@@ -27,9 +27,10 @@
   background: /Textures/LobbyScreens/skellyvstherev.webp
   title: Skelly Versus The Rev
   artist: Hannah 'FairlySadPanda' Dawson
+
 - type: lobbyBackground
-  id: Doomed
-  background: /Textures/LobbyScreens/doomed.webp
+id: Doomed
+background: /Textures/LobbyScreens/doomed.webp
   title: Doomed
   artist: brainfood1183
 
