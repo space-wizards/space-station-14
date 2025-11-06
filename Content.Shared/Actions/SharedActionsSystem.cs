@@ -608,8 +608,13 @@ public abstract partial class SharedActionsSystem : EntitySystem
                 RaiseLocalEvent(eveTarget, (object) eve, broadcast: true);
                 handled = eve.Handled;
 
-                if (!handled)
-                    return;
+                switch (handled)
+                {
+                    case false when action.Comp.Bypass:
+                        continue;
+                    case false:
+                        return;
+                }
 
                 if (eve.Toggle)
                     SetToggled((action, action), !action.Comp.Toggled);
