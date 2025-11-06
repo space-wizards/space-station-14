@@ -321,7 +321,14 @@ public abstract partial class SharedActionsSystem : EntitySystem
             Provider = provider
         };
         RaiseLocalEvent(action, ref validateEv);
-        if (validateEv.Invalid || validateEv.Cancel)
+        if (validateEv.Invalid)
+        {
+            Log.Warning($"{ToPrettyString(user):user} tried performing a invalid {Name(action):action}.");
+
+            return false;
+        }
+
+        if (validateEv.Cancel)
             return false;
 
         if (TryComp<DoAfterArgsComponent>(action, out var actionDoAfterComp) && TryComp<DoAfterComponent>(user, out var performerDoAfterComp) && !skipDoActionRequest)
