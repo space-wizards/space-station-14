@@ -62,7 +62,8 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
     protected bool TryFindRandomTile(out Vector2i tile,
         [NotNullWhen(true)] out EntityUid? targetStation,
         out EntityUid targetGrid,
-        out EntityCoordinates targetCoords)
+        out EntityCoordinates targetCoords,
+        bool safeOnly = false)
     {
         tile = default;
         targetStation = EntityUid.Invalid;
@@ -71,6 +72,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
         if (TryGetRandomStation(out targetStation))
         {
             return TryFindRandomTileOnStation((targetStation.Value, Comp<StationDataComponent>(targetStation.Value)),
+                safeOnly,
                 out tile,
                 out targetGrid,
                 out targetCoords);
@@ -80,6 +82,7 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
     }
 
     protected bool TryFindRandomTileOnStation(Entity<StationDataComponent> station,
+        bool safeOnly,
         out Vector2i tile,
         out EntityUid targetGrid,
         out EntityCoordinates targetCoords)
@@ -106,6 +109,10 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
         (targetGrid, var gridComp) = RobustRandom.Pick(weights);
 
+        var mapUid = Transform(targetGrid).MapUid;
+        if (mapUid == null)
+            return false;
+
         var found = false;
         var aabb = gridComp.LocalAABB;
 
@@ -115,10 +122,19 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
             var randomY = RobustRandom.Next((int) aabb.Bottom, (int) aabb.Top);
 
             tile = new Vector2i(randomX, randomY);
-            if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile)
-                || _atmosphere.IsTileAirBlocked(targetGrid, tile, mapGridComp: gridComp))
-            {
+
+            if (_atmosphere.IsTileAirBlocked(targetGrid, tile, mapGridComp: gridComp))
                 continue;
+
+            if (safeOnly)
+            {
+                if (!_atmosphere.IsTileMixtureProbablySafe(targetGrid, mapUid.Value, tile))
+                    continue;
+            }
+            else
+            {
+                if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile))
+                    continue;
             }
 
             found = true;
