@@ -3,8 +3,8 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Gravity;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
-public sealed partial class SharedGravityGeneratorComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class GravityGeneratorComponent : Component
 {
     [DataField] public float LightRadiusMin { get; set; }
     [DataField] public float LightRadiusMax { get; set; }
@@ -18,30 +18,30 @@ public sealed partial class SharedGravityGeneratorComponent : Component
     /// <summary>
     /// The sprite used by the core of the gravity generator when the gravity generator is starting up.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public string CoreStartupState = "startup";
 
     /// <summary>
     /// The sprite used by the core of the gravity generator when the gravity generator is idle.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public string CoreIdleState = "idle";
 
     /// <summary>
     /// The sprite used by the core of the gravity generator when the gravity generator is activating.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public string CoreActivatingState = "activating";
 
     /// <summary>
     /// The sprite used by the core of the gravity generator when the gravity generator is active.
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public string CoreActivatedState = "activated";
 
     /// <summary>
     /// Is the gravity generator currently "producing" gravity?
     /// </summary>
-    [DataField, ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool GravityActive = false;
 }
