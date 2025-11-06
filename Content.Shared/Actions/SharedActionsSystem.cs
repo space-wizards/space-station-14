@@ -321,7 +321,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
             Provider = provider
         };
         RaiseLocalEvent(action, ref validateEv);
-        if (validateEv.Invalid)
+        if (validateEv.Invalid || validateEv.Cancel)
             return false;
 
         if (TryComp<DoAfterArgsComponent>(action, out var actionDoAfterComp) && TryComp<DoAfterComponent>(user, out var performerDoAfterComp) && !skipDoActionRequest)
