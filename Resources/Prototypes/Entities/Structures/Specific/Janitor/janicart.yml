@@ -30,9 +30,6 @@
     solution: bucket
   - type: ExaminableSolution
     solution: bucket
-  - type: Tag
-    tags:
-      - Wringer
   - type: ItemMapper
     mapLayers:
       mopbucket_shark_blue:
@@ -270,9 +267,6 @@
       solution: bucket
     - type: ExaminableSolution
       solution: bucket
-    - type: Tag
-      tags:
-        - Wringer
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
