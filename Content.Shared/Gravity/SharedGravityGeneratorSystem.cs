@@ -22,7 +22,7 @@ public abstract class SharedGravityGeneratorSystem : EntitySystem
         if (!ent.Comp.GravityActive)
             return;
 
-        _popupSystem.PopupClient(Loc.GetString("gravity-generator-unanchoring-failed"), ent.Owner, args.User, PopupType.Medium);
+        _popupSystem.PopupEntity(Loc.GetString("gravity-generator-unanchoring-failed"), ent.Owner, args.User, PopupType.Medium);
 
         args.Cancel();
     }
