@@ -71,15 +71,15 @@
 
 - type: entity
   parent: BaseAction
-  id: ActionCreateHolocuffs
-  name: Create holo-cuffs
-  description: Channels suit power into creating a pair of holo-cuffs for quick restraints.
+  id: ActionCreateNanostraps
+  name: Create nanostraps
+  description: Channels suit power into creating a pair of nanostraps for quick, silencing restraints.
   components:
   - type: Action
     useDelay: 1
     icon:
-      sprite: Objects/Misc/holocuffs.rsi
-      state: holocuff
+      sprite: Objects/Misc/nanocuffs.rsi
+      state: nanocuff
     itemIconStyle: NoItem
     priority: -14
   - type: InstantAction

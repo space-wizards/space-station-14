@@ -44,6 +44,7 @@
   parent: ThrowingStar
   id: ThrowingStarNinja
   name: ninja throwing star
+  suffix: Timed, 30s
   components:
   # prevent ninja crashing server + filling bag with 20 stars to instakill a single person
   # also limits the crew's use

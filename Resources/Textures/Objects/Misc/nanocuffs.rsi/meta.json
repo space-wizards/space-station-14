@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "holocuff"
+      "name": "nanocuff"
     },
     {
       "name": "equipped-BELT",
@@ -16,6 +16,14 @@
     },
 	  {
       "name": "body-overlay-2",
+      "directions": 4
+    },
+	  {
+      "name": "body-overlay-2-vox",
+      "directions": 4
+    },
+	  {
+      "name": "body-overlay-2-vulpkanin",
       "directions": 4
     },
 	  {

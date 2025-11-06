@@ -66,14 +66,14 @@
 
   <Box>
     <GuideEntityEmbed Entity="ThrowingStar"/>
-    <GuideEntityEmbed Entity="Holocuffs"/>
+    <GuideEntityEmbed Entity="Nanostraps"/>
   </Box>
 
   Your suit's power can be used to materialize temporary weaponry.
 
   The [color=cyan]throwing star[/color] can be thrown for reliable ranged damage, with [bold]multiple hits able to stun targets[/bold]. Great at a distance or when your gloves' shock are on cooldown. Lasts for 30 seconds.
 
-  The [color=cyan]holo-cuffs[/color] allow for fast restraints at any time, especially against [bold]stunned targets[/bold]. They are however very brittle; if enough damage is dealt to a cuffed victim or if you try executing them with your sword, [bold]the holo-cuffs will break[/bold]. Lasts for 45 seconds.
+  The [color=cyan]nanostraps[/color] allow for fast restraints at any time, especially against [bold]stunned targets[/bold]. They are however very brittle; if enough damage is dealt to a cuffed victim or if you try executing them with your sword, [bold]the nanostraps will break[/bold]. Lasts for 60 seconds.
 
   ## Spider Clan Charge
 
