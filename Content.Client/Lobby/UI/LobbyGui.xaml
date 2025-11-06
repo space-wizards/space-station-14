@@ -55,8 +55,8 @@
                         <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
                         <PanelContainer StyleClasses="BackgroundPanel" Margin="3 3 3 3">
                             <BoxContainer Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                                <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
-                                <RichTextLabel Name="LobbyBackground" Access="Public" HorizontalAlignment="Center" />
+                                <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Left" />
+                                <RichTextLabel Name="LobbyBackground" Access="Public" HorizontalAlignment="Left" />
                             </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
