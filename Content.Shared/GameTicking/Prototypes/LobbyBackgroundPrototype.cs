@@ -1,7 +1,7 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Server.GameTicking.Prototypes;
+namespace Content.Shared.GameTicking.Prototypes;
 
 /// <summary>
 /// Prototype for a lobby background the game can choose.
@@ -18,4 +18,10 @@ public sealed partial class LobbyBackgroundPrototype : IPrototype
     /// </summary>
     [DataField("background", required: true)]
     public ResPath Background = default!;
+
+    [DataField("title")]
+    public string? Title;
+
+    [DataField("artist")]
+    public string? Artist;
 }

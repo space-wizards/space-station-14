@@ -1,48 +1,70 @@
 - type: lobbyBackground
   id: Warden
   background: /Textures/LobbyScreens/warden.webp
+  title: Warden
+  artist: Solbusaur
 
 - type: lobbyBackground
   id: Pharmacy
   background: /Textures/LobbyScreens/pharmacy.webp
+  title: Pharmacy
+  artist: Solbusaur
 
 - type: lobbyBackground
   id: SSXIV
   background: /Textures/LobbyScreens/ssxiv.webp
+  title: SSXIV
+  artist: Abyssal
 
 - type: lobbyBackground
   id: Susstation
   background: /Textures/LobbyScreens/susstation.webp
+  title: Susstation
+  artist: Alekshhh
 
 - type: lobbyBackground
   id: SkellyVsTheRev
   background: /Textures/LobbyScreens/skellyvstherev.webp
+  title: Skelly VS the Rev
 
 - type: lobbyBackground
   id: Doomed
   background: /Textures/LobbyScreens/doomed.webp
+  title: Doomed
+  artist: brainfood1183
 
 - type: lobbyBackground
   id: Blueprint
   background: /Textures/LobbyScreens/blueprint.webp
+  title: Blueprint
+  artist: data_redacted
 
 - type: lobbyBackground
   id: Behonker
   background: /Textures/LobbyScreens/behonker.webp
+  title: Behonker
+  artist: InCrah
 
 - type: lobbyBackground
   id: TerminalStation
   background: /Textures/LobbyScreens/terminalstation.webp
+  title: Terminal Station
+  artist: aserovich
 
 - type: lobbyBackground
   id: JustAWeekAway
   background: /Textures/LobbyScreens/justaweekaway.webp
+  title: Just a Week Away
+  artist: plantyfern
 
 - type: lobbyBackground
   id: JaniShootout
   background: /Textures/LobbyScreens/janishootout.webp
+  title: Jani Shootout
+  artist: psychpsyo
 
 - type: lobbyBackground
   id: ReclaimerNuke
   background: /Textures/LobbyScreens/reclaimer-nuke.webp
-  
+  title: Reclaimer Nuke
+  artist: GetOutMarutak
