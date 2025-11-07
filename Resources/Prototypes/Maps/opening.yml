@@ -17,5 +17,5 @@
 #          emergencyShuttlePath: /Maps/Shuttles/emergency.yml
         - type: StationJobs
           availableJobs:
-            Passenger: [ -1, -1 ] #infinite, not counted
+            Passenger: [ 1, 0 ] #infinite, not counted
 
