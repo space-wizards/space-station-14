@@ -40,9 +40,6 @@
   - type: Storage
     grid:
     - 0,0,1,1
-    whitelist:
-      components:
-      - Stamp
 
 - type: entity
   name: circuit tote
