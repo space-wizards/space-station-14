@@ -52,11 +52,6 @@
 
 - type: latheRecipe
   parent: BaseImplantRecipe
-  id: LearnKoboltLanguageImplanter
-  result: LearnKoboltLanguageImplanter
-
-- type: latheRecipe
-  parent: BaseImplantRecipe
   id: LearnPlafLanguageImplanter
   result: LearnPlafLanguageImplanter
 

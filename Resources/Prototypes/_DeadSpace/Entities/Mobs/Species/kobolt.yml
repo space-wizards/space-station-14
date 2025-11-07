@@ -105,7 +105,7 @@
   - type: Language
     selectedLanguage: GeneralLanguage
     knownLanguages:
-    - KoboltLanguage
+    - ReptilianLanguage
     - GeneralLanguage
 
 - type: entity
@@ -133,3 +133,8 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: Language
+    selectedLanguage: GeneralLanguage
+    knownLanguages:
+    - ReptilianLanguage
+    - GeneralLanguage

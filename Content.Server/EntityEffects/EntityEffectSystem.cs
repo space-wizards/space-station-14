@@ -771,15 +771,11 @@ public sealed class EntityEffectSystem : EntitySystem
         // DS14-Languages-start
         if (TryComp<LanguageComponent>(uid, out var language))
         {
-            language.KnownLanguages.Add(LanguageSystem.DefaultLanguageId);
-        }
-        else
-        {
-            AddComp(uid, new LanguageComponent
+            foreach (var langId in language.CantSpeakLanguages)
             {
-                KnownLanguages = { LanguageSystem.DefaultLanguageId },
-                SelectedLanguage = LanguageSystem.DefaultLanguageId
-            });
+                if (language.UnlockLanguagesAfterMakeSentient.Contains(langId))
+                    language.CantSpeakLanguages.Remove(langId);
+            }
         }
         // DS14-Languages-end
 

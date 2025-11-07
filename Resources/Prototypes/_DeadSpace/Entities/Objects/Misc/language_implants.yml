@@ -13,8 +13,8 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: LearnArachnidLanguageImplant
-  name: имплант изучения пучьего языка
-  description: Имплант изучения пучьего языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, непроизвольные подёргивания конечностей и временная тяга к ткачеству.
+  name: имплант изучения Це'хисс языка
+  description: Имплант изучения Це'хисс языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, непроизвольные подёргивания конечностей и временная тяга к ткачеству.
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
@@ -96,21 +96,9 @@
 
 - type: entity
   parent: BaseSubdermalImplant
-  id: LearnKoboltLanguageImplant
-  name: имплант изучения кобальдского языка
-  description: Имплант изучения кобальдского языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное шипение и кратковременные приступы чужого акцента.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: SubdermalImplant
-  - type: LearnLanguageImplant
-    language:
-    - KoboltLanguage
-
-- type: entity
-  parent: BaseSubdermalImplant
   id: LearnPlafLanguageImplant
-  name: имплант изучения акульего языка
-  description: Имплант изучения акульего языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, учащённое сердцебиение и кратковременное желание укусить собеседника.
+  name: имплант изучения Эве-Пишту
+  description: Имплант изучения Эве-Пишту. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, учащённое сердцебиение и кратковременное желание укусить собеседника.
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
@@ -133,26 +121,14 @@
 - type: entity
   parent: BaseSubdermalImplant
   id: LearnXenomorphLanguageImplant
-  name: имплант изучения языка ксеноморфов
-  description: Имплант изучения языка ксеноморфов. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное шипение и кратковременные приступы желания мытья полов.
+  name: имплант изучения языка Эхоглосса
+  description: Имплант изучения языка Эхоглосса. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное шипение и кратковременные приступы желания мытья полов.
   categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
   - type: LearnLanguageImplant
     language:
     - XenomorphLanguage
-
-- type: entity
-  parent: BaseSubdermalImplant
-  id: LearnDogLanguageImplant
-  name: имплант изучения собачьего языка
-  description: Имплант изучения собачьего языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное гавканье и ощущение, что нужно вертеть хвостом, даже если его нет.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: SubdermalImplant
-  - type: LearnLanguageImplant
-    language:
-    - DogLanguage
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -174,7 +150,18 @@
     - DemonLanguage
     - CatLanguage
     - MachineLanguage
-    - KoboltLanguage
     - PlafLanguage
     - VulpkaninLanguage
     - XenomorphLanguage
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: LearnDogLanguageImplant
+  name: имплант изучения собачьего языка
+  description: Имплант изучения собачьего языка. Подкожный имплант с простейшим языковым модулем. Подключается к периферийным нервам и подменяет часть сигналов, связанных с речью и слухом. Возможны лёгкие сбои восприятия, самопроизвольное гавканье и ощущение, что нужно вертеть хвостом, даже если его нет.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: LearnLanguageImplant
+    language:
+    - DogLanguage

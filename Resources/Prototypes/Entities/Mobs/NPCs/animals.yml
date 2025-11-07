@@ -51,14 +51,8 @@
     flavorKind: station-event-random-sentience-flavor-organic
   - type: Bloodstream
     bloodMaxVolume: 50
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: mouse
-  - type: Language
-    selectedLanguage: MouseLanguage
-    knownLanguages:
-    - MouseLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: mouse
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Effects/bite.ogg
@@ -273,14 +267,8 @@
     eggSpawn:
     - id: FoodEgg
   - type: ExaminableHunger
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: chicken
-  - type: Language
-    selectedLanguage: ChickenLanguage
-    knownLanguages:
-    - ChickenLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: chicken
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -522,7 +510,7 @@
   - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: Moth
-    speechSounds: Squeak
+    # speechSounds: Squeak # DS14
     allowedEmotes: ['Chitter', 'Squeak']
   - type: FaxableObject
     insertingState: inserting_mothroach
@@ -587,8 +575,8 @@
   - type: Extractable
     grindableSolutionName: food
   # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: mothroach
+  - type: ReplacementAccent
+    accent: mothroach
   - type: Language
     selectedLanguage: MothLanguage
     knownLanguages:
@@ -734,14 +722,8 @@
     eggSpawn:
     - id: FoodEgg
   - type: ExaminableHunger
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: duck
-  - type: Language
-    selectedLanguage: ChickenLanguage
-    knownLanguages:
-    - ChickenLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: duck
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -962,14 +944,8 @@
     guides:
     - Chef
     - FoodRecipes
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: cow
-  - type: Language
-    selectedLanguage: CowLanguage
-    knownLanguages:
-    - CowLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: cow
   - type: TTS # DS14
     voice: Thrud
 
@@ -1027,14 +1003,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: crab
-  - type: Language
-    selectedLanguage: CrabLanguage
-    knownLanguages:
-    - CrabLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: crab
   - type: Bloodstream
     bloodMaxVolume: 50
     bloodReagent: CopperBlood
@@ -1275,8 +1245,10 @@
       0: Alive
       200: Critical
       250: Dead
+  # DS14-start
   - type: NecromorfAfterInfection
     necroPrototype: NecroBrute
+  # DS14-end
 
 - type: entity
   name: kangaroo
@@ -1311,14 +1283,8 @@
   - type: Inventory
     speciesId: kangaroo
     templateId: kangaroo
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: kangaroo
-  - type: Language
-    selectedLanguage: KangarooLanguage
-    knownLanguages:
-    - KangarooLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: kangaroo
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1536,7 +1502,6 @@
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
 
-
 - type: entity
   name: monkey
   id: MobBaseSyndicateMonkey
@@ -1549,7 +1514,7 @@
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
   - type: Speech
-    speechSounds: Monkey
+    # speechSounds: Monkey # DS14
     speechVerb: Monkey
   - type: MonkeyAccent
   - type: NpcFactionMember
@@ -1597,15 +1562,14 @@
     group: Kobold
   - type: LizardAccent
   # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: kobold
+  - type: ReplacementAccent
+    accent: kobold
   - type: Language
-    selectedLanguage: KoboltLanguage
+    selectedLanguage: ReptilianLanguage
     knownLanguages:
-    - KoboltLanguage
+    - ReptilianLanguage
   # DS14-Languages-end
   - type: Speech
-    speechSounds: Lizard
     speechVerb: Reptilian
     allowedEmotes: ['Thump']
   - type: Vocal
@@ -1784,7 +1748,7 @@
     - MindRoleGhostRoleFreeAgentHarmless
   - type: GhostTakeoverAvailable
   - type: Speech
-    speechSounds: Squeak
+    # speechSounds: Squeak # DS14
     speechVerb: SmallMob
     allowedEmotes: ['Squeak']
   - type: Sprite
@@ -1887,14 +1851,8 @@
     spawned:
     - id: FoodMeatRat
       amount: 1
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: mouse
-  - type: Language
-    selectedLanguage: MouseLanguage
-    knownLanguages:
-    - MouseLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: mouse
   - type: Tag
     tags:
     - Trash
@@ -2576,14 +2534,6 @@
   - type: MeleeChemicalInjector
     transferAmount: 0.75
     solution: melee
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: xeno
-  - type: Language
-    selectedLanguage: XenomorphLanguage
-    knownLanguages:
-    - XenomorphLanguage
-  # DS14-Languages-end
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-tarantula
@@ -2601,7 +2551,7 @@
     bloodReagent: CopperBlood
   - type: Speech
     speechVerb: Arachnid
-    speechSounds: Arachnid
+    # speechSounds: Arachnid # DS14
     allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
     sounds:
@@ -2630,6 +2580,14 @@
       groups:
         Brute: -0.07
         Burn: -0.07
+  # DS14-start
+  - type: ReplacementAccent
+    accent: xeno
+  - type: Language
+    knownLanguages: 
+    - ArachnidLanguage
+    selectedLanguage: ArachnidLanguage
+  # DS14-end
 
 - type: entity
   parent: MobSpiderBase
@@ -3023,14 +2981,21 @@
     spawned:
     - id: FoodMeat
       amount: 2
-  # DS14-Languages-start
+  # DS14-start
   # - type: ReplacementAccent
   #   accent: dog
   - type: Language
     selectedLanguage: DogLanguage
     knownLanguages:
+    - GeneralLanguage
     - DogLanguage
-  # DS14-Languages-end
+    cantSpeakLanguages:
+    - GeneralLanguage
+    unlockLanguagesAfterMakeSentient:
+    - GeneralLanguage
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-corgi
+  # DS14-end
   - type: Tag
     tags:
     - VimPilot
@@ -3165,14 +3130,8 @@
     spawned:
     - id: FoodMeat
       amount: 3
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: cat
-  - type: Language
-    selectedLanguage: CatLanguage
-    knownLanguages:
-    - CatLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: cat
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-cat
@@ -3574,14 +3533,8 @@
     spawned:
     - id: FoodMeat
       amount: 1
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: mouse
-  - type: Language
-    selectedLanguage: MouseLanguage
-    knownLanguages:
-    - MouseLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: mouse
   - type: Tag
     tags:
     - VimPilot
@@ -3698,14 +3651,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       path: /Audio/Animals/pig_oink.ogg
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: pig
-  - type: Language
-    selectedLanguage: PigLanguage
-    knownLanguages:
-    - PigLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: pig
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-organic
   - type: NpcFactionMember
@@ -3802,8 +3749,8 @@
   suffix: Accent
   components:
   # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: nymph
+  - type: ReplacementAccent
+    accent: nymph
   - type: Language
     selectedLanguage: DionaLanguage
     knownLanguages:
