@@ -3,60 +3,111 @@
   suffix: Filled
   parent: WardrobeGrey
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitColorGrey
-        amount: 2
-      - id: ClothingUniformJumpskirtColorGrey
-        amount: 2
-      - id: ClothingShoesColorBlack
-        amount: 3
-      - id: ClothingHeadHatGreysoft
-      - id: ClothingBackpackDuffel
-        prob: 0.5
-      - id: ClothingOuterCoatBomber
-        prob: 0.3
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeGrey
+
+- type: entity
+  id: ClosetWallWardrobeGreyFilled
+  suffix: Filled
+  parent: ClosetWallGrey
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeGrey
+
+- type: entityTable
+  id: FillWardrobeGrey
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitColorGrey
+      amount: 2
+    - id: ClothingUniformJumpskirtColorGrey
+      amount: 2
+    - id: ClothingShoesColorBlack
+      amount: 3
+    - id: ClothingHeadHatGreysoft
+    - id: ClothingBackpackDuffel
+      prob: 0.5
+    - id: ClothingOuterCoatBomber
+      prob: 0.3
 
 - type: entity
   id: WardrobeMixedFilled
   suffix: Filled
   parent: WardrobeMixed
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingShoesColorBlack
-        amount: 1
-      - id: ClothingShoesColorBrown
-        amount: 1
-      - id: ClothingShoesColorWhite
-        amount: 1
-      - id: ClothingOuterCoatBomber
-        prob: 0.4
-      - id: ClothingOuterCoatGentle
-        prob: 0.3
-      - id: ClothingUniformRandomShorts
-        amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeMixed
+
+- type: entity
+  id: ClosetWallWardrobeMixedFilled
+  suffix: Filled
+  parent: ClosetWallMixed
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeMixed
+
+- type: entityTable
+  id: FillWardrobeMixed
+  table: !type:AllSelector
+    children:
+    - id: ClothingShoesColorBlack
+    - id: ClothingShoesColorBrown
+    - id: ClothingShoesColorWhite
+    - id: ClothingOuterCoatBomber
+      prob: 0.4
+    - id: ClothingOuterCoatGentle
+      prob: 0.3
+    - id: ClothingUniformRandomShorts
+      amount: 3
+    - id: ClothingUniformRandomBra
+      amount: 5
+    - !type:AllSelector
+      rolls: 5
+      children:
       - id: ClothingUniformRandomArmless
-        amount: 5
+        prob: 0.8
       - id: ClothingUniformRandomStandard
-        amount: 5
-      - id: ClothingUniformRandomBra
-        amount: 5
+        prob: 0.8
       - id: ClothingUniformRandomShirt
-        amount: 4
+        prob: 0.8
 
 - type: entity
   id: WardrobeYellowFilled
   suffix: Filled
   parent: WardrobeYellow
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitColorYellow
-      - id: ClothingUniformJumpskirtColorYellow
-      - id: ClothingShoesColorOrange
-        amount: 2
-      - id: ClothingHeadBandGold
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeYellow
+
+- type: entity
+  id: ClosetWallWardrobeYellowFilled
+  suffix: Filled
+  parent: ClosetWallYellow
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeYellow
+
+- type: entityTable
+  id: FillWardrobeYellow
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitColorYellow
+    - id: ClothingUniformJumpskirtColorYellow
+    - id: ClothingShoesColorOrange
+      amount: 2
+    - id: ClothingHeadBandGold
 
 
 - type: entity
@@ -64,62 +115,147 @@
   suffix: Filled
   parent: WardrobeWhite
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitColorWhite
-      - id: ClothingUniformJumpskirtColorWhite
-      - id: ClothingShoesColorWhite
-        amount: 2
-      - id: ClothingHeadHatMimesoft
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeWhite
+
+- type: entity
+  id: ClosetWallWardrobeWhiteFilled
+  suffix: Filled
+  parent: ClosetWallWhite
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeWhite
+
+- type: entityTable
+  id: FillWardrobeWhite
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitColorWhite
+    - id: ClothingUniformJumpskirtColorWhite
+    - id: ClothingShoesColorWhite
+      amount: 2
+    - id: ClothingHeadHatMimesoft
 
 - type: entity
   id: WardrobeBlueFilled
   suffix: Filled
   parent: WardrobeBlue
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitColorBlue
-      - id: ClothingUniformJumpskirtColorBlue
-      - id: ClothingShoesColorBrown
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeBlue
+
+- type: entity
+  id: ClosetWallWardrobeBlueFilled
+  suffix: Filled
+  parent: ClosetWallBlue
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeBlue
+
+- type: entityTable
+  id: FillWardrobeBlue
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitColorBlue
+    - id: ClothingUniformJumpskirtColorBlue
+    - id: ClothingShoesColorBrown
+      amount: 2
 
 - type: entity
   id: WardrobePinkFilled
   suffix: Filled
   parent: WardrobePink
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitColorPink
-      - id: ClothingUniformJumpskirtColorPink
-      - id: ClothingShoesColorBrown
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobePink
+
+- type: entity
+  id: ClosetWallWardrobePinkFilled
+  suffix: Filled
+  parent: ClosetWallPink
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobePink
+
+- type: entityTable
+  id: FillWardrobePink
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitColorPink
+    - id: ClothingUniformJumpskirtColorPink
+    - id: ClothingShoesColorBrown
+      amount: 2
 
 - type: entity
   id: WardrobeBlackFilled
   suffix: Filled
   parent: WardrobeBlack
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitColorBlack
-      - id: ClothingUniformJumpskirtColorBlack
-      - id: ClothingShoesColorBlack
-        amount: 2
-      - id: ClothingHeadBandBlack
-      - id: ClothingHeadBandSkull
-        prob: 0.4
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeBlack
+
+- type: entity
+  id: ClosetWallWardrobeBlackFilled
+  suffix: Filled
+  parent: ClosetWallBlack
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeBlack
+
+- type: entityTable
+  id: FillWardrobeBlack
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitColorBlack
+    - id: ClothingUniformJumpskirtColorBlack
+    - id: ClothingShoesColorBlack
+      amount: 2
+    - id: ClothingHeadBandBlack
+    - id: ClothingHeadBandSkull
+      prob: 0.4
 
 - type: entity
   id: WardrobeGreenFilled
   suffix: Filled
   parent: WardrobeGreen
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitColorGreen
-      - id: ClothingUniformJumpskirtColorGreen
-      - id: ClothingShoesColorBlack
-        amount: 2
-      - id: ClothingHeadBandGreen
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeGreen
+
+- type: entity
+  id: ClosetWallWardrobeGreenFilled
+  suffix: Filled
+  parent: ClosetWallGreen
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillWardrobeGreen
+
+- type: entityTable
+  id: FillWardrobeGreen
+  table: !type:AllSelector
+    children:
+    - id: ClothingUniformJumpsuitColorGreen
+    - id: ClothingUniformJumpskirtColorGreen
+    - id: ClothingShoesColorBlack
+      amount: 2
+    - id: ClothingHeadBandGreen

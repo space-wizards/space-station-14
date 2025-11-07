@@ -10,10 +10,9 @@
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: generic
-  - type: StaticPrice
-    price: 100
   - type: PhysicalComposition
     materialComposition:
       Glass: 200
     chemicalComposition:
       Silicon: 20
+  - type: Circuitboard
