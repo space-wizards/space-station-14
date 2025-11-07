@@ -488,7 +488,7 @@
   parent: BaseItem
   id: FoodSnackMREBrownie
   name: brownie
-  description: A military-grade brownie, made to withstand blunt trauma and harsh conditions, with a synthetic-cotton wrapper. Tastes like shit.
+  description: A military-grade brownie made to withstand blunt trauma and harsh conditions, with a synthetic-cotton wrapper. Tastes like shit.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
