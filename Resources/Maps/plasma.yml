@@ -86644,37 +86644,21 @@ entities:
     - type: Transform
       pos: -45.5,-61.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
-      solution: pool
   - uid: 13273
     components:
     - type: Transform
       pos: -44.5,-61.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
-      solution: pool
   - uid: 13274
     components:
     - type: Transform
       pos: -46.5,-61.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
-      solution: pool
   - uid: 13275
     components:
     - type: Transform
       pos: -44.5,-60.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
-      solution: pool
   - uid: 13276
     components:
     - type: Transform
