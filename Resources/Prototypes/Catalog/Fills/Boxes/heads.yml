@@ -50,7 +50,7 @@
   parent: BoxStamps
   id: BoxHoPStamps
   name: head of personnel's stamp box
-  description: A box filled with the head of personnel's stamps.
+  description: A small box containing the head of personnel's stamps.
   components:
   - type: StorageFill
     contents:
@@ -89,7 +89,7 @@
   parent: BoxStamps
   id: BoxQMStamps
   name: quartermaster's stamp box
-  description: A box filled with the quartermaster's stamps.
+  description: A small box containing the quartermaster's stamps.
   components:
   - type: StorageFill
     contents:
