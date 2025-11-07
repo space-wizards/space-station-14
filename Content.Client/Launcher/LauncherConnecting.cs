@@ -23,8 +23,10 @@ namespace Content.Client.Launcher
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IClipboardManager _clipboard = default!;
-		[Dependency] private readonly IUriOpener _uri = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+		[Dependency] private readonly IUriOpener _uri = default!; // DS14: Connect To Another Server
 
+        private ISawmill _sawmill = default!;
         private LauncherConnectingGui? _control;
 
         private Page _currentPage;
@@ -63,6 +65,8 @@ namespace Content.Client.Launcher
 
         protected override void Startup()
         {
+            _sawmill = _logManager.GetSawmill("launcher-ui");
+
             _control = new LauncherConnectingGui(this, _random, _prototypeManager, _cfg, _clipboard);
 
             _userInterfaceManager.StateRoot.AddChild(_control);
@@ -119,16 +123,17 @@ namespace Content.Client.Launcher
                 }
                 else
                 {
-                    Logger.InfoS("launcher-ui", $"Redial not possible, no Ss14Address");
+                    _sawmill.Info($"Redial not possible, no Ss14Address");
                 }
             }
             catch (Exception ex)
             {
-                Logger.ErrorS("launcher-ui", $"Redial exception: {ex}");
+                _sawmill.Error($"Redial exception: {ex}");
             }
             return false;
         }
-		
+
+		// DS14-start: Connect To Another Server
 		public void ConnectToAnotherServer()
 		{
 			_gameController.Redial($"ss14://{_cfg.GetCVar(CCCCVars.InfoLinksIPs)}");
@@ -138,6 +143,7 @@ namespace Content.Client.Launcher
 		{
 			_uri.OpenUri(_cfg.GetCVar(CCVars.InfoLinksDiscord));
 		}
+		// DS14-end
 
         public void Exit()
         {

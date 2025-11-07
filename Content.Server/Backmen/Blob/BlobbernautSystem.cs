@@ -14,11 +14,9 @@ namespace Content.Server.Backmen.Blob;
 public sealed class BlobbernautSystem : SharedBlobbernautSystem
 {
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-
+    [Dependency] private readonly EmpSystem _empSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EmpSystem _empSystem = default!;
-
     [Dependency] private readonly TransformSystem _transform = default!;
 
     public override void Initialize()
@@ -37,15 +35,22 @@ public sealed class BlobbernautSystem : SharedBlobbernautSystem
             return;
         if (!TryComp<BlobCoreComponent>(blobTileComponent.Core, out var blobCoreComponent))
             return;
+
         if (blobCoreComponent.CurrentChem == BlobChemType.ExplosiveLattice)
         {
-            _explosionSystem.QueueExplosion(args.HitEntities.FirstOrDefault(), blobCoreComponent.BlobExplosive, 4, 1, 2, maxTileBreak: 0);
+            _explosionSystem.QueueExplosion(args.HitEntities.FirstOrDefault(),
+                blobCoreComponent.BlobExplosive,
+                4,
+                1,
+                2,
+                maxTileBreak: 0);
         }
+
         if (blobCoreComponent.CurrentChem == BlobChemType.ElectromagneticWeb)
         {
             var xform = Transform(args.HitEntities.FirstOrDefault());
             if (_random.Prob(0.2f))
-                _empSystem.EmpPulse(_transform.GetMapCoordinates(xform), 3f, 50f, 3f);
+                _empSystem.EmpPulse(_transform.GetMapCoordinates(xform), 3f, 50f, TimeSpan.FromSeconds(3));
         }
     }
 
@@ -55,7 +60,7 @@ public sealed class BlobbernautSystem : SharedBlobbernautSystem
         {
             MobState.Dead => true,
             MobState.Alive => false,
-            _ => component.IsDead
+            _ => component.IsDead,
         };
     }
 

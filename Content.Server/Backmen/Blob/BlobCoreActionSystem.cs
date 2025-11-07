@@ -29,23 +29,25 @@ namespace Content.Server.Backmen.Blob;
 
 public sealed class BlobCoreActionSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly BlobCoreSystem _blobCoreSystem = default!;
-    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly FlammableSystem _flammable = default!;
-    [Dependency] private readonly EmpSystem _empSystem = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly MapSystem _mapSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     //[Dependency] private readonly GridFixtureSystem _gridFixture = default!;
 
     private const double ActionJobTime = 0.005;
     private readonly JobQueue _actionJobQueue = new(ActionJobTime);
+    [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly BlobCoreSystem _blobCoreSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly EmpSystem _empSystem = default!;
+
+    private readonly HashSet<Entity<MobStateComponent>> _entitiesTrackTiles = new();
+    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly FlammableSystem _flammable = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     private EntityQuery<BlobTileComponent> _tileQuery;
 
     public override void Initialize()
@@ -63,38 +65,9 @@ public sealed class BlobCoreActionSystem : EntitySystem
         _actionJobQueue.Process();
     }
 
-    public sealed class BlobMouseActionProcess : Job<object>
-    {
-        private readonly Entity<BlobObserverComponent> _ent;
-        private readonly Entity<BlobCoreComponent> _core;
-        private readonly BlobCoreActionSystem _system;
-        private readonly AfterInteractEvent _args;
-
-        public BlobMouseActionProcess(Entity<BlobObserverComponent> ent, Entity<BlobCoreComponent> core, BlobCoreActionSystem system, AfterInteractEvent args, double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
-        {
-            _ent = ent;
-            _core = core;
-            _system = system;
-            _args = args;
-        }
-
-        public BlobMouseActionProcess(Entity<BlobObserverComponent> ent, Entity<BlobCoreComponent> core, BlobCoreActionSystem system, AfterInteractEvent args, double maxTime, IStopwatch stopwatch, CancellationToken cancellation = default) : base(maxTime, stopwatch, cancellation)
-        {
-            _ent = ent;
-            _core = core;
-            _system = system;
-            _args = args;
-        }
-
-        protected override async Task<object?> Process()
-        {
-            _system.BlobInteract(_ent, _core, _args);
-            return null;
-        }
-    }
-
-    private readonly HashSet<Entity<MobStateComponent>> _entitiesTrackTiles = new();
-    private void BlobInteract(Entity<BlobObserverComponent> observer, Entity<BlobCoreComponent> core, AfterInteractEvent args)
+    private void BlobInteract(Entity<BlobObserverComponent> observer,
+        Entity<BlobCoreComponent> core,
+        AfterInteractEvent args)
     {
         var location = args.ClickLocation;
         if (!location.IsValid(EntityManager))
@@ -113,11 +86,10 @@ public sealed class BlobCoreActionSystem : EntitySystem
         }
 
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
-        {
             return;
-        }
 
         #region OnTarget
+
         if (args.Target != null &&
             !_tileQuery.HasComponent(args.Target) &&
             !HasComp<BlobMobComponent>(args.Target))
@@ -133,34 +105,39 @@ public sealed class BlobCoreActionSystem : EntitySystem
                 mobTile.GridIndices.Offset(Direction.East),
                 mobTile.GridIndices.Offset(Direction.West),
                 mobTile.GridIndices.Offset(Direction.North),
-                mobTile.GridIndices.Offset(Direction.South)
+                mobTile.GridIndices.Offset(Direction.South),
             };
-            var nearTile = mobAdjacentTiles.Select(indices=> _mapSystem.GetAnchoredEntities(gridUid.Value, grid, indices).Where(_tileQuery.HasComponent)
-                .FirstOrNull()).FirstOrDefault(x => x != null);
+            var nearTile = mobAdjacentTiles.Select(indices =>
+                    _mapSystem.GetAnchoredEntities(gridUid.Value, grid, indices)
+                        .Where(_tileQuery.HasComponent)
+                        .FirstOrNull())
+                .FirstOrDefault(x => x != null);
 
-            if (nearTile != null && HasComp<DestructibleComponent>(target) && !HasComp<ItemComponent>(target)&& !HasComp<SubFloorHideComponent>(target))
+            if (nearTile != null && HasComp<DestructibleComponent>(target) && !HasComp<ItemComponent>(target) &&
+                !HasComp<SubFloorHideComponent>(target))
             {
                 BlobTargetAttack(core, nearTile.Value, (gridUid.Value, grid), target.Value);
                 return;
             }
         }
+
         #endregion
 
-        var centerTile = _mapSystem.GetLocalTilesIntersecting(gridUid.Value, grid,
-            new Box2(location.Position, location.Position), false).ToArray();
+        var centerTile = _mapSystem.GetLocalTilesIntersecting(gridUid.Value,
+                grid,
+                new Box2(location.Position, location.Position),
+                false)
+            .ToArray();
 
         var targetTileEmpty = false;
         foreach (var tileRef in centerTile)
         {
             if (tileRef.Tile.IsEmpty)
-            {
                 targetTileEmpty = true;
-            }
 
             if (_mapSystem.GetAnchoredEntities(gridUid.Value, grid, tileRef.GridIndices).Any(_tileQuery.HasComponent))
-            {
                 return;
-            }
+
             var pos = _transform.ToMapCoordinates(_mapSystem.ToCoordinates(gridUid.Value, tileRef.GridIndices, grid));
 
             _entitiesTrackTiles.Clear();
@@ -180,21 +157,20 @@ public sealed class BlobCoreActionSystem : EntitySystem
             targetTile.GridIndices.Offset(Direction.East),
             targetTile.GridIndices.Offset(Direction.West),
             targetTile.GridIndices.Offset(Direction.North),
-            targetTile.GridIndices.Offset(Direction.South)
+            targetTile.GridIndices.Offset(Direction.South),
         };
 
         var fromTile = adjacentTiles
-            .Select(indices=>_mapSystem.GetAnchoredEntities(gridUid.Value, grid, indices).FirstOrNull(_tileQuery.HasComponent))
-            .FirstOrDefault(x => x!=null);
+            .Select(indices => _mapSystem.GetAnchoredEntities(gridUid.Value, grid, indices)
+                .FirstOrNull(_tileQuery.HasComponent))
+            .FirstOrDefault(x => x != null);
 
         if (fromTile == null)
             return;
 
         var cost = core.Comp.NormalBlobCost;
         if (targetTileEmpty)
-        {
             cost *= 2;
-        }
 
         if (!_blobCoreSystem.TryUseAbility(observer, core, core, cost))
             return;
@@ -214,12 +190,15 @@ public sealed class BlobCoreActionSystem : EntitySystem
             transformCost: cost);
     }
 
-    private void BlobTargetAttack(Entity<BlobCoreComponent> ent, Entity<BlobTileComponent?> from, Entity<MapGridComponent> fromGrid, EntityUid target)
+    private void BlobTargetAttack(Entity<BlobCoreComponent> ent,
+        Entity<BlobTileComponent?> from,
+        Entity<MapGridComponent> fromGrid,
+        EntityUid target)
     {
         if (!Resolve(from, ref from.Comp))
             return;
 
-        if(ent.Comp.Observer == null)
+        if (ent.Comp.Observer == null)
             return;
 
         if (!_blobCoreSystem.TryUseAbility(ent.Comp.Observer.Value, ent, ent, ent.Comp.AttackCost))
@@ -239,7 +218,7 @@ public sealed class BlobCoreActionSystem : EntitySystem
             case BlobChemType.ElectromagneticWeb:
             {
                 if (_random.Prob(0.2f))
-                    _empSystem.EmpPulse(_transform.GetMapCoordinates(target), 3f, 50f, 3f);
+                    _empSystem.EmpPulse(_transform.GetMapCoordinates(target), 3f, 50f, TimeSpan.FromSeconds(3));
                 break;
             }
             case BlobChemType.BlazingOil:
@@ -280,23 +259,70 @@ public sealed class BlobCoreActionSystem : EntitySystem
         args.Handled = true;
 
         _actionJobQueue.EnqueueJob(new BlobMouseActionProcess(
-            (uid,observerComponent),
+            (uid, observerComponent),
             (observerComponent.Core.Value, blobCoreComponent),
             this,
             args,
             ActionJobTime
         ));
     }
+
     private void OnInteractTarget(Entity<BlobObserverComponent> ent, ref UserActivateInWorldEvent args)
     {
-        var ev = new AfterInteractEvent(args.User, EntityUid.Invalid, args.Target, Transform(args.Target).Coordinates, true);
+        var ev = new AfterInteractEvent(args.User,
+            EntityUid.Invalid,
+            args.Target,
+            Transform(args.Target).Coordinates,
+            true);
         OnInteract(ent, ent, ev); // proxy?
         args.Handled = ev.Handled;
     }
+
     private void OnInteractController(Entity<BlobObserverControllerComponent> ent, ref AfterInteractEvent args)
     {
         var ev = new AfterInteractEvent(args.User, EntityUid.Invalid, args.Target, args.ClickLocation, true);
         OnInteract(ent.Comp.Blob, ent.Comp.Blob, ev); // proxy?
         args.Handled = ev.Handled;
+    }
+
+    public sealed class BlobMouseActionProcess : Job<object>
+    {
+        private readonly AfterInteractEvent _args;
+        private readonly Entity<BlobCoreComponent> _core;
+        private readonly Entity<BlobObserverComponent> _ent;
+        private readonly BlobCoreActionSystem _system;
+
+        public BlobMouseActionProcess(Entity<BlobObserverComponent> ent,
+            Entity<BlobCoreComponent> core,
+            BlobCoreActionSystem system,
+            AfterInteractEvent args,
+            double maxTime,
+            CancellationToken cancellation = default) : base(maxTime, cancellation)
+        {
+            _ent = ent;
+            _core = core;
+            _system = system;
+            _args = args;
+        }
+
+        public BlobMouseActionProcess(Entity<BlobObserverComponent> ent,
+            Entity<BlobCoreComponent> core,
+            BlobCoreActionSystem system,
+            AfterInteractEvent args,
+            double maxTime,
+            IStopwatch stopwatch,
+            CancellationToken cancellation = default) : base(maxTime, stopwatch, cancellation)
+        {
+            _ent = ent;
+            _core = core;
+            _system = system;
+            _args = args;
+        }
+
+        protected override async Task<object?> Process()
+        {
+            _system.BlobInteract(_ent, _core, _args);
+            return null;
+        }
     }
 }

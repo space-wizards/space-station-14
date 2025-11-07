@@ -6,9 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 18000 # 5 hrs
+      time: 5h
     - !type:OverallPlaytimeRequirement
-      time: 36000 # 10 hrs
+      time: 10h
   icon: "JobIconShaftMiner"
   startingGear: SalvageSpecialistGear
   supervisors: job-supervisors-qm

@@ -319,6 +319,7 @@
     - id: DrinkWaterBottleFull
   - type: Tag
     tags:
+    - BoxCardboard
     - BoxHug
 
 - type: entity
@@ -376,7 +377,7 @@
     - id: EmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodBreadBaguette
+    - id: FoodBreadNutriBatard
     - id: DrinkWaterBottleFull
 
 - type: entity
@@ -390,7 +391,7 @@
     - id: EmergencyNitrogenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodBreadBaguette
+    - id: FoodBreadNutriBatard
     - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
@@ -410,7 +411,7 @@
     - id: EmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodBreadBaguette
+    - id: FoodBreadNutriBatard
     - id: DrinkBeerCan
 
 - type: entity
@@ -424,7 +425,7 @@
     - id: EmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodBreadBaguetteCotton
+    - id: FoodBreadCottonNutriBatard
     - id: DrinkWaterBottleFull
 
 - type: entity

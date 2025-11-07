@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian
-      time: 3600 # 1 hour
+      time: 1h
   startingGear: ChefGear
   icon: "JobIconChef"
   supervisors: job-supervisors-hop

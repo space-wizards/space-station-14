@@ -30,6 +30,10 @@
       "directions": 4
     },
     {
+      "name": "equipped-HELMET-reptilian",
+      "directions": 4
+    },
+    {
         "name": "equipped-HELMET-monkey",
         "directions": 4
     },

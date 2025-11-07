@@ -8,12 +8,12 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Silicon
-      time: 72000 # 20 hours
+      time: 20h
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 72000 # 20 hours
+      time: 20h
     - !type:OverallPlaytimeRequirement
-      time: 648000 # 180 hours
+      time: 180h
   weight: 10
   canBeAntag: false
   icon: JobIconStationAi
@@ -29,7 +29,7 @@
   playTimeTracker: JobBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 216000 # 60 hrs
+      time: 60h
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-crew

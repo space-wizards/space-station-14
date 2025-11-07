@@ -1,0 +1,14 @@
+- type: entity
+  parent: [DrinkBaseMaterialPorcelain, DrinkBase]
+  id: ADTDrinkTeapot
+  name: чайник
+  description: Элегантный чайник для чая.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teapot.rsi
+  - type: Item
+    size: Normal # DS14

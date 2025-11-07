@@ -1,0 +1,9 @@
+ent-ClothingOuterApronTaipanBotanist = фартук
+    .desc = Фартук из прочной ткани, предназначенный для  работы с особо опасными растениями.
+    .suffix = Тайпан
+ent-ClothingOuterApronTaipanChef = фартук
+    .desc = Тёмный фартук, используемый лучшими поварами Синдиката.
+    .suffix = Тайпан
+ent-ClothingOuterJacketTaipanChef = куртка повара
+    .desc = Тёплая куртка, предназначенная для работы в холожных условиях.
+    .suffix = Тайпан

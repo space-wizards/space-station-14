@@ -459,6 +459,7 @@ ClothingHeadsetAltCSO: null
 ClothingBackpackLeaderDuffelCBURNNECROFilled: null
 ClothingBackpackDuffelCBURNNECROFilled: null
 ClothingBackpackDuffelCBURNSCSTFilled: null
+ClothingBackpackDuffelCBURN: null
 ActionToggleMagbootsAdvanced: null
 ADTClothingHeadHatBeretBlueshield: ClothingHeadHatBeretBlueShield
 ADTClothingBlueshieldArmor: ClothingOuterArmorBasicBlueShield
@@ -879,6 +880,11 @@ SpawnHonkBot: SpawnMobHonkBot
 CrateFoodPizzaLarge: CrateFoodPizza
 CrateFoodSoftdrinksLarge: CrateFoodSoftdrinks
 
+# 2025-06-03
+FloorTileItemGCircuit4: FloorTileItemGCircuit
+FloorTileItemBCircuit4: FloorTileItemBCircuit
+FloorTileItemRCircuit4: FloorTileItemRCircuit
+
 # 2025-06-06
 MagazineLightRifleMaxim: null
 MagazineLightRiflePkBox: null
@@ -934,7 +940,8 @@ ClothingBeltPlantTypan: ClothingBeltPlantTaipan
 ClothingBeltPlantTypanFilled: ClothingBeltPlantTaipanFilled
 TypanPlantBag: TaipanPlantBag
 ClothingOuterApronTypanBotanist: ClothingOuterApronTaipanBotanist
-ClothingBeltAssaultTypan: ClothingBeltAssaultTaipan
+ClothingBeltAssaultTypan: null
+ClothingBeltAssaultTaipan: null
 ClothingBeltTypanSecurityWebbing: null
 ClothingHeadsetAltTypan: ClothingHeadsetAltTaipan
 ClothingEyesHudSyndicateAgentTypan: null
@@ -1023,6 +1030,12 @@ SpawnMobParrotPoly: SpawnMobPollyParrot
 MobParrotPoly: MobPollyParrot
 ADTObjectsWeaponSubMachineGunUmp: null
 
+# 2025-07-17
+RipleyChassis: null
+HonkerChassis: null
+HamtrChassis: null
+VimChassis: null
+
 # 2025-08-01
 FoodDonutJellySlugcat: FoodDonutJellyScurret
 
@@ -1087,6 +1100,7 @@ ADTInquisitoryHead: null
 ADTClothingOuterCoatLabSec: null
 ADTVeteranSecHardsuit: null
 ADTVeteranSecHardsuitHelm: null
+ADTDrinkTeacup: DrinkTeacupEmpty
 LedLightTubeGreen: LightTubeCrystalGreen
 LedLightTubeRed: LightTubeCrystalRed
 LedLightTubeBlue: LightTubeCrystalBlue
@@ -1094,3 +1108,15 @@ LedLightTubeYellow: LightTubeCrystalYellow
 LedLightTubeViolet: LightBulbCrystalPink
 SpawnMobCrabAtmos: null
 SpawnMobSmile: null
+
+# 2025-08-29
+PrefilledSyringe: Syringe
+
+# 2025-10-6
+BibleTanakh: null
+BibleSatanic: null
+
+
+# 2025-10-08
+ClothingBeltAssault: ClothingBeltMilitaryWebbing
+WarpPointBombing: null

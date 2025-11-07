@@ -37,24 +37,6 @@
             ]
         },
         {
-            "name": "vulpkanin_eyes_s",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
             "name": "moth_eyes",
             "directions": 4,
             "delays": [

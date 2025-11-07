@@ -6,12 +6,12 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 36000 # 10 hours
+      time: 10h
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 144000 # 40 hours
+      time: 40h
     - !type:OverallPlaytimeRequirement
-      time: 360000 # 100 hours
+      time: 100h
     - !type:AgeRequirement
       requiredAge: 24
   weight: 10

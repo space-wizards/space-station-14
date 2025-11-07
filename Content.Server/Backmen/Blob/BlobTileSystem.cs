@@ -19,12 +19,12 @@ namespace Content.Server.Backmen.Blob;
 
 public sealed class BlobTileSystem : SharedBlobTileSystem
 {
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly BlobCoreSystem _blobCoreSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly BlobCoreSystem _blobCoreSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly EmpSystem _empSystem = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
 
     private EntityQuery<BlobCoreComponent> _blobCoreQuery;
@@ -43,7 +43,8 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
 
     private void OnTerminate(EntityUid uid, BlobTileComponent component, EntityTerminatingEvent args)
     {
-        if(component.Core == null || TerminatingOrDeleted(component.Core.Value) || !_blobCoreQuery.TryComp(component.Core.Value, out var blobCoreComponent))
+        if (component.Core == null || TerminatingOrDeleted(component.Core.Value) ||
+            !_blobCoreQuery.TryComp(component.Core.Value, out var blobCoreComponent))
             return;
         blobCoreComponent.BlobTiles.Remove(uid);
     }
@@ -53,9 +54,7 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
         if (args.Used == null || MetaData(args.Used.Value).EntityPrototype?.ID != "GrenadeFlashBang")
             return;
         if (component.BlobTileType == BlobTileType.Normal)
-        {
             _damageableSystem.TryChangeDamage(uid, component.FlashDamage);
-        }
     }
 
     private void OnDestruction(EntityUid uid, BlobTileComponent component, DestructionEventArgs args)
@@ -64,18 +63,17 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
             return;
 
         if (blobCoreComponent.CurrentChem == BlobChemType.ElectromagneticWeb)
-        {
-            _empSystem.EmpPulse(_transform.GetMapCoordinates(uid), 3f, 50f, 3f);
-        }
+            _empSystem.EmpPulse(_transform.GetMapCoordinates(uid), 3f, 50f, TimeSpan.FromSeconds(3));
     }
 
-    protected override  void TryRemove(EntityUid target, EntityUid coreUid, BlobTileComponent tile, BlobCoreComponent core)
+    protected override void TryRemove(EntityUid target,
+        EntityUid coreUid,
+        BlobTileComponent tile,
+        BlobCoreComponent core)
     {
         var xform = Transform(target);
         if (!_blobCoreSystem.RemoveBlobTile(target, coreUid, core))
-        {
             return;
-        }
 
         FixedPoint2 returnCost = 0;
 
@@ -125,13 +123,13 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
                     blobCoreComponent.Observer.Value,
                     PopupType.Large);
             }
+
             _blobCoreSystem.ChangeBlobPoint(coreUid, returnCost, core);
         }
     }
 
     private void OnPulsed(EntityUid uid, BlobTileComponent component, BlobTileGetPulseEvent args)
     {
-
         if (!TryComp<BlobTileComponent>(uid, out var blobTileComponent) || blobTileComponent.Core == null ||
             !_blobCoreQuery.TryComp(blobTileComponent.Core.Value, out var blobCoreComponent))
             return;
@@ -143,12 +141,11 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
             {
                 healCore.DamageDict.Add(keyValuePair.Key, keyValuePair.Value * 5);
             }
+
             _damageableSystem.TryChangeDamage(uid, healCore);
         }
         else
-        {
             _damageableSystem.TryChangeDamage(uid, component.HealthOfPulse);
-        }
 
         if (!args.Handled)
             return;
@@ -156,9 +153,7 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
         var xform = Transform(uid);
 
         if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
-        {
             return;
-        }
 
         var mobTile = _mapSystem.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
 
@@ -167,22 +162,22 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
             mobTile.GridIndices.Offset(Direction.East),
             mobTile.GridIndices.Offset(Direction.West),
             mobTile.GridIndices.Offset(Direction.North),
-            mobTile.GridIndices.Offset(Direction.South)
+            mobTile.GridIndices.Offset(Direction.South),
         };
 
         var localPos = xform.Coordinates.Position;
 
         var radius = 1.0f;
 
-        var innerTiles = _mapSystem.GetLocalTilesIntersecting(xform.GridUid.Value, grid,
-            new Box2(localPos + new Vector2(-radius, -radius), localPos + new Vector2(radius, radius))).ToArray();
+        var innerTiles = _mapSystem.GetLocalTilesIntersecting(xform.GridUid.Value,
+                grid,
+                new Box2(localPos + new Vector2(-radius, -radius), localPos + new Vector2(radius, radius)))
+            .ToArray();
 
         foreach (var innerTile in innerTiles)
         {
             if (!mobAdjacentTiles.Contains(innerTile.GridIndices))
-            {
                 continue;
-            }
 
             foreach (var ent in _mapSystem.GetAnchoredEntities(xform.GridUid.Value, grid, innerTile.GridIndices))
             {
@@ -193,6 +188,7 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
                 args.Handled = true;
                 return;
             }
+
             var spawn = true;
             foreach (var ent in _mapSystem.GetAnchoredEntities(xform.GridUid.Value, grid, innerTile.GridIndices))
             {
@@ -217,7 +213,11 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
         }
     }
 
-    protected override void TryUpgrade(EntityUid target, EntityUid user, EntityUid coreUid, BlobTileComponent tile, BlobCoreComponent core)
+    protected override void TryUpgrade(EntityUid target,
+        EntityUid user,
+        EntityUid coreUid,
+        BlobTileComponent tile,
+        BlobCoreComponent core)
     {
         var xform = Transform(target);
         if (tile.BlobTileType == BlobTileType.Normal)

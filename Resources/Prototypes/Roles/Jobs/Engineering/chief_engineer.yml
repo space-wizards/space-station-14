@@ -6,15 +6,15 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician
-      time: 21600 #6 hrs
+      time: 6h
     - !type:RoleTimeRequirement
       role: JobStationEngineer
-      time: 21600 #6 hrs
+      time: 6h
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000 #10 hrs
+      time: 10h
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs
+      time: 40h
     - !type:AgeRequirement
       requiredAge: 24
   weight: 10
@@ -48,7 +48,7 @@
   id: ChiefEngineerGear
   equipment:
     id: CEPDA
-    eyes: ClothingEyesGlassesMesonCE # DS14 chief engineer meson glasses
+    eyes: ClothingEyesGlassesMeson
     ears: ClothingHeadsetCE
     belt: ClothingBeltUtilityEngineering
     socks: ClothingUnderwearSocksChiefEngineer

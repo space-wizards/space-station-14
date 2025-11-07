@@ -371,20 +371,6 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
-  id: MagazineBoxAntiMateriel
-  result: MagazineBoxAntiMateriel
-  materials:
-    Steel: 1200
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
-  id: MagazinePistolCaselessRifle
-  result: MagazinePistolCaselessRifle
-  materials:
-    Steel: 300
-
-- type: latheRecipe
-  parent: BaseAmmoRecipe
   id: MagazineTommyGun
   result: MagazineTommyGun
   materials:

@@ -1,0 +1,17 @@
+ent-BoxFolderTaipanGoals = папка с целью ННКСС "Тайпан"
+    .suffix = Тайпан, Случайная цель
+    .desc = { ent-BaseItem.desc }
+ent-PaperTaipanGoalMonkeys = { ent-PaperPrintedSyndicate }
+    .desc = { ent-PaperPrintedSyndicate.desc }
+ent-PaperTaipanGoalGrenades = { ent-PaperPrintedSyndicate }
+    .desc = { ent-PaperPrintedSyndicate.desc }
+ent-PaperTaipanGoalVirus = { ent-PaperPrintedSyndicate }
+    .desc = { ent-PaperPrintedSyndicate.desc }
+ent-PaperTaipanGoalExplosives = { ent-PaperPrintedSyndicate }
+    .desc = { ent-PaperPrintedSyndicate.desc }
+ent-PaperTaipanGoalSpiders = { ent-PaperPrintedSyndicate }
+    .desc = { ent-PaperPrintedSyndicate.desc }
+ent-PaperTaipanGoalZombies = { ent-PaperPrintedSyndicate }
+    .desc = { ent-PaperPrintedSyndicate.desc }
+ent-PaperTaipanGoalNecromorfs = { ent-PaperPrintedSyndicate }
+    .desc = { ent-PaperPrintedSyndicate.desc }

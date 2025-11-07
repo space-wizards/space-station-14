@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.DeadSpace.Interfaces.Server;
+using Content.DeadSpace.Interfaces.Server; // DS14-sponsors
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
@@ -56,7 +56,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
         SubscribeLocalEvent<StationJobsGetCandidatesEvent>(OnStationJobsGetCandidates);
-        SubscribeLocalEvent<IsJobAllowedEvent>(OnIsJobAllowed);
+        SubscribeLocalEvent<IsRoleAllowedEvent>(OnIsRoleAllowed);
         SubscribeLocalEvent<GetDisallowedJobsEvent>(OnGetDisallowedJobs);
         _adminManager.OnPermsChanged += AdminPermsChanged;
 
@@ -90,6 +90,9 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         trackers.UnionWith(GetTimedRoles(player));
     }
 
+    /// <summary>
+    /// Returns true if the player has an attached mob and it is alive (even if in critical).
+    /// </summary>
     private bool IsPlayerAlive(ICommonSession session)
     {
         var attached = session.AttachedEntity;
@@ -180,9 +183,9 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         RemoveDisallowedJobs(ev.Player, ev.Jobs);
     }
 
-    private void OnIsJobAllowed(ref IsJobAllowedEvent ev)
+    private void OnIsRoleAllowed(ref IsRoleAllowedEvent ev)
     {
-        if (!IsAllowed(ev.Player, ev.JobId))
+        if (!IsAllowed(ev.Player, ev.Jobs) || !IsAllowed(ev.Player, ev.Antags))
             ev.Cancelled = true;
     }
 
@@ -191,7 +194,53 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         ev.Jobs.UnionWith(GetDisallowedJobs(ev.Player));
     }
 
-    public bool IsAllowed(ICommonSession player, string role)
+    /// <summary>
+    /// Checks if the player meets role requirements.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="jobs">A list of role prototype IDs</param>
+    /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
+    public bool IsAllowed(ICommonSession player, List<ProtoId<JobPrototype>>? jobs)
+    {
+        if (jobs is null)
+            return true;
+
+        foreach (var job in jobs)
+        {
+            if (!IsAllowed(player, job))
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if the player meets role requirements.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="antags">A list of role prototype IDs</param>
+    /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
+    public bool IsAllowed(ICommonSession player, List<ProtoId<AntagPrototype>>? antags)
+    {
+        if (antags is null)
+            return true;
+
+        foreach (var antag in antags)
+        {
+            if (!IsAllowed(player, antag))
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if the player meets role requirements.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="job">A list of role prototype IDs</param>
+    /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
+    public bool IsAllowed(ICommonSession player, ProtoId<JobPrototype> job)
     {
         // DS14-sponsors-start
         if (_sponsorsManager?.TryGetInfo(player.UserId, out var sponsorInfo) == true && sponsorInfo != null)
@@ -199,13 +248,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             if (sponsorInfo.AllowJob)
                 return true;
 
-            if (_prototypes.TryIndex<JobPrototype>(role, out var jobb) && sponsorInfo.AllowedMarkings.Contains(jobb.ID))
+            if (_prototypes.TryIndex<JobPrototype>(job, out var jobb) && sponsorInfo.AllowedMarkings.Contains(jobb.ID))
                 return true;
         }
         // DS14-sponsors-end
 
-        if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
-            !_cfg.GetCVar(CCVars.GameRoleTimers))
+        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
         if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
@@ -214,7 +262,43 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             playTimes = new Dictionary<string, TimeSpan>();
         }
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
+        var requirements = _roles.GetRoleRequirements(job);
+        return JobRequirements.TryRequirementsMet(
+            requirements,
+            playTimes,
+            out _,
+            EntityManager,
+            _prototypes,
+            (HumanoidCharacterProfile?)
+            _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
+    }
+
+    /// <summary>
+    /// Checks if the player meets role requirements.
+    /// </summary>
+    /// <param name="player">The player.</param>
+    /// <param name="antag">A list of role prototype IDs</param>
+    /// <returns>Returns true if all requirements were met or there were no requirements.</returns>
+    public bool IsAllowed(ICommonSession player, ProtoId<AntagPrototype> antag)
+    {
+        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+            return true;
+
+        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
+        {
+            Log.Error($"Unable to check playtimes {Environment.StackTrace}");
+            playTimes = new Dictionary<string, TimeSpan>();
+        }
+
+        var requirements = _roles.GetRoleRequirements(antag);
+        return JobRequirements.TryRequirementsMet(
+            requirements,
+            playTimes,
+            out _,
+            EntityManager,
+            _prototypes,
+            (HumanoidCharacterProfile?)
+            _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
     }
 
     public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)
@@ -265,11 +349,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         for (var i = 0; i < jobs.Count; i++)
         {
-            if (_prototypes.TryIndex(jobs[i], out var job)
+            if (_prototypes.Resolve(jobs[i], out var job)
                 && JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(userId).SelectedCharacter))
             {
                 continue;
             }
+
             // DS14-sponsors-start
             if (_sponsorsManager != null)
             {

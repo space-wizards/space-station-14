@@ -10,3 +10,6 @@ hand-labeler-has-label = На объекте имеется этикетка "{ 
 # Verb text
 hand-labeler-remove-label-text = Удалить этикетку
 hand-labeler-add-label-text = Наклеить этикетку
+# Shown when the labeler is examined
+hand-labeler-examine-blank = На объекте имеется пустая этикетка.
+hand-labeler-examine-label-text = На объекте имеется этикетка "{ $label }"

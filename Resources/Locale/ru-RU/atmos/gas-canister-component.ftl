@@ -1,6 +1,5 @@
 ## UI
 
-
 # Bound Interface
 
 gas-canister-bound-user-interface-title = Газовый баллон

@@ -2,8 +2,9 @@ analysis-console-menu-title = аналитическая консоль
 analysis-console-server-list-button = Сервер
 analysis-console-extract-button = Извлечь О.И.
 analysis-console-info-no-scanner = Анализатор не подключён! Пожалуйста, подключите его с помощью мультитула.
-analysis-console-info-no-artifact = Артефакт не найден!
-        Поместите артефакт на платформу  для получения данных о узлах.
+analysis-console-info-no-artifact =
+    Артефакт не найден!
+    Поместите артефакт на платформу  для получения данных о узлах.
 analysis-console-info-ready = Все системы запущены. Сканирование готово.
 analysis-console-no-node = Выберите узел для просмотра
 analysis-console-info-id = [font="Monospace" size=11]ID:[/font]

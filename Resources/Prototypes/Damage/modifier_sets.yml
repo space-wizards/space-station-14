@@ -118,6 +118,16 @@
     Heat: 5
     Structural: 5
 
+# Glass without the flat reductions
+- type: damageModifierSet
+  id: FlimsyGlass
+  coefficients:
+    Blunt: 1.2
+    Slash: 0.5
+    Piercing: 1.0
+    Heat: 0.8
+    Shock: 0 #glass is an insulator!
+
 - type: damageModifierSet
   id: RGlass
   coefficients:
@@ -149,7 +159,7 @@
   id: Card
   coefficients:
     Slash: 2.0
-    Piercing: 0.1 # Holes easily poked through, but do little to structural integrity 
+    Piercing: 0.1 # Holes easily poked through, but do little to structural integrity
     Heat: 3.0
 
 - type: damageModifierSet
@@ -323,12 +333,15 @@
   coefficients:
     Holy: 2
 
+# Vulps get more heat damage because fur
+- type: damageModifierSet
+  id: Vulpkanin
+  coefficients:
+    Heat: 1.15
+    Cold: 0.85
+
 - type: damageModifierSet
   id: Fur
   coefficients:
-    Blunt: 1
-    Piercing: 1
-    Slash: 1
     Cold: 0.5
     Heat: 1.5
-    Poison: 1

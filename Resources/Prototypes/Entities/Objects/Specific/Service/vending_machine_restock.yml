@@ -282,6 +282,8 @@
     canRestock:
     - NanoMedInventory
     - NanoMedPlusInventory
+    - NanoMedCivilianInventory
+    - NanoMedCivilianWallInventory
   - type: Sprite
     layers:
     - state: base

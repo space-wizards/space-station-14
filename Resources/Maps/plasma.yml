@@ -86644,37 +86644,21 @@ entities:
     - type: Transform
       pos: -45.5,-61.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
-      solution: pool
   - uid: 13273
     components:
     - type: Transform
       pos: -44.5,-61.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
-      solution: pool
   - uid: 13274
     components:
     - type: Transform
       pos: -46.5,-61.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
-      solution: pool
   - uid: 13275
     components:
     - type: Transform
       pos: -44.5,-60.5
       parent: 2
-    - type: Drink
-      useSound: !type:SoundPathSpecifier
-        path: /Audio/Items/drink.ogg
-      solution: pool
   - uid: 13276
     components:
     - type: Transform
@@ -137410,10 +137394,10 @@ entities:
         stampedColor: '#006600FF'
         stampedName: stamp-component-stamped-name-centcom
       content: >-
-        Поздравляем, командование NanoTrasen решило обновить минимальный охранный шаттл службы безопасности станции NT-Raven-GE до версии 09. 
+        Поздравляем, командование NanoTrasen решило обновить минимальный охранный шаттл службы безопасности станции NT-Raven-GE до версии 09.
 
 
-        Добавлены экстерьерные осветительные приборы на внешней стороне шаттла, чтобы космический мрак космоса не мешал служебным обязанностям пилота службы безопасности станции. 
+        Добавлены экстерьерные осветительные приборы на внешней стороне шаттла, чтобы космический мрак космоса не мешал служебным обязанностям пилота службы безопасности станции.
 
 
         Так же мы учли недовольства по поводу кнопок, добавлена кнопка переключения гермозатвора оружия отдельно от остальных гермозатворов фонаря шаттла.

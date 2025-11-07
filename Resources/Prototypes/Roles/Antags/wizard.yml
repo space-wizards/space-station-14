@@ -13,7 +13,7 @@
   objective: roles-antag-wizard-objective # TODO: maybe give random objs and stationary ones from AntagObjectives and AntagRandomObjectives
   requirements: # I hate time locked roles but this should be enough time for someone to be acclimated
   - !type:OverallPlaytimeRequirement
-    time: 216000 # 60 hours
+    time: 60h
   # guides: [ Wizard ] # DS14: disabled due to lack of localization
 
 # See wizard_startinggear for wiz start gear options

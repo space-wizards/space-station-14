@@ -5,7 +5,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Action
-    icon: Interface/Actions/actions_mecha.rsi/mech_overload_off.png
+    icon: { sprite: Interface/Actions/actions_mecha.rsi, state: mech_overload_off }
     priority: -20
     useDelay: 10
   - type: InstantAction

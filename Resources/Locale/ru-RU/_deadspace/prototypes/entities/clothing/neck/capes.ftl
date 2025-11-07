@@ -12,3 +12,5 @@ ent-ClothingNeckCapeLua = плащ Луа
     .desc = Пахнет сладкой фыркалкой.
 ent-ClothingNeckCapeFlame = пламенный плащ
     .desc = На этом плаще изображено плазменное пламя.
+ent-ClothingNeckCapeBlueShield = плащ офицера "Синий Щит"
+    .desc = Данный плащ соткан из самой качественной ткани для офицера "Синий Щит".

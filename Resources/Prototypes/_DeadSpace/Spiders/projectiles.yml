@@ -16,9 +16,7 @@
         - ReagentId: SpiderWebExtract
           Quantity: 5
   - type: Injector
-    minTransferAmount: 5
-    maxTransferAmount: 5
-    transferAmount: 5
+    currentTransferAmount: 5
   - type: EmbeddableProjectile
   - type: SolutionInjectOnEmbed
     transferAmount: 5

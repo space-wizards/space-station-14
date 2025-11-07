@@ -4,6 +4,10 @@ wire-name-ai-vision-light = ИИЗ
 wire-name-ai-act-light = ИИД
 station-ai-takeover = ИИ захват
 station-ai-eye-name = око ИИ — { $name }
+station-ai-has-no-power-for-upload = Загрузка не удалась — ядро ИИ обесточено.
+station-ai-is-too-damaged-for-upload = Загрузка не удалась — ядро ИИ нужно отремонтировать.
+station-ai-core-losing-power = Ваше ядро ИИ питается от резервной батареи.
+station-ai-core-critical-power = Ваше ядро ИИ имеет критически низкий уровень энергии. Возобновите внешнее питание, иначе может произойти серьёзное повреждение данных!
 # Radial actions
 ai-open = Открыть действия
 ai-close = Закрыть действия
