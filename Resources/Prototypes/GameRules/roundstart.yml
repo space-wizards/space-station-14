@@ -90,7 +90,7 @@
 
 - type: entity
   parent: BaseGameRule
-  id: SolitarySpawning
+  id: SoloSpawning
   components:
   - type: RerouteSpawningRule
     map: Opening

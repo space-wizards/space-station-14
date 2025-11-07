@@ -207,7 +207,7 @@
   description: tutorial-description
   showInVote: false
   rules:
-  - SolitarySpawning
+  - SoloSpawning
 
 - type: gamePreset
   id: Wizard

@@ -19,6 +19,7 @@ namespace Content.Server.Administration.Systems;
 public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleComponent>
 {
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -59,7 +60,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
             switch (Grouping)
             {
                 case RerouteType.Solo:
-                    if (!CreateSolitaryStation(args, reroute, session, out var stationTarget))
+                    if (!CreateSoloStation(args, reroute, session, out var stationTarget))
                         continue;
                     SpawnPlayer(args, stationTarget.Value);
                     // _outfitSystem.SetOutfit(mob, dm.Gear); //TODO:ERRANT gear??
@@ -79,7 +80,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     /// <param name="reroute">The reroute component for the event</param>
     /// <param name="session">The player session</param>
     /// <param name="stationTarget">The station entity (nullspace) that is being created for this player</param>
-    private bool CreateSolitaryStation(
+    private bool CreateSoloStation(
         PlayerBeforeSpawnEvent args,
         RerouteSpawningRuleComponent reroute,
         ICommonSession session,
@@ -94,11 +95,16 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
             return false;
         }
 
-        // Create the new map
-        var newMap = GameTicker.LoadGameMap(map, out var mapId, stationName: args.Profile.Name);
+        // Create the new map and station, and assign them identifiable names
+        var stationName = Loc.GetString("solo-station-name", ("character", args.Profile.Name));
+        var mapName = Loc.GetString("solo-map-name", ("character", args.Profile.Name));
+        var query = GameTicker.LoadGameMap(map, out var mapId, stationName: stationName);
+        var newMap = query.First();
+        _meta.SetEntityName(Transform(newMap).ParentUid, mapName);
+
         _map.InitializeMap(mapId);
 
-        if (!TryComp<StationMemberComponent>(newMap.First(), out var member))
+        if (!TryComp<StationMemberComponent>(newMap, out var member))
         {
             Log.Error($"Reroute failed for {session} - no target station");
             return false;
@@ -118,7 +124,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     /// <param name="station">The station entity (nullspace)</param>
     private void SpawnPlayer(PlayerBeforeSpawnEvent args, EntityUid station)
     {
-        //TODO This needs a full review, it might be missing modern stuff/steps. Ideally it should call an existing spawningsystem?
+        //TODO:ERRANT This needs a full review, it might be missing modern stuff/steps. Ideally it should call an existing spawningsystem?
 
         var newMind = _mind.CreateMind(args.Player.UserId, args.Profile.Name);
         _mind.SetUserId(newMind, args.Player.UserId);
