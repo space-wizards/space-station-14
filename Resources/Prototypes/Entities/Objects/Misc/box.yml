@@ -17,14 +17,6 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-  - type: Construction
-    graph: BoxCardboard
-    node: boxcardboard
-    containers:
-      - storagebase
-  - type: PhysicalComposition
-    materialComposition:
-      Cardboard: 100
   - type: StaticPrice
     price: 10
 
@@ -40,21 +32,14 @@
   - type: Storage
     grid:
     - 0,0,1,1
-  - type: Construction
-    graph: BoxCardboardSmall # Half the material cost of the "regular" box
-    node: boxcardboardsmall
-    containers:
-      - storagebase
-  - type: PhysicalComposition # Half of the "regular" box
-    materialComposition:
-      Cardboard: 50
   - type: StaticPrice # Half of the "regular" box
     price: 5
 
 - type: entity
-  name: circuit tote
-  id: ToteBase
   parent: BoxBase
+  id: ToteBase
+  name: circuit tote
+  suffix: Empty
   description: A large tote for carrying circuit boards.
   components:
   - type: Sprite

@@ -4,14 +4,14 @@
   name: cardboard box
   description: A cardboard box for storing things.
   components:
-  - type: Item
-    size: Large
-    shape:
-    - 0,0,2,2
-  - type: Storage
-    maxItemSize: Small
-    grid:
-    - 0,0,2,2
+  - type: Construction
+    graph: BoxCardboard
+    node: boxcardboard
+    containers:
+      - storagebase
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 100
   - type: Sprite
     state: box
   - type: Tag
@@ -24,13 +24,14 @@
   name: small cardboard box
   description: A small cardboard box for storing things.
   components:
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,1
-  - type: Storage
-    grid:
-    - 0,0,1,1
+  - type: Construction
+    graph: BoxCardboardSmall # Half the material cost of the "regular" cardboardbox
+    node: boxcardboardsmall
+    containers:
+      - storagebase
+  - type: PhysicalComposition # Half of the "regular" cardboard box
+    materialComposition:
+      Cardboard: 50
   - type: Sprite
     state: box
   - type: Tag

@@ -1,9 +1,10 @@
 - type: entity
   parent: ToteBase
   id: BoxCaptainCircuitboards
-  name: captain's circuit tote
-  description: A tote containing the captain's circuit boards.
+  suffix: Captain
   components:
+  - type: Label
+    currentLabel: job-name-captain
   - type: StorageFill
     contents:
       - id: CommsComputerCircuitboard
@@ -12,9 +13,10 @@
 - type: entity
   parent: ToteBase
   id: BoxCECircuitboards
-  name: chief engineer's circuit tote
-  description: A tote containing the chief engineer's circuit boards.
+  suffix: CE
   components:
+  - type: Label
+    currentLabel: job-name-ce
   - type: StorageFill
     contents:
       - id: CargoRequestEngineeringComputerCircuitboard
@@ -26,9 +28,10 @@
 - type: entity
   parent: ToteBase
   id: BoxCMOCircuitboards
-  name: chief medical officer's circuit tote
-  description: A tote containing the chief medical officer's circuit boards.
+  suffix: CMO
   components:
+  - type: Label
+    currentLabel: job-name-cmo
   - type: StorageFill
     contents:
       - id: MedicalTechFabCircuitboard
@@ -37,9 +40,10 @@
 - type: entity
   parent: ToteBase
   id: BoxHoPCircuitboards
-  name: head of personnel's circuit tote
-  description: A tote containing the head of personnel's circuit boards.
+  suffix: HoP
   components:
+  - type: Label
+    currentLabel: job-name-hop
   - type: StorageFill
     contents:
       - id: IDComputerCircuitboard
@@ -49,9 +53,10 @@
 - type: entity
   parent: BoxStamps
   id: BoxHoPStamps
-  name: head of personnel's stamp box
-  description: A small box containing the head of personnel's stamps.
+  suffix: HoP
   components:
+  - type: Label
+    currentLabel: job-name-hop
   - type: StorageFill
     contents:
       - id: RubberStampApproved
@@ -61,9 +66,10 @@
 - type: entity
   parent: ToteBase
   id: BoxHoSCircuitboards
-  name: head of security's circuit tote
-  description: A tote containing the head of security's circuit boards.
+  suffix: HoS
   components:
+  - type: Label
+    currentLabel: job-name-hos
   - type: StorageFill
     contents:
       - id: SecurityTechFabCircuitboard
@@ -72,9 +78,10 @@
 - type: entity
   parent: ToteBase
   id: BoxQMCircuitboards
-  name: quartermaster's circuit tote
-  description: A tote containing the quartermaster's circuit boards.
+  suffix: QM
   components:
+  - type: Label
+    currentLabel: job-name-qm
   - type: StorageFill
     contents:
       - id: CargoBountyComputerCircuitboard
@@ -88,9 +95,10 @@
 - type: entity
   parent: BoxStamps
   id: BoxQMStamps
-  name: quartermaster's stamp box
-  description: A small box containing the quartermaster's stamps.
+  suffix: QM
   components:
+  - type: Label
+    currentLabel: job-name-qm
   - type: StorageFill
     contents:
       - id: RubberStampApproved
@@ -100,9 +108,10 @@
 - type: entity
   parent: ToteBase
   id: BoxRDCircuitboards
-  name: research director's circuit tote
-  description: A tote containing the research director's circuit boards.
+  suffix: RD
   components:
+  - type: Label
+    currentLabel: job-name-rd
   - type: StorageFill
     contents:
       - id: CircuitImprinterMachineCircuitboard
