@@ -22,6 +22,7 @@
   parent: BoxBaseSmall
   id: BoxCardboardSmall
   name: small cardboard box
+  description: A small cardboard box for storing things.
   components:
   - type: Item
     size: Small
@@ -182,7 +183,7 @@
   parent: BoxCardboardSmall
   id: BoxStamps
   name: stamp box
-  description: A box containing stamps.
+  description: A small box containing stamps.
   components:
   - type: Sprite
     layers:
