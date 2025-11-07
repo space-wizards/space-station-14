@@ -362,5 +362,4 @@ reagent-name-bacchus-blessing = bacchus's blessing
 reagent-desc-bacchus-blessing = You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?
 
 reagent-name-kobold-juice = kobold juice
-# Placeholder description!
-reagent-desc-kobold-juice = This is the placeholder description for kobold juice.
+reagent-desc-kobold-juice = Best served on the rocks. On literal rocks, if you want to be especially authentic.

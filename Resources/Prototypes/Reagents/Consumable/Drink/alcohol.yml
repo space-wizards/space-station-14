@@ -2561,7 +2561,6 @@
   name: reagent-name-kobold-juice
   parent: BaseAlcohol
   desc: reagent-desc-kobold-juice
-  # PhysicalDesc isn't set in stone, waiting on feedback from Flash himself.
   physicalDesc: reagent-physical-desc-citric
   flavor: koboldjuice
   # Color likely needs some in-game fine-tuning, I just color-picked the IRL image.
