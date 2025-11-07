@@ -5,6 +5,9 @@
   playTimeTracker: JobHeadOfPersonnel
   requirements:
     - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 2.5h
+    - !type:DepartmentTimeRequirement
       department: Engineering
       time: 2.5h
     - !type:DepartmentTimeRequirement
