@@ -3,8 +3,11 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Gravity;
 
+/// <summary>
+/// Gives an entity a floating animation when weightless.
+/// Requires <see cref="GravityAffectedComponent"/>
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedFloatingVisualizerSystem))]
 public sealed partial class FloatingVisualsComponent : Component
 {
     /// <summary>
@@ -19,8 +22,14 @@ public sealed partial class FloatingVisualsComponent : Component
     [DataField, AutoNetworkedField]
     public Vector2 Offset = new(0, 0.2f);
 
-    [DataField, AutoNetworkedField]
-    public bool CanFloat;
+    /// <summary>
+    /// Is this entity currently floating?
+    /// </summary>
+    [ViewVariables]
+    public bool IsFloating;
 
-    public readonly string AnimationKey = "gravity";
+    /// <summary>
+    /// The key the animation is identified with.
+    /// </summary>
+    public const string AnimationKey = "gravity";
 }

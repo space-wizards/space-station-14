@@ -33,7 +33,7 @@ public sealed class ItemToggleSystem : EntitySystem
         _query = GetEntityQuery<ItemToggleComponent>();
 
         SubscribeLocalEvent<ItemToggleComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ItemToggleComponent, MapInitEvent>(OnMapInit);
+        //SubscribeLocalEvent<ItemToggleComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ItemToggleComponent, ItemUnwieldedEvent>(TurnOffOnUnwielded);
         SubscribeLocalEvent<ItemToggleComponent, ItemWieldedEvent>(TurnOnOnWielded);
         SubscribeLocalEvent<ItemToggleComponent, UseInHandEvent>(OnUseInHand);
@@ -48,6 +48,11 @@ public sealed class ItemToggleSystem : EntitySystem
     private void OnStartup(Entity<ItemToggleComponent> ent, ref ComponentStartup args)
     {
         UpdateVisuals(ent);
+        if (!ent.Comp.Activated)
+            return;
+
+        var ev = new ItemToggledEvent(Predicted: ent.Comp.Predictable, Activated: ent.Comp.Activated, User: null);
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void OnMapInit(Entity<ItemToggleComponent> ent, ref MapInitEvent args)
