@@ -175,7 +175,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         // Prioritize transferring non-evaporatives if absorbent has any
         var contaminants = SolutionContainer.SplitSolutionWithout(absorbentSoln,
             transferAmount,
-            Puddle.GetAbsorbentReagentsProtoId(absorbentSoln.Comp.Solution));
+            Puddle.GetAbsorbentReagents(absorbentSoln.Comp.Solution));
 
         SolutionContainer.TryAddSolution(refillableSoln,
             contaminants.Volume > 0
@@ -196,7 +196,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
     {
         var contaminantsFromAbsorbent = SolutionContainer.SplitSolutionWithout(absorbentSoln,
             absorbEnt.Comp.PickupAmount,
-            Puddle.GetAbsorbentReagentsProtoId(absorbentSoln.Comp.Solution));
+            Puddle.GetAbsorbentReagents(absorbentSoln.Comp.Solution));
 
         var absorbentSolution = absorbentSoln.Comp.Solution;
         if (contaminantsFromAbsorbent.Volume == FixedPoint2.Zero
@@ -308,7 +308,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
             var transferAmount = available > transferMax ? transferMax : available;
 
             puddleSplit =
-                puddleSolution.SplitSolutionWithout(transferAmount, Puddle.GetAbsorbentReagentsProtoId(puddleSolution));
+                puddleSolution.SplitSolutionWithout(transferAmount, Puddle.GetAbsorbentReagents(puddleSolution));
             var absorberSplit =
                 absorberSolution.SplitSolutionWithOnly(puddleSplit.Volume,
                     Puddle.GetAbsorbentReagents(absorberSolution));
@@ -326,7 +326,7 @@ public abstract class SharedAbsorbentSystem : EntitySystem
         else
         {
             // Note: arguably shouldn't this get all solutions?
-            puddleSplit = puddleSolution.SplitSolutionWithout(absorber.PickupAmount, Puddle.GetAbsorbentReagentsProtoId(puddleSolution));
+            puddleSplit = puddleSolution.SplitSolutionWithout(absorber.PickupAmount, Puddle.GetAbsorbentReagents(puddleSolution));
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {

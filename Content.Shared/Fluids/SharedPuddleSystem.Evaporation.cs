@@ -80,9 +80,9 @@ public abstract partial class SharedPuddleSystem
     }
 
 
-    public string[] GetEvaporatingReagents(Solution solution)
+    public ProtoId<ReagentPrototype>[] GetEvaporatingReagents(Solution solution)
     {
-        List<string> evaporatingReagents = [];
+        List<ProtoId<ReagentPrototype>> evaporatingReagents = [];
         foreach (var solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
         {
             if (solProto.EvaporationSpeed > FixedPoint2.Zero)
@@ -91,22 +91,7 @@ public abstract partial class SharedPuddleSystem
         return evaporatingReagents.ToArray();
     }
 
-    public string[] GetAbsorbentReagents(Solution solution)
-    {
-        return GetAbsorbentReagentsString(solution);
-    }
-
-    public string[] GetAbsorbentReagentsString(Solution solution)
-    {
-        List<string> absorbentReagents = [];
-        foreach (var solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
-        {
-            if (solProto.Absorbent)
-                absorbentReagents.Add(solProto.ID);
-        }
-        return absorbentReagents.ToArray();
-    }
-    public ProtoId<ReagentPrototype>[] GetAbsorbentReagentsProtoId(Solution solution)
+    public ProtoId<ReagentPrototype>[] GetAbsorbentReagents(Solution solution)
     {
         var absorbentReagents = new List<ProtoId<ReagentPrototype>>();
         foreach (ReagentPrototype solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
@@ -126,9 +111,9 @@ public abstract partial class SharedPuddleSystem
     /// Gets a mapping of evaporating speed of the reagents within a solution.
     /// The speed at which a solution evaporates is the average of the speed of all evaporating reagents in it.
     /// </summary>
-    public Dictionary<string, FixedPoint2> GetEvaporationSpeeds(Solution solution)
+    public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> GetEvaporationSpeeds(Solution solution)
     {
-        Dictionary<string, FixedPoint2> evaporatingSpeeds = [];
+        Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> evaporatingSpeeds = [];
         foreach (var solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
         {
             if (solProto.EvaporationSpeed > FixedPoint2.Zero)
