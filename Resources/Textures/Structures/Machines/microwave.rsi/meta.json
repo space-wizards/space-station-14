@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from Skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/ed4fbf117973dafea6e654bee7efdc2316bc2d8d",
+    "copyright": "Taken from Skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/ed4fbf117973dafea6e654bee7efdc2316bc2d8d, inhand edited by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
     "states": [
         {
             "name": "mw"
@@ -13,7 +13,7 @@
         },
         {
             "name": "mw_unlit"
-        },		
+        },
         {
             "name": "mw0"
         },
@@ -72,6 +72,14 @@
         },
        {
            "name": "mw-o"
-       }
+       },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        }
     ]
 }
