@@ -1,7 +1,7 @@
 - type: entity
-  id: BoxBase
-  parent: BaseStorageItem
   abstract: true
+  parent: BaseStorageItem
+  id: BoxBase
   components:
   - type: Sprite
     sprite: Objects/Storage/boxes.rsi
@@ -27,6 +27,22 @@
       Cardboard: 100
   - type: StaticPrice
     price: 10
+
+- type: entity
+  abstract: true
+  parent: BoxCardboard
+  id: BoxCardboardSmall
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: Storage
+    grid:
+    - 0,0,1,1
+    whitelist:
+      components:
+      - Stamp
 
 - type: entity
   name: circuit tote

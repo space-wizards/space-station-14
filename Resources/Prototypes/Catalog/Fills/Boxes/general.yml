@@ -161,25 +161,19 @@
 
 - type: entity
   abstract: true # Abstract because this prototype doesn't have a StorageFill set; create a child prototype with the appropriate stamps! (Baking "default" stamps into this parent seems bad for futureproofing.)
-  parent: BoxCardboard
+  parent: BoxCardboardSmall
   id: BoxStamps
   name: stamp box
   description: A box containing stamps.
   components:
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,1
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    whitelist:
-      components:
-      - Stamp
   - type: Sprite
     layers:
       - state: box
       - state: stamp
+  - type: Storage
+    whitelist:
+      components:
+      - Stamp
 
 - type: entity
   name: meson box
