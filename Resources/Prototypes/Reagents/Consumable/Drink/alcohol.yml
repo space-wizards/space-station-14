@@ -2563,15 +2563,13 @@
   desc: reagent-desc-kobold-juice
   physicalDesc: reagent-physical-desc-citric
   flavor: koboldjuice
-  # Color likely needs some in-game fine-tuning, I just color-picked the IRL image.
   color: "#6DAC75"
-  # Commenting out metamorphic glass stuff for now, since I need actual sprites first
-  # metamorphicSprite:
-  #   sprite: Objects/Consumable/Drinks/koboldjuice.rsi
-  #   state: icon_empty
-  # metamorphicMaxFillLevels: 4
-  # metamorphicFillBaseName: fill-
-  # metamorphicChangeColor: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/koboldjuice.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
