@@ -14,4 +14,4 @@
   id: EnergyShieldMessages
   values:
     prefix: comp-eshield-damaged-
-    count: 5
+    count: 4
