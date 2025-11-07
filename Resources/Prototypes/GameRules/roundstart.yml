@@ -1,6 +1,6 @@
 - type: entity
-  id: BaseGameRule
   abstract: true
+  id: BaseGameRule
   components:
   - type: GameRule
 
@@ -44,8 +44,8 @@
       prob: 0.3
 
 - type: entity
-  id: DeathMatch31
   parent: BaseGameRule
+  id: DeathMatch31
   components:
   - type: DeathMatchRule
     rewardSpawns:
@@ -73,20 +73,35 @@
     respawnDelay: 5
 
 - type: entity
-  id: InactivityTimeRestart
   parent: BaseGameRule
+  id: InactivityTimeRestart
   components:
   - type: InactivityRule
     inactivityMaxTime: 600
     roundEndDelay: 10
 
 - type: entity
-  id: MaxTimeRestart
   parent: BaseGameRule
+  id: MaxTimeRestart
   components:
   - type: MaxTimeRestartRule
     roundMaxTime: 300
     roundEndDelay: 10
+
+- type: entity
+  parent: BaseGameRule
+  id: SolitarySpawning
+  components:
+  - type: RerouteSpawningRule
+    map: Opening
+
+# Disable Observe
+
+# Funnel player into spawning as a default option when clicking Join, do not show UI
+
+# Disable deadchat and OOC? Although the player should never really be dead, so it probably wont matter
+
+# Disable ghosting on death/force respawn?
 
 - type: entity
   abstract: true

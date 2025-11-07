@@ -200,6 +200,16 @@
   - BasicRoundstartVariation
 
 - type: gamePreset
+  id: Tutorial
+  alias:
+  - tutorial
+  name: tutorial-title
+  description: tutorial-description
+  showInVote: false
+  rules:
+  - SolitarySpawning
+
+- type: gamePreset
   id: Wizard
   alias:
   - wizard
