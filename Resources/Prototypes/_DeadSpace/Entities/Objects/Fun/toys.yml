@@ -1000,6 +1000,71 @@
     pack: PlushieAmaliyaSpeech
 
 - type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilSAstro
+  name: плюшевая Астро
+  description: Кто нанял ЭТО в службу безопасности?
+  components:
+  - type: Sprite
+    state: plushie_astro
+  - type: TTS
+    voice: Kate
+  - type: SpeakOnTrigger
+    pack: PlushieAstroSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilDestin
+  name: плюшевый Дестин
+  description: Игрушка отображающая того самого тоталитариста. Тот кто не раз проводил сухой закон и от кого больше всех несёт алкоголем и абсурдом на станции. Властный и эгоцентричный тот капитан ,что изображён на игрушке, но почему то чем дольше вы с ним ходите тем больше он роднится с вами.
+  components:
+  - type: Sprite
+    state: plushie_destin
+  - type: TTS
+    voice: Noble
+  - type: SpeakOnTrigger
+    pack: PlushieDestinSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEgor
+  name: плюшевый Егор
+  description: Это Егор. Он пахнет жжёными изольками. Зачем вы его нюхаете?
+  components:
+  - type: Sprite
+    state: plushie_egor
+  - type: TTS
+    voice: Vor
+  - type: SpeakOnTrigger
+    pack: PlushieEgorSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilKim
+  name: плюшевая Ким
+  description: Плюшевая блондинистая аркана в униформе ведущего учёного, от неё веет выдержанным вином и свободой тех тоннелей, а на берете проблескивают капли вестина.
+  components:
+  - type: Sprite
+    state: plushie_kim
+  - type: TTS
+    voice: Samira
+  - type: SpeakOnTrigger
+    pack: PlushieKimSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieSilEmma
+  name: плюшевая Эмма
+  description: Плюшевая Вульпа одетая в гавайскую рубашку и сандали. Эта игрушка чистое воплощение лени. Игрушка пахнет ягодами и кажется она пропитана фрезоном.
+  components:
+  - type: Sprite
+    state: plushie_emma
+  - type: TTS
+    voice: Mei
+  - type: SpeakOnTrigger
+    pack: PlushieEmmaSpeech
+
+- type: entity
   parent: BasePlushie
   id: PlushieYosifAnita
   name: плюшевая Анита

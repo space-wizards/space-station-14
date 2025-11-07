@@ -269,6 +269,36 @@
     count: 3
 
 - type: localizedDataset
+  id: PlushieAstroSpeech
+  values:
+    prefix: plushies-astro-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieDestinSpeech
+  values:
+    prefix: plushies-destin-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieEgorSpeech
+  values:
+    prefix: plushies-egor-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieKimSpeech
+  values:
+    prefix: plushies-kim-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieEmmaSpeech
+  values:
+    prefix: plushies-emma-
+    count: 3
+
+- type: localizedDataset
   id: PlushieAmaliyaSpeech
   values:
     prefix: plushies-amaliya-
