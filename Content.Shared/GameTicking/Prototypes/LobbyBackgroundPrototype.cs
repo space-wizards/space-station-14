@@ -23,11 +23,11 @@ public sealed partial class LobbyBackgroundPrototype : IPrototype
     /// The title of the background to be displayed in the lobby.
     /// </summary>
     [DataField]
-    public string Title = "lobby-state-background-unknown-title";
+    public LocId Title = "lobby-state-background-unknown-title";
 
     /// <summary>
     /// The artist who made the art for the background.
     /// </summary>
     [DataField]
-    public string Artist = "lobby-state-background-unknown-artist";
+    public LocId Artist = "lobby-state-background-unknown-artist";
 }
