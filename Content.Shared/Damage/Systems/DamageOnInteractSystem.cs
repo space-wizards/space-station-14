@@ -7,11 +7,8 @@ using Content.Shared.Popups;
 using Robust.Shared.Random;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Timing;
-using Content.Shared.Random;
 using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Effects;
 using Content.Shared.Stunnable;
 
 namespace Content.Shared.Damage.Systems;
@@ -31,7 +28,6 @@ public sealed class DamageOnInteractSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
         SubscribeLocalEvent<DamageOnInteractComponent, InteractHandEvent>(OnHandInteract);
     }
 
@@ -55,49 +51,53 @@ public sealed class DamageOnInteractSystem : EntitySystem
         if (!entity.Comp.IsDamageActive)
             return;
 
-        var totalDamage = entity.Comp.Damage;
+        var damageToApply = entity.Comp.Damage;
 
         if (!entity.Comp.IgnoreResistances)
         {
-            // try to get damage on interact protection from either the inventory slots of the entity
-            _inventorySystem.TryGetInventoryEntity<DamageOnInteractProtectionComponent>(args.User, out var protectiveEntity);
+            DamageOnInteractProtectionComponent? protComp = null;
 
-            // or checking the entity for  the comp itself if the inventory didn't work
-            if (protectiveEntity.Comp == null && TryComp<DamageOnInteractProtectionComponent>(args.User, out var protectiveComp))
-                protectiveEntity = (args.User, protectiveComp);
-
-
-            // if protectiveComp isn't null after all that, it means the user has protection,
-            // so let's calculate how much they resist
-            if (protectiveEntity.Comp != null)
+            if (_inventorySystem.TryGetSlotEntity(args.User, "gloves", out var gloveEnt) &&
+                TryComp(gloveEnt, out DamageOnInteractProtectionComponent? invProt))
             {
-                totalDamage = DamageSpecifier.ApplyModifierSet(totalDamage, protectiveEntity.Comp.DamageProtection);
+                protComp = invProt;
             }
+            else if (TryComp(args.User, out DamageOnInteractProtectionComponent? directProt))
+            {
+                protComp = directProt;
+            }
+
+            if (protComp != null)
+                damageToApply = DamageSpecifier.ApplyModifierSet(damageToApply, protComp.DamageProtection);
         }
 
-        totalDamage = _damageableSystem.ChangeDamage(args.User, totalDamage, origin: args.Target);
+        var resultDamage = _damageableSystem.ChangeDamage(args.User, damageToApply, origin: args.Target);
 
-        if (totalDamage.AnyPositive())
+        if (resultDamage.AnyPositive())
         {
-            // Record this interaction and determine when a user is allowed to interact with this entity again
             entity.Comp.LastInteraction = _gameTiming.CurTime;
             entity.Comp.NextInteraction = _gameTiming.CurTime + TimeSpan.FromSeconds(entity.Comp.InteractTimer);
 
             args.Handled = true;
-            _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} injured their hand by interacting with {ToPrettyString(args.Target):target} and received {totalDamage.GetTotal():damage} damage");
+
+            _adminLogger.Add(LogType.Damaged,
+                $"{ToPrettyString(args.User):user} injured their hand by interacting with {ToPrettyString(args.Target):target} and received {resultDamage.GetTotal():damage} damage");
+
             _audioSystem.PlayPredicted(entity.Comp.InteractSound, args.Target, args.User);
 
             if (entity.Comp.PopupText != null)
                 _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);
 
-            // Attempt to paralyze the user after they have taken damage
             if (_random.Prob(entity.Comp.StunChance))
                 _stun.TryUpdateParalyzeDuration(args.User, TimeSpan.FromSeconds(entity.Comp.StunSeconds));
         }
-        // Check if the entity's Throw bool is false, or if the entity has the PullableComponent, then if the entity is currently being pulled.
-        // BeingPulled must be checked because the entity will be spastically thrown around without this.
-        if (!entity.Comp.Throw || !TryComp<PullableComponent>(entity, out var pullComp) || pullComp.BeingPulled)
+
+        if (!entity.Comp.Throw ||
+            !TryComp<PullableComponent>(entity, out var pullComp) ||
+            pullComp.BeingPulled)
+        {
             return;
+        }
 
         _throwingSystem.TryThrow(entity, _random.NextVector2(), entity.Comp.ThrowSpeed, doSpin: true);
     }
