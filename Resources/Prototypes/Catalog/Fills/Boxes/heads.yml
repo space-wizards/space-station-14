@@ -5,10 +5,11 @@
   components:
   - type: Label
     currentLabel: job-name-captain
-  - type: StorageFill
-    contents:
-      - id: CommsComputerCircuitboard
-      - id: StationRecordsComputerCircuitboard
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - CommsComputerCircuitboard
+      - StationRecordsComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -17,13 +18,14 @@
   components:
   - type: Label
     currentLabel: job-name-ce
-  - type: StorageFill
-    contents:
-      - id: CargoRequestEngineeringComputerCircuitboard
-      - id: AlertsComputerCircuitboard
-      - id: AtmosMonitoringComputerCircuitboard
-      - id: PowerComputerCircuitboard
-      - id: SolarControlComputerCircuitboard
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - CargoRequestEngineeringComputerCircuitboard
+      - AlertsComputerCircuitboard
+      - AtmosMonitoringComputerCircuitboard
+      - PowerComputerCircuitboard
+      - SolarControlComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -32,10 +34,11 @@
   components:
   - type: Label
     currentLabel: job-name-cmo
-  - type: StorageFill
-    contents:
-      - id: MedicalTechFabCircuitboard
-      - id: CargoRequestMedicalComputerCircuitboard
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - MedicalTechFabCircuitboard
+      - CargoRequestMedicalComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -44,11 +47,12 @@
   components:
   - type: Label
     currentLabel: job-name-hop
-  - type: StorageFill
-    contents:
-      - id: IDComputerCircuitboard
-      - id: FundingAllocationComputerCircuitboard
-      - id: CargoRequestServiceComputerCircuitboard
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - IDComputerCircuitboard
+      - FundingAllocationComputerCircuitboard
+      - CargoRequestServiceComputerCircuitboard
 
 - type: entity
   parent: BoxStamps
@@ -57,11 +61,12 @@
   components:
   - type: Label
     currentLabel: job-name-hop
-  - type: StorageFill
-    contents:
-      - id: RubberStampApproved
-      - id: RubberStampDenied
-      - id: RubberStampHop
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - RubberStampApproved
+      - RubberStampDenied
+      - RubberStampHop
 
 - type: entity
   parent: ToteBase
@@ -70,10 +75,11 @@
   components:
   - type: Label
     currentLabel: job-name-hos
-  - type: StorageFill
-    contents:
-      - id: SecurityTechFabCircuitboard
-      - id: CargoRequestSecurityComputerCircuitboard
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - SecurityTechFabCircuitboard
+      - CargoRequestSecurityComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -82,15 +88,16 @@
   components:
   - type: Label
     currentLabel: job-name-qm
-  - type: StorageFill
-    contents:
-      - id: CargoBountyComputerCircuitboard
-      - id: CargoRequestComputerCircuitboard
-      - id: CargoSaleComputerCircuitboard
-      - id: CargoShuttleConsoleCircuitboard
-      - id: SalvageMagnetMachineCircuitboard
-      - id: SalvageJobBoardComputerCircuitboard
-      - id: MailTeleporterMachineCircuitboard
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - CargoBountyComputerCircuitboard
+      - CargoRequestComputerCircuitboard
+      - CargoSaleComputerCircuitboard
+      - CargoShuttleConsoleCircuitboard
+      - SalvageMagnetMachineCircuitboard
+      - SalvageJobBoardComputerCircuitboard
+      - MailTeleporterMachineCircuitboard
 
 - type: entity
   parent: BoxStamps
@@ -99,11 +106,12 @@
   components:
   - type: Label
     currentLabel: job-name-qm
-  - type: StorageFill
-    contents:
-      - id: RubberStampApproved
-      - id: RubberStampDenied
-      - id: RubberStampQm
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - RubberStampApproved
+      - RubberStampDenied
+      - RubberStampQm
 
 - type: entity
   parent: ToteBase
@@ -112,13 +120,14 @@
   components:
   - type: Label
     currentLabel: job-name-rd
-  - type: StorageFill
-    contents:
-      - id: CircuitImprinterMachineCircuitboard
-      - id: ProtolatheMachineCircuitboard
-      - id: ResearchComputerCircuitboard
-      - id: CargoRequestScienceComputerCircuitboard
-      - id: RoboticsConsoleCircuitboard
-      - id: AnalysisComputerCircuitboard #Because sometimes round start artis just fucking explode on the pad.
-      - id: ArtifactAnalyzerMachineCircuitboard
-      - id: StationAiFixerCircuitboard
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - CircuitImprinterMachineCircuitboard
+      - ProtolatheMachineCircuitboard
+      - ResearchComputerCircuitboard
+      - CargoRequestScienceComputerCircuitboard
+      - RoboticsConsoleCircuitboard
+      - AnalysisComputerCircuitboard #Because sometimes round start artis just fucking explode on the pad.
+      - ArtifactAnalyzerMachineCircuitboard
+      - StationAiFixerCircuitboard
