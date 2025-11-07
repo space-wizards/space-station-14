@@ -95,7 +95,7 @@ public sealed class GasTankWindow
         _topLabel = new Label
         {
             FontOverride = font,
-            FontColorOverride = StyleNano.NanoGold,
+           StyleClasses = { StyleClass.LabelKeyText },
             VerticalAlignment = VAlignment.Center,
             HorizontalExpand = true,
             HorizontalAlignment = HAlignment.Left,
@@ -207,7 +207,9 @@ public sealed class GasTankWindow
         _btnInternals.Disabled = !canConnectInternals;
         _lblInternals.SetMarkup(Loc.GetString("gas-tank-window-internal-text",
             ("status", Loc.GetString(internalsConnected ? "gas-tank-window-internal-connected" : "gas-tank-window-internal-disconnected"))));
-        _spbPressure.Value = outputPressure;
+        if (!_spbPressure.HasKeyboardFocus())
+            // Don't update release pressure if we're currently editing it
+            _spbPressure.Value = outputPressure;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

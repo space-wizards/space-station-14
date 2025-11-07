@@ -7,16 +7,13 @@ namespace Content.Client.Interactable.Components
     [RegisterComponent]
     public sealed partial class InteractionOutlineComponent : Component
     {
+        private static readonly ProtoId<ShaderPrototype> ShaderInRange = "SelectionOutlineInrange";
+        private static readonly ProtoId<ShaderPrototype> ShaderOutOfRange = "SelectionOutline";
+
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private const float DefaultWidth = 1;
-
-        [ValidatePrototypeId<ShaderPrototype>]
-        private const string ShaderInRange = "SelectionOutlineInrange";
-
-        [ValidatePrototypeId<ShaderPrototype>]
-        private const string ShaderOutOfRange = "SelectionOutline";
 
         private bool _inRange;
         private ShaderInstance? _shader;
@@ -65,7 +62,7 @@ namespace Content.Client.Interactable.Components
         {
             var shaderName = inRange ? ShaderInRange : ShaderOutOfRange;
 
-            var instance = _prototypeManager.Index<ShaderPrototype>(shaderName).InstanceUnique();
+            var instance = _prototypeManager.Index(shaderName).InstanceUnique();
             instance.SetParameter("outline_width", DefaultWidth * renderScale);
             return instance;
         }

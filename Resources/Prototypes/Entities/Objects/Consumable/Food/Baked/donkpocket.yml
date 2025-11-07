@@ -5,7 +5,7 @@
   id: FoodDonkpocketBase
   abstract: true
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: SolutionContainerManager
@@ -228,8 +228,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
-        - ReagentId: Omnizine
-          Quantity: 2
+        - ReagentId: Honk
+          Quantity: 0.50
   - type: Sprite
     state: banana
 
@@ -249,6 +249,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+        - ReagentId: Honk
+          Quantity: 1
         - ReagentId: Omnizine
           Quantity: 2
 
@@ -407,7 +409,7 @@
           Quantity: 5
   - type: Sprite
     state: moth
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: Tag
     tags:
