@@ -36,9 +36,9 @@ public sealed partial class GameTicker
 
     private void RandomizeLobbyBackground()
     {
-        if (_lobbyBackgrounds!.Any())
+        if (_lobbyBackgrounds != null && _lobbyBackgrounds.Count != 0)
         {
-            LobbyBackground = _robustRandom.Pick(_lobbyBackgrounds!);
+            LobbyBackground = _robustRandom.Pick(_lobbyBackgrounds);
         }
         else
         {
