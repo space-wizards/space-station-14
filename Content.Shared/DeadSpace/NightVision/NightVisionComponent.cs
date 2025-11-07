@@ -1,29 +1,39 @@
 using Content.Shared.Actions;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.DeadSpace.NightVision;
 
-[RegisterComponent, NetworkedComponent]
-public sealed partial class NightVisionComponent : Component
+[NetworkedComponent]
+public abstract partial class SharedNightVisionComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("isNightVision")]
+    [DataField]
     public bool IsNightVision;
 
-    /// <description>
-    /// Used to ensure that this doesn't break with sandbox or admin tools.
-    /// This is not "enabled/disabled".
-    /// </description>
-    [Access(Other = AccessPermissions.ReadWriteExecute)]
-    public bool LightSetup = false;
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    public Color Color = new Color(80f / 255f, 220f / 255f, 70f / 255f, 0.2f);
 
-    /// <description>
-    /// Gives an extra frame of nighyvision to reenable light manager during
-    /// </description>
-    [Access(Other = AccessPermissions.ReadWriteExecute)]
-    public bool GraceFrame = false;
-
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public Color Color = Color.White;
+    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public SoundSpecifier? ActivateSound = null;
 }
 
 public sealed partial class ToggleNightVisionActionEvent : InstantActionEvent { }
+
+[Serializable, NetSerializable]
+public sealed class NightVisionComponentState : ComponentState
+{
+    public Color Color;
+    public bool IsNightVision;
+    public uint LastToggleTick;
+    public SoundSpecifier? ActivateSound;
+
+    public NightVisionComponentState(Color color, bool isNightVision, uint lastToggleTick, SoundSpecifier? activateSound = null)
+    {
+        Color = color;
+        IsNightVision = isNightVision;
+        LastToggleTick = lastToggleTick;
+        ActivateSound = activateSound;
+    }
+}

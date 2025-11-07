@@ -59,7 +59,7 @@
     sprite: Structures/Windows/plastitanium_window.rsi
     state: full
   - type: IconSmooth
-    key: windows
+    key: walls # DS14
     base: ptwindow
   - type: Airtight
   - type: Fixtures
@@ -90,13 +90,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
+        damage: 530 # DS14-value
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 265 # DS14-value
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -190,13 +190,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
+        damage: 530 # DS14-value
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 500
+        damage: 265 # DS14-value
       behaviors:
       - !type:PlaySoundBehavior
         sound:

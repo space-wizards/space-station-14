@@ -9,6 +9,16 @@
     contents:
     - id: MobGiantSpiderSpace
 
+- type: entity
+  id: CrateNPCXeno
+  parent: CrateSyndicateSecure
+  name: ящик с ксеноморфом
+  description: Ящик для содержания ксеноморфа.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobXenoRavager 
+
 # Engineering
 - type: entity
   id: CrateRCDSyndicate

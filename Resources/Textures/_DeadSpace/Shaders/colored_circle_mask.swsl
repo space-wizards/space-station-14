@@ -1,0 +1,36 @@
+uniform highp float Zoom;
+
+uniform highp float CircleRadius; 
+uniform highp float CircleMinDist;
+uniform highp float CirclePow;
+uniform highp float CircleMax; 
+uniform highp float CircleMult; 
+uniform highp vec4 Color; 
+uniform highp float TransitionProgress; // от 0 до 1
+
+uniform sampler2D SCREEN_TEXTURE;
+
+void fragment() 
+{ 
+    highp vec2 aspect = vec2(1.0 / SCREEN_PIXEL_SIZE.x, 1.0 / SCREEN_PIXEL_SIZE.y);
+    highp float actualZoom = Zoom;
+
+    highp vec2 uv = FRAGCOORD.xy * SCREEN_PIXEL_SIZE;
+
+    uv.y -= TransitionProgress;
+
+    highp float circle = zCircleGradient(aspect, uv / SCREEN_PIXEL_SIZE, CircleMax,
+        CircleRadius / actualZoom,
+        CircleMinDist / actualZoom,
+        CirclePow) * CircleMult;
+
+    highp float yNorm = FRAGCOORD.y * SCREEN_PIXEL_SIZE.y;
+
+    if (yNorm < TransitionProgress) {
+        discard;
+    }
+
+    vec4 baseColor = mix(Color, vec4(0.0, 0.0, 0.0, 1.0), clamp(circle, 0.0, 1.0));
+
+    COLOR = baseColor;
+}
