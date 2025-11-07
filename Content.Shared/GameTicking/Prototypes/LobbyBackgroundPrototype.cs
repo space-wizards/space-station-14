@@ -16,12 +16,18 @@ public sealed partial class LobbyBackgroundPrototype : IPrototype
     /// <summary>
     /// The sprite to use as the background. This should ideally be 1920x1080.
     /// </summary>
-    [DataField("background", required: true)]
+    [DataField(required: true)]
     public ResPath Background = default!;
 
-    [DataField("title")]
-    public string? Title;
+    /// <summary>
+    /// The title of the background to be displayed in the lobby.
+    /// </summary>
+    [DataField]
+    public string Title = "lobby-state-background-unknown-title";
 
-    [DataField("artist")]
-    public string? Artist;
+    /// <summary>
+    /// The artist who made the art for the background.
+    /// </summary>
+    [DataField]
+    public string Artist = "lobby-state-background-unknown-artist";
 }

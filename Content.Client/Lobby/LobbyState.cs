@@ -253,20 +253,12 @@ namespace Content.Client.Lobby
 
         private void UpdateLobbyBackground()
         {
-            if (_protoMan.TryIndex(_gameTicker.LobbyBackground, out LobbyBackgroundPrototype? proto))
+            if (_protoMan.TryIndex(_gameTicker.LobbyBackground, out var proto))
             {
                 Lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(proto.Background);
 
-                var background = _gameTicker.LobbyBackground;
-
-                var title = string.IsNullOrEmpty(proto.Title)
-                    ? Loc.GetString("lobby-state-background-unknown-title")
-                    : proto.Title;
-
-                var artist = string.IsNullOrEmpty(proto.Artist)
-                    ? Loc.GetString("lobby-state-background-unknown-artist")
-                    : proto.Artist;
-
+                var title = Loc.GetString(proto.Title);
+                var artist = Loc.GetString(proto.Artist);
                 var markup = Loc.GetString("lobby-state-background-text",
                     ("backgroundTitle", title),
                     ("backgroundArtist", artist));
