@@ -59,7 +59,7 @@ public sealed class CharacterInfoSystem : EntitySystem
                 job.LocalizedDescription != null &&
                 _proto.TryIndex(job.Icon, out var iconProto))
             {
-                objectives["Nanotrasen"] = new List<ObjectiveInfo>()
+                objectives[Loc.GetString("character-info-nanotrasen")] = new List<ObjectiveInfo>()
                 {
                     new ObjectiveInfo(Loc.GetString("character-info-fulfil-role"), Loc.GetString("character-info-job-desc", ("jobName", job.LocalizedName), ("jobDescription", job.LocalizedDescription)), iconProto.Icon, 0)
                 };
