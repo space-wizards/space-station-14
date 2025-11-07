@@ -102,12 +102,13 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!TryComp<InventoryComponent>(strippable, out var inventory))
             return;
 
-        var hasEnt = _inventorySystem.TryGetSlotEntity(strippable, args.Slot, out var held, inventory);
-
         var maybeActiveItem = _handsSystem.GetActiveItem((user, userHands));
+        var hasEnt = _inventorySystem.TryGetSlotEntity(strippable, args.Slot, out var held, inventory);
+        var inCombatMode = TryComp<CombatModeComponent>(user, out var combat) && combat.IsInCombatMode;
+
         if (maybeActiveItem is { } activeItem && !hasEnt)
             StartStripInsertInventory((user, userHands), strippable.Owner, activeItem, args.Slot);
-        else if (maybeActiveItem is null && hasEnt)
+        else if ((maybeActiveItem is null || inCombatMode) && hasEnt)
             StartStripRemoveInventory(user, strippable.Owner, held!.Value, args.Slot);
         else if (hasEnt)
             StartStripInteractInventory((user, userHands), strippable.Owner, held!.Value, args.Slot);
@@ -139,9 +140,11 @@ public abstract class SharedStrippableSystem : EntitySystem
         }
 
         var maybeActiveItem = _handsSystem.GetActiveItem(user.AsNullable());
+        var inCombatMode = TryComp<CombatModeComponent>(user, out var combat) && combat.IsInCombatMode;
+
         if (maybeActiveItem is { } activeItem && heldEntity == null)
             StartStripInsertHand(user, target, activeItem, handId, targetStrippable);
-        else if (maybeActiveItem is null && heldEntity != null)
+        else if ((maybeActiveItem is null || inCombatMode) && heldEntity != null)
             StartStripRemoveHand(user, target, heldEntity.Value, handId, targetStrippable);
         else if (heldEntity != null)
             StartStripInteractHand(user, target, heldEntity.Value, handId, targetStrippable);
