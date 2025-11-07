@@ -2,7 +2,7 @@
   parent: ToteBase
   id: BoxCaptainCircuitboards
   name: captain's circuit tote
-  description: A tote filled with the captain's circuit boards.
+  description: A tote containing the captain's circuit boards.
   components:
   - type: StorageFill
     contents:
@@ -13,7 +13,7 @@
   parent: ToteBase
   id: BoxCECircuitboards
   name: chief engineer's circuit tote
-  description: A tote filled with the chief engineer's circuit boards.
+  description: A tote containing the chief engineer's circuit boards.
   components:
   - type: StorageFill
     contents:
@@ -27,7 +27,7 @@
   parent: ToteBase
   id: BoxCMOCircuitboards
   name: chief medical officer's circuit tote
-  description: A tote filled with the chief medical officer's circuit boards.
+  description: A tote containing the chief medical officer's circuit boards.
   components:
   - type: StorageFill
     contents:
@@ -38,7 +38,7 @@
   parent: ToteBase
   id: BoxHoPCircuitboards
   name: head of personnel's circuit tote
-  description: A tote filled with the head of personnel's circuit boards.
+  description: A tote containing the head of personnel's circuit boards.
   components:
   - type: StorageFill
     contents:
@@ -62,7 +62,7 @@
   parent: ToteBase
   id: BoxHoSCircuitboards
   name: head of security's circuit tote
-  description: A tote filled with the head of security's circuit boards.
+  description: A tote containing the head of security's circuit boards.
   components:
   - type: StorageFill
     contents:
@@ -73,7 +73,7 @@
   parent: ToteBase
   id: BoxQMCircuitboards
   name: quartermaster's circuit tote
-  description: A tote filled with the quartermaster's circuit boards.
+  description: A tote containing the quartermaster's circuit boards.
   components:
   - type: StorageFill
     contents:
@@ -101,7 +101,7 @@
   parent: ToteBase
   id: BoxRDCircuitboards
   name: research director's circuit tote
-  description: A tote filled with the research director's circuit boards.
+  description: A tote containing the research director's circuit boards.
   components:
   - type: StorageFill
     contents:
