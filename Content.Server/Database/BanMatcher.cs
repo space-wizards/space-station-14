@@ -7,7 +7,7 @@ using Robust.Shared.Network;
 namespace Content.Server.Database;
 
 /// <summary>
-/// Implements logic to match a <see cref="ServerBanDef"/> or a <see cref="ServerRoleBan"/> against a player query.
+/// Implements logic to match a <see cref="ServerBanDef"/> or a <see cref="ServerRoleBanDef"/> against a player query.
 /// </summary>
 /// <remarks>
 /// <para>
