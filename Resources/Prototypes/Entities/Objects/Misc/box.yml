@@ -41,14 +41,14 @@
     grid:
     - 0,0,1,1
   - type: Construction
-    graph: BoxCardboardSmall
+    graph: BoxCardboardSmall # Half the material cost of the "regular" box
     node: boxcardboardsmall
     containers:
       - storagebase
-  - type: PhysicalComposition # Half of the "regular" cardboard box
+  - type: PhysicalComposition # Half of the "regular" box
     materialComposition:
       Cardboard: 50
-  - type: StaticPrice # Half of the "regular" cardboard box
+  - type: StaticPrice # Half of the "regular" box
     price: 5
 
 - type: entity
