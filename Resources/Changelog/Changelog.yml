@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: KamTheSythe
-  changes:
-  - message: Explosive payloads no longer explode. Modular grenades with explosive
-      payloads remain unchanged, and can still be used to stack explosions.
-    type: Tweak
-  id: 8687
-  time: '2025-06-17T09:46:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38049
 - author: Kittygyat
   changes:
   - message: Increased borg drag speed, equivalent to Diona speeds.
@@ -3925,3 +3917,10 @@
   id: 9188
   time: '2025-11-06T21:46:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41163
+- author: Jrpl
+  changes:
+  - message: Gravity Generators can no longer be unanchored while they are active.
+    type: Fix
+  id: 9189
+  time: '2025-11-07T01:05:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41256
