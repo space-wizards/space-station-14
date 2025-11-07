@@ -1,7 +1,7 @@
 - type: entity
-  name: cardboard box
   parent: BoxBase
   id: BoxCardboard
+  name: cardboard box
   description: A cardboard box for storing things.
   components:
   - type: Item
@@ -12,6 +12,24 @@
     maxItemSize: Small
     grid:
     - 0,0,2,2
+  - type: Sprite
+    state: box
+  - type: Tag
+    tags:
+    - BoxCardboard
+
+- type: entity
+  parent: BoxBaseSmall
+  id: BoxCardboardSmall
+  name: small cardboard box
+  components:
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: Storage
+    grid:
+    - 0,0,1,1
   - type: Sprite
     state: box
   - type: Tag

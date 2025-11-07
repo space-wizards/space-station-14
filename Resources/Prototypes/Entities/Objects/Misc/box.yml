@@ -30,8 +30,8 @@
 
 - type: entity
   abstract: true
-  parent: BoxCardboard
-  id: BoxCardboardSmall
+  parent: BoxBase
+  id: BoxBaseSmall
   components:
   - type: Item
     size: Small
@@ -40,6 +40,16 @@
   - type: Storage
     grid:
     - 0,0,1,1
+  - type: Construction
+    graph: BoxCardboardSmall
+    node: boxcardboardsmall
+    containers:
+      - storagebase
+  - type: PhysicalComposition # Half of the "regular" cardboard box
+    materialComposition:
+      Cardboard: 50
+  - type: StaticPrice # Half of the "regular" cardboard box
+    price: 5
 
 - type: entity
   name: circuit tote
