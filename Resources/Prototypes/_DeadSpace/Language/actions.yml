@@ -7,5 +7,6 @@
   - type: Action
     useDelay: 1
     icon: Interface/Actions/emoc.png
+    checkCanInteract: false
   - type: InstantAction
     event: !type:SelectLanguageActionEvent

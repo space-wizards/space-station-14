@@ -111,6 +111,20 @@
   - рину
 
 - type: language
+  id: DogLanguage
+  name: Собачий
+  icon: /Textures/_DeadSpace/LanguageIcons/vulp.png
+  generateTTSForLexicon: false
+  lexiconSound:
+    collection: DogLexicon
+  lexicon:
+  - Гав!
+  - Тяв!
+  - Вуф!
+  - Гаф.
+  - Гррр.
+
+- type: language
   id: SlimeLanguage
   name: Пузырчатый
   icon: /Textures/_DeadSpace/LanguageIcons/slime.png
@@ -218,7 +232,7 @@
 
 - type: language
   id: ArachnidLanguage
-  name: Арахнидский
+  name: Це'хисс
   icon: /Textures/_DeadSpace/LanguageIcons/spider.png
   generateTTSForLexicon: false
   lexiconSound:
@@ -325,7 +339,7 @@
 
 - type: language
   id: DionaLanguage
-  name: Песнь корней
+  name: Шелестящий
   generateTTSForLexicon: false
   lexiconSound:
     collection: DionaLexicon
@@ -974,7 +988,7 @@
 
 - type: language
   id: MachineLanguage
-  name: Машинный
+  name: Двоичный
   icon: /Textures/_DeadSpace/LanguageIcons/machine.png
   generateTTSForLexicon: false
   lexiconSound:
@@ -1008,114 +1022,8 @@
   - Z E R O ;
 
 - type: language
-  id: KoboltLanguage
-  name: Кобальдский
-  icon: /Textures/_DeadSpace/LanguageIcons/lizard.png
-  lexicon:
-  - Чк!
-  - Шик!
-  - Иик!
-  - Тц!
-  - Пшик
-  - Ки-и!
-  - Цк!
-  - Тцк
-  - Пщик!
-  - Иикс
-  - Кчкч!
-  - Пик-пик!
-  - Фрр!
-  - Пшш!
-  - Щик!
-  - Гха!
-  - Тцик!
-  - Шик-шик
-  - Иир!
-  - Пхик!
-  - Хррк!
-  - Тццц!
-  - Шррк!
-  - Ки!
-  - Цкцк!
-  - Шрк!
-  - Пск!
-  - Ии-к!
-  - Пых!
-  - Кпшик!
-  - Тцик
-  - Пшчк!
-  - Шикц!
-  - Тцки!
-  - Ппшик
-  - Гхик!
-  - Тшк!
-  - Хик!
-  - Киик!
-  - Пшк!
-  - Фррр!
-  - Цаак!
-  - Пк!
-  - Шкцк!
-  - Пипип!
-  - Ичк!
-  - Пхрр!
-  - Цырк!
-  - Пуп!
-  - Кчц!
-  - Кшик!
-  - Иччк!
-  - Тшик!
-  - Щип!
-  - Шпш!
-  - Кшкшк
-  - Тцкц!
-  - Пшиик
-  - Шкик!
-  - Грак!
-  - Хиик!
-  - Иик-иик!
-  - Ттцк
-  - Щкк!
-  - Ккп!
-  - Чик-чк!
-  - Пикс!
-  - Щап!
-  - Шряк!
-  - Пхчк
-  - Икики!
-  - Шк!
-  - Ттчк!
-  - Пирк!
-  - Ши-тц!
-  - Пи-и!
-  - Цкцкцк
-  - Шщш!
-  - Кчиик!
-  - Пиик!
-  - Хрк-хрк!
-  - Щи-и!
-  - Тсцк!
-  - Пшикс
-  - Шраап!
-  - Ки-ки!
-  - Щиии!
-  - Кап!
-  - Ииирр!
-  - Шцк!
-  - Грриик!
-  - Кырк!
-  - Тррц!
-  - Ии-и!
-  - Ци-кц!
-  - Пщк!
-  - Кии-к!
-  - Хшик!
-  - Ппчк!
-  - Кшрр!
-
-- type: language
   id: PlafLanguage
-  name: Акулий
+  name: Эве-Пишту
   icon: /Textures/_DeadSpace/LanguageIcons/plaf.png
   lexicon:
   - Гшк
@@ -1221,7 +1129,7 @@
 
 - type: language
   id: VulpkaninLanguage
-  name: Вульпканский
+  name: Канилунц
   icon: /Textures/_DeadSpace/LanguageIcons/vulp.png
   lexicon:
   - Чрр!
@@ -1327,7 +1235,7 @@
 
 - type: language
   id: XenomorphLanguage
-  name: Ксеноморфский
+  name: Эхоглосса
   icon: /Textures/_DeadSpace/LanguageIcons/alien.png
   generateTTSForLexicon: false
   lexiconSound:
@@ -1432,51 +1340,6 @@
   - щщщщщ
   - рццц
   - гггг
-
-- type: language
-  id: CowLanguage
-  name: Коровий
-  lexicon:
-  - муу...
-  - буу!
-  - мрруу
-  - бррр...
-  - уффф
-  - мгуу~
-  - мбаа!
-  - хррму
-  - фшшуу
-  - гууур
-
-- type: language
-  id: KangarooLanguage
-  name: Кенгуручий
-  lexicon:
-  - хуп!
-  - брум!
-  - ктаа!
-  - пфф-хоп
-  - тук-тук!
-  - ррха!
-  - гуппа
-  - чрук!
-  - брх-х!
-  - хап-хап!
-
-- type: language
-  id: PigLanguage
-  name: Свинячий
-  lexicon:
-  - хрю!
-  - хрррк
-  - фрр-фрр
-  - пхык!
-  - ррх-ррх
-  - хрюу~
-  - фырк!
-  - гхнн...
-  - ппфх!
-  - уф-хрю
 
 - type: language
   id: CarpDragonLanguage
@@ -1584,68 +1447,6 @@
   - ннннн...
 
 - type: language
-  id: CrabLanguage
-  name: Крабий
-  lexicon:
-  - кшк!
-  - тррцк
-  - крк-крк
-  - чкчк!
-  - кх-кх
-  - шкрт!
-  - тццц
-  - кррра
-  - хркш
-  - цк-трр
-
-- type: language
-  id: MouseLanguage
-  name: Мышиный
-  lexicon:
-  - пи-и!
-  - тви-тви
-  - скрр!
-  - шиик
-  - цви!
-  - тццц
-  - пиик-пиик
-  - шрррк!
-  - чви-и
-  - ик-ик!
-
-- type: language
-  id: ChickenLanguage
-  name: Куриный
-  generateTTSForLexicon: false
-  lexiconSound:
-    collection: ChickenLexicon
-  lexicon:
-  - ко-ко!
-  - куд-кудах
-  - кыырр!
-  - бгак!
-  - гудо!
-  - курр-курр
-  - коко-ря!
-  - кукареку!
-  - бух-гак!
-  - га-га-га!
-
-- type: language
-  id: DogLanguage
-  name: Собачий
-  icon: /Textures/_DeadSpace/LanguageIcons/vulp.png
-  generateTTSForLexicon: false
-  lexiconSound:
-    collection: DogLexicon
-  lexicon:
-  - Гав!
-  - Тяв!
-  - Вуф!
-  - Гаф.
-  - Гррр.
-
-- type: language
   id: NecromorfLanguage
   name: Некроморфский
   generateTTSForLexicon: false
@@ -1751,3 +1552,116 @@
   - чрха
   - фшшрр
   - хгшхаа
+
+- type: language
+  id: MonkeyLanguage
+  name: Обезьяний
+  generateTTSForLexicon: false
+  lexiconSound:
+    collection: MonkeyLexicon
+  lexicon:
+  - ука
+  - бум
+  - чик
+  - хоо
+  - угу
+  - мака
+  - кики
+  - уфа
+  - чуу
+  - баа
+  - хока
+  - уки
+  - чока
+  - буру
+  - гаа
+  - хука
+  - лики
+  - пук
+  - оки
+  - уба
+  - чап
+  - хух
+  - шика
+  - муму
+  - гоки
+  - пука
+  - нуу
+  - ваха
+  - кока
+  - ухи
+  - чуук
+  - баки
+  - фуфа
+  - шуп
+  - луу
+  - рики
+  - хопа
+  - нана
+  - гуру
+  - ума
+  - чоки
+  - ока
+  - вуки
+  - хаха
+  - лоп
+  - мум
+  - кики
+  - чапа
+  - укаа
+  - гуп
+  - хуу
+  - чоку
+  - фуки
+  - бака
+  - моки
+  - руу
+  - шап
+  - хопи
+  - лама
+  - чууу
+  - вух
+  - гаха
+  - туки
+  - пукаа
+  - хап
+  - чика
+  - мопа
+  - луки
+  - бру
+  - ууу
+  - хаха
+  - чии
+  - буки
+  - хапи
+  - ноки
+  - фука
+  - шупи
+  - гоки
+  - чоко
+  - маки
+  - рики
+  - лопа
+  - чики
+  - вуп
+  - хопу
+  - уфу
+  - чуп
+  - хак
+  - гупа
+  - муку
+  - бакаа
+  - шоки
+  - хру
+  - чопа
+  - ухи
+  - лопу
+  - гап
+  - чоп
+  - куу
+  - хах
+  - муп
+  - чип
+  - фуп
+  - брук
+  - укау

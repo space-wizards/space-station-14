@@ -162,14 +162,8 @@
   - type: Vocal
     sounds:
       Unsexed: Kangaroo
-  # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: kangaroo
-  - type: Language # DS14-Languages
-    selectedLanguage: KangarooLanguage
-    knownLanguages:
-    - KangarooLanguage
-  # DS14-Languages-end
+  - type: ReplacementAccent
+    accent: kangaroo
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -254,8 +248,8 @@
     solution: melee
     transferAmount: 4
   # DS14-Languages-start
-  # - type: ReplacementAccent
-  #   accent: xeno
+  - type: ReplacementAccent
+    accent: xeno
   - type: Language # DS14-Languages
     selectedLanguage: ArachnidLanguage
     knownLanguages:

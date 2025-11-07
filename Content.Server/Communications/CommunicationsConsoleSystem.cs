@@ -266,7 +266,7 @@ namespace Content.Server.Communications
             var languageId = LanguageSystem.DefaultLanguageId;
 
             if (TryComp<LanguageComponent>(message.Actor, out var languageComponent))
-                languageId = languageComponent.SelectedLanguage.Id;
+                languageId = languageComponent.SelectedLanguage;
             // DS14-Languages-end
 
             if (comp.AnnounceSentBy)

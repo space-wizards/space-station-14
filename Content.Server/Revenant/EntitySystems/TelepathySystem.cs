@@ -52,7 +52,7 @@ public sealed partial class TelepathySystem : EntitySystem
                         if (TryComp<LanguageComponent>(args.User, out var language))
                             lexiconMessage = _language.ReplaceWordsWithLexicon(message, language.SelectedLanguage);
 
-                        var selectedLanguage = language != null ? language.SelectedLanguage : LanguageSystem.DefaultLanguageId;
+                        var selectedLanguage = language != null ? language.SelectedLanguage : LanguageSystem.DefaultLanguageId.ToString();
 
                         _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, Loc.GetString("prayer-popup-subtle-revenant"));
                         var ev = new EntitySpokeToEntityEvent(args.Target, message, lexiconMessage, selectedLanguage);

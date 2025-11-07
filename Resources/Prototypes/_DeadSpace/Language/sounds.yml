@@ -16,12 +16,22 @@
   - /Audio/Voice/Diona/diona_scream.ogg
 
 - type: soundCollection
+  id: MonkeyLexicon
+  files:
+  - /Audio/Effects/Diseases/monkey1.ogg
+  - /Audio/Effects/Diseases/monkey2.ogg
+  - /Audio/Animals/monkey_scream.ogg
+
+- type: soundCollection
   id: SpiderLexicon
   files:
   - /Audio/Voice/Arachnid/arachnid_scream.ogg
   - /Audio/_DeadSpace/Languages/spider2.ogg
   - /Audio/_DeadSpace/Languages/spider1.ogg
   - /Audio/_DeadSpace/Languages/spider3.ogg
+  - /Audio/Voice/Talk/arachnid.ogg
+  - /Audio/Voice/Talk/arachnid_ask.ogg
+  - /Audio/Voice/Talk/arachnid_exclaim.ogg
 
 - type: soundCollection
   id: MachineLexicon
@@ -42,6 +52,9 @@
   - /Audio/_DeadSpace/Languages/dino1.ogg
   - /Audio/_DeadSpace/Languages/dino2.ogg
   - /Audio/_DeadSpace/Languages/dino3.ogg
+  - /Audio/Voice/Talk/lizard.ogg
+  - /Audio/Voice/Talk/lizard_ask.ogg
+  - /Audio/Voice/Talk/lizard_exclaim.ogg
 
 - type: soundCollection
   id: MothLexicon

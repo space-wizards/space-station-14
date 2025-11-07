@@ -66,14 +66,6 @@
 
 - type: entity
   parent: BaseImplantOnlyImplanter
-  id: LearnKoboltLanguageImplanter
-  name: имплант изучения кобальдского языка
-  components:
-  - type: Implanter
-    implant: LearnKoboltLanguageImplant
-
-- type: entity
-  parent: BaseImplantOnlyImplanter
   id: LearnPlafLanguageImplanter
   name: имплант изучения акульего языка
   components:
@@ -98,17 +90,18 @@
 
 - type: entity
   parent: BaseImplantOnlyImplanter
-  id: LearnDogLanguageImplanter
-  name: имплант изучения собачьего языка
-  components:
-  - type: Implanter
-    implant: LearnDogLanguageImplant
-
-- type: entity
-  parent: BaseImplantOnlyImplanter
   id: LearnAllLanguageImplanter
   name: имплант изучения всех языков
   suffix: Адмемы
   components:
   - type: Implanter
     implant: LearnAllLanguageImplant
+
+- type: entity
+  parent: BaseImplantOnlyImplanter
+  id: LearnDogLanguageImplanter
+  name: имплант изучения собачьего языка
+  components:
+  - type: Implanter
+    implant: LearnDogLanguageImplant
+  

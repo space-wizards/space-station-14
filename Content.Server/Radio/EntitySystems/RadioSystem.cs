@@ -251,7 +251,7 @@ public sealed class RadioSystem : EntitySystem
             RaiseLocalEvent(receiver, ref ev);
         }
 
-        var selectedLanguage = language != null ? language.SelectedLanguage.Id : string.Empty; // DS14-Languages
+        var selectedLanguage = language != null ? language.SelectedLanguage : string.Empty; // DS14-Languages
 
         RaiseLocalEvent(new RadioSpokeEvent(messageSource, message, lexiconMessage, selectedLanguage, ev.Receivers.ToArray())); // DS14
 
