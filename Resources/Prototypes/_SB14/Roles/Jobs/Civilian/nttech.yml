@@ -1,0 +1,17 @@
+# Nanotrasen Technician starting gear
+- type: job
+  id: NTT
+  name: Nanotrasen Technician
+  description: job-description-ntt
+  playTimeTracker: JobNTT
+  startingGear: NTTGear
+  icon: "JobIconNTTech"
+  supervisors: job-supervisors-centcom
+  access:
+  - Maintenance
+
+- type: startingGear
+  id: NTTGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    shoes: ClothingShoesColorBrown

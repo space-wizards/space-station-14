@@ -1,0 +1,8 @@
+- type: playTimeTracker
+  id: JobPrisoner
+
+- type: playTimeTracker
+  id: JobNTTech
+
+- type: playTimeTracker
+  id: JobPrisonWarden

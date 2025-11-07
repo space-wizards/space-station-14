@@ -1,0 +1,20 @@
+- type: gameMap
+  id: TestMap
+  mapName: 'Test Map'
+  mapPath: Maps/_SB14/testmap.yml
+  minPlayers: 1
+  stations:
+    TestMap:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Test Map {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'TG'
+        - type: StationJobs
+          availableJobs: 
+            #Prisoner (infinite)
+            Prisoner: [ -1, -1 ]
+            #Prison Warden
+            PrisonWarden: [ 3, 3 ]

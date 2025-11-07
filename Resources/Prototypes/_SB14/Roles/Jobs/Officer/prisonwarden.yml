@@ -1,0 +1,17 @@
+# Prison Warden starting gear
+- type: job
+  id: PrisonWarden
+  name: Prison Warden
+  description: job-description-prisonwarden
+  playTimeTracker: JobPrisonWarden
+  startingGear: PrisonWardenGear
+  icon: "JobIconPrisonWarden"
+  supervisors: job-supervisors-centcom
+  access:
+  - Maintenance
+
+- type: startingGear
+  id: PrisonWardenGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    shoes: ClothingShoesColorBrown

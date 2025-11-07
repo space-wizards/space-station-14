@@ -1,0 +1,17 @@
+# Prisoner starting gear
+- type: job
+  id: Prisoner
+  name: job-name-prisoner
+  description: job-description-prisoner
+  playTimeTracker: JobPrisoner
+  startingGear: PrisonerGear
+  icon: "JobIconSBPrisoner"
+  supervisors: job-supervisors-everyone
+  access:
+  - Maintenance
+
+- type: startingGear
+  id: PrisonerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorOrange
+    shoes: ClothingShoesColorBlack

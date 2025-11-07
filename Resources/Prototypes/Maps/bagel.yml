@@ -56,6 +56,7 @@
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 3, 3 ]
             #civilian (3+)
+            Prisoner: [-1, -1]
             Passenger: [ -1, -1 ] #infinite, not counted
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]

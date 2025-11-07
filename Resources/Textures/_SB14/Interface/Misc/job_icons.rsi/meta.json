@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made for Space Break 14",
+    "size": {
+        "x": 16,
+        "y": 16
+    },
+    "states": [
+        {
+            "name": "Prisoner"
+        },
+        {
+            "name": "NTTech"
+        },
+        {
+            "name": "PrisonWarden"
+        }
+    ]
+}

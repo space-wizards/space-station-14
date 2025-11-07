@@ -1,0 +1,27 @@
+# Prisoner
+
+- type: entity
+  id: SpawnPointPrisoner
+  parent: SpawnPointJobBase
+  name: prisoner
+  components:
+  - type: SpawnPoint
+    job_id: Prisoner
+  - type: Sprite
+    layers:
+      - state: green
+      - state: prisoner
+
+# Prison Warden
+
+- type: entity
+  id: SpawnPointPrisonWarden
+  parent: SpawnPointJobBase
+  name: prison warden
+  components:
+  - type: SpawnPoint
+    job_id: PrisonWarden
+  - type: Sprite
+    layers:
+      - state: green
+      - state: prisonwarden

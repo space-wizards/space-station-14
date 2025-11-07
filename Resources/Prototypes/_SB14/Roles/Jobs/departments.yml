@@ -1,0 +1,26 @@
+#Nanotrasen Technician
+- type: department
+  id: NTT
+  name: Nanotrasen Technician
+  description: department-NTT-description
+  color: "#0057a9"
+  roles:
+    - NTT
+
+# Prisoner
+- type: department
+  id: Prisoner
+  name: Prisoner
+  description: department-Prisoner-description
+  color: "#006a30"
+  roles:
+    - Prisoner
+
+# Prison Warden
+- type: department
+  id: NanotrasenOfficer
+  name: Nanotrasen Officer
+  description: department-NanotrasenOfficer-descriptiion
+  color: "#b40000"
+  roles:
+    - PrisonWarden

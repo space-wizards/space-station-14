@@ -1,0 +1,29 @@
+# Prisoner
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconSBPrisoner
+  icon:
+    sprite: /Textures/_SB14/Interface/Misc/job_icons.rsi
+    state: Prisoner
+  jobName: job-name-prisoner
+
+# Nanotrasen Technician
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconNTTech
+  icon:
+    sprite: /Textures/_SB14/Interface/Misc/job_icons.rsi
+    state: NTTech
+  jobName: job-name-ntt
+
+# Prison Warden
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPrisonWarden
+  icon:
+    sprite: /Textures/_SB14/Interface/Misc/job_icons.rsi
+    state: PrisonWarden
+    jobName: job-name-prisonwarden

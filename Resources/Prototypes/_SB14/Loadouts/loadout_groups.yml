@@ -1,0 +1,38 @@
+# Prisoner
+- type: loadoutGroup
+  id: PrisonerJumpsuit
+  name: loadout-group-prisoner-jumpsuit
+  loadouts:
+  - OrangeJumpsuit
+
+- type: loadoutGroup
+  id: PrisonerShoes
+  name: loadout-group-prisoner-shoes
+  loadouts:
+  - BlackShoes
+
+# Nanotrasen Technician
+- type: loadoutGroup
+  id: NTTechJumpsuit
+  name: loadout-group-ntt-jumpsuit
+  loadouts:
+  - BlueJumpsuit
+
+- type: loadoutGroup
+  id: NTTShoes
+  name: loadout-group-ntt-shoes
+  loadouts:
+  - BrownShoes
+
+# Prison Warden
+- type: loadoutGroup
+  id: PrisonWardenJumpsuit
+  name: loadout-group-prisonwarden-jumpsuit
+  loadouts:
+  - BlueJumpsuit
+
+- type: loadoutGroup
+  id: PrisonWardenShoes
+  name: loadout-group-prisonwarden-shoes
+  loadouts:
+  - BrownShoes
