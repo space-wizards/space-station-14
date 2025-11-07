@@ -1,7 +1,7 @@
 - type: entity
-  name: captain's circuit tote
   parent: ToteBase
   id: BoxCaptainCircuitboards
+  name: captain's circuit tote
   description: A tote filled with the captain's circuit boards.
   components:
   - type: StorageFill
@@ -10,9 +10,9 @@
       - id: StationRecordsComputerCircuitboard
 
 - type: entity
-  name: chief engineer's circuit tote
   parent: ToteBase
   id: BoxCECircuitboards
+  name: chief engineer's circuit tote
   description: A tote filled with the chief engineer's circuit boards.
   components:
   - type: StorageFill
@@ -24,9 +24,9 @@
       - id: SolarControlComputerCircuitboard
 
 - type: entity
-  name: chief medical officer's circuit tote
   parent: ToteBase
   id: BoxCMOCircuitboards
+  name: chief medical officer's circuit tote
   description: A tote filled with the chief medical officer's circuit boards.
   components:
   - type: StorageFill
@@ -35,9 +35,9 @@
       - id: CargoRequestMedicalComputerCircuitboard
 
 - type: entity
-  name: head of personnel's circuit tote
   parent: ToteBase
   id: BoxHoPCircuitboards
+  name: head of personnel's circuit tote
   description: A tote filled with the head of personnel's circuit boards.
   components:
   - type: StorageFill
@@ -59,9 +59,9 @@
       - id: RubberStampHop
 
 - type: entity
-  name: head of security's circuit tote
   parent: ToteBase
   id: BoxHoSCircuitboards
+  name: head of security's circuit tote
   description: A tote filled with the head of security's circuit boards.
   components:
   - type: StorageFill
@@ -70,9 +70,9 @@
       - id: CargoRequestSecurityComputerCircuitboard
 
 - type: entity
-  name: quartermaster's circuit tote
   parent: ToteBase
   id: BoxQMCircuitboards
+  name: quartermaster's circuit tote
   description: A tote filled with the quartermaster's circuit boards.
   components:
   - type: StorageFill
@@ -98,9 +98,9 @@
       - id: RubberStampQm
 
 - type: entity
-  name: research director's circuit tote
   parent: ToteBase
   id: BoxRDCircuitboards
+  name: research director's circuit tote
   description: A tote filled with the research director's circuit boards.
   components:
   - type: StorageFill
