@@ -306,7 +306,7 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
-  - type: NightVisionClothing # DS14
+  - type: PNV # DS14
     color: "#41af0e"
 
 - type: entity
