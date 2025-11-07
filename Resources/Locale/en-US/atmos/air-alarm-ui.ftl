@@ -29,8 +29,8 @@ air-alarm-ui-window-auto-mode-label = Auto mode
 air-alarm-ui-window-listing-title = {$address} : {-air-alarm-state-name(state:$state)}
 air-alarm-ui-window-pressure = {$pressure} kPa
 air-alarm-ui-window-pressure-indicator = Pressure: [color={$color}]{$pressure} kPa[/color]
-air-alarm-ui-window-temperature = {$tempC} C ({$temperature} K)
-air-alarm-ui-window-temperature-indicator = Temperature: [color={$color}]{$tempC} C ({$temperature} K)[/color]
+air-alarm-ui-window-temperature = {$temperature}K ({$tempC}°C)
+air-alarm-ui-window-temperature-indicator = Temperature: [color={$color}]{$temperature}K ({$tempC}°C)[/color]
 air-alarm-ui-window-alarm-state = [color={$color}]{-air-alarm-state-name(state:$state)}[/color]
 air-alarm-ui-window-alarm-state-indicator = Status: [color={$color}]{-air-alarm-state-name(state:$state)}[/color]
 
