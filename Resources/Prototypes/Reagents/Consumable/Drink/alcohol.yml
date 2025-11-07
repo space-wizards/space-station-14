@@ -836,7 +836,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: CoconutRum
@@ -874,7 +874,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: CosmicAlaska
@@ -889,7 +889,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: Cosmopolitan
@@ -1237,7 +1237,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: Hooch
@@ -1704,7 +1704,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
+  metamorphicChangeColor: true
 
 - type: reagent
   id: Sbiten
