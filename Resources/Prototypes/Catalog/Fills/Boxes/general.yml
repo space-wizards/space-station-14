@@ -170,10 +170,6 @@
     layers:
       - state: box
       - state: stamp
-  - type: Storage
-    whitelist:
-      components:
-      - Stamp
 
 - type: entity
   name: meson box
