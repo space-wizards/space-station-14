@@ -1560,8 +1560,8 @@
   id: KoboldJuice
   reactants:
     ScrewdriverCocktail:
-      amount: 2
+      amount: 3
     BlueCuracao:
       amount: 1
   products:
-    KoboldJuice: 3
+    KoboldJuice: 4
