@@ -163,7 +163,6 @@
   - Survival
   - Trinkets
   - JanitorJobTrinkets
-  - JanitorPlunger
   - AssistiveItems
   - GroupSpeciesBreathTool
 
@@ -404,7 +403,6 @@
   - SurvivalSecurity
   - Trinkets
   - HeadofSecurityJobTrinkets
-  - SecurityStar
   - AssistiveItems
   - GroupSpeciesBreathToolSecurity
 
@@ -420,7 +418,6 @@
   - SurvivalSecurity
   - Trinkets
   - WardenJobTrinkets
-  - SecurityStar
   - AssistiveItems
   - GroupSpeciesBreathToolSecurity
 
@@ -437,7 +434,6 @@
   - SurvivalSecurity
   - Trinkets
   - SecurityJobTrinkets
-  - SecurityStar
   - AssistiveItems
   - GroupSpeciesBreathToolSecurity
 
@@ -453,7 +449,6 @@
   - SurvivalSecurity
   - Trinkets
   - DetectiveJobTrinkets
-  - SecurityStar
   - AssistiveItems
   - GroupSpeciesBreathToolSecurity
 
