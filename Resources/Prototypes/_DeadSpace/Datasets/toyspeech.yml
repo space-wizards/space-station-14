@@ -2,13 +2,13 @@
   id: FigurinesHqdishkaSpeech
   values:
     prefix: figurine-hqdishka-
-    count: 5
+    count: 4
 
 - type: localizedDataset
   id: FigurinesHacksLuaSpeech
   values:
     prefix: figurine-hackslua-
-    count: 2
+    count: 1
 
 - type: localizedDataset
   id: PlushieJeleshkaSpeech
