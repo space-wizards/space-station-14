@@ -782,7 +782,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkErikaSurprise
-  suffix: erika surprise
+  suffix: barthender surprise
   components:
   - type: SolutionContainerManager
     solutions:

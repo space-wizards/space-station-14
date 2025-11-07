@@ -148,7 +148,7 @@ reagent-desc-eggnog = Not enough egg.
 reagent-name-electric-shark = electric shark
 reagent-desc-electric-shark = Fun Shark fact: Selachians make up 20% of Space Station 16’s Engineering staff!
 
-reagent-name-erika-surprise = Erika surprise
+reagent-name-erika-surprise = bartender surprise
 reagent-desc-erika-surprise = The surprise is, it's green!
 
 reagent-name-gargle-blaster = Pan-Galactic Gargle Blaster
