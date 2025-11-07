@@ -30,11 +30,12 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
         base.Initialize();
 
         SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnBeforeSpawn);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
     }
 
-    private void OnBeforeSpawn(PlayerBeforeSpawnEvent ev)
+    private void OnBeforeSpawn(PlayerBeforeSpawnEvent args)
     {
-        var session = ev.Player;
+        var session = args.Player;
 
         // Check if any Reroute Spawning rules are running
         var rules = EntityQueryEnumerator<RerouteSpawningRuleComponent,GameRuleComponent>();
@@ -46,7 +47,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
             // Check if the player already has a map
             if (RequestExistingStation(session, out var stationExist))
             {
-                SpawnPlayer(ev, stationExist.Value);
+                SpawnPlayer(args, stationExist.Value);
                 break;
             }
 
@@ -59,7 +60,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
             }
 
             // Create the new map
-            GameTicker.LoadGameMap(map, out var mapId, stationName: ev.Profile.Name);
+            GameTicker.LoadGameMap(map, out var mapId, stationName: args.Profile.Name);
             _map.InitializeMap(mapId);
 
             // Identify the new station grid that was created
@@ -81,22 +82,22 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
             //store the newly created station entity for this session so we can put the player back on reconnect
             _catalog.Add(session, stationTarget);
 
-            SpawnPlayer(ev, stationTarget);
+            SpawnPlayer(args, stationTarget);
 
             // _outfitSystem.SetOutfit(mob, dm.Gear); //TODO:ERRANT gear??
 
-            ev.Handled = true;
+            args.Handled = true;
             break;
         }
     }
 
-    private void SpawnPlayer(PlayerBeforeSpawnEvent ev, EntityUid station)
+    private void SpawnPlayer(PlayerBeforeSpawnEvent args, EntityUid station)
     {
         //TODO This needs a full review, it might be missing modern stuff/steps. Ideally it should call an existing spawningsystem?
 
-        var newMind = _mind.CreateMind(ev.Player.UserId, ev.Profile.Name);
-        _mind.SetUserId(newMind, ev.Player.UserId);
-        var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, null, ev.Profile);
+        var newMind = _mind.CreateMind(args.Player.UserId, args.Profile.Name);
+        _mind.SetUserId(newMind, args.Player.UserId);
+        var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, null, args.Profile);
         DebugTools.AssertNotNull(mobMaybe);
         var mob = mobMaybe!.Value;
         _mind.TransferTo(newMind, mob);
@@ -117,5 +118,10 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
 
         station = stored;
         return true;
+    }
+
+    private void OnRoundRestartCleanup(RoundRestartCleanupEvent args)
+    {
+        _catalog.Clear();
     }
 }
