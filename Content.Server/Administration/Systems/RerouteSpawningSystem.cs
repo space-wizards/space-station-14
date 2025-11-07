@@ -1,11 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
-using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Station.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -22,7 +23,8 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
-    private Dictionary<ICommonSession, EntityUid> _catalog = [];
+    private readonly Dictionary<ICommonSession, EntityUid> _catalog = [];
+    private const RerouteType Grouping = RerouteType.Solo;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,6 +35,9 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
     }
 
+    /// <summary>
+    /// A player is trying to spawn into the round
+    /// </summary>
     private void OnBeforeSpawn(PlayerBeforeSpawnEvent args)
     {
         var session = args.Player;
@@ -51,46 +56,66 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
                 break;
             }
 
-            // TODO Ask the Manager for a map prototype that the player pricked pre-join or even pre-round?
-
-            if (!_proto.TryIndex(reroute.Map, out var map))
+            switch (Grouping)
             {
-                Log.Error($"Invalid map prototype: {reroute.Map}");
-                continue;
+                case RerouteType.Solo:
+                    if (!CreateSolitaryStation(args, reroute, session, out var stationTarget))
+                        continue;
+                    SpawnPlayer(args, stationTarget.Value);
+                    // _outfitSystem.SetOutfit(mob, dm.Gear); //TODO:ERRANT gear??
+                    args.Handled = true;
+                    break;
+
+                //TODO reroutes that group some players to the same map, based on some criteria?
+                //Maybe things like Nukie Spawn could be folded into that code?
             }
-
-            // Create the new map
-            GameTicker.LoadGameMap(map, out var mapId, stationName: args.Profile.Name);
-            _map.InitializeMap(mapId);
-
-            // Identify the new station grid that was created
-            var spawns = EntityQueryEnumerator<StationJobsComponent, StationSpawningComponent>();
-            EntityUid? stationEnt = null;
-            while (spawns.MoveNext(out var station, out _, out _))
-            {
-                stationEnt = station;
-            }
-
-            if (stationEnt is null)
-            {
-                Log.Error($"Reroute failed for {session} - no target station");
-                continue;
-            }
-
-            var stationTarget = stationEnt.Value;
-
-            //store the newly created station entity for this session so we can put the player back on reconnect
-            _catalog.Add(session, stationTarget);
-
-            SpawnPlayer(args, stationTarget);
-
-            // _outfitSystem.SetOutfit(mob, dm.Gear); //TODO:ERRANT gear??
-
-            args.Handled = true;
-            break;
         }
     }
 
+    /// <summary>
+    /// Create a personal map for every single player that logs in (whatever grid they try to spawn on)
+    /// </summary>
+    /// <param name="args">The spawn event</param>
+    /// <param name="reroute">The reroute component for the event</param>
+    /// <param name="session">The player session</param>
+    /// <param name="stationTarget">The station entity (nullspace) that is being created for this player</param>
+    private bool CreateSolitaryStation(
+        PlayerBeforeSpawnEvent args,
+        RerouteSpawningRuleComponent reroute,
+        ICommonSession session,
+        [NotNullWhen(true)]out EntityUid? stationTarget)
+    {
+        stationTarget = null;
+        // TODO Ask the Manager for a map prototype that the player pricked pre-join or even pre-round?
+
+        if (!_proto.TryIndex(reroute.Map, out var map))
+        {
+            Log.Error($"Invalid map prototype: {reroute.Map}");
+            return false;
+        }
+
+        // Create the new map
+        var newMap = GameTicker.LoadGameMap(map, out var mapId, stationName: args.Profile.Name);
+        _map.InitializeMap(mapId);
+
+        if (!TryComp<StationMemberComponent>(newMap.First(), out var member))
+        {
+            Log.Error($"Reroute failed for {session} - no target station");
+            return false;
+        }
+
+        stationTarget = member.Station;
+
+        //store the newly created station entity for this session so we can put the player back on reconnect
+        _catalog.Add(session, stationTarget.Value);
+        return true;
+    }
+
+    /// <summary>
+    /// Spawn the player and their gear
+    /// </summary>
+    /// <param name="args">The spawn event</param>
+    /// <param name="station">The station entity (nullspace)</param>
     private void SpawnPlayer(PlayerBeforeSpawnEvent args, EntityUid station)
     {
         //TODO This needs a full review, it might be missing modern stuff/steps. Ideally it should call an existing spawningsystem?
@@ -107,7 +132,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     /// Checks if a player already has a station allocated to them.
     /// </summary>
     /// <param name="session">The player session</param>
-    /// <param name="station">The player's existing station, if there is one</param>
+    /// <param name="station">The player's existing station</param>
     /// <returns></returns>
     private bool RequestExistingStation(ICommonSession session, [NotNullWhen(true)] out EntityUid? station)
     {
@@ -120,6 +145,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
         return true;
     }
 
+    /// Clear the saved station list, since the maps are being deleted
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent args)
     {
         _catalog.Clear();
