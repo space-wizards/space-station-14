@@ -1,9 +1,7 @@
 ﻿using Content.Shared.CCVar;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
 using Content.Shared.SSDIndicator;
-using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -32,8 +30,8 @@ public sealed class SSDIndicatorSystem : EntitySystem
             _cfg.GetCVar(CCVars.ICShowSSDIndicator) &&
             !_mobState.IsDead(uid) &&
             !HasComp<ActiveNPCComponent>(uid) &&
-            TryComp<MindContainerComponent>(uid, out var mindContainer) &&
-            mindContainer.ShowExamineInfo)
+            TryComp<SSDExaminableComponent>(uid, out var ssd) &&
+            ssd.ShowExamineInfo)
         {
             args.StatusIcons.Add(_prototype.Index(component.Icon));
         }

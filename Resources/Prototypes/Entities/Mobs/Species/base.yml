@@ -160,6 +160,7 @@
         Blunt: 5
   - type: SleepEmitSound
   - type: SSDIndicator
+  - type: SSDExaminable
   - type: StandingState
   - type: Crawler
   - type: Dna
