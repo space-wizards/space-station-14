@@ -2565,7 +2565,7 @@
   flavor: koboldjuice
   color: "#6DAC75"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/koboldjuice.rsi
+    sprite: Objects/Consumable/Drinks/koboldjuiceglass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
