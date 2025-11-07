@@ -247,3 +247,13 @@
   cost: 4000
   category: cargoproduct-category-name-livestock
   group: taipan_market
+
+- type: cargoProduct
+  id: TaipanLivestockXeno
+  icon:
+    sprite: Mobs/Aliens/Xenos/ravager.rsi
+    state: running
+  product: CrateNPCXeno
+  cost: 4300
+  category: cargoproduct-category-name-livestock
+  group: taipan_market
