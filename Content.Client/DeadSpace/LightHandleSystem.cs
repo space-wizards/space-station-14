@@ -1,5 +1,4 @@
-﻿using Content.Shared.DeadSpace.NightVision;
-using Content.Shared.Eye.Blinding.Components;
+﻿using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Mobs.Components;
 using Robust.Client.Console;
 using Robust.Client.Graphics;
@@ -33,8 +32,6 @@ public sealed class LightHandleSystem : EntitySystem
         if (!HasComp<MobStateComponent>(plr))
             return;
         if (TryComp<BlindableComponent>(plr, out var blindableComponent) && blindableComponent.LightSetup)
-            return;
-        if (TryComp<NightVisionComponent>(plr, out var ncComponent) && ncComponent.LightSetup)
             return;
 
         _light.Enabled = true;

@@ -1,0 +1,13 @@
+- type: entity
+  id: ActionToggleNightVision
+  name: Переключить пнв
+  description: Ой!
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    useDelay: 1
+    icon:
+      sprite: _DeadSpace/Clothing/Eyes/Hud/pnv.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:ToggleNightVisionActionEvent

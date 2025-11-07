@@ -7,11 +7,11 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv.rsi
-    scale: 0.7, 0.7 # bad practice, don't do it
   - type: Clothing
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv.rsi
-  - type: NightVisionClothing
-    color: "#41af0ef2"
+  - type: PNV
+    activateSound: 
+      path: /Audio/_DeadSpace/NightVision/pnv.ogg
 
 - type: latheRecipe
   id: ClothingEyesPNV
@@ -31,11 +31,12 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-adv.rsi
-    scale: 0.7, 0.7 # bad practice, don't do it
   - type: Clothing
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-adv.rsi
-  - type: NightVisionClothing
+  - type: PNV
     color: "#ffffffe6"
+    activateSound: 
+      path: /Audio/_DeadSpace/NightVision/pnv.ogg
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSyndicateContraband]
@@ -46,10 +47,11 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-synd.rsi
-    scale: 0.7, 0.7 # bad practice, don't do it
   - type: Clothing
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-synd.rsi
-  - type: NightVisionClothing
+  - type: PNV
     color: "#ffffffe6"
+    activateSound: 
+      path: /Audio/_DeadSpace/NightVision/pnv.ogg
   - type: ShowSyndicateIcons
   - type: ShowHealthBars
