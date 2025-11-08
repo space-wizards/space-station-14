@@ -49,7 +49,7 @@ public sealed partial class BatterySystem : SharedBatterySystem
         if (!TryComp<BatteryComponent>(ent, out var battery))
             return;
 
-        int chargePercentRounded = 0;
+        var chargePercentRounded = 0;
         if (battery.MaxCharge != 0)
             chargePercentRounded = (int)(100 * battery.CurrentCharge / battery.MaxCharge);
         args.PushMarkup(

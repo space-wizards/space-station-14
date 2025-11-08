@@ -43,10 +43,10 @@ public sealed partial class BatterySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        var old = ent.Comp.CurrentCharge;
+        var oldCharge = ent.Comp.CurrentCharge;
         ent.Comp.CurrentCharge = MathHelper.Clamp(value, 0, ent.Comp.MaxCharge);
-        if (MathHelper.CloseTo(ent.Comp.CurrentCharge, old) &&
-            !(old != ent.Comp.CurrentCharge && ent.Comp.CurrentCharge == ent.Comp.MaxCharge))
+        if (MathHelper.CloseTo(ent.Comp.CurrentCharge, oldCharge) &&
+            !(oldCharge != ent.Comp.CurrentCharge && ent.Comp.CurrentCharge == ent.Comp.MaxCharge))
         {
             return;
         }
