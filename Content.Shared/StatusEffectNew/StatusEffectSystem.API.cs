@@ -1,6 +1,9 @@
+using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Prototypes;
+using YamlDotNet.Core.Tokens;
 
 namespace Content.Shared.StatusEffectNew;
 
@@ -289,6 +292,21 @@ public sealed partial class StatusEffectsSystem
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// A method which specifically removes time from a status effect, or removes the status effect if time is null.
+    /// </summary>
+    /// <param name="uid">The target entity on which the effect is applied.</param>
+    /// <param name="effectProto">The prototype ID of the status effect to modify.</param>
+    /// <param name="time">
+    /// The time adjustment to apply to the status effect. Positive values extend the duration,
+    /// while negative values reduce it.
+    /// </param>
+    /// <returns> True if duration was edited successfully, false otherwise.</returns>
+    public bool TryRemoveTime(EntityUid uid, EntProtoId effectProto, TimeSpan? time)
+    {
+        return time == null ? TryRemoveStatusEffect(uid, effectProto) : TryAddTime(uid, effectProto, - time.Value);
     }
 
     /// <summary>

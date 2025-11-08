@@ -34,7 +34,7 @@ public sealed class JammerSystem : SharedJammerSystem
 
             if (_powerCell.TryGetBatteryFromSlot(uid, out var batteryUid, out var battery))
             {
-                if (!_battery.TryUseCharge(batteryUid.Value, GetCurrentWattage((uid, jam)) * frameTime, battery))
+                if (!_battery.TryUseCharge((batteryUid.Value, battery), GetCurrentWattage((uid, jam)) * frameTime))
                 {
                     ChangeLEDState(uid, false);
                     RemComp<ActiveRadioJammerComponent>(uid);

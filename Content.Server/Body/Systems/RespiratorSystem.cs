@@ -2,21 +2,23 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
-using Content.Server.EntityEffects;
 using Content.Shared.Body.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Chat;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.EntityConditions;
+using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.EffectConditions;
 using Content.Shared.EntityEffects.Effects;
+using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -29,16 +31,16 @@ public sealed class RespiratorSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosSys = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DamageableSystem _damageableSys = default!;
     [Dependency] private readonly LungSystem _lungSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly SharedEntityConditionsSystem _entityConditions = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly EntityEffectSystem _entityEffect = default!;
 
     private static readonly ProtoId<MetabolismGroupPrototype> GasId = new("Gas");
 
@@ -340,7 +342,6 @@ public sealed class RespiratorSystem : EntitySystem
             }
         }
 
-        // TODO generalize condition checks
         // this is pretty janky, but I just want to bodge a method that checks if an entity can breathe a gas mixture
         // Applying actual reaction effects require a full ReagentEffectArgs struct.
         bool CanMetabolize(EntityEffect effect)
@@ -348,9 +349,10 @@ public sealed class RespiratorSystem : EntitySystem
             if (effect.Conditions == null)
                 return true;
 
+            // TODO: Use Metabolism Public API to do this instead, once that API has been built.
             foreach (var cond in effect.Conditions)
             {
-                if (cond is OrganType organ && !_entityEffect.OrganCondition(organ, lung))
+                if (cond is MetabolizerTypeCondition organ && !_entityConditions.TryCondition(lung, organ))
                     return false;
             }
 
@@ -365,7 +367,7 @@ public sealed class RespiratorSystem : EntitySystem
         if (ent.Comp.SuffocationCycles == 2)
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} started suffocating");
 
-        _damageableSys.TryChangeDamage(ent, ent.Comp.Damage, interruptsDoAfters: false);
+        _damageableSys.ChangeDamage(ent.Owner, ent.Comp.Damage, interruptsDoAfters: false);
 
         if (ent.Comp.SuffocationCycles < ent.Comp.SuffocationCycleThreshold)
             return;
@@ -379,7 +381,7 @@ public sealed class RespiratorSystem : EntitySystem
         if (ent.Comp.SuffocationCycles >= 2)
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} stopped suffocating");
 
-        _damageableSys.TryChangeDamage(ent, ent.Comp.DamageRecovery);
+        _damageableSys.ChangeDamage(ent.Owner, ent.Comp.DamageRecovery);
 
         var ev = new StopSuffocatingEvent();
         RaiseLocalEvent(ent, ref ev);

@@ -132,7 +132,6 @@
     maxCharge: 90
     startingCharge: 90
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 1
   - type: AmmoCounter
   - type: Item
