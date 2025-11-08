@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Map
+  category: Grid
   engineVersion: 267.3.0
   forkId: ""
   forkVersion: ""
-  time: 11/07/2025 02:48:33
-  entityCount: 993
-maps:
-- 499
+  time: 11/08/2025 02:06:47
+  entityCount: 992
+maps: []
 grids:
 - 1
-orphans: []
+orphans:
+- 1
 nullspace: []
 tilemap:
   1: Space
@@ -26,7 +26,7 @@ entities:
       name: Pirate Warship
     - type: Transform
       pos: -0.46875,-0.484375
-      parent: 499
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -185,16 +185,6 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-  - uid: 499
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: GridTree
-    - type: Broadphase
-    - type: OccluderTree
 - proto: ActionToggleInternals
   entities:
   - uid: 279
