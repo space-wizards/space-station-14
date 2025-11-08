@@ -13,19 +13,34 @@ public abstract partial class SharedInstrumentComponent : Component
     [ViewVariables]
     public bool Playing { get; set; }
 
-    [DataField("program"), ViewVariables(VVAccess.ReadWrite)]
-    public byte InstrumentProgram { get; set; }
+    /// <summary>
+    /// This must be set on all instruments.
+    /// This specifies the MIDI Instrument (bank, channel) that this instrument uses; when
+    /// the instrument can actually play several MIDI instruments, this specifies the one that
+    /// is defaulted to, and this instrument must also be stated in the list of selectable Instruments in the Instruments dictionary below.
+    /// </summary>
+    [DataField("default")]
+    public Instrument Instrument;
 
-    [DataField("bank"), ViewVariables(VVAccess.ReadWrite)]
-    public byte InstrumentBank { get; set; }
-
-    [DataField("allowPercussion"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// If true, this instrument play the special percussion track that many MIDI files have: see the General MIDI specification.
+    /// </summary>
+    [DataField]
     public bool AllowPercussion { get; set; }
 
-    [DataField("allowProgramChange"), ViewVariables(VVAccess.ReadWrite)]
-    public bool AllowProgramChange { get ; set; }
+    /// <summary>
+    /// If true, this instrument can change what "Program" it uses - this is MIDI jargon for the MIDI instrument this instrument is playing.
+    /// This is the difference between items like a synth (plays all tracks on its synth program) and a supersynth (plays all tracks on their specified instrument).
+    /// </summary>
+    [DataField]
+    public bool AllowProgramChange { get; set; }
 
-    [DataField("respectMidiLimits"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// If true, this instrument has a maximum capacity of notes-per-second it can play, and going over that will cause those notes not to play and a pop-up to
+    /// appear (reading something like 'your fingers cramp up'). Do not set this to false on any instrument you want to give to a player, unless you enjoy listening
+    /// to 'black' MIDIs that overload the MIDI player.
+    /// </summary>
+    [DataField]
     public bool RespectMidiLimits { get; set; } = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -33,6 +48,33 @@ public abstract partial class SharedInstrumentComponent : Component
 
     [ViewVariables]
     public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
+
+    /// <summary>
+    /// Stores the different instruments that can be swapped between. The default Instrument above must be in the list.
+    /// </summary>
+    /// <remarks>At the moment the string value of this dictionary is used directly in-game in the UI. A TODO exists to migrate this to a locstring.</remarks>
+    [DataField("instrumentList")]
+    public Dictionary<string, Instrument> Instruments = new();
+}
+
+/// <summary>
+/// Defines information about the MIDI mapping of an instrument.
+/// </summary>
+[DataDefinition, Serializable, NetSerializable]
+public sealed partial class Instrument
+{
+    /// <summary>
+    /// The bank - the list of instruments - this instrument is in.
+    /// If the instrument is not in a custom soundfont file, it's in bank 0.
+    /// </summary>
+    [DataField]
+    public byte Bank;
+
+    /// <summary>
+    /// The ID of the instrument.
+    /// </summary>
+    [DataField]
+    public byte Program;
 }
 
 /// <summary>
@@ -66,7 +108,6 @@ public sealed class InstrumentComponentState : ComponentState
 
     public BitArray FilteredChannels = default!;
 }
-
 
 /// <summary>
 ///     This message is sent to the client to completely stop midi input and midi playback.
@@ -153,15 +194,15 @@ public enum InstrumentUiKey
 }
 
 /// <summary>
-/// Sets the MIDI channels on an instrument.
+/// Sets the MIDI tracks on an Instrument.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class InstrumentSetChannelsEvent : EntityEventArgs
+public sealed class InstrumentSetTracksEvent : EntityEventArgs
 {
     public NetEntity Uid { get; }
     public MidiTrack?[] Tracks { get; set; }
 
-    public InstrumentSetChannelsEvent(NetEntity uid, MidiTrack?[] tracks)
+    public InstrumentSetTracksEvent(NetEntity uid, MidiTrack?[] tracks)
     {
         Uid = uid;
         Tracks = tracks;
@@ -178,19 +219,20 @@ public sealed class MidiTrack
     /// The first specified Track Name
     /// </summary>
     public string? TrackName;
+
     /// <summary>
     /// The first specified instrument name
     /// </summary>
     public string? InstrumentName;
 
     /// <summary>
-    /// The first program change resolved to the name.
+    /// The channels that this track targets.
     /// </summary>
-    public string? ProgramName;
+    public Dictionary<byte, string> Channels = [];
 
     public override string ToString()
     {
-        return $"Track Name: {TrackName}; Instrument Name: {InstrumentName}; Program Name: {ProgramName}";
+        return $"Track Name: {TrackName}; Instrument Name: {InstrumentName}";
     }
 
     /// <summary>
@@ -203,9 +245,6 @@ public sealed class MidiTrack
 
         if (TrackName != null)
             TrackName = Truncate(TrackName, limit);
-
-        if (ProgramName != null)
-            ProgramName = Truncate(ProgramName, limit);
     }
 
     public void SanitizeFields()
@@ -215,12 +254,10 @@ public sealed class MidiTrack
 
         if (TrackName != null)
             TrackName = Sanitize(TrackName);
-
-        if (ProgramName != null)
-            ProgramName = Sanitize(ProgramName);
     }
 
     private const string Postfix = "…";
+
     // TODO: Make a general method to use in RT? idk if we have that.
     private string Truncate(string input, int limit)
     {

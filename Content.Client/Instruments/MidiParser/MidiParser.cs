@@ -1,16 +1,26 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using Content.Shared.Instruments;
+using Robust.Shared.Audio.Midi;
 
 namespace Content.Client.Instruments.MidiParser;
 
 public static class MidiParser
 {
-    // Thanks again to http://www.somascape.org/midi/tech/mfile.html
+    /// <summary>
+    /// Attempts to get the MIDI tracks from a provided blob of bytes.
+    /// </summary>
+    /// <param name="data">The byte blob to read from.</param>
+    /// <param name="tracks">The MIDI tracks. Nil on failure.</param>
+    /// <param name="error">A reason why the MIDI track could not be parsed for its tracks. Nil on success.</param>
+    /// <returns>True on success, false on failure.</returns>
+    /// <remarks>The authors of this code used http://www.somascape.org/midi/tech/mfile.html as close reference. Thanks!</remarks>
     public static bool TryGetMidiTracks(
         byte[] data,
         [NotNullWhen(true)] out MidiTrack[]? tracks,
-        [NotNullWhen(false)] out string? error)
+        [NotNullWhen(false)] out string? error
+    )
     {
         tracks = null;
         error = null;
@@ -27,13 +37,16 @@ public static class MidiParser
         // MIDI specs define that the header is 6 bytes, we only look at the 6 bytes, if its more, we skip ahead.
 
         stream.Skip(2); // format
+
         var trackCount = stream.ReadUInt16();
+
         stream.Skip(2); // time div
 
         // We now skip ahead if we still have any header length left
         stream.Skip((int)(headerLength - 6));
 
         var parsedTracks = new List<MidiTrack>();
+        var defaultChannelName = Loc.GetString("instruments-component-menu-midi-channel-default");
 
         for (var i = 0; i < trackCount; i++)
         {
@@ -109,9 +122,11 @@ public static class MidiParser
                         {
                             case 0x03 when track.TrackName == null:
                                 track.TrackName = text;
+
                                 break;
                             case 0x04 when track.InstrumentName == null:
                                 track.InstrumentName = text;
+
                                 break;
                         }
 
@@ -128,6 +143,7 @@ public static class MidiParser
                         // Sysex events and meta-events cancel any running status which was in effect.
                         // Running status does not apply to and may not be used for these messages.
                         lastStatusByte = null;
+
                         break;
                     }
 
@@ -138,23 +154,42 @@ public static class MidiParser
                             // Program Change
                             case 0xC0:
                             {
-                                var programNumber = stream.ReadByte();
-                                if (track.ProgramName == null)
+                                var channel = (byte)(lastStatusByte & 0xF);
+
+                                if (!track.Channels.TryGetValue(channel, out var value) || value == defaultChannelName)
                                 {
-                                    if (programNumber < Enum.GetValues<MidiInstrument>().Length)
-                                        track.ProgramName = Loc.GetString($"instruments-component-menu-midi-channel-{((MidiInstrument)programNumber).GetStringRep()}");
+                                    track.Channels[channel] =
+                                        Loc.GetString(
+                                            $"instruments-component-menu-midi-channel-{((MidiInstrument)stream.ReadByte()).GetStringRep()}");
+
+                                    break;
                                 }
+
+                                stream.Skip(1);
+
+                                break;
+                            }
+
+                            case 0x90: // Note On
+                            {
+                                var channel = (byte)(lastStatusByte & 0xF);
+
+                                track.Channels.TryAdd(channel, defaultChannelName);
+
+                                hasMidiEvent = true;
+                                stream.Skip(2);
+
                                 break;
                             }
 
                             case 0x80: // Note Off
-                            case 0x90: // Note On
                             case 0xA0: // Polyphonic Key Pressure
                             case 0xB0: // Control Change
                             case 0xE0: // Pitch Bend
                             {
                                 hasMidiEvent = true;
                                 stream.Skip(2);
+
                                 break;
                             }
 
@@ -162,18 +197,28 @@ public static class MidiParser
                             {
                                 hasMidiEvent = true;
                                 stream.Skip(1);
+
                                 break;
                             }
 
                             default:
                                 error = $"Unknown MIDI event type {lastStatusByte:X2}";
                                 tracks = null;
+
                                 return false;
                         }
+
                         break;
                 }
             }
 
+            foreach (var channel in track.Channels)
+            {
+                // Channel 9 should always be percussion under the GM spec. Sometimes MIDI files set this by a Program Change, but there's no requirement to.
+                // So just set the value to actually show as percussion.
+                if (channel.Key == RobustMidiEvent.PercussionChannel)
+                    track.Channels[channel.Key] = Loc.GetString("instruments-component-menu-midi-channel-percussion");
+            }
 
             if (hasMidiEvent)
                 parsedTracks.Add(track);
