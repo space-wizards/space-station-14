@@ -24,7 +24,7 @@ arcade-villain-names-enemy-first-10 = the Great
 arcade-villain-names-enemy-first-11 = the Space
 
 arcade-villain-names-enemy-last-1 = Crushulon
-arcade-villain-names-enemy-last-2 = ERPer
+arcade-villain-names-enemy-last-2 = Bingle
 arcade-villain-names-enemy-last-3 = Ectoplasm
 arcade-villain-names-enemy-last-4 = Griefer
 arcade-villain-names-enemy-last-5 = Jeff
