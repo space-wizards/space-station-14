@@ -17,7 +17,7 @@ tilemap:
   8: FloorConcrete
   2: FloorConcreteMono
   1: FloorConcreteSmooth
-  6: FloorDesert
+  6: FloorAsteroidSandBorderless
   0: FloorGrayConcreteSmooth
   4: FloorShuttleBlack
   9: FloorSteel

@@ -1,0 +1,16 @@
+- type: gameMap
+  id: dmTest
+  mapName: 'dm_Test'
+  mapPath: /Maps/dmTest.yml
+  minPlayers: 0
+  stations:
+   dmTest:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "test dm"
+        - type: StationJobs
+          availableJobs:
+            Passenger: [ -1, -1 ]
+            Musician: [-1, -1 ]
+

@@ -1,0 +1,75 @@
+- type: entity
+  name: Luntik.exe
+  parent: [ SimpleMobBase, MobCombat ]
+  id: MobLuntik
+  description: A hostile, glitchy AI construct that smashes anything in its path.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: base
+      sprite: Objects/counterstrike/Mobs/luntik.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: base
+      Critical:
+        Base: base
+      Dead:
+        Base: dead
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 200
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    attackRate: 1.0
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 25
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+    - Revolutionary
+    - Wizard
+    - Xeno
+    - Dragon
+    - Xenoborg
+    - SimpleHostile
+    - AllHostile
+  - type: FactionException
+  - type: NPCRetaliation
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      150: Critical
+      200: Dead
+  - type: Bloodstream
+    bloodMaxVolume: 100
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 300
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+  # Removed invalid tag 'AntagonistFriendly'. The mob is assigned to the
+  # Syndicate faction so it will be friendly to syndicate antagonists and
+  # still hostile to normal station factions (e.g., NanoTrasen).

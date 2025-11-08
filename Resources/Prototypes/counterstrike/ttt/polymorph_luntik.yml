@@ -1,0 +1,11 @@
+- type: polymorph
+  id: LuntikMorph
+  configuration:
+    entity: MobLuntik
+    forced: true
+    inventory: Drop
+    transferName: true
+    transferDamage: true
+    revertOnDeath: true
+    revertOnCrit: false
+    # no duration => permanent until revert action is used (if available)

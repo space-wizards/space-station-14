@@ -5,9 +5,9 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/shuttle_window.rsi
+    sprite: Objects/counterstrike/Structures/Windows/shuttle_window.rsi
   - type: Icon
-    sprite: Structures/Windows/shuttle_window.rsi
+    sprite: Objects/counterstrike/Structures/Windows/shuttle_window.rsi
   - type: Repairable
     fuelCost: 15
     doAfterDelay: 3
@@ -65,7 +65,7 @@
   components:
   - type: Sprite
     drawdepth: WallTops
-    sprite: Structures/Windows/shuttle_window_diagonal.rsi
+    sprite: Objects/counterstrike/Structures/Windows/shuttle_window_diagonal.rsi
     state: state0
   - type: Tag
     tags:
@@ -76,7 +76,7 @@
     key: windows
     base: state
   - type: Icon
-    sprite: Structures/Windows/shuttle_window_diagonal.rsi
+    sprite: Objects/counterstrike/Structures/Windows/shuttle_window_diagonal.rsi
     state: state0
   - type: Fixtures
     fixtures:

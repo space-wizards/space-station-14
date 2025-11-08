@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
@@ -14,6 +15,12 @@ public sealed partial class SpawnPointComponent : Component, ISpawnPoint
     /// </summary>
     [DataField("spawn_type"), ViewVariables(VVAccess.ReadWrite)]
     public SpawnPointType SpawnType { get; set; } = SpawnPointType.Unset;
+
+    /// <summary>
+    /// Optional respawn delay for players respawning at this spawn point. If zero the global respawn delay is used.
+    /// </summary>
+    [DataField("respawn_delay")]
+    public TimeSpan RespawnDelay = TimeSpan.Zero;
 
     public override string ToString()
     {

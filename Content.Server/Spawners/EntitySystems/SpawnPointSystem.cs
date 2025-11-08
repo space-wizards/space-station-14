@@ -27,22 +27,32 @@ public sealed class SpawnPointSystem : EntitySystem
         var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
         var possiblePositions = new List<EntityCoordinates>();
 
-        while (points.MoveNext(out var uid, out var spawnPoint, out var xform))
+            while (points.MoveNext(out var uid, out var spawnPoint, out var xform))
         {
             if (args.Station != null && _stationSystem.GetOwningStation(uid, xform) != args.Station)
                 continue;
 
-            if (_gameTicker.RunLevel == GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.LateJoin)
-            {
-                possiblePositions.Add(xform.Coordinates);
-            }
+                // In-round spawning normally uses LateJoin spawn points. However, if a job id is provided
+                // (for example when respawning a player as their job) allow Job-type spawn points that match
+                // the requested job to be considered as well.
+                if (_gameTicker.RunLevel == GameRunLevel.InRound)
+                {
+                    if (spawnPoint.SpawnType == SpawnPointType.LateJoin)
+                    {
+                        possiblePositions.Add(xform.Coordinates);
+                    }
 
-            if (_gameTicker.RunLevel != GameRunLevel.InRound &&
-                spawnPoint.SpawnType == SpawnPointType.Job &&
-                (args.Job == null || spawnPoint.Job == args.Job))
-            {
-                possiblePositions.Add(xform.Coordinates);
-            }
+                    if (spawnPoint.SpawnType == SpawnPointType.Job && args.Job != null && spawnPoint.Job == args.Job)
+                    {
+                        possiblePositions.Add(xform.Coordinates);
+                    }
+                }
+                else if (_gameTicker.RunLevel != GameRunLevel.InRound &&
+                    spawnPoint.SpawnType == SpawnPointType.Job &&
+                    (args.Job == null || spawnPoint.Job == args.Job))
+                {
+                    possiblePositions.Add(xform.Coordinates);
+                }
         }
 
         if (possiblePositions.Count == 0)

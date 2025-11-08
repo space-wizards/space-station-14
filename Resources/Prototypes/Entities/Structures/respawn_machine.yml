@@ -1,0 +1,27 @@
+- type: entity
+  parent: BaseStructure
+  id: BaseRespawnMachine
+  name: respawn machine
+  description: A station device that will queue and respawn players of a configured role when they die.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/parts.rsi
+    layers:
+    - state: box_0
+      map: ["base"]
+  - type: InteractionOutline
+  - type: RespawnMachine
+    # The job prototype id this machine will respawn. Leave blank to configure per-instance in-map.
+    # Example: "Assistant"
+    job: Captain
+    respawnDelay: 5
+    enabled: true
+  - type: PointLight
+    color: Lime
+    radius: 1
+    energy: 0.5
+    castShadows: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals: {}

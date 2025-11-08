@@ -1,0 +1,10 @@
+- type: entity
+  id: LuntikImplant
+  parent: BaseSubdermalImplant
+  name: "Luntik Subdermal Implant"
+  description: A subdermal implant that grants its bearer the ability to transform into Luntik.exe.
+  components:
+  - type: SubdermalImplant
+    # Action prototype granted to the implanted entity
+    implantAction: ActionBecomeLuntik
+  - type: DeleteOnUse

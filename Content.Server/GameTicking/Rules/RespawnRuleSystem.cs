@@ -13,6 +13,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server.Spawners.Components;
+using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -25,6 +27,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly SharedJobSystem _jobSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -54,7 +57,13 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
                 if (session.GetMind() is { } mind && TryComp<MindComponent>(mind, out var mindComp) && mindComp.OwnedEntity.HasValue)
                     QueueDel(mindComp.OwnedEntity.Value);
-                GameTicker.MakeJoinGame(session, station, silent: true);
+
+                // Try to preserve the job when respawning so that job-specific spawn points are respected.
+                string? jobId = null;
+                if (session.GetMind() is { } sessMind && _jobSystem.MindTryGetJobId(sessMind, out var job))
+                    jobId = job?.Id;
+
+                GameTicker.MakeJoinGame(session, station, jobId, silent: true);
                 tracker.RespawnQueue.Remove(player);
             }
         }
@@ -102,22 +111,53 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         if (!respawnTracker.Comp.Players.Contains(player.Comp.PlayerSession.UserId) || respawnTracker.Comp.RespawnQueue.ContainsKey(player.Comp.PlayerSession.UserId))
             return false;
 
-        if (respawnTracker.Comp.RespawnDelay == TimeSpan.Zero)
+        // Determine effective respawn delay. Prefer any per-spawn-point delay configured for the player's job.
+        var effectiveDelay = respawnTracker.Comp.RespawnDelay;
+        if (effectiveDelay == TimeSpan.Zero)
         {
-            if (_station.GetStations().FirstOrNull() is not { } station)
-                return false;
+            // attempt to find a per-job spawnpoint with a respawn delay
+            if (player.Comp.PlayerSession.GetMind() is { } mind && _jobSystem.MindTryGetJobId(mind, out var jobProto))
+            {
+                var query = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
+                TimeSpan best = TimeSpan.Zero;
+                while (query.MoveNext(out _, out var sp, out var _))
+                {
+                    if (sp.SpawnType != SpawnPointType.Job)
+                        continue;
 
-            if (respawnTracker.Comp.DeleteBody)
-                QueueDel(player);
-            GameTicker.MakeJoinGame(player.Comp.PlayerSession, station, silent: true);
-            return false;
+                    if (sp.Job != jobProto)
+                        continue;
+
+                    if (sp.RespawnDelay != TimeSpan.Zero && (best == TimeSpan.Zero || sp.RespawnDelay < best))
+                        best = sp.RespawnDelay;
+                }
+
+                if (best != TimeSpan.Zero)
+                    effectiveDelay = best;
+            }
         }
 
-        var msg = Loc.GetString("rule-respawn-in-seconds", ("second", respawnTracker.Comp.RespawnDelay.TotalSeconds));
+            if (effectiveDelay == TimeSpan.Zero)
+            {
+                if (_station.GetStations().FirstOrNull() is not { } station)
+                    return false;
+
+                if (respawnTracker.Comp.DeleteBody)
+                    QueueDel(player);
+                // preserve job on immediate respawn if possible
+                string? jobId = null;
+                if (player.Comp.PlayerSession.GetMind() is { } mind && _jobSystem.MindTryGetJobId(mind, out var job))
+                    jobId = job?.Id;
+
+                GameTicker.MakeJoinGame(player.Comp.PlayerSession, station, jobId, silent: true);
+                return false;
+            }
+
+        var msg = Loc.GetString("rule-respawn-in-seconds", ("second", effectiveDelay.TotalSeconds));
         var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, player.Comp.PlayerSession.Channel, Color.LimeGreen);
 
-        respawnTracker.Comp.RespawnQueue[player.Comp.PlayerSession.UserId] = _timing.CurTime + respawnTracker.Comp.RespawnDelay;
+        respawnTracker.Comp.RespawnQueue[player.Comp.PlayerSession.UserId] = _timing.CurTime + effectiveDelay;
 
         return true;
     }
