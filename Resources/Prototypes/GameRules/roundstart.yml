@@ -95,15 +95,6 @@
   - type: RerouteSpawningRule
     map: Opening
 
-# TODO:ERRANT Disable Observe
-
-# TODO:ERRANT Funnel player into spawning as a default option when clicking Join, do not show UI
-#       alternatively, just hide the extra stations
-
-# TODO:ERRANT Disable ghosting, or on-death force respawn?
-
-# TODO:ERRANT Disable deadchat and OOC?
-
 - type: entity
   abstract: true
   parent: BaseGameRule
