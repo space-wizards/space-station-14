@@ -1,5 +1,4 @@
-using System.Linq;
-using System.Numerics;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Explosion.Components;
 using Content.Shared.CCVar;
@@ -21,6 +20,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Numerics;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -207,6 +208,7 @@ public sealed partial class ExplosionSystem
         string id,
         float? fireStacks,
         float? temperature,
+        float currentIntensity,
         EntityUid? cause)
     {
         var size = grid.Comp.TileSize;
@@ -237,6 +239,13 @@ public sealed partial class ExplosionSystem
         {
             processed.Add(entity);
             ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, temperature, cause);
+        }
+
+        // heat the atmosphere
+        if (temperature != null)
+        {
+            GridAtmosphereComponent? gridAtmosComp = EntityManager.GetComponent<GridAtmosphereComponent>(grid);
+            _atmosphere.HotspotExpose((grid, gridAtmosComp), tile, temperature.Value, currentIntensity, cause, true);
         }
 
         // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
@@ -475,13 +484,6 @@ public sealed partial class ExplosionSystem
                 flammable.FireStacks += fireStacksOnIgnite.Value;
                 _flammableSystem.Ignite(uid, uid, flammable);
             }
-        }
-
-        // heat the atmosphere
-        if ((temperature != null) && (xform != null) && (xform.GridUid is { } gridUid))
-        {
-            var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
-            _atmosphere.HotspotExpose(gridUid, position, temperature.Value, 50, uid, true);
         }
 
         // throw
@@ -873,6 +875,7 @@ sealed class Explosion
                     ExplosionType.ID,
                     ExplosionType.FireStacks,
                     ExplosionType.Temperature,
+                    _currentIntensity,
                     Cause);
 
                 // If the floor is not blocked by some dense object, damage the floor tiles.

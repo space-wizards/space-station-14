@@ -78,7 +78,6 @@
   fireColor: Blue
   texturePath: /Textures/Effects/fire_greyscale.rsi
   fireStates: 3
-  fireStacks: 0
 
 - type: explosion
   id: Minibomb
