@@ -90,3 +90,14 @@
           pink: ""
           purple: ""
           cyan: ""
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRadiant
+  name: Radiant's uniform
+  description: holy
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/Radiant.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/Radiant.rsi

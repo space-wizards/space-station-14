@@ -1,0 +1,24 @@
+#RADIANT
+
+# recruit
+- type: listing
+  id: DotaRadiantRecruitSword
+  name: Recruit's sword
+  description: a great sword.
+  icon: { sprite: /Objects/counterstrike/Weapons/Dota/Radiant/Recruit/Melee/recruitsword.rsi, state: icon }
+  productEntity: RadiantRecruitSword
+  cost:
+    Telecrystal: 1
+  categories:
+  - DotaRadiantRecruit
+
+- type: listing
+  id: DotaRadiantRecruitArmor
+  name: Recruit's armor.
+  description: this steel will shine forever.
+  icon: { sprite: /Objects/counterstrike/Clothing/Suit/RadiantSoldier.rsi, state: icon }
+  productEntity: ClothingOuterArmorRadiantSoldier
+  cost:
+    Telecrystal: 1
+  categories:
+  - DotaRadiantRecruit

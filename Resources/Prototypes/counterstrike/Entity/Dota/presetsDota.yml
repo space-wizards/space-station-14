@@ -1,0 +1,14 @@
+- type: entity
+  id: StorePresetDotaRadiant
+  abstract: true
+  components:
+  - type: Store
+    name: Radiance Store
+    categories:
+    - DotaRadiantRecruit
+    - DotaRadiantKnight
+    - DotaRadiantChieftain
+    currencyWhitelist:
+    - Telecrystal
+    balance:
+      Telecrystal: 3

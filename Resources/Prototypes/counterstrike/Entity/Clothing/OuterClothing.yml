@@ -55,3 +55,30 @@
       - state: equipped-OUTERCLOTHING
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHoodJeff
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterArmorRadiantSoldier
+  name: Radiant Soldier's Armor
+  description: This steel will shine forever.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Suit/RadiantSoldier.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Suit/RadiantSoldier.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.6
+        Piercing: 0.6
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: Reflect
+    reflectProb: 1.0
+    spread: 75
+    reflectingInHands: false

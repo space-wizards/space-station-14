@@ -197,3 +197,26 @@
   - type: Store
     balance:
       Telecrystal: 1
+
+# dota
+
+- type: entity
+  parent: [BaseStructure, StorePresetDotaRadiant]
+  id: DotaUplinkRadiant
+  name: radiant uplink.
+  description: dire's tech
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Structures/Dota/RadiantStore.rsi
+    layers:
+    - state: icon
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      Telecrystal: 5

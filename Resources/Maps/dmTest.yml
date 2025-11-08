@@ -72,6 +72,8 @@ entities:
         path: /Audio/Effects/alert.ogg
   - uid: 2
     components:
+    - type: ImplicitRoof
+      color: '#F2CD83FF'
     - type: BecomesStation
       id: dmTest
     - type: MetaData
@@ -100,7 +102,6 @@ entities:
     - type: SpreaderGrid
     - type: Shuttle
       dampingModifier: 0.25
-    - type: ImplicitRoof
     - type: GridPathfinding
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier

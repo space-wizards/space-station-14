@@ -1,0 +1,25 @@
+- type: entity
+  name: Radiant Recruit's Sword
+  parent: [ BaseSword, BaseMajorContraband ]
+  id: RadiantRecruitSword
+  description: a great sword.
+  components:
+  - type: Tag
+    tags:
+    - Machete
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/Dota/Radiant/Recruit/Melee/recruitsword.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 16
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,0,2
+  - type: DisarmMalus
+  - type: Tool
+    qualities:
+    - Slicing
