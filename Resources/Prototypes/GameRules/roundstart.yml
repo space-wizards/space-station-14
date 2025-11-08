@@ -94,6 +94,7 @@
   components:
   - type: RerouteSpawningRule
     map: Opening
+    gear: PassengerGear
 
 - type: entity
   abstract: true

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Content.Server.Maps;
+using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -16,9 +17,14 @@ public sealed partial class RerouteSpawningRuleComponent : Component
     [DataField, Required]
     public ProtoId<GameMapPrototype> Map;
 
-    //TODO Filter who will be targeted. For now, targeting every player is fine.
+    /// <summary>
+    /// The gear that will be equipped on the player.
+    /// If there are any JobPrototypes that use this StartingGear, their Loadouts will also be equipped
+    /// </summary>
+    [DataField, Required]
+    public ProtoId<StartingGearPrototype> Gear;
 
-    //TODO: Specify a loadout/gear for the player.
+    //TODO Filter who will be targeted. For now, targeting every player is fine.
 }
 
 public enum RerouteType : byte

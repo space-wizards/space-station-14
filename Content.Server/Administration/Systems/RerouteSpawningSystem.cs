@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Clothing.Systems;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -21,6 +22,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly OutfitSystem _outfit = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
@@ -53,7 +55,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
             // Check if the player already has a map
             if (RequestExistingStation(session, out var stationExist))
             {
-                SpawnPlayer(args, stationExist.Value);
+                SpawnPlayer(args, reroute, stationExist.Value);
                 break;
             }
 
@@ -62,8 +64,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
                 case RerouteType.Solo:
                     if (!CreateSoloStation(args, reroute, session, out var stationTarget))
                         continue;
-                    SpawnPlayer(args, stationTarget.Value);
-                    // _outfitSystem.SetOutfit(mob, dm.Gear); //TODO:ERRANT gear??
+                    SpawnPlayer(args, reroute, stationTarget.Value);
                     args.Handled = true;
                     break;
 
@@ -122,16 +123,19 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     /// </summary>
     /// <param name="args">The spawn event</param>
     /// <param name="station">The station entity (nullspace)</param>
-    private void SpawnPlayer(PlayerBeforeSpawnEvent args, EntityUid station)
+    private void SpawnPlayer(PlayerBeforeSpawnEvent args, RerouteSpawningRuleComponent comp, EntityUid station)
     {
         //TODO:ERRANT This needs a full review, it might be missing modern stuff/steps. Ideally it should call an existing spawningsystem?
 
         var newMind = _mind.CreateMind(args.Player.UserId, args.Profile.Name);
         _mind.SetUserId(newMind, args.Player.UserId);
+        // Do not give the player a real job, this system ignores job bans.
+        // Also, we don't want to give specific role playtime for the tutorial, either
         var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, null, args.Profile);
-        DebugTools.AssertNotNull(mobMaybe);
+        DebugTools.AssertNotNull(mobMaybe); //TODO:ERRANT make this fail more graceful
         var mob = mobMaybe!.Value;
         _mind.TransferTo(newMind, mob);
+        _outfit.SetOutfit(mob, comp.Gear);
     }
 
     /// <summary>
