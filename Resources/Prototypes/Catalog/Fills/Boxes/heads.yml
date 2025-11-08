@@ -4,7 +4,7 @@
   suffix: Captain
   components:
   - type: Label
-    currentLabel: job-name-captain
+    currentLabel: captain
   - type: ContainerFill
     containers:
       storagebase:
@@ -17,7 +17,7 @@
   suffix: CE
   components:
   - type: Label
-    currentLabel: job-name-ce
+    currentLabel: chief engineer
   - type: ContainerFill
     containers:
       storagebase:
@@ -33,7 +33,7 @@
   suffix: CMO
   components:
   - type: Label
-    currentLabel: job-name-cmo
+    currentLabel: chief medical officer
   - type: ContainerFill
     containers:
       storagebase:
@@ -46,7 +46,7 @@
   suffix: HoP
   components:
   - type: Label
-    currentLabel: job-name-hop
+    currentLabel: head of personnel
   - type: ContainerFill
     containers:
       storagebase:
@@ -60,7 +60,7 @@
   suffix: HoP
   components:
   - type: Label
-    currentLabel: job-name-hop
+    currentLabel: head of personnel
   - type: ContainerFill
     containers:
       storagebase:
@@ -74,7 +74,7 @@
   suffix: HoS
   components:
   - type: Label
-    currentLabel: job-name-hos
+    currentLabel: head of security
   - type: ContainerFill
     containers:
       storagebase:
@@ -87,7 +87,7 @@
   suffix: QM
   components:
   - type: Label
-    currentLabel: job-name-qm
+    currentLabel: quartermaster
   - type: ContainerFill
     containers:
       storagebase:
@@ -105,7 +105,7 @@
   suffix: QM
   components:
   - type: Label
-    currentLabel: job-name-qm
+    currentLabel: quartermaster
   - type: ContainerFill
     containers:
       storagebase:
@@ -119,7 +119,7 @@
   suffix: RD
   components:
   - type: Label
-    currentLabel: job-name-rd
+    currentLabel: research director
   - type: ContainerFill
     containers:
       storagebase:
