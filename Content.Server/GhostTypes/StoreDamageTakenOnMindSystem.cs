@@ -47,6 +47,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
             return;
 
         EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
+        Dirty(mindContainer.Mind.Value, storedDamage);
         storedDamage.DamagePerGroup = damageable.DamagePerGroup;
         storedDamage.Damage = damageable.Damage;
     }

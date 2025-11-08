@@ -1,23 +1,24 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.GhostTypes;
 
 /// <summary>
 /// Added to the Mind of an entity by the StoreDamageTakenOnMindSystem, allowing storage of the damage values their body had.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class LastBodyDamageComponent : Component
 {
     /// <summary>
     /// Dictionary DamageGroupPrototype proto ids to how much damage was received from that damage type.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public Dictionary<string, FixedPoint2>? DamagePerGroup;
 
     /// <summary>
     /// Collection of possible damage types, stored by the StoreDamageTakenOnMind.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public DamageSpecifier? Damage;
 }

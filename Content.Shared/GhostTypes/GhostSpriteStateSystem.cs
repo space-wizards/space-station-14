@@ -32,6 +32,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         }
         else if (TryComp<LastBodyDamageComponent>(mind, out var storedDamage) && storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
         {
+            Dirty(mind, storedDamage);
             damageTypes = _damageable.GetDamages(storedDamage.DamagePerGroup, storedDamage.Damage);
         }
         else
