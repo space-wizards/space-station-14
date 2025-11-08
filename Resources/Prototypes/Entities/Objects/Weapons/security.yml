@@ -91,6 +91,10 @@
     guides:
     - Security
     - Antagonists
+  - type: CombatSight
+    sight:
+      sprite: Interface/Misc/crosshair_pointers.rsi
+      state: baton_sight
 
 - type: entity
   name: truncheon

@@ -2,6 +2,7 @@ using Content.Client.Hands.Systems;
 using Content.Client.NPC.HTN;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -84,7 +85,8 @@ public sealed class CombatModeSystem : SharedCombatModeSystem
                 EntityManager,
                 _eye,
                 this,
-                EntityManager.System<HandsSystem>()));
+                EntityManager.System<HandsSystem>(),
+                EntityManager.System<SpriteSystem>()));
         }
         else
         {

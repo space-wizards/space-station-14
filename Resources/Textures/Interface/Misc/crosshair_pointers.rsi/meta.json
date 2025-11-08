@@ -15,6 +15,33 @@
     },
     {
       "name": "melee_sight"
+    },
+    {
+      "name": "revolver_sight"
+    },
+    {
+      "name": "launcher_sight"
+    },
+    {
+      "name": "launcher_bolt_sight"
+    },
+    {
+      "name": "sniper_sight"
+    },
+    {
+      "name": "sniper_bolt_sight"
+    },
+    {
+      "name": "rifle_sight"
+    },
+    {
+      "name": "rifle_bolt_sight"
+    },
+    {
+      "name": "spear_sight"
+    },
+    {
+      "name": "baton_sight"
     }
   ]
 }

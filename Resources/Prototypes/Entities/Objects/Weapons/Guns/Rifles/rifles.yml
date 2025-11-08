@@ -53,6 +53,13 @@
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
     price: 500
+  - type: CombatSight
+    sight:
+      sprite: Interface/Misc/crosshair_pointers.rsi
+      state: rifle_sight
+    unavailable:
+      sprite: Interface/Misc/crosshair_pointers.rsi
+      state: rifle_bolt_sight
 
 - type: entity
   name: AKMS
@@ -199,7 +206,7 @@
   name: XL8
   description: |-
     The Experimental Lecter 8
-    An unreasonably expensive military grade assault rifle with integrated optic. 
+    An unreasonably expensive military grade assault rifle with integrated optic.
     Uses .20 rifle ammo.
   components:
   - type: Sprite
@@ -219,7 +226,7 @@
     - Burst
     - SemiAuto
     - FullAuto
-  
+
 - type: entity
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
