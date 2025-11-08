@@ -30,9 +30,6 @@
     solution: bucket
   - type: ExaminableSolution
     solution: bucket
-  - type: Tag
-    tags:
-      - Wringer
   - type: ItemMapper
     mapLayers:
       mopbucket_shark_blue:
@@ -190,11 +187,7 @@
           whitelist:
             tags:
               - Plunger
-        goldenplunger_slot:
-          name: janitorial-trolley-slot-component-slot-name-goldenplunger
-          whitelist:
-            tags:
-            - GoldenPlunger
+              - GoldenPlunger
           priority: 8
         wetfloorsign_slot4:
           name: janitorial-trolley-slot-component-slot-name-sign
@@ -274,9 +267,6 @@
       solution: bucket
     - type: ExaminableSolution
       solution: bucket
-    - type: Tag
-      tags:
-        - Wringer
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
