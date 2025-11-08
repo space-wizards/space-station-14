@@ -1,12 +1,9 @@
 using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Explosion.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
-using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Projectiles;
@@ -16,11 +13,9 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
 using System.Numerics;
 using TimedDespawnComponent = Robust.Shared.Spawners.TimedDespawnComponent;
 
