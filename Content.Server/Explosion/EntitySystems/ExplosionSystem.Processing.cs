@@ -237,9 +237,8 @@ public sealed partial class ExplosionSystem
         }
 
         // heat the atmosphere
-        if (temperature != null)
+        if ((temperature != null) && (TryComp<GridAtmosphereComponent>(grid, out var gridAtmosComp)))
         {
-            GridAtmosphereComponent? gridAtmosComp = EntityManager.GetComponent<GridAtmosphereComponent>(grid);
             _atmosphere.HotspotExpose((grid, gridAtmosComp), tile, temperature.Value, currentIntensity, cause, true);
         }
 
