@@ -290,4 +290,10 @@ public sealed partial class GunSystem : SharedGunSystem
             Audio.PlayPvs(weaponSound, otherEntity);
         }
     }
+
+    public override void Update(float frameTime)
+    {
+        UpdateBallistic();
+        UpdateAutoFire();
+    }
 }
