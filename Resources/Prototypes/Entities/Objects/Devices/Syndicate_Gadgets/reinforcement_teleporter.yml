@@ -118,6 +118,6 @@
       - MindRoleGhostRoleSilicon
       raffle:
         settings: default
-      job: Borg # This role has a playtime requirement as it can speak.
+      job: Borg # Although these are reinforcements for the bad guys, this allows playtime as this borg to count toward station borg playtime, and vice-versa.
     - type: GhostRoleMobSpawner
       prototype: PlayerBorgSyndicateAssaultBattery
