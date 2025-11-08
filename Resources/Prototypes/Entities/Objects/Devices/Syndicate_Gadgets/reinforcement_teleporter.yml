@@ -28,7 +28,7 @@
     rules: ghost-role-information-syndicate-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -48,7 +48,7 @@
     rules: ghost-role-information-nukeop-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -66,7 +66,7 @@
     rules: ghost-role-information-syndicate-reinforcement-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
   - type: GhostRoleMobSpawner

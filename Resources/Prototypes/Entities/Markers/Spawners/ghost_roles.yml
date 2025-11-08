@@ -25,7 +25,7 @@
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleGhostRoleSoloAntagonist
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -170,7 +170,7 @@
     rules: ghost-role-information-space-dragon-rules
     mindRoles:
     - MindRoleDragon
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
   - type: Sprite
     layers:
     - state: green
@@ -188,7 +188,7 @@
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleNinja
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
   - type: Sprite
@@ -209,7 +209,7 @@
     rules: ghost-role-information-antagonist-rules
     mindRoles:
     - MindRoleParadoxClone
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
   - type: Sprite
@@ -229,7 +229,7 @@
     description: ghost-role-information-derelict-engineering-cyborg-description
     rules: ghost-role-information-silicon-rules
     mindRoles:
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
 
@@ -244,7 +244,7 @@
     rules: ghost-role-information-silicon-rules
     mindRoles:
     - MindRoleSubvertedSilicon
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
   - type: Sprite
@@ -264,7 +264,7 @@
     description: ghost-role-information-derelict-janitor-cyborg-description
     rules: ghost-role-information-silicon-rules
     mindRoles:
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
 
@@ -278,7 +278,7 @@
     description: ghost-role-information-derelict-medical-cyborg-description
     rules: ghost-role-information-silicon-rules
     mindRoles:
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
 
@@ -304,7 +304,7 @@
     description: ghost-role-information-derelict-syndicate-assault-cyborg-description
     rules: ghost-role-information-silicon-rules
     mindRoles:
-    - MindRoleGhostRoleProtected # This mob can speak.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
 

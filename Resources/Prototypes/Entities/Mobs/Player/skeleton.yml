@@ -57,7 +57,7 @@
     rules: ghost-role-information-freeagent-rules
     mindRoles:
     - MindRoleGhostRoleFreeAgent
-    - MindRoleGhostRoleProtected # This mob can speak and has hands.
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
