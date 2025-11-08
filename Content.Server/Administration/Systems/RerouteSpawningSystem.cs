@@ -56,6 +56,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
             if (RequestExistingStation(session, out var stationExist))
             {
                 SpawnPlayer(args, reroute, stationExist.Value);
+                args.Handled = true;
                 break;
             }
 

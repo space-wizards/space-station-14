@@ -208,6 +208,7 @@
   showInVote: false
   rules:
   - SoloSpawning
+  - RespawnDeadRule
 
 - type: gamePreset
   id: Wizard
