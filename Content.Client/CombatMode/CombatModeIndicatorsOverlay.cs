@@ -80,19 +80,17 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
 
         var isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
 
-        Texture sightAvailable =
-            isHandGunItem ? _defaultGunSight : _defaultMeleeSight;
-        Texture sightUnavailable =
-            isHandGunItem ? _defaultGunUnavailableSight : _defaultMeleeUnavailableSight;
+        var sightAvailable = isHandGunItem ? _defaultGunSight : _defaultMeleeSight;
+        var sightUnavailable = isHandGunItem ? _defaultGunUnavailableSight : _defaultMeleeUnavailableSight;
 
-        if (_entMan.TryGetComponent(handEntity, out CombatSightComponent? combatSight))
+        if (_entMan.TryGetComponent<CombatSightComponent>(handEntity, out var combatSight))
         {
             if (combatSight.Sight is { } sightSpecifier)
             {
                 // I pray this isn't a constructor.
                 sightAvailable = _spriteSys.Frame0(sightSpecifier);
             }
-            if (combatSight.UnavailableSight is { } unavailableSightSpecifier)
+            if (combatSight.Unavailable is { } unavailableSightSpecifier)
             {
                 sightUnavailable = _spriteSys.Frame0(unavailableSightSpecifier);
             }
@@ -100,7 +98,9 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
 
         var weaponAvailable = true;
         if (_entMan.TryGetComponent(handEntity, out ChamberMagazineAmmoProviderComponent? chamber))
-            weaponAvailable = chamber.BoltClosed ?? true;
+        {
+            weaponAvailable = weaponAvailable && (chamber.BoltClosed ?? true);
+        }
 
         var sight = weaponAvailable ? sightAvailable : sightUnavailable;
         DrawSight(sight, args.ScreenHandle, mousePos, limitedScale * Scale);

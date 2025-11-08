@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/Arteben",
+  "copyright": "gun_sight, gun_bolt_sight, melee_sight by https://github.com/Arteben, revolver_sight, launcher_sight, launcher_bolt_sight, sniper_sight, sniper_bolt_sight, rifle_sight, rifle_bolt_sight, spear_sight, and baton_sight by https://github.com/notquitehadouken",
   "size": {
     "x": 64,
     "y": 64
