@@ -4,8 +4,8 @@ meta:
   engineVersion: 267.3.0
   forkId: ""
   forkVersion: ""
-  time: 11/04/2025 19:49:34
-  entityCount: 23872
+  time: 11/07/2025 10:28:48
+  entityCount: 23873
 maps:
 - 5350
 grids:
@@ -64780,38 +64780,6 @@ entities:
     - type: Transform
       pos: 49.502296,31.49661
       parent: 30
-- proto: Dresser
-  entities:
-  - uid: 655
-    components:
-    - type: Transform
-      pos: 3.5,15.5
-      parent: 30
-  - uid: 6427
-    components:
-    - type: Transform
-      pos: 16.5,39.5
-      parent: 30
-  - uid: 17643
-    components:
-    - type: Transform
-      pos: -78.5,-49.5
-      parent: 30
-  - uid: 17946
-    components:
-    - type: Transform
-      pos: -52.5,-51.5
-      parent: 30
-  - uid: 17947
-    components:
-    - type: Transform
-      pos: -52.5,-55.5
-      parent: 30
-  - uid: 21299
-    components:
-    - type: Transform
-      pos: -29.5,-45.5
-      parent: 30
 - proto: DresserCaptainFilled
   entities:
   - uid: 4989
@@ -64835,10 +64803,45 @@ entities:
       parent: 30
 - proto: DresserFilled
   entities:
+  - uid: 655
+    components:
+    - type: Transform
+      pos: 3.5,15.5
+      parent: 30
+  - uid: 2001
+    components:
+    - type: Transform
+      pos: 16.5,39.5
+      parent: 30
+  - uid: 6427
+    components:
+    - type: Transform
+      pos: -78.5,-49.5
+      parent: 30
   - uid: 9968
     components:
     - type: Transform
       pos: -10.5,-22.5
+      parent: 30
+  - uid: 17643
+    components:
+    - type: Transform
+      pos: -52.5,-51.5
+      parent: 30
+  - uid: 17946
+    components:
+    - type: Transform
+      pos: -52.5,-55.5
+      parent: 30
+  - uid: 17947
+    components:
+    - type: Transform
+      pos: -29.5,-45.5
+      parent: 30
+  - uid: 21299
+    components:
+    - type: Transform
+      pos: 18.5,34.5
       parent: 30
 - proto: DresserHeadOfPersonnelFilled
   entities:

@@ -1,34 +1,4 @@
 ﻿Entries:
-- author: Citrea-Lingua
-  changes:
-  - message: Handheld artifact containers can now properly store handheld artifacts.
-    type: Fix
-  id: 8685
-  time: '2025-06-17T08:53:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38383
-- author: hoshizora-sayo
-  changes:
-  - message: Fixed oddities with the memory cell, APC, and black curtains crafting
-      menu entries.
-    type: Fix
-  id: 8686
-  time: '2025-06-17T09:22:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38372
-- author: KamTheSythe
-  changes:
-  - message: Explosive payloads no longer explode. Modular grenades with explosive
-      payloads remain unchanged, and can still be used to stack explosions.
-    type: Tweak
-  id: 8687
-  time: '2025-06-17T09:46:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38049
-- author: Kittygyat
-  changes:
-  - message: Increased borg drag speed, equivalent to Diona speeds.
-    type: Tweak
-  id: 8688
-  time: '2025-06-17T10:41:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38232
 - author: TheFlyingSentry
   changes:
   - message: Animal stealing thief objectives now actually check for the objective's
@@ -3922,3 +3892,36 @@
   id: 9186
   time: '2025-11-05T03:43:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41307
+- author: chromiumboy
+  changes:
+  - message: Gas analyzers now correctly report the total volume and the number of
+      moles of gas contained in gas pipe manifolds.
+    type: Fix
+  - message: The total volume of gas that gas pipe manifolds can contain has been
+      reduced from 1200L to 300L.
+    type: Tweak
+  id: 9187
+  time: '2025-11-06T06:31:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41325
+- author: Princess-Cheeseballs
+  changes:
+  - message: Phalanx now removes the death gene again.
+    type: Fix
+  id: 9188
+  time: '2025-11-06T21:46:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41163
+- author: Jrpl
+  changes:
+  - message: Gravity Generators can no longer be unanchored while they are active.
+    type: Fix
+  id: 9189
+  time: '2025-11-07T01:05:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41256
+- author: Hitlinemoss
+  changes:
+  - message: The golden plunger and security star have been moved to their respective
+      roles' "Job trinkets" loadout tab.
+    type: Tweak
+  id: 9190
+  time: '2025-11-07T07:43:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41094
