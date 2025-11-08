@@ -16,7 +16,6 @@
 - type: antag
   id: GhostRoleProtected
   name: job-name-unknown # Always appear as unknown.
-  description: job-description-unknown
   objective: never-shown
   requirements:
   - !type:OverallPlaytimeRequirement
