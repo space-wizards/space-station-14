@@ -429,3 +429,113 @@
         - !type:ReagentCondition
           reagent: CorgiJuice
           min: 50
+
+- type: reagent
+  id: Felinase
+  name: reagent-name-catessence
+  group: Toxins
+  desc: reagent-desc-catessence
+  physicalDesc: reagent-physical-desc-milky
+  flavor: cannedtuna
+  color: "#d8bed8"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 25
+        damage:
+          types:
+            Radiation: 0.5
+      - !type:AdjustReagent
+        reagent: Felinase
+        amount: -15
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 40
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 25
+        effectProto: StatusEffectOwO
+        time: 25.0
+        type: Add
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 25
+        emote: Cough
+        showInChat: true
+        showInGuidebook: true
+        force: true
+        probability: 0.05
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 25
+        type: Local
+        visualType: Small
+        messages: [ "capsaicin-effect-light-burn" ]
+        probability: 0.05
+
+- type: reagent
+  id: Caninase
+  name: reagent-name-canidessence
+  group: Toxins
+  desc: reagent-desc-canidessence
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: dogfood
+  color: "#b87333"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 25
+        damage:
+          types:
+            Radiation: 0.5
+      - !type:AdjustReagent
+        reagent: Caninase
+        amount: -15
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 40
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 25
+        effectProto: StatusEffectBark
+        time: 25.0
+        type: Add
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 25
+        emote: Cough
+        showInChat: true
+        showInGuidebook: true
+        force: true
+        probability: 0.05
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 25
+        type: Local
+        visualType: Small
+        messages: [ "capsaicin-effect-light-burn" ]
+        probability: 0.05

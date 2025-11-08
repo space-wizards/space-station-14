@@ -847,6 +847,7 @@
       fireCost: 80
     - proto: BulletDisablerSmgSpread
       fireCost: 48
+      pacifismAllowedMode: true
   - type: Item
     size: Large
     sprite: Objects/Weapons/Guns/Battery/inhands_64x.rsi
@@ -898,6 +899,7 @@
       fireCost: 150
     - proto: BulletDisabler
       fireCost: 62.5
+      pacifismAllowedMode: true
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 48
