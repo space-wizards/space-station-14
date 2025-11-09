@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kosticia
-  changes:
-  - message: Reflection chances are examinable now.
-    type: Add
-  id: 8690
-  time: '2025-06-18T00:50:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38199
 - author: Kittygyat
   changes:
   - message: Fixed vapes dealing unintended damage types to you when used.
@@ -3924,3 +3917,10 @@
   id: 9191
   time: '2025-11-08T20:40:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/37468
+- author: Princess-Cheeseballs
+  changes:
+  - message: Paradox clones now copy forensics from the original
+    type: Fix
+  id: 9192
+  time: '2025-11-09T01:46:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41358
