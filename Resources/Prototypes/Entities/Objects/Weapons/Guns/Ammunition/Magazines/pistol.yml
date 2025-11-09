@@ -337,9 +337,6 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
-    whitelist: # Redundant
-      tags:
-        - CartridgePistol
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
   - type: Sprite

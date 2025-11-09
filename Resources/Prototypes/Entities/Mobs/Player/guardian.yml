@@ -237,8 +237,7 @@
         types:
           Blunt: 5
           Piercing: 4
-        groups:
-          Burn: 3
+          Heat: 3
       catchingFailDamage:
         types:
           Blunt: 1

@@ -79,7 +79,6 @@
     tags:
     - Write
     - WriteIgnoreStamps
-    - Pickaxe
     - Pen
   - type: MeleeWeapon
     wideAnimationRotation: -45

@@ -6,7 +6,6 @@ using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Inventory;
@@ -29,6 +28,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Content.Shared.Atmos.Components;
 using System.Linq;
+using Content.Shared.Damage.Components;
 using Content.Shared.Temperature.Components;
 
 namespace Content.Server.NPC.Systems;
