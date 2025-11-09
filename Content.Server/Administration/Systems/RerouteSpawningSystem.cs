@@ -1,16 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.Clothing.Systems;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Station.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
+using Content.Shared.Roles;
 using Content.Shared.Station.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
 
@@ -22,8 +21,8 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly OutfitSystem _outfit = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
     private readonly Dictionary<ICommonSession, EntityUid> _catalog = [];
@@ -126,17 +125,18 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     /// <param name="station">The station entity (nullspace)</param>
     private void SpawnPlayer(PlayerBeforeSpawnEvent args, RerouteSpawningRuleComponent comp, EntityUid station)
     {
-        //TODO:ERRANT This needs a full review, it might be missing modern stuff/steps. Ideally it should call an existing spawningsystem?
+        //TODO:ERRANT Ideally it should call an existing spawningsystem?
+        //
 
+        // You must create a vessel.
+        var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, comp.Job, args.Profile);
+        var mob = mobMaybe!.Value;
+        // Are you there?
         var newMind = _mind.CreateMind(args.Player.UserId, args.Profile.Name);
         _mind.SetUserId(newMind, args.Player.UserId);
-        // Do not give the player a real job, this system ignores job bans.
-        // Also, we don't want to give specific role playtime for the tutorial, either
-        var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, null, args.Profile);
-        DebugTools.AssertNotNull(mobMaybe); //TODO:ERRANT make this fail more graceful
-        var mob = mobMaybe!.Value;
+        // Are we connected?
         _mind.TransferTo(newMind, mob);
-        _outfit.SetOutfit(mob, comp.Gear);
+        _roles.MindAddJobRole(newMind, jobPrototype: comp.Job );
     }
 
     /// <summary>

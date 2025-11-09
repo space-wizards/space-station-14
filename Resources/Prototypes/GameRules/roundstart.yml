@@ -94,7 +94,8 @@
   components:
   - type: RerouteSpawningRule
     map: Opening
-    gear: PassengerGear
+    gear: TutorialGear
+    job: Tutorial
 
 - type: entity
   abstract: true
