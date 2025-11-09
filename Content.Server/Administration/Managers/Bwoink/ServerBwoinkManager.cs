@@ -163,6 +163,18 @@ public sealed partial class ServerBwoinkManager : SharedBwoinkManager
                 // Not a manager, you get 1984'd messages that are only related to you.
 
                 var convo = GetFilteredConversation(session.UserId, channelId, true);
+                if (convo != null)
+                {
+                    // this is kind of shitcode, but we raise MessageBeingSent on a ref for every message inside the conversation.
+                    for (var index = 0; index < convo.Messages.Count; index++)
+                    {
+                        var bwoinkMessage = convo.Messages[index];
+                        var eventArgs = new BwoinkMessageClientSentEventArgs(bwoinkMessage, session);
+                        MessageBeingSent?.Invoke(eventArgs);
+                        // This in theory is ass, but I don't assume it is actually an issue.
+                        convo.Messages[index] = eventArgs.Message; // please dont hurt me
+                    }
+                }
                 conversations.Add(channelId,
                     convo != null
                         ? new Dictionary<NetUserId, Conversation> { { session.UserId, convo } }

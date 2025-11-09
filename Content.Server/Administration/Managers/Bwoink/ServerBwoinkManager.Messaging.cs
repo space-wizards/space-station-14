@@ -171,12 +171,6 @@ public sealed partial class ServerBwoinkManager
             Target = target,
         };
 
-        var msgNonAdminBwoink = new MsgBwoinkNonAdmin()
-        {
-            Message = message,
-            Channel = channel,
-        };
-
         _netManager.ServerSendToMany(msgBwoink, managers);
 
         if (message.Flags.HasFlag(MessageFlags.ManagerOnly))
@@ -193,6 +187,15 @@ public sealed partial class ServerBwoinkManager
             return;
         }
 
-        _netManager.ServerSendMessage(msgNonAdminBwoink, PlayerManager.GetSessionById(target).Channel);
+        var eventArgs = new BwoinkMessageClientSentEventArgs(message with { }, targetSes);
+        MessageBeingSent?.Invoke(eventArgs);
+
+        var msgNonAdminBwoink = new MsgBwoinkNonAdmin()
+        {
+            Message = eventArgs.Message,
+            Channel = channel,
+        };
+
+        _netManager.ServerSendMessage(msgNonAdminBwoink, targetSes.Channel);
     }
 }

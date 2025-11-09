@@ -79,6 +79,7 @@ namespace Content.Server.Entry
         [Dependency] private readonly ServerUpdateManager _updateManager = default!;
         [Dependency] private readonly ServerBwoinkManager _bwoinkManager = default!;
         [Dependency] private readonly BwoinkDiscordRelayManager _bwoinkDiscordRelayManager = default!;
+        [Dependency] private readonly MessageBwoinkManager _messageBwoinkManager = default!;
 
         public override void PreInit()
         {
@@ -170,6 +171,7 @@ namespace Content.Server.Entry
             _cvarCtrl.Initialize();
             _bwoinkManager.Initialize();
             _bwoinkDiscordRelayManager.Initialize();
+            _messageBwoinkManager.Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)

@@ -88,5 +88,6 @@ internal static class ServerContentIoC
         deps.RegisterInstance<SharedBwoinkManager>(bwoinkInstance);
 
         deps.Register<BwoinkDiscordRelayManager>();
+        deps.Register<MessageBwoinkManager>();
     }
 }

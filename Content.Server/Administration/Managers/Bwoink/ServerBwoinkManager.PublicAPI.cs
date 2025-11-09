@@ -2,12 +2,22 @@
 using Content.Shared.Administration.Managers.Bwoink.Requirements;
 using JetBrains.Annotations;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Managers.Bwoink;
 
 public sealed partial class ServerBwoinkManager
 {
+    /// <summary>
+    /// Event that runs before a message is sent to a (non-manager) client.
+    /// </summary>
+    /// <remarks>
+    /// This also gets invoked for every message during a sync.
+    /// If you compute PI in this event handler, consider not doing that unless you want to make joining a server lockup the main thread for years.
+    /// </remarks>
+    public Action<BwoinkMessageClientSentEventArgs>? MessageBeingSent;
+
     /// <summary>
     /// Sends a message to a given channel and user channel using the system user.
     /// </summary>
@@ -67,5 +77,28 @@ public sealed partial class ServerBwoinkManager
             SyncChannels(session);
             SynchronizeMessages(session);
         }
+    }
+}
+
+/// <summary>
+/// Event args for when a message is about to be sent to a client.
+/// This will only ever get invoked for non-managers
+/// </summary>
+public sealed class BwoinkMessageClientSentEventArgs
+{
+    /// <summary>
+    /// The message that is being sent.
+    /// </summary>
+    public BwoinkMessage Message { get; set; }
+
+    /// <summary>
+    /// The player we are about to send this to.
+    /// </summary>
+    public ICommonSession Target { get; private set; }
+
+    public BwoinkMessageClientSentEventArgs(BwoinkMessage message, ICommonSession target)
+    {
+        Message = message;
+        Target = target;
     }
 }
