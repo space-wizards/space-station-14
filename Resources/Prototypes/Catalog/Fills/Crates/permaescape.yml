@@ -128,9 +128,16 @@
           amount: 5
         - id: Pen
           amount: 3
-        - !type:NestedSelector
-          tableId: PermaEscapeFolders
+        - !type:GroupSelector
           rolls: 2
+          children:
+          - id: BoxFolderBaseEmpty
+          - id: BoxFolderBlackEmpty
+          - id: BoxFolderBlueEmpty
+          - id: BoxFolderGreenEmpty
+          - id: BoxFolderGreyEmpty
+          - id: BoxFolderRedEmpty
+          - id: BoxFolderYellowEmpty
         - id: CrayonBox
           prob: 0.50
         - id: CrayonBox
@@ -138,18 +145,6 @@
         - id: ClearPDA # change to visitor one day.
           prob: 0.10
         - id: PersonalAI
-
-- type: entityTable
-  id: PermaEscapeFolders
-  table: !type:GroupSelector
-    children:
-    - id: BoxFolderBaseEmpty
-    - id: BoxFolderBlackEmpty
-    - id: BoxFolderBlueEmpty
-    - id: BoxFolderGreenEmpty
-    - id: BoxFolderGreyEmpty
-    - id: BoxFolderRedEmpty
-    - id: BoxFolderYellowEmpty
 
 - type: entity
   id: CratePermaEscapeLights
@@ -198,16 +193,11 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:NestedSelector
-        tableId: PermaEscapeMats
+      entity_storage: !type:GroupSelector
         rolls: 2
-
-- type: entityTable
-  id: PermaEscapeMats
-  table: !type:GroupSelector
-    children:
-    - id: SheetSteel
-    - id: PartRodMetal
+        children:
+         - id: SheetSteel
+         - id: PartRodMetal
 
 - type: entity
   id: CratePermaEscapeGiftsFromSyndicate

@@ -574,9 +574,12 @@
         - !type:NestedSelector
           tableId: HappyHonkToyUnsafe
         # drinks - 4 cans, up to 2 blood-red brews
-        - !type:NestedSelector
-          tableId: HappyHonkNukieDrink
+        - !type:GroupSelector
           rolls: 2
+          children:
+          - id: DrinkNukieCan
+            weight: 0.2
+          - id: DrinkColaCan
         - id: DrinkColaCan
           amount: 2
         # food
@@ -754,11 +757,3 @@
     - id: BalloonSyn
       weight: 0.6
     - id: PlushieNuke
-
-- type: entityTable
-  id: HappyHonkNukieDrink
-  table: !type:GroupSelector
-    children:
-    - id: DrinkNukieCan
-      weight: 0.2
-    - id: DrinkColaCan
