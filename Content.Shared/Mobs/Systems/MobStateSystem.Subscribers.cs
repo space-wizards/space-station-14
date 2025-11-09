@@ -81,7 +81,6 @@ public partial class MobStateSystem
                 _standing.Stand(target);
                 break;
             case MobState.Dead:
-                RemComp<CollisionWakeComponent>(target);
                 _standing.Stand(target);
                 break;
             case MobState.Invalid:
@@ -111,7 +110,6 @@ public partial class MobStateSystem
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Critical);
                 break;
             case MobState.Dead:
-                EnsureComp<CollisionWakeComponent>(target);
                 _standing.Down(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Dead);
                 break;

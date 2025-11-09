@@ -23,7 +23,6 @@
         Blunt: 5
     soundHit:
       collection: MetalThud
-  - type: CollisionWake
   - type: GravityAffected
   - type: Physics
     bodyType: Dynamic

@@ -30,7 +30,7 @@ public sealed class AnimateSpellSystem : EntitySystem
         var fixture = fixtures.Fixtures.First();
 
         _transform.Unanchor(ent); // If left anchored they are effectively stuck/immobile and not a threat
-        _physics.SetCanCollide(ent, true, true, false, fixtures, physics);
+        _physics.SetCanCollide(ent, true, true, false, fixtures, body: physics);
         _physics.SetCollisionMask(ent, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobMask, fixtures, physics);
         _physics.SetCollisionLayer(ent, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobLayer, fixtures, physics);
         _physics.SetBodyType(ent, BodyType.KinematicController, fixtures, physics, xform);

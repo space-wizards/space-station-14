@@ -19,8 +19,6 @@
       collection: ChurchBell
   - type: Clickable
   - type: Rotatable
-  - type: CollisionWake
-    enabled: false
   - type: Physics
     canCollide: false
     bodyType: Static

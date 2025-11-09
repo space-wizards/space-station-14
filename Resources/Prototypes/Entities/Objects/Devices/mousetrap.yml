@@ -41,8 +41,6 @@
             False: {state: mousetrap}
     - type: Physics
       bodyType: Dynamic
-    - type: CollisionWake
-      enabled: false
     - type: Fixtures
       fixtures:
         slips:

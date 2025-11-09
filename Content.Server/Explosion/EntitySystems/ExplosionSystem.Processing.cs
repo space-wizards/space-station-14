@@ -214,8 +214,8 @@ public sealed partial class ExplosionSystem
 
         // get entities:
         lookup.DynamicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.KinematicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
         lookup.StaticTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
-        lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
         lookup.StaticSundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
 
         // process those entities
@@ -261,7 +261,7 @@ public sealed partial class ExplosionSystem
 
         list.Clear();
         lookup.DynamicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
-        lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.KinematicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
 
         foreach (var (uid, xform) in list)
         {
@@ -314,7 +314,6 @@ public sealed partial class ExplosionSystem
         // get entities:
         lookup.Comp.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
         lookup.Comp.StaticTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
-        lookup.Comp.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
         lookup.Comp.StaticSundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
 
         foreach (var (uid, xform) in state.Item1)
@@ -330,7 +329,6 @@ public sealed partial class ExplosionSystem
         // lookup is relatively minor computational cost, and throwing is disabled for nukes anyways.
         list.Clear();
         lookup.Comp.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
-        lookup.Comp.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
 
         foreach (var (uid, xform) in list)
         {

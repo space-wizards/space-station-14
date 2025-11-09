@@ -44,7 +44,7 @@ public sealed class RepulseAttractSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        
+
         var position = _xForm.GetMapCoordinates(args.Performer);
         args.Handled = TryRepulseAttract(position, args.Performer, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionMask);
     }
@@ -59,7 +59,7 @@ public sealed class RepulseAttractSystem : EntitySystem
     {
         _entSet.Clear();
         var epicenter = position.Position;
-        _lookup.GetEntitiesInRange(position.MapId, epicenter, range, _entSet, flags: LookupFlags.Dynamic | LookupFlags.Sundries);
+        _lookup.GetEntitiesInRange(position.MapId, epicenter, range, _entSet, flags: LookupFlags.Dynamic);
 
         foreach (var target in _entSet)
         {

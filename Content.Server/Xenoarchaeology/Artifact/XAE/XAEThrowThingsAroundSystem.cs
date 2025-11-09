@@ -56,7 +56,7 @@ public sealed class XAEThrowThingsAroundSystem : BaseXAESystem<XAEThrowThingsAro
         }
 
         _entities.Clear();
-        _lookup.GetEntitiesInRange(ent, component.Range, _entities, LookupFlags.Dynamic | LookupFlags.Sundries);
+        _lookup.GetEntitiesInRange(ent, component.Range, _entities, LookupFlags.Dynamic);
         foreach (var entity in _entities)
         {
             if (_physQuery.TryGetComponent(entity, out var phys)

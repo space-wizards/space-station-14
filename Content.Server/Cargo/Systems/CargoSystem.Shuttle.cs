@@ -162,7 +162,7 @@ public sealed partial class CargoSystem
             _lookup.GetEntitiesIntersecting(
                 palletUid,
                 _setEnts,
-                LookupFlags.Dynamic | LookupFlags.Sundries);
+                LookupFlags.Dynamic);
 
             foreach (var ent in _setEnts)
             {
