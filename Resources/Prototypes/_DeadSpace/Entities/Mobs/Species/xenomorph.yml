@@ -78,6 +78,15 @@
     - RadiationProtection
     - Drowsiness
     - Adrenaline
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
+    stateAlertDict:
+      Alive: XenomorphHealth
+      Critical: XenomorphCrit
+      Dead: XenomorphDead
   - type: InteractionPopup
     successChance: 1.0
     interactSuccessString: petting-success-bingus

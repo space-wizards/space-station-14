@@ -1,0 +1,40 @@
+- type: alert
+  id: XenomorphCrit
+  category: Health
+  icons:
+  - sprite: /Textures/_DeadSpace/Interface/Alerts/xenomorph_critical.rsi
+    state: critical
+  name: alerts-crit-name
+  description: alerts-crit-desc
+
+- type: alert
+  id: XenomorphDead
+  category: Health
+  icons:
+  - sprite: /Textures/_DeadSpace/Interface/Alerts/xenomorph_dead.rsi
+    state: dead
+  name: alerts-dead-name
+  description: alerts-dead-desc
+
+- type: alert
+  id: XenomorphHealth
+  category: Health
+  icons:
+  - sprite: /Textures/_DeadSpace/Interface/Alerts/xenomorph_alive.rsi
+    state: health0
+  - sprite: /Textures/_DeadSpace/Interface/Alerts/xenomorph_alive.rsi
+    state: health1
+  - sprite: /Textures/_DeadSpace/Interface/Alerts/xenomorph_alive.rsi
+    state: health2
+  - sprite: /Textures/_DeadSpace/Interface/Alerts/xenomorph_alive.rsi
+    state: health3
+  - sprite: /Textures/_DeadSpace/Interface/Alerts/xenomorph_alive.rsi
+    state: health4
+  - sprite: /Textures/_DeadSpace/Interface/Alerts/xenomorph_alive.rsi
+    state: health5
+  - sprite: /Textures/_DeadSpace/Interface/Alerts/xenomorph_alive.rsi
+    state: health6
+  name: alerts-health-name
+  description: alerts-health-desc
+  minSeverity: 0
+  maxSeverity: 6
