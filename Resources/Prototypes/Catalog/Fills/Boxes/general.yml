@@ -105,21 +105,22 @@
   parent: BoxLightbulb
   id: BoxLighttubeHoliday
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill # parenting
     containers:
-      storagebase:
-      - LightTubeCrystalRed # Its alternating on purpose for the light replacer.
-      - LightTubeCrystalGreen
-      - LightTubeCrystalRed
-      - LightTubeCrystalGreen
-      - LightTubeCrystalRed
-      - LightTubeCrystalGreen
-      - LightTubeCrystalRed
-      - LightTubeCrystalGreen
-      - LightTubeCrystalRed
-      - LightTubeCrystalGreen
-      - LightTubeCrystalRed
-      - LightTubeCrystalGreen
+      storagebase: !type:AllSelector
+        children:
+        - id: LightTubeCrystalRed # Its alternating on purpose for the light replacer.
+        - id: LightTubeCrystalGreen
+        - id: LightTubeCrystalRed
+        - id: LightTubeCrystalGreen
+        - id: LightTubeCrystalRed
+        - id: LightTubeCrystalGreen
+        - id: LightTubeCrystalRed
+        - id: LightTubeCrystalGreen
+        - id: LightTubeCrystalRed
+        - id: LightTubeCrystalGreen
+        - id: LightTubeCrystalRed
+        - id: LightTubeCrystalGreen
 
 - type: entity
   name: PDA box
@@ -208,11 +209,12 @@
   id: BoxHugHealing
   suffix: Medical
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill # parenting
     containers:
       storagebase:
-        id: Brutepack
-        amount: 3
+      - Brutepack
+      - Brutepack
+      - Brutepack
 
 - type: entity
   name: inflatable wall box
@@ -402,11 +404,11 @@
   components:
   - type: Item
     size: Normal
-  - type: ContainerFill
+  - type: EntityTableContainerFill # parenting
     containers:
       storagebase:
-      - EncryptionKeySyndie
-      - EncryptionKeySyndie
+        id: BoxEncryptionKeySyndie
+        amount: 2
   - type: Storage
 
 - type: entity
