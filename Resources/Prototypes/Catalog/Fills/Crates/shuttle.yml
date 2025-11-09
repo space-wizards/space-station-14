@@ -7,7 +7,7 @@
   - type: ContainerFill
     containers:
       entity_storage:
-      - id: ThrusterFlatpack
+      - ThrusterFlatpack
 
 - type: entity
   parent: CrateEngineering
@@ -18,4 +18,4 @@
   - type: ContainerFill
     containers:
       entity_storage:
-      - id: GyroscopeFlatpack
+      - GyroscopeFlatpack

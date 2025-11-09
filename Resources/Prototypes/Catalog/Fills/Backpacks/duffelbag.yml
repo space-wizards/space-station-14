@@ -97,8 +97,8 @@
   - type: ContainerFill
     containers:
       storagebase:
-      - id: WeaponLightMachineGunL6
-      - id: MagazineLightRifleBox
+      - WeaponLightMachineGunL6
+      - MagazineLightRifleBox
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
