@@ -1,0 +1,28 @@
+<Document>
+# The Captain
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHeadHatCaptain" Caption="The most fashionable and sought-after headpiece in local spess." />
+  </Box>
+
+The Captain is the most senior member of staff on Space Station 14, and are the Department Head of the [color=#1b67a5]Command[/color] department. They are the sole role on the station that is only a member of the [color=#1b67a5]Command[/color] department. Their job is to make sure Space Station 14 does what Nanotrasen wants, directing and leading the Department Heads as needed to do so, rather than micromanaging the station's departments. Otherwise, the Captain is concerned with keeping the Bridge, their personal domain, in good condition. In general, the Captain should only be picking up a welding torch or fighting a space dragon as a last resort.
+
+  <Box>
+    <GuideEntityEmbed Entity="MobFoxRenault" Caption="Not a Vulpkanin." />
+    <GuideEntityEmbed Entity="MobHamsterHamlet" Caption="Do not microwave." />
+  </Box>
+
+The Captain has access to some very powerful, shift-impacting equipment and items. The most important of these is the nuke disk. This contains the authentication codes required to arm the station's nuke, which functions as Space Station 14's self-destruct mechanism. For obvious reasons, do not allow the nuke disk to fall into enemy hands.
+
+  <Box>
+    <GuideEntityEmbed Entity="NukeDisk" Caption="THIS IS YOUR MOST IMPORTANT POSESSION, SECURE DAT FUKKEN DISK!" />
+  </Box>
+
+As Captain, it's important to remember that, when the station is operating normally and everyone is doing their jobs, your job in turn is to be seen and available, not to act like the protagonist. Leave micromanagement of each department to their Department Head. Instead, make sure that each department is working nicely with the others. Do not spend your time roaming the maintenance tunnels looking for trouble.
+
+  <Box>
+    <GuideEntityEmbed Entity="CaptainSabre" Caption="This is a symbol of office, not an excuse to go valid-hunting." />
+  </Box>
+
+The Captain should also attempt to keep all Department Head roles filled. The Captain is not expected to perfectly understand how all Department Heads do their own jobs, and should not be expected to fill in themselves except when absolutely neccessary.
+</Document>

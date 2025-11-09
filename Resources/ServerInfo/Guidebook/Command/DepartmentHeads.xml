@@ -1,0 +1,50 @@
+<Document>
+# Department Heads
+
+Congratulations on your promotion! Your new [color=#a4885c]responsibilities[/color] include:
+
+- The shift-to-shift running of your department
+- Making plans, prioritizing activities and responding to changes to the station
+- Keeping your personnel safe and happy and, more importantly, keeping Nanotrasen's equipment safe from damage or loss
+- Approving or denying requests from staff, which tends to involve stamps and [color=#9fed58]blessed paperwork[/color]
+- Not being assassinated by the Syndicate
+- Not being overthrown by your subordinates in a mutiny
+- Recruiting new staff to department roles
+- Slacking off while your cronies do all the work
+
+But don't forget, you're still a member of your department! Your fancy title doesn't earn you the shift off; you need to fill in for any staffing shortages, help out struggling staff, and teach department newbies the ropes. You might get away with just sitting around and bathing in your staff's resentment, but it's smarter to stay active and work alongside them. It also gives you witnesses if anyone tries to kill you.
+
+You should allow your staff to work on what they like doing, or what they do best, provided that the important responsibilities of your department are fulfilled. You may also need to discipline your staff, or suspend them from duty, if they have been unusually bad for the department's functionality (even by Nanotrasen's rock-bottom standards).
+
+## Equipment
+
+To help with your new exciting, dangerous and/or soul-crushing tasks, every Department Head is given special items to fulfil their duties with. Most of your tools can be found in your [color=#a4885c]locker[/color].
+  <Box>
+    <GuideEntityEmbed Entity="LockerHeadOfPersonnel" Caption=""/>
+    <GuideEntityEmbed Entity="LockerCaptain" Caption="Goodies contained inside."/>
+    <GuideEntityEmbed Entity="LockerHeadOfSecurity" Caption=""/>
+  </Box>
+
+Your [color=#a4885c]door remote[/color] is a simple but powerful tool. Door remotes can open and close [color=#a4885c]airlocks[/color], spin a door's [color=#a4885c]bolts[/color] to lock them, and enable or disable [color=#a4885c]emergency access[/color]. It can even do these actions from a distance. Don't let the clown steal it!
+  <Box>
+    <GuideEntityEmbed Entity="DoorRemoteCommand" Caption="Door stuck? Not anymore!"/>
+  </Box>
+
+The door remote influences where people move around. Department Heads can lock staff out of dangerous areas, secure the department in times of crisis, or let people in to grab something quickly.
+
+To make the swamp of paperwork (that will definitely overwhelm you) even harder to deal with, you have generously been given a [color=#a4885c]stamp[/color] in your locker. Use this to sign paperwork. After you stamp a paper, it definitely, absolutely, cannot be further edited by anyone. Probably. Remember to look over any paperwork before you stamp it. For obvious reasons, [color=#a4885c]don't lose your stamp![/color]
+  <Box>
+    <GuideEntityEmbed Entity="RubberStampCaptain" Caption="Generates infinite symbols of your AUTHORITEH."/>
+  </Box>
+
+## Command Radio
+
+All Department Heads have access to the [color=#1b67a5]Command[/color] radio channel. This radio channel is a powerful tool to communicate across departments quickly and co-ordinate the station in emergencies. Everyone on the Command channel has [color=#a4885c]entire departments[/color] at their fingertips. The station AI is also available to talk to on the channel.
+
+Use the [color=#1b67a5]Command[/color] channel to communicate with other Department Heads and represent what your staff want or need.
+
+The [color=#1b67a5]Captain[/color] and the [color=#9fed58]Head of Personnel[/color] get access to the lucrative [color=#a4885c]master encryption key[/color], letting them tune into every radio channel on the station. This is extremely valuable, as you can coordinate between departments yourself.
+  <Box>
+    <GuideEntityEmbed Entity="EncryptionKeyStationMaster" Caption="Don't waste this vital advantage!"/>
+  </Box>
+</Document>
