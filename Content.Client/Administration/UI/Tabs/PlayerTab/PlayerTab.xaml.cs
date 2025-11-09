@@ -244,7 +244,7 @@ public sealed partial class PlayerTab : Control
         };
     }
 
-    private int Compare(string x, string y)
+    private int Compare(string? x, string? y)
     {
         return string.Compare(x, y, StringComparison.OrdinalIgnoreCase);
     }

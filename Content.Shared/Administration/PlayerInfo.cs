@@ -1,4 +1,5 @@
 using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -10,7 +11,7 @@ public sealed record PlayerInfo(
     string Username,
     string CharacterName,
     string IdentityName,
-    string StartingJob,
+    ProtoId<JobPrototype>? StartingJob,
     bool Antag,
     ProtoId<RoleTypePrototype>? RoleProto,
     LocId? Subtype,

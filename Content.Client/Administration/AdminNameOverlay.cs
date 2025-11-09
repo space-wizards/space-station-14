@@ -213,7 +213,8 @@ internal sealed class AdminNameOverlay : Overlay
             {
                 color = Color.GreenYellow;
                 color.A = alpha;
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? color : colorDisconnected);
+                var jobName = _prototypeManager.Index(playerInfo.StartingJob).LocalizedName;
+                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, jobName, uiScale, playerInfo.Connected ? color : colorDisconnected);
                 currentOffset += lineoffset;
             }
 
