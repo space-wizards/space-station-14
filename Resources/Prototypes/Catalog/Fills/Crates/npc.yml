@@ -252,7 +252,6 @@
       entity_storage: !type:GroupSelector
         children:
           - id: MobHamsterHamlet
-            weight: 1
           - id: MobHamsterHamletSlippery
             weight: 0.001
 
