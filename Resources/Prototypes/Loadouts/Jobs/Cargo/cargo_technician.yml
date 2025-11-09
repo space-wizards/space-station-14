@@ -79,18 +79,18 @@
     shoes: ClothingShoesBootsWinterCargo
 
 # ID
-- type: loadout
-  id: CargoTechnicianPDA
-  equipment:
-    id: CargoPDA
-
-- type: loadout
-  id: SeniorCourierPDA
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorCargo
-  equipment:
-    id: SeniorCourierPDA
+#- type: loadout
+#  id: CargoTechnicianPDA
+#  equipment:
+#    id: CargoPDA
+#
+#- type: loadout
+#  id: SeniorCourierPDA
+#  effects:
+#  - !type:GroupLoadoutEffect
+#    proto: SeniorCargo
+#  equipment:
+#    id: SeniorCourierPDA
 
 # Underwear
 - type: loadout

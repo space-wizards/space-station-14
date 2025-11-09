@@ -1,6 +1,7 @@
 using Content.Shared.Alert;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Strip.Components;
 
@@ -14,13 +15,19 @@ public sealed partial class ThievingComponent : Component
     /// <summary>
     /// How much the strip time should be shortened by
     /// </summary>
-    [DataField, AutoNetworkedField]
+    // DS14-start
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("stripTimeReduction"), AutoNetworkedField]
+    // DS14-end
     public TimeSpan StripTimeReduction = TimeSpan.FromSeconds(0.5f);
 
     /// <summary>
     /// Should it notify the user if they're stripping a pocket?
     /// </summary>
-    [DataField, AutoNetworkedField]
+    // DS14-start
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("stealthy"), AutoNetworkedField]
+    // DS14-end
     public bool Stealthy;
 
     /// <summary>

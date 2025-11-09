@@ -212,10 +212,10 @@
     shoes: ClothingShoesBootsWinterSci
 
 # ID
-- type: loadout
-  id: ScientistPDA
-  equipment:
-    id: SciencePDA
+#- type: loadout
+#  id: ScientistPDA
+#  equipment:
+#    id: SciencePDA
 
 # - type: loadout
 #   id: SeniorResearcherPDA

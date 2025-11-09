@@ -131,10 +131,10 @@
     shoes: ClothingShoesBootsWinterEngi
 
 # ID
-- type: loadout
-  id: StationEngineerPDA
-  equipment:
-    id: EngineerPDA
+#- type: loadout
+#  id: StationEngineerPDA
+#  equipment:
+#    id: EngineerPDA
 
 # - type: loadout
 #   id: SeniorEngineerPDA

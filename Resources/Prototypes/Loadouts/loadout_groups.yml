@@ -917,12 +917,13 @@
   - BlackShoes
   - CargoWinterBoots
 
-- type: loadoutGroup
-  id: CargoTechnicianID
-  name: loadout-group-cargo-technician-id
-  loadouts:
-  - CargoTechnicianPDA
- # - SeniorCourierPDA
+# DS14-disabled
+#- type: loadoutGroup
+#  id: CargoTechnicianID
+#  name: loadout-group-cargo-technician-id
+#  loadouts:
+#  - CargoTechnicianPDA
+#  - SeniorCourierPDA
 
 - type: loadoutGroup
   id: CargoTechnicianUnderwear
@@ -1103,12 +1104,13 @@
   - WorkBoots
   - EngineeringWinterBoots
 
-- type: loadoutGroup
-  id: StationEngineerID
-  name: loadout-group-station-engineer-id
-  loadouts:
-  - StationEngineerPDA
-  # - SeniorEngineerPDA
+# DS14-disabled
+#- type: loadoutGroup
+#  id: StationEngineerID
+#  name: loadout-group-station-engineer-id
+#  loadouts:
+#  - StationEngineerPDA
+#  - SeniorEngineerPDA
 
 - type: loadoutGroup
   id: StationEngineerUnderwear
@@ -1322,12 +1324,13 @@
   - PurpleGloves
   - RobohandsGloves
 
-- type: loadoutGroup
-  id: ScientistPDA
-  name: loadout-group-scientist-id
-  loadouts:
-  - ScientistPDA
-  # - SeniorResearcherPDA
+# DS14-disabled
+#- type: loadoutGroup
+#  id: ScientistPDA
+#  name: loadout-group-scientist-id
+#  loadouts:
+#  - ScientistPDA
+#  - SeniorResearcherPDA
 
 - type: loadoutGroup
   id: ScientistUnderwear
@@ -1520,12 +1523,13 @@
   - JackBoots
   # - SecurityWinterBoots
 
-- type: loadoutGroup
-  id: SecurityPDA
-  name: loadout-group-security-id
-  loadouts:
-  - SecurityPDA
-  # - SeniorOfficerPDA
+# DS14-disabled
+#- type: loadoutGroup
+#  id: SecurityPDA
+#  name: loadout-group-security-id
+#  loadouts:
+#  - SecurityPDA
+#  - SeniorOfficerPDA
 
 - type: loadoutGroup
   id: SecuritySocks
@@ -1768,12 +1772,13 @@
   - WhiteShoes
   - MedicalWinterBoots
 
-- type: loadoutGroup
-  id: MedicalDoctorPDA
-  name: loadout-group-medical-doctor-id
-  loadouts:
-  - MedicalDoctorPDA
-  # - SeniorPhysicianPDA
+# DS14-disabled
+#- type: loadoutGroup
+#  id: MedicalDoctorPDA
+#  name: loadout-group-medical-doctor-id
+#  loadouts:
+#  - MedicalDoctorPDA
+#  - SeniorPhysicianPDA
 
 - type: loadoutGroup
   id: MedicalDoctorUnderwear
