@@ -55,6 +55,28 @@ public sealed class ApcSystem : EntitySystem
             {
                 UpdateApcState(uid, apc, battery);
             }
+
+            // Overload
+            if (apc.MainBreakerEnabled && battery.CurrentSupply > apc.MaxLoad)
+            {
+                // Not already overloaded, start timer
+                if (apc.TripStartTime == null)
+                {
+                    apc.TripStartTime = _gameTiming.CurTime;
+                }
+                else
+                {
+                    if (_gameTiming.CurTime - apc.TripStartTime > apc.TripTime)
+                    {
+                        apc.TripFlag = true;
+                        ApcToggleBreaker(uid, apc, battery); // off, we already checked MainBreakerEnabled above
+                    }
+                }
+            }
+            else
+            {
+                apc.TripStartTime = null;
+            }
         }
     }
 
@@ -105,6 +127,9 @@ public sealed class ApcSystem : EntitySystem
 
         apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
         battery.CanDischarge = apc.MainBreakerEnabled;
+
+        if (apc.MainBreakerEnabled)
+            apc.TripFlag = false;
 
         UpdateUIState(uid, apc);
         _audio.PlayPvs(apc.OnReceiveMessageSound, uid, AudioParams.Default.WithVolume(-2f));
@@ -169,7 +194,9 @@ public sealed class ApcSystem : EntitySystem
 
         var state = new ApcBoundInterfaceState(apc.MainBreakerEnabled,
             (int) MathF.Ceiling(battery.CurrentSupply), apc.LastExternalState,
-            charge);
+            charge,
+            apc.MaxLoad,
+            apc.TripFlag);
 
         _ui.SetUiState((uid, ui), ApcUiKey.Key, state);
     }
