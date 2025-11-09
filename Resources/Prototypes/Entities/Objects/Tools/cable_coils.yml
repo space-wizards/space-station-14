@@ -20,6 +20,8 @@
     sprite: Objects/Tools/cable-coils.rsi
     size: Small
     storedRotation: -90
+  - type: Construction
+    graph: Cable
   - type: CablePlacer
   - type: Clickable
   - type: StaticPrice
@@ -55,6 +57,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: coilhv
+  - type: Construction
+    graph: Cable
+    node: CableHV
   - type: CablePlacer
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
@@ -113,6 +118,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: coilmv
+  - type: Construction
+    graph: Cable
+    node: CableMV
   - type: CablePlacer
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
@@ -162,6 +170,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: coillv
+  - type: Construction
+    graph: Cable
+    node: start
   - type: Stack
     baseLayer: base
     layerStates:

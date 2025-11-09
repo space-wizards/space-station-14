@@ -36,7 +36,7 @@
       blockAmbience: false
       blockInteractions: false
     - type: Construction
-      graph: CableTerminal
+      graph: Cable
       node: cable_terminal
     - type: NodeContainer
       nodes:

@@ -43,9 +43,41 @@
   canBuildInImpassable: true
 
 - type: construction
-  id: CableTerminal
-  graph: CableTerminal
+  id: CableLVtoMV
+  graph: Cable
   startNode: start
+  targetNode: CableMV
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: CableMVtoLV
+  graph: Cable
+  startNode: CableMV
+  targetNode: start
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: CableMVtoHV
+  graph: Cable
+  startNode: CableMV
+  targetNode: CableHV
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: CableHVtoMV
+  graph: Cable
+  startNode: CableHV
+  targetNode: CableMV
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: CableTerminal
+  graph: Cable
+  startNode: CableHV
   targetNode: cable_terminal
   category: construction-category-utilities
   objectType: Structure

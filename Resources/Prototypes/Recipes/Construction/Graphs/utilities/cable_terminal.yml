@@ -1,24 +1,51 @@
 ﻿- type: constructionGraph
-  id: CableTerminal
+  id: Cable
   start: start
   graph:
-    - node: start
-      edges:
-        - to: cable_terminal
-          steps:
-            - material: Cable
-              amount: 10
-              doAfter: 2
 
-    - node: cable_terminal
-      entity: CableTerminal
-      edges:
-        - to: start
-          completed:
-            - !type:GivePrototype
-              prototype: CableApcStack1
-              amount: 10
-            - !type:DeleteEntity
-          steps:
-            - tool: Cutting
-              doAfter: 3
+  - node: start
+    entity: CableApcStack1
+    edges:
+    - to: CableMV
+      steps:
+      - material: Cable
+        amount: 3
+
+  - node: CableMV
+    entity: CableMVStack1
+    edges:
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: CableApcStack1
+        amount: 2
+      steps:
+      - material: CableMV
+    - to: CableHV
+      steps:
+      - material: CableMV
+        amount: 3
+      - material: MetalRod
+
+  - node: CableHV
+    entity: CableHVStack1
+    edges:
+    - to: CableMV
+      completed:
+      - !type:GivePrototype
+        prototype: CableMVStack1
+        amount: 2
+      - !type:GivePrototype
+        prototype: PartRodMetal1
+      steps:
+      - material: CableHV
+    - to: cable_terminal
+      steps:
+      - material: CableHV
+
+  - node: cable_terminal
+    entity: CableTerminal
+    edges:
+    - to: CableHV
+      steps:
+      - tool: Cutting
