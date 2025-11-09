@@ -524,7 +524,7 @@
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:NestedSelector
-        tabeId: HappyHonkToySafe
+        tableId: HappyHonkToySafe
 
 - type: entity
   id: HappyHonkMime
