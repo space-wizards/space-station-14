@@ -22,7 +22,7 @@
     CaptainGunStealObjective: 0.5
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
-    EnergyShotgunStealObjective: 0.5
+    EnergyMagnumStealObjective: 0.5
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
@@ -72,8 +72,8 @@
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
   weights:
-    ChiefEngineerToolbeltStealObjective: .5             #command
-    CaptainSwordStealObjective: .5
+    ChiefEngineerToolbeltStealObjective: 0.5             #command
+    CaptainSwordStealObjective: 0.5
     ClothingHeadsetAltMedicalStealObjective: 1
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5

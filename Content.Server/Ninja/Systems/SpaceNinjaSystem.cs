@@ -1,26 +1,20 @@
 using Content.Server.Communications;
-using Content.Server.Chat.Managers;
 using Content.Server.CriminalRecords.Systems;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives.Components;
 using Content.Server.Objectives.Systems;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
 using Content.Server.Research.Systems;
-using Content.Server.Roles;
 using Content.Shared.Alert;
 using Content.Shared.Doors.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
+using Content.Shared.Power.Components;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -112,7 +106,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <inheritdoc/>
     public override bool TryUseCharge(EntityUid user, float charge)
     {
-        return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
+        return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge((uid.Value, battery), charge);
     }
 
     /// <summary>
