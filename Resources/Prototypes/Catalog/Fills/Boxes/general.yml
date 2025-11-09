@@ -105,22 +105,21 @@
   parent: BoxLightbulb
   id: BoxLighttubeHoliday
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: LightTubeCrystalRed # Its alternating on purpose for the light replacer.
-        - id: LightTubeCrystalGreen
-        - id: LightTubeCrystalRed
-        - id: LightTubeCrystalGreen
-        - id: LightTubeCrystalRed
-        - id: LightTubeCrystalGreen
-        - id: LightTubeCrystalRed
-        - id: LightTubeCrystalGreen
-        - id: LightTubeCrystalRed
-        - id: LightTubeCrystalGreen
-        - id: LightTubeCrystalRed
-        - id: LightTubeCrystalGreen
+      storagebase:
+      - LightTubeCrystalRed # Its alternating on purpose for the light replacer.
+      - LightTubeCrystalGreen
+      - LightTubeCrystalRed
+      - LightTubeCrystalGreen
+      - LightTubeCrystalRed
+      - LightTubeCrystalGreen
+      - LightTubeCrystalRed
+      - LightTubeCrystalGreen
+      - LightTubeCrystalRed
+      - LightTubeCrystalGreen
+      - LightTubeCrystalRed
+      - LightTubeCrystalGreen
 
 - type: entity
   name: PDA box
@@ -192,14 +191,13 @@
   id: BoxMRE
   description: A box of decades old military surplus rations. It is surprisingly not rotten.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: DrinkMREFlask
-        - id: FoodSnackNutribrick
-        - id: FoodSnackMREBrownie
-        - id: FoodCondimentPacketKetchup
+      storagebase:
+      - DrinkMREFlask
+      - FoodSnackNutribrick
+      - FoodSnackMREBrownie
+      - FoodCondimentPacketKetchup
   - type: Sprite
     layers:
       - state: box
@@ -222,14 +220,13 @@
   id: BoxInflatable
   description: Inflatable walls are not to be used as floatation devices.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-          - id: InflatableWallStack
-            amount: 2
-          - id: InflatableDoorStack
-            amount: 2
+      storagebase:
+        - InflatableWallStack
+        - InflatableWallStack
+        - InflatableDoorStack
+        - InflatableDoorStack
   - type: Sprite
     layers:
       - state: box
@@ -241,15 +238,14 @@
   id: BoxPerformer
   description: Happy Hatsune Miku Day!
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingShoesBootsPerformer
-        - id: ClothingUniformJumpskirtPerformer
-        - id: ClothingHeadPerformerWig
-        - id: FoodMealMemoryleek
-          amount: 2
+      storagebase:
+      - ClothingShoesBootsPerformer
+      - ClothingUniformJumpskirtPerformer
+      - ClothingHeadPerformerWig
+      - FoodMealMemoryleek
+      - FoodMealMemoryleek
 
 - type: entity
   name: flare box
@@ -406,11 +402,11 @@
   components:
   - type: Item
     size: Normal
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
       storagebase:
-        id: EncryptionKeySyndie
-        amount: 2
+      - EncryptionKeySyndie
+      - EncryptionKeySyndie
   - type: Storage
 
 - type: entity
@@ -486,18 +482,17 @@
     layers:
       - state: box
       - state: darts
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Dart
-          amount: 2
-        - id: DartBlue
-          amount: 2
-        - id: DartPurple
-          amount: 2
-        - id: DartYellow
-          amount: 2
+      storagebase:
+      - Dart
+      - Dart
+      - DartBlue
+      - DartBlue
+      - DartPurple
+      - DartPurple
+      - DartYellow
+      - DartYellow
 
 - type: entity
   name: envelope box
@@ -525,11 +520,10 @@
     layers:
       - state: box
       - state: utensils
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Fork
-          amount: 2
-        - id: Spoon
-          amount: 2
+      storagebase:
+      - Fork
+      - Fork
+      - Spoon
+      - Spoon

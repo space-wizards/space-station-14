@@ -120,34 +120,32 @@
   suffix: Filled, all tools
   parent: ToolboxMechanical
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Crowbar
-        - id: Wrench
-        - id: Screwdriver
-        - id: Wirecutter
-        - id: Welder
-        - id: Multitool
+      storagebase:
+      - Crowbar
+      - Wrench
+      - Screwdriver
+      - Wirecutter
+      - Welder
+      - Multitool
 
 - type: entity
   parent: ToolboxSyndicate
   id: ToolboxSyndicateFilled
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Crowbar
-        - id: Wrench
-        - id: Screwdriver
-        - id: Wirecutter
-        - id: Welder
-        - id: Multitool
-        - id: ClothingHandsGlovesCombat
-        - id: ClothingMaskGasSyndicate
+      storagebase:
+      - Crowbar
+      - Wrench
+      - Screwdriver
+      - Wirecutter
+      - Welder
+      - Multitool
+      - ClothingHandsGlovesCombat
+      - ClothingMaskGasSyndicate
   - type: StaticPrice
     price: 1000
 

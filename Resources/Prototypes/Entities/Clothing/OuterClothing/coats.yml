@@ -19,12 +19,11 @@
     sprite: Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/detective.rsi
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: SmokingPipeFilledTobacco
-        - id: FlippoEngravedLighter
+      storagebase:
+      - SmokingPipeFilledTobacco
+      - FlippoEngravedLighter
   - type: ExplosionResistance
     damageCoefficient: 1 #its a coat. it doesnt do shit
 
@@ -44,12 +43,11 @@
   parent: ClothingOuterCoatDetective
   id: ClothingOuterCoatDetectiveLoadout
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: SmokingPipeFilledTobacco
-        - id: FlippoLighter #Not the steal objective, only difference from normal detective trenchcoat
+      storagebase:
+      - SmokingPipeFilledTobacco
+      - FlippoLighter #Not the steal objective, only difference from normal detective trenchcoat
 
 - type: entity
   parent: ClothingOuterStorageBase

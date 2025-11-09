@@ -8,14 +8,13 @@
     grid:
     - 0,0,3,2
     maxItemSize: Normal
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: LargeBeaker
-          amount: 2
-        - id: Beaker
-          amount: 2
+      storagebase:
+      - LargeBeaker
+      - LargeBeaker
+      - Beaker
+      - Beaker
   - type: Sprite
     layers:
       - state: box

@@ -27,14 +27,13 @@
   name: toolbox crate
   description: Two mechanical and two electrical toolboxes.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ToolboxMechanicalFilled
-          amount: 2
-        - id: ToolboxElectricalFilled
-          amount: 2
+      entity_storage:
+      - ToolboxMechanicalFilled
+      - ToolboxMechanicalFilled
+      - ToolboxElectricalFilled
+      - ToolboxMechanicalFilled
 
 #- type: entity
 #  id: CrateEngineeringPowercell
@@ -102,16 +101,15 @@
   name: bulk cable crate
   description: 2 coils each for every cable type.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: CableHVStack
-          amount: 2
-        - id: CableMVStack
-          amount: 2
-        - id: CableApcStack
-          amount: 2
+      entity_storage:
+      - CableHVStack
+      - CableHVStack
+      - CableMVStack
+      - CableMVStack
+      - CableApcStack
+      - CableApcStack
 
 - type: entity
   id: CrateEngineeringElectricalSupplies
@@ -119,14 +117,13 @@
   name: electrical supplies crate
   description: NT is not responsible for any workplace infighting relating to the insulated gloves included within these crates.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ToolboxElectricalFilled
-          amount: 2
-        - id: ClothingHandsGlovesColorYellow
-          amount: 2
+      entity_storage:
+      - ToolboxElectricalFilled
+      - ToolboxElectricalFilled
+      - ClothingHandsGlovesColorYellow
+      - ClothingHandsGlovesColorYellow
 
 - type: entity
   id: CrateEngineeringStationBeaconBundle
@@ -146,11 +143,11 @@
   name: jetpack crate
   description: Two jetpacks for those who don't know how to use fire extinguishers.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
       entity_storage:
-        id: JetpackBlue
-        amount: 2
+      - JetpackBlue
+      - JetpackBlue
 
 - type: entity
   id: CrateEngineeringMiniJetpack
@@ -158,11 +155,11 @@
   name: mini jetpack crate
   description: Two mini jetpacks for those who want an extra challenge.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
       entity_storage:
-        id: JetpackMini
-        amount: 2
+      - JetpackMini
+      - JetpackMini
 
 - type: entity
   id: CrateAirlockKit
@@ -185,14 +182,13 @@
   name: EVA kit
   description: A set consisting of two prestigious EVA suits and helmets.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ClothingHeadHelmetEVA
-          amount: 2
-        - id: ClothingOuterHardsuitEVA
-          amount: 2
+      entity_storage:
+      - ClothingHeadHelmetEVA
+      - ClothingHeadHelmetEVA
+      - ClothingOuterHardsuitEVA
+      - ClothingOuterHardsuitEVA
 
 - type: entity
   id: CrateRCDAmmo
@@ -212,10 +208,10 @@
   name: RCD crate
   description: A crate containing a single rapid construction device.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
       entity_storage:
-        id: RCD
+      - RCD
 
 - type: entity
   id: CrateParticleDecelerators
@@ -235,10 +231,10 @@
   name: space heater crate
   description: Contains a space heater for climate control.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
       entity_storage:
-        id: SpaceHeaterFlatpack
+      - SpaceHeaterFlatpack
 
 - type: entityTable
   id: RandomTechBoardTable

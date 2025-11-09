@@ -4,16 +4,15 @@
   name: bomb suit crate
   description: Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (time not included)
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ClothingHeadHelmetBombSuit
-        - id: ClothingMaskGas
-        - id: Screwdriver
-        - id: Wirecutter
-        - id: Multitool
-        - id: ClothingOuterSuitBomb
+      entity_storage:
+      - ClothingHeadHelmetBombSuit
+      - ClothingMaskGas
+      - Screwdriver
+      - Wirecutter
+      - Multitool
+      - ClothingOuterSuitBomb
 
 - type: entity
   id: CrateEmergencyFire
@@ -21,22 +20,21 @@
   name: firefighting crate
   description: Only you can prevent station fires. Partner up with two firefighter suits, gas masks, flashlights, large oxygen tanks, extinguishers, and hardhats!
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: FlashlightLantern
-          amount: 2
-        - id: FireExtinguisher
-          amount: 2
-        - id: ClothingHeadHatHardhatRed
-          amount: 2
-        - id: ClothingMaskGas
-          amount: 2
-        - id: ClothingOuterSuitFire
-          amount: 2
-        - id: OxygenTankFilled
-          amount: 2
+      entity_storage:
+      - FlashlightLantern
+      - FlashlightLantern
+      - FireExtinguisher
+      - FireExtinguisher
+      - ClothingHeadHatHardhatRed
+      - ClothingHeadHatHardhatRed
+      - ClothingMaskGas
+      - ClothingMaskGas
+      - ClothingOuterSuitFire
+      - ClothingOuterSuitFire
+      - OxygenTankFilled
+      - OxygenTankFilled
 
 - type: entity
   id: CrateEmergencyInternals
@@ -103,17 +101,16 @@
   name: radiation protection crate
   description: Survive the Nuclear Apocalypse and Supermatter Engine alike with two sets of Radiation suits. Each set contains a helmet, suit, and Geiger counter. We'll even throw in a bottle of vodka and some glasses too, considering the life-expectancy of people who order this.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ClothingOuterSuitRad
-          amount: 2
-        - id: GeigerCounter
-          amount: 2
-        - id: DrinkVodkaBottleFull
-        - id: DrinkShotGlass
-          amount: 2
+      entity_storage:
+      - ClothingOuterSuitRad
+      - ClothingOuterSuitRad
+      - GeigerCounter
+      - GeigerCounter
+      - DrinkVodkaBottleFull
+      - DrinkShotGlass
+      - DrinkShotGlass
 
 - type: entity
   id: CrateEmergencyInflatablewall
@@ -121,10 +118,10 @@
   name: inflatable wall crate
   description: Three stacks of inflatable walls for when the stations metal walls don't want to hold atmosphere anymore.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
       entity_storage:
-        id: BoxInflatable
+      - BoxInflatable
 
 - type: entity
   id: CrateGenericBiosuit
@@ -136,9 +133,8 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: ClothingOuterBioGeneral
-          amount: 2
-        - id: ClothingHeadHatHoodBioGeneral
-          amount: 2
+        - !type:NestedSelector
+          tableId: FillBiohazardGearGeneric
+          rolls: 2
         - id: ClothingMaskGas
           amount: 2

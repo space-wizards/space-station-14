@@ -22,19 +22,18 @@
   - type: Storage
     grid:
     - 0,0,3,2
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Beaker
-          amount: 2
-        - id: Dropper
-        # It would be cool to have special "syndicate" chemical analysis goggles
-        - id: ClothingEyesGlassesChemical
-        - id: VestineChemistryVial
-          amount: 2
-        - id: BaseChemistryEmptyVial
-        - id: SyringeStimulants
+      storagebase:
+      - Beaker
+      - Beaker
+      - Dropper
+      # It would be cool to have special "syndicate" chemical analysis goggles
+      - ClothingEyesGlassesChemical
+      - VestineChemistryVial
+      - VestineChemistryVial
+      - BaseChemistryEmptyVial
+      - SyringeStimulants
 
 - type: entity
   parent: [BoxCardboard, BaseSyndicateContraband]
@@ -92,12 +91,11 @@
     layers:
       - state: box_of_doom
       - state: france
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: WeaponCroissant
-          amount: 2
-        - id: WeaponBaguette
-        - id: SyndicateMicrowaveMachineCircuitboard
-        - id: PaperWrittenCombatBakeryKit
+      storagebase:
+      - WeaponCroissant
+      - WeaponCroissant
+      - WeaponBaguette
+      - SyndicateMicrowaveMachineCircuitboard
+      - PaperWrittenCombatBakeryKit

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.VendingMachines;
 using Content.Server.Wires;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Containers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
@@ -146,6 +147,24 @@ namespace Content.IntegrationTests.Tests
                         if (spawnEntry.PrototypeId != null && restocks.Contains(spawnEntry.PrototypeId))
                             restockStore.Add(spawnEntry.PrototypeId);
                     }
+
+                    if (restockStore.Count > 0)
+                        restockStores.Add(proto.ID, restockStore);
+                }
+
+                // Collect all the prototypes with ContainerFills referencing those entities.
+                foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (!proto.TryGetComponent<ContainerFillComponent>(out var storage, compFact))
+                        continue;
+
+                    List<string> restockStore = new();
+                    foreach (var spawns in storage.Containers.Values)
+                        foreach (var spawnEntry in spawns)
+                        {
+                            if (spawnEntry != null && restocks.Contains(spawnEntry))
+                                restockStore.Add(spawnEntry);
+                        }
 
                     if (restockStore.Count > 0)
                         restockStores.Add(proto.ID, restockStore);

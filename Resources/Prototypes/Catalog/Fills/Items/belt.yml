@@ -3,49 +3,46 @@
   parent: ClothingBeltUtility
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Crowbar
-        - id: Wrench
-        - id: Screwdriver
-        - id: Wirecutter
-        - id: Welder
-        - id: NetworkConfigurator
+      storagebase:
+      - Crowbar
+      - Wrench
+      - Screwdriver
+      - Wirecutter
+      - Welder
+      - NetworkConfigurator
 
 - type: entity
   id: ClothingBeltUtilityEngineering
   parent: ClothingBeltUtility
   suffix: Engineering
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: CrowbarYellow
-        - id: Wrench
-        - id: Screwdriver
-        - id: Wirecutter
-        - id: Welder
-        - id: Multitool
+      storagebase:
+      - CrowbarYellow
+      - Wrench
+      - Screwdriver
+      - Wirecutter
+      - Welder
+      - Multitool
 
 - type: entity
   id: ClothingBeltChiefEngineerFilled
   parent: ClothingBeltChiefEngineer
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: PowerDrill
-        - id: JawsOfLife
-        - id: WelderExperimental
-        - id: Multitool
-        - id: HolofanProjector
-        - id: GasAnalyzer
-        - id: trayScanner
+      storagebase:
+      - PowerDrill
+      - JawsOfLife
+      - WelderExperimental
+      - Multitool
+      - HolofanProjector
+      - GasAnalyzer
+      - trayScanner
 
 - type: entityTable
   id: BeltSecurityEntityTable
@@ -53,7 +50,7 @@
     children:
     - id: Stunbaton
     - id: Handcuffs
-    - id: Handcuffs
+      amount: 2
     - id: HoloprojectorSecurity
     - id: RadioHandheldSecurity
 
@@ -82,33 +79,31 @@
   parent: ClothingBeltJanitor
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Soap #Make a soap group and pick between when i'm not lazy
-        - id: SprayBottleSpaceCleaner
-        - id: CleanerGrenade
-          amount: 2
-        - id: FlashlightLantern
-        - id: LightReplacer
-        - id: WireBrush
+      storagebase:
+      - Soap #Make a soap group and pick between when i'm not lazy
+      - SprayBottleSpaceCleaner
+      - CleanerGrenade
+      - CleanerGrenade
+      - FlashlightLantern
+      - LightReplacer
+      - WireBrush
 
 - type: entity
   id: ClothingBeltMedicalFilled
   parent: ClothingBeltMedical
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Brutepack
-          amount: 2
-        - id: Ointment
-        - id: Bloodpack
-        - id: Gauze
-        - id: EmergencyMedipen #You never know what people are going to latejoin into
+      storagebase:
+      - Brutepack
+      - Brutepack
+      - Ointment
+      - Bloodpack
+      - Gauze
+      - EmergencyMedipen #You never know what people are going to latejoin into
 
 - type: entity
   id: ClothingBeltMedicalEMTFilled
@@ -131,14 +126,13 @@
   parent: ClothingBeltPlant
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: HydroponicsToolMiniHoe
-        - id: HydroponicsToolSpade
-        - id: HydroponicsToolClippers
-        - id: ChemistryBottleRobustHarvest
+      storagebase:
+      - HydroponicsToolMiniHoe
+      - HydroponicsToolSpade
+      - HydroponicsToolClippers
+      - ChemistryBottleRobustHarvest
 
 - type: entity
   id: ClothingBeltSheathFilled
@@ -178,51 +172,47 @@
   parent: ClothingBeltMilitaryWebbingMed
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ChemistryBottleEpinephrine
-          amount: 2
-        - id: ChemistryBottleEphedrine
-          amount: 2
-        - id: ChemistryBottleOmnizine
-        - id: MedkitCombatFilled
+      storagebase:
+      - ChemistryBottleEpinephrine
+      - ChemistryBottleEpinephrine
+      - ChemistryBottleEphedrine
+      - ChemistryBottleEphedrine
+      - ChemistryBottleOmnizine
+      - MedkitCombatFilled
 
 - type: entity
   parent: ClothingBeltWand
   id: ClothingBeltWandFilled
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: WeaponWandPolymorphCarp
-        - id: WeaponWandFireball
-        - id: WeaponWandDeath
-        - id: WeaponWandPolymorphDoor
+      storagebase:
+      - WeaponWandPolymorphCarp
+      - WeaponWandFireball
+      - WeaponWandDeath
+      - WeaponWandPolymorphDoor
 
 - type: entity
   id: ClothingBeltHolsterFilled
   parent: ClothingBeltHolster
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: WeaponRevolverInspector
-        - id: SpeedLoaderMagnum
+      storagebase:
+      - WeaponRevolverInspector
+      - SpeedLoaderMagnum
 
 - type: entity
   id: ClothingBeltChefFilled
   parent: ClothingBeltChef
   suffix: Filled
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: FoodShakerSalt
-        - id: FoodShakerPepper
+      storagebase:
+      - FoodShakerSalt
+      - FoodShakerPepper

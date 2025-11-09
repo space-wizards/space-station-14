@@ -20,19 +20,18 @@
   id: BoxAgrichem
   description: For the budding botanist ready to learn about maximizing farm output. This faded box must be at least 50 years old.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: PaperAgrichemManual
-        - id: ChemistryEmptyBottle01
-        - id: ChemistryBottlePotassium
-        - id: ChemistryBottlePhosphorus
-        - id: ChemistryBottleNitrogen
-        - id: ChemistryBottleHydrogen
-        - id: ChemistryBottleEthanol
-        - id: RadiumChemistryVial
-        - id: ChlorineChemistryVial
+      storagebase:
+      - PaperAgrichemManual
+      - ChemistryEmptyBottle01
+      - ChemistryBottlePotassium
+      - ChemistryBottlePhosphorus
+      - ChemistryBottleNitrogen
+      - ChemistryBottleHydrogen
+      - ChemistryBottleEthanol
+      - RadiumChemistryVial
+      - ChlorineChemistryVial
   - type: Sprite
     layers:
       - state: boxwide
@@ -47,41 +46,39 @@
   id: BoxLightbulbColorfulMixed
   name: mixed colorful lightbulb box
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: LightBulbCrystalCyan
-          amount: 2
-        - id: LightBulbCrystalBlue
-          amount: 2
-        - id: LightBulbCrystalGreen
-          amount: 2
-        - id: LightBulbCrystalPink
-          amount: 2
-        - id: LightBulbCrystalRed
-          amount: 2
-        - id: LightBulbCrystalOrange
-          amount: 2
+      storagebase:
+      - LightBulbCrystalCyan
+      - LightBulbCrystalCyan
+      - LightBulbCrystalBlue
+      - LightBulbCrystalBlue
+      - LightBulbCrystalGreen
+      - LightBulbCrystalGreen
+      - LightBulbCrystalPink
+      - LightBulbCrystalPink
+      - LightBulbCrystalRed
+      - LightBulbCrystalRed
+      - LightBulbCrystalOrange
+      - LightBulbCrystalOrange
 
 - type: entity
   parent: BoxLighttube
   id: BoxLighttubeColorfulMixed
   name: mixed colorful lighttube box
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: LightTubeCrystalCyan
-          amount: 2
-        - id: LightTubeCrystalBlue
-          amount: 2
-        - id: LightTubeCrystalGreen
-          amount: 2
-        - id: LightTubeCrystalPink
-          amount: 2
-        - id: LightTubeCrystalRed
-          amount: 2
-        - id: LightTubeCrystalOrange
-          amount: 2
+      storagebase:
+      - LightTubeCrystalCyan
+      - LightTubeCrystalCyan
+      - LightTubeCrystalBlue
+      - LightTubeCrystalBlue
+      - LightTubeCrystalGreen
+      - LightTubeCrystalGreen
+      - LightTubeCrystalPink
+      - LightTubeCrystalPink
+      - LightTubeCrystalRed
+      - LightTubeCrystalRed
+      - LightTubeCrystalOrange
+      - LightTubeCrystalOrange

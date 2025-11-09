@@ -12,11 +12,10 @@
   name: syndicate raid suit bundle
   description: "Contains the Syndicate's durable raid armor suit."
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingOuterArmorRaid
-        - id: ClothingHeadHelmetRaid
-        - id: ClothingMaskGasSyndicate
-        - id: ClothingHandsGlovesCombat
+      storagebase:
+      - ClothingOuterArmorRaid
+      - ClothingHeadHelmetRaid
+      - ClothingMaskGasSyndicate
+      - ClothingHandsGlovesCombat

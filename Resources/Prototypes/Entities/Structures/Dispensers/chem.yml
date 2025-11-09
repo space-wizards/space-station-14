@@ -55,27 +55,26 @@
   parent: ChemDispenserEmpty
   components:
   - type: ReagentDispenser
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: JugAluminium
-        - id: JugCarbon
-        - id: JugChlorine
-        - id: JugCopper
-        - id: JugEthanol
-        - id: JugFluorine
-        - id: JugSugar
-        - id: JugHydrogen
-        - id: JugIodine
-        - id: JugIron
-        - id: JugLithium
-        - id: JugMercury
-        - id: JugNitrogen
-        - id: JugOxygen
-        - id: JugPhosphorus
-        - id: JugPotassium
-        - id: JugRadium
-        - id: JugSilicon
-        - id: JugSodium
-        - id: JugSulfur
+      storagebase:
+      - JugAluminium
+      - JugCarbon
+      - JugChlorine
+      - JugCopper
+      - JugEthanol
+      - JugFluorine
+      - JugSugar
+      - JugHydrogen
+      - JugIodine
+      - JugIron
+      - JugLithium
+      - JugMercury
+      - JugNitrogen
+      - JugOxygen
+      - JugPhosphorus
+      - JugPotassium
+      - JugRadium
+      - JugSilicon
+      - JugSodium
+      - JugSulfur

@@ -13,10 +13,10 @@
     breakOnAccessBreaker: false
   - type: EntityStorage
     capacity: 1 # Its smol.
-  # - type: EntityTableContainerFill
+  # - type: ContainerFill
     # containers:
       # entity_storage:
-        # id: PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
+      # - PuddleSparkle # Ha! Cute. Unfortunately it despawns before the container is likely to open.
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container

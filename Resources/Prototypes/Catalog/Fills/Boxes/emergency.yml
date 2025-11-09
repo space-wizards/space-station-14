@@ -5,16 +5,15 @@
   description: It's a box with basic internals inside.
   suffix: Standard
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreath
+      - EmergencyOxygenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -25,16 +24,15 @@
   id: BoxSurvivalNitrogen
   suffix: Standard N2
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyNitrogenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreath
+      - EmergencyNitrogenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -49,16 +47,15 @@
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
   suffix: Extended
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: ExtendedEmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreath
+      - ExtendedEmergencyOxygenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -69,16 +66,15 @@
   id: BoxSurvivalEngineeringNitrogen
   suffix: Extended N2
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: ExtendedEmergencyNitrogenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreath
+      - ExtendedEmergencyNitrogenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -94,16 +90,15 @@
   description: It's a box with basic internals inside.
   suffix: Security
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskGasSecurity
-        - id: EmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskGasSecurity
+      - EmergencyOxygenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -114,16 +109,15 @@
   id: BoxSurvivalSecurityNitrogen
   suffix: Security N2
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskGasSecurity
-        - id: EmergencyNitrogenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskGasSecurity
+      - EmergencyNitrogenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -139,16 +133,15 @@
   description: It's a box with basic internals inside.
   suffix: Medical
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreathMedical
-        - id: EmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreathMedical
+      - EmergencyOxygenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -159,16 +152,15 @@
   id: BoxSurvivalMedicalNitrogen
   suffix: Medical N2
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreathMedical
-        - id: EmergencyNitrogenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreathMedical
+      - EmergencyNitrogenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -189,16 +181,15 @@
     - state: heart
   - type: Item
     heldPrefix: hug
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyFunnyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreath
+      - EmergencyFunnyOxygenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Tag
     tags:
     - BoxCardboard
@@ -209,16 +200,15 @@
   id: BoxHugNitrogen
   suffix: Emergency N2
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyNitrogenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreath
+      - EmergencyNitrogenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
+      - DrinkWaterBottleFull
   - type: Label
     currentLabel: reagent-name-nitrogen
 
@@ -227,32 +217,30 @@
   id: BoxMime
   suffix: Mime, Emergency
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodBreadNutriBatard
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreath
+      - EmergencyOxygenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodBreadNutriBatard
+      - DrinkWaterBottleFull
 
 - type: entity
   parent: BoxSurvivalNitrogen
   id: BoxMimeNitrogen
   suffix: Mime, Emergency N2
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyNitrogenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodBreadNutriBatard
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreath
+      - EmergencyNitrogenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodBreadNutriBatard
+      - DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -265,16 +253,15 @@
   id: BoxMimeMoth
   suffix: Mime, Emergency moth
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodBreadCottonNutriBatard
-        - id: DrinkWaterBottleFull
+      storagebase:
+      - ClothingMaskBreath
+      - EmergencyOxygenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodBreadCottonNutriBatard
+      - DrinkWaterBottleFull
 
 - type: entity
   parent: BoxCardboard
@@ -283,15 +270,14 @@
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
   suffix: Syndicate
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskGasSyndicate
-        - id: ExtendedEmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
+      storagebase:
+      - ClothingMaskGasSyndicate
+      - ExtendedEmergencyOxygenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
   - type: Sprite
     layers:
     - state: internals
@@ -302,15 +288,14 @@
   id: BoxSurvivalSyndicateNitrogen
   suffix: Syndicate N2
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskGasSyndicate
-        - id: ExtendedEmergencyNitrogenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
+      storagebase:
+      - ClothingMaskGasSyndicate
+      - ExtendedEmergencyNitrogenTankFilled
+      - EmergencyMedipen
+      - Flare
+      - FoodSnackNutribrick
   - type: Sprite
     layers:
     - state: internals

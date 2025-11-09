@@ -4,14 +4,13 @@
   suffix: Filled
   parent: Medkit
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Brutepack
-        - id: Ointment
-        - id: Gauze
-        - id: PillCanisterTricordrazine
+      storagebase:
+      - Brutepack
+      - Ointment
+      - Gauze
+      - PillCanisterTricordrazine
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
@@ -19,102 +18,95 @@
   suffix: Filled
   parent: MedkitBurn
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Ointment
-          amount: 2
-        - id: PillCanisterKelotane
-        - id: PillCanisterDermaline
+      storagebase:
+      - Ointment
+      - Ointment
+      - PillCanisterKelotane
+      - PillCanisterDermaline
 
 - type: entity
   id: MedkitBruteFilled
   suffix: Filled
   parent: MedkitBrute
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Brutepack
-        - id: Gauze
-        - id: PillCanisterIron
-        - id: PillCanisterCopper
+      storagebase:
+      - Brutepack
+      - Gauze
+      - PillCanisterIron
+      - PillCanisterCopper
 
 - type: entity
   id: MedkitToxinFilled
   suffix: Filled
   parent: MedkitToxin
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: SyringeIpecac
-        - id: SyringeEthylredoxrazine
-        - id: AntiPoisonMedipen
-        - id: PillCanisterDylovene
-        - id: PillCanisterCharcoal
+      storagebase:
+      - SyringeIpecac
+      - SyringeEthylredoxrazine
+      - AntiPoisonMedipen
+      - PillCanisterDylovene
+      - PillCanisterCharcoal
 
 - type: entity
   id: MedkitOxygenFilled
   suffix: Filled
   parent: MedkitO2
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreathMedical
-        - id: EmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: SyringeInaprovaline
-        - id: PillCanisterDexalin
+      storagebase:
+      - ClothingMaskBreathMedical
+      - EmergencyOxygenTankFilled
+      - EmergencyMedipen
+      - SyringeInaprovaline
+      - PillCanisterDexalin
 
 - type: entity
   id: MedkitRadiationFilled
   suffix: Filled
   parent: MedkitRadiation
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: SyringePhalanximine
-        - id: RadAutoInjector
-        - id: PillCanisterPotassiumIodide
-        - id: PillCanisterHyronalin
+      storagebase:
+      - SyringePhalanximine
+      - RadAutoInjector
+      - PillCanisterPotassiumIodide
+      - PillCanisterHyronalin
 
 - type: entity
   id: MedkitAdvancedFilled
   suffix: Filled
   parent: MedkitAdvanced
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: MedicatedSuture
-        - id: RegenerativeMesh
-        - id: Bloodpack
-          amount: 2
+      storagebase:
+      - MedicatedSuture
+      - RegenerativeMesh
+      - Bloodpack
+      - Bloodpack
 
 - type: entity
   id: MedkitCombatFilled
   suffix: Filled
   parent: MedkitCombat
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: MedicatedSuture
-        - id: RegenerativeMesh
-        - id: SyringeEphedrine
-        - id: SyringeSaline
-        - id: BruteAutoInjector
-        - id: BurnAutoInjector
+      storagebase:
+      - MedicatedSuture
+      - RegenerativeMesh
+      - SyringeEphedrine
+      - SyringeSaline
+      - BruteAutoInjector
+      - BurnAutoInjector
 
 - type: entity
   id: StimkitFilled

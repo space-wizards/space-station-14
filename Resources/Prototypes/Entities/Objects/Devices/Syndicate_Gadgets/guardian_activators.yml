@@ -38,13 +38,12 @@
   id: BoxHoloparasite
   description: A box containing a holoparasite injector.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: HoloparasiteInjector
-        - id: HoloparasiteInfo
-        - id: ClothingHeadHatBizarreSoft
+      storagebase:
+      - HoloparasiteInjector
+      - HoloparasiteInfo
+      - ClothingHeadHatBizarreSoft
   - type: Sprite
     layers:
       - state: box
@@ -56,13 +55,12 @@
   id: BoxHoloclown
   description: A box containing a holoclown injector.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: HoloClownInjector
-        - id: ToyFigurineHoloClown
-        - id: ToyHammer
+      storagebase:
+      - HoloClownInjector
+      - ToyFigurineHoloClown
+      - ToyHammer
   - type: Sprite
     layers:
       - state: box_hug

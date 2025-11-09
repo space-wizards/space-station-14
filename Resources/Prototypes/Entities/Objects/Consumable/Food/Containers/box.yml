@@ -281,12 +281,11 @@
   id: FoodBoxPizzaCotton
   suffix: Cotton Pizza
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: FoodPizzaCotton
-        - id: KnifePlastic
+      storagebase:
+      - FoodPizzaCotton
+      - KnifePlastic
 
 # Nugget
 
@@ -606,10 +605,10 @@
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
   - type: Item
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
       storagebase:
-        id: CluwneHorn
+      - CluwneHorn
 
 - type: entity
   id: FoodMealHappyHonkClown
@@ -642,13 +641,9 @@
       storagebase: !type:AllSelector
         children:
         - id: FoodBurgerBig
-          amount: 1
         - id: FoodMealFriesCheesy
-          amount: 1
         - id: DrinkColaBottleFull
-          amount: 1
         - id: FoodPieAppleSlice
-          amount: 1
         - !type:GroupSelector
           children:
           - id: ToyMouse

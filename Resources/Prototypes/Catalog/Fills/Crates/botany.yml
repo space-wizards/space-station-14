@@ -4,24 +4,23 @@
   name: exotic seeds crate
   description: Any entrepreneuring botanist's dream. Contains many different exotic seeds. Requires Hydroponics access to open.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: EggySeeds
-          amount: 2
-        - id: TowercapSeeds
-          amount: 2
-        - id: TobaccoSeeds
-          amount: 2
-        - id: CannabisSeeds
-          amount: 2
-        - id: NettleSeeds
-          amount: 2
-        - id: FlyAmanitaSeeds
-          amount: 2
-        - id: BungoSeeds
-          amount: 2
+      entity_storage:
+      - EggySeeds
+      - EggySeeds2
+      - TowercapSeeds
+      - TowercapSeeds
+      - TobaccoSeeds
+      - TobaccoSeeds
+      - CannabisSeeds
+      - CannabisSeeds
+      - NettleSeeds
+      - NettleSeeds
+      - FlyAmanitaSeeds
+      - FlyAmanitaSeeds
+      - BungoSeeds
+      - BungoSeeds
 
 - type: entity
   id: CrateHydroponicsSeedsMedicinal
@@ -50,22 +49,21 @@
   name: hydroponics equipment crate
   description: Supplies for growing a great garden! Contains some spray bottles of plant chemicals, a hatchet, a mini-hoe, scythe, as well as a pair of leather gloves and a botanist's apron.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: HydroponicsToolMiniHoe
-        - id: PlantBGoneSpray
-        - id: WeedSpray
-        - id: PestSpray
-        - id: HydroponicsToolClippers
-        - id: HydroponicsToolScythe
-        - id: HydroponicsToolSpade
-        - id: HydroponicsToolHatchet
-        - id: ClothingOuterApronBotanist
-        - id: ClothingHandsGlovesLeather
-        - id: ChemistryBottleEZNutrient
-          amount: 2
+      entity_storage:
+      - HydroponicsToolMiniHoe
+      - PlantBGoneSpray
+      - WeedSpray
+      - PestSpray
+      - HydroponicsToolClippers
+      - HydroponicsToolScythe
+      - HydroponicsToolSpade
+      - HydroponicsToolHatchet
+      - ClothingOuterApronBotanist
+      - ClothingHandsGlovesLeather
+      - ChemistryBottleEZNutrient
+      - ChemistryBottleEZNutrient
 
 - type: entity
   id: CrateHydroponicsSeeds
@@ -73,34 +71,33 @@
   name: seeds crate
   description: Big things have small beginnings. Contains twenty-four different seeds.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ChiliSeeds
-        - id: CornSeeds
-        - id: EggplantSeeds
-        - id: TomatoSeeds
-        - id: WheatSeeds
-        - id: CarrotSeeds
-        - id: CabbageSeeds
-        - id: GarlicSeeds
-        - id: ChanterelleSeeds
-        - id: PotatoSeeds
-        - id: SugarcaneSeeds
-        - id: LemonSeeds
-        - id: LimeSeeds
-        - id: OrangeSeeds
-        - id: OatSeeds
-        - id: OnionSeeds
-        - id: OnionRedSeeds
-        - id: RiceSeeds
-        - id: SoybeanSeeds
-        - id: GrapeSeeds
-        - id: WatermelonSeeds
-        - id: PeaSeeds
-        - id: CherrySeeds
-        - id: CottonSeeds
+      entity_storage:
+      - ChiliSeeds
+      - CornSeeds
+      - EggplantSeeds
+      - TomatoSeeds
+      - WheatSeeds
+      - CarrotSeeds
+      - CabbageSeeds
+      - GarlicSeeds
+      - ChanterelleSeeds
+      - PotatoSeeds
+      - SugarcaneSeeds
+      - LemonSeeds
+      - LimeSeeds
+      - OrangeSeeds
+      - OatSeeds
+      - OnionSeeds
+      - OnionRedSeeds
+      - RiceSeeds
+      - SoybeanSeeds
+      - GrapeSeeds
+      - WatermelonSeeds
+      - PeaSeeds
+      - CherrySeeds
+      - CottonSeeds
 
 - type: entity
   id: CrateHydroponicsTray
@@ -108,7 +105,7 @@
   name: hydroponics tray crate
   description: Contains a hydroponics tray flatpack.
   components:
-  - type: EntityTableContainerFill
+  - type: ContainerFill
     containers:
       entity_storage:
-        id: HydroponicsTrayFlatpack
+      - HydroponicsTrayFlatpack
