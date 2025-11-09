@@ -31,6 +31,7 @@ public sealed class PayloadSystem : EntitySystem
 
         SubscribeLocalEvent<PayloadCaseComponent, TriggerEvent>(OnCaseTriggered);
         SubscribeLocalEvent<PayloadTriggerComponent, TriggerEvent>(OnTriggerTriggered);
+        SubscribeLocalEvent<PayloadCaseComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<PayloadCaseComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<PayloadCaseComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
         SubscribeLocalEvent<PayloadCaseComponent, ExaminedEvent>(OnExamined);
@@ -80,6 +81,12 @@ public sealed class PayloadSystem : EntitySystem
         DebugTools.Assert(!_tagSystem.HasTag(uid, PayloadTag));
 
         RaiseLocalEvent(parent, ref args);
+    }
+
+    private void OnInsertAttempt(Entity<PayloadCaseComponent> ent, ref ContainerIsInsertingAttemptEvent args)
+    {
+        if (!_tagSystem.HasTag(args.EntityUid, PayloadTag) && !HasComp<PayloadTriggerComponent>(args.EntityUid))
+            args.Cancel();
     }
 
     private void OnEntityInserted(EntityUid uid, PayloadCaseComponent _, EntInsertedIntoContainerMessage args)
