@@ -4,12 +4,14 @@
   name: SMG crate
   description: Contains two SMGs with four mags. Requires Armory access to open.
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponSubMachineGunWt550
-        amount: 2
-      - id: MagazinePistolSubMachineGunTopMounted
-        amount: 4
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: WeaponSubMachineGunWt550
+          amount: 2
+        - id: MagazinePistolSubMachineGunTopMounted
+          amount: 4
 
 - type: entity
   id: CrateArmoryShotgun
@@ -17,12 +19,14 @@
   name: shotgun crate
   description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer Combat Shotguns, and some standard shotgun shells. Requires Armory access to open.
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponShotgunEnforcer
-        amount: 2
-      - id: BoxLethalshot
-        amount: 4
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: WeaponShotgunEnforcer
+          amount: 2
+        - id: BoxLethalshot
+          amount: 4
 
 - type: entity
   id: CrateTrackingImplants
@@ -30,9 +34,10 @@
   name: tracking implants
   description: Contains a handful of tracking implanters. Good for prisoners you'd like to release but still keep track of.
   components:
-  - type: StorageFill
-    contents:
-      - id: TrackingImplanter
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: TrackingImplanter
         amount: 5
 
 - type: entity
@@ -41,10 +46,11 @@
   name: training bombs
   description: Contains three low-yield training bombs for security to learn defusal and safe ordnance disposal, EOD suit not included. Requires Armory access to open.
   components:
-  - type: StorageFill
-    contents:
-    - id: TrainingBomb
-      amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: TrainingBomb
+        amount: 3
 
 - type: entity
   id: CrateArmoryLaser
@@ -52,9 +58,10 @@
   name: lasers crate
   description: Contains three standard-issue laser rifles. Requires Armory access to open.
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponLaserCarbine
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: WeaponLaserCarbine
         amount: 3
 
 - type: entity
@@ -63,12 +70,14 @@
   name: pistols crate
   description: Contains two standard NT pistols with four mags. Requires Armory access to open.
   components:
-  - type: StorageFill
-    contents:
-    - id: WeaponPistolMk58
-      amount: 2
-    - id: MagazinePistol
-      amount: 4
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: WeaponPistolMk58
+          amount: 2
+        - id: MagazinePistol
+          amount: 4
 
 - type: entity
   id: CrateSecurityRiot
@@ -76,18 +85,20 @@
   name: swat crate
   description: Contains two sets of riot armor, helmets, shields, and enforcers loaded with beanbags. Extra ammo is included. Requires Armory access to open.
   components:
-  - type: StorageFill
-    contents:
-    - id: ClothingOuterArmorRiot
-      amount: 2
-    - id: ClothingHeadHelmetRiot
-      amount: 2
-    - id: WeaponShotgunEnforcerRubber
-      amount: 2
-    - id: BoxBeanbag
-      amount: 2
-    - id: RiotShield
-      amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingOuterArmorRiot
+          amount: 2
+        - id: ClothingHeadHelmetRiot
+          amount: 2
+        - id: WeaponShotgunEnforcerRubber
+          amount: 2
+        - id: BoxBeanbag
+          amount: 2
+        - id: RiotShield
+          amount: 2
 
 - type: entity
   id: CrateArmoryRifle
@@ -95,9 +106,11 @@
   name: rifle crate
   description: Contains two high-powered assault rifles with four mags. Requires Armory access to open.
   components:
-  - type: StorageFill
-    contents:
-    - id: WeaponRifleLecter
-      amount: 2
-    - id: MagazineRifle
-      amount: 4
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: WeaponRifleLecter
+          amount: 2
+        - id: MagazineRifle
+          amount: 4

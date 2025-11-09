@@ -50,9 +50,10 @@
     - 0,0,4,3
     areaInsert: true
     maxItemSize: Tiny
-  - type: StorageFill
-    contents:
-      - id: SnapPop
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: SnapPop
         amount: 5
   - type: Dumpable
 
