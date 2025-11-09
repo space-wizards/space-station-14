@@ -98,10 +98,13 @@
   - FauxTileAstroGrass
   - FauxTileMowedAstroGrass
   - FauxTileJungleAstroGrass
+  - FauxTileDarkAstroGrass
+  - FauxTileLightAstroGrass
   - FauxTileFairyAstroGrass # DS14
   - FauxTileAstroIce
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand
+  - FauxTileDesertAstroSand
 
 - type: technology
   id: BiochemicalStasis
@@ -224,7 +227,6 @@
   - LearnDemonLanguageImplanter
   - LearnCatLanguageImplanter
   - LearnMachineLanguageImplanter
-  - LearnKoboltLanguageImplanter
   - LearnPlafLanguageImplanter
   - LearnVulpkaninLanguageImplanter
   - LearnXenomorphLanguageImplanter

@@ -9,7 +9,7 @@ public sealed partial class StunAttackActionEvent : InstantActionEvent
 
 }
 
-public sealed partial class DemonDashEvent : WorldTargetActionEvent 
+public sealed partial class DemonDashEvent : WorldTargetActionEvent
 {
 
 }

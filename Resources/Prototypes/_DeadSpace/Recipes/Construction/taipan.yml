@@ -1,0 +1,79 @@
+# Airlock
+- type: construction
+  id: AirlockTaipan
+  graph: AirlockTaipan
+  startNode: start
+  targetNode: airlock
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: AirlockTaipanGlass
+  graph: AirlockTaipan
+  startNode: start
+  targetNode: glassAirlock
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+# Firelock
+- type: construction
+  id: FirelockTaipan
+  graph: FirelockTaipan
+  startNode: start
+  targetNode: FirelockTaipan
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: FirelockTaipanGlass
+  graph: FirelockTaipan
+  startNode: start
+  targetNode: FirelockTaipanGlass
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: FirelockTaipanEdge
+  name: construction-recipe-firelock-edge
+  graph: FirelockTaipan
+  startNode: start
+  targetNode: FirelockTaipanEdge
+  category: construction-category-structures
+  entityWhitelist:
+    tags:
+    - TaipanRole
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

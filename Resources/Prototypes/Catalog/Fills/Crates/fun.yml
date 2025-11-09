@@ -42,11 +42,14 @@
     - id: PlushieMoth
     - id: PlushieArachind
     - id: PlushiePenguin
+    - id: PlushieVulp
+# DS14-start
     - id: PlushieJokerge
     - id: PlushieFloran
     - id: PlushieJuggernaut
     - id: PlushieLieutenant
     - id: PlushieIps
+# DS14-end
 
 - type: entityTable
   id: AllPottedPlantsTable
@@ -251,6 +254,30 @@
       - id: ReverseCymbalsInstrument
 
 - type: entity
+  id: CrateFunInstrumentsRandom
+  parent: CrateGenericSteel
+  name: random instrument collection
+  description: A box containing several randomly curated instruments, hand picked by Centcomm's top musicians!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: VarietyInstrumentTable # 200 speso max
+        - !type:NestedSelector
+          tableId: BrassInstrumentTable # 300 speso max
+        - !type:NestedSelector
+          tableId: StringInstrumentTable # 300 speso max
+        - !type:NestedSelector
+          tableId: WoodwindInstrumentTable # 200 speso max
+        - !type:NestedSelector
+          tableId: KeyedPercussionInstrumentTable # 300 speso max
+        - !type:NestedSelector
+          tableId: SpecialInstrumentTable # x2 200 speso max
+          rolls: 2
+
+- type: entity
   id: CrateFunArtSupplies
   parent: CrateGenericSteel
   name: art supplies
@@ -419,9 +446,11 @@
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
+      - id: TennisBall
+        amount: 2
       - id: ClothingShoesSkates
       - id: RubberChicken
-      - id: WeaponSMGTommyGunCap
+      - id: WeaponSMGTommyGunCap # DS14
 
 - type: entity
   id: CrateFunBikeHornImplants

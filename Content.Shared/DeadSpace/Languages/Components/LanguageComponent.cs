@@ -10,17 +10,28 @@ namespace Content.Shared.DeadSpace.Languages.Components;
 public sealed partial class LanguageComponent : Component
 {
     [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public HashSet<ProtoId<LanguagePrototype>> KnownLanguages = new();
 
     [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public HashSet<ProtoId<LanguagePrototype>> CantSpeakLanguages = new();
 
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<LanguagePrototype> SelectedLanguage = default!;
+    /// <summary>
+    ///     Языки, требующие разблокировки для возможности выбора после получения разума в EntityEffectEvent.
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
+    public HashSet<ProtoId<LanguagePrototype>> UnlockLanguagesAfterMakeSentient = new();
 
     [DataField]
+    public string SelectedLanguage = String.Empty;
+
+    [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public EntProtoId SelectLanguageAction = "SelectLanguageAction";
 
     [DataField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? SelectLanguageActionEntity;
 }

@@ -32,10 +32,6 @@
             "directions": 4
         },
         {
-            "name": "cart_garbage_blue",
-            "directions": 4
-        },
-        {
             "name": "cart_sign1",
             "directions": 4
         },
@@ -59,8 +55,8 @@
             "name": "cart_plunger",
             "directions": 4
         },
-		{
-            "name": "cart_plunger_golden",
+        {
+            "name": "cart_garbage_blue",
             "directions": 4
         },
         {

@@ -24,7 +24,7 @@ using Content.Shared.DeadSpace.Abilities.Invisibility.Components;
 using Content.Shared.DeadSpace.Demons.Abilities.Components;
 using Content.Shared.Charges.Components;
 using Content.Shared.Electrocution;
-using Content.Shared.DeadSpace.NightVision;
+using Content.Server.DeadSpace.Components.NightVision;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Damage.Components;

@@ -13,6 +13,7 @@ job-supervisors-medicine = врачам, химикам, ведущему вра
 job-supervisors-security = офицерам, инструктору, смотрителю, и главе службы безопасности
 job-supervisors-science = учёным, ведущему учёному, научному руководителю
 job-supervisors-hire = своим нанимателям
+job-supervisors-nobody = никому
 job-supervisors-everyone = вообще всем
 job-supervisors-crew = экипажу
 job-supervisors-security-borg = своим законам, офицерам, инструктору, смотрителю, и главе службы безопасности

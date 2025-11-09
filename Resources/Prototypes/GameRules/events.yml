@@ -175,6 +175,10 @@
   - type: BureaucraticErrorRule
     ignoredJobs:
     - StationAi
+    - ResearchAssistant
+    - MedicalIntern
+    - SecurityCadet
+    - TechnicalAssistant
 
 - type: entity
   id: ClericalError
@@ -372,7 +376,7 @@
     duration: 1
     earliestStart: 50 # DS14
     reoccurrenceDelay: 60
-    minimumPlayers: 35 # DS14
+    minimumPlayers: 30
   - type: AntagSelection
     agentName: wizard-round-end-name
     definitions:

@@ -121,7 +121,7 @@ namespace Content.Client.VendingMachines.UI
             {
                 var entry = inventory[i];
 
-                if (!_prototypeManager.TryIndex(entry.ID, out var prototype))
+                if (!_prototypeManager.Resolve(entry.ID, out var prototype))
                 {
                     _amounts[entry.ID] = 0;
                     continue;

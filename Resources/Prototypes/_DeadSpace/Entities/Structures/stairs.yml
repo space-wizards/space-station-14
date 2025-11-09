@@ -1,0 +1,96 @@
+- type: entity
+  id: StairWoodRed
+  parent: Stairs
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Stairs.rsi
+    state: stairs_wood_red
+    drawdepth: FloorTiles
+  - type: Construction
+    graph: WoodStairs
+    node: stairwoodred
+
+- type: entity
+  id: StairStageWoodRed
+  parent: Stairs
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Stairs.rsi
+    state: stairs_stage_wood_red
+    drawdepth: FloorTiles
+  - type: Construction
+    graph: WoodStairs
+    node: stairstagewoodred
+
+- type: entity
+  id: StairWoodDark
+  parent: Stairs
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Stairs.rsi
+    state: stairs_wood_dark
+    drawdepth: FloorTiles
+  - type: Construction
+    graph: WoodStairs
+    node: stairwooddark
+
+- type: entity
+  id: StairStageWoodDark
+  parent: Stairs
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Stairs.rsi
+    state: stairs_stage_wood_dark
+    drawdepth: FloorTiles
+  - type: Construction
+    graph: WoodStairs
+    node: stairstagewooddark
+
+- type: entity
+  id: StairWoodBlack
+  parent: Stairs
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Stairs.rsi
+    state: stairs_wood_black
+    drawdepth: FloorTiles
+  - type: Construction
+    graph: WoodStairs
+    node: stairwoodblack
+
+- type: entity
+  id: StairStageWoodBlack
+  parent: Stairs
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Stairs.rsi
+    state: stairs_stage_wood_black
+    drawdepth: FloorTiles
+  - type: Construction
+    graph: WoodStairs
+    node: stairstagewoodblack
+
+- type: entity
+  id: StairWoodLight
+  parent: Stairs
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Stairs.rsi
+    state: stairs_wood_light
+    drawdepth: FloorTiles
+  - type: Construction
+    graph: WoodStairs
+    node: stairwoodlight
+
+- type: entity
+  id: StairStageWoodLight
+  parent: Stairs
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Stairs.rsi
+    state: stairs_stage_wood_light
+    drawdepth: FloorTiles
+  - type: Construction
+    graph: WoodStairs
+    node: stairstagewoodlight
+

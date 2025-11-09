@@ -6,9 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 72000 # 20 hours
+      time: 20h
     - !type:OverallPlaytimeRequirement
-      time: 216000 # 60 hours
+      time: 60h
     - !type:AgeRequirement
       requiredAge: 24
   weight: 10

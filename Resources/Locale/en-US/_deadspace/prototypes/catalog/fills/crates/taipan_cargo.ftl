@@ -1,0 +1,14 @@
+ent-CrateNPCGiantSpiderSpace = ящик с космическим пауком
+    .desc = Ящик для содержания гигантского космического паука.
+ent-CrateRCDSyndicate = ящик РСУ
+    .desc = Ящик содержащий РСУ.
+ent-CrateFoodDonk = доставка донкпокетов
+    .desc = Холодильник, заполненный продукцией Donk Co.
+ent-CrateVendingMachineRestockChemVendSyndicateFilled = ящик пополнения СиндиСоки
+    .desc = Содержит набор пополнения торгомата СиндиСоки.
+ent-CrateVendingMachineRestockCigsTaipanFilled = ящик пополнения СиндиСигс
+    .desc = Содержит набор пополнения торгомата СиндиСигс.
+ent-CrateVendingMachineRestockDonkTaipanFilled = ящик пополнения Donk Co.
+    .desc = Содержит набор пополнения торгомата СиндиСигс.
+ent-CrateVendingMachineRestockBrassNBoltTaipanFilled = ящик пополнения Brass & Bolt
+    .desc = Содержит набор пополнения торгомата Brass & Bolt.

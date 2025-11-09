@@ -49,7 +49,6 @@
     DrinkWineCan: 5
     DrinkWaterBottleFull: 10 # DS14
     DrinkCampariBottleFull: 5 # Corvax
-    ADTDrinkTeacup: 10 # ADT
     ADTJigger: 5 # ADT
     ADTMixingGlass: 3 # ADT
     ADTDrinkTeapot: 2 # ADT

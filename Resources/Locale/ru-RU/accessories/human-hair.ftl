@@ -199,5 +199,6 @@ marking-HumanHairVeryshortovereyealternate = Очень короткая (Чер
 marking-HumanHairVlongfringe = Очень короткая (Чёлка)
 marking-HumanHairVolaju = Воладзю
 marking-HumanHairLongWithBangs = Длинная с чёлкой
+marking-HumanHairOverEyePigtail = Хвостик (над глазом)
 marking-HumanHairWisp = Пряди
 marking-HumanHairSpikyponytail2 = Шипастый хвостик

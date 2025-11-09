@@ -7,17 +7,53 @@
         "y": 32
     },
     "states": [
-        { "name": "inears", "directions": 4 },
-        { "name": "muzzle", "directions": 4 },
-        { "name": "muzzleinears", "directions": 4 },
-        { "name": "nose", "directions": 4 },
-        { "name": "outears", "directions": 4 },
-        { "name": "patch_2", "directions": 4 },
-        { "name": "tiger_face", "directions": 4 },
-        { "name": "tiger_head", "directions": 4 },
-        { "name": "eye_stripes_head", "directions": 4 },
-        { "name": "star_head", "directions": 4 },
-        { "name": "mane_head", "directions": 4 },
-        { "name": "raccoon-head", "directions": 4 }
+        {
+            "name": "inears",
+            "directions": 4
+        },
+        {
+            "name": "muzzle",
+            "directions": 4
+        },
+        {
+            "name": "muzzleinears",
+            "directions": 4
+        },
+        {
+            "name": "nose",
+            "directions": 4
+        },
+        {
+            "name": "outears",
+            "directions": 4
+        },
+        {
+            "name": "patch_2",
+            "directions": 4
+        },
+        {
+            "name": "tiger_face",
+            "directions": 4
+        },
+        {
+            "name": "tiger_head",
+            "directions": 4
+        },
+        {
+            "name": "eye_stripes_head",
+            "directions": 4
+        },
+        {
+            "name": "star_head",
+            "directions": 4
+        },
+        {
+            "name": "mane_head",
+            "directions": 4
+        },
+        {
+            "name": "raccoon-head",
+            "directions": 4
+        }
     ]
 }

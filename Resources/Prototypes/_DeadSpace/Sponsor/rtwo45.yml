@@ -91,9 +91,9 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
-    sprite: Clothing/Belt/assault.rsi
+    sprite: _DeadSpace/Sponsor/rtwo45/assault.rsi
   - type: Clothing
-    sprite: Clothing/Belt/assault.rsi
+    sprite: _DeadSpace/Sponsor/rtwo45/assault.rsi
   - type: Item
     size: Huge
   - type: StorageFill

@@ -20,7 +20,7 @@
   files:
     - /Audio/_DeadSpace/Voice/Vulpkanin/female_wolf_howl.ogg
 
-- type: soundCollection
+- type: soundCollection # Delete?
   id: VulpkaninMaleGrowl
   files:
     - /Audio/_DeadSpace/Voice/Vulpkanin/male_wolf_growl.ogg

@@ -7,9 +7,9 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Doors/Airlocks/Standard/taipan_firelock.rsi
-#  - type: Construction
-#    graph: Firelock
-#    node: frame1
+  - type: Construction
+    graph: FirelockTaipan
+    node: frame1
 
 - type: entity
   id: FirelockTaipan
@@ -20,14 +20,14 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Doors/Airlocks/Standard/taipan_firelock.rsi
-  #  - type: Construction
-  #    graph: Firelock
-  #    node: Firelock
-  #    containers:
-  #    - board
-  #  - type: ContainerFill
-  #    containers:
-  #      board: [ FirelockElectronics ]
+  - type: Construction
+    graph: FirelockTaipan
+    node: FirelockTaipan
+    containers:
+    - board
+  - type: ContainerFill
+    containers:
+      board: [ FirelockElectronicsTaipan ]
   - type: AccessReader
     access: [ [ "TaipanEngineering" ] ]
 
@@ -40,22 +40,27 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Doors/Airlocks/Glass/taipan_glass_firelock.rsi
-  #    - type: Construction
-  #      node: FirelockGlass
-  #  - type: ContainerFill
-  #    containers:
-  #      board: [ FirelockElectronics ]
+  - type: Construction
+    graph: FirelockTaipan
+    node: FirelockTaipanGlass
+  - type: ContainerFill
+    containers:
+      board: [ FirelockElectronicsTaipan ]
   - type: AccessReader
     access: [ [ "TaipanEngineering" ] ]
 
 - type: entity
   id: FirelockTaipanEdge
-  parent: FirelockTaipan
+  parent: FirelockEdge
+  name: пожарный шлюз
+  description: Примените лом.
   suffix: Тайпан
   components:
-    - type: Sprite
-      sprite: _DeadSpace/Structures/Doors/taipan_edge_door_hazard.rsi
-      snapCardinals: false
-#    - type: Construction
-#      graph: Firelock
-#      node: FirelockEdge
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/taipan_edge_door_hazard.rsi
+    snapCardinals: false
+  - type: Construction
+    graph: FirelockTaipan
+    node: FirelockTaipanEdge
+  - type: AccessReader
+    access: [ [ "TaipanEngineering" ] ]

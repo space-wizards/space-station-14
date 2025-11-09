@@ -1,0 +1,9 @@
+npc-debug-overlay-window-title = Отладка NPC
+npc-debug-overlay-window-section-npc-label = NPC
+npc-debug-overlay-window-section-pathfinder-label = Поисковик пути
+npc-debug-overlay-window-show-htn-tree-checkbox = Дерево HTN
+npc-debug-overlay-window-path-breadcrumbs-checkbox = Маршрут (следы)
+npc-debug-overlay-window-path-polygons-checkbox = Полигоны
+npc-debug-overlay-window-path-neighbors-checkbox = Соседние узлы
+npc-debug-overlay-window-path-route-costs-checkbox = Стоимость маршрута
+npc-debug-overlay-window-path-routes-checkbox = Маршруты

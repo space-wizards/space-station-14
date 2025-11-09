@@ -9,6 +9,7 @@
   discipline: TaipanResearch
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - ProximitySensor
 
@@ -21,6 +22,7 @@
   discipline: TaipanResearch
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - AnomalyScanner
   - AnomalyLocator
@@ -37,6 +39,7 @@
   discipline: TaipanResearch
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - NodeScanner
   - AnalysisComputerCircuitboardTaipan
@@ -51,6 +54,7 @@
   discipline: TaipanResearch
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - ClothingShoesBootsMagSyndie
   - ClothingShoesBootsMoon
@@ -64,6 +68,7 @@
   discipline: TaipanResearch
   tier: 1
   cost: 7500
+  diskAvailable: false
   recipeUnlocks:
   - EnergyDagger
   - BorgModuleSyndicateWeapon
@@ -79,6 +84,7 @@
   discipline: TaipanResearch
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ArtifactCrusherMachineCircuitboard
   - ObeliskStoper
@@ -92,6 +98,7 @@
   discipline: TaipanResearch
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponPistolCHIMP
   - WeaponPistolCHIMPUpgradeKit
@@ -110,6 +117,7 @@
   discipline: TaipanResearch
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - WeaponParticleDecelerator
   - HoloprojectorField
@@ -123,6 +131,7 @@
   discipline: TaipanResearch
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - ChameleonProjector
 
@@ -135,6 +144,7 @@
   discipline: TaipanResearch
   tier: 2
   cost: 15000
+  diskAvailable: false
   recipeUnlocks:
   - EnergySword
   - EnergyShield
@@ -153,6 +163,7 @@
   discipline: TaipanResearch
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - EmagTaipanLimited
   - BorgModuleOperative
@@ -166,6 +177,7 @@
   discipline: TaipanResearch
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - ADTClothingShoesBootsMagAdvSynd
   technologyPrerequisites:
@@ -180,6 +192,7 @@
   discipline: TaipanResearch
   tier: 3
   cost: 30000
+  diskAvailable: false
   recipeUnlocks:
   - EnergySwordDouble
   - BorgModuleDoubleEsword

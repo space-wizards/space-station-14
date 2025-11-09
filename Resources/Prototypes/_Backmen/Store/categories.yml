@@ -24,16 +24,16 @@
   name: store-category-HappyHonk
 
 - type: storeCategory
-  id: VendingClothing
-  name: store-category-vending-clothing
-
-- type: storeCategory
   id: VendingGames
   name: store-category-vending-games
 
 - type: storeCategory
-  id: VendingYouTool
+  id: VendingYouToolInventory
   name: store-category-vending-youtool
+
+- type: storeCategory
+  id: VendingWallMedicalInventory
+  name: store-category-vending-wall-medical
 
 # Drinks
 - type: storeCategory

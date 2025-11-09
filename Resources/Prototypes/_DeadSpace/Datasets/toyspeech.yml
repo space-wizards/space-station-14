@@ -2,13 +2,13 @@
   id: FigurinesHqdishkaSpeech
   values:
     prefix: figurine-hqdishka-
-    count: 5
+    count: 4
 
 - type: localizedDataset
   id: FigurinesHacksLuaSpeech
   values:
     prefix: figurine-hackslua-
-    count: 2
+    count: 1
 
 - type: localizedDataset
   id: PlushieJeleshkaSpeech
@@ -266,6 +266,36 @@
   id: PlushieRalseyaSpeech
   values:
     prefix: plushies-ralseya-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieAstroSpeech
+  values:
+    prefix: plushies-astro-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieDestinSpeech
+  values:
+    prefix: plushies-destin-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieEgorSpeech
+  values:
+    prefix: plushies-egor-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieKimSpeech
+  values:
+    prefix: plushies-kim-
+    count: 3
+
+- type: localizedDataset
+  id: PlushieEmmaSpeech
+  values:
+    prefix: plushies-emma-
     count: 3
 
 - type: localizedDataset

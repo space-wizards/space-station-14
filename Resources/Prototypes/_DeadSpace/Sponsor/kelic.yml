@@ -48,6 +48,10 @@
       - id: ClothingHandsRingDiamondKelic
       - id: ClothingHandsRingRubinoKelic
       - id: DoubleEmergencyOxygenTankFilled
+      - id: JukeboxMK
+      - id: TapeRecorderr
+      - id: TapeEmpty
+        amount: 1
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
   - type: ToggleableClothing

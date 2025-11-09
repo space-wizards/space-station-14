@@ -658,3 +658,53 @@
         type: StoreBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+
+- type: entity
+  parent: VendingMachineWallMedical
+  id: BackmenVendingMachineWallMedical
+  name: НаноМед Мини
+  suffix: Backmen, Платный
+  components:
+  - type: Store
+    categories:
+    - VendingWallMedicalInventory
+    currencyWhitelist:
+    - SpaceCash
+    balance:
+      SpaceCash: 0
+  - type: BuyStoreBank
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+    singleUser: true
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+
+- type: entity
+  parent: VendingMachineYouTool
+  id: BackmenVendingMachineYooTool
+  name: ТвоИнструменты
+  suffix: Backmen, Платный
+  components:
+  - type: Store
+    categories:
+    - VendingYouToolInventory
+    currencyWhitelist:
+    - SpaceCash
+    balance:
+      SpaceCash: 0
+  - type: BuyStoreBank
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+    singleUser: true
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface

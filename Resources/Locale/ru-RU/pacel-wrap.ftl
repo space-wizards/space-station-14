@@ -4,7 +4,7 @@ parcel-wrap-popup-parcel-destroyed = Упаковка, содержащая { TH
 # Shown when parcel wrap is examined in details range
 parcel-wrap-examine-detail-uses =
     Осталось [color={ $markupUsesColor }]{ $uses }[/color] { $uses ->
-    [one] использование
-    [few] использования
-    *[other] использований
+        [one] использование
+        [few] использования
+       *[other] использований
     }.

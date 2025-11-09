@@ -16,3 +16,5 @@ ent-MobMimeBot = mimebot
     .desc = Why not give the mimebot a friendly wave?
 ent-MobSupplyBot = supplybot
     .desc = Delivers cargo!
+ent-MobHugBot = hugbot
+    .desc = Awww, who needs a hug?

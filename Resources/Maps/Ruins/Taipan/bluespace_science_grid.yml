@@ -4,8 +4,8 @@ meta:
   engineVersion: 266.0.0
   forkId: ""
   forkVersion: ""
-  time: 10/19/2025 13:45:43
-  entityCount: 3257
+  time: 10/31/2025 10:32:35
+  entityCount: 3251
 maps: []
 grids:
 - 9593
@@ -1379,21 +1379,6 @@ entities:
           pitch: 1
           volume: 0
         path: /Audio/Ambience/ambidanger2.ogg
-- proto: AnomalyIce
-  entities:
-  - uid: 9625
-    components:
-    - type: Transform
-      pos: 20.525433,-15.509823
-      parent: 9593
-- proto: AnomalyPyroclastic
-  entities:
-  - uid: 9626
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 79.5061,-29.534758
-      parent: 9593
 - proto: AnomalyScanner
   entities:
   - uid: 92
@@ -1416,37 +1401,12 @@ entities:
     - type: Transform
       pos: 59.63812,-29.396523
       parent: 9593
-- proto: AnomalyTrapBluespace
-  entities:
-  - uid: 9628
-    components:
-    - type: Transform
-      pos: 60.5,-16.5
-      parent: 9593
 - proto: AnomalyTrapIce
   entities:
-  - uid: 9629
-    components:
-    - type: Transform
-      pos: 8.5,-2.5
-      parent: 9593
   - uid: 9630
     components:
     - type: Transform
       pos: 16.5,-15.5
-      parent: 9593
-- proto: AnomalyTrapPyroclastic
-  entities:
-  - uid: 9631
-    components:
-    - type: Transform
-      pos: 29.5,-25.5
-      parent: 9593
-  - uid: 9632
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 73.5,-26.5
       parent: 9593
 - proto: APCBasic
   entities:
@@ -14418,15 +14378,15 @@ entities:
       canCollide: False
 - proto: RandomAnomalyInjectorSpawner
   entities:
-  - uid: 13068
+  - uid: 245
     components:
     - type: Transform
-      pos: 37.5,2.5
+      pos: 37.5,-1.5
       parent: 9593
-  - uid: 13069
+  - uid: 246
     components:
     - type: Transform
-      pos: 3.5,-10.5
+      pos: 60.5,-15.5
       parent: 9593
 - proto: RandomArtifactSpawner
   entities:

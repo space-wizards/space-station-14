@@ -1,0 +1,25 @@
+- type: entity
+  id: CrewMonitoringServerTaipan
+  parent: CrewMonitoringServer
+  name: сервер мониторинга экипажа
+  description: Получает и передаёт статус всех включённых датчиков комбинезонов на станции.
+  suffix: Тайпан
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Machines/Taipan/server.rsi
+    snapCardinals: true
+    layers:
+    - state: server-off
+    - state: server-on
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+    - state: variant-crew
+    - state: server_o
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Machine
+    board: CrewMonitoringServerMachineCircuitboardTaipan
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: CrewMonitorTaipan
+    receiveFrequencyId: SuitSensorTaipan
+    autoConnect: false

@@ -1,0 +1,105 @@
+# NPC
+- type: entity
+  id: CrateNPCGiantSpiderSpace
+  parent: CrateSecure
+  name: ящик с космическим пауком
+  description: Ящик для содержания гигантского космического паука.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobGiantSpiderSpace
+
+- type: entity
+  id: CrateNPCXeno
+  parent: CrateSyndicateSecure
+  name: ящик с ксеноморфом
+  description: Ящик для содержания ксеноморфа.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobXenoRavager 
+
+# Engineering
+- type: entity
+  id: CrateRCDSyndicate
+  parent: CrateSyndicateSecure
+  name: ящик РСУ
+  description: Ящик содержащий РСУ.
+  components:
+  - type: StorageFill
+    contents:
+    - id: RCDSyndicate
+
+# Food
+- type: entity
+  id: CrateFoodDonk
+  parent: CrateDonkFreezer
+  name: доставка донкпокетов
+  description: Холодильник, заполненный продукцией Donk Co.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodBoxDonkpocket
+      amount: 1
+    - id: FoodBoxDonkpocketSpicy
+      amount: 1
+    - id: FoodBoxDonkpocketTeriyaki
+      amount: 1
+    - id: FoodBoxDonkpocketPizza
+      amount: 1
+    - id: FoodBoxDonkpocketStonk
+      amount: 1
+    - id: FoodBoxDonkpocketBerry
+      amount: 1
+    - id: FoodBoxDonkpocketHonk
+      amount: 1
+    - id: FoodBoxDonkpocketDink
+      amount: 1
+    - id: FoodBoxDonkpocketMoth
+      amount: 1
+    - id: FoodBoxDonkpocketCarp
+      amount: 1
+
+# Vending
+- type: entity
+  id: CrateVendingMachineRestockChemVendSyndicateFilled
+  parent: CrateInterdyneSecure
+  name: ящик пополнения СиндиСоки
+  description: Содержит набор пополнения торгомата СиндиСоки.
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockChemVendSyndicate
+
+- type: entity
+  id: CrateVendingMachineRestockCigsTaipanFilled
+  parent: CrateSyndicate
+  name: ящик пополнения СиндиСигс
+  description: Содержит набор пополнения торгомата СиндиСигс.
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockCigsTaipan
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockDonkTaipanFilled
+  parent: CrateSyndicate
+  name: ящик пополнения Donk Co.
+  description: Содержит набор пополнения торгомата СиндиСигс.
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockDonkTaipan
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockBrassNBoltTaipanFilled
+  parent: CrateSyndicate
+  name: ящик пополнения Brass & Bolt
+  description: Содержит набор пополнения торгомата Brass & Bolt.
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockBrassNBoltTaipan
+        amount: 2

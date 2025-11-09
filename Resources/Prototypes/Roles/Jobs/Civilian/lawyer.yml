@@ -6,9 +6,9 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 20h
     - !type:OverallPlaytimeRequirement
-      time: 144000 # 40 hours
+      time: 40h
   startingGear: LawyerGear
   icon: "JobIconLawyer"
   supervisors: job-supervisors-iaa

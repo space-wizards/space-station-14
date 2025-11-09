@@ -54,7 +54,12 @@
   - type: Language
     selectedLanguage: DogLanguage
     knownLanguages:
+    - GeneralLanguage
     - DogLanguage
+    cantSpeakLanguages:
+    - GeneralLanguage
+    unlockLanguagesAfterMakeSentient:
+    - GeneralLanguage
   - type: InteractionPopup
     successChance: 0.05
     interactSuccessString: petting-success-dog

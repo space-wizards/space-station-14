@@ -288,7 +288,7 @@
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: CrewMonitor
+    receiveFrequencyId: CrewMonitorTaipan
   - type: WirelessNetworkConnection
     range: 1200
 

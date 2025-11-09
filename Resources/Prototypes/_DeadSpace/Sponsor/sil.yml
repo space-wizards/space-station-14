@@ -392,6 +392,9 @@
     - id: PlushieSilMila
     - id: PlushieSilRiza
     - id: PlushieSilMuren
+    - id: JukeboxMK
+    - id: TapeRecorderr
+    - id: TapeEmpty
   - type: ToggleableClothing
     clothingPrototype: ClothingOuterHardsuitSil
     requiredSlot: BACK

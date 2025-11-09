@@ -69,6 +69,11 @@ public sealed partial class TechnologyPrototype : IPrototype
     /// </summary>
     [DataField]
     public IReadOnlyList<GenericUnlock> GenericUnlocks = new List<GenericUnlock>();
+
+    // DS14-start
+    [DataField("diskAvailable")]
+    public bool DiskAvailable { get; private set; } = true;
+    // DS14-end
 }
 
 [DataDefinition]

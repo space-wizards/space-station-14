@@ -13,13 +13,7 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobAtmosphericTechnician
-    time: 18000 #5 hrs
-  - !type:RoleTimeRequirement
-    role: JobTaipanTechnician
-    time: 18000 #5 hrs
-  - !type:DepartmentTimeRequirement
-    department: Taipan
-    time: 36000 #10 hrs
+    time: 72000 #20 hrs
   access:
   - TaipanMaint
   - TaipanEngineering

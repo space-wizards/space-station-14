@@ -6,3 +6,5 @@ ent-ClothingUniformBase = { ent-UnsensoredClothingUniformBase }
     .desc = { ent-UnsensoredClothingUniformBase.desc }
 ent-ClothingUniformSkirtBase = { ent-ClothingUniformBase }
     .desc = { ent-ClothingUniformBase.desc }
+ent-ClothingUniformFoldableBase = { "" }
+    .desc = { "" }

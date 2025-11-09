@@ -13,7 +13,7 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Taipan
-    time: 216000 # 60 hours
+    time: 108000 # 30 hours
   - !type:RoleTimeRequirement
     role: JobTaipanResearcher
     time: 72000 # 20 hours

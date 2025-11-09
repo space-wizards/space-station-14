@@ -4,12 +4,13 @@
   parent: AirlockAssembly
   name: каркас шлюза
   description: Он открывается, он закрывается, и он может вас раздавить.
+  suffix: Тайпан
   placement:
     mode: SnapgridCenter
   components:
   - type: Sprite
     sprite: _DeadSpace/Structures/Doors/Airlocks/Standard/taipan_basic.rsi
-    state: "assembly"
+    state: assembly
   - type: Destructible
     thresholds:
     - trigger:
@@ -21,6 +22,17 @@
   - type: Construction
     graph: AirlockTaipan
     node: assembly
+
+- type: entity
+  parent: AirlockTaipanAssembly
+  id: AirlockTaipanGlassAssembly
+  name: каркас шлюза
+  description: Он открывается, он закрывается, и он может вас раздавить.
+  suffix: Тайпан, Стеклянный
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Structures/Doors/Airlocks/Glass/taipan_glass.rsi
+    state: assembly
 
 # Airlock
 - type: entity

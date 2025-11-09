@@ -359,14 +359,19 @@
     spawned:
     - id: FoodMeat
       amount: 2
-  # DS14-Languages-start
+  # DS14-start
   # - type: ReplacementAccent
   #   accent: dog
   - type: Language
     selectedLanguage: DogLanguage
     knownLanguages:
+    - GeneralLanguage
     - DogLanguage
-  # DS14-Languages-end
+    cantSpeakLanguages:
+    - GeneralLanguage
+    unlockLanguagesAfterMakeSentient:
+    - GeneralLanguage
+  # DS14-end
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-dog
@@ -463,9 +468,6 @@
     - id: FoodMeat
       amount: 3
   - type: Language # DS14-Languages
-    selectedLanguage: DogLanguage
-    knownLanguages:
-    - DogLanguage
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-dog
@@ -875,8 +877,6 @@
   - type: Item
     sprite: Mobs/Pets/Smile/smile.rsi
     size: Huge
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-slime
   - type: MobPrice
     price: 3000 # it is a truly valuable creature
   - type: GhostRole

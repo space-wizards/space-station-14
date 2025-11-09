@@ -84,6 +84,8 @@
       damage:
         types:
           Blunt: 7
+    - type: NecromorfAfterInfection
+      necroPrototype: NecroBrute
     - type: StealTarget
       stealGroup: AnimalLargo
     # DS14-end

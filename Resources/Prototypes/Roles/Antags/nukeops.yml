@@ -7,10 +7,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000 # 10 hours
+      time: 10h
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 20h
   # guides: [ NuclearOperatives ] # DS14: disabled due to lack of localization
 
 - type: antag
@@ -22,13 +22,13 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 144000 # 40 hours
+      time: 40h
     - !type:RoleTimeRequirement
       role: JobChemist
-      time: 72000 # 20 hours
+      time: 20h
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 20h
   # guides: [ NuclearOperatives ] # DS14: disabled due to lack of localization
 
 - type: antag
@@ -40,13 +40,13 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 108000 # 30 hours
+      time: 30h
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 72000 # 20 hours
+      time: 20h
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 72000 # 20 hours
+      time: 20h
   # should be changed to nukie playtime when thats tracked (wyci)
   # guides: [ NuclearOperatives ] # DS14: disabled due to lack of localization
 
@@ -61,7 +61,7 @@
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitSyndie
     shoes: ClothingShoesBootsCombatFilled
-    id: SyndiPDA
+    id: SyndiOperativePDA
     pocket2: PlushieCarp
     belt: ClothingBeltMilitaryWebbing
   storage:
@@ -92,6 +92,7 @@
   id: SyndicateCommanderGearFull
   parent: SyndicateOperativeGearFull
   equipment:
+    id: SyndiCommanderPDA
     neck: SyndicateWhistle
     outerClothing: ClothingOuterHardsuitSyndieCommander
   inhand:
@@ -114,7 +115,7 @@
     eyes: ClothingEyesHudSyndicateAgent
     outerClothing: ClothingOuterHardsuitSyndieMedic
     shoes: ClothingShoesBootsMagSyndie
-    id: SyndiAgentPDA
+    id: SyndiCorpsmanPDA
     belt: ClothingBeltMilitaryWebbingMedFilled
   storage:
     back:

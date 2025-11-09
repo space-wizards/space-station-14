@@ -34,7 +34,7 @@
     unlitIdleState: unlit
     unlitRunningState: unlit-building
     staticPacks:
-    - ToolsStatic
+    - TaipanToolsStatic
     - PartsStatic
     - AtmosStatic
     - CablesStatic

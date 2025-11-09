@@ -166,3 +166,5 @@ ent-JukeboxCircuitBoard = jukebox machine board
     .desc = A machine printed circuit board for a jukebox.
 ent-CutterMachineCircuitboard = cutter machine board
     .desc = { ent-BaseMachineCircuitboard.desc }
+ent-SmartFridgeCircuitboard = SmartFridge machine board
+    .desc = A machine printed circuit board for a SmartFridge.

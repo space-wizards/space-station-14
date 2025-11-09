@@ -59,6 +59,13 @@ public sealed class CCCCVars
         CVarDef.Create("audio.radio_tts_sounds_enabled", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /*
+	* Jukebox
+	*/
+
+    public static readonly CVarDef<float> JukeboxMusicVolume =
+        CVarDef.Create("jukebox.volume", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /*
     * Taipan
     */
 

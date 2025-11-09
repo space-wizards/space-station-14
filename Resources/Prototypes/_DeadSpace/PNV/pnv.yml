@@ -1,0 +1,57 @@
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesPNV
+  name: прибор ночного видения
+  description: Браво-6, рубим свет. Традиционный тип ПНВ в котором используется зелёное фосфорицирующее покрытие экрана.
+  suffix: ПНВ
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv.rsi
+  - type: PNV
+    activateSound: 
+      path: /Audio/_DeadSpace/NightVision/pnv.ogg
+
+- type: latheRecipe
+  id: ClothingEyesPNV
+  result: ClothingEyesPNV
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 500
+    Silver: 100
+
+- type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons]
+  id: ClothingEyesPNVAdv
+  name: продвинутый прибор ночного видения
+  description: Браво-6, рубим свет. Продвинутый тип ПНВ в котором используется белое фосфорицирующее покрытие экрана дающие монохромное изображение. Данный тип ПНВ так же имеет встроенный визор службы безопасности.
+  suffix: ПНВ, Продвинутый
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-adv.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-adv.rsi
+  - type: PNV
+    color: "#ffffffe6"
+    activateSound: 
+      path: /Audio/_DeadSpace/NightVision/pnv.ogg
+
+- type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSyndicateContraband]
+  id: ClothingEyesPNVAdvSyndicate
+  name: прибор ночного видения оперативника
+  description: Браво-6, рубим свет. Продвинутый тип ПНВ в котором используется белое фосфорицирующее покрытие экрана дающие монохромное изображение. Собственность Cybersun Industries.
+  suffix: ПНВ, Синдикат
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-synd.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-synd.rsi
+  - type: PNV
+    color: "#ffffffe6"
+    activateSound: 
+      path: /Audio/_DeadSpace/NightVision/pnv.ogg
+  - type: ShowSyndicateIcons
+  - type: ShowHealthBars

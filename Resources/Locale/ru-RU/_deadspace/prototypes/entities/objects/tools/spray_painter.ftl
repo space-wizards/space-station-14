@@ -1,0 +1,9 @@
+ent-SprayPainterTaipan = краскопульт
+    .desc = Краскопульт для окрашивания шлюзов, труб и других предметов.
+    .suffix = Тайпан
+ent-SprayPainterTaipanRecharging = { ent-SprayPainterTaipan }
+    .suffix = Тайпан, Адмемы
+    .desc = { ent-SprayPainterTaipan.desc }
+ent-SprayPainterTaipanEmpty = { ent-SprayPainterTaipan }
+    .suffix = Тайпан, Пустой
+    .desc = { ent-SprayPainterTaipan.desc }

@@ -103,6 +103,12 @@ public static class ClientPackaging
             assemblies, // DS14-secrets
             cancel: cancel);
 
+        // await RobustClientPackaging.WriteClientResources( // DS14-secrets: Commented out to use our custom version
+        //     contentDir,
+        //     inputPass,
+        //     SharedPackaging.AdditionalIgnoredResources,
+        //     cancel);
+
         await WriteClientResources(contentDir, inputPass, cancel); // DS14-secrets: Support content resource ignore to ignore server-only prototypes
 
         inputPass.InjectFinished();

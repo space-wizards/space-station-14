@@ -1,0 +1,12 @@
+ent-ClothingOuterHardsuitTaipanAtmosphericsEngineer = скафандр атмосферного инженера
+    .desc = Герметичный скафандр, защищающий как от перепада давления, так и от температур.
+ent-ClothingOuterHardsuitTaipanCargotech = скафандр карготехника
+    .desc = Специальный укреплённый скафандр, предназначенный для работы в космосе.
+ent-ClothingOuterHardsuitTaipanTechnician = скафандр ремонтника
+    .desc = Специальный скафандр, защищающий в опасных условиях при низком давлении. Имеет встроенную защиту от радиации.
+ent-ClothingOuterHardsuitTaipanParamedic = скафандр парамедика
+    .desc = Special hardsuit of the guardian angel of the brig. It is the medical version of the security hardsuit.
+ent-ClothingOuterHardsuitTaipanRecruit = скафандр рекрута
+    .desc = Укреплённый скафандр с бронепластинами, предназначенный для работы в космосе.
+ent-ClothingOuterHardsuitTaipanCommunicationsOfficer = скафандр офицера телекоммуникаций
+    .desc = Специальный костюм, защищающий от опасных сред с низким давлением. Имеет дополнительный слой брони.

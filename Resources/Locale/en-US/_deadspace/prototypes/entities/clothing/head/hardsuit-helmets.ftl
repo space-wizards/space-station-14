@@ -1,0 +1,12 @@
+ent-ClothingHeadHelmetHardsuitTaipanAtmosphericsEngineer = шлем скафандра атмосферного инженера
+    .desc = { ent-ClothingHeadHelmetHardsuitEngineering.desc }
+ent-ClothingHeadHelmetHardsuitTaipanCargotech = шлем скафандра карготехника
+    .desc = { ent-ClothingHeadHelmetHardsuitSalvage.desc }
+ent-ClothingHeadHelmetHardsuitTaipanTechnician = шлем скафандра ремонтника
+    .desc = { ent-ClothingHeadHelmetHardsuitEngineering.desc }
+ent-ClothingHeadHelmetHardsuitTaipanParamedic = шлем скафандра парамедика
+    .desc = { ent-ClothingHeadHelmetHardsuitBrigmedic.desc }
+ent-ClothingHeadHelmetHardsuitTaipanRecruit = шлем скафандра рекрута
+    .desc = { ent-ClothingHeadHelmetHardsuitSecurity.desc }
+ent-ClothingHeadHelmetHardsuitTaipanCO = шлем скафандра офицера телекоммуникаций
+    .desc = { ent-ClothingHeadHelmetHardsuitSecurityRed.desc }

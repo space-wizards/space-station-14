@@ -75,6 +75,13 @@ public sealed partial class AudioTab : Control
             scale: ContentAudioSystem.TtsMultiplier);
         // DS14-TTS-End
 
+        // DS14-Start
+        Control.AddOptionPercentSlider(
+            CCCCVars.JukeboxMusicVolume,
+            SliderVolumeJukeboxMusic,
+            scale: ContentAudioSystem.JukeboxMusicMultiplier);
+        // DS14-End
+
         Control.AddOptionCheckBox(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox);
         Control.AddOptionCheckBox(CCVars.RestartSoundsEnabled, RestartSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.EventMusicEnabled, EventMusicCheckBox);

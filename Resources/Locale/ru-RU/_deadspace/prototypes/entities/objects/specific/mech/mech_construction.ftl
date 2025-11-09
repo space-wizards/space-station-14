@@ -1,0 +1,15 @@
+ent-BaseTaipanRipleyPart = { ent-BaseMechPart }
+    .suffix = Тайпан
+    .desc = { ent-BaseMechPart.desc }
+ent-BaseTaipanRipleyPartItem = { ent-BaseTaipanRipleyPart }
+    .desc = { ent-BaseTaipanRipleyPart.desc }
+ent-TaipanRipleyHarness = каркас кроваво-красного Рипли
+    .desc = Ядро кроваво-красного Рипли.
+ent-TaipanRipleyLArm = левая рука кроваво-красного Рипли
+    .desc = Левая рука кроваво-красного Рипли. Устанавливается на каркас меха.
+ent-TaipanRipleyLLeg = левая нога кроваво-красного Рипли
+    .desc = Левая нога кроваво-красного Рипли. Устанавливается на каркас меха.
+ent-TaipanRipleyRLeg = правая нога кроваво-красного Рипли
+    .desc = Правая нога кроваво-красного Рипли. Устанавливается на каркас меха.
+ent-TaipanRipleyRArm = правая рука кроваво-красного Рипли
+    .desc = Правая рука кроваво-красного Рипли. Устанавливается на каркас меха.

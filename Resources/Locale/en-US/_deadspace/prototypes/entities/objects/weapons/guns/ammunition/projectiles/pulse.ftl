@@ -1,0 +1,14 @@
+ent-BulletPulse = импульсный заряд
+    .desc = { ent-BulletLaser.desc }
+ent-BulletPulseSpread = широкий импульсный залп
+    .desc = { ent-BulletPulse.desc }
+ent-BulletPulseSpreadNarrow = узкий импульсный залп
+    .desc = { ent-BulletPulse.desc }
+ent-BulletDisablerPulse = оглушающий импульсный заряд
+    .desc = { ent-BulletDisablerSmg.desc }
+ent-BulletDisablerPulseSpread = оглушающий импульсный залп
+    .desc = { ent-BulletDisablerPulse.desc }
+ent-LaserRifleBulletpread = плазменный удар
+    .desc = { ent-LaserRifleBullet.desc }
+ent-BulletDisablerShotgun = парализатор
+    .desc = { ent-BulletDisabler.desc }

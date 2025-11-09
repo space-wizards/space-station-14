@@ -346,3 +346,15 @@
     stackRequirements:
       Manipulator: 4
       Cable: 1
+
+- type: entity
+  id: CrewMonitoringServerMachineCircuitboardTaipan
+  parent: BaseMachineCircuitboardTaipan
+  name: сервер мониторинга экипажа (машинная плата)
+  description: Печатная плата для сервера мониторинга экипажа.
+  components:
+  - type: MachineBoard
+    prototype: CrewMonitoringServerTaipan
+    stackRequirements:
+      Steel: 1
+      Cable: 2

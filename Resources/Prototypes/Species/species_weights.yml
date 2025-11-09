@@ -3,11 +3,10 @@
   id: SpeciesWeights
   weights:
     Human: 20
-    Vulpkanin: 6
-    Tajaran: 6
-    Moth: 6
+    Tajaran: 4
+    Moth: 4
     Reptilian: 4
-    Kobolt: 6
+    Kobolt: 2
     SlimePerson: 4
     Arachnid: 4
     Shark: 4
@@ -16,3 +15,4 @@
     IPC: 4
     Felinid: 2
     Diona: 2
+    Vulpkanin: 4

@@ -1,0 +1,142 @@
+- type: listing
+  id: YooToolCableApcStack
+  productEntity: CableApcStack
+  cost:
+    SpaceCash: 30
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 5
+
+- type: listing
+  id: YooToolCrowbar
+  productEntity: Crowbar
+  cost:
+    SpaceCash: 15
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 5
+
+- type: listing
+  id: YooToolWelder
+  productEntity: Welder
+  cost:
+    SpaceCash: 20
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: YooToolWirecutter
+  productEntity: Wirecutter
+  cost:
+    SpaceCash: 15
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 3
+
+- type: listing
+  id: YooToolWrench
+  productEntity: Wrench
+  cost:
+    SpaceCash: 15
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 6
+
+- type: listing
+  id: YooToolScrewdriver
+  productEntity: Screwdriver
+  cost:
+    SpaceCash: 15
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2
+
+- type: listing
+  id: YooTooltrayScanner
+  productEntity: trayScanner
+  cost:
+    SpaceCash: 15
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 3
+
+- type: listing
+  id: YooToolNetworkConfigurator
+  productEntity: NetworkConfigurator
+  cost:
+    SpaceCash: 20
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 3
+
+- type: listing
+  id: YooToolGasAnalyzer
+  productEntity: GasAnalyzer
+  cost:
+    SpaceCash: 20
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 3
+
+- type: listing
+  id: YooToolFlashlightLantern
+  productEntity: FlashlightLantern
+  cost:
+    SpaceCash: 10
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 5
+
+- type: listing
+  id: YooToolHandsGlovesBudget
+  productEntity: ClothingHandsGlovesColorYellowBudget
+  cost:
+    SpaceCash: 10
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 3
+
+- type: listing
+  id: YooToolSprayPaintAmmo
+  productEntity: SprayPainterAmmo
+  cost:
+    SpaceCash: 25
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 5
+
+- type: listing
+  id: YooToolSprayPaint
+  productEntity: SprayPainter
+  cost:
+    SpaceCash: 25
+  categories:
+    - VendingYouToolInventory
+  conditions:
+    - !type:ListingLimitedStockCondition
+      stock: 2

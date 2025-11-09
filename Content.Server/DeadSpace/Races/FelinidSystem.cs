@@ -9,7 +9,6 @@ using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Server.Medical;
 using Content.Server.Popups;
 using Robust.Shared.Random;
 using Robust.Shared.Prototypes;
@@ -21,6 +20,7 @@ using Content.Server.DeadSpace.Abilities.Felinid;
 using Content.Shared.Body.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Charges.Components;
+using Content.Shared.Medical;
 
 namespace Content.Server.DeadSpace.Races;
 

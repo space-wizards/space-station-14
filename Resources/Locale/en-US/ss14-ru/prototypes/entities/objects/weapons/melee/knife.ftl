@@ -25,3 +25,5 @@ ent-UraniumShiv = uranium shiv
     .desc = A crude weapon fashioned from a piece of cloth and a uranium glass shard. Violates the geneva convention!
 ent-ThrowingKnife = throwing knife
     .desc = This blood-red knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
+ent-UtilityKnife = utility knife
+    .desc = A knife with a retractable, tiny blade. Useful as a box cutter and letter opener, among other things.

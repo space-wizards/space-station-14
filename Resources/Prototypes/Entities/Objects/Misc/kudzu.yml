@@ -256,13 +256,9 @@
             Quantity: 2
           - ReagentId: Protein
             Quantity: 1
-    - type: Respirator
-      damage:
-        types:
-          Asphyxiation: 0.25
-      damageRecovery:
-        types:
-          Asphyxiation: -0.25
+    - type: AutoEmote # Meat Kudzu used to have respirator, but couldn't breathe so all it would do is gasp.
+      emotes:
+      - MeatGasp
     - type: Tag
       tags:
       - Meat

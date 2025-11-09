@@ -70,6 +70,6 @@ baby-jail-account-denied-reason = Этот сервер — сервер для 
 baby-jail-account-reason-account = Ваш аккаунт Space Station 14 слишком старый. Он должен быть моложе { $minutes } минут
 baby-jail-account-reason-overall =
     Наигранное Вами время на сервере должно быть больше { $minutes } { $minutes ->
-    [one] минуты
-    *[other] минут
+        [one] минуты
+       *[other] минут
     }.

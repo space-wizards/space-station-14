@@ -38,10 +38,13 @@
         toggleAction: AIActionAGhostShowCrewMonitoring
       enum.CommunicationsConsoleUiKey.Key:
         toggleAction: AIActionAGhostShowCommunications
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitorTaipan
   - type: CommunicationsConsole
 #    canCallShuttle: false
 #    canCallERT: false
-    title: comms-console-announcement-title-station-ai
+    title: comms-console-announcement-title-station-ai-syndicate
     color: "#fc7777"
   - type: HolographicAvatar
     layerData:
@@ -55,9 +58,9 @@
   - type: MindContainer
   - type: GhostRole
     allowMovement: false
-    name: job-name-station-ai
+    name: job-name-taipan-station-ai
     description: job-description-station-ai
-    rules: ghost-role-information-taipan-personal-rules
+    rules: ghost-role-information-taipan-ai-rules
     requirements:
     - !type:DepartmentTimeRequirement
       department: Silicon
@@ -103,14 +106,6 @@
     - state: full
       map: ["unshaded"]
       shader: unshaded
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.StationAiVisualState.Key:
-        unshaded:
-          Empty: { state: empty }
-          Occupied: { state: full }
-  - type: Intellicard
 
 - type: entity
   parent: PlayerStationAiPreview
@@ -128,76 +123,19 @@
   id: PlayerTaipanAiEmpty
   name: ядро ИИ Синдиката
   description: Последние достижения в области искусственного интеллекта.
-  parent:
-  - BaseStructure
-  - AiHolder
+  parent: PlayerStationAiEmpty
   suffix: Тайпан, Пустой
   components:
-  - type: Anchorable
-    flags:
-    - Anchorable
-  - type: Rotatable
-  - type: WarpPoint
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: ContainerComp
     proto: AiHeldTaipan
     container: station_ai_mind_slot
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: ApcPowerReceiver
-    powerLoad: 1000
-    needsPower: false
   - type: StationAiCore
     spawnedBrainProto: TaipanAiBrain
     remoteEntityProto: TaipanAiHolo
     physicalEntityProto: TaipanAiHoloLocal
-  - type: StationAiVision
-  - type: StationAiWhitelist
-  - type: Appearance
-  - type: InteractionOutline
   - type: Sprite
     snapCardinals: true
     sprite: _DeadSpace/Mobs/Silicon/station_ai.rsi
-    layers:
-    - state: base
-    - state: ai_empty
-      shader: unshaded
-    - state: ai
-      map: ["enum.StationAiVisualState.Key"]
-      shader: unshaded
-      visible: false
-  - type: Telephone
-    compatibleRanges:
-    - Grid
-    - Map
-    - Unlimited
-    listeningRange: 0
-    speakerVolume: Speak
-    unlistedNumber: true
-  - type: Holopad
-  - type: UserInterface
-    interfaces:
-      enum.HolopadUiKey.AiRequestWindow:
-        type: HolopadBoundUserInterface
-      enum.HolopadUiKey.AiActionWindow:
-        type: HolopadBoundUserInterface
-  - type: InteractionPopup
-    interactSuccessString: petting-success-station-ai
-    interactFailureString: petting-failure-station-ai
-    messagePerceivedByOthers: petting-success-station-ai-others
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: PlayerTaipanAi
