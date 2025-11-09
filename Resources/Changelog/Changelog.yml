@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kittygyat
-  changes:
-  - message: Fixed vapes dealing unintended damage types to you when used.
-    type: Fix
-  id: 8691
-  time: '2025-06-18T12:06:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38423
 - author: beck-thompson
   changes:
   - message: Recycler now properly recycles item stacks.
@@ -3924,3 +3917,11 @@
   id: 9192
   time: '2025-11-09T01:46:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41358
+- author: SirWarock
+  changes:
+  - message: Fixed Magazines not properly visualizing how much ammo they had left
+      in them!
+    type: Fix
+  id: 9193
+  time: '2025-11-09T07:54:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41362
