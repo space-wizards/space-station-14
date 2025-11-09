@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Recycler now properly recycles item stacks.
-    type: Fix
-  id: 8692
-  time: '2025-06-18T21:14:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38433
 - author: Bhijn and Myr
   changes:
   - message: In interest of raising awareness of addiction to the game, the lobby
@@ -3925,3 +3918,12 @@
   id: 9193
   time: '2025-11-09T07:54:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41362
+- author: mirrorcult
+  changes:
+  - message: Lighting attenuation has changed slightly. You shouldn't notice much
+      difference, but the edges of lights should look better. If any lights are significantly
+      different than they used to be, make a GitHub issue.
+    type: Tweak
+  id: 9194
+  time: '2025-11-09T16:29:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41361
