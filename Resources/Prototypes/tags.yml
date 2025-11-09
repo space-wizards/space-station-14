@@ -711,6 +711,9 @@
 - type: Tag
   id: HardsuitSpatio # ConstructionGraph: HardsuitGoliath
 
+- type: Tag # Used on DungeonRoom prototypes.
+  id: Haunted # PrefabDunGen whitelist on Haunted DungeonConfig.
+
 - type: Tag
   id: Head # ConstructionGraph: RitualSeat
 
