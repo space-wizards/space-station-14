@@ -1,0 +1,86 @@
+########################
+
+# Index
+
+# 1. EMERGENCY LIGHTS
+
+########################
+
+# 1. EMERGENCY LIGHTS
+- type: entity
+  parent: BaseLightFixture
+  id: EmergencyLight
+  name: emergency light
+  description: A small light with an internal battery that turns on as soon as it stops receiving any power. Nanotrasen technology allows it to adapt its color to alert crew to the conditions of the station.
+  components:
+  - type: PointLight
+    enabled: false
+    radius: 5
+    energy: 0.6
+    offset: "0, 0.4"
+    color: "#7CFC00"
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Battery
+    maxCharge: 30000
+    startingCharge: 0
+  - type: EmergencyLight
+  - type: RotatingLight
+    speed: 40
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
+    layers:
+    - state: base
+      map: [ "enum.EmergencyLightVisualLayers.Base" ]
+    - state: emergency_light_off
+      map: [ "enum.EmergencyLightVisualLayers.LightOff" ]
+      color: "#7CFC00"
+    - state: emergency_light_on
+      map: [ "enum.EmergencyLightVisualLayers.LightOn" ]
+      color: "#7CFC00"
+      shader: "unshaded"
+      visible: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,0.5,0.2,0.35"
+        density: 190
+        mask:
+        - None
+        layer:
+        - TabletopMachineLayer
+  - type: Appearance
+  - type: Construction
+    graph: LightFixture
+    node: emergencyLight
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
