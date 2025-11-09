@@ -646,8 +646,39 @@
           amount: 1
         - id: FoodPieAppleSlice
           amount: 1
-        - !type:NestedSelector
-          tableId: HappyHonkToySafe
+        - !type:GroupSelector
+          children:
+          - id: ToyMouse
+          - id: ToyAi
+          - id: ToyNuke
+          - id: ToyFigurinePassenger
+          - id: ToyFigurineGriffin
+          - id: ToyHonk
+          - id: ToyIan
+          - id: ToyMarauder
+          - id: ToyMauler
+          - id: ToyGygax
+          - id: ToyOdysseus
+          - id: ToyFigurineOwlman
+          - id: ToyDeathRipley
+          - id: ToyPhazon
+          - id: ToyFireRipley
+          - id: ToyReticence
+          - id: ToyRipley
+          - id: ToySeraph
+          - id: ToyDurand
+          - id: ToyFigurineSkeleton
+          - id: FoamBlade
+          - id: ClothingHeadHatBunny
+          - id: PersonalAI
+          #- id: CrayonBox Too big
+          - id: ToySword
+          - id: RevolverCapGun
+          - id: ToyRubberDuck
+          - id: BikeHorn
+            weight: 0.5
+          - id: GoldenBikeHorn
+            weight: 0.1
 
 - type: entity
   parent: BoxCardboard
