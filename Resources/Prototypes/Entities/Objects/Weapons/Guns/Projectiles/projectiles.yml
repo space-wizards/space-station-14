@@ -179,10 +179,10 @@
     layers:
     - state: uranium
       shader: unshaded
-  - type: PointLight
-    enabled: true
-    color: "#059919"
-    radius: 2.0
+ # - type: PointLight // Too resource intensive for what little effect it has, one day...
+ #   enabled: true
+ #   color: "#059919"
+ #   radius: 2.0
   - type: Projectile
     damage:
       types:
