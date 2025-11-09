@@ -711,9 +711,6 @@
 - type: Tag
   id: HardsuitSpatio # ConstructionGraph: HardsuitGoliath
 
-- type: Tag # Used on DungeonRoom prototypes.
-  id: Haunted # Unused. Exists on various DungeonRoomPrototypes in haunted.yml, presumably for an unimplemented PrefabDunGen whitelist.
-
 - type: Tag
   id: Head # ConstructionGraph: RitualSeat
 
@@ -859,16 +856,10 @@
 # Tagged entities always have BallisticAmmoProviderComponent.
 
 - type: Tag
-  id: MagazineCaselessRifle # Unused (Exists on BaseMagazineCaselessRifle)
-
-- type: Tag
   id: MagazineDebug # WeaponPistolDebug
 
 - type: Tag
   id: MagazineGrenade # ShuttleGunDuster
-
-- type: Tag
-  id: MagazineHeavyRifle # Unused (Exists on BaseMagazineHeavyRifle)
 
 - type: Tag
   id: MagazineLightRifle # WeaponRifleAk
@@ -1303,12 +1294,6 @@
 
 - type: Tag
   id: SpeedLoaderMagnum # Ammo: BaseWeaponRevolver, XenoArtifactGun
-
-- type: Tag
-  id: SpeedLoaderPistol # Unused (Exists on BaseSpeedLoaderPistol)
-
-- type: Tag
-  id: SpeedLoaderRifle # Unused (Exists on SpeedLoaderLightRifle)
 
 - type: Tag
   id: SpiderCraft # Used on various ConstructionPrototypes to create exclusive recipes for tagged entity.
