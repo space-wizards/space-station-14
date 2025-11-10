@@ -47,7 +47,7 @@ public sealed partial class BwoinkWindow : DefaultWindow
         _bwoinkManager.ReloadedData -= Regenerate;
     }
 
-    private void Regenerate()
+    public void Regenerate()
     {
         // We now nuke all the channels we already have. This *does* loose us any input and state we have previously.
         // Frankly, I call this a skill issue when admins upload prototypes on live.

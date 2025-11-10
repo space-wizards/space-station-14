@@ -154,7 +154,7 @@ public sealed partial class BwoinkPanel : BoxContainer
         {
             var info = _bwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, _managingFor.Value);
             info.LastMessage = message.SentAt;
-            if (!Visible)
+            if (!VisibleInTree)
                 info.Unread++;
         }
 

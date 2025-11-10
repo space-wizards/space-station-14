@@ -13,7 +13,6 @@ using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
@@ -33,14 +32,15 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
     private MenuButton? GameAHelpButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.AHelpButton;
     private Button? LobbyAHelpButton => (UIManager.ActiveScreen as LobbyGui)?.AHelpButton;
     private bool _hasUnreadAHelp;
     private bool _bwoinkSoundEnabled;
     private BwoinkWindow? _window;
-    private bool IsOpen => _window is { Disposed: false };
-    private bool IsVisible => _window is { Visible: true, Disposed: false };
+    private bool IsReal => _window is { Disposed: false };
+    private bool IsVisible => _window is { IsOpen: true, Disposed: false };
 
     public override void Initialize()
     {
@@ -53,6 +53,16 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
 
         _bwoinkManager.MessageReceived += MessageReceived;
+        _adminManager.AdminStatusUpdated += AdminStatusChanged;
+    }
+
+    private void AdminStatusChanged()
+    {
+        if (_window == null)
+            return;
+
+        _window.Close();
+        _window = null;
     }
 
     private void MessageReceived(ProtoId<BwoinkChannelPrototype> sender, (NetUserId person, BwoinkMessage message) args)
@@ -136,10 +146,9 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
     private void ToggleWindow()
     {
-        if (IsOpen)
+        if (IsVisible)
         {
             _window?.Close();
-            _window = null;
             SetAHelpPressed(false);
         }
         else
@@ -154,17 +163,23 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
     public void EnsureUIHelper()
     {
-        if (IsOpen)
+        if (IsVisible)
             return;
 
         if (!_netManager.IsConnected)
             return;
 
+        if (IsReal)
+        {
+            // no need to remake it if we already have one, just open it duh
+            _window!.OpenCentered();
+            return;
+        }
+
         _window = new BwoinkWindow(_bwoinkManager, _prototypeManager, _playerManager);
         _window.OpenCentered();
         _window.OnClose += () =>
         {
-            _window = null;
             SetAHelpPressed(false);
         };
 
@@ -206,7 +221,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         {
             GameAHelpButton.OnPressed -= AHelpButtonPressed;
             GameAHelpButton.OnPressed += AHelpButtonPressed;
-            GameAHelpButton.Pressed = IsOpen;
+            GameAHelpButton.Pressed = IsVisible;
 
             if (_hasUnreadAHelp)
             {
@@ -231,7 +246,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         {
             LobbyAHelpButton.OnPressed -= AHelpButtonPressed;
             LobbyAHelpButton.OnPressed += AHelpButtonPressed;
-            LobbyAHelpButton.Pressed = IsOpen;
+            LobbyAHelpButton.Pressed = IsVisible;
 
             if (_hasUnreadAHelp)
             {
