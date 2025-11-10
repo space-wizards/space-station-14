@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Power.Components;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]
@@ -50,13 +50,14 @@ public sealed partial class ApcComponent : BaseApcNetComponent
     /// <summary>
     /// Time that overloading began.
     /// </summary>
-    [ViewVariables]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan? TripStartTime;
 
     /// <summary>
     /// Set to true if the APC tripped off. Used to indicate problems in the UI. Reset by switching
     /// APC on.
     /// </summary>
+    [DataField]
     public bool TripFlag;
 
     // TODO ECS power a little better!

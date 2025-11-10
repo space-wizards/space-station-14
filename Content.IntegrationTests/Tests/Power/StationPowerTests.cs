@@ -117,16 +117,19 @@ public sealed class StationPowerTests
         });
 
         // Wait long enough for power to ramp up, but before anything can trip
-        await server.WaitRunTicks(30 * 2);
+        await pair.RunSeconds(2);
 
         // Check that no APCs start overloaded
         var apcQuery = entMan.EntityQueryEnumerator<ApcComponent, PowerNetworkBatteryComponent>();
-        while (apcQuery.MoveNext(out var uid, out var apc, out var battery))
+        Assert.Multiple(() =>
         {
-            Console.WriteLine($"ApcLoad:{mapProtoId}:{uid}:{battery.CurrentSupply}");
-            Assert.That(apc.MaxLoad, Is.GreaterThanOrEqualTo(battery.CurrentSupply),
-                    $"APC on {mapProtoId} is overloaded");
-        }
+            while (apcQuery.MoveNext(out var uid, out var apc, out var battery))
+            {
+                Console.WriteLine($"ApcLoad:{mapProtoId}:{uid}:{battery.CurrentSupply}");
+                Assert.That(apc.MaxLoad, Is.GreaterThanOrEqualTo(battery.CurrentSupply),
+                        $"APC {uid} on {mapProtoId} is overloaded {battery.CurrentSupply} / {apc.MaxLoad}");
+            }
+        });
 
         await pair.CleanReturnAsync();
     }
