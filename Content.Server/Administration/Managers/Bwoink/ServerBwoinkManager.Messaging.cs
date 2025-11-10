@@ -173,13 +173,13 @@ public sealed partial class ServerBwoinkManager
 
         _netManager.ServerSendToMany(msgBwoink, managers);
 
-        if (message.Flags.HasFlag(MessageFlags.ManagerOnly))
+        if (message.Flags.HasFlag(MessageFlags.ManagerOnly) || targetSes == null)
             return; // Stop here.
 
-        if (targetSes != null && CanManageChannel(channel, targetSes))
+        if (CanManageChannel(channel, targetSes))
             return; // Don't need to send it to the admin client.
 
-        if (targetSes == null || !CanReadChannel(channel, targetSes))
+        if (!CanReadChannel(channel, targetSes))
         {
             // Target can't read it. Womp. Womp.
             var notificationMessage = CreateSystemMessage(LocalizationManager.GetString("bwoink-channel-no-readers"), MessageFlags.Manager | MessageFlags.ManagerOnly);
