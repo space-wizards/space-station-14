@@ -34,14 +34,12 @@ public sealed partial class PayloadTriggerComponent : Component
     public ComponentRegistry? Components = null;
 
     /// <summary>
-    ///     Keeps track of what components this trigger has granted to the payload case.
+    ///     Set of components that this trigger has granted to the payload case.
     /// </summary>
     /// <remarks>
-    ///     This is required in case someone creates a construction graph that accepts more than one trigger, and those
-    ///     trigger grant the same type of component (or the case just innately has that component). This list is used
-    ///     when removing the component, to ensure that removal of this trigger only removes the components that it was
-    ///     responsible for adding.
+    ///     This is used to prevent the accidental removal of components that were never added by this trigger (e.g.,
+    ///     because the entity already had the specified component)
     /// </remarks>
     [DataField(serverOnly: true)]
-    public HashSet<Type> GrantedComponents = new();
+    public HashSet<string> GrantedComponents = new();
 }
