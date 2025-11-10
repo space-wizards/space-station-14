@@ -122,7 +122,7 @@ public sealed class PayloadSystem : EntitySystem
 
     private void OnEntityRemoved(EntityUid uid, PayloadCaseComponent component, EntRemovedFromContainerMessage args)
     {
-        if (!TryComp(args.Entity, out PayloadTriggerComponent? trigger))
+        if (args.Container.ID != TriggerContainer || !TryComp(args.Entity, out PayloadTriggerComponent? trigger))
             return;
 
         trigger.Active = false;
