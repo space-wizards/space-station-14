@@ -66,7 +66,7 @@
   id: ERTLeaderGearArmed
   equipment:
     pocket2: WeaponDisabler
-    suitstorage: WeaponRifleLecterXL8
+    suitstorage: WeaponRifleLecter
   storage:
     back:
     - Binoculars
@@ -573,6 +573,7 @@
     outerClothing: ClothingOuterHardsuitERTJanitor
     id: ERTJanitorPDA
     ears: ClothingHeadsetAltCentCom
+    eyes: ClothingEyesGlassesChemical
     belt: ClothingBeltMilitaryWebbingERT
     pocket2: CombatKnife
     suitstorage: WeaponLauncherHydra
