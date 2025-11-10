@@ -98,9 +98,7 @@
   description: A self rechargeable power cell, designed for fast recharge rate at the expense of capacity.
   components:
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 36 # 10 seconds to recharge
-    autoRechargePause: true
     autoRechargePauseTime: 30
 
 - type: entity
@@ -226,7 +224,6 @@
     maxCharge: 720
     startingCharge: 720
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 12 # takes 1 minute to charge itself back to full
 
 - type: entity
@@ -262,7 +259,6 @@
       maxCharge: 1200
       startingCharge: 1200
     - type: BatterySelfRecharger
-      autoRecharge: true
       autoRechargeRate: 40
 
 # Power cage (big heavy power cell for big devices)

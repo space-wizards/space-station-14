@@ -125,7 +125,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         // into an AI core that has a full battery and full integrity.
         if (TryComp<BatteryComponent>(ent, out var battery))
         {
-            _battery.SetCharge(ent, battery.MaxCharge);
+            _battery.SetCharge((ent, battery), battery.MaxCharge);
         }
 
         _damageable.ClearAllDamage(ent.Owner);
