@@ -19,18 +19,21 @@ public sealed partial class BwoinkWindow : DefaultWindow
     private readonly IPrototypeManager _prototypeManager;
     private readonly IPlayerManager _playerManager;
     private readonly ClientBwoinkManager _bwoinkManager;
+    private readonly ILocalizationManager _localizationManager;
 
-    private Dictionary<ProtoId<BwoinkChannelPrototype>, int> _channelIndexes = [];
+    private readonly Dictionary<ProtoId<BwoinkChannelPrototype>, int> _channelIndexes = [];
 
     public BwoinkWindow(ClientBwoinkManager clientBwoinkManager,
         IPrototypeManager prototypeManager,
-        IPlayerManager playerManager)
+        IPlayerManager playerManager,
+        ILocalizationManager localizationManager)
     {
         RobustXamlLoader.Load(this);
 
         _prototypeManager = prototypeManager;
         _playerManager = playerManager;
         _bwoinkManager = clientBwoinkManager;
+        _localizationManager = localizationManager;
 
         Regenerate();
     }
@@ -75,14 +78,14 @@ public sealed partial class BwoinkWindow : DefaultWindow
             var canManage = _bwoinkManager.CanManageChannel(channel, _playerManager.LocalSession!);
             if (canManage)
             {
-                var control = new BwoinkControl(this, channel, _bwoinkManager);
+                var control = new BwoinkControl(this, channel, _bwoinkManager, _localizationManager);
                 Channels.AddChild(control);
                 control.ChannelSelector.StopFiltering();
                 control.ChannelSelector.PopulateList();
             }
             else
             {
-                var control = new BwoinkPanel(this, channel, _bwoinkManager, false, null);
+                var control = new BwoinkPanel(this, channel, _bwoinkManager, false, null, _localizationManager);
                 _bwoinkManager.MessageReceived += (sender, args) =>
                 {
                     if (sender.Id != channel.ID)

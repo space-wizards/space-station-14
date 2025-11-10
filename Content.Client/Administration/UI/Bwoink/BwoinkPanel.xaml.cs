@@ -18,13 +18,15 @@ public sealed partial class BwoinkPanel : BoxContainer
     private readonly BwoinkChannelPrototype _channel;
     private readonly bool _manager;
     private readonly ClientBwoinkManager _bwoinkManager;
+    private readonly ILocalizationManager _localizationManager;
     private readonly NetUserId? _managingFor;
 
-    public BwoinkPanel(BwoinkWindow parentWindow, BwoinkChannelPrototype channel, ClientBwoinkManager clientBwoinkManager, bool manager, NetUserId? managingFor)
+    public BwoinkPanel(BwoinkWindow parentWindow, BwoinkChannelPrototype channel, ClientBwoinkManager clientBwoinkManager, bool manager, NetUserId? managingFor, ILocalizationManager localizationManager)
     {
         RobustXamlLoader.Load(this);
-        // TODO: dont use static Loc for this.
-        Name = Loc.GetString(channel.Name);
+        _localizationManager = localizationManager;
+
+        Name = _localizationManager.GetString(channel.Name);
 
         _channel = channel;
         _manager = manager;
@@ -34,7 +36,7 @@ public sealed partial class BwoinkPanel : BoxContainer
         if (!manager)
         {
             var helpText = new FormattedMessage(1);
-            helpText.AddMarkupOrThrow(Loc.GetString(channel.HelpText));
+            helpText.AddMarkupOrThrow(_localizationManager.GetString(channel.HelpText));
             TextOutput.AddMessage(helpText);
             HandledLabel.Visible = true;
         }
@@ -54,7 +56,7 @@ public sealed partial class BwoinkPanel : BoxContainer
                 _bwoinkManager.GetOrCreatePlayerPropertiesForChannel(_channel.ID, _managingFor.Value).Unread = 0;
 
             if (!_manager)
-                parentWindow.Title = Loc.GetString(channel.Name);
+                parentWindow.Title = _localizationManager.GetString(channel.Name);
         };
         SenderLineEdit.OnTextEntered += Input_OnTextEntered;
         SenderLineEdit.OnTextChanged += Input_OnTextChanged;
@@ -66,15 +68,13 @@ public sealed partial class BwoinkPanel : BoxContainer
     {
         _bwoinkManager.TypingsUpdated += BwoinkManagerOnTypingsUpdated;
 
-        // TODO: dont use static Loc for this.
-
         MessagePropsContainer.Visible = _manager;
 
         if (_channel.Features.TryFirstOrDefault(x => x is ManagerOnlyMessages, out var channelFeature))
         {
             var managerOnly = channelFeature as ManagerOnlyMessages;
-            ManagerOnly.ToolTip = Loc.GetString(managerOnly!.ToolTip);
-            ManagerOnly.Text = Loc.GetString(managerOnly.CheckName);
+            ManagerOnly.ToolTip = _localizationManager.GetString(managerOnly!.ToolTip);
+            ManagerOnly.Text = _localizationManager.GetString(managerOnly.CheckName);
         }
         else
             ManagerOnly.Visible = false;
@@ -132,9 +132,8 @@ public sealed partial class BwoinkPanel : BoxContainer
 
         if (!_manager)
         {
-            // TODO: dont use static Loc for this.
             var helpText = new FormattedMessage(1);
-            helpText.AddMarkupOrThrow(Loc.GetString(_channel.HelpText));
+            helpText.AddMarkupOrThrow(_localizationManager.GetString(_channel.HelpText));
             TextOutput.AddMessage(helpText);
         }
 
@@ -168,7 +167,7 @@ public sealed partial class BwoinkPanel : BoxContainer
 
         var text = PeopleTyping.Count == 0
             ? string.Empty
-            : Loc.GetString("bwoink-system-typing-indicator",
+            : _localizationManager.GetString("bwoink-system-typing-indicator",
                 ("players", string.Join(", ", PeopleTyping)),
                 ("count", PeopleTyping.Count));
 

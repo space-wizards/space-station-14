@@ -31,16 +31,17 @@ public sealed partial class BwoinkControl : Control
     private readonly BwoinkWindow _parentWindow;
     private readonly BwoinkChannelPrototype _channel;
     private readonly ClientBwoinkManager _clientBwoinkManager;
+    private readonly ILocalizationManager _localizationManager;
 
     private int _newPlayerThreshold = 0;
 
-    public BwoinkControl(BwoinkWindow parentWindow, BwoinkChannelPrototype channel, ClientBwoinkManager clientBwoinkManager)
+    public BwoinkControl(BwoinkWindow parentWindow, BwoinkChannelPrototype channel, ClientBwoinkManager clientBwoinkManager, ILocalizationManager localizationManager)
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
+        IoCManager.InjectDependencies(this); // TODO: Remove static ioc.
 
-        // TODO: Dont use static LOC
-        Name = Loc.GetString(channel.Name);
+        Name = localizationManager.GetString(channel.Name);
+        _localizationManager = localizationManager;
         _parentWindow = parentWindow;
         _channel = channel;
         _clientBwoinkManager = clientBwoinkManager;
@@ -65,13 +66,13 @@ public sealed partial class BwoinkControl : Control
 
         if (sel is null)
         {
-            _parentWindow.Title = Loc.GetString("bwoink-title-none-selected");
+            _parentWindow.Title = _localizationManager.GetString("bwoink-title-none-selected");
             return;
         }
 
-        _parentWindow.Title = $"{sel.CharacterName} / {sel.Username} | {Loc.GetString("generic-playtime-title")}: ";
+        _parentWindow.Title = $"{sel.CharacterName} / {sel.Username} | {_localizationManager.GetString("generic-playtime-title")}: ";
 
-        _parentWindow.Title += sel.OverallPlaytime != null ? sel.PlaytimeString : Loc.GetString("generic-unknown-title");
+        _parentWindow.Title += sel.OverallPlaytime != null ? sel.PlaytimeString : _localizationManager.GetString("generic-unknown-title");
         UpdateUnreadHeader();
     }
 
@@ -217,11 +218,11 @@ public sealed partial class BwoinkControl : Control
 
         if (unread == 0)
         {
-            Name = Loc.GetString(_channel.Name);
+            Name = _localizationManager.GetString(_channel.Name);
         }
         else
         {
-            Name = Loc.GetString("bwoink-channel-header-unread", ("title", Loc.GetString(_channel.Name)), ("unread", GetUnreadRune(unread)));
+            Name = _localizationManager.GetString("bwoink-channel-header-unread", ("title", _localizationManager.GetString(_channel.Name)), ("unread", GetUnreadRune(unread)));
         }
     }
 
@@ -248,7 +249,7 @@ public sealed partial class BwoinkControl : Control
         if (_panels.TryGetValue(user, out var panel))
             return panel;
 
-        var newPanel = new BwoinkPanel(_parentWindow, _channel, _clientBwoinkManager, true, user);
+        var newPanel = new BwoinkPanel(_parentWindow, _channel, _clientBwoinkManager, true, user, _localizationManager);
         _panels.Add(user, newPanel);
         BwoinkArea.AddChild(newPanel);
         newPanel.Visible = false;

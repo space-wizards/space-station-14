@@ -33,6 +33,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
     private MenuButton? GameAHelpButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.AHelpButton;
     private Button? LobbyAHelpButton => (UIManager.ActiveScreen as LobbyGui)?.AHelpButton;
@@ -176,7 +177,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
             return;
         }
 
-        _window = new BwoinkWindow(_bwoinkManager, _prototypeManager, _playerManager);
+        _window = new BwoinkWindow(_bwoinkManager, _prototypeManager, _playerManager, _localizationManager);
         _window.OpenCentered();
         _window.OnClose += () =>
         {

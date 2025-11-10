@@ -67,9 +67,10 @@ public sealed partial class ServerBwoinkManager
             return;
 
         if (!CanManageChannel(message.Channel, PlayerManager.GetSessionByChannel(message.MsgChannel)))
+        {
+            Log.Error($"Attempted admin bwoink without proper perms {message.Channel} {message.MsgChannel.UserId}");
             return;
-
-        // TODO: Logging for when a person can't manage a channel.
+        }
 
         var flags = MessageFlags.Manager;
 
@@ -105,7 +106,10 @@ public sealed partial class ServerBwoinkManager
             return;
 
         if (!CanWriteChannel(message.Channel, PlayerManager.GetSessionByChannel(message.MsgChannel)))
-            return; // TODO: Logging.
+        {
+            Log.Error($"Attempted bwoink without proper perms {message.Channel} {message.MsgChannel.UserId}");
+            return;
+        }
 
         var gameTickerNonsense = GetRoundIdAndTime();
 
