@@ -12,8 +12,8 @@ namespace Content.Server.Administration.Managers.Bwoink;
 /// </remarks>
 public sealed class MessageBwoinkManager
 {
-    [Dependency] private ServerBwoinkManager _bwoinkManager = default!;
-    [Dependency] private IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly ServerBwoinkManager _bwoinkManager = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     private string _overrideName = string.Empty;
 
