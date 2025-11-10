@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: TheFlyingSentry
-  changes:
-  - message: Animal stealing thief objectives now actually check for the objective's
-      existence.
-    type: Tweak
-  id: 8689
-  time: '2025-06-17T11:06:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38332
-- author: kosticia
-  changes:
-  - message: Reflection chances are examinable now.
-    type: Add
-  id: 8690
-  time: '2025-06-18T00:50:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38199
-- author: Kittygyat
-  changes:
-  - message: Fixed vapes dealing unintended damage types to you when used.
-    type: Fix
-  id: 8691
-  time: '2025-06-18T12:06:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38423
-- author: beck-thompson
-  changes:
-  - message: Recycler now properly recycles item stacks.
-    type: Fix
-  id: 8692
-  time: '2025-06-18T21:14:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38433
 - author: Bhijn and Myr
   changes:
   - message: In interest of raising awareness of addiction to the game, the lobby
@@ -3925,3 +3896,34 @@
   id: 9190
   time: '2025-11-07T07:43:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41094
+- author: Princess-Cheeseballs
+  changes:
+  - message: Items no longer spin on Conveyors
+    type: Fix
+  id: 9191
+  time: '2025-11-08T20:40:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37468
+- author: Princess-Cheeseballs
+  changes:
+  - message: Paradox clones now copy forensics from the original
+    type: Fix
+  id: 9192
+  time: '2025-11-09T01:46:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41358
+- author: SirWarock
+  changes:
+  - message: Fixed Magazines not properly visualizing how much ammo they had left
+      in them!
+    type: Fix
+  id: 9193
+  time: '2025-11-09T07:54:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41362
+- author: mirrorcult
+  changes:
+  - message: Lighting attenuation has changed slightly. You shouldn't notice much
+      difference, but the edges of lights should look better. If any lights are significantly
+      different than they used to be, make a GitHub issue.
+    type: Tweak
+  id: 9194
+  time: '2025-11-09T16:29:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41361
