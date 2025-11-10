@@ -264,11 +264,10 @@
     - MiningDrill
     - RCDAmmo
     - RCDAmmo # End of first line
-    - PowerCellHigh
-    - C4
-    - C4
+    - CableDetStack
+    - BoxDetonator
     - BoxLethalshot
-    - BoxLethalshot
+    - BoxShotgunSlug
 
 - type: chameleonOutfit
   id: ERTEngineerChameleonOutfit
