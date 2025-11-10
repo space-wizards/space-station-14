@@ -124,6 +124,9 @@ public abstract partial class SharedBwoinkManager
 
         var formatted = new FormattedMessage();
 
+        if (message.Color.HasValue)
+            formatted.PushColor(message.Color.Value);
+
         formatted.PushColor(Color.Gray);
 
         if (useRoundTime)
@@ -133,20 +136,21 @@ public abstract partial class SharedBwoinkManager
 
         formatted.Pop();
 
-        if (message.Flags.HasFlag(MessageFlags.ManagerOnly))
-        {
-            formatted.AddText(channel.TryGetFeature<ManagerOnlyMessages>(out var managerOnlyMessages)
-                ? $"{LocalizationManager.GetString(managerOnlyMessages.Prefix)} "
-                : $"{LocalizationManager.GetString("bwoink-message-manager-only")} ");
-        }
-
-        if (message.Flags.HasFlag(MessageFlags.Silent))
-        {
-            formatted.AddText($"{LocalizationManager.GetString("bwoink-message-silent")} ");
-        }
-
+        // We only need to decorate the message if its not a system message.
         if (!message.Flags.HasFlag(MessageFlags.System))
         {
+            if (message.Flags.HasFlag(MessageFlags.ManagerOnly))
+            {
+                formatted.AddText(channel.TryGetFeature<ManagerOnlyMessages>(out var managerOnlyMessages)
+                    ? $"{LocalizationManager.GetString(managerOnlyMessages.Prefix)} "
+                    : $"{LocalizationManager.GetString("bwoink-message-manager-only")} ");
+            }
+
+            if (message.Flags.HasFlag(MessageFlags.Silent))
+            {
+                formatted.AddText($"{LocalizationManager.GetString("bwoink-message-silent")} ");
+            }
+
             var color = Color.White;
             if (message.Flags.HasFlag(MessageFlags.Manager))
                 color = Color.Red;
@@ -157,6 +161,8 @@ public abstract partial class SharedBwoinkManager
         }
 
         formatted.AddText(message.Content);
+        if (message.Color.HasValue)
+            formatted.Pop();
 
         return formatted;
     }

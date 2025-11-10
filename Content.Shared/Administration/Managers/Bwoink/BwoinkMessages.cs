@@ -49,7 +49,11 @@ public sealed class MsgBwoinkSync : NetMessage
                     var roundTime = buffer.ReadTimeSpan();
                     var roundId = buffer.ReadInt32();
 
-                    messages.Add(new BwoinkMessage(sender, senderId, sentAt, content, flags, roundTime, roundId));
+                    Color? color = null;
+                    if (buffer.ReadBoolean())
+                        color = buffer.ReadColor();
+
+                    messages.Add(new BwoinkMessage(sender, senderId, sentAt, content, flags, roundTime, roundId, color));
                 }
 
                 var conversation = new Conversation(who, messages);
@@ -87,6 +91,10 @@ public sealed class MsgBwoinkSync : NetMessage
                     buffer.Write((byte)message.Flags);
                     buffer.Write(message.RoundTime);
                     buffer.Write(message.RoundId);
+
+                    buffer.Write(message.Color.HasValue);
+                    if (message.Color.HasValue)
+                        buffer.Write(message.Color.Value);
                 }
             }
         }
@@ -256,8 +264,13 @@ public sealed class MsgBwoinkNonAdmin : NetMessage
         var message = buffer.ReadString();
         var roundTime = buffer.ReadTimeSpan();
         var roundId = buffer.ReadInt32();
+        var flags = (MessageFlags)buffer.ReadByte();
 
-        Message = new BwoinkMessage(sender, null, sentAt, message, (MessageFlags)buffer.ReadByte(), roundTime, roundId);
+        Color? color = null;
+        if (buffer.ReadBoolean())
+            color = buffer.ReadColor();
+
+        Message = new BwoinkMessage(sender, null, sentAt, message, flags, roundTime, roundId, color);
         Channel = buffer.ReadString();
     }
 
@@ -272,6 +285,10 @@ public sealed class MsgBwoinkNonAdmin : NetMessage
         buffer.Write(Message.RoundTime);
         buffer.Write(Message.RoundId);
         buffer.Write((byte)Message.Flags);
+
+        buffer.Write(Message.Color.HasValue);
+        if (Message.Color.HasValue)
+            buffer.Write(Message.Color.Value);
 
         buffer.Write(Channel.Id);
     }
@@ -300,8 +317,12 @@ public sealed class MsgBwoink : NetMessage
         var message = buffer.ReadString();
         var roundTime = buffer.ReadTimeSpan();
         var roundId = buffer.ReadInt32();
+        var flags = (MessageFlags)buffer.ReadByte();
+        Color? color = null;
+        if (buffer.ReadBoolean())
+            color = buffer.ReadColor();
 
-        Message = new BwoinkMessage(sender, senderId, sentAt, message, (MessageFlags)buffer.ReadByte(), roundTime, roundId);
+        Message = new BwoinkMessage(sender, senderId, sentAt, message, flags, roundTime, roundId, color);
         Channel = new ProtoId<BwoinkChannelPrototype>(buffer.ReadString());
 
         Target = new NetUserId(buffer.ReadGuid());
@@ -322,6 +343,10 @@ public sealed class MsgBwoink : NetMessage
         buffer.Write(Message.RoundTime);
         buffer.Write(Message.RoundId);
         buffer.Write((byte)Message.Flags);
+
+        buffer.Write(Message.Color.HasValue);
+        if (Message.Color.HasValue)
+            buffer.Write(Message.Color.Value);
 
         buffer.Write(Channel.Id);
         buffer.Write(Target.UserId);

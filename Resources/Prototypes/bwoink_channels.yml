@@ -16,6 +16,7 @@
     checkName: admin-ahelp-admin-only
   - !type:DiscordRelay
     channelCvar: discord.bwoink.channel.ahelp
+  - !type:StatusMessages
 
 # TODO: Remove, this is only for testing.
 - type: bwoinkChannel

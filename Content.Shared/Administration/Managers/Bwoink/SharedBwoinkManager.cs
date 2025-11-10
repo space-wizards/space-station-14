@@ -203,8 +203,30 @@ public sealed record Conversation(NetUserId Who, List<BwoinkMessage> Messages)
 /// <summary>
 /// Represents a message sent into an ahelp channel.
 /// </summary>
-public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime SentAt, string Content, MessageFlags Flags, TimeSpan RoundTime, int RoundId)
+public sealed record BwoinkMessage
 {
+    /// <summary>
+    /// Represents a message sent into an ahelp channel.
+    /// </summary>
+    public BwoinkMessage(string sender,
+        NetUserId? senderId,
+        DateTime sentAt,
+        string content,
+        MessageFlags flags,
+        TimeSpan roundTime,
+        int roundId,
+        Color? color = null)
+    {
+        Color = color;
+        Sender = sender;
+        SenderId = senderId;
+        SentAt = sentAt;
+        RoundTime = roundTime;
+        RoundId = roundId;
+        Content = content;
+        Flags = flags;
+    }
+
     /// <summary>
     /// The sender of this message.
     /// For reasons of (for example) hiding the sender, this is a string of the sender name.
@@ -214,30 +236,30 @@ public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime 
 #else
     [ViewVariables]
 #endif
-    public string Sender { get; init; } = Sender;
+    public string Sender { get; init; }
 
     /// <summary>
     /// The User ID of the sender. This is may be null on the client if the true sender is hidden or the "system".
     /// </summary>
     [ViewVariables]
-    public NetUserId? SenderId { get; set; } = SenderId;
+    public NetUserId? SenderId { get; set; }
 
     /// <summary>
     /// The time (in utc) when this message was sent.
     /// </summary>
     [ViewVariables]
-    public DateTime SentAt { get; init; } = SentAt;
+    public DateTime SentAt { get; init; }
 
     /// <summary>
     /// The time elapsed into the round when this message was sent.
     /// </summary>
     [ViewVariables]
-    public TimeSpan RoundTime { get; init; } = RoundTime;
+    public TimeSpan RoundTime { get; init; }
     /// <summary>
     /// The round ID when this message was sent, crazy.
     /// </summary>
     [ViewVariables]
-    public int RoundId { get; init; } = RoundId;
+    public int RoundId { get; init; }
 
     /// <summary>
     /// The contents of this message.
@@ -247,13 +269,20 @@ public sealed record BwoinkMessage(string Sender, NetUserId? SenderId, DateTime 
 #else
     [ViewVariables]
 #endif
-    public string Content { get; init; } = Content;
+    public string Content { get; init; }
 
     /// <summary>
     /// The flags this message has.
     /// </summary>
+#if DEBUG
+    [ViewVariables(VVAccess.ReadWrite)]
+#else
     [ViewVariables]
-    public MessageFlags Flags { get; set; } = Flags;
+#endif
+    public MessageFlags Flags { get; set; }
+
+    [ViewVariables]
+    public Color? Color { get; set; }
 }
 
 public delegate void EventHandler<in TSender, in TArgs>(TSender sender, TArgs args);
@@ -290,6 +319,11 @@ public enum MessageFlags : byte
     /// This message was sent by the server itself, the message sender will not be shown in the UI and may be used for other purposes.
     /// </summary>
     System = 16,
+
+    /// <summary>
+    /// Template for your average system message.
+    /// </summary>
+    GenericSystem = Manager | Silent | System,
 }
 
 /// <summary>

@@ -8,7 +8,6 @@ using Content.Server.Mind;
 using Content.Shared.Administration.Managers.Bwoink;
 using Content.Shared.Administration.Managers.Bwoink.Features;
 using Content.Shared.CCVar;
-using NetCord;
 using NetCord.Rest;
 using Robust.Server.Player;
 using Robust.Shared.Asynchronous;
@@ -35,8 +34,6 @@ public sealed class BwoinkDiscordRelayManager : IPostInjectInit
     [Dependency] private readonly IEntitySystemManager _entitySystemManager = null!;
     [Dependency] private readonly ILocalizationManager _localizationManager = null!;
     [Dependency] private readonly IPlayerManager _playerManager = null!;
-    [Dependency] private readonly IAdminManager _adminManager = null!;
-    [Dependency] private readonly IAfkManager _afkManager = null!;
 
     // ReSharper disable once InconsistentNaming
     private ISawmill Log = null!;
@@ -241,7 +238,30 @@ public sealed class BwoinkDiscordRelayManager : IPostInjectInit
                 formattedMessage = formattedMessage[..truncatedLength] + "…";
             }
 
-            if (message.Flags.HasFlag(MessageFlags.Manager))
+            // MAY ZEUS STRIKE ME DOWN IF THIS IS SHITCOD-
+            // *lighting strike*
+            // We specifically check here if the message we received was sent by MessageBwoinkManager
+            if (message.Flags.HasFlag(MessageFlags.System) && byte.TryParse(message.Sender, out var messageEnumByte))
+            {
+                switch ((MessageBwoinkManager.BwoinkStatusTypes)messageEnumByte)
+                {
+                    case MessageBwoinkManager.BwoinkStatusTypes.Banned:
+                        messageBuilder.Append(":no_entry: ");
+                        break;
+                    case MessageBwoinkManager.BwoinkStatusTypes.Disconnect:
+                        messageBuilder.Append(":red_circle: ");
+                        break;
+                    case MessageBwoinkManager.BwoinkStatusTypes.Reconnect:
+                        messageBuilder.Append(":green_circle: ");
+                        break;
+
+                    default:
+                        // Default to manager sent. Throwing here is shitty cause we dont wanna drop relay messages.
+                        messageBuilder.Append(":outbox_tray: ");
+                        break;
+                }
+            }
+            else if (message.Flags.HasFlag(MessageFlags.Manager))
                 messageBuilder.Append(":outbox_tray: ");
             else if(message.Flags.HasFlag(MessageFlags.NoReceivers))
                 messageBuilder.Append(":sos: ");
@@ -320,7 +340,7 @@ public sealed class BwoinkDiscordRelayManager : IPostInjectInit
     {
         var roundId = -1;
         string? charName = null;
-        var session = _playerManager.GetSessionById(userId);
+        var session = _playerManager.GetPlayerData(userId);
 
         // i hate whoever made gameticker an entity system
         // we cry daily because of it.
@@ -345,13 +365,13 @@ public sealed class BwoinkDiscordRelayManager : IPostInjectInit
         if (charName != null)
         {
             embed = embed.WithTitle(_localizationManager.GetString("bwoink-discord-relay-title",
-                ("username", session.Name),
+                ("username", session.UserName),
                 ("roundRep", charName)));
         }
         else
         {
             embed = embed.WithTitle(_localizationManager.GetString("bwoink-discord-relay-title-no-rep",
-                ("username", session.Name)));
+                ("username", session.UserName)));
         }
 
         return embed;

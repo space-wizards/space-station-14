@@ -139,7 +139,7 @@ public sealed partial class ServerBwoinkManager
         if (gotRateLimited == RateLimitStatus.Blocked)
         {
             var rateLimitMessage = CreateSystemMessage(LocalizationManager.GetString("bwoink-system-rate-limited"),
-                MessageFlags.Silent | MessageFlags.Manager);
+                MessageFlags.Silent | MessageFlags.Manager | MessageFlags.System);
 
             var rateLimitMessageMsg = new MsgBwoinkNonAdmin()
             {

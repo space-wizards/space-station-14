@@ -23,9 +23,9 @@ admin-bwoink-play-sound = Play Sound
 bwoink-title-none-selected = None selected
 
 bwoink-system-rate-limited = You are sending messages too quickly.
-bwoink-system-player-disconnecting = has disconnected.
-bwoink-system-player-reconnecting = has reconnected.
-bwoink-system-player-banned = has been banned for: {$banReason}
+bwoink-system-player-disconnecting = {$name} has disconnected.
+bwoink-system-player-reconnecting = {$name} has reconnected.
+bwoink-system-player-banned = {$name} has been banned for: {$banReason}
 
 bwoink-system-user = System
 bwoink-read-only = You cannot write in this channel.
