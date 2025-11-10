@@ -16,7 +16,7 @@ public sealed partial class ServerBwoinkManager
     /// This also gets invoked for every message during a sync.
     /// If you compute PI in this event handler, consider not doing that unless you want to make joining a server lockup the main thread for years.
     /// </remarks>
-    public Action<BwoinkMessageClientSentEventArgs>? MessageBeingSent;
+    public event Action<BwoinkMessageClientSentEventArgs>? MessageBeingSent;
 
     /// <summary>
     /// Sends a message to a given channel and user channel using the system user.
