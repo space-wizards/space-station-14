@@ -1,4 +1,5 @@
-﻿using Content.Shared.Administration.Managers.Bwoink.Features;
+﻿using System.Linq;
+using Content.Shared.Administration.Managers.Bwoink.Features;
 using JetBrains.Annotations;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -11,12 +12,14 @@ public abstract partial class SharedBwoinkManager
     /// <summary>
     /// Creates a bwoink message for a given channel using the provided sender.
     /// </summary>
+    [PublicAPI]
     public BwoinkMessage CreateUserMessage(string text, MessageFlags flags, NetUserId sender)
     {
         var tickerNonsense = GetRoundIdAndTime();
         return new BwoinkMessage(PlayerManager.GetSessionById(sender).Name, sender, DateTime.UtcNow, text, flags, tickerNonsense.roundTime, tickerNonsense.roundId);
     }
 
+    [PublicAPI]
     public BwoinkMessage CreateUserMessage(string message, NetUserId? sender, string? senderName, MessageFlags flags)
     {
         var tickerNonsense = GetRoundIdAndTime();
@@ -57,8 +60,64 @@ public abstract partial class SharedBwoinkManager
     }
 
     /// <summary>
+    /// Returns all the bwoink channels that have the feature T.
+    /// </summary>
+    /// <typeparam name="T">The feature.</typeparam>
+    [PublicAPI]
+    public IEnumerable<(ProtoId<BwoinkChannelPrototype> channel, T feature)> GetBwoinkChannelsWithFeature<T>() where T : BwoinkChannelFeature
+    {
+        foreach (var (id, prototype) in ProtoCache)
+        {
+            if (!prototype.TryGetFeature<T>(out var feature))
+                continue;
+
+            yield return (id, feature);
+        }
+    }
+
+    /// <summary>
+    /// Gets the conversation for the specified user and channel.
+    /// </summary>
+    /// <param name="userId">The user you are filtering for.</param>
+    /// <param name="channel">The channel you are filtering for.</param>
+    /// <param name="filterSender">If the sender should be hidden.</param>
+    /// <returns>The conversation, if the user has no conversation for this channel, returns null.</returns>
+    [PublicAPI]
+    public Conversation? GetFilteredConversation(
+        NetUserId userId,
+        ProtoId<BwoinkChannelPrototype> channel,
+        bool filterSender)
+    {
+        if (!Conversations.TryGetValue(channel, out var conversations))
+        {
+            DebugTools.Assert($"Conversations for key {channel.Id} not found.");
+            Log.Error($"Conversations for key {channel.Id} not found.");
+            return null;
+        }
+
+        if (!conversations.TryGetValue(userId, out var conversation))
+            return null;
+
+        var filteredMessages = conversation.Messages
+            .Where(x => !x.Flags.HasFlag(MessageFlags.ManagerOnly))
+            .Select(x => x with { SenderId = filterSender ? null : x.SenderId })
+            .ToList();
+
+        return conversation with { Messages = filteredMessages };
+    }
+
+    /// <summary>
+    /// Returns the conversations for a given channel.
+    /// </summary>
+    public Dictionary<NetUserId, Conversation> GetConversationsForChannel(ProtoId<BwoinkChannelPrototype> channel)
+    {
+        return Conversations[channel];
+    }
+
+    /// <summary>
     /// Formats a bwoink message into a string that can be displayed in UIs.
     /// </summary>
+    [PublicAPI]
     public FormattedMessage FormatMessage(ProtoId<BwoinkChannelPrototype> channelId, BwoinkMessage message, bool useRoundTime = false)
     {
         var channel = ProtoCache[channelId];

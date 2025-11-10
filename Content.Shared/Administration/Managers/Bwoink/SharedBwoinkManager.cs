@@ -160,43 +160,6 @@ public abstract partial class SharedBwoinkManager : IPostInjectInit
     }
 
     /// <summary>
-    /// Gets the conversation for the specified user and channel.
-    /// </summary>
-    /// <param name="userId">The user you are filtering for.</param>
-    /// <param name="channel">The channel you are filtering for.</param>
-    /// <param name="filterSender">If the sender should be hidden.</param>
-    public Conversation? GetFilteredConversation(
-        NetUserId userId,
-        ProtoId<BwoinkChannelPrototype> channel,
-        bool filterSender)
-    {
-        if (!Conversations.TryGetValue(channel, out var conversations))
-        {
-            DebugTools.Assert($"Conversations for key {channel.Id} not found.");
-            Log.Error($"Conversations for key {channel.Id} not found.");
-            return null;
-        }
-
-        if (!conversations.TryGetValue(userId, out var conversation))
-            return null;
-
-        var filteredMessages = conversation.Messages
-            .Where(x => !x.Flags.HasFlag(MessageFlags.ManagerOnly))
-            .Select(x => x with { SenderId = filterSender ? null : x.SenderId })
-            .ToList();
-
-        return conversation with { Messages = filteredMessages };
-    }
-
-    /// <summary>
-    /// Returns the conversations for a given channel.
-    /// </summary>
-    public Dictionary<NetUserId, Conversation> GetConversationsForChannel(ProtoId<BwoinkChannelPrototype> channel)
-    {
-        return Conversations[channel];
-    }
-
-    /// <summary>
     /// Called once the channels are updated.
     /// </summary>
     protected virtual void UpdatedChannels() { }
