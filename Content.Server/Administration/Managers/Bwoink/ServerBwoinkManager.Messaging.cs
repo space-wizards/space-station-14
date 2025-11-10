@@ -126,7 +126,7 @@ public sealed partial class ServerBwoinkManager
     /// </summary>
     private void SynchronizeMessage(ProtoId<BwoinkChannelPrototype> channel, NetUserId target, BwoinkMessage message)
     {
-        var targetSes = PlayerManager.GetSessionById(target);
+        PlayerManager.TryGetSessionById(target, out var targetSes);
         var senderSes = message.SenderId.HasValue ? PlayerManager.GetSessionById(message.SenderId.Value) : null;
 
         // Since the sender session can be null, we default to allowed and then check if there only is a session.
@@ -176,10 +176,10 @@ public sealed partial class ServerBwoinkManager
         if (message.Flags.HasFlag(MessageFlags.ManagerOnly))
             return; // Stop here.
 
-        if (CanManageChannel(channel, targetSes))
+        if (targetSes != null && CanManageChannel(channel, targetSes))
             return; // Don't need to send it to the admin client.
 
-        if (!CanReadChannel(channel, targetSes))
+        if (targetSes == null || !CanReadChannel(channel, targetSes))
         {
             // Target can't read it. Womp. Womp.
             var notificationMessage = CreateSystemMessage(LocalizationManager.GetString("bwoink-channel-no-readers"), MessageFlags.Manager | MessageFlags.ManagerOnly);
