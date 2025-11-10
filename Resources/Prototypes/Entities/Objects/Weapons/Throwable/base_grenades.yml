@@ -21,13 +21,11 @@
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
-    - type: Destructible
-      thresholds:
-      - trigger: # Start fuse
-          !type:DamageTrigger
-          damage: 10
-        behaviors:
-        - !type:TimerStartBehavior
+    - trigger: # Start fuse
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
   - type: Appearance
   - type: AnimationPlayer
   - type: GenericVisualizer
