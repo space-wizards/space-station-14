@@ -69,6 +69,53 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: Reflect
-    reflectProb: 1.0
+    reflectProb: 0.2
     spread: 75
     reflectingInHands: false
+
+- type: entity
+  name: Mosinka
+  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  id: WeaponDotaMosin
+  description: by dizi4k.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/Dota/Dire/Recruit/Guns/mosin.rsi
+    layers:
+      - state: icon
+  - type: Gun
+    fireRate: 1
+    minAngle: 5
+    maxAngle: 30
+    angleIncrease: 8
+    angleDecay: 15
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/counterstrike/guns/aug.ogg
+  - type: GunWieldBonus
+    minAngle: -5
+    maxAngle: -5
+  - type: Clothing
+    sprite: Objects/counterstrike/Weapons/Dota/Dire/Recruit/Guns/mosin.rsi
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_chamber:
+        name: Chamber
+        startingItem: ShellShotgun
+        priority: 1
+        whitelist:
+          tags:
+            - ShellShotgun
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 2
+    pvsIncrease: 0.2
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot

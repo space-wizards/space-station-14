@@ -79,6 +79,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: Reflect
-    reflectProb: 1.0
+    reflectProb: 0.2
     spread: 75
     reflectingInHands: false

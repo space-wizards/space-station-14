@@ -74,3 +74,14 @@
     Telecrystal: 1
   categories:
   - DotaDireRecruit
+
+- type: listing
+  id: DotaDireRecruitGun
+  name: Recruit's gun.
+  description: this steel will never shine.
+  icon: { sprite: Objects/counterstrike/Weapons/Dota/Dire/Recruit/Guns/mosin.rsi, state: icon }
+  productEntity: WeaponDotaMosin
+  cost:
+    Telecrystal: 3
+  categories:
+  - DotaDireRecruit

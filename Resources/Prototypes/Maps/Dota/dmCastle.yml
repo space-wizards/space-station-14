@@ -1,0 +1,16 @@
+- type: gameMap
+  id: dmCastle
+  mapName: 'dm_Castle'
+  mapPath: /Maps/Dota/dmCastle.yml
+  minPlayers: 0
+  stations:
+   dmCastle:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Castle Battle"
+        - type: StationJobs
+          availableJobs:
+            Scientist: [ -1, -1 ]
+            ResearchAssistant: [-1, -1 ]
+

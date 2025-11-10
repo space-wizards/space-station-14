@@ -101,3 +101,14 @@
     sprite: Objects/counterstrike/Clothing/Uniform/Radiant.rsi
   - type: Clothing
     sprite: Objects/counterstrike/Clothing/Uniform/Radiant.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitDire
+  name: Dire's uniform
+  description: evil
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Uniform/Dire.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Uniform/Dire.rsi
