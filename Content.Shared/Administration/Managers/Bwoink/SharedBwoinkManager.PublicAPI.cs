@@ -127,6 +127,7 @@ public abstract partial class SharedBwoinkManager
         if (message.Color.HasValue)
             formatted.PushColor(message.Color.Value);
 
+        formatted.PushTag(new MarkupNode("bold", null, null));
         formatted.PushColor(Color.Gray);
 
         if (useRoundTime)
@@ -159,6 +160,8 @@ public abstract partial class SharedBwoinkManager
             formatted.AddText($"{message.Sender}: ");
             formatted.Pop();
         }
+
+        formatted.Pop();
 
         formatted.AddText(message.Content);
         if (message.Color.HasValue)

@@ -223,6 +223,7 @@ public sealed class BwoinkDiscordRelayManager : IPostInjectInit
 
         var descBuilder = new StringBuilder();
         var messageBuilder = new StringBuilder();
+        var formattedMessageSb = new StringBuilder();
 
         var embed = CreateEmbedFor(userChannel);
         var startIndex = 0;
@@ -230,7 +231,31 @@ public sealed class BwoinkDiscordRelayManager : IPostInjectInit
         for (var i = 0; i < messages.Messages.Count; i++)
         {
             var message = messages.Messages[i];
-            var formattedMessage = _serverBwoinkManager.FormatMessage(channel, message, useRoundTime: true).ToString();
+            var formattedMessageObject = _serverBwoinkManager.FormatMessage(channel, message, useRoundTime: true);
+
+            // may god forgive me, i have consumed glue when coding this
+            foreach (var markupNode in formattedMessageObject)
+            {
+                if (markupNode.Name == null)
+                {
+                    if (markupNode.Value.StringValue == null)
+                        continue; // ??
+
+                    // just a simple text node
+                    formattedMessageSb.Append(NetCord.Format.Escape(markupNode.Value.StringValue));
+                    continue;
+                }
+
+                // not text, maybe a bold tag?
+                if (markupNode.Name != "bold")
+                    continue; // :( no it isn't
+
+                formattedMessageSb.Append("**"); // lmao this shit will break the moment there is more than one bold tag
+            }
+
+            var formattedMessage = formattedMessageSb.ToString();
+            formattedMessageSb.Clear();
+
             if (formattedMessage.Length > MaxCharsPerMessage)
             {
                 const int truncatedLength = MaxCharsPerMessage - 1;
