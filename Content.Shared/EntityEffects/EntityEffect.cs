@@ -25,7 +25,7 @@ public abstract partial class EntityEffect
     /// If true, then it allows the scale multiplier to go above 1.
     /// </summary>
     [DataField]
-    public virtual bool Scaling { get; private set; }
+    public virtual bool Scaling { get; private set; } = true;
 
     // TODO: This should be an entity condition but guidebook relies on it heavily for formatting...
     /// <summary>

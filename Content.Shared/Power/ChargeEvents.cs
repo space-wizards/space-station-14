@@ -1,4 +1,5 @@
 using Content.Shared.Power.Components;
+using Content.Shared.PowerCell.Components;
 
 namespace Content.Shared.Power;
 

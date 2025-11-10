@@ -33,6 +33,5 @@ public sealed partial class BatterySelfRechargerComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
-
     public TimeSpan NextAutoRecharge = TimeSpan.FromSeconds(0);
 }

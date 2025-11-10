@@ -43,7 +43,7 @@ public abstract class SharedBatterySystem : EntitySystem
 
     /// <summary>
     /// If sufficient charge is available on the battery, use it. Otherwise, don't.
-    /// Resets the self-recharge cooldown if it exists
+    /// Resets the self-recharge cooldown if it exists.
     /// Always returns false on the client.
     /// </summary>
     /// <returns>If the full amount was able to be removed.</returns>

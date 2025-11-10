@@ -103,7 +103,6 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
         damage:
           groups:
             Brute: -0.15
@@ -111,7 +110,6 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
         damage:
           groups:
             Brute: -0.25
@@ -120,7 +118,6 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
         damage:
           groups:
             Brute: -1
@@ -129,7 +126,6 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaling: true
         damage:
           types:
             Heat: 1

@@ -189,7 +189,6 @@ public sealed partial class AdminVerbSystem
                     _predictedBatterySystem.SetCharge((args.Target, pBattery), 0);
                 },
                 Impact = LogImpact.Medium,
-                Message = Loc.GetString("admin-trick-drain-battery-description"),
                 Priority = (int)TricksVerbPriorities.DrainBattery,
             };
             args.Verbs.Add(drainBattery);
@@ -240,8 +239,6 @@ public sealed partial class AdminVerbSystem
                 {
                     _batterySystem.SetCharge((args.Target, battery), 0);
                 },
-                Impact = LogImpact.Medium,
-                Message = Loc.GetString("admin-trick-drain-battery-description"),
                 Priority = (int)TricksVerbPriorities.DrainBattery,
             };
             args.Verbs.Add(drainBattery);

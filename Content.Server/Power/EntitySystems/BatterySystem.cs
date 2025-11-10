@@ -41,12 +41,10 @@ public sealed partial class BatterySystem : SharedBatterySystem
     {
         DebugTools.Assert(!HasComp<PredictedBatteryComponent>(ent), $"{ent} has both BatteryComponent and PredictedBatteryComponent");
     }
-
     private void OnNetBatteryRejuvenate(Entity<PowerNetworkBatteryComponent> ent, ref RejuvenateEvent args)
     {
         ent.Comp.NetworkBattery.CurrentStorage = ent.Comp.NetworkBattery.Capacity;
     }
-
     private void OnBatteryRejuvenate(Entity<BatteryComponent> ent, ref RejuvenateEvent args)
     {
         SetCharge(ent.AsNullable(), ent.Comp.MaxCharge);
@@ -63,6 +61,7 @@ public sealed partial class BatterySystem : SharedBatterySystem
         int chargePercentRounded = 0;
         if (ent.Comp.MaxCharge != 0)
             chargePercentRounded = (int)(100 * ent.Comp.CurrentCharge / ent.Comp.MaxCharge);
+
         args.PushMarkup(
             Loc.GetString(
                 "examinable-battery-component-examine-detail",
