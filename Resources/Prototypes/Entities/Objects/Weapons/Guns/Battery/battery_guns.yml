@@ -57,6 +57,9 @@
     fireCost: 62.5
   - type: StaticPrice
     price: 420
+  - type: Tag
+    tags:
+    - LaserWeapon
 
 - type: entity
   id: BaseWeaponPowerCell
@@ -157,6 +160,10 @@
     magState: mag
     steps: 5
     zeroVisible: true
+  - type: Tag
+    tags:
+    - Sidearm
+    - LaserWeapon
 
 - type: entity
   name: retro laser blaster
@@ -182,6 +189,10 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: Tag
+    tags:
+    - Sidearm
+    - LaserWeapon
 
 - type: entity
   name: makeshift laser pistol
@@ -212,6 +223,10 @@
   - type: PredictedBattery
     maxCharge: 500
     startingCharge: 500
+  - type: Tag
+    tags:
+    - Sidearm
+    - LaserWeapon
 
 - type: entity
   name: tesla gun
@@ -300,6 +315,10 @@
   - type: PredictedBattery
     maxCharge: 2000
     startingCharge: 2000
+  - type: Tag
+    tags:
+    - Sidearm
+    - LaserWeapon
 
 - type: entity
   name: pulse carbine
@@ -675,6 +694,7 @@
     - HighRiskItem
     - Sidearm
     - WeaponAntiqueLaser
+    - LaserWeapon
   - type: StaticPrice
     price: 750
   - type: StealTarget
@@ -719,6 +739,10 @@
   - type: Appearance
   - type: StaticPrice
     price: 63
+  - type: Tag
+    tags:
+    - Sidearm
+    - LaserWeapon
 
 - type: entity
   name: C.H.I.M.P. handcannon
@@ -809,6 +833,10 @@
     autoRechargeRate: 40
   - type: StaticPrice
     price: 750
+  - type: Tag
+    tags:
+    - Sidearm
+    - LaserWeapon
 
 - type: entity
   name: energy shotgun
