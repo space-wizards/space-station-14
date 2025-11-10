@@ -30,6 +30,23 @@ public sealed partial class ServerBwoinkManager
     }
 
     /// <summary>
+    /// Sends a message into the specified channel. This is basically just a wrapper around <see cref="SynchronizeMessage"/>.
+    /// Before using this, consider if your use case is not covered by the other overloads that make the message themselves.
+    /// </summary>
+    /// <remarks>
+    /// This doesn't perform any kind of saftey checks, so like, don't blow shit up with this.
+    /// </remarks>
+    [PublicAPI]
+    public void SendMessageInChannel(ProtoId<BwoinkChannelPrototype> channel,
+        NetUserId userChannel,
+        BwoinkMessage message)
+    {
+        SynchronizeMessage(channel,
+            userChannel,
+            message);
+    }
+
+    /// <summary>
     /// Sends a message to a given channel and user channel using the provided sender.
     /// </summary>
     [PublicAPI]
