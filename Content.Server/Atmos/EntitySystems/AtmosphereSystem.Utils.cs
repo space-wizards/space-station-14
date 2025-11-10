@@ -12,8 +12,8 @@ namespace Content.Server.Atmos.EntitySystems;
 public partial class AtmosphereSystem
 {
     /*
-     Partial class that stores miscellaneous utility methods for Atmospherics.
-     */
+    Partial class that stores miscellaneous utility methods for Atmospherics.
+    */
 
     /// <summary>
     /// Gets the particular price of a <see cref="GasMixture"/>.
