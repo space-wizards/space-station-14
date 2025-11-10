@@ -34,7 +34,7 @@ public sealed class JammerSystem : SharedJammerSystem
 
             if (_powerCell.TryGetBatteryFromSlot(uid, out var batteryUid, out var battery))
             {
-                if (!_battery.TryUseCharge(batteryUid.Value, GetCurrentWattage((uid, jam)) * frameTime, battery))
+                if (!_battery.TryUseCharge((batteryUid.Value, battery), GetCurrentWattage((uid, jam)) * frameTime))
                 {
                     ChangeLEDState(uid, false);
                     RemComp<ActiveRadioJammerComponent>(uid);
@@ -72,6 +72,15 @@ public sealed class JammerSystem : SharedJammerSystem
             EnsureComp<DeviceNetworkJammerComponent>(ent, out var jammingComp);
             _jammer.SetRange((ent, jammingComp), GetCurrentRange(ent));
             _jammer.AddJammableNetwork((ent, jammingComp), DeviceNetworkComponent.DeviceNetIdDefaults.Wireless.ToString());
+
+            // Add excluded frequencies using the system method
+            if (ent.Comp.FrequenciesExcluded != null)
+            {
+                foreach (var freq in ent.Comp.FrequenciesExcluded)
+                {
+                    _jammer.AddExcludedFrequency((ent, jammingComp), (uint)freq);
+                }
+            }
         }
         else
         {
@@ -96,19 +105,23 @@ public sealed class JammerSystem : SharedJammerSystem
 
     private void OnRadioSendAttempt(ref RadioSendAttemptEvent args)
     {
-        if (ShouldCancelSend(args.RadioSource))
+        if (ShouldCancelSend(args.RadioSource, args.Channel.Frequency))
         {
             args.Cancelled = true;
         }
     }
 
-    private bool ShouldCancelSend(EntityUid sourceUid)
+    private bool ShouldCancelSend(EntityUid sourceUid, int frequency)
     {
         var source = Transform(sourceUid).Coordinates;
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out _, out var jam, out var transform))
         {
+            // Check if this jammer excludes the frequency
+            if (jam.FrequenciesExcluded != null && jam.FrequenciesExcluded.Contains(frequency))
+                continue;
+
             if (_transform.InRange(source, transform.Coordinates, GetCurrentRange((uid, jam))))
             {
                 return true;

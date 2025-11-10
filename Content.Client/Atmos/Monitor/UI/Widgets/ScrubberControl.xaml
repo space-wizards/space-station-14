@@ -27,9 +27,15 @@
                 </BoxContainer>
                 <!-- Lower row: every single gas -->
                 <Collapsible Margin="2 2 2 2">
-                    <CollapsibleHeading Title="Gas filters" />
+                    <CollapsibleHeading Title="{Loc 'air-alarm-ui-widget-gas-filters'}" />
                     <CollapsibleBody Margin="20 0 0 0">
-                        <GridContainer HorizontalExpand="True" Name="CGasContainer" Columns="3" />
+                        <BoxContainer Orientation="Vertical">
+                            <BoxContainer Margin="2">
+                                <Button Name="CSelectAll" Text="{Loc 'air-alarm-ui-scrubber-select-all-gases-label'}" />
+                                <Button Name="CDeselectAll" Text="{Loc 'air-alarm-ui-scrubber-deselect-all-gases-label'}" />
+                            </BoxContainer>
+                            <GridContainer Name="CGasContainer" Columns="3" />
+                        </BoxContainer>
                     </CollapsibleBody>
                 </Collapsible>
             </BoxContainer>

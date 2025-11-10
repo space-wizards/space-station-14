@@ -1,6 +1,7 @@
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Destructible;
+using Content.Shared.Nutrition;
 using Content.Shared.Prototypes;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Slippery;
@@ -24,6 +25,7 @@ public abstract class SharedGodmodeSystem : EntitySystem
         SubscribeLocalEvent<GodmodeComponent, BeforeStatusEffectAddedEvent>(OnBeforeStatusEffect);
         SubscribeLocalEvent<GodmodeComponent, BeforeOldStatusEffectAddedEvent>(OnBeforeOldStatusEffect);
         SubscribeLocalEvent<GodmodeComponent, BeforeStaminaDamageEvent>(OnBeforeStaminaDamage);
+        SubscribeLocalEvent<GodmodeComponent, IngestibleEvent>(BeforeEdible);
         SubscribeLocalEvent<GodmodeComponent, SlipAttemptEvent>(OnSlipAttempt);
         SubscribeLocalEvent<GodmodeComponent, DestructionAttemptEvent>(OnDestruction);
     }
@@ -60,6 +62,11 @@ public abstract class SharedGodmodeSystem : EntitySystem
         args.Cancel();
     }
 
+    private void BeforeEdible(Entity<GodmodeComponent> ent, ref IngestibleEvent args)
+    {
+        args.Cancelled = true;
+    }
+
     public virtual void EnableGodmode(EntityUid uid, GodmodeComponent? godmode = null)
     {
         godmode ??= EnsureComp<GodmodeComponent>(uid);
@@ -78,9 +85,9 @@ public abstract class SharedGodmodeSystem : EntitySystem
         if (!Resolve(uid, ref godmode, false))
             return;
 
-        if (TryComp<DamageableComponent>(uid, out var damageable) && godmode.OldDamage != null)
+        if (godmode.OldDamage != null)
         {
-            _damageable.SetDamage(uid, damageable, godmode.OldDamage);
+            _damageable.SetDamage(uid, godmode.OldDamage);
         }
 
         RemComp<GodmodeComponent>(uid);

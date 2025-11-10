@@ -3,6 +3,9 @@
   name: reagent-name-bleach
   desc: reagent-desc-bleach
   physicalDesc: reagent-physical-desc-strong-smelling
+  allowedJobs:
+  - Janitor
+  - Chemist
   flavor: bitter
   color: "#a1000b"
   boilingPoint: 111.0
@@ -23,6 +26,11 @@
       - !type:Emote
         emote: Scream
         probability: 0.15
+  tileReactions:
+  - !type:CleanTileReaction
+    cleanCost: 0.13
+  - !type:CleanDecalsReaction
+    cleanCost: 0.13
 
 - type: reagent
   id: SpaceCleaner
@@ -54,16 +62,18 @@
   metabolisms:
     Food:
       effects:
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
+          reagent: SoapReagent
           min: 6
         probability: 0.20
     Drink:
       effects:
-      - !type:ChemVomit
+      - !type:Vomit
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
+          reagent: SoapReagent
           min: 6
         probability: 0.20
 
@@ -102,7 +112,7 @@
       methods: [ Touch ]
       effects:
       # pva glue? no, antibiotic glue for sealing wounds
-      - !type:ModifyBleedAmount
+      - !type:ModifyBleed
         amount: -1.5
   metabolisms:
     Narcotic:
@@ -111,14 +121,11 @@
         effectProto: StatusEffectSeeingRainbow
         time: 5
         type: Add
-        refresh: false
     Drink:
       effects:
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
-        type: Add
         time: 5
-        refresh: false
   footstepSound:
     collection: FootstepSlime
