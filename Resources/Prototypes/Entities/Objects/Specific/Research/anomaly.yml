@@ -114,7 +114,7 @@
   components:
   - type: PowerCellDraw
     drawRate: 1
-    useRate: 0
+    useCharge: 0
   - type: ToggleCellDraw
 
 - type: entity
@@ -149,7 +149,7 @@
   components:
   - type: PowerCellDraw
     drawRate: 1
-    useRate: 0
+    useCharge: 0
   - type: ToggleCellDraw
 
 - type: entity

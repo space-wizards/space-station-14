@@ -41,9 +41,11 @@ public sealed partial class BorgSystem
             if (now < comp.NextBroadcast)
                 continue;
 
+            // TODO: Very important: Make this rate based instead of doing this every single tick.
+            // See PredictedBatteryComponent
             var charge = 0f;
             if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-                charge = battery.CurrentCharge / battery.MaxCharge;
+                charge = _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge;
 
             var hpPercent = CalcHP(uid);
 

@@ -1,10 +1,10 @@
 using Content.Server.Ninja.Events;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Stunnable;
 using Content.Shared.Timing;
 using Content.Shared.Whitelist;
@@ -17,7 +17,7 @@ namespace Content.Server.Ninja.Systems;
 /// </summary>
 public sealed class StunProviderSystem : SharedStunProviderSystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly PredictedBatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;

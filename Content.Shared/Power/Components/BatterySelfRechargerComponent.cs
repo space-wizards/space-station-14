@@ -1,4 +1,3 @@
-using System;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Power.Components;
@@ -18,7 +17,7 @@ public sealed partial class BatterySelfRechargerComponent : Component
     public bool AutoRecharge = true;
 
     /// <summary>
-    /// At what rate does the entity automatically recharge?
+    /// At what rate does the entity automatically recharge? In watts.
     /// </summary>
     [DataField]
     public float AutoRechargeRate;

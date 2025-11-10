@@ -91,6 +91,7 @@ public sealed partial class BorgSystem
         UpdateUI(uid, component);
     }
 
+    // TODO: Very important: Move to client so we don't have to network this every tick.
     public void UpdateUI(EntityUid uid, BorgChassisComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -101,7 +102,7 @@ public sealed partial class BorgSystem
         if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
         {
             hasBattery = true;
-            chargePercent = battery.CurrentCharge / battery.MaxCharge;
+            chargePercent = _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge;
         }
 
         var state = new BorgBuiState(chargePercent, hasBattery);

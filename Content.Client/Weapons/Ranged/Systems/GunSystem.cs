@@ -158,6 +158,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
     public override void Update(float frameTime)
     {
+        base.Update(frameTime);
+
         if (!Timing.IsFirstTimePredicted)
             return;
 
