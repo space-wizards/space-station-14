@@ -135,7 +135,14 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Invalidates a tile on a grid, marking it for revalidation.
+    /// <para>Invalidates a tile on a grid, marking it for revalidation.</para>
+    ///
+    /// <para>Frequently used tile data like <see cref="AirtightData"/> are determined once and cached.
+    /// If this tile's state changes, ex. being added or removed, then this position in the map needs to
+    /// be updated.</para>
+    ///
+    /// <para>Tiles that need to be updated are marked as invalid and revalidated before all other
+    /// processing stages.</para>
     /// </summary>
     /// <param name="entity">The grid entity.</param>
     /// <param name="tile">The tile to invalidate.</param>
@@ -224,7 +231,10 @@ public partial class AtmosphereSystem
     /// </summary>
     /// <param name="entity">The entity to get the tile mixture for.</param>
     /// <param name="excite">Whether to mark the tile as active for atmosphere processing.</param>
-    /// <returns>>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    /// <returns>A <see cref="GasMixture"/> if one could be found, null otherwise.</returns>
+    /// <remarks>This does not return the <see cref="GasMixture"/> that the entity
+    /// may be contained in, ex. if the entity is currently in a locker/crate with its own
+    /// <see cref="GasMixture"/>.</remarks>
     [PublicAPI]
     public GasMixture? GetTileMixture(Entity<TransformComponent?> entity, bool excite = false)
     {
@@ -272,7 +282,7 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Reacts a tile on a grid.
+    /// Triggers a tile's <see cref="GasMixture"/> to react.
     /// </summary>
     /// <param name="gridId">The grid to react the tile on.</param>
     /// <param name="tile">The tile to react.</param>
@@ -311,8 +321,12 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Checks if a tile on a grid or map is space.
+    /// Checks if a tile on a grid or map is space as defined by a tile's definition of space.
+    /// Some tiles can hold back space and others cannot - for example, plating can hold
+    /// back space, whereas scaffolding cannot, exposing the map atmosphere beneath.
     /// </summary>
+    /// <remarks>This does not check if the <see cref="GasMixture"/> on the tile is space,
+    /// it only checks the current tile's ability to hold back space.</remarks>
     /// <param name="grid">The grid to check.</param>
     /// <param name="map">The map to check.</param>
     /// <param name="tile">The tile to check.</param>
