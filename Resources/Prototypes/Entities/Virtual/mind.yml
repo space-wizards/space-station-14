@@ -1,0 +1,6 @@
+- type: entity
+  id: MindBase
+  name: mind
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Mind
