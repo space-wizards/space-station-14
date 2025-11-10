@@ -30,6 +30,7 @@
 - type: startingGear
   id: DoctorGear
   equipment:
+    id: MedicalPDA # DS14
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
     socks: ClothingUnderwearSocksDoctor

@@ -31,6 +31,7 @@
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
+    id: SecurityPDA # DS14
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
   storage:
