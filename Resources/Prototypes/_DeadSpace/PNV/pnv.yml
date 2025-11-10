@@ -34,7 +34,7 @@
   - type: Clothing
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-adv.rsi
   - type: PNV
-    color: "#ffffffe6"
+    color: "#ffffff22"
     activateSound: 
       path: /Audio/_DeadSpace/NightVision/pnv.ogg
 
@@ -50,7 +50,7 @@
   - type: Clothing
     sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-synd.rsi
   - type: PNV
-    color: "#ffffffe6"
+    color: "#ffffff22"
     activateSound: 
       path: /Audio/_DeadSpace/NightVision/pnv.ogg
   - type: ShowSyndicateIcons

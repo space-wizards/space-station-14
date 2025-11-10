@@ -307,7 +307,8 @@
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
   - type: PNV # DS14
-    color: "#41af0e"
+    activateSound: 
+      path: /Audio/_DeadSpace/NightVision/pnv.ogg
 
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
