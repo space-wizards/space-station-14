@@ -21,10 +21,6 @@
     metamorphicDefaultSprite:
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
-  - type: Tag
-    tags:
-    - DrinkCup # Do these tags
-    - DrinkGlass # even do anything?
   - type: TransformableContainer
 
 - type: entity
@@ -782,7 +778,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkErikaSurprise
-  suffix: barthender surprise
+  suffix: bartender surprise
   components:
   - type: SolutionContainerManager
     solutions:

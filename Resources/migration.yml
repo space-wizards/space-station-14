@@ -737,4 +737,11 @@ ToyOwlman: ToyFigurineOwlman
 ToySkeleton: ToyFigurineSkeleton
 
 # 2025-10-28
+<<<<<<< HEAD
 DringKiraSpecial: DrinkOrangeLimeSodaGlass
+=======
+DrinkKiraSpecial: DrinkOrangeLimeSodaGlass
+
+# 2025-11-08
+DrinkErikaSurprise: null
+>>>>>>> parent of f6fb0d313d (Revert "merge")
