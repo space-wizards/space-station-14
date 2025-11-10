@@ -76,11 +76,11 @@
   - DotaDireRecruit
 
 - type: listing
-  id: DotaDireRecruitGun
+  id: DotaDireMosinBox
   name: Recruit's gun.
-  description: this steel will never shine.
+  description: good weapon.
   icon: { sprite: Objects/counterstrike/Weapons/Dota/Dire/Recruit/Guns/mosin.rsi, state: icon }
-  productEntity: WeaponDotaMosin
+  productEntity: DotaMosinBox
   cost:
     Telecrystal: 3
   categories:

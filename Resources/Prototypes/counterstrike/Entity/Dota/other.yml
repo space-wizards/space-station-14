@@ -1,0 +1,16 @@
+# Bags
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: DotaBag
+  name: leather waist bag
+  description: a big bag.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/Dota/Other/bag.rsi
+    state: bag
+  - type: Clothing
+    sprite: Objects/counterstrike/Weapons/Dota/Other/bag.rsi
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,3,3

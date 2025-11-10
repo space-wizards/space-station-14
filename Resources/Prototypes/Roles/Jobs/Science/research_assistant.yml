@@ -1,12 +1,12 @@
 ﻿- type: job
   id: ResearchAssistant
-  name: job-name-research-assistant
+  name: Radiant
   description: job-description-research-assistant
   playTimeTracker: JobResearchAssistant
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 18000 #5 hrs
+      time: 0 #5 hrs
       inverted: true # stop playing intern if you're good at science!
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"
@@ -19,13 +19,11 @@
 - type: startingGear
   id: ResearchAssistantGear
   equipment:
-    shoes: ClothingShoesColorWhite
+    shoes: ClothingShoesBootsJackFilled
     id: ResearchAssistantPDA
-    ears: ClothingHeadsetScience
-    pocket2: BookScientistsGuidebook
-  #storage:
-    #back:
-    #- Stuff
+    belt: DotaBag
+    jumpsuit: ClothingUniformJumpsuitRadiant
+    neck: ClothingNeckCloakRadiant
 
 - type: chameleonOutfit
   id: ResearchAssistantChameleonOutfit

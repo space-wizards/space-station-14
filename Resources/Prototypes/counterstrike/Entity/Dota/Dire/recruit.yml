@@ -93,7 +93,7 @@
     availableModes:
       - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/counterstrike/guns/aug.ogg
+      path: /Audio/Weapons/counterstrike/guns/awp.ogg
   - type: GunWieldBonus
     minAngle: -5
     maxAngle: -5
@@ -106,7 +106,7 @@
     slots:
       gun_chamber:
         name: Chamber
-        startingItem: ShellShotgun
+        startingItem: ShellShotgunSlug
         priority: 1
         whitelist:
           tags:

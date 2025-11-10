@@ -44,7 +44,7 @@ entities:
         - AutoRoundRestartRuleCS
         - RoundstartPlaySoundCS
     - type: PurpleTintMap
-      contrast: 0.92
+      contrast: 0.99
       saturation: 2
       strength: 1
       tintColor: '#ffd675'

@@ -100,3 +100,35 @@
         Caustic: 0.95
   - type: ExplosionResistance
     damageCoefficient: 0.4
+
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHoodRadiant
+  name: Radiant Cloak Hood
+  description: ...
+  components:
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Cloaks/Radiant.rsi
+    state: hood
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Cloaks/Radiant.rsi
+    state: equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHoodDire
+  name: Dire Cloak Hood
+  description: ...
+  components:
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Cloaks/Dire.rsi
+    state: hood
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Cloaks/Dire.rsi
+    state: equipped-HELMET

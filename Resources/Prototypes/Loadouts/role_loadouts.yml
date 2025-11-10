@@ -250,33 +250,6 @@
   - Trinkets
   - GroupSpeciesBreathTool
 
-- type: roleLoadout
-  id: JobScientist
-  groups:
-  - GroupTankHarness
-  - ScientistHead
-  - ScientistNeck
-  - ScientistJumpsuit
-  - ScientistBackpack
-  - ScientistOuterClothing
-  - ScientistGloves
-  - ScientistShoes
-  - ScientistPDA
-  - Glasses
-  - Survival
-  - Trinkets
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
-  id: JobResearchAssistant
-  groups:
-  - GroupTankHarness
-  - ResearchAssistantJumpsuit
-  - ScientistBackpack
-  - Glasses
-  - Survival
-  - Trinkets
-  - GroupSpeciesBreathTool
 
 # Security
 - type: roleLoadout

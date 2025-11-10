@@ -1,0 +1,41 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakRadiant
+  name: Radiant Cloak
+  description: a great cloak
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Cloaks/Radiant.rsi
+    state:  icon
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Cloaks/Radiant.rsi
+    state:  equipped-NECK
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHoodRadiant
+    requiredSlot:
+    - neck
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakDire
+  name: Dire Cloak
+  description: an evil cloak
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Cloaks/Dire.rsi
+    state:  icon
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Cloaks/Dire.rsi
+    state:  equipped-NECK
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHoodDire
+    requiredSlot:
+    - neck
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
