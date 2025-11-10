@@ -1114,6 +1114,18 @@
     FoodButter: 1
     FoodMeatSnailCooked: 1
 
+- type: microwaveMealRecipe
+  id: RecipeGruelSoup
+  name: gruel recipe
+  result: FoodSoupGruel
+  time: 10
+  group: Soup
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FoodMeatSlime: 1
+
 #Pies
 
 - type: microwaveMealRecipe
@@ -2458,4 +2470,3 @@
     Fiber: 10
   solids:
     FoodCakePlain: 1
-    

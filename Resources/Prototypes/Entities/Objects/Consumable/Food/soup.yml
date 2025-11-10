@@ -1265,3 +1265,36 @@
     tags:
     - Meat
     - Soup
+
+- type: entity
+  name: gruel
+  parent: FoodBowlBase
+  id: FoodSoupGruel
+  description: Traditionally made with grains, this "meal" has a few subsitutions, making it (barely) edible for all species.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - slimy
+      - horrible
+  - type: Sprite
+    layers:
+    - state: bowl
+    - state: gruel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: GastroToxin
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 3
+        - ReagentId: Water
+          Quantity: 5
+  - type: Tag
+    tags:
+    - ClothMade
+    - Meat
+    - Soup
