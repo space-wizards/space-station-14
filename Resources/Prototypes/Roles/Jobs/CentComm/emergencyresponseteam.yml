@@ -76,6 +76,8 @@
     - MagazineRifle
     - MagazineRifle
     - MedkitCombatFilled # End of first line
+    - CableDetStack
+    - BoxDetonator
     - MagazineRifleIncendiary
     - MagazineRifleUranium
     - GrenadeShrapnel
