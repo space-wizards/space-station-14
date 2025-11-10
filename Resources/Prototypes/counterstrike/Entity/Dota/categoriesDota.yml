@@ -1,4 +1,5 @@
 # RADIANT
+
 - type: storeCategory
   id: DotaRadiantRecruit
   name: Recruit
@@ -11,5 +12,22 @@
 
 - type: storeCategory
   id: DotaRadiantChieftain
+  name: Chieftain
+  priority: 2
+
+# DIRE
+
+- type: storeCategory
+  id: DotaDireRecruit
+  name: Recruit
+  priority: 0
+
+- type: storeCategory
+  id: DotaDireKnight
+  name: Knight
+  priority: 1
+
+- type: storeCategory
+  id: DotaDireChieftain
   name: Chieftain
   priority: 2

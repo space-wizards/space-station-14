@@ -1,11 +1,12 @@
 #RADIANT
 
 # recruit
+
 - type: listing
   id: DotaRadiantRecruitSword
   name: Recruit's sword
   description: a great sword.
-  icon: { sprite: /Objects/counterstrike/Weapons/Dota/Radiant/Recruit/Melee/recruitsword.rsi, state: icon }
+  icon: { sprite: Objects/counterstrike/Weapons/Dota/Radiant/Recruit/Melee/recruitsword.rsi, state: icon }
   productEntity: RadiantRecruitSword
   cost:
     Telecrystal: 1
@@ -14,11 +15,62 @@
 
 - type: listing
   id: DotaRadiantRecruitArmor
-  name: Recruit's armor.
+  name: Recruit's chestplate.
   description: this steel will shine forever.
-  icon: { sprite: /Objects/counterstrike/Clothing/Suit/RadiantSoldier.rsi, state: icon }
+  icon: { sprite: Objects/counterstrike/Clothing/Suit/RadiantSoldier.rsi, state: icon }
   productEntity: ClothingOuterArmorRadiantSoldier
   cost:
     Telecrystal: 1
   categories:
   - DotaRadiantRecruit
+
+- type: listing
+  id: DotaRadiantRecruitHelmet
+  name: Recruit's helmet.
+  description: this steel will shine forever.
+  icon: { sprite: Objects/counterstrike/Clothing/Hats/RadiantSoldier.rsi, state: icon }
+  productEntity: ClothingHeadHelmetRadiantSoldier
+  cost:
+    Telecrystal: 1
+  categories:
+  - DotaRadiantRecruit
+
+# knight
+
+# chieftain
+
+#DIRE
+
+# recruit
+- type: listing
+  id: DotaDireRecruitSword
+  name: Recruit's sword
+  description: an evil sword.
+  icon: { sprite: Objects/counterstrike/Weapons/Dota/Radiant/Recruit/Melee/recruitsword.rsi, state: icon }
+  productEntity: DireRecruitSword
+  cost:
+    Telecrystal: 1
+  categories:
+  - DotaDireRecruit
+
+- type: listing
+  id: DotaDireRecruitArmor
+  name: Recruit's chestplate.
+  description: an evil armor.
+  icon: { sprite: Objects/counterstrike/Clothing/Suit/DireSoldier.rsi, state: icon }
+  productEntity: ClothingOuterArmorDireSoldier
+  cost:
+    Telecrystal: 1
+  categories:
+  - DotaDireRecruit
+
+- type: listing
+  id: DotaDireRecruitHelmet
+  name: Recruit's helmet.
+  description: this steel will never shine.
+  icon: { sprite: Objects/counterstrike/Clothing/Hats/DireSoldier.rsi, state: icon }
+  productEntity: ClothingHeadHelmetDireSoldier
+  cost:
+    Telecrystal: 1
+  categories:
+  - DotaDireRecruit

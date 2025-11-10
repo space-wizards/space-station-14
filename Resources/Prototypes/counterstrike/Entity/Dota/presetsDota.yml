@@ -12,3 +12,18 @@
     - Telecrystal
     balance:
       Telecrystal: 3
+
+- type: entity
+  id: StorePresetDotaDire
+  abstract: true
+  components:
+  - type: Store
+    name: Dire Store
+    categories:
+    - DotaDireRecruit
+    - DotaDireKnight
+    - DotaDireChieftain
+    currencyWhitelist:
+    - Telecrystal
+    balance:
+      Telecrystal: 3

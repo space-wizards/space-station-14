@@ -11,6 +11,6 @@
           mapNameTemplate: "test dm"
         - type: StationJobs
           availableJobs:
-            Passenger: [ -1, -1 ]
-            Musician: [-1, -1 ]
+            Scientist: [ -1, -1 ]
+            ResearchAssistant: [-1, -1 ]
 

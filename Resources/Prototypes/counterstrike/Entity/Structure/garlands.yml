@@ -1,0 +1,21 @@
+- type: entity
+  name: garland
+  parent: AlwaysPoweredWallLight
+  id: CSGarland
+  suffix: Snow
+  components:
+  - type: PointLight
+    radius: 3
+    energy: 0.3
+    softness: 0.5
+    color: "#ffffff"
+  - type: Sprite
+    sprite: Objects/counterstrike/Structures/Decor/garlands.rsi
+    drawdepth: WallMountedItems
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: base
+      shader: unshaded
+    state: base

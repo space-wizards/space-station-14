@@ -1,25 +1,25 @@
 - type: entity
   parent: BaseRespawnMachine
-  id: RespawnMachineAssistant
-  name: respawn machine ASSISTANT
-  description: A station device that will queue and respawn players of a configured role when they die.
+  id: RespawnMachineRadiant
+  name: respawn machine Radiant
+  description: Radiant's Respawning Machine.
   components:
   - type: RespawnMachine
     # The job prototype id this machine will respawn. Leave blank to configure per-instance in-map.
     # Example: "Assistant"
-    job: Passenger
+    job: Scientist
     respawnDelay: 5
     enabled: true
 
 - type: entity
   parent: BaseRespawnMachine
-  id: RespawnMachineMusician
-  name: respawn machine MUSICIAN
-  description: A station device that will queue and respawn players of a configured role when they die.
+  id: RespawnMachineDire
+  name: respawn machine Dire
+  description: Dire's Respawning Machine.
   components:
   - type: RespawnMachine
     # The job prototype id this machine will respawn. Leave blank to configure per-instance in-map.
     # Example: "Assistant"
-    job: Musician
+    job: ResearchAssistant
     respawnDelay: 5
     enabled: true

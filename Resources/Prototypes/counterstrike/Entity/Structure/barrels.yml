@@ -51,3 +51,21 @@
         - MidImpassable
         - LowImpassable
   - type: Anchorable
+
+- type: entity
+  id: CSSnowman
+  parent: CSBarrelBlue
+  name: snowman
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Structures/Decor/snowman.rsi
+    state: base
+
+- type: entity
+  id: CSSnowdick
+  parent: CSBarrelBlue
+  name: snowdick
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Structures/Decor/snowman.rsi
+    state: dick
