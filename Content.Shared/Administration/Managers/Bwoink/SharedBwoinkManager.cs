@@ -285,6 +285,11 @@ public enum MessageFlags : byte
     /// No manager received this specific message.
     /// </summary>
     NoReceivers = 8,
+
+    /// <summary>
+    /// This message was sent by the server itself, the message sender will not be shown in the UI and may be used for other purposes.
+    /// </summary>
+    System = 16,
 }
 
 /// <summary>

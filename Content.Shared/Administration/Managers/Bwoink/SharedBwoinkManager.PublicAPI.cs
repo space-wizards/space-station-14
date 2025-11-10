@@ -46,7 +46,7 @@ public abstract partial class SharedBwoinkManager
     /// Creates a bwoink message for a given channel using the system user.
     /// </summary>
     [PublicAPI]
-    public BwoinkMessage CreateSystemMessage(string text, MessageFlags flags = MessageFlags.Manager)
+    public BwoinkMessage CreateSystemMessage(string text, MessageFlags flags = MessageFlags.System)
     {
         var tickerNonsense = GetRoundIdAndTime();
 
@@ -124,10 +124,6 @@ public abstract partial class SharedBwoinkManager
 
         var formatted = new FormattedMessage();
 
-        var color = Color.White;
-        if (message.Flags.HasFlag(MessageFlags.Manager))
-            color = Color.Red;
-
         formatted.PushColor(Color.Gray);
 
         if (useRoundTime)
@@ -149,9 +145,16 @@ public abstract partial class SharedBwoinkManager
             formatted.AddText($"{LocalizationManager.GetString("bwoink-message-silent")} ");
         }
 
-        formatted.PushColor(color);
-        formatted.AddText($"{message.Sender} ");
-        formatted.Pop();
+        if (!message.Flags.HasFlag(MessageFlags.System))
+        {
+            var color = Color.White;
+            if (message.Flags.HasFlag(MessageFlags.Manager))
+                color = Color.Red;
+
+            formatted.PushColor(color);
+            formatted.AddText($"{message.Sender}: ");
+            formatted.Pop();
+        }
 
         formatted.AddText(message.Content);
 
