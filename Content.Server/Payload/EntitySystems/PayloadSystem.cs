@@ -17,13 +17,18 @@ namespace Content.Server.Payload.EntitySystems;
 
 public sealed class PayloadSystem : EntitySystem
 {
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
+
+    // TODO: Construction System Integration tests and remove the EnsureContainer from ConstructionSystem. :(
+    private static readonly string PayloadContainer = "payload";
+    private static readonly string TriggerContainer = "payloadTrigger";
 
     public override void Initialize()
     {
@@ -38,30 +43,23 @@ public sealed class PayloadSystem : EntitySystem
         SubscribeLocalEvent<ChemicalPayloadComponent, TriggerEvent>(HandleChemicalPayloadTrigger);
     }
 
-    public IEnumerable<EntityUid> GetAllPayloads(EntityUid uid, ContainerManagerComponent? contMan = null)
+    public IEnumerable<EntityUid> GetAllPayloads(EntityUid uid)
     {
-        if (!Resolve(uid, ref contMan, false))
+        if (!_container.TryGetContainer(uid, PayloadContainer, out var container))
             yield break;
 
-        foreach (var container in contMan.Containers.Values)
+        foreach (var entity in container.ContainedEntities)
         {
-            foreach (var entity in container.ContainedEntities)
-            {
-                if (_tagSystem.HasTag(entity, PayloadTag))
-                    yield return entity;
-            }
+            if (_tagSystem.HasTag(entity, PayloadTag))
+                yield return entity;
         }
     }
 
     private void OnCaseTriggered(EntityUid uid, PayloadCaseComponent component, TriggerEvent args)
     {
         // TODO: Adjust to the new trigger system
-
-        if (!TryComp(uid, out ContainerManagerComponent? contMan))
-            return;
-
         // Pass trigger event onto all contained payloads. Payload capacity configurable by construction graphs.
-        foreach (var ent in GetAllPayloads(uid, contMan))
+        foreach (var ent in GetAllPayloads(uid))
         {
             RaiseLocalEvent(ent, ref args, false);
         }
@@ -85,13 +83,16 @@ public sealed class PayloadSystem : EntitySystem
 
     private void OnInsertAttempt(Entity<PayloadCaseComponent> ent, ref ContainerIsInsertingAttemptEvent args)
     {
-        if (!_tagSystem.HasTag(args.EntityUid, PayloadTag) && !HasComp<PayloadTriggerComponent>(args.EntityUid))
+        if (args.Container.ID == PayloadContainer && !_tagSystem.HasTag(args.EntityUid, PayloadTag))
+            args.Cancel();
+
+        if (args.Container.ID == TriggerContainer && !HasComp<PayloadTriggerComponent>(args.EntityUid))
             args.Cancel();
     }
 
     private void OnEntityInserted(EntityUid uid, PayloadCaseComponent _, EntInsertedIntoContainerMessage args)
     {
-        if (!TryComp(args.Entity, out PayloadTriggerComponent? trigger))
+        if (args.Container.ID != TriggerContainer || !TryComp(args.Entity, out PayloadTriggerComponent? trigger))
             return;
 
         trigger.Active = true;
