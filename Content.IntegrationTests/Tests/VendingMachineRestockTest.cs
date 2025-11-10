@@ -159,12 +159,11 @@ namespace Content.IntegrationTests.Tests
                         continue;
 
                     List<string> restockStore = new();
-                    foreach (var spawns in storage.Containers.Values)
-                        foreach (var spawnEntry in spawns)
-                        {
-                            if (spawnEntry != null && restocks.Contains(spawnEntry))
-                                restockStore.Add(spawnEntry);
-                        }
+                    foreach (var spawnEntry in storage.Containers["entity_storage"]) // We only care about this container type.
+                    {
+                        if (spawnEntry != null && restocks.Contains(spawnEntry))
+                            restockStore.Add(spawnEntry);
+                    }
 
                     if (restockStore.Count > 0)
                         restockStores.Add(proto.ID, restockStore);
