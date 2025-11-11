@@ -1,6 +1,6 @@
 - type: entity # Starts fuse after taking 10 damage.
-  abstract: true
   parent: BaseItem
+  abstract: true
   id: GrenadeBase
   components:
   - type: Sprite
@@ -49,8 +49,8 @@
         friction: 0.2
 
 - type: entity # Starts fuse after taking 10 damage, instantly detonates/activates after taking 45 damage.
-  id: VolatileGrenadeBase
   abstract: true
+  id: VolatileGrenadeBase
   components:
   - type: Destructible
     thresholds:
@@ -68,9 +68,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
 
-- type: entity # Starts fuse after taking 15 damage, is destroyed without activating/detonating after taking 45 damage.
-  id: FragileGrenadeBase
+- type: entity # Starts fuse after taking 10 damage, is destroyed without activating/detonating after taking 45 damage.
   abstract: true
+  id: FragileGrenadeBase
   components:
   - type: Destructible
     thresholds:
