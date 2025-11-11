@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos;
@@ -5,6 +6,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.CCVar;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
@@ -114,6 +116,9 @@ public sealed class DeltaPressureTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
+        server.CfgMan.SetCVar(CCVars.MonstermosDepressurization, false);
+        server.CfgMan.SetCVar(CCVars.MonstermosEqualization, false);
+
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
         var atmosphereSystem = entMan.System<AtmosphereSystem>();
@@ -156,6 +161,9 @@ public sealed class DeltaPressureTest
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
+
+        server.CfgMan.SetCVar(CCVars.MonstermosDepressurization, false);
+        server.CfgMan.SetCVar(CCVars.MonstermosEqualization, false);
 
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
@@ -234,6 +242,7 @@ public sealed class DeltaPressureTest
         var deserializationOptions = DeserializationOptions.Default with { InitializeMaps = true };
 
         Entity<MapGridComponent> grid = default;
+        Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> newGrid = default;
         Entity<DeltaPressureComponent> dpEnt = default;
         TileAtmosphere tile = null!;
         AtmosDirection direction = default;
@@ -248,10 +257,32 @@ public sealed class DeltaPressureTest
 #pragma warning restore NUnit2045
 
             grid = gridSet.First();
+            newGrid = new Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>(
+                grid.Owner,
+                entMan.GetComponent<GridAtmosphereComponent>(grid.Owner),
+                entMan.GetComponent<GasTileOverlayComponent>(grid.Owner),
+                entMan.GetComponent<MapGridComponent>(grid.Owner),
+                entMan.GetComponent<TransformComponent>(grid.Owner));
+
+            atmosphereSystem.SetAtmosphereSimulation(newGrid, false);
         });
 
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
+            /*
+             RUNNING REGULAR TICKS USING WaitRunTicks AND GUESSING AS TO HOW MANY ATMOS SIMULATION TICKS ARE HAPPENING
+             WILL CAUSE A RACE CONDITION THAT IS A PAIN IN THE ASS TO DEBUG
+
+             AN ENTITY MAY BE REMOVED AND ADDED BETWEEN A SUBTICK. IF LINDA PROCESSING IS ENABLED IT MIGHT CAUSE
+             AN EQUALIZATION TO PUT AIR IN OTHER TILES IN THE SMALL WINDOW WHERE THE TILE IS NOT AIRTIGHT
+             WHICH WILL THROW OFF DELTAS
+             */
+
+            await server.WaitPost(() =>
+            {
+                atmosphereSystem.RunProcessingFull(newGrid,newGrid.Owner, atmosphereSystem.AtmosTickRate);
+            });
+
             await server.WaitPost(() =>
             {
                 // Need to spawn an entity each run to ensure it works for all directions.
@@ -260,11 +291,10 @@ public sealed class DeltaPressureTest
                 Assert.That(atmosphereSystem.IsDeltaPressureEntityInList(grid.Owner, dpEnt), "Entity was not in processing list when it should have been added!");
 
                 var indices = transformSystem.GetGridOrMapTilePosition(dpEnt);
-                var gridAtmosComp = entMan.GetComponent<GridAtmosphereComponent>(grid);
 
                 direction = (AtmosDirection)(1 << i);
                 var offsetIndices = indices.Offset(direction);
-                tile = gridAtmosComp.Tiles[offsetIndices];
+                tile = newGrid.Comp1.Tiles[offsetIndices];
 
                 Assert.That(tile.Air, Is.Not.Null, $"Tile at {offsetIndices} should have air!");
 
@@ -274,16 +304,22 @@ public sealed class DeltaPressureTest
                 tile.Air!.AdjustMoles(Gas.Nitrogen, moles);
             });
 
+            // get jiggy with it! hit that dance white boy!
+            await server.WaitPost(() =>
+            {
+                atmosphereSystem.RunProcessingFull(newGrid,newGrid.Owner, atmosphereSystem.AtmosTickRate);
+            });
+
+            // need to run some ticks as deleted entities are queued for removal
+            // and not removed instantly
             await server.WaitRunTicks(30);
 
-            // Entity should exist, if it took one tick of damage then it should be instantly destroyed.
+            // Entity shouldn't exist, if it took one tick of damage then it should be instantly destroyed.
             await server.WaitAssertion(() =>
             {
                 Assert.That(entMan.Deleted(dpEnt), $"{dpEnt} still exists after experiencing threshold pressure from {direction} side!");
                 tile.Air!.Clear();
             });
-
-            await server.WaitRunTicks(30);
         }
 
         await pair.CleanReturnAsync();
@@ -298,6 +334,9 @@ public sealed class DeltaPressureTest
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
+
+        server.CfgMan.SetCVar(CCVars.MonstermosDepressurization, false);
+        server.CfgMan.SetCVar(CCVars.MonstermosEqualization, false);
 
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
@@ -363,6 +402,9 @@ public sealed class DeltaPressureTest
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
+
+        server.CfgMan.SetCVar(CCVars.MonstermosDepressurization, false);
+        server.CfgMan.SetCVar(CCVars.MonstermosEqualization, false);
 
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
