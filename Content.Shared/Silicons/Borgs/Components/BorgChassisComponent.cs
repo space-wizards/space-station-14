@@ -4,6 +4,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -12,7 +13,8 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// "brain", legs, modules, and battery. Essentially the master component
 /// for borg logic.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem)), AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class BorgChassisComponent : Component
 {
     #region Brain
@@ -78,6 +80,10 @@ public sealed partial class BorgChassisComponent : Component
 
     [DataField]
     public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
+
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
+    public TimeSpan NextBatteryUpdate = TimeSpan.Zero;
 }
 
 [Serializable, NetSerializable]

@@ -27,10 +27,8 @@ public sealed partial class BorgSystem
         SubscribeLocalEvent<BorgTransponderComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
     }
 
-    public override void Update(float frameTime)
+    public void UpdateTransponder(float frameTime)
     {
-        base.Update(frameTime);
-
         var now = _timing.CurTime;
         var query = EntityQueryEnumerator<BorgTransponderComponent, BorgChassisComponent, DeviceNetworkComponent, MetaDataComponent>();
         while (query.MoveNext(out var uid, out var comp, out var chassis, out var device, out var meta))
@@ -41,8 +39,6 @@ public sealed partial class BorgSystem
             if (now < comp.NextBroadcast)
                 continue;
 
-            // TODO: Very important: Make this rate based instead of doing this every single tick.
-            // See PredictedBatteryComponent
             var charge = 0f;
             if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
                 charge = _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge;
