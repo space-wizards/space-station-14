@@ -21,9 +21,42 @@
     graph: BoxCardboard
     node: boxcardboard
     containers:
-      - entity_storage
+      - storagebase
   - type: PhysicalComposition
     materialComposition:
       Cardboard: 100
   - type: StaticPrice
     price: 10
+
+- type: entity
+  name: circuit tote
+  id: ToteBase
+  parent: BoxBase
+  description: A large tote for carrying circuit boards.
+  components:
+  - type: Sprite
+    layers:
+      - state: tote-0
+        map: ["enum.StorageFillLayers.Fill"]
+      - state: circuit
+  - type: Appearance
+  - type: StorageFillVisualizer
+    maxFillLevels: 3
+    fillBaseName: tote
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,5,2
+    whitelist:
+      components:
+      - MachineBoard
+      - Circuitboard
+  - type: Construction
+    graph: ToteBase
+    node: totebase
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 75
+      Cloth: 25
+  - type: StaticPrice
+    price: 15

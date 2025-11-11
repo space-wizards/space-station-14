@@ -7,6 +7,8 @@ using Content.Shared.Examine;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
+using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Stunnable;
 
 namespace Content.Server.Stunnable.Systems
@@ -31,7 +33,7 @@ namespace Content.Server.Stunnable.Systems
         private void OnStaminaHitAttempt(Entity<StunbatonComponent> entity, ref StaminaDamageOnHitAttemptEvent args)
         {
             if (!_itemToggle.IsActivated(entity.Owner) ||
-            !TryComp<BatteryComponent>(entity.Owner, out var battery) || !_battery.TryUseCharge(entity.Owner, entity.Comp.EnergyPerUse, battery))
+            !TryComp<BatteryComponent>(entity.Owner, out var battery) || !_battery.TryUseCharge((entity.Owner, battery), entity.Comp.EnergyPerUse))
             {
                 args.Cancelled = true;
             }
