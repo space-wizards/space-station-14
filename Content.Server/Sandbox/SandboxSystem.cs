@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.GameTicking;
+using Content.Server.Popups;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -9,6 +10,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
+using Content.Shared.Popups;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
 using Robust.Server.Placement;
@@ -36,9 +38,11 @@ namespace Content.Server.Sandbox
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         private int _maxEntitySpawnsPerTimeFrame;
         private TimeSpan _entitySpawnWindow;
+
         private readonly Dictionary<NetUserId, Queue<TimeSpan>> _entitySpawnHistories = new();
 
         private bool _isSandboxEnabled;
@@ -102,10 +106,10 @@ namespace Content.Server.Sandbox
             if (placement.IsTile)
                 return true;
 
-            return TryConsumeEntitySpawn(player.UserId);
+            return TryConsumeEntitySpawn(player.UserId, player);
         }
 
-        private bool TryConsumeEntitySpawn(NetUserId userId)
+        private bool TryConsumeEntitySpawn(NetUserId userId, ICommonSession player)
         {
             if (_entitySpawnWindow <= TimeSpan.Zero)
                 return true;
@@ -124,7 +128,15 @@ namespace Content.Server.Sandbox
             }
 
             if (recentSpawns.Count >= _maxEntitySpawnsPerTimeFrame)
+            {
+                var uid = player.AttachedEntity;
+                if (uid is not null)
+                {
+                    _popupSystem.PopupEntity("test hi", uid.Value, uid.Value);
+                }
+
                 return false;
+            }
 
             recentSpawns.Enqueue(now);
             return true;
