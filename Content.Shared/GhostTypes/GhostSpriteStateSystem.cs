@@ -16,6 +16,10 @@ public sealed class GhostSpriteStateSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
+    private readonly ProtoId<DamageTypePrototype> BluntProtoId = "Blunt";
+    private readonly ProtoId<DamageTypePrototype> HeatProtoId = "Heat";
+    private readonly ProtoId<DamageTypePrototype> PiercingProtoId = "Piercing";
+
     /// <summary>
     /// It goes through an entity damage and assigns them a sprite according to the highest damage type/s
     /// </summary>
@@ -56,7 +60,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         }
 
         highestTypes.Sort();
-        if (highestTypes.Count == 3 && highestTypes[0] == "Blunt" && highestTypes[1] == "Heat" && highestTypes[2] == "Piercing") // Specific case for explosions (not an ideal way of doing it)
+        if (highestTypes.Count == 3 && highestTypes[0] == BluntProtoId && highestTypes[1] == HeatProtoId && highestTypes[2] == PiercingProtoId) // Specific case for explosions (not an ideal way of doing it)
         {
             spriteState = "Explosion" + _random.Next(0, 3);
         }
