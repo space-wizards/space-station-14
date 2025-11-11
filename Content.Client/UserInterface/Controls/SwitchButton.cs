@@ -68,11 +68,17 @@ namespace Content.Client.UserInterface.Controls
 
         protected override void DrawModeChanged()
         {
+            // Workaround for child controls not being updated automatically.
+            // Remove once https://github.com/space-wizards/RobustToolbox/pull/6264
+            // or similar is merged.
+            var relevantChangeMade = false;
+
             if (Disabled)
             {
                 if (!HasStylePseudoClass(StylePseudoClassDisabled))
                 {
                     AddStylePseudoClass(StylePseudoClassDisabled);
+                    relevantChangeMade = true;
                 }
             }
             else
@@ -80,6 +86,7 @@ namespace Content.Client.UserInterface.Controls
                 if (HasStylePseudoClass(StylePseudoClassDisabled))
                 {
                     RemoveStylePseudoClass(StylePseudoClassDisabled);
+                    relevantChangeMade = true;
                 }
             }
 
@@ -88,6 +95,7 @@ namespace Content.Client.UserInterface.Controls
                 if (!HasStylePseudoClass(StylePseudoClassPressed))
                 {
                     AddStylePseudoClass(StylePseudoClassPressed);
+                    relevantChangeMade = true;
                 }
             }
             else
@@ -95,19 +103,21 @@ namespace Content.Client.UserInterface.Controls
                 if (HasStylePseudoClass(StylePseudoClassPressed))
                 {
                     RemoveStylePseudoClass(StylePseudoClassPressed);
+                    relevantChangeMade = true;
                 }
             }
 
-            // Child selectors don't update correctly currently, force update all the children.
-            // A comment in Button::DrawModeChanged() suggests this is only needed temporarily.
-            // TODO: something that actually works outside RT, or else wait for https://github.com/space-wizards/RobustToolbox/pull/6264
-            //Label?.Restyle();
-            //TextureRect?.Restyle();
-            //OffStateLabel?.Restyle();
-            //OnStateLabel?.Restyle();
+            if (relevantChangeMade)
+            {
+                Label.RemoveStyleClass("dummy");
+                TextureRect.RemoveStyleClass("dummy");
+                OffStateLabel.RemoveStyleClass("dummy");
+                OnStateLabel.RemoveStyleClass("dummy");
+            }
 
             // no base.DrawModeChanged() call - ContainerButton's pseudoclass handling
             // doesn't support a button being both pressed and disabled
+
             UpdateAppearance();
         }
 
