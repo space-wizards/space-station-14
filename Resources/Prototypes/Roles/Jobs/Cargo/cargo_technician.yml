@@ -28,6 +28,7 @@
 - type: startingGear
   id: CargoTechGear
   equipment:
+    id: CargoPDA # DS14
     ears: ClothingHeadsetCargo
     pocket1: AppraisalTool
     socks: ClothingUnderwearSocksCargoTech

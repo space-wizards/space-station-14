@@ -137,7 +137,7 @@ public sealed partial class BloodsuckerSystem : SharedBloodsuckerSystem
         var searchDoAfter = new DoAfterArgs(EntityManager, uid, TimeSpan.FromSeconds(component.Duration), new BloodsuckerDoAfterEvent(), uid, target: target)
         {
             Broadcast = true,
-            DistanceThreshold = 2,
+            DistanceThreshold = null,
             BreakOnMove = true
         };
 

@@ -23,6 +23,7 @@
 - type: startingGear
   id: ScientistGear
   equipment:
+    id: SciencePDA # DS14
     ears: ClothingHeadsetScience
     socks: ClothingUnderwearSocksScientist
   #storage:

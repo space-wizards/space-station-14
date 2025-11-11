@@ -163,11 +163,11 @@
   equipment:
     shoes: ClothingShoesBootsWinterSecFilled
 
-# PDA
-- type: loadout
-  id: SecurityPDA
-  equipment:
-    id: SecurityPDA
+# PDA # DS14-disabled
+#- type: loadout
+#  id: SecurityPDA
+#  equipment:
+#    id: SecurityPDA
 
 # - type: loadout
 #   id: SeniorOfficerPDA

@@ -247,7 +247,7 @@
   - CargoTechnicianBackpack
   - CargoTechnicianOuterClothing
   - CargoTechnicianShoes
-  - CargoTechnicianID
+#  - CargoTechnicianID # DS14-disabled
   - Glasses
   - Survival
   - Trinkets
@@ -306,7 +306,7 @@
   - StationEngineerBelt # DS14
   - StationEngineerOuterClothing
   - StationEngineerShoes
-  - StationEngineerID
+#  - StationEngineerID # DS14-disabled
   - SurvivalExtended
   - Trinkets
   - GroupSpeciesBreathTool
@@ -355,7 +355,7 @@
   - ScientistOuterClothing
   - ScientistGloves
   - ScientistShoes
-  - ScientistPDA
+#  - ScientistPDA # DS14-disabled
   - Glasses
   - Survival
   - Trinkets
@@ -423,7 +423,7 @@
   - SecurityBackpack
   - SecurityOuterClothing
   - SecurityShoes
-  - SecurityPDA
+#  - SecurityPDA # DS14-disabled
   - SecurityBelt
   - SurvivalSecurity
   - Trinkets
@@ -493,7 +493,7 @@
   - MedicalBackpack
   - MedicalDoctorOuterClothing
   - MedicalShoes
-  - MedicalDoctorPDA
+#  - MedicalDoctorPDA # DS14-disabled
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
@@ -523,7 +523,7 @@
   - MedicalBackpack
   - MedicalDoctorOuterClothing
   - MedicalShoes
-  - MedicalDoctorPDA
+#  - MedicalDoctorPDA # DS14-disabled
   # - MedicalEyewear
   - SurvivalMedical
   - Trinkets
