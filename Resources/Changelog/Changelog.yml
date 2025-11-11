@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: VerinSenpai
-  changes:
-  - message: Handcuffs no longer interfere with your daily tail wagging activities.
-    type: Fix
-  id: 8696
-  time: '2025-06-19T22:42:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38454
 - author: BigfootBravo
   changes:
   - message: Chameleon Controller Implants can be deimplanted.
@@ -3927,3 +3920,11 @@
   id: 9197
   time: '2025-11-11T17:57:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41392
+- author: Nox38
+  changes:
+  - message: All grenades now start their fuse after taking 10 damage, and instantly
+      detonate or break after taking 45.
+    type: Tweak
+  id: 9198
+  time: '2025-11-11T19:01:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34499
