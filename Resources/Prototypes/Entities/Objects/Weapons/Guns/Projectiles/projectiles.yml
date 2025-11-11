@@ -1391,22 +1391,22 @@
         - Opaque
 
 - type: entity
-  id: EnergyCrossbowBolt
-  name: energy bolt
   parent: BaseBullet
+  id: EnergyCrossbowBolt
   categories: [ HideSpawnMenu ]
+  name: energy bolt
   description: This'll hurt.
   components:
   - type: Reflective
     reflective:
-      - NonEnergy
+    - NonEnergy
   - type: Ammo
     muzzleFlash: null
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
     - state: crossbowbolt
-    shader: unshaded
+      shader: unshaded
   - type: Projectile
     damage:
       types:
