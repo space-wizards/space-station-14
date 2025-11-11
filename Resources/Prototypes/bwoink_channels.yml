@@ -10,7 +10,7 @@
   features:
   - !type:SoundOnMessage
     sound: !type:SoundPathSpecifier
-      path: /Audio/Animals/cat_meow.ogg
+      path: /Audio/Effects/adminhelp.ogg
   - !type:ManagerOnlyMessages
     prefix: bwoink-message-admin-only
     checkName: admin-ahelp-admin-only
