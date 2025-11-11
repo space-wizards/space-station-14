@@ -318,7 +318,13 @@ public sealed class DeltaPressureTest
             await server.WaitAssertion(() =>
             {
                 Assert.That(entMan.Deleted(dpEnt), $"{dpEnt} still exists after experiencing threshold pressure from {direction} side!");
-                tile.Air!.Clear();
+
+                // Double whammy: in case any unintended gas leak occured due to a race condition,
+                // clear out all the tiles.
+                foreach (var mix in atmosphereSystem.GetAllMixtures(newGrid))
+                {
+                    mix.Clear();
+                }
             });
         }
 
