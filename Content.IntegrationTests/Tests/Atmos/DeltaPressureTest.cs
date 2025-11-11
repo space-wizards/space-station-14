@@ -116,9 +116,6 @@ public sealed class DeltaPressureTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        server.CfgMan.SetCVar(CCVars.MonstermosDepressurization, false);
-        server.CfgMan.SetCVar(CCVars.MonstermosEqualization, false);
-
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
         var atmosphereSystem = entMan.System<AtmosphereSystem>();
@@ -161,9 +158,6 @@ public sealed class DeltaPressureTest
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
-
-        server.CfgMan.SetCVar(CCVars.MonstermosDepressurization, false);
-        server.CfgMan.SetCVar(CCVars.MonstermosEqualization, false);
 
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
@@ -341,9 +335,6 @@ public sealed class DeltaPressureTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        server.CfgMan.SetCVar(CCVars.MonstermosDepressurization, false);
-        server.CfgMan.SetCVar(CCVars.MonstermosEqualization, false);
-
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
         var atmosphereSystem = entMan.System<AtmosphereSystem>();
@@ -408,9 +399,6 @@ public sealed class DeltaPressureTest
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
-
-        server.CfgMan.SetCVar(CCVars.MonstermosDepressurization, false);
-        server.CfgMan.SetCVar(CCVars.MonstermosEqualization, false);
 
         var entMan = server.EntMan;
         var mapLoader = entMan.System<MapLoaderSystem>();
