@@ -721,7 +721,7 @@
     price: 63
 
 - type: entity
-  name: C.H.I.M.P. handcannon
+  name: C.H.I.M.P.
   parent: [BaseWeaponBatterySmall, BaseScienceContraband]
   id: WeaponPistolCHIMP
   description: A Compact Handheld Inductive Muon Projector. Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
@@ -769,7 +769,7 @@
     price: 100
 
 - type: entity
-  name: experimental C.H.I.M.P. handcannon
+  name: experimental C.H.I.M.P.
   parent: [WeaponPistolCHIMP, BaseSyndicateContraband]
   id: WeaponPistolCHIMPUpgraded
   description: This C.H.I.M.P. seems to have a greater punch than usual...
