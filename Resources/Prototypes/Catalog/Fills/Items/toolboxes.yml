@@ -32,20 +32,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Screwdriver
-        - id: CrowbarOrange
-        - id: Wirecutter
-        - id: CableApcStack10
-        - id: CableMVStack10
-        - id: trayScanner
-          prob: 0.9
-        - !type:GroupSelector
-          children:
-          - id: ClothingHandsGlovesColorYellow
-            weight: 0.05
-          - id: CableHVStack10
+      storagebase: !type:NestedSelector
+        tableId: ToolboxElectricalEntityTable
 
 - type: entity
   id: ToolboxElectricalTurretFilled
@@ -55,20 +43,25 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: Screwdriver
-        - id: CrowbarOrange
-        - id: Wirecutter
-        - id: CableApcStack10
-        - id: CableMVStack10
-        - id: trayScanner
-          prob: 0.9
-        - !type:GroupSelector
-          children:
-          - id: ClothingHandsGlovesColorYellow
-            weight: 0.05
-          - id: CableHVStack10
+      storagebase: !type:NestedSelector
+        tableId: ToolboxElectricalEntityTable
+
+- type: entityTable
+  id: ToolboxElectricalEntityTable
+  table: !type:AllSelector
+    children:
+    - id: Screwdriver
+    - id: CrowbarOrange
+    - id: Wirecutter
+    - id: CableApcStack10
+    - id: CableMVStack10
+    - id: trayScanner
+      prob: 0.9
+    - !type:GroupSelector
+      children:
+      - id: ClothingHandsGlovesColorYellow
+        weight: 0.05
+      - id: CableHVStack10
 
 - type: entity
   id: ToolboxArtisticFilled
