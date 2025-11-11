@@ -19,8 +19,10 @@ public sealed class GhostSpriteStateSystem : EntitySystem
     /// <summary>
     /// It goes through an entity damage and assigns them a sprite according to the highest damage type/s
     /// </summary>
-    public void SetGhostSprite(Entity<GhostSpriteStateComponent> ent, EntityUid mind)
+    public void SetGhostSprite(Entity<GhostSpriteStateComponent?> ent, EntityUid mind)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
         if (!TryComp<AppearanceComponent>(ent, out var appearance) || !TryComp<MindComponent>(mind, out var mindComp))
             return;
 
@@ -64,7 +66,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             if (ent.Comp.DamageMap.TryGetValue(spriteState, out var spriteAmount))  // Chooses a random sprite state
             {
                 spriteState += _random.Next(0, spriteAmount - 1);
-                Log.Debug($"weh weh {spriteState}");
             }
         }
         _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState, appearance);
