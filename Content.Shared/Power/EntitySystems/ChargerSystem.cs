@@ -168,7 +168,7 @@ public sealed class ChargerSystem : EntitySystem
         if (!TryComp<ChargerComponent>(chargerUid, out var chargerComp))
             return;
 
-        if (chargerComp.Portable && !_receiver.IsPowered(ent.Owner))
+        if (!chargerComp.Portable && !_receiver.IsPowered(chargerUid))
             return;
 
         if (_whitelist.IsWhitelistFail(chargerComp.Whitelist, ent.Owner))
@@ -229,19 +229,22 @@ public sealed class ChargerSystem : EntitySystem
         switch (status)
         {
             case CellChargerStatus.Off:
-                _receiver.SetLoad(ent.Owner, 0);
+                // Don't set the load to 0 or the charger will be considered as powered even if the LV connection is unpowered.
+                // TODO: Fix this on an ApcPowerReceiver level.
+                _receiver.SetLoad(ent.Owner, ent.Comp.PassiveDraw);
                 _appearance.SetData(ent.Owner, CellVisual.Light, CellChargerStatus.Off, appearance);
                 break;
             case CellChargerStatus.Empty:
-                _receiver.SetLoad(ent.Owner, 0);
+                _receiver.SetLoad(ent.Owner, ent.Comp.PassiveDraw);
                 _appearance.SetData(ent.Owner, CellVisual.Light, CellChargerStatus.Empty, appearance);
                 break;
             case CellChargerStatus.Charging:
+                // TODO: If someone ever adds chargers that can charge multiple batteries at once then set this to the total draw rate.
                 _receiver.SetLoad(ent.Owner, ent.Comp.ChargeRate);
                 _appearance.SetData(ent.Owner, CellVisual.Light, CellChargerStatus.Charging, appearance);
                 break;
             case CellChargerStatus.Charged:
-                _receiver.SetLoad(ent.Owner, 0);
+                _receiver.SetLoad(ent.Owner, ent.Comp.PassiveDraw);
                 _appearance.SetData(ent.Owner, CellVisual.Light, CellChargerStatus.Charged, appearance);
                 break;
             default:

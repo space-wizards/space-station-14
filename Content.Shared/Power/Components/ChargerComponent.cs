@@ -8,10 +8,17 @@ namespace Content.Shared.Power.Components;
 public sealed partial class ChargerComponent : Component
 {
     /// <summary>
-    /// The charge rate of the charger, in watts
+    /// The charge rate of the charger, in watts.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float ChargeRate = 20.0f;
+
+    /// <summary>
+    /// Passive draw when no power cell is inserted, in watts.
+    /// This should be larger than 0 or the charger will be considered as powered even without a LV supply.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float PassiveDraw = 1f;
 
     /// <summary>
     /// The container ID that is holds the entities being charged.
