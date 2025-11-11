@@ -51,6 +51,7 @@
     - PowerCellHigh
     - PowerCellHigh
     - MedkitCombatFilled # End of first line
+    - MedkitCombatFilled
     - TelescopicShield
     belt:
     - Stunbaton
@@ -66,7 +67,7 @@
   id: ERTLeaderGearArmed
   equipment:
     pocket2: WeaponDisabler
-    suitstorage: WeaponRifleLecter
+    suitstorage: WeaponRifleLecterXL8
   storage:
     back:
     - Binoculars
@@ -76,8 +77,6 @@
     - MagazineRifle
     - MagazineRifle
     - MedkitCombatFilled # End of first line
-    - CableDetStack
-    - BoxDetonator
     - MagazineRifleIncendiary
     - MagazineRifleUranium
     - GrenadeShrapnel
@@ -147,33 +146,29 @@
     pocket2: CombatKnife
   storage:
     back:
-    - WeaponPistolMk58
-    - MagazinePistol
-    - MagazinePistol
-    - CrowbarRed
-    - JugBlood
+    - BoxCandle
+    - BodyBagFolded
+    - BodyBagFolded
     - JugWater
-    - FlippoEngravedLighter # End of first row
-    - Candle
-    - Candle
-    - Candle
-    - CandleRed
-    - CandleBlack
-    - CandleGreen
-    - CandlePurple
+    - JugBlood # End of first row
+    - FoodPoppy
+    - FoodPoppy
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
+    - FoodBakedBunHotX
     belt:
     - Bible
     - Lantern
     - Lantern
     - Lantern
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
+    - CrowbarRed
+    - WeaponPistolMk58
+    - MagazinePistol
+    - FlippoEngravedLighter
 
 - type: chameleonOutfit
   id: ERTChaplainChameleonOutfit
@@ -266,10 +261,11 @@
     - MiningDrill
     - RCDAmmo
     - RCDAmmo # End of first line
-    - CableDetStack
-    - BoxDetonator
+    - PowerCellHigh
+    - C4
+    - C4
     - BoxLethalshot
-    - BoxShotgunSlug
+    - BoxLethalshot
 
 - type: chameleonOutfit
   id: ERTEngineerChameleonOutfit
@@ -575,7 +571,6 @@
     outerClothing: ClothingOuterHardsuitERTJanitor
     id: ERTJanitorPDA
     ears: ClothingHeadsetAltCentCom
-    eyes: ClothingEyesGlassesChemical
     belt: ClothingBeltMilitaryWebbingERT
     pocket2: CombatKnife
     suitstorage: WeaponLauncherHydra
