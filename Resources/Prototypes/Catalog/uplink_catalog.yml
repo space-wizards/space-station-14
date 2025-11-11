@@ -166,9 +166,9 @@
   productEntity: BriefcaseSyndieSniperBundleFilled
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 9
+    Telecrystal: 10
   cost:
-    Telecrystal: 16
+    Telecrystal: 17
   categories:
   - UplinkWeaponry
 
