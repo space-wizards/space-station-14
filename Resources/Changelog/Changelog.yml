@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: APCs now have a wirepanel. It can be used to disallow the AI from accessing
-      it.
-    type: Add
-  id: 8694
-  time: '2025-06-19T15:06:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38443
 - author: Sparlight
   changes:
   - message: Smart corgis can now wear various hardsuits, armors, and glasses items.
@@ -3927,3 +3919,11 @@
   id: 9195
   time: '2025-11-10T13:57:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41365
+- author: SolidSyn
+  changes:
+  - message: Clowns and Lawyers can now print their respective skirts and suitskirts
+      at a uniform lathe
+    type: Add
+  id: 9196
+  time: '2025-11-11T06:20:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39846
