@@ -27,6 +27,13 @@
             - material: FloorCarpetBlue
               amount: 1
               doAfter: 1
+        - to: CurtainsSkyBlue
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+          - material: FloorCarpetSkyBlue
+            amount: 1
+            doAfter: 1
         - to: CurtainsCyan
           completed:
             - !type:SnapToGrid { }
@@ -145,6 +152,29 @@
           steps:
             - tool: Cutting
               doAfter: 1
+
+    - node: CurtainsSkyBlue
+      entity: CurtainsSkyBlue
+      edges:
+      - to: start
+        completed:
+        - !type:GivePrototype
+          prototype: FloorCarpetItemSkyBlue
+          amount: 1
+        steps:
+        - tool: Cutting
+          doAfter: 1
+    - node: CurtainsSkyBlueOpen
+      entity: CurtainsSkyBlueOpen
+      edges:
+      - to: start
+        completed:
+        - !type:GivePrototype
+          prototype: FloorCarpetItemSkyBlue
+          amount: 1
+        steps:
+        - tool: Cutting
+          doAfter: 1
 
     - node: CurtainsCyan
       entity: CurtainsCyan
