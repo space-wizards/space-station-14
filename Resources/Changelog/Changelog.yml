@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sparlight
-  changes:
-  - message: Smart corgis can now wear various hardsuits, armors, and glasses items.
-    type: Add
-  id: 8695
-  time: '2025-06-19T19:49:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36875
 - author: VerinSenpai
   changes:
   - message: Handcuffs no longer interfere with your daily tail wagging activities.
@@ -3927,3 +3920,10 @@
   id: 9196
   time: '2025-11-11T06:20:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39846
+- author: April-Gras
+  changes:
+  - message: Tool-tip punctuation for the accentless speech trait
+    type: Tweak
+  id: 9197
+  time: '2025-11-11T17:57:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41392
