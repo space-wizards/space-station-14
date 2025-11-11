@@ -105,22 +105,13 @@
   parent: BoxLightbulb
   id: BoxLighttubeHoliday
   components:
-  - type: EntityTableContainerFill # parenting
+  - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: LightTubeCrystalRed # Its alternating on purpose for the light replacer.
-        - id: LightTubeCrystalGreen
         - id: LightTubeCrystalRed
         - id: LightTubeCrystalGreen
-        - id: LightTubeCrystalRed
-        - id: LightTubeCrystalGreen
-        - id: LightTubeCrystalRed
-        - id: LightTubeCrystalGreen
-        - id: LightTubeCrystalRed
-        - id: LightTubeCrystalGreen
-        - id: LightTubeCrystalRed
-        - id: LightTubeCrystalGreen
+        rolls: 6 # Rolls instead of amounts to alternate.
 
 - type: entity
   name: PDA box
