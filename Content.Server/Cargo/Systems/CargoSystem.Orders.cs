@@ -485,10 +485,14 @@ namespace Content.Server.Cargo.Systems
             if (console.Comp.IsTaipan)
                 return station.Comp.TaipanOrders.ToList();
 
-            var ourOrders = station.Comp.Orders[console.Comp.Account];
+            if (!station.Comp.Orders.TryGetValue(console.Comp.Account, out var ourOrders))
+                ourOrders = new List<CargoOrderData>();
 
             if (console.Comp.Account == bank.PrimaryAccount)
                 return ourOrders;
+
+            if (!station.Comp.Orders.TryGetValue(bank.PrimaryAccount, out var primaryOrders))
+                primaryOrders = new List<CargoOrderData>();
 
             var otherOrders = station.Comp.Orders[bank.PrimaryAccount].Where(order => order.Account == console.Comp.Account);
             // DS14-end
@@ -533,6 +537,9 @@ namespace Content.Server.Cargo.Systems
                 }
                 return amount;
             }
+
+            if (!station.Comp.Orders.TryGetValue(account, out _))
+                return amount; // возвращаем 0, если заказов для этого аккаунта нет
 
             foreach (var order in station.Comp.Orders[account])
             {
