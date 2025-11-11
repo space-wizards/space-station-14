@@ -84,7 +84,7 @@
   id: UplinkEnergyCrossbow
   name: uplink-energycrossbow-name
   description: uplink-energycrossbow-desc
-  discountCategory: RareDiscounts
+  discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 4
   productEntity: WeaponEnergyCrossbow
@@ -92,6 +92,9 @@
     Telecrystal: 6
   categories:
   - UplinkWeaponry
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
 
 - type: listing
   id: UplinkThrowingKnivesKit
@@ -787,16 +790,7 @@
           - SurplusBundle
 
 # Deception
-- type: listing
-  id: UplinkSyndicateIDCard
-  name: uplink-syndicate-id-card-name
-  description: uplink-syndicate-id-card-desc
-  productEntity: SyndicateIDCard
-  cost:
-    Telecrystal: 1
-  categories:
-  - UplinkDeception
-  
+
 - type: listing
   id: UplinkAgentIDCard
   name: uplink-agent-id-card-name
@@ -2224,7 +2218,7 @@
   discountDownTo:
     Telecrystal: 2
   cost:
-    Telecrystal: 3
+    Telecrystal: 5
   categories:
   - UplinkJob
   conditions:
