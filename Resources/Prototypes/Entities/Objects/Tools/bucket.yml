@@ -15,14 +15,14 @@
     quickEquip: false
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 250
   - type: SolutionTransfer
     transferAmount: 100
     maxTransferAmount: 100
     minTransferAmount: 10
   - type: SpillWhenWorn
-    solution: exposed
+    solution: container
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     inHandsFillBaseName: null
@@ -41,5 +41,5 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 500

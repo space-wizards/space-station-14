@@ -1072,7 +1072,7 @@
     sprite: Objects/Fun/glue.rsi
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 100
         reagents:
         - ReagentId: SpaceGlue
@@ -1081,7 +1081,7 @@
     sound:
       collection: packetOpenSounds
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 - type: entity
   parent: DrinkBase
@@ -1100,7 +1100,7 @@
   - type: Appearance
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 100
         reagents:
         - ReagentId: SpaceLube
@@ -1113,7 +1113,7 @@
           False: {state: "icon"}
   - type: Lube
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 - type: entity
   parent: BaseItem

@@ -16,12 +16,12 @@
       map: [ "enum.SolutionContainerLayers.Overlay" ]
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
   - type: SolutionContainerVisuals
     maxFillLevels: 6
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 - type: entity
   parent: BaseSqueezeBottle
@@ -33,7 +33,7 @@
     sprite: Objects/Consumable/Drinks/glue-tube.rsi
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: SpaceGlue
@@ -50,7 +50,7 @@
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: SpaceLube
@@ -88,7 +88,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar_what.rsi
   - type: FitsInDispenser
-    solution: exposed
+    solution: container
 
 # Mopwata
 - type: weightedRandomFillSolution
@@ -145,13 +145,13 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 50
         reagents:
         - ReagentId: Mopwata
           Quantity: 40
   - type: RandomFillSolution
-    solution: exposed
+    solution: container
     weightedRandomId: RandomFillMopwata
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mopwata.rsi

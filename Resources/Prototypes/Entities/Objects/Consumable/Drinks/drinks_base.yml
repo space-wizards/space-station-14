@@ -7,14 +7,14 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
   - type: DnaSubstanceTrace
   - type: Edible
     edible: Drink
     destroyOnEmpty: false
     utensil: None # Spoons conflict with MixableSolution
-    solution: &sol exposed
+    solution: &sol container
   - type: Spillable
     solution: *sol
   - type: MixableSolution

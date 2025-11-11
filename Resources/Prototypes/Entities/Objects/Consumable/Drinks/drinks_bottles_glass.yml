@@ -16,7 +16,7 @@
       collection: bottleCloseSounds
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-bottle.rsi # fallback
@@ -25,7 +25,7 @@
     - Rolling
     speedModifier: 0.75 # not as good as a rolling pin but does the job
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
   - type: Tag
     tags:
     - DrinkBottle
@@ -61,14 +61,14 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 50
   - type: Item
     size: Small
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi # fallback
   - type: FitsInDispenser
-    solution: exposed
+    solution: container
 
 # Large Glass Bottles
 
@@ -80,7 +80,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Absinthe
           Quantity: 100
@@ -97,7 +97,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: BlueCuracao
           Quantity: 100
@@ -121,7 +121,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Nothing
           Quantity: 100
@@ -138,7 +138,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Champagne
           Quantity: 100
@@ -159,7 +159,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Cognac
           Quantity: 100
@@ -176,7 +176,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Grenadine
           Quantity: 100
@@ -200,7 +200,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Gin
           Quantity: 100
@@ -217,7 +217,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Gildlager
           Quantity: 100
@@ -234,7 +234,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: CoffeeLiqueur
           Quantity: 100
@@ -251,7 +251,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: MelonLiquor
           Quantity: 100
@@ -275,7 +275,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Patron
           Quantity: 100
@@ -292,7 +292,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: PoisonWine
           Quantity: 100
@@ -311,7 +311,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Rum
           Quantity: 100
@@ -328,7 +328,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Tequila
           Quantity: 100
@@ -345,7 +345,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Vermouth
           Quantity: 100
@@ -362,7 +362,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Vodka
           Quantity: 100
@@ -379,7 +379,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Whiskey
           Quantity: 100
@@ -396,7 +396,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Wine
           Quantity: 100
@@ -419,7 +419,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 150
         reagents:
         - ReagentId: Beer
@@ -445,7 +445,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 150
         reagents:
         - ReagentId: Ale
@@ -470,7 +470,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Beer
           Quantity: 50
@@ -494,7 +494,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Ale
           Quantity: 50
@@ -515,7 +515,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Sake
           Quantity: 50

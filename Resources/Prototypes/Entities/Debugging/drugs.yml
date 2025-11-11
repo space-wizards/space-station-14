@@ -7,7 +7,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 20
         reagents:
           - ReagentId: Desoxyephedrine

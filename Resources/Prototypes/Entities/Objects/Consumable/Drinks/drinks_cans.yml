@@ -7,7 +7,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
       grindable: &grindable
         reagents: # 5u -> 1/2 steel sheet (10u)
@@ -21,14 +21,14 @@
   - type: Extractable
     grindableSolutionName: grindable
   - type: FitsInDispenser
-    solution: exposed
+    solution: container
   - type: Tool
     qualities:
     - Rolling
     speedModifier: 0.25 # its small so takes longer to roll the entire dough flat
   - type: SpaceGarbage
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
   - type: PhysicalComposition
     materialComposition:
       Steel: 50 #reduce, reuse, recycle
@@ -46,7 +46,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: Cola
@@ -69,7 +69,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
       grindable: *grindable
   - type: Tag
@@ -86,7 +86,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: IcedTea
@@ -105,7 +105,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: LemonLime
@@ -124,7 +124,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: LemonLimeCranberry
@@ -176,7 +176,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: GrapeSoda
@@ -195,7 +195,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: RootBeer
@@ -218,7 +218,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: SodaWater
@@ -237,7 +237,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: SpaceMountainWind
@@ -256,7 +256,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: SpaceUp
@@ -275,7 +275,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: SolDry
@@ -294,7 +294,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: Starkist
@@ -313,7 +313,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: TonicWater
@@ -332,7 +332,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: FourteenLoko
@@ -351,7 +351,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: ChangelingSting
@@ -370,7 +370,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: DrGibb
@@ -389,7 +389,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: Stimulants
@@ -412,7 +412,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: EnergyDrink
@@ -431,7 +431,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: ShamblersJuice
@@ -450,7 +450,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: PwrGame
@@ -469,7 +469,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: Beer
@@ -492,7 +492,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: Wine

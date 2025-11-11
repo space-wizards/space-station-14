@@ -6,10 +6,10 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 20
   - type: FitsInDispenser
-    solution: exposed
+    solution: container
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
@@ -73,7 +73,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 5 # One sip at a time. No rushing at the water cooler
   - type: Item
     size: Tiny
@@ -92,7 +92,7 @@
     quickEquip: false
     sprite: Clothing/Head/Hats/party_water_cup.rsi
   - type: SpillWhenWorn
-    solution: exposed
+    solution: container
 
 # Mugs
 - type: entity
@@ -205,7 +205,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: HotCocoa
           Quantity: 20
@@ -218,7 +218,7 @@
     - state: fill-3
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 - type: entity
   parent: DrinkBaseMug
@@ -229,7 +229,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Coffee
           Quantity: 20
@@ -242,7 +242,7 @@
     - state: fill-3
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 - type: entity
   parent: DrinkBaseMug
@@ -253,7 +253,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: CafeLatte
           Quantity: 20
@@ -270,7 +270,7 @@
     maxFillLevels: 1
     changeColor: false
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 - type: entity
   parent: DrinkTeacupEmpty
@@ -279,7 +279,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Tea
           Quantity: 20
@@ -287,7 +287,7 @@
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-vend-tea
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 - type: entity
   parent: DrinkTeacupEmpty
@@ -296,7 +296,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: GreenTea
           Quantity: 20
@@ -304,7 +304,7 @@
     sprite: Objects/Consumable/Drinks/teacup.rsi
     state: icon-vend-green-tea
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 # TODO this needs fill levels
 - type: entity
@@ -315,7 +315,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: JuiceGrape
           Quantity: 20
@@ -324,7 +324,7 @@
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 #[1] https://en.wikipedia.org/wiki/Cup
 #[2] https://en.wikipedia.org/wiki/Mug

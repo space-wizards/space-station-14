@@ -9,7 +9,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 100
   - type: Tag
     tags:
@@ -23,7 +23,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 50
   - type: Tag
     tags:
@@ -37,7 +37,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 50
 
 - type: entity
@@ -47,7 +47,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 100
 
 # Small bottles

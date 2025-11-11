@@ -10,7 +10,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: JuiceWatermelon
@@ -38,7 +38,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
         reagents:
         - ReagentId: JuiceWatermelon

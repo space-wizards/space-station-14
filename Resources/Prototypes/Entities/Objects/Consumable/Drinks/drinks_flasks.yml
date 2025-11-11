@@ -5,12 +5,12 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask.rsi
   - type: FitsInDispenser
-    solution: exposed
+    solution: container
   - type: Openable
     sound:
       collection: flaskOpenSounds
@@ -28,12 +28,12 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask_old.rsi
   - type: FitsInDispenser
-    solution: exposed
+    solution: container
 
 - type: entity
   parent: FlaskBase
@@ -55,12 +55,12 @@
     sprite: Objects/Consumable/Drinks/mreflask.rsi
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Water
           Quantity: 50
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
 
 - type: entity
   parent: FlaskBase

@@ -14,12 +14,12 @@
       collection: bottleCloseSounds
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/generic_jug.rsi # fallback to generic plastic jug
   - type: TrashOnSolutionEmpty
-    solution: exposed
+    solution: container
   - type: Tag
     tags:
     - DrinkBottle # Needed to fit in the soda dispenser, needs a better name
@@ -33,12 +33,12 @@
     size: Small
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi # fallback
   - type: FitsInDispenser
-    solution: exposed
+    solution: container
 
 # Empty
 
@@ -50,7 +50,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 150
 
 # Small Plastic Bottles
@@ -63,7 +63,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Water
           Quantity: 30
@@ -82,7 +82,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: Cola
           Quantity: 100
@@ -99,7 +99,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: SpaceMountainWind
           Quantity: 100
@@ -116,7 +116,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         reagents:
         - ReagentId: SpaceUp
           Quantity: 100
@@ -133,7 +133,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 100
         reagents:
         - ReagentId: SodaWater
@@ -151,7 +151,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 100
         reagents:
         - ReagentId: TonicWater
@@ -169,7 +169,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 100
         reagents:
         - ReagentId: EnergyDrink
@@ -190,7 +190,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: Sugar
@@ -207,7 +207,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: LemonLime
@@ -224,7 +224,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 150
         reagents:
         - ReagentId: Mead
@@ -241,7 +241,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: Ice
@@ -258,7 +258,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: CoconutWater
@@ -275,7 +275,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: Coffee
@@ -292,7 +292,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: Tea
@@ -309,7 +309,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: GreenTea
@@ -326,7 +326,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: IcedTea
@@ -343,7 +343,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: DrGibb
@@ -360,7 +360,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: RootBeer
@@ -377,7 +377,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      exposed:
+      container:
         maxVol: 300
         reagents:
         - ReagentId: JuiceWatermelon
