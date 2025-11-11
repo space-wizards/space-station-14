@@ -111,7 +111,8 @@ public abstract partial class SharedGunSystem
         // Update the visuals.
         Appearance.SetData(ent.Owner, AmmoVisuals.HasAmmo, shots != 0, appearance);
         Appearance.SetData(ent.Owner, AmmoVisuals.AmmoCount, shots, appearance);
-        Appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, capacity, appearance);
+        if (capacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
+            Appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, capacity, appearance);
     }
 
     private void OnPowerCellChanged(Entity<BatteryAmmoProviderComponent> ent, ref PowerCellChangedEvent args)
