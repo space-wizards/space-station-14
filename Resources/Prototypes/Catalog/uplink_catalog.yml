@@ -790,7 +790,6 @@
           - SurplusBundle
 
 # Deception
-
 - type: listing
   id: UplinkSyndicateIDCard
   name: uplink-syndicate-id-card-name
