@@ -9,7 +9,12 @@ namespace Content.Client.UserInterface.Controls
     [Virtual]
     public class SwitchButton : ContainerButton
     {
-        public const string StyleClassSwitchButton = "switchButton";
+        public const string StyleClassTrackFill = "trackFill";
+        public const string StyleClassTrackOutline = "trackOutline";
+        public const string StyleClassThumbFill = "thumbFill";
+        public const string StyleClassThumbOutline = "thumbOutline";
+        public const string StyleClassSymbol = "symbol";
+
         public new const string StylePseudoClassPressed = "pressed";
         public new const string StylePseudoClassDisabled = "disabled";
 
@@ -34,15 +39,46 @@ namespace Content.Client.UserInterface.Controls
         public Label Label { get; }
         public Label OffStateLabel { get; }
         public Label OnStateLabel { get; }
-        public TextureRect TextureRect { get; }
+
+        // I tried to find a way not to have five textures here, but the other
+        // options were worse.
+        public TextureRect TrackFill { get; }
+        public TextureRect TrackOutline { get; }
+        public TextureRect ThumbFill { get; }
+        public TextureRect ThumbOutline { get; }
+        public TextureRect Symbol { get; }
 
         public SwitchButton()
         {
             ToggleMode = true;
 
-            TextureRect = new TextureRect
+            TrackFill = new TextureRect
             {
-                StyleClasses = { StyleClassSwitchButton },
+                StyleClasses = { StyleClassTrackFill },
+                VerticalAlignment = VAlignment.Center,
+            };
+
+            TrackOutline = new TextureRect
+            {
+                StyleClasses = { StyleClassTrackOutline },
+                VerticalAlignment = VAlignment.Center,
+            };
+
+            ThumbFill = new TextureRect
+            {
+                StyleClasses = { StyleClassThumbFill },
+                VerticalAlignment = VAlignment.Center,
+            };
+
+            ThumbOutline = new TextureRect
+            {
+                StyleClasses = { StyleClassThumbOutline },
+                VerticalAlignment = VAlignment.Center,
+            };
+
+            Symbol = new TextureRect
+            {
+                StyleClasses = { StyleClassSymbol },
                 VerticalAlignment = VAlignment.Center,
             };
 
@@ -61,7 +97,11 @@ namespace Content.Client.UserInterface.Controls
             Label.HorizontalExpand = true;
 
             AddChild(Label);
-            AddChild(TextureRect);
+            AddChild(TrackFill);
+            AddChild(TrackOutline);
+            AddChild(ThumbFill);
+            AddChild(ThumbOutline);
+            AddChild(Symbol);
             AddChild(OffStateLabel);
             AddChild(OnStateLabel);
         }
@@ -110,7 +150,11 @@ namespace Content.Client.UserInterface.Controls
             if (relevantChangeMade)
             {
                 Label.RemoveStyleClass("dummy");
-                TextureRect.RemoveStyleClass("dummy");
+                TrackFill.RemoveStyleClass("dummy");
+                TrackOutline.RemoveStyleClass("dummy");
+                ThumbFill.RemoveStyleClass("dummy");
+                ThumbOutline.RemoveStyleClass("dummy");
+                Symbol.RemoveStyleClass("dummy");
                 OffStateLabel.RemoveStyleClass("dummy");
                 OnStateLabel.RemoveStyleClass("dummy");
             }
@@ -188,10 +232,10 @@ namespace Content.Client.UserInterface.Controls
             var separation = ActualSeparation;
 
             // Start with the icon, since it always appears
-            if (TextureRect is not null)
+            if (TrackOutline is not null)
             {
-                TextureRect.Measure(availableSize);
-                desiredSize = TextureRect.DesiredSize;
+                TrackOutline.Measure(availableSize);
+                desiredSize = TrackOutline.DesiredSize;
             }
 
             // Add space for the label if it has text
@@ -230,13 +274,13 @@ namespace Content.Client.UserInterface.Controls
         {
             var separation = ActualSeparation;
 
-            var actualMainLabelWidth = finalSize.X - separation - TextureRect.DesiredSize.X;
+            var actualMainLabelWidth = finalSize.X - separation - TrackOutline.DesiredSize.X;
             float iconPosition = 0;
             float stateLabelPosition = 0;
 
             if (string.IsNullOrEmpty(Label?.Text))
             {
-                stateLabelPosition = TextureRect.DesiredSize.X + separation;
+                stateLabelPosition = TrackOutline.DesiredSize.X + separation;
             }
             else
             {
@@ -247,14 +291,24 @@ namespace Content.Client.UserInterface.Controls
                 }
                 actualMainLabelWidth = float.Max(actualMainLabelWidth, 0);
                 iconPosition = actualMainLabelWidth + separation;
-                stateLabelPosition = iconPosition + TextureRect.DesiredSize.X + separation;
+                stateLabelPosition = iconPosition + TrackOutline.DesiredSize.X + separation;
             }
 
             var mainLabelTargetBox = new UIBox2(0, 0, actualMainLabelWidth, finalSize.Y);
             Label?.Arrange(mainLabelTargetBox);
 
-            var iconTargetBox = new UIBox2(iconPosition, 0, iconPosition + TextureRect.DesiredSize.X, finalSize.Y);
-            TextureRect.Arrange(iconTargetBox);
+            var iconTargetBox = new UIBox2(iconPosition, 0, iconPosition + TrackOutline.DesiredSize.X, finalSize.Y);
+            TrackFill.Arrange(iconTargetBox);
+            TrackOutline.Arrange(iconTargetBox);
+            Symbol.Arrange(iconTargetBox);
+
+            ThumbOutline.Measure(TrackOutline.DesiredSize); // didn't measure in MeasureOverride, don't need its size there
+            var thumbLeft = iconTargetBox.Left;
+            if (Pressed)
+                thumbLeft = iconTargetBox.Right - ThumbOutline.DesiredSize.X;
+            var thumbTargetBox = new UIBox2(thumbLeft, 0, thumbLeft + ThumbOutline.DesiredSize.X, finalSize.Y);
+            ThumbFill.Arrange(thumbTargetBox);
+            ThumbOutline.Arrange(thumbTargetBox);
 
             var stateLabelsTargetBox = new UIBox2(stateLabelPosition, 0, finalSize.X, finalSize.Y);
             OffStateLabel?.Arrange(stateLabelsTargetBox);

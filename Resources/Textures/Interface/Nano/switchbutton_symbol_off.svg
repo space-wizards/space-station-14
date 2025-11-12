@@ -8,8 +8,8 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
-   sodipodi:docname="toggleswitch_off.svg"
-   inkscape:export-filename="toggleswitch_off.svg.96dpi.png"
+   sodipodi:docname="switchbutton_label_off.svg"
+   inkscape:export-filename="switchbutton_symbol_off.svg.96dpi.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xml:space="preserve"
@@ -28,7 +28,7 @@
      inkscape:document-units="px"
      showguides="false"
      inkscape:zoom="12.618721"
-     inkscape:cx="19.058984"
+     inkscape:cx="19.138231"
      inkscape:cy="15.215488"
      inkscape:window-width="1600"
      inkscape:window-height="828"
@@ -53,15 +53,8 @@
      id="defs1" /><g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1"><path
-       style="baseline-shift:baseline;display:inline;overflow:visible;fill:#303030;fill-opacity:1;stroke:#494949;stroke-width:2;stroke-dasharray:none;stroke-opacity:1;enable-background:accumulate;stop-color:#000000"
-       d="M 1,1 V 15.58789 L 10.419922,25.005857 47,25 V 10.414063 l -9.417969,-9.41992 z"
-       id="path3-7"
-       sodipodi:nodetypes="ccccccc" /><path
-       style="baseline-shift:baseline;display:inline;overflow:visible;fill:#464966;fill-opacity:1;stroke:#65698e;stroke-width:2;stroke-dasharray:none;stroke-opacity:1;enable-background:accumulate;stop-color:#000000"
-       d="m 1,1 v 14.58789 l 9.419922,9.417967 H 22.998047 V 10.41992 L 13.580078,1 Z"
-       id="path3" /><circle
-       style="fill:none;fill-opacity:1;stroke:#8a8a8a;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     id="layer1"><circle
+       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="path4"
        cx="34"
        cy="13"
