@@ -729,7 +729,7 @@
         conditions:
         - !type:ReagentCondition
           reagent: Mechanotoxin
-          min: 9.4 # A spider bite that injects 10u will cause ~3 seconds of 80% slowdown then another 2 seconds of 20% slowdown (additive 20% slow plus 60% slow)
+          min: 9.5 # A spider bite that injects 10u will cause ~3 seconds of 80% slowdown then another 2 seconds of 20% slowdown (additive 20% slow plus 60% slow)
         - !type:MetabolizerTypeCondition
           type: [Arachnid]
           inverted: true
