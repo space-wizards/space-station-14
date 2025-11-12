@@ -201,12 +201,11 @@
   id: BoxHugHealing
   suffix: Medical
   components:
-  - type: ContainerFill # parenting
+  - type: EntityTableContainerFill
     containers:
       storagebase:
-      - Brutepack
-      - Brutepack
-      - Brutepack
+        id: Brutepack
+        amount: 3
 
 - type: entity
   name: inflatable wall box
@@ -398,7 +397,7 @@
   components:
   - type: Item
     size: Normal
-  - type: EntityTableContainerFill # parenting
+  - type: EntityTableContainerFill
     containers:
       storagebase:
         id: BoxEncryptionKeySyndie
