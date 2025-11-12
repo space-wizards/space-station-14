@@ -47,13 +47,13 @@
       - id: PlushieNar
       - id: PlushieRatvar
     - !type:GroupSelector # Rare plushies
-      weight: 0.1 # 1 in >200
+      weight: 0.1 # 1 in >210
       children:
       - id: PlushieHuman
       - id: PlushieGhost
       - id: PlushieLamp
     - !type:GroupSelector # Legendary plushies
-      weight: 0.001 # 1 in >21,000
+      weight: 0.002 # 1 in >10,500
       children:
       - id: PlushieThrongler
       - id: PlushieGhostRevenant # You got the god roll, and failed
