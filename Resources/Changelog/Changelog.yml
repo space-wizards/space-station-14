@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BigfootBravo
-  changes:
-  - message: Chameleon Controller Implants can be deimplanted.
-    type: Fix
-  id: 8697
-  time: '2025-06-20T22:41:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38439
 - author: FairlySadPanda
   changes:
   - message: A new poster.
@@ -3928,3 +3921,11 @@
   id: 9198
   time: '2025-11-11T19:01:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34499
+- author: aada
+  changes:
+  - message: Employed lizard plushies can now be found in bulk lizard plushie crates
+      and maintenance closets.
+    type: Tweak
+  id: 9199
+  time: '2025-11-12T07:37:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41398
