@@ -130,7 +130,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     {
         var numberXenoborgs = 0;
 
-        var query = AllEntityQuery<XenoborgComponent>();
+        var query = EntityQueryEnumerator<XenoborgComponent>();
         while (query.MoveNext(out var xenoborg, out _))
         {
             if (HasComp<MothershipCoreComponent>(xenoborg))
@@ -156,7 +156,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
     {
         var numberMothershipCores = 0;
 
-        var mothershipCoreQuery = AllEntityQuery<MothershipCoreComponent>();
+        var mothershipCoreQuery = EntityQueryEnumerator<MothershipCoreComponent>();
         while (mothershipCoreQuery.MoveNext(out _, out _))
         {
             numberMothershipCores++;
