@@ -30,7 +30,7 @@ public sealed class QuickInspectCommand : LocalizedEntityCommands
 
         var serverKey = _inputManager.GetKeyFunctionButtonString(ContentKeyFunctions.InspectServerComponent);
         var clientKey = _inputManager.GetKeyFunctionButtonString(ContentKeyFunctions.InspectClientComponent);
-        shell.WriteLine(LocalizationManager.GetString($"cmd-quickinspect-success", ("component", args[0]), ("serverKeybind", serverKey), ("clientKeybind", clientKey)));
+        shell.WriteLine(Loc.GetString($"cmd-quickinspect-success", ("component", args[0]), ("serverKeybind", serverKey), ("clientKeybind", clientKey)));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
