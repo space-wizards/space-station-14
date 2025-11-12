@@ -1217,7 +1217,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var relation = new ContainedSolutionComponent() { Container = container.Owner, ContainerName = name };
         AddComp(uid, relation);
 
-        MetaDataSys.SetEntityName(uid, $"solution - {name}");
+        MetaDataSys.SetEntityName(uid, $"solution - {name}", raiseEvents: false);
         ContainerSystem.Insert(uid, container, force: true);
 
         return (uid, solution, relation);
