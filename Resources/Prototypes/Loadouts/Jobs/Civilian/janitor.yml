@@ -5,7 +5,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobJanitor
-      time: 187200 #52 hrs (1 hour per week for 1 year)
+      time: 52h # 1 hour per week for 1 year
 
 # Head
 - type: loadout
@@ -45,13 +45,3 @@
   id: JanitorWintercoat
   equipment:
     outerClothing: ClothingOuterWinterJani
-
-# Misc
-- type: loadout
-  id: JanitorGoldenPlunger
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorJanitorial
-  storage:
-    back:
-    - GoldenPlunger

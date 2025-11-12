@@ -129,7 +129,6 @@
 
 # so theres not actually any way to replenish the gastrotoxin / gold in these.
 # I wouldn't add it to the solutionregeneration comp because that doesn't make a lot of sense imo.
-# I guess we just need to add shitting?
 - type: entity
   parent: ToiletEmpty
   id: ToiletDirtyWater
@@ -146,6 +145,30 @@
           Quantity: 180
         - ReagentId: GastroToxin
           Quantity: 20
+
+- type: entity
+  parent: ToiletEmpty
+  id: ToiletFilled
+  suffix: Empty, Random Cistern Loot
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      stash: !type:NestedSelector
+        tableId: ToiletCisternLoot
+        rolls: !type:RangeNumberSelector
+          range: 0, 1
+
+- type: entity
+  parent: ToiletDirtyWater
+  id: ToiletDirtyWaterFilled
+  suffix: Dirty Water, Random Cistern Loot
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      stash: !type:NestedSelector
+        tableId: ToiletCisternLoot
+        rolls: !type:RangeNumberSelector
+          range: 0, 1
 
 - type: entity
   parent: BaseToilet
