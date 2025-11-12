@@ -103,6 +103,11 @@ public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStyl
                 .ParentOf(E<TextureRect>().Class(SwitchButton.StyleClassSymbol))
                 .Modulate(sheet.SecondaryPalette.TextDark),
 
+            E<SwitchButton>()
+                .Pseudo(SwitchButton.StylePseudoClassDisabled)
+                .ParentOf(E<Label>())
+                .Modulate(sheet.PrimaryPalette.TextDark),
+
             // Both pressed & disabled styles
             // Note that some of the pressed-only and disabled-only styles do not conflict
             // and will also be used
