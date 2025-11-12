@@ -15,9 +15,6 @@ namespace Content.Client.UserInterface.Controls
         public const string StyleClassThumbOutline = "thumbOutline";
         public const string StyleClassSymbol = "symbol";
 
-        public new const string StylePseudoClassPressed = "pressed";
-        public new const string StylePseudoClassDisabled = "disabled";
-
         public const string StylePropertySeparation = "separation";
 
         private const int DefaultSeparation = 0;
