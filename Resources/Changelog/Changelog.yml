@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: A new poster.
-    type: Add
-  - message: A new (very expensive) crate to order from cargo, worth 25,000 spesos
-      and containing a hydrated scurret. The hydrated scurret is a ghost role - a
-      non-antagonistic emotional support scurret.
-    type: Add
-  id: 8698
-  time: '2025-06-20T23:39:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38218
 - author: Tayrtahn
   changes:
   - message: Sloths... now... speak... slowly...
@@ -3929,3 +3918,10 @@
   id: 9199
   time: '2025-11-12T07:37:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41398
+- author: PicklOH
+  changes:
+  - message: Make DAGD more likely but restrict it to 1 traitor per round
+    type: Tweak
+  id: 9200
+  time: '2025-11-12T16:31:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41402
