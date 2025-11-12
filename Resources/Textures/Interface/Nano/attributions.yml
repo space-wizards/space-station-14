@@ -1,9 +1,9 @@
-- files: ["toggleswitch_disabled_off.svg", "toggleswitch_disabled_on.svg"]
+- files: ["switchbutton_symbol_off.svg",
+          "switchbutton_symbol_on.svg",
+          "switchbutton_thumb_fill.svg",
+          "switchbutton_thumb_outline.svg",
+          "switchbutton_track_fill.svg",
+          "switchbutton_track_outline.svg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Based on toggleswitch_off.svg and toggleswitch_on.svg, modified by Jen Pollock <jen@jenpollock.ca>"
-  source: "https://github.com/Absotively"
-
-- files: ["toggleswitch_off.svg", "toggleswitch_on.svg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "Janet Blackquill <uhhadd@gmail.com>"
+  copyright: "Design by Janet Blackquill <uhhadd@gmail.com>"
   source: "https://github.com/sowelipililimute"
