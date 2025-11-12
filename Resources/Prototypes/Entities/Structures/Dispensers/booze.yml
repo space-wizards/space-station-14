@@ -31,18 +31,19 @@
   suffix: Filled
   parent: BoozeDispenserEmpty
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - DrinkAleBottleFullGrowler
-      - DrinkBeerGrowler
-      - DrinkCoffeeLiqueurBottleFull
-      - DrinkCognacBottleFull
-      - DrinkGinBottleFull
-      - DrinkMeadJug
-      - DrinkRumBottleFull
-      - DrinkTequilaBottleFull
-      - DrinkVermouthBottleFull
-      - DrinkVodkaBottleFull
-      - DrinkWhiskeyBottleFull
-      - DrinkWineBottleFull
+      storagebase: !type:AllSelector
+        children:
+        - id: DrinkAleBottleFullGrowler
+        - id: DrinkBeerGrowler
+        - id: DrinkCoffeeLiqueurBottleFull
+        - id: DrinkCognacBottleFull
+        - id: DrinkGinBottleFull
+        - id: DrinkMeadJug
+        - id: DrinkRumBottleFull
+        - id: DrinkTequilaBottleFull
+        - id: DrinkVermouthBottleFull
+        - id: DrinkVodkaBottleFull
+        - id: DrinkWhiskeyBottleFull
+        - id: DrinkWineBottleFull

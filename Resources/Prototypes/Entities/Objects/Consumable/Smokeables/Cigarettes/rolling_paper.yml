@@ -28,13 +28,14 @@
   id: PackPaperRollingFilters
   description: A pack of filters and thin pieces of paper used to make fine smokeables.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - PaperRolling
-      - PaperRolling
-      - CigaretteFilter
-      - CigaretteFilter
+      storagebase: !type:AllSelector
+        children:
+        - id: PaperRolling
+          amount: 2
+        - id: CigaretteFilter
+          amount: 2
 
 - type: entity
   id: PaperRolling

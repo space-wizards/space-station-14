@@ -183,13 +183,14 @@
   id: BoxMRE
   description: A box of decades old military surplus rations. It is surprisingly not rotten.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - DrinkMREFlask
-      - FoodSnackNutribrick
-      - FoodSnackMREBrownie
-      - FoodCondimentPacketKetchup
+      storagebase: !type:AllSelector
+        children:
+        - id: DrinkMREFlask
+        - id: FoodSnackNutribrick
+        - id: FoodSnackMREBrownie
+        - id: FoodCondimentPacketKetchup
   - type: Sprite
     layers:
       - state: box
@@ -213,13 +214,14 @@
   id: BoxInflatable
   description: Inflatable walls are not to be used as floatation devices.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-        - InflatableWallStack
-        - InflatableWallStack
-        - InflatableDoorStack
-        - InflatableDoorStack
+      storagebase: !type:AllSelector
+        children:
+          - id: InflatableWallStack
+            amount: 2
+          - id: InflatableDoorStack
+            amount: 2
   - type: Sprite
     layers:
       - state: box
@@ -231,14 +233,15 @@
   id: BoxPerformer
   description: Happy Hatsune Miku Day!
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - ClothingShoesBootsPerformer
-      - ClothingUniformJumpskirtPerformer
-      - ClothingHeadPerformerWig
-      - FoodMealMemoryleek
-      - FoodMealMemoryleek
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingShoesBootsPerformer
+        - id: ClothingUniformJumpskirtPerformer
+        - id: ClothingHeadPerformerWig
+        - id: FoodMealMemoryleek
+          amount: 2
 
 - type: entity
   name: flare box
@@ -475,17 +478,18 @@
     layers:
       - state: box
       - state: darts
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - Dart
-      - Dart
-      - DartBlue
-      - DartBlue
-      - DartPurple
-      - DartPurple
-      - DartYellow
-      - DartYellow
+      storagebase: !type:AllSelector
+        children:
+        - id: Dart
+          amount: 2
+        - id: DartBlue
+          amount: 2
+        - id: DartPurple
+          amount: 2
+        - id: DartYellow
+          amount: 2
 
 - type: entity
   name: envelope box
@@ -513,10 +517,11 @@
     layers:
       - state: box
       - state: utensils
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - Fork
-      - Fork
-      - Spoon
-      - Spoon
+      storagebase: !type:AllSelector
+        children:
+        - id: Fork
+          amount: 2
+        - id: Spoon
+          amount: 2

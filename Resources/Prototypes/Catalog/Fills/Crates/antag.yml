@@ -4,12 +4,13 @@
   suffix: Filled
   parent: CratePirate
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - ClothingNeckCloakPirateCap
-      - EnergyCutlass
-      - MicroBombImplanter
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingNeckCloakPirateCap
+        - id: EnergyCutlass
+        - id: MicroBombImplanter
 
 - type: entity
   id: CratePirateChest

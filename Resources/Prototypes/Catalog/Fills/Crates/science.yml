@@ -8,10 +8,11 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - !type:NestedSelector
-          tableId: FillBiohazardGearScience
-          rolls: 2
-        - id: ClothingMaskGas
+        - id: ClothingOuterBioScientist
+          amount: 2
+        - id: ClothingHeadHatHoodBioScientist
+          amount: 2
+        - id: ClothingMaskSterile
           amount: 2
 
 - type: entity

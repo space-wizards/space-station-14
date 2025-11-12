@@ -20,18 +20,19 @@
   id: BoxAgrichem
   description: For the budding botanist ready to learn about maximizing farm output. This faded box must be at least 50 years old.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - PaperAgrichemManual
-      - ChemistryEmptyBottle01
-      - ChemistryBottlePotassium
-      - ChemistryBottlePhosphorus
-      - ChemistryBottleNitrogen
-      - ChemistryBottleHydrogen
-      - ChemistryBottleEthanol
-      - RadiumChemistryVial
-      - ChlorineChemistryVial
+      storagebase: !type:AllSelector
+        children:
+        - id: PaperAgrichemManual
+        - id: ChemistryEmptyBottle01
+        - id: ChemistryBottlePotassium
+        - id: ChemistryBottlePhosphorus
+        - id: ChemistryBottleNitrogen
+        - id: ChemistryBottleHydrogen
+        - id: ChemistryBottleEthanol
+        - id: RadiumChemistryVial
+        - id: ChlorineChemistryVial
   - type: Sprite
     layers:
       - state: boxwide
@@ -46,7 +47,7 @@
   id: BoxLightbulbColorfulMixed
   name: mixed colorful lightbulb box
   components:
-  - type: EntityTableContainerFill # parenting
+  - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
         children:
@@ -68,7 +69,7 @@
   id: BoxLighttubeColorfulMixed
   name: mixed colorful lighttube box
   components:
-  - type: EntityTableContainerFill # parenting
+  - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
         children:

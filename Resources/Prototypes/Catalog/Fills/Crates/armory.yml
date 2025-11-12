@@ -85,19 +85,20 @@
   name: swat crate
   description: Contains two sets of riot armor, helmets, shields, and enforcers loaded with beanbags. Extra ammo is included. Requires Armory access to open.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - ClothingOuterArmorRiot
-      - ClothingOuterArmorRiot
-      - ClothingHeadHelmetRiot
-      - ClothingHeadHelmetRiot
-      - WeaponShotgunEnforcerRubber
-      - WeaponShotgunEnforcerRubber
-      - BoxBeanbag
-      - BoxBeanbag
-      - RiotShield
-      - RiotShield
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingOuterArmorRiot
+          amount: 2
+        - id: ClothingHeadHelmetRiot
+          amount: 2
+        - id: WeaponShotgunEnforcerRubber
+          amount: 2
+        - id: BoxBeanbag
+          amount: 2
+        - id: RiotShield
+          amount: 2
 
 - type: entity
   id: CrateArmoryRifle

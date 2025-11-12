@@ -48,14 +48,15 @@
   name: security supplies crate
   description: Contains various supplies for the station's Security team. Requires Security access to open.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - BoxHandcuff
-      - BoxSechud
-#      - SecBelt
-#      - SecGasmask
-#      - SpacelawBook
+      entity_storage: !type:AllSelector
+        children:
+        - id: BoxHandcuff
+        - id: BoxSechud
+#        - SecBelt
+#        - SecGasmask
+#        - SpacelawBook
 
 - type: entity
   id: CrateRestraints
@@ -63,13 +64,14 @@
   name: restraints crate
   description: Contains two boxes each of handcuffs and zipties. Requires Security access to open.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - BoxHandcuff
-      - BoxHandcuff
-      - BoxZiptie
-      - BoxZiptie
+      entity_storage: !type:AllSelector
+        children:
+        - id: BoxHandcuff
+          amount: 2
+        - id: BoxZiptie
+          amount: 2
 
 - type: entity
   id: CrateSecurityBiosuit
@@ -81,10 +83,11 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - !type:NestedSelector
-          tableId: FillBiohazardGearSecurity
-          rolls: 2
-        - id: ClothingMaskGas
+        - id: ClothingOuterBioSecurity
+          amount: 2
+        - id: ClothingHeadHatHoodBioSecurity
+          amount: 2
+        - id: ClothingMaskSterile
           amount: 2
 
 - type: entity
@@ -113,7 +116,10 @@
       entity_storage: !type:AllSelector
         children:
         - id: BoxFlashbang
+          amount: 1
         - id: BoxStinger
+          amount: 1
         - id: BoxTearGas
+          amount: 1
         - id: Bola # replace with 4 e-bolas when added
           amount: 4

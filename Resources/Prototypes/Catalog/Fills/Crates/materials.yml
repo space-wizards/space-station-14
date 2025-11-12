@@ -30,12 +30,13 @@
   name: textiles crate
   description: 60 pieces of cloth and 30 pieces of durathread.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - MaterialCloth
-      - MaterialCloth
-      - MaterialDurathread
+      entity_storage: !type:AllSelector
+        children:
+        - id: MaterialCloth
+          amount: 2
+        - id: MaterialDurathread
 
 - type: entity
   id: CrateMaterialPlastic
@@ -81,10 +82,11 @@
   name: plasteel crate
   description: 30 sheets of plasteel.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - SheetPlasteel
+      entity_storage: !type:AllSelector
+        children:
+        - id: SheetPlasteel
 
 - type: entity
   id: CrateMaterialPlasma
@@ -92,10 +94,11 @@
   name: solid plasma crate
   description: 30 sheets of plasma.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - SheetPlasma
+      entity_storage: !type:AllSelector
+        children:
+        - id: SheetPlasma
 
 - type: entity
   id: CrateMaterialGold
@@ -103,10 +106,11 @@
   name: gold crate
   description: 30 bars of gold.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - IngotGold
+      entity_storage: !type:AllSelector
+        children:
+        - id: IngotGold
 
 - type: entity
   id: CrateMaterialSilver
@@ -114,10 +118,11 @@
   name: silver crate
   description: 30 bars of silver.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - IngotSilver
+      entity_storage: !type:AllSelector
+        children:
+        - id: IngotSilver
 
 - type: entity
   id: CrateMaterialCardboard
@@ -213,31 +218,32 @@
   name: basic sheet crate
   description: 30 sheets of steel, glass, and plastic.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - SheetSteel
-      - SheetGlass
-      - SheetPlastic
+      entity_storage: !type:AllSelector
+        children:
+        - id: SheetSteel
+        - id: SheetGlass
+        - id: SheetPlastic
 
 #- type: entity
 #  id: CrateMaterialHFuelTank
 #  name: fueltank crate
 #  parent: CrateGenericSteel
 #  components:
-#  - type: ContainerFill
+#  - type: EntityTableContainerFill
 #    containers:
-#      entity_storage:
-#      - WeldingFuelTank
-#        amount: 1
+#      entity_storage: !type:AllSelector
+#        children:
+#        - id: WeldingFuelTank
 
 #- type: entity
 #  id: CrateMaterialHWaterTank
 #  name: watertank crate
 #  parent: CrateGenericSteel
 #  components:
-#  - type: ContainerFill
+#  - type: EntityTableContainerFill
 #    containers:
-#      entity_storage:
-#      - WaterTankFull
-#        amount: 1
+#      entity_storage: !type:AllSelector
+#        children:
+#        - id: WaterTankFull

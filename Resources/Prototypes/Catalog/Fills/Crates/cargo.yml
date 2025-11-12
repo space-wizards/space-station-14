@@ -4,10 +4,10 @@
   name: luxury mining hardsuit crate
   description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - ClothingOuterHardsuitLuxury
+        id: ClothingOuterHardsuitLuxury
 
 - type: entity
   id: CrateCargoParcelWrap

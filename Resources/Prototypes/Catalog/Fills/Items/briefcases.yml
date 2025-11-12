@@ -20,44 +20,47 @@
     maxItemSize: Huge
     grid:
     - 0,0,6,3
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - WeaponSniperHristov
-      - MagazineBoxAntiMateriel
-      - ClothingNeckTieRed
-      - ClothingHandsGlovesLatex
-      - ClothingUniformJumpsuitLawyerBlack
-      - BarberScissors
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponSniperHristov
+        - id: MagazineBoxAntiMateriel
+        - id: ClothingNeckTieRed
+        - id: ClothingHandsGlovesLatex
+        - id: ClothingUniformJumpsuitLawyerBlack
+        - id: BarberScissors
 
 - type: entity
   id: BriefcaseSyndieLobbyingBundleFilled
   parent: BriefcaseSyndie
   suffix: Syndicate, Spesos
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - ClothingEyesGlassesSunglasses
-      - SpaceCash30000
-      - EncryptionKeySyndie
-      - RubberStampTrader
-      - PhoneInstrumentSyndicate
-      - ClothingUniformJumpsuitTacticool
-      - ClothingOuterCoatJensen
-      - ClothingHandsGlovesCombat
-      - ClothingMaskNeckGaiter
-      - SyndieHandyFlag
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingEyesGlassesSunglasses
+        - id: SpaceCash30000
+        - id: EncryptionKeySyndie
+        - id: RubberStampTrader
+        - id: PhoneInstrumentSyndicate
+        - id: ClothingUniformJumpsuitTacticool
+        - id: ClothingOuterCoatJensen
+        - id: ClothingHandsGlovesCombat
+        - id: ClothingMaskNeckGaiter
+        - id: SyndieHandyFlag
 
 - type: entity
   id: BriefcaseThiefBribingBundleFilled
   parent: BriefcaseSyndie
   suffix: Thief, Spesos
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - ClothingEyesGlassesSunglasses
-      - SpaceCash20000
-      - ClothingOuterCoatJensen
-      - ClothingHandsGlovesColorBlack
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingEyesGlassesSunglasses
+        - id: SpaceCash20000
+        - id: ClothingOuterCoatJensen
+        - id: ClothingHandsGlovesColorBlack

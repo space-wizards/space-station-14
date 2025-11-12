@@ -4,19 +4,20 @@
   name: chemicals crate (P)
   description: Contains chemicals from the P-Block of elements. Requires Chemistry access to open.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - JugAluminium
-      - JugCarbon
-      - JugChlorine
-      - JugFluorine
-      - JugIodine
-      - JugPhosphorus
-      - JugSulfur
-      - JugSilicon
-      - JugOxygen
-      - JugNitrogen
+      entity_storage: !type:AllSelector
+        children:
+        - id: JugAluminium
+        - id: JugCarbon
+        - id: JugChlorine
+        - id: JugFluorine
+        - id: JugIodine
+        - id: JugPhosphorus
+        - id: JugSulfur
+        - id: JugSilicon
+        - id: JugOxygen
+        - id: JugNitrogen
 
 - type: entity
   id: CrateChemistryS
@@ -24,14 +25,15 @@
   name: chemicals crate (S)
   description: Contains chemicals from the S-Block of elements. Requires Chemistry access to open.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - JugHydrogen
-      - JugLithium
-      - JugSodium
-      - JugPotassium
-      - JugRadium
+      entity_storage: !type:AllSelector
+        children:
+        - id: JugHydrogen
+        - id: JugLithium
+        - id: JugSodium
+        - id: JugPotassium
+        - id: JugRadium
 
 - type: entity
   id: CrateChemistryD
@@ -39,14 +41,15 @@
   name: chemicals crate (D)
   description: Contains chemicals from the D-Block of elements. Requires Chemistry access to open.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - JugIron
-      - JugCopper
-      - JugGold
-      - JugMercury
-      - JugSilver
+      entity_storage: !type:AllSelector
+        children:
+        - id: JugIron
+        - id: JugCopper
+        - id: JugGold
+        - id: JugMercury
+        - id: JugSilver
 
 - type: entity
   id: CratePlantBGone

@@ -83,18 +83,19 @@
   - type: Item
     shape:
     - 0,0,1,1
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - EvidenceMarkerOne
-      - EvidenceMarkerTwo
-      - EvidenceMarkerThree
-      - EvidenceMarkerFour
-      - EvidenceMarkerFive
-      - EvidenceMarkerSix
-      - EvidenceMarkerSeven
-      - EvidenceMarkerEight
-      - EvidenceMarkerNine
+      storagebase: !type:AllSelector
+        children:
+        - id: EvidenceMarkerOne
+        - id: EvidenceMarkerTwo
+        - id: EvidenceMarkerThree
+        - id: EvidenceMarkerFour
+        - id: EvidenceMarkerFive
+        - id: EvidenceMarkerSix
+        - id: EvidenceMarkerSeven
+        - id: EvidenceMarkerEight
+        - id: EvidenceMarkerNine
   - type: Sprite
     layers:
       - state: box_security

@@ -73,13 +73,14 @@
   name: duck crate
   description: A crate containing six fully grown ducks.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      entity_storage:
-      - MobDuckMallard
-      - MobDuckBrown
-      - MobDuckWhite
-      - MobDuckWhite
+      entity_storage: !type:AllSelector
+        children:
+        - id: MobDuckMallard
+        - id: MobDuckBrown
+        - id: MobDuckWhite
+          amount: 2
 
 - type: entity
   id: CrateNPCCorgi
@@ -87,10 +88,10 @@
   name: corgi crate
   description: A crate containing a single corgi.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobCorgi
+        id: MobCorgi
 
 - type: entity
   id: CrateNPCPuppyCorgi
@@ -98,10 +99,10 @@
   name: puppy corgi crate
   description: A crate containing a single puppy corgi. Awww.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobCorgiPuppy
+        id: MobCorgiPuppy
 
 - type: entity
   id: CrateNPCCow
@@ -109,10 +110,10 @@
   name: cow crate
   description: A crate containing a single cow.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobCow
+        id: MobCow
 
 - type: entity
   id: CrateNPCGoat
@@ -120,10 +121,10 @@
   name: goat crate
   description: A crate containing a single goat.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobGoat
+        id: MobGoat
 
 - type: entity
   id: CrateNPCGoose
@@ -131,11 +132,11 @@
   name: goose crate
   description: A crate containing two geese.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobGoose
-      - MobGoose
+        id: MobGoose
+        amount: 2
 
 - type: entity
   id: CrateNPCGorilla
@@ -143,10 +144,10 @@
   name: gorilla crate
   description: A crate containing a single gorilla.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobGorilla
+        id: MobGorilla
 
 - type: entity
   id: CrateNPCMonkeyCube
@@ -154,10 +155,10 @@
   name: monkey cube crate
   description: A crate containing single box of monkey cubes.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MonkeyCubeBox
+        id: MonkeyCubeBox
 
 - type: entity
   id: CrateNPCKoboldCube
@@ -165,10 +166,10 @@
   name: kobold cube crate
   description: A crate containing single box of kobold cubes.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - KoboldCubeBox
+        id: KoboldCubeBox
 
 - type: entity
   id: CrateNPCMouse
@@ -200,11 +201,11 @@
   name: penguin crate
   description: A crate containing two penguins.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobPenguin
-      - MobPenguin
+        id: MobPenguin
+        amount: 2
 
 - type: entity
   id: CrateNPCPig
@@ -212,10 +213,10 @@
   name: pig crate
   description: A crate containing a single pig.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobPig
+        id: MobPig
 
 - type: entity
   id: CrateNPCSnake
@@ -234,10 +235,10 @@
   parent: CrateRodentCage
   suffix: Filled
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobHamster
+        id: MobHamster
 
 - type: entity
   id: CrateNPCHamlet
@@ -258,10 +259,10 @@
   name: lizard crate
   description: A crate containing a lizard.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobLizard
+        id: MobLizard
 
 - type: entity
   id: CrateNPCKangaroo
@@ -269,10 +270,10 @@
   name: kangaroo crate
   description: A crate containing a kangaroo.
   components:
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - MobKangaroo
+        id: MobKangaroo
 
 - type: entity
   id: CrateNPCMothroach
