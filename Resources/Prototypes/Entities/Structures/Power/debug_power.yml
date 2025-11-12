@@ -7,9 +7,6 @@
     supplyRate: 300000
     supplyRampRate: 50000
     supplyRampTolerance: 500
-  - type: Tag
-    tags:
-      - Debug
 
 - type: entity
   id: DebugConsumer
@@ -18,9 +15,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -63,9 +57,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -96,9 +87,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Clickable
   - type: PowerNetworkBattery
   - type: InteractionOutline
@@ -128,10 +116,6 @@
   parent: BaseSMES
   id: DebugSMES
   suffix: DEBUG, Empty
-  components:
-  - type: Tag
-    tags:
-    - Debug
 
 - type: entity
   parent: BaseSMES
@@ -140,19 +124,11 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
-  - type: Tag
-    tags:
-    - Debug
 
 - type: entity
   parent: BaseSubstation
   id: DebugSubstation
   suffix: DEBUG, Empty
-  components:
-  - type: Tag
-    tags:
-    - Debug
 
 - type: entity
   parent: BaseSubstation
@@ -161,19 +137,11 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
-  - type: Tag
-    tags:
-    - Debug
 
 - type: entity
   parent: BaseSubstationWall
   id: DebugSubstationWall
   suffix: DEBUG, Empty
-  components:
-  - type: Tag
-    tags:
-    - Debug
 
 - type: entity
   parent: BaseSubstationWall
@@ -182,19 +150,11 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
-  - type: Tag
-    tags:
-    - Debug
 
 - type: entity
   parent: BaseAPC
   id: DebugAPC
   suffix: DEBUG, Empty
-  components:
-  - type: Tag
-    tags:
-    - Debug
 
 - type: entity
   parent: BaseAPC
@@ -203,10 +163,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
-  - type: Tag
-    tags:
-    - Debug
 
 - type: entity
   id: DebugPowerReceiver
@@ -215,9 +171,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics

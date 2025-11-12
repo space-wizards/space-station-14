@@ -92,7 +92,6 @@
       - id: Poison
       - id: Narcotic
       - id: Alcohol
-        rateModifier: 0.1
   - type: Item
     size: Small
     heldPrefix: stomach

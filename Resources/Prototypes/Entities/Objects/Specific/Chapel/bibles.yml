@@ -16,8 +16,8 @@
         Brute: 15
         Airloss: 15
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
-      groups:
-        Burn: 10
+      types:
+        Heat: 10
   - type: MeleeWeapon
     soundHit:
       collection: Punch

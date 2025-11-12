@@ -1,0 +1,87 @@
+- type: entity # Starts fuse after taking 10 damage.
+  parent: BaseItem
+  abstract: true
+  id: GrenadeBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/grenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: Item
+    size: Small
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: TriggerOnUse
+  - type: TimerTrigger
+    delay: 3
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger: # Start fuse
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
+  - type: Appearance
+  - type: AnimationPlayer
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: primed }
+          Unprimed: { state: icon }
+  - type: Tag
+    tags:
+    - HandGrenade
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+
+- type: entity # Starts fuse after taking 10 damage, instantly detonates/activates after taking 45 damage.
+  abstract: true
+  id: VolatileGrenadeBase
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
+    - trigger: # immediately explode
+        !type:DamageTrigger
+        damage: 45
+      behaviors:
+      - !type:TriggerBehavior
+        keyOut: timer
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity # Starts fuse after taking 10 damage, is destroyed without activating/detonating after taking 45 damage.
+  abstract: true
+  id: FragileGrenadeBase
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
+    - trigger: # Disappear
+        !type:DamageTrigger
+        damage: 45
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]

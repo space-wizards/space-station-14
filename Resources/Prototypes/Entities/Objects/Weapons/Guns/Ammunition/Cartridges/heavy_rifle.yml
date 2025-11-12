@@ -6,7 +6,7 @@
   components:
   - type: Tag
     tags:
-      - CartridgeHeavyRifle
+    - CartridgeHeavyRifle
   - type: CartridgeAmmo
     proto: BulletHeavyRifle
   - type: Sprite

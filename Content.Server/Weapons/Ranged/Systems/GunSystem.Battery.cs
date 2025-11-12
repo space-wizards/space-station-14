@@ -68,6 +68,7 @@ public sealed partial class GunSystem
 
     protected override void TakeCharge(Entity<BatteryAmmoProviderComponent> entity)
     {
+        // Take charge from either the BatteryComponent or PowerCellSlotComponent.
         var ev = new ChangeChargeEvent(-entity.Comp.FireCost);
         RaiseLocalEvent(entity, ref ev);
     }

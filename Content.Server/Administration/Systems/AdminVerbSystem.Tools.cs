@@ -169,7 +169,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/fill_battery.png")),
                 Act = () =>
                 {
-                    _batterySystem.SetCharge(args.Target, battery.MaxCharge, battery);
+                    _batterySystem.SetCharge((args.Target, battery), battery.MaxCharge);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-refill-battery-description"),
@@ -184,7 +184,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/drain_battery.png")),
                 Act = () =>
                 {
-                    _batterySystem.SetCharge(args.Target, 0, battery);
+                    _batterySystem.SetCharge((args.Target, battery), 0);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-drain-battery-description"),
@@ -200,9 +200,8 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var recharger = EnsureComp<BatterySelfRechargerComponent>(args.Target);
-                    recharger.AutoRecharge = true;
                     recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
-                    recharger.AutoRechargePause = false; // No delay.
+                    recharger.AutoRechargePauseTime = TimeSpan.Zero; // No delay.
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-infinite-battery-object-description"),
@@ -553,7 +552,7 @@ public sealed partial class AdminVerbSystem
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
-                        _batterySystem.SetCharge(ent, battery.MaxCharge, battery);
+                        _batterySystem.SetCharge((ent, battery), battery.MaxCharge);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -574,7 +573,7 @@ public sealed partial class AdminVerbSystem
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
-                        _batterySystem.SetCharge(ent, 0, battery);
+                        _batterySystem.SetCharge((ent, battery), 0);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -599,9 +598,8 @@ public sealed partial class AdminVerbSystem
                         var recharger = EnsureComp<BatterySelfRechargerComponent>(ent);
                         var battery = EnsureComp<BatteryComponent>(ent);
 
-                        recharger.AutoRecharge = true;
                         recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
-                        recharger.AutoRechargePause = false; // No delay.
+                        recharger.AutoRechargePauseTime = TimeSpan.Zero; // No delay.
                     }
                 },
                 Impact = LogImpact.Extreme,

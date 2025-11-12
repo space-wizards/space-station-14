@@ -55,7 +55,7 @@
 - type: reaction
   id: Licoxide
   reactants:
-    Lead:
+    Lithium:
       amount: 1
     Zinc:
       amount: 1
@@ -227,3 +227,50 @@
       amount: 1
   products:
     CorgiJuice: 2
+
+- type: reaction
+  id: Felinase
+  reactants:
+    Haloperidol:
+      amount: 3
+    Cognizine:
+      amount: 2
+    CarpoToxin:
+      amount: 2
+    Enzyme:
+      amount: 1
+  products:
+    Felinase: 2
+
+- type: reaction
+  id: Caninase
+  reactants:
+    Haloperidol:
+      amount: 3
+    Cognizine:
+      amount: 2
+    Happiness:
+      amount: 2
+    Enzyme:
+      amount: 1
+  products:
+    Caninase: 2
+
+- type: reaction
+  id: CaninaseFelinaseReaction
+  impact: High
+  priority: 20
+  reactants:
+    Caninase:
+      amount: 1
+    Felinase:
+      amount: 1
+  products:
+    Razorium: 2
+  effects:
+  - !type:Explosion
+    explosionType: Radioactive
+    maxIntensity: 5
+    intensityPerUnit: 1
+    intensitySlope: 2.7
+    maxTotalIntensity: 50

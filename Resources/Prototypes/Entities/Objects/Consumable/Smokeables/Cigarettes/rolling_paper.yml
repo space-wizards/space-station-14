@@ -27,11 +27,6 @@
   id: PackPaperRollingFilters
   description: A pack of filters and thin pieces of paper used to make fine smokeables.
   components:
-  - type: Storage # Redundant
-    whitelist:
-      tags:
-      - RollingPaper
-      - CigFilter
   - type: StorageFill
     contents:
       - id: PaperRolling

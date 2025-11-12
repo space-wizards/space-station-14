@@ -121,6 +121,15 @@
     - PlushieLizardJobJanitor
 
 - type: loadout
+  id: JanitorGoldenPlunger
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorJanitorial
+  storage:
+    back:
+    - GoldenPlunger
+
+- type: loadout
   id: LizardPlushieBotanist
   effects:
   - !type:JobRequirementLoadoutEffect
@@ -335,6 +344,18 @@
   storage:
     back:
     - PlushieLizardJobSecurityofficer
+
+- type: loadout
+  id: SecStar
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:DepartmentTimeRequirement
+        department: Security
+        time: 100h
+  storage:
+    back:
+    - Dinkystar
 
 - type: loadout
   id: LizardPlushieSecurityCadet

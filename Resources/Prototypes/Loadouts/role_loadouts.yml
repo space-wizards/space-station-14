@@ -152,7 +152,6 @@
   - Survival
   - Trinkets
   - JanitorJobTrinkets
-  - JanitorPlunger
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -378,7 +377,6 @@
   - SurvivalSecurity
   - Trinkets
   - HeadofSecurityJobTrinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -393,7 +391,6 @@
   - SurvivalSecurity
   - Trinkets
   - WardenJobTrinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -409,7 +406,6 @@
   - SurvivalSecurity
   - Trinkets
   - SecurityJobTrinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -424,7 +420,6 @@
   - SurvivalSecurity
   - Trinkets
   - DetectiveJobTrinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout

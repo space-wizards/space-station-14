@@ -2,23 +2,27 @@
   id: AllPlushiesTable
   table: !type:GroupSelector
     children:
-    - id: PlushieBee
-    - id: PlushieNar
-      weight: 0.5
-    - id: PlushieRatvar
-      weight: 0.5
+    - !type:NestedSelector
+      tableId: AllLizardPlushieTable
     - id: PlushieNuke
     - id: PlushieSlime
     - id: PlushieSnake
     - id: PlushieExperiment
+    - id: PlushieVox
+    - id: PlushieRouny
+    - id: PlushieAtmosian
+    - id: PlushieDiona
+    - id: PlushieXeno
+    - id: PlushieHampter
+    - id: PlushieMoth
+    - id: PlushieArachind
+    - id: PlushiePenguin
+    - id: PlushieVulp
     - !type:GroupSelector
       children:
-      - id: PlushieLizard
-        weight: 9
-      - id: PlushieSpaceLizard
-        weight: 1
-      - id: PlushieLizardInversed
-        weight: 0.5
+      - id: PlushieBee
+      - id: PlushieRGBee
+        weight: 0.1
     - !type:GroupSelector
       children:
       - id: PlushieCarp
@@ -28,21 +32,84 @@
         weight: 0.25
       - id: PlushieRainbowCarp
         weight: 0.15
-    - id: PlushieVox
-    - id: PlushieRouny
     - !type:GroupSelector
       children:
       - id: PlushieSharkBlue
       - id: PlushieSharkGrey
       - id: PlushieSharkPink
-    - id: PlushieAtmosian
-    - id: PlushieDiona
-    - id: PlushieXeno
-    - id: PlushieHampter
-    - id: PlushieMoth
-    - id: PlushieArachind
-    - id: PlushiePenguin
-    - id: PlushieVulp
+    - !type:GroupSelector # Toy plushies
+      children:
+      - id: ToyIan
+      - id: ToyAmongPequeno
+      - id: ToyMouse
+    - !type:GroupSelector # Giant plushies
+      children:
+      - id: PlushieNar
+      - id: PlushieRatvar
+    - !type:GroupSelector # Rare plushies
+      weight: 0.1 # 1 in >210
+      children:
+      - id: PlushieHuman
+      - id: PlushieGhost
+      - id: PlushieLamp
+    - !type:GroupSelector # Legendary plushies
+      weight: 0.002 # 1 in >10,500
+      children:
+      - id: PlushieThrongler
+      - id: PlushieGhostRevenant # You got the god roll, and failed
+
+- type: entityTable
+  id: AllLizardPlushieTable
+  table: !type:GroupSelector
+    children:
+    - id: PlushieLizard
+      weight: 8
+    - id: PlushieSpaceLizard
+      weight: 1
+    - id: PlushieLizardInversed
+      weight: 0.1 # 1 in >100
+    - !type:GroupSelector # Lizard gets a job table
+      children:
+      - id: PlushieLizardJobAtmospherictechnician
+      - id: PlushieLizardJobBartender
+      - id: PlushieLizardJobBotanist
+      - id: PlushieLizardJobBoxer
+      - id: PlushieLizardJobCaptain
+      - id: PlushieLizardJobCargotechnician
+      - id: PlushieLizardJobChaplain
+      - id: PlushieLizardJobChef
+      - id: PlushieLizardJobChemist
+      - id: PlushieLizardJobChiefengineer
+      - id: PlushieLizardJobChiefmedicalofficer
+      - id: PlushieLizardJobClown # :o)
+      - id: PlushieLizardJobDetective
+      - id: PlushieLizardJobHeadofpersonnel
+      - id: PlushieLizardJobHeadofsecurity
+      - id: PlushieLizardJobJanitor
+      - id: PlushieLizardJobLawyer
+      - id: PlushieLizardJobLibrarian
+      - id: PlushieLizardJobMedicaldoctor
+      - id: PlushieLizardJobMedicalintern
+      - id: PlushieLizardJobMime #
+      - id: PlushieLizardJobMusician
+      - id: PlushieLizardJobParamedic
+      - id: PlushieLizardJobPassenger
+      - id: PlushieLizardJobPsychologist
+      - id: PlushieLizardJobQuartermaster
+      - id: PlushieLizardJobReporter
+      - id: PlushieLizardJobResearchassistant
+      - id: PlushieLizardJobResearchdirector
+      - id: PlushieLizardJobSalvagespecialist
+      - id: PlushieLizardJobScientist
+      - id: PlushieLizardJobSecuritycadet
+      - id: PlushieLizardJobSecurityofficer
+      - id: PlushieLizardJobServiceworker
+      - id: PlushieLizardJobStationengineer
+      - id: PlushieLizardJobTechnicalassistant
+      - id: PlushieLizardJobZookeeper
+      - id: PlushieLizardJobMultiweh
+        weight: 0.5 # 1 in >800
+
 
 - type: entityTable
   id: AllPottedPlantsTable
@@ -108,16 +175,10 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: PlushieLizard
-          amount: !type:ConstantNumberSelector
-            value: 3
-        - id: PlushieSpaceLizard
-          amount: !type:ConstantNumberSelector
-            value: 3
-        - id: PlushieLizardJobMultiweh # the exceedingly rare multiweh!
-          prob: 0.01
+      entity_storage: !type:NestedSelector
+        tableId: AllLizardPlushieTable
+        rolls: !type:ConstantNumberSelector
+          value: 6
 
 - type: entity
   id: CrateFunSharkPlushieBulk

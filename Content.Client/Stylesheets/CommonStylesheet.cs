@@ -65,6 +65,11 @@ public abstract class CommonStylesheet : PalettedStylesheet, IButtonConfig, IWin
     ResPath IButtonConfig.RoundedButtonPath => new("rounded_button.svg.96dpi.png");
     ResPath IButtonConfig.RoundedButtonBorderedPath => new("rounded_button_bordered.svg.96dpi.png");
 
+    ResPath IButtonConfig.MonotoneBaseButtonPath => new("Monotone/monotone_button.svg.96dpi.png");
+    ResPath IButtonConfig.MonotoneOpenLeftButtonPath => new("Monotone/monotone_button_open_left.svg.96dpi.png");
+    ResPath IButtonConfig.MonotoneOpenRightButtonPath => new("Monotone/monotone_button_open_right.svg.96dpi.png");
+    ResPath IButtonConfig.MonotoneOpenBothButtonPath => new("Monotone/monotone_button_open_both.svg.96dpi.png");
+
     ColorPalette IButtonConfig.ButtonPalette => PrimaryPalette with { PressedElement = PositivePalette.PressedElement };
     ColorPalette IButtonConfig.PositiveButtonPalette => PositivePalette;
     ColorPalette IButtonConfig.NegativeButtonPalette => NegativePalette;

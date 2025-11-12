@@ -84,6 +84,14 @@ public sealed partial class CloningSystem : SharedCloningSystem
         return true;
     }
 
+    public override void CloneComponents(EntityUid original, EntityUid clone, ProtoId<CloningSettingsPrototype> settings)
+    {
+        if (!_prototype.Resolve(settings, out var proto))
+            return;
+
+        CloneComponents(original, clone, proto);
+    }
+
     public override void CloneComponents(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
     {
         var componentsToCopy = settings.Components;
