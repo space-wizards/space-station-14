@@ -37,6 +37,11 @@
       - id: PlushieSharkBlue
       - id: PlushieSharkGrey
       - id: PlushieSharkPink
+    - !type:GroupSelector # Toy plushies
+      children:
+      - id: ToyIan
+      - id: ToyAmongPequeno
+      - id: ToyMouse
     - !type:GroupSelector # Giant plushies
       children:
       - id: PlushieNar
@@ -48,7 +53,7 @@
       - id: PlushieGhost
       - id: PlushieLamp
     - !type:GroupSelector # Legendary plushies
-      weight: 0.001 # 1 in >20,000
+      weight: 0.001 # 1 in >21,000
       children:
       - id: PlushieThrongler
       - id: PlushieGhostRevenant # You got the god roll, and failed
