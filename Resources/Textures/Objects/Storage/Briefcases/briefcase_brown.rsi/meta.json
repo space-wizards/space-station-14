@@ -22,13 +22,18 @@
       "name": "icon-muzzle"
     },
     {
-      "name": "inhand-left-muzzle"
+      "name": "inhand-left-muzzle",
+      "directions": 4
     },
     {
-      "name": "inhand-right-muzzle"
+      "name": "inhand-right-muzzle",
+      "directions": 4
     },
     {
       "name": "bolt-open"
+    },
+    {
+      "name": "base"
     }
   ]
 }

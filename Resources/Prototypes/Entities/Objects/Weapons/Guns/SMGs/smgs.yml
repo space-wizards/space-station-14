@@ -317,10 +317,6 @@
       path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
   - type: ChamberMagazineAmmoProvider
     autoEject: false
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
   - type: Appearance
   - type: StaticPrice
     price: 5000

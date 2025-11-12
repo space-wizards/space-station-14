@@ -2297,9 +2297,8 @@
   id: uplinkBriefcaseGun
   name: uplink-briefcase-gun-name
   description: uplink-briefcase-gun-desc
-  icon: { sprite:  Objects/Storage/Briefcases/briefcase_brown.rsi, state: icon-muzzle}
   productEntity: WeaponSubMachineGunBriefcase
-  discountCategory: veryRareDiscounts
+  discountCategory: veryRareDiscountsrareDiscounts
   discountDownTo:
     Telecrystal: 10
   cost:
