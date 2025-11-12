@@ -18,7 +18,6 @@
     - id: PlushieArachind
     - id: PlushiePenguin
     - id: PlushieVulp
-    - id: PlushieLamp
     - !type:GroupSelector
       children:
       - id: PlushieBee
@@ -47,6 +46,7 @@
       children:
       - id: PlushieHuman
       - id: PlushieGhost
+      - id: PlushieLamp
     - !type:GroupSelector # Legendary plushies
       weight: 0.001 # 1 in >20,000
       children:
