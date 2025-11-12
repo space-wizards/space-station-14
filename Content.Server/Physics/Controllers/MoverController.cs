@@ -109,7 +109,6 @@ public sealed class MoverController : SharedMoverController
                     break;
                 }
 
-
                 if (activeMover is not null)
                     activeMover.RelayedFrom = ent.Comp2.Source;
 
