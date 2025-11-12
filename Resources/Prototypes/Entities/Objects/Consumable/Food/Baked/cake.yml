@@ -9,7 +9,6 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/cake.rsi
   - type: SolutionContainerManager
@@ -49,7 +48,7 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1148,7 +1147,7 @@
           Quantity: 80
         - ReagentId: Sugar
           Quantity: 30
-  - type: Food
+  - type: Edible
     transferAmount: 12
   - type: Item
     size: Normal
@@ -1156,7 +1155,7 @@
   - type: PointLight
     color: "#FFFF00"
     radius: 2
-    energy: 1.4
+    energy: 2.5
 
 - type: entity
   name: suppermatter shard
@@ -1175,12 +1174,12 @@
           Quantity: 10
         - ReagentId: Sugar
           Quantity: 5
-  - type: Food
+  - type: Edible
     transferAmount: 3
   - type: PointLight
     color: "#FFFF00"
     radius: 1.4
-    energy: 1.4
+    energy: 2.5
   - type: Tag
     tags:
     - Slice
