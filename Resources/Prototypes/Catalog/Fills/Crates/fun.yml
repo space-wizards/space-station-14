@@ -107,7 +107,8 @@
       - id: PlushieLizardJobStationengineer
       - id: PlushieLizardJobTechnicalassistant
       - id: PlushieLizardJobZookeeper
-      - id: PlushieLizardJobMultiweh # I'd give it a lower weight, but it's already .0025% chance
+      - id: PlushieLizardJobMultiweh
+        weight: 0.5 # 1 in >800
 
 
 - type: entityTable
