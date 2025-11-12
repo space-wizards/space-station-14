@@ -302,7 +302,7 @@ namespace Content.Shared.Chemistry.Components
         /// If you only want the volume of a single reagent, use <see cref="GetReagentQuantity"/>
         /// </summary>
         [Pure]
-        public FixedPoint2 GetTotalPrototypeQuantity(params string[] prototypes)
+        public FixedPoint2 GetTotalPrototypeQuantity(params ProtoId<ReagentPrototype>[] prototypes)
         {
             var total = FixedPoint2.Zero;
             foreach (var (reagent, quantity) in Contents)
@@ -314,7 +314,7 @@ namespace Content.Shared.Chemistry.Components
             return total;
         }
 
-        public FixedPoint2 GetTotalPrototypeQuantity(string id)
+        public FixedPoint2 GetTotalPrototypeQuantity(ProtoId<ReagentPrototype> id)
         {
             var total = FixedPoint2.Zero;
             foreach (var (reagent, quantity) in Contents)
@@ -645,7 +645,7 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         /// Splits a solution with only the specified reagent prototypes.
         /// </summary>
-        public Solution SplitSolutionWithOnly(FixedPoint2 toTake, params string[] includedPrototypes)
+        public Solution SplitSolutionWithOnly(FixedPoint2 toTake, params ProtoId<ReagentPrototype>[] includedPrototypes)
         {
             // First remove the non-included prototypes
             List<ReagentQuantity> excluded = new();
@@ -844,7 +844,7 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        public Color GetColorWithout(IPrototypeManager? protoMan, params string[] without)
+        public Color GetColorWithout(IPrototypeManager? protoMan, params ProtoId<ReagentPrototype>[] without)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -887,7 +887,7 @@ namespace Content.Shared.Chemistry.Components
             return GetColorWithout(protoMan);
         }
 
-        public Color GetColorWithOnly(IPrototypeManager? protoMan, params string[] included)
+        public Color GetColorWithOnly(IPrototypeManager? protoMan, params ProtoId<ReagentPrototype>[] included)
         {
             if (Volume == FixedPoint2.Zero)
             {

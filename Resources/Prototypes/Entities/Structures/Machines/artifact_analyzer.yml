@@ -66,7 +66,7 @@
     board: ArtifactAnalyzerMachineCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#b53ca1"
   - type: GuideHelp
     guides:
