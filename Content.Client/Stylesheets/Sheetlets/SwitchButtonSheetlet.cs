@@ -10,20 +10,18 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets;
 
 [CommonSheetlet]
-public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, ICheckboxConfig
+public sealed class SwitchButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, ISwitchButtonConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
-        // TODO: make config
-        // ICheckboxConfig checkboxCfg = sheet;
+        ISwitchButtonConfig switchButtonCfg = sheet;
 
-        // SwitchButton
-        var trackFillTex = ResCache.GetTexture("/Textures/Interface/Nano/switchbutton_track_fill.svg.96dpi.png");
-        var trackOutlineTex = ResCache.GetTexture("/Textures/Interface/Nano/switchbutton_track_outline.svg.96dpi.png");
-        var thumbFillTex = ResCache.GetTexture("/Textures/Interface/Nano/switchbutton_thumb_fill.svg.96dpi.png");
-        var thumbOutlineTex = ResCache.GetTexture("/Textures/Interface/Nano/switchbutton_thumb_outline.svg.96dpi.png");
-        var symbolOffTex = ResCache.GetTexture("/Textures/Interface/Nano/switchbutton_symbol_off.svg.96dpi.png");
-        var symbolOnTex = ResCache.GetTexture("/Textures/Interface/Nano/switchbutton_symbol_on.svg.96dpi.png");
+        var trackFillTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonTrackFillPath, NanotrasenStylesheet.TextureRoot);
+        var trackOutlineTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonTrackOutlinePath, NanotrasenStylesheet.TextureRoot);
+        var thumbFillTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonThumbFillPath, NanotrasenStylesheet.TextureRoot);
+        var thumbOutlineTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonThumbOutlinePath, NanotrasenStylesheet.TextureRoot);
+        var symbolOffTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonSymbolOffPath, NanotrasenStylesheet.TextureRoot);
+        var symbolOnTex = sheet.GetTextureOr(switchButtonCfg.SwitchButtonSymbolOnPath, NanotrasenStylesheet.TextureRoot);
 
         return
         [
