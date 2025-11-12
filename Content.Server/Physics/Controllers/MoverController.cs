@@ -167,8 +167,7 @@ public sealed class MoverController : SharedMoverController
         while (inputQueryEnumerator.MoveNext(out var uid, out var activeComp, out var moverComp))
         {
             _seenRelayMovers.Clear(); // O(1) if already empty
-            if (activeComp.RelayedFrom is { } relay)
-                QueueRelaySources(relay);
+            QueueRelaySources(activeComp.RelayedFrom);
 
             // If it's already inserted, that's fine—that means it'll still be
             // handled before its child movers
@@ -188,22 +187,22 @@ public sealed class MoverController : SharedMoverController
         // When we insert a chain of relay sources we have to flip its ordering
         // It's going to be extremely uncommon for a relay chain to be more than
         // one entity so we just recurse as needed.
-        void QueueRelaySources(Entity<ActiveInputMoverComponent?, InputMoverComponent?> next)
+        void QueueRelaySources(EntityUid? next)
         {
             // We only care if it's still a mover
-            if (!_activeQuery.Resolve(next, ref next.Comp1, logMissing: false)
-                || !MoverQuery.Resolve(next, ref next.Comp2)
-                || !_seenRelayMovers.Add(next))
+            if (!_activeQuery.TryComp(next, out var nextActive)
+                || !MoverQuery.TryComp(next, out var nextMover)
+                || !_seenRelayMovers.Add(next.Value))
                 return;
 
-            Debug.Assert(next.Owner != next.Comp1.RelayedFrom);
+            Debug.Assert(next.Value != nextActive.RelayedFrom);
 
             // While it is (as of writing) currently true that this recursion
             // should always terminate due to RelayedFrom always being written
             // in a way that tracks if it's made a loop, we still take the extra
             // memory (and small time cost) of making sure via _seenRelayMovers.
-            QueueRelaySources(next);
-            AddMover((next, next.Comp2));
+            QueueRelaySources(nextActive.RelayedFrom);
+            AddMover((next.Value, nextMover));
         }
 
         // Track inserts so we have ~ O(1) inserts without duplicates. Hopefully
