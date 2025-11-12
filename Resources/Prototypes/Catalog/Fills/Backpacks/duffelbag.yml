@@ -283,10 +283,8 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingOuterHardsuitSyndie
-        - id: ClothingMaskGasSyndicate
-        - id: ClothingHandsGlovesCombat
-        - id: DoubleEmergencyOxygenTankFilled
-        - id: DoubleEmergencyNitrogenTankFilled
+        - !type:NestedSelector
+          tableId: TableSyndicateHardsuitExtras
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -299,10 +297,8 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingOuterHardsuitSyndieElite
-        - id: ClothingMaskGasSyndicate
-        - id: ClothingHandsGlovesCombat
-        - id: DoubleEmergencyOxygenTankFilled
-        - id: DoubleEmergencyNitrogenTankFilled
+        - !type:NestedSelector
+          tableId: TableSyndicateHardsuitExtras
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -312,12 +308,17 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskGasSyndicate
-        - id: ClothingHandsGlovesCombat
-        - id: DoubleEmergencyOxygenTankFilled
-        - id: DoubleEmergencyNitrogenTankFilled
+      storagebase: !type:NestedSelector
+        tableId: TableSyndicateHardsuitExtras
+
+- type: entityTable
+  id: TableSyndicateHardsuitExtras
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskGasSyndicate
+    - id: ClothingHandsGlovesCombat
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

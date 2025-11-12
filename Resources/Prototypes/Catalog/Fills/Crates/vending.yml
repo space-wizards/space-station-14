@@ -1,3 +1,4 @@
+#TODO: Change these to EntityTableContainerFill when the VendingMachineRestockTest can check those.
 - type: entity
   id: CrateVendingMachineRestockBoozeFilled
   parent: CratePlastic

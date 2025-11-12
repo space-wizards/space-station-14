@@ -19,10 +19,8 @@
       entity_storage: !type:AllSelector
         children:
         - id: ClothingOuterHardsuitJuggernaut
-        - id: ClothingMaskGasSyndicate
-        - id: ClothingHandsGlovesCombat
-        - id: DoubleEmergencyOxygenTankFilled
-        - id: DoubleEmergencyNitrogenTankFilled
+        - !type:NestedSelector
+          tableId: TableSyndicateHardsuitExtras
 
 - type: entity
   id: CrateSyndicateSuperSurplusBundle
