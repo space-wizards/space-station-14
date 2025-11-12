@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using Content.Server.Shuttles.Components;
@@ -102,6 +103,9 @@ public sealed class MoverController : SharedMoverController
                 && Exists(ent.Comp2.Source)
                 && !_seenMovers.Contains(ent.Comp2.Source))
             {
+                if (ent.Comp2.Source == ent.Owner)
+                    Log.Error($"Entity {ToPrettyString(ent)} is attempting to relay movement to itself!");
+
                 if (activeMover is not null)
                     activeMover.RelayedFrom = ent.Comp2.Source;
 
@@ -160,11 +164,12 @@ public sealed class MoverController : SharedMoverController
         while (inputQueryEnumerator.MoveNext(out var uid, out var activeComp, out var moverComp))
         {
             _seenRelayMovers.Clear(); // O(1) if already empty
-            QueueRelaySources(activeComp.RelayedFrom);
+            if (activeComp.RelayedFrom is { } relay)
+                QueueRelaySources(relay);
 
             // If it's already inserted, that's fine—that means it'll still be
             // handled before its child movers
-            AddMover(uid, moverComp);
+            AddMover((uid, moverComp));
         }
 
         ActiveMoverGauge.Set(_moversToUpdate.Count);
@@ -180,32 +185,34 @@ public sealed class MoverController : SharedMoverController
         // When we insert a chain of relay sources we have to flip its ordering
         // It's going to be extremely uncommon for a relay chain to be more than
         // one entity so we just recurse as needed.
-        void QueueRelaySources(EntityUid? next)
+        void QueueRelaySources(Entity<ActiveInputMoverComponent?, InputMoverComponent?> next)
         {
             // We only care if it's still a mover
-            if (!_activeQuery.TryComp(next, out var nextActive)
-                || !MoverQuery.TryComp(next, out var nextMover)
-                || !_seenRelayMovers.Add(next.Value))
+            if (!_activeQuery.Resolve(next, ref next.Comp1, logMissing: false)
+                || !MoverQuery.Resolve(next, ref next.Comp2)
+                || !_seenRelayMovers.Add(next))
                 return;
+
+            Debug.Assert(next.Owner != next.Comp1.RelayedFrom);
 
             // While it is (as of writing) currently true that this recursion
             // should always terminate due to RelayedFrom always being written
             // in a way that tracks if it's made a loop, we still take the extra
             // memory (and small time cost) of making sure via _seenRelayMovers.
-            QueueRelaySources(nextActive.RelayedFrom);
-            AddMover(next.Value, nextMover);
+            QueueRelaySources(next);
+            AddMover((next, next.Comp2));
         }
 
         // Track inserts so we have ~ O(1) inserts without duplicates. Hopefully
         // it doesn't matter that both _seenMovers and _moversToUpdate are never
         // trimmed? They should be pretty memory light anyway, and in general
         // it'll be rare for there to be a decrease in movers.
-        void AddMover(EntityUid uid, InputMoverComponent comp)
+        void AddMover(Entity<InputMoverComponent> entity)
         {
-            if (_seenMovers.Contains(uid))
+            if (!_seenMovers.Add(entity))
                 return;
-            _moversToUpdate.Add((uid, comp));
-            _seenMovers.Add(uid);
+
+            _moversToUpdate.Add(entity);
         }
     }
 
