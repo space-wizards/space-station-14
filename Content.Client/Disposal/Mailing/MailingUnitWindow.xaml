@@ -48,9 +48,9 @@
                     Text="{Loc 'ui-disposal-unit-button-eject'}"
                     StyleClasses="OpenBoth" />
             <Button Name="Power"
-                    Access="Public"
-                    Text="{Loc 'ui-disposal-unit-button-power'}"
-                    StyleClasses="OpenLeft" />
+                         Access="Public"
+                         Text="{Loc 'ui-disposal-unit-button-power'}"
+                         StyleClasses="OpenLeft" />
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

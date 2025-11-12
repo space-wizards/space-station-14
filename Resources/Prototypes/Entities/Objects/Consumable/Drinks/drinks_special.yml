@@ -17,9 +17,6 @@
     inHandsMaxFillLevels: 1
   - type: FitsInDispenser
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
 
 - type: entity
   parent: [DrinkBaseMaterialMetal, DrinkBase]
@@ -208,9 +205,6 @@
     solution: drink
   - type: FitsInDispenser
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkGlass
 
 - type: entity
   parent: DrinkShakeBase
