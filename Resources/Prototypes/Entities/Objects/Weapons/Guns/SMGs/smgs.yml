@@ -294,10 +294,18 @@
   components:
   - type: Item
     size: Ginormous
+    inhandVisuals:
+      left:
+        - state: inhand-left
+        - state: inhand-left-muzzle
+      right:
+        - state: inhand-right
+        - state: inhand-right-muzzle
   - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/briefcase_gun.rsi
+    sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
     layers:
-    - state: base
+    - state: icon
+    - state: icon-muzzle
       map: ["enum.GunVisualLayers.Base"]
   - type: Gun
     fireRate: 9
