@@ -108,7 +108,9 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
-    state: shard
+    layers:
+    - state: shard
+      shader: unshaded
   - type: Projectile
     damage:
       types:
