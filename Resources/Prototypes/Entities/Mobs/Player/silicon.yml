@@ -845,10 +845,8 @@
     rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
-    requirements:
-    - !type:RoleTimeRequirement
-     role: JobBorg
-     time: 1h
+    reregister: false
+    job: Borg
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -862,8 +860,6 @@
     rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
-    requirements:
-    - !type:RoleTimeRequirement
-      role: JobBorg
-      time: 1h
+    reregister: false
+    job: Borg
   - type: GhostTakeoverAvailable
