@@ -5,16 +5,17 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Ghost;
 using Content.Shared.Mind;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.GhostTypes;
 
 public sealed class GhostSpriteStateSystem : EntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private readonly ProtoId<DamageTypePrototype> BluntProtoId = "Blunt";
     private readonly ProtoId<DamageTypePrototype> HeatProtoId = "Heat";
@@ -59,17 +60,21 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             }
         }
 
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+        var rand = new System.Random(seed);
+
         highestTypes.Sort();
         if (highestTypes.Count == 3 && highestTypes[0] == BluntProtoId && highestTypes[1] == HeatProtoId && highestTypes[2] == PiercingProtoId) // Specific case for explosions (not an ideal way of doing it)
         {
-            spriteState = "Explosion" + _random.Next(0, 3);
+            spriteState = "Explosion" + rand.Next(0, 3);
         }
         else
         {
-            spriteState = highestTypes[_random.Next(0, highestTypes.Count)]; // Chooses a random damage type from the list
+            spriteState = highestTypes[rand.Next(0, highestTypes.Count)]; // Chooses a random damage type from the list
             if (ent.Comp.DamageMap.TryGetValue(spriteState, out var spriteAmount))  // Chooses a random sprite state
             {
-                spriteState += _random.Next(0, spriteAmount - 1);
+                spriteState += rand.Next(0, spriteAmount - 1);
             }
         }
         _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState, appearance);
