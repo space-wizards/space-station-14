@@ -585,6 +585,35 @@
   - MothershipCore5
   obeysTo: laws-owner-xenoborgs
 
+# Central Command lawset
+- type: siliconLaw
+  id: CentComm1
+  order: 1
+  lawString: law-centcomm-1
+
+- type: siliconLaw
+  id: CentComm2
+  order: 2
+  lawString: law-centcomm-2
+
+- type: siliconLaw
+  id: CentComm3
+  order: 3
+  lawString: law-centcomm-3
+
+- type: siliconLaw
+  id: CentComm4
+  order: 4
+  lawString: law-centcomm-4
+
+- type: siliconLawset
+  id: CentCommLawset
+  laws:
+  - CentComm1
+  - CentComm2
+  - CentComm3
+  - CentComm4
+  obeysTo: laws-owner-centcomm
 
 # ion storm random lawsets
 - type: weightedRandom

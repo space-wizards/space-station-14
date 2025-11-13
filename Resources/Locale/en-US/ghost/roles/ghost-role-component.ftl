@@ -265,6 +265,12 @@ ghost-role-information-derelict-mining-cyborg-description = You are a salvage cy
 ghost-role-information-derelict-syndicate-assault-cyborg-name = Derelict Syndicate Assault Cyborg
 ghost-role-information-derelict-syndicate-assault-cyborg-description = You are an early model syndicate assault cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
 
+ghost-role-information-centcomm-cyborg-combat-name = Combat Cyborg
+ghost-role-information-centcomm-cyborg-combat-description = A Emergency Response Team needs more manpower. You, a combat-specialized chassis, will help them.
+
+ghost-role-information-centcomm-cyborg-commando-name = Commando Cyborg
+ghost-role-information-centcomm-cyborg-commando-description = A Deathsquad needs more firepower. You, a top-of-the-line chassis, will help them.
+
 ghost-role-information-security-name = Security
 ghost-role-information-security-description = You are part of a security task force, but seem to have found yourself in a strange situation...
 

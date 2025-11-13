@@ -256,3 +256,32 @@
         Blunt: 2
         Slash: 6
         Structural: 20
+
+- type: entity
+  name: sonic jackhammer
+  parent: BaseItem
+  id: SonicJackhammer
+  description: A powerful tool used to quickly breach structures.
+  components:
+  - type: Item
+    storedRotation: -90
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: Objects/Tools/sonicjackhammer.rsi
+    state: icon
+  - type: MeleeWeapon
+    autoAttack: true
+    angle: 0
+    wideAnimationRotation: -90
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+    attackRate: 7
+    damage:
+      groups:
+        Brute: 3
+      types:
+        Structural: 30
+  - type: ThrowingAngle
+    angle: 270

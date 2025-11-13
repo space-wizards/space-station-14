@@ -144,6 +144,9 @@
   id: BorgModuleSyndicateAssault # Cyborg module category for extra evil red robots (nukies)
 
 - type: Tag
+  id: BorgModuleCentComm # Cyborg module category for Central Command cyborgs
+
+- type: Tag
   id: Bot # Targeting whitelist: ChameleonProjector
 
 - type: Tag

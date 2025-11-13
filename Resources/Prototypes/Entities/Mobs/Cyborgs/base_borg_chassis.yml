@@ -538,3 +538,290 @@
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+# Centcomm Cyborgs
+- type: entity
+  id: BorgChassisCombat
+  parent: BaseBorgChassisNotIonStormable
+  name: combat cyborg
+  description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen, this chassis is purpose-built for the extermination of powerful threats alongside their ERT compatriots. Its shell is reinforced with Plasteel.
+  components:
+  - type: BorgTransponder
+    name: combat cyborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: combat
+  - type: Sprite
+    layers:
+    - state: combat
+      sprite: Mobs/Silicon/chassis.rsi
+    - state: combat_e
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+      sprite: Mobs/Silicon/chassis.rsi
+    - state: combat_l
+      shader: unshaded
+      map: [ "light" ]
+      visible: false
+      sprite: Mobs/Silicon/chassis.rsi
+  - type: BorgChassis
+    maxModules: 3
+    hasMindState: combat_e
+    noMindState: combat_e_r
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleEngineering
+      - BorgModuleCentComm
+  - type: FlashImmunity
+  - type: MobThresholds # 2x more HP than a regular cyborg
+    thresholds:
+      0: Alive
+      200: Critical
+      400: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+      Critical: BorgCrit
+      Dead: BorgDead
+    showOverlays: false
+    allowRevives: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Binary
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - BorgModuleERT
+      - BorgModuleAdvancedTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+  - type: SiliconLawProvider
+    laws: CentCommLawset
+  - type: RandomMetadata
+    nameSegments:
+    - NamesBorg
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  - type: Access
+    enabled: false
+    groups:
+    - AllAccess
+    tags:
+    - Borg
+    - CentralCommand
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: ShowJobIcons
+  - type: Stripping
+
+- type: entity
+  id: BorgChassisCommando
+  parent: BaseBorgChassisNotIonStormable
+  name: commando cyborg
+  description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen. Fitted with the finest technology Nanotrasen could offer, nothing will stand in its way for too long. Its shell is reinforced with Plastitanium.
+  components:
+  - type: BorgTransponder
+    name: commando cyborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: commando
+  - type: Sprite
+    layers:
+    - state: commando
+      sprite: Mobs/Silicon/chassis.rsi
+    - state: commando_e
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+      sprite: Mobs/Silicon/chassis.rsi
+    - state: commando_l
+      shader: unshaded
+      map: [ "light" ]
+      visible: false
+      sprite: Mobs/Silicon/chassis.rsi
+  - type: BorgChassis
+    maxModules: 3
+    hasMindState: commando_e
+    noMindState: commando_e_r
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleEngineering
+      - BorgModuleCentComm
+  - type: FlashImmunity
+  - type: MobThresholds # 4x more HP than a regular cyborg. Mostly just to match how TANKY Deathsquads are. You're not meant to win against a DS, after all.
+    thresholds:
+      0: Alive
+      400: Critical
+      800: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+      Critical: BorgCrit
+      Dead: BorgDead
+    showOverlays: false
+    allowRevives: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 350
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Binary
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - BorgModuleCommando
+      - BorgModuleAdvancedTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+  - type: SiliconLawProvider
+    laws: CentCommLawset
+  - type: RandomMetadata
+    nameSegments:
+    - NamesBorg
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  - type: Access
+    enabled: false
+    groups:
+    - AllAccess
+    tags:
+    - Borg
+    - CentralCommand
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: ShowJobIcons
+  - type: Stripping
+
+- type: entity
+  id: PlayerBorgCombatGhostRole
+  parent: BorgChassisCombat
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-centcomm-cyborg-combat-name
+    description: ghost-role-information-centcomm-cyborg-combat-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobBorg
+      time: 3600 #1 hour
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerBorgCommandoGhostRole
+  parent: BorgChassisCommando
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-centcomm-cyborg-commando-name
+    description: ghost-role-information-centcomm-cyborg-commando-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobBorg
+      time: 3600 #1 hour
+  - type: GhostTakeoverAvailable
