@@ -850,7 +850,7 @@
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsExternal ]
+      board: [ DoorElectronicsEVA ]
 
 - type: entity
   parent: AirlockSyndicateGlass
