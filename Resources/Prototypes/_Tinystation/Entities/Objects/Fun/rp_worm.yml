@@ -1,29 +1,29 @@
-- type: entity
-  id: rp_worm
-  parent: BaseItem
-  name: РП ЧЕРВЬ
-  description: Самый обычный РП червь...
-  components:
-    - type: Sprite
-      sprite: _Tinystation/Objects/Misc/rp_worm.rsi
-      state: icon
-
-    - type: Item
-    - type: MeleeWeapon
-      damage:
-        types:
-          Blunt: 1
-          Sharp: 1
-          Heat: 1
-          Electricity: 1
-          Radiation: 1
-          Chemical: 1
-      soundHit:
-        path: /Audio/_Tinystation/Items/rp_worm/worm_hit.ogg
-      hitspark: Slime
-    - type: EmitSoundOnUse
-      sound:
-        path: /Audio/_Tinystation/Items/rp_worm/worm_use.ogg
-
-    - type: UseDelay
-      delay: 1.0
+#- type: entity
+#  id: rp_worm
+#  parent: BaseItem
+#  name: РП ЧЕРВЬ
+#  description: Самый обычный РП червь...
+#  components:
+#    - type: Sprite
+#      sprite: _Tinystation/Objects/Misc/rp_worm.rsi
+#      state: icon
+#
+#    - type: Item
+#    - type: MeleeWeapon
+#      damage:
+#        types:
+#          Blunt: 1
+#          Sharp: 1
+#          Heat: 1
+#          Electricity: 1
+#          Radiation: 1
+#          Chemical: 1
+#      soundHit:
+#        path: /Audio/_Tinystation/Items/rp_worm/worm_hit.ogg
+#      hitspark: Slime
+#    - type: EmitSoundOnUse
+#      sound:
+#        path: /Audio/_Tinystation/Items/rp_worm/worm_use.ogg
+#
+#    - type: UseDelay
+#      delay: 1.0

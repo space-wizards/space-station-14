@@ -3,8 +3,6 @@
   name: job-name-lawyer
   description: job-description-lawyer
   playTimeTracker: JobLawyer
-  department: Civilian
-  weight: 20
   requirements:
     - !type:OverallPlaytimeRequirement
       time: 2.5h
