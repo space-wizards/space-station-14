@@ -11,7 +11,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// </summary>
 /// <remarks>Avoid recursive loops where this component triggers itself. Use <see cref="RepeatingTriggerComponent"/> instead.</remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class TriggerRouletteOnTriggerComponent : BaseXOnTriggerComponent
+public sealed partial class RandomTriggerOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>
     /// The trigger keys and their weights.

@@ -5,13 +5,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class TriggerRouletteOnTriggerSystem : XOnTriggerSystem<TriggerRouletteOnTriggerComponent>
+public sealed class RandomTriggerOnTriggerSystem : XOnTriggerSystem<RandomTriggerOnTriggerComponent>
 {
     [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    protected override void OnTrigger(Entity<TriggerRouletteOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
+    protected override void OnTrigger(Entity<RandomTriggerOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
         // TODO: Replace with RandomPredicted once the engine PR is merged
         var hash = new List<int>
