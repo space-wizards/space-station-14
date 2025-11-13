@@ -847,8 +847,8 @@
       settings: default
     requirements:
     - !type:RoleTimeRequirement
-      role: JobBorg
-      time: 3600 #1 hour
+     role: JobBorg
+     time: 1h
   - type: GhostTakeoverAvailable
 
 - type: entity
@@ -865,5 +865,5 @@
     requirements:
     - !type:RoleTimeRequirement
       role: JobBorg
-      time: 3600 #1 hour
+      time: 1h
   - type: GhostTakeoverAvailable
