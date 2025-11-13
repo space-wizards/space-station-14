@@ -295,15 +295,18 @@
     size: Ginormous
     inhandVisuals:
       left:
-        - state: inhand-left
+        - sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+          state: inhand-left
         - state: inhand-left-muzzle
       right:
-        - state: inhand-right
+        - sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+          state: inhand-right
         - state: inhand-right-muzzle
   - type: Sprite
-    sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+    sprite: Objects/Weapons/Guns/SMGs/briefcase.rsi
     layers:
-    - state: icon
+    - sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+      state: icon
     - state: icon-muzzle
       map: ["enum.GunVisualLayers.Base"]
   - type: Gun
