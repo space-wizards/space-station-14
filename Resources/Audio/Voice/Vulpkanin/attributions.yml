@@ -50,6 +50,6 @@
   source: "https://github.com/goonstation/goonstation/blob/master/sound/voice/animal/werewolf_howl.ogg"
 
 - files: ["vulp_scream1.ogg", "vulp_scream2.ogg", "vulp_scream3.ogg", "vulp_scream4.ogg"]
-  license: "CC0-1.0"
-  copyright: "Original sound by https://freesound.org/people/lordomega/sounds/514959/ - cut out four clips, cleaned up, converted to ogg"
-  source: "https://freesound.org/people/lordomega/sounds/514959/"
+  license: "https://pixabay.com/service/license-summary/"
+  copyright: "Original sound by https://pixabay.com/sound-effects/fox-calling-243999/ - cut out four clips, cleaned up, converted to ogg"
+  source: "https://pixabay.com/sound-effects/fox-calling-243999/"
