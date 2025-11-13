@@ -1,7 +1,7 @@
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Tesla.Components;
 using Content.Server.Lightning;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -24,7 +24,7 @@ public sealed class TeslaCoilSystem : EntitySystem
     {
         if (TryComp<BatteryComponent>(coil, out var batteryComponent))
         {
-            _battery.SetCharge(coil, batteryComponent.CurrentCharge + coil.Comp.ChargeFromLightning);
+            _battery.SetCharge((coil, batteryComponent), batteryComponent.CurrentCharge + coil.Comp.ChargeFromLightning);
         }
     }
 }
