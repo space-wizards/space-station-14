@@ -97,6 +97,7 @@ namespace Content.Client.Lobby.UI
                 characterPickerButton.OnPressed += _ =>
                 {
                     _preferencesManager.SelectCharacter(slot);
+                    UserInterfaceManager.GetUIController<LobbyUIController>().ReloadCharacterSetup();
                     RebuildJobList();
                 };
             }
