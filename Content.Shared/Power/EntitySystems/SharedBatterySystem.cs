@@ -1,5 +1,6 @@
 using Content.Shared.Emp;
 using Content.Shared.Power.Components;
+using JetBrains.Annotations;
 
 namespace Content.Shared.Power.EntitySystems;
 
@@ -26,6 +27,7 @@ public abstract class SharedBatterySystem : EntitySystem
     /// A positive value will add charge, a negative value will remove charge.
     /// </summary>
     /// <returns>The actually changed amount.</returns>
+    [PublicAPI]
     public virtual float ChangeCharge(Entity<BatteryComponent?> ent, float amount)
     {
         return 0f;
@@ -36,6 +38,7 @@ public abstract class SharedBatterySystem : EntitySystem
     /// and resets the self-recharge cooldown if it exists.
     /// </summary>
     /// <returns>The actually changed amount.</returns>
+    [PublicAPI]
     public virtual float UseCharge(Entity<BatteryComponent?> ent, float amount)
     {
         return 0f;
@@ -47,6 +50,7 @@ public abstract class SharedBatterySystem : EntitySystem
     /// Always returns false on the client.
     /// </summary>
     /// <returns>If the full amount was able to be removed.</returns>
+    [PublicAPI]
     public virtual bool TryUseCharge(Entity<BatteryComponent?> ent, float amount)
     {
         return false;
@@ -55,21 +59,25 @@ public abstract class SharedBatterySystem : EntitySystem
     /// <summary>
     /// Sets the battery's charge.
     /// </summary>
+    [PublicAPI]
     public virtual void SetCharge(Entity<BatteryComponent?> ent, float value) { }
 
     /// <summary>
     /// Sets the battery's maximum charge.
     /// </summary>
+    [PublicAPI]
     public virtual void SetMaxCharge(Entity<BatteryComponent?> ent, float value) { }
 
     /// <summary>
     /// Checks if the entity has a self recharge and puts it on cooldown if applicable.
     /// Uses the cooldown time given in the component.
     /// </summary>
+    [PublicAPI]
     public virtual void TrySetChargeCooldown(Entity<BatterySelfRechargerComponent?> ent) { }
 
     /// <summary>
     /// Puts the entity's self recharge on cooldown for the specified time.
     /// </summary>
+    [PublicAPI]
     public virtual void SetChargeCooldown(Entity<BatterySelfRechargerComponent?> ent, TimeSpan cooldown) { }
 }

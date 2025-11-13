@@ -76,7 +76,7 @@ public sealed partial class PredictedBatterySystem : EntitySystem
         if (!HasComp<ExaminableBatteryComponent>(ent))
             return;
 
-        int chargePercentRounded = 0;
+        var chargePercentRounded = 0;
         var currentCharge = GetCharge(ent.AsNullable());
         if (ent.Comp.MaxCharge != 0)
             chargePercentRounded = (int)(100 * currentCharge / ent.Comp.MaxCharge);

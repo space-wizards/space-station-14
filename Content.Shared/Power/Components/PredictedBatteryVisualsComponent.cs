@@ -7,6 +7,7 @@ namespace Content.Shared.Power.Components;
 /// <summary>
 /// Marker component that makes an entity with <see cref="PredictedBatteryComponent"/> update its appearance data for use with visualizers.
 /// Also works with an entity with <see cref="PowerCellSlotComponent"/> and will relay the state of the inserted powercell.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class PredictedBatteryVisualsComponent : Component;
 
@@ -23,7 +24,7 @@ public enum BatteryVisuals : byte
     /// </summary>
     State,
     /// <summary>
-    /// Is the battery currently charging or decharging?
+    /// Is the battery currently charging or discharging?
     /// Uses a <see cref="BatteryChargingState"/>.
     /// </summary>
     Charging,
@@ -36,11 +37,11 @@ public enum BatteryVisuals : byte
 public enum BatteryChargingState : byte
 {
     /// <summary>
-    /// PredictedBatteryComponent.ChargeRate > 0
+    /// PredictedBatteryComponent.ChargeRate &gt; 0
     /// </summary>
     Charging,
     /// <summary>
-    /// PredictedBatteryComponent.ChargeRate < 0
+    /// PredictedBatteryComponent.ChargeRate &lt; 0
     /// </summary>
     Decharging,
     /// <summary>

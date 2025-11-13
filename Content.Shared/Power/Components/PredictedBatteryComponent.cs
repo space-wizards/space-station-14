@@ -13,7 +13,7 @@ namespace Content.Shared.Power.Components;
 /// </summary>
 /// <remarks>
 /// We cannot simply network <see cref="BatteryComponent"/> since it would get dirtied every single tick when it updates.
-/// This component solves this by requiring a constant charge rate and having the client infer the the current charge from the rate
+/// This component solves this by requiring a constant charge rate and having the client infer the current charge from the rate
 /// and the timestamp the charge was last networked at. This can possibly be expanded in the future by adding a second time derivative.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]

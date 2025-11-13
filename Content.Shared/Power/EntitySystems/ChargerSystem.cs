@@ -228,28 +228,17 @@ public sealed class ChargerSystem : EntitySystem
         var status = GetStatus(ent);
         switch (status)
         {
-            case CellChargerStatus.Off:
-                // Don't set the load to 0 or the charger will be considered as powered even if the LV connection is unpowered.
-                // TODO: Fix this on an ApcPowerReceiver level.
-                _receiver.SetLoad(ent.Owner, ent.Comp.PassiveDraw);
-                _appearance.SetData(ent.Owner, CellVisual.Light, CellChargerStatus.Off, appearance);
-                break;
-            case CellChargerStatus.Empty:
-                _receiver.SetLoad(ent.Owner, ent.Comp.PassiveDraw);
-                _appearance.SetData(ent.Owner, CellVisual.Light, CellChargerStatus.Empty, appearance);
-                break;
             case CellChargerStatus.Charging:
                 // TODO: If someone ever adds chargers that can charge multiple batteries at once then set this to the total draw rate.
                 _receiver.SetLoad(ent.Owner, ent.Comp.ChargeRate);
-                _appearance.SetData(ent.Owner, CellVisual.Light, CellChargerStatus.Charging, appearance);
-                break;
-            case CellChargerStatus.Charged:
-                _receiver.SetLoad(ent.Owner, ent.Comp.PassiveDraw);
-                _appearance.SetData(ent.Owner, CellVisual.Light, CellChargerStatus.Charged, appearance);
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                // Don't set the load to 0 or the charger will be considered as powered even if the LV connection is unpowered.
+                // TODO: Fix this on an ApcPowerReceiver level.
+                _receiver.SetLoad(ent.Owner, ent.Comp.PassiveDraw);
+                break;
         }
+        _appearance.SetData(ent.Owner, CellVisual.Light, status, appearance);
     }
 
     private CellChargerStatus GetStatus(Entity<ChargerComponent> ent)

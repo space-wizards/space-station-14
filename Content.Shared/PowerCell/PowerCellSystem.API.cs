@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Power.Components;
 using Content.Shared.PowerCell.Components;
+using JetBrains.Annotations;
 
 namespace Content.Shared.PowerCell;
 
@@ -10,6 +11,7 @@ public sealed partial class PowerCellSystem
     /// <summary>
     /// Gets the power cell battery inside a power cell slot.
     /// </summary>
+    [PublicAPI]
     public bool TryGetBatteryFromSlot(
         Entity<PowerCellSlotComponent?> ent,
         [NotNullWhen(true)] out Entity<PredictedBatteryComponent>? battery)
@@ -39,7 +41,11 @@ public sealed partial class PowerCellSystem
     /// <summary>
     /// Returns whether the entity has a slotted battery and charge for the requested action.
     /// </summary>
+    /// <param name="ent">The power cell.</param>
+    /// <param name="charge">The charge that is needed.</param>
     /// <param name="user">Show a popup to this user with the relevant details if specified.</param>
+    /// <param name="predicted">Whether to predict the popup or not.</param>
+    [PublicAPI]
     public bool HasCharge(Entity<PowerCellSlotComponent?> ent, float charge, EntityUid? user = null, bool predicted = false)
     {
         if (!TryGetBatteryFromSlot(ent, out var battery))
@@ -74,7 +80,11 @@ public sealed partial class PowerCellSystem
     /// <summary>
     /// Tries to use charge from a slotted battery.
     /// </summary>
+    /// <param name="ent">The power cell.</param>
+    /// <param name="charge">The charge that is needed.</param>
     /// <param name="user">Show a popup to this user with the relevant details if specified.</param>
+    /// <param name="predicted">Whether to predict the popup or not.</param>
+    [PublicAPI]
     public bool TryUseCharge(Entity<PowerCellSlotComponent?> ent, float charge, EntityUid? user = null, bool predicted = false)
     {
         if (!TryGetBatteryFromSlot(ent, out var battery))
@@ -108,6 +118,9 @@ public sealed partial class PowerCellSystem
     /// <summary>
     /// Gets number of remaining uses for the given charge cost.
     /// </summary>
+    /// <param name="ent">The power cell.</param>
+    /// <param name="cost">The cost per use.</param>
+    [PublicAPI]
     public int GetRemainingUses(Entity<PowerCellSlotComponent?> ent, float cost)
     {
         if (!TryGetBatteryFromSlot(ent, out var battery))
@@ -119,6 +132,9 @@ public sealed partial class PowerCellSystem
     /// <summary>
     /// Gets number of maximum uses at full charge for the given charge cost.
     /// </summary>
+    /// <param name="ent">The power cell.</param>
+    /// <param name="cost">The cost per use.</param>
+    [PublicAPI]
     public int GetMaxUses(Entity<PowerCellSlotComponent?> ent, float cost)
     {
         if (!TryGetBatteryFromSlot(ent, out var battery))

@@ -58,7 +58,7 @@ public sealed partial class BatterySystem : SharedBatterySystem
         if (!HasComp<ExaminableBatteryComponent>(ent))
             return;
 
-        int chargePercentRounded = 0;
+        var chargePercentRounded = 0;
         if (ent.Comp.MaxCharge != 0)
             chargePercentRounded = (int)(100 * ent.Comp.CurrentCharge / ent.Comp.MaxCharge);
 
