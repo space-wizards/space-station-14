@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos.Components;
 using Robust.Server.GameObjects;
@@ -87,12 +88,17 @@ public class GasOverlayBenchmark
                     new Vector2(generated * (GridLength + 1), 0)); // Space them apart by 1 tile or something it doesnt really matter how much
 
                 _mapSystem.SetTiles(grid, ConstructTileLength(GridLength, new Tile(plating)));
-
-                // Update the only tile that there is
-                if (_entMan.TryGetComponent<GasTileOverlayComponent>(grid, out var overlayComponent))
-                    overlayComponent.InvalidTiles.Add(Vector2i.Zero);
             }
+
+            InvalidateAllTilesAllGrids();
         });
+    }
+
+    // microbenchmark obliterator 9000
+    [IterationSetup]
+    public async Task IterationSetupAsync()
+    {
+        await _pair.Server.WaitPost(InvalidateAllTilesAllGrids);
     }
 
     // No visible gas overlay changes.
@@ -110,5 +116,20 @@ public class GasOverlayBenchmark
     {
         await _pair.DisposeAsync();
         PoolManager.Shutdown();
+    }
+
+    /// <summary>
+    /// Invalidates all tiles on all grids.
+    /// </summary>
+    private void InvalidateAllTilesAllGrids()
+    {
+        var gridQuery = _entMan.EntityQueryEnumerator<GridAtmosphereComponent, GasTileOverlayComponent>();
+        while (gridQuery.MoveNext(out var gridAtmosphereComponent, out var overlayComp))
+        {
+            foreach (var tile in gridAtmosphereComponent.Tiles)
+            {
+                overlayComp.InvalidTiles.Add(tile.Key);
+            }
+        }
     }
 }
