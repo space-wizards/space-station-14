@@ -14,7 +14,6 @@ using Robust.Shared;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Threading;
@@ -31,7 +30,6 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IConfigurationManager _confMan = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -353,7 +351,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
-        /// Updates every invalid tile on every chunk on a grid, and dirties it's <see cref="GasTileOverlayComponent"/>. 
+        /// Updates every invalid tile on every chunk on a grid, and dirties it's <see cref="GasTileOverlayComponent"/>.
         /// </summary>
         public void UpdateGasChunkTiles(in Entity<GasTileOverlayComponent, GridAtmosphereComponent> entity)
         {
@@ -484,20 +482,15 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         /// Updates a grid's gas overlay data and dirties it if it's visuals were changed.
         /// </summary>
-        private record struct UpdateGridOverlayJob : IParallelRobustJob
+        private readonly record struct UpdateGridOverlayJob(GasTileOverlaySystem System) : IParallelRobustJob
         {
-            public readonly int BatchSize => 16;
+            public int BatchSize => 16;
 
             // Not much reason to use non-interface entman here and we need it because it exposes a query for MetaDataComponent.
-            public GasTileOverlaySystem System;
-            public List<Entity<GasTileOverlayComponent, GridAtmosphereComponent>> Grids = new();
+            public readonly GasTileOverlaySystem System = System;
+            public readonly List<Entity<GasTileOverlayComponent, GridAtmosphereComponent>> Grids = [];
 
-            public UpdateGridOverlayJob(GasTileOverlaySystem system)
-            {
-                System = system;
-            }
-
-            public readonly void Execute(int gridIndex)
+            public void Execute(int gridIndex)
             {
                 System.UpdateGasChunkTiles(Grids[gridIndex]);
             }
