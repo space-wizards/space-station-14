@@ -96,9 +96,9 @@ public class GasOverlayBenchmark
 
     // microbenchmark obliterator 9000
     [IterationSetup]
-    public async Task IterationSetupAsync()
+    public void IterationSetupAsync()
     {
-        await _pair.Server.WaitPost(InvalidateAllTilesAllGrids);
+        _pair.Server.WaitPost(InvalidateAllTilesAllGrids).GetAwaiter().GetResult();
     }
 
     // No visible gas overlay changes.
