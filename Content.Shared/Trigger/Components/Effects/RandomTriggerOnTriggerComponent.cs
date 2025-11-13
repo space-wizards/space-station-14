@@ -9,7 +9,7 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// When triggered this component will choose a key and send a new trigger.
 /// Trigger is sent to user if <see cref="BaseXOnTriggerComponent.TargetUser"/> is true.
 /// </summary>
-/// <remarks>Avoid recursive loops where this component triggers itself. Use <see cref="RepeatingTriggerComponent"/> instead.</remarks>
+/// <remarks>Does not support recursive loops where this component triggers itself. Use <see cref="RepeatingTriggerComponent"/> instead.</remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RandomTriggerOnTriggerComponent : BaseXOnTriggerComponent
 {
