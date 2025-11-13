@@ -246,7 +246,7 @@
   - type: ApcPowerReceiverBattery
     idleLoad: 500
     batteryRechargeRate: 1000
-    batteryRechargeEfficiency: 0 # Setting to zero until the light flickering issue associated with dynamic power loads is fixed 
+    batteryRechargeEfficiency: 0 # Setting to zero until the light flickering issue associated with dynamic power loads is fixed
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline
@@ -315,7 +315,7 @@
       - StationAiCoreElectronics
   - type: StaticPrice
     price: 5000
-      
+
 # The job-ready version of an AI spawn.
 - type: entity
   id: PlayerStationAi
@@ -334,7 +334,7 @@
   description: An unfinished computer core for housing an artifical intelligence.
   components:
   - type: Anchorable
-    flags: 
+    flags:
     - Anchorable
   - type: Rotatable
   - type: Sprite
@@ -832,4 +832,38 @@
       settings: default
     reregister: false
     job: Borg
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerBorgCombatGhostRole
+  parent: BorgChassisCombat
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-centcomm-cyborg-combat-name
+    description: ghost-role-information-centcomm-cyborg-combat-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobBorg
+      time: 3600 #1 hour
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerBorgCommandoGhostRole
+  parent: BorgChassisCommando
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-centcomm-cyborg-commando-name
+    description: ghost-role-information-centcomm-cyborg-commando-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    requirements:
+    - !type:RoleTimeRequirement
+      role: JobBorg
+      time: 3600 #1 hour
   - type: GhostTakeoverAvailable

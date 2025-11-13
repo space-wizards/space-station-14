@@ -542,7 +542,7 @@
 # Centcomm Cyborgs
 - type: entity
   id: BorgChassisCombat
-  parent: BaseBorgChassisNotIonStormable
+  parent: [ BaseBorgChassisNotIonStormable, ShowSecurityIcons, ShowMedicalIcons ]
   name: combat cyborg
   description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen, this chassis is purpose-built for the extermination of powerful threats alongside their ERT compatriots. Its shell is reinforced with Plasteel.
   components:
@@ -665,10 +665,14 @@
     access: [["CentralCommand"]]
   - type: ShowJobIcons
   - type: Stripping
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
 
 - type: entity
   id: BorgChassisCommando
-  parent: BaseBorgChassisNotIonStormable
+  parent: [ BaseBorgChassisNotIonStormable, ShowSecurityIcons, ShowMedicalIcons ]
   name: commando cyborg
   description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen. Fitted with the finest technology Nanotrasen could offer, nothing will stand in its way for too long. Its shell is reinforced with Plastitanium.
   components:
@@ -791,37 +795,7 @@
     access: [["CentralCommand"]]
   - type: ShowJobIcons
   - type: Stripping
-
-- type: entity
-  id: PlayerBorgCombatGhostRole
-  parent: BorgChassisCombat
-  suffix: Ghost role
-  components:
-  - type: GhostRole
-    name: ghost-role-information-centcomm-cyborg-combat-name
-    description: ghost-role-information-centcomm-cyborg-combat-description
-    rules: ghost-role-information-silicon-rules
-    raffle:
-      settings: default
-    requirements:
-    - !type:RoleTimeRequirement
-      role: JobBorg
-      time: 3600 #1 hour
-  - type: GhostTakeoverAvailable
-
-- type: entity
-  id: PlayerBorgCommandoGhostRole
-  parent: BorgChassisCommando
-  suffix: Ghost role
-  components:
-  - type: GhostRole
-    name: ghost-role-information-centcomm-cyborg-commando-name
-    description: ghost-role-information-centcomm-cyborg-commando-description
-    rules: ghost-role-information-silicon-rules
-    raffle:
-      settings: default
-    requirements:
-    - !type:RoleTimeRequirement
-      role: JobBorg
-      time: 3600 #1 hour
-  - type: GhostTakeoverAvailable
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
