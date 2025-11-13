@@ -43,11 +43,12 @@ public sealed class ApcSystem : EntitySystem
     public override void Update(float deltaTime)
     {
         var query = EntityQueryEnumerator<ApcComponent, PowerNetworkBatteryComponent, UserInterfaceComponent>();
+        var curTime = _gameTiming.CurTime;
         while (query.MoveNext(out var uid, out var apc, out var battery, out var ui))
         {
-            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime && _ui.IsUiOpen((uid, ui), ApcUiKey.Key))
+            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < curTime && _ui.IsUiOpen((uid, ui), ApcUiKey.Key))
             {
-                apc.LastUiUpdate = _gameTiming.CurTime;
+                apc.LastUiUpdate = curTime;
                 UpdateUIState(uid, apc, battery);
             }
 
@@ -62,11 +63,11 @@ public sealed class ApcSystem : EntitySystem
                 // Not already overloaded, start timer
                 if (apc.TripStartTime == null)
                 {
-                    apc.TripStartTime = _gameTiming.CurTime;
+                    apc.TripStartTime = curTime;
                 }
                 else
                 {
-                    if (_gameTiming.CurTime - apc.TripStartTime > apc.TripTime)
+                    if (curTime - apc.TripStartTime > apc.TripTime)
                     {
                         apc.TripFlag = true;
                         ApcToggleBreaker(uid, apc, battery); // off, we already checked MainBreakerEnabled above
