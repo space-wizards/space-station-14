@@ -1,0 +1,35 @@
+- type: entity
+  id: DotaBall
+  name: ball
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/Ammunition/yadro.rsi
+    state: ball
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 90
+        Structural: 5
+
+- type: entity
+  id: ShellDotaBall
+  name: ball shell (.50 slug)
+  parent: [ BaseShellShotgun, BaseSecurityContraband]
+  components:
+  - type: Tag
+    tags:
+    - ShellDotaBall
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/Ammunition/yadro.rsi
+    layers:
+      - state: shell
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: CartridgeAmmo
+    proto: PelletShotgunSlug
+  - type: SpentAmmoVisuals
+    state: "shell"
+
+- type: Tag
+  id: ShellDotaBall

@@ -106,11 +106,11 @@
     slots:
       gun_chamber:
         name: Chamber
-        startingItem: ShellShotgunSlug
+        startingItem: ShellDotaBall
         priority: 1
         whitelist:
           tags:
-            - ShellShotgun
+            - ShellDotaBall
   - type: CursorOffsetRequiresWield
   - type: EyeCursorOffset
     maxOffset: 2

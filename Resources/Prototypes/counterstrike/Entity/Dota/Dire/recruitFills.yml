@@ -14,5 +14,5 @@
     - type: StorageFill
       contents:
         - id: WeaponDotaMosin
-        - id: ShellShotgunSlug
-          amount: 8
+        - id: ShellDotaBall
+          amount: 12

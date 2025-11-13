@@ -82,3 +82,84 @@
     reflectProb: 0.2
     spread: 75
     reflectingInHands: false
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterRadiantCuirassKnight
+  name: Radiant Knight's Cuirass
+  description: This steel will shine forever.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Suit/RadiantCuirass.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Suit/RadiantCuirass.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.6
+        Piercing: 0.5
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Reflect
+    reflectProb: 0.4
+    spread: 75
+    reflectingInHands: false
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterDireCuirassKnight
+  name: Dire Knight's Cuirass
+  description: evil one.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Suit/DireCuirass.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Suit/DireCuirass.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.6
+        Piercing: 0.5
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Reflect
+    reflectProb: 0.4
+    spread: 75
+    reflectingInHands: false
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterRadiantHeavyKnight
+  name: Radiant Knight's Heavy Chestplate.
+  description: This steel will shine forever.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Suit/RadiantHeavy.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Suit/RadiantHeavy.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.2
+        Piercing: 0.4
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.6
+  - type: Reflect
+    reflectProb: 0.1
+    spread: 75
+    reflectingInHands: false

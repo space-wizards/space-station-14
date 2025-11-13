@@ -1,0 +1,26 @@
+- type: entity
+  name: Radiant Knight's Sword
+  parent: [ BaseSword, BaseMajorContraband ]
+  id: RadiantKnightSword
+  description: a great sword.
+  components:
+  - type: Tag
+    tags:
+    - Machete
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/Dota/Radiant/Knight/Melee/sword.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10
+        Piercing: 10
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,0,2
+  - type: DisarmMalus
+  - type: Tool
+    qualities:
+    - Slicing

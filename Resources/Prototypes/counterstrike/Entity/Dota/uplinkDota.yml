@@ -37,6 +37,50 @@
 
 # knight
 
+- type: listing
+  id: DotaRadiantRecruitCuirass
+  name: Knight's cuirass.
+  description: this steel will shine forever.
+  icon: { sprite: Objects/counterstrike/Clothing/Suit/RadiantCuirass.rsi, state: icon }
+  productEntity: ClothingOuterRadiantCuirassKnight
+  cost:
+    Telecrystal: 3
+  categories:
+  - DotaRadiantKnight
+
+- type: listing
+  id: DotaRadiantKnightSword
+  name: Knight's sword
+  description: a great sword.
+  icon: { sprite: Objects/counterstrike/Weapons/Dota/Radiant/Knight/Melee/sword.rsi, state: icon }
+  productEntity: RadiantKnightSword
+  cost:
+    Telecrystal: 4
+  categories:
+  - DotaRadiantKnight
+
+- type: listing
+  id: DotaRadiantRecruitHeavy
+  name: Knight's Heavy Chestplate.
+  description: this steel will shine forever.
+  icon: { sprite: Objects/counterstrike/Clothing/Suit/RadiantHeavy.rsi, state: icon }
+  productEntity: ClothingOuterRadiantHeavyKnight
+  cost:
+    Telecrystal: 5
+  categories:
+  - DotaRadiantKnight
+
+- type: listing
+  id: DotaRadiantRecruitHeavyHelmet
+  name: Knight's Heavy Helmet.
+  description: this steel will shine forever.
+  icon: { sprite: Objects/counterstrike/Clothing/Hats/RadiantHeavy.rsi, state: icon }
+  productEntity: ClothingHeadHelmetRadiantKnightHeavy
+  cost:
+    Telecrystal: 5
+  categories:
+  - DotaRadiantKnight
+
 # chieftain
 
 #DIRE
@@ -85,3 +129,15 @@
     Telecrystal: 3
   categories:
   - DotaDireRecruit
+
+# knight 
+- type: listing
+  id: DotaDireRecruitCuirass
+  name: Knight's cuirass..
+  description: an evil armor.
+  icon: { sprite: Objects/counterstrike/Clothing/Suit/DireCuirass.rsi, state: icon }
+  productEntity: ClothingOuterDireCuirassKnight
+  cost:
+    Telecrystal: 1
+  categories:
+  - DotaDireKnight
