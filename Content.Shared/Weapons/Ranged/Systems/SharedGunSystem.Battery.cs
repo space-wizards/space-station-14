@@ -17,6 +17,7 @@ public abstract partial class SharedGunSystem
     protected virtual void InitializeBattery()
     {
         SubscribeLocalEvent<BatteryAmmoProviderComponent, ComponentStartup>(OnBatteryStartup);
+        SubscribeLocalEvent<BatteryAmmoProviderComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
         SubscribeLocalEvent<BatteryAmmoProviderComponent, TakeAmmoEvent>(OnBatteryTakeAmmo);
         SubscribeLocalEvent<BatteryAmmoProviderComponent, GetAmmoCountEvent>(OnBatteryAmmoCount);
         SubscribeLocalEvent<BatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
@@ -28,7 +29,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBatteryExamine(Entity<BatteryAmmoProviderComponent> ent, ref ExaminedEvent args)
     {
-        args.PushMarkup(Loc.GetString("gun-battery-examine", ("color", AmmoExamineColor), ("count", GetShots(ent).Item1)));
+        args.PushMarkup(Loc.GetString("gun-battery-examine", ("color", AmmoExamineColor), ("count", ent.Comp.Shots)));
     }
 
     private void OnBatteryDamageExamine(Entity<BatteryAmmoProviderComponent> ent, ref DamageExamineEvent args)
@@ -61,7 +62,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBatteryTakeAmmo(Entity<BatteryAmmoProviderComponent> ent, ref TakeAmmoEvent args)
     {
-        var shots = Math.Min(args.Shots, GetShots(ent).Item1);
+        var shots = Math.Min(args.Shots, ent.Comp.Shots);
 
         if (shots == 0)
             return;
@@ -76,9 +77,8 @@ public abstract partial class SharedGunSystem
 
     private void OnBatteryAmmoCount(Entity<BatteryAmmoProviderComponent> ent, ref GetAmmoCountEvent args)
     {
-        (var shots, var capacity) = GetShots(ent);
-        args.Count = shots;
-        args.Capacity = capacity;
+        args.Count = ent.Comp.Shots;
+        args.Capacity = ent.Comp.Capacity;
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public abstract partial class SharedGunSystem
     /// </summary>
     public void TakeCharge(Entity<BatteryAmmoProviderComponent> ent, int shots = 1)
     {
-        // Take charge from either the BatteryComponent or PowerCellSlotComponent.
+        // Take charge from either the BatteryComponent, PredictedBatteryComponent or PowerCellSlotComponent.
         var ev = new ChangeChargeEvent(-ent.Comp.FireCost * shots);
         RaiseLocalEvent(ent, ref ev);
         // UpdateShots is already called by the resulting PredictedBatteryChargeChangedEvent or ChargeChangedEvent
@@ -101,25 +101,47 @@ public abstract partial class SharedGunSystem
 
     public void UpdateShots(Entity<BatteryAmmoProviderComponent> ent)
     {
-        // Update the ammo counter UI.
-        UpdateAmmoCount(ent);
+        var oldShots = ent.Comp.Shots;
+        var oldCapacity = ent.Comp.Capacity;
+        (var newShots, var newCapacity) = GetShots(ent);
+
+        // Only dirty if necessary.
+        if (oldShots == newShots && oldCapacity == newCapacity)
+            return;
+
+        ent.Comp.Shots = newShots;
+        if (newCapacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
+            ent.Comp.Capacity = newCapacity;
+
+        // Update the ammo counter predictively if the change was predicted. On the server this does nothing.
+        UpdateAmmoCount(ent.Owner);
+
+        Dirty(ent); // Dirtying will update the client's ammo counter in an AfterAutoHandleStateEvent subscription in case it was not predicted.
 
         if (!TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
-        (var shots, var capacity) = GetShots(ent);
         // Update the visuals.
-        Appearance.SetData(ent.Owner, AmmoVisuals.HasAmmo, shots != 0, appearance);
-        Appearance.SetData(ent.Owner, AmmoVisuals.AmmoCount, shots, appearance);
-        if (capacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
-            Appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, capacity, appearance);
+        Appearance.SetData(ent.Owner, AmmoVisuals.HasAmmo, newShots != 0, appearance);
+        Appearance.SetData(ent.Owner, AmmoVisuals.AmmoCount, newShots, appearance);
+        if (newCapacity > 0) // Don't make the capacity 0 when removing a power cell as this will make it be visualized as full instead of empty.
+            Appearance.SetData(ent.Owner, AmmoVisuals.AmmoMax, newCapacity, appearance);
     }
 
+    // For server side changes the client's ammo counter needs to be updated as well.
+    private void OnAfterAutoHandleState(Entity<BatteryAmmoProviderComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateAmmoCount(ent); // Need to have prediction set to true because the state is applied repeatedly while prediction is running.
+    }
+
+    // For when a power cell gets inserted or removed.
     private void OnPowerCellChanged(Entity<BatteryAmmoProviderComponent> ent, ref PowerCellChangedEvent args)
     {
         UpdateShots(ent);
     }
 
+    // For predicted batteries.
+    // If the entity is has a PowerCellSlotComponent then this event is relayed from the power cell to the slot entity.
     private void OnPredictedChargeChanged(Entity<BatteryAmmoProviderComponent> ent, ref PredictedBatteryChargeChangedEvent args)
     {
         // Update the visuals and charge counter UI.
@@ -128,11 +150,12 @@ public abstract partial class SharedGunSystem
         UpdateNextUpdate(ent, args.CurrentCharge, args.MaxCharge, args.CurrentChargeRate);
     }
 
+    // For unpredicted batteries.
     private void OnChargeChanged(Entity<BatteryAmmoProviderComponent> ent, ref ChargeChangedEvent args)
     {
         // Update the visuals and charge counter UI.
         UpdateShots(ent);
-        // No need to queue an update here since unpredicted batteries already update periodically.
+        // No need to queue an update here since unpredicted batteries already update periodically as they charge/discharge.
     }
 
     private void UpdateNextUpdate(Entity<BatteryAmmoProviderComponent> ent, float currentCharge, float maxCharge, float currentChargeRate)
@@ -153,6 +176,7 @@ public abstract partial class SharedGunSystem
         Dirty(ent);
     }
 
+    // Shots are only chached, not a DataField, so we need to refresh this when the game is loaded.
     private void OnBatteryStartup(Entity<BatteryAmmoProviderComponent> ent, ref ComponentStartup args)
     {
         UpdateShots(ent);

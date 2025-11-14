@@ -8,21 +8,19 @@ public sealed partial class GunSystem
     {
         base.InitializeBattery();
 
-        SubscribeLocalEvent<BatteryAmmoProviderComponent, AmmoCounterControlEvent>(OnControl);
         SubscribeLocalEvent<BatteryAmmoProviderComponent, UpdateAmmoCounterEvent>(OnAmmoCountUpdate);
+        SubscribeLocalEvent<BatteryAmmoProviderComponent, AmmoCounterControlEvent>(OnControl);
     }
 
-    private void OnAmmoCountUpdate(EntityUid uid, BatteryAmmoProviderComponent component, UpdateAmmoCounterEvent args)
+    private void OnAmmoCountUpdate(Entity<BatteryAmmoProviderComponent> ent, ref UpdateAmmoCounterEvent args)
     {
-        if (args.Control is not BoxesStatusControl boxes) return;
+        if (args.Control is not BoxesStatusControl boxes)
+            return;
 
-        // This returns 0 for non-predicted Batteries as those are not networked.
-        // But that does not matter, since all handheld guns should be using PredictedBatteryComponent anyways.
-        (var shots, var capacity) = GetShots((uid, component));
-        boxes.Update(shots, capacity);
+        boxes.Update(ent.Comp.Shots, ent.Comp.Capacity);
     }
 
-    private void OnControl(EntityUid uid, BatteryAmmoProviderComponent component, AmmoCounterControlEvent args)
+    private void OnControl(Entity<BatteryAmmoProviderComponent> ent, ref AmmoCounterControlEvent args)
     {
         args.Control = new BoxesStatusControl();
     }
