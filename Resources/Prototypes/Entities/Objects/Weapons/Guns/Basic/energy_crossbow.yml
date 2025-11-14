@@ -33,6 +33,7 @@
     proto: EnergyCrossbowBolt
     capacity: 1
     count: 1
+
 - type: entity
   parent: [WeaponEnergyCrossbowBase, BaseSyndicateContraband]
   id: WeaponEnergyCrossbow
