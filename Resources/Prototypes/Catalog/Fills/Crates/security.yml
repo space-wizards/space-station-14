@@ -83,10 +83,9 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: ClothingOuterBioSecurity
-          amount: 2
-        - id: ClothingHeadHatHoodBioSecurity
-          amount: 2
+        - !type:NestedSelector
+          tableId: FillBiohazardGearSecurity
+          rolls: 2
         - id: ClothingMaskSterile
           amount: 2
 
