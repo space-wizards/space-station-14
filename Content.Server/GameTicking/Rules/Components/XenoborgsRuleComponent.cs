@@ -25,5 +25,9 @@ public sealed partial class XenoborgsRuleComponent : Component
     [DataField]
     public float XenoborgShuttleCallPercentage = 0.7f;
 
+    /// <summary>
+    /// If the announcment of the death of the mothership core was sent
+    /// </summary>
+    [DataField]
     public bool MothershipCoreDeathAnnouncmentSent = false;
 }
