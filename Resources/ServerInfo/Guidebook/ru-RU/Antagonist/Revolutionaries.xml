@@ -1,0 +1,53 @@
+<Document>
+  # Революционеры
+
+  <Box>
+    [color=#999999][italic]"Да здравствует революция!!"[/italic][/color]
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="PosterContrabandRevolt" Caption=""/>
+  </Box>
+
+  Революционеры — антагонисты-конвертеры от [color=#ff0000]Синдиката[/color], стремящиеся взять станцию под контроль. У них нет уловок или дешёвых трюков, только идея и сила в числах.
+
+  ## Задачи
+  Нужно конвертировать, надеть наручники или убить всех [textlink="Command staff" link="Command"] на станции, в любом порядке.
+
+  Ваша цель — [bold]не разрушать станцию[/bold], а [italic]захватить её[/italic], поэтому по возможности избегайте лишнего ущерба.
+
+  [bold]Революция провалится[/bold], если все [bold][color=#5e9cff]главные революционеры[/color][/bold] погибнут, а остальные [color=red]революционеры[/color] вернутся к прежней лояльности.
+
+  ## Главревы и конверсия
+  [bold][color=#5e9cff]Главные революционеры[/color][/bold] выбираются в начале смены и начинают с [color=cyan]флэша[/color] и пары [color=cyan]солнцезащитных очков[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="Flash"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses"/>
+  </Box>
+
+  Вы можете конвертировать член экипажа, взяв любой [bold]флэш[/bold] и атаковав человека в режиме [color=#ff0000]harm[/color].
+  Однако [bold]вы не сможете конвертировать цель, если на ней есть [color=cyan]защита от флэша[/color][/bold], например, очки или маска сварщика.
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSunglasses"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity"/>
+    <GuideEntityEmbed Entity="ClothingHeadHatWelding"/>
+  </Box>
+
+  На пути могут встать [color=cyan]имплантеры ментального щита[/color]. Они:
+  - Не дадут имплантированному человеку превратиться в [color=red]революционера[/color]
+  - Деконвертируют революционеров и вернут их к прежней лояльности
+  - [bold]Явно ломаются при имплантации [color=#5e9cff]Главному революционеру[/color][/bold], выдавая вас
+  - Не защищают от дезориентирующего флэша
+
+  Считайте, что все [color=#cb0000]Силы безопасности[/color] и [color=#1b67a5]Команда[/color] уже имеют ментальные щиты, [bold]но их можно снять имплантером, доступным через MedFab Медицинского отдела.[/bold]
+
+  <Box>
+    <GuideEntityEmbed Entity="MindShieldImplanter"/>
+  </Box>
+
+  ## Революционер
+  [color=red]Революционер[/color] — член экипажа, которого конвертировал [bold][color=#5e9cff]Главный революционер[/color][/bold].
+
+  [bold][color=red]Революционеры[/color] сами не конвертируют,[/bold] но они справляются с грязной работой и выполняют приказы.
+</Document>

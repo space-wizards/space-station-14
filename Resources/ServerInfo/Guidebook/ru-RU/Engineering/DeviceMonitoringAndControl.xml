@@ -1,0 +1,39 @@
+﻿<Document>
+  # Мониторинг и контроль устройств
+  Учитывая общестанционный характер атмосферной сети, важно иметь возможность контролировать и контролировать устройства из центрального пункта.
+
+  Используя эти системы, «Атмосферика» может отслеживать и контролировать атмосферу на всей станции.
+
+  <Box>
+    <GuideEntityEmbed Entity="AirAlarm" Caption=""/>
+    <GuideEntityEmbed Entity="AirSensor" Caption=""/>
+  </Box>
+  <Box>
+    ## Воздушная сигнализация
+  </Box>
+  <Box>
+    [color=#999999][italic]Глобальный мониторинг и контроль над устройствами Atmos[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerAlert" Caption=""/>
+  </Box>
+  <Box>
+    ## Компьютер атмосферных предупреждений
+  </Box>
+  <Box>
+    [color=#999999][italic]Общестанционный мониторинг воздушной сигнализации[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerAtmosMonitoring" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeSensor" Caption=""/>
+  </Box>
+  <Box>
+    ## Монитор атмосферной сети
+  </Box>
+  <Box>
+    [color=#999999][italic]Мониторинг всей трубопроводной сети[italic][/color]
+  </Box>
+
+</Document>

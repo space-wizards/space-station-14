@@ -1,0 +1,43 @@
+<Document>
+# Безопасность
+Обеспечение безопасности станции и экипажа является номером один для [color=#cb0000]Безопасность[/color]. Они готовы к любой ситуации и [color=#cb0000]Безопасность[/color] готовы поддерживать порядок и контролировать скопление людей.
+
+Они сталкиваются [textlink="Syndicate Agents" link="Traitors"], [textlink="Nuclear Operatives" link="NuclearOperatives"], [textlink="Zombies" link="Zombies"] и непослушный персонал.
+
+## Персонал
+[color=#cb0000]Безопасность[/color]Штат состоит из курсантов службы безопасности, офицеров службы безопасности и детектива. [color=#cb0000]Безопасность[/color] находится в ведении начальника охраны и начальника службы безопасности.
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineSecurity" Caption="Secoff"/>
+    <GuideEntityEmbed Entity="ToyFigurineDetective" Caption="Detective"/>
+    <GuideEntityEmbed Entity="ToyFigurineWarden" Caption="Warden"/>
+    <GuideEntityEmbed Entity="ToyFigurineHeadOfSecurity" Caption="HoS"/>
+  </Box>
+
+## Снаряжение
+Во-первых, у нас есть несмертельные действия, которые на шаг выше простого указания кому-то следовать инструкциям. И электрошоковая дубинка, и дизейлер способны ограничить движение нападавшего, тогда как наручники могут быть применены, чтобы лишить преступника свободы передвижения и доступа к его рукам. Наручники также толкнут человека вниз, если вы [color=red]режим вреда[/color] активен во время снятия манжеты.
+  <Box>
+    <GuideEntityEmbed Entity="Stunbaton"/>
+    <GuideEntityEmbed Entity="Handcuffs"/>
+   <GuideEntityEmbed Entity="WeaponDisabler"/>
+  </Box>
+
+## Мигает
+[color=#a4885c]Мигает[/color] являются эффективным инструментом для разгона толпы и задержания особо увертливых целей, с большой областью действия, ослепляющей всех, кто не имеет защиты.
+Стоит отметить, что вспышки можно использовать как на большой площади ([color=yellow]З[/color] горячая клавиша), и если вы нападете на кого-нибудь с ее помощью [color=red]режим вреда[/color] активен. Важно отметить, что локализованные вспышки действуют дольше. [color=yellow]2,5[/color] раз длиннее, чем на больших площадях.
+[color=#cb0000]Безопасность[/color] и [color=#a4885c]некоторый[/color] у остальных сотрудников есть средства защиты глаз от светошумовых гранат и вспышек.
+  <Box>
+    <GuideEntityEmbed Entity="Flash"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity"/>
+    <GuideEntityEmbed Entity="GrenadeFlashBang"/>
+  </Box>
+
+## Смертельные исходы
+Если того требует ситуация, [color=#cb0000]Безопасность[/color] иметь доступ к лазерным винтовкам, дробовикам, пистолетам и автоматическим винтовкам, способным подавить сильный огонь по любому, кто выступит против станции.
+  <Box>
+    <GuideEntityEmbed Entity="WeaponLaserCarbine"/>
+    <GuideEntityEmbed Entity="WeaponShotgunKammerer"/>
+    <GuideEntityEmbed Entity="WeaponPistolMk58"/>
+    <GuideEntityEmbed Entity="WeaponRifleLecter"/>
+  </Box>
+</Document>

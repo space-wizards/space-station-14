@@ -1,0 +1,31 @@
+<Document>
+  # Инжиниринг
+  [color=#f39f27]Инженерное дело[/color] представляет собой комбинацию [textlink="construction" link="Construction"] работа, [textlink="repair" link="ExpandingRepairingStation"] работать, поддерживая машину смерти, которая производит [textlink="power" link="Power"], и убедившись, что станция содержит [textlink="breathable air" link="Atmospherics"].
+
+  ## Персонал
+  [color=#f39f27]Инженерное дело[/color]Штат компании состоит из технических помощников, инженеров станций и техников по атмосфере.
+  Проектированием руководит главный инженер.
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineEngineer" Caption="Engineer"/>
+    <GuideEntityEmbed Entity="ToyFigurineAtmosTech" Caption="Atmosian"/>
+    <GuideEntityEmbed Entity="ToyFigurineChiefEngineer" Caption="CE"/>
+  </Box>
+
+  ## Инструменты
+  <Box>
+    <GuideEntityEmbed Entity="Wrench"/>
+    <GuideEntityEmbed Entity="Crowbar"/>
+    <GuideEntityEmbed Entity="Screwdriver"/>
+    <GuideEntityEmbed Entity="Wirecutter"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="Welder"/>
+    <GuideEntityEmbed Entity="Multitool"/>
+    <GuideEntityEmbed Entity="NetworkConfigurator"/>
+  </Box>
+  Ваш основной набор инструментов представляет собой небольшой набор инструментов.
+  Если вы инженер, то на вашей талии должен быть ремень, на котором будет по одному из каждого предмета; если нет, вы, вероятно, можете найти их в шахтах технического обслуживания и на складах инструментов в различных ящиках для инструментов и торговых автоматах.
+
+  Большинство заданий будут иметь пояснения, как их выполнять на экзамене; например, если вы [textlink="constructing" link="Construction"] стена, она подскажет вам следующий шаг, если вы посмотрите на нее поближе.
+</Document>

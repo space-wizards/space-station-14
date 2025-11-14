@@ -1,0 +1,12 @@
+ent-BaseDelivery = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-PackageDelivery = посылка
+    .desc = { ent-BaseDelivery.desc }
+ent-LetterDelivery = письмо
+    .desc = { ent-BaseDelivery.desc }
+ent-DeliveryModifierPriority = { "" }
+    .desc = Компоненты, которые добавляются приоритетным посылкам.
+ent-DeliveryModifierFragile = { "" }
+    .desc = Компоненты, которые добавляются хрупким посылкам.
+ent-DeliveryModifierBomb = { "" }
+    .desc = Компоненты, добавляемые, когда почта является бомбой.

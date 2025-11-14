@@ -1,0 +1,54 @@
+<Document>
+# Наука
+[color=#c96dbf]Наука[/color], часто называемая исследованиями и разработками, представляет собой работу, состоящую из создания исследовательских очков для открытия новых технологий и использования этих технологий для производства новых предметов на токарных станках, чтобы помочь станции.
+
+## Персонал
+[color=#c96dbf]Наука[/color]Штат компании состоит из научных сотрудников и ученых. [color=#c96dbf]Наука[/color] руководит директор по исследованиям.
+
+  <Box>
+   <GuideEntityEmbed Entity="ToyFigurineScientist" Caption="Scientist"/>
+   <GuideEntityEmbed Entity="ToyFigurineResearchDirector" Caption="RD"/>
+  </Box>
+
+## Технологии
+  <Box>
+    <GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
+    <GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
+  </Box>
+Самая важная вещь внутри вашего отдела — это сервер исследований и разработок, на котором хранятся разблокированные технологии, и компьютер исследований и разработок, который позволяет вам разблокировать [color=#a4885c]технологии[/color].
+
+Каждая технология стоит [color=#a4885c]Очки исследования[/color] и открывает рецепты на токарных станках. Для некоторых технологий также потребуются предварительные условия, которые вам необходимо разблокировать, прежде чем вы сможете их исследовать.
+
+[textlink="Click here to see a list of technologies." link="Technologies"].
+
+## Дисциплины
+Технологии распределены по 4 различным дисциплинам:
+  <Box>
+    <GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
+    <GuideEntityEmbed Entity="WeaponTetherGun" Caption="Experimental"/>
+    <GuideEntityEmbed Entity="ComputerTelevision" Caption="Civil Services"/>
+    <GuideEntityEmbed Entity="WeaponXrayCannon" Caption="Arsenal"/>
+  </Box>
+
+<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/> Используйте ближайшую консоль исследований и разработок, чтобы узнать, какие исследования скрыты за каждым деревом дисциплин.
+
+## Уровни
+Каждое дерево Дисциплины имеет до 3 уровней технологий. Вначале единственный уровень, который открыт и доступен для вас, — это уровень 1.
+
+Чтобы прогрессировать дальше, вам придется исследовать до [color=brown]75%[/color] текущего уровня для перехода на следующий. Таким образом, чтобы разблокировать исследования Т2, вам необходимо исследовать 75% исследований Т1.
+
+Сейчас [color=green]Уровень 3[/color] вот где это становится интересным. Если вы исследуете технологию Т3, вы [color=brown]запереть[/color] Техники Т3 из других веток дисциплин. То есть, если вы не можете найти другой способ обойти эту проблему... вам, вероятно, следует спросить своего [color=purple]Директор по исследованиям[/color].
+
+## Токарные станки
+  <Box>
+    <GuideEntityEmbed Entity="Protolathe"/>
+    <GuideEntityEmbed Entity="CircuitImprinter"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ExosuitFabricator"/>
+    <GuideEntityEmbed Entity="MedicalTechFab"/>
+    <GuideEntityEmbed Entity="SecurityTechFab"/>
+  </Box>
+На токарном станке вы можете выбрать сервер, который позволит ему печатать любые рецепты, которые вы разблокировали. Для рецептов требуются различные материалы (сталь, стекло, пластик, золото, плазма), которые можно приобрести в магазине «Груз» или «Утиль».
+
+</Document>

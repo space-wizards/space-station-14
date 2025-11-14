@@ -1,0 +1,43 @@
+﻿<Document>
+  # Пневматический клапан
+  Пневматический клапан представляет собой двунаправленный клапан, управляемый через вход давления.
+  <Box>
+    <GuideEntityEmbed Entity="PressureControlledValve"/>
+  </Box>
+
+  Пневматический клапан имеет 3 соединения: входное, выходное и управляющее.
+  Сторона «входа» будет соединением входа/выхода с самым высоким давлением и может переключаться между сторонами, делая клапан двунаправленным.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input/Output"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Control" Rotation="90"/>
+    <GuideEntityEmbed Entity="PressureControlledValve" Caption=""/>
+    <GuideEntityEmbed Entity="FloorTileItemSteel" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input/Output"/>
+  </Box>
+
+  Клапан будет [color=green]открыть[/color] когда давление на стороне выхода ниже давления на стороне управления на [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] кПа[/color].
+
+  Клапан будет [color=red]закрывать[/color] когда давление на стороне выхода достигает давления на стороне управления в пределах [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] кПа[/color].
+
+  Например, пневмоклапан с управляющим давлением 500 кПа откроется, когда выходное давление составит 500 кПа – [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] кПа[/color] или ниже, и закроется, когда выходное давление составит 500 кПа - [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] кПа[/color] или выше.
+
+  Управляющее давление клапана определяется трубопроводным соединением и поэтому может регулироваться «на лету» с помощью [textlink="pump" link="Pumps"] или другой источник контроля давления.
+
+  ## Отличия от насосов
+
+  Пневматический клапан отличается от [textlink="pump" link="Pumps"] который перемещает газ посредством работы.
+  Пневматический клапан представляет собой пассивное устройство, которое перемещает газ за счет более высокого давления входного газа и поэтому иногда может заполнять объемы быстрее, чем [textlink="pump" link="Pumps"] может.
+
+  Например, пневмоклапан с управляющим давлением 500 кПа заполнит объем быстрее, чем давление [textlink="pump" link="Pumps"] установлено на 500 кПа.
+  Однако [textlink="pump" link="Pumps"] сможет более точно поддерживать давление в объеме.
+
+  Пневматический клапан может использоваться в различных приложениях, например:
+  - Для автоматического стравливания газов из камеры сгорания на основании управляющего сигнала.
+  - Быстрое заполнение объема на основе настраиваемого управляющего давления
+
+</Document>

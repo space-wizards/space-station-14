@@ -1,0 +1,35 @@
+<Document>
+  # Мощность
+  Энергия – это источник жизненной силы станции.
+  Без этого станция быстро погрузится в хаос.
+  Инженеры несут ответственность за поддержание электросети станции, обеспечивая подачу, распределение электроэнергии и удовлетворение всех отделов.
+
+  <Box>
+    <GuideEntityEmbed Entity="SingularityGenerator" Caption=""/>
+    <GuideEntityEmbed Entity="TeslaGenerator" Caption=""/>
+    <GuideEntityEmbed Entity="AmeController" Caption=""/>
+    <GuideEntityEmbed Entity="SMESBasic" Caption=""/>
+    <GuideEntityEmbed Entity="SubstationBasic" Caption=""/>
+    <GuideEntityEmbed Entity="APCBasic" Caption=""/>
+  </Box>
+
+  Существует множество различных аспектов моделирования энергосистемы Space Station 14, а также предполагаемого игрового процесса Engineering.
+
+  Некоторая важная информация, которую следует иметь в виду, включает в себя:
+  - Станция [textlink="generators" link="Generators"] являются многоуровневыми и следуют иерархии. Чем ниже уровень, тем менее устойчивы они, но тем проще их настроить. Чем выше уровень, тем они более устойчивы, но тем сложнее их настроить.
+  - Особенности космической станции 14 [textlink="voltage networks" link="VoltageNetworks"], которые распределяют мощность по станции и понижают напряжение машинами, чтобы их могли использовать другие машины.
+  - Власть [textlink="generators" link="Generators"] иметь [textlink="ramping" link="Ramping"]Это означает, что им требуется время, чтобы привести в соответствие спрос сети с их предложением.
+
+  ## Начало
+  В начале смены на станции заканчивается чисто [textlink="battery" link="PowerStorage"] власть.
+  Это продлится максимум 5-10 минут, в зависимости от потребляемой мощности станции.
+
+  Чтобы продлить это, вы можете запустить станцию [textlink="Antimatter Engine" link="AME"], или [textlink="AME." link="AME"]
+  Это значительно продлит время работы батарей станции, давая вам больше времени для настройки станции более высокого уровня. [textlink="generators." link="Generators"]
+  Вы можете расширить это еще больше, настроив [textlink="solar panels" link="SolarPanels"], которые генерируют электроэнергию бесплатно.
+
+  После настройки [textlink="AME" link="AME"] и [textlink="Solars" link="SolarPanels"], вы должны генерировать приличное количество энергии.
+
+  Теперь, когда вы выиграли время, вы можете сосредоточиться на настройке более высокого уровня. [textlink="generators" link="Generators"] как [textlink="Singularity Engine" link="SingularityEngine"], который может обеспечить электроэнергию до конца смены.
+
+</Document>

@@ -1,0 +1,20 @@
+<Document>
+# Botanicals
+
+Ботаника и химия часто помогают друг другу делать лучшее лекарство (или коктейли для отдыха). Стоит дать ботаникам нужные удобрения и попросить взамен лечебные растения.
+
+<Box>
+<GuideEntityEmbed Entity="FoodGalaxythistle"/>
+<GuideEntityEmbed Entity="FoodLingzhi"/>
+<GuideEntityEmbed Entity="FoodAmbrosiaVulgaris"/>
+<GuideEntityEmbed Entity="FoodAloe"/>
+<GuideEntityEmbed Entity="Nettle"/>
+</Box>
+
+<GuideReagentGroupEmbed Group="Botanical"/>
+<GuideReagentEmbed Reagent="UnstableMutagen"/>
+<GuideReagentEmbed Reagent="Cryoxadone"/>
+<GuideReagentEmbed Reagent="Dylovene"/>
+<GuideReagentEmbed Reagent="Phalanximine"/>
+
+</Document>

@@ -1,0 +1,12 @@
+ent-ClothingHandsBase = { ent-Clothing }
+    .desc = { ent-Clothing.desc }
+ent-ClothingHandsButcherable = { ent-ClothingHandsBase }
+    .desc = { ent-ClothingHandsBase.desc }
+ent-ClothingHandsGlovesSyntheticBase = { ent-ClothingHandsButcherable }
+    .desc = { ent-ClothingHandsButcherable.desc }
+ent-RingBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-GoldRingBase = { "" }
+    .desc = { "" }
+ent-SilverRingBase = серебряное кольцо
+    .desc = Выглядит немного дешевле золотого.

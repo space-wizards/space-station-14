@@ -1,0 +1,34 @@
+<Document>
+# Услуга
+[color=#9fed58]Услуга[/color] поддерживает станцию ​​в чистоте, эффективности и разумности, чтобы все остальные отделы могли лучше выполнять свою работу и делать своих сотрудников счастливыми. Они также выполняют большую часть документации на станции.
+
+## Персонал
+[color=#9fed58]Услуга[/color]Персонал состоит из работников сферы обслуживания, поваров, ботаников, барменов, дворников, капелланов, клоунов, мимов, музыкантов, юристов, библиотекарей и пассажиров. Службу возглавляет руководитель отдела кадров.
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineChef" Caption="Chef"/>
+    <GuideEntityEmbed Entity="ToyFigurineBotanist" Caption="Botanist"/>
+    <GuideEntityEmbed Entity="ToyFigurineBartender" Caption="Bartender"/>
+    <GuideEntityEmbed Entity="ToyFigurineJanitor" Caption="Janitor"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineChaplain" Caption="Chaplain"/>
+    <GuideEntityEmbed Entity="ToyFigurineClown" Caption="Clown"/>
+    <GuideEntityEmbed Entity="ToyFigurineMime" Caption="Mime"/>
+    <GuideEntityEmbed Entity="ToyFigurineMusician" Caption="Musician"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineLawyer" Caption="Lawyer"/>
+    <GuideEntityEmbed Entity="ToyFigurineLibrarian" Caption="Librarian"/>
+    <GuideEntityEmbed Entity="ToyFigurinePassenger" Caption="Passenger"/>
+    <GuideEntityEmbed Entity="ToyFigurineHeadOfPersonnel" Caption="HoP"/>
+  </Box>
+
+## Работаем вместе
+[color=#9fed58]Услуга[/color], несмотря на то, что он самый разнообразный, имеет тенденцию быть самым [color=#a4885c]взаимосвязаны[/color] отдел, безусловно.
+Большинство [color=#9fed58]Услуга[/color] рабочие места требуют [color=#a4885c]сотрудничество[/color] между работниками.
+Поварам часто нужны ингредиенты, которые могут эффективно вырастить только ботаники. Бармен может попросить бананы, которые в изобилии носят только клоуны.
+Адвокат может предложить миму разыграть шарады, чтобы убедить судью в невиновности его клиента.
+
+Много [color=#a4885c]сотрудничество[/color] необходимо внутри и снаружи [color=#9fed58]Услуга[/color]. Зачастую, [color=#9fed58]Услуга[/color] требуется для других отделов, так что будьте начеку.
+</Document>

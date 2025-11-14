@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using Content.Client.Guidebook.RichText;
 using Content.Client.UserInterface.ControlExtensions;
@@ -12,6 +13,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Localization;
 
 namespace Content.Client.Guidebook.Controls;
 
@@ -19,6 +21,7 @@ namespace Content.Client.Guidebook.Controls;
 public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IAnchorClickHandler
 {
     [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
 
     private Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> _entries = new();
@@ -116,7 +119,9 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         EntryContainer.Visible = true;
         SearchBar.Text = "";
         EntryContainer.RemoveAllChildren();
-        using var file = _resourceManager.ContentFileReadText(entry.Text);
+        var culture = _loc.DefaultCulture ?? CultureInfo.CurrentUICulture;
+        var textPath = GuidebookLocalizationHelper.ResolveLocalizedGuidebookPath(entry.Text, culture, _resourceManager);
+        using var file = _resourceManager.ContentFileReadText(textPath);
 
         SearchContainer.Visible = entry.FilterEnabled;
 

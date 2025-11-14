@@ -1,0 +1,32 @@
+<Document>
+# Medical
+Это отдел, куда обращаются за помощью, когда получают травмы — теперь это на медицинском персонале, чтобы их вылечить.
+
+## Персонал
+В штате [color=#5b97bc]Medical[/color] есть медицинские интерны, врачи, фельдшеры и химики. [color=#5b97bc]Medical[/color] управляется главным врачом (Chief Medical Officer).
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="Доктор"/>
+    <GuideEntityEmbed Entity="ToyFigurineParamedic" Caption="Фельдшер"/>
+    <GuideEntityEmbed Entity="ToyFigurineChemist" Caption="Химик"/>
+    <GuideEntityEmbed Entity="ToyFigurineChiefMedicalOfficer" Caption="CMO"/>
+  </Box>
+  
+Сейчас медбей разделён на два направления ухода:
+
+## Медицинское лечение
+  <Box>
+    <GuideEntityEmbed Entity="Brutepack"/>
+    <GuideEntityEmbed Entity="Bloodpack"/>
+    <GuideEntityEmbed Entity="Ointment"/>
+    <GuideEntityEmbed Entity="Gauze"/>
+    <GuideEntityEmbed Entity="HandheldHealthAnalyzer"/>
+  </Box>
+## Производство химии
+  <Box>
+    <GuideEntityEmbed Entity="ChemDispenser"/>
+    <GuideEntityEmbed Entity="LargeBeaker"/>
+    <GuideEntityEmbed Entity="PillCanister"/>
+    <GuideEntityEmbed Entity="ChemMaster"/>
+  </Box>
+</Document>

@@ -1,0 +1,41 @@
+﻿<Document>
+  # Трубопроводные сети
+  Трубопроводные сети, обычно называемые Pipenets, представляют собой серию взаимосвязанных [textlink="pipes" link="Pipes"], обычно с общей задачей.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeHalf" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeBend" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeFourway" Caption=""/>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption=""/>
+    <GuideEntityEmbed Entity="GasVolumePump" Caption=""/>
+  </Box>
+
+  По всей станции используются трубопроводы для подачи, удаления или иного перемещения газа по ней.
+  Отличными примерами являются станции Distro или Wastenet, которые доставляют воздух, пригодный для дыхания, и удаляют отходящие газы соответственно.
+
+  ## Как работают пипетки
+  На Космической станции 14 пипетки ведут себя как единое целое, определенный объем с точками ввода/вывода на концах сети.
+  Нагнетание или вакуумирование газа в или из него с помощью [textlink="pump" link="Pumps"] повлияет на всю сеть, а не только на трубу, к которой она подключена.
+
+  Трубопроводы разделяются только устройствами, способными прерывать поток, или определенными устройствами.
+  Например, [textlink="Pressure Pump" link="Pumps"] не позволит газу течь через него, если он не подключен к питанию и не имеет газа для перекачки.
+
+  Некоторые примеры устройств, разделяющих трубопроводные сети:
+  - [textlink="Pressure and Volumetric Pumps" link="Pumps"]
+  - [textlink="Gas Mixers and Filters" link="MixingAndFiltering"]
+  - [textlink="All Valves" link="Valves"]
+  - [textlink="Radiators" link="Radiators"]
+
+  Пример пайпетной сети, разделенной на две отдельные пипетки с помощью [textlink="pump" link="Pumps"] показано ниже:
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Pipenet 1" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption="Network Seperator" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="" Rotation="90"/>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption="Pipenet 2" Rotation="90"/>
+  </Box>
+
+</Document>

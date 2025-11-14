@@ -1,0 +1,16 @@
+﻿<Document>
+  # Клапаны
+  Клапаны — это быстрый способ остановить или разрешить поток газа через [textlink="pipenet" link="PipeNetworks"].
+  <Box>
+    <GuideEntityEmbed Entity="GasValve"/>
+    <GuideEntityEmbed Entity="SignalControlledValve"/>
+    <GuideEntityEmbed Entity="PressureControlledValve"/>
+    <GuideEntityEmbed Entity="GasPassiveGate"/>
+    <GuideEntityEmbed Entity="GasPressureRegulator"/>
+  </Box>
+  Все клапаны не требуют [textlink="power" link="Power"] действовать.
+
+  Клапаны могут выглядеть простыми, но они позволяют использовать самые разнообразные сложные трубопроводные системы, в том числе:
+  - Сигнальные клапаны, реагирующие на сигналы тревоги по воздуху или выходы логических вентилей.
+  - Пневматические клапаны, регулирующие регулируемый выпуск отходящих газов из камеры сгорания.
+</Document>

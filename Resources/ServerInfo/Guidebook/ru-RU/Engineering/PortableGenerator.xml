@@ -1,0 +1,47 @@
+<Document>
+  # Портативные генераторы
+
+  "ПАКМАН" линейка портативных генераторов используется для обеспечения аварийного или дополнительного электроснабжения ключевых помещений, зон или даже отделов.
+  Они просты в настройке и обслуживании и могут использоваться для питания критически важных систем и зон в случае отключения электроэнергии.
+
+  <Box>
+    <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="J.R.P.A.C.M.A.N." />
+    <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="P.A.C.M.A.N." />
+    <GuideEntityEmbed Entity="PortableGeneratorSuperPacman" Caption="S.U.P.E.R.P.A.C.M.A.N." />
+  </Box>
+
+  # Младший
+
+  <Box>
+    <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="J.R.P.A.C.M.A.N." />
+    <GuideEntityEmbed Entity="WeldingFuelTank" />
+  </Box>
+
+  J.R.P.A.C.M.A.N. Его можно найти по всей станции в шахтах технического обслуживания, и он идеально подходит для экипажа, который может подготовиться в случае проблем с электропитанием.
+  Его производительность до [color=orange][protodata="PortableGeneratorJrPacman" comp="FuelGenerator" member="MaxTargetPower" format="N0"/] Вт[/color] достаточно для питания одной или двух комнат, что может оказаться неоценимым в таких местах, как медицинский отсек или химический отдел медицинского отделения.
+
+  Установка невероятно проста: поверните его над [color=green]ЛВ[/color] силовой кабель, залейте сварочным топливом и запустите.
+
+  Сварочное топливо — единственный источник топлива, который компания J.R.P.A.C.M.A.N. можно использовать, и его можно найти в сварочных топливных баках по всей станции, обычно в зонах технического обслуживания.
+
+  # Большие
+
+  <Box>
+    <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="P.A.C.M.A.N." />
+    <GuideEntityEmbed Entity="SheetPlasma" />
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="PortableGeneratorSuperPacman" Caption="S.U.P.E.R.P.A.C.M.A.N." />
+    <GuideEntityEmbed Entity="SheetUranium" />
+  </Box>
+
+  P.A.C.M.A.N. и СУПЕРПАКМАН. предназначен для использования в технике при больших перебоях в подаче электроэнергии и пополнении мощности в случае ее дефицита.
+  Начальная загрузка большего размера [textlink="engines" link="SingularityTeslaEngine"], силовые подразделения и так далее.
+
+  СУПЕРПАКМАН. имеет большую выходную мощность (до [color=orange][protodata="PortableGeneratorSuperPacman" comp="FuelGenerator" member="MaxTargetPower" format="N0"/] Вт[/color]) и более длительное время работы при максимальной производительности, но масштабирование до более низкой производительности происходит менее эффективно.
+
+  Они подключаются напрямую к [color=yellow]МВ[/color] или [color=orange]ВН[/color] [textlink="power cables" link="VoltageNetworks"] и могут переключаться между ними для обеспечения гибкости.
+
+  S.U.P.E.R.P.AC.M.A.N и P.A.C.M.A.N требуют в качестве топлива листы урана и листы плазмы соответственно.
+</Document>
