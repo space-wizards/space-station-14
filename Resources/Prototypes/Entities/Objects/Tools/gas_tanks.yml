@@ -94,6 +94,7 @@
   - type: Item
     size: Small
     sprite: Objects/Tanks/emergency.rsi
+    storedRotation: -45
   - type: GasTank
     air:
       volume: 0.66
