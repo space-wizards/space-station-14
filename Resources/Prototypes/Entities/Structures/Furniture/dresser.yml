@@ -61,14 +61,14 @@
       storagebase: !type:AllSelector
         children:
         - !type:NestedSelector
-          tableId: DresserMainLoot
+          tableId: DresserMainLootEntityTable
         - !type:NestedSelector
-          tableId: DresserSecondLoot
+          tableId: DresserSecondLootEntityTable
         - !type:NestedSelector
-          tableId: DresserThirdLoot
+          tableId: DresserThirdLootEntityTable
 
 - type: entityTable
-  id: DresserMainLoot
+  id: DresserMainLootEntityTable
   table: !type:GroupSelector
     children:
     - id: ClothingUniformJumpsuitLoungewear
@@ -193,7 +193,7 @@
       weight: 0.001
 
 - type: entityTable
-  id: DresserSecondLoot
+  id: DresserSecondLootEntityTable
   table: !type:GroupSelector
     children:
     - id: Pen # It`s pen.
@@ -284,7 +284,7 @@
       weight: 0.03
 
 - type: entityTable
-  id: DresserThirdLoot
+  id: DresserThirdLootEntityTable
   table: !type:GroupSelector
     children:
     - id: ClothingUniformJumpskirtColorPink

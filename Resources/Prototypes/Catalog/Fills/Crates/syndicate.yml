@@ -20,7 +20,7 @@
         children:
         - id: ClothingOuterHardsuitJuggernaut
         - !type:NestedSelector
-          tableId: TableSyndicateHardsuitExtras
+          tableId: SyndicateHardsuitExtrasEntityTable
 
 - type: entity
   id: CrateSyndicateSuperSurplusBundle

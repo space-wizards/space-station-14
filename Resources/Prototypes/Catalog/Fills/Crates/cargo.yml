@@ -32,23 +32,23 @@
       entity_storage: !type:AllSelector
         children:
         - !type:NestedSelector
-          tableId: LotteryCash
+          tableId: LotteryCashEntityTable
         - !type:NestedSelector
-          tableId: LotteryJunk
+          tableId: LotteryJunkEntityTable
         - !type:NestedSelector
-          tableId: LotteryCanisters
+          tableId: LotteryCanistersEntityTable
         - !type:NestedSelector
-          tableId: LotteryWeapons
+          tableId: LotteryWeaponsEntityTable
         - !type:NestedSelector
-          tableId: LotteryClothing
+          tableId: LotteryClothingEntityTable
         - !type:NestedSelector
-          tableId: LotterySwag
+          tableId: LotterySwagEntityTable
         - !type:NestedSelector
-          tableId: LotteryPlushies
+          tableId: LotteryPlushiesEntityTable
         - !type:NestedSelector
-          tableId: LotteryUseful
+          tableId: LotteryUsefulEntityTable
         - !type:NestedSelector
-          tableId: LotteryNotUseful
+          tableId: LotteryNotUsefulEntityTable
 
 - type: entityTable
   id: LotteryCash

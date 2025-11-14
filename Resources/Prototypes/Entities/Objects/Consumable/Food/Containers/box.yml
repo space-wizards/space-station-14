@@ -524,7 +524,7 @@
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:NestedSelector
-        tableId: HappyHonkToySafe
+        tableId: HappyHonkToySafeEntityTable
 
 - type: entity
   id: HappyHonkMime
@@ -555,7 +555,7 @@
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:NestedSelector
-        tableId: HappyHonkToyUnsafe
+        tableId: HappyHonkToyUnsafeEntityTable
 
 - type: entity
   parent: HappyHonkNukie
@@ -572,7 +572,7 @@
         children:
         # toy
         - !type:NestedSelector
-          tableId: HappyHonkToyUnsafe
+          tableId: HappyHonkToyUnsafeEntityTable
         # drinks - 4 cans, up to 2 blood-red brews
         - !type:GroupSelector
           rolls: 2
@@ -629,7 +629,7 @@
           - id: DrinkLemonLimeCranberryCan
           - id: DrinkIcedTeaCan
         - !type:NestedSelector
-          tableId: HappyHonkToySafe
+          tableId: HappyHonkToySafeEntityTable
 
 - type: entity
   id: FoodMealHappyHonkBigBite
@@ -709,7 +709,7 @@
         id: MaterialCloth10
 
 - type: entityTable
-  id: HappyHonkToySafe
+  id: HappyHonkToySafeEntityTable
   table: !type:GroupSelector
     children:
     - id: ToyMouse
@@ -745,7 +745,7 @@
       weight: 0.1
 
 - type: entityTable
-  id: HappyHonkToyUnsafe
+  id: HappyHonkToyUnsafeEntityTable
   table: !type:GroupSelector
     children:
     - id: C4
