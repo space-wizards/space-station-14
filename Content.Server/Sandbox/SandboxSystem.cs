@@ -44,6 +44,8 @@ namespace Content.Server.Sandbox
         private TimeSpan _entitySpawnWindow;
 
         private readonly Dictionary<NetUserId, Queue<TimeSpan>> _entitySpawnHistories = new();
+        private readonly Dictionary<NetUserId, TimeSpan> _lastRateLimitHits = new();
+        private readonly TimeSpan _spawnRateLimitHitCooldown = TimeSpan.FromSeconds(1);
 
         private bool _isSandboxEnabled;
 
@@ -111,10 +113,16 @@ namespace Content.Server.Sandbox
 
         private bool TryConsumeEntitySpawn(NetUserId userId, ICommonSession player)
         {
-            if (_entitySpawnWindow <= TimeSpan.Zero)
+            var now = _timing.CurTime;
+
+            if (_entitySpawnWindow <= TimeSpan.Zero || _maxEntitySpawnsPerTimeFrame <= 0)
                 return true;
 
-            var now = _timing.CurTime;
+            if (_lastRateLimitHits.TryGetValue(userId, out var lastHit)
+                && now - lastHit < _spawnRateLimitHitCooldown)
+            {
+                return false;
+            }
 
             if (!_entitySpawnHistories.TryGetValue(userId, out var recentSpawns))
             {
@@ -130,9 +138,11 @@ namespace Content.Server.Sandbox
             if (recentSpawns.Count >= _maxEntitySpawnsPerTimeFrame)
             {
                 var uid = player.AttachedEntity;
+
+                _lastRateLimitHits[userId] = now;
                 if (uid is not null)
                 {
-                    _popupSystem.PopupEntity("test hi", uid.Value, uid.Value);
+                    _popupSystem.PopupEntity(Loc.GetString("sandbox-spawn-rate-reached-popup"), uid.Value, uid.Value, PopupType.Medium);
                 }
 
                 return false;
