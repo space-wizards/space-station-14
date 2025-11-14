@@ -7,6 +7,7 @@ using Content.Shared.Containers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
+using Content.Shared.EntityTable;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage.Components;
 using Content.Shared.VendingMachines;
@@ -116,6 +117,7 @@ namespace Content.IntegrationTests.Tests
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
+            var entityTable = server.ResolveDependency<EntityTableSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -155,14 +157,15 @@ namespace Content.IntegrationTests.Tests
                 // Collect all the prototypes with ContainerFills referencing those entities.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<ContainerFillComponent>(out var storage, compFact))
+                    if (!proto.TryGetComponent<EntityTableContainerFillComponent>(out var storage, compFact))
                         continue;
 
                     List<string> restockStore = new();
                     var entityStorageKey = "entity_storage"; // We only care about this container type.
-                    foreach (var spawnEntry in storage.Containers[entityStorageKey])
+                    var container = storage.Containers[entityStorageKey];
+                    foreach (var spawnEntry in entityTable.GetSpawns(container))
                     {
-                        if (spawnEntry != null && restocks.Contains(spawnEntry))
+                        if (restocks.Contains(spawnEntry))
                             restockStore.Add(spawnEntry);
                     }
 
