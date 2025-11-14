@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Prole0
-  changes:
-  - message: Flask Visuals & Sounds!
-    type: Add
-  - message: Flasks now need to be opened to be drunk from.
-    type: Tweak
-  id: 8702
-  time: '2025-06-21T14:52:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38032
 - author: qrwas
   changes:
   - message: Loadout item group UI improvements
@@ -3925,3 +3916,12 @@
   id: 9203
   time: '2025-11-14T22:21:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40042
+- author: Entvari, Nosrepp
+  changes:
+  - message: Added the Mini Energy Crossbow to Traitor and Nukie uplinks.
+    type: Add
+  - message: The Foam Crossbow now uses the new sounds shared by the Mini Energy Crossbow.
+    type: Tweak
+  id: 9204
+  time: '2025-11-14T22:34:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39796
