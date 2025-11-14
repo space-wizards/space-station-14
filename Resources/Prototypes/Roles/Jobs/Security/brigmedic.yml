@@ -1,0 +1,64 @@
+- type: job
+  id: Brigmedic
+  name: job-name-brigmedic
+  description: job-description-brigmedic
+  playTimeTracker: JobBrigmedic
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 5h
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 5h
+  weight: 5
+  startingGear: BrigmedicGear
+  icon: "JobIconBrigmedic"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  access:
+  - Security
+  - Brig
+  - Medical
+  - Maintenance
+  - Service
+  - External
+  - Cryogenics
+  - GenpopEnter
+  - GenpopLeave
+  extendedAccess:
+  - Chemistry
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+
+- type: startingGear
+  id: BrigmedicGear
+  equipment:
+    gloves: ClothingHandsGlovesNitrile
+    eyes: ClothingEyesHudMedical
+    id: BrigmedicPDA
+    ears: ClothingHeadsetBrigmedic
+    pocket1: WeaponDisabler
+    pocket2: TrackingImplanter
+  storage:
+    back:
+    - WeaponTaser
+    - MedkitFilled
+    - ClothingMaskBreathMedicalSecurity
+
+- type: chameleonOutfit
+  id: BrigmedicChameleonOutfit
+  job: Brigmedic
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretBrigmedic
+    mask: ClothingMaskBreathMedicalSecurity
+    outerClothing: ClothingOuterCoatAMG
+    jumpsuit: ClothingUniformJumpsuitBrigmedic
+    back: ClothingBackpackBrigmedic
+    eyes: ClothingEyesHudMedical
+    ears: ClothingHeadsetBrigmedic
+    id: BrigmedicPDA
+    belt: ClothingBeltMedicalFilled
+    gloves: ClothingHandsGlovesNitrile
+    shoes: ClothingShoesColorRed

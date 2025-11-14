@@ -143,7 +143,7 @@
   id: OfficerHandgunsStealCollectionObjective
   components:
   - type: NotJobRequirement
-    jobs: [ SecurityOfficer, HeadOfSecurity, Detective, Warden ]
+    jobs: [ SecurityOfficer, Brigmedic, HeadOfSecurity, Detective, Warden ]
   - type: StealCondition
     stealGroup: OfficerHandgun
     minCollectionSize: 2
@@ -533,7 +533,7 @@
   id: ShivaStealObjective
   components:
   - type: NotJobRequirement
-    jobs: [ SecurityOfficer ]
+    jobs: [ SecurityOfficer, Brigmedic ]
   - type: StealCondition
     stealGroup: AnimalShiva
   - type: Objective
