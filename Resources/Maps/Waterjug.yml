@@ -4,8 +4,8 @@ meta:
   engineVersion: 267.3.0
   forkId: ""
   forkVersion: ""
-  time: 11/13/2025 22:11:10
-  entityCount: 16703
+  time: 11/14/2025 00:00:59
+  entityCount: 16709
 maps:
 - 1
 grids:
@@ -8576,7 +8576,7 @@ entities:
       pos: -27.5,53.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -218851.1
+      secondsUntilStateChange: -220153.81
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -43632,7 +43632,7 @@ entities:
       pos: -41.5,59.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -213343.17
+      secondsUntilStateChange: -214645.89
       state: Closing
   - uid: 7249
     components:
@@ -86898,6 +86898,38 @@ entities:
     components:
     - type: Transform
       pos: -11.5,74.5
+      parent: 2
+- proto: SpawnPointLatejoin
+  entities:
+  - uid: 16704
+    components:
+    - type: Transform
+      pos: 1.5,28.5
+      parent: 2
+  - uid: 16705
+    components:
+    - type: Transform
+      pos: 1.5,21.5
+      parent: 2
+  - uid: 16706
+    components:
+    - type: Transform
+      pos: 13.5,21.5
+      parent: 2
+  - uid: 16707
+    components:
+    - type: Transform
+      pos: 13.5,28.5
+      parent: 2
+  - uid: 16708
+    components:
+    - type: Transform
+      pos: 13.5,27.5
+      parent: 2
+  - uid: 16709
+    components:
+    - type: Transform
+      pos: 1.5,27.5
       parent: 2
 - proto: SpawnPointLawyer
   entities:
