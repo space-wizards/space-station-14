@@ -1,5 +1,7 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.Weather;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -47,7 +49,7 @@ public sealed class WeatherRemoveCommand : LocalizedEntityCommands
         if (args.Length == 1)
             return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
 
-        if (args.Length == 2)
+        if (args.Length == 2) //TODO: dont show ALL weathers here, only weathers applied to selected map
         {
             var opts = new List<CompletionOption>();
             foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())

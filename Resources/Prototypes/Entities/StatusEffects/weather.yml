@@ -22,3 +22,157 @@
       params:
         loop: true
         volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectAshfall
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: ashfall
+    sound:
+      path: /Audio/Effects/Weather/snowstorm_weak.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectAshfallLight
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: ashfall_light
+    sound:
+      path: /Audio/Effects/Weather/snowstorm_weak.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectAshfallHeavy
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: ashfall_heavy
+    sound:
+      path: /Audio/Effects/Weather/snowstorm.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectFallout
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: fallout
+    sound:
+      path: /Audio/Effects/Weather/snowstorm_weak.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectHail
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: hail
+    sound:
+      path: /Audio/Effects/Weather/rain.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectSandstorm
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: sandstorm
+    sound:
+      path: /Audio/Effects/Weather/snowstorm_weak.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectSandstormHeavy
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: sandstorm_heavy
+    sound:
+      path: /Audio/Effects/Weather/snowstorm.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectSnowfallLight
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: snowfall_light
+    sound:
+      path: /Audio/Effects/Weather/snowstorm_weak.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectSnowfallMedium
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: snowfall_med
+    sound:
+      path: /Audio/Effects/Weather/snowstorm_weak.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectSnowfallHeavy
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: snowfall_heavy
+    sound:
+      path: /Audio/Effects/Weather/snowstorm.ogg
+      params:
+        loop: true
+        volume: -6
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectStorm
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: storm
+    sound:
+      path: /Audio/Effects/Weather/rain_heavy.ogg
+      params:
+        loop: true
+        volume: -6

@@ -17,7 +17,7 @@ public sealed class WeatherTriggerSystem : XOnTriggerSystem<WeatherOnTriggerComp
 
         if (ent.Comp.Weather == null) //Clear weather if nothing is set
         {
-            _weather.SetWeather(xform.MapID, null, null);
+            _weather.SetWeather(xform.MapID, null);
             return;
         }
 

@@ -202,7 +202,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// <param name="mapId">Target mapId</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
     /// <param name="duration">How long this weather should exist on map? If null - infinity duration</param>
-    public void SetWeather(MapId mapId, EntProtoId weatherProto, TimeSpan? duration = null)
+    public void SetWeather(MapId mapId, EntProtoId? weatherProto, TimeSpan? duration = null)
     {
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return;
