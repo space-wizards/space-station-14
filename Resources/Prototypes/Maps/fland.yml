@@ -50,6 +50,7 @@
             #security (14)
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 10, 10 ]
+            Brigmedic: [ 1, 1 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 6, 6 ] #intern, not counted
             Lawyer: [ 2, 2 ]

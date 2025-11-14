@@ -131,6 +131,9 @@
   id: JobSecurityOfficer
 
 - type: playTimeTracker
+  id: JobBrigmedic
+
+- type: playTimeTracker
   id: JobServiceWorker
 
 - type: playTimeTracker
