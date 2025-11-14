@@ -1,0 +1,11 @@
+﻿selectable-lock-verb-category-name = Заблокировать
+selectable-lock-no-lock-verb = Без замка
+selectable-lock-no-lock-popup = { CAPITALIZE($target) } без замка.
+selectable-lock-voice-verb = Голосовой замок
+selectable-lock-voice-popup = { CAPITALIZE($target) } заблокирован голосовым замком.
+selectable-lock-tool-prying-verb = Инструмент (Монтировка)
+selectable-lock-tool-prying-popup = { CAPITALIZE($target) } заблокирован монтировкой.
+selectable-lock-tool-screwing-verb = Инструмент (Отвёртка)
+selectable-lock-tool-screwing-popup = { CAPITALIZE($target) } заблокирован отвёрткой.
+selectable-lock-tool-cutting-verb = Инструмент (Кусачки)
+selectable-lock-tool-cutting-popup = { CAPITALIZE($target) } заблокирован кусачками.

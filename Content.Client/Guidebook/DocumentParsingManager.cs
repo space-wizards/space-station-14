@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Linq;
 using Content.Client.Guidebook.Controls;
 using Content.Client.Guidebook.Richtext;
@@ -9,6 +10,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
 using Robust.Shared.Utility;
+using Robust.Shared.Localization;
 using static Pidgin.Parser;
 
 namespace Content.Client.Guidebook;
@@ -16,10 +18,11 @@ namespace Content.Client.Guidebook;
 /// <summary>
 ///     This manager should be used to convert documents (shitty rich-text / pseudo-xaml) into UI Controls
 /// </summary>
-public sealed partial class DocumentParsingManager
+    public sealed partial class DocumentParsingManager
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
     [Dependency] private readonly IResourceManager _resourceManager = default!;
     [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
 
@@ -56,13 +59,17 @@ public sealed partial class DocumentParsingManager
         if (!_prototype.Resolve(entryId, out var entry))
             return false;
 
-        using var file = _resourceManager.ContentFileReadText(entry.Text);
+        var culture = _loc.DefaultCulture ?? CultureInfo.CurrentUICulture;
+        var textPath = GuidebookLocalizationHelper.ResolveLocalizedGuidebookPath(entry.Text, culture, _resourceManager);
+        using var file = _resourceManager.ContentFileReadText(textPath);
         return TryAddMarkup(control, file.ReadToEnd());
     }
 
     public bool TryAddMarkup(Control control, GuideEntry entry)
     {
-        using var file = _resourceManager.ContentFileReadText(entry.Text);
+        var culture = _loc.DefaultCulture ?? CultureInfo.CurrentUICulture;
+        var textPath = GuidebookLocalizationHelper.ResolveLocalizedGuidebookPath(entry.Text, culture, _resourceManager);
+        using var file = _resourceManager.ContentFileReadText(textPath);
         return TryAddMarkup(control, file.ReadToEnd());
     }
 

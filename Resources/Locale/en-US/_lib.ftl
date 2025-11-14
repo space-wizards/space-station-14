@@ -44,3 +44,7 @@ zzzz-fmt-energy-watt-hours = { TOSTRING($divided, "F1") } { $places ->
 
 # Used internally by the PLAYTIME() function.
 zzzz-fmt-playtime = {$hours}H {$minutes}M
+
+# Used internally by FormatList/FormatListToOr helpers.
+zzzz-fmt-list-and = and
+zzzz-fmt-list-or = or
