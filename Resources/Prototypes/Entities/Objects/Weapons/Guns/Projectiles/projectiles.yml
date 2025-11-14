@@ -1411,22 +1411,22 @@
     damage:
       types:
         Piercing: 2
-  - type: StunOnCollide #mirror to taser stats, meant to be tot 'sidegrade'
-    stunAmount: 0
+  - type: StunOnCollide #somewhat mirror to taser stats, meant to be tot 'sidegrade'
+    stunAmount: 0.25
     knockdownAmount: 2.5
     slowdownAmount: 2.5
     walkSpeedModifier: 0.5
     sprintSpeedModifier: 0.5
     drop: false
   - type: StaminaDamageOnCollide #additional stam damage to make repeated pushups less of a viable counter
-    damage: 40
+    damage: 45
   - type: SolutionContainerManager
     solutions:
       bolt:
-        maxVol: 1
+        maxVol: 1.5
         reagents:
         - ReagentId: Toxin
-          Quantity: 1
+          Quantity: 1.5
   - type: SolutionInjectOnProjectileHit
-    transferAmount: 1
+    transferAmount: 1.5
     solution: bolt

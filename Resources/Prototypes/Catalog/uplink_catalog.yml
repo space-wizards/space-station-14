@@ -86,10 +86,10 @@
   description: uplink-energycrossbow-desc
   discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 4
+    Telecrystal: 3
   productEntity: WeaponEnergyCrossbow
   cost:
-    Telecrystal: 6
+    Telecrystal: 5
   categories:
   - UplinkWeaponry
   conditions:
