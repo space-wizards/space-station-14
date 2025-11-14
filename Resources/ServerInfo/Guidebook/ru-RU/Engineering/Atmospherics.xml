@@ -1,0 +1,25 @@
+<Document>
+  # Атмосфера
+  Атмосфера - это инженерный отдел, отвечающий за поддержание атмосферы станции и обеспечение ее безопасности и пригодности для дыхания экипажа.
+
+  Атмосферикой управляют специалисты по атмосфере, за которыми наблюдает главный инженер.
+
+  <Box>
+    <GuideEntityEmbed Entity="ToyFigurineAtmosTech" Caption="Atmosian"/>
+    <GuideEntityEmbed Entity="ToyFigurineChiefEngineer" Caption="CE"/>
+  </Box>
+  <Box>
+    [color=#999999][italic][italic][/color]
+  </Box>
+
+  ## Обязанности
+  Как правило, вы будете отвечать на [textlink="atmospheric upsets" link="AtmosphericUpsets"] по всей станции.
+  Они могут варьироваться от незначительных утечек до полного включения. [textlink="fires" link="Fires"] или [textlink="spacing" link="Spacing"] инциденты.
+
+  Люди из других отделов также могут запросить [textlink="canned gasses" link="GasCanisters"] для своих ведомственных обязанностей, таких как [textlink="plasma" link="Gasses"] для [textlink="Research Department" link="Science"] или [textlink="carbon dioxide" link="Gasses"] для [textlink="Chemistry" link="Chemist"].
+
+  Во время простоя вы можете попытаться улучшить станцию, создав комнаты с разной атмосферой для [textlink="Voxes" link="Vox"] и других видов, либо наладив производство [textlink="exotic gasses" link="Gasses"] для нужд станции.
+
+  Когда работы нет, от вас могут ожидать, что вы будете помогать обычным инженерам станций с их задачами и наставлять новых инженеров станций и техников по атмосфере.
+
+</Document>

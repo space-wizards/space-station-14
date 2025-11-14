@@ -1,0 +1,22 @@
+<Document>
+  # Species
+
+  Nanotrasen нанимает самых разных разумных существ.
+
+  <Box>
+  <GuideEntityEmbed Entity="MobArachnid" Caption="Арахнид"/>
+  <GuideEntityEmbed Entity="MobDiona" Caption="Diona"/>
+  <GuideEntityEmbed Entity="MobDwarf" Caption="Дварф"/>
+  <GuideEntityEmbed Entity="MobHuman" Caption="Человек"/>
+  </Box>
+  <Box>
+  <GuideEntityEmbed Entity="MobMoth" Caption="Мот"/>
+  <GuideEntityEmbed Entity="MobReptilian" Caption="Рептил"/>
+  <GuideEntityEmbed Entity="MobSlimePerson" Caption="Слайм"/>
+  <GuideEntityEmbed Entity="MobVox" Caption="Вокс"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="MobVulpkanin" Caption="Вульпканин"/>
+  </Box>
+
+</Document>

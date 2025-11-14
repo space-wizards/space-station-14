@@ -1,0 +1,24 @@
+<Document>
+  # Арахниды
+
+  <Box>
+    <GuideEntityEmbed Entity="MobArachnid" Caption=""/>
+  </Box>
+
+  У них два дополнительных кармана в инвентаре. Они могут есть сырое мясо без вреда, но такие продукты, как шоколад и лук, отравляют их.
+  Они задыхаются на 50% быстрее, а их [color=blue]синяя кровь[/color] не восстанавливается из железа — основана на меди.
+
+  Атаки без оружия наносят колющий урон вместо дробящего.
+
+  ## Серикультура
+
+  <Box>
+    <GuideEntityEmbed Entity="MaterialWebSilk" Caption=""/>
+    <GuideEntityEmbed Entity="ClothingUniformJumpskirtWeb" Caption=""/>
+    <GuideEntityEmbed Entity="WebShield" Caption=""/>
+    <GuideEntityEmbed Entity="WallWeb" Caption=""/>
+  </Box>
+
+  Арахниды могут создавать паутинную нить ценой дополнительного голода. Только они способны изготавливать паутину в предметы — одежду, щиты и даже стены.
+
+</Document>

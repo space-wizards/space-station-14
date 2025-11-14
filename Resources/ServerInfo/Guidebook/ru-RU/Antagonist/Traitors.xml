@@ -1,0 +1,112 @@
+<Document>
+  # Предатели
+
+  <Box>
+    [color=#999999][italic]"УИСКИ. ЭХО. УИСКИ. ЛИМА. АЛЬФА. ДЕЛЬТА. АГЕНТ, ВЫ АКТИВИРОВАНЫ."[/italic][/color]
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="PosterContrabandSyndicateRecruitment" Caption=""/>
+  </Box>
+  Предатели — антагонисты, нанятые [color=#ff0000]Синдикатом[/color]. Вы — спящий агент, который получает доступ к различному оружию и инструментам через [bold]подключение[/bold].
+  Также вы получаете [bold]кодовые слова[/bold] для опознавания других агентов, а скоординированная команда может иметь [italic]ужасающие последствия[/italic].
+
+  Любой, кроме [textlink="department heads" link="Command"] или членов [textlink="Security" link="Security"], может стать предателем.
+
+  ## Подключение и активация
+  [color=cyan]Подключение[/color] — ваш главный инструмент. Вы можете обменять стартовые 20 [color=red]телекристаллов[/color] (TC) на предметы, которые помогут выполнить цели.
+
+  Нажмите [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color], чтобы увидеть личный код подключения. [bold]Установив его как мелодию PDA, вы откроете подключение.[/bold]
+  Также через [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color] можно посмотреть задачи и кодовые слова.
+
+  Если у вас нет PDA при активации, [color=cyan]имплант подключений[/color] можно получить [bold]за полную цену импланта в [color=red]TC[/color][/bold].
+  Он доступен на вашей панели.
+  <Box>
+    <GuideEntityEmbed Entity="PassengerPDA" Caption="PDA"/>
+    <GuideEntityEmbed Entity="Telecrystal" Caption="Телекристаллы"/>
+    <GuideEntityEmbed Entity="BaseUplinkRadio" Caption="Имплант подключения"/>
+  </Box>
+
+  [bold]Закрывайте подключение PDA, чтобы никто не увидел.[/bold] Не дайте [color=#cb0000]Службе безопасности[/color] заметить его и конфисковать!
+
+  Подключения в имплантах обычно недоступны для других, поэтому у них нет защиты. Но поставить их может пустой имплантер.
+
+  <Box>
+    <GuideEntityEmbed Entity="WeaponPistolCobra" Caption="Оружие"/>
+    <GuideEntityEmbed Entity="MagazineBoxLightRifle" State="icon" Caption="Патроны"/>
+    <GuideEntityEmbed Entity="C4" Caption="Взрывчатка"/>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitSyndie" Caption="Снаряжение"/>
+    <GuideEntityEmbed Entity="Stimpack" Caption="Химия"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ChameleonProjector" Caption="Маскировка"/>
+    <GuideEntityEmbed Entity="Emag" Caption="Подрыв"/>
+    <GuideEntityEmbed Entity="StorageImplanter" Caption="Импланты"/>
+    <GuideEntityEmbed Entity="MobMonkeySyndicateAgentNukeops" Caption="Союзники"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesOutlawGlasses" Caption="Просто так"/>
+  </Box>
+
+  Покупайте только то, что поможет с задачами. Не всё оборудование пригодится, придётся выбирать между скрытностью и громким действием.
+
+  ## Координация
+  Кодовые слова служат тайным способом опознавать товарищей по делу или установить связь, особенно если задачи включают [italic][color=cyan]взаимную помощь.[/color][/italic]
+
+  Когда найдёте союзников, [bold]можно перечислить им [color=red]телекристаллы[/color] из своего подключения[/bold]. Они вложат их в своё подключение.
+
+  Некоторые предложения требуют больше 20 TC, так что придётся делиться.
+
+  ## Убийство
+  Одна из задач — [italic][color=cyan]убить или посадить в тюрьму члена экипажа.[/color][/italic]
+
+  Вы можете [color=cyan]запереть[/color] цель, [bold]не дав ей уехать в CentComm[/bold] на эвакуации или капсуле.
+
+  Если нельзя посадить или цель слишком важна, придётся [color=cyan]убить[/color]. Убедитесь, что она не живёт, когда [bold]эвакуационный шаттл прибывает в CentComm,[/bold] и не допускайте реанимации.
+
+  Помните: Синдикат хочет только конкретных целей. [color=red]Старайтесь избегать массовых убийств или серьёзных разрушений станции,[/color] чем больше невинных жизней — тем больше вы рискуете.
+
+  ## Скрываюсь и самоуничтожение
+  Цели могут требовать, чтобы вы [italic][color=cyan]добрались до CentComm живым.[/color][/italic] Не позволяйте [color=#cb0000]Службе безопасности[/color] остановить вас, выполните остальные задачи и [bold]вернитесь невредимыми.[/bold]
+
+  Или же задачи могут требовать [italic][color=cyan]смерти в бою.[/color][/italic] [bold]Не возвращайтесь к жизни,[/bold] иначе окажетесь в наручниках.
+
+  ## Присвоение
+  Чаще всего потребуется [italic][color=cyan]украсть вещь у начальника отдела.[/color][/italic]
+
+  Цель может быть при человеке или в офисе. Иногда придётся убить носителя, если не удаётся вытащить краденое.
+
+  Возможные задачи:
+  - Украсть [color=yellow]Капитана[/color]: [bold]ID-карту[/bold], [bold]антикварный лазерный пистолет[/bold], [bold]реактивный ранец[/bold] или [bold]диск аутентификации ядерной бомбы[/bold].
+  <Box>
+    <GuideEntityEmbed Entity="CaptainIDCard" Caption=""/>
+    <GuideEntityEmbed Entity="WeaponAntiqueLaser" Caption=""/>
+    <GuideEntityEmbed Entity="JetpackCaptainFilled" Caption=""/>
+    <GuideEntityEmbed Entity="NukeDisk" Caption=""/>
+  </Box>
+  - Украсть у [color=#5b97bc]главного медика[/color] [bold]гипоспрей[/bold] или [bold]портативный монитор экипажа[/bold].
+  <Box>
+    <GuideEntityEmbed Entity="Hypospray" Caption=""/>
+    <GuideEntityEmbed Entity="HandheldCrewMonitorEmpty" Caption=""/>
+  </Box>
+  - Украсть у [color=#c96dbf]директора исследований[/color] [bold]экспериментальный хардуит[/bold] или [bold]ручной телепорт[/bold].
+  <Box>
+    <GuideEntityEmbed Entity="ClothingOuterHardsuitRd" Caption=""/>
+    <GuideEntityEmbed Entity="HandTeleporter" Caption=""/>
+  </Box>
+  - Украсть у [color=#cb0000]начальника службы безопасности[/color] [bold]энергетический магнум[/bold].
+  <Box>
+    <GuideEntityEmbed Entity="WeaponEnergyMagnum" Caption=""/>
+  </Box>
+  - Украсть у [color=#f39f27]главного инженера[/color] [bold]продвинутые магнитные сапоги[/bold].
+  <Box>
+    <GuideEntityEmbed Entity="ClothingShoesBootsMagAdv" Caption=""/>
+  </Box>
+  - Украсть у [color=#b18644]кладовщика[/color] [bold]дистанционную цифровую доску[/bold].
+  <Box>
+    <GuideEntityEmbed Entity="BoxFolderQmClipboard" Caption=""/>
+  </Box>
+  - Разрубить Иэна, собаку [color=#9fed58]главы персонала[/color], и получить [bold]мясо корги[/bold].
+  <Box>
+    <GuideEntityEmbed Entity="MobCorgiIan" Caption=""/>
+    <GuideEntityEmbed Entity="FoodMeatCorgi" Caption=""/>
+  </Box>
+
+</Document>

@@ -1,0 +1,76 @@
+<Document>
+  # Двигатель антивещества (AME)
+  Двигатель антиматерии — это генератор кратковременной поддержки станции, обеспечивающий значительную часть энергии в течение ограниченного времени.
+
+  В основном он используется для помощи инженерам при запуске более крупных двигателей, таких как [textlink="Singularity Engine" link="SingularityEngine"] или [textlink="Tesla Engine" link="TeslaEngine"], дополняя станцию [textlink="batteries" link="PowerStorage"] с частичной мощностью для продления времени их работы.
+
+  ## Строительство
+  <Box>Необходимые детали:</Box>
+  <Box>
+  <GuideEntityEmbed Entity="AmeController"/>
+  <GuideEntityEmbed Entity="AmePartFlatpack"/>
+  <GuideEntityEmbed Entity="AmeJar"/>
+  </Box>
+
+  Контроллер AME — это часть AME, которая передает мощность в сеть станции через [textlink="HV connection" link="VoltageNetworks"].
+  По этой причине вам захочется начать построение AME с контроллера, установленного на вершине [color=orange]ВН провод[/color].
+
+  Большинство станций подверглись воздействию [color=orange]Высоковольтная проводка[/color] или специально отведенные места, чтобы открутить контроллер AME, чтобы он подключился к сети.
+
+  AME-экранирование — это физическая структура, из которой состоит двигатель антивещества. Он сделан путем преобразования плоских пакетов AME в экранирующие устройства с помощью мультитула.
+
+  Чтобы построить AME, начните складывать квадрат плоских пакетов AME 3x3 или больше, готовясь к сборке, стараясь максимально увеличить количество «центральных» частей, окруженных со всех восьми сторон.
+  Чем больше центральных элементов, тем больше ядер будет у вашего AME и тем больше мощности он сможет безопасно выдавать.
+
+  <Box>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+    <GuideEntityEmbed Entity="AmePartFlatpack" Caption=""/>
+  </Box>
+
+  Как только это будет сделано, вы можете использовать многофункциональный инструмент для преобразования каждого плоского блока AME в экранирование, которое должно сформировать законченную конфигурацию AME.
+
+  <GuideEntityEmbed Entity="AmeController" Caption=""/>
+  <Box>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="AmeShielding" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    [color=#999999][italic]Пример одноядерной установки[italic][/color]
+  </Box>
+
+  ## Операция
+  Чтобы запустить AME, вставьте канистру с топливом в контроллер AME и установите безопасную скорость впрыска.
+
+  Безопасная скорость впрыска — это точка, при которой AME может безопасно работать без перегрева и при этом максимизировать выходную мощность.
+
+  Эта скорость всегда в два раза превышает количество ядер.
+
+  Например, AME с одним сердечником будет иметь безопасную скорость впрыска 2. Для двух сердечников безопасная скорость впрыска будет равна 4 и так далее.
+
+  Любое превышение этого соотношения в конечном итоге приведет к тому, что двигатель [color=#ff0000]перегрев[/color] и вскоре после этого [color=#ff0000]взрывающийся[/color].
+
+  Контроллер AME будет [textlink="report" link="InspectingPower"] как от количества энергии, подаваемой в сеть, так и от теоретической максимальной мощности, которую она может обеспечить, если потребуется.
+
+</Document>

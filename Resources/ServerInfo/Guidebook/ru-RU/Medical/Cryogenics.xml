@@ -1,0 +1,53 @@
+<Document>
+# Cryogenics
+Cryogenics может показаться сложным, но после быстрого обзора этой схемы вы поймёте, как с ним работать. Давайте разберёмся, за что отвечает каждый элемент:
+
+- Air in: воздух поступает через магистраль или баллон, даёт людям возможность дышать и охлаждает морозильник.
+- Gas pump: ограничивает давление в системе, чтобы капсула не раздавила пациентов.
+- Freezer: охлаждает воздух и, следовательно, пациентов в капсуле, чтобы Cryoxadone активировался.
+- Gas filters: удаляют отходящие газы (углекислый газ и оксид азота) из контура.
+- Air out: отработанный воздух выходит сюда, либо в накопитель, либо в систему сброса.
+<Box>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeStraight" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="0"/>
+<GuideEntityEmbed Entity="CryoPod" Caption="cryo pod" Rotation="0"/>
+<GuideEntityEmbed Entity="GasThermoMachineFreezerEnabled" Rotation="0"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="180"/>
+<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
+<GuideEntityEmbed Entity="GasFilterFlipped" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="270"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="GasPort" Caption="air out" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeTJunction" Rotation="180"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
+<GuideEntityEmbed Entity="GasPort" Caption="air in" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPressurePump" Rotation="90"/>
+<GuideEntityEmbed Entity="GasPipeBend" Rotation="270"/>
+</Box>
+
+Не каждая сеть будет выглядеть так, но надеюсь, это даёт представление о принципе.
+
+Важно помнить: зимняя одежда (и хардуиты) уменьшают эффективность криоствола или полностью нейтрализуют её. Снимите холодостойкую одежду перед помещением пациента.
+
+## Использование капсулы
+После настройки потребуется специфическое лекарство — Cryoxadone. Оно лечит любой урон, когда пациент охлаждён, и может вводиться заранее (в виде пилюли) или заливаться в клетку с помощью мензурки. Обратите внимание: пациент начнёт лечиться только после достижения нужной температуры, поэтому стоит подождать немного, прежде чем добавлять мензурку.
+
+## Дополнительные сведения:
+Обычное давление в насосе — 100.325 кПа. Cryoxadone работает ниже 170К, но принято выставлять морозильник на 100К для быстрого замораживания.
+
+<GuideReagentEmbed Reagent="Aloxadone"/>
+<GuideReagentEmbed Reagent="Cryoxadone"/>
+<GuideReagentEmbed Reagent="Doxarubixadone"/>
+<GuideReagentEmbed Reagent="Dexalin"/>
+<GuideReagentEmbed Reagent="Leporazine"/>
+<GuideReagentEmbed Reagent="Necrosol"/>
+<GuideReagentEmbed Reagent="Opporozidone"/>
+
+</Document>

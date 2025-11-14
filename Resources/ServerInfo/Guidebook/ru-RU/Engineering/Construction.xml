@@ -1,0 +1,27 @@
+<Document>
+  # Строительство
+
+  <Box>
+    <GuideEntityEmbed Entity="Bed" Caption=""/>
+    <GuideEntityEmbed Entity="TableReinforced" Caption=""/>
+    <GuideEntityEmbed Entity="WeaponImprovisedPneumaticCannon" Caption=""/>
+    <GuideEntityEmbed Entity="Chair" Caption=""/>
+  </Box>
+
+
+  Меню строительства позволяет вам строить и создавать объекты в игре.
+  Доступ к нему можно получить, нажав [color=yellow][bold][keybind="OpenCraftingMenu"][/bold][/color].
+
+  При размещении объектов, которые «привязываются» к сетке, вы можете удерживать [color=yellow][bold][keybind="EditorLinePlace"][/bold][/color] для размещения всей строки за раз, и [color=yellow][bold][keybind="EditorGridPlace"][/bold][/color] для размещения всей сетки за раз.
+
+  Создавая предметы из большого количества ингредиентов, имейте в виду, что вам не обязательно держать все сразу; вы можете просто положить ингредиенты на пол, в рюкзак или на стол рядом с вами, и они будут израсходованы во время крафта, как обычно.
+
+  Размещая «строительный призрак» где-нибудь в мире, нажмите [color=yellow][bold][keybind="EditorRotateObject"][/bold][/color] чтобы повернуть призрак по часовой стрелке.
+  Если вы создаете зеркальный компонент (например, газовые смесители/фильтры), вы можете нажать [color=yellow][bold][keybind="EditorFlipObject"][/bold][/color] перевернуть призрака.
+
+  Вы также можете использовать [color=yellow][bold][keybind="RotateObjectClockwise"][/bold][/color] и [color=yellow][bold][keybind="RotateObjectCounterclockwise"][/bold][/color] вращать объект по часовой стрелке или против часовой стрелки, если он уже построен, при условии, что он не закреплен (откручен).
+
+
+
+
+</Document>

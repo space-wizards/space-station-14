@@ -1,0 +1,28 @@
+<Document>
+  
+  # Специализированные грубые химикаты
+
+  Лучшие учёные Nanotrasen синтезировали три новых грубых химиката! Каждый лечит определённый тип урона.
+
+  <GuideReagentEmbed Reagent="Bruizine"/>
+  <GuideReagentEmbed Reagent="Puncturase"/>
+  <GuideReagentEmbed Reagent="Lacerinol"/>
+
+  # Razorium
+
+  [color=red]БУДЬТЕ ОСТОРОЖНЫ[/color], используя перечисленные грубые химикаты. Если смешать их с другим грубым химиком, получится опасный состав под названием Razorium!
+  <GuideReagentEmbed Reagent="Razorium"/>
+  Чтобы этого избежать, дождитесь, пока пациент метаболизирует один препарат, прежде чем давать другой. Следите за тем, как меняется его здоровье.
+
+  [bold]Примеры комбинаций, приводящих к Razorium:[/bold]
+
+  Bicaridine и Puncturase
+
+  Puncturase и Lacerinol
+
+  Bruizine и Bicaridine
+
+  Lacerinol и Bruizine
+
+  Учтите, что [bold]любая[/bold] комбинация этих четырёх реагентов может дать Razorium! Будьте аккуратны при приготовлении, ведь они содержат Bicaridine. Остатки Bicaridine могут смешаться в Razorium!
+</Document>

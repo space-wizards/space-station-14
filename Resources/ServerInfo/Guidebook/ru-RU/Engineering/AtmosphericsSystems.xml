@@ -1,0 +1,58 @@
+﻿<Document>
+  # Системы атмосферного анализа
+  Atmos предлагает широкий спектр устройств, предназначенных для перемещения, управления и иных манипуляций с газом.
+  Эти устройства часто работают вместе, чтобы поддерживать безопасную, пригодную для дыхания атмосферу для экипажа или выполнять общую задачу.
+
+  В этом разделе рассматриваются различные системы, которыми располагает Atmos, их взаимодействие и способы их оптимального использования.
+
+
+  <Box>
+    <GuideEntityEmbed Entity="GasPipeStraight" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeHalf" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeBend" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeTJunction" Caption=""/>
+    <GuideEntityEmbed Entity="GasPipeFourway" Caption=""/>
+    <GuideEntityEmbed Entity="GasPressurePump" Caption=""/>
+    <GuideEntityEmbed Entity="GasVolumePump" Caption=""/>
+  </Box>
+  <Box>
+    ## Трубопроводные сети
+  </Box>
+  <Box>
+    [color=#999999][italic]Взаимосвязанные трубы с общей задачей — обычно называемые Pipenets.[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerAlert" Caption=""/>
+    <GuideEntityEmbed Entity="AirAlarm" Caption=""/>
+  </Box>
+  <Box>
+    ## Мониторинг и контроль устройств
+  </Box>
+  <Box>
+    [color=#999999][italic]Мониторинг и контроль над устройствами, управляющими местной атмосферой[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="Firelock" Caption=""/>
+    <GuideEntityEmbed Entity="FireAlarm" Caption=""/>
+  </Box>
+  <Box>
+    ## Пожарный и газовый контроль
+  </Box>
+  <Box>
+    [color=#999999][italic]Устройства для контроля и предотвращения утечек газа и пожаров[italic][/color]
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="GasMinerOxygenStation" Caption=""/>
+    <GuideEntityEmbed Entity="AirCanister" Caption=""/>
+  </Box>
+  <Box>
+    ## Добыча и хранение газа
+  </Box>
+  <Box>
+    [color=#999999][italic] Устройства для добычи нового газа для использования на станции и хранения его на потом.[italic][/color]
+  </Box>
+
+</Document>

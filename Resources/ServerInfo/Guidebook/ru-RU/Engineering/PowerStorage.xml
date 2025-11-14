@@ -1,0 +1,50 @@
+﻿<Document>
+  # Энергетический накопитель
+  Из-за [textlink="Power Ramping" link="Ramping"]Важно иметь устройства накопления энергии, которые помогут сгладить скачки и провалы энергопотребления, а также обеспечить питание в случае дефицита мощности.
+
+  Каждый трансформатор для своего соответствующего уровня мощности ([color=orange]ВН[/color], [color=yellow]МВ[/color], и [color=green]ЛВ[/color]) имеет прикрепленную небольшую батарею для работы с небольшими скачками и провалами; однако это нецелесообразно в случае большого дефицита сети.
+
+  ## МСП
+
+  Устройство сверхпроводящего накопления магнитной энергии (SMES) — это устройство, которое может хранить большое количество энергии и быстро ее высвобождать.
+
+  <Box>
+    <GuideEntityEmbed Entity="SMESBasic"/>
+  </Box>
+
+  Для того, чтобы зарядить блок SMES, [color=orange]ВН[/color] питание должно быть подано на кабельную клемму, направленную на блок SMES. SMES будет получать энергию от терминала и передавать ее снизу.
+
+  Терминал обеспечит [color=orange]Высоковольтный вход[/color] и [color=orange]ВН выход[/color] не подключайтесь.
+
+  <Box HorizontalAlignment="Stretch">
+    <Box>
+      <GuideEntityEmbed Entity="CableTerminal"/>
+    </Box>
+
+    <Box>
+      <GuideEntityEmbed Entity="CableHV" Caption="Output"/>
+      <GuideEntityEmbed Entity="SMESBasic" Caption="" Margin="0"/>
+      <GuideEntityEmbed Entity="CableTerminal" Caption="" Margin="0" Rotation="270"/>
+      <GuideEntityEmbed Entity="CableHV" Caption="Input"/>
+    </Box>
+  </Box>
+
+  МСП могут хранить [color=orange][protodata="SMESBasic" comp="Battery" member="MaxCharge" format="N0"/] Дж[/color] энергии и может выдавать максимум [color=orange][protodata="SMESBasic" comp="PowerNetworkBattery" member="MaxSupply" format="N0"/] Вт[/color] власти.
+
+  Если батарея заряжена, SMES будет передавать энергию, полученную от входного кабеля, к выходному кабелю. В случае дефицита электроэнергии SMES будет наращивать мощность, чтобы восполнить потребляемую мощность.
+
+  ## Продвинутый SMES
+  Блок Advanced SMES — это более совершенная версия блока SMES, которая может хранить еще больше энергии.
+
+  <Box>
+    <GuideEntityEmbed Entity="SMESAdvanced"/>
+  </Box>
+
+  В основном они используются в массивах SMES станций для хранения большого количества энергии для энергосистемы станции.
+  Они помогают инженерам выиграть время для настройки электропитания при запуске или для обеспечения электропитания в случае дефицита электропитания в течение продолжительных периодов времени.
+
+  Продвинутые СМС могут хранить [color=orange][protodata="SMESAdvanced" comp="Battery" member="MaxCharge" format="N0"/] Дж[/color] энергии и может выдавать максимум [color=orange][protodata="SMESAdvanced" comp="PowerNetworkBattery" member="MaxSupply" format="N0"/] Вт[/color] власти.
+
+  Имейте в виду, что это не волшебное решение проблемы дефицита энергии, и они не могут хранить бесконечную энергию.
+  Нагрузка станции быстро разряжает эти батареи, если нет источника питания, частично поддерживающего их.
+</Document>

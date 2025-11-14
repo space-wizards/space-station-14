@@ -1,0 +1,95 @@
+﻿<Document>
+  # Сети напряжения
+  На Космической станции 14 распределение электроэнергии разделено на три отдельные сети напряжения.
+  Эти сети являются [color=green]Низкое напряжение[/color] Сеть, [color=Yellow]Среднее напряжение[/color] Сеть и [color=orange]Высокое напряжение[/color] Сеть.
+
+  Эти сети питают различные типы техники на станции.
+
+  <Box>
+    <GuideEntityEmbed Entity="CableHVStack"/>
+    <GuideEntityEmbed Entity="CableMVStack"/>
+    <GuideEntityEmbed Entity="CableApcStack"/>
+  </Box>
+
+  ## Сеть низкого напряжения
+   [color=green]Низкое напряжение[/color] Сеть используется для питания почти всех небольших машин на станции. Сюда входят такие вещи, как освещение, компьютеры и другие небольшие устройства.
+
+  <Box>
+    <GuideEntityEmbed Entity="PoweredSmallLight" Caption=""/>
+    <GuideEntityEmbed Entity="ComputerShuttleCargo" Caption=""/>
+    <GuideEntityEmbed Entity="ComputerComms" Caption=""/>
+    <GuideEntityEmbed Entity="Autolathe" Caption=""/>
+    <GuideEntityEmbed Entity="VendingMachineEngivend" Caption=""/>
+    <GuideEntityEmbed Entity="VendingMachineMedical" Caption=""/>
+    <GuideEntityEmbed Entity="AlwaysPoweredWallLight" Caption=""/>
+  </Box>
+
+  [color=green]Низкое напряжение[/color] питание обеспечивается APC, которые представляют собой настенные устройства, преобразующие энергию от [color=Yellow]Среднее напряжение[/color] Сеть для [color=green]Низкое напряжение[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="APCBasic"/>
+  </Box>
+
+  [color=green]Низкое напряжение[/color] провод не обязательно подводить напрямую к каждой машине, поскольку он может питать несколько машин, если провод находится достаточно близко к машине.
+  Он может приводить в действие машины в пределах 2 клеток в радиальном направлении и 3 клеток в каждом кардинальном направлении.
+
+  ## Сеть среднего напряжения
+   [color=Yellow]Среднее напряжение[/color] Сеть используется для питания БТР и другой энергоемкой техники, которая может принимать только [color=Yellow]Среднее напряжение[/color] власть.
+  Ускоритель частиц является примером, поскольку он работает на [color=Yellow]Среднее напряжение[/color] власть.
+
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEndCap" Caption="" Margin="0"/>
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorControlBox" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="CableMV" Caption="" Margin="0"/>
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorPowerBox" Caption="" Margin="0"/>
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEmitterStarboard" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEmitterFore" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEmitterPort" Caption="" Margin="0"/>
+  </Box>
+
+  <Box>
+    [color=#999999][italic]Ускоритель частиц[italic][/color]
+  </Box>
+
+  [color=Yellow]Среднее напряжение[/color] Электроэнергия обеспечивается подстанциями, которые представляют собой большие машины, преобразующие энергию из [color=Orange]Высокое напряжение[/color] Сеть для [color=Yellow]Среднее напряжение[/color].
+
+  Существуют также настенные варианты этих подстанций для компактных помещений, например шаттлов.
+  <Box HorizontalAlignment="Stretch">
+    <Box>
+      <GuideEntityEmbed Entity="SubstationBasic"/>
+    </Box>
+    <Box>
+      <GuideEntityEmbed Entity="SubstationWallBasic"/>
+    </Box>
+  </Box>
+
+  ## Сеть высокого напряжения
+   [color=Orange]Высокое напряжение[/color] Сеть используется для передачи большого количества энергии по станции. Он используется для питания большинства силового оборудования, такого как агрегаты СМИС и подстанции.
+
+  Большинство генераторов высокой мощности выдают мощность на [color=Orange]Высокое напряжение[/color] Сеть.
+
+  <Box>
+    <GuideEntityEmbed Entity="SMESBasic"/>
+    <GuideEntityEmbed Entity="RadiationCollector"/>
+    <GuideEntityEmbed Entity="TeslaCoil"/>
+    <GuideEntityEmbed Entity="SubstationBasic"/>
+  </Box>
+
+  ## Урон от шока
+  Если вы будете поражены током кабеля, несущего энергию, вы получите урон. Сумма получаемого вами урона зависит от напряжения кабеля, который вас поразил.
+
+  [color=green]Низкое напряжение[/color] кабели нанесут меньше повреждений, чем [color=Yellow]Среднее напряжение[/color] кабели, которые нанесут меньше повреждений, чем [color=Orange]Высокое напряжение[/color] кабели.
+
+  Заряженный [color=Orange]Высокое напряжение[/color] и [color=Yellow]Среднее напряжение[/color] прокладка кабеля вызывает повреждение, поэтому при работе с ним обязательно надевайте изолированные перчатки.
+
+</Document>

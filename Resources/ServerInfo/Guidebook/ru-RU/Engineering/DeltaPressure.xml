@@ -1,0 +1,69 @@
+<Document>
+  # Дельта давления
+  Дельта давления, или ΔP, — это разница давлений между двумя областями.
+  Эта разница в давлении может оказывать воздействие на объекты между двумя областями, вызывая [bold]повреждение давлением[/bold] некоторым объектам на своем пути.
+
+  Различные объекты, сделанные из стекла, такие как окна, оконные двери и ставни, могут быть повреждены давлением, если разница ΔP между двумя сторонами достаточно высока.
+  Это повреждение может привести к разрушению этих объектов, позволяя газу свободно течь между двумя областями.
+
+  Различные типы объектов имеют разные пороговые значения ΔP, которые они могут выдержать перед разрушением.
+  Как правило, чем прочнее стекло, тем выше порог. Тонкие объекты также будут иметь более низкие пороги.
+
+  На такие объекты, как стены, шлюзы и пожарные шлюзы, ΔP не влияет.
+
+  ## Стандартное стекло и предметы
+  <Box>
+    <GuideEntityEmbed Entity="Window" Caption=""/>
+    <GuideEntityEmbed Entity="WindowDirectional" Caption=""/>
+    <GuideEntityEmbed Entity="Windoor" Caption=""/>
+    <GuideEntityEmbed Entity="ShuttersWindow" Caption=""/>
+    <GuideEntityEmbed Entity="InflatableWall" Caption=""/>
+  </Box>
+
+  Стандартное полноразмерное стекло и другие слабые предметы могут выдерживать перепад давления до [color=orange][protodata="Window" comp="DeltaPressure" member="MinPressureDelta"/] кПа[/color] прежде чем начать трескаться.
+
+  Стекло размером в четверть размера, такое как направленные окна, может выдерживать ΔP до [color=orange][protodata="WindowDirectional" comp="DeltaPressure" member="MinPressureDelta"/] кПа[/color] прежде чем начать трескаться.
+
+  ## Армированное стекло и предметы
+  <Box>
+    <GuideEntityEmbed Entity="ReinforcedWindow" Caption=""/>
+    <GuideEntityEmbed Entity="WindowReinforcedDirectional" Caption=""/>
+    <GuideEntityEmbed Entity="WindoorSecure" Caption=""/>
+    <GuideEntityEmbed Entity="ShuttleWindow" Caption=""/>
+  </Box>
+
+  Армированное полноразмерное стекло выдерживает перепад давления до [color=orange][protodata="ReinforcedWindow" comp="DeltaPressure" member="MinPressureDelta"/] кПа[/color] прежде чем начать трескаться.
+
+  Армированное стекло размером в четверть размера выдерживает перепад давления до [color=orange][protodata="WindowReinforcedDirectional" comp="DeltaPressure" member="MinPressureDelta"/] кПа[/color] прежде чем начать трескаться.
+
+  ## Плазма/Урановое стекло
+  <Box>
+    <GuideEntityEmbed Entity="PlasmaWindow" Caption=""/>
+    <GuideEntityEmbed Entity="PlasmaWindowDirectional" Caption=""/>
+    <GuideEntityEmbed Entity="WindoorPlasma" Caption=""/>
+    <GuideEntityEmbed Entity="UraniumWindow" Caption=""/>
+    <GuideEntityEmbed Entity="UraniumWindowDirectional" Caption=""/>
+    <GuideEntityEmbed Entity="WindoorUranium" Caption=""/>
+  </Box>
+
+  Плазменное стекло и урановое стекло выдерживают перепад давления до [color=orange][protodata="PlasmaWindow" comp="DeltaPressure" member="MinPressureDelta"/] кПа[/color] прежде чем начать трескаться.
+
+  Плазменное и урановое стекло размером в четверть размера выдерживает перепад давления до [color=orange][protodata="PlasmaWindowDirectional" comp="DeltaPressure" member="MinPressureDelta"/] кПа[/color] прежде чем начать трескаться.
+
+  ## Армированное плазменное/урановое стекло
+
+  <Box>
+    <GuideEntityEmbed Entity="ReinforcedPlasmaWindow" Caption=""/>
+    <GuideEntityEmbed Entity="PlasmaReinforcedWindowDirectional" Caption=""/>
+    <GuideEntityEmbed Entity="WindoorSecurePlasma" Caption=""/>
+    <GuideEntityEmbed Entity="ReinforcedUraniumWindow" Caption=""/>
+    <GuideEntityEmbed Entity="UraniumReinforcedWindowDirectional" Caption=""/>
+    <GuideEntityEmbed Entity="WindoorSecureUranium" Caption=""/>
+
+  </Box>
+
+  Армированное плазменное стекло и урановое стекло выдерживают перепад давления до [color=orange][protodata="ReinforcedPlasmaWindow" comp="DeltaPressure" member="MinPressureDelta"/] кПа[/color] прежде чем начать трескаться.
+
+  Армированное плазменным и урановым стеклом размером в четверть размера выдерживает ΔP до [color=orange][protodata="PlasmaReinforcedWindowDirectional" comp="DeltaPressure" member="MinPressureDelta"/] кПа[/color] прежде чем начать трескаться.
+
+</Document>

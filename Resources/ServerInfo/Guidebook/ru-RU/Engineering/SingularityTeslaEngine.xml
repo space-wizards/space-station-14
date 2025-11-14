@@ -1,0 +1,97 @@
+<Document>
+  # Сингулярность / Двигатель Теслы
+
+  Двигатель Сингулярности/Двигатель Теслы может дать результат [color=#a4885c]бесконечная сила[/color] на всю смену, что делает его ценным активом для станции.
+
+  Это также может [color=red]уничтожить всю станцию[/color] с одинаковой легкостью и требует тщательной подготовки и мониторинга для предотвращения [bold]свободный[/bold].
+
+  # Настройка
+  Оба движка выполняют одни и те же базовые этапы настройки, но имеют разные подсистемы и требования.
+
+  ## Поле сдерживания
+  Поле сдерживания — это лучевое поле, состоящее из нескольких ячеек, которое отталкивает сингулярность или Теслу, не давая ей ускользнуть.
+
+  Лазеры-излучатели и сдерживающие поля также могут нанести ущерб и/или отправить вас в глубокий космос; [color=#a4885c]избегай прикасаться к ним[/color] когда активен.
+
+  <Box>
+    <GuideEntityEmbed Entity="Emitter"/>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator"/>
+    <GuideEntityEmbed Entity="ContainmentField"/>
+  </Box>
+
+  Поля сдерживания генерируются между активными генераторами полей сдерживания, которые питаются от излучателей.
+
+  Генератор поля сдерживания может генерировать поле сдерживания, если:
+  - Генератор включен,
+  - другой генератор поля находится в пределах 8 клеток,
+  - и генераторы поля находятся на одной кардинальной оси.
+
+  Это означает, что максимальная длина поля содержания составляет 7 плиток.
+
+  Вы можете включить генератор поля сдерживания, взаимодействуя с ним с помощью [color=yellow][bold][keybind="Use"][/bold][/color].
+  Генераторы сдерживающего поля не будут работать, если они не включены, даже при попадании в них излучателя. Не забудьте включить генератор поля!
+
+  Генератор сдерживающего поля имеет внутренний энергетический уровень, который заполняется путем удара по нему излучателя. Когда генератор сдерживающего поля накопит достаточно энергии, он создаст сдерживающее поле.
+
+  Этот уровень энергии естественным образом будет затухать со временем, и поле исчезнет, ​​когда уровень энергии достигнет нуля после задержки.
+
+  Когда поле сдерживания активно, вы не можете выключить генератор поля или снять его привязку. Вы должны дождаться, пока поле затухнет, прежде чем вы сможете выключить генератор.
+
+  <Box>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator" Caption=""/>
+    <GuideEntityEmbed Entity="ContainmentField" Caption="" Rotation="90" Margin="0"/>
+    <GuideEntityEmbed Entity="ContainmentField" Caption="" Rotation="90" Margin="0"/>
+    <GuideEntityEmbed Entity="ContainmentField" Caption="" Rotation="90" Margin="0"/>
+    <GuideEntityEmbed Entity="ContainmentFieldGenerator" Caption=""/>
+  </Box>
+
+  ## Эмиттеры
+  Эмиттеры — это устройства, питающие генераторы сдерживающего поля.
+
+  <Box>
+    <GuideEntityEmbed Entity="Emitter"/>
+  </Box>
+
+  Излучатели подключаются к кабелям среднего напряжения и запускают лазеры, пока на них есть питание и они включены.
+
+  Рекомендуется [color=#a4885c]заблокировать эмиттеры[/color] с [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color], чтобы предотвратить потерю сингулярности или Теслы любыми злоумышленниками, просто выключив поле.
+
+  ## Ускоритель частиц
+  Ускоритель частиц (PA) — это многоячеечная структура, которая запускает ускоренные частицы из своих эмиттеров.
+
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEndCap" Caption="" Margin="0"/>
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorControlBox" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="CableMV" Caption="" Margin="0"/>
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorPowerBox" Caption="" Margin="0"/>
+  </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEmitterStarboard" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEmitterFore" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="ParticleAcceleratorEmitterPort" Caption="" Margin="0"/>
+  </Box>
+
+  На некоторых станциях уже есть недостроенная ПА.
+  Для завершения сначала убедитесь, что под блоком питания PA находится кабель среднего напряжения, закрепите все детали, а затем добавьте кабель низкого напряжения к каждой детали.
+
+  <Box>
+    <GuideEntityEmbed Entity="CableApcStack"/>
+  </Box>
+
+  Затем с помощью отвертки прикрутите панели.
+  [color=#a4885c]Сканировать детали[/color] с помощью управляющего компьютера PA проверьте его работоспособность (PA не будет работать, если вы его не просканируете!).
+  Если он окажется неполным, проверьте, чего не хватает.
+
+  <Box>
+    <GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
+  </Box>
+
+</Document>

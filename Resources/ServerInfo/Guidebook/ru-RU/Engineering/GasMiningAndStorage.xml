@@ -1,0 +1,66 @@
+﻿<Document>
+  # Добыча и хранение газа
+  Газы часто используются постоянно. Потеряны ли они для [textlink="space" link="Spacing"] или используется в камере сгорания, станция должна иметь возможность производить больше газа, чтобы заменить то, что потеряно.
+  Этот газ также необходимо хранить безопасным и эффективным способом.
+
+  ## Газовые шахтеры
+  Газомайнеры используются для пополнения запасов газа на станции. Их можно найти в резервуарах для хранения газа в атмосфере.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasMinerOxygenStation"/>
+    <GuideEntityEmbed Entity="GasMinerNitrogenStation"/>
+  </Box>
+
+  Шахтеры постоянно производят газ комнатной температуры и выбрасывают его в открытую атмосферу. Им не требуется питание для функционирования, и они никогда не перестают работать, пока не достигнут определенного уровня. [bold]давление отключения[/bold].
+
+  Вы можете увидеть больше информации о газодобытчиках, проверив их с помощью [color=yellow][bold][keybind="ExamineEntity"][/bold][/color].
+  Попробуйте осмотреть представленные выше газодобытчики.
+
+  Газовые шахты состоят из нескольких уровней: более крупные версии имеют более высокое отсечку давления, чем меньшие версии.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasMinerNitrogen" Caption="300 kPa"/>
+    <GuideEntityEmbed Entity="GasMinerNitrogenStation" Caption="1000 kPa"/>
+    <GuideEntityEmbed Entity="GasMinerNitrogenStationLarge" Caption="4500 kPa"/>
+  </Box>
+
+  Если газодобытчики когда-либо открепятся от станции, их можно снова закрепить с помощью обычного гаечного ключа.
+
+  ## Газовое хранилище
+  Резервуары для хранения газа используются для хранения газа, добываемого газодобывающими предприятиями, и для использования его в других процессах. Они встречаются в атмосфере.
+
+  <Box>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="ReinforcedPlasmaWindow" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasOutletInjector" Rotation="270" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasMinerOxygenStation" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="GasPassiveVent" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+    <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
+  </Box>
+
+  <Box>
+    [color=#999999][italic]Пример небольшого резервуара для хранения газа[italic][/color]
+  </Box>
+
+  Различные процессы Atmos вводят и удаляют газы из резервуаров для хранения газа.
+  Например:
+  - Газодобывающая установка подает свежий газ в резервуары для хранения газа, если есть место.
+  - Рециркуляционная сеть впрыскивает регенерированные газы в резервуары для хранения газа для повторного использования.
+  - Такие установки, как распределительная сеть и камера сгорания, удаляют газы из резервуаров для хранения газа.
+
+  Резервуары для хранения газа сконструированы таким образом, чтобы их можно было измерить с помощью [textlink="Gas Analyzer" link="AtmosTools"].
+  Поскольку выпускное отверстие представляет собой [textlink="passive vent" link="PassiveVent"], вы можете использовать [textlink="gas analyzer" link="AtmosTools"] для измерения содержания газа в [textlink="pump's" link="Pumps"] вход, который поступает из резервуара для хранения газа.
+</Document>

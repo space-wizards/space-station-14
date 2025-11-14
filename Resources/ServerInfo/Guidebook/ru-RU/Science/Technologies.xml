@@ -1,0 +1,20 @@
+<Document>
+# Технологии
+
+У всех технологий есть стоимость и требования к уровню, необходимые для их исследования. Их разблокировка добавляет множество рецептов, которые можно распечатать на различных токарных станках.
+
+Различные технологии и соответствующие дисциплины перечислены ниже.
+
+## Промышленный
+<GuideTechDisciplineEmbed Discipline="Industrial"/>
+
+## Арсенал
+<GuideTechDisciplineEmbed Discipline="Arsenal"/>
+
+## Экспериментальный
+<GuideTechDisciplineEmbed Discipline="Experimental"/>
+
+## Гражданские службы
+<GuideTechDisciplineEmbed Discipline="CivilianServices"/>
+
+</Document>
