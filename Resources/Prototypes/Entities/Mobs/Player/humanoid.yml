@@ -59,7 +59,7 @@
       - MindRoleGhostRoleFamiliar
     - type: Loadout
       prototypes: [ DeathSquadGear ]
-      roleLoadout: [ RoleSurvivalEVA ]
+      roleLoadout: [ RoleSurvivalDeathSquad ]
     - type: RandomMetadata
       nameSegments:
         - NamesMilitaryFirstLeader

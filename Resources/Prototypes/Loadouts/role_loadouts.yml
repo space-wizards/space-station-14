@@ -599,3 +599,9 @@
   groups:
   - GroupEVATank
   - SurvivalExtended
+
+- type: roleLoadout
+  id: RoleSurvivalDeathSquad
+  groups:
+  - GroupBluespaceJetpack
+  - SurvivalExtended

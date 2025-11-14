@@ -320,33 +320,56 @@
   suffix: Empty
   components:
   - type: Item
-    sprite: Objects/Tanks/Jetpacks/bluespace.rsi
+    sprite: Objects/Tanks/Jetpacks/bluespaceoxygen.rsi
     size: Normal
   - type: Sprite
-    sprite: Objects/Tanks/Jetpacks/bluespace.rsi
+    sprite: Objects/Tanks/Jetpacks/bluespaceoxygen.rsi
   - type: Clothing
-    sprite: Objects/Tanks/Jetpacks/bluespace.rsi
+    sprite: Objects/Tanks/Jetpacks/bluespaceoxygen.rsi
     slots:
     - suitStorage
   - type: StaticPrice
     price: 3000
   - type: GasTank
-    outputPressure: 42.6
+    outputPressure: 21.3
     air:
       volume: 20
 
 - type: entity
-  id: JetpackBluespaceFilled
+  id: JetpackBluespaceFilledOxygen
   parent: JetpackBluespace
   name: bluespace jetpack
   suffix: Filled
   components:
   - type: GasTank
-    outputPressure: 42.6
+    outputPressure: 21.3
     air:
       # 52 minutes of thrust
       volume: 20
       temperature: 293.15
       moles:
-        Oxygen: 4.102758145
-        Nitrogen: 4.102758145
+        Oxygen: 8.2055162915044
+
+- type: entity
+  id: JetpackBluespaceFilledNitrogen
+  parent: JetpackBluespace
+  name: bluespace jetpack
+  suffix: Filled
+  components:
+  - type: Item
+    sprite: Objects/Tanks/Jetpacks/bluespacenitrogen.rsi
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Tanks/Jetpacks/bluespacenitrogen.rsi
+  - type: Clothing
+    sprite: Objects/Tanks/Jetpacks/bluespacenitrogen.rsi
+    slots:
+    - suitStorage
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 52 minutes of thrust
+      volume: 20
+      temperature: 293.15
+      moles:
+        Nitrogen: 8.2055162915044
