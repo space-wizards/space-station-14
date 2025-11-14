@@ -11,6 +11,7 @@ using Content.Shared.Roles;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Enums;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -31,6 +32,8 @@ public sealed partial class AntagSelectionSystem
         var mindCount = ent.Comp.AssignedMinds.Count;
         if (mindCount >= totalTargetCount)
             return false;
+
+        // Its been over a year, I hope my old comment here is out of date by now.
 
         // TODO ANTAG fix this
         // If here are two definitions with 1/10 and 10/10 slots filled, this will always return the second definition
@@ -342,7 +345,7 @@ public sealed partial class AntagSelectionSystem
 
         if (!TryGetNextAvailableDefinition(rule, out var def))
             def = rule.Comp.Definitions.Last();
-        MakeAntag(rule, player, def.Value);
+        MakeAntag(rule, player, def);
     }
 
     /// <summary>
@@ -368,9 +371,9 @@ public sealed partial class AntagSelectionSystem
     /// Get all sessions that have been preselected for antag.
     /// </summary>
     /// <param name="except">A specific definition to be excluded from the check.</param>
-    public HashSet<ICommonSession> GetPreSelectedAntagSessions(AntagSelectionDefinition? except = null)
+    public HashSet<NetUserId> GetPreSelectedAntagSessions(AntagSelectionDefinition? except = null)
     {
-        var result = new HashSet<ICommonSession>();
+        var result = new HashSet<NetUserId>();
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out var comp, out _))
         {
@@ -397,9 +400,9 @@ public sealed partial class AntagSelectionSystem
     // Note: This is a bit iffy since technically this exclusive definition is defined via the MultiAntagSetting, while there's a separately tracked antagExclusive variable in the mindrole.
     // We can't query that however since there's no guarantee the mindrole has been given out yet when checking pre-selected antags.
     // I don't think there's any instance where they differ, but it's something to be aware of for a potential future refactor.
-    public HashSet<ICommonSession> GetPreSelectedExclusiveAntagSessions(AntagSelectionDefinition? except = null)
+    public HashSet<NetUserId> GetPreSelectedExclusiveAntagSessions(AntagSelectionDefinition? except = null)
     {
-        var result = new HashSet<ICommonSession>();
+        var result = new HashSet<NetUserId>();
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out var comp, out _))
         {

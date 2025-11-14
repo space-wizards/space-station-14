@@ -5,6 +5,7 @@ using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -47,13 +48,13 @@ public sealed partial class AntagSelectionComponent : Component
     /// Cached sessions of antag definitions and selected players. Players in this dict are not guaranteed to have been assigned the role yet.
     /// </summary>
     [DataField]
-    public Dictionary<AntagSelectionDefinition, HashSet<ICommonSession>>PreSelectedSessions = new();
+    public Dictionary<AntagSelectionDefinition, HashSet<NetUserId>> PreSelectedSessions = new();
 
     /// <summary>
     /// Cached sessions of players who are chosen. Used so we don't have to rebuild the pool multiple times in a tick.
     /// Is not serialized.
     /// </summary>
-    public HashSet<ICommonSession> AssignedSessions = new();
+    public HashSet<NetUserId> AssignedSessions = new();
 
     /// <summary>
     /// Locale id for the name of the antag.
@@ -71,7 +72,7 @@ public sealed partial class AntagSelectionComponent : Component
 }
 
 [DataDefinition]
-public partial struct AntagSelectionDefinition()
+public sealed partial class AntagSelectionDefinition
 {
     /// <summary>
     /// A list of antagonist roles that are used for selecting which players will be antagonists.
