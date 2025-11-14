@@ -1,11 +1,12 @@
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.Maps;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Weather;
@@ -19,33 +20,35 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedRoofSystem _roof = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
 
     private EntityQuery<BlockWeatherComponent> _blockQuery;
+    private EntityQuery<WeatherStatusEffectComponent> _weatherQuery;
+
+    public static readonly TimeSpan StartupTime = TimeSpan.FromSeconds(15);
+    public static readonly TimeSpan ShutdownTime = TimeSpan.FromSeconds(15);
 
     public override void Initialize()
     {
         base.Initialize();
+
         _blockQuery = GetEntityQuery<BlockWeatherComponent>();
-        SubscribeLocalEvent<WeatherComponent, EntityUnpausedEvent>(OnWeatherUnpaused);
+        _weatherQuery = GetEntityQuery<WeatherStatusEffectComponent>();
+
+        SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnCompShutdown);
     }
 
-    private void OnWeatherUnpaused(EntityUid uid, WeatherComponent component, ref EntityUnpausedEvent args)
+    private void OnCompShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
     {
-        foreach (var weather in component.Weather.Values)
-        {
-            weather.StartTime += args.PausedTime;
-
-            if (weather.EndTime != null)
-                weather.EndTime = weather.EndTime.Value + args.PausedTime;
-        }
+        _audio.Stop(ent.Comp.Stream);
     }
 
-    public bool CanWeatherAffect(EntityUid uid, MapGridComponent grid, TileRef tileRef, RoofComponent? roofComp = null)
+    public bool CanWeatherAffect(Entity<MapGridComponent> ent, TileRef tileRef, RoofComponent? roofComp = null)
     {
         if (tileRef.Tile.IsEmpty)
             return true;
 
-        if (Resolve(uid, ref roofComp, false) && _roof.IsRooved((uid, grid, roofComp), tileRef.GridIndices))
+        if (Resolve(ent, ref roofComp, false) && _roof.IsRooved((ent, ent.Comp, roofComp), tileRef.GridIndices))
             return false;
 
         var tileDef = (ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId];
@@ -53,33 +56,36 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (!tileDef.Weather)
             return false;
 
-        var anchoredEntities = _mapSystem.GetAnchoredEntitiesEnumerator(uid, grid, tileRef.GridIndices);
 
-        while (anchoredEntities.MoveNext(out var ent))
+        var anchoredEntities = _mapSystem.GetAnchoredEntitiesEnumerator(ent, ent.Comp, tileRef.GridIndices);
+
+        while (anchoredEntities.MoveNext(out var anchored))
         {
-            if (_blockQuery.HasComponent(ent.Value))
+            if (_blockQuery.HasComponent(anchored.Value))
                 return false;
         }
 
         return true;
-
     }
 
-    public float GetPercent(WeatherData component, EntityUid mapUid)
+    /// <summary>
+    /// Calculates the current “strength” of the specified weather based on the duration of the status effect.
+    /// </summary>
+    public float GetWeatherPercent(Entity<StatusEffectComponent> ent)
     {
-        var pauseTime = _metadata.GetPauseTime(mapUid);
-        var elapsed = Timing.CurTime - (component.StartTime + pauseTime);
-        var duration = component.Duration;
+        var pauseTime = _metadata.GetPauseTime(ent);
+        var elapsed = Timing.CurTime - (ent.Comp.StartEffectTime + pauseTime);
+        var duration = ent.Comp.Duration;
         var remaining = duration - elapsed;
         float alpha;
 
-        if (remaining < WeatherComponent.ShutdownTime)
+        if (remaining < ShutdownTime)
         {
-            alpha = (float) (remaining / WeatherComponent.ShutdownTime);
+            alpha = (float) (remaining / ShutdownTime);
         }
-        else if (elapsed < WeatherComponent.StartupTime)
+        else if (elapsed < StartupTime)
         {
-            alpha = (float) (elapsed / WeatherComponent.StartupTime);
+            alpha = (float) (elapsed / StartupTime);
         }
         else
         {
@@ -88,7 +94,6 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         return alpha;
     }
-
 
     public override void Update(float frameTime)
     {
@@ -99,146 +104,125 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         var curTime = Timing.CurTime;
 
-        var query = EntityQueryEnumerator<WeatherComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        var query = EntityQueryEnumerator<WeatherStatusEffectComponent, StatusEffectComponent, MetaDataComponent>();
+        while (query.MoveNext(out var uid, out var weatherComp, out var statusEffect, out var metaData))
         {
-            if (comp.Weather.Count == 0)
+            if (metaData.EntityPrototype == null)
                 continue;
 
-            foreach (var (proto, weather) in comp.Weather)
+            var endTime = statusEffect.EndEffectTime;
+
+            var remainingTime = endTime - curTime;
+
+            //Gradually Shutdown
+            if (endTime != null && remainingTime < ShutdownTime)
             {
-                var endTime = weather.EndTime;
+                SetState((uid, weatherComp), WeatherStateNew.Ending);
+            }
+            else
+            {
+                var startTime = statusEffect.StartEffectTime;
+                var elapsed = Timing.CurTime - startTime;
 
-                // Ended
-                if (endTime != null && endTime < curTime)
+                if (elapsed < StartupTime)
                 {
-                    EndWeather(uid, comp, proto);
-                    continue;
+                    SetState((uid, weatherComp), WeatherStateNew.Starting);
                 }
-
-                var remainingTime = endTime - curTime;
-
-                // Admin messed up or the likes.
-                if (!ProtoMan.TryIndex<WeatherPrototype>(proto, out var weatherProto))
-                {
-                    Log.Error($"Unable to find weather prototype for {comp.Weather}, ending!");
-                    EndWeather(uid, comp, proto);
-                    continue;
-                }
-
-                // Shutting down
-                if (endTime != null && remainingTime < WeatherComponent.ShutdownTime)
-                {
-                    SetState(uid, WeatherState.Ending, comp, weather, weatherProto);
-                }
-                // Starting up
-                else
-                {
-                    var startTime = weather.StartTime;
-                    var elapsed = Timing.CurTime - startTime;
-
-                    if (elapsed < WeatherComponent.StartupTime)
-                    {
-                        SetState(uid, WeatherState.Starting, comp, weather, weatherProto);
-                    }
-                }
-
-                // Run whatever code we need.
-                Run(uid, weather, weatherProto, frameTime);
             }
         }
     }
 
+    protected virtual bool SetState(Entity<WeatherStatusEffectComponent> ent, WeatherStateNew state)
+    {
+        if (ent.Comp.State.Equals(state))
+            return false;
+
+        ent.Comp.State = state;
+        Dirty(ent);
+        return true;
+    }
+
     /// <summary>
-    /// Shuts down all existing weather and starts the new one if applicable.
+    /// Adds new weather to map. Dont remove other existed weathers.
     /// </summary>
-    public void SetWeather(MapId mapId, WeatherPrototype? proto, TimeSpan? endTime)
+    /// <param name="mapId">Target mapId</param>
+    /// <param name="weatherProto">EntProtoId of weather status effect</param>
+    /// <param name="duration">How long this weather should exist on map? If null - infinity duration</param>
+    public void AddWeather(MapId mapId, EntProtoId weatherProto, TimeSpan? duration = null)
     {
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return;
 
-        var weatherComp = EnsureComp<WeatherComponent>(mapUid.Value);
-
-        foreach (var (eProto, weather) in weatherComp.Weather)
-        {
-            // if we turn off the weather, we don't want endTime = null
-            if (proto == null)
-                endTime ??= Timing.CurTime + WeatherComponent.ShutdownTime;
-
-            // Reset cooldown if it's an existing one.
-            if (proto is not null && eProto == proto.ID)
-            {
-                weather.EndTime = endTime;
-                if (weather.State == WeatherState.Ending)
-                    weather.State = WeatherState.Running;
-
-                Dirty(mapUid.Value, weatherComp);
-                continue;
-            }
-
-            // Speedrun
-            var end = Timing.CurTime + WeatherComponent.ShutdownTime;
-
-            if (weather.EndTime == null || weather.EndTime > end)
-            {
-                weather.EndTime = end;
-                Dirty(mapUid.Value, weatherComp);
-            }
-        }
-
-        if (proto != null)
-            StartWeather(mapUid.Value, weatherComp, proto, endTime);
+        AddWeather(mapUid.Value, weatherProto, duration);
     }
 
     /// <summary>
-    /// Run every tick when the weather is running.
+    /// Adds new weather to map. Dont remove other existed weathers. If this type of weather already exists, it simply override its duration.
     /// </summary>
-    protected virtual void Run(EntityUid uid, WeatherData weather, WeatherPrototype weatherProto, float frameTime) { }
-
-    protected void StartWeather(EntityUid uid, WeatherComponent component, WeatherPrototype weather, TimeSpan? endTime)
+    /// <param name="mapUid">Target entity map</param>
+    /// <param name="weatherProto">EntProtoId of weather status effect</param>
+    /// <param name="duration">How long this weather should exist on map? If null - infinity duration</param>
+    public void AddWeather(EntityUid mapUid, EntProtoId weatherProto, TimeSpan? duration = null)
     {
-        if (component.Weather.ContainsKey(weather.ID))
+        _statusEffects.TrySetStatusEffectDuration(mapUid, weatherProto, out _ , duration);
+    }
+
+    /// <summary>
+    /// Start slowly removing weather from map. Its should be gone after <see cref="ShutdownTime"/> seconds.
+    /// </summary>
+    /// <param name="mapId">Target mapId</param>
+    /// <param name="weatherProto">EntProtoId of weather status effect</param>
+    public void GraduallyRemoveWeather(MapId mapId, EntProtoId weatherProto)
+    {
+        if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return;
 
-        var data = new WeatherData()
-        {
-            StartTime = Timing.CurTime,
-            EndTime = endTime,
-        };
-
-        component.Weather.Add(weather.ID, data);
-        Dirty(uid, component);
+        GraduallyRemoveWeather(mapUid.Value, weatherProto);
     }
 
-    protected virtual void EndWeather(EntityUid uid, WeatherComponent component, string proto)
+    /// <summary>
+    /// Start slowly removing weather from map. Its should be gone after <see cref="ShutdownTime"/> seconds.
+    /// </summary>
+    /// <param name="mapUid">Target entity map</param>
+    /// <param name="weatherProto">EntProtoId of weather status effect</param>
+    public void GraduallyRemoveWeather(EntityUid mapUid, EntProtoId weatherProto)
     {
-        if (!component.Weather.TryGetValue(proto, out var data))
+        if (!_statusEffects.TryGetStatusEffect(mapUid, weatherProto, out var weatherEnt))
             return;
 
-        _audio.Stop(data.Stream);
-        data.Stream = null;
-        component.Weather.Remove(proto);
-        Dirty(uid, component);
+        if (!_weatherQuery.TryComp(weatherEnt, out _))
+            return;
+
+        _statusEffects.TrySetStatusEffectDuration(mapUid, weatherProto, ShutdownTime);
     }
 
-    protected virtual bool SetState(EntityUid uid, WeatherState state, WeatherComponent component, WeatherData weather, WeatherPrototype weatherProto)
+    /// <summary>
+    /// Removes all weather conditions except the specified one. If the specified weather does not exist on the map, it adds it.
+    /// </summary>
+    /// <param name="mapId">Target mapId</param>
+    /// <param name="weatherProto">EntProtoId of weather status effect</param>
+    /// <param name="duration">How long this weather should exist on map? If null - infinity duration</param>
+    public void SetWeather(MapId mapId, EntProtoId weatherProto, TimeSpan? duration = null)
     {
-        if (weather.State.Equals(state))
-            return false;
+        if (!_mapSystem.TryGetMap(mapId, out var mapUid))
+            return;
 
-        weather.State = state;
-        Dirty(uid, component);
-        return true;
-    }
-
-    [Serializable, NetSerializable]
-    protected sealed class WeatherComponentState : ComponentState
-    {
-        public Dictionary<ProtoId<WeatherPrototype>, WeatherData> Weather;
-
-        public WeatherComponentState(Dictionary<ProtoId<WeatherPrototype>, WeatherData> weather)
+        if (_statusEffects.TryEffectsWithComp<WeatherStatusEffectComponent>(mapUid, out var effects))
         {
-            Weather = weather;
+            foreach (var effect in effects)
+            {
+                var effectProto = MetaData(effect).EntityPrototype;
+                if (effectProto is null)
+                    continue;
+
+                if (effectProto != weatherProto)
+                {
+                    GraduallyRemoveWeather(mapUid.Value, effectProto); //Removing all others weathers
+                    continue;
+                }
+
+                AddWeather(mapUid.Value, effectProto, duration); //Add specific weather, or override it duration
+            }
         }
     }
 }

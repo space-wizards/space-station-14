@@ -1,0 +1,24 @@
+- type: entity
+  parent: StatusEffectBase
+  id: WeatherStatusEffectBase
+  abstract: true
+  components:
+  - type: WeatherStatusEffect
+  - type: StatusEffect
+    whitelist:
+      components:
+      - Map
+
+- type: entity
+  parent: WeatherStatusEffectBase
+  id: WeatherStatusEffectRain
+  components:
+  - type: WeatherStatusEffect
+    sprite:
+      sprite: /Textures/Effects/weather.rsi
+      state: rain
+    sound:
+      collection: Rain
+      params:
+        loop: true
+        volume: -6

@@ -1,0 +1,67 @@
+using Content.Server.Administration;
+using Content.Shared.Administration;
+using Robust.Shared.Console;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+
+namespace Content.Server.Weather.Commands;
+
+[AdminCommand(AdminFlags.Fun)]
+public sealed class WeatherRemoveCommand : LocalizedEntityCommands
+{
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
+    public override string Command => "weather_remove";
+
+    public override string Description => "Remove specific weather from map";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length < 2)
+        {
+            shell.WriteError(Loc.GetString("cmd-weather-error-no-arguments"));
+            return;
+        }
+
+        //MapId parse
+        if (!int.TryParse(args[0], out var mapInt))
+            return;
+
+        var mapId = new MapId(mapInt);
+
+        //Weather proto parse
+        EntProtoId weatherProto = args[1];
+        if (!_proto.TryIndex(weatherProto, out _))
+        {
+            shell.WriteError(Loc.GetString("cmd-weather-error-unknown-proto"));
+            return;
+        }
+
+        _entMan.System<WeatherSystem>().GraduallyRemoveWeather(mapId, weatherProto);
+    }
+
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
+
+        if (args.Length == 2)
+        {
+            var opts = new List<CompletionOption>();
+            foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
+            {
+                if (!proto.Components.ContainsKey("WeatherStatusEffect")) //Uhh, iirc we have something like nameof(), but i cant found it.
+                    continue;
+
+                opts.Add(new CompletionOption(proto.ID, proto.Name));
+            }
+
+            opts.Add(new CompletionOption("null", Loc.GetString("cmd-weather-null")));
+            return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-weather-hint"));
+        }
+
+        return CompletionResult.Empty;
+    }
+}
