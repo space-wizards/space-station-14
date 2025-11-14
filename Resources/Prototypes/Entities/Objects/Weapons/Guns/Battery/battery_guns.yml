@@ -962,7 +962,7 @@
   name: cyborg pulse rifle #imp
   parent: WeaponPulseRifle
   id: WeaponPulseRifleCyborg
-  description: A weapon almost as infamous as its users. Recharges from the Cyborgs internal cell.
+  description: A weapon almost as infamous as its users. Draws power from the cyborg's internal cell, slowly recharging.
   components:
   - type: Gun
     minAngle: -4

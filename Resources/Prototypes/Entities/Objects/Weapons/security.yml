@@ -236,7 +236,7 @@
   id: StunBatonBorg
   parent: Stunbaton
   name: recharging cyborg baton
-  description: A version of the Stun Baton that passively recharges off of the Cyborgs internal cell.
+  description: A version of the Stun Baton that draws power from the cyborg's internal cell.
   suffix: Cyborg
   components:
   - type: BatterySelfRecharger

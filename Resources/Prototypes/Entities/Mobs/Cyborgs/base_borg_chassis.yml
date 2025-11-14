@@ -544,7 +544,7 @@
   id: BorgChassisCombat
   parent: [ BaseBorgChassisNotIonStormable, ShowSecurityIcons, ShowMedicalIcons ]
   name: combat cyborg
-  description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen, this chassis is purpose-built for the extermination of powerful threats alongside their ERT compatriots. Its shell is reinforced with Plasteel.
+  description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen, specialized for the extermination of powerful threats alongside their ERT compatriots. Its shell is reinforced with plasteel.
   components:
   - type: BorgTransponder
     name: combat cyborg
@@ -674,7 +674,7 @@
   id: BorgChassisCommando
   parent: [ BaseBorgChassisNotIonStormable, ShowSecurityIcons, ShowMedicalIcons ]
   name: commando cyborg
-  description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen. Fitted with the finest technology Nanotrasen could offer, nothing will stand in its way for too long. Its shell is reinforced with Plastitanium.
+  description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen. Fitted with the finest technology Nanotrasen could offer, nothing will stand in its way for long. Its shell is reinforced with plastitanium.
   components:
   - type: BorgTransponder
     name: commando cyborg

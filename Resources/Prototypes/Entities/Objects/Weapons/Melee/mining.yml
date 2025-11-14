@@ -261,7 +261,7 @@
   name: sonic jackhammer
   parent: BaseItem
   id: SonicJackhammer
-  description: A powerful tool used to quickly breach structures.
+  description: A specialized tool used to quickly breach structures with extremely focused vibrations.
   components:
   - type: Item
     storedRotation: -90
