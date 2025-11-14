@@ -12,11 +12,7 @@
         </ScrollContainer>
 
         <!-- Vertical rule -->
-        <PanelContainer MinSize="2 0">
-            <PanelContainer.PanelOverride>
-                <graphics:StyleBoxFlat BackgroundColor="{xNamespace:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
-            </PanelContainer.PanelOverride>
-        </PanelContainer>
+        <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
         <!-- We stuff the job/join buttons in here -->
         <BoxContainer Name="JobList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"
