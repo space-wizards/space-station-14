@@ -57,7 +57,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
             var occlusion = 0f;
 
-
             // Work out tiles nearby to determine volume.
             if (_gridQuery.TryComp(entXform.GridUid, out var grid))
             {
@@ -124,19 +123,5 @@ public sealed class WeatherSystem : SharedWeatherSystem
             _audio.SetGain(weather.Stream, alpha, audio);
             audio.Occlusion = occlusion;
         }
-    }
-
-    protected override bool SetState(Entity<WeatherStatusEffectComponent> ent, WeatherStateNew state)
-    {
-        if (!base.SetState(ent, state))
-            return false;
-
-        if (!Timing.IsFirstTimePredicted)
-            return true;
-
-        // TODO: Fades (properly)
-        ent.Comp.Stream = _audio.Stop(ent.Comp.Stream);
-        ent.Comp.Stream = _audio.PlayGlobal(ent.Comp.Sound, Filter.Local(), true)?.Entity;
-        return true;
     }
 }

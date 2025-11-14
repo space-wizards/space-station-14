@@ -10,7 +10,7 @@ namespace Content.Shared.Weather;
 /// Uses only in conjure with <see cref="StatusEffectComponent"/> on map entities.
 /// contains basic information about all types of weather effects
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedWeatherSystem))]
 public sealed partial class WeatherStatusEffectComponent : Component
 {
     [DataField(required: true)]
@@ -34,15 +34,4 @@ public sealed partial class WeatherStatusEffectComponent : Component
     // Client audio stream.
     [NonSerialized]
     public EntityUid? Stream;
-
-    [DataField]
-    public WeatherStateNew State = WeatherStateNew.Invalid;
-}
-
-public enum WeatherStateNew : byte
-{
-    Invalid = 0,
-    Starting,
-    Running,
-    Ending,
 }

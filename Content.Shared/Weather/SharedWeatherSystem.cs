@@ -15,9 +15,9 @@ public abstract class SharedWeatherSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedRoofSystem _roof = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
@@ -34,13 +34,6 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         _blockQuery = GetEntityQuery<BlockWeatherComponent>();
         _weatherQuery = GetEntityQuery<WeatherStatusEffectComponent>();
-
-        SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnCompShutdown);
-    }
-
-    private void OnCompShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
-    {
-        _audio.Stop(ent.Comp.Stream);
     }
 
     public bool CanWeatherAffect(Entity<MapGridComponent> ent, TileRef tileRef, RoofComponent? roofComp = null)
@@ -77,69 +70,13 @@ public abstract class SharedWeatherSystem : EntitySystem
         var elapsed = Timing.CurTime - (ent.Comp.StartEffectTime + pauseTime);
         var duration = ent.Comp.Duration;
         var remaining = duration - elapsed;
-        float alpha;
 
         if (remaining < ShutdownTime)
-        {
-            alpha = (float) (remaining / ShutdownTime);
-        }
+            return (float) (remaining / ShutdownTime);
         else if (elapsed < StartupTime)
-        {
-            alpha = (float) (elapsed / StartupTime);
-        }
+            return (float) (elapsed / StartupTime);
         else
-        {
-            alpha = 1f;
-        }
-
-        return alpha;
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
-        var curTime = Timing.CurTime;
-
-        var query = EntityQueryEnumerator<WeatherStatusEffectComponent, StatusEffectComponent, MetaDataComponent>();
-        while (query.MoveNext(out var uid, out var weatherComp, out var statusEffect, out var metaData))
-        {
-            if (metaData.EntityPrototype == null)
-                continue;
-
-            var endTime = statusEffect.EndEffectTime;
-
-            var remainingTime = endTime - curTime;
-
-            //Gradually Shutdown
-            if (endTime != null && remainingTime < ShutdownTime)
-            {
-                SetState((uid, weatherComp), WeatherStateNew.Ending);
-            }
-            else
-            {
-                var startTime = statusEffect.StartEffectTime;
-                var elapsed = Timing.CurTime - startTime;
-
-                if (elapsed < StartupTime)
-                {
-                    SetState((uid, weatherComp), WeatherStateNew.Starting);
-                }
-            }
-        }
-    }
-
-    protected virtual bool SetState(Entity<WeatherStatusEffectComponent> ent, WeatherStateNew state)
-    {
-        if (ent.Comp.State.Equals(state))
-            return false;
-
-        ent.Comp.State = state;
-        Dirty(ent);
-        return true;
+            return 1f;
     }
 
     /// <summary>
@@ -172,12 +109,12 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// </summary>
     /// <param name="mapId">Target mapId</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
-    public void GraduallyRemoveWeather(MapId mapId, EntProtoId weatherProto)
+    public void RemoveWeather(MapId mapId, EntProtoId weatherProto)
     {
         if (!_mapSystem.TryGetMap(mapId, out var mapUid))
             return;
 
-        GraduallyRemoveWeather(mapUid.Value, weatherProto);
+        RemoveWeather(mapUid.Value, weatherProto);
     }
 
     /// <summary>
@@ -185,7 +122,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// </summary>
     /// <param name="mapUid">Target entity map</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
-    public void GraduallyRemoveWeather(EntityUid mapUid, EntProtoId weatherProto)
+    public void RemoveWeather(EntityUid mapUid, EntProtoId weatherProto)
     {
         if (!_statusEffects.TryGetStatusEffect(mapUid, weatherProto, out var weatherEnt))
             return;
@@ -217,7 +154,7 @@ public abstract class SharedWeatherSystem : EntitySystem
 
                 if (effectProto != weatherProto)
                 {
-                    GraduallyRemoveWeather(mapUid.Value, effectProto); //Removing all others weathers
+                    RemoveWeather(mapUid.Value, effectProto); //Removing all others weathers
                     continue;
                 }
 

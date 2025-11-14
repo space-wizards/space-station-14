@@ -40,7 +40,7 @@ public sealed class WeatherRemoveCommand : LocalizedEntityCommands
             return;
         }
 
-        _entMan.System<WeatherSystem>().GraduallyRemoveWeather(mapId, weatherProto);
+        _entMan.System<WeatherSystem>().RemoveWeather(mapId, weatherProto);
     }
 
 

@@ -33,8 +33,10 @@ public sealed class WeatherSetCommand : LocalizedEntityCommands
         var mapId = new MapId(mapInt);
 
         //Weather proto parse
-        EntProtoId weatherProto = args[1];
-        if (!_proto.TryIndex(weatherProto, out _))
+        EntProtoId? weatherProto = args[1];
+        if (args[1] == "null")
+            weatherProto = null;
+        else if (!_proto.TryIndex(weatherProto, out _))
         {
             shell.WriteError(Loc.GetString("cmd-weather-error-unknown-proto"));
             return;

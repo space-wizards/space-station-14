@@ -10,7 +10,7 @@
       - Map
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherRain
   components:
   - type: WeatherStatusEffect
@@ -24,7 +24,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherAshfall
   components:
   - type: WeatherStatusEffect
@@ -38,7 +38,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherAshfallLight
   components:
   - type: WeatherStatusEffect
@@ -52,7 +52,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherAshfallHeavy
   components:
   - type: WeatherStatusEffect
@@ -66,7 +66,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherFallout
   components:
   - type: WeatherStatusEffect
@@ -80,7 +80,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherHail
   components:
   - type: WeatherStatusEffect
@@ -94,7 +94,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherSandstorm
   components:
   - type: WeatherStatusEffect
@@ -108,7 +108,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherSandstormHeavy
   components:
   - type: WeatherStatusEffect
@@ -122,7 +122,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherSnowfallLight
   components:
   - type: WeatherStatusEffect
@@ -136,7 +136,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherSnowfallMedium
   components:
   - type: WeatherStatusEffect
@@ -150,7 +150,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherSnowfallHeavy
   components:
   - type: WeatherStatusEffect
@@ -164,7 +164,7 @@
         volume: -6
 
 - type: entity
-  parent: WeatherStatusEffectBase
+  parent: WeatherBase
   id: WeatherStorm
   components:
   - type: WeatherStatusEffect
