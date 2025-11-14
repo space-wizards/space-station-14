@@ -14,21 +14,8 @@ public sealed class SurveillanceCameraMapSystem : EntitySystem
         SubscribeLocalEvent<SurveillanceCameraComponent, MoveEvent>(OnCameraMoved);
 
         SubscribeLocalEvent<SurveillanceCameraComponent, EntityUnpausedEvent>(OnCameraUnpaused);
-        SubscribeLocalEvent<SurveillanceCameraMapComponent, EntityPausedEvent>(OnGridPaused);
 
         SubscribeNetworkEvent<RequestCameraMarkerUpdateMessage>(OnRequestCameraMarkerUpdate);
-    }
-
-    private void OnGridPaused(EntityUid uid, SurveillanceCameraMapComponent comp, ref EntityPausedEvent args)
-    {
-        if (Terminating(uid))
-            return;
-
-        if (comp.Cameras.Count > 0)
-        {
-            comp.Cameras.Clear();
-            Dirty(uid, comp);
-        }
     }
 
     private void OnCameraUnpaused(EntityUid uid, SurveillanceCameraComponent comp, ref EntityUnpausedEvent args)
