@@ -157,9 +157,10 @@ public abstract class SharedWeatherSystem : EntitySystem
                     RemoveWeather(mapUid.Value, effectProto); //Removing all others weathers
                     continue;
                 }
-
-                AddWeather(mapUid.Value, effectProto, duration); //Add specific weather, or override it duration
             }
+            
+            if (weatherProto is not null)
+                AddWeather(mapUid.Value, weatherProto.Value, duration); //Add specific weather, or override it duration
         }
     }
 }
