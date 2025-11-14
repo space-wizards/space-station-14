@@ -1412,7 +1412,7 @@
       types:
         Piercing: 2
   - type: StunOnCollide #somewhat mirror to taser stats, meant to be tot 'sidegrade'
-    stunAmount: 0.25
+    stunAmount: 0.5
     knockdownAmount: 2.5
     slowdownAmount: 2.5
     walkSpeedModifier: 0.5
