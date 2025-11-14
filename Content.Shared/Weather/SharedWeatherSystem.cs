@@ -158,9 +158,9 @@ public abstract class SharedWeatherSystem : EntitySystem
                     continue;
                 }
             }
-            
-            if (weatherProto is not null)
-                AddWeather(mapUid.Value, weatherProto.Value, duration); //Add specific weather, or override it duration
         }
+
+        if (weatherProto is not null)
+            AddWeather(mapUid.Value, weatherProto.Value, duration); //Add specific weather, or override it duration
     }
 }
