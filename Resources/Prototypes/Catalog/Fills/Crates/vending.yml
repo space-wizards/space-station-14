@@ -7,7 +7,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockBooze
+        id: VendingMachineRestockBooze
 
 - type: entity
   id: CrateVendingMachineRestockChefvendFilled
@@ -18,7 +18,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockChefvend
+        id: VendingMachineRestockChefvend
 
 - type: entity
   id: CrateVendingMachineRestockClothesFilled
@@ -29,7 +29,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockClothes
+        id: VendingMachineRestockClothes
 
 - type: entity
   id: CrateVendingMachineRestockAutoDrobeFilled
@@ -40,7 +40,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockCostumes
+        id: VendingMachineRestockCostumes
 
 - type: entity
   id: CrateVendingMachineRestockCondimentStationFilled
@@ -51,7 +51,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockCondimentStation
+        id: VendingMachineRestockCondimentStation
 
 - type: entity
   id: CrateVendingMachineRestockDinnerwareFilled
@@ -62,7 +62,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockDinnerware
+        id: VendingMachineRestockDinnerware
 
 - type: entity
   id: CrateVendingMachineRestockEngineeringFilled
@@ -73,7 +73,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockEngineering
+        id: VendingMachineRestockEngineering
 
 - type: entity
   id: CrateVendingMachineRestockGamesFilled
@@ -84,7 +84,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockGames
+        id: VendingMachineRestockGames
 
 - type: entity
   id: CrateVendingMachineRestockHotDrinksFilled
@@ -95,7 +95,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockHotDrinks
+        id: VendingMachineRestockHotDrinks
         amount: 2
 
 - type: entity
@@ -107,7 +107,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockMedical
+        id: VendingMachineRestockMedical
 
 - type: entity
   id: CrateVendingMachineRestockChemVendFilled
@@ -118,7 +118,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockChemVend
+        id: VendingMachineRestockChemVend
 
 - type: entity
   id: CrateVendingMachineRestockNutriMaxFilled
@@ -129,7 +129,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockNutriMax
+        id: VendingMachineRestockNutriMax
 
 - type: entity
   id: CrateVendingMachineRestockPTechFilled
@@ -140,7 +140,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockPTech
+        id: VendingMachineRestockPTech
 
 - type: entity
   id: CrateVendingMachineRestockRobustSoftdrinksFilled
@@ -151,7 +151,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockRobustSoftdrinks
+        id: VendingMachineRestockRobustSoftdrinks
         amount: 2
 
 - type: entity
@@ -163,7 +163,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockSalvageEquipment
+        id: VendingMachineRestockSalvageEquipment
 
 - type: entity
   id: CrateVendingMachineRestockSecTechFilled
@@ -174,7 +174,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockSecTech
+        id: VendingMachineRestockSecTech
 
 - type: entity
   id: CrateVendingMachineRestockSeedsFilled
@@ -185,7 +185,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockSeeds
+        id: VendingMachineRestockSeeds
 
 - type: entity
   id: CrateVendingMachineRestockSmokesFilled
@@ -196,7 +196,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockSmokes
+        id: VendingMachineRestockSmokes
         amount: 2
 
 - type: entity
@@ -208,7 +208,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockVendomat
+        id: VendingMachineRestockVendomat
 
 - type: entity
   id: CrateVendingMachineRestockRoboticsFilled
@@ -219,7 +219,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockRobotics
+        id: VendingMachineRestockRobotics
 
 - type: entity
   id: CrateVendingMachineRestockTankDispenserFilled
@@ -230,7 +230,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockTankDispenser
+        id: VendingMachineRestockTankDispenser
 
 - type: entity
   id: CrateVendingMachineRestockHappyHonkFilled
@@ -241,7 +241,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockHappyHonk
+        id: VendingMachineRestockHappyHonk
         amount: 2
 
 - type: entity
@@ -253,7 +253,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockGetmoreChocolateCorp
+        id: VendingMachineRestockGetmoreChocolateCorp
         amount: 2
 
 - type: entity
@@ -265,7 +265,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockChang
+        id: VendingMachineRestockChang
         amount: 2
 
 - type: entity
@@ -277,7 +277,7 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockDiscountDans
+        id: VendingMachineRestockDiscountDans
         amount: 2
 
 - type: entity
@@ -289,5 +289,5 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-      - id: VendingMachineRestockDonut
+        id: VendingMachineRestockDonut
         amount: 2
