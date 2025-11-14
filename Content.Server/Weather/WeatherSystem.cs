@@ -16,14 +16,14 @@ public sealed class WeatherSystem : SharedWeatherSystem
         SubscribeLocalEvent<WeatherStatusEffectComponent, ComponentShutdown>(OnCompShutdown);
     }
 
+    private void OnCompInit(Entity<WeatherStatusEffectComponent> ent, ref ComponentInit args)
+    {
+        _pvs.AddGlobalOverride(ent);
+    }
+
     private void OnCompShutdown(Entity<WeatherStatusEffectComponent> ent, ref ComponentShutdown args)
     {
         Audio.Stop(ent.Comp.Stream);
         _pvs.RemoveGlobalOverride(ent);
-    }
-
-    private void OnCompInit(Entity<WeatherStatusEffectComponent> ent, ref ComponentInit args)
-    {
-        _pvs.AddGlobalOverride(ent);
     }
 }
