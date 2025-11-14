@@ -31,6 +31,9 @@
     inherentRadioChannels:
     - Common
     - Binary
+  - type: WieldingBlocker
+    blockInHand: false
+    blockEquipped: false
 
 - type: entity
   id: BorgChassisGeneric
