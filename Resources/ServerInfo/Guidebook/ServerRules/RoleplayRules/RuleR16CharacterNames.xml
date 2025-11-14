@@ -2,74 +2,80 @@
   # Roleplay Rule 16 - Use appropriate names for characters
   [color=SlateGray][italic]Revision A, 2025-10-11[/italic][/color]
 
-  All names must not breach server rules or exploit in-game naming mechanics.
+  Unless otherwise specified, roundstart names must not:
+  - Be famous figures
+  - Be low-effort
+  - Be miscapitalized
+  - Be mispunctuated
+  - Be unpronouncable
+  - Break convention (unless following a theme)
+  - Break other rules
+  - Contain emojis
+  - Contain numbers
+  - Contain titles
+  - Contain unrecognizable or untypeable symbols
+  - Exploit in-game naming mechanics
 
-  Roundstart names must not contain:
-  - Non-familial titles
-  - Numbers
-  - Emojis
-  - Unrecognisable symbols
-
-  Additionally, roundstart names must not be:
-  - Recognisable figures
-  - Unpronouncable
-  - Mispunctuated
-  - Miscapitalized
-  - Low-effort
-
-  Silicon names are exempt from roundstart name rules. Stage names (Clown, Mime, Musician) may have titles and looser restrictions for "low-effort" names.
-
-  ## MRP Amendment
-  Character descriptions must not include intangible details such as relationships, background, and work history.
+  Silicons are exempt from roundstart name rules. Clown, Mime, and Musician stage names may contain non-familial titles and be mildly low-effort.
 
   ## Conventions and Examples
-  Humans follow a "'first name' 'surname'" convention:
+  Humans follow a "'First name' 'Middle name (optional)' 'Surname'" convention, which may be appended with familial titles and Roman numerals:
   [color=#449944]Appropriate:[/color]
   - Tom Fisher
   - Tom J. Fisher
   - Tom Jay Fisher
+  - TJ Fisher
   - Spacey Chapman
   - Spacey Chapman Jr. III
 
   [color=#994444]Prohibited:[/color]
-  - bob bifel (miscapitalized)
-  - Dr. Tom Fisher (contains title)
-  - Walter White (recognizable figure)
-  - George Washington (recognizable figure)
-  - Joe Biden (recognizable figure)
-  - Ben Dover (low-effort, breaches server rules)
-  - MIKE HUNT (low-effort, breaches server rules, miscapitalized)
+  - Jane (is low-effort)
+  - Bob (is low-effort)
+  - bob bifel (is miscapitalized)
+  - Dr. Tom Fisher 3 (contains non-familial title and number)
+  - Dr. Tom Fisher  (contains non-familial title and number)
+  - TJ F (is low-effort)
+  - Tom the CXIV (is low-effort, breaks convention)
+  - Walter White (is famous figure)
+  - George Washington (is famous figure)
+  - Joe Biden (is famous figure)
+  - Ben Dover (is low-effort, breaks other rules)
+  - MIKE HUNT (is low-effort, is miscapitalized, and breaks other rules)
 
-  Dwarves follow human names of Scandinavian origin:
+  Dwarves follow human names of Nordic origin.
   [color=#449944]Appropriate:[/color]
   - Ingrid Firebreath
   - Björn Lightningclaw
   - Åse Forgebreaker
 
-  Reptilians follow a "'Verb'-'article'-'Noun'" convention:
+  Reptilians follow Argonian names of Jel origin (The Elder Scrolls series) or a "'Verb'-'article'-'Noun'" convention:
   [color=#449944]Appropriate:[/color]
-  - Cleans-the-Airlocks
+  - Vistha-Druja
   - Ber-Mei
+  - Cleans-the-Airlocks
+  - Stuns-the-Prisoner
 
   [color=#994444]Prohibited:[/color]
-  - Runs from Trouble (mispunctuated)
-  - Bans-the-Admins (low-effort)
+  - Runs-from Trouble (is low-effort, is mispunctuated, breaks convention)
+  - Bans-the-Admins (is low-effort)
 
-  Slime People follow an onomatopoeia theme:
+  Slime People follow human names with optional surname and onomatopoeia theme:
   [color=#449944]Appropriate:[/color]
   - Foolp Suub
   - Foolp
+  - Rain Caldwell
 
   [color=#994444]Prohibited:[/color]
-  - Slime (low-effort)
+  - Slime (is low-effort)
+  - Teal Slime (is low-effort)
 
-  Diona follow a serene nature-themed "Noun of Noun" convention:
+  Diona follow a "'Noun' of 'Noun'" convention with a nature theme:
   [color=#449944]Appropriate:[/color]
   - Petal of Tranquility
   - Garden of Relaxation
 
   [color=#994444]Prohibited:[/color]
-  - Tree but Alive (low-effort)
+  - Tree but Alive (is low-effort and breaks convention)
 
   Moth People follow human names of Latin origin or with a light theme:
   [color=#449944]Appropriate:[/color]
@@ -81,45 +87,45 @@
   [color=#449944]Appropriate:[/color]
   - Argyroneta Reticulatus
   - Loxosceles Domesticus
-  - Spider-Man (low-effort, recognizable figure)
+  - Spider-Man (is famous figure, is low-effort, breaks convention)
 
-  Vox are made up of repeating syllables:
+  Vox follow names made up of repeating syllables:
   [color=#449944]Appropriate:[/color]
   - Hirixashahre
   - Xapikrikrik
 
   [color=#994444]Prohibited:[/color]
-  - Chipikirchitchitchitbecretretrer (unpronouncable)
-  - Trololol (low-effort)
-  - Skibidi (low-effort)
+  - Chipikirchitchitchitbecretretrer (is unpronouncable)
+  - Trololol (is famous figure and low-effort)
+  - Skibidi (is famous figure and low-effort)
 
-  Vulpkanin follow human names with a Slavic theme:
+  Vulpkanin follow human names of Slavic origin:
   [color=#449944]Appropriate:[/color]
   - Małgorzata Nowak
   - Svetlana Olegovna
 
   [color=#994444]Prohibited:[/color]
-  - Furry (low-effort)
-  - Vladmir Lenin (recognizable figure)
-  - Grzegorz Brzęczyszczykiewicz (recognizable figure, unpronouncable)
+  - Furry (is low-effort and breaks convention)
+  - Дpyr (is low-effort, breaks convention, and contains unrecognizable or untypeable symbols)
+  - Vladmir Lenin (is famous figure)
+  - Grzegorz Brzęczyszczykiewicz (is famous figure and unpronouncable)
 
   Other examples of inappropriate names:
   [color=#994444]Prohibited:[/color]
-  - XxRobustxX (low-effort, unpronounceable)
-  - SDpksSodjdfk (low-effort, unpronounceable)
-  - Lkdsoisgoieun (low-effort, unpronounceable)
-  - :3 (low-effort, unpronounceable)
-  - john spacestation (low-effort, miscapitalized)
-  - Greytide (low-effort)
-  - Passenger (low-effort)
-  - Admin (low-effort)
-  - Game-Master (low-effort)
-  - Jane (low-effort)
-  - Joe Mamma (low-effort)
-  - Joe McRogan (low-effort)
-  - The Drunk (low-effort, recognizable figure)
-  - Mark Not a Lizardman Zuckerber (low-effort, recognizable figure)
-  - Urist McHands (meta name; default for admin-spawned humans)
-  - Middle-Aged Man (meta name; default for obscured identities)
-  - Operative Whiskey (meta name; naming pattern of nuclear operatives)
+  - XxRobustxX (is low-effort and unpronounceable)
+  - SDpksSodjdfk (is low-effort and unpronounceable)
+  - Lkdsoisgoieun (is low-effort and unpronounceable)
+  - :3 (is famous figure, low-effort, and unpronounceable)
+  - john spacestation (is low-effort and miscapitalized)
+  - Greytide (is low-effort)
+  - Passenger (is low-effort)
+  - Admin (is low-effort)
+  - Game-Master (is low-effort)
+  - Joe Mamma (is low-effort)
+  - Joe McRogan (is famous figure and low-effort)
+  - The Drunk (is low-effort)
+  - Mark Not a Lizardman Zuckerber (is famous figure and low-effort)
+  - Urist McHands (exploits in-game default humanoid naming mechanic)
+  - Middle-Aged Man (exploits in-game obscured identity naming mechanics)
+  - Operative Whiskey (exploits in-game antagonist naming mechanics)
 </Document>
