@@ -1412,11 +1412,11 @@
       types:
         Piercing: 2
   - type: StunOnCollide #somewhat mirror to taser stats, meant to be tot 'sidegrade'
-    stunAmount: 0.5
+    stunAmount: 0
     knockdownAmount: 2.5
     slowdownAmount: 2.5
-    walkSpeedModifier: 0.5
-    sprintSpeedModifier: 0.5
+    walkSpeedModifier: 0.2
+    sprintSpeedModifier: 0.2
     drop: false
   - type: StaminaDamageOnCollide #additional stam damage to make repeated pushups less of a viable counter
     damage: 45
