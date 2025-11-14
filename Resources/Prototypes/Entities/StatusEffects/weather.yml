@@ -1,6 +1,6 @@
 - type: entity
   parent: StatusEffectBase
-  id: WeatherStatusEffectBase
+  id: WeatherBase
   abstract: true
   components:
   - type: WeatherStatusEffect
@@ -11,7 +11,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectRain
+  id: WeatherRain
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -25,7 +25,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectAshfall
+  id: WeatherAshfall
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -39,7 +39,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectAshfallLight
+  id: WeatherAshfallLight
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -53,7 +53,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectAshfallHeavy
+  id: WeatherAshfallHeavy
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -67,7 +67,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectFallout
+  id: WeatherFallout
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -81,7 +81,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectHail
+  id: WeatherHail
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -95,7 +95,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectSandstorm
+  id: WeatherSandstorm
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -109,7 +109,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectSandstormHeavy
+  id: WeatherSandstormHeavy
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -123,7 +123,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectSnowfallLight
+  id: WeatherSnowfallLight
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -137,7 +137,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectSnowfallMedium
+  id: WeatherSnowfallMedium
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -151,7 +151,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectSnowfallHeavy
+  id: WeatherSnowfallHeavy
   components:
   - type: WeatherStatusEffect
     sprite:
@@ -165,7 +165,7 @@
 
 - type: entity
   parent: WeatherStatusEffectBase
-  id: WeatherStatusEffectStorm
+  id: WeatherStorm
   components:
   - type: WeatherStatusEffect
     sprite:
