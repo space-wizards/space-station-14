@@ -48,8 +48,3 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "Original sound taken from Goonstation. Renamed to howl.ogg"
   source: "https://github.com/goonstation/goonstation/blob/master/sound/voice/animal/werewolf_howl.ogg"
-
-- files: ["vulp_scream1.ogg", "vulp_scream2.ogg", "vulp_scream3.ogg", "vulp_scream4.ogg"]
-  license: "CC0-1.0"
-  copyright: "Original sound by https://freesound.org/people/lordomega/sounds/514959/ - cut out four clips, cleaned up, converted to ogg"
-  source: "https://freesound.org/people/lordomega/sounds/514959/"

@@ -1210,10 +1210,7 @@
     sound: *PlushieVulpSound
   - type: Edible
     requiresSpecialDigestion: true
-    useSound:
-      path: /Audio/Voice/Vulpkanin/vulp_scream4.ogg
-      params:
-        volume: -5
+    useSound: *PlushieVulpSound
   - type: MeleeWeapon
     soundHit: *PlushieVulpSound
   - type: Clothing
