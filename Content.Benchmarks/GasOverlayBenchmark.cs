@@ -46,7 +46,7 @@ public class GasOverlayBenchmark
     /// </summary>
     private static List<(Vector2i, Tile)> ConstructTileLength(int length, in Tile tile)
     {
-        var matrix = new List<(Vector2i, Tile)>();
+        var matrix = new List<(Vector2i, Tile)>(length);
         for (var x = 0; x < length; x++)
         {
             matrix.Add((new Vector2i(x, 0), tile));
