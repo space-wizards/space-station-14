@@ -1,0 +1,27 @@
+﻿- type: entity
+  id: BorgComabtGhostroleSpawner
+  name: Combat Borg Spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: blue
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: combat
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgCombatGhostRole
+
+- type: entity
+  name: Commando Borg Spawner
+  id: BorgCommandoGhostroleSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: blue
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: commando
+  - type: ConditionalSpawner
+    prototypes:
+    - PlayerBorgCommandoGhostRole
