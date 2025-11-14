@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed wallmount interaction rotation.
-    type: Fix
-  id: 8701
-  time: '2025-06-21T13:11:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38111
 - author: Prole0
   changes:
   - message: Flask Visuals & Sounds!
@@ -3925,3 +3918,10 @@
   id: 9202
   time: '2025-11-14T11:15:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41411
+- author: Samuka, DarkIcedCoffee, Whale
+  changes:
+  - message: 'Added a new antag: Xenoborgs'
+    type: Add
+  id: 9203
+  time: '2025-11-14T22:21:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40042
