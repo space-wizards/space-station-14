@@ -3,19 +3,20 @@
   id: BasePercussionInstrument
   abstract: true
   components:
-  - type: Tag
-    tags:
-    - PercussionInstrument
+    - type: Tag
+      tags:
+        - PercussionInstrument
 
 - type: entity
   parent: BasePercussionInstrument
   id: GlockenspielInstrument
   name: glockenspiel
   components:
-  - type: Instrument
-    program: 9
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/glockenspiel.rsi
+    - type: Instrument
+      default:
+        program: 9
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/glockenspiel.rsi
 
 - type: entity
   parent: BasePercussionInstrument
@@ -23,12 +24,13 @@
   name: music box
   description: Playing this makes you feel safe from scary animatronics.
   components:
-  - type: Instrument
-    program: 10
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/musicbox.rsi
-  - type: Item
-    size: Small
+    - type: Instrument
+      default:
+        program: 10
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/musicbox.rsi
+    - type: Item
+      size: Small
 
 - type: entity
   parent: BasePercussionInstrument
@@ -36,31 +38,40 @@
   name: xylophone
   description: Rainbow colored glockenspiel.
   components:
-  - type: Instrument
-    program: 13
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/structureinstruments.rsi
-    state: xylophone
+    - type: Instrument
+      default:
+        program: 13
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/structureinstruments.rsi
+      state: xylophone
 
 - type: entity
   parent: BaseHandheldInstrument
   id: MicrophoneInstrument
   name: microphone
-  description: Perfect for singing your heart out.
+  description: A microphone that auto-tunes your voice to one of several presets. Allows even the worst karaoke to sound tolerable. For some reason, two of the settings make you sound like a scurret, and one like a dog who plays a banjo.
   components:
-  - type: Instrument
-    program: 52
-  - type: SwappableInstrument
-    instrumentList:
-      "Aah": {52: 0}
-      "Ooh": {53: 0}
-      "Kweh": {4: 100} # Defined in space-station-14.sf2
-      "Waa": {5: 100} # Defined in space-station-14.sf2
-      "Wah": {6: 100} # Defined in space-station-14.sf2
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/microphone.rsi
-  - type: Item
-    size: Small
+    - type: Instrument
+      default:
+        program: 52
+      instrumentList:
+        Aaaaaah:
+          program: 52
+        Ooooooh:
+          program: 53
+        Kweh:
+          bank: 100 # Defined in space-station-14.sf2
+          program: 4
+        Waaaaaa:
+          bank: 100 # Defined in space-station-14.sf2
+          program: 5
+        Waaaaah:
+          bank: 100 # Defined in space-station-14.sf2
+          program: 6
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/microphone.rsi
+    - type: Item
+      size: Small
 
 - type: entity
   parent: BasePercussionInstrument
@@ -68,10 +79,11 @@
   name: woodblock
   description: If you listen to this enough it'll start driving itself into your mind.
   components:
-  - type: Instrument
-    program: 115
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/woodblock.rsi
+    - type: Instrument
+      default:
+        program: 115
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/woodblock.rsi
 
 - type: entity
   parent: BasePercussionInstrument
@@ -79,7 +91,8 @@
   name: reverse cymbals
   description: I think you have it the wrong way around?
   components:
-  - type: Instrument
-    program: 119
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/reversecymbal.rsi
+    - type: Instrument
+      default:
+        program: 119
+    - type: Sprite
+      sprite: Objects/Fun/Instruments/reversecymbal.rsi

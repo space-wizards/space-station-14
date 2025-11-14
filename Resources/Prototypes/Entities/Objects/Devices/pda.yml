@@ -1009,8 +1009,9 @@
   - type: Instrument
     allowPercussion: false
     handheld: true
-    program: 2
-    bank: 100 # Defined in space-station-14.sf2
+    default:
+      bank: 100 # Defined in space-station-14.sf2
+      program: 2
 
 - type: entity
   parent: MusicianPDA

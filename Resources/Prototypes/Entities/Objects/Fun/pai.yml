@@ -9,8 +9,9 @@
   - type: Instrument
     allowPercussion: false
     handheld: false
-    program: 2
-    bank: 100 # Defined in space-station-14.sf2
+    default:
+      bank: 10 # Defined in space-station-14.sf2
+      program: 2
   - type: UserInterface
     interfaces:
       enum.StoreUiKey.Key:
