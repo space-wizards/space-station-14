@@ -33,6 +33,7 @@ public sealed class SurveillanceCameraNavMapControl : NavMapControl
 
     public SurveillanceCameraNavMapControl()
     {
+        IoCManager.InjectDependencies(this);
 
         _activeTexture = _resourceCache.GetTexture("/Textures/Interface/NavMap/beveled_triangle.png");
         _selectedTexture = _activeTexture;
