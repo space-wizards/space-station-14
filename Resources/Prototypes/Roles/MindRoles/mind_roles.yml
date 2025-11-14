@@ -292,6 +292,31 @@
     subtype: role-subtype-wizard
   - type: WizardRole
 
+# Xenoborgs
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleMothershipCore
+  name: Mothership Core Role
+  components:
+  - type: MindRole
+    antagPrototype: MothershipCore
+    exclusiveAntag: true
+    roleType: Silicon
+    subtype: role-subtype-xenoborg-core
+  - type: XenoborgRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleXenoborg
+  name: Xenoborg Role
+  components:
+  - type: MindRole
+    antagPrototype: Xenoborg
+    exclusiveAntag: true
+    roleType: Silicon
+    subtype: role-subtype-xenoborg
+  - type: XenoborgRole
+
 # Zombie Squad
 - type: entity
   parent: BaseMindRoleAntag

@@ -42,7 +42,7 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
 
-    private string[] _standoutReagents = [];
+    private ProtoId<ReagentPrototype>[] _standoutReagents = [];
 
     /// <summary>
     /// The lowest threshold to be considered for puddle sprite states as well as slipperiness of a puddle.

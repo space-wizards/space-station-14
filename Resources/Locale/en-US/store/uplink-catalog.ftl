@@ -498,3 +498,6 @@ uplink-smuggler-satchel-desc = A handy, suspicious looking satchel. Just flat en
 
 uplink-acolyte-armor-name = Acolyte Armor
 uplink-acolyte-armor-desc = The must have of any self respecting cult leader. An evil looking piece of armor, made of bones, and surprisingly resistant to damage.
+
+uplink-briefcase-gun-name = Briefcase Gun
+uplink-briefcase-gun-desc = An indistinct briefcase with a highly compact C-20K mounted inside it. Careful not the grip the handle too tight!

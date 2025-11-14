@@ -81,9 +81,19 @@ public sealed partial class BorgChassisComponent : Component
     [DataField]
     public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
 
+    /// <summary>
+    /// The next update time for the battery charge level.
+    /// Used for the alert and borg UI.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextBatteryUpdate = TimeSpan.Zero;
+
+    /// <summary>
+    /// If the entity can open own UI.
+    /// </summary>
+    [DataField]
+    public bool CanOpenSelfUi;
 }
 
 [Serializable, NetSerializable]

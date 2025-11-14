@@ -1505,5 +1505,13 @@ Entries:
   id: 183
   time: '2025-11-03T13:16:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41261
+- author: slarticodefast
+  changes:
+  - message: Added the "quickinspect" command to quickly inspect the selected component
+      for an entity via a keybind.
+    type: Add
+  id: 184
+  time: '2025-11-12T23:22:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41348
 Name: Admin
 Order: 3
