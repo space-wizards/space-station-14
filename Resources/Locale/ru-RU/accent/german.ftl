@@ -1,138 +1,206 @@
 accent-german-words-1 = да
 accent-german-words-1-2 = ага
-accent-german-words-replace-1 = ja
+accent-german-words-replace-1 = я
+
 accent-german-words-2 = нет
-accent-german-words-replace-2 = nein
-accent-german-words-3 = мой
-accent-german-words-replace-3 = mein
-accent-german-words-4 = блять
-accent-german-words-replace-4 = scheisse
+accent-german-words-replace-2 = найн
+
+accent-german-words-3 = этот
+accent-german-words-3-2 = это
+accent-german-words-3-3 = та
+accent-german-words-replace-3 = зе
+
+accent-german-words-4 = черт
+accent-german-words-4-2 = дерьмо
+accent-german-words-replace-4 = шайзе
+
 accent-german-words-5 = сосиска
-accent-german-words-replace-5 = wurst
+accent-german-words-replace-5 = вурст
+
 accent-german-words-6 = сосиски
-accent-german-words-replace-6 = würste
+accent-german-words-replace-6 = вюрсте
+
 accent-german-words-7 = мужчина
-accent-german-words-replace-7 = mann
+accent-german-words-replace-7 = манн
+
 accent-german-words-8 = мужчины
-accent-german-words-replace-8 = männer
+accent-german-words-replace-8 = мэннер
+
 accent-german-words-9 = женщина
 accent-german-words-9-2 = леди
-accent-german-words-replace-9 = frau
+accent-german-words-replace-9 = фрау
+
 accent-german-words-10 = женщины
-accent-german-words-10-2 = леди
-accent-german-words-replace-10 = frauen
-accent-german-words-11 = джентельмен
-accent-german-words-replace-11 = herr
-accent-german-words-12 = джентельмены
-accent-german-words-replace-12 = herren
+accent-german-words-10-2 = дамы
+accent-german-words-replace-10 = фрауэн
+
+accent-german-words-11 = джентльмен
+accent-german-words-replace-11 = херр
+
+accent-german-words-12 = джентльмены
+accent-german-words-replace-12 = херрен
+
 accent-german-words-13 = о боже
-accent-german-words-replace-13 = mein gott
-accent-german-words-14 = моя
-accent-german-words-replace-14 = meine
-accent-german-words-15 = тут
-accent-german-words-replace-15 = hier
+accent-german-words-replace-13 = майн готт
+
+accent-german-words-14 = мой
+accent-german-words-14-2 = моя
+accent-german-words-replace-14 = майн
+
+accent-german-words-15 = здесь
+accent-german-words-15-2 = тут
+accent-german-words-replace-15 = хиер
+
 accent-german-words-16 = идиот
-accent-german-words-replace-16 = dummkopf
+accent-german-words-replace-16 = думкопф
+
 accent-german-words-17 = идиоты
-accent-german-words-replace-17 = dummköpfe
+accent-german-words-replace-17 = думкёпфе
+
 accent-german-words-18 = бабочка
-accent-german-words-replace-18 = schmetterling
+accent-german-words-replace-18 = шметтерлинг
+
 accent-german-words-19 = машина
-accent-german-words-replace-19 = maschine
+accent-german-words-replace-19 = машинe
+
 accent-german-words-20 = машины
-accent-german-words-replace-20 = maschinen
-accent-german-words-21 = внимание
-accent-german-words-replace-21 = achtung
+accent-german-words-replace-20 = машинен
+
+accent-german-words-21 = внимай
+accent-german-words-21-2 = осторожно
+accent-german-words-replace-21 = ахтунг
+
 accent-german-words-22 = музыка
-accent-german-words-replace-22 = musik
+accent-german-words-replace-22 = музик
+
 accent-german-words-23 = капитан
-accent-german-words-replace-23 = kapitän
-accent-german-words-24 = шашлык
-accent-german-words-replace-24 = döner
+accent-german-words-replace-23 = капитэн
+
+accent-german-words-24 = шаурма
+accent-german-words-replace-24 = дёнер
+
 accent-german-words-25 = мышь
-accent-german-words-replace-25 = maus
-accent-german-words-26 = что
-accent-german-words-replace-26 = was
-accent-german-words-27 = благодарю
-accent-german-words-replace-27 = dankeschön
-accent-german-words-28 = спасибо
-accent-german-words-replace-28 = danke
-accent-german-words-29 = будь здоров
-accent-german-words-replace-29 = gesundheit
-accent-german-words-30 = огнемёт
-accent-german-words-replace-30 = flammenwerfer
-accent-german-words-31 = призрак
-accent-german-words-replace-31 = poltergeist
-accent-german-words-32 = травка
-accent-german-words-32-2 = капуста
-accent-german-words-replace-32 = kraut
-accent-german-words-33 = водка
-accent-german-words-replace-33 = wodka
-accent-german-words-34 = рюкзак
-accent-german-words-replace-34 = rucksack
-accent-german-words-35 = медикаменты
-accent-german-words-replace-35 = medizin
-accent-german-words-36 = акцент
-accent-german-words-replace-36 = akzent
-accent-german-words-37 = аномалия
-accent-german-words-replace-37 = anomalie
-accent-german-words-38 = артифакт
-accent-german-words-38-2 = артефакт
-accent-german-words-replace-38 = artefakt
-accent-german-words-39 = тупой
-accent-german-words-replace-39 = dumm
-accent-german-words-40 = глупый
-accent-german-words-replace-40 = doof
-accent-german-words-41 = прекрасно
-accent-german-words-replace-41 = wunderbar
-accent-german-words-42 = предупреждение
-accent-german-words-replace-42 = warnung
-accent-german-words-43 = предупреждения
-accent-german-words-replace-43 = warnungen
-accent-german-words-44 = и
-accent-german-words-replace-44 = und
-accent-german-words-45 = карп
-accent-german-words-replace-45 = karpfen
-accent-german-words-46 = командир
-accent-german-words-replace-46 = kommandant
-accent-german-words-47 = пиво
-accent-german-words-47-2 = пива
-accent-german-words-replace-47 = bier
-accent-german-words-48 = привет
-accent-german-words-replace-48 = hallo
-accent-german-words-49 = здравствуйте
-accent-german-words-replace-49 = guten Tag
-accent-german-words-50 = скорая
-accent-german-words-replace-50 = krankenwagen
-accent-german-words-51 = до встречи
-accent-german-words-replace-51 = auf Wiedersehen
-accent-german-words-52 = пока
-accent-german-words-replace-52 = tschüss
-accent-german-words-53 = пока пока
-accent-german-words-53-2 = пока-пока
-accent-german-words-replace-53 = tschau
-accent-german-words-54 = фантастика
-accent-german-words-replace-54 = fantastisch
-accent-german-words-55 = генокрад
-accent-german-words-replace-55 = doppelgänger
-accent-german-words-56 = запрещено
-accent-german-words-56-2 = запрещён
-accent-german-words-56-3 = запрет
-accent-german-words-replace-56 = verboten
-accent-german-words-57 = быстро
-accent-german-words-57-2 = быстрее
-accent-german-words-replace-57 = schnell
-accent-german-words-58 = госпиталь
-accent-german-words-replace-58 = krankenhaus
-accent-german-words-59 = tesla coil
-accent-german-words-replace-59 = tesla coil
-accent-german-words-60 = tesla coils
-accent-german-words-replace-60 = tesla coils
-accent-german-words-61 = теслалуз
-accent-german-words-61-2 = теслуз
-accent-german-words-61-3 = шаровая молния
-accent-german-words-61-4 = ball lightning
-accent-german-words-61-5 = тесла
-accent-german-words-replace-61 = kugelblitz
-accent-german-words-62 = авто
-accent-german-words-replace-62 = auto
+accent-german-words-replace-25 = маус
+
+accent-гerman-words-26 = что
+accent-гerman-words-26-2 = чё
+accent-гerman-words-replace-26 = вас
+
+accent-гerman-words-27 = спасибо
+accent-гerman-words-27-2 = благодарю
+accent-гerman-words-replace-27 = данкешён
+
+accent-гerman-words-28 = спасибо большое
+accent-гerman-words-28-2 = спасибо
+accent-гerman-words-replace-28 = данке
+
+accent-гerman-words-29 = будь здоров
+accent-гerman-words-replace-29 = гезундхайт
+
+accent-гerman-words-30 = огнемёт
+accent-гerman-words-replace-30 = фламменверфер
+
+accent-гerman-words-31 = призрак
+accent-гerman-words-replace-31 = польтергайст
+
+accent-гerman-words-32 = травка
+accent-гerman-words-32-2 = капуста
+accent-гerman-words-replace-32 = краут
+
+accent-гerman-words-33 = водка
+accent-гerman-words-replace-33 = водка
+
+accent-гerman-words-34 = рюкзак
+accent-гerman-words-replace-34 = рюкзак
+
+accent-гerman-words-35 = медицина
+accent-гerman-words-35-2 = медикаменты
+accent-гerman-words-replace-35 = медизин
+
+accent-гerman-words-36 = акцент
+accent-гerman-words-replace-36 = акцент
+
+accent-гerman-words-37 = аномалия
+accent-гerman-words-replace-37 = аномалиэ
+
+accent-гerman-words-38 = артефакт
+accent-гerman-words-38-2 = артефакт
+accent-гerman-words-replace-38 = артефакт
+
+accent-гerman-words-39 = тупой
+accent-гerman-words-replace-39 = думм
+
+accent-гerman-words-40 = глупый
+accent-гerman-words-replace-40 = дуф
+
+accent-гerman-words-41 = чудесно
+accent-гerman-words-replace-41 = вундербар
+
+accent-гerman-words-42 = предупреждение
+accent-гerman-words-replace-42 = варнунг
+
+accent-гerman-words-43 = предупреждения
+accent-гerman-words-replace-43 = варнунген
+
+accent-гerman-words-44 = и
+accent-гerman-words-replace-44 = унд
+
+accent-гerman-words-45 = карп
+accent-гerman-words-replace-45 = карпфен
+
+accent-гerman-words-46 = командир
+accent-гerman-words-replace-46 = коммандант
+
+accent-гerman-words-47 = пиво
+accent-гerman-words-47-2 = пивка
+accent-гerman-words-replace-47 = бир
+
+accent-гerman-words-48 = привет
+accent-гerman-words-replace-48 = халло
+
+accent-гerman-words-49 = здравствуйте
+accent-гerman-words-replace-49 = гутен таг
+
+accent-гerman-words-50 = скорая
+accent-гerman-words-replace-50 = кранкенваген
+
+accent-гerman-words-51 = до свидания
+accent-гerman-words-replace-51 = ауф видерзейн
+
+accent-гerman-words-52 = пока
+accent-гerman-words-replace-52 = чюсс
+
+accent-гerman-words-53 = пока-пока
+accent-гerman-words-53-2 = пока
+accent-гerman-words-replace-53 = чау
+
+accent-гerman-words-54 = фантастика
+accent-гerman-words-replace-54 = фантастиш
+
+accent-гerman-words-55 = генокрад
+accent-гerman-words-replace-55 = доппельгенгер
+
+accent-гerman-words-56 = запрещено
+accent-гerman-words-56-2 = запрет
+accent-гerman-words-replace-56 = верботен
+
+accent-гerman-words-57 = быстро
+accent-гerman-words-57-2 = скорее
+accent-гerman-words-replace-57 = шнель
+
+accent-гerman-words-58 = госпиталь
+accent-гerman-words-replace-58 = кранкенхаус
+
+accent-гerman-words-59 = катушка тесла
+accent-гerman-words-replace-59 = тесла койл
+
+accent-гerman-words-60 = катушки тесла
+accent-гerman-words-replace-60 = тесла койлы
+
+accent-гerman-words-61 = теслалуз
+accent-гerman-words-61-2 = шаровая молния
+accent-гerman-words-replace-61 = кугельблиц
+
+accent-гerman-words-62 = машина
+accent-гerman-words-62-2 = автомобиль
+accent-гerman-words-replace-62 = авто
