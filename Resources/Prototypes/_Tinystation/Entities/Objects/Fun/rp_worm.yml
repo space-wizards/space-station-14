@@ -1,8 +1,8 @@
 - type: entity
   parent: BasePlushie
   id: PlushieRpWorm
-  name: РП червь
-  description: Самый обычный РП червь...
+  name: ent-PlushieRpWorm
+  description: ent-PlushieRpWorm-desc
   components:
   - type: Sprite
     sprite: _Tinystation/Objects/Misc/rp_worm.rsi
