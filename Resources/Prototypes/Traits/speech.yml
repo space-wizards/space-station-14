@@ -47,6 +47,16 @@
     accent: cowboy
 
 - type: trait
+  id: KazakhAccent
+  name: trait-kazakh-name
+  description: trait-kazakh-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: ReplacementAccent
+    accent: kazakh
+
+- type: trait
   id: GermanAccent
   name: trait-german-name
   description: trait-german-desc
