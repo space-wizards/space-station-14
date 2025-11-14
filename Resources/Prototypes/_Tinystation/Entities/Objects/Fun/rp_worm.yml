@@ -1,29 +1,56 @@
-#- type: entity
-#  id: rp_worm
-#  parent: BaseItem
-#  name: РП ЧЕРВЬ
-#  description: Самый обычный РП червь...
-#  components:
-#    - type: Sprite
-#      sprite: _Tinystation/Objects/Misc/rp_worm.rsi
-#      state: icon
-#
-#    - type: Item
-#    - type: MeleeWeapon
-#      damage:
-#        types:
-#          Blunt: 1
-#          Sharp: 1
-#          Heat: 1
-#          Electricity: 1
-#          Radiation: 1
-#          Chemical: 1
-#      soundHit:
-#        path: /Audio/_Tinystation/Items/rp_worm/worm_hit.ogg
-#      hitspark: Slime
-#    - type: EmitSoundOnUse
-#      sound:
-#        path: /Audio/_Tinystation/Items/rp_worm/worm_use.ogg
-#
-#    - type: UseDelay
-#      delay: 1.0
+- type: entity
+  parent: BasePlushie
+  id: PlushieRpWorm
+  name: РП червь
+  description: Самый обычный РП червь...
+  components:
+  - type: Sprite
+    sprite: _Tinystation/Objects/Misc/rp_worm.rsi
+    state: icon
+  - type: Item
+    sprite: _Tinystation/Objects/Misc/rp_worm.rsi
+    size: Small
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: MeleeWeapon
+    attackRate: 1
+    wideAnimationRotation: 0
+    soundHit:
+      path: /Audio/_Tinystation/Items/rp_worm/worm_hit.ogg
+    hitspark: Slime
+    damage:
+      types:
+        Blunt: 1
+        Slash: 1
+        Heat: 1
+        Cold: 1
+        Piercing: 1
+        Shock: 1
+        Radiation: 1
+        Caustic: 1
+        Poison: 1
+        Cellular: 1
+        Asphyxiation: 1
+        Bloodloss: 1
+        Holy: 1
+        Structural: 1
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Tinystation/Items/rp_worm/worm_use.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Tinystation/Items/rp_worm/worm_use.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/_Tinystation/Items/rp_worm/worm_use.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Tinystation/Items/rp_worm/worm_use.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Tinystation/Items/rp_worm/worm_use.ogg
+  - type: UseDelay
+    delay: 1.0
