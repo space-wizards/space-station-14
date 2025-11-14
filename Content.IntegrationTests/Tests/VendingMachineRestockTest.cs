@@ -159,7 +159,8 @@ namespace Content.IntegrationTests.Tests
                         continue;
 
                     List<string> restockStore = new();
-                    foreach (var spawnEntry in storage.Containers["entity_storage"]) // We only care about this container type.
+                    var entityStorageKey = "entity_storage"; // We only care about this container type.
+                    foreach (var spawnEntry in storage.Containers[entityStorageKey])
                     {
                         if (spawnEntry != null && restocks.Contains(spawnEntry))
                             restockStore.Add(spawnEntry);
