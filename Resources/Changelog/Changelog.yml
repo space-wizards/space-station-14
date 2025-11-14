@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: whatston3
-  changes:
-  - message: Locked buttons must now be unlocked to trigger.
-    type: Fix
-  id: 8700
-  time: '2025-06-21T09:41:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38474
 - author: slarticodefast
   changes:
   - message: Fixed wallmount interaction rotation.
@@ -3925,3 +3918,10 @@
   id: 9201
   time: '2025-11-13T21:39:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40210
+- author: Hitlinemoss
+  changes:
+  - message: Security IDs no longer have Service access by default.
+    type: Remove
+  id: 9202
+  time: '2025-11-14T11:15:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41411
