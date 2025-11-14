@@ -51,6 +51,9 @@ trait-liar-desc = You can hardly bring yourself to tell the truth. Sometimes you
 trait-cowboy-name = Cowboy accent
 trait-cowboy-desc = You speak with a distinct cowboy accent!
 
+trait-kazakh-name = Kazakh accent
+trait-kazakh-desc = You speak with a Kazakh accent.
+
 trait-german-name = German accent
 trait-german-desc = You seem to come from space Germany.
 
