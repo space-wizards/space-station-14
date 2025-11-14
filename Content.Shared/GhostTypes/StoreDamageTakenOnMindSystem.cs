@@ -1,16 +1,15 @@
 using Content.Shared.Damage.Components;
-using Content.Shared.GhostTypes;
 using Content.Shared.Gibbing.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
-using Robust.Server.Containers;
+using Robust.Shared.Containers;
 
-namespace Content.Server.GhostTypes;
+namespace Content.Shared.GhostTypes;
 
 public sealed class StoreDamageTakenOnMindSystem : EntitySystem
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<StoreDamageTakenOnMindComponent, AttemptEntityGibEvent>(SaveBodyOnGib);
