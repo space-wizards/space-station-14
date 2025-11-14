@@ -17,7 +17,7 @@ public sealed partial class XenoborgsRuleComponent : Component
     /// The amount of time between each check for the end of the round.
     /// </summary>
     [DataField]
-    public TimeSpan EndCheckDelay = TimeSpan.FromSeconds(30);
+    public TimeSpan EndCheckDelay = TimeSpan.FromSeconds(15);
 
     /// <summary>
     /// After this amount of the crew become xenoborgs, the shuttle will be automatically called.
