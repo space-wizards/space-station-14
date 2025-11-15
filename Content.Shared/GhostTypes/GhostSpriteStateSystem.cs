@@ -48,7 +48,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         if (damageTypes.Count == 0)
             return;
 
-        var spriteState = new ProtoId<DamageTypePrototype>();
         var sortedDict = damageTypes.OrderBy(x => x.Value).ToDictionary();
         List<ProtoId<DamageTypePrototype>> highestTypes = new();
 
@@ -59,24 +58,31 @@ public sealed class GhostSpriteStateSystem : EntitySystem
                 highestTypes.Add(sortedDict.ElementAt(i).Key);
             }
         }
+        if (highestTypes.Count == 0)
+            return;
 
         // TODO: Replace with RandomPredicted once the engine PR is merged
         var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
         var rand = new System.Random(seed);
 
-        highestTypes.Sort();
-        if (highestTypes.Count == 3 && highestTypes[0] == BluntProtoId && highestTypes[1] == HeatProtoId && highestTypes[2] == PiercingProtoId) // Specific case for explosions (not an ideal way of doing it)
+        ProtoId<DamageTypePrototype>? spriteState = null;
+
+        // Specific case for explosions (temporary solution, going to be changed soon)
+        if (highestTypes.Count == 3 &&
+            damageTypes.TryGetValue(BluntProtoId, out var bluntDmg) &&
+            damageTypes.TryGetValue(HeatProtoId, out var heatDmg) &&
+            damageTypes.TryGetValue(PiercingProtoId, out var piercingDmg) &&
+            bluntDmg == heatDmg && bluntDmg == piercingDmg)
         {
             spriteState = "Explosion" + rand.Next(0, 3);
         }
         else
         {
-            spriteState = highestTypes[rand.Next(0, highestTypes.Count)]; // Chooses a random damage type from the list
-            if (ent.Comp.DamageMap.TryGetValue(spriteState, out var spriteAmount))  // Chooses a random sprite state
-            {
-                spriteState += rand.Next(0, spriteAmount - 1);
-            }
+            if (ent.Comp.DamageMap.TryGetValue(highestTypes[0], out var spriteAmount))  // Chooses a random sprite state if needed
+                spriteState = highestTypes[0] + rand.Next(0, spriteAmount - 1);
         }
-        _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState, appearance);
+
+        if (spriteState != null)
+            _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState, appearance);
     }
 }
