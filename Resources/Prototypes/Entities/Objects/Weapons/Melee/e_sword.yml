@@ -92,6 +92,10 @@
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: StaticPrice
     price: 2500
+  - type: UserInterface
+    interfaces:
+      enum.EnergySwordColorUiKey.Key:
+        type: EnergySwordColorBoundUserInterface
 
 - type: entity
   name: energy dagger
