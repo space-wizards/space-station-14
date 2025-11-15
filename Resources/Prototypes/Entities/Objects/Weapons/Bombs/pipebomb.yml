@@ -28,7 +28,6 @@
     intensitySlope: 5
     maxIntensity: 6
     canCreateVacuum: false
-  - type: Appearance
   - type: TimerTriggerVisuals
   - type: Construction
     graph: PipeBomb

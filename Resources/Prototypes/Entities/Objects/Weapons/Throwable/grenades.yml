@@ -1,11 +1,11 @@
 - type: entity
-  name: explosive grenade
-  description: Grenade that creates a small but devastating explosion.
   parent: [VolatileGrenadeBase, GrenadeBase, BaseSyndicateContraband]
   id: ExGrenade
+  name: explosive grenade
+  description: Grenade that creates a small but devastating explosion.
   components:
   - type: ExplodeOnTrigger
-    keysIn:
+    keysIn: &TimerIn
     - timer
   - type: Explosive
     explosionType: Default
@@ -22,34 +22,29 @@
     beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
-  name: flashbang
-  description: Eeeeeeeeeeeeeeeeeeeeee.
   parent: [ FragileGrenadeBase, GrenadeBase, BaseSecurityContraband ]
   id: GrenadeFlashBang
+  name: flashbang
+  description: Eeeeeeeeeeeeeeeeeeeeee.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/flashbang.rsi
   - type: FlashOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     range: 7
   - type: EmitSoundOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
     positional: true
   - type: DeleteOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
   - type: SpawnOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     proto: GrenadeFlashEffect
     predicted: true
-  - type: Appearance
   - type: TimerTriggerVisuals
-    primingSound:
+    primingSound: &countdown.ogg
       path: /Audio/Effects/countdown.ogg
   - type: GuideHelp
     guides:
@@ -77,10 +72,10 @@
 #The explosive values for these are pretty god damn mediocre, but SS14's explosion system is hard to understand - this is a good enough approximation of how it was in SS13.
 #Ideally, there should be a weak radius around the bomb outside of its gibbing / spacing range capable of dealing fair damage to players / structures.
 - type: entity
-  name: syndicate minibomb
-  description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
   parent: [VolatileGrenadeBase, GrenadeBase, BaseSyndicateContraband]
   id: SyndieMiniBomb
+  name: syndicate minibomb
+  description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
@@ -89,14 +84,12 @@
   - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 200
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60
-  - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/minibombcountdown.ogg
@@ -106,15 +99,14 @@
     price: 2000
 
 - type: entity
-  name: self destruct
-  description: Go out on your own terms!
   parent: GrenadeBase
   id: SelfDestructSeq
+  name: self destruct
+  description: Go out on your own terms!
   categories: [ HideSpawnMenu ]
   components:
   - type: ExplodeOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
   - type: Explosive
     explosionType: Minibomb
     totalIntensity: 400
@@ -144,29 +136,23 @@
   - type: TimerTrigger
     delay: 3
     beepInterval: 0.46
-    beepSound:
+    beepSound: &smbeep.ogg
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
       params:
         volume: -5
   - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
-      params:
-        volume: -5
+    primingSound: *smbeep.ogg
   - type: EmitSoundOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     sound:
       path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
       params:
         volume: 5
   - type: AnchorOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     removeOnTrigger: true
   - type: TwoStageTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     triggerDelay: 10.45
     components:
       - type: AmbientSound
@@ -205,27 +191,20 @@
     price: 1000
 
 - type: entity
-  name: whitehole grenade
-  description: Grenade that repulses everything around for some time.
   parent: SingularityGrenade
   id: WhiteholeGrenade
+  name: whitehole grenade
+  description: Grenade that repulses everything around for some time.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
   - type: TimerTrigger
-    delay: 3
     beepInterval: 0.69
   - type: EmitSoundOnTrigger
-    keysIn:
-    - timer
     sound:
       path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
       params:
         volume: 5
-  - type: AnchorOnTrigger
-    keysIn:
-    - timer
-    removeOnTrigger: true
   - type: TwoStageTrigger
     triggerDelay: 11.14
     components:
@@ -261,47 +240,32 @@
       - type: DeleteOnTrigger
         keysIn:
         - stageTwo
-  - type: StaticPrice
-    price: 1000
 
 - type: entity
+  parent: [ VolatileGrenadeBase, GrenadeBase ]
+  id: NuclearGrenade
   name: the nuclear option
   description: Please don't throw it, think of the children.
-  parent: GrenadeBase
-  id: NuclearGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/nukenade.rsi
   - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
   - type: Explosive
     explosionType: Default
     totalIntensity: 20000 # ~15 tile radius.
     intensitySlope: 5
     maxIntensity: 50
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:TriggerBehavior
-        keyOut: timer # immediately explode
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Appearance
   - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Effects/countdown.ogg
+    primingSound: *countdown.ogg
 
 - type: entity
-  name: modular grenade
-  description: A grenade casing. Requires a trigger and a payload.
   parent: BaseItem
   id: ModularGrenade
+  name: modular grenade
+  description: A grenade casing. Requires a trigger and a payload.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/modular.rsi
@@ -346,39 +310,34 @@
     price: 75
 
 - type: entity
-  name: EMP grenade
-  description: A grenade designed to wreak havoc on electronic systems.
   parent: [FragileGrenadeBase, GrenadeBase, BaseSyndicateContraband]
   id: EmpGrenade
+  name: EMP grenade
+  description: A grenade designed to wreak havoc on electronic systems.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/empgrenade.rsi
   - type: EmpOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     range: 5.5
     energyConsumption: 50000
   - type: DeleteOnTrigger
-    keysIn:
-    - timer
-  - type: Appearance
+    keysIn: *TimerIn
   - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Effects/countdown.ogg
+    primingSound: *countdown.ogg
   - type: StaticPrice
     price: 666 # 2000 for 3, I love fractions
 
 - type: entity
-  name: holy hand grenade
-  description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
   parent: [GrenadeBase, BaseSyndicateContraband]
   id: HolyHandGrenade
+  name: holy hand grenade
+  description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/holyhandgrenade.rsi
   - type: ExplodeOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
   - type: Explosive
     explosionType: Default # same as macrobomb
     totalIntensity: 3500
@@ -400,49 +359,42 @@
 # Non-explosive "dummy" grenades to use as a distraction.
 
 - type: entity
-  name: trick grenade
-  description: All the grenade without any of the boom.
   parent: GrenadeBase
   id: GrenadeDummy
+  name: trick grenade
+  description: All the grenade without any of the boom.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/grenade.rsi
   - type: DeleteOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
   - type: SpawnOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     proto: GrenadeFlashEffect
     predicted: true
   - type: EmitSoundOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
     positional: true
-  - type: Appearance
   - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Effects/countdown.ogg
+    primingSound: *countdown.ogg
 
 - type: entity
-  name: syndicate trickybomb
-  description: A syndicate-manufactured explosive used to make an excellent distraction.
   parent: [GrenadeDummy, BaseSyndicateContraband]
   id: SyndieTrickyBomb
+  name: syndicate trickybomb
+  description: A syndicate-manufactured explosive used to make an excellent distraction.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
   - type: TimerTrigger
     delay: 5
   - type: EmitSoundOnTrigger
-    keysIn:
-    - timer
+    keysIn: *TimerIn
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
     positional: true
-  - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/minibombcountdown.ogg
