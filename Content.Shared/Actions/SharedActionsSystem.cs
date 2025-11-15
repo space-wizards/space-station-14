@@ -426,7 +426,7 @@ public abstract partial class SharedActionsSystem : EntitySystem
         if (_whitelist.IsWhitelistFail(comp.Whitelist, target))
             return false;
 
-        if (_whitelist.IsBlacklistPass(comp.Blacklist, target))
+        if (_whitelist.IsWhitelistPass(comp.Blacklist, target))
             return false;
 
         if (_actionQuery.Comp(uid).CheckCanInteract && !_actionBlocker.CanInteract(user, target))

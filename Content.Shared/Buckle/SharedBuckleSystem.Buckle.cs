@@ -235,7 +235,7 @@ public abstract partial class SharedBuckleSystem
 
         // Does it pass the Whitelist
         if (_whitelistSystem.IsWhitelistFail(strapComp.Whitelist, buckleUid) ||
-            _whitelistSystem.IsBlacklistPass(strapComp.Blacklist, buckleUid))
+            _whitelistSystem.IsWhitelistPass(strapComp.Blacklist, buckleUid))
         {
             if (popup)
                 _popup.PopupClient(Loc.GetString("buckle-component-cannot-fit-message"), user, PopupType.Medium);
