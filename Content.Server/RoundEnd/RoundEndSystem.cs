@@ -90,6 +90,8 @@ namespace Content.Server.RoundEnd
                 _cooldownTokenSource = null;
             }
 
+            CantRecall = false;
+
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;
             SetAutoCallTime();
