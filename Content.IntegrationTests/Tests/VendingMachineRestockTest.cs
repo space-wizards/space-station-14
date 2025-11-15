@@ -137,24 +137,7 @@ namespace Content.IntegrationTests.Tests
                     restocks.Add(proto.ID);
                 }
 
-                // Collect all the prototypes with StorageFills referencing those entities.
-                foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
-                {
-                    if (!proto.TryGetComponent<StorageFillComponent>(out var storage, compFact))
-                        continue;
-
-                    List<string> restockStore = new();
-                    foreach (var spawnEntry in storage.Contents)
-                    {
-                        if (spawnEntry.PrototypeId != null && restocks.Contains(spawnEntry.PrototypeId))
-                            restockStore.Add(spawnEntry.PrototypeId);
-                    }
-
-                    if (restockStore.Count > 0)
-                        restockStores.Add(proto.ID, restockStore);
-                }
-
-                // Collect all the prototypes with ContainerFills referencing those entities.
+                // Collect all the prototypes with EntityTableContainerFills referencing those entities.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
                     if (!proto.TryGetComponent<EntityTableContainerFillComponent>(out var storage, compFact))
@@ -175,7 +158,7 @@ namespace Content.IntegrationTests.Tests
 
                 // Iterate through every CargoProduct and make sure each
                 // prototype with a restock component is referenced in a
-                // purchaseable entity with a StorageFill/ContainerFill.
+                // purchaseable entity with an EntityTableContainerFill.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
                     if (restockStores.ContainsKey(proto.Product))
