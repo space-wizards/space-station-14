@@ -34,10 +34,11 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PowerCellSlotVisuals.Enabled:
+      enum.BatteryVisuals.State:
         enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
   - type: GuideHelp
     guides:
     - MedicalDoctor
@@ -47,6 +48,7 @@
   parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
   suffix: ""
   components:
+  - type: PredictedBatteryVisuals
   - type: PowerCellDraw
     drawRate: 1.2 #Calculated for 5 minutes on a small cell
   - type: ToggleCellDraw
@@ -61,3 +63,10 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: analyzer
+      shader: unshaded
+      visible: false
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]

@@ -48,7 +48,7 @@
   - type: MultiHandedItem
   - type: ToggleCellDraw
   - type: PowerCellDraw
-    useRate: 100
+    useCharge: 100
 
 - type: entity
   id: DefibrillatorEmpty
@@ -86,7 +86,7 @@
     size: Normal
   - type: ToggleCellDraw
   - type: PowerCellDraw
-    useRate: 100
+    useCharge: 100
   - type: Defibrillator
     zapHeal:
       types:

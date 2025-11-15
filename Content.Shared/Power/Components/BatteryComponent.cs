@@ -5,6 +5,8 @@ namespace Content.Shared.Power.Components;
 
 /// <summary>
 /// Battery node on the pow3r network. Needs other components to connect to actual networks.
+/// Use this for batteries that cannot be predicted.
+/// Use <see cref="PredictedBatteryComponent"/> otherwise.
 /// </summary>
 [RegisterComponent]
 [Virtual]
