@@ -300,6 +300,9 @@ namespace Content.Shared.Containers.ItemSlots
                     LogImpact.Low,
                     $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
+            var ev = new InsertIntoItemSlotEvent(uid);
+            RaiseLocalEvent(item, ref ev);
+
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
         }
 
@@ -550,6 +553,9 @@ namespace Content.Shared.Containers.ItemSlots
                 _adminLogger.Add(LogType.Action,
                     LogImpact.Low,
                     $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
+
+            var ev = new EjectFromItemSlotEvent(uid);
+            RaiseLocalEvent(item, ref ev);
 
             _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null);
         }

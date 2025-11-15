@@ -30,3 +30,17 @@ public sealed class ItemSlotButtonPressedEvent : BoundUserInterfaceMessage
         TryInsert = tryInsert;
     }
 }
+
+/// <summary>
+///     Raised on an entity when they're inserted into an itemslot.
+/// </summary>
+/// <param name="Container">The entity the item has been inserted into.</param>
+[ByRefEvent]
+public record struct InsertIntoItemSlotEvent(EntityUid Container);
+
+/// <summary>
+///     Raised on an entity when they're ejected from an itemslot.
+/// </summary>
+/// <param name="Container">The entity the item has been ejected from.</param>
+[ByRefEvent]
+public record struct EjectFromItemSlotEvent(EntityUid Container);
