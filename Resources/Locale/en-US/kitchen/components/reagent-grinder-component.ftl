@@ -13,5 +13,6 @@ grinder-menu-manual-label = Manual mode
 grinder-menu-chamber-content-box-label = Chamber
 grinder-menu-chamber-content-box-button = Eject Contents
 grinder-menu-beaker-content-box-label = Beaker
-grinder-menu-beaker-content-box-button = Eject Beaker
+grinder-menu-beaker-content-box-eject = Eject Beaker
+grinder-menu-beaker-content-box-insert = Insert Beaker
 grinder-menu-beaker-content-box-is-empty = Empty
