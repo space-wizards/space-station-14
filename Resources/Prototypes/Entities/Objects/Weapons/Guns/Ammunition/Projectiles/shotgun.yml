@@ -1,8 +1,8 @@
 - type: entity
+  parent: BaseBullet
   id: PelletShotgunSlug
   name: pellet (.50 slug)
   categories: [ HideSpawnMenu ]
-  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -15,10 +15,10 @@
 
 
 - type: entity
+  parent: BaseBullet
   id: PelletShotgunBeanbag
   name: beanbag (.50)
   categories: [ HideSpawnMenu ]
-  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -31,10 +31,10 @@
     damage: 40 # 3 hits to stun
 
 - type: entity
+  parent: BaseBullet
   id: PelletShotgun
   name: pellet (.50)
   categories: [ HideSpawnMenu ]
-  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -47,9 +47,9 @@
 
 
 - type: entity
+  parent: PelletShotgun
   id: PelletShotgunSpread
   categories: [ HideSpawnMenu ]
-  parent: PelletShotgun
   components:
   - type: ProjectileSpread
     proto: PelletShotgun
@@ -57,10 +57,10 @@
     spread: 15
 
 - type: entity
+  parent: BaseBulletIncendiary
   id: PelletShotgunIncendiary
   name: pellet (.50 incendiary)
   categories: [ HideSpawnMenu ]
-  parent: BaseBulletIncendiary
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -74,9 +74,9 @@
     ignited: true
 
 - type: entity
+  parent: PelletShotgunIncendiary
   id: PelletShotgunIncendiarySpread
   categories: [ HideSpawnMenu ]
-  parent: PelletShotgunIncendiary
   components:
   - type: ProjectileSpread
     proto: PelletShotgunIncendiary
@@ -84,10 +84,10 @@
     spread: 15
 
 - type: entity
+  parent: BaseBulletPractice
   id: PelletShotgunPractice
   name: pellet (.50 practice)
   categories: [ HideSpawnMenu ]
-  parent: BaseBulletPractice
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -98,9 +98,9 @@
         Blunt: 1
 
 - type: entity
+  parent: PelletShotgunPractice
   id: PelletShotgunPracticeSpread
   categories: [ HideSpawnMenu ]
-  parent: PelletShotgunPractice
   components:
   - type: ProjectileSpread
     proto: PelletShotgunPractice
@@ -108,10 +108,10 @@
     spread: 15
 
 - type: entity
+  parent: BaseBullet
   id: PelletShotgunImprovised
   name: improvised pellet
   categories: [ HideSpawnMenu ]
-  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -123,9 +123,9 @@
         Slash: 3
 
 - type: entity
+  parent: PelletShotgunImprovised
   id: PelletShotgunImprovisedSpread
   categories: [ HideSpawnMenu ]
-  parent: PelletShotgunImprovised
   components:
   - type: ProjectileSpread
     proto: PelletShotgunImprovised
@@ -133,10 +133,10 @@
     spread: 45
 
 - type: entity
+  parent: BaseBulletPractice
   id: PelletShotgunTranquilizer
   name: pellet (.50 tranquilizer)
   categories: [ HideSpawnMenu ]
-  parent: BaseBulletPractice
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -170,7 +170,7 @@
           !type:PhysShapeAabb
           bounds: "-0.1,-0.1,0.1,0.1"
         mask:
-          - BulletImpassable
+        - BulletImpassable
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: buckshot-flare
@@ -201,10 +201,10 @@
         Heat: 5
 
 - type: entity
+  parent: BaseBullet
   id: PelletShotgunUranium
   name: pellet (.50 uranium)
   categories: [ HideSpawnMenu ]
-  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -218,9 +218,9 @@
         Piercing: 5
 
 - type: entity
+  parent: PelletShotgunUranium
   id: PelletShotgunUraniumSpread
   categories: [ HideSpawnMenu ]
-  parent: PelletShotgunUranium
   components:
   - type: ProjectileSpread
     proto: PelletShotgunUranium
@@ -228,10 +228,10 @@
     spread: 6
 
 - type: entity
+  parent: BaseBullet
   id: PelletGrapeshot #tally fucking ho
   name: grapeshot pellet
   categories: [ HideSpawnMenu ]
-  parent: BaseBullet
   components:
   - type: Sprite
     noRot: false
@@ -246,9 +246,9 @@
         Structural: 5
 
 - type: entity
+  parent: PelletGrapeshot
   id: PelletGrapeshotSpread
   categories: [ HideSpawnMenu ]
-  parent: PelletGrapeshot
   components:
   - type: ProjectileSpread
     proto: PelletGrapeshot
@@ -256,9 +256,9 @@
     spread: 40
 
 - type: entity
+  parent: BaseBullet
   id: PelletGlass
   name: glass shard
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
