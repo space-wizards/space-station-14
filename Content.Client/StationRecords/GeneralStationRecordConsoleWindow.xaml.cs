@@ -76,6 +76,9 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
 
     public void UpdateState(GeneralStationRecordConsoleState state)
     {
+        AddRecord.Disabled = !state.CanModifyEntries;
+        AddRecord.Visible = state.CanModifyEntries;
+
         if (state.Filter != null)
         {
             if (state.Filter.Type != _currentFilterType)
@@ -115,13 +118,14 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             RecordContainerStatus.Text = state.SelectedKey == null
                 ? Loc.GetString("general-station-record-console-no-record-found")
                 : Loc.GetString("general-station-record-console-select-record-info");
-            PopulateRecordContainer(state.Record, state.CanDeleteEntries, state.SelectedKey);
+            PopulateRecordContainer(state.Record, state.CanModifyEntries, state.SelectedKey);
         }
         else
         {
             RecordContainer.RemoveAllChildren();
         }
     }
+
     private void PopulateRecordListing(Dictionary<uint, string> listing, uint? selected)
     {
         RecordListing.Clear();
@@ -135,15 +139,16 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
             item.Metadata = key;
             item.Selected = key == selected;
         }
+
         _isPopulating = false;
 
         RecordListing.SortItemsByText();
     }
 
-    private void PopulateRecordContainer(GeneralStationRecord record, bool enableDelete, uint? id)
+    private void PopulateRecordContainer(GeneralStationRecord record, bool enableModify, uint? id)
     {
         RecordContainer.RemoveAllChildren();
-        var newRecord = new GeneralRecord(record, enableDelete, id, _prototypeManager);
+        var newRecord = new GeneralRecord(record, enableModify, id, _prototypeManager);
         newRecord.OnDeletePressed = OnDeleted;
 
         RecordContainer.AddChild(newRecord);
@@ -161,5 +166,4 @@ public sealed partial class GeneralStationRecordConsoleWindow : DefaultWindow
     {
         return Loc.GetString($"general-station-record-{type.ToString().ToLower()}-filter");
     }
-
 }
