@@ -71,6 +71,16 @@
   id: DresserMainLootEntityTable
   table: !type:GroupSelector
     children:
+    - id: ClothingNeckLGBTPin
+      weight: 0.06
+    - id: ClothingUniformJumpsuitColorGrey
+      weight: 0.06
+    - id: ClothingUniformJumpskirtColorGrey
+      weight: 0.06
+    - id: ClothingUniformJumpsuitColorWhite
+      weight: 0.05
+    - id: ClothingUniformJumpsuitColorPink
+      weight: 0.05
     - id: ClothingUniformJumpsuitLoungewear
       weight: 0.05
     - id: ClothingUniformJumpskirtBlackElegantDress
@@ -208,6 +218,8 @@
       weight: 0.03
     - id: ClothingMaskBreath
       weight: 0.03
+    - id: ClothingOuterCoatLab
+      weight: 0.03
     - id: ClothingOuterDameDane
       weight: 0.03
     - id: ClothingOuterWinterCoat
@@ -280,15 +292,17 @@
       weight: 0.00001
     - id: OrganHumanKidneys
       weight: 0.00001
-    - id: ClothingOuterCoatLab
-      weight: 0.03
 
 - type: entityTable
   id: DresserThirdLootEntityTable
   table: !type:GroupSelector
     children:
+    - id: ClothingUniformJumpskirtColorWhite
+      weight: 0.05
     - id: ClothingUniformJumpskirtColorPink
       weight: 0.05
+    - id: ClothingUniformJumpskirtColorBlue
+      weight: 0.03
     - id: ClothingUniformJumpskirtColorGreen
       weight: 0.03
     - id: ClothingUniformJumpsuitColorOrange
@@ -296,8 +310,6 @@
     - id: ClothingUniformJumpsuitColorTeal
       weight: 0.03
     - id: ClothingUniformJumpskirtColorTeal
-      weight: 0.03
-    - id: ClothingUniformJumpskirtColorBlue
       weight: 0.03
     - id: ClothingHeadHatGreysoft
       weight: 0.03
