@@ -69,7 +69,7 @@
   id: Eggshells
   description: You're walkin' on 'em bud.
   components:
-  - type: Food
+  - type: Edible
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
     state: eggshells
