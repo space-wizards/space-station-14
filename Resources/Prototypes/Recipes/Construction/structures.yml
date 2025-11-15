@@ -1097,10 +1097,10 @@
     - !type:TileNotBlocked
 
 - type: construction
-  id: LightGroundFixture
+  id: LightPostFixture
   graph: LightFixture
   startNode: start
-  targetNode: groundLight
+  targetNode: postLight
   category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
@@ -1121,6 +1121,19 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: LightFloorFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: floorLight
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
 
 #conveyor
 - type: construction
