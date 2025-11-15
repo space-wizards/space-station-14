@@ -401,22 +401,30 @@ public abstract class SharedMagicSystem : EntitySystem
     #endregion
     #region Knock Spells
     /// <summary>
-    /// Opens all doors and locks within range
+    /// Opens all doors and locks within range.
     /// </summary>
-    /// <param name="args"></param>
     private void OnKnockSpell(KnockSpellEvent args)
     {
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
         args.Handled = true;
+        Knock(args.Performer, args.Range);
+    }
 
-        var transform = Transform(args.Performer);
+    /// <summary>
+    /// Opens all doors and locks within range.
+    /// </summary>
+    /// <param name="performer">Performer of spell. </param>
+    /// <param name="range">Radius around <see cref="performer"/> in which all doors and locks should be opened.</param>
+    public void Knock(EntityUid performer, float range)
+    {
+        var transform = Transform(performer);
 
         // Look for doors and lockers, and don't open/unlock them if they're already opened/unlocked.
-        foreach (var target in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(args.Performer, transform), args.Range, flags: LookupFlags.Dynamic | LookupFlags.Static))
+        foreach (var target in _lookup.GetEntitiesInRange(_transform.GetMapCoordinates(performer, transform), range, flags: LookupFlags.Dynamic | LookupFlags.Static))
         {
-            if (!_examine.InRangeUnOccluded(args.Performer, target, range: 0))
+            if (!_examine.InRangeUnOccluded(performer, target, range: 0))
                 continue;
 
             if (TryComp<DoorBoltComponent>(target, out var doorBoltComp) && doorBoltComp.BoltsDown)
@@ -426,7 +434,7 @@ public abstract class SharedMagicSystem : EntitySystem
                 _door.StartOpening(target);
 
             if (TryComp<LockComponent>(target, out var lockComp) && lockComp.Locked)
-                _lock.Unlock(target, args.Performer, lockComp);
+                _lock.Unlock(target, performer, lockComp);
         }
     }
     // End Knock Spells
