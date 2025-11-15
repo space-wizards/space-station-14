@@ -1,0 +1,8 @@
+﻿<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal">
+        <Label MinWidth="300" Name="TitleLabel" />
+        <OptionButton SetWidth="250" Name="DropDown" StyleClasses="OpenRight" Filterable="True" />
+        <OptionButton SetWidth="100" Name="ScaleDropDown" Margin="0 0 8 0" StyleClasses="OpenLeft" />
+        <Label Name="PreviewLabel" Text="{Loc 'ui-options-font-selector-preview-text'}" />
+    </BoxContainer>
+</Control>
