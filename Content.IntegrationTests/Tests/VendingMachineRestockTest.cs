@@ -143,9 +143,14 @@ namespace Content.IntegrationTests.Tests
                     if (!proto.TryGetComponent<EntityTableContainerFillComponent>(out var storage, compFact))
                         continue;
 
-                    List<string> restockStore = new();
                     var entityStorageKey = "entity_storage"; // We only care about this container type.
-                    var container = storage.Containers[entityStorageKey];
+                    var containers = storage.Containers;
+
+                    if (!containers.TryGetValue(entityStorageKey, out var container))
+                        continue;
+
+                    List<string> restockStore = new();
+
                     foreach (var spawnEntry in entityTable.GetSpawns(container))
                     {
                         if (restocks.Contains(spawnEntry))
