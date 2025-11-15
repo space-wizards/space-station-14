@@ -1,0 +1,6 @@
+- type: stack
+  parent: BaseVerySmallStack
+  id: Conveyor
+  name: stack-conveyor
+  icon: { sprite: "/Textures/Structures/conveyor.rsi", state: conveyor }
+  spawn: ConveyorBeltAssembly1
