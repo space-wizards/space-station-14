@@ -17,6 +17,7 @@
     - map: [ "outerClothing" ]
     - map: [ "eyes" ]
     - map: [ "neck" ]
+    - map: [ "suitstorage" ]
     - map: [ "back" ]
     - map: [ "mask" ]
     - map: [ "head" ]
