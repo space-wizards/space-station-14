@@ -30,3 +30,6 @@
     actions:
     - !type:BuildMech
       mechPrototype: MechVim
+      completed:
+      - !type:SnapToNode
+        node: vim
