@@ -1341,6 +1341,51 @@
     - type: StaticPrice
       price: 2000
 
+# mothership module
+- type: entity
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: MothershipModule
+  name: mothership module
+  description: A module that helps the mothership borg brains and install other modules.
+  components:
+  - type: Tag
+    tags:
+    - MothershipModule
+  - type: Sprite
+    layers:
+    - state: xenoborg_generic
+    - state: icon-xenoborg-basic
+  - type: ItemBorgModule
+    hands:
+    - item: DoorRemoteXenoborg
+    - hand:
+        emptyRepresentative: MMIFilled
+        emptyLabel: borg-slot-brains-empty
+        whitelist:
+          components:
+          - Brain
+          - BorgBrain
+    - hand:
+        emptyRepresentative: XenoborgModuleBasic
+        emptyLabel: borg-slot-modules-empty
+        whitelist:
+          components:
+          - BorgModule
+    - hand:
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - hand:
+        emptyRepresentative: PowerCellHigh
+        emptyLabel: borg-slot-powercell-empty
+        whitelist:
+          components:
+          - PowerCell
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-module-module }
+
 # xenoborg modules
 - type: entity
   parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1354,7 +1399,13 @@
     - state: icon-xenoborg-basic
   - type: ItemBorgModule
     hands:
-    - item: MaterialBag
+    - hand:
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - item: XenoborgMaterialBag
     - item: PinpointerMothership
     - item: HandheldGPSBasic
   - type: BorgModuleIcon
@@ -1475,6 +1526,7 @@
     hands:
     - item: HandheldGPSBasic
     - item: HandHeldMassScannerBorg
+    - item: PinpointerMothership
     - item: HandheldStationMapUnpowered
     - item: WeaponGrapplingGun
     - item: JetpackXenoborg
