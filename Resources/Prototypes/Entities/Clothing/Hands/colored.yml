@@ -374,3 +374,18 @@
   components:
   - type: Insulated
     coefficient: 5 # zap em good
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxGlovesConducting
+  name: conducting gloves box
+  description: A box containing a pair of conducting gloves. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: insulfake
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingHandsGlovesConducting
+    sound:
+      path: /Audio/Effects/unwrap.ogg

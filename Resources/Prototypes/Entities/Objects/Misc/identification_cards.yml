@@ -960,6 +960,21 @@
         type: ChameleonBoundUserInterface
 
 - type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxAgentIDCard
+  name: Agent ID box
+  description: A box containing an Agent ID. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: pdafake
+  - type: SpawnItemsOnUse
+    items:
+    - id: AgentIDCard
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
   name: passenger ID card
   parent: AgentIDCard
   id: NukieAgentIDCard

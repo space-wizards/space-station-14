@@ -57,6 +57,23 @@
     canCreateVacuum: false
 
 - type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxWeaponTurretSyndicateDisposable
+  name: disposable ballistic turret box
+  description: A box containing a ballistic turret disguised as a toolbox. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: sentry
+  - type: Item
+    size: Huge
+  - type: SpawnItemsOnUse
+    items:
+    - id: ToolboxElectricalTurretFilled
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
   parent: BaseWeaponBallisticTurret
   id: WeaponTurretNanoTrasen
   suffix: NanoTrasen

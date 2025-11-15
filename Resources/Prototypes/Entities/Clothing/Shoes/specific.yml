@@ -210,6 +210,21 @@
   - type: NoSlip
 
 - type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxShoesChameleonNoSlips
+  name: no-slip shoes box
+  description: A box containing a pair of no-slip shoes. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: shoesfake
+  - type: SpawnItemsOnUse
+    items:
+    - id: ClothingShoesChameleonNoSlips
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
   parent: ClothingShoesClown
   id: ClothingShoesJester
   name: jester shoes

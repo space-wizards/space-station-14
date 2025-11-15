@@ -42,3 +42,18 @@
   - type: Tag
     tags:
     - FakeNukeDisk
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: BoxNukeDiskFake
+  name: decoy nuclear authentication disk box
+  description: A box containing a decoy nuclear authentication disk. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/boxicons.rsi
+    state: nukediskfake
+  - type: SpawnItemsOnUse
+    items:
+    - id: NukeDiskFake
+    sound:
+      path: /Audio/Effects/unwrap.ogg
