@@ -126,10 +126,6 @@
     - sob
     - sobs
     - sobbing
-    - whine
-    - whines
-    - whined
-    - whining
 
 - type: emote
   id: Squish
@@ -238,6 +234,24 @@
   - snarls
   - snarled
   - snarling
+
+- type: emote
+  id: Whine
+  name: chat-emote-name-whine
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-whine"]
+  chatTriggers:
+  - whine
+  - whines
+  - whined
+  - whining
 
 - type: emote
   id: Howl
