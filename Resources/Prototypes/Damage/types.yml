@@ -92,3 +92,8 @@
   armorCoefficientPrice: 1
   armorFlatPrice: 1
 
+- type: damageType
+  id: Stamina
+  name: damage-type-stamina
+  armorCoefficientPrice: 1
+  armorFlatPrice: 1

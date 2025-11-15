@@ -12,3 +12,4 @@ damage-type-shock = Shock
 damage-type-slash = Slash
 damage-type-structural = Structural
 damage-type-holy = Holy
+damage-type-stamina = Stamina
