@@ -507,7 +507,7 @@
     access: [["CentralCommand"]]
 
 - type: entity
-  parent: [BaseBrandedLighter, BaseMajorContraband]
+  parent: [BaseBrandedLighter, BaseHighlyIllegalContraband]
   id: SpiderclanFlippo
   name: Spider-Clan lighter
   description: "A high tech jet lighter, engineered to function even in deep space. Runs on a tiny microfusion cell."
