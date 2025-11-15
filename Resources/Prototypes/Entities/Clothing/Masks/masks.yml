@@ -21,7 +21,7 @@
     hideOnToggle: true
 
 - type: entity
-  parent: [ClothingMaskGas, BaseSecurityContraband]
+  parent: [ClothingMaskGas, BaseSecurityContraband, HailerSecurity]
   id: ClothingMaskGasSecurity
   name: security gas mask
   description: A standard issue Security gas mask.
@@ -32,6 +32,13 @@
     sprite: Clothing/Mask/gassecurity.rsi
   - type: Clothing
     sprite: Clothing/Mask/gassecurity.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SecMaskVisuals.State:
+        mask:
+          Intact: { state: icon }
+          WiresCut: { state: icon-wires-cut }
   - type: Armor
     modifiers:
       coefficients:
@@ -39,6 +46,7 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]
@@ -367,7 +375,7 @@
     accent: StutteringAccent
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseSecurityContraband ]
+  parent: [ ClothingMaskGas, BaseSecurityContraband, HailerSecurity]
   id: ClothingMaskGasSwat
   name: swat gas mask
   description: A elite issue Security gas mask.
@@ -376,6 +384,13 @@
     sprite: Clothing/Mask/swat.rsi
   - type: Clothing
     sprite: Clothing/Mask/swat.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SecMaskVisuals.State:
+        mask:
+          Intact: { state: icon }
+          WiresCut: { state: icon-wires-cut }
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -393,6 +408,12 @@
         Slash: 0.90
         Piercing: 0.95
         Heat: 0.95
+  - type: Hailer
+    hailLevelIndex: 2
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+    loggingDisabled: true
+    breakOnAccessBreaker: false
 
 - type: entity
   parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
@@ -413,7 +434,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseCentcommContraband ]
+  parent: [ ClothingMaskGas, BaseCentcommContraband, HailerSecurity]
   id: ClothingMaskGasERT
   name: ert gas mask
   description: The gas mask of the elite squad of the ERT.
@@ -425,9 +446,12 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - EmagImmune 
   - type: HideLayerClothing
     slots:
     - Hair
+    - HeadTop
+    - HeadSide
     - Snout
     hideOnToggle: true
   - type: FlashImmunity
@@ -439,9 +463,33 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: Hailer
+    hailLevels:
+    hailLevelIndex: 
+    emagLevelPrefix:
+    isToolInteractible: false
+    buttonColor: "#3B40D4"
+    buttonHoverColor: "#6F6BDF"
+    orders:
+    - name: attention
+      description: Pay attention !
+      soundCollection: hailer-ERT-attention
+      localePrefix: hailer-ERT-attention
+      icon:
+        sprite: Objects/Fun/whistles.rsi
+        state: whistle
+    - name: combat
+      description: Hostile detected !
+      soundCollection: hailer-ERT-combat
+      localePrefix: hailer-ERT-combat
+      icon:
+        sprite: Actions/Implants/implants.rsi
+        state: explosive
+    chatName: "ERT Hailer"
+    descriptionLocale: hailer-ert-mask-examined  
 
 - type: entity
-  parent: ClothingMaskGasERT
+  parent: [ ClothingMaskGas, BaseCentcommContraband ]
   id: ClothingMaskGasDeathSquad
   name: death squad gas mask
   description: A unique gas mask for the NT's most elite squad.
@@ -450,11 +498,19 @@
     sprite: Clothing/Mask/squadron.rsi
   - type: Clothing
     sprite: Clothing/Mask/squadron.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - EmagImmune 
   - type: HideLayerClothing
     slots:
     - Hair
     - HeadTop
     - HeadSide
+    - Snout
+    hideOnToggle: true
+  - type: FlashImmunity
+  - type: EyeProtection
   - type: Armor
     modifiers:
       coefficients:
