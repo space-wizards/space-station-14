@@ -931,12 +931,6 @@
     tags:
     - Maintenance
     - SyndicateAgent
-  - type: Sprite
-    layers:
-    - state: default
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Passenger
   - type: AgentIDCard
   - type: UIRequiresLock
   - type: ActivatableUI
