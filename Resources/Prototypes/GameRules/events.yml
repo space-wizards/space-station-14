@@ -503,8 +503,16 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-    - id: MobGiantSpiderAngry
-      prob: 0.05
+    - id: MobGiantSpiderTarantulaAngry
+      prob: 0.01
+    - id: MobGiantSpiderHunterAngry
+      prob: 0.01
+    - id: MobGiantSpiderGuardAngry
+      prob: 0.01
+    - id: MobGiantSpiderMidwifeAngry
+      prob: 0.01
+    - id: MobGiantSpiderNurseAngry
+      prob: 0.01
 
 - type: entity
   id: SpiderClownSpawn
@@ -520,7 +528,7 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-    - id: MobClownSpider
+    - id: MobGiantSpiderClownAngry
       prob: 0.05
 
 - type: entity
