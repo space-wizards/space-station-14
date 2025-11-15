@@ -301,6 +301,9 @@ public sealed partial class SleepingSystem : EntitySystem
         if (tryingToSleepEvent.Cancelled)
             return false;
 
+        var ev = new FellAsleepEvent();
+        RaiseLocalEvent(ent, ref ev);
+
         EnsureComp<SleepingComponent>(ent);
         return true;
     }
