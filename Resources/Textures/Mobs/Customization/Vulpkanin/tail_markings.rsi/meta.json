@@ -1,62 +1,106 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86. Fluffy created by Skarletto (Github). Modified by FairlySadPanda (Github/Discord)",
+    "copyright": "Taken from https://github.com/DeltaV-Station/Delta-v/commit/65d35d0b3c20aa4e8a0e749a4de8392e53051e86. Fluffy created by Skarletto (Github). Modified by FairlySadPanda (Github/Discord), front and behind tail splits by Briddragon (github)",
     "size": {"x": 32, "y": 32},
     "states": [
         {
             "name": "tail-wag-icon"
         },
         {
-            "name": "fennec",
+            "name": "fennec_front",
             "directions": 4
         },
         {
-            "name": "fennec-tip",
+            "name": "fennec-tip_front",
             "directions": 4
         },
         {
-            "name": "fluffy",
+            "name": "fennec_behind",
             "directions": 4
         },
         {
-            "name": "fluffy-tip",
+            "name": "fennec-tip_behind",
             "directions": 4
         },
         {
-            "name": "husky",
+            "name": "fluffy_front",
             "directions": 4
         },
         {
-            "name": "husky-inner",
+            "name": "fluffy-tip_front",
             "directions": 4
         },
         {
-            "name": "husky-outer",
+            "name": "fluffy_behind",
             "directions": 4
         },
         {
-            "name": "long",
+            "name": "fluffy-tip_behind",
             "directions": 4
         },
         {
-            "name": "long-tip",
+            "name": "husky-inner_front",
             "directions": 4
         },
         {
-            "name": "vulp",
+            "name": "husky-outer_front",
             "directions": 4
         },
         {
-            "name": "vulp-fade",
+            "name": "husky-inner_behind",
             "directions": 4
         },
         {
-            "name": "vulp-tip",
+            "name": "husky-outer_behind",
             "directions": 4
         },
         {
-            "name": "coyote",
+            "name": "long_front",
+            "directions": 4
+        },
+        {
+            "name": "long-tip_front",
+            "directions": 4
+        },
+        {
+            "name": "long_behind",
+            "directions": 4
+        },
+        {
+            "name": "long-tip_behind",
+            "directions": 4
+        },
+        {
+            "name": "vulp_front",
+            "directions": 4
+        },
+        {
+            "name": "vulp_behind",
+            "directions": 4
+        },
+        {
+            "name": "vulp-fade_front",
+            "directions": 4
+        },
+        {
+            "name": "vulp-fade_behind",
+            "directions": 4
+        },
+        {
+            "name": "vulp-tip_front",
+            "directions": 4
+        },
+        {
+            "name": "vulp-tip_behind",
+            "directions": 4
+        },
+        {
+            "name": "coyote_front",
+            "directions": 4
+        },
+        {
+            "name": "coyote_behind",
             "directions": 4
         }
     ]
