@@ -93,6 +93,9 @@
     - id: CarbonDioxideCanister
       prob: 0.001
       orGroup: Canister
+    - id: ElectrovaeCanister
+      prob: 0.001
+      orGroup: Canister
     - id: FrezonCanister
       prob: 0.001
       orGroup: Canister
