@@ -116,7 +116,8 @@ namespace Content.IntegrationTests.Tests
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
-            var entityTable = server.ResolveDependency<EntityTableSystem>();
+            var entMan = server.ResolveDependency<IEntityManager>();
+            var entityTable = entMan.System<EntityTableSystem>();
 
             await server.WaitAssertion(() =>
             {
