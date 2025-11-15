@@ -18,4 +18,16 @@ paper-ui-fill-level = {$currentLength}/{$maxLength}
 
 paper-ui-save-button = Save ({$keybind})
 
+# Form and signature buttons
+paper-form-fill-button = Fill
+paper-signature-sign-button = Sign
+paper-form-dialog-ok = OK
+paper-form-dialog-cancel = Cancel
+paper-signature-unknown = Unknown
+
+# Check dialog buttons
+paper-check-dialog-blank = ☐ Blank
+paper-check-dialog-check = ✔ Check
+paper-check-dialog-cross = ✖ Cross
+
 paper-tamper-proof-modified-message = This page was written using tamper-proof ink.
