@@ -23,7 +23,7 @@
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
     LawOverriderStealObjective: 0.5
-    EnergyShotgunStealObjective: 0.5
+    EnergyMagnumStealObjective: 0.5
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
@@ -35,7 +35,7 @@
   id: TraitorObjectiveGroupState
   weights:
     EscapeShuttleObjective: 1
-    DieObjective: 0.05
+    DieObjective: 0.2
     #HijackShuttleObjective: 0.02
 
 - type: weightedRandom

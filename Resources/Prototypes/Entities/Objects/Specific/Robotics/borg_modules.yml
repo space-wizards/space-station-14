@@ -51,6 +51,7 @@
 - type: entity
   parent: BaseAction
   id: ActionBorgSwapModule
+  # Name and description will normally be changed by BorgSystem
   name: Swap Module
   description: Select this module, enabling you to use the tools it provides.
   components:
@@ -451,6 +452,23 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
 
 - type: entity
+  id: BorgModuleArtistry
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: artistry cyborg module
+  description: A module for arts & crafts whilst the station burns!
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-artistry
+  - type: ItemBorgModule
+    hands:
+    - item: SprayPainterBorg
+    - item: CrayonBorg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: artistry-module }
+
+- type: entity
   id: BorgModuleFireExtinguisher
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: thruster cyborg module
@@ -779,8 +797,8 @@
         emptyLabel: borg-slot-beakers-empty
         emptyRepresentative: Beaker
         whitelist:
-          tags:
-          - GlassBeaker
+          components:
+          - FitsInDispenser
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
@@ -1323,6 +1341,51 @@
     - type: StaticPrice
       price: 2000
 
+# mothership module
+- type: entity
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: MothershipModule
+  name: mothership module
+  description: A module that helps the mothership borg brains and install other modules.
+  components:
+  - type: Tag
+    tags:
+    - MothershipModule
+  - type: Sprite
+    layers:
+    - state: xenoborg_generic
+    - state: icon-xenoborg-basic
+  - type: ItemBorgModule
+    hands:
+    - item: DoorRemoteXenoborg
+    - hand:
+        emptyRepresentative: MMIFilled
+        emptyLabel: borg-slot-brains-empty
+        whitelist:
+          components:
+          - Brain
+          - BorgBrain
+    - hand:
+        emptyRepresentative: XenoborgModuleBasic
+        emptyLabel: borg-slot-modules-empty
+        whitelist:
+          components:
+          - BorgModule
+    - hand:
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - hand:
+        emptyRepresentative: PowerCellHigh
+        emptyLabel: borg-slot-powercell-empty
+        whitelist:
+          components:
+          - PowerCell
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-module-module }
+
 # xenoborg modules
 - type: entity
   parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
@@ -1336,7 +1399,13 @@
     - state: icon-xenoborg-basic
   - type: ItemBorgModule
     hands:
-    - item: MaterialBag
+    - hand:
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - item: XenoborgMaterialBag
     - item: PinpointerMothership
     - item: HandheldGPSBasic
   - type: BorgModuleIcon
@@ -1457,6 +1526,7 @@
     hands:
     - item: HandheldGPSBasic
     - item: HandHeldMassScannerBorg
+    - item: PinpointerMothership
     - item: HandheldStationMapUnpowered
     - item: WeaponGrapplingGun
     - item: JetpackXenoborg

@@ -25,6 +25,7 @@ electrify-door-off = Disable overcharge
 toggle-light = Toggle light
 
 ai-device-not-responding = Device is not responding
+ai-device-no-access = You have no access to this device
 
 ai-consciousness-download-warning = Your consciousness is being downloaded.
 
