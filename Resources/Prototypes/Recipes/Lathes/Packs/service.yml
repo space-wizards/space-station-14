@@ -56,6 +56,11 @@
   - PushHorn
 
 - type: latheRecipePack
+  id: Reporter
+  recipes:
+  - SurveillanceWirelessCameraHandheld
+
+- type: latheRecipePack
   id: ServiceBoards
   recipes:
   - BiofabricatorMachineCircuitboard
@@ -66,3 +71,4 @@
   - ReagentGrinderIndustrialMachineCircuitboard
   - JukeboxCircuitBoard
   - DawInstrumentMachineCircuitboard
+

@@ -224,3 +224,8 @@
     Steel: 750
     Plasma: 150
     Uranium: 150
+
+- type: latheRecipe
+  parent: BaseBigToolRecipe
+  id: SurveillanceWirelessCameraHandheld
+  result: SurveillanceWirelessCameraHandheld
