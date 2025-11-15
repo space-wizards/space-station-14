@@ -4,9 +4,13 @@ namespace Content.Shared.CCVar;
 
 public sealed partial class CCVars
 {
-    public static readonly CVarDef<bool> HolidaysEnabled = CVarDef.Create("holidays.enabled", true, CVar.SERVERONLY);
     public static readonly CVarDef<bool> BrandingSteam = CVarDef.Create("branding.steam", false, CVar.CLIENTONLY);
     public static readonly CVarDef<int> EntityMenuGroupingType = CVarDef.Create("entity_menu", 0, CVar.CLIENTONLY);
+
+    /// <summary>
+    ///     Should we enable holiday behaviors like maps, spawns, and round greetings?
+    /// </summary>
+    public static readonly CVarDef<bool> HolidaysEnabled = CVarDef.Create("holidays.enabled", true);
 
     /// <summary>
     ///     Should we pre-load all of the procgen atlasses.
