@@ -241,6 +241,7 @@ namespace Content.Server.RoundEnd
 
         public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true)
         {
+            if (CantRecall) return;
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
             if (checkCooldown && _cooldownTokenSource != null) return;
 
