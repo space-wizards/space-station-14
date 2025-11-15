@@ -92,10 +92,10 @@
     keysIn:
     - timer
   - type: Explosive
-    explosionType: Minibomb
-    totalIntensity: 200
-    intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
-    maxIntensity: 60
+    explosionType: DemolitionCharge
+    totalIntensity: 350
+    intensitySlope: 50 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
+    maxIntensity: 100
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
@@ -116,9 +116,9 @@
     keysIn:
     - timer
   - type: Explosive
-    explosionType: Minibomb
-    totalIntensity: 400
-    intensitySlope: 30
+    explosionType: DemolitionCharge
+    totalIntensity: 660
+    intensitySlope: 50
     maxIntensity: 125
     deleteAfterExplosion: false
     repeatable: true
