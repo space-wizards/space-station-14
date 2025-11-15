@@ -1,4 +1,3 @@
-using Content.Server.Atmos.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -223,7 +222,7 @@ public sealed partial class ExplosionSystem
         // process those entities
         foreach (var (uid, xform) in list)
         {
-            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, temperature, cause);
+            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
         }
 
         // process anchored entities
@@ -233,13 +232,13 @@ public sealed partial class ExplosionSystem
         foreach (var entity in _anchored)
         {
             processed.Add(entity);
-            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, temperature, cause);
+            ProcessEntity(entity, epicenter, damage, throwForce, id, null, fireStacks, cause);
         }
 
         // heat the atmosphere
-        if ((temperature != null) && (TryComp<GridAtmosphereComponent>(grid, out var gridAtmosComp)))
+        if (temperature != null)
         {
-            _atmosphere.HotspotExpose((grid, gridAtmosComp), tile, temperature.Value, currentIntensity, cause, true);
+            _atmosphere.HotspotExpose((grid, null), tile, temperature.Value, currentIntensity, cause, true);
         }
 
         // Walls and reinforced walls will break into girders. These girders will also be considered turf-blocking for
@@ -275,7 +274,7 @@ public sealed partial class ExplosionSystem
         {
             // Here we only throw, no dealing damage. Containers n such might drop their entities after being destroyed, but
             // they should handle their own damage pass-through, with their own damage reduction calculation.
-            ProcessEntity(uid, epicenter, null, throwForce, id, xform, null, temperature, cause);
+            ProcessEntity(uid, epicenter, null, throwForce, id, xform, null, cause);
         }
 
         return !tileBlocked;
@@ -329,7 +328,7 @@ public sealed partial class ExplosionSystem
         foreach (var (uid, xform) in state.Item1)
         {
             processed.Add(uid);
-            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, temperature, cause);
+            ProcessEntity(uid, epicenter, damage, throwForce, id, xform, fireStacks, cause);
         }
 
         if (throwForce <= 0)
@@ -343,7 +342,7 @@ public sealed partial class ExplosionSystem
 
         foreach (var (uid, xform) in list)
         {
-            ProcessEntity(uid, epicenter, null, throwForce, id, xform, fireStacks, temperature, cause);
+            ProcessEntity(uid, epicenter, null, throwForce, id, xform, fireStacks, cause);
         }
     }
 
@@ -442,7 +441,6 @@ public sealed partial class ExplosionSystem
         string id,
         TransformComponent? xform,
         float? fireStacksOnIgnite,
-        float? temperature,
         EntityUid? cause)
     {
         if (originalDamage != null)
