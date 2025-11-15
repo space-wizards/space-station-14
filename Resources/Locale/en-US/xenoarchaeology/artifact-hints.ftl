@@ -68,6 +68,13 @@ xenoarch-trigger-tip-blood = Blood
 xenoarch-trigger-tip-throw = Being thrown
 xenoarch-trigger-tip-death = Death
 xenoarch-trigger-tip-magnet = Magnetic waves
+xenoarch-trigger-tip-alcohol = Any alcoholic chemical
+xenoarch-trigger-tip-baseelement = Any liquid base chemical element
+xenoarch-trigger-tip-cleaning = Any cleaning chemical
+xenoarch-trigger-tip-medicine = Any medicinal chemical
+xenoarch-trigger-tip-narcotic = Any narcotic chemical
+xenoarch-trigger-tip-pyrotechnic = Any pyrotechnic chemical
+xenoarch-trigger-tip-toxin = Any toxic chemical
 
 ### Description hints
 xenoarch-trigger-examine-wrenching = There's a loose bit spinning around.
