@@ -13,7 +13,7 @@ public sealed class XAEKnockSystem : BaseXAESystem<XAEKnockComponent>
     {
         var ev = new KnockSpellEvent
         {
-            Performer = ent.Owner,
+            Performer = args.Artifact,
             Range = ent.Comp.KnockRange
         };
         RaiseLocalEvent(ev);
