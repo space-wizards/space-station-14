@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Content.Server.VendingMachines;
 using Content.Server.Wires;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Containers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
+using Content.Shared.EntityTable;
 using Content.Shared.Prototypes;
-using Content.Shared.Storage.Components;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
@@ -115,6 +116,7 @@ namespace Content.IntegrationTests.Tests
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
+            var entityTable = server.ResolveDependency<EntityTableSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -134,17 +136,19 @@ namespace Content.IntegrationTests.Tests
                     restocks.Add(proto.ID);
                 }
 
-                // Collect all the prototypes with StorageFills referencing those entities.
+                // Collect all the prototypes with EntityTableContainerFills referencing those entities.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<StorageFillComponent>(out var storage, compFact))
+                    if (!proto.TryGetComponent<EntityTableContainerFillComponent>(out var storage, compFact))
                         continue;
 
                     List<string> restockStore = new();
-                    foreach (var spawnEntry in storage.Contents)
+                    var entityStorageKey = "entity_storage"; // We only care about this container type.
+                    var container = storage.Containers[entityStorageKey];
+                    foreach (var spawnEntry in entityTable.GetSpawns(container))
                     {
-                        if (spawnEntry.PrototypeId != null && restocks.Contains(spawnEntry.PrototypeId))
-                            restockStore.Add(spawnEntry.PrototypeId);
+                        if (restocks.Contains(spawnEntry))
+                            restockStore.Add(spawnEntry);
                     }
 
                     if (restockStore.Count > 0)
@@ -153,7 +157,7 @@ namespace Content.IntegrationTests.Tests
 
                 // Iterate through every CargoProduct and make sure each
                 // prototype with a restock component is referenced in a
-                // purchaseable entity with a StorageFill.
+                // purchaseable entity with an EntityTableContianerFill.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
                     if (restockStores.ContainsKey(proto.Product))
