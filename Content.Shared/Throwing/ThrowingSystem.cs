@@ -5,14 +5,15 @@ using Content.Shared.CCVar;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
-using Content.Shared.Friction;
 using Content.Shared.Projectiles;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Throwing;
@@ -30,6 +31,8 @@ public sealed class ThrowingSystem : EntitySystem
     private float _frictionModifier;
     private float _airDamping;
 
+    private const float ThrowManyRandomDefaultMaxForce = 0.6f;
+
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -38,6 +41,7 @@ public sealed class ThrowingSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly AnchorableSystem _anchorable = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     private EntityQuery<AnchorableComponent> _anchorableQuery;
 
@@ -255,7 +259,64 @@ public sealed class ThrowingSystem : EntitySystem
             _physics.ApplyLinearImpulse(user.Value, -impulseVector / physics.Mass * pushbackRatio * MathF.Min(massLimit, physics.Mass), body: userPhysics);
     }
 
+    /// <summary>
+    ///    Tries to throw all items in the given set, with random force and either random or defined direction cone.
+    /// </summary>
+    /// <param name="items">The items to throw.</param>
+    /// <param name="throwDirection">The direction in which to throw the items in a cone.</param>
+    /// <param name="throwCone"> The full spread angle of thrown items. Defaults to 360 degrees if
+    /// <see cref="throwDirection"/> is not defined, else 0 degrees.</param>
+    /// <param name="maxThrowImpulseModifier">Modifies how far each item will be thrown at most.</param>
+    /// <param name="scatterItems">Whether to scatter the items near their original position.</param>
+    public void TryThrowManyRandom(
+        HashSet<EntityUid> items,
+        Vector2? throwDirection = null,
+        Angle throwCone = default,
+        float maxThrowImpulseModifier = 1.0f,
+        bool scatterItems = false)
+    {
+        if (items.Count == 0)
+        {
+            return;
+        }
 
+        var maxThrowImpulse = maxThrowImpulseModifier * ThrowManyRandomDefaultMaxForce;
+
+        foreach (var item in items)
+        {
+            // TODO: Replace with RandomPredicted once the engine PR is merged (#5849)
+            var seed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, GetNetEntity(item).Id);
+            var rand = new System.Random(seed);
+
+            if (scatterItems)
+            {
+                var positionDifference = new Angle(rand.NextFloat() * MathF.Tau);
+                _transform.SetWorldPosition(item,
+                    _transform.GetWorldPosition(item) + positionDifference.ToVec() * rand.NextFloat());
+            }
+
+            if (maxThrowImpulse == 0.0f)
+            {
+                continue;
+            }
+
+            Vector2 currentDir;
+            if (throwDirection is not null)
+            {
+                var currentAngle = throwDirection.Value.ToAngle();
+                currentAngle += _random.NextAngle((-throwCone / 2.0f), (throwCone / 2.0f));
+                currentDir = currentAngle.ToVec();
+            }
+            else
+            {
+                currentDir = _random.NextAngle().ToVec();
+            }
+
+            var throwSpeed = _random.NextFloat(0.2f, 1.0f) * maxThrowImpulse;
+            var airTimeVariance = _random.NextFloat(1.0f, 2.0f);
+            TryThrow(item, currentDir * throwSpeed, throwSpeed * airTimeVariance);
+        }
+    }
 }
 
 /// <summary>
