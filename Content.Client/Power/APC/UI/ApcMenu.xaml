@@ -10,7 +10,7 @@
         <BoxContainer Margin="0 5 10 10" Orientation="Vertical">
             <BoxContainer Margin="0" Orientation="Horizontal">
                 <!-- Sprite View -->
-                <PanelContainer Margin="0" StyleClasses="Inset" VerticalAlignment="Center">
+                <PanelContainer Margin="0" StyleClasses="Outset" VerticalAlignment="Center">
                     <SpriteView Name="EntityView" Scale="2 2" SetSize="64 64" OverrideDirection="South" />
                 </PanelContainer>
                 <!-- Data -->
