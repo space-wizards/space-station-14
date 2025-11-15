@@ -9,39 +9,41 @@ namespace Content.Shared.Traits.Assorted;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
+[AutoGenerateComponentPause]
 [Access(typeof(SharedParacusiaSystem))]
 public sealed partial class ParacusiaComponent : Component
 {
     /// <summary>
-    /// The maximum time between incidents in seconds
-    /// </summary>
-    [DataField("maxTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public float MaxTimeBetweenIncidents = 60f;
-
-    /// <summary>
-    /// The minimum time between incidents in seconds
-    /// </summary>
-    [DataField("minTimeBetweenIncidents", required: true), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public float MinTimeBetweenIncidents = 30f;
-
-    /// <summary>
     /// How far away at most can the sound be?
     /// </summary>
-    [DataField("maxSoundDistance", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     [AutoNetworkedField]
     public float MaxSoundDistance;
 
     /// <summary>
+    /// The maximum time between incidents.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public TimeSpan MaxTimeBetweenIncidents = TimeSpan.FromSeconds(60);
+
+    /// <summary>
+    /// The minimum time between incidents.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public TimeSpan MinTimeBetweenIncidents = TimeSpan.FromSeconds(30);
+
+    [AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextIncidentTime;
+
+    /// <summary>
     /// The sounds to choose from
     /// </summary>
-    [DataField("sounds", required: true)]
+    [DataField(required: true)]
     [AutoNetworkedField]
-    public SoundSpecifier Sounds = default!;
-
-    [DataField("timeBetweenIncidents", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan NextIncidentTime;
+    public SoundSpecifier Sounds;
 
     public EntityUid? Stream;
 }
