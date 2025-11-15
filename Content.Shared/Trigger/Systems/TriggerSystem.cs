@@ -3,9 +3,7 @@ using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
 using Content.Shared.EntityTable;
 using Content.Shared.Item.ItemToggle;
-using Content.Shared.Mind;
 using Content.Shared.Popups;
-using Content.Shared.Roles;
 using Content.Shared.Timing;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Whitelist;
@@ -41,8 +39,6 @@ public sealed partial class TriggerSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
-    [Dependency] private readonly SharedRoleSystem _role = default!;
-    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
 
     public const string DefaultTriggerKey = "trigger";
@@ -52,7 +48,6 @@ public sealed partial class TriggerSystem : EntitySystem
         base.Initialize();
 
         InitializeCollide();
-        InitializeCondition();
         InitializeInteraction();
         InitializeProximity();
         InitializeSignal();
@@ -67,17 +62,33 @@ public sealed partial class TriggerSystem : EntitySystem
     /// <param name="trigger">The entity that has the components that should be triggered.</param>
     /// <param name="user">The user of the trigger. Some effects may target the user instead of the trigger entity.</param>
     /// <param name="key">A key string to allow multiple, independent triggers on the same entity. If null then all triggers will activate.</param>
-    /// <returns>Whether or not the trigger has sucessfully activated an effect.</returns>
+    /// <returns>Whether any trigger has successfully activated an effect, including triggers caused by conditions canceling the attempt.</returns>
     public bool Trigger(EntityUid trigger, EntityUid? user = null, string? key = null)
     {
-        var attemptTriggerEvent = new AttemptTriggerEvent(user, key);
+        var cancelKeys = new List<string>();
+        var attemptTriggerEvent = new AttemptTriggerEvent(cancelKeys, user, key);
         RaiseLocalEvent(trigger, ref attemptTriggerEvent);
-        if (attemptTriggerEvent.Cancelled)
-            return false;
 
-        var triggerEvent = new TriggerEvent(user, key);
-        RaiseLocalEvent(trigger, ref triggerEvent, true);
-        return triggerEvent.Handled;
+        if (attemptTriggerEvent.Cancelled)
+        {
+            var cancelledTriggerEvent = new TriggerEvent(cancelKeys, user);
+            RaiseLocalEvent(trigger, ref cancelledTriggerEvent, true);
+            return cancelledTriggerEvent.Handled;
+        }
+
+        if (key == null)
+        {
+            var triggerEvent = new TriggerEvent(null, user);
+            RaiseLocalEvent(trigger, ref triggerEvent, true);
+            return triggerEvent.Handled;
+        }
+        else
+        {
+            var keys = new List<string>() { key };
+            var triggerEvent = new TriggerEvent(keys, user);
+            RaiseLocalEvent(trigger, ref triggerEvent, true);
+            return triggerEvent.Handled;
+        }
     }
 
     /// <summary>
@@ -133,7 +144,7 @@ public sealed partial class TriggerSystem : EntitySystem
             return false;
 
         if (!HasComp<ActiveTimerTriggerComponent>(ent))
-            return false; // the timer is not active
+            return false; // the timer is not active`
 
         RemComp<ActiveTimerTriggerComponent>(ent);
         if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
