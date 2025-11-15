@@ -203,7 +203,7 @@
     - Back
     - suitStorage
   - type: Item
-    sprite: _WH40K/Objects/Weapons/Battery/meltagun_in-hands.rsi
+    sprite: _WH40K/Objects/Weapons/Guns/Battery/meltagun_in-hands.rsi
 
 - type: entity
   name: лазкарабин
