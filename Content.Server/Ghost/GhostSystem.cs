@@ -333,6 +333,7 @@ namespace Content.Server.Ghost
             if (_followerSystem.GetMostGhostFollowed() is not {} target)
                 return;
 
+            // The ghost warp buttons follow the entity if its a player, shouldnt we follow said entity in this case as well, instead of just warping?
             WarpTo(uid, target);
         }
 
