@@ -92,7 +92,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var numXenoborgs = GetNumberXenoborgs();
         var numHumans = _mindSystem.GetAliveHumans().Count;
 
-        if ((float)numXenoborgs / numHumans > xenoborgsRuleComponent.XenoborgShuttleCallPercentage)
+        if ((float)numXenoborgs / numHumans > xenoborgsRuleComponent.XenoborgShuttleCallPercentage && !_roundEnd.IsRoundEndRequested())
         {
             foreach (var station in _station.GetStations())
             {
