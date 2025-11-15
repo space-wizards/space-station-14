@@ -1,19 +1,27 @@
-using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 
-namespace Content.Server.Instruments;
+namespace Content.Shared.Instruments;
 
-public sealed partial class InstrumentSystem
+/// <summary>
+/// Shared configuration variables for musical instruments.
+/// </summary>
+[CVarDefs]
+public static class InstrumentCVars
 {
-    public int MaxMidiEventsPerSecond { get; private set; }
-    public int MaxMidiEventsPerBatch { get; private set; }
-    public int MaxMidiBatchesDropped { get; private set; }
-    public int MaxMidiLaggedBatches { get; private set; }
+    /// <summary>
+    /// Maximum allowed MIDI notes per second per player.
+    /// Prevents flooding the network.
+    /// </summary>
+    public static readonly CVarDef<int> MidiNotesPerSecondCap =
+        CVarDef.Create("instrument.midi_notes_per_second_cap", 500,
+            CVar.SERVER | CVar.REPLICATED,
+            "Maximum number of MIDI notes per second allowed per player.");
 
-    private void InitializeCVars()
-    {
-        Subs.CVar(_cfg, CCVars.MaxMidiEventsPerSecond, obj => MaxMidiEventsPerSecond = obj, true);
-        Subs.CVar(_cfg, CCVars.MaxMidiEventsPerBatch, obj => MaxMidiEventsPerBatch = obj, true);
-        Subs.CVar(_cfg, CCVars.MaxMidiBatchesDropped, obj => MaxMidiBatchesDropped = obj, true);
-        Subs.CVar(_cfg, CCVars.MaxMidiLaggedBatches, obj => MaxMidiLaggedBatches = obj, true);
-    }
+    /// <summary>
+    /// Maximum allowed packet size for individual MIDI messages.
+    /// </summary>
+    public static readonly CVarDef<int> MidiPacketSizeLimit =
+        CVarDef.Create("instrument.midi_packet_size_limit", 1024,
+            CVar.SERVER | CVar.REPLICATED,
+            "Maximum size in bytes of an instrument MIDI packet.");
 }
