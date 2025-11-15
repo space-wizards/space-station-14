@@ -384,6 +384,10 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
             if (humanoid.MarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var displacementData) && markingPrototype.CanBeDisplaced)
                 _displacement.TryAddDisplacement(displacementData, (entity.Owner, sprite), targetLayer + j + 1, layerId, out _);
+
+            if (humanoid.Sex == Sex.Female
+                && humanoid.FemaleMarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var femaledisplacementData) && markingPrototype.CanBeDisplaced)
+                _displacement.TryAddDisplacement(femaledisplacementData, (entity.Owner, sprite), targetLayer + j + 1, layerId, out _);
         }
     }
 
