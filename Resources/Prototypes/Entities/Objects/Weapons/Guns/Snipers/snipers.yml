@@ -93,7 +93,7 @@
   name: Hristov
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperHristov
-  description: For when you absolutely, positively need to make someone regret their life choices from a safe distance. Uses .60 anti-materiel ammo.
+  description: "A portable bolt-action anti-materiel rifle. Its removable stock and telescoping barrel allow it to be disassembled into a remarkably small package, while its integrated scope facilitates long-range engagements.\nLoads five rounds of .60 anti-materiel."
   components:
   - type: Item
     size: Huge
