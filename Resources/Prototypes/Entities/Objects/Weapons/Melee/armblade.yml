@@ -26,3 +26,4 @@
   - type: Prying
     speedModifier: 1.5 # Jaws of life speed
     pryPowered: true
+  - type: MobilityAid # I think it's reasonable to assume that a ling would drop the whole impairment thing to Fucking Get You.
