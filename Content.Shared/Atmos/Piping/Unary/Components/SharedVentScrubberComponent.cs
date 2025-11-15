@@ -14,6 +14,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public float VolumeRate { get; set; } = 200f;
         public bool WideNet { get; set; } = false;
         public bool AirAlarmPanicWireCut { get; set; }
+        public bool AirAlarmEmagged { get; set; }
 
         public static HashSet<Gas> DefaultFilterGases = new()
         {

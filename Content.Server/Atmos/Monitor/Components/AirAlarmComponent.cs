@@ -53,4 +53,10 @@ public sealed partial class AirAlarmComponent : Component
     /// </summary>
     [DataField, ViewVariables]
     public bool PanicWireCut;
+
+    /// <summary>
+    /// Whether the Air alarm is emagged, forcing the alarm into panic mode.
+    /// </summary>
+    [DataField, ViewVariables]
+    public bool IsEmagged;
 }
