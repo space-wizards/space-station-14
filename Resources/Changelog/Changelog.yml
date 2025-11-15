@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: qrwas
-  changes:
-  - message: Loadout item group UI improvements
-    type: Tweak
-  id: 8703
-  time: '2025-06-21T22:20:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38488
 - author: perryprog
   changes:
   - message: Wet mops no longer have zero melee damage.
@@ -3925,3 +3918,10 @@
   id: 9204
   time: '2025-11-14T22:34:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/39796
+- author: April-Gras
+  changes:
+  - message: Rat king now goes 0.5 faster when sprinting
+    type: Tweak
+  id: 9205
+  time: '2025-11-15T05:27:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41420
