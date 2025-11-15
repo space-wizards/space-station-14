@@ -189,15 +189,6 @@
 
 - type: entity
   parent: BasePlushieLizardJob
-  id: PlushieLizardJobMedicalintern
-  name: medical intern lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson as a medical intern. It smells faintly of antiseptic.
-  components:
-  - type: Sprite
-    state: medicalintern
-
-- type: entity
-  parent: BasePlushieLizardJob
   id: PlushieLizardJobMime
   name: mime lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson as a mime. It stares at you silently, its motives unknown.
@@ -276,15 +267,6 @@
 
 - type: entity
   parent: BasePlushieLizardJob
-  id: PlushieLizardJobResearchassistant
-  name: research assistant lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson as a research assistant. It smells faintly of burnt paper.
-  components:
-  - type: Sprite
-    state: researchassistant
-
-- type: entity
-  parent: BasePlushieLizardJob
   id: PlushieLizardJobResearchdirector
   name: research director lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson as the research director. There's a few burn marks on the plushie.
@@ -312,15 +294,6 @@
 
 - type: entity
   parent: BasePlushieLizardJob
-  id: PlushieLizardJobSecuritycadet
-  name: security cadet lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson as a security cadet. Seems to have shock marks across the plushie.
-  components:
-  - type: Sprite
-    state: securitycadet
-
-- type: entity
-  parent: BasePlushieLizardJob
   id: PlushieLizardJobSecurityofficer
   name: security officer lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson as a security officer. The stuffing has been padded down from a lot of punching.
@@ -345,15 +318,6 @@
   components:
   - type: Sprite
     state: stationengineer
-
-- type: entity
-  parent: BasePlushieLizardJob
-  id: PlushieLizardJobTechnicalassistant
-  name: technical assistant lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson as a technical assistant. It smells faintly of burnt wires.
-  components:
-  - type: Sprite
-    state: technicalassistant
 
 - type: entity
   parent: BasePlushieLizardJob

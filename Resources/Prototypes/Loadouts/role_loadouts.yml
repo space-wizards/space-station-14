@@ -284,7 +284,6 @@
   - StationEngineerBackpack
   - SurvivalExtended
   - Trinkets
-  - TechnicalAssistantJobTrinkets
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -360,7 +359,6 @@
   - Glasses
   - Survival
   - Trinkets
-  - ResearchAssistantJobTrinkets
   - GroupSpeciesBreathTool
 
 # Security
@@ -429,7 +427,6 @@
   - SecurityBackpack
   - SurvivalSecurity
   - Trinkets
-  - SecurityCadetJobTrinkets
   - GroupSpeciesBreathToolSecurity
 
 # Medical
@@ -478,7 +475,6 @@
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
-  - MedicalInternJobTrinkets
   - GroupSpeciesBreathToolMedical
 
 - type: roleLoadout
