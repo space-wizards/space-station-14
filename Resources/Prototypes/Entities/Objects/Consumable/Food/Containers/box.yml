@@ -378,7 +378,6 @@
         - id: FoodDonkpocket
           amount: 6
         - id: DonkcoLighter
-          amount: 1
           prob: 0.10
 
 - type: entity
@@ -642,13 +641,9 @@
       storagebase: !type:AllSelector
         children:
         - id: FoodBurgerBig
-          amount: 1
         - id: FoodMealFriesCheesy
-          amount: 1
         - id: DrinkColaBottleFull
-          amount: 1
         - id: FoodPieAppleSlice
-          amount: 1
         - !type:GroupSelector
           children:
           - id: ToyMouse

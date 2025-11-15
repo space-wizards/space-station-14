@@ -3,7 +3,7 @@
   id: CratePermaEscapeSpawner
   parent: CrateEmptySpawner
   components:
-  - type: RandomSpawner #I'd like to make one crate with a bunch of tables but this doesn't support weights
+  - type: RandomSpawner
     prototypes:
     # Please note any duplicates & alphabetize <3
       - CrateEngineeringMiniJetpack
