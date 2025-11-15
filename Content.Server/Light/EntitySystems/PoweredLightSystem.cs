@@ -19,7 +19,7 @@ public sealed class PoweredLightSystem : SharedPoweredLightSystem
 
     private void OnGhostBoo(EntityUid uid, PoweredLightComponent light, GhostBooEvent args)
     {
-        if (light.IgnoreGhostsBoo)
+        if (light.IgnoreGhostsBoo || !light.CurrentLit)
             return;
 
         // check cooldown first to prevent abuse
