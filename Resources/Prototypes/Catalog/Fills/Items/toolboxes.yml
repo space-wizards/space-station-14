@@ -4,24 +4,25 @@
   parent: ToolboxEmergency
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: CrowbarRed
-      - id: RadioHandheld
-      - id: WelderMini
-      - id: FireExtinguisherMini
-      # Random lighting item orGroup
-      - id: FlashlightLantern
-        orGroup: LightingItem
-      - id: Flare
-        orGroup: LightingItem
-      - id: GlowstickBase
-        orGroup: LightingItem
-      # Low-chance items
-      - id: FoodSnackChocolate
-        prob: 0.15
-      - id: HarmonicaInstrument
-        prob: 0.15
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CrowbarRed
+        - id: RadioHandheld
+        - id: WelderMini
+        - id: FireExtinguisherMini
+        # Random lighting item GroupSelector
+        - !type:GroupSelector
+          children:
+          - id: FlashlightLantern
+          - id: Flare
+          - id: GlowstickBase
+        # Low-chance items
+        - id: FoodSnackChocolate
+          prob: 0.15
+        - id: HarmonicaInstrument
+          prob: 0.15
 
 - type: entity
   id: ToolboxElectricalFilled
@@ -29,20 +30,10 @@
   suffix: Filled
   parent: ToolboxElectrical
   components:
-  - type: StorageFill
-    contents:
-      - id: Screwdriver
-      - id: CrowbarOrange
-      - id: Wirecutter
-      - id: CableApcStack10
-      - id: CableMVStack10
-      - id: trayScanner
-        prob: 0.9
-      - id: ClothingHandsGlovesColorYellow
-        prob: 0.05
-        orGroup: GlovesOrWires
-      - id: CableHVStack10
-        orGroup: GlovesOrWires
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: ToolboxElectricalEntityTable
 
 - type: entity
   id: ToolboxElectricalTurretFilled
@@ -50,20 +41,27 @@
   suffix: Syndicate, Turret, Filled
   parent: ToolboxElectricalTurret
   components:
-  - type: StorageFill
-    contents:
-      - id: Screwdriver
-      - id: CrowbarOrange
-      - id: Wirecutter
-      - id: CableApcStack10
-      - id: CableMVStack10
-      - id: trayScanner
-        prob: 0.9
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: ToolboxElectricalEntityTable
+
+- type: entityTable
+  id: ToolboxElectricalEntityTable
+  table: !type:AllSelector
+    children:
+    - id: Screwdriver
+    - id: CrowbarOrange
+    - id: Wirecutter
+    - id: CableApcStack10
+    - id: CableMVStack10
+    - id: trayScanner
+      prob: 0.9
+    - !type:GroupSelector
+      children:
       - id: ClothingHandsGlovesColorYellow
-        prob: 0.05
-        orGroup: GlovesOrWires
+        weight: 0.05
       - id: CableHVStack10
-        orGroup: GlovesOrWires
 
 - type: entity
   id: ToolboxArtisticFilled
@@ -71,20 +69,22 @@
   suffix: Filled
   parent: ToolboxArtistic
   components:
-  - type: StorageFill
-    contents:
-    - id: CrayonBox
-    - id: Paper
-      amount: 3
-    - id: Pen
-    - id: MysteryFigureBox
-      prob: 0.5
-    - id: MysteryFigureBox
-      prob: 0.5
-    - id: BookRandom
-      amount: 2
-    - id: CrayonMime
-    - id: CrayonRainbow
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CrayonBox
+        - id: Paper
+          amount: 3
+        - id: Pen
+        - id: MysteryFigureBox
+          prob: 0.5
+        - id: MysteryFigureBox
+          prob: 0.5
+        - id: BookRandom
+          amount: 2
+        - id: CrayonMime
+        - id: CrayonRainbow
 
 - type: entity
   id: ToolboxMechanicalFilled
@@ -92,18 +92,20 @@
   suffix: Filled
   parent: ToolboxMechanical
   components:
-  - type: StorageFill
-    contents:
-      - id: CrowbarOrange
-      - id: Wrench
-      - id: Welder
-      - id: Wirecutter
-      - id: Screwdriver
-        prob: 0.5
-      - id: FlashlightLantern
-        prob: 0.7
-      - id: ClothingHeadHatHardhatBlue
-        prob: 0.5
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CrowbarOrange
+        - id: Wrench
+        - id: Welder
+        - id: Wirecutter
+        - id: Screwdriver
+          prob: 0.5
+        - id: FlashlightLantern
+          prob: 0.7
+        - id: ClothingHeadHatHardhatBlue
+          prob: 0.5
 
 - type: entity
   id: ToolboxMechanicalFilledAllTools
@@ -111,30 +113,34 @@
   suffix: Filled, all tools
   parent: ToolboxMechanical
   components:
-  - type: StorageFill
-    contents:
-    - id: Crowbar
-    - id: Wrench
-    - id: Screwdriver
-    - id: Wirecutter
-    - id: Welder
-    - id: Multitool
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Crowbar
+        - id: Wrench
+        - id: Screwdriver
+        - id: Wirecutter
+        - id: Welder
+        - id: Multitool
 
 - type: entity
   parent: ToolboxSyndicate
   id: ToolboxSyndicateFilled
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-    - id: Crowbar
-    - id: Wrench
-    - id: Screwdriver
-    - id: Wirecutter
-    - id: Welder
-    - id: Multitool
-    - id: ClothingHandsGlovesCombat
-    - id: ClothingMaskGasSyndicate
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Crowbar
+        - id: Wrench
+        - id: Screwdriver
+        - id: Wirecutter
+        - id: Welder
+        - id: Multitool
+        - id: ClothingHandsGlovesCombat
+        - id: ClothingMaskGasSyndicate
   - type: StaticPrice
     price: 1000
 
@@ -144,8 +150,10 @@
   parent: ToolboxGolden
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: IngotGold
-      - id: DrinkGoldenCup
-        prob: 0.05
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: IngotGold
+        - id: DrinkGoldenCup
+          prob: 0.05

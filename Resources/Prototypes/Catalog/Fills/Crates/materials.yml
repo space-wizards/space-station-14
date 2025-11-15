@@ -4,9 +4,10 @@
   name: glass sheet crate
   description: 90 sheets of glass, packed with care.
   components:
-  - type: StorageFill
-    contents:
-      - id: SheetGlass
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SheetGlass
         amount: 3
 
 - type: entity
@@ -15,9 +16,10 @@
   name: steel sheet crate
   description: 90 sheets of steel.
   components:
-  - type: StorageFill
-    contents:
-      - id: SheetSteel
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SheetSteel
         amount: 3
 
 - type: entity
@@ -26,11 +28,13 @@
   name: textiles crate
   description: 60 pieces of cloth and 30 pieces of durathread.
   components:
-  - type: StorageFill
-    contents:
-      - id: MaterialCloth
-        amount: 2
-      - id: MaterialDurathread
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: MaterialCloth
+          amount: 2
+        - id: MaterialDurathread
 
 - type: entity
   id: CrateMaterialPlastic
@@ -38,9 +42,10 @@
   name: plastic sheet crate
   description: 90 sheets of plastic.
   components:
-  - type: StorageFill
-    contents:
-      - id: SheetPlastic
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SheetPlastic
         amount: 3
 
 - type: entity
@@ -49,9 +54,10 @@
   name: wood crate
   description: Bunch of wood planks.
   components:
-  - type: StorageFill
-    contents:
-      - id: MaterialWoodPlank
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MaterialWoodPlank
 
 - type: entity
   id: CrateMaterialBrass
@@ -59,9 +65,10 @@
   name: brass crate
   description: 90 sheets of brass.
   components:
-  - type: StorageFill
-    contents:
-      - id: SheetBrass
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SheetBrass
         amount: 3
 
 - type: entity
@@ -70,9 +77,10 @@
   name: plasteel crate
   description: 30 sheets of plasteel.
   components:
-  - type: StorageFill
-    contents:
-      - id: SheetPlasteel
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SheetPlasteel
 
 - type: entity
   id: CrateMaterialPlasma
@@ -80,9 +88,10 @@
   name: solid plasma crate
   description: 30 sheets of plasma.
   components:
-  - type: StorageFill
-    contents:
-      - id: SheetPlasma
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SheetPlasma
 
 - type: entity
   id: CrateMaterialGold
@@ -90,9 +99,10 @@
   name: gold crate
   description: 30 bars of gold.
   components:
-  - type: StorageFill
-    contents:
-    - id: IngotGold
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: IngotGold
 
 - type: entity
   id: CrateMaterialSilver
@@ -100,9 +110,10 @@
   name: silver crate
   description: 30 bars of silver.
   components:
-  - type: StorageFill
-    contents:
-    - id: IngotSilver
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: IngotSilver
 
 - type: entity
   id: CrateMaterialCardboard
@@ -110,9 +121,10 @@
   name: cardboard crate
   description: 90 pieces of cardboard.
   components:
-  - type: StorageFill
-    contents:
-      - id: MaterialCardboard
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: MaterialCardboard
         amount: 3
 
 - type: entity
@@ -121,9 +133,10 @@
   name: paper crate
   description: 90 sheets of paper.
   components:
-  - type: StorageFill
-    contents:
-      - id: SheetPaper
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SheetPaper
         amount: 3
 
 - type: entityTable
@@ -176,15 +189,17 @@
   name: material silo crate
   description: A package including all the materials to create a material silo.
   components:
-  - type: StorageFill
-    contents:
-    - id: MaterialSiloMachineCircuitboard
-    - id: SheetSteel1
-      amount: 5
-    - id: MicroManipulatorStockPart
-      amount: 4
-    - id: CableApcStack1
-      amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: MaterialSiloMachineCircuitboard
+        - id: SheetSteel1
+          amount: 5
+        - id: MicroManipulatorStockPart
+          amount: 4
+        - id: CableApcStack1
+          amount: 2
 
 - type: entity
   id: CrateMaterialBasicResource
@@ -192,28 +207,30 @@
   name: basic sheet crate
   description: 30 sheets of steel, glass, and plastic.
   components:
-  - type: StorageFill
-    contents:
-    - id: SheetSteel
-    - id: SheetGlass
-    - id: SheetPlastic
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SheetSteel
+        - id: SheetGlass
+        - id: SheetPlastic
 
 #- type: entity
 #  id: CrateMaterialHFuelTank
 #  name: fueltank crate
 #  parent: CrateGenericSteel
 #  components:
-#  - type: StorageFill
-#    contents:
-#      - id: WeldingFuelTank
-#        amount: 1
+#  - type: EntityTableContainerFill
+#    containers:
+#      entity_storage:
+#        id: WeldingFuelTank
 
 #- type: entity
 #  id: CrateMaterialHWaterTank
 #  name: watertank crate
 #  parent: CrateGenericSteel
 #  components:
-#  - type: StorageFill
-#    contents:
-#      - id: WaterTankFull
-#        amount: 1
+#  - type: EntityTableContainerFill
+#    containers:
+#      entity_storage:
+#        id: WaterTankFull
