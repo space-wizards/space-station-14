@@ -64,6 +64,11 @@
     tags:
     - Cake
     - Slice
+  - type: SecretStash
+    maxItemSize: "Tiny"
+    blacklist:
+      components:
+      - SecretStash # Prevents being able to insert other stashes inside of it. EX: Infinite cake or plushie stacking
 
 # Custom Cake Example
 

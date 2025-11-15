@@ -84,6 +84,8 @@
   - type: Tag
     tags:
     - ToyRubberDuck
+  - type: SecretStash
+    maxItemSize: "Tiny"
 
 - type: entity
   parent: BaseRubberToy
