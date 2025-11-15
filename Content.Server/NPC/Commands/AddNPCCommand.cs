@@ -6,21 +6,17 @@ using Robust.Shared.Console;
 namespace Content.Server.NPC.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class AddNPCCommand : IConsoleCommand
+    public sealed class AddNPCCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entities = default!;
 
-        public string Command => "addnpc";
-        public string Description => "Add a HTN NPC component with a given root task";
-        public string Help => "Usage: addnpc <entityId> <rootTask>"
-                              + "\n    entityID: Uid of entity to add the AiControllerComponent to. Open its VV menu to find this."
-                              + "\n    rootTask: Name of a behaviorset to add to the component on initialize.";
+        public override string Command => "addnpc";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
-                shell.WriteError("Wrong number of args.");
+                shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
@@ -28,13 +24,13 @@ namespace Content.Server.NPC.Commands
 
             if (!_entities.TryGetEntity(nent, out var entId))
             {
-                shell.WriteError($"Unable to find entity {nent}");
+                shell.WriteError(Loc.GetString("shell-invalid-entity-uid", ("uid", args[0])));
                 return;
             }
 
             if (_entities.HasComponent<HTNComponent>(entId))
             {
-                shell.WriteError("Entity already has an NPC component.");
+                shell.WriteError(Loc.GetString("cmd-addnpc-already-has-npc"));
                 return;
             }
 
@@ -43,7 +39,7 @@ namespace Content.Server.NPC.Commands
             {
                 Task = args[1]
             };
-            shell.WriteLine("AI component added.");
+            shell.WriteLine(Loc.GetString("cmd-addnpc-added"));
         }
     }
 }

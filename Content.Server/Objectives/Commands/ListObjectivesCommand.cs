@@ -10,9 +10,10 @@ using Robust.Shared.Player;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Logs)]
-    public sealed class ListObjectivesCommand : LocalizedCommands
-    {
-        [Dependency] private readonly IEntityManager _entities = default!;
+    public sealed class ListObjectivesCommand : LocalizedEntityCommands
+        {
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedObjectivesSystem _objectivesSystem = default!;
         [Dependency] private readonly IPlayerManager _players = default!;
 
         public override string Command => "lsobjectives";
@@ -31,27 +32,25 @@ namespace Content.Server.Objectives.Commands
                 return;
             }
 
-            var minds = _entities.System<SharedMindSystem>();
-            if (!minds.TryGetMind(player, out var mindId, out var mind))
+            if (!_mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
                 shell.WriteError(LocalizationManager.GetString("shell-target-entity-does-not-have-message", ("missing", "mind")));
                 return;
             }
 
-            shell.WriteLine($"Objectives for player {player.UserId}:");
+            shell.WriteLine(Loc.GetString("cmd-lsobjectives-objectives-for-player", ("player", player.UserId)));
             var objectives = mind.Objectives.ToList();
             if (objectives.Count == 0)
             {
-                shell.WriteLine("None.");
+                shell.WriteLine(Loc.GetString("cmd-lsobjectives-none"));
             }
 
-            var objectivesSystem = _entities.System<SharedObjectivesSystem>();
             for (var i = 0; i < objectives.Count; i++)
             {
-                var info = objectivesSystem.GetInfo(objectives[i], mindId, mind);
+                var info = _objectivesSystem.GetInfo(objectives[i], mindId, mind);
                 if (info == null)
                 {
-                    shell.WriteLine($"- [{i}] {objectives[i]} - INVALID");
+                    shell.WriteLine(Loc.GetString("cmd-lsobjectives-invalid", ("objective", objectives[i])));
                 }
                 else
                 {
@@ -66,7 +65,7 @@ namespace Content.Server.Objectives.Commands
         {
             if (args.Length == 1)
             {
-                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), LocalizationManager.GetString("shell-argument-username-hint"));
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("shell-argument-username-hint"));
             }
 
             return CompletionResult.Empty;
