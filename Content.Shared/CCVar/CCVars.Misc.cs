@@ -109,4 +109,11 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> PlaytimeMinutesToday =
         CVarDef.Create("playtime.minutes_today", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     Enabled: CPR action will auto-repeat as long as the target is still crit
+    ///     Disabled: CPR has to be performed by repeated manual interaction
+    /// </summary>
+    public static readonly CVarDef<bool> CprRepeat =
+        CVarDef.Create("cpr.repeat", true, CVar.SERVER);
 }
