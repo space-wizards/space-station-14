@@ -9,6 +9,7 @@
       - enum.ChameleonUiKey.Key
     accessDeniedSound: null
     popup: null
+    alwaysShowUIVerb: false
   - type: UserInterface
     interfaces:
       enum.ChameleonUiKey.Key:
