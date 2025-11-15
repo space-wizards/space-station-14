@@ -417,6 +417,7 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage:
+      entity_storage: !type:AllSelector
+        children:
         - id: BoxLightbulbColorfulMixed
         - id: BoxLighttubeColorfulMixed
