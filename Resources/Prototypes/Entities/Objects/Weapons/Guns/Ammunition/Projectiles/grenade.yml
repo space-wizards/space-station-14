@@ -1,8 +1,8 @@
 - type: entity
+  parent: BaseBullet
   id: PelletClusterRubber
   name: pellet (ball, rubber)
   categories: [ HideSpawnMenu ]
-  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -18,10 +18,10 @@
     lifetime: 0.25
 
 - type: entity
+  parent: BaseBullet
   id: PelletClusterLethal
   name: pellet (ball, lethal)
   categories: [ HideSpawnMenu ]
-  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -35,10 +35,10 @@
     lifetime: 0.25
 
 - type: entity
+  parent: BaseBulletIncendiary
   id: PelletClusterIncendiary
   name: pellet (ball, incendiary)
   categories: [ HideSpawnMenu ]
-  parent: BaseBulletIncendiary
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -56,10 +56,10 @@
     lifetime: 0.25
 
 - type: entity
+  parent: BaseBullet
   id: PelletClusterLessLethal
   name: pellet (ball, less lethal)
   categories: [ HideSpawnMenu ]
-  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
