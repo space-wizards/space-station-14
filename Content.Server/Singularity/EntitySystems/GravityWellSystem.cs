@@ -206,7 +206,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
             epicenter,
             maxRange,
             _entSet,
-            flags: LookupFlags.Dynamic | LookupFlags.Sundries);
+            flags: LookupFlags.Dynamic);
 
         foreach (var entity in _entSet)
         {

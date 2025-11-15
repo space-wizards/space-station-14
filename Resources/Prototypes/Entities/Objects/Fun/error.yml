@@ -21,8 +21,6 @@
       launchForwardsMultiplier: 3
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: CollisionWake
-    enabled: false
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures

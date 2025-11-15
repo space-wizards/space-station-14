@@ -3129,16 +3129,12 @@ entities:
     - type: Transform
       pos: -2.499681,9.919846
       parent: 1
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
   - uid: 781
     components:
     - type: Transform
       pos: -2.499681,11.232346
       parent: 1
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: CombatKnife
   entities:
@@ -5039,32 +5035,24 @@ entities:
     - type: Transform
       pos: -2.499681,11.677658
       parent: 1
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
   - uid: 777
     components:
     - type: Transform
       pos: -2.452806,10.833908
       parent: 1
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
   - uid: 778
     components:
     - type: Transform
       pos: -2.5231185,10.458908
       parent: 1
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
   - uid: 779
     components:
     - type: Transform
       pos: -2.4293685,9.451096
       parent: 1
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: Stunprod
   entities:

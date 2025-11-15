@@ -21,8 +21,6 @@
       visible: false
   - type: Physics
     bodyType: Dynamic
-  - type: CollisionWake
-    enabled: false
   - type: InteractionOutline
   - type: Fixtures
     fixtures:

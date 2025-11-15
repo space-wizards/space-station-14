@@ -6111,8 +6111,6 @@ entities:
     - type: Transform
       pos: 30.526005,6.691239
       parent: 1
-    - type: CollisionWake
-      enabled: False
 - proto: FoodPlateSmall
   entities:
   - uid: 1388
