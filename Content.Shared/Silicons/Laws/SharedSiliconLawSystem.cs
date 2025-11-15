@@ -5,6 +5,7 @@ using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Wires;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Laws;
 
@@ -13,6 +14,7 @@ namespace Content.Shared.Silicons.Laws;
 /// </summary>
 public abstract partial class SharedSiliconLawSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
@@ -22,6 +24,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     public override void Initialize()
     {
         InitializeUpdater();
+        InitializeOverrider();
         SubscribeLocalEvent<EmagSiliconLawComponent, GotEmaggedEvent>(OnGotEmagged);
     }
 
@@ -54,12 +57,31 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         component.OwnerName = Name(args.UserUid);
 
         NotifyLawsChanged(uid, component.EmaggedSound);
-        if(_mind.TryGetMind(uid, out var mindId, out _))
+        if (_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
         _stunSystem.TryUpdateParalyzeDuration(uid, component.StunTime);
 
         args.Handled = true;
+    }
+
+    /// <summary>
+    /// Extract all the laws from a lawset's prototype ids.
+    /// </summary>
+    public SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
+    {
+        var proto = _prototype.Index(lawset);
+        var laws = new SiliconLawset()
+        {
+            Laws = new List<SiliconLaw>(proto.Laws.Count)
+        };
+        foreach (var law in proto.Laws)
+        {
+            laws.Laws.Add(_prototype.Index<SiliconLawPrototype>(law).ShallowClone());
+        }
+        laws.ObeysTo = proto.ObeysTo;
+
+        return laws;
     }
 
     public virtual void NotifyLawsChanged(EntityUid uid, SoundSpecifier? cue = null)
@@ -73,6 +95,16 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     }
 
     protected virtual void RemoveSubvertedSiliconRole(EntityUid mindId)
+    {
+
+    }
+
+    public virtual void SetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
+    {
+
+    }
+
+    public virtual void SoftSetLaws(List<SiliconLaw> newLaws, EntityUid target, SoundSpecifier? cue = null)
     {
 
     }
