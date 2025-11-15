@@ -305,6 +305,7 @@
           data: { state: spookysmoke }
         - options: ReducedMotion
           data: { state: spookysmoke_static }
+    - type: InvisibleToBlind
 
 - type: entity
   name: haze
