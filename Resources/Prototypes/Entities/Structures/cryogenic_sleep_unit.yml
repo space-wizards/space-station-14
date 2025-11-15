@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   id: CryogenicSleepUnit
   name: cryogenic sleep unit
   description: A super-cooled container that keeps crewmates safe during space travel.

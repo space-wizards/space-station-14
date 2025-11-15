@@ -1,5 +1,6 @@
 - type: entity
   id: Stairs
+  parent: BaseRelaxedAnchoring
   name: stairs
   suffix: Steel
   description: The greatest invention since rocket-propelled grenades.

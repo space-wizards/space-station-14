@@ -1,5 +1,6 @@
 ﻿- type: entity
   id: UnfinishedMachineFrame
+  parent: BaseRelaxedAnchoring
   name: machine frame
   description: A machine under construction. Needs more parts.
   suffix: Unfinished
@@ -68,6 +69,7 @@
 
 - type: entity
   id: MachineFrame
+  parent: BaseRelaxedAnchoring
   name: machine frame
   suffix: Ready
   placement:

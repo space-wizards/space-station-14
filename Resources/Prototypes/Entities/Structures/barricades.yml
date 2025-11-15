@@ -111,6 +111,7 @@
         - WallLayer
   - type: Tag
     tags:
+    - Directional
     - Wooden
   - type: Flammable
     fireSpread: true
