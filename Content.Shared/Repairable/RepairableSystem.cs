@@ -35,6 +35,9 @@ public sealed partial class RepairableSystem : EntitySystem
         {
             var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, ent.Comp.Damage, true, false, origin: args.User);
             _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
+            // Only try to continue repairing the target if it is still damaged
+            if (damageable.TotalDamage > 0)
+                args.Args.Event.Repeat = true;
         }
 
         else
