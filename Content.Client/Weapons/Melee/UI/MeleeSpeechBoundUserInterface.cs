@@ -9,11 +9,14 @@ namespace Content.Client.Weapons.Melee.UI;
 /// </summary>
 public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
     [ViewVariables]
     private MeleeSpeechWindow? _window;
 
     public MeleeSpeechBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        IoCManager.InjectDependencies(this);
     }
 
     protected override void Open()
@@ -21,7 +24,14 @@ public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<MeleeSpeechWindow>();
-        _window.OnBattlecryEntered += OnBattlecryChanged;
+
+        if (_entManager.TryGetComponent(Owner, out MeleeSpeechComponent? speech))
+        {
+            _window.SetInitialBattlecry(speech!.Battlecry);
+            _window.SetMaxBattlecryLength(speech!.MaxBattlecryLength);
+        }
+
+        _window.OnBattlecryChanged += OnBattlecryChanged;
     }
 
     private void OnBattlecryChanged(string newBattlecry)
