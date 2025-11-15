@@ -48,7 +48,7 @@
   parent: CrateLivestock
   id: CrateNPCChicken
   name: chicken crate
-  description: A crate containing four to six chickens of possibly varied ages.
+  description: A crate containing four to six chickens of possibly varied ages. # Chickens instantly breed a lot of the time.
   components:
   - type: StorageFill
     contents:
@@ -70,7 +70,7 @@
   parent: CrateLivestock
   id: CrateNPCDuck
   name: duck crate
-  description: A crate containing four to six ducks of varied shapes and sizes.
+  description: A crate containing four to six ducks of varied shapes and sizes. # 6 because breeding lol
   components:
   - type: StorageFill
     contents:
