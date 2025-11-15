@@ -19,13 +19,13 @@
     maxItemSize: Normal
     grid:
     - 0,0,9,3
-    quickInsert: true
-    areaInsert: true
     whitelist:
       tags:
         - ArtifactFragment
         - Ore
   - type: Dumpable
+  - type: QuickPickup
+  - type: AreaPickup
 
 - type: entity
   parent: OreBag
