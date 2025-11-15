@@ -1,6 +1,7 @@
-﻿using Content.Server.Store.Systems;
+﻿using Content.Shared.Store.Systems;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Store.Components;
+namespace Content.Shared.Store.Components;
 
 // TODO: Refund on a per-item/action level.
 //   Requires a refund button next to each purchase (disabled/invis by default)
@@ -9,24 +10,25 @@ namespace Content.Server.Store.Components;
 /// <summary>
 ///     Keeps track of entities bought from stores for refunds, especially useful if entities get deleted before they can be refunded.
 /// </summary>
-[RegisterComponent, Access(typeof(StoreSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[Access(typeof(SharedStoreSystem))]
 public sealed partial class StoreRefundComponent : Component
 {
     /// <summary>
     ///     The store this entity was bought from
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? StoreEntity;
 
     /// <summary>
     ///     The time this entity was bought
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan? BoughtTime;
 
     /// <summary>
     ///     How long until this entity disables refund purchase?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan DisableTime = TimeSpan.FromSeconds(300);
 }

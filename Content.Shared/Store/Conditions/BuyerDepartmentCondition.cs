@@ -1,16 +1,17 @@
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
-using Content.Shared.Store;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Server.Store.Conditions;
+namespace Content.Shared.Store.Conditions;
 
 /// <summary>
 /// Allows a store entry to be filtered out based on the user's job.
 /// Supports both blacklists and whitelists
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class BuyerDepartmentCondition : ListingCondition
 {
     /// <summary>

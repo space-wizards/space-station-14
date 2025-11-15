@@ -9,14 +9,14 @@ namespace Content.Shared.StoreDiscount.Components;
 /// <summary>
 /// Partner-component for adding discounts functionality to StoreSystem using StoreDiscountSystem.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class StoreDiscountComponent : Component
 {
     /// <summary>
     /// Discounts for items in <see cref="ListingData"/>.
     /// </summary>
-    [ViewVariables, DataField]
-    public IReadOnlyList<StoreDiscountData> Discounts = Array.Empty<StoreDiscountData>();
+    [DataField, AutoNetworkedField]
+    public List<StoreDiscountData> Discounts = new();
 }
 
 /// <summary>

@@ -1,8 +1,7 @@
-using Content.Shared.Mind;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Popups;
-using Content.Shared.Roles;
 using Content.Shared.Store;
+using Content.Shared.Store.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -38,6 +37,8 @@ public abstract class SharedRingerSystem : EntitySystem
         // RingerBoundUserInterface Subscriptions
         SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
         SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(OnPlayRingtone);
+
+        SubscribeLocalEvent<RingerComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
     }
 
     /// <inheritdoc/>
@@ -189,6 +190,22 @@ public abstract class SharedRingerSystem : EntitySystem
     private void OnPlayRingtone(Entity<RingerComponent> ent, ref RingerPlayRingtoneMessage args)
     {
         StartRingtone(ent);
+    }
+
+    /// <summary>
+    /// Handles the <see cref="CurrencyInsertAttemptEvent"/> for <see cref="RingerUplinkComponent"/>.
+    /// </summary>
+    private void OnCurrencyInsert(Entity<RingerComponent> ent, ref CurrencyInsertAttemptEvent args)
+    {
+        if (!TryComp<RingerUplinkComponent>(ent, out var uplink))
+        {
+            args.Cancel();
+            return;
+        }
+
+        // if the store can be locked, it must be unlocked first before inserting currency. Stops traitor checking.
+        if (!uplink.Unlocked)
+            args.Cancel();
     }
 
     // Helper methods
