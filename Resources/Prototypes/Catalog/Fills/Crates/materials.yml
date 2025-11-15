@@ -6,10 +6,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: SheetGlass
-          amount: 3
+      entity_storage:
+        id: SheetGlass
+        amount: 3
 
 - type: entity
   id: CrateMaterialSteel
@@ -19,10 +18,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: SheetSteel
-          amount: 3
+      entity_storage:
+        id: SheetSteel
+        amount: 3
 
 - type: entity
   id: CrateMaterialTextiles
@@ -46,10 +44,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: SheetPlastic
-          amount: 3
+      entity_storage:
+        id: SheetPlastic
+        amount: 3
 
 - type: entity
   id: CrateMaterialWood
@@ -59,9 +56,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: MaterialWoodPlank
+      entity_storage:
+        id: MaterialWoodPlank
 
 - type: entity
   id: CrateMaterialBrass
@@ -71,10 +67,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: SheetBrass
-          amount: 3
+      entity_storage:
+        id: SheetBrass
+        amount: 3
 
 - type: entity
   id: CrateMaterialPlasteel
@@ -84,9 +79,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: SheetPlasteel
+      entity_storage:
+        id: SheetPlasteel
 
 - type: entity
   id: CrateMaterialPlasma
@@ -96,9 +90,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: SheetPlasma
+      entity_storage:
+        id: SheetPlasma
 
 - type: entity
   id: CrateMaterialGold
@@ -108,9 +101,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: IngotGold
+      entity_storage:
+        id: IngotGold
 
 - type: entity
   id: CrateMaterialSilver
@@ -120,9 +112,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: IngotSilver
+      entity_storage:
+        id: IngotSilver
 
 - type: entity
   id: CrateMaterialCardboard
@@ -132,10 +123,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: MaterialCardboard
-          amount: 3
+      entity_storage:
+        id: MaterialCardboard
+        amount: 3
 
 - type: entity
   id: CrateMaterialPaper
@@ -145,10 +135,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: SheetPaper
-          amount: 3
+      entity_storage:
+        id: SheetPaper
+        amount: 3
 
 - type: entityTable
   id: RandomMaterialCrateTable
@@ -233,9 +222,8 @@
 #  components:
 #  - type: EntityTableContainerFill
 #    containers:
-#      entity_storage: !type:AllSelector
-#        children:
-#        - id: WeldingFuelTank
+#      entity_storage:
+#        id: WeldingFuelTank
 
 #- type: entity
 #  id: CrateMaterialHWaterTank
@@ -244,6 +232,5 @@
 #  components:
 #  - type: EntityTableContainerFill
 #    containers:
-#      entity_storage: !type:AllSelector
-#        children:
-#        - id: WaterTankFull
+#      entity_storage:
+#        id: WaterTankFull
