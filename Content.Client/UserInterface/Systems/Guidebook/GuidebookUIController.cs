@@ -208,9 +208,19 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         }
         _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
 
-        // Expand up to depth-2.
+        // Expand only the root entries.
         _guideWindow.Tree.SetAllExpanded(false);
-        _guideWindow.Tree.SetAllExpanded(true, 1);
+        _guideWindow.Tree.SetAllExpanded(true, 0);
+
+        // Always expand the currently selected entry & all of its parents
+        if (selected != null && _guideWindow.Tree.Items.TryFirstOrDefault(x => x.Metadata is GuideEntry entry && entry.Id == selected, out var item))
+        {
+            while (item != null)
+            {
+                item.SetExpanded(true);
+                item = item.ParentItem;
+            }
+        }
 
         _guideWindow.OpenCenteredRight();
     }
