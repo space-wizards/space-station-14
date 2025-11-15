@@ -2003,9 +2003,9 @@
   productEntity: ClothingHandsGlovesBoxingRigged
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 2
+    Telecrystal: 4
   cost:
-    Telecrystal: 3
+    Telecrystal: 6
   categories:
     - UplinkJob
   conditions:
