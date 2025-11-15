@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.FixedPoint;
@@ -112,13 +113,21 @@ public sealed partial class ExplosionSystem
         // that this will result in a non-airtight entity.Entities that ONLY break via construction graph node changes
         // are currently effectively "invincible" as far as this is concerned. This really should be done more rigorously.
         var totalDamageTarget = FixedPoint2.MaxValue;
-        if (_destructibleQuery.TryGetComponent(uid, out var destructible))
+        if (_destructibleQuery.TryComp(uid, out var destructible))
         {
             totalDamageTarget = _destructibleSystem.DestroyedAt(uid, destructible);
         }
 
+        DamageModifierSet? armor = null;
+        if (_armorQuery.TryComp(uid, out var armorComp))
+        {
+            armor = armorComp.Modifiers;
+        }
+
+        _explosionResistanceQuery.TryComp(uid, out var explosionComp);
+
         var explosionTolerance = new float[_explosionTypes.Count];
-        if (totalDamageTarget == FixedPoint2.MaxValue || !_damageableQuery.TryGetComponent(uid, out var damageable))
+        if (totalDamageTarget == FixedPoint2.MaxValue || !_damageableQuery.TryComp(uid, out var damageable))
         {
             for (var i = 0; i < explosionTolerance.Length; i++)
             {
@@ -141,24 +150,38 @@ public sealed partial class ExplosionSystem
 
             // evaluate the damage that this damage type would do to this entity
             var damagePerIntensity = FixedPoint2.Zero;
+            var flatReduction = 0f;
+            float modifier;
             foreach (var (type, value) in explosionType.DamagePerIntensity.DamageDict)
             {
                 if (!damageable.Damage.DamageDict.ContainsKey(type))
                     continue;
 
-                // TODO EXPLOSION SYSTEM
-                // add a variant of the event that gets raised once, instead of once per prototype.
-                // Or better yet, just calculate this manually w/o the event.
-                // The event mainly exists for indirect resistances via things like inventory & clothing
-                // But this shouldn't matter for airtight entities.
-                var ev = new GetExplosionResistanceEvent(explosionType.ID);
-                RaiseLocalEvent(uid, ref ev);
+                if (armor != null)
+                {
+                    if (!armor.Coefficients.TryGetValue(type, out modifier))
+                        modifier = 1f;
 
-                damagePerIntensity += value * mod * Math.Max(0, ev.DamageCoefficient);
+                    if (armor.FlatReduction.TryGetValue(type, out var flat))
+                        flatReduction += flat * modifier;
+                }
+                else
+                {
+                    modifier = 1f;
+                }
+
+                if (explosionComp != null)
+                {
+                    modifier *= explosionComp.DamageCoefficient;
+                    if (explosionComp.Modifiers.TryGetValue(explosionType.ID, out var typeMod))
+                        modifier *= typeMod;
+                }
+
+                damagePerIntensity += value * Math.Max(0, modifier);
             }
 
             explosionTolerance[index] = damagePerIntensity > 0
-                ? (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity)
+                ? (float) ((totalDamageTarget - damageable.TotalDamage + flatReduction) / (damagePerIntensity * mod))
                 : float.MaxValue;
         }
 

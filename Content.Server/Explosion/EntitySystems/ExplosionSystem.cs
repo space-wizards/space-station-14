@@ -6,6 +6,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Destructible;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.Armor;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Camera;
 using Content.Shared.CCVar;
@@ -55,13 +56,15 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     [Dependency] private readonly FlammableSystem _flammableSystem = default!;
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
 
+    private EntityQuery<ActorComponent> _actorQuery;
+    private EntityQuery<AirtightComponent> _airtightQuery;
+    private EntityQuery<ArmorComponent> _armorQuery;
+    private EntityQuery<DamageableComponent> _damageableQuery;
+    private EntityQuery<DestructibleComponent> _destructibleQuery;
+    private EntityQuery<ExplosionResistanceComponent> _explosionResistanceQuery;
     private EntityQuery<FlammableComponent> _flammableQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<ProjectileComponent> _projectileQuery;
-    private EntityQuery<ActorComponent> _actorQuery;
-    private EntityQuery<DestructibleComponent> _destructibleQuery;
-    private EntityQuery<DamageableComponent> _damageableQuery;
-    private EntityQuery<AirtightComponent> _airtightQuery;
 
     /// <summary>
     ///     "Tile-size" for space when there are no nearby grids to use as a reference.
@@ -97,13 +100,15 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         InitAirtightMap();
         InitVisuals();
 
+        _actorQuery = GetEntityQuery<ActorComponent>();
+        _airtightQuery = GetEntityQuery<AirtightComponent>();
+        _armorQuery = GetEntityQuery<ArmorComponent>();
+        _damageableQuery = GetEntityQuery<DamageableComponent>();
+        _destructibleQuery = GetEntityQuery<DestructibleComponent>();
+        _explosionResistanceQuery = GetEntityQuery<ExplosionResistanceComponent>();
         _flammableQuery = GetEntityQuery<FlammableComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
-        _actorQuery = GetEntityQuery<ActorComponent>();
-        _destructibleQuery = GetEntityQuery<DestructibleComponent>();
-        _damageableQuery = GetEntityQuery<DamageableComponent>();
-        _airtightQuery = GetEntityQuery<AirtightComponent>();
     }
 
     private void OnReset(RoundRestartCleanupEvent ev)
