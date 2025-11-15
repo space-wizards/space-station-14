@@ -37,6 +37,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
 
         InitializeRelay();
+        InitializeMMI();
     }
 
     private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)

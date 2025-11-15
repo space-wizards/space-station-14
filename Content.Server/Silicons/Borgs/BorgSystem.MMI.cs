@@ -13,8 +13,10 @@ public sealed partial class BorgSystem
 
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
-    public void InitializeMMI()
+    public override void InitializeMMI()
     {
+        base.InitializeMMI();
+
         SubscribeLocalEvent<MMIComponent, ComponentInit>(OnMMIInit);
         SubscribeLocalEvent<MMIComponent, EntInsertedIntoContainerMessage>(OnMMIEntityInserted);
         SubscribeLocalEvent<MMIComponent, MindAddedMessage>(OnMMIMindAdded);
