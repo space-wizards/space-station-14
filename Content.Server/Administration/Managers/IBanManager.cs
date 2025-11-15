@@ -2,6 +2,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Content.Shared.Database;
 using Content.Shared.Roles;
+using Robust.Shared.Console;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -50,6 +51,8 @@ public interface IBanManager
     /// Gets a list of prototype IDs with the player's job bans.
     /// </summary>
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
+    public NoteSeverity GetServerBanSeverity();
+    public CompletionOption[] BanDurations { get; }
 
     /// <summary>
     /// Gets a list of prototype IDs with the player's antag bans.
