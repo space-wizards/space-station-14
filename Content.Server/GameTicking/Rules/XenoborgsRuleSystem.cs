@@ -56,7 +56,6 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var numHumans = _mindSystem.GetAliveHumans().Count;
 
         args.AddLine("");
-        args.AddLine("");
 
         if (numXenoborgs < 5)
             args.AddLine(Loc.GetString("xenoborgs-crewmajor"));

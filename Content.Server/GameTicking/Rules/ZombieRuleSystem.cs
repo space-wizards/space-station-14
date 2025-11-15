@@ -65,6 +65,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         // This is just the general condition thing used for determining the win/lose text
         var fraction = GetInfectedFraction(true, true);
 
+        args.AddLine("");
+
         if (fraction <= 0)
             args.AddLine(Loc.GetString("zombie-round-end-amount-none"));
         else if (fraction <= 0.25)

@@ -122,6 +122,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         if (!TryComp<PointManagerComponent>(uid, out var point))
             return;
 
+        args.AddLine("");
         if (component.Victor != null && _player.TryGetPlayerData(component.Victor.Value, out var data))
         {
             args.AddLine(Loc.GetString("point-scoreboard-winner", ("player", data.UserName)));

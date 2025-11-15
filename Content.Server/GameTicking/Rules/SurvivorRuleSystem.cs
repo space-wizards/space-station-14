@@ -103,6 +103,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
             aliveMarooned++;
         }
 
+        args.AddLine("");
         args.AddLine(Loc.GetString("survivor-round-end-dead-count", ("deadCount", deadSurvivors)));
         args.AddLine(Loc.GetString("survivor-round-end-alive-count", ("aliveCount", aliveMarooned)));
         args.AddLine(Loc.GetString("survivor-round-end-alive-on-shuttle-count", ("aliveCount", aliveOnShuttle)));
