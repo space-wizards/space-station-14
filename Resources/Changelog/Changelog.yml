@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: Wet mops no longer have zero melee damage.
-    type: Fix
-  id: 8704
-  time: '2025-06-21T22:23:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38486
 - author: Cojoke-dot
   changes:
   - message: Pacifists can now use the Staff of Healing
@@ -3925,3 +3918,11 @@
   id: 9205
   time: '2025-11-15T05:27:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41420
+- author: Fildrance
+  changes:
+  - message: KNOCK spell and 'Mild electromagnetic interference' xeno artifact effects
+      now will be blocked only by obstructed line of sight (range is still applied)
+    type: Tweak
+  id: 9206
+  time: '2025-11-15T23:18:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41447
