@@ -418,5 +418,5 @@
   - type: EntityTableContainerFill
     containers:
       entity_storage:
-        id: BoxLightbulbColorfulMixed
-        amount: 2
+        - id: BoxLightbulbColorfulMixed
+        - id: BoxLighttubeColorfulMixed
