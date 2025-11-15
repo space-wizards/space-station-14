@@ -321,9 +321,7 @@ public sealed class FollowerSystem : EntitySystem
         var query = EntityQueryEnumerator<FollowerComponent, GhostComponent, ActorComponent>();
         while (query.MoveNext(out _, out var follower, out _, out var actor))
         {
-            // Exclude admins
-            // Is this check even neccessary? All it does is make sure admins following somebody doesn't count.
-            // Could probably use the PreventGhostnadoWarpTag instead of the IsAdmin check.
+            // Don't count admin followers so that players cannot notice if admins are in stealth mode and following someone.
             if (_adminManager.IsAdmin(actor.PlayerSession))
                 continue;
 
