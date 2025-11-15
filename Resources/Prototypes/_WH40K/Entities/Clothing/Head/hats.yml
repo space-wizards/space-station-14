@@ -54,6 +54,3 @@
     sprite: _WH40K/Clothing/Head/Hats/beret.rsi
   - type: Clothing
     sprite: _WH40K/Clothing/Head/Hats/beret.rsi
-  - type: HideLayerClothing
-    slots:
-    - Hair

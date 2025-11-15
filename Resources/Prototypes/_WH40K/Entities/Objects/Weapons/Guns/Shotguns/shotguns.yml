@@ -62,7 +62,7 @@
 
 - type: entity
   name: револьверный дробовик
-  parent: [BaseItem, BaseGunWieldable]
+  parent: [BaseWeaponRevolver, BaseGunWieldable]
   id: WeaponShotgunRevolver
   description:
   suffix: WH40K
@@ -83,41 +83,17 @@
     slots:
     - Back
     - suitStorage
-  - type: AmmoCounter
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - ShellShotgun
+    proto: ShellShotgun
+    capacity: 8
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: GunRequiresWield
-  - type: Gun
-    fireRate: 2
-    selectedMode: FullAuto
-    availableModes:
-    - FullAuto
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineCombatShotgun
-        priority: 2
-        whitelist:
-          tags:
-          - MagazineCombatShotgun
-        whitelistFailPopup: gun-magazine-whitelist-fail
-        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
-  - type: MagazineAmmoProvider
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
-  - type: StaticPrice
-    price: 500
 
 - type: entity
   name: боевой дробовик
