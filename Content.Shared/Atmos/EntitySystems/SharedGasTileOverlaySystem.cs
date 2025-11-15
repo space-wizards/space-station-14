@@ -1,8 +1,10 @@
+using System.Runtime.CompilerServices;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
 namespace Content.Shared.Atmos.EntitySystems
 {
@@ -58,10 +60,18 @@ namespace Content.Shared.Atmos.EntitySystems
             args.State = new GasTileOverlayDeltaState(data, new(component.Chunks.Keys));
         }
 
+        /// <summary>
+        /// Converts a (1-dimensional) tile index to that of it's corresponding gas-tile-overlay chunk.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int TileIndexToChunk(int index)
+            => index >= 0 ? index / ChunkSize : (index - (ChunkSize - 1)) / ChunkSize;
+
+        /// <summary>
+        /// Gets the indices of a gas-tile-overlay chunk corresponding to the given indices.
+        /// </summary>
         public static Vector2i GetGasChunkIndices(Vector2i indices)
-        {
-            return new((int) MathF.Floor((float) indices.X / ChunkSize), (int) MathF.Floor((float) indices.Y / ChunkSize));
-        }
+            => new(TileIndexToChunk(indices.X), TileIndexToChunk(indices.Y));
 
         [Serializable, NetSerializable]
         public readonly struct GasOverlayData : IEquatable<GasOverlayData>
@@ -106,7 +116,7 @@ namespace Content.Shared.Atmos.EntitySystems
         [Serializable, NetSerializable]
         public sealed class GasOverlayUpdateEvent : EntityEventArgs
         {
-            public Dictionary<NetEntity, List<GasOverlayChunk>> UpdatedChunks = new();
+            public Dictionary<NetEntity, GasOverlayChunk[]> UpdatedChunks = new();
             public Dictionary<NetEntity, HashSet<Vector2i>> RemovedChunks = new();
         }
     }
