@@ -1,12 +1,13 @@
 using Content.Shared.CCVar;
 using Robust.Shared;
 using Robust.Shared.ContentPack;
+using Robust.Shared.EntitySerialization;
 using Robust.Shared.Replays;
 using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Utility;
+using YamlDotNet.RepresentationModel;
 
 namespace Content.Server.GameTicking;
 
@@ -21,8 +22,35 @@ public sealed partial class GameTicker
 
     private void InitializeReplays()
     {
+        _replays.RecordingStopped2 += OnReplayRecordingStopped;
         _replays.RecordingFinished += ReplaysOnRecordingFinished;
         _replays.RecordingStopped += ReplaysOnRecordingStopped;
+    }
+
+    /// <summary>
+    /// If enabled, this will save all entities to a yaml file and include it in the replay zip.
+    /// </summary>
+    private void OnReplayRecordingStopped(ReplayRecordingStopped replay)
+    {
+        if (!_cfg.GetCVar(CCVars.ReplaySaveGame))
+            return;
+
+        var opts = SerializationOptions.Default with
+        {
+            // Various entities are explicitly non-serializable and would currently log errors
+            // TODO SERIALIZATION Change this to MissingEntityBehaviour.Error
+            MissingEntityBehaviour = MissingEntityBehaviour.Ignore,
+
+            // TODO SERIALIZATION make this IgnoreComponent
+            EntityExceptionBehaviour = EntityExceptionBehaviour.IgnoreEntity,
+        };
+
+        if (!_loader.TrySerializeAllEntities(out var data, opts))
+            return;
+
+        var document = new YamlDocument(data.ToYaml());
+        var path = new ResPath("save.yml");
+        replay.Writer.WriteYaml(path, document);
     }
 
     /// <summary>
