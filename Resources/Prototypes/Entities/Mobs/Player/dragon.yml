@@ -106,6 +106,7 @@
     - RadiationProtection
     - Adrenaline
   - type: Temperature
+  - type: TemperatureDamageThresholds
     heatDamageThreshold: 2400
   - type: Metabolizer
     solutionOnBody: false
