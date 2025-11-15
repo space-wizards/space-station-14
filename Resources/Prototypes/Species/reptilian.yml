@@ -15,8 +15,11 @@
 - type: speciesBaseSprites
   id: MobReptilianSprites
   sprites:
+    Special: MobHumanoidAnyMarking
     Head: MobReptilianHead
     Snout: MobHumanoidAnyMarking
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
     UndergarmentTop: MobHumanoidAnyMarking
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobReptilianTorso

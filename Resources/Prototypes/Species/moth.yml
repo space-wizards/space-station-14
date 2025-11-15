@@ -15,8 +15,11 @@
 - type: speciesBaseSprites
   id: MobMothSprites
   sprites:
+    Special: MobHumanoidAnyMarking
     Head: MobMothHead
     Snout: MobHumanoidAnyMarking
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
     UndergarmentTop: MobHumanoidAnyMarking
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobMothTorso
