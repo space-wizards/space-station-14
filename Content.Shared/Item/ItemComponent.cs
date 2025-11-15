@@ -44,6 +44,13 @@ public sealed partial class ItemComponent : Component
     public List<Box2i>? Shape;
 
     /// <summary>
+    /// An optional override for the weight of an item, typically useful if an item has a unique shape, or should be
+    /// heavier/bulkier despite its small size.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int? Bulk;
+
+    /// <summary>
     /// A sprite used to depict this entity specifically when it is displayed in the storage UI.
     /// </summary>
     [DataField, AutoNetworkedField]

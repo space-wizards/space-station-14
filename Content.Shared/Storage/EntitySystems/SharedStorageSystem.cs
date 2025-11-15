@@ -578,8 +578,7 @@ public abstract class SharedStorageSystem : EntitySystem
             foreach (var entity in _entSet)
             {
                 if (entity == args.User
-                    || !_itemQuery.TryGetComponent(entity, out var itemComp) // Need comp to get item size to get weight
-                    || !_prototype.Resolve(itemComp.Size, out var itemSize)
+                    || !_itemQuery.TryGetComponent(entity, out var itemComp)
                     || !CanInsert(uid, entity, out _, storageComp, item: itemComp)
                     || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                 {
@@ -587,9 +586,10 @@ public abstract class SharedStorageSystem : EntitySystem
                 }
 
                 _entList.Add(entity);
-                delay += itemSize.Weight;
+                delay += ItemSystem.GetItemSizeWeight(itemComp);
 
                 if (_entList.Count >= StorageComponent.AreaPickupLimit)
+
                     break;
             }
 
@@ -1073,7 +1073,8 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         var maxSize = GetMaxItemSize((uid, storageComp));
-        if (ItemSystem.GetSizePrototype(item.Size) > maxSize)
+        var size = ItemSystem.GetItemSizeWeight(item);
+        if (size > maxSize.Weight)
         {
             reason = "comp-storage-too-big";
             return false;
