@@ -4,6 +4,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.ForceSay;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
 using Content.Shared.Eye.Blinding.Systems;

@@ -364,6 +364,9 @@ public sealed partial class IngestionSystem : EntitySystem
 
         var split = _solutionContainer.SplitSolution(solution.Value, transfer);
 
+        if (beforeEv.Refresh)
+            _solutionContainer.TryAddSolution(solution.Value, split);
+
         var ingestEv = new IngestingEvent(food, split, forceFed);
         RaiseLocalEvent(entity, ref ingestEv);
 
@@ -372,9 +375,6 @@ public sealed partial class IngestionSystem : EntitySystem
         // Everything is good to go item has been successfuly eaten
         var afterEv = new IngestedEvent(args.User, entity, split, forceFed);
         RaiseLocalEvent(food, ref afterEv);
-
-        if (afterEv.Refresh)
-            _solutionContainer.TryAddSolution(solution.Value, split);
 
         _stomach.TryTransferSolution(stomachToUse.Value.Owner, split, stomachToUse);
 

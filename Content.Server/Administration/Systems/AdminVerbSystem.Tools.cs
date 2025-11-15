@@ -413,7 +413,7 @@ public sealed partial class AdminVerbSystem
                     // Unbounded intentionally.
                     _quickDialog.OpenDialog(player, Loc.GetString("admin-verbs-adjust-stack"), Loc.GetString("admin-verbs-dialog-adjust-stack-amount", ("max", _stackSystem.GetMaxCount(stack))), (int newAmount) =>
                     {
-                        _stackSystem.SetCount(args.Target, newAmount, stack);
+                        _stackSystem.SetCount((args.Target, stack), newAmount);
                     });
                 },
                 Impact = LogImpact.Medium,
@@ -429,7 +429,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/fill-stack.png")),
                 Act = () =>
                 {
-                    _stackSystem.SetCount(args.Target, _stackSystem.GetMaxCount(stack), stack);
+                    _stackSystem.SetCount((args.Target, stack), _stackSystem.GetMaxCount(stack));
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-fill-stack-description"),

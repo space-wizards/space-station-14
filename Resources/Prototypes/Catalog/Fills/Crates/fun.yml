@@ -428,7 +428,7 @@
     contents:
       - id: SnapPopBox
       - id: CrazyGlue
-        amount: 2
+      - id: CrazyLube
       - id: PlasticBanana
       - id: WhoopieCushion
       - id: ToyHammer

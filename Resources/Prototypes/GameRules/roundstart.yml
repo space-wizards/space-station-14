@@ -504,6 +504,7 @@
     - id: BasicTrashVariationPass
     - id: SolidWallRustingVariationPass
     - id: ReinforcedWallRustingVariationPass
+    - id: CutWireVariationPass
     - id: BasicPuddleMessVariationPass
       prob: 0.99
       orGroup: puddleMess

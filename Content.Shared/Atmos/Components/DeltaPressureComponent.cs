@@ -1,37 +1,37 @@
-using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Guidebook;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Atmos.Components;
+namespace Content.Shared.Atmos.Components;
 
 /// <summary>
 /// Entities that have this component will have damage done to them depending on the local pressure
 /// environment that they reside in.
 ///
 /// Atmospherics.DeltaPressure batch-processes entities with this component in a list on
-/// the grid's <see cref="GridAtmosphereComponent"/>.
+/// the grid's GridAtmosphereComponent.
 /// The entities are automatically added and removed from this list, and automatically
 /// added on initialization.
 /// </summary>
-/// <remarks> Note that the entity should have an <see cref="AirtightComponent"/> and be a grid structure.</remarks>
+/// <remarks> Note that the entity should have an AirtightComponent and be a grid structure.</remarks>
 [RegisterComponent]
+[NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedAtmosphereSystem), typeof(SharedDeltaPressureSystem))]
 public sealed partial class DeltaPressureComponent : Component
 {
     /// <summary>
-    /// Whether the entity is currently in the processing list of the grid's <see cref="GridAtmosphereComponent"/>.
+    /// Whether the entity is currently in the processing list of the grid's GridAtmosphereComponent.
     /// </summary>
     [DataField(readOnly: true)]
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
     public bool InProcessingList;
 
     /// <summary>
     /// Whether this entity is currently taking damage from pressure.
     /// </summary>
-    [DataField(readOnly: true)]
-    [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(DeltaPressureSystem), typeof(AtmosphereSystem))]
+    [DataField, AutoNetworkedField]
     public bool IsTakingDamage;
 
     /// <summary>
@@ -39,9 +39,12 @@ public sealed partial class DeltaPressureComponent : Component
     /// Required for proper deletion, as we cannot reference the grid
     /// for removal while the entity is being deleted.
     /// </summary>
-    /// <remarks>Note that while <see cref="AirtightComponent"/> already stores the grid,
-    /// we cannot trust it to be available on init or when the entity is being deleted. Tragic.</remarks>
-    [DataField]
+    /// <remarks>Note that while AirtightComponent already stores the grid,
+    /// we cannot trust it to be available on init or when the entity is being deleted. Tragic.
+    /// Double note: this is set during ComponentInit and thus does not need to be a datafield
+    /// or else it will spam serialization.</remarks>
+    /// TODO ATMOS: Simply use AirtightComponent's GridUID caching and handle entity removal from the processing list on an invalidation system similar to InvalidTiles.
+    [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? GridUid;
 
     /// <summary>
