@@ -117,7 +117,6 @@ namespace Content.IntegrationTests.Tests
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
-            var entityTable = server.ResolveDependency<EntityTableSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -137,19 +136,17 @@ namespace Content.IntegrationTests.Tests
                     restocks.Add(proto.ID);
                 }
 
-                // Collect all the prototypes with EntityTableContainerFills referencing those entities.
+                // Collect all the prototypes with StorageFills referencing those entities.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<EntityTableContainerFillComponent>(out var storage, compFact))
+                    if (!proto.TryGetComponent<StorageFillComponent>(out var storage, compFact))
                         continue;
 
                     List<string> restockStore = new();
-                    var entityStorageKey = "entity_storage"; // We only care about this container type.
-                    var container = storage.Containers[entityStorageKey];
-                    foreach (var spawnEntry in entityTable.GetSpawns(container))
+                    foreach (var spawnEntry in storage.Contents)
                     {
-                        if (restocks.Contains(spawnEntry))
-                            restockStore.Add(spawnEntry);
+                        if (spawnEntry.PrototypeId != null && restocks.Contains(spawnEntry.PrototypeId))
+                            restockStore.Add(spawnEntry.PrototypeId);
                     }
 
                     if (restockStore.Count > 0)
@@ -158,7 +155,7 @@ namespace Content.IntegrationTests.Tests
 
                 // Iterate through every CargoProduct and make sure each
                 // prototype with a restock component is referenced in a
-                // purchaseable entity with an EntityTableContainerFill.
+                // purchaseable entity with a StorageFill.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<CargoProductPrototype>())
                 {
                     if (restockStores.ContainsKey(proto.Product))
