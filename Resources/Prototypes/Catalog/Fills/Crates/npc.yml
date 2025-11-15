@@ -33,9 +33,7 @@
       entity_storage: !type:GroupSelector
         children:
         - id: MobCat
-          weight: 1
         - id: MobCatCalico
-          weight: 1
         - id: MobCatCaracal
           weight: 0.5
         - id: MobCatKitten

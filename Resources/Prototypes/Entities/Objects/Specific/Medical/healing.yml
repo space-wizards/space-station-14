@@ -816,65 +816,40 @@
       storagebase: !type:GroupSelector
         children:
         - id: PillDexalin
-          weight: 0.10
-          amount: !type:RangeNumberSelector
+          amount: &Range1to6 !type:RangeNumberSelector
             range: 1, 6
         - id: PillDylovene
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillHyronalin
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillPotassiumIodide
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillIron
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillCopper
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillKelotane
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillDermaline
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillTricordrazine
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillBicaridine
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillCharcoal
-          weight: 0.10
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          amount: *Range1to6
         - id: PillAmbuzol
-          weight: 0.075
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          weight: 0.75
+          amount: *Range1to6
         - id: PillAmbuzolPlus
-          weight: 0.075
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          weight: 0.75
+          amount: *Range1to6
         - id: PillSpaceDrugs
-          weight: 0.075
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          weight: 0.75
+          amount: *Range1to6
         - id: StrangePill
-          weight: 0.075
-          amount: !type:RangeNumberSelector
-            range: 1, 6
+          weight: 0.75
+          amount: *Range1to6
 
 # Syringes
 - type: entity

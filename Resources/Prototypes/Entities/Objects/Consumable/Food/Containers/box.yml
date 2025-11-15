@@ -250,6 +250,7 @@
     containers:
       storagebase: !type:AllSelector
         children:
+        - id: KnifePlastic
         - !type:GroupSelector
           children:
           - id: FoodPizzaArnold
@@ -274,7 +275,6 @@
             weight: 0.10
           - id: FoodPizzaWorldpeas
             weight: 0.05
-        - id: KnifePlastic
 
 - type: entity
   parent: FoodBoxPizza
@@ -644,7 +644,7 @@
         - id: FoodMealFriesCheesy
         - id: DrinkColaBottleFull
         - id: FoodPieAppleSlice
-        - !type:GroupSelector
+        - !type:GroupSelector # One item is too big, so the HappyHonkToySafeEntityTable can't  be used like the others.
           children:
           - id: ToyMouse
           - id: ToyAi
@@ -669,7 +669,7 @@
           - id: FoamBlade
           - id: ClothingHeadHatBunny
           - id: PersonalAI
-          #- id: CrayonBox Too big
+          #- id: CrayonBox
           - id: ToySword
           - id: RevolverCapGun
           - id: ToyRubberDuck

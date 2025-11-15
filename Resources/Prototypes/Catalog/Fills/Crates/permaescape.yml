@@ -97,21 +97,19 @@
       entity_storage: !type:GroupSelector
         children:
         - id: WeaponPistolMk58
-          weight: 0.15
+          weight: 1.5
         - id: FoamCrossbow
-          weight: 0.10
         - id: WeaponRifleFoam
-          weight: 0.05
+          weight: 0.5
         - id: WeaponPistolFlintlock
-          weight: 0.20
+          weight: 2
         - id: WeaponShotgunBlunderbuss
-          weight: 0.10
         - id: WeaponShotgunBlunderbuss
-          weight: 0.15
+          weight: 1.5
         - id: WeaponRevolverPirate
-          weight: 0.15
+          weight: 1.5
         - id: WeaponProtoKineticAccelerator
-          weight: 0.20
+          weight: 2
 
 - type: entity
   id: CratePermaEscapeBureaucracy

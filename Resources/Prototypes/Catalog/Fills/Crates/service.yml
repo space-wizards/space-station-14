@@ -58,10 +58,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: BoxLighttubeHoliday
-        - id: BoxLighttubeHoliday
+      entity_storage:
+        id: BoxLighttubeHoliday
+        amount: 2
 
 - type: entity
   id: CrateMousetrapBoxes
@@ -418,7 +417,6 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: BoxLightbulbColorfulMixed
-        - id: BoxLighttubeColorfulMixed
+      entity_storage:
+        id: BoxLightbulbColorfulMixed
+        amount: 2

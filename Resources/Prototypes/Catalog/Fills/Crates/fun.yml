@@ -292,9 +292,8 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: CrayonBox
+      entity_storage:
+        id: CrayonBox
 
 - type: entity
   id: CrateFunBoardGames
@@ -328,10 +327,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: SadTromboneImplanter
-          amount: 3
+      entity_storage:
+        id: SadTromboneImplanter
+        amount: 3
 
 - type: entity
   id: CrateFunLightImplants
@@ -341,10 +339,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: LightImplanter
-          amount: 3
+      entity_storage:
+        id: LightImplanter
+        amount: 3
 
 - type: entity
   id: CrateFunParty
@@ -486,10 +483,9 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: BikeHornImplanter
-          amount: 3
+      entity_storage:
+        id: BikeHornImplanter
+        amount: 3
 
 - type: entity
   id: CrateFunMysteryFigurines
