@@ -11,6 +11,7 @@
       - id: Wirecutter
       - id: Welder
       - id: NetworkConfigurator
+      - id: trayScanner
 
 - type: entity
   id: ClothingBeltUtilityEngineering
