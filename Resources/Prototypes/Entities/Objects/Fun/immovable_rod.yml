@@ -36,9 +36,6 @@
   - type: WarpPoint
     follow: true
     location: immovable rod
-    blacklist:
-      tags:
-      - GhostOnlyWarp
 
 - type: entity
   id: ImmovableRodDespawn

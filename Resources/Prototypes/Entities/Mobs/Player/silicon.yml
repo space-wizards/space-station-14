@@ -104,9 +104,6 @@
   description: Handles AI interactions across holocards + AI cores
   components:
   - type: ItemSlots
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
@@ -181,9 +178,6 @@
     - Anchorable
   - type: Rotatable
   - type: WarpPoint
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: Fixtures
     fixtures:
       fix1:
@@ -464,14 +458,8 @@
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: NoFTL
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: Eye
     pvsScale: 1.5
   - type: Visibility
@@ -492,14 +480,8 @@
   components:
   - type: Transform
     anchored: true
-  - type: Tag
-    tags:
-    - GhostOnlyWarp
   - type: WarpPoint
     follow: true
-    blacklist:
-      tags:
-      - GhostOnlyWarp
   - type: Eye
   - type: ContentEye
   - type: Examiner
