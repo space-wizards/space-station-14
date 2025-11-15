@@ -23,7 +23,14 @@ public sealed partial class EntityTargetActionComponent : Component
     /// If this is null entity-world targeting is done as specified on the component doc.
     /// </summary>
     [DataField, NonSerialized]
+    [Obsolete("Actions can now use multiple events instead")]
     public EntityTargetActionEvent? Event;
+
+    /// <summary>
+    /// Local events to raise when this action is performed.
+    /// </summary>
+    [DataField, NonSerialized]
+    public List<EntityTargetActionEvent> Events = [];
 
     /// <summary>
     /// Determines which entities are valid targets for this action.
