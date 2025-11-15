@@ -630,7 +630,7 @@
       - cheap
   - type: ComponentToggler
     components:
-    - type: Food
+    - type: Edible # This shouldn't be component toggler, but doesn't work when it's not
   - type: PointLight
     enabled: false
     netsync: false
