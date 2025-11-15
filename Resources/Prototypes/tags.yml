@@ -851,6 +851,9 @@
 - type: Tag
   id: Lime # CargoBounty: BountyLime
 
+- type: Tag
+  id: Log
+
 ## M ##
 
 #region Magazine (Ammo)
