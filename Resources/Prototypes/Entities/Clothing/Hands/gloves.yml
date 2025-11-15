@@ -83,15 +83,8 @@
   id: ClothingHandsGlovesBoxingRigged
   suffix: Rigged
   components:
-  - type: StaminaDamageOnHit
-    damage: 25
-  - type: MeleeWeapon
-    attackRate: 1.4
-    damage:
-      types:
-        Blunt: 8
-    bluntStaminaDamageFactor: 0.0 # so blunt doesn't deal stamina damage at all
-    mustBeEquippedToUse: true
+    - type: ThrowEquippedOnHit
+      throwChance: 0.05
 
 - type: entity
   parent: [ClothingHandsBase, BaseCommandContraband]

@@ -783,7 +783,7 @@
     Telecrystal: 1
   categories:
   - UplinkDeception
-  
+
 - type: listing
   id: UplinkAgentIDCard
   name: uplink-agent-id-card-name
@@ -2005,7 +2005,7 @@
   discountDownTo:
     Telecrystal: 2
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
     - UplinkJob
   conditions:
