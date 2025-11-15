@@ -1,4 +1,5 @@
-using Content.Shared.Arcade;
+using Content.Server.Arcade.Systems;
+using Content.Shared.Arcade.BlockGame;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using System.Linq;
@@ -42,6 +43,10 @@ public sealed partial class BlockGame
     /// </summary>
     private bool IsGameOver => _field.Any(block => block.Position.Y == 0);
 
+    /// <summary>
+    /// The amount of time that has passed since the active piece last moved vertically,
+    /// </summary>
+    private float _accumulatedFieldFrameTime;
 
     public BlockGame(EntityUid owner)
     {
@@ -60,7 +65,7 @@ public sealed partial class BlockGame
     /// </summary>
     public void StartGame()
     {
-        SendMessage(new BlockGameMessages.BlockGameSetScreenMessage(BlockGameMessages.BlockGameScreen.Game));
+        SendMessage(new BlockGameSetScreenMessage(BlockGameScreen.Game));
 
         FullUpdate();
 
@@ -83,7 +88,7 @@ public sealed partial class BlockGame
             _highScorePlacement = _arcadeSystem.RegisterHighScore(meta.EntityName, Points);
             SendHighscoreUpdate();
         }
-        SendMessage(new BlockGameMessages.BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));
+        SendMessage(new BlockGameGameOverScreenMessage(Points, _highScorePlacement?.LocalPlacement, _highScorePlacement?.GlobalPlacement));
     }
 
     /// <summary>
@@ -99,11 +104,6 @@ public sealed partial class BlockGame
 
         FieldTick(frameTime);
     }
-
-    /// <summary>
-    /// The amount of time that has passed since the active piece last moved vertically,
-    /// </summary>
-    private float _accumulatedFieldFrameTime;
 
     /// <summary>
     /// Handles timing the movements of the active game piece.
@@ -243,7 +243,7 @@ public sealed partial class BlockGame
         NextPiece = GetRandomBlockGamePiece(_random);
         _holdBlock = false;
 
-        SendMessage(new BlockGameMessages.BlockGameVisualUpdateMessage(NextPiece.BlocksForPreview(), BlockGameMessages.BlockGameVisualType.NextBlock));
+        SendMessage(new BlockGameVisualUpdateMessage(NextPiece.BlocksForPreview(), BlockGameVisualType.NextBlock));
     }
 
     /// <summary>
