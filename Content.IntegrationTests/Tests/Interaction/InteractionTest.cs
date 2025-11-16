@@ -15,6 +15,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Input;
 using Robust.Client.State;
@@ -123,6 +124,7 @@ public abstract partial class InteractionTest
     protected SharedUserInterfaceSystem SUiSys = default!;
     protected SharedCombatModeSystem SCombatMode = default!;
     protected SharedGunSystem SGun = default!;
+    protected SharedMeleeWeaponSystem SMelee = default!;
 
     // CLIENT dependencies
     protected IEntityManager CEntMan = default!;
@@ -198,6 +200,7 @@ public abstract partial class InteractionTest
         SUiSys = SEntMan.System<SharedUserInterfaceSystem>();
         SCombatMode = SEntMan.System<SharedCombatModeSystem>();
         SGun = SEntMan.System<SharedGunSystem>();
+        SMelee = SEntMan.System<SharedMeleeWeaponSystem>();
 
         // client dependencies
         CEntMan = Client.ResolveDependency<IEntityManager>();
