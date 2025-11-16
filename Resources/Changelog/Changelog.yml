@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Pacifists can now use the Staff of Healing
-    type: Tweak
-  id: 8706
-  time: '2025-06-22T19:38:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38509
 - author: slarticodefast
   changes:
   - message: The interrogator lamp and flash lantern now properly flash when toggled
@@ -3926,3 +3919,10 @@
   id: 9206
   time: '2025-11-15T23:18:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41447
+- author: Princess-Cheeseballs
+  changes:
+  - message: No2 should put you to sleep again without needing double the gas.
+    type: Fix
+  id: 9207
+  time: '2025-11-16T01:03:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41438
