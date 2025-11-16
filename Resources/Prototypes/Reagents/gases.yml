@@ -1,3 +1,6 @@
+# TODO: Reagent Args which allow more selective scaling.
+# Currently all Gas metabolisms scale by reagent quantity metabolized, where other Metabolisms are modified by metabolism rate!
+
 - type: reagent
   id: Oxygen
   name: reagent-name-oxygen
