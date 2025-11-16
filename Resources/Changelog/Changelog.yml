@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: The interrogator lamp and flash lantern now properly flash when toggled
-      on.
-    type: Fix
-  id: 8707
-  time: '2025-06-23T11:32:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37640
 - author: metalgearsloth
   changes:
   - message: Added ambient occlusion to walls so they have shadows around them.
@@ -3926,3 +3918,10 @@
   id: 9207
   time: '2025-11-16T01:03:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41438
+- author: buunie099
+  changes:
+  - message: Vulpkannin cries now use the same sounds as whining
+    type: Tweak
+  id: 9208
+  time: '2025-11-16T10:34:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40982
