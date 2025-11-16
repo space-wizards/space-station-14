@@ -11,7 +11,7 @@ public abstract partial class SharedHandsSystem
     private void InitializeEventListeners()
     {
         SubscribeLocalEvent<HandsComponent, GetStandUpTimeEvent>(OnStandupArgs);
-        SubscribeLocalEvent<HandsComponent, KnockedDownRefreshEvent>(OnKnockedFownRefresh);
+        SubscribeLocalEvent<HandsComponent, KnockedDownRefreshEvent>(OnKnockedDownRefresh);
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ public abstract partial class SharedHandsSystem
         time.DoAfterTime *= (float)ent.Comp.Count / (hands + ent.Comp.Count);
     }
 
-    private void OnKnockedFownRefresh(Entity<HandsComponent> ent, ref KnockedDownRefreshEvent args)
+    private void OnKnockedDownRefresh(Entity<HandsComponent> ent, ref KnockedDownRefreshEvent args)
     {
         var freeHands = CountFreeHands(ent.AsNullable());
         var totalHands = GetHandCount(ent.AsNullable());
