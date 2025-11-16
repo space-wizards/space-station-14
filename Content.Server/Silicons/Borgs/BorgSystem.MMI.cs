@@ -1,4 +1,5 @@
-﻿using Content.Shared.Containers.ItemSlots;
+﻿using Content.Server.Ghost.Roles.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
@@ -24,74 +25,100 @@ public sealed partial class BorgSystem
         SubscribeLocalEvent<MMILinkedComponent, EntGotRemovedFromContainerMessage>(OnMMILinkedRemoved);
     }
 
-    private void OnMMIInit(EntityUid uid, MMIComponent component, ComponentInit args)
+    private void OnMMIInit(Entity<MMIComponent> entity, ref ComponentInit args)
     {
-        if (!TryComp<ItemSlotsComponent>(uid, out var itemSlots))
+        if (!TryComp<ItemSlotsComponent>(entity.Owner, out var itemSlots))
             return;
 
-        if (ItemSlots.TryGetSlot(uid, component.BrainSlotId, out var slot, itemSlots))
-            component.BrainSlot = slot;
+        if (ItemSlots.TryGetSlot(entity.Owner, entity.Comp.BrainSlotId, out var slot, itemSlots))
+            entity.Comp.BrainSlot = slot;
         else
-            ItemSlots.AddItemSlot(uid, component.BrainSlotId, component.BrainSlot, itemSlots);
+            ItemSlots.AddItemSlot(entity.Owner, entity.Comp.BrainSlotId, entity.Comp.BrainSlot, itemSlots);
     }
 
-    private void OnMMIEntityInserted(EntityUid uid, MMIComponent component, EntInsertedIntoContainerMessage args)
+    private void OnMMIEntityInserted(Entity<MMIComponent> entity, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != component.BrainSlotId)
+        if (args.Container.ID != entity.Comp.BrainSlotId)
             return;
 
         var ent = args.Entity;
         var linked = EnsureComp<MMILinkedComponent>(ent);
-        linked.LinkedMMI = uid;
-        Dirty(uid, component);
+        linked.LinkedMMI = entity.Owner;
+        Dirty(entity.Owner, entity.Comp);
 
         if (_mind.TryGetMind(ent, out var mindId, out var mind))
         {
-            _mind.TransferTo(mindId, uid, true, mind: mind);
+            _mind.TransferTo(mindId, entity.Owner, true, mind: mind);
 
             if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
                 _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
         }
+        else if (entity.Comp.EnableGhostRole)
+        {
+            EnableGhostRole((entity.Owner, entity.Comp));
+        }
 
-        _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
+        _appearance.SetData(entity.Owner, MMIVisuals.BrainPresent, true);
     }
 
-    private void OnMMIMindAdded(EntityUid uid, MMIComponent component, MindAddedMessage args)
+    private void OnMMIMindAdded(Entity<MMIComponent> entity, ref MindAddedMessage args)
     {
-        _appearance.SetData(uid, MMIVisuals.HasMind, true);
+        _appearance.SetData(entity.Owner, MMIVisuals.MindState, MMIVisualsMindstate.HasMind);
     }
 
-    private void OnMMIMindRemoved(EntityUid uid, MMIComponent component, MindRemovedMessage args)
+    private void OnMMIMindRemoved(Entity<MMIComponent> entity, ref MindRemovedMessage args)
     {
-        _appearance.SetData(uid, MMIVisuals.HasMind, false);
+        if (entity.Comp.EnableGhostRole)
+            EnableGhostRole((entity.Owner, entity.Comp));
+        else
+            _appearance.SetData(entity.Owner, MMIVisuals.MindState, MMIVisualsMindstate.NoMind);
     }
 
-    private void OnMMILinkedMindAdded(EntityUid uid, MMILinkedComponent component, MindAddedMessage args)
+    private void OnMMILinkedMindAdded(Entity<MMILinkedComponent> entity, ref MindAddedMessage args)
     {
-        if (!_mind.TryGetMind(uid, out var mindId, out var mind) ||
-            component.LinkedMMI == null)
+        if (!_mind.TryGetMind(entity.Owner, out var mindId, out var mind) ||
+            entity.Comp.LinkedMMI == null)
             return;
 
-        _mind.TransferTo(mindId, component.LinkedMMI, true, mind: mind);
+        _mind.TransferTo(mindId, entity.Comp.LinkedMMI, true, mind: mind);
     }
 
-    private void OnMMILinkedRemoved(EntityUid uid, MMILinkedComponent component, EntGotRemovedFromContainerMessage args)
+    private void OnMMILinkedRemoved(Entity<MMILinkedComponent> entity, ref EntGotRemovedFromContainerMessage args)
     {
-        if (Terminating(uid))
+        if (Terminating(entity.Owner))
             return;
 
-        if (component.LinkedMMI is not { } linked)
+        if (entity.Comp.LinkedMMI is not { } linked)
             return;
-        RemComp(uid, component);
+        RemComp(entity.Owner, entity.Comp);
 
         if (_mind.TryGetMind(linked, out var mindId, out var mind))
         {
             if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
                 _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
 
-            _mind.TransferTo(mindId, uid, true, mind: mind);
+            _mind.TransferTo(mindId, entity.Owner, true, mind: mind);
+        }
+        else if (HasComp<GhostTakeoverAvailableComponent>(linked))
+        {
+            RemComp<GhostRoleComponent>(linked);
         }
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
+    }
+
+    private void EnableGhostRole(Entity<MMIComponent> entity)
+    {
+        var ghostRole = EnsureComp<GhostRoleComponent>(entity.Owner);
+        EnsureComp<GhostTakeoverAvailableComponent>(entity.Owner);
+
+        //GhostRoleComponent inherits custom settings from the the MMI component
+        ghostRole.RoleName = Loc.GetString(entity.Comp.RoleName);
+        ghostRole.RoleDescription = Loc.GetString(entity.Comp.RoleDescription);
+        ghostRole.RoleRules = Loc.GetString(entity.Comp.RoleRules);
+        ghostRole.MindRoles = entity.Comp.MindRoles;
+        ghostRole.JobProto = entity.Comp.JobProto;
+
+        _appearance.SetData(entity.Owner, MMIVisuals.MindState, MMIVisualsMindstate.Searching);
     }
 }

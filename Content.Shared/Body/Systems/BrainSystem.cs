@@ -5,12 +5,15 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Pointing;
+using Content.Shared.Traits.Assorted;
 
 namespace Content.Shared.Body.Systems;
 
 public sealed class BrainSystem : EntitySystem
 {
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+
+    private EntityQuery<MindUntransferableToBrainComponent> _mindUntransferableQuery;
 
     public override void Initialize()
     {
@@ -19,11 +22,13 @@ public sealed class BrainSystem : EntitySystem
         SubscribeLocalEvent<BrainComponent, OrganAddedToBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
         SubscribeLocalEvent<BrainComponent, OrganRemovedFromBodyEvent>((uid, _, args) => HandleMind(uid, args.OldBody));
         SubscribeLocalEvent<BrainComponent, PointAttemptEvent>(OnPointAttempt);
+
+        _mindUntransferableQuery = GetEntityQuery<MindUntransferableToBrainComponent>();
     }
 
     private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
     {
-        if (TerminatingOrDeleted(newEntity) || TerminatingOrDeleted(oldEntity))
+        if (TerminatingOrDeleted(newEntity) || TerminatingOrDeleted(oldEntity) || _mindUntransferableQuery.HasComp(oldEntity))
             return;
 
         EnsureComp<MindContainerComponent>(newEntity);

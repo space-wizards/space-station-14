@@ -3,6 +3,7 @@ using Content.Shared.Species.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Zombies;
 using Content.Server.Zombies;
+using Content.Shared.Traits.Assorted;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Species.Systems;
@@ -13,11 +14,15 @@ public sealed partial class NymphSystem : EntitySystem
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
 
+    private EntityQuery<MindUntransferableToBrainComponent> _mindUntransferableQuery;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<NymphComponent, OrganRemovedFromBodyEvent>(OnRemovedFromPart);
+
+        _mindUntransferableQuery = GetEntityQuery<MindUntransferableToBrainComponent>();
     }
 
     private void OnRemovedFromPart(EntityUid uid, NymphComponent comp, ref OrganRemovedFromBodyEvent args)
@@ -37,7 +42,12 @@ public sealed partial class NymphSystem : EntitySystem
 
         // Move the mind if there is one and it's supposed to be transferred
         if (comp.TransferMind == true && _mindSystem.TryGetMind(args.OldBody, out var mindId, out var mind))
+        {
             _mindSystem.TransferTo(mindId, nymph, mind: mind);
+
+            if (_mindUntransferableQuery.HasComp(args.OldBody))
+                AddComp<MindUntransferableToBrainComponent>(nymph);
+        }
 
         // Delete the old organ
         QueueDel(uid);

@@ -53,6 +53,10 @@
     whitelist:
       components:
       - SecretStash
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
 
 - type: entity
   parent: MMI
@@ -67,6 +71,14 @@
         whitelist:
           components:
             - Brain
+
+- type: entity
+  parent: MMI
+  id: MMIGhostRoleable
+  suffix: Ghost Role-able
+  components:
+  - type: MMI
+    enableGhostRole: true
 
 - type: entity
   parent: BaseItem
