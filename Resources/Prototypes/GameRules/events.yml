@@ -266,6 +266,7 @@
       - type: GibOnRoundEnd
         preventGibbingObjectives:
         - NinjaKillLimitObjective
+        spawnProto: Acidifier
         deleteItems: true
       mindRoles:
       - MindRoleNinja
