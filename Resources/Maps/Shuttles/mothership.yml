@@ -4,7 +4,7 @@ meta:
   engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/16/2025 15:25:34
+  time: 11/16/2025 15:37:41
   entityCount: 441
 maps: []
 grids:
@@ -1100,11 +1100,6 @@ entities:
       parent: 1
 - proto: ComputerIFFSyndicate
   entities:
-  - uid: 278
-    components:
-    - type: Transform
-      pos: 2.5,5.5
-      parent: 1
   - uid: 437
     components:
     - type: Transform
@@ -1138,6 +1133,11 @@ entities:
       parent: 1
 - proto: ComputerSurveillanceCameraMonitor
   entities:
+  - uid: 278
+    components:
+    - type: Transform
+      pos: 2.5,5.5
+      parent: 1
   - uid: 426
     components:
     - type: Transform
