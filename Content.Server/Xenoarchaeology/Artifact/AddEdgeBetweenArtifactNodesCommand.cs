@@ -63,6 +63,7 @@ public sealed class AddEdgeBetweenArtifactNodesCommand : LocalizedEntityCommands
                     var netEntity = EntityManager.GetNetEntity(uid);
                     completionOptions.Add(new CompletionOption(netEntity.Id.ToString()));
                 }
+
                 return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-artifact-hint"));
             }
             case 2:

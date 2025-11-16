@@ -16,8 +16,8 @@ cmd-removenodefromartifact-help = <artifact uid> <node uid>
 cmd-addedgebetweeennodes-desc = Creates edge, linking two nodes inside one xeno artifact
 cmd-addedgebetweeennodes-help = <artifact uid> <node uid from> <node uid to>
 
-cmd-createnodetoartifact-desc = Create node in xeno artifact,
-cmd-createnodetoartifact-help = <artifact uid> <effect ent proto id> <trigger proto id> <node uid from>
+cmd-createnodeinartifact-desc = Create node in xeno artifact,
+cmd-createnodeinartifact-help = <artifact uid> <effect ent proto id> <trigger proto id> <node uid from>
 
 cmd-xenoartifact-commands-failed-to-find-effect = Failed to parse {$entProtoId} as a valid EntProtoId for xeno artifact effect
 cmd-xenoartifact-commands-failed-to-find-trigger = Failed to parse {$protoId} as a valid ProtoId for XenoArchTriggerPrototype

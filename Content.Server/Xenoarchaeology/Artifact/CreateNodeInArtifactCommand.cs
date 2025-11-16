@@ -9,13 +9,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Xenoarchaeology.Artifact;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class CreateNodeToArtifactCommand : LocalizedEntityCommands
+public sealed class CreateNodeInArtifactCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly XenoArtifactSystem _artifact = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <inheritdoc />
-    public override string Command => "createnodetoartifact";
+    public override string Command => "createnodeinartifact";
 
     /// <inheritdoc />
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
