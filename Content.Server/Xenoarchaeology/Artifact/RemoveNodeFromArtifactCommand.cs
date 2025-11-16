@@ -61,12 +61,12 @@ public sealed class RemoveNodeFromArtifactCommand : LocalizedEntityCommands
             case 2:
             {
                 var query = EntityManager.EntityQueryEnumerator<XenoArtifactNodeComponent>();
-                var completionOptions = new List<CompletionOption>();
                 if (!int.TryParse(args[0], out var artifactEntId))
                 {
                     return CompletionResult.Empty;
                 }
 
+                var completionOptions = new List<CompletionOption>();
                 while (query.MoveNext(out var uid, out var nodeComp))
                 {
                     if (nodeComp.Attached?.Id == artifactEntId)

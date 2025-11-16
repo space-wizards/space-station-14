@@ -105,13 +105,13 @@ public sealed class CreateNodeInArtifactCommand : LocalizedEntityCommands
             case 4:
             {
                 var query = EntityManager.EntityQueryEnumerator<XenoArtifactNodeComponent>();
-                var completionOptions = new List<CompletionOption>();
                 if (!NetEntity.TryParse(args[0], out var artifactNetEntId)
                     || !EntityManager.TryGetEntity(artifactNetEntId, out var artifactEntId))
                 {
                     return CompletionResult.Empty;
                 }
 
+                var completionOptions = new List<CompletionOption>();
                 while (query.MoveNext(out var uid, out var nodeComp))
                 {
                     if (nodeComp.Attached == artifactEntId)
