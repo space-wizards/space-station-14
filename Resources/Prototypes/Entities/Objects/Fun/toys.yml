@@ -530,8 +530,8 @@
       - OnCollide
 
 - type: entity
-  parent: HardBeachBall
-  id: BeachBall
+  parent: BeachBall
+  id: EvilBeachBall
   suffix: EVIL/ADMEME
   name: beach ball
   description: Someone's drawn ">:3c" on the side of this beach ball in indelible ink.
