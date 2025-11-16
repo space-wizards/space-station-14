@@ -172,3 +172,21 @@
   - chat-speech-verb-electricity-1
   - chat-speech-verb-electricity-2
   - chat-speech-verb-electricity-3
+
+- type: speechVerb
+  id: Vulpkanin
+  name: chat-speech-verb-vulpkanin
+  speechVerbStrings:
+  - chat-speech-verb-vulpkanin-1
+  - chat-speech-verb-vulpkanin-2
+  - chat-speech-verb-vulpkanin-3
+  - chat-speech-verb-vulpkanin-4
+
+- type: speechVerb
+  id: Wawa
+  name: chat-speech-verb-name-wawa
+  speechVerbStrings:
+  - chat-speech-verb-wawa-1
+  - chat-speech-verb-wawa-2
+  - chat-speech-verb-wawa-3
+  - chat-speech-verb-wawa-4

@@ -3,10 +3,8 @@
   priority: -2
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
   minimumRequirements: # In this case, same as minimum mole count.
-    - 0.01  # oxygen
-    - 0     # nitrogen
-    - 0     # carbon dioxide
-    - 0.01  # plasma
+    Oxygen: 0.01
+    Plasma: 0.01
   effects:
     - !type:PlasmaFireReaction {}
 
@@ -15,11 +13,8 @@
   priority: -1
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
   minimumRequirements: # In this case, same as minimum mole count.
-    - 0.01  # oxygen
-    - 0     # nitrogen
-    - 0     # carbon dioxide
-    - 0     # plasma
-    - 0.01  # tritium
+    Oxygen: 0.01
+    Tritium: 0.01
   effects:
     - !type:TritiumFireReaction {}
 
@@ -28,15 +23,8 @@
   priority: 1
   minimumTemperature: 23.15
   minimumRequirements:
-  - 0     # oxygen
-  - 0.01  # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0     # ammonia
-  - 0     # n2o
-  - 0.01  # frezon
+    Nitrogen: 0.01
+    Frezon: 0.01
   effects:
   - !type:FrezonCoolantReaction {}
 
@@ -45,15 +33,9 @@
   priority: 2
   maximumTemperature: 73.15 # Cold tritium fire, basically.
   minimumRequirements:
-  - 0.01  # oxygen
-  - 0.01  # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0.01  # tritium
-  - 0     # vapor
-  - 0     # ammonia
-  - 0     # n2o
-  - 0     # frezon
+    Oxygen: 0.01
+    Nitrogen: 0.01
+    Tritium: 0.01
   effects:
   - !type:FrezonProductionReaction {}
 
@@ -62,15 +44,8 @@
   priority: 2
   minimumTemperature: 323.149
   minimumRequirements:
-  - 0.01  # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0.01  # ammonia
-  - 0     # n2o
-  - 0     # frezon
+    Oxygen: 0.01
+    Ammonia: 0.01
   effects:
   - !type:AmmoniaOxygenReaction {}
 
@@ -79,15 +54,7 @@
   priority: 0
   minimumTemperature: 850
   minimumRequirements:
-  - 0     # oxygen
-  - 0     # nitrogen
-  - 0     # carbon dioxide
-  - 0     # plasma
-  - 0     # tritium
-  - 0     # vapor
-  - 0     # ammonia
-  - 0.01  # n2o
-  - 0     # frezon
+    NitrousOxide: 0.01
   effects:
   - !type:N2ODecompositionReaction {}
 
@@ -96,12 +63,7 @@
 #  priority: 1
 #  maximumTemperature: 373.13 # Boiling point of water.
 #  minimumRequirements: # In this case, same as minimum mole count.
-#    - 0  # oxygen
-#    - 0  # nitrogen
-#    - 0  # carbon dioxide
-#    - 0  # plasma
-#    - 0  # tritium
-#    - 1  # water vapor
+#    WaterVapor: 1
 #  effects:
 #    - !type:WaterVaporReaction
 #      gas: 5

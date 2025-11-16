@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/blob/f80e7ba62d27c77cfeac709dd71033744d0015c4/icons/mob/mob.dmi",
+  "copyright": "https://github.com/tgstation/tgstation/blob/f80e7ba62d27c77cfeac709dd71033744d0015c4/icons/mob/mob.dmi, inhand sprites by TiniestShark (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -185,6 +185,14 @@
           0.1
         ]
       ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
     }
   ]
 }

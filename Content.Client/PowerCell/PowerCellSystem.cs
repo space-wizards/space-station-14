@@ -48,17 +48,15 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         if (!_sprite.LayerExists((uid, args.Sprite), PowerCellVisualLayers.Unshaded))
             return;
 
-        if (_appearance.TryGetData<byte>(uid, PowerCellVisuals.ChargeLevel, out var level, args.Component))
-        {
-            if (level == 0)
-            {
-                _sprite.LayerSetVisible((uid, args.Sprite), PowerCellVisualLayers.Unshaded, false);
-                return;
-            }
+        // If no appearance data is set, rely on whatever existing sprite state is set being correct.
+        if (!_appearance.TryGetData<byte>(uid, PowerCellVisuals.ChargeLevel, out var level, args.Component))
+            return;
 
-            _sprite.LayerSetVisible((uid, args.Sprite), PowerCellVisualLayers.Unshaded, false);
+        var positiveCharge = level > 0;
+        _sprite.LayerSetVisible((uid, args.Sprite), PowerCellVisualLayers.Unshaded, positiveCharge);
+
+        if (positiveCharge)
             _sprite.LayerSetRsiState((uid, args.Sprite), PowerCellVisualLayers.Unshaded, $"o{level}");
-        }
     }
 
     private enum PowerCellVisualLayers : byte
