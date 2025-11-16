@@ -435,7 +435,7 @@ public sealed class BwoinkDiscordRelayManager : IPostInjectInit
         if (!_prototypeManager.Resolve(sender, out var channel))
             return;
 
-        if (!channel.HasFeature<DiscordRelay>())
+        if (!channel.HasFeature<DiscordRelay>() || !_discordLink.IsConnected)
             return;
 
         if (!_channelQueue.ContainsKey(sender))
