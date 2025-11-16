@@ -50,11 +50,11 @@ public sealed class KillLimitConditionSystem : EntitySystem
     /// </summary>
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
-        if (ev.NewMobState == MobState.Dead)
+        if (ev.NewMobState == MobState.Dead && ev.OldMobState != MobState.Dead)
             return;
 
         var query = EntityQueryEnumerator<KillLimitConditionComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        while (query.MoveNext(out _, out var comp))
         {
             if (comp.AllowReviving)
                 comp.KillList.Remove(ev.Target);

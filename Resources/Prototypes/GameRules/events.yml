@@ -266,6 +266,7 @@
       - type: GibOnRoundEnd
         preventGibbingObjectives:
         - NinjaKillLimitObjective
+        deleteItems: true
       mindRoles:
       - MindRoleNinja
   - type: DynamicRuleCost
