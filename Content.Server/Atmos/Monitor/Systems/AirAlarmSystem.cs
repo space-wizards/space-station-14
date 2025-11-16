@@ -465,14 +465,15 @@ public sealed class AirAlarmSystem : EntitySystem
         if (_emag.CheckFlag(uid, EmagType.Interaction))
             return;
 
-        args.Repeatable = true;
-        args.Handled = true;
-        airAlarm.IsEmagged = true;
-
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var devNet))
         {
             SetMode(uid, devNet.Address, AirAlarmMode.None, false);
+            RemCompDeferred<DeviceNetworkComponent>(uid);
         }
+
+        args.Repeatable = true;
+        airAlarm.IsEmagged = true;
+        args.Handled = true;
     }
 
     #endregion
