@@ -26,6 +26,7 @@
     solutions:
       stomach:
         maxVol: 75
+        canReact: false
       food:
         maxVol: 5
         reagents:
