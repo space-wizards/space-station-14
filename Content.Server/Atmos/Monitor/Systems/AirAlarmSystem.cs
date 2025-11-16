@@ -459,13 +459,19 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, AirAlarmComponent airAlarm, ref GotEmaggedEvent args)
     {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
         args.Repeatable = true;
         args.Handled = true;
         airAlarm.IsEmagged = true;
 
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var devNet))
         {
-            SetMode(uid, devNet.Address, AirAlarmMode.Panic, false);
+            SetMode(uid, devNet.Address, AirAlarmMode.None, false);
         }
     }
 
