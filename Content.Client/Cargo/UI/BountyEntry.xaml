@@ -3,7 +3,7 @@
               Margin="10 10 10 0"
               HorizontalExpand="True"
               Visible="True">
-    <PanelContainer StyleClasses="AngleRect" HorizontalExpand="True">
+    <PanelContainer StyleClasses="BackgroundPanel" HorizontalExpand="True">
         <BoxContainer Orientation="Vertical"
                       HorizontalExpand="True">
             <BoxContainer Orientation="Horizontal">
