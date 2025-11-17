@@ -27,7 +27,8 @@ public sealed partial class BorgModuleComponent : Component
     public bool DefaultModule;
 
     /// <summary>
-    /// List of types of borgs this module fits into
+    /// List of types of borgs this module fits into.
+    /// this only affects examine text. what actually defines this the tag and whitelist on the borg.
     /// </summary>
     [DataField]
     public HashSet<LocId>? BorgFitTypes;
