@@ -2,6 +2,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Localizations;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -46,26 +47,18 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (ent.Comp.BorgFitTypes == null)
             return;
 
-        var types = "";
-        var numberType = 0;
+        if (ent.Comp.BorgFitTypes.Count == 0)
+            return;
+
+        var typeList = new List<string>();
+
         foreach (var type in ent.Comp.BorgFitTypes)
         {
-            numberType++;
-
-            if (numberType == ent.Comp.BorgFitTypes.Count && numberType > 1)
-            {
-                types += " ";
-                types += Loc.GetString("borg-module-fit-and");
-                types += " ";
-            }
-            else if (numberType > 1)
-                types += ", ";
-
-            types += Loc.GetString(type);
+            typeList.Add(Loc.GetString(type));
         }
 
-        if (numberType > 0)
-            args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
+        var types = ContentLocalizationManager.FormatList(typeList);
+        args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
     }
 
     private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
