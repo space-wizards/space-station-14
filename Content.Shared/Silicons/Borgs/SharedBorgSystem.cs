@@ -64,7 +64,8 @@ public abstract partial class SharedBorgSystem : EntitySystem
             types += Loc.GetString(type);
         }
 
-        args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
+        if (numberType > 0)
+            args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
     }
 
     private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
