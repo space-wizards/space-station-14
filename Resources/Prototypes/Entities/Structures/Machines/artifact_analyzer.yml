@@ -161,7 +161,7 @@
 # just a resprite
 - type: entity
   parent: MachineArtifactCrusher
-  id: MachineBodyCrusher
+  id: MachineArtifactCrusherXenoborg
   name: body crusher
   description: Best not to let your head get stuck...
   components:
