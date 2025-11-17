@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Added ambient occlusion to walls so they have shadows around them.
-    type: Add
-  id: 8708
-  time: '2025-06-24T07:56:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38276
 - author: BramvanZijp
   changes:
   - message: Added Stamina Damage resistance to the raid/hard-suits used by Nuclear
@@ -3925,3 +3918,10 @@
   id: 9208
   time: '2025-11-16T10:34:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40982
+- author: slarticodefast
+  changes:
+  - message: Crawling speed now depends on the number of free hands you have.
+    type: Tweak
+  id: 9209
+  time: '2025-11-16T23:59:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41458
