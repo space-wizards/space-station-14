@@ -1,19 +1,19 @@
 borg-module-fit = This module fits in {$types}.
 borg-module-fit-and = and
 
-borg-type-all = any cyborg
-borg-type-cargo = mining cyborgs
-borg-type-engineering = engineering cyborgs
-borg-type-generic = generic cyborgs
-borg-type-janitor = janitor cyborgs
-borg-type-medical = medical cyborgs
-borg-type-service = service cyborgs
+borg-type-all = [color=white]any cyborg[/color]
+borg-type-cargo = [color= #d6b328]mining cyborgs[/color]
+borg-type-engineering = [color= #ff9900]engineering cyborgs[/color]
+borg-type-generic = [color= #666680]generic cyborgs[/color]
+borg-type-janitor = [color= #a747c0]janitor cyborgs[/color]
+borg-type-medical = [color= #5995ba]medical cyborgs[/color]
+borg-type-service = [color= #508242]service cyborgs[/color]
 
-borg-type-syndicate = syndicate cyborgs
-borg-type-syndicate-assault = syndicate assault cyborgs
+borg-type-syndicate = [color= #962023]syndicate cyborgs[/color]
+borg-type-syndicate-assault = [color= #680a0d]syndicate assault cyborgs[/color]
 
-xenoborg-type-all = any xenoborg
-xenoborg-type-engineering = engineering xenoborgs
-xenoborg-type-heavy = heavy xenoborgs
-xenoborg-type-scout = scout xenoborgs
-xenoborg-type-stealth = stealth xenoborgs
+xenoborg-type-all = [color= #3d94ff]any xenoborg[/color]
+xenoborg-type-engineering = [color= #edd45b]engineering xenoborgs[/color]
+xenoborg-type-heavy = [color= #d62020]heavy xenoborgs[/color]
+xenoborg-type-scout = [color= #6a6b6f]scout xenoborgs[/color]
+xenoborg-type-stealth = [color= #ff00cc]stealth xenoborgs[/color]
