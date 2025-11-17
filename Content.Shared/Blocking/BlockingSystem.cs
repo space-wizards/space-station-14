@@ -201,6 +201,7 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         shield.Comp.IsBlocking = true;
+        EnsureComp<HasRaisedShieldComponent>(user);
         Dirty(shield);
 
         return true;
@@ -245,6 +246,7 @@ public sealed partial class BlockingSystem : EntitySystem
         }
 
         shield.Comp.IsBlocking = false;
+        RemComp<HasRaisedShieldComponent>(user);
         Dirty(shield);
 
         return true;

@@ -1,6 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Movement.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
@@ -20,6 +21,7 @@ public sealed partial class BlockingSystem
         SubscribeLocalEvent<BlockingUserComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<BlockingUserComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<BlockingUserComponent, EntityTerminatingEvent>(OnEntityTerminating);
+        SubscribeLocalEvent<HasRaisedShieldComponent, MoveInputEvent>(OnMoveInput);
     }
 
     private void OnParentChanged(Entity<BlockingUserComponent> shieldUser, ref EntParentChangedMessage args)
@@ -38,6 +40,14 @@ public sealed partial class BlockingSystem
             return;
 
         UserStopBlocking(shieldUser);
+    }
+
+    private void OnMoveInput(Entity<HasRaisedShieldComponent> shieldUser, ref MoveInputEvent args)
+    {
+        if (!TryComp<BlockingUserComponent>(shieldUser, out var shieldUserComp))
+            return;
+
+        UserStopBlocking((shieldUser, shieldUserComp));
     }
 
     private void OnUserDamageModified(EntityUid uid, BlockingUserComponent component, DamageModifyEvent args)
