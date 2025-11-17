@@ -180,6 +180,36 @@
     slice: FoodPieBananaCreamSlice
 
 - type: entity
+  parent: FoodPieBananaCream
+  id: FoodPieBananaCreamKick
+  name: super bananium cream pie
+  suffix: kick
+  components:
+  - type: TriggerOnLand
+    keyOut: splat
+  - type: TriggerOnThrowDoHit
+    keyOut: creamed
+
+  - type: DeleteOnTrigger
+    keysIn: [ splat, creamed ]
+  - type: SpawnOnTrigger
+    keysIn: [ splat, creamed ]
+  - type: EmptyContentsOnTrigger
+    keysIn: [ splat, creamed ]
+  - type: EmitSoundOnTrigger
+    keysIn: [ splat, creamed ]
+  - type: PopupOnTrigger
+    keysIn: creamed
+  - type: StunOnTrigger
+    keysIn: creamed
+
+  - type: TriggerContentsOnTrigger
+    keysIn: [ splat, creamed ]
+
+  - type: GhostKickOnTrigger
+    keysIn: creamed
+
+- type: entity
   name: slice of banana cream pie
   parent: FoodPieSliceBase
   id: FoodPieBananaCreamSlice
