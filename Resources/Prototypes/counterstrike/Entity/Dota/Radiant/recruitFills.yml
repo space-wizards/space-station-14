@@ -1,0 +1,18 @@
+- type: entity
+  name: Mosin box
+  parent: BoxCardboard
+  id: DotaMosinBoxRadiant
+  description: This box is filled with gun.
+  components:
+    - type: Storage
+      maxItemSize: Huge
+      grid:
+      - 0,0,4,4
+    - type: Sprite
+      layers:
+        - state: box
+    - type: StorageFill
+      contents:
+        - id: WeaponDotaMosinRadiant
+        - id: ShellDotaBall
+          amount: 12

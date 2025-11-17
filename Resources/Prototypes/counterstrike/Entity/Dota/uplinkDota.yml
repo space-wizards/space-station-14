@@ -35,6 +35,17 @@
   categories:
   - DotaRadiantRecruit
 
+- type: listing
+  id: DotaRadiantMosinBox
+  name: Recruit's gun.
+  description: good weapon.
+  icon: { sprite: Objects/counterstrike/Weapons/Dota/Radiant/Recruit/Guns/mosin.rsi, state: icon }
+  productEntity: DotaMosinBoxRadiant
+  cost:
+    Telecrystal: 3
+  categories:
+  - DotaRadiantRecruit
+
 # knight
 
 - type: listing
@@ -78,6 +89,17 @@
   productEntity: ClothingHeadHelmetRadiantKnightHeavy
   cost:
     Telecrystal: 5
+  categories:
+  - DotaRadiantKnight
+
+- type: listing
+  id: DotaRadiantKnightPoleaxe
+  name: Knight's sword
+  description: a great sword.
+  icon: { sprite: Objects/counterstrike/Weapons/Dota/Radiant/Knight/Melee/knight.rsi, state: icon }
+  productEntity: RadiantPoleaxe
+  cost:
+    Telecrystal: 8
   categories:
   - DotaRadiantKnight
 
@@ -141,3 +163,60 @@
     Telecrystal: 1
   categories:
   - DotaDireKnight
+
+- type: listing
+  id: DotaDireKnightSword
+  name: Knight's sword
+  description: a great sword.
+  icon: { sprite: Objects/counterstrike/Weapons/Dota/Radiant/Knight/Melee/sword.rsi, state: icon }
+  productEntity: RadiantKnightSword
+  cost:
+    Telecrystal: 4
+  categories:
+  - DotaDireKnight
+
+- type: listing
+  id: DotaDireRecruitHeavy
+  name: Knight's Heavy Chestplate.
+  description: this steel will shine forever.
+  icon: { sprite: Objects/counterstrike/Clothing/Suit/DireHeavy.rsi, state: icon }
+  productEntity: ClothingOuterDireHeavyKnight
+  cost:
+    Telecrystal: 5
+  categories:
+  - DotaDireKnight
+
+- type: listing
+  id: DotaDireRecruitHeavyHelmet
+  name: Knight's Heavy Helmet.
+  description: this steel will shine forever.
+  icon: { sprite: Objects/counterstrike/Clothing/Hats/DireHeavy.rsi, state: icon }
+  productEntity: ClothingHeadHelmetDireKnightHeavy
+  cost:
+    Telecrystal: 5
+  categories:
+  - DotaDireKnight
+
+# chieftain
+
+- type: listing
+  id: DotaDireSusano
+  name: Susano
+  description: an evil spirit.
+  icon: { sprite: Objects/counterstrike/Clothing/susano.rsi, state: icon }
+  productEntity: SusanoDire
+  cost:
+    Telecrystal: 14
+  categories:
+  - DotaDireChieftain
+
+- type: listing
+  id: DotaDireSusanoFist
+  name: Susano
+  description: an evil fist of The Dire.
+  icon: { sprite: Objects/counterstrike/Clothing/susano.rsi, state: fist }
+  productEntity: SusanoFist
+  cost:
+    Telecrystal: 53
+  categories:
+  - DotaDireChieftain

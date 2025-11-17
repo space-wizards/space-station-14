@@ -1,0 +1,29 @@
+- type: entity
+  id: AutoRoundEndingRuleDota
+  components:
+    - type: GameRule
+    - type: AutoRoundEndingRule
+      inRoundDelay: 600
+      inRoundWarnThreshold: 30
+      warnThresholds: [300, 120, 60, 10]
+      warnMessages:
+        - "До КОНЦА ПРИБЫВАНИЯ НА ОСТРОВЕ: {remaining} секунд."
+        - "До КОНЦА ПРИБЫВАНИЯ НА ОСТРОВЕ: {remaining} секунд."
+        - "До КОНЦА ПРИБЫВАНИЯ НА ОСТРОВЕ: {remaining} секунд."
+        - "конец ПРИБЫВАНИЯ НА ОСТРОВЕ"
+      senderName: "OSTROV"
+      warnMessage: "До КОНЦА ПРИБЫВАНИЯ НА ОСТРОВЕ: {remaining} секунд."
+      endMessage: "ОСТРОВ ЗАКРЫВАЕТСЯ"
+      startMessage: "ОСТРОВ СКОРО ЗАКРОЕТСЯ"
+      hudLabel: "До конца прибывания на ОСТРОВЕ"
+      hudIconRsi: "Objects/counterstrike/Other/interface.rsi"
+      hudIconState: "ttt"
+
+- type: entity
+  parent: BaseGameRule
+  id: RoundstartPlaySoundDota
+  name: Roundstart Play Sound (Dota)
+  components:
+  - type: RoundstartPlaySoundRule
+    sound: "/Audio/Weapons/counterstrike/other/roundstart/ttt.ogg"
+    volume: -7

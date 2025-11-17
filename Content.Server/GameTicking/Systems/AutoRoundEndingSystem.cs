@@ -40,37 +40,20 @@ public sealed class AutoRoundEndingSystem : EntitySystem
 
     private bool TryGetRuleConfig([NotNullWhen(true)] out AutoRoundEndingRuleComponent? cfg)
     {
-        // If there is a MapAutoGameRule configured, prefer an active rule whose prototype ID is listed there.
-        cfg = null;
-        var active = EntityQuery<AutoRoundEndingRuleComponent, ActiveGameRuleComponent>().ToList();
-        if (active.Count == 0)
-            return false;
-
-        var mapCfg = EntityQuery<MapAutoGameRuleComponent>().FirstOrDefault();
-        if (mapCfg != null && mapCfg.Rules.Count > 0)
-        {
-            foreach (var (ruleComp, activeComp) in active)
-            {
-                if (!TryComp<MetaDataComponent>(activeComp.Owner, out var meta))
-                    continue;
-                var id = meta.EntityPrototype?.ID;
-                if (id != null && mapCfg.Rules.Contains(id))
-                {
-                    cfg = ruleComp;
-                    break;
-                }
-            }
-        }
-
-        // Fallback: first active rule
-        cfg ??= active.FirstOrDefault().Item1;
+        // Prefer the active rule with the largest delay to avoid a shorter config overriding a longer one.
+        cfg = EntityQuery<AutoRoundEndingRuleComponent, ActiveGameRuleComponent>()
+            .Select(t => t.Item1)
+            .OrderByDescending(c => c.InRoundDelay)
+            .FirstOrDefault();
         return cfg != null;
     }
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
-        // Only react to run-level changes if a rule prototype is active.
-        if (!TryGetRuleConfig(out _))
+        // Activate if either a map controller is present OR an active rule exists
+        var hasController = ControllerPresent(out _);
+        var hasRule = EntityQuery<AutoRoundEndingRuleComponent, ActiveGameRuleComponent>().Any();
+        if (!hasController && !hasRule)
             return;
 
         switch (ev.New)

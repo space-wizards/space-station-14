@@ -5,7 +5,7 @@
   description: an evil sword.
   components:
   - type: Sprite
-    sprite: Objects/counterstrike/Weapons/Dota/Radiant/Recruit/Melee/recruitsword.rsi
+    sprite: Objects/counterstrike/Weapons/Dota/Dire/Recruit/Melee/recruitsword.rsi
   - type: MeleeWeapon
     damage:
       types:

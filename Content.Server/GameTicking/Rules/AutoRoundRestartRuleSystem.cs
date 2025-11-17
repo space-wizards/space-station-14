@@ -1,103 +1,95 @@
+using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Shared.GameTicking;
-using Robust.Shared.Configuration;
-using Robust.Shared.Timing;
-using System.Linq;
 using Content.Shared.GameTicking.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
 /// <summary>
-/// GameRule System которая перезапускает раунд через определенное время после его начала
+/// GameRule System: restarts the round after a configured delay once the round has ended (PostRound).
 /// </summary>
 public sealed class AutoRoundRestartRuleSystem : GameRuleSystem<AutoRoundRestartRuleComponent>
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
 
-    private float _restartDelay = 180f; // время до рестарта
-    private TimeSpan? _roundStartTime;
-    private bool _roundStarted;
+    private TimeSpan? _roundEndTime;
+    private bool _postRoundActive;
     private bool _notified;
 
-    private static readonly ISawmill Sawmill = Logger.GetSawmill("auto-restart");
+    private static readonly ISawmill Sawmill = Logger.GetSawmill("auto-restart-rule");
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged); //ивент смены уровня игры(InRound будет указана ниже).
+        SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
     }
 
     private void OnRunLevelChanged(GameRunLevelChangedEvent ev)
     {
-        Sawmill.Info($"[AutoRoundRestart] RunLevelChanged: {ev.New}"); //логирует смену стадии игры
-        if (!EntityQuery<AutoRoundRestartRuleComponent>().Any())
+        if (!EntityQuery<AutoRoundRestartRuleComponent, ActiveGameRuleComponent>().Any())
             return;
 
-        if (ev.New == GameRunLevel.InRound) // если раунд начался то есть GameRunLevel.InRound то таймер запускается.
+        switch (ev.New)
         {
-            OnRoundStart();
-        }
-        else // если стадия сменилась на любую другую (PostRound, PreRound, PreRoundLobby и т.д.) — сбрасываем таймер
-        {
-            if (_roundStarted)
-            {
-                Sawmill.Info("[AutoRoundRestart] RunLevel moved away from InRound, cancelling auto-restart timer.");
-                ResetTimerState();
-            }
+            case GameRunLevel.PostRound:
+                _postRoundActive = true;
+                _roundEndTime = _gameTiming.CurTime;
+                _notified = false;
+                Sawmill.Info("[AutoRoundRestartRule] Entered PostRound. Starting timer.");
+                break;
+            default:
+                _postRoundActive = false;
+                _roundEndTime = null;
+                _notified = false;
+                break;
         }
     }
 
-    public override void Update(float frameTime) // вызывается каждый кадр
+    public override void Update(float frameTime) 
     {
         base.Update(frameTime);
 
-        if (!_roundStarted || _roundStartTime == null) // если раунд не начался
+        if (!_postRoundActive || _roundEndTime is null)
             return;
 
-        var timeSinceStart = _gameTiming.CurTime - _roundStartTime.Value; // время с начала рунда
-        var secondsLeft = _restartDelay - (float)timeSinceStart.TotalSeconds; //время до рестарта
+        var cfg = EntityQuery<AutoRoundRestartRuleComponent, ActiveGameRuleComponent>().Select(t => t.Item1).FirstOrDefault();
+        if (cfg == null)
+            return;
 
-        // Уведомление на 30 секунд отключено (сообщения теперь задаются в прототипах других правил)
-        if (!_notified && secondsLeft <= 30f && secondsLeft > 0f)
+        var timeSinceEnd = _gameTiming.CurTime - _roundEndTime.Value;
+        var secondsLeft = cfg.PostRoundDelay - (float) timeSinceEnd.TotalSeconds;
+
+        if (!_notified && secondsLeft <= cfg.PostRoundWarnThreshold && secondsLeft > 0f)
         {
+            NotifyPlayers(FormatRemaining(cfg.WarnMessage, secondsLeft), cfg.SenderName);
             _notified = true;
         }
 
-        if (timeSinceStart.TotalSeconds >= _restartDelay) // если время с начала раунда больше или равно времени до рестарта.
+        if (timeSinceEnd.TotalSeconds >= cfg.PostRoundDelay)
         {
-            RestartRound();
-            ResetTimerState();
+            if (!string.IsNullOrWhiteSpace(cfg.RestartMessage))
+                NotifyPlayers(cfg.RestartMessage, cfg.SenderName);
+            _gameTicker.RestartRound();
+            _postRoundActive = false;
+            _roundEndTime = null;
+            _notified = false;
         }
     }
 
-    private void OnRoundStart() //вызывается когда  раунд стартуется
+    private void NotifyPlayers(string message, string sender)
     {
-        _roundStarted = true;
-        _roundStartTime = _gameTiming.CurTime;
-        _notified = false;
-        // Стартовое сообщение отключено. Старт уведомлений и логов не отправляется.
+        _chatSystem.DispatchGlobalAnnouncement(message, sender: sender);
+        Sawmill.Info($"[AutoRoundRestartRule] {message}");
     }
 
-    private void NotifyPlayers(string message) //уведомление
+    private static string FormatRemaining(string template, float remaining)
     {
-        // Disabled: announcements must be driven by prototype-based systems (AutoRoundEnding/Restart systems).
-        // Intentionally no chat dispatch and no message echo here to avoid hardcoded phrases.
-    }
-
-    private void RestartRound() //отвечает за перезапуск раунда
-    {
-        _gameTicker.EndRound();
-        Sawmill.Info("[AutoRoundRestart] changing InRound to PostRound. Using EndRound!");
-    }
-    private void ResetTimerState()
-    {
-        _roundStarted = false;
-        _roundStartTime = null;
-        _notified = false;
+        var rem = MathF.Ceiling(MathF.Max(0f, remaining));
+        return template.Replace("{remaining}", rem.ToString());
     }
 }

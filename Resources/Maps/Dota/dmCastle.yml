@@ -40,9 +40,9 @@ entities:
       direction: 3,1
     - type: MapAutoGameRule
       rules:
-        - AutoRoundEndingRuleCS
+        - AutoRoundEndingRuleDota
         - AutoRoundRestartRuleCS
-        - RoundstartPlaySoundCS
+        - RoundstartPlaySoundDota
     - type: PurpleTintMap
       contrast: 0.99
       saturation: 2
@@ -4300,29 +4300,23 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 7.5,15.5
       parent: 2
-- proto: SpawnPointAtmos
+- proto: SpawnerKrip
   entities:
   - uid: 1573
     components:
     - type: Transform
       pos: 42.5,60.5
       parent: 2
-- proto: SpawnPointBartender
-  entities:
   - uid: 1574
     components:
     - type: Transform
       pos: 42.5,53.5
       parent: 2
-- proto: SpawnPointBrigmedic
-  entities:
   - uid: 1576
     components:
     - type: Transform
       pos: 6.5,48.5
       parent: 2
-- proto: SpawnPointCaptain
-  entities:
   - uid: 1575
     components:
     - type: Transform

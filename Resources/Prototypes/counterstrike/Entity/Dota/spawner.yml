@@ -1,0 +1,19 @@
+- type: entity
+  name: Krip
+  id: SpawnerKrip
+  parent: AITimedSpawner
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Species/Human/parts.rsi
+          state: full
+        - state: ai
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+        - MobKrip
+      chance: 1
+      intervalSeconds: 60
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 3

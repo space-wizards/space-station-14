@@ -23,3 +23,50 @@
   - type: Tool
     qualities:
     - Slicing
+
+- type: entity
+  name: MosinkaRadiant
+  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  id: WeaponDotaMosinRadiant
+  description: by dizi4k.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/Dota/Radiant/Recruit/Guns/mosin.rsi
+    layers:
+      - state: icon
+  - type: Gun
+    fireRate: 1
+    minAngle: 5
+    maxAngle: 30
+    angleIncrease: 8
+    angleDecay: 15
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/counterstrike/guns/awp.ogg
+  - type: GunWieldBonus
+    minAngle: -5
+    maxAngle: -5
+  - type: Clothing
+    sprite: Objects/counterstrike/Weapons/Dota/Radiant/Recruit/Guns/mosin.rsi
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_chamber:
+        name: Chamber
+        startingItem: ShellDotaBall
+        priority: 1
+        whitelist:
+          tags:
+            - ShellDotaBall
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 2
+    pvsIncrease: 0.2
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot

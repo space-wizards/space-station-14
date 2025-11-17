@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.GameTicking.Components;
 
@@ -7,10 +8,14 @@ namespace Content.Shared.GameTicking.Components;
 /// Allows tuning via prototype: time, sender, messages.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class AutoRoundEndingRuleComponent : Component
+public sealed partial class AutoRoundEndingRuleComponent : Component, ISerializationHooks
 {
     // Seconds from entering InRound until ending the round
-    [DataField("inRoundDelay")] public float InRoundDelay = 180f;
+    [DataField("inRoundDelay")] public float InRoundDelay = 600f;
+
+    // Optional alias to configure the same delay via 'roundDelay' in YAML.
+    // If set (> 0), it overrides InRoundDelay after deserialization.
+    [DataField("roundDelay")] public float? RoundDelay { get; set; }
 
     // Warn when remaining time is at or below this threshold (seconds)
     [DataField("inRoundWarnThreshold")] public float InRoundWarnThreshold = 30f;
@@ -43,4 +48,10 @@ public sealed partial class AutoRoundEndingRuleComponent : Component
 
     // Center HUD: RSI state name within the RSI file (e.g. "cs")
     [DataField("hudIconState")] public string? HudIconState;
+
+    void ISerializationHooks.AfterDeserialization()
+    {
+        if (RoundDelay is { } d && d > 0f)
+            InRoundDelay = d;
+    }
 }

@@ -1,0 +1,61 @@
+- type: entity
+  name: Krip1
+  parent: [ SimpleMobBase, MobCombat ]
+  id: MobKrip
+  description: the creep
+  components:
+  - type: Butcherable
+    spawned:
+    - id: Telecrystal1
+      amount: 4
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: krip
+      sprite: Objects/counterstrike/Mobs/krip.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: krip
+      Critical:
+        Base: krip
+      Dead:
+        Base: dead
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    attackRate: 1.0
+    animation: WeaponArcFist
+    damage:
+      types:
+        Blunt: 10
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+    - Revolutionary
+    - Wizard
+    - Xeno
+    - Dragon
+    - Xenoborg
+    - SimpleHostile
+    - AllHostile
+  - type: FactionException
+  - type: NPCRetaliation
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      101: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 300
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound

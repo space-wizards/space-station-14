@@ -163,3 +163,30 @@
     reflectProb: 0.1
     spread: 75
     reflectingInHands: false
+
+- type: entity
+  parent: ClothingOuterArmorBase
+  id: ClothingOuterDireHeavyKnight
+  name: Dire Knight's Heavy Chestplate.
+  description: evil
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Suit/DireHeavy.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Suit/DireHeavy.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.2
+        Piercing: 0.4
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.6
+  - type: Reflect
+    reflectProb: 0.1
+    spread: 75
+    reflectingInHands: false

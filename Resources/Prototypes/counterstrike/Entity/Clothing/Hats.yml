@@ -157,3 +157,28 @@
         Caustic: 0.95
   - type: ExplosionResistance
     damageCoefficient: 0.4
+
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHelmetDireKnightHeavy
+  name: Dire Soldier's Heavy Helmet
+  description: evil
+  components:
+  - type: HideLayerClothing
+    layers:
+      Hair : HEAD
+  - type: Sprite
+    sprite: Objects/counterstrike/Clothing/Hats/DireHeavy.rsi
+  - type: Clothing
+    sprite: Objects/counterstrike/Clothing/Hats/DireHeavy.rsi
+  - type: Armor #This is intentionally not spaceproof, when the time comes to port the values from SS13 this should be buffed from what it was.
+    modifiers:
+      coefficients:
+        Blunt: 0.50
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.80
+        Radiation: 0.80
+        Caustic: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.4

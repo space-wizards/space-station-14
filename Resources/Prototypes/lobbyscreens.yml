@@ -13,3 +13,11 @@
 - type: lobbyBackground
   id: piretes
   background: /Textures/LobbyScreens/pirates.webp
+
+- type: lobbyBackground
+  id: sotiSS14
+  background: /Textures/LobbyScreens/sotiss14.webp
+
+- type: lobbyBackground
+  id: theDire
+  background: /Textures/LobbyScreens/theDire.webp
