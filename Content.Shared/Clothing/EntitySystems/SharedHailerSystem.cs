@@ -11,9 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Speech;
 using Content.Shared.Stealth.Components;
-using Content.Shared.Timing;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -31,17 +29,13 @@ public abstract class SharedHailerSystem : EntitySystem
     [Dependency] private readonly SharedChatSystem _chat = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedAppearanceSystem _sharedAppearance = default!;
-    [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _sharedDoAfter = default!;
-    [Dependency] private readonly SharedPopupSystem _sharedPopup = default!;
-    [Dependency] private readonly SharedToolSystem _sharedTool = default!;
-    [Dependency] private readonly SharedTransformSystem _sharedTransform = default!;
-
-
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
-    //[Dependency] private readonly SharedAudioSystem _audio = default!;
-
 
     public override void Initialize()
     {
@@ -52,71 +46,11 @@ public abstract class SharedHailerSystem : EntitySystem
         SubscribeLocalEvent<HailerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<HailerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<HailerComponent, HailerToolDoAfterEvent>(OnToolDoAfter);
-
         SubscribeLocalEvent<HailerComponent, HailerActionEvent>(OnHailAction);
         SubscribeLocalEvent<HailerComponent, HailerOrderMessage>(OnHailOrder);
-    }
-
-    private void OnHailAction(Entity<HailerComponent> ent, ref HailerActionEvent ev)
-    {
-        if (ev.Handled)
-            return;
-
-        if (TryComp<MaskComponent>(ent, out var mask))
-        {
-            if (!mask.IsToggled && !ent.Comp.AreWiresCut)
-            {
-                if (!_ui.IsUiOpen(ent.Owner, HailerUiKey.Key))
-                {
-                    if (_ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer))
-                    {
-                        ev.Handled = true;
-                    }
-                }
-            }
-        }
-    }
-
-    private void OnHailOrder(Entity<HailerComponent> ent, ref HailerOrderMessage args)
-    {
-        string soundCollection;
-        string localeText;
-
-        if (HasComp<EmaggedComponent>(ent) && ent.Comp.EmagLevelPrefix != null)
-        {
-            //Emag lines
-            localeText = soundCollection = ent.Comp.EmagLevelPrefix;
-        }
-        else
-        {
-            //Set the strings needed for choosing a file in the SoundCollection and the corresponding loc string
-            var orderUsed = ent.Comp.Orders[args.OrderIndex];
-            var hailLevel = ent.Comp.CurrentHailLevel != null ? "-" + ent.Comp.CurrentHailLevel.Value.Name : String.Empty;
-            soundCollection = orderUsed.SoundCollection + hailLevel;
-            localeText = orderUsed.LocalePrefix + hailLevel;
-        }
-
-        //Play voice audio line and we get the index of the randomly choosen sound in the SoundCollection
-        var index = PlayVoiceLineSound(ent, soundCollection);
-
-        //Send chat message, based on the index of the audio file to match with the loc string
-        SubmitChatMessage(ent, localeText, index);
-    }
-
-    private int PlayVoiceLineSound(Entity<HailerComponent> ent, string soundCollection)
-    {
-        var specifier = new SoundCollectionSpecifier(soundCollection);
-        var resolver = _sharedAudio.ResolveSound(specifier); //Since this uses Robust Random, this can't be predicted ???
-        if (resolver is ResolvedCollectionSpecifier collectionResolver)
-        {
-            _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
-            return collectionResolver.Index;
-        }
-        else
-            Log.Error("SharedHailerSystem tried to play an audio file NOT from a SoundCollection !");
-        return -1;
+        SubscribeLocalEvent<HailerComponent, HailerToolDoAfterEvent>(OnToolDoAfter);
+        SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<HailerComponent, ItemMaskToggledEvent>(OnMaskToggle);
     }
 
     private void OnEquip(Entity<HailerComponent> ent, ref ClothingGotEquippedEvent args)
@@ -126,6 +60,12 @@ public abstract class SharedHailerSystem : EntitySystem
     private void OnUnequip(Entity<HailerComponent> ent, ref ClothingGotUnequippedEvent args)
     {
         ent.Comp.User = null;
+    }
+
+    private void OnMaskToggle(Entity<HailerComponent> ent, ref ItemMaskToggledEvent args)
+    {
+        if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
+            _ui.CloseUi(ent.Owner, HailerUiKey.Key);
     }
 
     private void OnExamine(Entity<HailerComponent> ent, ref ExaminedEvent args)
@@ -153,7 +93,7 @@ public abstract class SharedHailerSystem : EntitySystem
         if (ent.Comp.User.HasValue && ent.Comp.User != args.UserUid)
             return;
 
-        _sharedPopup.PopupPredicted(Loc.GetString("hailer-gas-mask-emagged"), Loc.GetString("hailer-gas-mask-emagged"), ent.Owner, args.UserUid);
+        _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-emagged"), Loc.GetString("hailer-gas-mask-emagged"), ent.Owner, args.UserUid);
 
         args.Type = EmagType.Interaction;
 
@@ -195,18 +135,43 @@ public abstract class SharedHailerSystem : EntitySystem
         //Does the user has sufficient access level (security) ? If not, beep and show error
         if (!_access.IsAllowed(userActed, ent.Owner))
         {
-            _sharedAudio.PlayPredicted(ent.Comp.SettingError, ent.Owner, ent.Owner, AudioParams.Default.WithVariation(0.15f));
-            _sharedPopup.PopupPredicted(Loc.GetString("hailer-gas-mask-wrong_access"), Loc.GetString("hailer-gas-mask-wrong_access"), ent.Owner, userActed);
+            _audio.PlayPredicted(ent.Comp.SettingError, ent.Owner, ent.Owner, AudioParams.Default.WithVariation(0.15f));
+            _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-wrong_access"), Loc.GetString("hailer-gas-mask-wrong_access"), ent.Owner, userActed);
             return;
         }
 
         //If all good
         if (!HasComp<EmaggedComponent>(ent) && !ent.Comp.AreWiresCut)
         {
-            _sharedAudio.PlayPredicted(ent.Comp.SettingBeep, ent.Owner, userActed, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
+            _audio.PlayPredicted(ent.Comp.SettingBeep, ent.Owner, userActed, AudioParams.Default.WithVolume(0.5f).WithVariation(0.15f));
             IncreaseAggressionLevel(ent, userActed);
             Dirty(ent);
         }
+    }
+
+    private void OnHailAction(Entity<HailerComponent> ent, ref HailerActionEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        if (TryComp<MaskComponent>(ent, out var mask))
+        {
+            if (!mask.IsToggled && !ent.Comp.AreWiresCut)
+            {
+                if (!_ui.IsUiOpen(ent.Owner, HailerUiKey.Key))
+                {
+                    if (_ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer))
+                    {
+                        // This is kinda bad as it starts the cooldown when the BUI opens instead of when choosing an option in the radial menu.
+                        ev.Handled = true;
+                    }
+                }
+            }
+        }
+    }
+
+    protected virtual void OnHailOrder(Entity<HailerComponent> ent, ref HailerOrderMessage args)
+    {
     }
 
     /// <summary>
@@ -214,7 +179,7 @@ public abstract class SharedHailerSystem : EntitySystem
     /// </summary>
     /// <param name="ent"></param>
     /// <returns>Is it handled succesfully ?</returns>
-    protected void ExclamateHumanoidsAround(Entity<HailerComponent> ent)
+    private void ExclamateHumanoidsAround(Entity<HailerComponent> ent)
     {
         var (uid, comp) = ent;
         if (!Resolve(uid, ref comp, false) || comp.Distance <= 0)
@@ -222,7 +187,7 @@ public abstract class SharedHailerSystem : EntitySystem
 
         StealthComponent? stealth = null;
         foreach (var iterator in
-            _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_sharedTransform.GetMapCoordinates(uid), comp.Distance))
+            _entityLookup.GetEntitiesInRange<HumanoidAppearanceComponent>(_transform.GetMapCoordinates(uid), comp.Distance))
         {
             //Avoid pinging invisible entities
             if (TryComp(iterator, out stealth) && stealth.Enabled)
@@ -242,7 +207,7 @@ public abstract class SharedHailerSystem : EntitySystem
     /// </summary>
     /// <param name="ent"></param>
     /// <param name="clientUser">User who is increasing the level</param>
-    protected void IncreaseAggressionLevel(Entity<HailerComponent> ent, EntityUid clientUser)
+    private void IncreaseAggressionLevel(Entity<HailerComponent> ent, EntityUid clientUser)
     {
         //Do we have actual levels ?
         if (ent.Comp.HailLevels != null)
@@ -254,7 +219,7 @@ public abstract class SharedHailerSystem : EntitySystem
 
             //Notify player
             if (ent.Comp.CurrentHailLevel.HasValue)
-                _sharedPopup.PopupPredicted(Loc.GetString("hailer-gas-mask-screwed", ("level", ent.Comp.CurrentHailLevel.Value.Name.ToLower())), ent.Owner, clientUser);
+                _popup.PopupPredicted(Loc.GetString("hailer-gas-mask-screwed", ("level", ent.Comp.CurrentHailLevel.Value.Name.ToLower())), ent.Owner, clientUser);
         }
     }
 
@@ -295,12 +260,12 @@ public abstract class SharedHailerSystem : EntitySystem
             return;
 
         //Is it a wirecutter or a screwdriver ?
-        if (_sharedTool.HasQuality(args.Used, SharedToolSystem.CutQuality))
+        if (_tool.HasQuality(args.Used, SharedToolSystem.CutQuality))
         {
             OnInteractCutting(ent, ref args);
             args.Handled = true;
         }
-        else if (_sharedTool.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
+        else if (_tool.HasQuality(args.Used, SharedToolSystem.ScrewQuality))
         {
             OnInteractScrewing(ent, ref args);
             args.Handled = true;
@@ -327,12 +292,6 @@ public abstract class SharedHailerSystem : EntitySystem
         StartADoAfter(ent, args, quality);
     }
 
-    /// <summary>
-    /// Starts a do after relative to the quality of the tool used
-    /// </summary>
-    /// <param name="ent"></param>
-    /// <param name="args">Args of the previous event</param>
-    /// <param name="quality">Quality of the tool</param>
     private void StartADoAfter(Entity<HailerComponent> ent, InteractUsingEvent args, ProtoId<ToolQualityPrototype> quality)
     {
         float? time = null;
@@ -352,7 +311,7 @@ public abstract class SharedHailerSystem : EntitySystem
             return;
         }
 
-        _sharedDoAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, time.Value, new HailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, time.Value, new HailerToolDoAfterEvent(quality), ent.Owner, target: args.Target, used: args.Used)
         {
             Broadcast = true,
             BreakOnMove = true,
@@ -382,7 +341,7 @@ public abstract class SharedHailerSystem : EntitySystem
 
     private void OnCuttingDoAfter(Entity<HailerComponent> ent, ref HailerToolDoAfterEvent args)
     {
-        _sharedAudio.PlayPredicted(ent.Comp.CutSounds, ent.Owner, args.User);
+        _audio.PlayPredicted(ent.Comp.CutSounds, ent.Owner, args.User);
 
         var (uid, comp) = ent;
 
@@ -392,13 +351,13 @@ public abstract class SharedHailerSystem : EntitySystem
 
         //Change sprite, set in the yaml
         var state = comp.AreWiresCut ? "WiresCut" : "Intact";
-        _sharedAppearance.SetData(ent, SecMaskVisuals.State, state);
+        _appearance.SetData(ent, SecMaskVisuals.State, state);
         Dirty(ent);
     }
 
     private void OnScrewingDoAfter(Entity<HailerComponent> ent, ref HailerToolDoAfterEvent args)
     {
-        _sharedAudio.PlayPredicted(ent.Comp.ScrewedSounds, ent.Owner, args.User);
+        _audio.PlayPredicted(ent.Comp.ScrewedSounds, ent.Owner, args.User);
         IncreaseAggressionLevel(ent, args.User);
     }
 }
