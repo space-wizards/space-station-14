@@ -70,7 +70,7 @@ public sealed class SmartEquipSystem : EntitySystem
 
     private void HandleSmartEquipSuitStorage(ICommonSession? session)
     {
-        HandleSmartEquip(session, "suitstorage", Loc.GetString("inventory-slot-suitstorage"));
+        HandleSmartEquip(session, "suitstorage", Loc.GetString("inventory-slot-suit-storage"));
     }
 
     private void HandleSmartEquip(ICommonSession? session, string equipmentSlot, string equipmentName)
