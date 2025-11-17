@@ -1,8 +1,9 @@
 using Content.Server.Body.Systems;
+using Content.Server.Destructible;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
 using Content.Shared.Body.Components;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
@@ -24,6 +25,7 @@ public sealed class ImmovableRodSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
 
@@ -32,7 +34,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         base.Update(frameTime);
 
         // we are deliberately including paused entities. rod hungers for all
-        foreach (var (rod, trans) in EntityManager.EntityQuery<ImmovableRodComponent, TransformComponent>(true))
+        foreach (var (rod, trans) in EntityQuery<ImmovableRodComponent, TransformComponent>(true))
         {
             if (!rod.DestroyTiles)
                 continue;
@@ -55,7 +57,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, ImmovableRodComponent component, MapInitEvent args)
     {
-        if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
+        if (TryComp(uid, out PhysicsComponent? phys))
         {
             _physics.SetLinearDamping(uid, phys, 0f);
             _physics.SetFriction(uid, phys, 0f);
@@ -127,7 +129,7 @@ public sealed class ImmovableRodSystem : EntitySystem
             return;
         }
 
-        QueueDel(ent);
+        _destructible.DestroyEntity(ent);
     }
 
     private void OnExamined(EntityUid uid, ImmovableRodComponent component, ExaminedEvent args)

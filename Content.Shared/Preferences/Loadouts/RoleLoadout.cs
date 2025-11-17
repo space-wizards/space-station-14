@@ -1,8 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Random;
 using Robust.Shared.Collections;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -59,6 +61,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     {
         var groupRemove = new ValueList<string>();
         var protoManager = collection.Resolve<IPrototypeManager>();
+        var configManager = collection.Resolve<IConfigurationManager>();
 
         if (!protoManager.TryIndex(Role, out var roleProto))
         {
@@ -78,10 +81,11 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         if (EntityName != null)
         {
             var name = EntityName.Trim();
+            var maxNameLength = configManager.GetCVar(CCVars.MaxNameLength);
 
-            if (name.Length > HumanoidCharacterProfile.MaxNameLength)
+            if (name.Length > maxNameLength)
             {
-                EntityName = name[..HumanoidCharacterProfile.MaxNameLength];
+                EntityName = name[..maxNameLength];
             }
 
             if (name.Length == 0)
@@ -224,13 +228,13 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             var loadouts = new List<Loadout>();
             SelectedLoadouts[group] = loadouts;
 
-            if (groupProto.MinLimit > 0)
+            if (groupProto.MinLimit > 0 || loadouts.Count < groupProto.DefaultSelected)
             {
                 // Apply any loadouts we can.
                 foreach (var protoId in groupProto.Loadouts)
                 {
                     // Reached the limit, time to stop
-                    if (loadouts.Count >= groupProto.MinLimit)
+                    if (loadouts.Count >= Math.Max(groupProto.MinLimit, groupProto.DefaultSelected))
                         break;
 
                     if (!protoManager.TryIndex(protoId, out var loadoutProto))

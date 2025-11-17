@@ -134,9 +134,9 @@ figurines-ce-6 = Power's out again.
 figurines-engineer-1 = SINGULOOSE!
 figurines-engineer-2 = TESLOOSE!
 figurines-engineer-3 = What is AME?
-figurines-engineer-4 = Free insuls at engineering
+figurines-engineer-4 = Free insuls at Engineering!
 figurines-engineer-5 = Where'd the power go?
-figurines-engineer-6 = Someone bombed medbay... again...
+figurines-engineer-6 = Someone bombed the medbay... again...
 figurines-engineer-7 = Well, why don't you come and fix it?
 
 figurines-atmostech-1 = I put plasma in distro.
@@ -148,7 +148,7 @@ figurines-atmostech-6 = Distro? That's short for disposal.
 figurines-atmostech-7 = TEG: Thermal Energy? Gone!
 
 figurines-rd-1 = Blowing up all of the borgs!
-figurines-rd-2 = Tier 3 arsenal? No way.
+figurines-rd-2 = Tier 3 Arsenal? No way.
 figurines-rd-3 = Now where did I leave my hardsuit...?
 figurines-rd-4 = Now you're thinking with portals!
 figurines-rd-5 = The cake is a lie!
@@ -245,22 +245,22 @@ figurines-nukie-3 = The nuke makes boom.
 figurines-nukie-4 = What's the code?
 figurines-nukie-5 = Commander...? ...That's a balloon...
 
-figurines-nukie-elite-1 = Not a word in nanotrasen.
+figurines-nukie-elite-1 = Not a word in Nanotrasen.
 figurines-nukie-elite-2 = THAT'S A KEG!
-figurines-nukie-elite-3 = Guys are you alive?
+figurines-nukie-elite-3 = Guys, are you alive?
 figurines-nukie-elite-4 = Breach and clear!
 figurines-nukie-elite-5 = Leave no survivors.
 figurines-nukie-elite-6 = Good work, team.
 
 figurines-nukie-commander-1 = GET DAT FUKKEN DISK!
 figurines-nukie-commander-2 = Fuckin' flukies.
-figurines-nukie-commander-3 = The syndicate sends its regards.
+figurines-nukie-commander-3 = The Syndicate sends its regards.
 figurines-nukie-commander-4 = Failure is not an option.
 figurines-nukie-commander-5 = Whoops.
 
 figurines-footsoldier-1 = I'm an evil boy. Less boy every day, more evil every day.
 figurines-footsoldier-2 = Who will you choose? Them or us? Us or them?
-figurines-footsoldier-3 = Glory to the syndicate!
+figurines-footsoldier-3 = Glory to the Syndicate!
 figurines-footsoldier-4 = Down with Nanotrasen!
 figurines-footsoldier-5 = I'd rather die than join Nanotrasen.
 
@@ -316,3 +316,27 @@ figurines-hamlet-5 = Pip!
 figurines-hamlet-6 = Fwiep!
 figurines-hamlet-7 = Heep!
 figurines-hamlet-8 = NOT THE MICROWAVE!
+
+figurines-thief-1 = You don't have a warrant!
+figurines-thief-2 = This is just a normal beacon!
+figurines-thief-3 = Theres nothing suspicious about this satchel at all, officer.
+figurines-thief-4 = I have NO idea where your pet is...
+figurines-thief-5 = Huh, I didn't know that wall could open up...
+
+figurines-skeleton-1 = ACK ACK!
+figurines-skeleton-2 = Ugh, that locker was cramped!
+figurines-skeleton-3 = You're going to have a bad time.
+figurines-skeleton-4 = Got any milk?
+figurines-skeleton-5 = I have a bone to pick with you!
+
+figurines-owlman-1 = No need to fear, Owlman is here!
+figurines-owlman-2 = Owl be seeing you later!
+figurines-owlman-3 = HOOT!!
+figurines-owlman-4 = What do you call an owl magician, HOO-DINI!
+figurines-owlman-5 = Don't worry citizen, I'll save the day!
+
+figurines-griffin-1 = MUHAHAHAHA, I am so evil!!
+figurines-griffin-2 = The second I see Owlman, they are so dead!!
+figurines-griffin-3 = How do us Griffins deal with stress? We wing it!
+figurines-griffin-4 = My name isn't Gilda!!
+figurines-griffin-5 = Being a criminal mastermind, isn't easy.

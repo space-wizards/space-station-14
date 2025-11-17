@@ -216,26 +216,6 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
     }
 
     /// <summary>
-    ///     Try to get a record from this station's record entries,
-    ///     from the provided station record key. Will always return
-    ///     null if the key does not match the station.
-    /// </summary>
-    /// <param name="key">Station and key to try and index from the record set.</param>
-    /// <param name="entry">The resulting entry.</param>
-    /// <param name="records">Station record component.</param>
-    /// <typeparam name="T">Type to get from the record set.</typeparam>
-    /// <returns>True if the record was obtained, false otherwise.</returns>
-    public bool TryGetRecord<T>(StationRecordKey key, [NotNullWhen(true)] out T? entry, StationRecordsComponent? records = null)
-    {
-        entry = default;
-
-        if (!Resolve(key.OriginStation, ref records))
-            return false;
-
-        return records.Records.TryGetRecordEntry(key.Id, out entry);
-    }
-
-    /// <summary>
     /// Gets a random record from the station's record entries.
     /// </summary>
     /// <param name="ent">The EntityId of the station from which you want to get the record.</param>
@@ -255,26 +235,6 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         var key = _random.Pick(ent.Comp.Records.Keys);
 
         return ent.Comp.Records.TryGetRecordEntry(key, out entry);
-    }
-
-    /// <summary>
-    /// Returns an id if a record with the same name exists.
-    /// </summary>
-    /// <remarks>
-    /// Linear search so O(n) time complexity.
-    /// </remarks>
-    public uint? GetRecordByName(EntityUid station, string name, StationRecordsComponent? records = null)
-    {
-        if (!Resolve(station, ref records, false))
-            return null;
-
-        foreach (var (id, record) in GetRecordsOfType<GeneralStationRecord>(station, records))
-        {
-            if (record.Name == name)
-                return id;
-        }
-
-        return null;
     }
 
     /// <summary>
@@ -413,6 +373,10 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         {
             StationRecordFilterType.Name =>
                 !someRecord.Name.ToLower().Contains(filterLowerCaseValue),
+            StationRecordFilterType.Job =>
+                !someRecord.JobTitle.ToLower().Contains(filterLowerCaseValue),
+            StationRecordFilterType.Species =>
+                !someRecord.Species.ToLower().Contains(filterLowerCaseValue),
             StationRecordFilterType.Prints => someRecord.Fingerprint != null
                 && IsFilterWithSomeCodeValue(someRecord.Fingerprint, filterLowerCaseValue),
             StationRecordFilterType.DNA => someRecord.DNA != null

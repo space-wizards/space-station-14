@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Physics.Controllers;
+using Content.Client.PhysicsSystem.Controllers;
 using Content.Shared.Movement.Components;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Events;

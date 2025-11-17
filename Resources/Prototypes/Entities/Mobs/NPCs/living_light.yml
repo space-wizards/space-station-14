@@ -48,7 +48,6 @@
         BaseUnshaded: dead_glow
   - type: StatusEffects
     allowed:
-    - Stun
     - Corporeal
     - Electrocution
     - StaminaModifier
@@ -91,6 +90,7 @@
   - type: Tag
     tags:
       - FootstepSound
+      - SlowImmune
   - type: Destructible
     thresholds:
       - trigger:
@@ -175,7 +175,6 @@
     maxCharge: 1000
     startingCharge: 1000
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 50
   - type: Gun
     fireRate: 0.3

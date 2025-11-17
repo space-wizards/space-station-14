@@ -83,6 +83,8 @@
     steps: 4
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 10000
 
 - type: entity
   name: L6C ROW
@@ -122,6 +124,5 @@
       maxCharge: 10000
       startingCharge: 10000
     - type: BatterySelfRecharger
-      autoRecharge: true
       autoRechargeRate: 25
     - type: AmmoCounter

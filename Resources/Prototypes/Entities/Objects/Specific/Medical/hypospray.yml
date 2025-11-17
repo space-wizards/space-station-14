@@ -22,6 +22,7 @@
     solution: hypospray
   - type: ExaminableSolution
     solution: hypospray
+    exactVolume: true
   - type: Hypospray
     onlyAffectsMobs: false
   - type: UseDelay
@@ -63,6 +64,7 @@
     solution: hypospray
   - type: ExaminableSolution
     solution: hypospray
+    exactVolume: true
   - type: Hypospray
     onlyAffectsMobs: false
   - type: UseDelay
@@ -142,6 +144,7 @@
         maxVol: 15
   - type: ExaminableSolution
     solution: pen
+    exactVolume: true
   - type: Hypospray
     solutionName: pen
     transferAmount: 15
@@ -152,9 +155,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: firstaid_empty
-  - type: Tag
-    tags:
-    - Trash
   - type: PhysicalComposition
     materialComposition:
       Plastic: 50
@@ -188,8 +188,6 @@
           Quantity: 12
         - ReagentId: TranexamicAcid
           Quantity: 3
-  - type: Tag
-    tags: []
 
 - type: entity
   name: poison auto-injector
@@ -227,8 +225,6 @@
           Quantity: 10
         - ReagentId: Epinephrine
           Quantity: 5
-  - type: Tag
-    tags: []
 
 - type: entity
   name: brute auto-injector
@@ -271,8 +267,6 @@
           Quantity: 15
         - ReagentId: TranexamicAcid
           Quantity: 5
-  - type: Tag
-    tags: []
 
 - type: entity
   name: burn auto-injector
@@ -315,8 +309,6 @@
           Quantity: 10
         - ReagentId: Leporazine
           Quantity: 10
-  - type: Tag
-    tags: []
 
 - type: entity
   name: rad auto-injector
@@ -359,8 +351,6 @@
           Quantity: 15
         - ReagentId: Bicaridine
           Quantity: 5
-  - type: Tag
-    tags: []
 
 - type: entity
   name: puncturase auto-injector
@@ -403,8 +393,6 @@
           Quantity: 10
         - ReagentId: TranexamicAcid
           Quantity: 5
-  - type: Tag
-    tags: []
 
 - type: entity
   name: pyrazine auto-injector
@@ -447,8 +435,6 @@
           Quantity: 10
         - ReagentId: Dermaline
           Quantity: 10
-  - type: Tag
-    tags: []
 
 - type: entity
   name: airloss auto-injector
@@ -491,8 +477,6 @@
           Quantity: 20
         - ReagentId: DexalinPlus
           Quantity: 20
-  - type: Tag
-    tags: []
 
 - type: entity
   name: space medipen
@@ -536,8 +520,6 @@
             Quantity: 10
           - ReagentId: Barozine
             Quantity: 20
-  - type: Tag
-    tags: []
 
 - type: entity
   name: hyperzine injector
@@ -581,9 +563,7 @@
     onlyAffectsMobs: false
     injectOnly: true
   - type: StaticPrice
-    price: 500
-  - type: Tag
-    tags: []
+    price: 1500
 
 - type: entity
   name: hyperzine microinjector
@@ -622,9 +602,7 @@
     changeColor: false
     emptySpriteName: microstimpen_empty
   - type: StaticPrice
-    price: 100
-  - type: Tag
-    tags: []
+    price: 583 # 3500 for 6 as a freaky fraction
 
 - type: entity
   name: combat medipen
@@ -668,15 +646,11 @@
     onlyAffectsMobs: false
     injectOnly: true
   - type: StaticPrice
-    price: 500
-  - type: Tag
-    tags: []
+    price: 1500
 
 - type: entity
-  name: pen
   suffix: Hypopen
   parent: Pen # It is just like normal pen, isn't it?
-  description: A dark ink pen.
   id: Hypopen
   components:
   - type: SolutionContainerManager
@@ -685,11 +659,15 @@
         maxVol: 10
   - type: RefillableSolution
     solution: hypospray
+    refillTime: 1.25
+    maxRefill: 5
   - type: ExaminableSolution
     solution: hypospray
     heldOnly: true # Allow examination only when held in hand.
+    exactVolume: true
   - type: Hypospray
     onlyAffectsMobs: false
+    drawTime: 1.25
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
@@ -741,5 +719,3 @@
     transferAmount: 1
     onlyAffectsMobs: false
     injectOnly: true
-  - type: Tag
-    tags: []

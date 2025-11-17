@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -41,6 +42,8 @@ namespace Content.Server.Database
         Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot);
 
         Task SaveAdminOOCColorAsync(NetUserId userId, Color color);
+
+        Task SaveConstructionFavoritesAsync(NetUserId userId, List<ProtoId<ConstructionPrototype>> constructionFavorites);
 
         // Single method for two operations for transaction.
         Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot);
@@ -487,6 +490,12 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.SaveAdminOOCColorAsync(userId, color));
+        }
+
+        public Task SaveConstructionFavoritesAsync(NetUserId userId, List<ProtoId<ConstructionPrototype>> constructionFavorites)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.SaveConstructionFavoritesAsync(userId, constructionFavorites));
         }
 
         public Task<PlayerPreferences?> GetPlayerPreferencesAsync(NetUserId userId, CancellationToken cancel)
