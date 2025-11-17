@@ -1,0 +1,29 @@
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Trigger.Components.Effects;
+
+/// <summary>
+/// Trigger effect for sending the target sidewise (crawling).
+/// Knockdowns the user if <see cref="BaseXOnTriggerComponent.TargetUser"/> is true.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class KnockdownOnTriggerComponent : BaseXOnTriggerComponent
+{
+    /// <summary>
+    /// How long the target is forced to be on the ground.
+    /// </summary>
+    [DataField(required: true)]
+    public TimeSpan KnockdownAmount;
+
+    /// <summary>
+    /// Should the entity try and stand automatically?
+    /// </summary>
+    [DataField]
+    public bool AutoStand = true;
+
+    /// <summary>
+    /// Should the entity drop their items upon first being knocked down?
+    /// </summary>
+    [DataField]
+    public bool Drop = true;
+}

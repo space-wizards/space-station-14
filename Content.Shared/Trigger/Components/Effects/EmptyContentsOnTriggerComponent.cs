@@ -1,10 +1,20 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
-/// This is used for...
+/// Trigger effect for removing all items in container(s) on the target.
 /// </summary>
-[RegisterComponent]
-public sealed partial class EmptyContentsOnTriggerComponent : Component
+/// <remarks>
+/// Be very careful when setting <see cref="BaseXOnTriggerComponent.TargetUser"/> to true, or all your organs might fall out.
+/// </remarks>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class EmptyContentsOnTriggerComponent : BaseXOnTriggerComponent
 {
-    
+    /// <summary>
+    /// Names of containers to empty.
+    /// If null, all containers will be emptied.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public List<string>? Container;
 }

@@ -1,10 +1,10 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
-/// This is used for...
+/// Trigger for when this entity is thrown and then hits a second entity.
+/// User is the entity hit.
 /// </summary>
-[RegisterComponent]
-public sealed partial class TriggerOnThrowDoHitComponent : Component
-{
-    
-}
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class TriggerOnThrowDoHitComponent : BaseTriggerOnXComponent;
