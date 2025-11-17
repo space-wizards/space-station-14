@@ -4,8 +4,6 @@
   components:
   - type: Hailer
     areWiresCut: false
-    buttonColor: "#464966"
-    buttonHoverColor: "#575b7f"
     chatName:
     cuttingDoAfterDelay: 4
     screwingDoAfterDelay: 2
@@ -28,8 +26,6 @@
     - name: low
     - name: med
     - name: high
-    buttonColor: "#D43B3B"
-    buttonHoverColor: "#DF6B6B"
     chatName: "Security Hailer"
     descriptionLocale: hailer-gas-mask-examined
     emagLevelPrefix: hailer-emag

@@ -468,8 +468,6 @@
     hailLevelIndex: 
     emagLevelPrefix:
     isToolInteractible: false
-    buttonColor: "#3B40D4"
-    buttonHoverColor: "#6F6BDF"
     orders:
     - name: attention
       description: Pay attention !

@@ -26,12 +26,6 @@ public sealed partial class HailerComponent : Component
     [DataField]
     public string ChatName;
 
-    [DataField]
-    public string ButtonColor;
-
-    [DataField]
-    public string ButtonHoverColor;
-
     /// <summary>
     /// Delay when the hailer is used with a cutting tool
     /// </summary>
