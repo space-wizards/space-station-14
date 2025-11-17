@@ -9,6 +9,7 @@
     event: !type:ToggleActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionSecHailer
   name: Shout for compliance
   description: Verbally order the criminal to stop.
@@ -18,6 +19,6 @@
       sprite: Clothing/Mask/gassecurity.rsi
       state: sec-hail
     useDelay: 10 # Just like screaming
-    itemIconStyle: BigAction
+    # itemIconStyle: BigAction
   - type: InstantAction
     event: !type:HailerActionEvent

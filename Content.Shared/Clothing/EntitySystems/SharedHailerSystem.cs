@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.Chat;
+using Content.Shared.Clothing.ActionEvent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.Event;
 using Content.Shared.Coordinates;
@@ -10,7 +11,9 @@ using Content.Shared.Examine;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Speech;
 using Content.Shared.Stealth.Components;
+using Content.Shared.Timing;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -35,6 +38,11 @@ public abstract class SharedHailerSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _sharedTool = default!;
     [Dependency] private readonly SharedTransformSystem _sharedTransform = default!;
 
+
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    //[Dependency] private readonly SharedAudioSystem _audio = default!;
+
+
     public override void Initialize()
     {
         base.Initialize();
@@ -46,8 +54,70 @@ public abstract class SharedHailerSystem : EntitySystem
         SubscribeLocalEvent<HailerComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<HailerComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<HailerComponent, HailerToolDoAfterEvent>(OnToolDoAfter);
+
+        SubscribeLocalEvent<HailerComponent, HailerActionEvent>(OnHailAction);
+        SubscribeLocalEvent<HailerComponent, HailerOrderMessage>(OnHailOrder);
     }
 
+    private void OnHailAction(Entity<HailerComponent> ent, ref HailerActionEvent ev)
+    {
+        if (ev.Handled)
+            return;
+
+        if (TryComp<MaskComponent>(ent, out var mask))
+        {
+            if (!mask.IsToggled && !ent.Comp.AreWiresCut)
+            {
+                if (!_ui.IsUiOpen(ent.Owner, HailerUiKey.Key))
+                {
+                    if (_ui.TryOpenUi(ent.Owner, HailerUiKey.Key, ev.Performer))
+                    {
+                        ev.Handled = true;
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnHailOrder(Entity<HailerComponent> ent, ref HailerOrderMessage args)
+    {
+        string soundCollection;
+        string localeText;
+
+        if (HasComp<EmaggedComponent>(ent) && ent.Comp.EmagLevelPrefix != null)
+        {
+            //Emag lines
+            localeText = soundCollection = ent.Comp.EmagLevelPrefix;
+        }
+        else
+        {
+            //Set the strings needed for choosing a file in the SoundCollection and the corresponding loc string
+            var orderUsed = ent.Comp.Orders[args.OrderIndex];
+            var hailLevel = ent.Comp.CurrentHailLevel != null ? "-" + ent.Comp.CurrentHailLevel.Value.Name : String.Empty;
+            soundCollection = orderUsed.SoundCollection + hailLevel;
+            localeText = orderUsed.LocalePrefix + hailLevel;
+        }
+
+        //Play voice audio line and we get the index of the randomly choosen sound in the SoundCollection
+        var index = PlayVoiceLineSound(ent, soundCollection);
+
+        //Send chat message, based on the index of the audio file to match with the loc string
+        SubmitChatMessage(ent, localeText, index);
+    }
+
+    private int PlayVoiceLineSound(Entity<HailerComponent> ent, string soundCollection)
+    {
+        var specifier = new SoundCollectionSpecifier(soundCollection);
+        var resolver = _sharedAudio.ResolveSound(specifier); //Since this uses Robust Random, this can't be predicted ???
+        if (resolver is ResolvedCollectionSpecifier collectionResolver)
+        {
+            _sharedAudio.PlayPvs(resolver, ent.Owner, audioParams: new AudioParams().WithVolume(-3f));
+            return collectionResolver.Index;
+        }
+        else
+            Log.Error("SharedHailerSystem tried to play an audio file NOT from a SoundCollection !");
+        return -1;
+    }
 
     private void OnEquip(Entity<HailerComponent> ent, ref ClothingGotEquippedEvent args)
     {
