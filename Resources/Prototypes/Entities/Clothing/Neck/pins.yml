@@ -261,3 +261,45 @@
     state: goldautism
   - type: Clothing
     equippedPrefix: goldautism
+
+- type: entity
+  name: flower pin
+  parent: ClothingNeckPinBase
+  id: SprayFlowerPin
+  description: A cute flower pin. Something seems off with it...
+  components:
+  - type: Sprite
+    state: flower
+  - type: Clothing
+    equippedPrefix: flower
+  - type: EquipSpray
+    verbLocId: equip-spray-verb-press
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 30
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
+  - type: RefillableSolution
+    solution: spray
+  - type: DrainableSolution
+    solution: spray
+  - type: SolutionTransfer
+    maxTransferAmount: 30
+    transferAmount: 30
+  - type: UseDelay
+  - type: Spray
+    transferAmount: 5
+    pushbackAmount: 30
+    spraySound:
+      path: /Audio/Effects/spray3.ogg
+    sprayedPrototype: FlowerSpraySpray
+    vaporAmount: 1
+    vaporSpread: 90
+    sprayVelocity: 1.0
+
+
+# todo:
+#   Update spray sprite
+#   When you inspect it it shoots you? think about this...

@@ -16,11 +16,13 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Content.Shared.Fluids.EntitySystems;
+using Content.Shared.Fluids.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public sealed class SpraySystem : EntitySystem
+public sealed class SpraySystem : SharedSpaySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly GravitySystem _gravity = default!;
@@ -44,6 +46,8 @@ public sealed class SpraySystem : EntitySystem
         SubscribeLocalEvent<SprayComponent, UserActivateInWorldEvent>(OnActivateInWorld);
         Subs.CVar(_cfg, CCVars.GridImpulseMultiplier, UpdateGridMassMultiplier, true);
     }
+
+
 
     private void OnActivateInWorld(Entity<SprayComponent> entity, ref UserActivateInWorldEvent args)
     {
@@ -74,7 +78,8 @@ public sealed class SpraySystem : EntitySystem
         Spray(entity, args.User, clickPos);
     }
 
-    public void Spray(Entity<SprayComponent> entity, EntityUid user, MapCoordinates mapcoord)
+    // This doesn't make sense, user and map cord need to be changed to make sense (user is the source somehow??)
+    public override void Spray(Entity<SprayComponent> entity, EntityUid user, MapCoordinates mapcoord)
     {
         if (!_solutionContainer.TryGetSolution(entity.Owner, SprayComponent.SolutionName, out var soln, out var solution))
             return;
