@@ -109,4 +109,4 @@
   description: trait-unborgable-desc
   category: Disabilities
   components:
-  - type: MindUntransferableToBrainComponent
+  - type: MindUntransferableToBrain
