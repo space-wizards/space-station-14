@@ -891,3 +891,94 @@
   - type: StealthOnMove
     passiveVisibilityRate: -0.10
     movementVisibilityRate: 0.10
+
+- type: entity
+  parent: [StructureWheeled, CrateBaseWeldable]
+  id: CrateMailCart
+  name: mail cart
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/mailcart.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/mailcart.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Paintable
+    group: null
+
+#TODO: Figure out how to make mailcart similar to a filing cabinet with inventory space.
+#------Then figure out how to make custom package / letter slots
+# - type: entity
+#   parent: [ BaseStructureDynamic, BaseBagOpenClose, StructureWheeled ]
+#   id: CrateMailCart
+#   name: mail cart
+#   description: A create for all mail delivery needs
+#   suffix: Empty
+#   abstract: true
+#   components:
+#   - type: Storage
+#     grid:
+#     - 0,0,12,4
+#     maxItemSize: Normal
+#   - type: Sprite
+#     sprite: Structures/Storage/Creates/mailcart.rsi
+#     noRot: true
+#   - type: Appearance
+#   - type: UserInterface
+#     interfaces:
+#       enum.StorageUiKey.Key:
+#         type: StorageBoundUserInterface
+#   - type: Transform
+#     noRot: true
+#   - type: Fixtures
+#     fixtures:
+#       fix1:
+#         shape:
+#           !type:PhysShapeAabb
+#           bounds: "-0.18,-0.48,0.18,0.48"
+#         density: 200
+#         mask:
+#         - MachineMask
+#         layer:
+#         - MachineLayer
+#   - type: InteractionOutline
+#   - type: ContainerContainer
+#     containers:
+#       storagebase: !type:Container
+#   - type: Damageable
+#     damageContainer: StructuralInorganic
+#     damageModifierSet: Metallic
+#   - type: Destructible
+#     thresholds:
+#     - trigger: # Excess damage, don't spawn entities
+#         !type:DamageTrigger
+#         damage: 100
+#       behaviors:
+#       - !type:PlaySoundBehavior
+#         sound:
+#           collection: MetalBreak
+#       - !type:DoActsBehavior
+#         acts: ["Destruction"]
+#     - trigger:
+#         !type:DamageTrigger
+#         damage: 50
+#       behaviors:
+#       - !type:DoActsBehavior
+#         acts: ["Destruction"]
+#       - !type:PlaySoundBehavior
+#         sound:
+#           collection: MetalBreak
+#       - !type:SpawnEntitiesBehavior
+#         spawn:
+#           SheetSteel1:
+#             min: 1
+#             max: 2
+#   - type: StaticPrice
+#     price: 450
+#   - type: Construction
+#     graph: CrateMailCart
