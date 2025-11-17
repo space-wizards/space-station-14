@@ -142,7 +142,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
   - type: TimerTrigger
-    delay: 3
     beepInterval: 0.46
     beepSound:
       path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
@@ -213,7 +212,6 @@
   - type: Sprite
     sprite: Objects/Weapons/Grenades/whiteholegrenade.rsi
   - type: TimerTrigger
-    delay: 3
     beepInterval: 0.69
   - type: EmitSoundOnTrigger
     keysIn:
