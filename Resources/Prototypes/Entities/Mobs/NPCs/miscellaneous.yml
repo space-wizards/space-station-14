@@ -51,7 +51,6 @@
       proto: RedLightLaser
       fireCost: 50
     - type: BatterySelfRecharger
-      autoRecharge: true
       autoRechargeRate: 50
     - type: Battery
       maxCharge: 1000
@@ -104,36 +103,32 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
         damage:
           groups:
-            Brute: -0.25
+            Brute: -0.15
     - reagents: [ Blood ]
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
         damage:
           groups:
-            Brute: -0.5
-            Burn: -0.5
+            Brute: -0.25
+            Burn: -0.25
     - reagents: [ RobustHarvest ]
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
         damage:
           groups:
-            Brute: -2
-            Burn: -2
+            Brute: -1
+            Burn: -1
     - reagents: [ WeedKiller, PlantBGone ]
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
         damage:
           types:
-            Heat: 2
+            Heat: 1
   - type: ReplacementAccent
     accent: tomatoKiller
   - type: Item

@@ -57,7 +57,7 @@
     slotFlags: EYES
     uiWindowPos: 1,2
     strippingWindowPos: 1,2
-    displayName: inventory-slot-head
+    displayName: inventory-slot-eyes
     whitelist:
       tags:
       - PetWearable
