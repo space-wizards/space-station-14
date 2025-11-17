@@ -5,8 +5,8 @@
   components:
     - type: TriggerOnUse
     - type: PopupOnTrigger
-      text: wavable-component-wave
-      otherText: wavable-component-wave-other
+      text: popup-on-trigger-wave
+      otherText: popup-on-trigger-wave-other
     - type: UseDelay
       delay: 0.5
 
