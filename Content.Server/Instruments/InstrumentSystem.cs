@@ -180,18 +180,15 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         Dirty(uid, activeInstrument);
     }
 
-    private void OnMidiSetMaster(InstrumentSetMasterEvent msg, EntitySessionEventArgs args)
+    public void SetMaster(EntityUid uid, EntityUid? master)
     {
-        var uid = GetEntity(msg.Uid);
-        var master = GetEntity(msg.Master);
-
         if (!HasComp<ActiveInstrumentComponent>(uid))
             return;
 
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
-        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+        if (instrument.Master == master)
             return;
 
         if (master != null)
@@ -214,6 +211,20 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         {
             Clean(uid, instrument);
         }
+    }
+
+    private void OnMidiSetMaster(InstrumentSetMasterEvent msg, EntitySessionEventArgs args)
+    {
+        var uid = GetEntity(msg.Uid);
+        var master = GetEntity(msg.Master);
+
+        if (!TryComp(uid, out InstrumentComponent? instrument))
+            return;
+
+        if (args.SenderSession.AttachedEntity != instrument.InstrumentPlayer)
+            return;
+
+        SetMaster(uid, master);
     }
 
     private void OnMidiSetFilteredChannel(InstrumentSetFilteredChannelEvent msg, EntitySessionEventArgs args)

@@ -5,6 +5,7 @@ using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
+using Content.Server.Instruments;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
@@ -378,6 +379,12 @@ public sealed class NPCUtilitySystem : EntitySystem
                         return 0f;
 
                     return temperature.CurrentTemperature <= con.MinTemp ? 1f : 0f;
+                }
+            case PlayingMusicCon:
+                {
+                    if (TryComp(targetUid, out InstrumentComponent? instrument) && instrument.Playing && instrument.Master == null)
+                        return 1f;
+                    return 0f;
                 }
             default:
                 throw new NotImplementedException();

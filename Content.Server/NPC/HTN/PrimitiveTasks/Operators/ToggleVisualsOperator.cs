@@ -6,9 +6,14 @@ public sealed partial class ToggleVisualsOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
+    /// <summary>
+    /// Sets enabled or disabled on a ToggleableVisuals enum
+    /// If the entity using this has a visualizer that uses the ToggleableVisuals enum, this allows changing the sprite state
+    /// </summary>
+
     [DataField("enabled")]
     public bool Enabled = true;
-    
+
     public override void Startup(NPCBlackboard blackboard)
     {
         base.Startup(blackboard);

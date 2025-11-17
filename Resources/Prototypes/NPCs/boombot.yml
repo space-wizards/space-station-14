@@ -17,18 +17,17 @@
 - type: htnCompound
   id: FollowBandTargetCompound
   branches:
-    - tasks:
+    - preconditions:
+        - !type:IsPlayingMusicPrecondition
+      tasks:
         # Make sure the music is still playing
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyMusic
-          preconditions:
-            - !type:KeyExistsPrecondition
-              key: Target
         # Keep following the source of music if there is one
         - !type:HTNPrimitiveTask
           operator: !type:MoveToOperator
-            pathfindInPlanning: true
+            pathfindInPlanning: false
             removeKeyOnFinish: false
             targetKey: TargetCoordinates
             pathfindKey: TargetPathfind
@@ -55,7 +54,9 @@
         - !type:HTNPrimitiveTask
           operator: !type:ToggleVisualsOperator
             enabled: true
-        # TODO: Begin accompanying music
+        # Start accompanying music
+        - !type:HTNPrimitiveTask
+          operator: !type:JoinBandOperator
 
 - type: htnCompound
   id: LeaveBandTargetCompound
@@ -78,6 +79,9 @@
         - !type:HTNPrimitiveTask
           operator: !type:ForgetKeyOperator
             key: Target
+        # Stop accompanying music
+        - !type:HTNPrimitiveTask
+          operator: !type:JoinBandOperator
 
 - type: utilityQuery
   id: NearbyMusic
@@ -89,3 +93,5 @@
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
         preset: TargetDistance
+    - !type:PlayingMusicCon
+      curve: !type:BoolCurve

@@ -525,7 +525,6 @@
   - type: Anchorable
   - type: Instrument
     program: 62
-#  - type: Boombot
   - type: InteractionPopup
     interactSuccessString: petting-success-boombot
     interactFailureString: petting-failure-boombot

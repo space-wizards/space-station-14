@@ -12,7 +12,7 @@
           state: box
         name: construction-graph-tag-cardboardbox
         doAfter: 2
-      - prototype: SynthesizerInstrument
+      - tag: SynthesizerInstrument
         icon:
           sprite: /Textures/Objects/Fun/Instruments/h_synthesizer.rsi
           state: icon

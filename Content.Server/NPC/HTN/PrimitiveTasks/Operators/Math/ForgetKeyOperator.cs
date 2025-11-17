@@ -4,6 +4,10 @@ public sealed partial class ForgetKeyOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
+    /// <summary>
+    /// Wipes a specified key from the blackboard.
+    /// </summary>
+
     [DataField("key")]
     public string key;
 
