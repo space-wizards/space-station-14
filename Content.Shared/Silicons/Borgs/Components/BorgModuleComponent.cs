@@ -28,7 +28,7 @@ public sealed partial class BorgModuleComponent : Component
 
     /// <summary>
     /// List of types of borgs this module fits into.
-    /// this only affects examine text. what actually defines this the tag and whitelist on the borg.
+    /// This only affects examine text. The actual whitelist for modules that can be inserted into a borg is defined in its <see cref="BorgChassisComponent"/>.
     /// </summary>
     [DataField]
     public HashSet<LocId>? BorgFitTypes;
