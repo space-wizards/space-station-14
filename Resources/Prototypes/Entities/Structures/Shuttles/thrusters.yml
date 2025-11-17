@@ -104,7 +104,7 @@
 
 - type: entity
   parent: Thruster
-  id: XenoborgThruster
+  id: ThrusterXenoborg
   components:
   - type: Sprite
     sprite: Structures/Shuttles/xenoborg_thruster.rsi
