@@ -1585,7 +1585,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -6.5,-0.5
       parent: 1
-- proto: MachineBodyCrusher
+- proto: MachineArtifactCrusherXenoborg
   entities:
   - uid: 111
     components:
@@ -2475,7 +2475,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,2.5
       parent: 1
-- proto: XenoborgThruster
+- proto: ThrusterXenoborg
   entities:
   - uid: 113
     components:
