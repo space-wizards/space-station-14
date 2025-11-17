@@ -86,7 +86,7 @@ public sealed class SpawnArtifactWithNodeCommand : LocalizedEntityCommands
                     }
                 }
 
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-effect-type-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-effect-type-hint"));
             }
             case 3:
             {
@@ -97,7 +97,7 @@ public sealed class SpawnArtifactWithNodeCommand : LocalizedEntityCommands
                     completionOptions.Add(new CompletionOption(prototype.ID, Loc.GetString(prototype.Tip)));
                 }
 
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-trigger-type-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-trigger-type-hint"));
             }
             default:
                 return CompletionResult.Empty;

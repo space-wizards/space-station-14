@@ -26,7 +26,7 @@ public sealed class RemoveNodeFromArtifactCommand : LocalizedEntityCommands
             || !EntityManager.TryGetEntity(artifactId, out var target)
             || !EntityManager.TryGetComponent(target.Value, out XenoArtifactComponent? artifactComp))
         {
-            shell.WriteLine(Loc.GetString("cmd-xenoartifact-commands-failed-to-find-artifact", ("uid", args[0])));
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-artifact", ("uid", args[0])));
             return;
         }
 
@@ -34,7 +34,7 @@ public sealed class RemoveNodeFromArtifactCommand : LocalizedEntityCommands
             || !EntityManager.TryGetEntity(toDeleteNetEnt, out var toDelete)
             || !EntityManager.TryGetComponent(toDelete, out XenoArtifactNodeComponent? nodeComponent))
         {
-            shell.WriteLine(Loc.GetString("cmd-xenoartifact-commands-failed-to-find-node", ("uid", args[0])));
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-node", ("uid", args[0])));
             return;
         }
 
@@ -56,7 +56,7 @@ public sealed class RemoveNodeFromArtifactCommand : LocalizedEntityCommands
                     var netEntity = EntityManager.GetNetEntity(uid);
                     completionOptions.Add(new CompletionOption(netEntity.Id.ToString()));
                 }
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-artifact-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-artifact-hint"));
             }
             case 2:
             {
@@ -76,7 +76,7 @@ public sealed class RemoveNodeFromArtifactCommand : LocalizedEntityCommands
                     }
                 }
 
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-node-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-node-hint"));
             }
             default:
                 return CompletionResult.Empty;

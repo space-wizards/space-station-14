@@ -25,7 +25,7 @@ public sealed class AddEdgeBetweenArtifactNodesCommand : LocalizedEntityCommands
         if(!NetEntity.TryParse(args[0], out var artifactNetEnt)
            || !EntityManager.TryGetEntity(artifactNetEnt, out var artifactEnt))
         {
-            shell.WriteLine(Loc.GetString("cmd-xenoartifact-commands-failed-to-find-artifact", ("uid", args[0])));
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-artifact", ("uid", args[0])));
             return;
         }
 
@@ -33,7 +33,7 @@ public sealed class AddEdgeBetweenArtifactNodesCommand : LocalizedEntityCommands
             || !EntityManager.TryGetEntity(nodeNetEntFrom, out var nodeEntFrom)
             || !EntityManager.TryGetComponent(nodeEntFrom, out XenoArtifactNodeComponent? _))
         {
-            shell.WriteLine(Loc.GetString("cmd-xenoartifact-commands-failed-to-find-node", ("uid", args[1])));
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-node", ("uid", args[1])));
             return;
         }
 
@@ -41,7 +41,7 @@ public sealed class AddEdgeBetweenArtifactNodesCommand : LocalizedEntityCommands
             || !EntityManager.TryGetEntity(nodeNetEntTo, out var nodeEntTo)
             || !EntityManager.TryGetComponent(nodeEntTo, out XenoArtifactNodeComponent? _))
         {
-            shell.WriteLine(Loc.GetString("cmd-xenoartifact-commands-failed-to-find-node", ("uid", args[2])));
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-node", ("uid", args[2])));
             return;
         }
 
@@ -64,7 +64,7 @@ public sealed class AddEdgeBetweenArtifactNodesCommand : LocalizedEntityCommands
                     completionOptions.Add(new CompletionOption(netEntity.Id.ToString()));
                 }
 
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-artifact-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-artifact-hint"));
             }
             case 2:
             {
@@ -88,7 +88,7 @@ public sealed class AddEdgeBetweenArtifactNodesCommand : LocalizedEntityCommands
                     }
                 }
 
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-node-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-node-hint"));
             }
             case 3:
             {
@@ -117,7 +117,7 @@ public sealed class AddEdgeBetweenArtifactNodesCommand : LocalizedEntityCommands
                         completionOptions.Add(new CompletionOption(netEntity.Id.ToString(), hint));
                     }
                 }
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-node-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-node-hint"));
             }
             default:
                 return CompletionResult.Empty;

@@ -30,19 +30,19 @@ public sealed class CreateNodeInArtifactCommand : LocalizedEntityCommands
             || !EntityManager.TryGetEntity(artifactNetEntity, out var target)
             || !EntityManager.TryGetComponent(target.Value, out XenoArtifactComponent? artifactComp))
         {
-            shell.WriteLine(Loc.GetString("cmd-xenoartifact-commands-failed-to-find-artifact", ("uid", args[0])));
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-artifact", ("uid", args[0])));
             return;
         }
 
         if (!_prototypeManager.TryIndex(args[1], out var effectProtoId))
         {
-            shell.WriteLine(Loc.GetString("cmd-xenoartifact-commands-failed-to-find-effect", ("entProtoId", args[1])));
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-effect", ("entProtoId", args[1])));
             return;
         }
 
         if (!_prototypeManager.TryIndex<XenoArchTriggerPrototype>(args[2], out var trigger))
         {
-            shell.WriteLine(Loc.GetString("cmd-xenoartifact-commands-failed-to-find-trigger", ("protoId", args[2])));
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-trigger", ("protoId", args[2])));
             return;
         }
 
@@ -80,7 +80,7 @@ public sealed class CreateNodeInArtifactCommand : LocalizedEntityCommands
                     completionOptions.Add(new CompletionOption(netEntity.Id.ToString()));
                 }
 
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-artifact-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-artifact-hint"));
             }
             case 2:
             {
@@ -95,12 +95,12 @@ public sealed class CreateNodeInArtifactCommand : LocalizedEntityCommands
                     }
                 }
 
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-effect-type-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-effect-type-hint"));
             }
             case 3:
             {
                 var options = CompletionHelper.PrototypeIDs<XenoArchTriggerPrototype>();
-                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-xenoartifact-commands-trigger-type-hint"));
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-xenoartifact-common-trigger-type-hint"));
             }
             case 4:
             {
@@ -121,7 +121,7 @@ public sealed class CreateNodeInArtifactCommand : LocalizedEntityCommands
                     }
                 }
 
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-commands-node-hint"));
+                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-node-hint"));
             }
             default:
                 return CompletionResult.Empty;
