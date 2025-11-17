@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
@@ -92,6 +93,13 @@ public sealed partial class ClothingComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan StripDelay = TimeSpan.Zero;
+
+    /// <summary>
+    ///     A scale applied to all layers.
+    /// </summary>
+    /// 
+    [DataField]
+    public Vector2 Scale = Vector2.One;
 }
 
 public enum ClothingMask : byte
