@@ -1,4 +1,4 @@
-borg-module-fit = This module fits in {$types}.
+borg-module-fit = This module fits into {$types}.
 
 borg-type-all = [color=white]any cyborg[/color]
 borg-type-cargo = [color= #d6b328]mining cyborgs[/color]
