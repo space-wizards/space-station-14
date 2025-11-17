@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -24,6 +25,12 @@ public sealed partial class BorgModuleComponent : Component
     [DataField]
     [AutoNetworkedField]
     public bool DefaultModule;
+
+    /// <summary>
+    /// List of types of borgs this module fits into
+    /// </summary>
+    [DataField]
+    public HashSet<LocId>? BorgFitTypes;
 }
 
 /// <summary>

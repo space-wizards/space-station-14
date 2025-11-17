@@ -1,4 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
@@ -35,8 +36,35 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+        SubscribeLocalEvent<BorgModuleComponent, ExaminedEvent>(OnModuleExamine);
 
         InitializeRelay();
+    }
+
+    private void OnModuleExamine(Entity<BorgModuleComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.BorgFitTypes == null)
+            return;
+
+        var types = "";
+        var numberType = 0;
+        foreach (var type in ent.Comp.BorgFitTypes)
+        {
+            numberType++;
+
+            if (numberType == ent.Comp.BorgFitTypes.Count && numberType > 1)
+            {
+                types += " ";
+                types += Loc.GetString("borg-module-fit-and");
+                types += " ";
+            }
+            else if (numberType > 1)
+                types += ", ";
+
+            types += Loc.GetString(type);
+        }
+
+        args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
     }
 
     private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
