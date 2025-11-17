@@ -70,7 +70,7 @@
   components:
   - type: BorgModule
     borgFitTypes:
-    - borg-type-cargo
+    - borg-type-salvage
   - type: Tag
     tags:
     - BorgModuleCargo
@@ -98,7 +98,7 @@
   components:
   - type: BorgModule
     borgFitTypes:
-    - borg-type-engineering
+    - borg-type-engineer
   - type: Tag
     tags:
     - BorgModuleEngineering
@@ -339,7 +339,7 @@
   components:
   - type: BorgModule
     borgFitTypes:
-    - xenoborg-type-engineering
+    - xenoborg-type-engi
   - type: Tag
     tags:
     - XenoborgModuleEngi
