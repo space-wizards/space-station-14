@@ -203,7 +203,7 @@ namespace Content.Client.Inventory
         private void SlotPressed(GUIBoundKeyEventArgs ev, SlotControl slot)
         {
             // TODO: allow other interactions? Verbs? But they should then generate a pop-up and/or have a delay so the
-            // user that is being stripped can prevent the verbs from being exectuted.
+            // user that is being stripped can prevent the verbs from being executed.
             // So for now: only stripping & examining
             if (ev.Function == EngineKeyFunctions.Use)
             {
@@ -254,7 +254,7 @@ namespace Content.Client.Inventory
 
         private void UpdateEntityIcon(SlotControl button, EntityUid? entity)
         {
-            // Hovering, highlighting & storage are features of general hands & inv GUIs. This UI just re-uses these because I'm lazy.
+            // Hovering, highlighting & storage are features of general hands & inv GUIs. This UI just reuses these because I'm lazy.
             button.ClearHover();
             button.StorageButton.Visible = false;
 
