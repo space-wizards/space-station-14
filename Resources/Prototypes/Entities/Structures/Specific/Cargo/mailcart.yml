@@ -68,13 +68,13 @@
       fixtures:
         fix1:
           shape:
-            !type:PhysShapeCircle
-            radius: 0.3
-          density: 250
-          layer:
-          - MobLayer
+            !type:PhysShapeAabb
+            bounds: "-0.18,-0.2,0.18,0.2"
+          density: 60
           mask:
-          - MobMask
+          - FullTileMask
+          layer:
+          - LargeMobLayer
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
