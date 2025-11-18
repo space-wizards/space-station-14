@@ -3,6 +3,7 @@ using Content.Shared.Species.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Zombies;
 using Content.Server.Zombies;
+using Content.Shared.Mind.Components;
 using Content.Shared.Traits.Assorted;
 using Robust.Shared.Prototypes;
 
@@ -41,12 +42,20 @@ public sealed partial class NymphSystem : EntitySystem
             _zombie.ZombifyEntity(nymph);
 
         // Move the mind if there is one and it's supposed to be transferred
-        if (comp.TransferMind == true && _mindSystem.TryGetMind(args.OldBody, out var mindId, out var mind))
+        if (comp.TransferMind)
         {
-            _mindSystem.TransferTo(mindId, nymph, mind: mind);
+            if (TryComp<MindContainerComponent>(args.OldBody, out var oldMindCont))
+            {
+                // A mind being moved from body -> brain counts as having inhabited the same container, even if the mind has since left.
+                var nympMindCont = EnsureComp<MindContainerComponent>(nymph);
+                _mindSystem.UpdateLatestMind((nymph, nympMindCont), oldMindCont.LatestMind);
+            }
 
             if (_mindUntransferableQuery.HasComp(args.OldBody))
                 AddComp<MindUntransferableToBrainComponent>(nymph);
+
+            if (_mindSystem.TryGetMind(args.OldBody, out var mindId, out var mind))
+                _mindSystem.TransferTo(mindId, nymph, mind: mind);
         }
 
         // Delete the old organ

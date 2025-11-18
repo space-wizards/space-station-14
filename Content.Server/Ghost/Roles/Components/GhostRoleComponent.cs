@@ -1,5 +1,5 @@
-using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Mind.Commands;
+using Content.Shared.Ghost.Roles.Raffles;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 

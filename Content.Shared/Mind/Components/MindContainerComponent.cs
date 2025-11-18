@@ -17,6 +17,13 @@ public sealed partial class MindContainerComponent : Component
     public EntityUid? Mind { get; set; }
 
     /// <summary>
+    ///     The latest mind to control this container.
+    ///     Used to track if the mob has been inhabited, even if the mind has since left.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid? LatestMind { get; set; }
+
+    /// <summary>
     ///     True if we have a mind, false otherwise.
     /// </summary>
     [MemberNotNullWhen(true, nameof(Mind))]

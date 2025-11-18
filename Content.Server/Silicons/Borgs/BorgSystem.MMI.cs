@@ -1,4 +1,5 @@
-﻿using Content.Server.Ghost.Roles.Components;
+﻿using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
@@ -13,6 +14,7 @@ public sealed partial class BorgSystem
 {
 
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
 
     public void InitializeMMI()
     {
@@ -46,7 +48,9 @@ public sealed partial class BorgSystem
         linked.LinkedMMI = entity.Owner;
         Dirty(entity.Owner, entity.Comp);
 
-        if (_mind.TryGetMind(ent, out var mindId, out var mind))
+        TryComp<MindContainerComponent>(ent, out var mindContainer);
+
+        if (_mind.TryGetMind(ent, out var mindId, out var mind, mindContainer))
         {
             _mind.TransferTo(mindId, entity.Owner, true, mind: mind);
 
@@ -55,7 +59,8 @@ public sealed partial class BorgSystem
         }
         else if (entity.Comp.EnableGhostRole)
         {
-            EnableGhostRole((entity.Owner, entity.Comp));
+            if (!entity.Comp.GhostRoleRequiresPlayerBrain || mindContainer != null && mindContainer.LatestMind != null)
+                EnableGhostRole((entity.Owner, entity.Comp));
         }
 
         _appearance.SetData(entity.Owner, MMIVisuals.BrainPresent, true);
@@ -97,11 +102,17 @@ public sealed partial class BorgSystem
             if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
                 _roles.MindRemoveRole<SiliconBrainRoleComponent>(mindId);
 
-            _mind.TransferTo(mindId, entity.Owner, true, mind: mind);
+            if (HasComp<GhostTakeoverAvailableComponent>(linked))
+                // We detach the ghost role player from the brain if they leave the MMI, as they are not the original brain's owner.
+                _mind.TransferTo(mindId, null, true, true, mind: mind);
+            else
+                _mind.TransferTo(mindId, entity.Owner, true, mind: mind);
         }
-        else if (HasComp<GhostTakeoverAvailableComponent>(linked))
+
+        if (HasComp<GhostTakeoverAvailableComponent>(linked))
         {
-            RemComp<GhostRoleComponent>(linked);
+            RemCompDeferred<GhostTakeoverAvailableComponent>(linked);
+            RemCompDeferred<GhostRoleComponent>(linked);
         }
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
@@ -109,15 +120,14 @@ public sealed partial class BorgSystem
 
     private void EnableGhostRole(Entity<MMIComponent> entity)
     {
+        if (!entity.Comp.EnableGhostRole || entity.Comp.GhostRole == null)
+            return;
+
         var ghostRole = EnsureComp<GhostRoleComponent>(entity.Owner);
         EnsureComp<GhostTakeoverAvailableComponent>(entity.Owner);
 
         //GhostRoleComponent inherits custom settings from the the MMI component
-        ghostRole.RoleName = Loc.GetString(entity.Comp.RoleName);
-        ghostRole.RoleDescription = Loc.GetString(entity.Comp.RoleDescription);
-        ghostRole.RoleRules = Loc.GetString(entity.Comp.RoleRules);
-        ghostRole.MindRoles = entity.Comp.MindRoles;
-        ghostRole.JobProto = entity.Comp.JobProto;
+        _ghostRole.ApplyGhostRoleSettings((entity.Owner, ghostRole), entity.Comp.GhostRole);
 
         _appearance.SetData(entity.Owner, MMIVisuals.MindState, MMIVisualsMindstate.Searching);
     }

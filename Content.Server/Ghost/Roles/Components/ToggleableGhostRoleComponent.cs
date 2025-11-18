@@ -1,3 +1,4 @@
+using Content.Shared.Ghost.Roles;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
@@ -34,28 +35,10 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     public string BeginSearchingText = string.Empty;
 
     /// <summary>
-    /// The name shown on the Ghost Role list
+    /// Ghost role settings that will be applied to the role this component creates.
     /// </summary>
     [DataField]
-    public string RoleName = string.Empty;
-
-    /// <summary>
-    /// The description shown on the Ghost Role list
-    /// </summary>
-    [DataField]
-    public string RoleDescription = string.Empty;
-
-    /// <summary>
-    /// The introductory message shown when trying to take the ghost role/join the raffle
-    /// </summary>
-    [DataField]
-    public string RoleRules = string.Empty;
-
-    /// <summary>
-    /// A list of mind roles that will be added to the entity's mind
-    /// </summary>
-    [DataField]
-    public List<EntProtoId> MindRoles;
+    public GhostRoleSettings GhostRole;
 
     /// <summary>
     /// The displayed name of the verb to wipe the controlling player
@@ -80,10 +63,4 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     /// </summary>
     [DataField]
     public string StopSearchVerbPopup = string.Empty;
-
-    /// /// <summary>
-    /// The prototype ID of the job that will be given to the controlling mind
-    /// </summary>
-    [DataField("job")]
-    public ProtoId<JobPrototype>? JobProto;
 }

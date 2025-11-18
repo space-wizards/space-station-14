@@ -74,11 +74,31 @@
 
 - type: entity
   parent: MMI
-  id: MMIGhostRoleable
-  suffix: Ghost Role-able
+  id: MMIXenoborg
+  suffix: Xenoborg
+  name: xenoborg man-machine interface
+  description: A machine able to facilitate communication between a biological brain and electronics, with integrated circuits able to support new personalities should the brain be unable to do so.
   components:
+  - type: Sprite
+    layers:
+    - state: mmi_brain
+      map: ["enum.MMIVisualLayers.Brain"]
+      visible: false
+    - state: mmi_off
+      map: ["enum.MMIVisualLayers.Base"]
+    - state: mmi_xenoborg
+      map: ["enum.MMIVisualLayers.Coloration"]
   - type: MMI
+    # This is not enabled for MMIs by default, as brains are intended to "belong" to the player who initially played them.
+    # Xenoborgs use this option however, so that the Unborgable trait doesn't negatively impact the antag's progression.
     enableGhostRole: true
+    ghostRole:
+      roleName: mmi-brain-role-name
+      roleDescription: mmi-brain-role-description
+      roleRules: ghost-role-information-silicon-rules
+      mindRoles:
+      - MindRoleGhostRoleSilicon
+      #jobProto: Borg # You are not working for the station.
 
 - type: entity
   parent: BaseItem
@@ -98,16 +118,17 @@
       examineTextMindSearching: positronic-brain-still-searching
       examineTextNoMind: positronic-brain-off
       beginSearchingText: positronic-brain-searching
-      roleName: positronic-brain-role-name
-      roleDescription: positronic-brain-role-description
-      roleRules: ghost-role-information-silicon-rules
-      mindRoles:
-      - MindRoleGhostRoleSilicon
+      ghostRole:
+        roleName: positronic-brain-role-name
+        roleDescription: positronic-brain-role-description
+        roleRules: ghost-role-information-silicon-rules
+        mindRoles:
+        - MindRoleGhostRoleSilicon
+        jobProto: Borg
       wipeVerbText: positronic-brain-wipe-device-verb-text
       wipeVerbPopup: positronic-brain-wiped-device
       stopSearchVerbText: positronic-brain-stop-searching-verb-text
       stopSearchVerbPopup: positronic-brain-stopped-searching
-      job: Borg
     - type: BlockMovement
     - type: Examiner
     - type: BorgBrain

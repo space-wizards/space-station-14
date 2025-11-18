@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Ghost.Roles;
 using Content.Shared.Roles;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -52,39 +53,22 @@ public sealed partial class MMIComponent : Component
 
     /// <summary>
     /// If true, a brain without mind being inserted into this MMI creates a ghost role (similar to a positronic brain).
+    /// Must have <see cref="GhostRole"/> set to work.
     /// </summary>
     [DataField]
     public bool EnableGhostRole;
 
     /// <summary>
-    /// The name shown on the Ghost Role list
+    /// If true, the brain required to create a ghost role must have had a player inhabit it at some point.
     /// </summary>
     [DataField]
-    public LocId RoleName = "mmi-brain-role-name";
+    public bool GhostRoleRequiresPlayerBrain = true;
 
     /// <summary>
-    /// The description shown on the Ghost Role list
+    /// If true, the brain required to create a ghost role must have had a player inhabit it at some point.
     /// </summary>
     [DataField]
-    public LocId RoleDescription = "mmi-brain-role-description";
-
-    /// <summary>
-    /// The introductory message shown when trying to take the ghost role/join the raffle
-    /// </summary>
-    [DataField]
-    public LocId RoleRules = "ghost-role-information-silicon-rules";
-
-    /// <summary>
-    /// A list of mind roles that will be added to the entity's mind
-    /// </summary>
-    [DataField]
-    public List<EntProtoId> MindRoles = new() { "MindRoleGhostRoleSilicon" };
-
-    /// <summary>
-    /// The prototype ID of the job that will be given to the controlling mind
-    /// </summary>
-    [DataField]
-    public ProtoId<JobPrototype>? JobProto = "Borg";
+    public GhostRoleSettings? GhostRole;
 }
 
 [Serializable, NetSerializable]
@@ -99,6 +83,7 @@ public enum MMIVisualLayers : byte
 {
     Brain,
     Base,
+    Coloration,
 }
 
 [Serializable, NetSerializable]
