@@ -13,11 +13,13 @@
     # - type: Rotatable
     - type: InteractionOutline
     - type: Storage
-      popup: true
-      capacity: 80
-      blacklist: # there is exclusive item slots for that
-       tags:
-         - PackageDelivery
+      maxItemSize: Small
+      grid:
+      - 0,0,6,8
+      quickInsert: true
+      whitelist:
+        tags:
+        - LetterDelivery
     - type: ItemSlots
       slots:
         package_1:
