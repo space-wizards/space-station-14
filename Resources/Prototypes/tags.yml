@@ -159,7 +159,7 @@
   id: Bottle # Storage whitelist: ChemMaster, ChemBag, SmartFridge, ClothingBeltJanitor, ClothingBeltMedical, ClothingBeltPlant
 
 - type: Tag
-  id: BoxCardboard # CargoBounty: BountyCardboardBox
+  id: BoxCardboard # CargoBounty: BountyCardboardBox. Storage whitelist: MailCart
 
 - type: Tag
   id: BoxHug # ConstructionGraph: HugBot
@@ -465,7 +465,7 @@
   id: DockEmergency # Used bv EmergencyShuttleSystem for finding a priority FTL destination.
 
 - type: Tag
-  id: Document # A superset of Paper tag. Represents a paper-like entity with writing on it, but is not necessarily writeable itself.
+  id: Document # A superset of Paper tag. Represents a paper-like entity with writing on it, but is not necessarily writeable itself. Storage whitelist: MailCart
 
 - type: Tag
   id: DonkPocket # Storage whitelist: FoodBoxDonkpocket
@@ -581,7 +581,7 @@
   id: Flower # CargoBounty: flowerwreath. CargoBounty: BountyFlower
 
 - type: Tag
-  id: Folder # Storage whitelist: Bookshelf, NoticeBoard
+  id: Folder # Storage whitelist: Bookshelf, NoticeBoard, MailCart
 
 - type: Tag
   id: FoodSnack # Storage whitelist: CandyBucket, CandyBowl. ItemMapper: CandyBowl
@@ -846,7 +846,7 @@
   id: Lemon # CargoBounty: BountyLemon
 
 - type: Tag
-  id: LetterDelivery # Storage whitelist: MailCart. ItemMapper: MailCart.
+  id: LetterDelivery # Storage whitelist: MailCart
 
 - type: Tag
   id: LightBulb # Storage whitelist: BoxLightbulb. ConstructionGraph: HelmetJustice
@@ -1028,7 +1028,7 @@
 ## P ##
 
 - type: Tag
-  id: PackageDelivery # Storage whitelist: MailCart. ItemMapper: MailCart.
+  id: PackageDelivery # Storage whitelist: MailCart. ItemMapper: MailCart
 
 - type: Tag
   id: Packet # Storage whitelist: ClothingBeltChef
@@ -1037,7 +1037,7 @@
   id: Pancake # CargoBounty: BountyPancake
 
 - type: Tag
-  id: Paper # A writeable piece of paper. Subset of Document tag. SpecialDigestible: OrganMothStomach, OrganReptilianStomach
+  id: Paper # A writeable piece of paper. Subset of Document tag. SpecialDigestible: OrganMothStomach, OrganReptilianStomach. Storage whitelist: MailCart
 
 - type: Tag
   id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
