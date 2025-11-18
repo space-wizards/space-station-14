@@ -105,6 +105,17 @@
 
 # chieftain
 
+- type: listing
+  id: DotaRadiantAlmightySword
+  name: Almighty Sword
+  description: a great sword.
+  icon: { sprite: Objects/counterstrike/Weapons/Dota/Radiant/Сhieftain/almightySword.rsi, state: icon }
+  productEntity: RadiantAlmightySword
+  cost:
+    Telecrystal: 67
+  categories:
+  - DotaRadiantChieftain
+
 #DIRE
 
 # recruit

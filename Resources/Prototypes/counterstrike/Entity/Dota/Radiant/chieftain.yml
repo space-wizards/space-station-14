@@ -1,0 +1,22 @@
+- type: entity
+  name: Almighty Sword
+  parent: [ BaseSword, BaseMajorContraband ]
+  id: RadiantAlmightySword
+  description: an almighty sword.
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/Dota/Radiant/Сhieftain/almightySword.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 30
+        Blunt: 20
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,0,2
+  - type: Tool
+    qualities:
+    - Slicing
