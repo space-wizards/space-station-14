@@ -12,13 +12,16 @@
         - state: mailcart_base
     - type: InteractionOutline
     - type: Storage
-      maxItemSize: Small
       grid:
       - 0,0,6,8
       quickInsert: true
       whitelist:
         tags:
         - LetterDelivery
+        - Paper
+        - Document
+        - BoxCardboard
+        - Folder
     - type: ItemSlots
       slots:
         package_1:

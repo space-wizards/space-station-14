@@ -1,12 +1,15 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Modified noahrb (Github) for SS14",
+  "copyright": "Modified noahrb and jrpl (Github) for SS14",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
+    {
+      "name": "icon"
+    },
     {
       "name": "mailcart_base"
     },
