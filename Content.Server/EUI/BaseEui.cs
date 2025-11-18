@@ -1,9 +1,6 @@
-﻿using System;
 using Content.Shared.Eui;
-using Robust.Server.Player;
-using Robust.Shared.IoC;
 using Robust.Shared.Network;
-
+using Robust.Shared.Player;
 
 namespace Content.Server.EUI
 {
@@ -25,7 +22,7 @@ namespace Content.Server.EUI
         /// <summary>
         ///     The player that this EUI is open for.
         /// </summary>
-        public IPlayerSession Player { get; private set; } = default!;
+        public ICommonSession Player { get; private set; } = default!;
         public bool IsShutDown { get; private set; }
         public EuiManager Manager { get; private set; } = default!;
         public uint Id { get; private set; }
@@ -51,6 +48,8 @@ namespace Content.Server.EUI
         /// </summary>
         public virtual void HandleMessage(EuiMessageBase msg)
         {
+            if (msg is CloseEuiMessage)
+                Close();
         }
 
         /// <summary>
@@ -83,11 +82,11 @@ namespace Content.Server.EUI
         public void SendMessage(EuiMessageBase message)
         {
             var netMgr = IoCManager.Resolve<IServerNetManager>();
-            var msg = netMgr.CreateNetMessage<MsgEuiMessage>();
+            var msg = new MsgEuiMessage();
             msg.Id = Id;
             msg.Message = message;
 
-            netMgr.ServerSendMessage(msg, Player.ConnectedClient);
+            netMgr.ServerSendMessage(msg, Player.Channel);
         }
 
         /// <summary>
@@ -111,14 +110,14 @@ namespace Content.Server.EUI
             var state = GetNewState();
 
             var netMgr = IoCManager.Resolve<IServerNetManager>();
-            var msg = netMgr.CreateNetMessage<MsgEuiState>();
+            var msg = new MsgEuiState();
             msg.Id = Id;
             msg.State = state;
 
-            netMgr.ServerSendMessage(msg, Player.ConnectedClient);
+            netMgr.ServerSendMessage(msg, Player.Channel);
         }
 
-        internal void Initialize(EuiManager manager, IPlayerSession player, uint id)
+        internal void Initialize(EuiManager manager, ICommonSession player, uint id)
         {
             Manager = manager;
             Player = player;

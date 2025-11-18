@@ -1,392 +1,421 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Administration.Logs;
-using Content.Server.Explosion.Components;
-using Content.Shared.Acts;
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Destructible;
+using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NPC.Pathfinding;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Camera;
+using Content.Shared.CCVar;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Maps;
-using Content.Shared.Physics;
-using Content.Shared.Sound;
-using Content.Shared.Tag;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Explosion;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.EntitySystems;
+using Content.Shared.GameTicking;
+using Content.Shared.Inventory;
+using Content.Shared.Projectiles;
+using Content.Shared.Throwing;
+using Robust.Server.GameStates;
+using Robust.Server.Player;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
-namespace Content.Server.Explosion.EntitySystems
+namespace Content.Server.Explosion.EntitySystems;
+
+public sealed partial class ExplosionSystem : SharedExplosionSystem
 {
-    public sealed class ExplosionSystem : EntitySystem
+    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
+    [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
+    [Dependency] private readonly SharedCameraRecoilSystem _recoilSystem = default!;
+    [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsSys = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly FlammableSystem _flammableSystem = default!;
+    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
+
+    private EntityQuery<FlammableComponent> _flammableQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private EntityQuery<ProjectileComponent> _projectileQuery;
+    private EntityQuery<ActorComponent> _actorQuery;
+    private EntityQuery<DestructibleComponent> _destructibleQuery;
+    private EntityQuery<DamageableComponent> _damageableQuery;
+    private EntityQuery<AirtightComponent> _airtightQuery;
+
+    /// <summary>
+    ///     "Tile-size" for space when there are no nearby grids to use as a reference.
+    /// </summary>
+    public const ushort DefaultTileSize = 1;
+
+    public const int MaxExplosionAudioRange = 30;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        base.Initialize();
 
-        /// <summary>
-        /// Distance used for camera shake when distance from explosion is (0.0, 0.0).
-        /// Avoids getting NaN values down the line from doing math on (0.0, 0.0).
-        /// </summary>
-        private static readonly Vector2 EpicenterDistance = (0.1f, 0.1f);
+        DebugTools.Assert(_prototypeManager.HasIndex(DefaultExplosionPrototypeId));
 
-        /// <summary>
-        /// Chance of a tile breaking if the severity is Light and Heavy
-        /// </summary>
-        private const float LightBreakChance = 0.3f;
-        private const float HeavyBreakChance = 0.8f;
+        // handled in ExplosionSystem.GridMap.cs
+        SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+        SubscribeLocalEvent<GridStartupEvent>(OnGridStartup);
+        SubscribeLocalEvent<ExplosionResistanceComponent, GetExplosionResistanceEvent>(OnGetResistance);
 
-        // TODO move this to the component
-        private static readonly SoundSpecifier ExplosionSound = new SoundCollectionSpecifier("explosion");
+        // as long as explosion-resistance mice are never added, this should be fine (otherwise a mouse-hat will transfer it's power to the wearer).
+        SubscribeLocalEvent<ExplosionResistanceComponent, InventoryRelayedEvent<GetExplosionResistanceEvent>>(RelayedResistance);
 
-        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IMapManager _maps = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ITileDefinitionManager _tiles = default!;
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
 
-        [Dependency] private readonly ActSystem _acts = default!;
-        [Dependency] private readonly EffectSystem _effects = default!;
-        [Dependency] private readonly TriggerSystem _triggers = default!;
-        [Dependency] private readonly AdminLogSystem _logSystem = default!;
-        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
-        [Dependency] private readonly TagSystem _tags = default!;
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
 
-        private bool IgnoreExplosivePassable(EntityUid e)
+        // Handled by ExplosionSystem.Processing.cs
+        SubscribeLocalEvent<MapRemovedEvent>(OnMapRemoved);
+
+        // handled in ExplosionSystemAirtight.cs
+        SubscribeLocalEvent<AirtightComponent, DamageChangedEvent>(OnAirtightDamaged);
+        SubscribeCvars();
+        InitAirtightMap();
+        InitVisuals();
+
+        _flammableQuery = GetEntityQuery<FlammableComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _projectileQuery = GetEntityQuery<ProjectileComponent>();
+        _actorQuery = GetEntityQuery<ActorComponent>();
+        _destructibleQuery = GetEntityQuery<DestructibleComponent>();
+        _damageableQuery = GetEntityQuery<DamageableComponent>();
+        _airtightQuery = GetEntityQuery<AirtightComponent>();
+    }
+
+    private void OnReset(RoundRestartCleanupEvent ev)
+    {
+        _explosionQueue.Clear();
+        _queuedExplosions.Clear();
+        if (_activeExplosion != null)
+            QueueDel(_activeExplosion.VisualEnt);
+        _activeExplosion = null;
+        _nodeGroupSystem.PauseUpdating = false;
+        _pathfindingSystem.PauseUpdating = false;
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _nodeGroupSystem.PauseUpdating = false;
+        _pathfindingSystem.PauseUpdating = false;
+    }
+
+    private void RelayedResistance(EntityUid uid, ExplosionResistanceComponent component,
+        InventoryRelayedEvent<GetExplosionResistanceEvent> args)
+    {
+        if (component.Worn)
+            OnGetResistance(uid, component, ref args.Args);
+    }
+
+    private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, ref GetExplosionResistanceEvent args)
+    {
+        args.DamageCoefficient *= component.DamageCoefficient;
+        if (component.Modifiers.TryGetValue(args.ExplosionPrototype, out var modifier))
+            args.DamageCoefficient *= modifier;
+    }
+
+    /// <inheritdoc/>
+    public override void TriggerExplosive(EntityUid uid, ExplosiveComponent? explosive = null, bool delete = true, float? totalIntensity = null, float? radius = null, EntityUid? user = null)
+    {
+        // log missing: false, because some entities (e.g. liquid tanks) attempt to trigger explosions when damaged,
+        // but may not actually be explosive.
+        if (!Resolve(uid, ref explosive, logMissing: false))
+            return;
+
+        // No reusable explosions here.
+        if (explosive.Exploded)
+            return;
+
+        explosive.Exploded = !explosive.Repeatable;
+
+        // Override the explosion intensity if optional arguments were provided.
+        if (radius != null)
+            totalIntensity ??= RadiusToIntensity((float)radius, explosive.IntensitySlope, explosive.MaxIntensity);
+        totalIntensity ??= explosive.TotalIntensity;
+
+        QueueExplosion(uid,
+            explosive.ExplosionType,
+            (float)totalIntensity,
+            explosive.IntensitySlope,
+            explosive.MaxIntensity,
+            explosive.TileBreakScale,
+            explosive.MaxTileBreak,
+            explosive.CanCreateVacuum,
+            user);
+
+        if (explosive.DeleteAfterExplosion ?? delete)
+            QueueDel(uid);
+    }
+
+    /// <summary>
+    ///     Find the strength needed to generate an explosion of a given radius. More useful for radii larger then 4, when the explosion becomes less "blocky".
+    /// </summary>
+    /// <remarks>
+    ///     This assumes the explosion is in a vacuum / unobstructed. Given that explosions are not perfectly
+    ///     circular, here radius actually means the sqrt(Area/pi), where the area is the total number of tiles
+    ///     covered by the explosion. Until you get to radius 30+, this is functionally equivalent to the
+    ///     actual radius.
+    /// </remarks>
+    public float RadiusToIntensity(float radius, float slope, float maxIntensity = 0)
+    {
+        // If you consider the intensity at each tile in an explosion to be a height. Then a circular explosion is
+        // shaped like a cone. So total intensity is like the volume of a cone with height = slope * radius. Of
+        // course, as the explosions are not perfectly circular, this formula isn't perfect, but the formula works
+        // reasonably well.
+
+        // This should actually use the formula for the volume of a distorted octagonal frustum. But this is good
+        // enough.
+
+        var coneVolume = slope * MathF.PI / 3 * MathF.Pow(radius, 3);
+
+        if (maxIntensity <= 0 || slope * radius < maxIntensity)
+            return coneVolume;
+
+        // This explosion is limited by the maxIntensity.
+        // Instead of a cone, we have a conical frustum.
+
+        // Subtract the volume of the missing cone segment, with height:
+        var h = slope * radius - maxIntensity;
+        return coneVolume - h * MathF.PI / 3 * MathF.Pow(h / slope, 2);
+    }
+
+    /// <summary>
+    ///     Inverse formula for <see cref="RadiusToIntensity"/>
+    /// </summary>
+    public float IntensityToRadius(float totalIntensity, float slope, float maxIntensity)
+    {
+        // max radius to avoid being capped by max-intensity
+        var r0 = maxIntensity / slope;
+
+        // volume at r0
+        var v0 = RadiusToIntensity(r0, slope);
+
+        if (totalIntensity <= v0)
         {
-            return _tags.HasTag(e, "ExplosivePassable");
+            // maxIntensity is a non-issue, can use simple inverse formula
+            return MathF.Cbrt(3 * totalIntensity / (slope * MathF.PI));
         }
 
-        private ExplosionSeverity CalculateSeverity(float distance, float devastationRange, float heavyRange)
+        return r0 * (MathF.Sqrt(12 * totalIntensity / v0 - 3) / 6 + 0.5f);
+    }
+
+    /// <inheritdoc />
+    public override void QueueExplosion(EntityUid uid,
+        string typeId,
+        float totalIntensity,
+        float slope,
+        float maxTileIntensity,
+        float tileBreakScale = 1f,
+        int maxTileBreak = int.MaxValue,
+        bool canCreateVacuum = true,
+        EntityUid? user = null,
+        bool addLog = true)
+    {
+        var pos = Transform(uid);
+
+        var mapPos = _transformSystem.GetMapCoordinates(pos);
+
+        var posFound = _transformSystem.TryGetMapOrGridCoordinates(uid, out var gridPos, pos);
+
+        QueueExplosion(mapPos, typeId, totalIntensity, slope, maxTileIntensity, uid, tileBreakScale, maxTileBreak, canCreateVacuum, addLog: false);
+
+        if (!addLog)
+            return;
+
+        if (user == null)
         {
-            if (distance < devastationRange)
-            {
-                return ExplosionSeverity.Destruction;
-            }
-            else if (distance < heavyRange)
-            {
-                return ExplosionSeverity.Heavy;
-            }
+            _adminLogger.Add(LogType.Explosion, LogImpact.High,
+                $"{ToPrettyString(uid):entity} exploded ({typeId}) at Pos:{(posFound ? $"{gridPos:coordinates}" : "[Grid or Map not found]")} with intensity {totalIntensity} slope {slope}");
+        }
+        else
+        {
+            var alertMinExplosionIntensity = _cfg.GetCVar(CCVars.AdminAlertExplosionMinIntensity);
+            var logImpact = (alertMinExplosionIntensity > -1 && totalIntensity >= alertMinExplosionIntensity)
+                ? LogImpact.Extreme
+                : LogImpact.High;
+            if (posFound)
+                _adminLogger.Add(LogType.Explosion, logImpact, $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:{gridPos:coordinates} with intensity {totalIntensity} slope {slope}");
             else
-            {
-                return ExplosionSeverity.Light;
-            }
+                _adminLogger.Add(LogType.Explosion, logImpact, $"{ToPrettyString(user.Value):user} caused {ToPrettyString(uid):entity} to explode ({typeId}) at Pos:[Grid or Map not found] with intensity {totalIntensity} slope {slope}");
+        }
+    }
+
+
+    /// <summary>
+    ///     Queue an explosion, with a specified epicenter and set of starting tiles.
+    /// </summary>
+    public void QueueExplosion(MapCoordinates epicenter,
+        string typeId,
+        float totalIntensity,
+        float slope,
+        float maxTileIntensity,
+        EntityUid? cause,
+        float tileBreakScale = 1f,
+        int maxTileBreak = int.MaxValue,
+        bool canCreateVacuum = true,
+        bool addLog = true)
+    {
+        if (totalIntensity <= 0 || slope <= 0)
+            return;
+
+        if (!_prototypeManager.TryIndex<ExplosionPrototype>(typeId, out var type))
+        {
+            Log.Error($"Attempted to spawn unknown explosion prototype: {type}");
+            return;
         }
 
-        private void CameraShakeInRange(EntityCoordinates epicenter, float maxRange)
+        if (addLog) // dont log if already created a separate, more detailed, log.
+            _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Explosion ({typeId}) spawned at {epicenter:coordinates} with intensity {totalIntensity} slope {slope}");
+
+        // try to combine explosions on the same tile if they are the same type
+        foreach (var queued in _queuedExplosions)
         {
-            var players = Filter.Empty()
-                .AddInRange(epicenter.ToMap(EntityManager), MathF.Ceiling(maxRange))
-                .Recipients;
+            // ignore different types or those on different maps
+            if (queued.Proto.ID != type.ID || queued.Epicenter.MapId != epicenter.MapId)
+                continue;
 
-            foreach (var player in players)
-            {
-                if (player.AttachedEntity is not {Valid: true} playerEntity ||
-                    !EntityManager.HasComponent<CameraRecoilComponent>(playerEntity))
-                {
-                    continue;
-                }
+            var dst2 = queued.Proto.MaxCombineDistance * queued.Proto.MaxCombineDistance;
+            var direction = queued.Epicenter.Position - epicenter.Position;
+            if (direction.LengthSquared() > dst2)
+                continue;
 
-                var playerPos = EntityManager.GetComponent<TransformComponent>(playerEntity).WorldPosition;
-                var delta = epicenter.ToMapPos(EntityManager) - playerPos;
-
-                //Change if zero. Will result in a NaN later breaking camera shake if not changed
-                if (delta.EqualsApprox((0.0f, 0.0f)))
-                    delta = EpicenterDistance;
-
-                var distance = delta.LengthSquared;
-                var effect = 10 * (1 / (1 + distance));
-                if (effect > 0.01f)
-                {
-                    var kick = -delta.Normalized * effect;
-                    _cameraRecoil.KickCamera(player.AttachedEntity.Value, kick);
-                }
-            }
+            // they are close enough to combine so just add total intensity and prevent queuing another one
+            queued.TotalIntensity += totalIntensity;
+            return;
         }
 
-        /// <summary>
-        /// Damage entities inside the range. The damage depends on a discrete
-        /// damage bracket [light, heavy, devastation] and the distance from the epicenter
-        /// </summary>
-        /// <returns>
-        /// A dictionary of coordinates relative to the parents of every grid of entities that survived the explosion,
-        /// have an airtight component and are currently blocking air. Like a wall.
-        /// </returns>
-        private void DamageEntitiesInRange(
-            EntityCoordinates epicenter,
-            Box2 boundingBox,
-            float devastationRange,
-            float heavyRange,
-            float maxRange,
-            MapId mapId)
+        var boom = new QueuedExplosion(type)
         {
-            var entitiesInRange = _entityLookup.GetEntitiesInRange(mapId, boundingBox, 0).ToList();
+            Epicenter = epicenter,
+            TotalIntensity = totalIntensity,
+            Slope = slope,
+            MaxTileIntensity = maxTileIntensity,
+            TileBreakScale = tileBreakScale,
+            MaxTileBreak = maxTileBreak,
+            CanCreateVacuum = canCreateVacuum,
+            Cause = cause
+        };
+        _explosionQueue.Enqueue(boom);
+        _queuedExplosions.Add(boom);
+    }
 
-            var impassableEntities = new List<(EntityUid, float)>();
-            var nonImpassableEntities = new List<(EntityUid, float)>();
-            // TODO: Given this seems to rely on physics it should just query directly like everything else.
+    /// <summary>
+    ///     This function actually spawns the explosion. It returns an <see cref="Explosion"/> instance with
+    ///     information about the affected tiles for the explosion system to process. It will also trigger the
+    ///     camera shake and sound effect.
+    /// </summary>
+    private Explosion? SpawnExplosion(QueuedExplosion queued)
+    {
+        var pos = queued.Epicenter;
+        if (!_map.MapExists(pos.MapId))
+            return null;
 
-            // The entities are paired with their distance to the epicenter
-            // and splitted into two lists based on if they are Impassable or not
-            foreach (var entity in entitiesInRange)
-            {
-                if (Deleted(entity) || entity.IsInContainer())
-                {
-                    continue;
-                }
+        var results = GetExplosionTiles(pos, queued.Proto.ID, queued.TotalIntensity, queued.Slope, queued.MaxTileIntensity);
 
-                if (!EntityManager.GetComponent<TransformComponent>(entity).Coordinates.TryDistance(EntityManager, epicenter, out var distance) ||
-                    distance > maxRange)
-                {
-                    continue;
-                }
+        if (results == null)
+            return null;
 
-                if (!EntityManager.TryGetComponent(entity, out FixturesComponent? fixturesComp) || fixturesComp.Fixtures.Count < 1)
-                {
-                    continue;
-                }
+        var (area, iterationIntensity, spaceData, gridData, spaceMatrix) = results.Value;
 
-                if (!EntityManager.TryGetComponent(entity, out PhysicsComponent? body))
-                {
-                    continue;
-                }
+        var visualEnt = CreateExplosionVisualEntity(pos, queued.Proto.ID, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
 
-                if ((body.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
-                {
-                    impassableEntities.Add((entity, distance));
-                }
-                else
-                {
-                    nonImpassableEntities.Add((entity, distance));
-                }
-            }
+        // camera shake
+        CameraShake(iterationIntensity.Count * 4f, pos, queued.TotalIntensity);
 
-            // The Impassable entities are sorted in descending order
-            // Entities closer to the epicenter are first
-            impassableEntities.Sort((x, y) => x.Item2.CompareTo(y.Item2));
+        //For whatever bloody reason, sound system requires ENTITY coordinates.
+        var mapEntityCoords = _transformSystem.ToCoordinates(_map.GetMap(pos.MapId), pos);
 
-            // Impassable entities are handled first. If they are damaged enough, they are destroyed and they may
-            // be able to spawn a new entity. I.e Wall -> Girder.
-            // Girder has a tag ExplosivePassable, and the predicate make it so the entities with this tag are ignored
-            var epicenterMapPos = epicenter.ToMap(EntityManager);
-            foreach (var (entity, distance) in impassableEntities)
-            {
-                if (!_interactionSystem.InRangeUnobstructed(epicenterMapPos, entity, maxRange, predicate: IgnoreExplosivePassable))
-                {
-                    continue;
-                }
+        // play sound.
+        // for the normal audio, we want everyone in pvs range
+        // + if the bomb is big enough, people outside of it too
+        // this is capped to 30 because otherwise really huge bombs
+        // will attempt to play regular audio for people who can't hear it anyway because the epicenter is so far away
+        //
+        // TODO EXPLOSION redo this.
+        // Use the Filter.Pvs range-multiplier option instead of AddInRange.
+        // Also the default PVS range is 25*2 = 50. So capping it at 30 makes no sense here.
+        // So actually maybe don't use Filter.Pvs at all and only use AddInRange?
+        var audioRange = Math.Min(iterationIntensity.Count * 2, MaxExplosionAudioRange);
+        var filter = Filter.Pvs(pos).AddInRange(pos, audioRange);
+        var sound = iterationIntensity.Count < queued.Proto.SmallSoundIterationThreshold
+            ? queued.Proto.SmallSound
+            : queued.Proto.Sound;
 
-                _acts.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heavyRange));
-            }
+        _audio.PlayStatic(sound, filter, mapEntityCoords, true, sound.Params);
 
-            // Impassable entities were handled first so NonImpassable entities have a bigger chance to get hit. As now
-            // there are probably more ExplosivePassable entities around
-            foreach (var (entity, distance) in nonImpassableEntities)
-            {
-                if (!_interactionSystem.InRangeUnobstructed(epicenterMapPos, entity, maxRange, predicate: IgnoreExplosivePassable))
-                {
-                    continue;
-                }
+        // play far sound
+        // far sound should play for anyone who wasn't in range of any of the effects of the bomb
+        var farAudioRange = iterationIntensity.Count * 5;
+        var farFilter = Filter.Empty().AddInRange(pos, farAudioRange).RemoveInRange(pos, audioRange);
+        var farSound = iterationIntensity.Count < queued.Proto.SmallSoundIterationThreshold
+            ? queued.Proto.SmallSoundFar
+            : queued.Proto.SoundFar;
 
-                _acts.HandleExplosion(epicenter, entity, CalculateSeverity(distance, devastationRange, heavyRange));
-            }
-        }
+        _audio.PlayGlobal(farSound, farFilter, true, farSound.Params);
 
-        /// <summary>
-        /// Damage tiles inside the range. The type of tile can change depending on a discrete
-        /// damage bracket [light, heavy, devastation], the distance from the epicenter and
-        /// a probability bracket [<see cref="LightBreakChance"/>, <see cref="HeavyBreakChance"/>, 1.0].
-        /// </summary>
-        ///
-        private void DamageTilesInRange(EntityCoordinates epicenter,
-                                               GridId gridId,
-                                               Box2 boundingBox,
-                                               float devastationRange,
-                                               float heaveyRange,
-                                               float maxRange)
+        return new Explosion(this,
+            queued.Proto,
+            spaceData,
+            gridData.Values.ToList(),
+            iterationIntensity,
+            pos,
+            spaceMatrix,
+            area,
+            // TODO: instead of le copy paste fields refactor so it has QueuedExplosion as a field?
+            queued.TileBreakScale,
+            queued.MaxTileBreak,
+            queued.CanCreateVacuum,
+            EntityManager,
+            visualEnt,
+            queued.Cause,
+            _map,
+            _damageableSystem);
+    }
+
+    private void CameraShake(float range, MapCoordinates epicenter, float totalIntensity)
+    {
+        var players = Filter.Empty();
+        players.AddInRange(epicenter, range, _playerManager, EntityManager);
+
+        foreach (var player in players.Recipients)
         {
-            if (!_maps.TryGetGrid(gridId, out var mapGrid))
-            {
-                return;
-            }
+            if (player.AttachedEntity is not EntityUid uid)
+                continue;
 
-            if (!EntityManager.EntityExists(mapGrid.GridEntityId))
-            {
-                return;
-            }
+            var playerPos = _transformSystem.GetWorldPosition(player.AttachedEntity!.Value);
+            var delta = epicenter.Position - playerPos;
 
-            var tilesInGridAndCircle = mapGrid.GetTilesIntersecting(boundingBox);
-            var epicenterMapPos = epicenter.ToMap(EntityManager);
+            if (delta.EqualsApprox(Vector2.Zero))
+                delta = new(0.01f, 0);
 
-            foreach (var tile in tilesInGridAndCircle)
-            {
-                var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
-                if (!tileLoc.TryDistance(EntityManager, epicenter, out var distance) ||
-                    distance > maxRange)
-                {
-                    continue;
-                }
-
-                if (tile.IsBlockedTurf(false))
-                {
-                    continue;
-                }
-
-                if (!_interactionSystem.InRangeUnobstructed(tileLoc.ToMap(EntityManager), epicenterMapPos, maxRange, predicate: IgnoreExplosivePassable))
-                {
-                    continue;
-                }
-
-                var tileDef = (ContentTileDefinition) _tiles[tile.Tile.TypeId];
-                var baseTurfs = tileDef.BaseTurfs;
-                if (baseTurfs.Count == 0)
-                {
-                    continue;
-                }
-
-                var zeroTile = new Tile(_tiles[baseTurfs[0]].TileId);
-                var previousTile = new Tile(_tiles[baseTurfs[^1]].TileId);
-
-                var severity = CalculateSeverity(distance, devastationRange, heaveyRange);
-
-                switch (severity)
-                {
-                    case ExplosionSeverity.Light:
-                        if (!previousTile.IsEmpty && _random.Prob(LightBreakChance))
-                        {
-                            mapGrid.SetTile(tileLoc, previousTile);
-                        }
-                        break;
-                    case ExplosionSeverity.Heavy:
-                        if (!previousTile.IsEmpty && _random.Prob(HeavyBreakChance))
-                        {
-                            mapGrid.SetTile(tileLoc, previousTile);
-                        }
-                        break;
-                    case ExplosionSeverity.Destruction:
-                        mapGrid.SetTile(tileLoc, zeroTile);
-                        break;
-                }
-            }
-        }
-
-        private void FlashInRange(EntityCoordinates epicenter, float flashRange)
-        {
-            if (flashRange > 0)
-            {
-                var time = _timing.CurTime;
-                var message = new EffectSystemMessage
-                {
-                    EffectSprite = "Effects/explosion.rsi",
-                    RsiState = "explosionfast",
-                    Born = time,
-                    DeathTime = time + TimeSpan.FromSeconds(5),
-                    Size = new Vector2(flashRange / 2, flashRange / 2),
-                    Coordinates = epicenter,
-                    Rotation = 0f,
-                    ColorDelta = new Vector4(0, 0, 0, -1500f),
-                    Color = Vector4.Multiply(new Vector4(255, 255, 255, 750), 0.5f),
-                    Shaded = false
-                };
-
-                _effects.CreateParticle(message);
-            }
-        }
-
-        public void SpawnExplosion(
-            EntityUid entity,
-            int devastationRange = 0,
-            int heavyImpactRange = 0,
-            int lightImpactRange = 0,
-            int flashRange = 0,
-            EntityUid? user = null,
-            ExplosiveComponent? explosive = null,
-            TransformComponent? transform = null)
-        {
-            if (!Resolve(entity, ref transform))
-            {
-                return;
-            }
-
-            Resolve(entity, ref explosive, false);
-
-            if (explosive is { Exploding: false })
-            {
-                _triggers.Explode(entity, explosive, user);
-            }
-            else
-            {
-                while (EntityManager.EntityExists(entity) && entity.TryGetContainer(out var container))
-                {
-                    entity = container.Owner;
-                }
-
-                if (!EntityManager.TryGetComponent(entity, out transform))
-                {
-                    return;
-                }
-
-                var epicenter = transform.Coordinates;
-
-                SpawnExplosion(epicenter, devastationRange, heavyImpactRange, lightImpactRange, flashRange, entity, user);
-            }
-        }
-
-        public void SpawnExplosion(
-            EntityCoordinates epicenter,
-            int devastationRange = 0,
-            int heavyImpactRange = 0,
-            int lightImpactRange = 0,
-            int flashRange = 0,
-            EntityUid? entity = null,
-            EntityUid? user = null)
-        {
-            var mapId = epicenter.GetMapId(EntityManager);
-            if (mapId == MapId.Nullspace)
-            {
-                return;
-            }
-
-            // logging
-            var range = $"{devastationRange}/{heavyImpactRange}/{lightImpactRange}/{flashRange}";
-            if (entity == null || !entity.Value.IsValid())
-            {
-                _logSystem.Add(LogType.Explosion, LogImpact.High, $"Explosion spawned at {epicenter:coordinates} with range {range}");
-            }
-            else if (user == null || !user.Value.IsValid())
-            {
-                _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{ToPrettyString(entity.Value):entity} exploded at {epicenter:coordinates} with range {range}");
-            }
-            else
-            {
-                _logSystem.Add(LogType.Explosion, LogImpact.High,
-                    $"{ToPrettyString(user.Value):user} caused {ToPrettyString(entity.Value):entity} to explode at {epicenter:coordinates} with range {range}");
-            }
-
-            var maxRange = MathHelper.Max(devastationRange, heavyImpactRange, lightImpactRange, 0);
-            var epicenterMapPos = epicenter.ToMapPos(EntityManager);
-            var boundingBox = new Box2(epicenterMapPos - new Vector2(maxRange, maxRange),
-                epicenterMapPos + new Vector2(maxRange, maxRange));
-
-            SoundSystem.Play(Filter.Broadcast(), ExplosionSound.GetSound(), epicenter);
-            DamageEntitiesInRange(epicenter, boundingBox, devastationRange, heavyImpactRange, maxRange, mapId);
-
-            var mapGridsNear = _maps.FindGridsIntersecting(mapId, boundingBox);
-
-            foreach (var gridId in mapGridsNear)
-            {
-                DamageTilesInRange(epicenter, gridId.Index, boundingBox, devastationRange, heavyImpactRange, maxRange);
-            }
-
-            CameraShakeInRange(epicenter, maxRange);
-            FlashInRange(epicenter, flashRange);
+            var distance = delta.Length();
+            var effect = 5 * MathF.Pow(totalIntensity, 0.5f) * (1 - distance / range);
+            if (effect > 0.01f)
+                _recoilSystem.KickCamera(uid, -delta.Normalized() * effect);
         }
     }
 }

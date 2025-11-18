@@ -25,8 +25,6 @@
     - node: missingWires
       entity: UnfinishedMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "box_0"
         - !type:EmptyAllContainers
       edges:
         - to: machineFrame
@@ -35,9 +33,6 @@
           steps:
             - material: Cable
         - to: start
-          conditions:
-            - !type:EntityAnchored
-              anchored: false
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
@@ -50,6 +45,10 @@
     - node: machineFrame
       entity: MachineFrame
       actions:
+        - !type:AddContainer
+          container: machine_parts
+        - !type:AddContainer
+          container: machine_board
         - !type:MachineFrameRegenerateProgress
       edges:
         - to: machine
@@ -62,34 +61,37 @@
               guideIconParts:
                 sprite: Objects/Misc/stock_parts.rsi
                 state: scan_module
-          completed:
-            # Yes, this is snowflaked so we don't have to make an unique graph per machine. You're welcome.
-            - !type:BuildMachine
           steps:
             - tool: Screwing
               doAfter: 0.5
 
-        - to: missingWires
+        - to: machineFrame
           conditions:
             - !type:EntityAnchored
-          completed:
-            - !type:SpawnPrototype
-              prototype: CableApcStack1
+            - !type:ContainerNotEmpty
+              container: machine_board
           steps:
             - tool: Prying
               doAfter: 2
               completed:
                 - !type:EmptyAllContainers
                 - !type:MachineFrameRegenerateProgress
+
+        - to: missingWires
+          conditions:
+            - !type:EntityAnchored
+            - !type:ContainerEmpty
+              container: machine_board
+              examineText: construction-condition-machine-container-empty
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
             - tool: Cutting
               doAfter: 0.25
 
     - node: machine
-      actions:
-        - !type:AddContainer
-          container: machine_parts
-        - !type:AddContainer
-          container: machine_board
+      entity: !type:BoardNodeEntity { container: machine_board }
       edges:
         - to: machineFrame
           completed:
@@ -101,7 +103,7 @@
             - !type:WirePanel
           steps:
             - tool: Prying
-              doAfter: 0.25
+              doAfter: 2
 
     - node: destroyedMachineFrame
       entity: MachineFrameDestroyed
@@ -109,7 +111,7 @@
         - to: start
           steps:
             - tool: Welding
-              doAfter: 5            
+              doAfter: 5
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1

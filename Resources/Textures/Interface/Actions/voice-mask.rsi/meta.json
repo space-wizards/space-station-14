@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-4.0",
+  "copyright": "Made by Carve for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

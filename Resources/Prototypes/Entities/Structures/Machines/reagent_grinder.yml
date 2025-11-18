@@ -1,34 +1,105 @@
 - type: entity
   id: KitchenReagentGrinder
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, SmallConstructibleMachine ]
   name: reagent grinder
   description: From BlenderTech. Will It Blend? Let's find out!
   suffix: grinder/juicer
   components:
-  - type: Transform
-    anchored: true
   - type: ReagentGrinder
+  - type: ActivatableUI
+    key: enum.ReagentGrinderUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.ReagentGrinderUiKey.Key
-      type: ReagentGrinderBoundUserInterface
+      enum.ReagentGrinderUiKey.Key:
+        type: ReagentGrinderBoundUserInterface
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: ReagentGrinderVisualizer
+      enum.ReagentGrinderVisualState.BeakerAttached:
+        grinder:
+          True: {state: "grinder_beaker_attached"}
+          False: {state: "grinder_empty"}
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.08,-0.35,0.15,0.25"
-      layer:
-      - SmallImpassable
-      mask:
-      - VaultImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.17,0,0.20,0.4"
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: Sprite
-    netsync: false
-    sprite: Structures/Machines/juicer.rsi
-    state: juicer0
-    drawdepth: SmallObjects
+    sprite: Structures/Machines/grinder.rsi
+    drawdepth: LargeObjects
+    snapCardinals: true
+    offset: "0.0,0.4"
+    layers:
+    - map: [ "grinder" ]
+      state: "grinder_empty"
   - type: ApcPowerReceiver
     powerLoad: 300
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: Machine
+    board: ReagentGrinderMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      inputContainer: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
+
+- type: entity
+  parent: Recycler #too different so different parent
+  id: ReagentGrinderIndustrial
+  name: industrial reagent grinder
+  description: An industrial reagent grinder.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      output:
+        maxVol: 400 #*slaps roof of machine* This baby can fit so much omnizine in it
+  - type: MaterialReclaimer
+    whitelist:
+      components:
+      - Extractable #same as reagent grinder
+    blacklist:
+      tags:
+      - HighRiskItem #ian meat
+    efficiency: 0.9
+    reclaimMaterials: false # Materials have ExtractableComponent, which is whitelisted, so we have to avoid infinite recycling loops
+    onlyReclaimDrainable: false
+    solutionContainerId: output
+  - type: Sprite
+    sprite: Structures/Machines/recycling.rsi
+    layers:
+      - state: grinder-b0
+  - type: Machine
+    board: ReagentGrinderIndustrialMachineCircuitboard
+  - type: GenericVisualizer
+    visuals:
+      enum.ConveyorVisuals.State:
+        enum.ConveyorState.Off:
+          Forward: { state: grinder-b1 }
+          Reverse: { state: grinder-b1 }
+          Off: { state: grinder-b0 }
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+    - machine_parts
+    - machine_board
+  - type: DrainableSolution
+    solution: output
+  - type: ExaminableSolution
+    solution: output

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Robust.Server.Player;
-using Robust.Shared.Localization;
-
+using Content.Server.Voting.Managers;
+using Robust.Shared.Player;
 
 namespace Content.Server.Voting
 {
@@ -19,7 +16,7 @@ namespace Content.Server.Voting
         /// <summary>
         ///     The player that started the vote. Used to keep track of player cooldowns to avoid vote spam.
         /// </summary>
-        public IPlayerSession? InitiatorPlayer { get; set; }
+        public ICommonSession? InitiatorPlayer { get; set; }
 
         /// <summary>
         ///     The shown title of the vote.
@@ -43,16 +40,31 @@ namespace Content.Server.Voting
         public List<(string text, object data)> Options { get; set; } = new();
 
         /// <summary>
+        ///     Which sessions may send a vote. Used when only a subset of players should be able to vote. Defaults to all.
+        /// </summary>
+        public VoteManager.VoterEligibility VoterEligibility = VoteManager.VoterEligibility.All;
+
+        /// <summary>
+        ///     Whether the vote should send and display the number of votes to the clients. Being an admin defaults this option to true for your client.
+        /// </summary>
+        public bool DisplayVotes = true;
+
+        /// <summary>
+        ///     Whether the vote should have an entity attached to it, to be used for things like letting ghosts follow it. 
+        /// </summary>
+        public NetEntity? TargetEntity = null;
+
+        /// <summary>
         ///     Sets <see cref="InitiatorPlayer"/> and <see cref="InitiatorText"/>
         ///     by setting the latter to the player's name.
         /// </summary>
-        public void SetInitiator(IPlayerSession player)
+        public void SetInitiator(ICommonSession player)
         {
             InitiatorPlayer = player;
             InitiatorText = player.Name;
         }
 
-        public void SetInitiatorOrServer(IPlayerSession? player)
+        public void SetInitiatorOrServer(ICommonSession? player)
         {
             if (player != null)
             {

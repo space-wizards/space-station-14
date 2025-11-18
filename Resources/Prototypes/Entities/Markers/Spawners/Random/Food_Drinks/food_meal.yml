@@ -1,0 +1,97 @@
+- type: entity
+  id: RandomFoodMeal
+  name: random food spawner
+  suffix: Meal
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Food/meals.rsi
+        state: cornedbeef
+  - type: RandomSpawner
+    prototypes:
+      - FoodMealPotatoLoaded
+      - FoodMealFries
+      - FoodMealFriesCheesy
+      - FoodMealFriesCarrot
+      - FoodMealNachos
+      - FoodMealNachosCheesy
+      - FoodMealNachosCuban
+      - FoodMealEggplantParm
+      - FoodMealPotatoYaki
+      - FoodMealCubancarp
+      - FoodMealCornedbeef
+      - FoodMealPigblanket
+      - FoodMealRibs
+      - FoodMealEggsbenedict
+      - FoodMealOmelette
+      - FoodMealFriedegg
+      - FoodMealQueso
+      - FoodMealSashimi
+      - FoodMealEnchiladas
+      - FoodNoodlesChowmein
+      - FoodNoodlesSpesslaw
+      - FoodNoodlesMeatball
+      - FoodNoodlesBoiled
+      - FoodNoodles
+      - FoodNoodlesButter
+      - FoodMealHappyHonkClown
+      - FoodSoupPea
+      - FoodSaladHerb
+      - FoodSaladValid
+      - FoodSaladFruit
+      - FoodSaladJungle
+      - FoodSaladCitrus
+      - FoodSaladCaesar
+      - FoodSaladColeslaw
+      - FoodSaladKimchi
+      - FoodSaladWatermelonFruitBowl
+      - FoodRiceBoiled
+      - FoodRiceEgg
+      - FoodRicePork
+      - FoodRicePudding
+      - FoodRiceGumbo
+      - FoodOatmeal
+      - FoodSoupMeatball
+      - FoodSoupVegetable
+      - FoodSoupNettle
+      - FoodSoupChiliHot
+      - FoodSoupChiliCold
+      - FoodSoupTomato
+      - FoodSoupMiso
+      - FoodSoupMushroom
+      - FoodSoupBeet
+      - FoodSoupBeetRed
+      - FoodSoupPotato
+      - FoodSoupOnion
+      - FoodSoupBisque
+      - FoodSoupBungo
+      - FoodMealCornInButter
+      - FoodSoupStew
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - FoodMealMint
+      - FoodMealBearsteak
+      - FoodMealMilkape
+      - DisgustingSweptSoup
+      - FoodMealMemoryleek
+      - FoodSaladAesir
+      - FoodSaladEden
+      - FoodJellyDuff
+      - FoodJellyAmanita
+      - FoodSoupSlime
+      - FoodSoupTomatoBlood
+      - FoodSoupWingFangChu
+      - FoodSoupClown
+      - FoodSoupMystery
+      - FoodSoupChiliClown
+      - FoodSoupMonkey
+      - FoodSoupEyeball
+      - FoodSoupElectron
+      - FoodNoodlesCopy
+    rareChance: 0.05

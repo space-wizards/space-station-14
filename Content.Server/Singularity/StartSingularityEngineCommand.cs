@@ -1,46 +1,64 @@
 using Content.Server.Administration;
+using Content.Server.Machines.EntitySystems;
 using Content.Server.ParticleAccelerator.Components;
+using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Administration;
+using Content.Shared.Machines.Components;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Singularity
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class StartSingularityEngineCommand : IConsoleCommand
+    public sealed class StartSingularityEngineCommand : LocalizedEntityCommands
     {
-        public string Command => "startsingularityengine";
-        public string Description => "Automatically turns on the particle accelerator and containment field emitters.";
-        public string Help => $"{Command}";
+        [Dependency] private readonly EmitterSystem _emitterSystem = default!;
+        [Dependency] private readonly MultipartMachineSystem _multipartSystem = default!;
+        [Dependency] private readonly ParticleAcceleratorSystem  _paSystem = default!;
+        [Dependency] private readonly RadiationCollectorSystem _radCollectorSystem = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "startsingularityengine";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 0)
             {
-                shell.WriteLine($"Invalid amount of arguments: {args.Length}.\n{Help}");
+                shell.WriteLine(Loc.GetString($"shell-need-exactly-zero-arguments"));
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (var comp in entityManager.EntityQuery<EmitterComponent>())
+            // Turn on emitters
+            var emitterQuery = EntityManager.EntityQueryEnumerator<EmitterComponent>();
+            while (emitterQuery.MoveNext(out var uid, out var emitterComponent))
             {
-                EntitySystem.Get<EmitterSystem>().SwitchOn(comp);
+                //FIXME: This turns on ALL emitters, including APEs. It should only turn on the containment field emitters.
+                _emitterSystem.SwitchOn(uid, emitterComponent);
             }
-            foreach (var comp in entityManager.EntityQuery<RadiationCollectorComponent>())
+
+            // Turn on radiation collectors
+            var radiationCollectorQuery = EntityManager.EntityQueryEnumerator<RadiationCollectorComponent>();
+            while (radiationCollectorQuery.MoveNext(out var uid, out var radiationCollectorComponent))
             {
-                comp.Collecting = true;
+                _radCollectorSystem.SetCollectorEnabled(uid, enabled: true, user: null, radiationCollectorComponent);
             }
-            foreach (var comp in entityManager.EntityQuery<ParticleAcceleratorControlBoxComponent>())
+
+            // Setup PA
+            var paQuery = EntityManager.EntityQueryEnumerator<ParticleAcceleratorControlBoxComponent>();
+            while (paQuery.MoveNext(out var paId, out var paControl))
             {
-                comp.RescanParts();
-                comp.SetStrength(ParticleAcceleratorPowerState.Level0);
-                comp.SwitchOn();
+                if (!EntityManager.TryGetComponent<MultipartMachineComponent>(paId, out var machine))
+                    continue;
+
+                if (!_multipartSystem.Rescan((paId, machine)))
+                    continue;
+
+                _paSystem.SetStrength(paId, ParticleAcceleratorPowerState.Level0, comp: paControl);
+                _paSystem.SwitchOn(paId, comp: paControl);
             }
-            shell.WriteLine("Done!");
+
+            shell.WriteLine(Loc.GetString($"shell-command-success"));
         }
     }
 }

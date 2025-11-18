@@ -1,16 +1,15 @@
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Content.Shared.Guidebook;
 
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public sealed class PowerSupplierComponent : BasePowerNetComponent
+    public sealed partial class PowerSupplierComponent : BaseNetConnectorComponent<IBasePowerNet>
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("supplyRate")]
+        [GuidebookData]
         public float MaxSupply { get => NetworkSupply.MaxSupply; set => NetworkSupply.MaxSupply = value; }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -50,12 +49,12 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         public PowerState.Supply NetworkSupply { get; } = new();
 
-        protected override void AddSelfToNet(IPowerNet powerNet)
+        protected override void AddSelfToNet(IBasePowerNet powerNet)
         {
             powerNet.AddSupplier(this);
         }
 
-        protected override void RemoveSelfFromNet(IPowerNet powerNet)
+        protected override void RemoveSelfFromNet(IBasePowerNet powerNet)
         {
             powerNet.RemoveSupplier(this);
         }

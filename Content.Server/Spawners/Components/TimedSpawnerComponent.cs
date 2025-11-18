@@ -1,81 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Spawners.Components
+namespace Content.Server.Spawners.Components;
+
+/// <summary>
+/// Spawns entities at a set interval.
+/// Can configure the set of entities, spawn timing, spawn chance,
+/// and min/max number of entities to spawn.
+/// </summary>
+[RegisterComponent, EntityCategory("Spawner")]
+[AutoGenerateComponentPause]
+public sealed partial class TimedSpawnerComponent : Component, ISerializationHooks
 {
-    [RegisterComponent]
-    public sealed class TimedSpawnerComponent : Component, ISerializationHooks
+    /// <summary>
+    /// List of entities that can be spawned by this component. One will be randomly
+    /// chosen for each entity spawned. When multiple entities are spawned at once,
+    /// each will be randomly chosen separately.
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> Prototypes = [];
+
+    /// <summary>
+    /// Chance of an entity being spawned at the end of each interval.
+    /// </summary>
+    [DataField]
+    public float Chance = 1.0f;
+
+    /// <summary>
+    /// Length of the interval between spawn attempts.
+    /// </summary>
+    [DataField]
+    public TimeSpan IntervalSeconds = TimeSpan.FromSeconds(60);
+
+    /// <summary>
+    /// The minimum number of entities that can be spawned when an interval elapses.
+    /// </summary>
+    [DataField]
+    public int MinimumEntitiesSpawned = 1;
+
+    /// <summary>
+    /// The maximum number of entities that can be spawned when an interval elapses.
+    /// </summary>
+    [DataField]
+    public int MaximumEntitiesSpawned = 1;
+
+    /// <summary>
+    /// The time at which the current interval will have elapsed and entities may be spawned.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextFire = TimeSpan.Zero;
+
+    void ISerializationHooks.AfterDeserialization()
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("prototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
-        public List<string> Prototypes { get; set; } = new();
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("chance")]
-        public float Chance { get; set; } = 1.0f;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("intervalSeconds")]
-        public int IntervalSeconds { get; set; } = 60;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("MinimumEntitiesSpawned")]
-        public int MinimumEntitiesSpawned { get; set; } = 1;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("MaximumEntitiesSpawned")]
-        public int MaximumEntitiesSpawned { get; set; } = 1;
-
-        private CancellationTokenSource? TokenSource;
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            if (MinimumEntitiesSpawned > MaximumEntitiesSpawned)
-                throw new ArgumentException("MaximumEntitiesSpawned can't be lower than MinimumEntitiesSpawned!");
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            SetupTimer();
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-            TokenSource?.Cancel();
-        }
-
-        private void SetupTimer()
-        {
-            TokenSource?.Cancel();
-            TokenSource = new CancellationTokenSource();
-            Owner.SpawnRepeatingTimer(TimeSpan.FromSeconds(IntervalSeconds), OnTimerFired, TokenSource.Token);
-        }
-
-        private void OnTimerFired()
-        {
-            if (!_robustRandom.Prob(Chance))
-                return;
-
-            var number = _robustRandom.Next(MinimumEntitiesSpawned, MaximumEntitiesSpawned);
-
-            for (int i = 0; i < number; i++)
-            {
-                var entity = _robustRandom.Pick(Prototypes);
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(entity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
-            }
-        }
+        if (MinimumEntitiesSpawned > MaximumEntitiesSpawned)
+            throw new ArgumentException("MaximumEntitiesSpawned can't be lower than MinimumEntitiesSpawned!");
     }
 }

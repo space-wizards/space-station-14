@@ -3,8 +3,6 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.UI
 {
@@ -12,9 +10,9 @@ namespace Content.Server.Administration.UI
     public sealed class SetOutfitEui : BaseEui
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        private readonly EntityUid _target;
+        private readonly NetEntity _target;
 
-        public SetOutfitEui(EntityUid entity)
+        public SetOutfitEui(NetEntity entity)
         {
             _target = entity;
             IoCManager.InjectDependencies(this);
@@ -32,7 +30,7 @@ namespace Content.Server.Administration.UI
         {
             return new SetOutfitEuiState
             {
-                TargetEntityId = _target
+                TargetNetEntity = _target,
             };
         }
 

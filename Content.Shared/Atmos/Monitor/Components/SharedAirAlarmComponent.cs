@@ -1,135 +1,136 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.Atmos;
-using Content.Shared.Atmos.Monitor;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Atmos.Monitor.Components
+namespace Content.Shared.Atmos.Monitor.Components;
+
+[Serializable, NetSerializable]
+public enum SharedAirAlarmInterfaceKey
 {
-    [Serializable, NetSerializable]
-    public enum SharedAirAlarmInterfaceKey
+    Key
+}
+
+[Serializable, NetSerializable]
+public enum AirAlarmMode
+{
+    None,
+    Filtering,
+    WideFiltering,
+    Fill,
+    Panic,
+}
+
+[Serializable, NetSerializable]
+public enum AirAlarmWireStatus
+{
+    Power,
+    Access,
+    Panic,
+    DeviceSync
+}
+
+public interface IAtmosDeviceData
+{
+    public bool Enabled { get; set; }
+    public bool Dirty { get; set; }
+    public bool IgnoreAlarms { get; set; }
+}
+
+[Serializable, NetSerializable]
+public sealed class AirAlarmUIState : BoundUserInterfaceState
+{
+    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, List<(string, IAtmosDeviceData)> deviceData, AirAlarmMode mode, AtmosAlarmType alarmType, bool autoMode, bool panicWireCut)
     {
-        Key
+        Address = address;
+        DeviceCount = deviceCount;
+        PressureAverage = pressureAverage;
+        TemperatureAverage = temperatureAverage;
+        DeviceData = deviceData;
+        Mode = mode;
+        AlarmType = alarmType;
+        AutoMode = autoMode;
+        PanicWireCut = panicWireCut;
     }
 
-    [Serializable, NetSerializable]
-    public enum AirAlarmMode
+    public string Address { get; }
+    public int DeviceCount { get; }
+    public float PressureAverage { get; }
+    public float TemperatureAverage { get; }
+    /// <summary>
+    ///     Every single device data that can be seen from this
+    ///     air alarm. This includes vents, scrubbers, and sensors.
+    ///     Each entry is a tuple of device address and the device
+    ///     data. The same address may appear multiple times, if
+    ///     that device provides multiple functions.
+    /// </summary>
+    public List<(string, IAtmosDeviceData)> DeviceData { get; }
+    public AirAlarmMode Mode { get; }
+    public AtmosAlarmType AlarmType { get; }
+    public bool AutoMode { get; }
+    public bool PanicWireCut { get; }
+}
+
+[Serializable, NetSerializable]
+public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
+{}
+
+[Serializable, NetSerializable]
+public sealed class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
+{
+    public AirAlarmMode Mode { get; }
+
+    public AirAlarmUpdateAlarmModeMessage(AirAlarmMode mode)
     {
-        None,
-        Filtering,
-        Fill,
-        Panic,
-        Replace
+        Mode = mode;
     }
+}
 
-    [Serializable, NetSerializable]
-    public enum AirAlarmWireStatus
+[Serializable, NetSerializable]
+public sealed class AirAlarmUpdateAutoModeMessage : BoundUserInterfaceMessage
+{
+    public bool Enabled { get; }
+
+    public AirAlarmUpdateAutoModeMessage(bool enabled)
     {
-        Power,
-        Access,
-        Panic,
-        DeviceSync
+        Enabled = enabled;
     }
+}
 
-    [Serializable, NetSerializable]
-    public readonly struct AirAlarmAirData
+[Serializable, NetSerializable]
+public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
+{
+    public string Address { get; }
+    public IAtmosDeviceData Data { get; }
+
+    public AirAlarmUpdateDeviceDataMessage(string addr, IAtmosDeviceData data)
     {
-        public readonly float? Pressure { get; }
-        public readonly float? Temperature { get; }
-        public readonly float? TotalMoles { get; }
-        public readonly AtmosMonitorAlarmType AlarmState { get; }
-
-        private readonly Dictionary<Gas, float>? _gases;
-        public readonly IReadOnlyDictionary<Gas, float>? Gases { get => _gases; }
-
-        public AirAlarmAirData(float? pressure, float? temperature, float? moles, AtmosMonitorAlarmType state, Dictionary<Gas, float>? gases)
-        {
-            Pressure = pressure;
-            Temperature = temperature;
-            TotalMoles = moles;
-            AlarmState = state;
-            _gases = gases;
-        }
+        Address = addr;
+        Data = data;
     }
+}
 
-    public interface IAtmosDeviceData
+[Serializable, NetSerializable]
+public sealed class AirAlarmCopyDeviceDataMessage : BoundUserInterfaceMessage
+{
+    public IAtmosDeviceData Data { get; }
+
+    public AirAlarmCopyDeviceDataMessage(IAtmosDeviceData data)
     {
-        public bool Enabled { get; set; }
-        public bool Dirty { get; set; }
-        public bool IgnoreAlarms { get; set; }
+        Data = data;
     }
+}
 
-    // would be nice to include the entire state here
-    // but it's already handled by messages
-    [Serializable, NetSerializable]
-    public sealed class AirAlarmUIState : BoundUserInterfaceState
-    {}
+[Serializable, NetSerializable]
+public sealed class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
+{
+    public string Address { get; }
+    public AtmosAlarmThreshold Threshold { get; }
+    public AtmosMonitorThresholdType Type { get; }
+    public Gas? Gas { get; }
 
-    [Serializable, NetSerializable]
-    public sealed class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
-    {}
-
-    [Serializable, NetSerializable]
-    public sealed class AirAlarmSetAddressMessage : BoundUserInterfaceMessage
+    public AirAlarmUpdateAlarmThresholdMessage(string address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
     {
-        public string Address { get; }
-
-        public AirAlarmSetAddressMessage(string address)
-        {
-            Address = address;
-        }
+        Address = address;
+        Threshold = threshold;
+        Type = type;
+        Gas = gas;
     }
-
-    [Serializable, NetSerializable]
-    public sealed class AirAlarmUpdateAirDataMessage : BoundUserInterfaceMessage
-    {
-        public AirAlarmAirData AirData;
-
-        public AirAlarmUpdateAirDataMessage(AirAlarmAirData airData)
-        {
-            AirData = airData;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
-    {
-        public AirAlarmMode Mode { get; }
-
-        public AirAlarmUpdateAlarmModeMessage(AirAlarmMode mode)
-        {
-            Mode = mode;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
-    {
-        public string Address { get; }
-        public IAtmosDeviceData Data { get; }
-
-        public AirAlarmUpdateDeviceDataMessage(string addr, IAtmosDeviceData data)
-        {
-            Address = addr;
-            Data = data;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
-    {
-        public AtmosAlarmThreshold Threshold { get; }
-        public AtmosMonitorThresholdType Type { get; }
-        public Gas? Gas { get; }
-
-        public AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
-        {
-            Threshold = threshold;
-            Type = type;
-            Gas = gas;
-        }
-    }
-
-
 }

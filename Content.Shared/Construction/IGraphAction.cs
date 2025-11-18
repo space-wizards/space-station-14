@@ -1,12 +1,9 @@
-﻿using System.Threading.Tasks;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.Shared.Construction
+﻿namespace Content.Shared.Construction
 {
     [ImplicitDataDefinitionForInheritors]
-    public interface IGraphAction
+    public partial interface IGraphAction
     {
+        // TODO pass in node/edge & graph ID for better error logs.
         void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager);
     }
 }

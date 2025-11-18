@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: Shutters
   start: start
   graph:
@@ -44,8 +44,8 @@
             - !type:EntityAnchored
               anchored: true
           steps:
-            - tag: DoorElectronics
-              name: Door Electronics
+            - component: DoorElectronics
+              name: construction-graph-component-door-electronics-circuit-board
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "door_electronics"
@@ -148,7 +148,7 @@
           steps:
             - tool: Anchoring
               doAfter: 1
-              
+
     - node: ShuttersRadiationFrame
       edges:
         - to: ShuttersRadiation

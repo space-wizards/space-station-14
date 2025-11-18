@@ -1,4 +1,3 @@
-﻿using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
@@ -7,5 +6,6 @@ namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 public enum SharedArtifactsVisuals : byte
 {
     SpriteIndex,
-    IsActivated
+    IsActivated,
+    IsUnlocking
 }

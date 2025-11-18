@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.IoC;
+using Content.Shared.NodeContainer.NodeGroups;
 using Robust.Shared.Reflection;
 
 namespace Content.Server.NodeContainer.NodeGroups
@@ -53,16 +50,5 @@ namespace Content.Server.NodeContainer.NodeGroups
             instance.Create(id);
             return instance;
         }
-    }
-
-    public enum NodeGroupID
-    {
-        Default,
-        HVPower,
-        MVPower,
-        Apc,
-        AMEngine,
-        Pipe,
-        WireNet
     }
 }

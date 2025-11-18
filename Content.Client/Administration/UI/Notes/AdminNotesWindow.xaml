@@ -1,0 +1,7 @@
+<ui:FancyWindow xmlns="https://spacestation14.io"
+            xmlns:notes="clr-namespace:Content.Client.Administration.UI.Notes"
+            xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+            SetSize="600 400"
+            Title="Loading...">
+    <notes:AdminNotesControl Name="Notes" Access="Public" Margin="4"/>
+</ui:FancyWindow>

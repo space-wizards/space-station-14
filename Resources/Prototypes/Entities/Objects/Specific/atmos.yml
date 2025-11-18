@@ -6,20 +6,35 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Atmos/gasanalyzer.rsi
-    state: icon
-    netsync: false
+    layers:
+      - state: icon
+        map: ["analyzer"]
   - type: GasAnalyzer
   - type: ActivatableUI
+    inHandsOnly: true
+    singleUser: true
+    requireActiveHand: false
     key: enum.GasAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
-    - key: enum.GasAnalyzerUiKey.Key
-      type: GasAnalyzerBoundUserInterface
+      enum.GasAnalyzerUiKey.Key:
+        type: GasAnalyzerBoundUserInterface
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: GasAnalyzerVisualizer
-      state_off: icon
-      state_working: working
-  - type: Tag
-    tags:
-      - DroneUsable
+        enum.GasAnalyzerVisuals.Enabled:
+          enabled:
+            True: { state: working }
+            False: { state: icon }
+  - type: StaticPrice
+    price: 80
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+      Glass: 100
+  - type: GuideHelp
+    guides:
+    - AtmosTools
+    - PipeNetworks
+    - Pipes
+    - GasCanisters

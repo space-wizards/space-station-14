@@ -1,0 +1,50 @@
+﻿- type: decal
+  id: SpaceStationSign1
+  tags: ["station"]
+  sprite:
+    sprite: Decals/ss14sign.rsi
+    state: ss14sign1
+
+- type: decal
+  id: SpaceStationSign2
+  tags: ["station"]
+  sprite:
+    sprite: Decals/ss14sign.rsi
+    state: ss14sign2
+
+- type: decal
+  id: SpaceStationSign3
+  tags: ["station"]
+  sprite:
+    sprite: Decals/ss14sign.rsi
+    state: ss14sign3
+
+- type: decal
+  id: SpaceStationSign4
+  tags: ["station"]
+  sprite:
+    sprite: Decals/ss14sign.rsi
+    state: ss14sign4
+
+- type: decal
+  id: SpaceStationSign5
+  tags: ["station"]
+  sprite:
+    sprite: Decals/ss14sign.rsi
+    state: ss14sign5
+
+- type: decal
+  id: SpaceStationSign6
+  tags: ["station"]
+  sprite:
+    sprite: Decals/ss14sign.rsi
+    state: ss14sign6
+
+- type: decal
+  id: SpaceStationSign7
+  tags: ["station"]
+  sprite:
+    sprite: Decals/ss14sign.rsi
+    state: ss14sign7
+
+

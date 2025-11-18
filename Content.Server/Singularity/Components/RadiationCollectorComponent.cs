@@ -1,84 +1,86 @@
-using System;
-using Content.Server.Power.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
-using Content.Shared.Radiation;
-using Content.Shared.Singularity.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
+using Content.Server.Singularity.EntitySystems;
+using Content.Shared.Atmos;
 
-namespace Content.Server.Singularity.Components
+namespace Content.Server.Singularity.Components;
+
+/// <summary>
+///     Generates electricity from radiation.
+/// </summary>
+[RegisterComponent]
+[Access(typeof(RadiationCollectorSystem))]
+public sealed partial class RadiationCollectorComponent : Component
 {
-    [RegisterComponent]
-    public sealed class RadiationCollectorComponent : Component, IInteractHand, IRadiationAct
-    {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IEntityManager _entMan = default!;
+    /// <summary>
+    ///     Power output (in Watts) per unit of radiation collected.
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float ChargeModifier = 30000f;
 
-        private bool _enabled;
-        private TimeSpan _coolDownEnd;
+    /// <summary>
+    ///     Number of power ticks that the power supply can remain active for. This is needed since
+    ///     power and radiation don't update at the same tickrate, and since radiation does not provide
+    ///     an update when radiation is removed. When this goes to zero, zero out the power supplier
+    ///     to model the radiation source going away.
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int PowerTicksLeft = 0;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Collecting {
-            get => _enabled;
-            set
-            {
-                if (_enabled == value) return;
-                _enabled = value;
-                SetAppearance(_enabled ? RadiationCollectorVisualState.Activating : RadiationCollectorVisualState.Deactivating);
-            }
-        }
+    /// <summary>
+    ///     Is the machine enabled.
+    /// </summary>
+    [DataField]
+    [ViewVariables]
+    public bool Enabled;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float ChargeModifier = 30000f;
+    /// <summary>
+    ///     List of gases that will react to the radiation passing through the collector
+    /// </summary>
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public List<RadiationReactiveGas>? RadiationReactiveGases;
+}
 
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            var curTime = _gameTiming.CurTime;
+/// <summary>
+///     Describes how a gas reacts to the collected radiation
+/// </summary>
+[DataDefinition]
+public sealed partial class RadiationReactiveGas
+{
+    /// <summary>
+    ///     The reactant gas
+    /// </summary>
+    [DataField(required: true)]
+    public Gas ReactantPrototype;
 
-            if(curTime < _coolDownEnd)
-                return true;
+    /// <summary>
+    ///     Multipier for the amount of power produced by the radiation collector when using this gas
+    /// </summary>
+    [DataField]
+    public float PowerGenerationEfficiency = 1f;
 
-            if (!_enabled)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-on"));
-                Collecting = true;
-            }
-            else
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("radiation-collector-component-use-off"));
-                Collecting = false;
-            }
+    /// <summary>
+    ///     Controls the rate (molar percentage per rad) at which the reactant breaks down when exposed to radiation
+    /// </summary>
+    /// /// <remarks>
+    ///     Set to zero if the reactant does not deplete
+    /// </remarks>
+    [DataField]
+    public float ReactantBreakdownRate = 1f;
 
-            _coolDownEnd = curTime + TimeSpan.FromSeconds(0.81f);
+    /// <summary>
+    ///     A byproduct gas that is generated when the reactant breaks down
+    /// </summary>
+    /// <remarks>
+    ///     Leave null if the reactant no byproduct gas is to be formed
+    /// </remarks>
+    [DataField]
+    public Gas? Byproduct;
 
-            return true;
-        }
-
-        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
-        {
-            if (!_enabled) return;
-
-            // No idea if this is even vaguely accurate to the previous logic.
-            // The maths is copied from that logic even though it works differently.
-            // But the previous logic would also make the radiation collectors never ever stop providing energy.
-            // And since frameTime was used there, I'm assuming that this is what the intent was.
-            // This still won't stop things being potentially hilarously unbalanced though.
-            if (_entMan.TryGetComponent<BatteryComponent>(Owner, out var batteryComponent))
-            {
-                batteryComponent.CurrentCharge += frameTime * radiation.RadsPerSecond * ChargeModifier;
-            }
-        }
-
-        private void SetAppearance(RadiationCollectorVisualState state)
-        {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<AppearanceComponent?>(Owner, out var appearance))
-            {
-                appearance.SetData(RadiationCollectorVisuals.VisualState, state);
-            }
-        }
-    }
+    /// <summary>
+    ///     The molar ratio of the byproduct gas generated from the reactant gas
+    /// </summary>
+    [DataField]
+    public float MolarRatio = 1f;
 }

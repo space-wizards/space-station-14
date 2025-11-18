@@ -1,7 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop.Events
 {
@@ -11,12 +8,12 @@ namespace Content.Shared.Tabletop.Events
     [Serializable, NetSerializable]
     public sealed class TabletopPlayEvent : EntityEventArgs
     {
-        public EntityUid TableUid;
-        public EntityUid CameraUid;
+        public NetEntity TableUid;
+        public NetEntity CameraUid;
         public string Title;
         public Vector2i Size;
 
-        public TabletopPlayEvent(EntityUid tableUid, EntityUid cameraUid, string title, Vector2i size)
+        public TabletopPlayEvent(NetEntity tableUid, NetEntity cameraUid, string title, Vector2i size)
         {
             TableUid = tableUid;
             CameraUid = cameraUid;

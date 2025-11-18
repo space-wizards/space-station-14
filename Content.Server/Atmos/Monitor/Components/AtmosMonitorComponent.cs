@@ -1,106 +1,85 @@
-using System.Collections.Generic;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Atmos.Monitor.Components
+namespace Content.Server.Atmos.Monitor.Components;
+
+[RegisterComponent]
+public sealed partial class AtmosMonitorComponent : Component
 {
-    [RegisterComponent]
-    public sealed class AtmosMonitorComponent : Component
-    {
-        // Whether this monitor can send alarms,
-        // or recieve atmos command events.
-        //
-        // Useful for wires; i.e., pulsing a monitor wire
-        // will make it send an alert, and cutting
-        // it will make it so that alerts are no longer
-        // sent/receieved.
-        //
-        // Note that this cancels every single network
-        // event, including ones that may not be
-        // related to atmos monitor events.
-        [ViewVariables]
-        public bool NetEnabled = true;
+    // Whether this monitor can send alarms,
+    // or recieve atmos command events.
+    //
+    // Useful for wires; i.e., pulsing a monitor wire
+    // will make it send an alert, and cutting
+    // it will make it so that alerts are no longer
+    // sent/receieved.
+    //
+    // Note that this cancels every single network
+    // event, including ones that may not be
+    // related to atmos monitor events.
+    [DataField("netEnabled")]
+    public bool NetEnabled = true;
 
-        // Entities that the monitor will alarm. Stores only EntityUids, is populated
-        // when this component starts up.
-        [ViewVariables]
-        public List<EntityUid> LinkedEntities = new();
+    [DataField("temperatureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
+    public string? TemperatureThresholdId;
 
-        [DataField("temperatureThreshold", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThreshold>)))]
-        public readonly string? TemperatureThresholdId;
+    [DataField("temperatureThreshold")]
+    public AtmosAlarmThreshold? TemperatureThreshold;
 
-        [ViewVariables]
-        public AtmosAlarmThreshold? TemperatureThreshold;
+    [DataField("pressureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
+    public string? PressureThresholdId;
 
-        [DataField("pressureThreshold", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThreshold>)))]
-        public readonly string? PressureThresholdId;
+    [DataField("pressureThreshold")]
+    public AtmosAlarmThreshold? PressureThreshold;
 
-        [ViewVariables]
-        public AtmosAlarmThreshold? PressureThreshold;
+    // monitor fire - much different from temperature
+    // since there's events for fire, setting this to true
+    // will make the atmos monitor act like a smoke detector,
+    // immediately signalling danger if there's a fire
+    [DataField("monitorFire")]
+    public bool MonitorFire = false;
 
-        // monitor fire - much different from temperature
-        // since there's events for fire, setting this to true
-        // will make the atmos monitor act like a smoke detector,
-        // immediately signalling danger if there's a fire
-        [DataField("monitorFire")]
-        public bool MonitorFire = false;
+    [DataField("gasThresholdPrototypes",
+        customTypeSerializer:typeof(PrototypeIdValueDictionarySerializer<Gas, AtmosAlarmThresholdPrototype>))]
+    public Dictionary<Gas, string>? GasThresholdPrototypes;
 
-        [DataField("displayMaxAlarmInNet")]
-        public bool DisplayMaxAlarmInNet = false;
+    [DataField("gasThresholds")]
+    public Dictionary<Gas, AtmosAlarmThreshold>? GasThresholds;
 
-        [DataField("alarmSound")]
-        public SoundSpecifier AlarmSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/alarm.ogg");
+    /// <summary>
+    /// Stores a reference to the gas on the tile this entity is on (or the pipe network it monitors; see <see cref="MonitorsPipeNet"/>).
+    /// </summary>
+    [ViewVariables]
+    public GasMixture? TileGas;
 
-        [DataField("alarmVolume")]
-        public float AlarmVolume { get; set; } = -10;
+    // Stores the last alarm state of this alarm.
+    [DataField("lastAlarmState")]
+    public AtmosAlarmType LastAlarmState = AtmosAlarmType.Normal;
 
-        // really messy but this is parsed at runtime after
-        // prototypes are initialized, there's no
-        // way without implementing a new
-        // type serializer
-        [DataField("gasThresholds")]
-        public Dictionary<Gas, string>? GasThresholdIds;
+    [DataField("trippedThresholds")]
+    public AtmosMonitorThresholdTypeFlags TrippedThresholds;
 
-        [ViewVariables]
-        public Dictionary<Gas, AtmosAlarmThreshold>? GasThresholds;
+    /// <summary>
+    ///     Registered devices in this atmos monitor. Alerts will be sent directly
+    ///     to these devices.
+    /// </summary>
+    [DataField("registeredDevices")]
+    public HashSet<string> RegisteredDevices = new();
 
-        // Stores a reference to the gas on the tile this is on.
-        [ViewVariables]
-        public GasMixture? TileGas;
+    /// <summary>
+    /// Specifies whether this device monitors its own internal pipe network rather than the surrounding atmosphere.
+    /// </summary>
+    /// <remarks>
+    /// If 'true', the entity will require a NodeContainerComponent with one or more PipeNodes to function.
+    /// </remarks>
+    [DataField]
+    public bool MonitorsPipeNet = false;
 
-        // Stores the last alarm state of this alarm.
-        [ViewVariables]
-        public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
-
-        // feeling real dirty about this one
-        // Caches the alarm states it recieves from the rest of the network.
-        // This is so that the highest alarm in the network can be calculated
-        // from any monitor without having to reping every alarm.
-        [ViewVariables]
-        public Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
-
-        // Calculates the highest alarm in the network, including itself.
-        [ViewVariables]
-        public AtmosMonitorAlarmType HighestAlarmInNetwork
-        {
-            get
-            {
-                var state = AtmosMonitorAlarmType.Normal;
-                foreach (var (_, netState) in NetworkAlarmStates)
-                    if (state < netState)
-                        state = netState;
-
-                if (LastAlarmState > state) state = LastAlarmState;
-
-                return state;
-            }
-        }
-    }
+    /// <summary>
+    /// Specifies the name of the pipe node that this device is monitoring.
+    /// </summary>
+    [DataField]
+    public string NodeNameMonitoredPipe = "monitored";
 }

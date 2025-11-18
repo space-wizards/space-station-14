@@ -1,28 +1,45 @@
+using Content.Client.Items;
 using Content.Client.Tools.Components;
+using Content.Client.Tools.UI;
 using Content.Shared.Tools.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
+using Robust.Client.GameObjects;
+using SharedToolSystem = Content.Shared.Tools.Systems.SharedToolSystem;
 
 namespace Content.Client.Tools
 {
-    public sealed class ToolSystem : EntitySystem
+    public sealed class ToolSystem : SharedToolSystem
     {
+        [Dependency] private readonly SpriteSystem _sprite = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<WelderComponent, ComponentHandleState>(OnWelderHandleState);
+            Subs.ItemStatus<WelderComponent>(ent => new WelderStatusControl(ent, EntityManager, this));
+            Subs.ItemStatus<MultipleToolComponent>(ent => new MultipleToolStatusControl(ent));
         }
 
-        private void OnWelderHandleState(EntityUid uid, WelderComponent welder, ref ComponentHandleState args)
+        public override void SetMultipleTool(EntityUid uid,
+        MultipleToolComponent? multiple = null,
+        ToolComponent? tool = null,
+        bool playSound = false,
+        EntityUid? user = null)
         {
-            if (args.Current is not WelderComponentState state)
+            if (!Resolve(uid, ref multiple))
                 return;
 
-            welder.FuelCapacity = state.FuelCapacity;
-            welder.Fuel = state.Fuel;
-            welder.Lit = state.Lit;
-            welder.UiUpdateNeeded = true;
+            base.SetMultipleTool(uid, multiple, tool, playSound, user);
+            multiple.UiUpdateNeeded = true;
+
+            // TODO replace this with appearance + visualizer
+            // in order to convert this to a specifier, the manner in which the sprite is specified in yaml needs to be updated.
+
+            if (multiple.Entries.Length > multiple.CurrentEntry && TryComp(uid, out SpriteComponent? sprite))
+            {
+                var current = multiple.Entries[multiple.CurrentEntry];
+                if (current.Sprite != null)
+                    _sprite.LayerSetSprite((uid, sprite), 0, current.Sprite);
+            }
         }
     }
 }

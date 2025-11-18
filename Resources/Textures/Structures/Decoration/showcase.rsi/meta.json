@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/commit/240aadc41d3555fabfe9875b9ee0c3fc3a19062a",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "showcase_1"
+    },
+    {
+      "name": "showcase_2",
+      "delays": [
+        [
+          25.5,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "showcase_3"
+    },
+    {
+      "name": "showcase_4"
+    }
+  ]
+}

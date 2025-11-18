@@ -1,0 +1,8 @@
+- files:
+    - SDS_Charge.ogg
+    - SDS_Charge2.ogg
+  license: Custom
+  source: https://freesound.org/people/Teh_Bucket/sounds/518739/
+  # couldn't figure out how to source multiple (the right way) without shit breaking so heres the rest: https://pixabay.com/sound-effects/switchbigpowerwav-14710/ https://pixabay.com/sound-effects/shield-recharging-107016/
+  copyright: '"Electric Charge + Shot" by Teh_Bucket on Freesound.org. This is adapted from multiple works by dylanperitz, satanicupsman, CaptainGusterd, arightwizard, BigKahuna360, michael_grinnell, weaveofkev, MichelleGrobler, Alex_John73, sandyrb and breo2012 all of Freesound.org. The work by sandyrb is licensed under CC-BY-4.0. , "switchbigpower-14710.wav" and "shield-recharging-107016.wav" by Pixabay on pixabay.com'
+  # i have no idea how to set these up, it uses all 3 sound effects and i copied the electric charge one from the powersink, godo

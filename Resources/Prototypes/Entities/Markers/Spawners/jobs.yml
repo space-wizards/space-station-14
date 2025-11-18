@@ -14,12 +14,14 @@
 - type: entity
   name: observer spawn point
   id: SpawnPointObserver
-  parent: SpawnPointJobBase
+  parent: MarkerBase
   components:
   - type: Sprite
+    sprite: Markers/jobs.rsi
     layers:
       - state: green
-      - texture: Mobs/Ghosts/ghost_human.rsi/icon.png
+      - sprite: Mobs/Ghosts/ghost_human.rsi
+        state: icon
     state: observer
   - type: SpawnPoint
     spawn_type: Observer
@@ -33,6 +35,17 @@
     state: green
   - type: SpawnPoint
     spawn_type: LateJoin
+
+- type: entity
+  name: any job spawn point
+  id: SpawnPointAnyJob # used for integration tests so we don't need to map every single job spawner on the test map
+  parent: SpawnPointJobBase
+  components:
+  - type: Sprite
+    state: green
+  - type: SpawnPoint
+    spawn_type: Job
+    job_id: null # any job can spawn here
 
 # Cargo
 
@@ -71,21 +84,81 @@
   - type: Sprite
     layers:
       - state: green
-      - state: miner
+      - state: salvagespecialist
 
 # Civilian
 
 - type: entity
-  id: SpawnPointAssistant
+  id: SpawnPointPassenger
   parent: SpawnPointJobBase
-  name: assistant
+  name: passenger
   components:
   - type: SpawnPoint
-    job_id: Assistant
+    job_id: Passenger
   - type: Sprite
     layers:
       - state: green
-      - state: assistant
+      - state: passenger
+
+- type: entity
+  id: SpawnPointTechnicalAssistant
+  parent: SpawnPointJobBase
+  name: technical assistant
+  components:
+  - type: SpawnPoint
+    job_id: TechnicalAssistant
+  - type: Sprite
+    layers:
+      - state: green
+      - state: technicalassistant
+
+- type: entity
+  id: SpawnPointMedicalIntern
+  parent: SpawnPointJobBase
+  name: medical intern
+  components:
+  - type: SpawnPoint
+    job_id: MedicalIntern
+  - type: Sprite
+    layers:
+      - state: green
+      - state: medicalintern
+
+- type: entity
+  id: SpawnPointSecurityCadet
+  parent: SpawnPointJobBase
+  name: security cadet
+  components:
+  - type: SpawnPoint
+    job_id: SecurityCadet
+  - type: Sprite
+    layers:
+      - state: green
+      - state: security_cadet
+
+- type: entity
+  id: SpawnPointResearchAssistant
+  parent: SpawnPointJobBase
+  name: research assistant
+  components:
+  - type: SpawnPoint
+    job_id: ResearchAssistant
+  - type: Sprite
+    layers:
+      - state: green
+      - state: researchassistant
+
+- type: entity
+  id: SpawnPointServiceWorker
+  parent: SpawnPointJobBase
+  name: service worker
+  components:
+  - type: SpawnPoint
+    job_id: ServiceWorker
+  - type: Sprite
+    layers:
+      - state: green
+      - state: serviceworker
 
 - type: entity
   id: SpawnPointBartender
@@ -158,7 +231,7 @@
     layers:
       - state: green
       - state: chaplain
-      
+
 - type: entity
   id: SpawnPointLibrarian
   parent: SpawnPointJobBase
@@ -181,7 +254,7 @@
   - type: Sprite
     layers:
       - state: green
-      - state: lawyer 
+      - state: lawyer
 
 - type: entity
   id: SpawnPointJanitor
@@ -200,12 +273,39 @@
   parent: SpawnPointJobBase
   name: musician
   components:
-    - type: SpawnPoint
-      job_id: Musician
-    - type: Sprite
-      layers:
-        - state: green
-        - state: musician
+  - type: SpawnPoint
+    job_id: Musician
+  - type: Sprite
+    layers:
+      - state: green
+      - state: musician
+
+- type: entity
+  id: SpawnPointBoxer
+  parent: SpawnPointJobBase
+  name: boxer
+  components:
+  - type: SpawnPoint
+    job_id: Boxer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: boxer
+
+- type: entity
+  id: SpawnPointBorg
+  parent: SpawnPointJobBase
+  name: cyborg
+  components:
+  - type: SpawnPoint
+    job_id: Borg
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot_e
 
 # Command
 
@@ -259,6 +359,18 @@
       - state: green
       - state: engineer
 
+- type: entity
+  id: SpawnPointAtmos
+  parent: SpawnPointJobBase
+  name: atmospherics
+  components:
+  - type: SpawnPoint
+    job_id: AtmosphericTechnician
+  - type: Sprite
+    layers:
+      - state: green
+      - state: atmospherics
+
 # Medical
 
 - type: entity
@@ -284,6 +396,18 @@
     layers:
       - state: green
       - state: doctor
+
+- type: entity
+  id: SpawnPointParamedic
+  parent: SpawnPointJobBase
+  name: paramedic
+  components:
+  - type: SpawnPoint
+    job_id: Paramedic
+  - type: Sprite
+    layers:
+      - state: green
+      - state: paramedic
 
 - type: entity
   id: SpawnPointChemist
@@ -360,3 +484,137 @@
     layers:
       - state: green
       - state: security_officer
+
+- type: entity
+  id: SpawnPointDetective
+  parent: SpawnPointJobBase
+  name: detective
+  components:
+  - type: SpawnPoint
+    job_id: Detective
+  - type: Sprite
+    layers:
+      - state: green
+      - state: detective
+
+- type: entity
+  id: SpawnPointBrigmedic
+  parent: SpawnPointJobBase
+  name: brigmedic
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: brigmedic
+
+# SPECIAL
+# ERT
+- type: entity
+  id: SpawnPointERTLeader
+  parent: SpawnPointJobBase
+  name: ERTleader
+  components:
+  - type: SpawnPoint
+    job_id: ERTLeader
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertleader
+
+- type: entity
+  id: SpawnPointERTChaplain
+  parent: SpawnPointJobBase
+  name: ERTchaplain
+  components:
+  - type: SpawnPoint
+    job_id: ERTChaplain
+  - type: Sprite
+    layers:
+      - state: green
+      - state: chaplain
+
+- type: entity
+  id: SpawnPointERTEngineer
+  parent: SpawnPointJobBase
+  name: ERTengineer
+  components:
+  - type: SpawnPoint
+    job_id: ERTEngineer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertengineer
+
+- type: entity
+  id: SpawnPointERTMedical
+  parent: SpawnPointJobBase
+  name: ERTmedical
+  components:
+  - type: SpawnPoint
+    job_id: ERTMedical
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertmedical
+
+- type: entity
+  id: SpawnPointERTSecurity
+  parent: SpawnPointJobBase
+  name: ERTsecurity
+  components:
+  - type: SpawnPoint
+    job_id: ERTSecurity
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertsecurity
+
+- type: entity
+  id: SpawnPointERTJanitor
+  parent: SpawnPointJobBase
+  name: ERTjanitor
+  components:
+  - type: SpawnPoint
+    job_id: ERTJanitor
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ertjanitor
+
+# STATION SPECIFIC
+
+- type: entity
+  id: SpawnPointReporter
+  parent: SpawnPointJobBase
+  name: reporter
+  components:
+  - type: SpawnPoint
+    job_id: Reporter
+  - type: Sprite
+    layers:
+      - state: green
+      - state: reporter
+
+- type: entity
+  id: SpawnPointPsychologist
+  parent: SpawnPointJobBase
+  name: psychologist
+  components:
+  - type: SpawnPoint
+    job_id: Psychologist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: psychologist
+
+- type: entity
+  id: SpawnPointZookeeper
+  parent: SpawnPointJobBase
+  name: zookeeper
+  components:
+  - type: SpawnPoint
+    job_id: Zookeeper
+  - type: Sprite
+    layers:
+      - state: green
+      - state: zookeeper

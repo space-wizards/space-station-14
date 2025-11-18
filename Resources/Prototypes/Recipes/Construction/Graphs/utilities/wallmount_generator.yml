@@ -18,9 +18,10 @@
         - tool: Welding
           doAfter: 4
         completed:
-        - !type:SpawnPrototype
+        - !type:GivePrototype
           prototype: SheetSteel1
           amount: 5
+        - !type:DeleteEntity {}
       - to: parts
         steps:
         - material: Cable
@@ -30,34 +31,35 @@
           doAfter: 2
 
     - node: parts
+      entity: BaseGeneratorWallmountFrame
       edges:
-      - to: electronics 
+      - to: electronics
         steps:
-        - prototype: WallmountGeneratorElectronics
+        - tag: WallmountGeneratorElectronics
           store: board
-          name: "wallmount generator circuit board"
+          name: construction-graph-tag-wallmount-generator-circuit-board
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"
           doAfter: 1
       - to: electronicsAPU
         steps:
-        - prototype: WallmountGeneratorAPUElectronics
+        - tag: WallmountGeneratorAPUElectronics
           store: board
-          name: "wallmount APU circuit board"
+          name: construction-graph-tag-wallmount-apu-circuit-board
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"
           doAfter: 1
       - to: frame
         completed:
-        - !type:SpawnPrototype
-          prototype: CableHVStack1
+        - !type:GivePrototype
+          prototype: CableApcStack1
           amount: 5
         steps:
         - tool: Cutting
-          doAfter: 1      
-        
+          doAfter: 1
+
 
     - node: electronics
       edges:
@@ -65,14 +67,14 @@
         steps:
         - tool: Screwing
           doAfter: 2
-          
+
     - node: electronicsAPU
       edges:
       - to: APU
         steps:
         - tool: Screwing
           doAfter: 2
-      
+
     - node: generator
       entity: GeneratorWallmountBasic
       edges:
@@ -82,11 +84,13 @@
         - !type:ContainerNotEmpty
           container: board
         completed:
-        - !type:EmptyAllContainers {}
+        - !type:EmptyAllContainers
+          pickup: true
+          emptyAtUser: true
         steps:
         - tool: Prying
           doAfter: 1
-          
+
     - node: APU
       entity: GeneratorWallmountAPU
       edges:
@@ -96,7 +100,9 @@
         - !type:ContainerNotEmpty
           container: board
         completed:
-        - !type:EmptyAllContainers {}
+        - !type:EmptyAllContainers
+          pickup: true
+          emptyAtUser: true
         steps:
         - tool: Prying
           doAfter: 1

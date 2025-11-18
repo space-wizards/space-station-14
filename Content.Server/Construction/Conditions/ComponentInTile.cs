@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
@@ -20,7 +13,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ComponentInTile : IGraphCondition
+    public sealed partial class ComponentInTile : IGraphCondition
     {
         /// <summary>
         ///     If true, any entity on the tile must have the component.
@@ -30,13 +23,13 @@ namespace Content.Server.Construction.Conditions
         public bool HasEntity { get; private set; }
 
         [DataField("examineText")]
-        public string? ExamineText { get; }
+        public string? ExamineText { get; private set; }
 
         [DataField("guideText")]
-        public string? GuideText { get; }
+        public string? GuideText { get; private set; }
 
         [DataField("guideIcon")]
-        public SpriteSpecifier? GuideIcon { get; }
+        public SpriteSpecifier? GuideIcon { get; private set; }
 
         /// <summary>
         ///     The component name in question.
@@ -51,10 +44,21 @@ namespace Content.Server.Construction.Conditions
             var type = IoCManager.Resolve<IComponentFactory>().GetRegistration(Component).Type;
 
             var transform = entityManager.GetComponent<TransformComponent>(uid);
-            var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>());
-            var entities = indices.GetEntitiesInTile(transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, EntitySystem.Get<EntityLookupSystem>());
+            if (transform.GridUid == null)
+                return false;
 
-            foreach (var ent in entities)
+            var transformSys = entityManager.System<SharedTransformSystem>();
+            var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>(), transformSys);
+            var lookup = entityManager.EntitySysManager.GetEntitySystem<EntityLookupSystem>();
+
+
+            if (!entityManager.TryGetComponent<MapGridComponent>(transform.GridUid.Value, out var grid))
+                return !HasEntity;
+
+            if (!entityManager.System<SharedMapSystem>().TryGetTileRef(transform.GridUid.Value, grid, indices, out var tile))
+                return !HasEntity;
+
+            foreach (var ent in lookup.GetEntitiesInTile(tile, flags: LookupFlags.Approximate | LookupFlags.Static))
             {
                 if (entityManager.HasComponent(ent, type))
                     return HasEntity;

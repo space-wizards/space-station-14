@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by TheShuEd (github) for ss14, Inhands by TiniestShark (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "core"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pulse",
+      "delays": [
+        [
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625
+        ]
+      ]
+    }
+  ]
+}

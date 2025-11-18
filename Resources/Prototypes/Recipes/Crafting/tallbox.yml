@@ -1,0 +1,45 @@
+- type: construction
+  id: ClosetSteel
+  graph: ClosetSteel
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  objectType: Structure
+
+- type: construction
+  id: ClosetSteelSecure
+  graph: ClosetSteelSecure
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  objectType: Structure
+
+- type: construction
+  id: ClosetFreezer
+  name: construction-recipe-closet-freezer
+  graph: ClosetFreezer
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  objectType: Structure
+
+- type: construction
+  id: GunSafe
+  graph: GunSafe
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  objectType: Structure
+
+- type: construction
+  id: ClosetWall
+  graph: ClosetWall
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition

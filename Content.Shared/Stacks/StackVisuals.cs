@@ -1,4 +1,3 @@
-using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Stacks
@@ -12,7 +11,7 @@ namespace Content.Shared.Stacks
         Actual,
         /// <summary>
         /// The total amount of elements in the stack. If unspecified, the visualizer assumes
-        /// its
+        /// it's StackComponent.LayerStates.Count
         /// </summary>
         MaxCount,
         Hide

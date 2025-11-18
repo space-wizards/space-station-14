@@ -5,10 +5,19 @@
       amount: 2
     SpaceCleaner:
       amount: 2
-    Oxygen:
+    SodiumHydroxide:
       amount: 1
   products:
     Bleach: 5
+
+- type: reaction
+  id: AmmoniaFromBlood
+  minTemp: 370
+  reactants:
+    AmmoniaBlood:
+      amount: 2
+  products:
+    Ammonia: 1
 
 - type: reaction
   id: SpaceCleaner
@@ -26,9 +35,9 @@
   reactants:
     Water:
       amount: 1
-    Silicon:
+    Fersilicite:
       amount: 1
     Oxygen:
       amount: 1
   products:
-    SpaceLube: 3
+    SpaceLube: 5

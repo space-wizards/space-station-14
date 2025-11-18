@@ -1,0 +1,88 @@
+﻿- type: constructionGraph
+  id: BananiumStatueClown
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bananiumStatue
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Bananium
+              amount: 8
+              doAfter: 10
+
+    - node: bananiumStatue
+      entity: StatueBananiumClown
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialBananium1
+                amount: 8
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 5
+            - tool: Welding
+              doAfter: 5
+
+- type: constructionGraph
+  id: CarpStatue
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: empty
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: Silver
+        amount: 15
+        doAfter: 7
+  - node: empty
+    entity: CarpStatueEmpty
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: IngotSilver1
+        amount: 15
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 5
+    - to: eyes
+      steps:
+      - material: Diamond
+        amount: 2
+        doAfter: 2
+  - node: eyes
+    entity: CarpStatueEyes
+    edges:
+    - to: empty
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialDiamond1
+        amount: 2
+      steps:
+      - tool: Prying
+        doAfter: 2
+    - to: statue
+      steps:
+      - material: SpaceCarpTooth
+        amount: 5
+        doAfter: 3
+  - node: statue
+    entity: CarpStatue
+    edges:
+    - to: eyes
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialToothSpaceCarp1
+        amount: 5
+      steps:
+      - tool: Prying
+        doAfter: 5

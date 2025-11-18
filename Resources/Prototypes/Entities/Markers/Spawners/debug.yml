@@ -1,0 +1,14 @@
+- type: entity
+  name: Urist Spawner
+  id: SpawnMobHuman
+  parent: MarkerBase
+  suffix: DEBUG
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHuman

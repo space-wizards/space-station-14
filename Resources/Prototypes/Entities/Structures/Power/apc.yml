@@ -1,11 +1,13 @@
 - type: entity
-  abstract: true
+  parent: BaseWallmount
+  categories: [ HideSpawnMenu ]
   id: BaseAPC
   name: APC
   description: A control terminal for the area's electrical systems.
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
@@ -13,34 +15,48 @@
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
-    netsync: false
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#3db83b"
     castShadows: false
-  - type: Clickable
+    netsync: false
   - type: AccessReader
     access: [["Engineering"]]
-  - type: InteractionOutline
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.3,0.25"
-        layer: [ Passable ]
-  - type: Transform
-    anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    layers:
+    - state: base
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+    - state: display-charging
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.ChargeState"]
+    - state: lock0-locked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.InterfaceLock"]
+      visible: false
+    - state: lock1-locked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.PanelLock"]
+      visible: false
+    - state: lock1-locked #when these are implemented get actual sprites.
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Equipment"]
+      visible: false
+    - state: lock1-locked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Lighting"]
+      visible: false
+    - state: lock1-locked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Environment"]
+      visible: false
   - type: Appearance
-    visuals:
-    - type: ApcVisualizer
+  - type: ApcVisuals
   - type: Battery
-    maxCharge: 10000
+    maxCharge: 50000
     startingCharge: 0
   - type: ExaminableBattery
   - type: NodeContainer
@@ -52,6 +68,13 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
+  - type: PowerMonitoringDevice
+    group: APC
+    sourceNode: input
+    loadNode: output
+    collectionName: apc
+    sprite: Structures/Power/apc.rsi
+    state: static
   - type: BatteryCharger
     voltage: Medium
   - type: PowerProvider
@@ -61,11 +84,12 @@
   - type: ExtensionCableProvider
   - type: UserInterface
     interfaces:
-    - key: enum.ApcUiKey.Key
-      type: ApcBoundUserInterface
+      enum.ApcUiKey.Key:
+        type: ApcBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: ActivatableUI
     inHandsOnly: false
-    singleUser: true
     key: enum.ApcUiKey.Key
   - type: Construction
     graph: APC
@@ -75,3 +99,150 @@
     maxChargeRate: 5000
     supplyRampTolerance: 1000
     supplyRampRate: 500
+  - type: WallMount
+  - type: WiresPanel
+  - type: Wires
+    alwaysRandomize: true
+    boardName: wires-board-name-apc
+    layoutId: APC
+  - type: WiresVisuals
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: StationInfiniteBatteryTarget
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    mediumVoltageNode: input
+    lowVoltageNode: output
+  - type: LightningTarget
+    priority: 1
+  - type: StaticPrice
+    price: 500
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
+
+# APC under construction
+- type: entity
+  parent: BaseWallmountMetallic
+  categories: [ HideSpawnMenu ]
+  id: APCFrame
+  name: APC frame
+  description: A control terminal for the area's electrical systems, lacking the electronics.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Power/apc.rsi
+    state: frame
+  - type: Construction
+    graph: APC
+    node: apcFrame
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+# Constructed APC
+- type: entity
+  parent: BaseAPC
+  id: APCConstructed
+  suffix: Open
+  components:
+  - type: WiresPanel
+    open: true
+
+# APCs in use
+- type: entity
+  parent: BaseAPC
+  id: APCBasic
+  suffix: Basic, 50kJ
+  components:
+  - type: Battery
+    maxCharge: 50000
+    startingCharge: 50000
+
+- type: entity
+  parent: BaseAPC
+  id: APCHighCapacity
+  suffix: High Capacity, 100kJ
+  components:
+  - type: Battery
+    maxCharge: 100000
+    startingCharge: 100000
+
+- type: entity
+  parent: BaseAPC
+  id: APCSuperCapacity
+  suffix: Super Capacity, 150kJ
+  components:
+  - type: Battery
+    maxCharge: 150000
+    startingCharge: 150000
+
+- type: entity
+  parent: BaseAPC
+  id: APCHyperCapacity
+  suffix: Hyper Capacity, 200kJ
+  components:
+  - type: Battery
+    maxCharge: 200000
+    startingCharge: 200000
+
+- type: entity
+  parent: BaseAPC
+  id: APCXenoborg
+  suffix: Basic, 50kJ, Xenoborg
+  components:
+  - type: Battery
+    maxCharge: 50000
+    startingCharge: 50000
+  - type: AccessReader
+    access: [["Xenoborg"]]

@@ -1,0 +1,72 @@
+- type: entity
+  parent: BaseItem
+  id: CandyBowl
+  name: "candy bowl"
+  description: Grab as much as you can fit in your pockets!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/candy_bowl.rsi
+    noRot: true
+    drawdepth: SmallObjects
+    state: candy_bowl0
+  - type: Appearance
+  - type: Bin
+    maxItems: 100
+    whitelist:
+      components:
+        - Pill
+      tags:
+        - FoodSnack
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 4
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.10,0.10,0.10"
+        density: 20
+        mask:
+        - TabletopMachineMask
+        restitution: 0.3
+        friction: 0.2
+  - type: InteractionOutline
+  - type: ItemMapper
+    sprite: Objects/Misc/candy_bowl.rsi
+    mapLayers:
+      candy_bowl1:
+        whitelist:
+          components:
+          - Pill
+          tags:
+          - FoodSnack

@@ -1,0 +1,18 @@
+- type: vendingMachineInventory
+  id: DrGibbInventory
+  startingInventory:
+    DrinkDrGibbCan: 6
+    DrinkGrapeCan: 2
+    DrinkRootBeerCan: 2
+    DrinkIcedTeaCan: 2
+    DrinkSolDryCan: 2
+    DrinkLemonLimeCan: 2
+    DrinkLemonLimeCranberryCan: 2
+    DrinkFourteenLokoCan: 2
+  contrabandInventory:
+    ClothingNeckStethoscope: 2
+    Saw: 2
+    Tourniquet: 3
+    DrinkChangelingStingCan: 2
+  emaggedInventory:
+    DrinkNukieCan: 2

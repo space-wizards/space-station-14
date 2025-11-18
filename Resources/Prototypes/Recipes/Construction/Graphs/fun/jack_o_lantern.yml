@@ -1,0 +1,14 @@
+﻿- type: constructionGraph
+  id: PumpkinAddLight
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: lit
+          steps:
+            - tag: Torch
+              name: construction-graph-tag-torch
+              doAfter: 2
+
+    - node: lit
+      entity: PumpkinLantern

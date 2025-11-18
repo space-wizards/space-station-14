@@ -1,11 +1,10 @@
-using System;
-using Robust.Shared.GameObjects;
+using System.Numerics;
+using Content.Shared.Alert;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Shuttles.Components
 {
@@ -14,54 +13,32 @@ namespace Content.Shared.Shuttles.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class PilotComponent : Component
+    public sealed partial class PilotComponent : Component
     {
-        [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
+        [ViewVariables]
+        public EntityUid? Console { get; set; }
 
         /// <summary>
         /// Where we started piloting from to check if we should break from moving too far.
         /// </summary>
-        [ViewVariables] public EntityCoordinates? Position { get; set; }
+        [ViewVariables]
+        public EntityCoordinates? Position { get; set; }
 
-        public const float BreakDistance = 0.25f;
+        public Vector2 CurTickStrafeMovement = Vector2.Zero;
+        public float CurTickRotationMovement;
+        public float CurTickBraking;
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not PilotComponentState state) return;
+        public GameTick LastInputTick = GameTick.Zero;
+        public ushort LastInputSubTick = 0;
 
-            var console = state.Console.GetValueOrDefault();
-            if (!console.IsValid())
-            {
-                Console = null;
-                return;
-            }
+        [ViewVariables]
+        public ShuttleButtons HeldButtons = ShuttleButtons.None;
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+        [DataField]
+        public ProtoId<AlertPrototype> PilotingAlert = "PilotingShuttle";
 
-            if (!entityManager.TryGetComponent(console, out SharedShuttleConsoleComponent? shuttleConsoleComponent))
-            {
-                Logger.Warning($"Unable to set Helmsman console to {console}");
-                return;
-            }
-
-            Console = shuttleConsoleComponent;
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return Console == null ? new PilotComponentState(null) : new PilotComponentState(Console.Owner);
-        }
-
-        [Serializable, NetSerializable]
-        private sealed class PilotComponentState : ComponentState
-        {
-            public EntityUid? Console { get; }
-
-            public PilotComponentState(EntityUid? uid)
-            {
-                Console = uid;
-            }
-        }
+        public override bool SendOnlyToOwner => true;
     }
+
+    public sealed partial class StopPilotingAlertEvent : BaseAlertEvent;
 }

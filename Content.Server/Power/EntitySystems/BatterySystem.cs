@@ -1,45 +1,123 @@
 using Content.Server.Power.Components;
+using Content.Shared.Cargo;
+using Content.Shared.Examine;
+using Content.Shared.Power;
+using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.Rejuvenate;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
-namespace Content.Server.Power.EntitySystems
+namespace Content.Server.Power.EntitySystems;
+
+[UsedImplicitly]
+public sealed partial class BatterySystem : SharedBatterySystem
 {
-    [UsedImplicitly]
-    public sealed class BatterySystem : EntitySystem
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
-            SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
+        SubscribeLocalEvent<ExaminableBatteryComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<BatteryComponent, RejuvenateEvent>(OnBatteryRejuvenate);
+        SubscribeLocalEvent<PowerNetworkBatteryComponent, RejuvenateEvent>(OnNetBatteryRejuvenate);
+        SubscribeLocalEvent<BatteryComponent, PriceCalculationEvent>(CalculateBatteryPrice);
+        SubscribeLocalEvent<BatteryComponent, ChangeChargeEvent>(OnChangeCharge);
+        SubscribeLocalEvent<BatteryComponent, GetChargeEvent>(OnGetCharge);
+
+        SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
+        SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
+    }
+
+    private void OnNetBatteryRejuvenate(Entity<PowerNetworkBatteryComponent> ent, ref RejuvenateEvent args)
+    {
+        ent.Comp.NetworkBattery.CurrentStorage = ent.Comp.NetworkBattery.Capacity;
+    }
+
+    private void OnBatteryRejuvenate(Entity<BatteryComponent> ent, ref RejuvenateEvent args)
+    {
+        SetCharge(ent.AsNullable(), ent.Comp.MaxCharge);
+    }
+
+    private void OnExamine(Entity<ExaminableBatteryComponent> ent, ref ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange)
+            return;
+
+        if (!TryComp<BatteryComponent>(ent, out var battery))
+            return;
+
+        var chargePercentRounded = 0;
+        if (battery.MaxCharge != 0)
+            chargePercentRounded = (int)(100 * battery.CurrentCharge / battery.MaxCharge);
+        args.PushMarkup(
+            Loc.GetString(
+                "examinable-battery-component-examine-detail",
+                ("percent", chargePercentRounded),
+                ("markupPercentColor", "green")
+            )
+        );
+    }
+
+    private void PreSync(NetworkBatteryPreSync ev)
+    {
+        // Ignoring entity pausing. If the entity was paused, neither component's data should have been changed.
+        var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
+        while (enumerator.MoveNext(out var netBat, out var bat))
+        {
+            DebugTools.Assert(bat.CurrentCharge <= bat.MaxCharge && bat.CurrentCharge >= 0);
+            netBat.NetworkBattery.Capacity = bat.MaxCharge;
+            netBat.NetworkBattery.CurrentStorage = bat.CurrentCharge;
         }
+    }
 
-        private void PreSync(NetworkBatteryPreSync ev)
+    private void PostSync(NetworkBatteryPostSync ev)
+    {
+        // Ignoring entity pausing. If the entity was paused, neither component's data should have been changed.
+        var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
+        while (enumerator.MoveNext(out var uid, out var netBat, out var bat))
         {
-            foreach (var (netBat, bat) in EntityManager.EntityQuery<PowerNetworkBatteryComponent, BatteryComponent>())
-            {
-                netBat.NetworkBattery.Capacity = bat.MaxCharge;
-                netBat.NetworkBattery.CurrentStorage = bat.CurrentCharge;
-            }
+            SetCharge((uid, bat), netBat.NetworkBattery.CurrentStorage);
         }
+    }
 
-        private void PostSync(NetworkBatteryPostSync ev)
-        {
-            foreach (var (netBat, bat) in EntityManager.EntityQuery<PowerNetworkBatteryComponent, BatteryComponent>())
-            {
-                bat.CurrentCharge = netBat.NetworkBattery.CurrentStorage;
-            }
-        }
+    /// <summary>
+    /// Gets the price for the power contained in an entity's battery.
+    /// </summary>
+    private void CalculateBatteryPrice(Entity<BatteryComponent> ent, ref PriceCalculationEvent args)
+    {
+        args.Price += ent.Comp.CurrentCharge * ent.Comp.PricePerJoule;
+    }
 
-        public override void Update(float frameTime)
+    private void OnChangeCharge(Entity<BatteryComponent> ent, ref ChangeChargeEvent args)
+    {
+        if (args.ResidualValue == 0)
+            return;
+
+        args.ResidualValue -= ChangeCharge(ent.AsNullable(), args.ResidualValue);
+    }
+
+    private void OnGetCharge(Entity<BatteryComponent> entity, ref GetChargeEvent args)
+    {
+        args.CurrentCharge += entity.Comp.CurrentCharge;
+        args.MaxCharge += entity.Comp.MaxCharge;
+    }
+
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<BatterySelfRechargerComponent, BatteryComponent>();
+        var curTime = _timing.CurTime;
+        while (query.MoveNext(out var uid, out var comp, out var bat))
         {
-            foreach (var (comp, batt) in EntityManager.EntityQuery<BatterySelfRechargerComponent, BatteryComponent>())
-            {
-                if (!comp.AutoRecharge) continue;
-                if (batt.IsFullyCharged) continue;
-                batt.CurrentCharge += comp.AutoRechargeRate * frameTime;
-            }
+            if (!comp.AutoRecharge || IsFull((uid, bat)))
+                continue;
+
+            if (comp.NextAutoRecharge > curTime)
+                continue;
+
+            SetCharge((uid, bat), bat.CurrentCharge + comp.AutoRechargeRate * frameTime);
         }
     }
 }

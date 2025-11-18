@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi, librarian by Peptide",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi | cburn and cluwne made by brainfood1183 (github). brigmed made by PuroSlavKing (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -14,9 +14,6 @@
       "name": "ai"
     },
     {
-      "name": "assistant"
-    },
-    {
       "name": "atmospherics"
     },
     {
@@ -26,10 +23,19 @@
       "name": "botanist"
     },
     {
+      "name": "boxer"
+    },
+    {
+      "name": "brigmedic"
+    },
+    {
       "name": "captain"
     },
     {
       "name": "cargo_tech"
+    },
+    {
+      "name": "cburn"
     },
     {
       "name": "centcom"
@@ -50,6 +56,9 @@
       "name": "clown"
     },
     {
+      "name": "cluwne"
+    },
+    {
       "name": "chef"
     },
     {
@@ -60,6 +69,42 @@
     },
     {
       "name": "detective"
+    },
+    {
+      "name": "doctor"
+    },
+    {
+      "name": "ertengineer"
+    },
+    {
+      "name": "ertengineereva"
+    },
+    {
+      "name": "ertjanitor"
+    },
+    {
+      "name": "ertjanitoreva"
+    },
+    {
+      "name": "ertleader"
+    },
+    {
+      "name": "ertleadereva"
+    },
+    {
+      "name": "ertmedical"
+    },
+    {
+      "name": "ertmedicaleva"
+    },
+    {
+      "name": "ertsecurity"
+    },
+    {
+      "name": "ertsecurityeva"
+    },
+    {
+      "name": "engineer"
     },
     {
       "name": "geneticist"
@@ -77,13 +122,28 @@
       "name": "lawyer"
     },
     {
-      "name": "doctor"
+      "name": "librarian"
+    },
+    {
+      "name": "medicalintern"
     },
     {
       "name": "mime"
     },
     {
+      "name": "miner"
+    },
+    {
+      "name": "musician"
+    },
+    {
+      "name": "reporter"
+    },
+    {
       "name": "paramedic"
+    },
+    {
+      "name": "passenger"
     },
     {
       "name": "prisoner"
@@ -98,31 +158,49 @@
       "name": "rd"
     },
     {
+      "name": "researchassistant"
+    },
+    {
       "name": "roboticist"
+    },
+    {
+      "name": "salvagespecialist"
     },
     {
       "name": "scientist"
     },
     {
+      "name": "security_cadet" 
+    },
+    {
       "name": "security_officer"
     },
     {
-      "name": "miner"
+      "name": "serviceworker"
     },
     {
-      "name": "engineer"
+      "name": "seniorengineer"
+    },
+    {
+      "name": "seniorresearcher"
+    },
+    {
+      "name": "seniorphysician"
+    },
+    {
+      "name": "seniorofficer"
+    },
+    {
+      "name": "technicalassistant"
     },
     {
       "name": "virologist"
     },
     {
-      "name": "librarian"
-    },
-    {
       "name": "warden"
     },
     {
-      "name": "musician"
+      "name": "zookeeper"
     }
   ]
 }

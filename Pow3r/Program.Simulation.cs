@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Content.Server.Power.Pow3r;
+using Robust.Shared.Threading;
+using Robust.UnitTesting;
 using static Content.Server.Power.Pow3r.PowerState;
 
 
@@ -32,6 +34,8 @@ namespace Pow3r
         private readonly Queue<object> _remQueue = new();
         private readonly Stopwatch _simStopwatch = new Stopwatch();
 
+        private IParallelManager _parallel = new TestingParallelManager();
+
         private void Tick(float frameTime)
         {
             if (_paused)
@@ -45,7 +49,7 @@ namespace Pow3r
             _simStopwatch.Restart();
             _tickDataIdx = (_tickDataIdx + 1) % MaxTickData;
 
-            _solvers[_currentSolver].Tick(frameTime, _state);
+            _solvers[_currentSolver].Tick(frameTime, _state, _parallel);
 
             // Update tick history.
             foreach (var load in _state.Loads.Values)
@@ -111,13 +115,13 @@ namespace Pow3r
                     supply.LinkedNetwork = network.Id;
                 }
 
-                foreach (var batteryId in network.BatteriesCharging)
+                foreach (var batteryId in network.BatteryLoads)
                 {
                     var battery = _state.Batteries[batteryId];
                     battery.LinkedNetworkCharging = network.Id;
                 }
 
-                foreach (var batteryId in network.BatteriesDischarging)
+                foreach (var batteryId in network.BatterySupplies)
                 {
                     var battery = _state.Batteries[batteryId];
                     battery.LinkedNetworkDischarging = network.Id;

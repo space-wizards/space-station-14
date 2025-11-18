@@ -17,9 +17,11 @@ binds:
   type: State
   key: MouseLeft
   canFocus: true
-- function: WideAttack
+- function: UseSecondary
   type: State
-  key: Space
+  key: MouseRight
+  canFocus: true
+  priority: -1 # UIRightClick & EditorCancelPlace should fire first.
 - function: ShowDebugMonitors
   type: Toggle
   key: F3
@@ -42,15 +44,54 @@ binds:
 - function: Walk
   type: State
   key: Shift
+# Shuttle
+- function: ShuttleStrafeUp
+  type: State
+  key: W
+- function: ShuttleStrafeLeft
+  type: State
+  key: A
+- function: ShuttleStrafeRight
+  type: State
+  key: D
+- function: ShuttleStrafeDown
+  type: State
+  key: S
+- function: ShuttleRotateLeft
+  type: State
+  key: Q
+- function: ShuttleRotateRight
+  type: State
+  key: E
+- function: ShuttleBrake
+  type: State
+  key: Space
+# Camera
 - function: CameraRotateLeft
   type: State
   key: NumpadNum7
 - function: CameraRotateRight
   type: State
   key: NumpadNum9
+- function: CameraReset
+  type: State
+  key: NumpadNum8
+- function: ZoomOut
+  type: State
+  key: NumpadNum4
+- function: ZoomIn
+  type: State
+  key: NumpadNum6
+- function: ResetZoom
+  type: State
+  key: NumpadNum5
+# Misc
 - function: ShowEscapeMenu
   type: State
-  key: Escape
+  key: F10
+- function: ToggleFullscreen
+  type: State
+  key: F11
 - function: CycleChatChannelForward
   type: State
   key: Tab
@@ -65,12 +106,20 @@ binds:
 - function: FocusLocalChatWindow
   type: State
   key: Period
+- function: FocusEmote
+  type: State
+  mod1: Shift
+  key: Apostrophe
 - function: FocusWhisperChatWindow
   type: State
   key: Comma
 - function: FocusRadioWindow
   type: State
   key: SemiColon
+- function: FocusLOOCWindow
+  type: State
+  mod1: Shift
+  key: Num9
 - function: FocusOOCWindow
   type: State
   key: LBracket
@@ -104,9 +153,31 @@ binds:
 - function: EditorRotateObject
   type: State
   key: MouseMiddle
+- function: EditorFlipObject
+  type: State
+  key: MouseMiddle
+  mod1: Control
+- function: EditorCopyObject
+  type: State
+  key: P
 - function: SwapHands
   type: State
   key: X
+- function: SwapHandsReverse
+  type: State
+  key: X
+  mod1: Shift
+- function: MoveStoredItem
+  type: State
+  key: MouseLeft
+  canFocus: true
+  priority: 10
+- function: RotateStoredItem
+  type: State
+  key: MouseRight
+- function: SaveItemLocation
+  type: State
+  key: MouseMiddle
 - function: Drop
   type: State
   key: Q
@@ -119,7 +190,10 @@ binds:
   mod1: Alt
 - function: OpenCharacterMenu
   type: State
-  key: C
+  key: U
+- function: OpenEmotesMenu
+  type: State
+  key: Y
 - function: TextCursorSelect
   # TextCursorSelect HAS to be above ExamineEntity
   # So that LineEdit receives it correctly.
@@ -148,7 +222,6 @@ binds:
 - function: ThrowItemInHand
   type: State
   key: Q
-  canFocus: true
   mod1: Control
 - function: TryPullObject
   type: State
@@ -162,15 +235,13 @@ binds:
 - function: ReleasePulledObject
   type: State
   key: H
-- function: OpenContextMenu
-  type: State
-  key: MouseRight
-  canFocus: true
-  priority: -1 # UIRightClick & EditorCancelPlace should fire first.
 - function: OpenCraftingMenu
   type: State
   key: G
-- function: OpenInfo
+- function: OpenGuidebook
+  type: State
+  key: NumpadNum0
+- function: OpenAHelp
   type: State
   key: F1
 - function: OpenInventoryMenu
@@ -184,13 +255,54 @@ binds:
   type: State
   key: E
   mod1: Shift
+- function: SmartEquipPocket1
+  type: State
+  key: F
+  mod1: Shift
+- function: SmartEquipPocket2
+  type: State
+  key: G
+  mod1: Shift
+- function: SmartEquipSuitStorage
+  type: State
+  key: H
+  mod1: Shift
+- function: OpenBackpack
+  type: State
+  key: V
+- function: OpenBelt
+  type: State
+  key: V
+  mod1: Shift
 - function: ShowDebugConsole
   type: State
   key: Tilde
+- function: InspectEntity
+  type: State
+  key: v
+  mod1: Alt
+- function: InspectServerComponent
+  type: State
+  key: b
+  mod1: Alt
+- function: InspectClientComponent
+  type: State
+  key: c
+  mod1: Alt
 - function: MouseMiddle
   type: State
   key: MouseMiddle
   canFocus: true
+- function: RotateObjectClockwise
+  type: State
+  key: R
+- function: RotateObjectCounterclockwise
+  type: State
+  key: R
+  mod1: Shift
+- function: FlipObject
+  type: State
+  key: F
 - function: TextCursorLeft
   type: State
   key: Left
@@ -199,6 +311,16 @@ binds:
   type: State
   key: Right
   canRepeat: true
+- function: TextCursorUp
+  type: State
+  key: Up
+  canRepeat: true
+  priority: 2
+- function: TextCursorDown
+  type: State
+  key: Down
+  canRepeat: true
+  priority: 2
 - function: TextCursorWordLeft
   type: State
   key: Left
@@ -227,6 +349,18 @@ binds:
 - function: TextCursorSelectRight
   type: State
   key: Right
+  mod1: Shift
+  canRepeat: true
+  allowSubCombs: true
+- function: TextCursorSelectUp
+  type: State
+  key: Up
+  mod1: Shift
+  canRepeat: true
+  allowSubCombs: true
+- function: TextCursorSelectDown
+  type: State
+  key: Down
   mod1: Shift
   canRepeat: true
   allowSubCombs: true
@@ -259,12 +393,44 @@ binds:
   type: State
   key: BackSpace
   canRepeat: true
+- function: TextDelete
+  type: State
+  key: Delete
+  canRepeat: true
+- function: TextWordBackspace
+  type: State
+  key: BackSpace
+  mod1: Control
+  canRepeat: true
+  allowSubCombs: true
+- function: TextWordDelete
+  type: State
+  key: Delete
+  mod1: Control
+  canRepeat: true
+  allowSubCombs: true
+- function: TextNewline
+  type: State
+  key: Return
+  canRepeat: true
+- function: TextNewline
+  type: State
+  key: NumpadEnter
+  canRepeat: true
 - function: TextSubmit
   type: State
   key: Return
 - function: TextSubmit
   type: State
   key: NumpadEnter
+- function: MultilineTextSubmit
+  type: State
+  key: Return
+  mod1: Control
+- function: MultilineTextSubmit
+  type: State
+  key: NumpadEnter
+  mod1: Control
 - function: TextSelectAll
   type: State
   key: A
@@ -291,6 +457,16 @@ binds:
 - function: TextHistoryNext
   type: State
   key: Down
+- function: TextCompleteNext
+  type: State
+  key: Down
+  priority: 1
+  canRepeat: true
+- function: TextCompletePrev
+  type: State
+  key: Up
+  priority: 1
+  canRepeat: true
 - function: TextReleaseFocus
   type: State
   key: Escape
@@ -298,10 +474,6 @@ binds:
 - function: TextScrollToBottom
   type: State
   key: PageDown
-- function: TextDelete
-  type: State
-  key: Delete
-  canRepeat: true
 - function: TextTabComplete
   type: State
   key: Tab
@@ -317,6 +489,9 @@ binds:
 - function: OpenDecalSpawnWindow
   type: State
   key: F8
+- function: ToggleRoundEndSummaryWindow
+  type: Toggle
+  key: F9
 - function: OpenSandboxWindow
   type: State
   key: B
@@ -334,6 +509,13 @@ binds:
   type: State
   key: Tab
   mod1: Shift
+- function: EscapeContext
+  type: State
+  key: Escape
+- function: WindowCloseAll
+  type: State
+  key: Escape
+  mod1: Shift
 - function: Point
   type: State
   key: MouseMiddle
@@ -341,15 +523,19 @@ binds:
 - function: ArcadeUp
   type: State
   key: Up
+  priority: -1
 - function: ArcadeDown
   type: State
   key: Down
+  priority: -1
 - function: ArcadeLeft
   type: State
   key: Left
+  priority: -1
 - function: ArcadeRight
   type: State
   key: Right
+  priority: -1
 - function: Arcade1
   type: State
   key: Space
@@ -359,6 +545,9 @@ binds:
 - function: Arcade3
   type: State
   key: Z
+- function: ToggleKnockdown
+  type: State
+  key: C
 - function: OpenAbilitiesMenu
   type: State
   key: K
@@ -392,39 +581,73 @@ binds:
 - function: Hotbar9
   type: State
   key: Num9
-- function: Loadout1
+- function: HotbarShift0
+  type: State
+  key: Num0
+  mod1: Shift
+- function: HotbarShift1
   type: State
   key: Num1
   mod1: Shift
-- function: Loadout2
+- function: HotbarShift2
   type: State
   key: Num2
   mod1: Shift
-- function: Loadout3
+- function: HotbarShift3
   type: State
   key: Num3
   mod1: Shift
-- function: Loadout4
+- function: HotbarShift4
   type: State
   key: Num4
   mod1: Shift
-- function: Loadout5
+- function: HotbarShift5
   type: State
   key: Num5
   mod1: Shift
-- function: Loadout6
+- function: HotbarShift6
   type: State
   key: Num6
   mod1: Shift
-- function: Loadout7
+- function: HotbarShift7
   type: State
   key: Num7
   mod1: Shift
-- function: Loadout8
+- function: HotbarShift8
   type: State
   key: Num8
   mod1: Shift
-- function: Loadout9
+- function: HotbarShift9
   type: State
   key: Num9
   mod1: Shift
+- function: MappingUnselect
+  type: State
+  key: MouseRight
+  canFocus: true
+- function: SaveMap
+  type: State
+  key: S
+  mod1: Control
+- function: MappingEnablePick
+  type: State
+  key: Num5
+- function: MappingEnableDelete
+  type: State
+  key: Num6
+- function: MappingPick
+  type: State
+  key: MouseLeft
+  canFocus: true
+- function: MappingRemoveDecal
+  type: State
+  key: MouseLeft
+  canFocus: true
+- function: MappingCancelEraseDecal
+  type: State
+  key: MouseRight
+  canFocus: true
+- function: MappingOpenContextMenu
+  type: State
+  key: MouseRight
+  canFocus: true

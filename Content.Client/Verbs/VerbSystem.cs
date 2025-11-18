@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Client.ContextMenu.UI;
+using System.Numerics;
 using Content.Client.Examine;
+using Content.Client.Gameplay;
 using Content.Client.Popups;
-using Content.Client.Verbs.UI;
-using Content.Client.Viewport;
+using Content.Shared.CCVar;
 using Content.Shared.Examine;
-using Content.Shared.GameTicking;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.State;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Verbs
 {
@@ -27,178 +25,169 @@ namespace Content.Client.Verbs
     public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ExamineSystem _examineSystem = default!;
+        [Dependency] private readonly ExamineSystem _examine = default!;
+        [Dependency] private readonly SpriteTreeSystem _tree = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-
-        /// <summary>
-        ///     When a user right clicks somewhere, how large is the box we use to get entities for the context menu?
-        /// </summary>
-        public const float EntityMenuLookupSize = 0.25f;
-
-        public EntityMenuPresenter EntityMenu = default!;
-        public VerbMenuPresenter VerbMenu = default!;
-
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SharedContainerSystem _containers = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+
+        private float _lookupSize;
+
+        private static readonly ProtoId<TagPrototype> HideContextMenuTag = "HideContextMenu";
 
         /// <summary>
         ///     These flags determine what entities the user can see on the context menu.
         /// </summary>
         public MenuVisibility Visibility;
 
+        public Action<VerbsResponseEvent>? OnVerbsResponse;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            UpdatesOutsidePrediction = true;
-
-            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<VerbsResponseEvent>(HandleVerbResponse);
-
-            EntityMenu = new(this);
-            VerbMenu = new(this);
+            Subs.CVar(_cfg, CCVars.GameEntityMenuLookup, OnLookupChanged, true);
         }
 
-        public void Reset(RoundRestartCleanupEvent ev)
+        private void OnLookupChanged(float val)
         {
-            CloseAllMenus();
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            EntityMenu?.Dispose();
-            VerbMenu?.Dispose();
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            EntityMenu?.Update();
-        }
-
-        public void CloseAllMenus()
-        {
-            EntityMenu.Close();
-            VerbMenu.Close();
+            _lookupSize = val;
         }
 
         /// <summary>
-        ///     Get all of the entities in an area for displaying on the context menu.
+        /// Get all of the entities in an area for displaying on the context menu.
         /// </summary>
-        public bool TryGetEntityMenuEntities(MapCoordinates targetPos, [NotNullWhen(true)] out List<EntityUid>? result)
+        /// <returns>True if any entities were found.</returns>
+        public bool TryGetEntityMenuEntities(MapCoordinates targetPos, [NotNullWhen(true)] out List<EntityUid>? entities)
         {
-            result = null;
+            entities = null;
 
-            if (_stateManager.CurrentState is not GameScreenBase gameScreenBase)
+            if (_stateManager.CurrentState is not GameplayStateBase)
                 return false;
 
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
-            if (player == null)
+            if (_playerManager.LocalEntity is not { } player)
                 return false;
 
             // If FOV drawing is disabled, we will modify the visibility option to ignore visiblity checks.
-            var visibility = _eyeManager.CurrentEye.DrawFov
-                ? Visibility
-                : Visibility | MenuVisibility.NoFov;
+            var visibility = _eyeManager.CurrentEye.DrawFov ? Visibility : Visibility | MenuVisibility.NoFov;
+
+            var ev = new MenuVisibilityEvent
+            {
+                TargetPos = targetPos,
+                Visibility = visibility,
+            };
+
+            RaiseLocalEvent(player, ref ev);
+            visibility = ev.Visibility;
+
+            // Initially, we include all entities returned by a sprite area lookup
+            var box = Box2.CenteredAround(targetPos.Position, new Vector2(_lookupSize, _lookupSize));
+            var queryResult = _tree.QueryAabb(targetPos.MapId, box);
+            entities = new List<EntityUid>(queryResult.Count);
+            foreach (var ent in queryResult)
+            {
+                entities.Add(ent.Uid);
+            }
+
+            // If we're in a container list all other entities in it.
+            // E.g., allow players in lockers to examine / interact with other entities in the same locker
+            if (_containers.TryGetContainingContainer((player, null), out var container))
+            {
+                // Only include the container contents when clicking near it.
+                if (entities.Contains(container.Owner)
+                    || _containers.TryGetOuterContainer(container.Owner, Transform(container.Owner), out var outer)
+                    && entities.Contains(outer.Owner))
+                {
+                    // The container itself might be in some other container, so it might not have been added by the
+                    // sprite tree lookup.
+                    if (!entities.Contains(container.Owner))
+                        entities.Add(container.Owner);
+
+                    // TODO Context Menu
+                    // This might miss entities in some situations. E.g., one of the contained entities entity in it, that
+                    // itself has another entity attached to it, then we should be able to "see" that entity.
+                    // E.g., if a security guard is on a segway and gets thrown in a locker, this wouldn't let you see the guard.
+                    foreach (var ent in container.ContainedEntities)
+                    {
+                        if (!entities.Contains(ent))
+                            entities.Add(ent);
+                    }
+                }
+            }
+
+            if ((visibility & MenuVisibility.InContainer) != 0)
+            {
+                // This is inefficient, but I'm lazy and CBF implementing my own recursive container method. Note that
+                // this might actually fail to add the contained children of some entities in the menu. E.g., an entity
+                // with a large sprite aabb, but small broadphase might appear in the menu, but have its children added
+                // by this.
+                var flags = LookupFlags.All & ~LookupFlags.Sensors;
+                foreach (var e in _lookup.GetEntitiesInRange(targetPos, _lookupSize, flags: flags))
+                {
+                    if (!entities.Contains(e))
+                        entities.Add(e);
+                }
+            }
 
             // Do we have to do FoV checks?
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var entitiesUnderMouse = gameScreenBase.GetEntitiesUnderPosition(targetPos);
-                bool Predicate(EntityUid e) => e == player || entitiesUnderMouse.Contains(e);
-                if (!_examineSystem.CanExamine(player.Value, targetPos, Predicate))
-                    return false;
-            }
-
-            // Get entities
-            var entities = _entityLookup.GetEntitiesInRange(targetPos.MapId, targetPos.Position, EntityMenuLookupSize)
-                .ToList();
-
-            if (entities.Count == 0)
-                return false;
-
-            if (visibility == MenuVisibility.All)
-            {
-                result = entities;
-                return true;
-            }
-
-            // remove any entities in containers
-            if ((visibility & MenuVisibility.InContainer) == 0)
-            {
-                foreach (var entity in entities.ToList())
+                TryComp(player, out ExaminerComponent? examiner);
+                for (var i = entities.Count - 1; i >= 0; i--)
                 {
-                    if (!ContainerSystem.IsInSameOrTransparentContainer(player.Value, entity))
-                        entities.Remove(entity);
+                    if (!_examine.CanExamine(player, targetPos, e => e == player, entities[i], examiner))
+                        entities.RemoveSwap(i);
                 }
             }
 
-            // remove any invisible entities
-            if ((visibility & MenuVisibility.Invisible) == 0)
-            {
-                foreach (var entity in entities.ToList())
-                {
-                    if (!EntityManager.TryGetComponent(entity, out ISpriteComponent? spriteComponent) ||
-                    !spriteComponent.Visible)
-                    {
-                        entities.Remove(entity);
-                        continue;
-                    }
+            if ((visibility & MenuVisibility.Invisible) != 0)
+                return entities.Count != 0;
 
-                    if (_tagSystem.HasTag(entity, "HideContextMenu"))
-                        entities.Remove(entity);
-                }
+            for (var i = entities.Count - 1; i >= 0; i--)
+            {
+                if (_tagSystem.HasTag(entities[i], HideContextMenuTag))
+                    entities.RemoveSwap(i);
             }
 
-            // Remove any entities that do not have LOS
-            if ((visibility & MenuVisibility.NoFov) == 0)
+            // Unless we added entities in containers, every entity should already have a visible sprite due to
+            // the fact that we used the sprite tree query.
+            if (container == null && (visibility & MenuVisibility.InContainer) == 0)
+                return entities.Count != 0;
+
+            var spriteQuery = GetEntityQuery<SpriteComponent>();
+            for (var i = entities.Count - 1; i >= 0; i--)
             {
-                var playerPos = EntityManager.GetComponent<TransformComponent>(player.Value).MapPosition;
-                foreach (var entity in entities.ToList())
-                {
-                    if (!ExamineSystemShared.InRangeUnOccluded(
-                        playerPos,
-                        EntityManager.GetComponent<TransformComponent>(entity).MapPosition,
-                        ExamineSystemShared.ExamineRange,
-                        null))
-                    {
-                        entities.Remove(entity);
-                    }
-                }
+                if (!spriteQuery.TryGetComponent(entities[i], out var spriteComponent) || !spriteComponent.Visible)
+                    entities.RemoveSwap(i);
             }
 
-            if (entities.Count == 0)
-                return false;
-
-            result = entities;
-            return true;
-        }
-
-        /// <summary>
-        ///     Asks the server to send back a list of server-side verbs, for the given verb type.
-        /// </summary>
-        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, Type type, bool force = false)
-        {
-            return GetVerbs(target, user, new List<Type>() { type }, force);
+            return entities.Count != 0;
         }
 
         /// <summary>
         ///     Ask the server to send back a list of server-side verbs, and for now return an incomplete list of verbs
         ///     (only those defined locally).
         /// </summary>
-        public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, List<Type> verbTypes,
-            bool force = false)
+        public SortedSet<Verb> GetVerbs(NetEntity target, EntityUid user, List<Type> verbTypes, out List<VerbCategory> extraCategories, bool force = false)
         {
             if (!target.IsClientSide())
-            {
                 RaiseNetworkEvent(new RequestServerVerbsEvent(target, verbTypes, adminRequest: force));
+
+            // Some admin menu interactions will try get verbs for entities that have not yet been sent to the player.
+            if (!TryGetEntity(target, out var local))
+            {
+                extraCategories = new();
+                return new();
             }
 
-            return GetLocalVerbs(target, user, verbTypes, force);
+            return GetLocalVerbs(local.Value, user, verbTypes, out extraCategories, force);
         }
+
 
         /// <summary>
         ///     Execute actions associated with the given verb.
@@ -208,8 +197,18 @@ namespace Content.Client.Verbs
         /// </remarks>
         public void ExecuteVerb(EntityUid target, Verb verb)
         {
-            var user = _playerManager.LocalPlayer?.ControlledEntity;
-            if (user == null)
+            ExecuteVerb(GetNetEntity(target), verb);
+        }
+
+        /// <summary>
+        ///     Execute actions associated with the given verb.
+        /// </summary>
+        /// <remarks>
+        ///     Unless this is a client-exclusive verb, this will also tell the server to run the same verb.
+        /// </remarks>
+        public void ExecuteVerb(NetEntity target, Verb verb)
+        {
+            if ( _playerManager.LocalEntity is not {} user)
                 return;
 
             // is this verb actually valid?
@@ -217,50 +216,21 @@ namespace Content.Client.Verbs
             {
                 // maybe send an informative pop-up message.
                 if (!string.IsNullOrWhiteSpace(verb.Message))
-                    _popupSystem.PopupEntity(verb.Message, user.Value);
+                    _popupSystem.PopupEntity(FormattedMessage.RemoveMarkupOrThrow(verb.Message), user);
 
                 return;
             }
 
-            if (verb.ClientExclusive)
+            if (verb.ClientExclusive || target.IsClientSide())
                 // is this a client exclusive (gui) verb?
-                ExecuteVerb(verb, user.Value, target);
+                ExecuteVerb(verb, user, GetEntity(target));
             else
-                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(target, verb));
-        }
-
-        public override void ExecuteVerb(Verb verb, EntityUid user, EntityUid target, bool forced = false)
-        {
-            // invoke any relevant actions
-            verb.Act?.Invoke();
-
-            // Maybe raise a local event
-            if (verb.ExecutionEventArgs != null)
-            {
-                if (verb.EventTarget.IsValid())
-                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
-                else
-                    RaiseLocalEvent(verb.ExecutionEventArgs);
-            }
+                RaisePredictiveEvent(new ExecuteVerbEvent(target, verb));
         }
 
         private void HandleVerbResponse(VerbsResponseEvent msg)
         {
-            if (!VerbMenu.RootMenu.Visible || VerbMenu.CurrentTarget != msg.Entity)
-                return;
-
-            VerbMenu.AddServerVerbs(msg.Verbs);
+            OnVerbsResponse?.Invoke(msg);
         }
-    }
-
-    [Flags]
-    public enum MenuVisibility
-    {
-        // What entities can a user see on the entity menu?
-        Default = 0,          // They can only see entities in FoV.
-        NoFov = 1 << 0,         // They ignore FoV restrictions
-        InContainer = 1 << 1,   // They can see through containers.
-        Invisible = 1 << 2,   // They can see entities without sprites and the "HideContextMenu" tag is ignored.
-        All = NoFov | InContainer | Invisible
     }
 }

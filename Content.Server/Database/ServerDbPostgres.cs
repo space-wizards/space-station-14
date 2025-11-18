@@ -1,22 +1,43 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
+using Content.Server.IP;
+using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Microsoft.EntityFrameworkCore;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Database
 {
-    public sealed class ServerDbPostgres : ServerDbBase
+    public sealed partial class ServerDbPostgres : ServerDbBase
     {
         private readonly DbContextOptions<PostgresServerDbContext> _options;
+        private readonly ISawmill _notifyLog;
+        private readonly SemaphoreSlim _prefsSemaphore;
         private readonly Task _dbReadyTask;
 
-        public ServerDbPostgres(DbContextOptions<PostgresServerDbContext> options)
+        private int _msLag;
+
+        public ServerDbPostgres(DbContextOptions<PostgresServerDbContext> options,
+            string connectionString,
+            IConfigurationManager cfg,
+            ISawmill opsLog,
+            ISawmill notifyLog)
+            : base(opsLog)
         {
+            var concurrency = cfg.GetCVar(CCVars.DatabasePgConcurrency);
+
             _options = options;
+            _notifyLog = notifyLog;
+            _prefsSemaphore = new SemaphoreSlim(concurrency, concurrency);
 
             _dbReadyTask = Task.Run(async () =>
             {
@@ -30,6 +51,10 @@ namespace Content.Server.Database
                     await ctx.DisposeAsync();
                 }
             });
+
+            cfg.OnValueChanged(CCVars.DatabasePgFakeLag, v => _msLag = v, true);
+
+            InitNotificationListener(connectionString);
         }
 
         #region Ban
@@ -49,7 +74,8 @@ namespace Content.Server.Database
         public override async Task<ServerBanDef?> GetServerBanAsync(
             IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId)
+            ImmutableArray<byte>? hwId,
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds)
         {
             if (address == null && userId == null && hwId == null)
             {
@@ -58,7 +84,9 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned: false)
+            var exempt = await GetBanExemptionCore(db, userId);
+            var newPlayer = userId == null || !await PlayerRecordExists(db, userId.Value);
+            var query = MakeBanLookupQuery(address, userId, hwId, modernHWIds, db, includeUnbanned: false, exempt, newPlayer)
                 .OrderByDescending(b => b.BanTime);
 
             var ban = await query.FirstOrDefaultAsync();
@@ -68,7 +96,9 @@ namespace Content.Server.Database
 
         public override async Task<List<ServerBanDef>> GetServerBansAsync(IPAddress? address,
             NetUserId? userId,
-            ImmutableArray<byte>? hwId, bool includeUnbanned)
+            ImmutableArray<byte>? hwId,
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds,
+            bool includeUnbanned)
         {
             if (address == null && userId == null && hwId == null)
             {
@@ -77,7 +107,9 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeBanLookupQuery(address, userId, hwId, db, includeUnbanned);
+            var exempt = await GetBanExemptionCore(db, userId);
+            var newPlayer = !await db.PgDbContext.Player.AnyAsync(p => p.UserId == userId);
+            var query = MakeBanLookupQuery(address, userId, hwId, modernHWIds, db, includeUnbanned, exempt, newPlayer);
 
             var queryBans = await query.ToArrayAsync();
             var bans = new List<ServerBanDef>(queryBans.Length);
@@ -99,45 +131,92 @@ namespace Content.Server.Database
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds,
             DbGuardImpl db,
-            bool includeUnbanned)
+            bool includeUnbanned,
+            ServerBanExemptFlags? exemptFlags,
+            bool newPlayer)
         {
-            IQueryable<ServerBan>? query = null;
+            DebugTools.Assert(!(address == null && userId == null && hwId == null));
 
-            if (userId is { } uid)
+            var query = MakeBanLookupQualityShared<ServerBan, ServerUnban>(
+                userId,
+                hwId,
+                modernHWIds,
+                db.PgDbContext.Ban);
+
+            if (address != null && !exemptFlags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP))
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
-                    .Where(b => b.UserId == uid.UserId);
+                    .Where(b => b.Address != null
+                                && EF.Functions.ContainsOrEqual(b.Address.Value, address)
+                                && !(b.ExemptFlags.HasFlag(ServerBanExemptFlags.BlacklistedRange) && !newPlayer));
 
                 query = query == null ? newQ : query.Union(newQ);
             }
 
-            if (address != null)
-            {
-                var newQ = db.PgDbContext.Ban
-                    .Include(p => p.Unban)
-                    .Where(b => b.Address != null && EF.Functions.ContainsOrEqual(b.Address.Value, address));
-
-                query = query == null ? newQ : query.Union(newQ);
-            }
-
-            if (hwId != null)
-            {
-                var newQ = db.PgDbContext.Ban
-                    .Include(p => p.Unban)
-                    .Where(b => b.HWId!.SequenceEqual(hwId.Value.ToArray()));
-
-                query = query == null ? newQ : query.Union(newQ);
-            }
+            DebugTools.Assert(
+                query != null,
+                "At least one filter item (IP/UserID/HWID) must have been given to make query not null.");
 
             if (!includeUnbanned)
             {
-                query = query?.Where(p =>
-                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
+                query = query.Where(p =>
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow));
             }
 
-            query = query!.Distinct();
+            if (exemptFlags is { } exempt)
+            {
+                if (exempt != ServerBanExemptFlags.None)
+                    exempt |= ServerBanExemptFlags.BlacklistedRange; // Any kind of exemption should bypass BlacklistedRange
+
+                query = query.Where(b => (b.ExemptFlags & exempt) == 0);
+            }
+
+            return query.Distinct();
+        }
+
+        private static IQueryable<TBan>? MakeBanLookupQualityShared<TBan, TUnban>(
+            NetUserId? userId,
+            ImmutableArray<byte>? hwId,
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds,
+            DbSet<TBan> set)
+            where TBan : class, IBanCommon<TUnban>
+            where TUnban : class, IUnbanCommon
+        {
+            IQueryable<TBan>? query = null;
+
+            if (userId is { } uid)
+            {
+                var newQ = set
+                    .Include(p => p.Unban)
+                    .Where(b => b.PlayerUserId == uid.UserId);
+
+                query = query == null ? newQ : query.Union(newQ);
+            }
+
+            if (hwId != null && hwId.Value.Length > 0)
+            {
+                var newQ = set
+                    .Include(p => p.Unban)
+                    .Where(b => b.HWId!.Type == HwidType.Legacy && b.HWId!.Hwid.SequenceEqual(hwId.Value.ToArray()));
+
+                query = query == null ? newQ : query.Union(newQ);
+            }
+
+            if (modernHWIds != null)
+            {
+                foreach (var modernHwid in modernHWIds)
+                {
+                    var newQ = set
+                        .Include(p => p.Unban)
+                        .Where(b => b.HWId!.Type == HwidType.Modern && b.HWId!.Hwid.SequenceEqual(modernHwid.ToArray()));
+
+                    query = query == null ? newQ : query.Union(newQ);
+                }
+            }
+
             return query;
         }
 
@@ -149,7 +228,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.PlayerUserId is {} guid)
             {
                 uid = new NetUserId(guid);
             }
@@ -165,13 +244,17 @@ namespace Content.Server.Database
             return new ServerBanDef(
                 ban.Id,
                 uid,
-                ban.Address,
-                ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
+                ban.Address.ToTuple(),
+                ban.HWId,
                 ban.BanTime,
                 ban.ExpirationTime,
+                ban.RoundId,
+                ban.PlaytimeAtNote,
                 ban.Reason,
+                ban.Severity,
                 aUid,
-                unbanDef);
+                unbanDef,
+                ban.ExemptFlags);
         }
 
         private static ServerUnbanDef? ConvertUnban(ServerUnban? unban)
@@ -199,13 +282,17 @@ namespace Content.Server.Database
 
             db.PgDbContext.Ban.Add(new ServerBan
             {
-                Address = serverBan.Address,
-                HWId = serverBan.HWId?.ToArray(),
+                Address = serverBan.Address.ToNpgsqlInet(),
+                HWId = serverBan.HWId,
                 Reason = serverBan.Reason,
+                Severity = serverBan.Severity,
                 BanningAdmin = serverBan.BanningAdmin?.UserId,
                 BanTime = serverBan.BanTime.UtcDateTime,
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
-                UserId = serverBan.UserId?.UserId
+                RoundId = serverBan.RoundId,
+                PlaytimeAtNote = serverBan.PlaytimeAtNote,
+                PlayerUserId = serverBan.UserId?.UserId,
+                ExemptFlags = serverBan.ExemptFlags
             });
 
             await db.PgDbContext.SaveChangesAsync();
@@ -244,6 +331,7 @@ namespace Content.Server.Database
         public override async Task<List<ServerRoleBanDef>> GetServerRoleBansAsync(IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds,
             bool includeUnbanned)
         {
             if (address == null && userId == null && hwId == null)
@@ -253,7 +341,7 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeRoleBanLookupQuery(address, userId, hwId, db, includeUnbanned)
+            var query = MakeRoleBanLookupQuery(address, userId, hwId, modernHWIds, db, includeUnbanned)
                 .OrderByDescending(b => b.BanTime);
 
             return await QueryRoleBans(query);
@@ -281,19 +369,15 @@ namespace Content.Server.Database
             IPAddress? address,
             NetUserId? userId,
             ImmutableArray<byte>? hwId,
+            ImmutableArray<ImmutableArray<byte>>? modernHWIds,
             DbGuardImpl db,
             bool includeUnbanned)
         {
-            IQueryable<ServerRoleBan>? query = null;
-
-            if (userId is { } uid)
-            {
-                var newQ = db.PgDbContext.RoleBan
-                    .Include(p => p.Unban)
-                    .Where(b => b.UserId == uid.UserId);
-
-                query = query == null ? newQ : query.Union(newQ);
-            }
+            var query = MakeBanLookupQualityShared<ServerRoleBan, ServerRoleUnban>(
+                userId,
+                hwId,
+                modernHWIds,
+                db.PgDbContext.RoleBan);
 
             if (address != null)
             {
@@ -304,25 +388,17 @@ namespace Content.Server.Database
                 query = query == null ? newQ : query.Union(newQ);
             }
 
-            if (hwId != null)
-            {
-                var newQ = db.PgDbContext.RoleBan
-                    .Include(p => p.Unban)
-                    .Where(b => b.HWId!.SequenceEqual(hwId.Value.ToArray()));
-
-                query = query == null ? newQ : query.Union(newQ);
-            }
-
             if (!includeUnbanned)
             {
                 query = query?.Where(p =>
-                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.Now));
+                    p.Unban == null && (p.ExpirationTime == null || p.ExpirationTime.Value > DateTime.UtcNow));
             }
 
             query = query!.Distinct();
             return query;
         }
 
+        [return: NotNullIfNotNull(nameof(ban))]
         private static ServerRoleBanDef? ConvertRoleBan(ServerRoleBan? ban)
         {
             if (ban == null)
@@ -331,7 +407,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.PlayerUserId is {} guid)
             {
                 uid = new NetUserId(guid);
             }
@@ -347,11 +423,14 @@ namespace Content.Server.Database
             return new ServerRoleBanDef(
                 ban.Id,
                 uid,
-                ban.Address,
-                ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
+                ban.Address.ToTuple(),
+                ban.HWId,
                 ban.BanTime,
                 ban.ExpirationTime,
+                ban.RoundId,
+                ban.PlaytimeAtNote,
                 ban.Reason,
+                ban.Severity,
                 aUid,
                 unbanDef,
                 ban.RoleId);
@@ -376,23 +455,28 @@ namespace Content.Server.Database
                 unban.UnbanTime);
         }
 
-        public override async Task AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan)
+        public override async Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverRoleBan)
         {
             await using var db = await GetDbImpl();
 
-            db.PgDbContext.RoleBan.Add(new ServerRoleBan
+            var ban = new ServerRoleBan
             {
-                Address = serverRoleBan.Address,
-                HWId = serverRoleBan.HWId?.ToArray(),
+                Address = serverRoleBan.Address.ToNpgsqlInet(),
+                HWId = serverRoleBan.HWId,
                 Reason = serverRoleBan.Reason,
+                Severity = serverRoleBan.Severity,
                 BanningAdmin = serverRoleBan.BanningAdmin?.UserId,
                 BanTime = serverRoleBan.BanTime.UtcDateTime,
                 ExpirationTime = serverRoleBan.ExpirationTime?.UtcDateTime,
-                UserId = serverRoleBan.UserId?.UserId,
+                RoundId = serverRoleBan.RoundId,
+                PlaytimeAtNote = serverRoleBan.PlaytimeAtNote,
+                PlayerUserId = serverRoleBan.UserId?.UserId,
                 RoleId = serverRoleBan.Role,
-            });
+            };
+            db.PgDbContext.RoleBan.Add(ban);
 
             await db.PgDbContext.SaveChangesAsync();
+            return ConvertRoleBan(ban);
         }
 
         public override async Task AddServerRoleUnbanAsync(ServerRoleUnbanDef serverRoleUnban)
@@ -410,23 +494,14 @@ namespace Content.Server.Database
         }
         #endregion
 
-        protected override PlayerRecord MakePlayerRecord(Player record)
-        {
-            return new PlayerRecord(
-                new NetUserId(record.UserId),
-                new DateTimeOffset(record.FirstSeenTime),
-                record.LastSeenUserName,
-                new DateTimeOffset(record.LastSeenTime),
-                record.LastSeenAddress,
-                record.LastSeenHWId?.ToImmutableArray());
-        }
-
         public override async Task<int> AddConnectionLogAsync(
             NetUserId userId,
             string userName,
             IPAddress address,
-            ImmutableArray<byte> hwId,
-            ConnectionDenyReason? denied)
+            ImmutableTypedHwid? hwId,
+            float trust,
+            ConnectionDenyReason? denied,
+            int serverId)
         {
             await using var db = await GetDbImpl();
 
@@ -436,8 +511,10 @@ namespace Content.Server.Database
                 Time = DateTime.UtcNow,
                 UserId = userId.UserId,
                 UserName = userName,
-                HWId = hwId.ToArray(),
+                HWId = hwId,
                 Denied = denied,
+                ServerId = serverId,
+                Trust = trust,
             };
 
             db.PgDbContext.ConnectionLog.Add(connectionLog);
@@ -468,31 +545,66 @@ namespace Content.Server.Database
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
         }
 
-        private async Task<DbGuardImpl> GetDbImpl()
+        protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
         {
-            await _dbReadyTask;
+            // https://learn.microsoft.com/en-us/ef/core/querying/sql-queries#passing-parameters
+            // Read the link above for parameterization before changing this method or you get the bullet
+            if (!string.IsNullOrWhiteSpace(filter?.Search))
+            {
+                return db.AdminLog.FromSql($"""
+SELECT a.admin_log_id, a.round_id, a.date, a.impact, a.json, a.message, a.type FROM admin_log AS a
+WHERE to_tsvector('english'::regconfig, a.message) @@ websearch_to_tsquery('english'::regconfig, {filter.Search})
+""");
+            }
 
-            return new DbGuardImpl(new PostgresServerDbContext(_options));
+            return db.AdminLog;
         }
 
-        protected override async Task<DbGuard> GetDb()
+        protected override DateTime NormalizeDatabaseTime(DateTime time)
         {
-            return await GetDbImpl();
+            DebugTools.Assert(time.Kind == DateTimeKind.Utc);
+            return time;
+        }
+
+        private async Task<DbGuardImpl> GetDbImpl(
+            CancellationToken cancel = default,
+            [CallerMemberName] string? name = null)
+        {
+            LogDbOp(name);
+
+            await _dbReadyTask;
+            await _prefsSemaphore.WaitAsync(cancel);
+
+            if (_msLag > 0)
+                await Task.Delay(_msLag, cancel);
+
+            return new DbGuardImpl(this, new PostgresServerDbContext(_options));
+        }
+
+        protected override async Task<DbGuard> GetDb(
+            CancellationToken cancel = default,
+            [CallerMemberName] string? name = null)
+        {
+            return await GetDbImpl(cancel, name);
         }
 
         private sealed class DbGuardImpl : DbGuard
         {
-            public DbGuardImpl(PostgresServerDbContext dbC)
+            private readonly ServerDbPostgres _db;
+
+            public DbGuardImpl(ServerDbPostgres db, PostgresServerDbContext dbC)
             {
+                _db = db;
                 PgDbContext = dbC;
             }
 
             public PostgresServerDbContext PgDbContext { get; }
             public override ServerDbContext DbContext => PgDbContext;
 
-            public override ValueTask DisposeAsync()
+            public override async ValueTask DisposeAsync()
             {
-                return DbContext.DisposeAsync();
+                await DbContext.DisposeAsync();
+                _db._prefsSemaphore.Release();
             }
         }
     }

@@ -1,22 +1,23 @@
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Administration;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using System;
+using System.Linq;
 
 namespace Content.Server.Administration.Commands
 {
     /// <summary>
     ///     Command that allows you to edit an existing solution by adding (or removing) reagents.
     /// </summary>
-    [AdminCommand(AdminFlags.Fun)]
+    [AdminCommand(AdminFlags.Admin)]
     public sealed class AddReagent : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+        [Dependency] private readonly IPrototypeManager _protomanager = default!;
+
         public string Command => "addreagent";
         public string Description => "Add (or remove) some amount of reagent from some solution.";
         public string Help => $"Usage: {Command} <target> <solution> <reagent> <quantity>";
@@ -29,27 +30,27 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var uid))
+            if (!NetEntity.TryParse(args[0], out var uidNet) || !_entManager.TryGetEntity(uidNet, out var uid))
             {
                 shell.WriteLine($"Invalid entity id.");
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(uid, out SolutionContainerManagerComponent man))
+            if (!_entManager.TryGetComponent(uid, out SolutionContainerManagerComponent? man))
             {
                 shell.WriteLine($"Entity does not have any solutions.");
                 return;
             }
 
-            if (!man.Solutions.ContainsKey(args[1]))
+            var solutionContainerSystem = _entManager.System<SharedSolutionContainerSystem>();
+            if (!solutionContainerSystem.TryGetSolution((uid.Value, man), args[1], out var solution))
             {
-                var validSolutions = string.Join(", ", man.Solutions.Keys);
+                var validSolutions = string.Join(", ", solutionContainerSystem.EnumerateSolutions((uid.Value, man)).Select(s => s.Name));
                 shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
                 return;
             }
-            var solution = man.Solutions[args[1]];
 
-            if (!IoCManager.Resolve<IPrototypeManager>().HasIndex<ReagentPrototype>(args[2]))
+            if (!_protomanager.HasIndex<ReagentPrototype>(args[2]))
             {
                 shell.WriteLine($"Unknown reagent prototype");
                 return;
@@ -63,9 +64,9 @@ namespace Content.Server.Administration.Commands
             var quantity = FixedPoint2.New(MathF.Abs(quantityFloat));
 
             if (quantityFloat > 0)
-                EntitySystem.Get<SolutionContainerSystem>().TryAddReagent(uid, solution, args[2], quantity, out var _);
+                solutionContainerSystem.TryAddReagent(solution.Value, args[2], quantity, out _);
             else
-                EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(uid, solution, args[2], quantity);
+                solutionContainerSystem.RemoveReagent(solution.Value, args[2], quantity);
         }
     }
 }

@@ -1,18 +1,9 @@
-using System;
-using Content.Shared.Movement.Components;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Stunnable
-{
-    [Friend(typeof(SharedStunSystem))]
-    [RegisterComponent, NetworkedComponent]
-    public sealed class StunnedComponent : Component
-    {
-    }
-}
+namespace Content.Shared.Stunnable;
+
+/// <summary>
+/// This is used to temporarily prevent an entity from moving or acting.
+/// </summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedStunSystem))]
+public sealed partial class StunnedComponent : Component;

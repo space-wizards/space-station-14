@@ -1,29 +1,41 @@
-using Content.Server.Administration;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
-namespace Content.Server.GameTicking.Commands
+namespace Content.Server.GameTicking.Commands;
+
+[AnyCommand]
+public sealed class ToggleReadyCommand : LocalizedEntityCommands
 {
-    [AnyCommand]
-    sealed class ToggleReadyCommand : IConsoleCommand
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+
+    public override string Command => "toggleready";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "toggleready";
-        public string Description => "";
-        public string Help => "";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (args.Length != 1)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
-            {
-                return;
-            }
-
-            var ticker = EntitySystem.Get<GameTicker>();
-            ticker.ToggleReady(player, bool.Parse(args[0]));
+            shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
+            return;
         }
+
+        if (shell.Player is not { } player)
+        {
+            shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
+            return;
+        }
+
+        if (_gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
+        {
+            shell.WriteError(Loc.GetString("shell-can-only-run-from-pre-round-lobby"));
+            return;
+        }
+
+        if (!bool.TryParse(args[0], out var ready))
+        {
+            shell.WriteError(Loc.GetString("shell-argument-must-be-boolean"));
+            return;
+        }
+
+        _gameTicker.ToggleReady(player, ready);
     }
 }

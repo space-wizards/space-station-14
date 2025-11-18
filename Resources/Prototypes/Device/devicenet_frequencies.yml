@@ -1,0 +1,148 @@
+- type: deviceFrequency
+  id: ShuttleTimer
+  name: device-frequency-prototype-name-shuttle-timer
+  frequency: 2450
+
+- type: deviceFrequency
+  id: ArrivalsShuttleTimer
+  name: device-frequency-prototype-name-arrivals-shuttle-timer
+  frequency: 2451
+
+- type: deviceFrequency
+  id: SurveillanceCamera
+  name: device-frequency-prototype-name-surveillance-camera
+  frequency: 1926 # i only have so many of these, y'know?
+
+- type: deviceFrequency
+  id: SurveillanceCameraEngineering
+  name: device-frequency-prototype-name-surveillance-camera-engineering
+  frequency: 1931
+
+- type: deviceFrequency
+  id: SurveillanceCameraSecurity
+  name: device-frequency-prototype-name-surveillance-camera-security
+  frequency: 1932
+
+- type: deviceFrequency
+  id: SurveillanceCameraScience
+  name: device-frequency-prototype-name-surveillance-camera-science
+  frequency: 1933
+
+- type: deviceFrequency
+  id: SurveillanceCameraSupply
+  name: device-frequency-prototype-name-surveillance-camera-supply
+  frequency: 1934
+
+- type: deviceFrequency
+  id: SurveillanceCameraCommand
+  name: device-frequency-prototype-name-surveillance-camera-command
+  frequency: 1935
+
+- type: deviceFrequency
+  id: SurveillanceCameraService
+  name: device-frequency-prototype-name-surveillance-camera-service
+  frequency: 1936
+
+- type: deviceFrequency
+  id: SurveillanceCameraMedical
+  name: device-frequency-prototype-name-surveillance-camera-medical
+  frequency: 1937
+
+- type: deviceFrequency
+  id: SurveillanceCameraGeneral
+  name: device-frequency-prototype-name-surveillance-camera-general
+  frequency: 1938
+
+- type: deviceFrequency
+  id: SurveillanceCameraEntertainment
+  name: device-frequency-prototype-name-surveillance-camera-entertainment
+  frequency: 1939
+
+- type: deviceFrequency
+  id: AtmosMonitor
+  name: device-frequency-prototype-name-atmos
+  frequency: 1621
+
+# Only listen to this frequency if you are a crew monitor server. Otherwise you will just slow down the server by constantly receiving periodic broadcasts from every player-entity.
+- type: deviceFrequency
+  id: SuitSensor
+  name: device-frequency-prototype-name-suit-sensors
+  frequency: 1262
+
+# Crew monitors listen to this for a list of suit sensor statuses
+- type: deviceFrequency
+  id: CrewMonitor
+  name: device-frequency-prototype-name-crew-monitor
+  frequency: 1261
+
+# Cyborgs broadcast to consoles on this frequency
+- type: deviceFrequency
+  id: RoboticsConsole
+  name: device-frequency-prototype-name-robotics-console
+  frequency: 1291
+
+# Console sends commands to cyborgs on this frequency
+- type: deviceFrequency
+  id: CyborgControl
+  name: device-frequency-prototype-name-cyborg-control
+  frequency: 1292
+
+# Turret controllers send data to their turrets on this frequency
+- type: deviceFrequency
+  id: TurretControl
+  name: device-frequency-prototype-name-turret-control
+  frequency: 2151
+
+# Turrets send data to their controllers on this frequency
+- type: deviceFrequency
+  id: Turret
+  name: device-frequency-prototype-name-turret
+  frequency: 2152
+  
+# AI turret controllers send data to their turrets on this frequency
+- type: deviceFrequency
+  id: TurretControlAI
+  name: device-frequency-prototype-name-turret-control
+  frequency: 2153
+
+# AI turrets send data to their controllers on this frequency
+- type: deviceFrequency
+  id: TurretAI
+  name: device-frequency-prototype-name-turret
+  frequency: 2154
+
+# This frequency will likely have a LARGE number of listening entities. Please don't broadcast on this frequency.
+- type: deviceFrequency
+  id: SmartLight #used by powered lights.
+  name: device-frequency-prototype-name-lights
+  frequency: 1173
+
+- type: deviceFrequency
+  id: MailingUnit
+  name: device-frequency-prototype-name-mailing-units
+  frequency: 2300
+
+- type: deviceFrequency
+  id: PDA
+  name: device-frequency-prototype-name-pdas
+  frequency: 2202
+
+- type: deviceFrequency
+  id: Fax
+  name: device-frequency-prototype-name-fax
+  frequency: 2640
+
+- type: deviceFrequency
+  id: BasicDevice
+  name: device-frequency-prototype-name-basic-device
+  frequency: 1280
+
+- type: deviceFrequency
+  id: Xenoborg
+  name: device-frequency-prototype-name-xenoborg
+  frequency: 2004
+
+- type: deviceFrequency
+  id: Mothership
+  name: device-frequency-prototype-name-mothership
+  frequency: 2005

@@ -1,0 +1,499 @@
+# Used for generic robotic entities (like Hivelords)
+- type: entity
+  save: false
+  abstract: true
+  parent: BaseMob
+  id: MobRobotic
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: MovedByPressure
+  - type: Physics
+    bodyType: KinematicController # Same for all inheritors
+  - type: StatusEffects
+    allowed:
+    - Electrocution
+  - type: Repairable
+    doAfterDelay: 8
+    fuelCost: 15
+  - type: Pullable
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - SiliconEmotes
+    - Unimplantable
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+      Dead: BorgDead
+    showOverlays: false
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+  - type: TypingIndicator
+    proto: robot
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: Emoting
+  - type: ZombieImmune
+  - type: ProtectedFromStepTriggers
+  - type: NoSlip
+  - type: Insulated
+
+# Used for bots
+- type: entity
+  save: false
+  abstract: true
+  parent: MobRobotic
+  id: MobSiliconBase
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: Access
+    tags:
+    - BasicSilicon
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
+    channels:
+    - Common
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+    locPrefix: silicon
+  - type: NameIdentifier
+    group: Silicon
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 4
+  - type: Stamina
+    critThreshold: 120
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:TriggerBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: GuideHelp
+    guides:
+    - Robotics
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - SiliconEmotes
+    - Bot
+    - Unimplantable
+  - type: Body
+    prototype: Bot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobFireBot
+  name: firebot
+  description: A little fire extinguishing bot. He looks rather anxious.
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/firebot.rsi
+    state: firebot
+  - type: Construction
+    graph: FireBot
+    node: bot
+  - type: HTN
+    rootTask:
+      task: FirebotCompound
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 10
+        reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: SolutionRegeneration
+    solution: spray
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: Spray
+    transferAmount: 10
+    pushbackAmount: 60
+    spraySound:
+      path: /Audio/Effects/extinguish.ogg
+    sprayedPrototype: ExtinguisherSpray
+    vaporAmount: 1
+    vaporSpread: 90
+    sprayVelocity: 3.0
+  - type: UseDelay
+    delay: 2
+  - type: InteractionPopup
+    interactSuccessString: petting-success-firebot
+    interactFailureString: petting-failure-firebot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Vocalizer
+  - type: DatasetVocalizer
+    dataset: FirebotAd
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobHonkBot
+  name: honkbot
+  description: Horrifying.
+  components:
+  - type: SpamEmitSound
+    minInterval: 2
+    maxInterval: 12
+    sound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/honkbot.rsi
+    state: honkbot
+  - type: HTN
+    rootTask:
+      task: HonkbotCompound
+  - type: Slippery
+    slipData:
+      launchForwardsMultiplier: 2
+  - type: Speech
+    speechVerb: Cluwne
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        hard: false
+        layer:
+          - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
+  - type: Construction
+    graph: HonkBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-honkbot-name
+    description: ghost-role-information-honkbot-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-honkbot
+    interactFailureString: petting-failure-honkbot
+    interactSuccessSound:
+      path: /Audio/Items/bikehorn.ogg
+      params:
+        variation: 0.125
+
+- type: entity
+  parent: MobHonkBot
+  id: MobJonkBot
+  name: jonkbot
+  description: Horrifying.
+  components:
+  - type: SpamEmitSound
+    sound:
+      collection: CluwneHorn
+      params:
+        variation: 0.125
+  - type: Sprite
+    state: jonkbot
+  - type: Construction
+    graph: JonkBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-jonkbot-name
+    description: ghost-role-information-jonkbot-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
+    raffle:
+      settings: default
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Items/brokenbikehorn.ogg
+      params:
+        variation: 0.125
+  - type: Vocal
+    sounds:
+      Unsexed: Cluwne
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+    totalIntensity: 10
+    intensitySlope: 5
+    canCreateVacuum: false
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobCleanBot
+  name: cleanbot
+  description: The creep of automation now threatening space janitors.
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/cleanbot.rsi
+    state: cleanbot
+  - type: Construction
+    graph: CleanBot
+    node: bot
+  - type: Absorbent
+    pickupAmount: 10
+  - type: UseDelay
+    delay: 2
+  - type: SolutionRegeneration
+    solution: absorbed
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: SolutionPurge
+    solution: absorbed
+    preserve:
+      - Water
+    quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      absorbed:
+        maxVol: 50
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: HTN
+    rootTask:
+      task: CleanbotCompound
+  - type: DrainableSolution
+    solution: drainBuffer
+  - type: InteractionPopup
+    interactSuccessString: petting-success-cleanbot
+    interactFailureString: petting-failure-cleanbot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent:
+  - MobSiliconBase
+  - ShowMedicalIcons
+  - StripableInventoryBase
+  id: MobMedibot
+  name: medibot
+  description: No substitute for a doctor, but better than nothing.
+  components:
+  - type: Medibot
+    treatments:
+      Alive:
+        reagent: Tricordrazine
+        quantity: 30
+        minDamage: 0
+        maxDamage: 50
+      Critical:
+        reagent: Inaprovaline
+        quantity: 15
+  - type: EmaggableMedibot
+    replacements:
+      # when you are fine, medibot will help you go sleep
+      Alive:
+        reagent: ChloralHydrate
+        quantity: 15
+      # when you are crit, medibot will help you have fun
+      Critical:
+        reagent: SpaceDrugs
+        quantity: 25
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/medibot.rsi
+    state: medibot
+  - type: HTN
+    rootTask:
+      task: MedibotCompound
+  - type: Construction
+    graph: MediBot
+    node: bot
+  - type: Anchorable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-medibot
+    interactFailureString: petting-failure-medibot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Vocalizer
+  - type: DatasetVocalizer
+    dataset: MedibotAds
+  - type: Inventory
+    templateId: medibot
+  - type: DoAfter
+
+- type: entity
+  parent:
+  - MobSiliconBase
+  - StripableInventoryBase
+  id: MobMimeBot
+  name: mimebot
+  description: Why not give the mimebot a friendly wave?
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/mimebot.rsi
+    state: mimebot
+  - type: MimePowers
+  - type: Construction
+    graph: MimeBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-mimebot-name
+    description: ghost-role-information-mimebot-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-mimebot
+    interactFailureString: petting-failure-mimebot
+  - type: Inventory
+    templateId: head
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobSupplyBot
+  name: supplybot
+  description: Delivers cargo!
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/supplybot.rsi
+    layers:
+    - map: ["movement"]
+      state: supplybot
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: supplybot-moving
+    noMovementLayers:
+      movement:
+        state: supplybot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-supplybot-name
+    description: ghost-role-information-supplybot-description
+    rules: ghost-role-information-nonantagonist-rules
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Construction
+    graph: SupplyBot
+    node: bot
+  - type: Access
+    tags:
+    - Cargo
+    - Maintenance
+    - Salvage
+  - type: Dumpable
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,9,3
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBorg
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+    - SiliconEmotes
+    - Bot
+    - Unimplantable
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Supply
+  - type: Puller
+    needsHands: false
+
+- type: entity
+  parent: [ MobSiliconBase, MobCombat ]
+  id: MobHugBot
+  name: hugbot
+  description: Awww, who needs a hug?
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/Bots/hugbot.rsi
+    state: hugbot
+  - type: Construction
+    graph: HugBot
+    node: bot
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Weapons/boxingpunch1.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Blunt: 2
+  - type: Anchorable
+  - type: Hands # This probably REALLY needs hand whitelisting, but we NEED hands for hugs, so...
+  - type: ComplexInteraction # Hugging is a complex interaction, apparently.
+  - type: HugBot
+  - type: Body
+    prototype: HugBot
+  - type: HTN
+    rootTask:
+      task: HugBotCompound
+  - type: InteractionPopup
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others

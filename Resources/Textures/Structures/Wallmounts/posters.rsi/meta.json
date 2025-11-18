@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from  at commit https://github.com/tgstation/tgstation/commit/f01de25493e2bd2706ef9b0303cb0d7b5e3e471b",
+  "copyright": "Taken from  at commit https://github.com/tgstation/tgstation/commit/f01de25493e2bd2706ef9b0303cb0d7b5e3e471b.     poster52_contraband, poster53_contraband and poster54_contraband taken from https://github.com/vgstation-coders/vgstation13/blob/435ed5f2a7926e91cc31abac3a0d47d7e9ad7ed4/icons/obj/posters.dmi.     originmap, poster55_contraband, poster56_contraband, poster57_contraband and poster39_legit by discord brainfood#7460,     poster63_contraband by discord foboscheshir_,     poster4_contraband edited, poster36_contraband and poster52_legit made by SlamBamActionman,     poster53_legit and the original version by @RCOI on discord, modified by Spessmann,     poster54_legit by hex_reject on Discord,     poster64_contraband, poster65_contraband, poster66_contraband by JuneSzalkowska (Discord), poster55_legit by FairlySadPanda (Github), based on art and a character owned by Vytian (Discord), poster56_legit by aksosotl (Discord).",
   "size": {
     "x": 32,
     "y": 32
@@ -196,13 +196,46 @@
       "name": "poster48_contraband"
     },
     {
-      "name": "poster49_contraband"
-    },
-    {
       "name": "poster50_contraband"
     },
     {
+      "name": "poster55_contraband"
+    },
+    {
+      "name": "poster56_contraband"
+    },
+    {
+      "name": "poster57_contraband"
+    },
+    {
+      "name": "poster58_contraband"
+    },
+    {
+      "name": "poster59_contraband"
+    },
+    {
+      "name": "poster60_contraband"
+    },
+    {
+      "name": "poster61_contraband"
+    },
+    {
+      "name": "poster62_contraband"
+    },
+    {
+      "name": "poster63_contraband"
+    },
+    {
       "name": "poster51_contraband"
+    },
+    {
+      "name": "poster64_contraband"
+    },
+    {
+      "name": "poster65_contraband"
+    },
+    {
+      "name": "poster66_contraband"
     },
     {
       "name": "poster1_legit"
@@ -316,6 +349,63 @@
       "name": "poster37_legit"
     },
     {
+      "name": "poster38_legit"
+    },
+    {
+      "name": "poster39_legit"
+    },
+    {
+      "name": "poster40_legit"
+    },
+    {
+      "name": "poster41_legit"
+    },
+    {
+      "name": "poster42_legit"
+    },
+    {
+      "name": "poster43_legit"
+    },
+    {
+      "name": "poster44_legit"
+    },
+    {
+      "name": "poster45_legit"
+    },
+    {
+      "name": "poster46_legit"
+    },
+    {
+      "name": "poster47_legit"
+    },
+    {
+      "name": "poster48_legit"
+    },
+    {
+      "name": "poster49_legit"
+    },
+    {
+      "name": "poster50_legit"
+    },
+    {
+      "name": "poster51_legit"
+    },
+    {
+      "name": "poster52_legit"
+    },
+    {
+      "name": "poster53_legit"
+    },
+    {
+      "name": "poster54_legit"
+    },
+    {
+      "name": "poster55_legit"
+    },
+    {
+      "name": "poster56_legit"
+    },
+    {
       "name": "random_legit"
     },
     {
@@ -323,6 +413,48 @@
     },
     {
       "name": "random_anything"
+    },
+    {
+      "name": "poster52_contraband"
+    },
+    {
+      "name": "poster53_contraband"
+    },
+    {
+      "name": "poster54_contraband"
+    },
+    {
+      "name": "bagelmap"
+    },
+    {
+      "name": "deltamap"
+    },
+    {
+      "name": "marathonmap"
+    },
+    {
+      "name": "originmap"
+    },
+    {
+      "name": "moosemap"
+    },
+    {
+      "name": "packedmap"
+    },
+    {
+      "name": "pillarmap"
+    },
+    {
+      "name": "salternmap"
+    },
+    {
+      "name": "splitmap"
+    },
+    {
+      "name": "lighthousemap"
+    },
+    {
+      "name": "waystationmap"
     }
   ]
 }

@@ -1,22 +1,48 @@
 ﻿using Content.Server.Administration;
 using Content.Shared.Administration;
-using JetBrains.Annotations;
+using Content.Shared.Station.Components;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
-namespace Content.Server.Nuke.Commands
+namespace Content.Server.Nuke.Commands;
+
+[AdminCommand(AdminFlags.Fun)]
+public sealed class SendNukeCodesCommand : LocalizedEntityCommands
 {
-    [UsedImplicitly]
-    [AdminCommand(AdminFlags.Fun)]
-    public sealed class SendNukeCodesCommand : IConsoleCommand
-    {
-        public string Command => "nukecodes";
-        public string Description => "Send nuke codes to the communication console";
-        public string Help => "nukecodes";
+    [Dependency] private readonly NukeCodePaperSystem _nukeCodeSystem = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "nukecodes";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length != 1)
         {
-            EntitySystem.Get<NukeCodeSystem>().SendNukeCodes();
+            shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
+            return;
         }
+
+        if (!NetEntity.TryParse(args[0], out var uidNet) || !EntityManager.TryGetEntity(uidNet, out var uid))
+        {
+            shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
+            return;
+        }
+
+        _nukeCodeSystem.SendNukeCodes(uid.Value);
+    }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length != 1)
+            return CompletionResult.Empty;
+
+        var stations = new List<CompletionOption>();
+        var query = EntityManager.EntityQueryEnumerator<StationDataComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            var meta = EntityManager.GetComponent<MetaDataComponent>(uid);
+
+            stations.Add(new CompletionOption(uid.ToString(), meta.EntityName));
+        }
+
+        return CompletionResult.FromHintOptions(stations, null);
     }
 }

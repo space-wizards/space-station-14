@@ -1,0 +1,127 @@
+﻿- type: construction
+  id: CyanLight
+  graph: CyanLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: BlueLight
+  graph: BlueLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: YellowLight
+  graph: YellowLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: PinkLight
+  graph: PinkLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: OrangeLight
+  graph: OrangeLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: BlackLight
+  graph: BlackLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: RedLight
+  graph: RedLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: GreenLight
+  graph: GreenLight
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: CyanLightBulb
+  graph: CyanLightBulb
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: BlueLightBulb
+  graph: BlueLightBulb
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: YellowLightBulb
+  graph: YellowLightBulb
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: PinkLightBulb
+  graph: PinkLightBulb
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: OrangeLightBulb
+  graph: OrangeLightBulb
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: BlackLightBulb
+  graph: BlackLightBulb
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: RedLightBulb
+  graph: RedLightBulb
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: GreenLightBulb
+  graph: GreenLightBulb
+  startNode: start
+  targetNode: icon
+  category: construction-category-utilities
+  objectType: Item

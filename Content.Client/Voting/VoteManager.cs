@@ -1,15 +1,20 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Voting;
 using Robust.Client;
+using Robust.Client.Audio;
 using Robust.Client.Console;
+using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Audio.Sources;
+using Robust.Shared.ContentPack;
 
 
 namespace Content.Client.Voting
@@ -29,15 +34,19 @@ namespace Content.Client.Voting
 
     public sealed class VoteManager : IVoteManager
     {
+        [Dependency] private readonly IAudioManager _audio = default!;
+        [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IClientConsoleHost _console = default!;
-        [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly IResourceCache _res = default!;
 
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeouts = new();
         private readonly Dictionary<int, ActiveVote> _votes = new();
         private readonly Dictionary<int, UI.VotePopup> _votePopups = new();
         private Control? _popupContainer;
+
+        private IAudioSource? _voteSource;
 
         public bool CanCallVote { get; private set; }
 
@@ -47,6 +56,14 @@ namespace Content.Client.Voting
 
         public void Initialize()
         {
+            const string sound = "/Audio/Effects/voteding.ogg";
+            _voteSource = _audio.CreateAudioSource(_res.GetResource<AudioResource>(sound));
+
+            if (_voteSource != null)
+            {
+                _voteSource.Global = true;
+            }
+
             _netManager.RegisterNetMessage<MsgVoteData>(ReceiveVoteData);
             _netManager.RegisterNetMessage<MsgVoteCanCall>(ReceiveVoteCanCall);
 
@@ -93,6 +110,13 @@ namespace Content.Client.Voting
             }
 
             _popupContainer = container;
+            SetVoteData();
+        }
+
+        private void SetVoteData()
+        {
+            if (_popupContainer == null)
+                return;
 
             foreach (var (vId, vote) in _votes)
             {
@@ -116,8 +140,15 @@ namespace Content.Client.Voting
                     return;
                 }
 
+                _voteSource?.Restart();
                 @new = true;
-                SoundSystem.Play(Filter.Local(), "/Audio/Effects/voteding.ogg");
+
+                // Refresh
+                var container = _popupContainer;
+                ClearPopupContainer();
+
+                if (container != null)
+                    SetPopupContainer(container);
 
                 // New vote from the server.
                 var vote = new ActiveVote(voteId)
@@ -136,6 +167,7 @@ namespace Content.Client.Voting
                 _votes.Remove(voteId);
                 if (_votePopups.TryGetValue(voteId, out var toRemove))
                 {
+
                     toRemove.Orphan();
                     _votePopups.Remove(voteId);
                 }
@@ -152,6 +184,8 @@ namespace Content.Client.Voting
             existingVote.Title = message.VoteTitle;
             existingVote.StartTime = _gameTiming.RealServerToLocal(message.StartTime);
             existingVote.EndTime = _gameTiming.RealServerToLocal(message.EndTime);
+            existingVote.DisplayVotes = message.DisplayVotes;
+            existingVote.TargetEntity = message.TargetEntity;
 
             // Logger.Debug($"{existingVote.StartTime}, {existingVote.EndTime}, {_gameTiming.RealTime}");
 
@@ -213,7 +247,8 @@ namespace Content.Client.Voting
             public string Initiator = "";
             public int? OurVote;
             public int Id;
-
+            public bool DisplayVotes;
+            public int? TargetEntity; // NetEntity
             public ActiveVote(int voteId)
             {
                 Id = voteId;

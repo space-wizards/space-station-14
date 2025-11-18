@@ -1,0 +1,76 @@
+﻿<widgets:HotbarGui
+    xmlns="https://spacestation14.io"
+    xmlns:inventory="clr-namespace:Content.Client.UserInterface.Systems.Inventory.Controls"
+    xmlns:hands="clr-namespace:Content.Client.UserInterface.Systems.Hands.Controls"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Hotbar.Widgets"
+    Name="HotbarInterface"
+    VerticalExpand="True"
+    VerticalAlignment="Bottom"
+    Orientation="Vertical"
+    HorizontalAlignment="Center">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Name="SingleStorageContainer"
+                      Access="Public"
+                      HorizontalAlignment="Center"
+                      HorizontalExpand="True"
+                      Margin="10">
+        </BoxContainer>
+        <BoxContainer Name="DoubleStorageContainer"
+                      Access="Public"
+                      HorizontalAlignment="Stretch"
+                      HorizontalExpand="True"
+                      Margin="10">
+            <BoxContainer Name="LeftStorageContainer"
+                          Access="Public"
+                          HorizontalAlignment="Left"
+                          HorizontalExpand="True"
+                          VerticalAlignment="Bottom"
+                          Margin="10">
+            </BoxContainer>
+            <BoxContainer Name="RightStorageContainer"
+                          Access="Public"
+                          HorizontalAlignment="Right"
+                          HorizontalExpand="True"
+                          VerticalAlignment="Bottom"
+                          Margin="10">
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" Name="Hotbar" HorizontalAlignment="Center">
+            <inventory:ItemSlotButtonContainer
+                Name="SecondHotbar"
+                SlotGroup="SecondHotbar"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                VerticalExpand="False"
+                ExpandBackwards="True"
+                Columns="6"
+                HorizontalExpand="False"/>
+            <inventory:ItemStatusPanel
+                Name="StatusPanelRight"
+                HorizontalAlignment="Center" Margin="0 0 -2 2"
+                SetWidth="125"
+                SetHeight="60"/>
+            <hands:HandsContainer
+                Name="HandContainer"
+                Access="Public"
+                HorizontalAlignment="Center"
+                HorizontalExpand="False"
+                ColumnLimit="6"/>
+            <inventory:ItemStatusPanel
+                Name="StatusPanelLeft"
+                HorizontalAlignment="Center" Margin="-2 0 0 2"
+                SetWidth="125"
+                SetHeight="60"/>
+            <inventory:ItemSlotButtonContainer
+                Name="MainHotbar"
+                SlotGroup="MainHotbar"
+                VerticalExpand="False"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                HorizontalExpand="False"
+                ExpandBackwards="True"
+                Columns="6"
+                />
+        </BoxContainer>
+    </BoxContainer>
+</widgets:HotbarGui>

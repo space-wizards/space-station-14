@@ -1,227 +1,835 @@
+﻿# Be careful with these as they get removed on shutdown too!
 - type: entity
-  save: false
-  abstract: true
-  id: PlayerSiliconBase #for player controlled silicons
+  id: AiHeld
+  description: Components added / removed from an entity that gets inserted into an AI core.
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Reactive
-    groups:
-      Acidic: [Touch]
-  - type: Input
-    context: "human"
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/hit_kick.ogg
-  - type: Clickable
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+  - type: IgnoreUIRange
+  - type: StationAiHeld
+  - type: StationAiOverlay
+  - type: ShowElectrocutionHUD
+  - type: ActionGrant
+    actions:
+    - ActionJumpToCore
+    - ActionSurvCameraLights
+    - ActionAIViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+      enum.CrewMonitoringUIKey.Key:
+        type: CrewMonitoringBoundUserInterface
+      enum.GeneralStationRecordConsoleKey.Key:
+        type: GeneralStationRecordConsoleBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowRadar
+      enum.CrewMonitoringUIKey.Key:
+        toggleAction: ActionAGhostShowCrewMonitoring
+      enum.GeneralStationRecordConsoleKey.Key:
+        toggleAction: ActionAGhostShowStationRecords
+      enum.CommunicationsConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowCommunications
+  - type: CrewMonitoringConsole
+  - type: GeneralStationRecordConsole
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: CrewMonitor
+    transmitFrequencyId: ShuttleTimer
+  - type: RadarConsole
+    followEntity: false
+  - type: CommunicationsConsole
+    canShuttle: false
+    title: comms-console-announcement-title-station-ai
+    color: "#5ed7aa"
+  - type: ShowJobIcons
+  - type: DamagedSiliconAccent
+    startPowerCorruptionAtCharIdx: 4
+    maxPowerCorruptionAtCharIdx: 20
+
+- type: entity
+  id: AiHeldIntellicard
+  description: Components added / removed from an entity that gets inserted into an Intellicard.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+  - type: ActionGrant
+    actions:
+    - ActionAIViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+  - type: ShowJobIcons
+
+# Ai
+- type: entity
+  id: AiHolder
+  abstract: true
+  description: Handles AI interactions across holocards + AI cores
+  components:
+  - type: ItemSlots
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: StationAiHolder
+    slot:
+      name: station-ai-mind-slot
+      locked: false
+      disableEject: true
+      whitelist:
+        tags:
+        - StationAi
+  - type: ContainerContainer
+    containers:
+      station_ai_mind_slot: !type:ContainerSlot
+        # Load-bearing.
+        # The issue is verbs check for same transparent container.
+        # The alternative is you add a bunch of events trying to override it; we don't even really need the container functionality
+        # anyway it's just a quality of life thing.
+        showEnts: True
+
+# Items
+- type: entity
+  id: Intellicard
+  name: intellicard
+  description: A storage device for AIs.
+  parent:
+  - BaseItem
+  - AiHolder
+  suffix: Empty
+  components:
+  - type: ContainerComp
+    proto: AiHeldIntellicard
+    container: station_ai_mind_slot
+  - type: Sprite
+    sprite: Objects/Devices/ai_card.rsi
+    layers:
+    - state: base
+    - state: full
+      map: ["unshaded"]
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StationAiVisualLayers.Icon:
+        unshaded:
+          Empty: { state: empty }
+          Occupied: { state: full }
+          Rebooting: { state: dead }
+          Dead: { state: dead }
+  - type: Intellicard
+
+- type: entity
+  id: PlayerStationAiPreview
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
+
+# Empty AI core
+- type: entity
+  id: PlayerStationAiEmpty
+  name: AI core
+  description: The latest in Artificial Intelligences.
+  parent:
+  - BaseStructure
+  - AiHolder
+  suffix: Empty
+  components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
+  - type: WarpPoint
+    blacklist:
+      tags:
+      - GhostOnlyWarp
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 200
+  - type: ContainerComp
+    proto: AiHeld
+    container: station_ai_mind_slot
   - type: Damageable
-    damageContainer: Inorganic
-  - type: Bloodstream
-    bloodReagent: Oil
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -0.25
+    damageModifierSet: StrongMetallic
+  - type: Repairable
+    doAfterDelay: 10
+    allowSelfRepair: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Breakage" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 2000
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 2
+          SheetPlasteel:
+            min: 2
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: DamageVisuals
+    thresholds: [25, 50, 75, 100, 200, 300, 400]
+    damageDivisor: 4
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Mobs/Silicon/station_ai_cracks.rsi
+  - type: ApcPowerReceiver
+    powerLoad: 500
+  - type: ExtensionCableReceiver
+  - type: Battery
+    maxCharge: 300000
+    startingCharge: 300000
+  - type: ApcPowerReceiverBattery
+    idleLoad: 500
+    batteryRechargeRate: 1000
+    batteryRechargeEfficiency: 0 # Setting to zero until the light flickering issue associated with dynamic power loads is fixed 
+  - type: StationAiCore
+  - type: StationAiVision
+  - type: InteractionOutline
+  - type: Sprite
+    snapCardinals: true
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai_empty
+      map: ["enum.StationAiVisualLayers.Base"]
+      shader: unshaded
+    - state: ai
+      map: ["enum.StationAiVisualLayers.Icon"]
+      shader: unshaded
+      visible: false
+    - state: ai_unpowered
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { visible: true }
+          True: { visible: false }
+      enum.StationAiVisuals.Broken:
+        enum.StationAiVisualLayers.Base:
+          False: { state: ai_empty }
+          True: { state: ai_error }
+  - type: InteractionPopup
+    interactSuccessString: petting-success-station-ai
+    interactFailureString: petting-failure-station-ai
+    messagePerceivedByOthers: petting-success-station-ai-others # Otherwise AI cannot tell its being pet as It's just a brain inside of the core, not the core itself.
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Telephone
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
+    listeningRange: 0
+    speakerVolume: Speak
+    unlistedNumber: true
+  - type: Holopad
+  - type: StationAiWhitelist
+  - type: UserInterface
+    interfaces:
+      enum.HolopadUiKey.AiRequestWindow:
+        type: HolopadBoundUserInterface
+      enum.HolopadUiKey.AiActionWindow:
+        type: HolopadBoundUserInterface
+      enum.StationAiCustomizationUiKey.Key:
+        type: StationAiCustomizationBoundUserInterface
+  - type: Construction
+    graph: StationAiCore
+    node: stationAiCore
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      station_ai_brain_slot: !type:Container
+      station_ai_mind_slot: !type:ContainerSlot
+        showEnts: true
+  - type: ContainerFill
+    containers:
+      board:
+      - StationAiCoreElectronics
+  - type: StaticPrice
+    price: 5000
+      
+# The job-ready version of an AI spawn.
+- type: entity
+  id: PlayerStationAi
+  parent: PlayerStationAiEmpty
+  suffix: Job spawn
+  components:
+  - type: ContainerSpawnPoint
+    containerId: station_ai_mind_slot
+    job: StationAi
+
+# The station AI core assembly
+- type: entity
+  parent: BaseStructure
+  id: PlayerStationAiAssembly
+  name: AI core assembly
+  description: An unfinished computer core for housing an artifical intelligence.
+  components:
+  - type: Anchorable
+    flags: 
+    - Anchorable
+  - type: Rotatable
+  - type: Sprite
+    snapCardinals: true
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: frame_0
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          frame: { state: frame_0 }
+          frameWithElectronics: { state: frame_1 }
+          frameWithSecuredElectronics: { state: frame_2 }
+          frameWithWires: { state: frame_3 }
+          frameWithBrain: { state: frame_3b }
+          frameWithBrainFinished: { state: frame_4 }
+          frameWithoutBrainFinished: { state: frame_4 }
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
-    - shape:
-        # Circles, cuz rotation of rectangles looks very bad
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 20
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 3
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-    netsync: false
-  - type: Physics
-    bodyType: KinematicController
-  - type: Hands
-    showInHands: false
-  - type: Body
-    template: DroneTemplate
-    preset: DronePreset
-  - type: DoAfter
-  - type: Pullable
-  - type: Examiner
-  - type: Puller
-  - type: Recyclable
-    safe: false
-  - type: StandingState
-  - type: Alerts
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 200
+  - type: Damageable
+    damageModifierSet: StrongMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlasteel:
+            min: 2
+            max: 4
+      - !type:EmptyContainersBehaviour
+        containers:
+        - station_ai_brain_slot
+        - board
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Construction
+    graph: StationAiCore
+    node: frame
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+      station_ai_brain_slot: !type:Container
 
+# The actual brain inside the core
 - type: entity
-  name: drone
-  id: Drone
-  parent: PlayerSiliconBase
+  id: StationAiBrain
+  parent: PositronicBrain
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
-  - type: Drone
-    tools:
-      - id: ClothingBackpackSatchelDrone
-      - id: trayScanner
-      - id: Omnitool
-      - id: WelderExperimental
-  - type: NameIdentifier
-    group: Drone
-  - type: Inventory
-    templateId: drone
-  - type: Strippable
+  - type: Sprite
+    # Once it's in a core it's pretty much an abstract entity at that point.
+    visible: false
+  - type: SiliconLawProvider
+    laws: Crewsimov
+  - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
   - type: UserInterface
     interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: Maintenance Drone
-    description: Maintain the station. Ignore other beings except drones.
-    rules: |
-     You are bound by these laws both in-game and out-of-character:
-     1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
-     2. You may not harm any being, regardless of intent or circumstance.
-     3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 5
-    baseSprintSpeed : 5
-  - type: MobState
-    thresholds:
-      0: !type:NormalMobState {}
-      60: !type:DeadMobState {}
-  - type: Flashable
-  - type: NoSlip
-  - type: StatusEffects
-    allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-  - type: SlowOnDamage
-    speedModifierThresholds:
-      20: 0.8
-      30: 0.6
-      40: 0.4
-      50: 0.2
-  - type: Temperature
-    heatDamageThreshold: 5000
-    currentTemperature: 310.15
-    specificHeat: 42
-    heatDamage:
-      types:
-        Heat : 1 #per second, scales with temperature & other constants
-  - type: Sprite
-    drawdepth: Mobs
-    netsync: false
-    layers:
-    - state: shell
-      sprite: Mobs/Silicon/drone.rsi
-  - type: MovementIgnoreGravity
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      mass: 20
-      mask:
-      - SmallImpassable
-      - MobImpassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-      - type: GenericEnumVisualizer
-        key: enum.DroneVisuals.Status
-        layer: 0
-        states:
-          enum.DroneStatus.Off: shell
-          enum.DroneStatus.On: drone
-  - type: ReplacementAccent
-    accent: silicon
-  - type: Repairable
-    fuelcost: 15
-    doAfterDelay: 8
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+        requireInputValidation: false
+  - type: ComplexInteraction
   - type: Actions
-  - type: UnpoweredFlashlight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
-  - type: PointLight
-    enabled: false
-    radius: 2.5
-    softness: 5
-    mask: /Textures/Effects/LightMasks/cone.png
-    autoRot: true
+  - type: Access
+    groups:
+    - AllAccess
+    - Silicon
+  - type: Eye
+    drawFov: false
+  - type: Examiner
+  - type: InputMover
+  - type: BlockMovement
+    blockInteraction: false
+  - type: GhostOnMove
+    mustBeDead: true
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+  - type: Tag
+    tags:
+    - HideContextMenu
+    - StationAi
+    - NoConsoleSound
+  - type: StartingMindRole
+    mindRole: "MindRoleSiliconBrain"
+    silent: true
+  - type: StationAiCustomization
+    protoIds:
+      StationAiCoreIconography: StationAiIconAi
+      StationAiHolograms: StationAiHologramFemale
+  - type: HolographicAvatar
+    layerData:
+    - sprite: Mobs/Silicon/holograms.rsi
+      state: ai_female
+  - type: NameIdentifier
+    group: StationAi
+
+# Hologram projection that the AI's eye tracks.
+- type: entity
+  parent:
+  - Incorporeal
+  - BaseMob
+  id: StationAiHolo
+  name: AI eye
+  description: The AI's viewer.
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: NoFTL
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    blacklist:
+      tags:
+      - GhostOnlyWarp
+  - type: Eye
+    pvsScale: 1.5
+  - type: Visibility
+    layer: 2
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: ai_camera
+      shader: unshaded
+      map: ["base"]
+
+# The holographic representation of the AI that is projected from a holopad.
+- type: entity
+  id: StationAiHoloLocal
+  name: AI hologram
+  description: A holographic representation of an AI.
+  categories: [ HideSpawnMenu, DoNotMap ]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Tag
+    tags:
+    - GhostOnlyWarp
+  - type: WarpPoint
+    follow: true
+    blacklist:
+      tags:
+      - GhostOnlyWarp
+  - type: Eye
+  - type: ContentEye
+  - type: Examiner
+  - type: Actions
+  - type: Alerts
+  - type: FTLSmashImmune
+  - type: CargoSellBlacklist
+  - type: StationAiVision
+    range: 20
+
+# Borgs
+- type: entity
+  id: PlayerBorgBattery
+  parent: BorgChassisSelectable
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: StartingMindRole
+    mindRole: "MindRoleSiliconBrain"
+    silent: true
 
 - type: entity
-  name: onestar mecha
-  id: Onestar
-  parent: PlayerSiliconBase
+  id: PlayerBorgSyndicateAssaultBattery
+  parent: BorgChassisSyndicateAssault
+  suffix: Battery, Module, Operative
   components:
-  - type: Drone
-    applyLaws: false
-    tools:
-      - id: Minigun
-      - id: EnergySword
-      - id: LauncherMultipleRocket
-      - id: XrayCannon
-  - type: UserInterface
-    interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: Onestar Mecha
-    description: You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
-    rules: Use your weapons to cause havok. You are an antagonist.
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 2
-  - type: MobState
-    thresholds:
-      0: !type:NormalMobState {}
-      1000: !type:DeadMobState {}
+  - type: NukeOperative
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleOperative
+        - BorgModuleL6C
+        - BorgModuleDoubleEsword
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+
+- type: entity
+  id: PlayerBorgSyndicateAssaultGhostRole
+  parent: PlayerBorgSyndicateAssaultBattery
+  suffix: Ghost role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-syndicate-cyborg-assault-name
+      description: ghost-role-information-syndicate-cyborg-description
+      rules: ghost-role-information-silicon-rules
+      raffle:
+        settings: default
+      job: Borg
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  id: PlayerBorgSyndicateSaboteurBattery
+  parent: BorgChassisSyndicateSaboteur
+  suffix: Battery, Module, Operative
+  components:
+  - type: NukeOperative
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleOperative
+        - BorgModuleSyndicateWeapon
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+
+- type: entity
+  id: PlayerBorgSyndicateSaboteurGhostRole
+  parent: PlayerBorgSyndicateSaboteurBattery
+  suffix: Ghost role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-syndicate-cyborg-saboteur-name
+      description: ghost-role-information-syndicate-cyborg-description
+      rules: ghost-role-information-silicon-rules
+      raffle:
+        settings: default
+      job: Borg
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  name: syndicate invasion borg spawner
+  id: PlayerBorgSyndicateInvasionGhostRoleSpawner
+  parent: MarkerBase
+  components:
   - type: Sprite
-    drawdepth: Mobs
-    netsync: false
     layers:
-    - state: onestar_boss
-      sprite: Mobs/Silicon/onestar.rsi
-    - state: onestar_boss_screen
-      sprite: Mobs/Silicon/onestar.rsi
-      shader: unshaded
-  - type: MovementIgnoreGravity
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 1
-      mass: 500
-      mask:
-      - SmallImpassable
-      - MobImpassable
-      - VaultImpassable
-      - Impassable
-      layer:
-      - Opaque
-  - type: Appearance
-    visuals:
-    - type: DamageStateVisualizer
-      rotate: true
-      normal: onestar_boss
-      dead: onestar_boss_wrecked
-  - type: CombatMode
+      - state: red
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner_syndicate
+  - type: RandomSpawner
+    prototypes:
+    - PlayerBorgSyndicateAssaultGhostRole
+    - PlayerBorgSyndicateAssaultGhostRole # Saboteurs are kinda like cyborg medics, we want less.
+    - PlayerBorgSyndicateSaboteurGhostRole
+
+- type: entity
+  parent: EngineeringBorgChassisDerelict
+  id: PlayerEngineeringBorgDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleFireExtinguisher
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleCable
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  parent: PlayerEngineeringBorgDerelict
+  id: PlayerEngineeringBorgDerelictGhostRole
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-engineering-cyborg-name
+    description: ghost-role-information-derelict-engineering-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: BorgChassisDerelict
+  id: PlayerBorgDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+        - PositronicBrain
+      borg_module:
+        - BorgModuleTool
+        - BorgModuleFireExtinguisher
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  parent: PlayerBorgDerelict
+  id: PlayerBorgDerelictGhostRole
+  suffix: Ghost role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-derelict-cyborg-name
+      description: ghost-role-information-derelict-cyborg-description
+      rules: ghost-role-information-silicon-rules
+      raffle:
+        settings: default
+      reregister: false
+      job: Borg
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: JanitorBorgChassisDerelict
+  id: PlayerJanitorBorgDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleFireExtinguisher
+      - BorgModuleCleaning
+      - BorgModuleCustodial
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  parent: PlayerJanitorBorgDerelict
+  id: PlayerJanitorBorgDerelictGhostRole
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-janitor-cyborg-name
+    description: ghost-role-information-derelict-janitor-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MedicalBorgChassisDerelict
+  id: PlayerMedicalBorgDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool
+      - BorgModuleFireExtinguisher
+      - BorgModuleChemical
+      - BorgModuleTopicals
+      - BorgModuleRescue
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  parent: PlayerMedicalBorgDerelict
+  id: PlayerMedicalBorgDerelictGhostRole
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-medical-cyborg-name
+    description: ghost-role-information-derelict-medical-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: MiningBorgChassisDerelict
+  id: PlayerMiningBorgDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleTool #No fire extinguisher, traversal is better
+      - BorgModuleMining
+      - BorgModuleTraversal
+      - BorgModuleAppraisal
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
+  - type: RandomMetadata
+    nameSegments: [NamesBorg]
+
+- type: entity
+  parent: PlayerMiningBorgDerelict
+  id: PlayerMiningBorgDerelictGhostRole
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-mining-cyborg-name
+    description: ghost-role-information-derelict-mining-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  parent: SyndicateAssaultBorgChassisDerelict
+  id: PlayerSyndicateAssaultBorgDerelict
+  suffix: Battery, Module
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - PositronicBrain
+      borg_module:
+      - BorgModuleOperative
+      - BorgModuleC20r
+      - BorgModuleEsword
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+  - type: RandomMetadata
+    nameSegments: [NamesDeathCommando]
+
+- type: entity
+  parent: PlayerSyndicateAssaultBorgDerelict
+  id: PlayerBorgSyndicateDerelictGhostRole
+  suffix: Ghost role
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-syndicate-assault-cyborg-name
+    description: ghost-role-information-derelict-syndicate-assault-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+    reregister: false
+    job: Borg
+  - type: GhostTakeoverAvailable

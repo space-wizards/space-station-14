@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Content.Shared.Chat
+﻿namespace Content.Shared.Chat
 {
     /// <summary>
     ///     Chat channels that the player can select in the chat box.
@@ -51,7 +49,7 @@ namespace Content.Shared.Chat
         /// <summary>
         ///     Admin chat
         /// </summary>
-        Admin = ChatChannel.Admin,
+        Admin = ChatChannel.AdminChat,
 
         Console = ChatChannel.Unspecified
     }

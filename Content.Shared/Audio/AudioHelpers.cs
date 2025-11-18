@@ -1,19 +1,28 @@
-using System;
 using Robust.Shared.Audio;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Audio
 {
-    public static class AudioHelpers{
+    public static class AudioHelpers
+    {
         /// <summary>
         ///     Returns a random pitch.
         /// </summary>
+        [Obsolete("Use AudioParams.Variation data-field")]
         public static AudioParams WithVariation(float amplitude)
         {
-            var scale = (float)(IoCManager.Resolve<IRobustRandom>().NextGaussian(1, amplitude));
+            return WithVariation(amplitude, null);
+        }
+
+        /// <summary>
+        ///     Returns a random pitch.
+        /// </summary>
+        [Obsolete("Use AudioParams.Variation data-field")]
+        public static AudioParams WithVariation(float amplitude, IRobustRandom? rand)
+        {
+            IoCManager.Resolve(ref rand);
+            var scale = (float) rand.NextGaussian(1, amplitude);
             return AudioParams.Default.WithPitchScale(scale);
         }
 
@@ -35,27 +44,22 @@ namespace Content.Shared.Audio
         /// </summary>
         /// <param name="shift">Number of semitones to shift, positive or negative. Clamped between -12 and 12
         /// which correspond to a pitch multiplier of 0.5 and 2.0 respectively.</param>
-        public static AudioParams ShiftSemitone(int shift)
+        public static AudioParams ShiftSemitone(AudioParams @params, int shift)
         {
             shift = MathHelper.Clamp(shift, -12, 12);
             float pitchMult = SemitoneMultipliers[shift + 12];
-            return AudioParams.Default.WithPitchScale(pitchMult);
+            return @params.WithPitchScale(pitchMult);
         }
 
         /// <summary>
         /// Returns a pitch multiplier shifted by a random number of semitones within variation.
         /// </summary>
         /// <param name="variation">Max number of semitones to shift in either direction. Values above 12 have no effect.</param>
-        public static AudioParams WithSemitoneVariation(int variation)
+        public static AudioParams WithSemitoneVariation(AudioParams @params, int variation, IRobustRandom rand)
         {
+            IoCManager.Resolve(ref rand);
             variation = Math.Clamp(variation, 0, 12);
-            return ShiftSemitone(IoCManager.Resolve<IRobustRandom>().Next(-variation, variation));
-        }
-
-        public static string GetRandomFileFromSoundCollection(string name)
-        {
-            var soundCollection = IoCManager.Resolve<IPrototypeManager>().Index<SoundCollectionPrototype>(name);
-            return IoCManager.Resolve<IRobustRandom>().Pick(soundCollection.PickFiles).ToString();
+            return ShiftSemitone(@params, rand.Next(-variation, variation));
         }
     }
 }

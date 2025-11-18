@@ -1,40 +1,84 @@
 - type: job
   id: HeadOfPersonnel
-  name: "head of personnel"
-  head: true
+  name: job-name-hop
+  description: job-description-hop
+  playTimeTracker: JobHeadOfPersonnel
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 2.5h
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 2.5h
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 2.5h
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 2.5h
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 2.5h
+  weight: 20
   startingGear: HoPGear
-  departments:
-  - Command
-  - Civilian
-  icon: "HeadOfPersonnel"
-  requireAdminNotify: true
-  supervisors: "the captain"
+  icon: "JobIconHeadOfPersonnel"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Command
   - HeadOfPersonnel
-  - Security # HoPcurity strikes again
+  - Bar
   - Service
-  - Quartermaster
-  - Salvage
-  - Cargo
   - Maintenance
   - Janitor
   - Theatre
   - Kitchen
   - Chapel
   - Hydroponics
+  - External
+  - Cryogenics
   # I mean they'll give themselves the rest of the access levels *anyways*.
+  # As of 15/03/23 they can't do that so here's MOST of the rest of the access levels.
+  # Head level access that isn't their own was deliberately left out, get AA from the captain instead.
+  - Chemistry
+  - Engineering
+  - Research
+  - Detective
+  - Salvage
+  - Security
+  - Brig
+  - Lawyer
+  - Cargo
+  - Atmospherics
+  - Medical
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: HoPGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitHoP
-    back: ClothingBackpackFilled
     shoes: ClothingShoesColorBrown
-    head: ClothingHeadHatHopcap
     id: HoPPDA
+    gloves: ClothingHandsGlovesHop
     ears: ClothingHeadsetAltCommand
-  innerclothingskirt: ClothingUniformJumpskirtHoP
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+    belt: BoxFolderClipboardThreePapers
+    eyes: ClothingEyesHudCommand
+  storage:
+    back:
+    - Flash
+
+- type: chameleonOutfit
+  id: HeadOfPersonnelChameleonOutfit
+  job: HeadOfPersonnel
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatHopcap
+    eyes: ClothingEyesHudCommand
+    mask: ClothingMaskNeckGaiterRed
+    neck: ClothingNeckCloakHop
+    outerClothing: ClothingOuterWinterHoP
+

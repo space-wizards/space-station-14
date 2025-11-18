@@ -82,7 +82,7 @@ namespace Content.Server.Database
         }
     }
 
-    public class SnakeCaseConvention :
+    public partial class SnakeCaseConvention :
         IEntityTypeAddedConvention,
         IEntityTypeAnnotationChangedConvention,
         IPropertyAddedConvention,
@@ -99,22 +99,27 @@ namespace Content.Server.Database
 
         public static string RewriteName(string name)
         {
-            var regex = new Regex("[A-Z]+",  RegexOptions.Compiled);
-            return regex.Replace(
-                name,
-                (Match match) => {
-                    if (match.Index == 0 && (match.Value == "FK" || match.Value == "PK" ||  match.Value == "IX")) {
-                        return match.Value;
+            return UpperCaseLocator()
+                .Replace(
+                    name,
+                    (Match match) => {
+                        if (match.Index == 0 && (match.Value == "FK" || match.Value == "PK" ||  match.Value == "IX")) {
+                            return match.Value;
+                        }
+                        if (match.Value == "HWI")
+                            return (match.Index == 0 ? "" : "_") + "hwi";
+                        if (match.Index == 0)
+                            return match.Value.ToLower();
+                        if (match.Length > 1)
+                            return $"_{match.Value[..^1].ToLower()}_{match.Value[^1..^0].ToLower()}";
+
+                        // Do not add a _ if there is already one before this. This happens with owned entities.
+                        if (name[match.Index - 1] == '_')
+                            return match.Value.ToLower();
+
+                        return "_" + match.Value.ToLower();
                     }
-                    if (match.Value == "HWI")
-                        return (match.Index == 0 ? "" : "_") + "hwi";
-                    if (match.Index == 0)
-                        return match.Value.ToLower();
-                    if (match.Length > 1)
-                        return $"_{match.Value[..^1].ToLower()}_{match.Value[^1..^0].ToLower()}";
-                    return "_" + match.Value.ToLower();
-                }
-            );
+                );
         }
 
         public virtual void ProcessEntityTypeAdded(
@@ -200,12 +205,12 @@ namespace Content.Server.Database
                 return;
             }
 
-            if (entityType.FindPrimaryKey() is IConventionKey primaryKey)
+            if (entityType.FindPrimaryKey() is { } primaryKey)
             {
                 if (entityType.FindRowInternalForeignKeys(tableIdentifier).FirstOrDefault() is null
                     && (entityType.BaseType is null || entityType.GetTableName() == entityType.BaseType.GetTableName()))
                 {
-                    primaryKey.Builder.HasName(RewriteName(primaryKey.GetDefaultName()));
+                    primaryKey.Builder.HasName(RewriteName(primaryKey.GetDefaultName()!));
                 }
                 else
                 {
@@ -215,16 +220,16 @@ namespace Content.Server.Database
 
             foreach (var foreignKey in entityType.GetForeignKeys())
             {
-                foreignKey.Builder.HasConstraintName(RewriteName(foreignKey.GetDefaultName()));
+                foreignKey.Builder.HasConstraintName(RewriteName(foreignKey.GetDefaultName()!));
             }
 
             foreach (var index in entityType.GetIndexes())
             {
-                index.Builder.HasDatabaseName(RewriteName(index.GetDefaultDatabaseName()));
+                index.Builder.HasDatabaseName(RewriteName(index.GetDefaultDatabaseName()!));
             }
 
             if (annotation?.Value is not null
-                && entityType.FindOwnership() is IConventionForeignKey ownership
+                && entityType.FindOwnership() is { } ownership
                 && (string)annotation.Value != ownership.PrincipalEntityType.GetTableName())
             {
                 foreach (var property in entityType.GetProperties()
@@ -234,9 +239,9 @@ namespace Content.Server.Database
                     RewriteColumnName(property.Builder);
                 }
 
-                if (entityType.FindPrimaryKey() is IConventionKey key)
+                if (entityType.FindPrimaryKey() is { } key)
                 {
-                    key.Builder.HasName(RewriteName(key.GetDefaultName()));
+                    key.Builder.HasName(RewriteName(key.GetDefaultName()!));
                 }
             }
         }
@@ -245,7 +250,7 @@ namespace Content.Server.Database
             IConventionForeignKeyBuilder relationshipBuilder,
             IConventionContext<IConventionForeignKeyBuilder> context)
         {
-            relationshipBuilder.HasConstraintName(RewriteName(relationshipBuilder.Metadata.GetDefaultName()));
+            relationshipBuilder.HasConstraintName(RewriteName(relationshipBuilder.Metadata.GetDefaultName()!));
         }
 
         public void ProcessKeyAdded(IConventionKeyBuilder keyBuilder, IConventionContext<IConventionKeyBuilder> context)
@@ -257,7 +262,7 @@ namespace Content.Server.Database
 
             if (entityType.FindOwnership() is null)
             {
-                keyBuilder.HasName(RewriteName(keyBuilder.Metadata.GetDefaultName()));
+                keyBuilder.HasName(RewriteName(keyBuilder.Metadata.GetDefaultName()!));
             }
         }
 
@@ -270,7 +275,7 @@ namespace Content.Server.Database
 
                 foreach (var property in entityType.GetProperties())
                 {
-                    var columnName = property.GetColumnBaseName();
+                    var columnName = property.GetColumnName();
                     if (columnName.StartsWith(entityType.ShortName() + '_', StringComparison.Ordinal))
                     {
                         property.Builder.HasColumnName(
@@ -301,20 +306,20 @@ namespace Content.Server.Database
         private static void RewriteColumnName(IConventionPropertyBuilder propertyBuilder)
         {
             var property = propertyBuilder.Metadata;
-            var entityType = property.DeclaringEntityType;
+            var entityType = (IConventionEntityType)property.DeclaringType;
 
             if (entityType.ClrType == typeof(Microsoft.EntityFrameworkCore.Migrations.HistoryRow))
                 return;
 
             property.Builder.HasNoAnnotation(RelationalAnnotationNames.ColumnName);
 
-            var baseColumnName = StoreObjectIdentifier.Create(property.DeclaringEntityType, StoreObjectType.Table) is { } tableIdentifier
+            var baseColumnName = StoreObjectIdentifier.Create(entityType, StoreObjectType.Table) is { } tableIdentifier
                 ? property.GetDefaultColumnName(tableIdentifier)
-                : property.GetDefaultColumnBaseName();
+                : property.GetDefaultColumnName();
 
             if (baseColumnName == "Id")
                 baseColumnName = entityType.GetTableName() + baseColumnName;
-            propertyBuilder.HasColumnName(RewriteName(baseColumnName));
+            propertyBuilder.HasColumnName(RewriteName(baseColumnName!));
 
             foreach (var storeObjectType in _storeObjectTypes)
             {
@@ -332,5 +337,8 @@ namespace Content.Server.Database
                 }
             }
         }
+
+        [GeneratedRegex("[A-Z]+", RegexOptions.Compiled)]
+        private static partial Regex UpperCaseLocator();
     }
 }

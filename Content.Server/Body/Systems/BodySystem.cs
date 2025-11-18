@@ -1,94 +1,131 @@
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Server.Body.Components;
-using Content.Server.GameTicking;
-using Content.Server.Mind.Components;
+using System.Numerics;
+using Content.Server.Ghost;
+using Content.Server.Humanoid;
 using Content.Shared.Body.Components;
-using Content.Shared.MobState.Components;
-using Content.Shared.Movement.EntitySystems;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Body.Events;
+using Content.Shared.Body.Part;
+using Content.Shared.Body.Systems;
+using Content.Shared.Damage.Components;
+using Content.Shared.Humanoid;
+using Content.Shared.Mind;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Movement.Events;
+using Content.Shared.Movement.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Body.Systems
+namespace Content.Server.Body.Systems;
+
+public sealed class BodySystem : SharedBodySystem
 {
-    public sealed class BodySystem : EntitySystem
+    [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly GameTicker _ticker = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
+        SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
+    }
+
+    private void OnRelayMoveInput(Entity<BodyComponent> ent, ref MoveInputEvent args)
+    {
+        // If they haven't actually moved then ignore it.
+        if ((args.Entity.Comp.HeldMoveButtons &
+             (MoveButtons.Down | MoveButtons.Left | MoveButtons.Up | MoveButtons.Right)) == 0x0)
         {
-            base.Initialize();
-            SubscribeLocalEvent<BodyComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            return;
         }
 
-        private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
+        if (_mobState.IsDead(ent) && _mindSystem.TryGetMind(ent, out var mindId, out var mind))
         {
-            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
-                mobState.IsDead() &&
-                EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
-                mind.HasMind)
-            {
-                if (!mind.Mind!.TimeOfDeath.HasValue)
-                {
-                    mind.Mind.TimeOfDeath = _gameTiming.RealTime;
-                }
+            mind.TimeOfDeath ??= _gameTiming.RealTime;
+            _ghostSystem.OnGhostAttempt(mindId, canReturnGlobal: true, mind: mind);
+        }
+    }
 
-                _ticker.OnGhostAttempt(mind.Mind!, true);
-            }
+    private void OnApplyMetabolicMultiplier(
+        Entity<BodyComponent> ent,
+        ref ApplyMetabolicMultiplierEvent args)
+    {
+        foreach (var organ in GetBodyOrgans(ent, ent))
+        {
+            RaiseLocalEvent(organ.Id, ref args);
+        }
+    }
+
+    protected override void AddPart(
+        Entity<BodyComponent?> bodyEnt,
+        Entity<BodyPartComponent> partEnt,
+        string slotId)
+    {
+        // TODO: Predict this probably.
+        base.AddPart(bodyEnt, partEnt, slotId);
+
+        var layer = partEnt.Comp.ToHumanoidLayers();
+        if (layer != null)
+        {
+            var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+            _humanoidSystem.SetLayersVisibility(bodyEnt.Owner, layers, visible: true);
+        }
+    }
+
+    protected override void RemovePart(
+        Entity<BodyComponent?> bodyEnt,
+        Entity<BodyPartComponent> partEnt,
+        string slotId)
+    {
+        base.RemovePart(bodyEnt, partEnt, slotId);
+
+        if (!TryComp<HumanoidAppearanceComponent>(bodyEnt, out var humanoid))
+            return;
+
+        var layer = partEnt.Comp.ToHumanoidLayers();
+
+        if (layer is null)
+            return;
+
+        var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
+        _humanoidSystem.SetLayersVisibility((bodyEnt, humanoid), layers, visible: false);
+    }
+
+    public override HashSet<EntityUid> GibBody(
+        EntityUid bodyId,
+        bool gibOrgans = false,
+        BodyComponent? body = null,
+        bool launchGibs = true,
+        Vector2? splatDirection = null,
+        float splatModifier = 1,
+        Angle splatCone = default,
+        SoundSpecifier? gibSoundOverride = null
+    )
+    {
+        if (!Resolve(bodyId, ref body, logMissing: false)
+            || TerminatingOrDeleted(bodyId)
+            || EntityManager.IsQueuedForDeletion(bodyId))
+        {
+            return new HashSet<EntityUid>();
         }
 
-        /// <summary>
-        ///     Returns a list of ValueTuples of <see cref="T"/> and MechanismComponent on each mechanism
-        ///     in the given body.
-        /// </summary>
-        /// <param name="uid">The entity to check for the component on.</param>
-        /// <param name="body">The body to check for mechanisms on.</param>
-        /// <typeparam name="T">The component to check for.</typeparam>
-        public IEnumerable<(T Comp, MechanismComponent Mech)> GetComponentsOnMechanisms<T>(EntityUid uid,
-            SharedBodyComponent? body=null) where T : Component
-        {
-            if (!Resolve(uid, ref body))
-                yield break;
+        if (HasComp<GodmodeComponent>(bodyId))
+            return new HashSet<EntityUid>();
 
-            foreach (var (part, _) in body.Parts)
-            foreach (var mechanism in part.Mechanisms)
-            {
-                if (EntityManager.TryGetComponent<T>((mechanism).Owner, out var comp))
-                    yield return (comp, mechanism);
-            }
-        }
+        var xform = Transform(bodyId);
+        if (xform.MapUid is null)
+            return new HashSet<EntityUid>();
 
-        /// <summary>
-        ///     Tries to get a list of ValueTuples of <see cref="T"/> and MechanismComponent on each mechanism
-        ///     in the given body.
-        /// </summary>
-        /// <param name="uid">The entity to check for the component on.</param>
-        /// <param name="comps">The list of components.</param>
-        /// <param name="body">The body to check for mechanisms on.</param>
-        /// <typeparam name="T">The component to check for.</typeparam>
-        /// <returns>Whether any were found.</returns>
-        public bool TryGetComponentsOnMechanisms<T>(EntityUid uid,
-            [NotNullWhen(true)] out IEnumerable<(T Comp, MechanismComponent Mech)>? comps,
-            SharedBodyComponent? body=null) where T: Component
-        {
-            if (!Resolve(uid, ref body))
-            {
-                comps = null;
-                return false;
-            }
+        var gibs = base.GibBody(bodyId, gibOrgans, body, launchGibs: launchGibs,
+            splatDirection: splatDirection, splatModifier: splatModifier, splatCone:splatCone);
 
-            comps = GetComponentsOnMechanisms<T>(uid, body).ToArray();
+        var ev = new BeingGibbedEvent(gibs);
+        RaiseLocalEvent(bodyId, ref ev);
 
-            if (!comps.Any())
-            {
-                comps = null;
-                return false;
-            }
+        QueueDel(bodyId);
 
-            return true;
-        }
+        return gibs;
     }
 }

@@ -1,0 +1,29 @@
+- type: constructionGraph
+  id: BoxCardboard
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: boxcardboard
+      steps:
+      - material: Cardboard
+        amount: 1
+        doAfter: 4
+  - node: boxcardboard
+    entity: BoxCardboard
+
+- type: constructionGraph
+  id: ToteBase
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: totebase
+      steps:
+      - material: Cardboard
+        amount: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 4
+  - node: totebase
+    entity: ToteBase

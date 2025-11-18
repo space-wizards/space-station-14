@@ -1,30 +1,44 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Examine;
+using Content.Shared.Emp;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using System;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.PowerCell;
 
 public abstract class SharedPowerCellSystem : EntitySystem
 {
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PowerCellSlotComponent, ComponentInit>(OnCellSlotInit);
-        SubscribeLocalEvent<PowerCellSlotComponent, ComponentRemove>(OnCellSlotRemove);
+        SubscribeLocalEvent<PowerCellDrawComponent, MapInitEvent>(OnMapInit);
 
-        SubscribeLocalEvent<PowerCellSlotComponent, ExaminedEvent>(OnSlotExamined);
-
+        SubscribeLocalEvent<PowerCellSlotComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
+
+        SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
+    }
+
+    private void OnMapInit(Entity<PowerCellDrawComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextUpdateTime = Timing.CurTime + ent.Comp.Delay;
+    }
+
+    private void OnRejuvenate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
+    {
+        if (!_itemSlots.TryGetSlot(uid, component.CellSlotId, out var itemSlot) || !itemSlot.Item.HasValue)
+            return;
+
+        // charge entity batteries and remove booby traps.
+        RaiseLocalEvent(itemSlot.Item.Value, args);
     }
 
     private void OnCellInsertAttempt(EntityUid uid, PowerCellSlotComponent component, ContainerIsInsertingAttemptEvent args)
@@ -32,10 +46,10 @@ public abstract class SharedPowerCellSystem : EntitySystem
         if (!component.Initialized)
             return;
 
-        if (args.Container.ID != component.CellSlot.ID)
+        if (args.Container.ID != component.CellSlotId)
             return;
 
-        if (!TryComp(args.EntityUid, out PowerCellComponent? cell) || cell.CellSize != component.SlotSize)
+        if (!HasComp<PowerCellComponent>(args.EntityUid))
         {
             args.Cancel();
         }
@@ -46,64 +60,59 @@ public abstract class SharedPowerCellSystem : EntitySystem
         if (!component.Initialized)
             return;
 
-        if (args.Container.ID != component.CellSlot.ID)
+        if (args.Container.ID != component.CellSlotId)
             return;
-
+        _appearance.SetData(uid, PowerCellSlotVisuals.Enabled, true);
         RaiseLocalEvent(uid, new PowerCellChangedEvent(false), false);
     }
 
-    private void OnCellRemoved(EntityUid uid, PowerCellSlotComponent component, EntRemovedFromContainerMessage args)
+    protected virtual void OnCellRemoved(EntityUid uid, PowerCellSlotComponent component, EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != component.CellSlot.ID)
+        if (args.Container.ID != component.CellSlotId)
             return;
-
+        _appearance.SetData(uid, PowerCellSlotVisuals.Enabled, false);
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
-    private void OnCellSlotInit(EntityUid uid, PowerCellSlotComponent component, ComponentInit args)
+    private void OnCellEmpAttempt(Entity<PowerCellComponent> entity, ref EmpAttemptEvent args)
     {
-        _itemSlotsSystem.AddItemSlot(uid, "cellslot_cell_container", component.CellSlot);
-
-        if (string.IsNullOrWhiteSpace(component.CellSlot.Name) &&
-            !string.IsNullOrWhiteSpace(component.SlotName))
-        {
-            component.CellSlot.Name = component.SlotName;
-        }
-
-        if (component.StartEmpty)
-            return;
-
-        if (!string.IsNullOrWhiteSpace(component.CellSlot.StartingItem))
-            return;
-
-        // set default starting cell based on cell-type
-        component.CellSlot.StartingItem = component.SlotSize switch
-        {
-            PowerCellSize.Small => "PowerCellSmallStandard",
-            PowerCellSize.Medium => "PowerCellMediumStandard",
-            PowerCellSize.Large => "PowerCellLargeStandard",
-            _ => throw new ArgumentOutOfRangeException()
-        };
+        var parent = Transform(entity).ParentUid;
+        // relay the attempt event to the slot so it can cancel it
+        if (HasComp<PowerCellSlotComponent>(parent))
+            RaiseLocalEvent(parent, ref args);
     }
 
-    private void OnCellSlotRemove(EntityUid uid, PowerCellSlotComponent component, ComponentRemove args)
+    public void SetDrawEnabled(Entity<PowerCellDrawComponent?> ent, bool enabled)
     {
-        _itemSlotsSystem.RemoveItemSlot(uid, component.CellSlot);
-    }
-
-    private void OnSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)
-    {
-        if (!args.IsInDetailsRange || string.IsNullOrWhiteSpace(component.DescFormatString))
+        if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.Enabled == enabled)
             return;
 
-        var sizeText = Loc.GetString(component.SlotSize switch
-        {
-            PowerCellSize.Small => "power-cell-slot-component-description-size-small",
-            PowerCellSize.Medium => "power-cell-slot-component-description-size-medium",
-            PowerCellSize.Large => "power-cell-slot-component-description-size-large",
-            _ => "???"
-        });
+        if (enabled)
+            ent.Comp.NextUpdateTime = Timing.CurTime;
 
-        args.PushMarkup(Loc.GetString(component.DescFormatString, ("size", sizeText)));
+        ent.Comp.Enabled = enabled;
+        Dirty(ent, ent.Comp);
     }
+
+    /// <summary>
+    /// Returns whether the entity has a slotted battery and <see cref="PowerCellDrawComponent.UseRate"/> charge.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="battery"></param>
+    /// <param name="cell"></param>
+    /// <param name="user">Popup to this user with the relevant detail if specified.</param>
+    public abstract bool HasActivatableCharge(
+        EntityUid uid,
+        PowerCellDrawComponent? battery = null,
+        PowerCellSlotComponent? cell = null,
+        EntityUid? user = null);
+
+    /// <summary>
+    /// Whether the power cell has any power at all for the draw rate.
+    /// </summary>
+    public abstract bool HasDrawCharge(
+        EntityUid uid,
+        PowerCellDrawComponent? battery = null,
+        PowerCellSlotComponent? cell = null,
+        EntityUid? user = null);
 }

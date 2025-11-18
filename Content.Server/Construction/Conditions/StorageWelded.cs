@@ -1,28 +1,21 @@
-using System.Collections.Generic;
-using Content.Server.Storage.Components;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
+using Content.Shared.Storage.Components;
+using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class StorageWelded : IGraphCondition
+    public sealed partial class StorageWelded : IGraphCondition
     {
         [DataField("welded")]
         public bool Welded { get; private set; } = true;
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entityManager.TryGetComponent(uid, out EntityStorageComponent? entityStorageComponent))
-                return false;
-
-            return entityStorageComponent.IsWeldedShut == Welded;
+            return entityManager.System<WeldableSystem>().IsWelded(uid) == Welded;
         }
 
         public bool DoExamine(ExaminedEvent args)
@@ -30,13 +23,14 @@ namespace Content.Server.Construction.Conditions
             var entMan = IoCManager.Resolve<IEntityManager>();
             var entity = args.Examined;
 
-            if (!entMan.TryGetComponent(entity, out EntityStorageComponent? entityStorage)) return false;
+            if (!entMan.HasComponent<EntityStorageComponent>(entity))
+                return false;
 
             var metaData = entMan.GetComponent<MetaDataComponent>(entity);
 
-            if (entityStorage.IsWeldedShut != Welded)
+            if (entMan.System<WeldableSystem>().IsWelded(entity) != Welded)
             {
-                if (Welded == true)
+                if (Welded)
                     args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", metaData.EntityName)) + "\n");
                 else
                     args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", metaData.EntityName)) + "\n");

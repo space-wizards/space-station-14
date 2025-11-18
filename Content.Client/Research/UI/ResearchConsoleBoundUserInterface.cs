@@ -1,84 +1,62 @@
+using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using static Content.Shared.Research.Components.SharedResearchConsoleComponent;
+using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 
-namespace Content.Client.Research.UI
+namespace Content.Client.Research.UI;
+
+[UsedImplicitly]
+public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
 {
-    [UsedImplicitly]
-    public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private ResearchConsoleMenu? _consoleMenu;
+
+    public ResearchConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        public int Points { get; private set; }
-        public int PointsPerSecond { get; private set; }
-        private ResearchConsoleMenu? _consoleMenu;
-        private TechnologyDatabaseComponent? _technologyDatabase;
+    }
 
-        public ResearchConsoleBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    protected override void Open()
+    {
+        base.Open();
+
+        var owner = Owner;
+
+        _consoleMenu = this.CreateWindow<ResearchConsoleMenu>();
+        _consoleMenu.SetEntity(owner);
+
+        _consoleMenu.OnTechnologyCardPressed += id =>
         {
-            SendMessage(new ConsoleServerSyncMessage());
-        }
+            SendMessage(new ConsoleUnlockTechnologyMessage(id));
+        };
 
-        protected override void Open()
+        _consoleMenu.OnServerButtonPressed += () =>
         {
-            base.Open();
+            SendMessage(new ConsoleServerSelectionMessage());
+        };
+    }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out _technologyDatabase)) return;
+    public override void OnProtoReload(PrototypesReloadedEventArgs args)
+    {
+        base.OnProtoReload(args);
 
-            _consoleMenu = new ResearchConsoleMenu(this);
+        if (!args.WasModified<TechnologyPrototype>())
+            return;
 
-            _consoleMenu.OnClose += Close;
+        if (State is not ResearchConsoleBoundInterfaceState rState)
+            return;
 
-            _consoleMenu.ServerSyncButton.OnPressed += (_) =>
-            {
-                SendMessage(new ConsoleServerSyncMessage());
-            };
+        _consoleMenu?.UpdatePanels(rState);
+        _consoleMenu?.UpdateInformationPanel(rState);
+    }
 
-            _consoleMenu.ServerSelectionButton.OnPressed += (_) =>
-            {
-                SendMessage(new ConsoleServerSelectionMessage());
-            };
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
 
-            _consoleMenu.UnlockButton.OnPressed += (_) =>
-            {
-                if (_consoleMenu.TechnologySelected != null)
-                {
-                    SendMessage(new ConsoleUnlockTechnologyMessage(_consoleMenu.TechnologySelected.ID));
-                }
-            };
-
-            _consoleMenu.OpenCentered();
-
-            _technologyDatabase.OnDatabaseUpdated += _consoleMenu.Populate;
-        }
-
-        public bool IsTechnologyUnlocked(TechnologyPrototype technology)
-        {
-            return _technologyDatabase?.IsTechnologyUnlocked(technology) ?? false;
-        }
-
-        public bool CanUnlockTechnology(TechnologyPrototype technology)
-        {
-            return _technologyDatabase?.CanUnlockTechnology(technology) ?? false;
-        }
-
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-
-            var castState = (ResearchConsoleBoundInterfaceState)state;
-            Points = castState.Points;
-            PointsPerSecond = castState.PointsPerSecond;
-            // We update the user interface here.
-            _consoleMenu?.PopulatePoints();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _consoleMenu?.Dispose();
-        }
+        if (state is not ResearchConsoleBoundInterfaceState castState)
+            return;
+        _consoleMenu?.UpdatePanels(castState);
+        _consoleMenu?.UpdateInformationPanel(castState);
     }
 }

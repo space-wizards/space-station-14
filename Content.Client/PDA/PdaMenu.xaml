@@ -1,0 +1,98 @@
+<pda:PdaWindow  xmlns="https://spacestation14.io"
+                xmlns:pda="clr-namespace:Content.Client.PDA"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                MinSize="576 450"
+                SetSize="576 450">
+    <!-- This: (Margin="1 1 3 0") is necessary so the navigation bar doesn't sticks into the black content border. -->
+    <BoxContainer Name="NavigationBar" HorizontalExpand="True" MinHeight="32" Margin="1 1 3 0">
+        <pda:PdaNavigationButton Name="HomeButton" SetWidth="32" CurrentTabBorderThickness="0 0 2 0" IsCurrent="True"/>
+        <pda:PdaNavigationButton Name="ProgramListButton" Access="Public" MinWidth="100" LabelText="{Loc 'comp-pda-io-program-list-button'}"/>
+        <pda:PdaNavigationButton Name="SettingsButton" MinWidth="100" LabelText="{Loc 'comp-pda-io-settings-button'}"/>
+
+        <pda:PdaNavigationButton Name="ProgramTitle" Access="Public" BorderThickness="0 0 0 2" CurrentTabBorderThickness="2 0 0 2"
+                                 ActiveBgColor="#202023" Visible="False"/>
+
+        <pda:PdaNavigationButton HorizontalExpand="True"/>
+
+        <pda:PdaNavigationButton Name="ProgramCloseButton" Access="Public" IconScale="0.5 0.5" BorderThickness="0 0 2 2"
+                                 Visible="False" IsActive="False" SetWidth="32"/>
+
+        <pda:PdaNavigationButton Name="FlashLightToggleButton" Access="Public" ToggleMode="True" ActiveFgColor="#EAEFBB" SetWidth="32"/>
+        <pda:PdaNavigationButton Name="EjectPenButton" Access="Public" SetWidth="32"/>
+        <pda:PdaNavigationButton Name="EjectIdButton" Access="Public" SetWidth="32"/>
+        <pda:PdaNavigationButton Name="EjectPaiButton" Access="Public" SetWidth="32"/>
+    </BoxContainer>
+    <BoxContainer Name="ViewContainer" HorizontalExpand="True" VerticalExpand="True" Access="Public">
+        <BoxContainer Orientation="Vertical"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      MinSize="50 50"
+                      Margin="8">
+            <ContainerButton Name="PdaOwnerButton">
+                <RichTextLabel Name="PdaOwnerLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="IdInfoButton">
+                <RichTextLabel Name="IdInfoLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="StationNameButton">
+                <RichTextLabel Name="StationNameLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="StationAlertLevelButton">
+                <RichTextLabel Name="StationAlertLevelLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="StationTimeButton">
+                <RichTextLabel Name="StationTimeLabel" Access="Public"/>
+            </ContainerButton>
+            <ContainerButton Name="StationAlertLevelInstructionsButton">
+                <RichTextLabel Name="StationAlertLevelInstructions" Access="Public"/>
+            </ContainerButton>
+        </BoxContainer>
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
+            <BoxContainer Orientation="Vertical"
+                          VerticalExpand="True"
+                          HorizontalExpand="True"
+                          MinSize="50 50"
+                          Name="ProgramList"
+                          Margin="4"/>
+        </ScrollContainer>
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="True">
+            <BoxContainer Orientation="Vertical"
+                          VerticalExpand="True"
+                          HorizontalExpand="True"
+                          MinSize="50 50"
+                          Name="Settings">
+                <pda:PdaSettingsButton Name="AccessRingtoneButton"
+                                       Access="Public"
+                                       Text="{Loc 'comp-pda-ui-ringtone-button'}"
+                                       Description="{Loc 'comp-pda-ui-ringtone-button-description'}"/>
+                <pda:PdaSettingsButton Name="ActivateMusicButton"
+                                       Access="Public"
+                                       Visible="False"
+                                       Text="{Loc 'pda-bound-user-interface-music-button'}"
+                                       Description="{Loc 'pda-bound-user-interface-music-button-description'}"/>
+                <pda:PdaSettingsButton Name="ShowUplinkButton"
+                                       Access="Public"
+                                       Visible="False"
+                                       Text="{Loc 'pda-bound-user-interface-show-uplink-title'}"
+                                       Description="{Loc 'pda-bound-user-interface-show-uplink-description'}"/>
+                <pda:PdaSettingsButton Name="LockUplinkButton"
+                                       Access="Public"
+                                       Visible="False"
+                                       Text="{Loc 'pda-bound-user-interface-lock-uplink-title'}"
+                                       Description="{Loc 'pda-bound-user-interface-lock-uplink-description'}"/>
+            </BoxContainer>
+        </ScrollContainer>
+        <BoxContainer Orientation="Vertical"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      Name="ProgramView"
+                      Access="Public">
+        </BoxContainer>
+    </BoxContainer>
+    <BoxContainer Name="ContentFooter" HorizontalExpand="True" SetHeight="28" Margin="1 0 2 1">
+        <controls:StripeBack HasBottomEdge="False" HasMargins="False" HorizontalExpand="True">
+            <Label Text="Robust#OS ™" VerticalAlignment="Center" Margin="6 0" StyleClasses="PdaContentFooterText"/>
+            <Label Name="AddressLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6 0" StyleClasses="PdaContentFooterText"/>
+        </controls:StripeBack>
+    </BoxContainer>
+</pda:PdaWindow>

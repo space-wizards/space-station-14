@@ -1,41 +1,38 @@
-using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
-using Robust.Server.Player;
+using Content.Shared.Chat;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
-namespace Content.Server.Administration.Commands
+namespace Content.Server.Administration.Commands;
+
+[AdminCommand(AdminFlags.Moderator)]
+public sealed class DsayCommand : LocalizedEntityCommands
 {
-    [AdminCommand(AdminFlags.Admin)]
-    sealed class DSay : IConsoleCommand
+    [Dependency] private readonly ChatSystem _chatSystem = default!;
+
+    public override string Command => "dsay";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "dsay";
-
-        public string Description => Loc.GetString("dsay-command-description");
-
-        public string Help => Loc.GetString("dsay-command-help-text", ("command", Command));
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (shell.Player is not { } player)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
-            {
-                shell.WriteLine("shell-only-players-can-run-this-command");
-                return;
-            }
-
-            if (args.Length < 1)
-                return;
-
-            var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
-            var chat = IoCManager.Resolve<IChatManager>();
-
-            chat.SendAdminDeadChat(player, message);
-
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
+            return;
         }
+
+        if (player.AttachedEntity is not { Valid: true } entity)
+        {
+            shell.WriteError(Loc.GetString("shell-must-be-attached-to-entity"));
+            return;
+        }
+
+        if (args.Length < 1)
+            return;
+
+        var message = string.Join(" ", args).Trim();
+        if (string.IsNullOrEmpty(message))
+            return;
+
+        _chatSystem.TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Dead, false, shell, player);
     }
 }

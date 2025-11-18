@@ -4,7 +4,6 @@ using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
-using System.Collections.Generic;
 using Content.Shared.FixedPoint;
 
 namespace Content.Tests.Shared
@@ -16,22 +15,10 @@ namespace Content.Tests.Shared
     [TestOf(typeof(DamageGroupPrototype))]
     public sealed class DamageTest : ContentUnitTest
     {
-
-        static private Dictionary<string, float> _resistanceCoefficientDict = new()
-        {
-            // "missing" blunt entry
-            { "Piercing", -2 },// Turn Piercing into Healing
-            { "Slash", 3 },
-            { "Radiation", 1.5f },
-        };
-
-        static private Dictionary<string, float> _resistanceReductionDict = new()
-        {
-            { "Blunt", - 5 },
-            // "missing" piercing entry
-            { "Slash", 8 },
-            { "Radiation", 0.5f },  // Fractional adjustment
-        };
+        private static readonly ProtoId<DamageGroupPrototype> BruteDamageGroup = "Brute";
+        private static readonly ProtoId<DamageTypePrototype> RadiationDamageType = "Radiation";
+        private static readonly ProtoId<DamageTypePrototype> SlashDamageType = "Slash";
+        private static readonly ProtoId<DamageTypePrototype> PiercingDamageType = "Piercing";
 
         private IPrototypeManager _prototypeManager;
 
@@ -44,12 +31,12 @@ namespace Content.Tests.Shared
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             _prototypeManager.Initialize();
             _prototypeManager.LoadString(_damagePrototypes);
-            _prototypeManager.Resync();
+            _prototypeManager.ResolveResults();
 
             // Create a damage data set
-            _damageSpec = new(_prototypeManager.Index<DamageGroupPrototype>("Brute"), 6);
-            _damageSpec += new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Radiation"), 3);
-            _damageSpec += new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Slash"), -1); // already exists in brute
+            _damageSpec = new(_prototypeManager.Index(BruteDamageGroup), 6);
+            _damageSpec += new DamageSpecifier(_prototypeManager.Index(RadiationDamageType), 3);
+            _damageSpec += new DamageSpecifier(_prototypeManager.Index(SlashDamageType), -1); // already exists in brute
         }
 
         //Check that DamageSpecifier will split groups and can do arithmetic operations
@@ -61,7 +48,7 @@ namespace Content.Tests.Shared
 
             // Check that it properly split up the groups into types
             FixedPoint2 damage;
-            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(8)));
+            Assert.That(damageSpec.GetTotal(), Is.EqualTo(FixedPoint2.New(8)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(2)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
@@ -73,7 +60,7 @@ namespace Content.Tests.Shared
 
             // check that integer multiplication works
             damageSpec = damageSpec * 2;
-            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(16)));
+            Assert.That(damageSpec.GetTotal(), Is.EqualTo(FixedPoint2.New(16)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
@@ -93,7 +80,7 @@ namespace Content.Tests.Shared
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(4.4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(13.2)));
-            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(8.8 + 8.8 + 4.4 + 13.2)));
+            Assert.That(damageSpec.GetTotal(), Is.EqualTo(FixedPoint2.New(8.8 + 8.8 + 4.4 + 13.2)));
 
             // check that integer division works
             damageSpec = damageSpec / 2;
@@ -118,15 +105,15 @@ namespace Content.Tests.Shared
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(3)));
 
             // Lets also test the constructor with damage types and damage groups works properly.
-            damageSpec = new(_prototypeManager.Index<DamageGroupPrototype>("Brute"), 4);
+            damageSpec = new(_prototypeManager.Index(BruteDamageGroup), 4);
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
-            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.34))); // doesn't divide evenly, so the 0.01 goes to the last one
 
-            damageSpec = new(_prototypeManager.Index<DamageTypePrototype>("Piercing"), 4);
+            damageSpec = new(_prototypeManager.Index(PiercingDamageType), 4);
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(FixedPoint2.New(4)));
         }
@@ -139,11 +126,7 @@ namespace Content.Tests.Shared
             DamageSpecifier damageSpec = 10 * new DamageSpecifier(_damageSpec);
 
             // Create a modifier set
-            DamageModifierSetPrototype modifierSet = new()
-            {
-                Coefficients = _resistanceCoefficientDict,
-                FlatReduction = _resistanceReductionDict
-            };
+            var modifierSet = _prototypeManager.Index<DamageModifierSetPrototype>(ModifierTestSetId);
 
             //damage is initially   20 / 20 / 10 / 30
             //Each time we subtract -5 /  0 /  8 /  0.5
@@ -161,52 +144,66 @@ namespace Content.Tests.Shared
             Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(FixedPoint2.New(30)));
             Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(-40))); // resistances don't apply to healing
             Assert.That(!damageSpec.DamageDict.ContainsKey("Slash"));  // Reduction reduced to 0, and removed from specifier
-            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(65.63)));
+            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(65.62)));
         }
 
+        private const string ModifierTestSetId = "ModifierTestSet";
+
         // Default damage Yaml
-        private string _damagePrototypes = @"
+        private readonly string _damagePrototypes = $@"
 - type: damageType
   id: Blunt
+  name: damage-type-blunt
 
 - type: damageType
   id: Slash
+  name: damage-type-slash
 
 - type: damageType
   id: Piercing
+  name: damage-type-piercing
 
 - type: damageType
   id: Heat
+  name: damage-type-heat
 
 - type: damageType
   id: Shock
+  name: damage-type-shock
 
 - type: damageType
   id: Cold
+  name: damage-type-cold
 
 # Poison damage. Generally caused by various reagents being metabolised.
 - type: damageType
   id: Poison
+  name: damage-type-poison
 
 - type: damageType
   id: Radiation
+  name: damage-type-radiation
 
 # Damage due to being unable to breathe.
 # Represents not enough oxygen (or equivalent) getting to the blood.
 # Usually healed automatically if entity can breathe
 - type: damageType
   id: Asphyxiation
+  name: damage-type-asphyxiation
 
 # Damage representing not having enough blood.
 # Represents there not enough blood to supply oxygen (or equivalent).
 - type: damageType
   id: Bloodloss
+  name: damage-type-bloodloss
 
 - type: damageType
   id: Cellular
+  name: damage-type-cellular
 
 - type: damageGroup
   id: Brute
+  name: damage-group-brute
   damageTypes:
     - Blunt
     - Slash
@@ -214,6 +211,7 @@ namespace Content.Tests.Shared
 
 - type: damageGroup
   id: Burn
+  name: damage-group-burn
   damageTypes:
     - Heat
     - Shock
@@ -225,6 +223,7 @@ namespace Content.Tests.Shared
 # bloodloss, not this whole group, unless you have a wonder drug that affects both.
 - type: damageGroup
   id: Airloss
+  name: damage-group-airloss
   damageTypes:
     - Asphyxiation
     - Bloodloss
@@ -233,12 +232,14 @@ namespace Content.Tests.Shared
 # Though there are probably some radioactive poisons.
 - type: damageGroup
   id: Toxin
+  name: damage-group-toxin
   damageTypes:
     - Poison
     - Radiation
 
 - type: damageGroup
   id: Genetic
+  name: damage-group-genetic
   damageTypes:
     - Cellular
 
@@ -272,6 +273,17 @@ namespace Content.Tests.Shared
     Shock: 0
   flatReductions:
     Blunt: 5
+
+- type: damageModifierSet
+  id: {ModifierTestSetId}
+  coefficients:
+    Piercing: -2
+    Slash: 3
+    Radiation: 1.5
+  flatReductions:
+    Blunt: -5
+    Slash: 8
+    Radiation: 0.5
 
 - type: damageContainer
   id: Biological

@@ -1,19 +1,17 @@
 - type: entity
-  name: Mimic
+  name: mimic
   id: MobMimic
-  parent: SimpleMobBase
+  parent: [ SimpleMobBase, MobCombat ]
   description: Surprise. # When this gets a proper write this should use the object's actual description >:)
   components:
   - type: Tag
     tags:
     - FootstepSound
-  - type: UtilityAI
-    behaviorSets:
-    - UnarmedAttackHostiles
-  - type: AiFactionTag
+  - type: InputMover
+  - type: MobMover
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: Hands
   - type: Sprite
     drawdepth: Mobs
     sprite: Structures/Machines/VendingMachines/cola.rsi
@@ -21,32 +19,28 @@
   - type: Icon
     sprite: Structures/Machines/VendingMachines/cola.rsi
     state: normal
-  - type: Physics
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
+      fix1:
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
-      mass: 100
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - MobImpassable
-  - type: CharacterInfo
-  - type: HumanoidAppearance
+        density: 1000
+        mask:
+        - MobMask
+        layer:
+        - MachineLayer
   - type: AnimationPlayer
-  - type: UnarmedCombat
-    range: 1.5
-    arcwidth: 0
-    arc: fist
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcFist
     damage:
       types:
         Blunt: 20
   - type: MovementSpeedModifier
     baseWalkSpeed : 1
     baseSprintSpeed : 1
+  - type: Butcherable
+    spawned:
+    - id: DrinkChangelingStingCan
+      amount: 1

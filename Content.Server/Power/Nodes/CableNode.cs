@@ -1,20 +1,18 @@
-using System.Collections.Generic;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.GameObjects;
+using Content.Shared.NodeContainer;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Power.Nodes
 {
     [DataDefinition]
-    public sealed class CableNode : Node
+    public sealed partial class CableNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            IMapGrid? grid,
+            MapGridComponent? grid,
             IEntityManager entMan)
         {
             if (!xform.Anchored || grid == null)
@@ -54,7 +52,6 @@ namespace Content.Server.Power.Nodes
                         {
                             // Target tile has a terminal towards us, block the direction.
                             terminalDirs |= 1 << (int) dir;
-                            break;
                         }
                     }
                 }

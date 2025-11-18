@@ -1,0 +1,740 @@
+# This is a basic dictionary that maps old entity prototype ids to new ids. This only works for entity prototypes, and
+# is intended to allow maps to load without having to manually edit them. An empty or "null" string results in the
+# entity getting deleted.
+
+# e.g., you can swap all walls with windows and delete all tables by adding lines like:
+#
+# Window: WallSolid
+# WallSolid: Window
+# Table: null
+
+# 2023-07-03
+ClothingHeadHelmetHelmet: ClothingHeadHelmetBasic
+ClothingHeadHelmetHelmetOld: ClothingHeadHelmetBasic
+
+# 2023-07-04
+# Bulletproof armor is almost statistically identical to kevlar, however, before this kevlar armor was the closest thing there was to "basic" armor. It makes the most sense to replace it with this.
+ClothingOuterVestKevlar: ClothingOuterArmorBasic
+
+# 2023-07-10
+Intercom: IntercomCommon
+
+# 2023-07-12
+ToyAssistant: ToyFigurinePassenger
+
+# 2023-07-20
+ForensicGloves: ClothingHandsGlovesForensic
+
+# 2023-07-24
+ClothingEyesGlassesBeer: ClothingEyesHudBeer
+
+# 2023-08-01
+lantern: Lantern
+lanternextrabright: LanternFlash
+
+# 2023-08-04
+BoxMagazineLightRifleHighVelocity: BoxMagazineLightRifle
+BoxMagazineMagnumSubMachineGunHighVelocity: null
+BoxMagazinePistolCaselessRifleHighVelocity: BoxMagazinePistolCaselessRifle
+BoxMagazinePistolHighCapacityHighVelocity: BoxMagazinePistolHighCapacity
+BoxMagazinePistolHighVelocity: BoxMagazinePistol
+BoxMagazinePistolSubMachineGunHighVelocity: BoxMagazinePistolSubMachineGun
+BoxMagazineRifleHighVelocity: BoxMagazineRifle
+BulletCaselessRifleHighVelocity: BulletCaselessRifle
+BulletLightRifleHighVelocity: BulletLightRifle
+BulletMagnumHighVelocity: BulletMagnum
+BulletPistolHighVelocity: BulletPistol
+BulletRifleHighVelocity: BulletRifle
+CartridgeCaselessRifleHighVelocity: CartridgeCaselessRifle
+CartridgeLightRifleHighVelocity: CartridgeLightRifle
+CartridgeMagnumHighVelocity: CartridgeMagnum
+CartridgePistolHighVelocity: CartridgePistol
+CartridgeRifleHighVelocity: CartridgeRifle
+MagazineBoxCaselessRifleHighVelocity: MagazineBoxCaselessRifle
+MagazineBoxLightRifleHighVelocity: MagazineBoxLightRifle
+MagazineBoxMagnumHighVelocity: MagazineBoxMagnum
+MagazineBoxPistolHighVelocity: MagazineBoxPistol
+MagazineBoxRifleHighVelocity: MagazineBoxRifle
+MagazineCaselessRifleHighVelocity: MagazineCaselessRifle
+MagazineCaselessRifleShortHighVelocity: null
+MagazineLightRifleHighVelocity: MagazineLightRifle
+MagazineMagnumSubMachineGunHighVelocity: null
+MagazinePistolCaselessRifleHighVelocity: MagazinePistolCaselessRifle
+MagazinePistolHighCapacityHighVelocity: MagazinePistolHighCapacity
+MagazinePistolHighVelocity: MagazinePistol
+MagazinePistolSubMachineGunHighVelocity: MagazinePistolSubMachineGun
+MagazineRifleHighVelocity: MagazineRifle
+SpeedLoaderMagnumHighVelocity: SpeedLoaderMagnum
+SpeedLoaderPistolHighVelocity: SpeedLoaderPistol
+
+# 2023-08-07
+#If the name is anything to go off of, these are presumably just CEV-Eris versions of the snow rock (which we already have.)
+#They are practically never used in this way however, so they're migrated to the basic rock type.
+MountainRock: AsteroidRock
+MountainRockMining: AsteroidRockMining
+
+# 2023-08-08
+WindowTintedDirectional: WindowFrostedDirectional
+
+# 2023-08-10
+SyringeSpaceacillin: null
+
+# 2023-08-13
+AirlockPainter: SprayPainter
+
+# 2023-08-19
+GeneratorPlasma: PortableGeneratorPacman
+GeneratorUranium: PortableGeneratorSuperPacman
+GeneratorPlasmaMachineCircuitboard: PortableGeneratorPacmanMachineCircuitboard
+GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitboard
+
+# 2023-12-10
+SpawnPointSeniorResearcher: null
+SpawnPointSeniorOfficer: null
+SpawnPointSeniorEngineer: null
+SpawnPointSeniorPhysician: null
+
+# 2023-12-12
+#No this is not the CMO hardsuit, their prototype IDs were just confusingly similar
+ClothingOuterHardsuitMedic: ClothingOuterHardsuitSyndieMedic
+
+# 2023-12-13
+VendingMachineSmartFridge: SmartFridge
+
+# 2023-12-18
+ReagentContainerMilk: DrinkMilkCarton
+ReagentContainerMilkSoy: DrinkSoyMilkCarton
+ReagentContainerMilkOat: DrinkOatMilkCarton
+
+# 2023-12-20
+MiasmaCanister: AmmoniaCanister
+
+# 2023-12-28
+WarpPointBeaconBar: null
+WarpPointBeaconCargo: null
+WarpPointBeaconCommand: null
+WarpPointBeaconEngineering: null
+WarpPointBeaconMedical: null
+WarpPointBeaconNeutral: null
+WarpPointBeaconScience: null
+WarpPointBeaconSecurity: null
+WarpPointBeaconService: null
+
+# 2023-12-30
+ClothingEyesGlassesCosmeticSunglasses: ClothingEyesGlassesSunglasses
+SpawnPointAssistant: SpawnPointPassenger
+
+# 2024-01-05
+DrinkGoldschlagerBottleFull: DrinkGildlagerBottleFull
+DrinkGoldschlagerGlass: DrinkGildlagerGlass
+
+# 2024-01-07
+ClosetBase: ClosetSteelBase
+
+# 2024-01-08
+SalvagePartsT4Spawner: SalvageLootSpawner
+SalvagePartsT3Spawner: SalvageLootSpawner
+SalvagePartsT3T4Spawner: SalvageLootSpawner
+SalvagePartsT2Spawner: SalvageLootSpawner
+#SuperCapacitorStockPart: CapacitorStockPart
+#QuadraticCapacitorStockPart: CapacitorStockPart
+#NanoManipulatorStockPart: MicroManipulatorStockPart
+PicoManipulatorStockPart: MicroManipulatorStockPart
+FemtoManipulatorStockPart: MicroManipulatorStockPart
+#AdvancedMatterBinStockPart: MatterBinStockPart
+#SuperMatterBinStockPart: MatterBinStockPart
+#BluespaceMatterBinStockPart: MatterBinStockPart
+AnsibleSubspaceStockPart: null
+FilterSubspaceStockPart: null
+AmplifierSubspaceStockPart: null
+TreatmentSubspaceStockPart: null
+AnalyzerSubspaceStockPart: null
+CrystalSubspaceStockPart: null
+TransmitterSubspaceStockPart: null
+
+# 2024-01-10
+ClothingHeadHatHoodRad: null
+
+# 2024-01-12
+SpaceMedipen: null
+
+# 2024-01-18
+ClothingHeadHelmetVoidParamed: null
+
+# 2024-01-19
+DefaultStationBeaconTeslaEngine: null
+
+# 2024-01-27 (Reverted on 2024-03-10)
+# ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
+# ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
+# ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective
+
+# 2024-01-28
+FoodBoxDonkpocketGondola: FoodBoxDonkpocketPizza
+
+# 2024-01-31
+SpyCrewMonitor: null
+SpyCrewMonitorEmpty: null
+SyndiCrewMonitor: null
+SyndiCrewMonitorEmpty: null
+
+SpawnVehicleWheelchair: null
+SpawnVehicleWheelchairFolded: null
+VehicleWheelchair: null
+VehicleWheelchairFolded: null
+VehicleSecwayStealObjective: null
+VehicleKeyJanicart: null
+VehicleKeySecway: null
+VehicleKeyATV: null
+VehicleKeySkeleton: null
+VehicleKeySyndicateSegway: null
+VehicleKeySkeletonMotorcycle: null
+VehicleSecway: null
+VehicleATV: null
+VehicleSyndicateSegway: null
+VehicleSkeletonMotorcycle: null
+VehicleUnicycle: null
+VehicleUnicycleFolded: null
+ActionVehicleHorn: null
+CrateFunATV: null
+CrateFunSyndicateSegway: null
+MobTaxiBot: null
+# MobSupplyBot: null
+SpawnVehicleMotobike: null
+SpawnVehicleATV: null
+SpawnVehicleSecway: null
+SpawnVehicleJanicart: null
+VehicleJanicart: null
+VehicleJanicartDestroyed: null
+
+# 2024-02-01
+YellowOxygenTank: OxygenTank
+YellowOxygenTankFilled: OxygenTankFilled
+
+# 2024-02-12
+FoodDonutBlumpkin: FoodDonutBluePumpkin
+FoodDonutJellyBlumpkin: FoodDonutJellyBluePumpkin
+
+# 2024-02-19
+Drone: null
+SpawnMobDrone: null
+Onestar: null # I dont think this is even mapped, but just in case
+
+# 2024-02-22
+SolarAssemblyPart: SolarAssemblyFlatpack
+AmePart: AmePartFlatpack
+AmePartStealObjective: AmePartFlatpackStealObjective
+Observationskit: null
+
+# 2024-02-26
+CrateBaseWeldable: CrateGenericSteel
+
+# 2024-03-05
+BookBotanicalTextbook: BookRandomStory
+BookEscalation: BookRandomStory
+BookEscalationSecurity: BookRandomStory
+BookDemonomiconRandom: BookRandomStory
+BookDemonomicon1: BookRandomStory
+BookDemonomicon2: BookRandomStory
+BookDemonomicon3: BookRandomStory
+BookChemistryInsane: BookRandomStory
+BookGnominomicon: BookRandomStory
+BookFishing: BookRandomStory
+BookDetective: BookRandomStory
+
+# 2024-03-07
+AirlockExternalEasyPry: AirlockExternal
+AirlockExternalGlassEasyPry: AirlockExternalGlass
+AirlockGlassShuttleEasyPry: AirlockGlassShuttle
+AirlockShuttleEasyPry: AirlockShuttle
+AirlockExternalEasyPryLocked: AirlockExternalLocked
+AirlockExternalGlassEasyPryLocked: AirlockExternalGlassLocked
+AirlockGlassShuttleEasyPryLocked: AirlockExternalGlassShuttleLocked
+AirlockShuttleEasyPryLocked: AirlockExternalShuttleLocked
+
+# 2024-03-10
+FoodChili: FoodChiliPepper
+FoodChilly: FoodChillyPepper
+# ClothingBackpackFilledDetective: ClothingBackpackSecurityFilledDetective
+# ClothingBackpackDuffelFilledDetective: ClothingBackpackDuffelSecurityFilledDetective
+# ClothingBackpackSatchelFilledDetective: ClothingBackpackSatchelSecurityFilledDetective
+
+# 2024-03-11
+ImprovisedExplosive: FireBomb
+ImprovisedExplosiveEmpty: FireBombEmpty
+ImprovisedExplosiveFuel: FireBombFuel
+
+# 2024-03-16
+ClothingHeadHatHairflower: FoodPoppy
+
+# 2024-03-21
+RPED: null
+
+# 2024-03-30
+TraversalDistorterMachineCircuitboard: null
+MachineTraversalDistorter: null
+# These are technically not equivalent, but it probably makes more sense to replace any existing SCAF stuff with SOME kind of armor, instead of just deleting it outright.
+ClothingHeadHelmetScaf: ClothingHeadHelmetBasic
+ClothingOuterArmorScaf: ClothingOuterArmorBasic
+
+# 2024-03-31
+ClothingNeckFlowerWreath: ClothingHeadHatFlowerWreath
+ClothingHeadHatFlowerCrown: ClothingHeadHatFlowerWreath
+BriefcaseSyndieBase: null
+
+# 2024-04-08
+BodyBag_Container: BodyBag
+BodyBag_Folded: BodyBagFolded
+
+# 2024-04-26
+BaseBulletRubber: null
+BulletPistolRubber: BulletPistol
+BulletMagnumRubber: BulletMagnum
+BulletLightRifleRubber: BulletLightRifle
+BulletRifleRubber: BulletRifle
+BulletCaselessRifleRubber: BulletCaselessRifle
+CartridgePistolRubber: CartridgePistol
+CartridgeMagnumRubber: CartridgeMagnum
+CartridgeLightRifleRubber: CartridgeLightRifle
+CartridgeRifleRubber: CartridgeRifle
+CartridgeCaselessRifleRubber: CartridgeCaselessRifle
+MagazinePistolRubber: MagazinePistol
+MagazinePistolSubMachineGunRubber: MagazinePistolSubMachineGun
+MagazinePistolCaselessRifleRubber: MagazinePistolCaselessRifle
+MagazineMagnumRubber: MagazineMagnum
+MagazineMagnumSubMachineGunRubber: null
+MagazineLightRifleRubber: MagazineLightRifle
+MagazineRifleRubber: MagazineRifle
+MagazineCaselessRifleRubber: MagazineCaselessRifle
+MagazineCaselessRifleShortRubber: null
+SpeedLoaderPistolRubber: SpeedLoaderPistol
+SpeedLoaderMagnumRubber: SpeedLoaderMagnum
+MagazineBoxPistolRubber: MagazineBoxPistol
+# RIP box of magnum rubbers 202X to 2024
+MagazineBoxMagnumRubber: MagazineBoxMagnum
+MagazineBoxLightRifleRubber: MagazineBoxLightRifle
+MagazineBoxRifleRubber: MagazineBoxRifle
+MagazineBoxRifleBigRubber: MagazineBoxRifleBig
+MagazineBoxCaselessRifleRubber: MagazineBoxCaselessRifle
+BoxMagazinePistolRubber: BoxMagazinePistol
+BoxMagazinePistolHighCapacityRubber: BoxMagazinePistolHighCapacity
+BoxMagazinePistolSubMachineGunRubber: BoxMagazinePistolSubMachineGun
+BoxMagazineLightRifleRubber: BoxMagazineLightRifle
+BoxMagazineRifleRubber: BoxMagazineRifle
+BoxMagazineCaselessRifleRubber: BoxMagazinePistolCaselessRifle
+BoxMagazineMagnumSubMachineGunRubber: null
+WeaponPistolMk58Nonlethal: WeaponPistolMk58
+WeaponPistolN1984Nonlethal: WeaponPistolN1984
+WeaponSubMachineGunDrozdRubber: WeaponSubMachineGunDrozd
+WeaponRifleLecterRubber: WeaponRifleLecter
+
+# 2024-04-26
+GlassBoxLaserBroken: GlassBoxBroken
+ReinforcementRadioSyndicateMonkey: ReinforcementRadioSyndicateAncestor
+ReinforcementRadioSyndicateMonkeyNukeops: ReinforcementRadioSyndicateAncestorNukeops
+
+# 2024-05-01
+DrinkBottleGoldschlager: DrinkBottleGildlager
+
+# 2024-05-14
+soda_dispenser: SodaDispenser
+chem_master: ChemMaster
+
+# 2024-05-21
+CrateJanitorExplosive: ClosetJanitorBombFilled
+
+# 2024-05-27
+DoorRemoteFirefight: null
+
+# 2024-06-03
+AirlockServiceCaptainLocked: AirlockCaptainLocked
+
+#2024-06-05
+DisasterVictimSpawner: CommandVisitorSpawner
+LostCargoTechnicianSpawner: VisitorCargoTechnicianSpawner
+ClownTroupeSpawner: VisitorClownSpawner
+TravelingChefSpawner: VisitorChefSpawner
+SyndieDisasterVictimSpawner: SyndieVisitorSpawner
+
+# 2024-06-15
+ClothingOuterCoatInspector: ClothingOuterCoatJensen
+
+# 2024-06-23
+FloorTileItemReinforced: PartRodMetal1
+
+#2024-06-25
+BookChefGaming: BookHowToCookForFortySpaceman
+
+#2024-06-29
+IntercomAssesmbly: IntercomAssembly
+
+# 2024-07-7
+SignScience1: SignScience
+SignScience2: SignScience
+SignXenobio2: SignXenobio
+SignXenolab: SignXenobio
+SignToxins2: SignToxins
+SignMinerDock: SignShipDock
+SignChemistry1: SignChem
+SignChemistry2: SignChem
+SignCourt: SignLawyer
+SignAtmosMinsky: SignAtmos
+SignDrones: SignMaterials
+SignShield: null # what was this even for?
+SignHydro2: SignHydro1
+SignHydro3: SignHydro1
+
+# 2024-07-27
+LogicGate: LogicGateOr
+
+# 2024-08-08
+MaterialReclaimer: null
+MaterialReclaimerMachineCircuitboard: null
+
+# 2024-08-11
+FoodTacoBeef: FoodTacoShell
+FoodTacoChicken: FoodTacoShell
+FoodTacoFish: FoodTacoShell
+FoodTacoBeefSupreme: FoodTacoShell
+FoodTacoChickenSupreme: FoodTacoShell
+FoodTacoRat: FoodTacoShell
+
+FoodMeatHumanKebab: FoodKebabSkewer
+FoodMeatLizardtailKebab: FoodKebabSkewer
+FoodMeatRatKebab: FoodKebabSkewer
+FoodMeatRatdoubleKebab: FoodKebabSkewer
+FoodMeatSnakeKebab: FoodKebabSkewer
+FoodMeatHawaiianKebab: FoodKebabSkewer
+FoodMeatKebab: FoodKebabSkewer
+FoodMeatFiestaKebab: FoodKebabSkewer
+
+#2024-08-14
+ClothingBeltSuspenders: ClothingBeltSuspendersRed
+
+# 2024-08-19
+ClothingNeckShockCollar: ClothingBackpackElectropack
+
+# 2024-08-22
+ComputerShuttleSalvage: null
+SalvageShuttleConsoleCircuitboard: null
+SalvageShuttleCircuitboardStealObjective: null
+
+# 2024-08-28
+ClothingBackpackDuffelSyndicateCostumeCentcom: null
+ClothingHeadsetAltCentComFake: null
+CentcomPDAFake: null
+CentcomIDCardSyndie: null
+
+# 2024-09-06
+AntimovCircuitBoard: null
+OverlordCircuitBoard: null
+
+# 2024-09-08
+HatBase: null
+
+# 2024-09-19
+BlueprintFlare: null
+
+# 2024-10-04
+BaseAdvancedPen: Pen
+
+# 2024-10-09
+# Removal of separate borg chassis parts, replace them with generic borg parts.
+LeftArmBorgEngineer: LeftArmBorg
+RightArmBorgEngineer: RightArmBorg
+LeftLegBorgEngineer: LeftLegBorg
+RightLegBorgEngineer: RightLegBorg
+HeadBorgEngineer: LightHeadBorg
+TorsoBorgEngineer: TorsoBorg
+
+LeftArmBorgMedical: LeftArmBorg
+RightArmBorgMedical: RightArmBorg
+LeftLegBorgMedical: LeftLegBorg
+RightLegBorgMedical: RightLegBorg
+HeadBorgMedical: LightHeadBorg
+TorsoBorgMedical: TorsoBorg
+
+LeftArmBorgMining: LeftArmBorg
+RightArmBorgMining: RightArmBorg
+LeftLegBorgMining: LeftLegBorg
+RightLegBorgMining: RightLegBorg
+HeadBorgMining: LightHeadBorg
+TorsoBorgMining: TorsoBorg
+
+LeftArmBorgService: LeftArmBorg
+RightArmBorgService: RightArmBorg
+LeftLegBorgService: LeftLegBorg
+RightLegBorgService: RightLegBorg
+HeadBorgService: LightHeadBorg
+TorsoBorgService: TorsoBorg
+
+LeftLegBorgJanitor: LeftLegBorg
+RightLegBorgJanitor: RightLegBorg
+HeadBorgJanitor: LightHeadBorg
+TorsoBorgJanitor: TorsoBorg
+
+# 2024-11-17
+PresentRandomAsh: PresentRandomCoal
+
+# 2024-11-19
+CrateCrewMonitoringBoards: CrateCrewMonitoring
+
+# 2024-11-25
+CrateSlimepersonLifeSupport: CrateNitrogenInternals
+
+# 2024-12-01
+DungeonMasterCircuitBoard: GameMasterCircuitBoard
+
+# 2024-12-12
+FloraRockSolid01: FloraRockSolid
+FloraRockSolid02: FloraRockSolid
+FloraRockSolid03: FloraRockSolid
+FloraStalagmite1: FloraStalagmite
+FloraStalagmite2: FloraStalagmite
+FloraStalagmite3: FloraStalagmite
+FloraStalagmite4: FloraStalagmite
+FloraStalagmite5: FloraStalagmite
+FloraStalagmite6: FloraStalagmite
+FloraGreyStalagmite1: FloraGreyStalagmite
+FloraGreyStalagmite2: FloraGreyStalagmite
+FloraGreyStalagmite3: FloraGreyStalagmite
+FloraGreyStalagmite4: FloraGreyStalagmite
+FloraGreyStalagmite5: FloraGreyStalagmite
+FloraGreyStalagmite6: FloraGreyStalagmite
+FloraTree01: FloraTree
+FloraTree02: FloraTree
+FloraTree03: FloraTree
+FloraTree04: FloraTree
+FloraTree05: FloraTree
+FloraTree06: FloraTree
+FloraTreeSnow01: FloraTreeSnow
+FloraTreeSnow02: FloraTreeSnow
+FloraTreeSnow03: FloraTreeSnow
+FloraTreeSnow04: FloraTreeSnow
+FloraTreeSnow05: FloraTreeSnow
+FloraTreeSnow06: FloraTreeSnow
+FloraTreeLarge01: FloraTreeLarge
+FloraTreeLarge02: FloraTreeLarge
+FloraTreeLarge03: FloraTreeLarge
+FloraTreeLarge04: FloraTreeLarge
+FloraTreeLarge05: FloraTreeLarge
+FloraTreeLarge06: FloraTreeLarge
+FloraTreeConifer01: FloraTreeConifer
+FloraTreeConifer02: FloraTreeConifer
+FloraTreeConifer03: FloraTreeConifer
+ShadowTree01: ShadowTree
+ShadowTree02: ShadowTree
+ShadowTree03: ShadowTree
+ShadowTree04: ShadowTree
+ShadowTree05: ShadowTree
+ShadowTree06: ShadowTree
+LightTree01: LightTree
+LightTree02: LightTree
+LightTree03: LightTree
+LightTree04: LightTree
+LightTree05: LightTree
+LightTree06: LightTree
+
+# 2024-12-28
+DrinkIrishCarBomb: DrinkIrishSlammer
+
+# 2025-01-06
+BorgModuleRadiationDetection: null
+BorgModuleGPS: null
+BorgModuleLightReplacer: BorgModuleCustodial
+BorgModuleAdvancedTreatment: null
+ClothingMaskSexyClown: ClothingMaskBlushingClown
+ClothingMaskSexyMime: ClothingMaskBlushingMime
+
+# 2025-01-27
+FoodCondimentPacketFrostoil: FoodCondimentPacketColdsauce
+
+# 2025-02-05
+WeaponSubMachineGunVector: null
+WeaponSubMachineGunVectorRubber: null
+
+# 2025-02-11
+WallShuttleInterior: WallShuttle
+
+# 2025-02-18
+PosterContrabandLustyExomorph: PosterContrabandRealExomorph
+PosterContrabandBustyBackdoorExoBabes6: PosterContrabandRouny
+
+# 2025-02-20
+MagazineBoxAntiMaterielBig: null
+MagazineBoxCaselessRifle10x24: null
+MagazineBoxCaselessRifleBig: null
+MagazinePistolHighCapacityRubber: null
+
+# 2025-03-18
+EpinephrineChemistryBottle: ChemistryBottleEpinephrine
+RobustHarvestChemistryBottle: ChemistryBottleRobustHarvest
+EZNutrientChemistryBottle: ChemistryBottleEZNutrient
+Left4ZedChemistryBottle: ChemistryBottleLeft4Zed
+UnstableMutagenChemistryBottle: ChemistryBottleUnstableMutagen
+PotassiumChemistryBottle: ChemistryBottlePotassium
+NocturineChemistryBottle: ChemistryBottleNocturine
+NitrogenChemistryBottle: ChemistryBottleNitrogen
+EphedrineChemistryBottle: ChemistryBottleEphedrine
+PhosphorusChemistryBottle: ChemistryBottlePhosphorus
+OmnizineChemistryBottle: ChemistryBottleOmnizine
+HydrogenChemistryBottle: ChemistryBottleHydrogen
+CognizineChemistryBottle: ChemistryBottleCognizine
+EthanolChemistryBottle: ChemistryBottleEthanol
+PaxChemistryBottle: ChemistryBottlePax
+MuteToxinChemistryBottle: ChemistryBottleMuteToxin
+LeadChemistryBottle: ChemistryBottleLead
+ToxinChemistryBottle: ChemistryBottleToxin
+
+# 2025-03-29
+ClothingBackpackDuffelSyndicateRaidBundle: ClothingBackpackSyndicateRaidBundle
+
+# 2025-04-14
+MailRobustToolsSpam: MailSpamLetter
+MailNanotrasenSpam: MailSpamLetter
+MailSyndicateSpam: MailSpamLetter
+MailAlternativeDimensionSpam: MailSpamLetter
+MailNarsieCultSpam: MailSpamLetter
+MailRageCageSpam: MailSpamLetter
+MailVoyageAdvertisementSpam: MailSpamLetter
+MailScienceSpiderClanSpam: MailSpamLetter
+MailAllAccessSpam: MailSpamLetter
+MailCentcommRetributionSpam: MailSpamLetter
+MailEvilLizardSpam: MailSpamLetter
+MailParentsNeedMoneySpam: MailSpamLetter
+
+# 2025-04-15
+SimpleXenoArtifact: ComplexXenoArtifact
+MediumXenoArtifact: ComplexXenoArtifact
+SimpleXenoArtifactItem: ComplexXenoArtifactItem
+MediumXenoArtifactItem: ComplexXenoArtifactItem
+VariedXenoArtifactItem: ComplexXenoArtifactItem
+
+# 2025-04-19
+ClothingOuterHardsuitSyndicate: ClothingOuterEVASuitSyndicate
+AirlockMaintCommonLocked: AirlockMaintLocked
+AirlockMaintIntLocked: AirlockMaintLocked
+
+# 2025-04-26
+ComputerCargoShuttle: ComputerShuttleCargo
+CargoShuttleComputerCircuitboard: CargoShuttleConsoleCircuitboard
+
+# 2025-05-02
+CigPackMixedNasty: CigPackMixed
+CigPackMixedMedical: CigPackMixed
+CigaretteIpecac: CigaretteNutriment
+CigarettePax: CigaretteSaline
+CigaretteTHC: CigaretteRobustHarvest
+CigaretteMuteToxin: CigaretteSodiumPolyacrylate
+CigaretteSpaceDrugs: CigaretteLipolicide
+CigaretteMilk: CigaretteHaloperidol
+CigaretteBread: CigaretteBbqSauce
+
+# 2025-05-09
+ClothingOuterHardsuitBasic: ClothingOuterHardsuitEVA
+ClothingHeadHelmetHardsuitBasic: null
+SuitStorageBasic: SuitStorageEVA
+
+# 2025-05-18
+ClothingNeckCloakMiner: null
+
+# 2025-05-22
+MatterBinStockPart: MicroManipulatorStockPart
+CapacitorStockPart: MicroManipulatorStockPart
+
+# 2025-05-26 Turrets
+WeaponEnergyTurretStation: WeaponEnergyTurretSecurity
+WeaponEnergyTurretStationControlPanel: WeaponEnergyTurretSecurityControlPanel
+WeaponEnergyTurretStationMachineCircuitboard: WeaponEnergyTurretSecurityMachineCircuitboard
+
+# 2025-05-30
+SpawnHonkBot: SpawnMobHonkBot
+
+# 2025-06-01
+CrateFoodPizzaLarge: CrateFoodPizza
+CrateFoodSoftdrinksLarge: CrateFoodSoftdrinks
+
+# 2025-06-03
+FloorTileItemGCircuit4: FloorTileItemGCircuit
+FloorTileItemBCircuit4: FloorTileItemBCircuit
+FloorTileItemRCircuit4: FloorTileItemRCircuit
+
+# 2025-06-06
+MagazineLightRifleMaxim: null
+MagazineLightRiflePkBox: null
+MagazineCaselessRifle10x24: null
+BaseMagazineCaselessRifleShort: null
+MagazineCaselessRifleShort: null
+MagazineCaselessRifleShortPractice: null
+BaseMagazineMagnumSubMachineGun: null
+MagazineMagnumSubMachineGunEmpty: null
+MagazineMagnumSubMachineGun: null
+MagazineMagnumSubMachineGunPractice: null
+MagazineMagnumSubMachineGunUranium: null
+MagazineMagnumSubMachineGunPiercing: null
+BoxMagazineMagnumSubMachineGun: null
+BoxMagazineMagnumSubMachineGunPractice: null
+
+# 2025-06-09
+BarSignAlignTile: BarSign
+BarSignComboCafeAlignTile: BarSignComboCafe
+BarSignEmergencyRumPartyAlignTile: BarSignEmergencyRumParty
+BarSignLV426AlignTile: BarSignLV426
+BarSignMaidCafeAlignTile: BarSignMaidCafe
+BarSignMalteseFalconAlignTile: BarSignMalteseFalcon
+BarSignOfficerBeerskyAlignTile: BarSignOfficerBeersky
+BarSignRobustaCafeAlignTile: BarSignRobustaCafe
+BarSignTheAleNathAlignTile: BarSignTheAleNath
+BarSignTheBirdCageAlignTile: BarSignTheBirdCage
+BarSignTheCoderbusAlignTile: BarSignTheCoderbus
+BarSignTheDrunkCarpAlignTile: BarSignTheDrunkCarp
+BarSignEngineChangeAlignTile: BarSignEngineChange
+BarSignTheHarmbatonAlignTile: BarSignTheHarmbaton
+BarSignTheLightbulbAlignTile: BarSignTheLightbulb
+BarSignTheLooseGooseAlignTile: BarSignTheLooseGoose
+BarSignTheNetAlignTile: BarSignTheNet
+BarSignTheOuterSpessAlignTile: BarSignTheOuterSpess
+BarSignTheSinguloAlignTile: BarSignTheSingulo
+BarSignTheSunAlignTile: BarSignTheSun
+BarSignWiggleRoomAlignTile: BarSignWiggleRoom
+BarSignZocaloAlignTile: BarSignZocalo
+BarSignEmprahAlignTile: BarSignEmprah
+BarSignSpacebucksAlignTile: BarSignSpacebucks
+BarSignMaltroachAlignTile: BarSignMaltroach
+BarSignWhiskeyEchoesAlignTile: BarSignWhiskeyEchoes
+
+# 2025-06-21
+ClothingNeckHeadphones: ClothingMultipleHeadphones
+
+# 2025-07-17
+RipleyChassis: null
+HonkerChassis: null
+HamtrChassis: null
+VimChassis: null
+
+# 2025-08-01
+FoodDonutJellySlugcat: FoodDonutJellyScurret
+
+# 2025-08-11
+ClothingUniformJumpsuitChiefEngineerNT: ClothingUniformJumpsuitChiefEngineer
+ClothingUniformJumpsuitParamedicNT: ClothingUniformJumpsuitParamedic
+
+# 2025-08-29
+PrefilledSyringe: Syringe
+
+# 2025-10-6
+BibleTanakh: null
+BibleSatanic: null
+
+
+# 2025-10-08
+ClothingBeltAssault: ClothingBeltMilitaryWebbing
+WarpPointBombing: null
+
+# 2025-10-13
+ToyGriffin: ToyFigurineGriffin
+ToyOwlman: ToyFigurineOwlman
+ToySkeleton: ToyFigurineSkeleton
+
+# 2025-10-28
+DrinkKiraSpecial: DrinkOrangeLimeSodaGlass

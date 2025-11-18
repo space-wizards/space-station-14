@@ -1,9 +1,10 @@
-using Content.Server.Station;
+using Content.Server.Administration.Managers;
+using Content.Server.Station.Systems;
 using Content.Shared.Administration;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
-using Content.Shared.Station;
-using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -12,7 +13,10 @@ namespace Content.Server.GameTicking.Commands
     [AnyCommand]
     sealed class JoinGameCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         public string Command => "joingame";
         public string Description => "";
@@ -30,17 +34,17 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var player = shell.Player as IPlayerSession;
+            var player = shell.Player;
 
             if (player == null)
             {
                 return;
             }
 
-            var ticker = EntitySystem.Get<GameTicker>();
-            var stationSystem = EntitySystem.Get<StationSystem>();
+            var ticker = _entManager.System<GameTicker>();
+            var stationJobs = _entManager.System<StationJobsSystem>();
 
-            if (!ticker.PlayersInLobby.ContainsKey(player) || ticker.PlayersInLobby[player] == LobbyPlayerStatus.Observer)
+            if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
             {
                 Logger.InfoS("security", $"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
                 shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
@@ -56,23 +60,29 @@ namespace Content.Server.GameTicking.Commands
             {
                 string id = args[0];
 
-                if (!uint.TryParse(args[1], out var sid))
+                if (!int.TryParse(args[1], out var sid))
                 {
                     shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
                 }
 
-                var stationId = new StationId(sid);
+                var station = _entManager.GetEntity(new NetEntity(sid));
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
-                if(!stationSystem.IsJobAvailableOnStation(stationId, jobPrototype))
+                if(stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
                 {
-                    shell.WriteLine($"{jobPrototype.Name} has no available slots.");
+                    shell.WriteLine($"{jobPrototype.LocalizedName} has no available slots.");
                     return;
                 }
-                ticker.MakeJoinGame(player, stationId, id);
+
+                if (_adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
+                {
+                    _adminManager.DeAdmin(player);
+                }
+
+                ticker.MakeJoinGame(player, station, id);
                 return;
             }
 
-            ticker.MakeJoinGame(player, StationId.Invalid);
+            ticker.MakeJoinGame(player, EntityUid.Invalid);
         }
     }
 }

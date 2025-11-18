@@ -1,17 +1,30 @@
 - type: reagent
   id: Cryptobiolin
-  name: cryptobiolin
+  name: reagent-name-cryptobiolin
   group: Medicine
-  desc: Causes confusion and dizziness. This is essential to make Spaceacillin.
-  physicalDesc: fizzy
+  desc: reagent-desc-cryptobiolin
+  physicalDesc: reagent-physical-desc-fizzy
+  allowedDepartments:
+  - Medical
+  flavor: medicine
   color: "#081a80"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectScrambled
+        type: Update
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectWoozy
+        time: 20.0
 
 - type: reagent
   id: Dylovene
-  name: dylovene
+  name: reagent-name-dylovene
   group: Medicine
-  desc: A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
-  physicalDesc: translucent
+  desc: reagent-desc-dylovene
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
   color: "#3a1d8a"
   metabolisms:
     Medicine:
@@ -20,19 +33,52 @@
         damage:
           types:
             Poison: -1
-    # TODO overdose: vomit, dizzy effect (drunkenness?)
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 20
+        damage:
+          groups:
+            Brute: 2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 20
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 20
+        probability: 0.02
+      - !type:Drunk
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 15
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: -10
-    - !type:PlantAdjustHealth
-      amount: 1
+  - !type:PlantAdjustToxins
+    amount: -10
+  - !type:PlantAdjustHealth
+    amount: 1
 
 - type: reagent
   id: Diphenhydramine
-  name: diphenhydramine
+  name: reagent-name-diphenhydramine
   group: Medicine
-  desc: Rapidly purges the body of histamine and reduces jitteriness.
-  physicalDesc: chalky
+  desc: reagent-desc-diphenhydramine
+  physicalDesc: reagent-physical-desc-chalky
+  flavor: medicine
   color: "#64ffe6"
   metabolisms:
     Medicine:
@@ -44,13 +90,41 @@
         key: Jitter
         time: 3.0
         type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 1.5
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -3
+
+- type: reagent
+  id: Ethylredoxrazine
+  name: reagent-name-ethylredoxrazine
+  group: Medicine
+  desc: reagent-desc-ethylredoxrazine
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "#2d5708"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrunk
+        time: 6.0
+        type: Remove
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -0.5
 
 - type: reagent
   id: Arithrazine
-  name: arithrazine
+  name: reagent-name-arithrazine
   group: Medicine
-  desc: A slightly unstable medication used for the most extreme case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
-  physicalDesc: cloudy
+  desc: reagent-desc-arithrazine
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: medicine
   color: "#bd5902"
   metabolisms:
     Medicine:
@@ -60,86 +134,134 @@
           types:
             Radiation: -3
           groups:
-            Brute: 0.5
+            Brute: 1.5
 
 - type: reagent
   id: Bicaridine
-  name: bicaridine
+  name: reagent-name-bicaridine
   group: Medicine
-  desc: An analgesic which is highly effective at treating brute damage. It is useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
-  physicalDesc: opaque
+  desc: reagent-desc-bicaridine
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
   color: "#ffaa00"
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Brute: -2
+          Brute: -1.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Bicaridine
+          min: 15
+        damage:
+          types:
+            Asphyxiation: 0.5
+            Poison: 1.5
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Bicaridine
+          min: 30
+        probability: 0.02
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Bicaridine
+          min: 15
+      - !type:Drunk
 
 - type: reagent
   id: Cryoxadone
-  name: cryoxadone
+  name: reagent-name-cryoxadone
   group: Medicine
-  desc: Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 170K (usually this means cryo cells). Can also slowly heal clone damage, such as caused by cloning or Slimes.
-  physicalDesc: fizzy
+  desc: reagent-desc-cryoxadone
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: medicine
   color: "#0091ff"
   plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: -3
-    - !type:PlantAdjustHealth
-      amount: 3
+  - !type:PlantAdjustToxins
+    amount: -5
+  - !type:PlantAdjustHealth
+    amount: 5
+  - !type:PlantCryoxadone {}
   metabolisms:
     Medicine:
       effects:
         - !type:HealthChange
           conditions:
-          - !type:Temperature
+          - !type:TemperatureCondition
             # this is a little arbitrary but they gotta be pretty cold
-            max: 150.0
+            max: 213.0
           damage:
           # todo scale with temp like SS13
             groups:
               Airloss: -6
               Brute: -4
-              Burn: -4
+              Burn: -6
               Toxin: -4
 
 - type: reagent
-  id: Clonexadone
-  name: clonexadone
+  id: Doxarubixadone
+  name: reagent-name-doxarubixadone
   group: Medicine
-  parent: Cryoxadone
-  desc: Heals standard damage in the same as Cryoxadone, with the same temperature requirement. Significantly more effective than the former at treating cellular damage, although both can be used simultaneously. Best used in cryo cells.
-  physicalDesc: bubbly
-  color: "#0666ff"
-  plantMetabolism:
-    - !type:PlantAdjustToxins
-      amount: -5
-    - !type:PlantAdjustHealth
-      amount: 5
+  desc: reagent-desc-doxarubixadone
+  physicalDesc: reagent-physical-desc-bubbling
+  flavor: medicine
+  color: "#32cd32"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:TemperatureCondition
+            max: 213.0
+          damage:
+            types:
+             Cellular: -2
 
 - type: reagent
   id: Dermaline
-  name: dermaline
+  name: reagent-name-dermaline
   group: Medicine
-  desc: An advanced chemical that is more effective at treating burn damage than Kelotane.
-  physicalDesc: translucent
+  desc: reagent-desc-dermaline
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
   color: "#215263"
   metabolisms:
     Medicine:
       effects:
       - !type:HealthChange
         damage:
+          types:
+            Heat: -1.5
+            Shock: -1.5
+            Cold: -1.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dermaline
+          min: 10
+        damage:
+          types:
+            Asphyxiation: 1
+            Cold: 2
           groups:
-            Burn: -3
+            Brute: 0.5
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dermaline
+          min: 10
 
 - type: reagent
   id: Dexalin
-  name: dexalin
+  name: reagent-name-dexalin
   group: Medicine
-  desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful.
-  physicalDesc: opaque
+  desc: reagent-desc-dexalin
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
   color: "#0041a8"
   metabolisms:
     Medicine:
@@ -149,13 +271,23 @@
           types:
             Asphyxiation: -1
             Bloodloss: -0.5
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentCondition
+            reagent: Dexalin
+            min: 20
+        damage:
+          types:
+            Asphyxiation: 3
+            Cold: 1
 
 - type: reagent
   id: DexalinPlus
-  name: dexalin plus
+  name: reagent-name-dexalin-plus
   group: Medicine
-  desc: Used in treatment of extreme cases of oxygen deprivation. Effective at healing blood loss damage.
-  physicalDesc: cloudy
+  desc: reagent-desc-dexalin-plus
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: medicine
   color: "#4da0bd"
   metabolisms:
     Medicine:
@@ -163,27 +295,51 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: -3
-            Bloodloss: -2
+            Asphyxiation: -3.5
+            Bloodloss: -3
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: HeartbreakerToxin
+          min: 1
+        reagent: HeartbreakerToxin
+        amount: -3
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentCondition
+            reagent: DexalinPlus
+            min: 25
+        damage:
+          types:
+            Asphyxiation: 5
+            Cold: 3
 
 # this ones a doozy
 - type: reagent
   id: Epinephrine
-  name: epinephrine
+  name: reagent-name-epinephrine
   group: Medicine
-  desc: Effective at bringing people back from a critical state. Reduces some stun times. Easy to overdose on.
-  physicalDesc: odorless
+  desc: reagent-desc-epinephrine
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: medicine
   color: "#d2fffa"
   metabolisms:
     Medicine:
       effects:
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentCondition
+          reagent: Histamine
+          min: 45
+        reagent: Histamine
+        amount: -5
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
           # they gotta be in crit first
-          min: 100
-        - !type:ReagentThreshold
-          min: 0
+        - !type:MobStateCondition
+          mobstate: Critical
+        - !type:ReagentCondition
+          reagent: Epinephrine
           max: 20
         damage:
           types:
@@ -194,45 +350,50 @@
             Burn: -0.5
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
+          reagent: Epinephrine
           min: 20
         damage:
           types:
             Asphyxiation: 1
             Poison: 1
       - !type:AdjustReagent
-        reagent: Lexorin
+        reagent: HeartbreakerToxin
         amount: -2
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
-          reagent: Lexorin
+        - !type:ReagentCondition
+          reagent: HeartbreakerToxin
           min: 1
         reagent: Epinephrine
         amount: -1
       - !type:AdjustReagent
         probability: 0.1
         conditions:
-        - !type:ReagentThreshold
-          reagent: Lexorin
+        - !type:ReagentCondition
+          reagent: HeartbreakerToxin
           min: 1
         reagent: Histamine
         amount: 4
-      - !type:GenericStatusEffect
-        key: Stun
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStunned
+        time: 0.75
+        type: Remove
+      - !type:ModifyKnockdown
         time: 0.75
         type: Remove
       - !type:GenericStatusEffect
-        key: KnockedDown
-        time: 0.75
-        type: Remove
+        key: Adrenaline # Guess what epinephrine is...
+        component: IgnoreSlowOnDamage
+        time: 5 # lingers less than hivemind reagent to give it a niche
 
 - type: reagent
   id: Hyronalin
-  name: hyronalin
+  name: reagent-name-hyronalin
   group: Medicine
-  desc: A weak treatment for radiation damage. Considered to be useful mainly for genetic modification, where it reduces radiation levels, and thus the chance of genetic mutations. Largely outclassed by Arithrazine.
-  physicalDesc: cloudy
+  desc: reagent-desc-hyronalin
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: medicine
   color: "#4cb580"
   metabolisms:
     Medicine:
@@ -241,130 +402,336 @@
         damage:
           types:
             Radiation: -1
+      - !type:Vomit
+        probability: 0.02
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hyronalin
+          min: 30
+        damage:
+          types:
+           Heat: 2
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Hyronalin
+          min: 30
 
 - type: reagent
-  id: Inaprovaline
-  name: inaprovaline
+  id: Ipecac
+  name: reagent-name-ipecac
   group: Medicine
-  desc: Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients- it stops oxygen loss when the patient is in critical health. It'll also slow down bleeding by a good amount. Acts as a decent painkiller.
-  physicalDesc: opaque
-  color: "#731024"
+  desc: reagent-desc-ipecac
+  physicalDesc: reagent-physical-desc-inky
+  allowedDepartments:
+  - Medical
+  flavor: medicine
+  color: "#422912"
   metabolisms:
     Medicine:
       effects:
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ipecac
+          min: 4
+        probability: 0.3
+
+- type: reagent
+  id: Inaprovaline
+  name: reagent-name-inaprovaline
+  group: Medicine
+  desc: reagent-desc-inaprovaline
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "#731024"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1 # Smaller doses stabilize critical people for longer. Gives it a specific usecase as to not be entirely outclassed by dex+
+      effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
           # they gotta be in crit first
-          min: 100
+        - !type:MobStateCondition
+          mobstate: Critical
         damage:
           types:
-            Asphyxiation: -5
-      - !type:ModifyBleedAmount
+            Asphyxiation: -2
+      - !type:ModifyBleed
         amount: -0.25
 
 - type: reagent
   id: Kelotane
-  name: kelotane
+  name: reagent-name-kelotane
   group: Medicine
-  desc: Treats burn damage and prevents infection.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-kelotane
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: medicine
   color: "#bf3d19"
   metabolisms:
     Medicine:
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Burn: -1
+          types:
+            Heat: -0.33
+            Shock: -0.33
+            Cold: -0.33
+      - !type:SatiateThirst
+        factor: -10
+        conditions:
+        - !type:ReagentCondition
+          reagent: Kelotane
+          min: 30
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - generic-reagent-effect-nauseous
+        - generic-reagent-effect-thirsty
+        - generic-reagent-effect-parched
+        probability: 0.1
+        conditions:
+        - !type:ReagentCondition
+          reagent: Kelotane
+          min: 25
 
 - type: reagent
   id: Leporazine
-  name: leporazine
+  name: reagent-name-leporazine
   group: Medicine
-  desc: This keeps a patient's body temperature stable. High doses can allow short periods of unprotected EVA, but prevents use of the cryogenics tubes.
-  physicalDesc: pungent
+  desc: reagent-desc-leporazine
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: medicine
   color: "#ff7db5"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:AdjustTemperature
-        conditions:
-        - !type:Temperature
-          max: 293.15
-        amount: 1000 # thermal energy, not temperature!
-      - !type:AdjustTemperature
-        conditions:
-        - !type:Temperature
-          min: 293.15
-        amount: -1000
-      - !type:PopupMessage
-        type: Local
-        messages: [ "leporazine-effect-temperature-adjusting" ]
-        probability: 0.2
-
-- type: reagent
-  id: Phalanximine
-  name: phalanximine
-  group: Medicine
-  desc: Used in the treatment of cancer, is as effective as Anti-Toxin. Causes moderate radiation and hair loss.
-  physicalDesc: acrid
-  color: "#c8ff75"
   metabolisms:
     Medicine:
       effects:
       - !type:HealthChange
         damage:
           types:
-            Cellular: -1
-            Radiation: 1
+            Cold: -4
+      - !type:AdjustTemperature
+        conditions:
+        - !type:TemperatureCondition
+          max: 293.15
+        amount: 100000 # thermal energy, not temperature!
+      - !type:AdjustTemperature
+        conditions:
+        - !type:TemperatureCondition
+          min: 293.15
+        amount: -10000
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "leporazine-effect-temperature-adjusting" ]
+        probability: 0.2
+      - !type:AdjustReagent
+        reagent: Fresium
+        amount: -5
 
 - type: reagent
-  id: PulpedBananaPeel
-  name: pulped banana peel
+  id: Barozine
+  name: reagent-name-barozine
   group: Medicine
-  desc: Pulped banana peels have some effectiveness against bleeding.
-  physicalDesc: pulpy
-  color: "#FFE774"
+  desc: reagent-desc-barozine
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: medicine
+  color: "#ff867d"
   metabolisms:
     Medicine:
       effects:
-      - !type:ModifyBleedAmount
-        amount: -0.5
+      - !type:HealthChange
+        probability: 0.3
+        damage:
+          types:
+            Heat: 0.5
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentCondition
+            reagent: Barozine
+            min: 30
+        damage:
+          types:
+            Poison: 3
+      - !type:Vomit
+        probability: 0.15
+        conditions:
+          - !type:ReagentCondition
+            reagent: Barozine
+            min: 30
+      - !type:GenericStatusEffect
+        key: PressureImmunity
+        component: PressureImmunity
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:Jitter
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "barozine-effect-skin-burning", "barozine-effect-muscle-contract" ]
+        probability: 0.1
 
 - type: reagent
-  id: Siderlac
-  name: siderlac
+  id: Phalanximine
+  name: reagent-name-phalanximine
   group: Medicine
-  desc: A powerful anti-caustic medicine derived from plants.
-  physicalDesc: milky
-  color: "#f4dab8"
+  desc: reagent-desc-phalanximine
+  physicalDesc: reagent-physical-desc-acrid
+  flavor: medicine
+  color: "#c8ff75"
+  plantMetabolism:
+    - !type:PlantAdjustToxins
+      amount: 6
+    - !type:PlantPhalanximine
+      minScale: 4
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: -0.3
+            Radiation: 0.15
+            Caustic: 0.15
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Phalanximine
+          min: 11
+        damage:
+          types:
+            Radiation: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Arithrazine
+          min: 1
+        damage:
+          types:
+            Caustic: 0.3
+
+- type: reagent
+  id: PolypyryliumOligomers
+  name: reagent-name-polypyrylium-oligomers
+  group: Medicine
+  desc: reagent-desc-polypyrylium-oligomers
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: violets
+  color: "#9423FF"
   metabolisms:
     Medicine:
       effects:
       - !type:HealthChange
         damage:
           groups:
-            Caustic: -5
+            Brute: -3.5
+          types:
+            Asphyxiation: -2.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: PolypyryliumOligomers
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 3.5
+      - !type:ModifyBleed
+        amount: -0.25
 
 - type: reagent
-  id: Spaceacillin
-  name: spaceacillin
+  id: Ambuzol
+  name: reagent-name-ambuzol
   group: Medicine
-  desc: A theta-lactam antibiotic. A common and very useful medicine, effective against many diseases likely to be encountered in space. Slows progression of diseases.
-  physicalDesc: opaque
-  color: "#9942f5"
+  desc: reagent-desc-ambuzol
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: medicine
+  color: "#86caf7"
   metabolisms:
     Medicine:
       effects:
-        - !type:ChemCureDisease
+        - !type:CureZombieInfection
+          conditions:
+            - !type:ReagentCondition
+              reagent: Ambuzol
+              min: 10
+
+- type: reagent
+  id: AmbuzolPlus
+  name: reagent-name-ambuzol-plus
+  group: Medicine
+  desc: reagent-desc-ambuzol-plus
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: medicine
+  color: "#1274b5"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:CureZombieInfection
+          innoculate: true
+          conditions:
+            - !type:ReagentCondition
+              reagent: AmbuzolPlus
+              min: 5
+
+- type: reagent
+  id: PulpedBananaPeel
+  name: reagent-name-pulped-banana-peel
+  group: Medicine
+  desc: reagent-desc-pulped-banana-peel
+  physicalDesc: reagent-physical-desc-pulpy
+  flavor: medicine
+  color: "#FFE774"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyBleed
+        amount: -0.5
+
+- type: reagent
+  id: Saline
+  name: reagent-name-saline
+  group: Medicine
+  desc: reagent-desc-saline
+  physicalDesc: reagent-physical-desc-salty
+  flavor: salty
+  color: "#0064C8"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 6
+        - !type:ModifyBloodLevel
+          amount: 6
+
+- type: reagent
+  id: Siderlac
+  name: reagent-name-siderlac
+  group: Medicine
+  desc: reagent-desc-siderlac
+  physicalDesc: reagent-physical-desc-milky
+  flavor: medicine
+  color: "#f4dab8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: -5
 
 - type: reagent
   id: Stellibinin
-  name: stellibinin
+  name: reagent-name-stellibinin
   group: Medicine
-  desc: A natual antitoxin with particular effectiveness against amatoxin.
-  physicalDesc: starry
+  desc: reagent-desc-stellibinin
+  physicalDesc: reagent-physical-desc-starry
+  flavor: medicine
   color: "#2b2f77"
   metabolisms:
     Medicine:
@@ -372,10 +739,10 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: -1
+            Poison: -4
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Amatoxin
           min: 1
         reagent: Amatoxin
@@ -383,10 +750,11 @@
 
 - type: reagent
   id: Synaptizine
-  name: synaptizine
+  name: reagent-name-synaptizine
   group: Medicine
-  desc: Toxic, but treats hallucinations, drowsiness & halves the duration of paralysis, stuns and knockdowns. One unit is enough to treat hallucinations; two units is deadly.
-  physicalDesc: pungent
+  desc: reagent-desc-synaptizine
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: medicine
   color: "#d49a2f"
   metabolisms:
     Poison:
@@ -394,33 +762,38 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 3
-      - !type:GenericStatusEffect
-        key: Stun
+            Poison: 2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStunned
         time: 3.0
         type: Remove
-      - !type:GenericStatusEffect
-        key: KnockedDown
+      - !type:ModifyKnockdown
         time: 3.0
+        type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 15.0
         type: Remove
 
 - type: reagent
   id: TranexamicAcid
-  name: tranexamic acid
+  name: reagent-name-tranexamic-acid
   group: Medicine
-  desc: A blood clotting medicine for preventing heavy bleeding. Very dangerous in large quantities.
-  physicalDesc: viscous
+  desc: reagent-desc-tranexamic-acid
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: medicine
   color: "#ba7d7d"
   metabolisms:
     Medicine:
       effects:
       # Medium-large quantities can hurt you instead,
       # but still technically stop your bleeding.
-      - !type:ModifyBleedAmount
+      - !type:ModifyBleed
         amount: -1.5
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
+          reagent: TranexamicAcid
           min: 15
         damage:
           types:
@@ -428,31 +801,37 @@
 
 - type: reagent
   id: Tricordrazine
-  name: tricordrazine
+  name: reagent-name-tricordrazine
   group: Medicine
-  desc: A wide-spectrum stimulant, originally derived from Cordrazine. It is capable of healing most common damage types simultaneously, however only at about half the rate of other medications. Because of its low potency, it's best used as a supplement to other medicines.
-  physicalDesc: opaque
+  desc: reagent-desc-tricordrazine
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
   color: "#00e5ff"
   metabolisms:
     Medicine:
       effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
+        - !type:TotalDamageCondition
           max: 50
         damage:
           groups:
-            Burn: -1
             Brute: -1
           types:
             Poison: -0.5 ##Should be about what it was when it healed the toxin group
+            Heat: -0.33
+            Shock: -0.33
+            Cold: -0.33
 
 - type: reagent
   id: Lipozine
-  name: lipozine
+  name: reagent-name-lipozine
   group: Medicine
-  desc: Causes weight loss upon consumption.
-  physicalDesc: oily
+  desc: reagent-desc-lipozine
+  allowedDepartments:
+  - Medical
+  physicalDesc: reagent-physical-desc-oily
+  flavor: medicine
   color: "#2690b5"
   metabolisms:
     Medicine:
@@ -461,62 +840,650 @@
       - !type:SatiateHunger
         factor: -1
 
+  # Should heal quite literally everything, use in very small amounts
 - type: reagent
   id: Omnizine
-  name: Omnizine
+  name: reagent-name-omnizine
   group: Medicine
-  desc: A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that it's origins remain a mystery because knowing the secrets of its production would render most commercial pharmaceuticals obsolete.
-  physicalDesc: soothing
+  desc: reagent-desc-omnizine
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
   color: "#fcf7f9"
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         damage:
-          groups:
-            Burn: -2
-            Toxin: -2
-            Airloss: -2
-            Brute: -2
+          Burn: -2
+          Toxin: -2
+          Airloss: -2
+          Brute: -2
 
 - type: reagent
   id: Ultravasculine
-  name: ultravasculine
+  name: reagent-name-ultravasculine
   group: Medicine
-  desc: Rapidly flushes toxins from the body, but places some stress on the veins. Do not overdose.
-  physicalDesc: thick and grainy
+  desc: reagent-desc-ultravasculine
+  physicalDesc: reagent-physical-desc-thick-and-grainy
+  flavor: medicine
   color: "#520e30"
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
+      - !type:EvenHealthChange
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
+          reagent: Ultravasculine
           min: 0
-          max: 30
+          max: 20
         damage:
-          groups:
-            Toxin: -3
-            Brute: 0.5
+          Toxin: -6
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
-          min: 30
+        - !type:ReagentCondition
+          reagent: Ultravasculine
+          min: 0
+          max: 20
         damage:
           groups:
-            Toxin: -1
-            Brute: 3
+            Brute: 1.5
+      - !type:EvenHealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ultravasculine
+          min: 20
+        damage:
+          Toxin: -2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ultravasculine
+          min: 20
+        damage:
+          groups:
+            Brute: 6
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Histamine
           min: 1
         reagent: Histamine
         amount: -1
       - !type:AdjustReagent
         conditions:
-        - !type:ReagentThreshold
+        - !type:ReagentCondition
           reagent: Histamine
           min: 1
         reagent: Ultravasculine
         amount: 0.5
+
+- type: reagent
+  id: Oculine
+  name: reagent-name-oculine
+  desc: reagent-desc-oculine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: medicine
+  color: "#404040"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:EyeDamage
+
+- type: reagent
+  id: Cognizine
+  name: reagent-name-cognizine
+  desc: reagent-desc-cognizine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
+  color: "#b50ee8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:MakeSentient
+        conditions:
+        - !type:ReagentCondition
+          reagent: Cognizine
+          min: 5
+
+- type: reagent
+  id: Ethyloxyephedrine
+  name: reagent-name-ethyloxyephedrine
+  desc: reagent-desc-ethyloxyephedrine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: medicine
+  color: "#d5d5e4"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 10
+        type: Remove
+      - !type:ResetNarcolepsy
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethyloxyephedrine
+          min: 10
+      - !type:PopupMessage
+        visualType: Medium
+        messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
+        type: Local
+        probability: 0.1
+
+- type: reagent
+  id: Diphenylmethylamine
+  name: reagent-name-diphenylmethylamine
+  desc: reagent-desc-diphenylmethylamine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: medicine
+  color: "#b0abaa"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 10
+        type: Remove
+      - !type:ResetNarcolepsy
+        conditions:
+        - !type:ReagentCondition
+          reagent: Diphenylmethylamine
+          min: 5
+      - !type:PopupMessage
+        visualType: Medium
+        messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
+        type: Local
+        probability: 0.1
+
+- type: reagent
+  id: Sigynate
+  name: reagent-name-sigynate
+  group: Medicine
+  desc: reagent-desc-sigynate
+  physicalDesc: reagent-physical-desc-thick
+  flavor: sweet
+  color: "#e0a5b9"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: -1.25 # 5 per u
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sigynate
+          min: 16
+        damage:
+          types:
+            Heat: 1 # 4 per u
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sigynate
+          min: 20
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sigynate
+          min: 20
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Sigynate
+          min: 30
+        probability: 0.02
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Arithrazine
+          min: 1
+        probability: 0.1
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Arithrazine
+          min: 1
+        type: Local
+        visualType: Medium
+        messages: [ "generic-reagent-effect-nauseous" ]
+        probability: 0.2
+
+- type: reagent
+  id: Lacerinol
+  name: reagent-name-lacerinol
+  group: Medicine
+  desc: reagent-desc-lacerinol
+  physicalDesc: reagent-physical-desc-viscous
+  flavor: syrupy
+  color: "#283332"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Slash: -2 # 8 per u
+            Heat: 0.2 # 0.8 per u
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lacerinol
+          min: 12
+        damage:
+          types:
+            Cold: 1.5 # 6 per u
+
+- type: reagent
+  id: Puncturase
+  name: reagent-name-puncturase
+  group: Medicine
+  desc: reagent-desc-puncturase
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: fizzy
+  color: "#b9bf93"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Piercing: -2.5 # 10 per u
+            Radiation: 0.05 # 0.2 per u, 3 for 15u
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Puncturase
+          min: 12
+        damage:
+          types:
+            Blunt: 3 # 12 per u
+
+- type: reagent
+  id: Bruizine
+  name: reagent-name-bruizine
+  group: Medicine
+  desc: reagent-desc-bruizine
+  physicalDesc: reagent-physical-desc-mucus-like
+  flavor: sour
+  color: "#ff3636"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.25
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -2.25 # 9 per u
+      - !type:SatiateHunger
+        factor: -1
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Bruizine
+          min: 10.5
+        damage:
+          types:
+            Poison: 2.5 # 10 per u
+
+- type: reagent
+  id: Holywater
+  name: reagent-name-holywater
+  group: Medicine
+  desc: reagent-desc-holywater
+  evaporationSpeed: 0.3
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#91C3F7"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamageCondition
+          max: 50
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:Extinguish
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        ignoreResistances: false
+        damage:
+          types:
+            Holy: 0.5
+  plantMetabolism:
+  - !type:PlantAdjustWater
+    amount: 1
+  tileReactions:
+  - !type:ExtinguishTileReaction { }
+
+- type: reagent
+  id: Pyrazine
+  name: reagent-name-pyrazine
+  group: Medicine
+  desc: reagent-desc-pyrazine
+  physicalDesc: reagent-physical-desc-thick
+  flavor: syrupy
+  color: "#aa4308"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1 # slow metabolism to not be a godly combat med, its for treating burn victims efficiently
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: -1
+      # od causes massive bleeding
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Pyrazine
+          min: 20
+        damage:
+          types:
+            Slash: 0.5
+            Piercing: 0.5
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Pyrazine
+          min: 15
+        probability: 0.1
+      - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Pyrazine
+          min: 20
+        emote: Scream
+        probability: 0.2
+
+- type: reagent
+  id: Insuzine
+  name: reagent-name-insuzine
+  group: Medicine
+  desc: reagent-desc-insuzine
+  physicalDesc: reagent-physical-desc-frosty
+  flavor: metallic
+  color: "#8147ff"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.25
+      effects:
+      # heals shocks and removes shock chems
+      - !type:HealthChange
+        damage:
+          types:
+            Shock: -1.5 # 6 per u
+      - !type:AdjustReagent
+        reagent: Licoxide
+        amount: -2
+      - !type:AdjustReagent
+        reagent:  Tazinide
+        amount: -2
+      # makes you a little chilly when not oding
+      - !type:AdjustTemperature
+        amount: -2500
+      # od makes you freeze to death
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Insuzine
+          min: 12
+        damage:
+          types:
+            Cold: 1 # 4 per u
+      - !type:AdjustTemperature
+        conditions:
+        - !type:ReagentCondition
+          reagent: Insuzine
+          min: 12
+        amount: -30000
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Insuzine
+          min: 12
+
+- type: reagent
+  id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
+  name: reagent-name-opporozidone
+  group: Medicine
+  desc: reagent-desc-opporozidone
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: acid
+  color: "#b5e36d"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:ReduceRotting
+          seconds: 20
+          conditions:
+          #Patient must be dead and in a cryo tube (or something cold)
+          - !type:TemperatureCondition
+            max: 150.0
+          - !type:MobStateCondition
+            mobstate: Dead
+
+- type: reagent
+  id: Necrosol
+  name: reagent-name-necrosol
+  group: Medicine
+  desc: reagent-desc-necrosol
+  physicalDesc: reagent-physical-desc-necrotic
+  flavor: medicine
+  color: "#86a5bd"
+  worksOnTheDead: true
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: -5
+  - !type:PlantAdjustHealth
+    amount: 5
+  - !type:PlantCryoxadone {}
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:HealthChange
+          conditions:
+          - !type:TemperatureCondition
+            max: 213.0
+          damage:
+            groups:
+              Brute: -4
+              Burn: -5
+            types:
+              Poison: -2
+
+- type: reagent
+  id : Aloxadone
+  name: reagent-name-aloxadone
+  group: Medicine
+  desc: reagent-desc-aloxadone
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
+  color: "#89f77f"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:TemperatureCondition
+          max: 213.0
+        damage:
+          types:
+            Cold: -4.0
+            Heat: -4.0
+            Shock: -4.0
+            Caustic: -1.5
+
+- type: reagent
+  id : Mannitol # currently this is just a way to create psicodine
+  name: reagent-name-mannitol
+  group: Medicine
+  desc: reagent-desc-mannitol
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: sweet
+  color: "#A0A0A0"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentCondition
+          reagent: Mannitol
+          min: 15
+        type: Local
+        visualType: Medium
+        messages: [ "mannitol-effect-enlightened" ]
+        probability: 0.2
+
+- type: reagent
+  id: Psicodine
+  name: reagent-name-psicodine
+  group: Medicine
+  desc: reagent-desc-psicodine
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: bitter
+  color: "#07E79E"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Psicodine
+          min: 30
+        damage:
+          types:
+            Poison: 2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        conditions:
+        - !type:ReagentCondition
+          reagent: Psicodine
+          min: 30
+        type: Add
+        time: 8
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 2.0
+        type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrunk
+        time: 6.0
+        type: Remove
+      - !type:PopupMessage # we dont have sanity/mood so this will have to do
+        type: Local
+        visualType: Medium
+        messages:
+        - "psicodine-effect-fearless"
+        - "psicodine-effect-anxieties-wash-away"
+        - "psicodine-effect-at-peace"
+        probability: 0.2
+
+- type: reagent
+  id: PotassiumIodide
+  name: reagent-name-potassium-iodide
+  group: Medicine
+  desc: reagent-desc-potassium-iodide
+  physicalDesc: reagent-physical-desc-grainy
+  flavor: medicine
+  color: "#baa15d"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:GenericStatusEffect
+        key: RadiationProtection
+        component: RadiationProtection
+        time: 2
+        type: Add
+      - !type:HealthChange
+        conditions:
+          - !type:ReagentCondition
+            reagent: PotassiumIodide
+            min: 20
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
+  id: Haloperidol
+  name: reagent-name-haloperidol
+  group: Medicine
+  desc: reagent-desc-haloperidol
+  physicalDesc: reagent-physical-desc-crystalline
+  flavor: medicine
+  color: "#27870a"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:Emote
+        emote: Yawn
+        showInChat: true
+        probability: 0.1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 4
+        type: Add
+      - !type:GenericStatusEffect
+        key: Jitter
+        time: 4.0
+        type: Remove
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        time: 10.0
+        type: Remove
+      - !type:AdjustReagent
+        reagent: Desoxyephedrine
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: Ephedrine
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: Stimulants
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: THC
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: SpaceDrugs
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: Bananadine
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: SpaceGlue
+        amount: -3.0
+      - !type:AdjustReagent
+        reagent: MindbreakerToxin
+        amount: -3.0

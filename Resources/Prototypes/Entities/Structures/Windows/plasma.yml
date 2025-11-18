@@ -1,7 +1,7 @@
 - type: entity
   id: PlasmaWindow
   name: plasma window
-  parent: Window
+  parent: [BaseDeltaPressurePlasma, WindowRCDResistant]
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -9,17 +9,26 @@
   - type: Icon
     sprite: Structures/Windows/plasma_window.rsi
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: RGlass
+    damageContainer: StructuralInorganic
+    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:
@@ -33,17 +42,20 @@
     graph: Window
     node: plasmaWindow
   - type: Appearance
-    visuals:
-    - type: DamageVisualizer
-      thresholds: [4, 8, 12]
-      damageDivisor: 12
-      trackAllDamage: true
-      damageOverlay:
-        sprite: Structures/Windows/cracks.rsi
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 3
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
+  - type: StaticPrice
+    price: 100
+  - type: RadiationBlocker
+    resistance: 2
 
 - type: entity
   id: PlasmaWindowDirectional
-  parent: WindowDirectional
+  parent: [BaseDeltaPressurePlasmaQuarter, WindowDirectionalRCDResistant]
   name: directional plasma window
   description: Don't smudge up the glass down there.
   placement:
@@ -52,7 +64,6 @@
     - Window
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: plasma_window
   - type: Icon
@@ -61,19 +72,88 @@
   - type: Construction
     graph: WindowDirectional
     node: plasmaWindowDirectional
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 1.5
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional.rsi
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+    - trigger:
+        !type:DamageTrigger
+        damage: 37
       behaviors:
       - !type:PlaySoundBehavior
         sound:
-          collection: GlassBreak
+          collection: WindowShatter
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:
             min: 1
-            max: 2
+            max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 50
+  - type: RadiationBlocker
+    resistance: 1
+
+- type: entity
+  parent: PlasmaWindow
+  id: PlasmaWindowDiagonal
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/plasma_diagonal.rsi
+    state: state0
+  - type: Tag
+    tags:
+    - Diagonal
+    - Window
+  - type: IconSmooth
+    mode: Diagonal
+    key: windows
+    base: state
+  - type: Icon
+    sprite: Structures/Windows/plasma_diagonal.rsi
+    state: state0
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
+  - type: DamageVisuals
+    damageOverlay:
+      sprite: Structures/Windows/cracks_diagonal.rsi
+  - type: Construction
+    graph: WindowDiagonal
+    node: plasmaWindowDiagonal

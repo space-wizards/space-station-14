@@ -1,0 +1,16 @@
+# Configuration preset layer for gateway Wizard's Den servers.
+# Intended to be loaded after wizardsDen.toml
+
+# hostname is a placeholder
+# needs region tag
+
+[game]
+hostname = "[EN][New Player Server] Wizard's Den Farm Grass Hopper [US East]"
+desc = "Official English Space Station 14 servers for new players. Vanilla, roleplay ruleset."
+panic_bunker.enabled = false
+panic_bunker.disable_with_admins = false
+panic_bunker.enable_without_admins = false
+panic_bunker.custom_reason = ""
+
+[hub]
+tags = "lang:en,region:am_n_e,rp:low"

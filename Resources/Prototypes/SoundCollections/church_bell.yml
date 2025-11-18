@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: ChurchBell
+  files:
+    - /Audio/Effects/church_bell1.ogg
+    - /Audio/Effects/church_bell2.ogg
+    - /Audio/Effects/church_bell3.ogg
+    - /Audio/Effects/church_bell4.ogg

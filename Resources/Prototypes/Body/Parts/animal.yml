@@ -1,4 +1,4 @@
-﻿# Just copypasta of some human basic body parts for interaction,
+# Just copypasta of some human basic body parts for interaction,
 # only differences for now is that limbs work in pairs,
 # they are unextractable and can't be spawned (no surgery on Animals!?).
 
@@ -8,155 +8,114 @@
   name: "animal body part"
   abstract: true
   components:
+  # yes these sprites dont make sense i dont care its better than them being invisible
+  - type: Sprite
+    sprite: Mobs/Species/Reptilian/parts.rsi
   - type: Damageable
     damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 50
+  - type: Tag
+    tags:
+      - Trash
+  - type: Gibbable
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
 
-# For primates mainly
 - type: entity
   id: HandsAnimal
-  name: "animal hands"
+  name: animal hands
   parent: PartAnimal
-  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    layers:
+    - state: l_hand
+    - state: r_hand
   - type: BodyPart
     partType: Hand
-    size: 1
-    compatibility: Biological
     symmetry: Left
 
 - type: entity
   id: LegsAnimal
-  name: "animal legs"
+  name: animal legs
   parent: PartAnimal
-  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    layers:
+    - state: l_leg
+    - state: r_leg
   - type: BodyPart
     partType: Leg
-    size: 1
-    compatibility: Biological
+  - type: MovementBodyPart
 
 - type: entity
   id: FeetAnimal
-  name: "animal feet"
+  name: animal feet
   parent: PartAnimal
-  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    layers:
+    - state: r_foot
+    - state: l_foot
   - type: BodyPart
     partType: Foot
-    size: 1
-    compatibility: Biological
 
 - type: entity
   id: TorsoAnimal
-  name: "animal torso"
+  name: animal torso
   parent: PartAnimal
-  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
+  - type: Sprite
+    layers:
+    - state: torso_m
   - type: BodyPart
     partType: Torso
-    size: 7
-    compatibility: Biological
-    mechanisms:
-    - OrganAnimalLungs
-    - OrganAnimalStomach
-    - OrganAnimalLiver
-    - OrganAnimalHeart
-    - OrganAnimalKidneys
   - type: Damageable
     damageContainer: Biological
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
 
 - type: entity
-  id: BaseAnimalOrgan
-  parent: BaseItem
-  abstract: true
+  parent: PartAnimal
+  id: LeftHandSmartCorgi
+  name: corgi hand
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Mechanism
+  - type: Sprite
+    layers:
+    - state: l_hand
+  - type: BodyPart
+    partType: Hand
+    symmetry: Left
 
 - type: entity
-  id: OrganAnimalLungs
-  parent: BaseAnimalOrgan
-  name: lungs
-  abstract: true
+  parent: PartAnimal
+  id: RightHandSmartCorgi
+  name: corgi hand
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: Lung
-  - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [ Animal ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
-
-- type: entity
-  id: OrganAnimalStomach
-  parent: BaseAnimalOrgan
-  name: stomach
-  abstract: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 100
-  - type: Stomach
-    maxVolume: 100
-    digestionDelay: 20
-  - type: Metabolizer
-    maxReagents: 3
-    metabolizerTypes: [Human, Animal]
-    groups:
-    - id: Food
-    - id: Drink
-
-- type: entity
-  id: OrganAnimalLiver
-  parent: BaseAnimalOrgan
-  name: liver
-  abstract: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: Metabolizer
-    maxReagents: 1
-    metabolizerTypes: [Human, Animal]
-    groups:
-    - id: Alcohol
-      rateModifier: 0.1
-
-- type: entity
-  id: OrganAnimalHeart
-  parent: BaseAnimalOrgan
-  name: heart
-  abstract: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: Metabolizer
-    maxReagents: 2
-    metabolizerTypes: [Human, Animal]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
-
-- type: entity
-  id: OrganAnimalKidneys
-  parent: BaseAnimalOrgan
-  name: kidneys
-  abstract: true
-  components:
-  - type: Mechanism
-    size: 1
-    compatibility: Biological
-  - type: Metabolizer
-    maxReagents: 5
-    metabolizerTypes: [Human, Animal]
-    removeEmpty: true
+  - type: Sprite
+    layers:
+    - state: r_hand
+  - type: BodyPart
+    partType: Hand
+    symmetry: Right

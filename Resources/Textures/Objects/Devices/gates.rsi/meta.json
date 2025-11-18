@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "or.png originally created by Kevin Zheng, 2022. All are modified by deltanedas (github) for SS14, 2024. Sprites logic_a logic_b logic_o were made by 0tito (github) for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "logic"
+    },
+    {
+       "name":  "logic_o"
+    },
+    {
+       "name":  "logic_b"
+    },
+    {
+      "name":  "logic_a"
+    },
+    {
+      "name": "or"
+    },
+    {
+      "name": "and"
+    },
+    {
+      "name": "xor"
+    },
+    {
+      "name": "nor"
+    },
+    {
+      "name": "nand"
+    },
+    {
+      "name": "xnor"
+    },
+    {
+      "name": "edge_detector"
+    },
+    {
+      "name": "or_icon"
+    },
+    {
+      "name": "power_sensor"
+    },
+    {
+      "name": "memory_cell"
+    }
+  ]
+}

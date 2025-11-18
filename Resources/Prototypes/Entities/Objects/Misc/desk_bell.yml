@@ -1,0 +1,50 @@
+- type: entity
+  parent: BaseItem
+  id: DeskBell
+  name: desk bell
+  description: The cornerstone of any customer service job. You feel an unending urge to ring it.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/desk_bell.rsi
+    state: "normal"
+  - type: Tag
+    tags:
+      - Payload
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessSound:
+      collection: DeskBell
+      params:
+        variation: 0.03
+        volume: 3
+    onActivate: true
+  - type: EmitSoundOnUse
+    sound:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
+  - type: EmitSoundOnLand
+    sound:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
+  - type: UseDelay
+    delay: 0.5
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
+    damage:
+      types:
+        Blunt: 4

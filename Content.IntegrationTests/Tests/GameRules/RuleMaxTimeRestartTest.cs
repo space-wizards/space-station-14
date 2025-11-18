@@ -1,69 +1,71 @@
-﻿using System;
-using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using NUnit.Framework;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.GameRules
 {
     [TestFixture]
     [TestOf(typeof(MaxTimeRestartRuleSystem))]
-    public sealed class RuleMaxTimeRestartTest : ContentIntegrationTest
+    public sealed class RuleMaxTimeRestartTest
     {
         [Test]
         public async Task RestartTest()
         {
-            var options = new ServerContentIntegrationOption
-            {
-                CVarOverrides =
-                {
-                    ["game.lobbyenabled"] = "true",
-                    ["game.dummyticker"] = "false",
-                    ["game.defaultpreset"] = "", // No preset.
-                }
-            };
-            var server = StartServer(options);
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
+            var server = pair.Server;
 
-            await server.WaitIdleAsync();
+            Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.Zero);
+            Assert.That(server.EntMan.Count<ActiveGameRuleComponent>(), Is.Zero);
 
+            var entityManager = server.ResolveDependency<IEntityManager>();
             var sGameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
-            var maxTimeMaxTimeRestartRuleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MaxTimeRestartRuleSystem>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
+
+            MaxTimeRestartRuleComponent maxTime = null;
+            await server.WaitPost(() =>
+            {
+                sGameTicker.StartGameRule("MaxTimeRestart", out var ruleEntity);
+                Assert.That(entityManager.TryGetComponent<MaxTimeRestartRuleComponent>(ruleEntity, out maxTime));
+            });
+
+            Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.EqualTo(1));
+            Assert.That(server.EntMan.Count<ActiveGameRuleComponent>(), Is.EqualTo(1));
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
-
-                sGameTicker.StartGameRule(IoCManager.Resolve<IPrototypeManager>().Index<GameRulePrototype>(maxTimeMaxTimeRestartRuleSystem.Prototype));
-                maxTimeMaxTimeRestartRuleSystem.RoundMaxTime = TimeSpan.FromSeconds(3);
-
+                maxTime.RoundMaxTime = TimeSpan.FromSeconds(3);
                 sGameTicker.StartRound();
             });
+
+            Assert.That(server.EntMan.Count<GameRuleComponent>(), Is.EqualTo(1));
+            Assert.That(server.EntMan.Count<ActiveGameRuleComponent>(), Is.EqualTo(1));
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
             });
 
-            var ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTimeMaxTimeRestartRuleSystem.RoundMaxTime.TotalSeconds * 1.1f);
-            await server.WaitRunTicks(ticks);
+            var ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundMaxTime.TotalSeconds * 1.1f);
+            await pair.RunTicksSync(ticks);
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
             });
 
-            ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTimeMaxTimeRestartRuleSystem.RoundEndDelay.TotalSeconds * 1.1f);
-            await server.WaitRunTicks(ticks);
+            ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundEndDelay.TotalSeconds * 1.1f);
+            await pair.RunTicksSync(ticks);
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
             });
+
+            await pair.CleanReturnAsync();
         }
     }
 }

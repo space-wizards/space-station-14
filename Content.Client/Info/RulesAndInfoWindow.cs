@@ -1,31 +1,32 @@
-using Content.Client.EscapeMenu.UI;
-using Robust.Client.ResourceManagement;
+using System.Numerics;
+using Content.Client.UserInterface.Systems.EscapeMenu;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
+using Robust.Shared.ContentPack;
 
 namespace Content.Client.Info
 {
     public sealed class RulesAndInfoWindow : DefaultWindow
     {
-        [Dependency] private readonly RulesManager _rulesManager = default!;
-        [Dependency] private readonly IResourceCache _resourceManager = default!;
-
-        private OptionsMenu optionsMenu;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
 
         public RulesAndInfoWindow()
         {
             IoCManager.InjectDependencies(this);
 
-            optionsMenu = new OptionsMenu();
-
             Title = Loc.GetString("ui-info-title");
 
             var rootContainer = new TabContainer();
 
-            var rulesList = new Info();
-            var tutorialList = new Info();
+            var rulesList = new RulesControl
+            {
+                Margin = new Thickness(10)
+            };
+            var tutorialList = new Info
+            {
+                Margin = new Thickness(10)
+            };
 
             rootContainer.AddChild(rulesList);
             rootContainer.AddChild(tutorialList);
@@ -33,17 +34,11 @@ namespace Content.Client.Info
             TabContainer.SetTabTitle(rulesList, Loc.GetString("ui-info-tab-rules"));
             TabContainer.SetTabTitle(tutorialList, Loc.GetString("ui-info-tab-tutorial"));
 
-            PopulateRules(rulesList);
             PopulateTutorial(tutorialList);
 
-            Contents.AddChild(rootContainer);
+            ContentsContainer.AddChild(rootContainer);
 
-            SetSize = (650, 650);
-        }
-
-        private void PopulateRules(Info rulesList)
-        {
-            AddSection(rulesList, Loc.GetString("ui-rules-header"), "Rules.txt", true);
+            SetSize = new Vector2(650, 650);
         }
 
         private void PopulateTutorial(Info tutorialList)
@@ -54,20 +49,23 @@ namespace Content.Client.Info
             AddSection(tutorialList, Loc.GetString("ui-info-header-gameplay"), "Gameplay.txt", true);
             AddSection(tutorialList, Loc.GetString("ui-info-header-sandbox"), "Sandbox.txt", true);
 
-            infoControlSection.ControlsButton.OnPressed += _ => optionsMenu.OpenCentered();
+            infoControlSection.ControlsButton.OnPressed += _ => UserInterfaceManager.GetUIController<OptionsUIController>().OpenWindow();
+        }
+
+        private static void AddSection(Info info, Control control)
+        {
+            info.InfoContainer.AddChild(control);
         }
 
         private void AddSection(Info info, string title, string path, bool markup = false)
         {
-            info.InfoContainer.AddChild(new InfoSection(title,
-                _resourceManager.ContentFileReadAllText($"/Server Info/{path}"), markup));
+            AddSection(info, MakeSection(title, path, markup, _resourceManager));
         }
 
-        protected override void Opened()
+        private static Control MakeSection(string title, string path, bool markup, IResourceManager res)
         {
-            base.Opened();
-
-            _rulesManager.SaveLastReadTime();
+            return new InfoSection(title, res.ContentFileReadAllText($"/ServerInfo/{path}"), markup);
         }
+
     }
 }

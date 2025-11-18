@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: TraitorCorporations
+  values:
+    prefix: traitor-corporations-dataset-
+    count: 9

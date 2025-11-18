@@ -67,6 +67,9 @@ namespace Content.Client.Nuke
         public void UpdateState(NukeUiState state)
         {
             string firstMsg, secondMsg;
+
+            ArmButton.Text = Loc.GetString("nuke-user-interface-arm-button");
+
             switch (state.Status)
             {
                 case NukeStatus.AWAIT_DISK:
@@ -87,6 +90,7 @@ namespace Content.Client.Nuke
                     firstMsg = Loc.GetString("nuke-user-interface-first-status-device-armed");
                     secondMsg = Loc.GetString("nuke-user-interface-second-status-time",
                         ("time", state.RemainingTime));
+                    ArmButton.Text = Loc.GetString("nuke-user-interface-disarm-button");
                     break;
                 case NukeStatus.COOLDOWN:
                     firstMsg = Loc.GetString("nuke-user-interface-first-status-device-cooldown");
@@ -103,10 +107,10 @@ namespace Content.Client.Nuke
             FirstStatusLabel.Text = firstMsg;
             SecondStatusLabel.Text = secondMsg;
 
-            EjectButton.Disabled = !state.DiskInserted;
-            AnchorButton.Disabled = !state.DiskInserted;
+            EjectButton.Disabled = !state.DiskInserted || state.Status == NukeStatus.ARMED || !state.IsAnchored;
+            AnchorButton.Disabled = state.Status == NukeStatus.ARMED;
             AnchorButton.Pressed = state.IsAnchored;
-            ArmButton.Disabled = !state.AllowArm;
+            ArmButton.Disabled = !state.AllowArm || !state.IsAnchored;
         }
 
         private string VisualizeCode(int codeLength, int maxLength)

@@ -1,9 +1,5 @@
-﻿using System;
 using Content.Client.Stylesheets;
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -27,9 +23,10 @@ namespace Content.Client.Actions.UI
 
         public ActionAlertTooltip(FormattedMessage name, FormattedMessage? desc, string? requires = null)
         {
+            Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSystem;
             _gameTiming = IoCManager.Resolve<IGameTiming>();
 
-            SetOnlyStyleClass(StyleNano.StyleClassTooltipPanel);
+            SetOnlyStyleClass(StyleClass.TooltipPanel);
 
             BoxContainer vbox;
             AddChild(vbox = new BoxContainer
@@ -40,7 +37,7 @@ namespace Content.Client.Actions.UI
             var nameLabel = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = {StyleNano.StyleClassTooltipActionTitle}
+                StyleClasses = { StyleClass.TooltipTitle }
             };
             nameLabel.SetMessage(name);
             vbox.AddChild(nameLabel);
@@ -50,7 +47,7 @@ namespace Content.Client.Actions.UI
                 var description = new RichTextLabel
                 {
                     MaxWidth = TooltipTextMaxWidth,
-                    StyleClasses = {StyleNano.StyleClassTooltipActionDescription}
+                    StyleClasses = { StyleClass.TooltipDesc }
                 };
                 description.SetMessage(desc);
                 vbox.AddChild(description);
@@ -59,7 +56,7 @@ namespace Content.Client.Actions.UI
             vbox.AddChild(_cooldownLabel = new RichTextLabel
             {
                 MaxWidth = TooltipTextMaxWidth,
-                StyleClasses = {StyleNano.StyleClassTooltipActionCooldown},
+                StyleClasses = { StyleClass.TooltipDesc },
                 Visible = false
             });
 
@@ -68,11 +65,14 @@ namespace Content.Client.Actions.UI
                 var requiresLabel = new RichTextLabel
                 {
                     MaxWidth = TooltipTextMaxWidth,
-                    StyleClasses = {StyleNano.StyleClassTooltipActionRequirements}
+                    StyleClasses = { StyleClass.TooltipDesc }
                 };
-                requiresLabel.SetMessage(FormattedMessage.FromMarkup("[color=#635c5c]" +
-                                                                     requires +
-                                                                     "[/color]"));
+
+                if (!FormattedMessage.TryFromMarkup("[color=#635c5c]" + requires + "[/color]", out var markup))
+                    return;
+
+                requiresLabel.SetMessage(markup);
+
                 vbox.AddChild(requiresLabel);
             }
         }
@@ -90,8 +90,11 @@ namespace Content.Client.Actions.UI
             if (timeLeft > TimeSpan.Zero)
             {
                 var duration = Cooldown.Value.End - Cooldown.Value.Start;
-                _cooldownLabel.SetMessage(FormattedMessage.FromMarkup(
-                    $"[color=#a10505]{(int) duration.TotalSeconds} sec cooldown ({(int) timeLeft.TotalSeconds + 1} sec remaining)[/color]"));
+
+                if (!FormattedMessage.TryFromMarkup(Loc.GetString("ui-actionslot-duration", ("duration", (int)duration.TotalSeconds), ("timeLeft", (int)timeLeft.TotalSeconds + 1)), out var markup))
+                    return;
+
+                _cooldownLabel.SetMessage(markup);
                 _cooldownLabel.Visible = true;
             }
             else

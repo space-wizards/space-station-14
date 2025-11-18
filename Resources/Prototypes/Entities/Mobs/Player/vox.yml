@@ -1,21 +1,5 @@
 ﻿- type: entity
   save: false
-  name: Vox
-  parent: BaseVox
-  id: Vox
-  components:
-    - type: Mind
-      showExamineInfo: true
-    - type: Input
-      context: "human"
-    - type: Alerts
-    - type: Actions
-    - type: Eye
-    - type: CameraRecoil
-    - type: Examiner
-    - type: Vocal
-      maleScream: /Audio/Voice/Vox/shriek1.ogg
-      femaleScream: /Audio/Voice/Vox/shriek1.ogg
-    - type: AiFactionTag
-      factions:
-        - NanoTrasen
+  name: Uristititi McVox
+  parent: BaseMobVox
+  id: MobVox

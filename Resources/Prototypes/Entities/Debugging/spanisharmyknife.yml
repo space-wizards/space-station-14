@@ -5,25 +5,21 @@
   description: The pain of using this is almost too great to bear.
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Sprite
     sprite: Objects/Tools/debug.rsi
     state: icon
   - type: Clothing
     sprite: Objects/Tools/debug.rsi
     quickEquip: false
-    Slots:
+    slots:
       - Belt
   - type: MeleeWeapon
     damage:
       types:
         Slash: 10
-  - type: TilePrying
+  - type: ToolTileCompatible
   - type: Tool
-    qualities:
-      - Prying
+  - type: Prying
   - type: MultipleTool
     statusShowBehavior: true
     entries:

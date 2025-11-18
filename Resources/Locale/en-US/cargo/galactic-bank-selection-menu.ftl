@@ -1,1 +1,0 @@
-galactic-bank-selection-menu-title = Galactic Bank Selection

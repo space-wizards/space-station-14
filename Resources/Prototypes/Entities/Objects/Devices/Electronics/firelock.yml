@@ -1,14 +1,21 @@
 ﻿- type: entity
   id: FirelockElectronics
-  parent: BaseItem
+  parent: BaseElectronics
   name: firelock electronics
   description: An electronics board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
   components:
-    - type: Tag
-      tags:
-      - FirelockElectronics
-      - DroneUsable
+    - type: Item
+      storedRotation: 0
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: mainboard
-      netsync: false
+    - type: Tag
+      tags:
+      - FirelockElectronics
+    - type: StaticPrice
+      price: 14
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 0
+      chemicalComposition:
+        Silicon: 20

@@ -1,0 +1,91 @@
+- type: entity
+  id: MobRevenant
+  parent:
+  - Incorporeal
+  - BaseMob
+  name: revenant
+  description: A spooky ghostie.
+  components:
+  - type: Emag
+    emagType: All
+  - type: Input
+    context: "ghost"
+  - type: Spectral
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 6
+    baseSprintSpeed: 6
+  - type: Sprite
+    sprite: Mobs/Ghosts/revenant.rsi
+    layers:
+    - state: active
+  - type: StatusEffects
+    allowed:
+    - Corporeal
+  - type: Damageable
+    damageContainer: ManifestedSpirit
+    damageModifierSet: ManifestedSpirit
+  - type: NoSlip
+  - type: Eye
+    drawFov: false
+    visMask:
+      - Normal
+      - Ghost
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: NameIdentifier
+    group: GenericNumber
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-revenant-name
+    description: ghost-role-information-revenant-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Revenant
+    malfunctionWhitelist:
+      components:
+      # emag lockers open
+      - EntityStorage
+      # emag doors open
+      - Airlock
+      # troll medical to help get kills
+      - StasisBed
+      - EmaggableMedibot
+      # borg become killer
+      - EmagSiliconLaw
+  - type: PointLight
+    color: MediumPurple
+    radius: 2
+    softness: 1
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: Visibility
+    layer: 2 #ghost vis layer
+  - type: ActionGrant
+    actions:
+    - ActionRevenantShop
+  - type: Store
+    categories:
+    - RevenantAbilities
+    currencyWhitelist:
+    - StolenEssence
+  - type: RandomMetadata
+    nameSegments:
+    - NamesRevenantType
+    - NamesRevenantAdjective
+    - NamesRevenantTheme
+    nameFormat: name-format-revenant
+  - type: Speech
+    speechVerb: Ghost
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Tag
+    tags:
+    - SlowImmune
+    - KnockdownImmune

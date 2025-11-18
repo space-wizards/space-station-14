@@ -1,15 +1,11 @@
-using System.Collections.Generic;
 using Content.Shared.Construction.Prototypes;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
 {
-    [RegisterComponent, Friend(typeof(ConstructionSystem))]
-    public sealed class ConstructionComponent : Component
+    [RegisterComponent, Access(typeof(ConstructionSystem))]
+    public sealed partial class ConstructionComponent : Component
     {
         [DataField("graph", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
         public string Graph { get; set; } = string.Empty;
@@ -39,9 +35,8 @@ namespace Content.Server.Construction.Components
         public string? DeconstructionNode { get; set; } = "start";
 
         [ViewVariables]
-        public bool WaitingDoAfter { get; set; } = false;
-
-        [ViewVariables]
+        // TODO Force flush interaction queue before serializing to YAML.
+        // Otherwise you can end up with entities stuck in invalid states (e.g., waiting for DoAfters).
         public readonly Queue<object> InteractionQueue = new();
     }
 }

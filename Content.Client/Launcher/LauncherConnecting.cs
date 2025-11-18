@@ -1,8 +1,12 @@
 using System;
 using Robust.Client;
 using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Client.Launcher
 {
@@ -12,6 +16,10 @@ namespace Content.Client.Launcher
         [Dependency] private readonly IClientNetManager _clientNetManager = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IClipboardManager _clipboard = default!;
 
         private LauncherConnectingGui? _control;
 
@@ -47,10 +55,11 @@ namespace Content.Client.Launcher
         public event Action<Page>? PageChanged;
         public event Action<string?>? ConnectFailReasonChanged;
         public event Action<ClientConnectionState>? ConnectionStateChanged;
+        public event Action<NetConnectFailArgs>? ConnectFailed;
 
-        public override void Startup()
+        protected override void Startup()
         {
-            _control = new LauncherConnectingGui(this);
+            _control = new LauncherConnectingGui(this, _random, _prototypeManager, _cfg, _clipboard);
 
             _userInterfaceManager.StateRoot.AddChild(_control);
 
@@ -60,7 +69,7 @@ namespace Content.Client.Launcher
             CurrentPage = Page.Connecting;
         }
 
-        public override void Shutdown()
+        protected override void Shutdown()
         {
             _control?.Dispose();
 
@@ -70,8 +79,15 @@ namespace Content.Client.Launcher
 
         private void OnConnectFailed(object? _, NetConnectFailArgs args)
         {
+            if (args.RedialFlag)
+            {
+                // We've just *attempted* to connect and we've been told we need to redial, so do it.
+                // Result deliberately discarded.
+                Redial();
+            }
             ConnectFailReason = args.Reason;
             CurrentPage = Page.ConnectFailed;
+            ConnectFailed?.Invoke(args);
         }
 
         private void OnConnectStateChanged(ClientConnectionState state)
@@ -86,6 +102,27 @@ namespace Content.Client.Launcher
                 _baseClient.ConnectToServer(_gameController.LaunchState.ConnectEndpoint);
                 CurrentPage = Page.Connecting;
             }
+        }
+
+        public bool Redial()
+        {
+            try
+            {
+                if (_gameController.LaunchState.Ss14Address != null)
+                {
+                    _gameController.Redial(_gameController.LaunchState.Ss14Address);
+                    return true;
+                }
+                else
+                {
+                    Logger.InfoS("launcher-ui", $"Redial not possible, no Ss14Address");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorS("launcher-ui", $"Redial exception: {ex}");
+            }
+            return false;
         }
 
         public void Exit()

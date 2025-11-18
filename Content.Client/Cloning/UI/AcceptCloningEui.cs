@@ -1,6 +1,7 @@
 ﻿using Content.Client.Eui;
 using Content.Shared.Cloning;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
 
 namespace Content.Client.Cloning.UI
 {
@@ -19,6 +20,8 @@ namespace Content.Client.Cloning.UI
                 _window.Close();
             };
 
+            _window.OnClose += () => SendMessage(new AcceptCloningChoiceMessage(AcceptCloningUiButton.Deny));
+
             _window.AcceptButton.OnPressed += _ =>
             {
                 SendMessage(new AcceptCloningChoiceMessage(AcceptCloningUiButton.Accept));
@@ -28,6 +31,7 @@ namespace Content.Client.Cloning.UI
 
         public override void Opened()
         {
+            IoCManager.Resolve<IClyde>().RequestWindowAttention();
             _window.OpenCentered();
         }
 

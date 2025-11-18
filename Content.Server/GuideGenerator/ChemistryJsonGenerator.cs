@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -6,8 +5,9 @@ using System.Text.Json.Serialization;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
+using Content.Shared.EntityConditions;
+using Content.Shared.EntityEffects;
 using Content.Shared.FixedPoint;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GuideGenerator;
@@ -42,8 +42,8 @@ public sealed class ChemistryJsonGenerator
             WriteIndented = true,
             Converters =
             {
-                new UniversalJsonConverter<ReagentEffect>(),
-                new UniversalJsonConverter<ReagentEffectCondition>(),
+                new UniversalJsonConverter<EntityEffect>(),
+                new UniversalJsonConverter<EntityCondition>(),
                 new UniversalJsonConverter<ReagentEffectsEntry>(),
                 new UniversalJsonConverter<DamageSpecifier>(),
                 new FixedPointJsonConverter()

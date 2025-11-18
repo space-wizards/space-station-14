@@ -1,0 +1,59 @@
+- type: entity
+  name: random altar spawner
+  id: AltarSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Furniture/Altars/Gods/nanotrasen.rsi
+          state: nanotrasen
+    - type: RandomSpawner
+      prototypes:
+        - AltarNanotrasen
+        - AltarChaos
+        - AltarDruid
+        - AltarToolbox
+        - AltarSpaceChristian
+        - AltarSatana
+        - AltarTechnology
+      offset: 0.0
+
+- type: entity
+  name: random convert-altar spawner
+  id: ConvertAltarSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Furniture/Altars/Gods/convertaltar.rsi
+          state: convertaltar
+    - type: RandomSpawner
+      prototypes:
+        - AltarConvert
+        - AltarConvertFestival
+        - AltarConvertMaint
+        - AltarConvertBlue
+        - AltarConvertBurden
+        - AltarConvertOrange
+        - AltarConvertRed
+        - AltarConvertWhite
+        - AltarConvertYellow
+      offset: 0.0
+
+- type: entity
+  name: random cult-altar spawner
+  id: CultAltarSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Furniture/Altars/Cults/fangs.rsi
+          state: full
+    - type: RandomSpawner
+      prototypes:
+        - AltarHeaven
+        - AltarFangs
+      offset: 0.0

@@ -1,0 +1,113 @@
+- type: entity
+  id: BaseTarget
+  parent: BaseStructureDynamic
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_stake
+    noRot: true
+  - type: Repairable
+  - type: DamagePopup
+    allowTypeChange: true
+    damagePopupType: Combined
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 200
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: InteractionOutline
+  - type: Physics
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel:
+            min: 5
+            max: 5
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: human target
+  id: TargetHuman
+  parent: BaseTarget
+  description: A shooting target. This one is a human.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_h
+
+- type: entity
+  name: syndicate target
+  id: TargetSyndicate
+  parent: BaseTarget
+  description: A shooting target. This one is a syndicate agent.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_s
+
+- type: entity
+  name: clown target
+  id: TargetClown
+  parent: BaseTarget
+  description: A shooting target. This one is a clown.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_c
+
+# put it on a salvage or something
+- type: entity
+  name: strange target
+  id: TargetStrange
+  parent: BaseTarget
+  description: A shooting target. You aren't quite sure what this one is, but it seems to be extra robust.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Security/target.rsi
+    state: target_f
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 4000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 2000
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel:
+            min: 10
+            max: 10
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

@@ -1,0 +1,37 @@
+<Control xmlns="https://spacestation14.io">
+    <!-- Primary container -->
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+        <!-- Marking lists -->
+        <BoxContainer Orientation="Horizontal" SeparationOverride="5" HorizontalExpand="True">
+            <!-- Unused markings -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Text="{Loc 'markings-unused'}" HorizontalAlignment="Stretch" HorizontalExpand="True" />
+                    <Label Name="CMarkingPoints" Text="uwu" HorizontalAlignment="Right" />
+                </BoxContainer>
+
+                <OptionButton Name="CMarkingCategoryButton" StyleClasses="OpenLeft" />
+                <LineEdit Name="CMarkingSearch" PlaceHolder="{Loc 'markings-search'}" />
+
+                <ItemList Name="CMarkingsUnused" VerticalExpand="True" MinSize="300 250" />
+                <Button Name="CMarkingAdd" Text="{Loc 'markings-add'}" StyleClasses="OpenRight" />
+            </BoxContainer>
+
+            <!-- Used markings -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <Label Text="{Loc 'markings-used'}" />
+
+                <ItemList Name="CMarkingsUsed" VerticalExpand="True" MinSize="300 250" />
+
+                <BoxContainer Orientation="Horizontal">
+                    <Button Name="CMarkingRankUp" Text="{Loc 'markings-rank-up'}" StyleClasses="OpenBoth" HorizontalExpand="True" />
+                    <Button Name="CMarkingRankDown" Text="{Loc 'markings-rank-down'}" StyleClasses="OpenBoth" HorizontalExpand="True" />
+                </BoxContainer>
+                <Button Name="CMarkingRemove" Text="{Loc 'markings-remove'}" StyleClasses="OpenRight" />
+            </BoxContainer>
+        </BoxContainer>
+
+        <!-- Colors -->
+        <BoxContainer Name="CMarkingColors" Orientation="Vertical" Visible="False" />
+    </BoxContainer>
+</Control>

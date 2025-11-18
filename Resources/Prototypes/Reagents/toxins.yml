@@ -1,10 +1,12 @@
-﻿- type: reagent
+- type: reagent
   id: Toxin
-  name: toxin
+  name: reagent-name-toxin
   group: Toxins
-  desc: A Toxic chemical.
+  desc: reagent-desc-toxin
+  flavor: bitter
   color: "#cf3600"
-  physicalDesc: opaque
+  physicalDesc: reagent-physical-desc-opaque
+  contrabandSeverity: Minor
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -16,14 +18,118 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 4
+
+- type: reagent
+  id: CarpoToxin
+  name: reagent-name-carpotoxin
+  group: Toxins
+  desc: reagent-desc-carpotoxin
+  flavor: bitter
+  color: "#e2a38c"
+  physicalDesc: reagent-physical-desc-exotic-smelling
+  allowedDepartments:
+  - Medical
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustHealth
+    amount: -5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+      - !type:PopupMessage
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-burning-insides" ]
+        probability: 0.33
+
+- type: reagent
+  id: ChloralHydrate
+  name: reagent-name-chloral-hydrate
+  group: Toxins
+  desc: reagent-desc-chloral-hydrate
+  flavor: bitter
+  color: "#000067"
+  physicalDesc: reagent-physical-desc-nondescript
+  allowedDepartments:
+  - Medical
+  allowedJobs:
+  - Zookeeper
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Emote
+        emote: Yawn
+        showInChat: true
+        probability: 0.1
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 4
+        type: Update
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: ChloralHydrate
+          min: 20
+        damage:
+          types:
+            Poison: 1.5
+
+- type: reagent
+  id: GastroToxin
+  name: reagent-name-gastrotoxin
+  group: Toxins
+  desc: reagent-desc-gastrotoxin
+  flavor: bitter
+  color: "#acc91a"
+  physicalDesc: reagent-physical-desc-putrid
+  metabolisms:
+    Poison:
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 2
+        - !type:Vomit
+          conditions:
+          - !type:ReagentCondition
+            reagent: GastroToxin
+            min: 2
+          probability: 0.2
+
+- type: reagent
+  id: Mold
+  name: reagent-name-mold
+  group: Toxins
+  desc: reagent-desc-mold
+  flavor: bitter
+  color: "#8a9a5b"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-fuzzy
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
 
 - type: reagent
   id: PolytrinicAcid
-  name: polytrinic acid
+  name: reagent-name-polytrinic-acid
   group: Toxins
-  desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-polytrinic-acid
+  physicalDesc: reagent-physical-desc-strong-smelling
+  contrabandSeverity: Major
+  flavor: acid
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
@@ -39,31 +145,58 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.5
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.3
   metabolisms:
     Poison:
+      metabolismRate : 3.00 # High damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Caustic: 2
+          types:
+            Caustic: 11.0
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.3
+
+- type: reagent
+  id: FerrochromicAcid
+  name: reagent-name-ferrochromic-acid
+  group: Toxins
+  desc: reagent-desc-ferrochromic-acid
+  flavor: sour
+  color: "#48b3b8"
+  physicalDesc: reagent-physical-desc-ferrous
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: -1.5
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Heat: 2.5
+            Caustic: 1
 
 - type: reagent
   id: FluorosulfuricAcid
-  name: fluorosulfuric acid
+  name: reagent-name-fluorosulfuric-acid
   group: Toxins
-  desc: An extremely corrosive chemical substance.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-fluorosulfuric-acid
+  physicalDesc: reagent-physical-desc-strong-smelling
+  contrabandSeverity: Minor
+  flavor: acid
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87
@@ -72,32 +205,41 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.3
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.2
   metabolisms:
     Poison:
+      metabolismRate: 3.00 # High damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Caustic: 2
+          types:
+            Caustic: 8
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.25
 
 - type: reagent
   id: SulfuricAcid
-  name: sulfuric acid
+  name: reagent-name-sulfuric-acid
   group: Toxins
-  desc: A highly corrosive, oily, colorless liquid.
-  physicalDesc: oily
+  desc: reagent-desc-sulfuric-acid
+  physicalDesc: reagent-physical-desc-oily
+  allowedJobs:
+  - Chemist
+  flavor: acid
   color: "#BF8C00"
+  recognizable: true
   boilingPoint: 337.0
   meltingPoint: 10.31
   plantMetabolism:
@@ -112,31 +254,40 @@
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.1
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.1
   metabolisms:
     Poison:
+      metabolismRate: 3.00 # Okay damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Caustic: 5
       - !type:PopupMessage
         type: Local
+        visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
 
 - type: reagent
   id: UnstableMutagen
-  name: unstable mutagen
+  name: reagent-name-unstable-mutagen
   group: Toxins
-  desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
-  physicalDesc: glowing
+  desc: reagent-desc-unstable-mutagen
+  physicalDesc: reagent-physical-desc-glowing
+  allowedJobs:
+  - Chemist
+  - Botanist
+  flavor: bitter
   color: "#00ff5f"
   boilingPoint: 340282300000000000000000000000000000000 # Ethidium bromide, which doesn't boil.
   meltingPoint: 261.0
@@ -153,10 +304,11 @@
 
 - type: reagent
   id: HeartbreakerToxin
-  name: heartbreaker toxin
+  name: reagent-name-heartbreaker-toxin
   group: Toxins
-  desc: A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-heartbreaker-toxin
+  physicalDesc: reagent-physical-desc-strong-smelling
+  contrabandSeverity: Major
   color: "#5f959c"
   metabolisms:
     Poison:
@@ -164,17 +316,18 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: 4
+            Asphyxiation: 5
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
 
 - type: reagent
   id: Lexorin
-  name: lexorin
+  name: reagent-name-lexorin
   group: Toxins
-  desc: Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
-  physicalDesc: pungent
+  desc: reagent-desc-lexorin
+  physicalDesc: reagent-physical-desc-pungent
+  contrabandSeverity: Syndicate
   color: "#6b0007"
   metabolisms:
     Poison:
@@ -182,26 +335,34 @@
       - !type:HealthChange
         damage:
           groups:
-            Airloss: 7
+            Airloss: 10
 
 - type: reagent
   id: MindbreakerToxin
-  name: mindbreaker toxin
+  name: reagent-name-mindbreaker-toxin
   group: Toxins
-  desc: A potent hallucinogenic compound that is illegal under space law. Formerly known as LSD.
-  physicalDesc: opaque
+  desc: reagent-desc-mindbreaker-toxin
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: bitter
   color: "#77b58e"
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
-  # TODO hallucinations
+  metabolisms:
+    Poison:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 10
+  # TODO: PROPER hallucinations
 
 - type: reagent
   id: Histamine
-  name: histamine
+  name: reagent-name-histamine
   group: Toxins
-  desc: Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal.
-  physicalDesc: abrasive
+  desc: reagent-desc-histamine
+  physicalDesc: reagent-physical-desc-abrasive
   color: "#FA6464"
   metabolisms:
     Poison:
@@ -214,67 +375,79 @@
       # todo: cough, sneeze
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
-          min: 30
+        - !type:ReagentCondition
+          reagent: Histamine
+          min: 45
         damage:
           groups:
             Brute: 2
-            Toxin: 2
             Airloss: 2
+          types:
+            Poison: 2
       - !type:PopupMessage
         type: Local
         messages: [ "histamine-effect-light-itchiness" ]
         probability: 0.1
       - !type:PopupMessage
         conditions:
-        - !type:ReagentThreshold
-          min: 30
+        - !type:ReagentCondition
+          reagent: Histamine
+          min: 45
         type: Local
+        visualType: Medium
         messages: [ "histamine-effect-heavy-itchiness" ]
         probability: 0.2
 
 - type: reagent
   id: Theobromine
-  name: theobromine
+  name: reagent-name-theobromine
   group: Toxins
-  desc: Theobromine is a bitter alkaloid of the cacao plant found in chocolate, and some other foods.
-  physicalDesc: grainy
+  desc: reagent-desc-theobromine
+  physicalDesc: reagent-physical-desc-grainy
   color: "#f5f5f5"
   meltingPoint: 351
   boilingPoint: 554 # I'm not a chemist, but it boils at 295, lower than melting point, idk how it works so I gave it higher value
   metabolisms:
     Poison:
+      metabolismRate: 0.05
       effects:
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
-          min: 1
-        - !type:OrganType
-          type: Animal # Applying damage to the mobs with lower metabolism capabilities
+        - !type:MetabolizerTypeCondition
+          type: [Animal] # Applying damage to the mobs with lower metabolism capabilities
         damage:
           types:
-            Poison: 4
+            Poison: 0.4
+      - !type:Vomit
+        probability: 0.04 #Scaled for time, not metabolismrate.
+        conditions:
+          - !type:MetabolizerTypeCondition
+            type: [Animal]
 
 - type: reagent
   id: Amatoxin
-  name: amatoxin
+  name: reagent-name-amatoxin
   group: Toxins
-  desc: A potent toxin found in some mushrooms.
-  physicalDesc: nondescript
+  desc: reagent-desc-amatoxin
+  physicalDesc: reagent-physical-desc-nondescript
+  contrabandSeverity: Major
   color: "#D6CE7B"
   metabolisms:
     Poison:
+      metabolismRate: 0.2
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 6
+            Poison: 3
 
 - type: reagent
   id: VentCrud
-  name: vent crud
-  desc: A jet black substance found in poorly maintained ventilation systems.
-  physicalDesc: sticky
+  name: reagent-name-vent-crud
+  group: Toxins
+  desc: reagent-desc-vent-crud
+  physicalDesc: reagent-physical-desc-sticky
+  flavor: bitter
   color: "#000000"
   metabolisms:
     Poison:
@@ -283,6 +456,298 @@
           damage:
             types:
               Poison: 2
-        - !type:ChemCauseDisease ##Since this mostly just comes from the event you won't ingest that much
-          causeChance: 0.6
-          disease: VentCough
+
+- type: reagent
+  id: Romerol
+  name: reagent-name-romerol
+  group: Toxins
+  desc: reagent-desc-romerol
+  physicalDesc: reagent-physical-desc-necrotic
+  contrabandSeverity: Syndicate
+  flavor: bitter
+  color: "#7e916e"
+  worksOnTheDead: true
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:CauseZombieInfection
+          conditions:
+            - !type:ReagentCondition
+              reagent: Romerol
+              min: 5
+
+- type: reagent
+  id: UncookedAnimalProteins
+  name: reagent-name-uncooked-animal-proteins
+  group: Foods
+  desc: reagent-desc-uncooked-animal-proteins
+  physicalDesc: reagent-physical-desc-clumpy
+  flavor: bitter
+  color: "#FFFFE5"
+  metabolisms:
+    Food:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal, Vox ]
+          inverted: true
+        type: Local
+        visualType: MediumCaution
+        messages: [ "generic-reagent-effect-sick" ]
+        probability: 0.5
+      - !type:Vomit
+        probability: 0.1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal, Vox ]
+          inverted: true
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal, Vox ]
+          inverted: true
+        damage:
+          types:
+            Poison: 1
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Animal ]
+        reagent: Protein
+        amount: 0.5
+      - !type:AdjustReagent
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Vox ]
+        reagent: Protein
+        amount: 0.25
+
+- type: reagent
+  id: Allicin
+  name: reagent-name-allicin
+  group: Foods
+  desc: reagent-desc-allicin
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Allicin
+          min: 1
+        - !type:MetabolizerTypeCondition
+          type: [Animal]
+        damage:
+          types:
+            Poison: 0.06
+
+- type: reagent
+  id: Pax
+  name: reagent-name-pax
+  group: Narcotics
+  desc: reagent-desc-pax
+  physicalDesc: reagent-physical-desc-soothing
+  allowedDepartments:
+  - Security
+  - Medical
+  allowedJobs:
+  - Zookeeper
+  color: "#AAAAAA"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:GenericStatusEffect
+        key: Pacified
+        component: Pacified
+        time: 4
+
+- type: reagent
+  id: Honk
+  name: reagent-name-honk
+  group: Toxins
+  desc: reagent-desc-honk
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:Emote
+        emote: Honk
+        showInChat: true
+        showInGuidebook: true
+        force: true
+        probability: 0.2
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Honk
+          min: 1
+        - !type:MetabolizerTypeCondition
+          type: [ Animal ]
+        damage:
+          types:
+            Poison: 0.06
+
+
+- type: reagent
+  id: Lead
+  name: reagent-name-lead
+  group: Toxins
+  desc: reagent-desc-lead
+  physicalDesc: reagent-physical-desc-metallic
+  contrabandSeverity: Major
+  color: "#5C6274"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.03 # Effectively once every 30 seconds.
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.6 # Makes it 20 damage per unit.
+
+- type: reagent
+  id: Bungotoxin
+  name: reagent-name-bungotoxin
+  group: Toxins
+  desc: reagent-desc-bungotoxin
+  physicalDesc: reagent-physical-desc-nondescript
+  contrabandSeverity: Major
+  color: "#EBFF8E"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.8
+
+- type: reagent
+  id: Vestine
+  name: reagent-name-vestine
+  group: Toxins
+  desc: reagent-desc-vestine
+  physicalDesc: reagent-physical-desc-shiny
+  contrabandSeverity: Syndicate
+  flavor: medicine
+  color: "#435166"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Jitter
+        conditions:
+        - !type:ReagentCondition
+          reagent: Vestine
+          min: 5
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 0.8
+        sprintSpeedModifier: 0.8
+      - !type:HealthChange
+        damage:
+          groups:
+            Airloss: 2
+
+- type: reagent
+  id: Tazinide
+  name: reagent-name-tazinide
+  group: Toxins
+  desc: reagent-desc-tazinide
+  physicalDesc: reagent-physical-desc-metallic
+  contrabandSeverity: Syndicate
+  flavor: shocking
+  color: "#FDD023"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Electrocute
+        probability: 0.8
+
+- type: reagent
+  id: Lipolicide
+  name: reagent-name-lipolicide
+  group: Toxins
+  desc: reagent-desc-lipolicide
+  physicalDesc: reagent-physical-desc-strong-smelling
+  allowedDepartments:
+  - Medical
+  flavor: mothballs #why does weightloss juice taste like mothballs
+  color: "#F0FFF0"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:HungerCondition
+          max: 50
+        damage:
+          types:
+            Poison: 2
+      - !type:SatiateHunger
+        factor: -6
+
+# inspired by the spider neurotoxin GsMtx-4
+# poisons non-spiders and slows you down at high doses
+- type: reagent
+  id: Mechanotoxin
+  name: reagent-name-mechanotoxin
+  group: Toxins
+  desc: reagent-desc-mechanotoxin
+  flavor: sweet
+  color: "#00b408"
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Poison:
+      metabolismRate: 0.2 # Slower metabolism so it can build up over time for slowdown
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Arachnid]
+          inverted: true
+        damage:
+          types:
+            Poison: 1.6
+      - !type:MovementSpeedModifier
+        conditions:
+        - !type:ReagentCondition
+          reagent: Mechanotoxin
+          min: 2
+        - !type:MetabolizerTypeCondition
+          type: [Arachnid]
+          inverted: true
+        walkSpeedModifier: 0.8
+        sprintSpeedModifier: 0.8
+      - !type:MovementSpeedModifier
+        conditions:
+        - !type:ReagentCondition
+          reagent: Mechanotoxin
+          min: 4
+        - !type:MetabolizerTypeCondition
+          type: [Arachnid]
+          inverted: true
+        walkSpeedModifier: 0.4
+        sprintSpeedModifier: 0.4
+
+- type: reagent
+  id: ToxinTrash
+  name: reagent-name-toxintrash
+  group: Toxins
+  desc: reagent-desc-toxintrash
+  flavor: trashy
+  physicalDesc: reagent-physical-desc-nondescript
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        factor: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Vox]

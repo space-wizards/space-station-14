@@ -1,8 +1,6 @@
-using Robust.Shared.GameObjects;
-
 namespace Content.Server.Guardian;
 
 [RegisterComponent]
-public sealed class CanHostGuardianComponent : Component
+public sealed partial class CanHostGuardianComponent : Component
 {
 }

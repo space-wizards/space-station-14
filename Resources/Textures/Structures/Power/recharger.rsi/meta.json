@@ -8,11 +8,11 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9ea3eccbe22e18d24653949067f3d7dd12194ea9/icons/obj/stationobjs.dmi",
     "states": [
         {
-            "name": "empty",
+            "name": "empty"
 
         },
         {
-            "name": "full",
+            "name": "full"
 
         },
         {

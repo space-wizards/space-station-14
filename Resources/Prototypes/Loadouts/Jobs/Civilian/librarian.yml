@@ -1,0 +1,20 @@
+# Jumpsuit
+- type: loadout
+  id: LibrarianJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLibrarian
+
+- type: loadout
+  id: LibrarianJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtLibrarian
+
+- type: loadout
+  id: CuratorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCurator
+
+- type: loadout
+  id: CuratorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCurator

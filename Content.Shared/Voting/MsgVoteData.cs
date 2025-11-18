@@ -1,6 +1,6 @@
-﻿using System;
 using Lidgren.Network;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Voting
 {
@@ -17,8 +17,10 @@ namespace Content.Shared.Voting
         public (ushort votes, string name)[] Options = default!;
         public bool IsYourVoteDirty;
         public byte? YourVote;
+        public bool DisplayVotes;
+        public int TargetEntity;
 
-        public override void ReadFromBuffer(NetIncomingMessage buffer)
+        public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
         {
             VoteId = buffer.ReadVariableInt32();
             VoteActive = buffer.ReadBoolean();
@@ -31,6 +33,8 @@ namespace Content.Shared.Voting
             VoteInitiator = buffer.ReadString();
             StartTime = TimeSpan.FromTicks(buffer.ReadInt64());
             EndTime = TimeSpan.FromTicks(buffer.ReadInt64());
+            DisplayVotes = buffer.ReadBoolean();
+            TargetEntity = buffer.ReadVariableInt32();
 
             Options = new (ushort votes, string name)[buffer.ReadByte()];
             for (var i = 0; i < Options.Length; i++)
@@ -45,7 +49,7 @@ namespace Content.Shared.Voting
             }
         }
 
-        public override void WriteToBuffer(NetOutgoingMessage buffer)
+        public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
         {
             buffer.WriteVariableInt32(VoteId);
             buffer.Write(VoteActive);
@@ -58,6 +62,8 @@ namespace Content.Shared.Voting
             buffer.Write(VoteInitiator);
             buffer.Write(StartTime.Ticks);
             buffer.Write(EndTime.Ticks);
+            buffer.Write(DisplayVotes);
+            buffer.WriteVariableInt32(TargetEntity);
 
             buffer.Write((byte) Options.Length);
             foreach (var (votes, name) in Options)

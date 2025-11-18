@@ -6,13 +6,11 @@
   abstract: true
   description: Goes great with robust coffee.
   components:
-  - type: Food
   - type: Tag
     tags:
     - Donut
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -22,7 +20,17 @@
           Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
-    size: 1
+    size: Tiny
+
+- type: entity
+  abstract: true
+  parent: FoodDonutBase
+  id: FoodDonutFruitBase
+  components:
+  - type: Tag
+    tags:
+    - Donut
+    - Fruit
 # Tastes like donut.
 
 # The sprinkles are now an overlay, so you can put them on any donut! If we really
@@ -39,6 +47,9 @@
   parent: FoodDonutBase
   id: FoodDonutPlain
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
   - type: Sprite
     state: plain
 
@@ -47,6 +58,9 @@
   parent: FoodDonutBase
   id: FoodDonutJellyPlain
   components:
+  - type: FlavorProfile
+    flavors:
+      - jelly
   - type: Sprite
     state: jelly-plain
   - type: SolutionContainerManager
@@ -66,10 +80,13 @@
   parent: FoodDonutBase
   id: FoodDonutHomer
   components:
+  - type: FlavorProfile
+    flavors:
+      - pink
   - type: Sprite
     state: homer
   - type: Item
-    HeldPrefix: pink
+    heldPrefix: pink
 
 - type: entity
   name: chaos donut
@@ -77,6 +94,12 @@
   id: FoodDonutChaos
   description: Like life, it never quite tastes the same.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - funny
+      - magical
+      - tingly
   - type: Sprite
     state: chaos
 # Tastes like donut, chaos.
@@ -87,8 +110,15 @@
   id: FoodDonutMeat
   description: Tastes as gross as it looks.
   components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
   - type: Sprite
     state: meat
+  - type: Tag
+    tags:
+    - Meat
+    - Donut
 # Tastes like meat.
 
 - type: entity
@@ -97,10 +127,13 @@
   id: FoodDonutPink
   description: Goes great with a soy latte.
   components:
+  - type: FlavorProfile
+    flavors:
+      - pink
   - type: Sprite
     state: pink
   - type: Item
-    HeldPrefix: pink
+    heldPrefix: pink
 
 - type: entity
   name: spaceman's donut
@@ -118,6 +151,10 @@
   id: FoodDonutApple
   description: Goes great with a shot of cinnamon schnapps.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - apple
   - type: Sprite
     state: green
 # Tastes like donut, green apples.
@@ -138,6 +175,9 @@
   id: FoodDonutChocolate
   description: Goes great with a glass of warm milk.
   components:
+  - type: FlavorProfile
+    flavors:
+      - chocolate
   - type: Sprite
     state: choc
   - type: SolutionContainerManager
@@ -152,14 +192,18 @@
 # Tastes like donut, bitterness.
 
 - type: entity
-  name: blumpkin donut
+  name: blue pumpkin donut
   parent: FoodDonutBase
-  id: FoodDonutBlumpkin
-  description: Goes great with a mug of soothing drunken blumpkin.
+  id: FoodDonutBluePumpkin
+  description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - bluepumpkin
   - type: Sprite
     state: blue
-# Tastes like donut, blumpkin.
+# Tastes like donut, blue pumpkin.
 
 - type: entity
   name: bungo donut
@@ -167,6 +211,10 @@
   id: FoodDonutBungo
   description: Goes great with a mason jar of hippie's delight.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - bungo
   - type: Sprite
     state: yellow
 # Tastes like donut, tropical sweetness.
@@ -177,6 +225,9 @@
   id: FoodDonut
   description: The L-theanine in this donut is relaxing, yet not euphoric. Goes great with a cup of tea.
   components:
+  - type: FlavorProfile
+    flavors:
+      - tea
   - type: Sprite
     state: olive
 # Tastes like donut, matcha.
@@ -202,7 +253,7 @@
   - type: Sprite
     state: jelly-homer
   - type: Item
-    HeldPrefix: pink
+    heldPrefix: pink
   - type: SolutionContainerManager
     solutions:
       food:
@@ -222,7 +273,7 @@
   - type: Sprite
     state: jelly-pink
   - type: Item
-    HeldPrefix: pink
+    heldPrefix: pink
   - type: SolutionContainerManager
     solutions:
       food:
@@ -254,7 +305,7 @@
 
 - type: entity
   name: apple jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellyApple
   description: Goes great with a shot of cinnamon schnapps.
   components:
@@ -269,6 +320,7 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
+
 # Tastes like jelly-donut, green apples.
 
 - type: entity
@@ -312,11 +364,15 @@
 # Tastes like jelly-donut, bitterness.
 
 - type: entity
-  name: blumpkin jelly-donut
-  parent: FoodDonutBase
-  id: FoodDonutJellyBlumpkin
-  description: Goes great with a mug of soothing drunken blumpkin.
+  name: blue pumpkin jelly-donut
+  parent: FoodDonutFruitBase
+  id: FoodDonutJellyBluePumpkin
+  description: Goes great with a mug of soothing drunken blue pumpkin.
   components:
+  - type: FlavorProfile
+    flavors:
+      - sweet
+      - bluepumpkin
   - type: Sprite
     state: jelly-blue
   - type: SolutionContainerManager
@@ -328,11 +384,11 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 1
-# Tastes like jelly-donut, blumpkin.
+# Tastes like jelly-donut, blue pumpkin.
 
 - type: entity
   name: bungo jelly-donut
-  parent: FoodDonutBase
+  parent: FoodDonutFruitBase
   id: FoodDonutJellyBungo
   description: Goes great with a mason jar of hippie's delight.
   components:
@@ -388,10 +444,10 @@
 # Tastes like jelly-donut, fizzy tutti frutti.
 
 - type: entity
-  name: slugcat jelly-donut
+  name: scurret jelly-donut
   parent: FoodDonutBase
-  id: FoodDonutJellySlugcat
-  description: No holes in this donut incase a suspicious looking pole shows up.
+  id: FoodDonutJellyScurret
+  description: No holes in this donut in case a suspicious looking pole shows up.
   components:
   - type: Sprite
     state: jelly-slug
@@ -405,3 +461,17 @@
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like jelly-donut, fizzy tutti frutti.
+
+# Poison donut
+- type: entity
+  parent: FoodDonutPink
+  id: FoodDonutPoison
+  suffix: Poison
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 10

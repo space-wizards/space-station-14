@@ -1,90 +1,28 @@
-﻿using Content.Shared.Body.Components;
-using Robust.Shared.GameObjects;
+namespace Content.Shared.Body.Events;
 
-namespace Content.Shared.Body.Events
-{
-    // All of these events are raised on a mechanism entity when added/removed to a body in different
-    // ways.
+// All of these events are raised on a mechanism entity when added/removed to a body in different
+// ways.
 
-    /// <summary>
-    ///     Raised on a mechanism when it is added to a body.
-    /// </summary>
-    public sealed class AddedToBodyEvent : EntityEventArgs
-    {
-        public SharedBodyComponent Body;
+/// <summary>
+/// Raised on a mechanism when it is added to a body part.
+/// </summary>
+[ByRefEvent]
+public readonly record struct OrganAddedEvent(EntityUid Part);
 
-        public AddedToBodyEvent(SharedBodyComponent body)
-        {
-            Body = body;
-        }
-    }
+/// <summary>
+/// Raised on a mechanism when it is added to a body part within a body.
+/// </summary>
+[ByRefEvent]
+public readonly record struct OrganAddedToBodyEvent(EntityUid Body, EntityUid Part);
 
-    /// <summary>
-    ///     Raised on a mechanism when it is added to a body part.
-    /// </summary>
-    public sealed class AddedToPartEvent : EntityEventArgs
-    {
-        public SharedBodyPartComponent Part;
+/// <summary>
+/// Raised on a mechanism when it is removed from a body part.
+/// </summary>
+[ByRefEvent]
+public readonly record struct OrganRemovedEvent(EntityUid OldPart);
 
-        public AddedToPartEvent(SharedBodyPartComponent part)
-        {
-            Part = part;
-        }
-    }
-
-    /// <summary>
-    ///     Raised on a mechanism when it is added to a body part within a body.
-    /// </summary>
-    public sealed class AddedToPartInBodyEvent : EntityEventArgs
-    {
-        public SharedBodyComponent Body;
-        public SharedBodyPartComponent Part;
-
-        public AddedToPartInBodyEvent(SharedBodyComponent body, SharedBodyPartComponent part)
-        {
-            Body = body;
-            Part = part;
-        }
-    }
-
-    /// <summary>
-    ///     Raised on a mechanism when it is removed from a body.
-    /// </summary>
-    public sealed class RemovedFromBodyEvent : EntityEventArgs
-    {
-        public SharedBodyComponent Old;
-
-        public RemovedFromBodyEvent(SharedBodyComponent old)
-        {
-            Old = old;
-        }
-    }
-
-    /// <summary>
-    ///     Raised on a mechanism when it is removed from a body part.
-    /// </summary>
-    public sealed class RemovedFromPartEvent : EntityEventArgs
-    {
-        public SharedBodyPartComponent Old;
-
-        public RemovedFromPartEvent(SharedBodyPartComponent old)
-        {
-            Old = old;
-        }
-    }
-
-    /// <summary>
-    ///     Raised on a mechanism when it is removed from a body part within a body.
-    /// </summary>
-    public sealed class RemovedFromPartInBodyEvent : EntityEventArgs
-    {
-        public SharedBodyComponent OldBody;
-        public SharedBodyPartComponent OldPart;
-
-        public RemovedFromPartInBodyEvent(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
-        {
-            OldBody = oldBody;
-            OldPart = oldPart;
-        }
-    }
-}
+/// <summary>
+/// Raised on a mechanism when it is removed from a body part within a body.
+/// </summary>
+[ByRefEvent]
+public readonly record struct OrganRemovedFromBodyEvent(EntityUid OldBody, EntityUid OldPart);

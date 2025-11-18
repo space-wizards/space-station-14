@@ -1,40 +1,95 @@
 ﻿- type: construction
-  name: metal rod
   id: MetalRod
   graph: MetalRod
   startNode: start
   targetNode: MetalRod
-  category: Materials
-  description: A sturdy metal rod that can be used for various purposes.
-  icon: Objects/Materials/parts.rsi/rods.png
+  category: construction-category-materials
   objectType: Item
 
 - type: construction
-  name: reinforced glass
   id: SheetRGlass
   graph: Glass
   startNode: start
   targetNode: SheetRGlass
-  category: Materials
-  icon: Objects/Materials/Sheets/glass.rsi/rglass.png
+  category: construction-category-materials
   objectType: Item
 
 - type: construction
-  name: plasma glass
+  id: SheetClockworkGlass
+  graph: Glass
+  startNode: start
+  targetNode: SheetClockworkGlass
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
   id: SheetPGlass
   graph: Glass
   startNode: start
   targetNode: SheetPGlass
-  category: Materials
-  icon: Objects/Materials/Sheets/glass.rsi/pglass.png
+  category: construction-category-materials
   objectType: Item
 
 - type: construction
-  name: reinforced plasma glass
   id: SheetRPGlass
   graph: Glass
   startNode: start
   targetNode: SheetRPGlass
-  category: Materials
-  icon: Objects/Materials/Sheets/glass.rsi/rpglass.png
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: SheetRPGlass0
+  graph: Glass
+  startNode: start
+  targetNode: SheetRPGlass0
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: SheetRPGlass1
+  graph: Glass
+  startNode: start
+  targetNode: SheetRPGlass1
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: MaterialDurathread
+  graph: Durathread
+  startNode: start
+  targetNode: MaterialDurathread
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: SheetUGlass
+  graph: Glass
+  startNode: start
+  targetNode: SheetUGlass
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: SheetRUGlass
+  graph: Glass
+  startNode: start
+  targetNode: SheetRUGlass
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: SheetRUGlass0
+  graph: Glass
+  startNode: start
+  targetNode: SheetRUGlass0
+  category: construction-category-materials
+  objectType: Item
+
+- type: construction
+  id: SheetRUGlass1
+  graph: Glass
+  startNode: start
+  targetNode: SheetRUGlass1
+  category: construction-category-materials
   objectType: Item

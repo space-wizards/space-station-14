@@ -1,63 +1,75 @@
-using Content.Server.Interaction.Components;
-using Content.Server.Sound.Components;
-using Content.Server.Throwing;
-using Content.Shared.Audio;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Throwing;
-using JetBrains.Annotations;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Player;
+using Content.Shared.Sound;
+using Content.Shared.Sound.Components;
+using Robust.Shared.Timing;
+using Robust.Shared.Network;
 
-namespace Content.Server.Sound
+namespace Content.Server.Sound;
+
+public sealed class EmitSoundSystem : SharedEmitSoundSystem
 {
-    /// <summary>
-    /// Will play a sound on various events if the affected entity has a component derived from BaseEmitSoundComponent
-    /// </summary>
-    [UsedImplicitly]
-    public sealed class EmitSoundSystem : EntitySystem
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
+
+    public override void Update(float frameTime)
     {
-        /// <inheritdoc />
-        public override void Initialize()
+        base.Update(frameTime);
+        var query = EntityQueryEnumerator<SpamEmitSoundComponent>();
+
+        while (query.MoveNext(out var uid, out var soundSpammer))
         {
-            base.Initialize();
-            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>(HandleEmitSoundOnLand);
-            SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>(HandleEmitSoundOnUseInHand);
-            SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>(HandleEmitSoundOnThrown);
-            SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
-        }
+            if (!soundSpammer.Enabled)
+                continue;
 
-        private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
-        {
-            TryEmitSound(component);
-        }
+            if (_timing.CurTime >= soundSpammer.NextSound)
+            {
+                if (soundSpammer.PopUp != null)
+                    Popup.PopupEntity(Loc.GetString(soundSpammer.PopUp), uid);
+                TryEmitSound(uid, soundSpammer, predict: false);
 
-        private void HandleEmitSoundOnUseInHand(EntityUid eUI, BaseEmitSoundComponent component, UseInHandEvent arg)
-        {
-            if (arg.Handled) return;
-
-            arg.Handled = true;
-            TryEmitSound(component);
-        }
-
-        private void HandleEmitSoundOnThrown(EntityUid eUI, BaseEmitSoundComponent component, ThrownEvent arg)
-        {
-            TryEmitSound(component);
-        }
-
-        private void HandleEmitSoundOnActivateInWorld(EntityUid eUI, BaseEmitSoundComponent component, ActivateInWorldEvent arg)
-        {
-            if (arg.Handled) return;
-
-            arg.Handled = true;
-            TryEmitSound(component);
-        }
-
-        private static void TryEmitSound(BaseEmitSoundComponent component)
-        {
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.Sound.GetSound(), component.Owner, AudioHelpers.WithVariation(component.PitchVariation).WithVolume(-2f));
+                SpamEmitSoundReset((uid, soundSpammer));
+            }
         }
     }
-}
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<SpamEmitSoundComponent, MapInitEvent>(HandleSpamEmitSoundMapInit);
+    }
+
+    private void HandleSpamEmitSoundMapInit(Entity<SpamEmitSoundComponent> entity, ref MapInitEvent args)
+    {
+        SpamEmitSoundReset(entity);
+
+        // Prewarm so multiple entities have more variation.
+        entity.Comp.NextSound -= Random.Next(entity.Comp.MaxInterval);
+        Dirty(entity);
+    }
+
+    private void SpamEmitSoundReset(Entity<SpamEmitSoundComponent> entity)
+    {
+        if (_net.IsClient)
+            return;
+
+        entity.Comp.NextSound = _timing.CurTime + ((entity.Comp.MinInterval < entity.Comp.MaxInterval)
+            ? Random.Next(entity.Comp.MinInterval, entity.Comp.MaxInterval)
+            : entity.Comp.MaxInterval);
+
+        Dirty(entity);
+    }
+
+    public override void SetEnabled(Entity<SpamEmitSoundComponent?> entity, bool enabled)
+    {
+        if (!Resolve(entity, ref entity.Comp, false))
+            return;
+
+        if (entity.Comp.Enabled == enabled)
+            return;
+
+        entity.Comp.Enabled = enabled;
+
+        if (enabled)
+            SpamEmitSoundReset((entity, entity.Comp));
+    }
+}

@@ -1,14 +1,18 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/da42afcbaeaa04e5ba288ade027c011efb3ef0ab, modified by Skarlet and Psychpsyo",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "caution"
+      "name": "icon"
+    },
+    {
+      "name": "equipped-OUTERCLOTHING",
+      "directions": 4
     },
     {
       "name": "inhand-left",

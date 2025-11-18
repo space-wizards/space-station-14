@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Graphics;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -20,6 +22,7 @@ namespace Content.Client.Viewport
     public sealed class ScalingViewport : Control, IViewportControl
     {
         [Dependency] private readonly IClyde _clyde = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
 
         // Internal viewport creation is deferred.
@@ -29,6 +32,7 @@ namespace Content.Client.Viewport
         private int _curRenderScale;
         private ScalingViewportStretchMode _stretchMode = ScalingViewportStretchMode.Bilinear;
         private ScalingViewportRenderScaleMode _renderScaleMode = ScalingViewportRenderScaleMode.Fixed;
+        private ScalingViewportIgnoreDimension _ignoreDimension = ScalingViewportIgnoreDimension.None;
         private int _fixedRenderScale = 1;
 
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
@@ -103,6 +107,17 @@ namespace Content.Client.Viewport
             }
         }
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ScalingViewportIgnoreDimension IgnoreDimension
+        {
+            get => _ignoreDimension;
+            set
+            {
+                _ignoreDimension = value;
+                InvalidateViewport();
+            }
+        }
+
         public ScalingViewport()
         {
             IoCManager.InjectDependencies(this);
@@ -129,14 +144,10 @@ namespace Content.Client.Viewport
             _inputManager.ViewportKeyEvent(this, args);
         }
 
-
-        protected override void FrameUpdate(FrameEventArgs args)
+        protected override void Draw(IRenderHandle handle)
         {
             EnsureViewportCreated();
-        }
 
-        protected override void Draw(DrawingHandleScreen handle)
-        {
             DebugTools.AssertNotNull(_viewport);
 
             _viewport!.Render();
@@ -159,7 +170,7 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
-            handle.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
+            handle.DrawingHandleScreen.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
         }
 
@@ -179,7 +190,19 @@ namespace Content.Client.Viewport
             if (FixedStretchSize == null)
             {
                 var (ratioX, ratioY) = ourSize / vpSize;
-                var ratio = Math.Min(ratioX, ratioY);
+                var ratio = 1f;
+                switch (_ignoreDimension)
+                {
+                    case ScalingViewportIgnoreDimension.None:
+                        ratio = Math.Min(ratioX, ratioY);
+                        break;
+                    case ScalingViewportIgnoreDimension.Vertical:
+                        ratio = ratioX;
+                        break;
+                    case ScalingViewportIgnoreDimension.Horizontal:
+                        ratio = ratioY;
+                        break;
+                }
 
                 var size = vpSize * ratio;
                 // Size
@@ -229,7 +252,7 @@ namespace Content.Client.Viewport
                     Filter = StretchMode == ScalingViewportStretchMode.Bilinear,
                 });
 
-            _viewport.RenderScale = (renderScale, renderScale);
+            _viewport.RenderScale = new Vector2(renderScale, renderScale);
 
             _viewport.Eye = _eye;
         }
@@ -254,9 +277,27 @@ namespace Content.Client.Viewport
 
             EnsureViewportCreated();
 
-            var matrix = Matrix3.Invert(LocalToScreenMatrix());
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            coords = Vector2.Transform(coords, matrix);
 
-            return _viewport!.LocalToWorld(matrix.Transform(coords));
+            return _viewport!.LocalToWorld(coords);
+        }
+
+        /// <inheritdoc/>
+        public MapCoordinates PixelToMap(Vector2 coords)
+        {
+            if (_eye == null)
+                return default;
+
+            EnsureViewportCreated();
+
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            coords = Vector2.Transform(coords, matrix);
+
+            var ev = new PixelToMapEvent(coords, this, _viewport!);
+            _entityManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
+
+            return _viewport!.LocalToWorld(ev.VisiblePosition);
         }
 
         public Vector2 WorldToScreen(Vector2 map)
@@ -268,26 +309,29 @@ namespace Content.Client.Viewport
 
             var vpLocal = _viewport!.WorldToLocal(map);
 
-            var matrix = LocalToScreenMatrix();
+            var matrix = GetLocalToScreenMatrix();
 
-            return matrix.Transform(vpLocal);
+            return Vector2.Transform(vpLocal, matrix);
         }
 
-        private Matrix3 LocalToScreenMatrix()
+        public Matrix3x2 GetWorldToScreenMatrix()
         {
-            DebugTools.AssertNotNull(_viewport);
+            EnsureViewportCreated();
+            return _viewport!.GetWorldToLocalMatrix() * GetLocalToScreenMatrix();
+        }
+
+        public Matrix3x2 GetLocalToScreenMatrix()
+        {
+            EnsureViewportCreated();
 
             var drawBox = GetDrawBox();
             var scaleFactor = drawBox.Size / (Vector2) _viewport!.Size;
 
-            if (scaleFactor == (0, 0))
+            if (scaleFactor.X == 0 || scaleFactor.Y == 0)
                 // Basically a nonsense scenario, at least make sure to return something that can be inverted.
-                return Matrix3.Identity;
+                return Matrix3x2.Identity;
 
-            var scale = Matrix3.CreateScale(scaleFactor);
-            var translate = Matrix3.CreateTranslation(GlobalPixelPosition + drawBox.TopLeft);
-
-            return scale * translate;
+            return Matrix3Helpers.CreateTransform(GlobalPixelPosition + drawBox.TopLeft, 0, scaleFactor);
         }
 
         private void EnsureViewportCreated()
@@ -336,5 +380,26 @@ namespace Content.Client.Viewport
         ///     Ceiling to the closest integer scale possible.
         /// </summary>
         CeilInt
+    }
+
+    /// <summary>
+    ///     If the viewport is allowed to freely scale, this determines which dimensions should be ignored while fitting the viewport
+    /// </summary>
+    public enum ScalingViewportIgnoreDimension
+    {
+        /// <summary>
+        ///     The viewport won't ignore any dimension.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        ///     The viewport will ignore the horizontal dimension, and will exclusively consider the vertical dimension for scaling.
+        /// </summary>
+        Horizontal,
+
+        /// <summary>
+        ///     The viewport will ignore the vertical dimension, and will exclusively consider the horizontal dimension for scaling.
+        /// </summary>
+        Vertical
     }
 }

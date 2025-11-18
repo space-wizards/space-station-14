@@ -1,101 +1,91 @@
-using System.Collections.Generic;
 using Content.Shared.Atmos.EntitySystems;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Content.Shared.Atmos.EntitySystems.SharedGasTileOverlaySystem;
 
 namespace Content.Shared.Atmos
 {
+    [Serializable, NetSerializable]
+    [Access(typeof(SharedGasTileOverlaySystem))]
     public sealed class GasOverlayChunk
     {
         /// <summary>
-        ///     Grid for this chunk
+        ///     The index of this chunk
         /// </summary>
-        public GridId GridIndices { get; }
+        public readonly Vector2i Index;
+        public readonly Vector2i Origin;
+
+        public GasOverlayData[] TileData = new GasOverlayData[ChunkSize * ChunkSize];
+
+        [NonSerialized]
+        public GameTick LastUpdate;
+
+        public GasOverlayChunk(Vector2i index)
+        {
+            Index = index;
+            Origin = Index * ChunkSize;
+        }
+
+        public GasOverlayChunk(GasOverlayChunk data)
+        {
+            Index = data.Index;
+            Origin = data.Origin;
+
+            // This does not clone the opacity array. However, this chunk cloning is only used by the client,
+            // which never modifies that directly. So this should be fine.
+            Array.Copy(data.TileData, TileData, data.TileData.Length);
+        }
 
         /// <summary>
-        ///     Origin of this chunk
+        /// Resolve a data index into <see cref="TileData"/> for the given grid index.
         /// </summary>
-        public Vector2i Vector2i { get; }
-
-        public SharedGasTileOverlaySystem.GasOverlayData[,] TileData = new SharedGasTileOverlaySystem.GasOverlayData[SharedGasTileOverlaySystem.ChunkSize, SharedGasTileOverlaySystem.ChunkSize];
-
-        public GameTick LastUpdate { get; private set; }
-
-        public GasOverlayChunk(GridId gridIndices, Vector2i vector2i)
+        public int GetDataIndex(Vector2i gridIndices)
         {
-            GridIndices = gridIndices;
-            Vector2i = vector2i;
+            DebugTools.Assert(InBounds(gridIndices));
+            return (gridIndices.X - Origin.X) + (gridIndices.Y - Origin.Y) * ChunkSize;
         }
 
-        public void Dirty(GameTick currentTick)
+        private bool InBounds(Vector2i gridIndices)
         {
-            LastUpdate = currentTick;
+            return gridIndices.X >= Origin.X &&
+                gridIndices.Y >= Origin.Y &&
+                gridIndices.X < Origin.X + ChunkSize &&
+                gridIndices.Y < Origin.Y + ChunkSize;
+        }
+    }
+
+    public struct GasChunkEnumerator
+    {
+        private readonly GasOverlayData[] _tileData;
+        private int _index = -1;
+
+        public int X = ChunkSize - 1;
+        public int Y = -1;
+
+        public GasChunkEnumerator(GasOverlayChunk chunk)
+        {
+            _tileData = chunk.TileData;
         }
 
-        /// <summary>
-        ///     Flags Dirty if the data is different.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="indices"></param>
-        public void Update(SharedGasTileOverlaySystem.GasOverlayData data, Vector2i indices)
+        public bool MoveNext(out GasOverlayData gas)
         {
-            DebugTools.Assert(InBounds(indices));
-            var (offsetX, offsetY) = (indices.X - Vector2i.X,
-                indices.Y - Vector2i.Y);
-
-            TileData[offsetX, offsetY] = data;
-        }
-
-        public void Update(SharedGasTileOverlaySystem.GasOverlayData data, byte x, byte y)
-        {
-            DebugTools.Assert(x < SharedGasTileOverlaySystem.ChunkSize && y < SharedGasTileOverlaySystem.ChunkSize);
-
-            TileData[x, y] = data;
-        }
-
-        public IEnumerable<SharedGasTileOverlaySystem.GasOverlayData> GetAllData()
-        {
-            for (var x = 0; x < SharedGasTileOverlaySystem.ChunkSize; x++)
+            while (++_index < _tileData.Length)
             {
-                for (var y = 0; y < SharedGasTileOverlaySystem.ChunkSize; y++)
+                X += 1;
+                if (X >= ChunkSize)
                 {
-                    yield return TileData[x, y];
+                    X = 0;
+                    Y += 1;
                 }
+
+                gas = _tileData[_index];
+                if (!gas.Equals(default))
+                    return true;
             }
-        }
 
-        public void GetData(List<(Vector2i, SharedGasTileOverlaySystem.GasOverlayData)> existingData, HashSet<Vector2i> indices)
-        {
-            foreach (var index in indices)
-            {
-                existingData.Add((index, GetData(index)));
-            }
-        }
-
-        public IEnumerable<Vector2i> GetAllIndices()
-        {
-            for (var x = 0; x < SharedGasTileOverlaySystem.ChunkSize; x++)
-            {
-                for (var y = 0; y < SharedGasTileOverlaySystem.ChunkSize; y++)
-                {
-                    yield return new Vector2i(Vector2i.X + x, Vector2i.Y + y);
-                }
-            }
-        }
-
-        public SharedGasTileOverlaySystem.GasOverlayData GetData(Vector2i indices)
-        {
-            DebugTools.Assert(InBounds(indices));
-            return TileData[indices.X - Vector2i.X, indices.Y - Vector2i.Y];
-        }
-
-        private bool InBounds(Vector2i indices)
-        {
-            if (indices.X < Vector2i.X || indices.Y < Vector2i.Y) return false;
-            if (indices.X >= Vector2i.X + SharedGasTileOverlaySystem.ChunkSize || indices.Y >= Vector2i.Y + SharedGasTileOverlaySystem.ChunkSize) return false;
-            return true;
+            gas = default;
+            return false;
         }
     }
 }

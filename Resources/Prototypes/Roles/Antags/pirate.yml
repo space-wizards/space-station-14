@@ -1,0 +1,25 @@
+- type: startingGear
+  id: PirateGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPirate
+    back: ClothingBackpackSatchelLeather
+    head: ClothingHeadBandBlack
+    shoes: ClothingShoesBootsLaceup
+    id: PiratePDA
+    belt: ClothingBeltUtility
+    pocket1: AppraisalTool
+
+- type: startingGear
+  id: PirateCaptainGear
+  parent: PirateGear
+  equipment:
+    head: ClothingHeadHatPirate
+    pocket2: EnergyCutlass
+    outerClothing: ClothingOuterCoatPirate
+
+- type: startingGear
+  id: PirateFirstmateGear
+  parent: PirateGear
+  equipment:
+    head: ClothingHeadHatPirateTricord
+    outerClothing: ClothingOuterCoatGentle

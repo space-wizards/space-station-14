@@ -1,15 +1,10 @@
 #chairs
 - type: construction
-  name: chair
   id: Chair
   graph: Seat
   startNode: start
   targetNode: chair
-  category: Furniture
-  description: You sit in this. Either by will or force.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: chair
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -17,16 +12,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: stool
   id: Stool
   graph: Seat
   startNode: start
   targetNode: stool
-  category: Furniture
-  description: You sit in this. Either by will or force.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: stool
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -34,16 +24,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: bar stool
   id: StoolBar
   graph: Seat
   startNode: start
   targetNode: stoolBar
-  category: Furniture
-  description: You sit in this. Either by will or force.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: bar
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -51,16 +36,23 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: office chair
+  id: ChairBrass
+  graph: Seat
+  startNode: start
+  targetNode: chairBrass
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   id: ChairOfficeLight
   graph: Seat
   startNode: start
   targetNode: chairOffice
-  category: Furniture
-  description: You sit in this. Either by will or force.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: office-white
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -68,16 +60,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: dark office chair
   id: ChairOfficeDark
   graph: Seat
   startNode: start
   targetNode: chairOfficeDark
-  category: Furniture
-  description: You sit in this. Either by will or force.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: office-dark
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -85,33 +72,23 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: comfy chair
   id: ChairComfy
   graph: Seat
   startNode: start
   targetNode: chairComfy
-  category: Furniture
-  description: It looks comfy.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: comfy
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-    
+
 - type: construction
-  name: pilots chair
   id: chairPilotSeat
   graph: Seat
   startNode: start
   targetNode: chairPilotSeat
-  category: Furniture
-  description: Fit for a captain.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: shuttle
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -119,16 +96,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: wooden chair
   id: ChairWood
   graph: Seat
   startNode: start
   targetNode: chairWood
-  category: Furniture
-  description: You sit in this. Either by will or force.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: wooden
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -136,16 +108,97 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: ritual chair
+  id: ChairMeat
+  graph: Seat
+  startNode: start
+  targetNode: chairMeat
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   id: ChairRitual
   graph: RitualSeat
   startNode: start
   targetNode: chairRitual
-  category: Furniture
-  description: A strangely carved chair.
-  icon:
-    sprite: Structures/Furniture/chairs.rsi
-    state: ritual
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairFolding
+  graph: Seat
+  startNode: start
+  targetNode: chairFolding
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChairSteelBench
+  graph: Seat
+  startNode: start
+  targetNode: chairSteelBench
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: StoolCard
+  graph: Seat
+  startNode: start
+  targetNode: stoolCard
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: ChairWoodBench
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodBench
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: RedComfBench
+  name: construction-recipe-red-comf-bench
+  graph: Seat
+  startNode: start
+  targetNode: redComfBench
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: BlueComfBench
+  name: construction-recipe-blue-comf-bench
+  graph: Seat
+  startNode: start
+  targetNode: blueComfBench
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -154,16 +207,11 @@
 
 #tables
 - type: construction
-  name: steel table
   id: Table
   graph: Table
   startNode: start
   targetNode: Table
-  category: Furniture
-  description: A square piece of metal standing on four metal legs.
-  icon:
-    sprite: Structures/Furniture/Tables/generic.rsi
-    state: full
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -171,16 +219,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: reinforced steel table
   id: TableReinforced
   graph: Table
   startNode: start
   targetNode: TableReinforced
-  category: Furniture
-  description: A square piece of metal standing on four metal legs. Extra robust.
-  icon:
-    sprite: Structures/Furniture/Tables/reinforced.rsi
-    state: full
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -188,16 +231,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: glass table
   id: TableGlass
   graph: Table
   startNode: start
   targetNode: TableGlass
-  category: Furniture
-  description: A square piece of glass, standing on four metal legs.
-  icon:
-    sprite: Structures/Furniture/Tables/glass.rsi
-    state: full
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -205,16 +243,23 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: reinforced glass table
+  id: TableCard
+  graph: Table
+  startNode: start
+  targetNode: TableCard
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   id: TableReinforcedGlass
   graph: Table
   startNode: start
   targetNode: TableReinforcedGlass
-  category: Furniture
-  description: A square piece of glass, standing on four metal legs. Extra robust.
-  icon:
-    sprite: Structures/Furniture/Tables/r_glass.rsi
-    state: full
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -222,16 +267,11 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: plasma glass table
   id: TablePlasmaGlass
   graph: Table
   startNode: start
   targetNode: TablePlasmaGlass
-  category: Furniture
-  description: A square piece of plasma glass, standing on four metal legs. Pretty!
-  icon:
-    sprite: Structures/Furniture/Tables/plasma.rsi
-    state: full
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -239,16 +279,23 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: wood table
+  id: TableBrass
+  graph: Table
+  startNode: start
+  targetNode: TableBrass
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   id: TableWood
   graph: Table
   startNode: start
   targetNode: TableWood
-  category: Furniture
-  description: Do not apply fire to this. Rumour says it burns easily.
-  icon:
-    sprite: Structures/Furniture/Tables/wood.rsi
-    state: full
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -256,16 +303,165 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: poker table
   id: TableCarpet
   graph: Table
   startNode: start
   targetNode: TableCarpet
-  category: Furniture
-  description: A square piece of wood standing on four legs covered by a cloth. (What did you expect?)
-  icon:
-    sprite: Structures/Furniture/Tables/carpet.rsi
-    state: full
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancyBlack
+  name: construction-recipe-table-fancy-black
+  graph: Table
+  startNode: start
+  targetNode: TableFancyBlack
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancyBlue
+  name: construction-recipe-table-fancy-blue
+  graph: Table
+  startNode: start
+  targetNode: TableFancyBlue
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancySkyBlue
+  name: construction-recipe-table-fancy-sky-blue
+  graph: Table
+  startNode: start
+  targetNode: TableFancySkyBlue
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancyCyan
+  name: construction-recipe-table-fancy-cyan
+  graph: Table
+  startNode: start
+  targetNode: TableFancyCyan
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancyGreen
+  name: construction-recipe-table-fancy-green
+  graph: Table
+  startNode: start
+  targetNode: TableFancyGreen
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancyOrange
+  name: construction-recipe-table-fancy-orange
+  graph: Table
+  startNode: start
+  targetNode: TableFancyOrange
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancyPurple
+  name: construction-recipe-table-fancy-purple
+  graph: Table
+  startNode: start
+  targetNode: TableFancyPurple
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancyPink
+  name: construction-recipe-table-fancy-pink
+  graph: Table
+  startNode: start
+  targetNode: TableFancyPink
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancyRed
+  name: construction-recipe-table-fancy-red
+  graph: Table
+  startNode: start
+  targetNode: TableFancyRed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableFancyWhite
+  name: construction-recipe-table-fancy-white
+  graph: Table
+  startNode: start
+  targetNode: TableFancyWhite
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableCounterMetal
+  graph: Table
+  startNode: start
+  targetNode: CounterMetal
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TableCounterWood
+  graph: Table
+  startNode: start
+  targetNode: CounterWood
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -274,34 +470,36 @@
 
 #bathroom
 - type: construction
-  name: toilet
   id: ToiletEmpty
   graph: Toilet
   startNode: start
   targetNode: toilet
-  category: Furniture
-  description: A human excrement flushing apparatus
-  icon:
-    sprite: Structures/Furniture/toilet.rsi
-    state: closed_toilet_seat_up
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
 
-#beds
+#bedroom
 - type: construction
   id: Bed
-  name: bed
-  description: This is used to lie in, sleep in or strap on.
   graph: bed
   startNode: start
   targetNode: bed
-  category: Furniture
-  icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: bed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: MedicalBed
+  graph: bed
+  startNode: start
+  targetNode: medicalbed
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -310,15 +508,22 @@
 
 - type: construction
   id: DogBed
-  name: dog bed
-  description: A comfy-looking dog bed. You can even strap your pet in, in case the gravity turns off.
   graph: bed
   startNode: start
   targetNode: dogbed
-  category: Furniture
-  icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: dogbed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: Dresser
+  graph: Dresser
+  startNode: start
+  targetNode: dresser
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -328,17 +533,184 @@
 #racks
 - type: construction
   id: Rack
-  name: rack
-  description: A rack for storing things on.
   graph: Rack
   startNode: start
   targetNode: Rack
-  category: Furniture
-  icon:
-    sprite: Structures/Furniture/furniture.rsi
-    state: rack
+  category: construction-category-furniture
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+#misc
+- type: construction
+  id: MeatSpike
+  graph: MeatSpike
+  startNode: start
+  targetNode: MeatSpike
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: Curtains
+  name: construction-recipe-curtains-cloth
+  graph: Curtains
+  startNode: start
+  targetNode: Curtains
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsBlack
+  name: construction-recipe-curtains-black
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsBlack
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsBlue
+  name: construction-recipe-curtains-blue
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsBlue
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsSkyBlue
+  name: construction-recipe-curtains-sky-blue
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsSkyBlue
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsCyan
+  name: construction-recipe-curtains-cyan
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsCyan
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsGreen
+  name: construction-recipe-curtains-green
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsGreen
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsOrange
+  name: construction-recipe-curtains-orange
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsOrange
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsPink
+  name: construction-recipe-curtains-pink
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsPink
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsPurple
+  name: construction-recipe-curtains-purple
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsPurple
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsRed
+  name: construction-recipe-curtains-red
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsRed
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: CurtainsWhite
+  name: construction-recipe-curtains-white
+  graph: Curtains
+  startNode: start
+  targetNode: CurtainsWhite
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  id: Bookshelf
+  graph: Bookshelf
+  startNode: start
+  targetNode: bookshelf
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: NoticeBoard
+  graph: NoticeBoard
+  startNode: start
+  targetNode: noticeBoard
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  id: Mannequin
+  graph: Mannequin
+  startNode: start
+  targetNode: mannequin
+  category: construction-category-furniture
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked

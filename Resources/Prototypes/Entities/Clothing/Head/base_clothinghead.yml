@@ -4,38 +4,172 @@
   id: ClothingHeadBase
   components:
   - type: Clothing
-    Slots:
+    slots:
     - HEAD
   - type: Sprite
     state: icon
+  - type: Item
+    size: Small
+    storedRotation: -90
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
   - type: Tag
     tags:
-      - DroneUsable
-
-- type: entity
-  abstract: true
-  parent: Clothing
-  id: HatBase
-  components:
-  - type: Clothing
-    Slots:
-    - HEAD
-  - type: Sprite
-    state: icon
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   abstract: true
   parent: ClothingHeadBase
-  id: ClothingHeadHardsuitBase
-  name: base hardsuit helmet
+  id: ClothingHeadBaseButcherable
   components:
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 1
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 50
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
+  id: ClothingHeadLightBase
+  name: base helmet with light
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: icon-flash
+      visible: false
+      map: [ "light" ]
   - type: Clothing
-    size: 15
+    equippedPrefix: off
+  - type: Item
+    heldPrefix: off
+    size: Normal
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: ItemTogglePointLight
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 1
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    netsync: false
+  - type: Appearance
+  - type: HandheldLight
+    addPrefix: true
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        startValue: 0.1
+        endValue: 2.0
+        isLooped: true
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot {}
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
+  id: ClothingHeadEVAHelmetBase
+  name: base space helmet
+  components:
+# SlotBlocker blocked until UI change
+#  - type: SlotBlock
+#    slots: [ears, eyes, mask]
+  - type: BreathMask
+  - type: Item
+    size: Normal
   - type: PressureProtection
     highPressureMultiplier: 0.6
-    lowPressureMultiplier: 10
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.1
+    heatingCoefficient: 0.2
+    coolingCoefficient: 0.2
+  - type: IngestionBlocker
+  - type: Clothing
+    #Copies ClothingHeadHardsuitBase behavior
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
+    equipDelay: 2
+    unequipDelay: 2
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - HelmetEVA
+  - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+    - FacialHair
+
+- type: entity
+  abstract: true
+  # No parent since we aren't actually an item.
+  id: ClothingHeadHardsuitBase
+  name: base hardsuit helmet
+  categories: [ HideSpawnMenu ]
+  components:
+# SlotBlocker blocked until UI change
+#  - type: SlotBlock
+#    slots: [ears, eyes, mask]
+  - type: BreathMask
+  - type: Sprite
+    state: icon # default state used by most inheritors
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Clothing
+    #Apparently the hardsuit helmet equip sound is from a walking mech?
+    equipSound: /Audio/Mecha/mechmove03.ogg
+    unequipSound: /Audio/Mecha/mechmove03.ogg
+    quickEquip: false
+    slots: [ HEAD ]
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
   - type: Armor
     modifiers:
       coefficients:
@@ -44,41 +178,103 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.25
+  - type: GroupExamine
   - type: IngestionBlocker
   - type: Tag
     tags:
-    - HidesHair
-  - type: DiseaseProtection
-    protection: 0.05
+    - WhitelistChameleon
+  - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+    - FacialHair
 
 - type: entity
   abstract: true
-  parent: ClothingHeadHardsuitBase
-  id: ClothingHeadHardsuitWithLightBase
+  # No parent since it isn't an item
+  # must parent both this and the desired helmet base when using
+  id: ClothingHeadSuitWithLightBase
   name: base hardsuit helmet with light
+  categories: [ HideSpawnMenu ]
   components:
+# SlotBlocker blocked until UI change
+#  - type: SlotBlock
+#    slots: [ears, eyes, mask]
   - type: Sprite
-    netsync: true
     layers:
     - state: icon
     - state: icon-flash
       visible: false
+      map: [ "light" ]
   - type: Clothing
-    HeldPrefix: off
+    equippedPrefix: off
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: ItemTogglePointLight
   - type: PointLight
     enabled: false
     radius: 3
+    energy: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    netsync: false
   - type: Appearance
-    visuals:
-    - type: FlashLightVisualizer
   - type: HandheldLight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
-  - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellHardsuitHelmet # self recharging
-      locked: true # no need to recharge manually
+    addPrefix: true
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+      - !type:FadeBehaviour
+        id: radiating
+        interpolate: Linear
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        startValue: 0.1
+        endValue: 2.0
+        isLooped: true
+  - type: Battery
+    maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
+    startingCharge: 600
+  - type: BatterySelfRecharger
+    autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.
+
+- type: entity
+  abstract: true
+  id: ClothingHeadHatHoodWinterBase
+  name: base winter coat hood
+  description: A hood, made to keep your head warm.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: icon
+  - type: Clickable
+  - type: Clothing
+    equipSound: /Audio/Effects/rustle1.ogg
+    unequipSound: /Audio/Effects/rustle2.ogg
+    quickEquip: false
+    slots: [ HEAD ]
+  - type: TemperatureProtection
+    heatingCoefficient: 1.05
+    coolingCoefficient: 0.7
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.90
+  - type: Armor # so zombification resistance shows up
+    modifiers:
+      coefficients: { }
+  - type: GroupExamine
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide

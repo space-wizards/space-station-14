@@ -1,125 +1,199 @@
 - type: reagent
   id: Flour
-  name: flour
+  name: reagent-name-flour
   group: Foods
-  desc: Used for baking.
-  physicalDesc: powdery
+  desc: reagent-desc-flour
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: chalky
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.4
+      - !type:SatiateThirst
+        factor: -0.2 #its flour
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
+
+- type: reagent
+  id: Cornmeal
+  name: reagent-name-cornmeal
+  group: Foods
+  desc: reagent-desc-cornmeal
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: corn #so corn doesnt taste chalky
+  color: tan
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateThirst
+        factor: -0.2 #its cornflour
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
 
 - type: reagent
   id: Oats
-  name: oats
+  name: reagent-name-oats
   group: Foods
-  desc: Used for a variety of tasty purposes.
-  physicalDesc: coarse
+  desc: reagent-desc-oats
+  physicalDesc: reagent-physical-desc-coarse
+  flavor: oats
   color: tan
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.2
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.3
 
 - type: reagent
   id: Enzyme
-  name: universal enzyme
+  name: reagent-name-enzyme
   group: Foods
-  desc: Used in cooking various dishes.
-  physicalDesc: chalky
+  desc: reagent-desc-enzyme
+  physicalDesc: reagent-physical-desc-chalky
+  flavor: bitter
   color: "#009900"
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        nutritionFactor: 1
 
 - type: reagent
   id: Egg
-  name: egg
+  name: reagent-name-raw-egg
   group: Foods
-  desc: Used for baking.
-  physicalDesc: mucus-like
+  desc: reagent-desc-raw-egg
+  physicalDesc: reagent-physical-desc-mucus-like
+  flavor: raw-egg
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: UncookedAnimalProteins
+        amount: 0.5
 
 - type: reagent
-  id: Sugar
-  name: sugar
+  id: EggCooked
+  name: reagent-name-egg
   group: Foods
-  desc: Tasty spacey sugar!
-  physicalDesc: sweet
+  desc: reagent-desc-egg
+  physicalDesc: reagent-physical-desc-fluffy
+  flavor: egg
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Protein
+        amount: 1
 
 - type: reagent
   id: Blackpepper
-  name: black pepper
+  name: reagent-name-blackpepper
   group: Foods
-  desc: Often used to flavor food or make people sneeze.
-  physicalDesc: grainy
+  desc: reagent-desc-blackpepper
+  physicalDesc: reagent-physical-desc-grainy
+  flavor: peppery
   color: black
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:Emote
+        emote: Cough
+        showInChat: true
+        showInGuidebook: true
+        probability: 0.05
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:Emote
+        emote: Cough
+        showInGuidebook: true
+        conditions:
+        - !type:BreathingCondition
+        - !type:InternalsCondition
+          inverted: true
 
 - type: reagent
   id: Vinegar
-  name: vinegar
+  name: reagent-name-vinegar
   group: Foods
-  desc: Often used to flavor food.
-  physicalDesc: sour
+  desc: reagent-desc-vinegar
+  physicalDesc: reagent-physical-desc-sour
+  flavor: bitter
   color: tan
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Water
+        amount: 0.4
+      - !type:AdjustReagent
+        reagent: Vitamin
+        amount: 0.1
+      - !type:Vomit
+        probability: 0.1
+        conditions:
+          - !type:ReagentCondition
+            reagent: Vinegar
+            min: 6
 
 - type: reagent
   id: Rice
-  name: rice
+  name: reagent-name-rice
   group: Foods
-  desc: Hard, small white grains.
-  physicalDesc: chewy
+  desc: reagent-desc-rice
+  physicalDesc: reagent-physical-desc-chewy
+  flavor: rice
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.4
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
 
 - type: reagent
   id: OilOlive
-  name: olive oil
+  name: reagent-name-oil-olive
   group: Foods
-  desc: Viscous and fragrant.
-  physicalDesc: oily
+  desc: reagent-desc-oil-olive
+  physicalDesc: reagent-physical-desc-oily
+  flavor: oily
+  flavorMinimum: 0.05
   color: olive
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.75
 
 - type: reagent
   id: Oil
-  name: oil
+  name: reagent-name-oil
   group: Foods
-  desc: Used by chefs to cook.
-  physicalDesc: oily
+  desc: reagent-desc-oil
+  physicalDesc: reagent-physical-desc-oily
+  flavor: oily
+  flavorMinimum: 0.05
+  recognizable: true
   color: "#b67823"
   boilingPoint: 300.0
   meltingPoint: -16.0
@@ -128,27 +202,127 @@
 
 - type: reagent
   id: CapsaicinOil
-  name: Capsaicin Oil
-  desc: Capsaicin Oil is the ingredient found in different types of hot peppers.
-  physicalDesc: oily
+  name: reagent-name-capsaicin-oil
+  group: Foods
+  desc: reagent-desc-capsaicin-oil
+  physicalDesc: reagent-physical-desc-oily
+  flavor: spicy
+  flavorMinimum: 0.05
   color: "#FF0000"
+  recognizable: true
   meltingPoint: 146
   boilingPoint: 410 # Really high boiling point compared to its melting
   metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment #Oils enhance nutrition
+        amount: 0.75
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Caustic: 0.5
+        - !type:AdjustTemperature
+          amount: 250 # thermal energy, not temp
         - !type:HealthChange
           conditions:
-            - !type:ReagentThreshold
+            - !type:ReagentCondition
+              reagent: CapsaicinOil
               min: 5
           damage:
-            groups:
+            types:
               Caustic: 1
         - !type:PopupMessage
           type: Local
           messages: [ "capsaicin-effect-light-burn" ]
           probability: 0.2
+
+- type: reagent
+  id: CocoaPowder #Candy and chocolate
+  name: reagent-name-cocoapowder
+  group: Foods
+  desc: reagent-desc-cocoapowder
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: chocolate
+  color: "#800000"
+  meltingPoint: 146.0
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:ReagentCondition #Only satiates when eaten with nutriment
+          reagent: Nutriment
+          min: 0.1
+        factor: 1
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.1
+  - !type:PlantAdjustWeeds
+    amount: 2
+  - !type:PlantAdjustPests
+    amount: 2
+
+- type: reagent
+  id: Butter
+  name: reagent-name-butter
+  group: Foods
+  desc: reagent-desc-butter
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: butter
+  color: yellow
+  meltingPoint: 32.0
+  boilingPoint: 100.0
+  recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.75
+
+- type: reagent
+  id: TeaPowder
+  name: reagent-name-tea-powder
+  desc: reagent-desc-tea-powder
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: tea
+  color: "#7F8400"
+  group: Foods
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateThirst
+        factor: -0.2
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
+
+- type: reagent
+  id: FrostOil
+  name: reagent-name-frost-oil
+  group: Foods
+  desc: reagent-desc-frost-oil
+  physicalDesc: reagent-physical-desc-oily
+  flavor: cold
+  color: skyblue
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment #Oils enhance nutrition
+        amount: 0.75
+    Poison:
+      effects:
+      - !type:AdjustTemperature
+        amount: -250 # thermal energy, not temp
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: FrostOil
+          min: 5
+        damage:
+          types:
+            Cold: 1
+      - !type:PopupMessage
+        type: Local
+        messages: [ "frost-oil-effect-light-cold" ]
+        probability: 0.2

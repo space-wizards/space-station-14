@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothingGasTanks]
   id: ClothingOuterBioGeneral
   name: bio suit
   suffix: Generic
@@ -9,11 +9,22 @@
     sprite: Clothing/OuterClothing/Bio/general.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/general.rsi
-  - type: DiseaseProtection
-    protection: 0.2
+  - type: HideLayerClothing
+    slots:
+    - Tail
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.35
+  - type: GroupExamine
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBioGeneral
   id: ClothingOuterBioCmo
   name: bio suit
   suffix: CMO
@@ -23,25 +34,25 @@
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
-  - type: DiseaseProtection
-    protection: 0.3
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBioGeneral
   id: ClothingOuterBioJanitor
   name: bio suit
   suffix: Janitor
-  description: A suit that protects against biological contamination, in Janitor colors.
+  description: A suit that protects against biological contamination and caustic spills.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Bio/janitor.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/janitor.rsi
-  - type: DiseaseProtection
-    protection: 0.2
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.4
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBioGeneral
   id: ClothingOuterBioScientist
   name: bio suit
   suffix: Science
@@ -51,33 +62,41 @@
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
-  - type: DiseaseProtection
-    protection: 0.2
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband]
   id: ClothingOuterBioSecurity
   name: bio suit
   suffix: Security
-  description: A suit that protects against biological contamination, in Security colors.
+  description: A suit that protects against biological contamination, kitted out with additional armor.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Bio/security.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/security.rsi
-  - type: DiseaseProtection
-    protection: 0.2
-
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.8
+        Slash: 0.6
+        Piercing: 0.8
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.4
+  - type: GroupExamine
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+    
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterBioGeneral
   id: ClothingOuterBioVirology
   name: bio suit
   suffix: Virology
-  description: A suit that protects against biological contamination, in Virology colors.
+  description: A suit that strongly protects against biological contamination.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/virology.rsi
-  - type: DiseaseProtection
-    protection: 0.3
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.25

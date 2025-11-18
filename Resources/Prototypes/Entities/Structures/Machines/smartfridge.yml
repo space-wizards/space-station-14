@@ -1,0 +1,127 @@
+﻿- type: entity
+  parent: [BaseStructureDynamic, ConstructibleMachine]
+  id: SmartFridge
+  name: SmartFridge
+  description: A refrigerated storage unit for keeping items cold and fresh.
+  components:
+  - type: StationAiWhitelist
+  - type: Vocalizer
+    hideChat: true
+  - type: VocalizerRequiresPower
+  - type: DatasetVocalizer
+    dataset: SmartFridgeAds
+  - type: Speech
+  - type: Appearance
+  - type: Sprite
+    sprite: Structures/Machines/smartfridge.rsi
+    snapCardinals: true
+    layers:
+    - state: smartfridge
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: smartfridge_door
+      map: ["enum.StorageVisualLayers.Door"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.2
+    energy: 3.0
+    color: "#9dc5c9"
+  - type: Machine
+    board: SmartFridgeCircuitboard
+  - type: ContainerContainer
+    containers:
+      smart_fridge_inventory: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+    - machine_parts
+    - machine_board
+    - smart_fridge_inventory
+  - type: LitOnPowered
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: ExtensionCableReceiver
+  - type: SmartFridge
+    whitelist:
+      components:
+      - FitsInDispenser
+      - Pill
+      - Produce
+      - Seed
+      tags:
+      - PillCanister
+      - Bottle
+      - Syringe
+      - ChemDispensable
+  - type: ActivatableUI
+    key: enum.SmartFridgeUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+      enum.SmartFridgeUiKey.Key:
+        type: SmartFridgeBoundUserInterface
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: AccessReader
+  - type: UseDelay
+    delay: 1
+  - type: AntiRottingContainer
+  - type: ResistLocker
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+    anchored: True
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 200
+  - type: Anchorable
+    delay: 2
+  - type: InteractionOutline
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      collection: MetalThud
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: Airtight
+
+- type: entity
+  parent: SmartFridge
+  id: SmartFridgeMedical
+  suffix: Medical
+  components:
+  - type: SmartFridge
+    flavorText: smart-fridge-request-chemistry
+  - type: AccessReader
+    access: [["Medical"]]

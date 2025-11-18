@@ -1,8 +1,5 @@
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {
@@ -10,7 +7,7 @@ namespace Content.Server.Power.Components
     ///     Draws power directly from an MV or HV wire it is on top of.
     /// </summary>
     [RegisterComponent]
-    public sealed class PowerConsumerComponent : BaseNetConnectorComponent<IBasePowerNet>
+    public sealed partial class PowerConsumerComponent : BaseNetConnectorComponent<IBasePowerNet>
     {
         /// <summary>
         ///     How much power this needs to be fully powered.
@@ -18,6 +15,10 @@ namespace Content.Server.Power.Components
         [DataField("drawRate")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float DrawRate { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+
+        [DataField("showInMonitor")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ShowInMonitor { get; set; } = true;
 
         /// <summary>
         ///     How much power this is currently receiving from <see cref="PowerSupplierComponent"/>s.

@@ -1,10 +1,6 @@
-using Content.Shared.Stacks;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Materials
 {
@@ -12,38 +8,53 @@ namespace Content.Shared.Materials
     ///     Materials are read-only storage for the properties of specific materials.
     ///     Properties should be intrinsic (or at least as much is necessary for game purposes).
     /// </summary>
-    [Prototype("material")]
-    public sealed class MaterialPrototype : IPrototype, IInheritingPrototype
+    [Prototype]
+    public sealed partial class MaterialPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("parent")]
-        public string? Parent { get; } = null;
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<MaterialPrototype>))]
+        public string[]? Parents { get; private set; }
 
         [ViewVariables]
-        [DataField("abstract")]
-        public bool Abstract { get; } = false;
+        [AbstractDataField]
+        public bool Abstract { get; private set; } = false;
 
         [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+        [IdDataField]
+        public string ID { get; private set; } = default!;
 
-        [ViewVariables]
-        [DataField("stack", customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
-        public string? StackId { get; } = null;
+        /// <summary>
+        ///     For material storage to be able to convert back and forth
+        ///     between the material and physical entities you can carry,
+        ///     include which stack we should spawn by default.
+        /// </summary>
+        [DataField]
+        public EntProtoId? StackEntity;
 
-        [ViewVariables]
-        [DataField("name")]
-        public string Name { get; } = "unobtanium";
+        [DataField]
+        public string Name = string.Empty;
 
-        [ViewVariables]
-        [DataField("color")]
-        public Color Color { get; } = Color.Gray;
+        /// <summary>
+        /// Locale id for the unit of this material.
+        /// Lathe recipe tooltips and material storage display use this to let you change a material to sound nicer.
+        /// For example, 5 bars of gold is better than 5 sheets of gold.
+        /// </summary>
+        [DataField]
+        public LocId Unit = "materials-unit-sheet";
+
+        [DataField]
+        public Color Color { get; private set; } = Color.Gray;
 
         /// <summary>
         ///     An icon used to represent the material in graphic interfaces.
         /// </summary>
-        [ViewVariables]
-        [DataField("icon")]
-        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
+        [DataField]
+        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
+
+        /// <summary>
+        /// The price per cm3.
+        /// </summary>
+        [DataField(required: true)]
+        public double Price = 0;
     }
 }

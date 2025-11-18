@@ -1,13 +1,12 @@
 - type: vendingMachineInventory
   id: GetmoreChocolateCorpInventory
-  name: Getmore Chocolate Corp
-  animationDuration: 0.5
-  spriteName: snack
   startingInventory:
     FoodSnackRaisins: 3
     FoodSnackChocolate: 3
-    FoodSnackPopcorn: 3
+    FoodSnackCnDs: 3
+    FoodSnackPistachios: 3
+    FoodSnackSus: 3
+    FoodSnackSemki: 3
+  contrabandInventory:
+    FoodSnackSwirlLollipop: 2
     FoodSnackSyndi: 3
-    DrinkRamen: 3
-    DrinkHellRamen: 2
-

@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Redid the original tarantulas. Made by Nimfar11 (github) for SS14",
+  "states": [
+    {
+      "name": "shiva",
+      "directions": 4
+    },
+    {
+      "name": "shiva-moving",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "shiva_dead",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

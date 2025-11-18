@@ -1,10 +1,21 @@
-﻿- type: latheRecipe
+- type: latheRecipe
   id: ConveyorBeltAssembly
-  icon:
-    sprite: Structures/conveyor.rsi
-    state: conveyor_loose
   result: ConveyorBeltAssembly
-  completetime: 1000
+  completetime: 4
+  materials:
+    Steel: 250
+    Plastic: 50
+
+- type: latheRecipe
+  id: AppraisalTool
+  result: AppraisalTool
+  completetime: 4
   materials:
     Steel: 500
-    Plastic: 50
+
+- type: latheRecipe
+  id: UtilityKnife
+  result: UtilityKnife
+  completetime: 2
+  materials:
+    Steel: 100

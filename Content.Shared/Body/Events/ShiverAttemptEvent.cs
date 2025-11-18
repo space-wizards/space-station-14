@@ -1,14 +1,8 @@
-﻿using Robust.Shared.GameObjects;
+namespace Content.Shared.Body.Events;
 
-namespace Content.Shared.Body.Events
+[ByRefEvent]
+public record struct ShiverAttemptEvent(EntityUid Uid)
 {
-    public sealed class ShiverAttemptEvent : CancellableEntityEventArgs
-    {
-        public ShiverAttemptEvent(EntityUid uid)
-        {
-            Uid = uid;
-        }
-
-        public EntityUid Uid { get; }
-    }
+    public readonly EntityUid Uid = Uid;
+    public bool Cancelled = false;
 }

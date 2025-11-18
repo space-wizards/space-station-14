@@ -1,13 +1,11 @@
-﻿using Robust.Shared.GameObjects;
-
-namespace Content.Server.Atmos.Components
+﻿namespace Content.Server.Atmos.Components
 {
     // not if i get there first - Flipp
     /// <summary>
     /// Represents that entity can be exposed to Atmos
     /// </summary>
     [RegisterComponent]
-    public sealed class AtmosExposedComponent : Component
+    public sealed partial class AtmosExposedComponent : Component
     {
     }
 }

@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: Firelock
   start: start
   graph:
@@ -16,8 +16,7 @@
     - node: frame1
       entity: FirelockFrame
       actions:
-        - !type:SpriteStateChange
-          state: frame1
+      - !type:AppearanceChange
       edges:
         - to: frame2
           conditions:
@@ -42,8 +41,7 @@
 
     - node: frame2
       actions:
-        - !type:SpriteStateChange
-          state: frame2
+      - !type:AppearanceChange
       edges:
         - to: frame3
           conditions:
@@ -51,7 +49,8 @@
               anchored: true
           steps:
             - tag: FirelockElectronics
-              name: Firelock Electronics
+              store: board
+              name: construction-graph-tag-firelock-electronics-circuit-board
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "mainboard"
@@ -70,8 +69,7 @@
 
     - node: frame3
       actions:
-        - !type:SpriteStateChange
-          state: frame3
+      - !type:AppearanceChange
       edges:
         - to: frame4
           conditions:
@@ -82,9 +80,9 @@
               doAfter: 0.25
         - to: frame2
           completed:
-            - !type:SpawnPrototype
-              prototype: FirelockElectronics
-              amount: 1
+            - !type:EmptyAllContainers
+              pickup: true
+              emptyAtUser: true
           conditions:
             - !type:EntityAnchored
               anchored: true
@@ -95,8 +93,7 @@
     - node: frame4
       entity: FirelockFrame
       actions:
-        - !type:SpriteStateChange
-          state: frame4
+      - !type:AppearanceChange
       edges:
         - to: Firelock
           conditions:
@@ -105,6 +102,14 @@
           steps:
             - tool: Anchoring
               doAfter: 1
+
+        - to: FirelockEdge
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Welding
+              doAfter: 0.5
 
         - to: FirelockGlassFrame
           conditions:
@@ -133,6 +138,9 @@
           steps:
             - tool: Anchoring
               doAfter: 0.25
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
 
     - node: FirelockGlassFrame
       edges:
@@ -149,7 +157,7 @@
               prototype: SheetGlass1
               amount: 2
           steps:
-            - tool: Screwing
+            - tool: Prying
               doAfter: 1
 
 
@@ -163,3 +171,17 @@
           steps:
             - tool: Anchoring
               doAfter: 1
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+
+    - node: FirelockEdge
+      entity: FirelockEdge
+      edges:
+        - to: frame4
+          conditions:
+            - !type:DoorWelded
+              welded: true
+          steps:
+            - tool: Anchoring
+              doAfter: 0.25

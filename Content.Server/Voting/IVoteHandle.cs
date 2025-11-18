@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
 using Content.Server.Voting.Managers;
-using Robust.Server.Player;
+using Robust.Shared.Player;
 
 namespace Content.Server.Voting
 {
@@ -46,6 +44,11 @@ namespace Content.Server.Voting
         bool Cancelled { get; }
 
         /// <summary>
+        /// Dictionary of votes cast by players, matching the option's id.
+        /// </summary>
+        IReadOnlyDictionary<ICommonSession, int> CastVotes { get; }
+
+        /// <summary>
         /// Current count of votes per option type.
         /// </summary>
         IReadOnlyDictionary<object, int> VotesPerOption { get; }
@@ -77,7 +80,7 @@ namespace Content.Server.Voting
         /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="optionId"/> is not a valid option ID.
         /// </exception>
-        void CastVote(IPlayerSession session, int? optionId);
+        void CastVote(ICommonSession session, int? optionId);
 
         /// <summary>
         /// Cancel this vote.

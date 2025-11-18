@@ -1,8 +1,11 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: HotDrinksMachineInventory
-  name: Hot drinks machine
-  animationDuration: 3.4
-  spriteName: coffee
   startingInventory:
-    DrinkHotCoffee: 20
-    DrinkTeaGlass: 20
+    DrinkHotCoffee: 5
+    DrinkCafeLatte: 5
+    DrinkTeacup: 5
+    DrinkGreenTea: 5
+    DrinkHotCoco: 5
+  contrabandInventory:
+    DrinkTeapot: 2
+    DrinkNothing: 2

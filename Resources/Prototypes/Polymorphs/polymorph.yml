@@ -1,0 +1,248 @@
+- type: polymorph
+  id: Mouse
+  configuration:
+    entity: MobMouse
+    forced: true
+    duration: 30
+
+- type: polymorph
+  id: Chicken
+  configuration:
+    entity: MobChicken
+    forced: true
+    inventory: Drop
+
+- type: polymorph
+  id: Monkey
+  configuration:
+    entity: MobMonkey
+    forced: true
+    inventory: Drop
+    revertOnCrit: true
+    revertOnDeath: true
+
+- type: polymorph
+  id: WizardForcedCarp
+  configuration:
+    entity: MobCarpMagic
+    forced: true
+    inventory: None
+    transferName: true
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: true
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+
+- type: polymorph
+  id: WizardForcedSkeleton
+  configuration:
+    entity: MobSkeletonPerson
+    forced: true
+    inventory: Drop
+    transferName: true
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: false
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+
+- type: polymorph
+  id: WizardForcedMonkey
+  configuration:
+    entity: MobMonkey
+    forced: true
+    inventory: None
+    transferName: true
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: true
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+
+- type: polymorph
+  id: WizardWallDoor
+  configuration:
+    entity: WoodDoor
+    forced: true
+    inventory: None
+    transferName: false
+    transferDamage: false
+    revertOnCrit: false
+    revertOnDeath: false
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+
+- type: polymorph
+  id: WizardForcedCluwne
+  configuration:
+    entity: MobCluwne
+    forced: true
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: Transfer
+    revertOnDeath: true
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+
+# this is a test for transferring some visual appearance stuff
+- type: polymorph
+  id: TestHumanMorph
+  configuration:
+    entity: MobHuman
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: Transfer
+
+- type: polymorph
+  id: AMIVMorph
+  configuration:
+    entity: MobMonkey
+    forced: true
+    inventory: Transfer
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: false
+
+- type: polymorph
+  id: BreadMorph
+  configuration:
+    entity: FoodBreadPlain
+    forced: true
+    inventory: None
+    transferName: false
+    transferDamage: true
+    revertOnCrit: false
+    revertOnDeath: true
+    revertOnEat: true
+
+- type: polymorph
+  id: TreeMorph
+  configuration:
+    entity: FloraTree
+    forced: true
+    transferName: true
+    revertOnDeath: true
+    inventory: Drop
+    cooldown: 160
+
+- type: polymorph
+  id: SmartCorgiMorph
+  configuration:
+    entity: MobCorgiSmart
+    forced: false
+    inventory: Drop
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: false
+    allowRepeatedMorphs: false
+
+# this is the monkey polymorph for artifact.
+- type: polymorph
+  id: ArtifactMonkey
+  configuration:
+    entity: MobMonkey
+    forced: true
+    transferName: true
+    allowRepeatedMorphs: true
+    inventory: Transfer
+    revertOnCrit: true
+    revertOnDeath: true
+    duration: 20
+
+- type: polymorph
+  id: ArtifactCluwne
+  configuration:
+    entity: MobCluwne
+    forced: true
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+    duration: 30
+
+- type: polymorph
+  id: ArtifactLizard
+  configuration:
+    entity: MobLizard
+    forced: true
+    transferName: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+    duration: 20
+
+- type: polymorph
+  id: ArtifactLuminous
+  configuration:
+    entity: MobLuminousPerson
+    forced: true
+    transferName: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+    duration: 20
+
+# Polymorphs for Wizards polymorph self spell
+- type: polymorph
+  id: WizardSpider
+  configuration:
+    entity: MobGiantSpiderWizard #Not angry so ghosts can't just take over the wizard
+    transferName: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+
+- type: polymorph
+  id: WizardRod
+  configuration:
+    entity: ImmovableRodWizard #CLANG
+    transferName: true
+    transferDamage: false
+    inventory: None
+    duration: 1
+    forced: true
+    revertOnCrit: false
+    revertOnDeath: false
+
+# Temporary Jaunt
+# Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
+- type: polymorph
+  id: Jaunt
+  configuration:
+    entity: EtherealJaunt
+    transferName: true
+    inventory: None
+    forced: true
+    revertOnDeath: true
+    revertOnCrit: true
+    allowRepeatedMorphs: false
+    polymorphSound: /Audio/Magic/ethereal_enter.ogg
+    exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
+    duration: 3
+
+# Desynchronized / Void Pocket status
+- type: polymorph
+  id: VoidPocket
+  configuration:
+    entity: DesynchronizedPocket
+    transferName: false
+    inventory: None
+    forced: false
+    revertOnDeath: true
+    allowRepeatedMorphs: false
+    polymorphSound: /Audio/Magic/ethereal_enter.ogg
+    exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
+    duration: 120
+    effectProto: EffectDesynchronizer

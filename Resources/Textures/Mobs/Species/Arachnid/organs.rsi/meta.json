@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by PixelTheKermit (github) for SS14, inhands by mubururu_ (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "eyeball-l"
+    },
+    {
+      "name": "eyeball-r"
+    },
+    {
+      "name": "eyeballs-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "eyeballs-inhand-right",
+      "directions": 4
+    },
+    {
+        "name": "tongue"
+    },
+    {
+      "name": "heart-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "heart-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "heart-on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.6
+        ]
+      ]
+    },
+    {
+      "name": "heart-off"
+    },
+    {
+      "name": "lung-l"
+    },
+    {
+      "name": "lung-r"
+    },
+    {
+      "name": "muscle"
+    },
+    {
+      "name": "stomach"
+    },
+    {
+      "name": "stomach-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "stomach-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "web-gland"
+    }
+  ]
+}

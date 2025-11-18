@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken/modified from cev eris at https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/guns/energy/cassad.dmi",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/pull/27386/commits/4814da0f8e0d88f430c8b335e541e0a7734755a2 backpack sprite by Peptide (copy of pulse rifle), backpack sling sprite edited by Boaz1111, wield sprites by RiceMar1244",
     "size": {
         "x": 32,
         "y": 32
@@ -12,9 +12,6 @@
         },
         {
             "name": "base"
-        },
-        {
-            "name": "mag-unshaded-0"
         },
         {
             "name": "mag-unshaded-1"
@@ -34,6 +31,22 @@
         },
         {
             "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "equipped-SUITSTORAGE",
             "directions": 4
         }
     ]

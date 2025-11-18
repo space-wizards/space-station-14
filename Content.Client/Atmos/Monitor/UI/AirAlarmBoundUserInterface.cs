@@ -1,87 +1,80 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
-using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Client.UserInterface;
 
-namespace Content.Client.Atmos.Monitor.UI
+namespace Content.Client.Atmos.Monitor.UI;
+
+public sealed class AirAlarmBoundUserInterface : BoundUserInterface
 {
-    public sealed class AirAlarmBoundUserInterface : BoundUserInterface
+    private AirAlarmWindow? _window;
+
+    public AirAlarmBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        private AirAlarmWindow? _window;
+    }
 
-        public AirAlarmBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
-        {}
+    protected override void Open()
+    {
+        base.Open();
 
-        protected override void Open()
+        _window = this.CreateWindow<AirAlarmWindow>();
+        _window.SetEntity(Owner);
+
+        _window.AtmosDeviceDataChanged += OnDeviceDataChanged;
+		_window.AtmosDeviceDataCopied += OnDeviceDataCopied;
+        _window.AtmosAlarmThresholdChanged += OnThresholdChanged;
+        _window.AirAlarmModeChanged += OnAirAlarmModeChanged;
+        _window.AutoModeChanged += OnAutoModeChanged;
+        _window.ResyncAllRequested += ResyncAllDevices;
+    }
+
+    private void ResyncAllDevices()
+    {
+        SendMessage(new AirAlarmResyncAllDevicesMessage());
+    }
+
+    private void OnDeviceDataChanged(string address, IAtmosDeviceData data)
+    {
+        SendMessage(new AirAlarmUpdateDeviceDataMessage(address, data));
+    }
+
+	private void OnDeviceDataCopied(IAtmosDeviceData data)
+    {
+        SendMessage(new AirAlarmCopyDeviceDataMessage(data));
+    }
+
+    private void OnAirAlarmModeChanged(AirAlarmMode mode)
+    {
+        SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
+    }
+
+    private void OnAutoModeChanged(bool enabled)
+    {
+        SendMessage(new AirAlarmUpdateAutoModeMessage(enabled));
+    }
+
+    private void OnThresholdChanged(string address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
+    {
+        SendMessage(new AirAlarmUpdateAlarmThresholdMessage(address, type, threshold, gas));
+    }
+
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+
+        if (state is not AirAlarmUIState cast || _window == null)
         {
-            base.Open();
-
-            _window = new AirAlarmWindow();
-
-            if (State != null) UpdateState(State);
-
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
-            _window.AtmosDeviceDataChanged += OnDeviceDataChanged;
-            _window.AtmosAlarmThresholdChanged += OnThresholdChanged;
-            _window.AirAlarmModeChanged += OnAirAlarmModeChanged;
-            _window.ResyncAllRequested += ResyncAllDevices;
+            return;
         }
 
-        private void ResyncAllDevices()
-        {
-            SendMessage(new AirAlarmResyncAllDevicesMessage());
-        }
+        _window.UpdateState(cast);
+    }
 
-        private void OnDeviceDataChanged(string address, IAtmosDeviceData data)
-        {
-            SendMessage(new AirAlarmUpdateDeviceDataMessage(address, data));
-        }
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
 
-        private void OnAirAlarmModeChanged(AirAlarmMode mode)
-        {
-            SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
-        }
-
-        private void OnThresholdChanged(AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
-        {
-            SendMessage(new AirAlarmUpdateAlarmThresholdMessage(type, threshold, gas));
-        }
-
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            if (_window == null)
-                return;
-
-            switch (message)
-            {
-                case AirAlarmSetAddressMessage addrMsg:
-                    _window.SetAddress(addrMsg.Address);
-                    break;
-                case AirAlarmUpdateDeviceDataMessage deviceMsg:
-                    _window.UpdateDeviceData(deviceMsg.Address, deviceMsg.Data);
-                    break;
-                case AirAlarmUpdateAlarmModeMessage alarmMsg:
-                    _window.UpdateModeSelector(alarmMsg.Mode);
-                    break;
-                case AirAlarmUpdateAlarmThresholdMessage thresholdMsg:
-                    _window.UpdateThreshold(ref thresholdMsg);
-                    break;
-                case AirAlarmUpdateAirDataMessage airDataMsg:
-                    _window.UpdateGasData(ref airDataMsg.AirData);
-                    break;
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing) _window?.Dispose();
-        }
+        if (disposing)
+            _window?.Dispose();
     }
 }

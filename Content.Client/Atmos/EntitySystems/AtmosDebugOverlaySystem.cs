@@ -1,22 +1,16 @@
-using System.Collections.Generic;
 using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
-
-        private readonly Dictionary<GridId, AtmosDebugOverlayMessage> _tileData =
-            new();
+        public readonly Dictionary<EntityUid, AtmosDebugOverlayMessage> TileData = new();
 
         // Configuration set by debug commands and used by AtmosDebugOverlay {
         /// <summary>Value source for display</summary>
@@ -43,25 +37,25 @@ namespace Content.Client.Atmos.EntitySystems
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
             if(!overlayManager.HasOverlay<AtmosDebugOverlay>())
-                overlayManager.AddOverlay(new AtmosDebugOverlay());
+                overlayManager.AddOverlay(new AtmosDebugOverlay(this));
         }
 
         private void OnGridRemoved(GridRemovalEvent ev)
         {
-            if (_tileData.ContainsKey(ev.GridId))
+            if (TileData.ContainsKey(ev.EntityUid))
             {
-                _tileData.Remove(ev.GridId);
+                TileData.Remove(ev.EntityUid);
             }
         }
 
         private void HandleAtmosDebugOverlayMessage(AtmosDebugOverlayMessage message)
         {
-            _tileData[message.GridId] = message;
+            TileData[GetEntity(message.GridId)] = message;
         }
 
         private void HandleAtmosDebugOverlayDisableMessage(AtmosDebugOverlayDisableMessage ev)
         {
-            _tileData.Clear();
+            TileData.Clear();
         }
 
         public override void Shutdown()
@@ -74,24 +68,12 @@ namespace Content.Client.Atmos.EntitySystems
 
         public void Reset(RoundRestartCleanupEvent ev)
         {
-            _tileData.Clear();
+            TileData.Clear();
         }
 
-        public bool HasData(GridId gridId)
+        public bool HasData(EntityUid gridId)
         {
-            return _tileData.ContainsKey(gridId);
-        }
-
-        public AtmosDebugOverlayData? GetData(GridId gridIndex, Vector2i indices)
-        {
-            if (!_tileData.TryGetValue(gridIndex, out var srcMsg))
-                return null;
-
-            var relative = indices - srcMsg.BaseIdx;
-            if (relative.X < 0 || relative.Y < 0 || relative.X >= LocalViewRange || relative.Y >= LocalViewRange)
-                return null;
-
-            return srcMsg.OverlayData[relative.X + relative.Y * LocalViewRange];
+            return TileData.ContainsKey(gridId);
         }
     }
 

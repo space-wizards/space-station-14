@@ -1,37 +1,63 @@
 - type: entity
-  name: health analyzer
+  id: HandheldHealthAnalyzerUnpowered
   parent: BaseItem
-  id: HandheldHealthAnalyzer
+  name: health analyzer
+  suffix: Always Powered
   description: A hand-held body scanner capable of distinguishing vital signs of the subject.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/healthanalyzer.rsi
-    netsync: false
-    state: analyzer
+    state: icon
+    layers:
+      - state: icon
+      - state: analyzer
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: Item
+    heldPrefix: analyzer
+    storedRotation: -90
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
   - type: UserInterface
     interfaces:
-      - key: enum.HealthAnalyzerUiKey.Key
+      enum.HealthAnalyzerUiKey.Key:
         type: HealthAnalyzerBoundUserInterface
+  - type: ItemToggle
+    onUse: false
   - type: HealthAnalyzer
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: Tag
+    tags:
+      - DiscreteHealthAnalyzer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: GuideHelp
+    guides:
+    - MedicalDoctor
 
 - type: entity
-  parent: HandheldHealthAnalyzer
-  id: HandheldHealthAnalyzerGigacancer
-  suffix: gigacancer
+  id: HandheldHealthAnalyzer
+  parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
+  suffix: ""
   components:
-  - type: HealthAnalyzer
-    fake: true
-    disease: Ultragigacancer
+  - type: PowerCellDraw
+    drawRate: 1.2 #Calculated for 5 minutes on a small cell
+  - type: ToggleCellDraw
+  - type: ActivatableUIRequiresPowerCell
 
-## I know admins will want this
 - type: entity
+  id: HandheldHealthAnalyzerEmpty
   parent: HandheldHealthAnalyzer
-  id: HandheldHealthAnalyzerOwOnavirus
-  name: OwOnavirus analyzer
-  suffix: admin abuse
+  suffix: Empty
   components:
-  - type: HealthAnalyzer
-    fake: true
-    disease: OwOnavirus
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

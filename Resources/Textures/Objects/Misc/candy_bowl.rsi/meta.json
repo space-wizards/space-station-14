@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Mercer~Bray#5324 (Discord) for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "candy_bowl0"
+    },
+    {
+      "name": "candy_bowl1"
+    }
+  ]
+}

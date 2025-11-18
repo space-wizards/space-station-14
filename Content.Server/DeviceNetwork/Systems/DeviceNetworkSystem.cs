@@ -1,10 +1,13 @@
-using Content.Server.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Collections.Generic;
+using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.Examine;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -13,95 +16,120 @@ namespace Content.Server.DeviceNetwork.Systems
     ///     Device networking allows machines and devices to communicate with each other while adhering to restrictions like range or being connected to the same powernet.
     /// </summary>
     [UsedImplicitly]
-    public sealed class DeviceNetworkSystem : EntitySystem
+    public sealed class DeviceNetworkSystem : SharedDeviceNetworkSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly DeviceListSystem _deviceLists = default!;
+        [Dependency] private readonly NetworkConfiguratorSystem _configurator = default!;
 
-        private readonly Dictionary<DeviceNetworkComponent.ConnectionType, List<DeviceNetworkComponent>> _connections = new();
-        private readonly Queue<NetworkPacket> _packets = new();
+        private readonly Dictionary<int, DeviceNet> _networks = new(4);
+        private readonly Queue<DeviceNetworkPacketEvent> _queueA = new();
+        private readonly Queue<DeviceNetworkPacketEvent> _queueB = new();
+
+        /// <summary>
+        /// The queue being processed in the current tick
+        /// </summary>
+        private Queue<DeviceNetworkPacketEvent> _activeQueue = null!;
+
+        /// <summary>
+        /// The queue that will be processed in the next tick
+        /// </summary>
+        private Queue<DeviceNetworkPacketEvent> _nextQueue = null!;
+
 
         public override void Initialize()
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<DeviceNetworkComponent, ComponentStartup>(OnNetworkStarted);
+            SubscribeLocalEvent<DeviceNetworkComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<DeviceNetworkComponent, ComponentShutdown>(OnNetworkShutdown);
+            SubscribeLocalEvent<DeviceNetworkComponent, ExaminedEvent>(OnExamine);
+
+            _activeQueue = _queueA;
+            _nextQueue = _queueB;
         }
 
         public override void Update(float frameTime)
         {
-            base.Update(frameTime);
 
-            while (_packets.Count > 0)
+            while (_activeQueue.TryDequeue(out var packet))
             {
-                var packet = _packets.Dequeue();
-
-                if(packet.Broadcast)
-                {
-                    BroadcastPacket(packet);
-                    continue;
-                }
                 SendPacket(packet);
             }
+
+            SwapQueues();
+        }
+
+        public override bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, int? network = null, DeviceNetworkComponent? device = null)
+        {
+            if (!Resolve(uid, ref device, false))
+                return false;
+
+            if (device.Address == string.Empty)
+                return false;
+
+            frequency ??= device.TransmitFrequency;
+
+            if (frequency == null)
+                return false;
+
+            network ??= device.DeviceNetId;
+
+            _nextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, device.Address, uid, data));
+            return true;
         }
 
         /// <summary>
-        /// Manually connect an entity with a DeviceNetworkComponent.
+        /// Swaps the active queue.
+        /// Queues are swapped so that packets being sent in the current tick get processed in the next tick.
         /// </summary>
-        /// <param name="uid">The Entity containing a DeviceNetworkComponent</param>
-        public void Connect(EntityUid uid)
+        /// <remarks>
+        /// This prevents infinite loops while sending packets
+        /// </remarks>
+        private void SwapQueues()
         {
-            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
+            _nextQueue = _activeQueue;
+            _activeQueue = _activeQueue == _queueA ? _queueB : _queueA;
+        }
+
+        private void OnExamine(EntityUid uid, DeviceNetworkComponent device, ExaminedEvent args)
+        {
+            if (device.ExaminableAddress)
             {
-                AddConnection(component);
+                args.PushText(Loc.GetString("device-address-examine-message", ("address", device.Address)));
             }
         }
 
         /// <summary>
-        /// Sends the given payload as a device network packet to the entity with the given address and frequency.
-        /// Addresses are given to the DeviceNetworkComponent of an entity when connecting.
+        /// Automatically attempt to connect some devices when a map starts.
         /// </summary>
-        /// <param name="uid">The EntityUid of the sending entity</param>
-        /// <param name="address">The address of the entity that the packet gets sent to when not broadcasting</param>
-        /// <param name="frequency">The frequency to send on</param>
-        /// <param name="data">The data to be sent</param>
-        /// <param name="broadcast">Send to all devices on the same device network on the given frequency</param>
-        public void QueuePacket(EntityUid uid, string address, int frequency, NetworkPayload data, bool broadcast = false)
+        private void OnMapInit(EntityUid uid, DeviceNetworkComponent device, MapInitEvent args)
         {
-            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
+            if (device.ReceiveFrequency == null
+                && device.ReceiveFrequencyId != null
+                && _protoMan.TryIndex<DeviceFrequencyPrototype>(device.ReceiveFrequencyId, out var receive))
             {
-                var packet = new NetworkPacket
-                {
-                    NetId = component.DeviceNetId,
-                    Address = address,
-                    Frequency = frequency,
-                    Broadcast = broadcast,
-                    Data = data,
-                    Sender = component
-                };
-
-                _packets.Enqueue(packet);
+                device.ReceiveFrequency = receive.Frequency;
             }
+
+            if (device.TransmitFrequency == null
+                && device.TransmitFrequencyId != null
+                && _protoMan.TryIndex<DeviceFrequencyPrototype>(device.TransmitFrequencyId, out var xmit))
+            {
+                device.TransmitFrequency = xmit.Frequency;
+            }
+
+            if (device.AutoConnect)
+                ConnectDevice(uid, device);
         }
 
-        /// <summary>
-        /// Manually disconnect an entity with a DeviceNetworkComponent.
-        /// </summary>
-        /// <param name="uid">The Entity containing a DeviceNetworkComponent</param>
-        public void Disconnect(EntityUid uid)
+        private DeviceNet GetNetwork(int netId)
         {
-            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
-            {
-                RemoveConnection(component);
-            }
-        }
-
-        /// <summary>
-        /// Automatically connect when an entity with a DeviceNetworkComponent starts up.
-        /// </summary>
-        private void OnNetworkStarted(EntityUid uid, DeviceNetworkComponent component, ComponentStartup args)
-        {
-            AddConnection(component);
+            if (_networks.TryGetValue(netId, out var deviceNet))
+                return deviceNet;
+            var newDeviceNet = new DeviceNet(netId, _random);
+            _networks[netId] = newDeviceNet;
+            return newDeviceNet;
         }
 
         /// <summary>
@@ -109,178 +137,226 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnNetworkShutdown(EntityUid uid, DeviceNetworkComponent component, ComponentShutdown args)
         {
-            RemoveConnection(component);
-        }
-
-        private bool AddConnection(DeviceNetworkComponent connection)
-        {
-            var netId = connection.DeviceNetId;
-            if (!_connections.ContainsKey(netId))
-                _connections[netId] = new List<DeviceNetworkComponent>();
-
-            if (!_connections[netId].Contains(connection))
+            foreach (var list in component.DeviceLists)
             {
-                connection.Address = GenerateValidAddress(netId);
-                _connections[netId].Add(connection);
-                connection.Open = true;
-                return true;
+                _deviceLists.OnDeviceShutdown(list, (uid, component));
             }
 
-            return false;
-        }
+            foreach (var list in component.Configurators)
+            {
+                _configurator.OnDeviceShutdown(list, (uid, component));
+            }
 
-        private bool RemoveConnection(DeviceNetworkComponent connection)
-        {
-            connection.Address = "";
-            connection.Open = false;
-            return _connections[connection.DeviceNetId].Remove(connection);
+            GetNetwork(component.DeviceNetId).Remove(component);
         }
 
         /// <summary>
-        /// Generates a valid address by randomly generating one and checking if it already exists on the device network with the given device netId.
+        /// Connect an entity with a DeviceNetworkComponent. Note that this will re-use an existing address if the
+        /// device already had one configured. If there is a clash, the device cannot join the network.
         /// </summary>
-        private string GenerateValidAddress(DeviceNetworkComponent.ConnectionType netId)
+        public bool ConnectDevice(EntityUid uid, DeviceNetworkComponent? device = null)
         {
-            var unique = false;
-            var connections = _connections[netId];
-            var address = "";
+            if (!Resolve(uid, ref device, false))
+                return false;
 
-            while (!unique)
-            {
-                address = _random.Next().ToString("x");
-                unique = !connections.Exists(connection => connection.Address == address);
-            }
-
-            return address;
+            return GetNetwork(device.DeviceNetId).Add(device);
         }
 
-        private List<DeviceNetworkComponent> ConnectionsForFrequency(DeviceNetworkComponent.ConnectionType netId, int frequency)
+        /// <summary>
+        /// Disconnect an entity with a DeviceNetworkComponent.
+        /// </summary>
+        public bool DisconnectDevice(EntityUid uid, DeviceNetworkComponent? device, bool preventAutoConnect = true)
         {
-            if (!_connections.ContainsKey(netId))
-                return new List<DeviceNetworkComponent>();
+            if (!Resolve(uid, ref device, false))
+                return false;
 
-            var result = _connections[netId].FindAll(connection => connection.Frequency == frequency);
+            // If manually disconnected, don't auto reconnect when a game state is loaded.
+            if (preventAutoConnect)
+                device.AutoConnect = false;
 
-            return result;
+            return GetNetwork(device.DeviceNetId).Remove(device);
         }
 
-        private bool TryGetConnectionWithAddress(DeviceNetworkComponent.ConnectionType netId, int frequency, string address, [NotNullWhen(true)] out DeviceNetworkComponent connection)
+        /// <summary>
+        /// Checks if a device is already connected to its network
+        /// </summary>
+        /// <returns>True if the device was found in the network with its corresponding network id</returns>
+        public bool IsDeviceConnected(EntityUid uid, DeviceNetworkComponent? device)
         {
-            var connections = ConnectionsForFrequency(netId, frequency);
+            if (!Resolve(uid, ref device, false))
+                return false;
 
-            var result = connections.Find(dvc => dvc.Address == address);
+            if (!_networks.TryGetValue(device.DeviceNetId, out var deviceNet))
+                return false;
 
-            if(result != null)
-            {
-                connection = result;
-                return true;
-            }
-
-            connection = default!;
-            return false;
+            return deviceNet.Devices.ContainsValue(device);
         }
 
-        private List<DeviceNetworkComponent> ConnectionsWithReceiveAll(DeviceNetworkComponent.ConnectionType netId, int frequency)
+        /// <summary>
+        /// Checks if an address exists in the network with the given netId
+        /// </summary>
+        public bool IsAddressPresent(int netId, string? address)
         {
-            if (!_connections.ContainsKey(netId))
-                return new List<DeviceNetworkComponent>();
+            if (address == null || !_networks.TryGetValue(netId, out var network))
+                return false;
 
-            var result = _connections[netId].FindAll(device => device.Frequency == frequency && device.ReceiveAll);
-
-            return result;
+            return network.Devices.ContainsKey(address);
         }
 
-        private void SendPacket(NetworkPacket packet)
+        public void SetReceiveFrequency(EntityUid uid, uint? frequency, DeviceNetworkComponent? device = null)
         {
-            if (!TryGetConnectionWithAddress(packet.NetId, packet.Frequency, packet.Address, out var connection))
+            if (!Resolve(uid, ref device, false))
                 return;
 
-            var receivers = ConnectionsWithReceiveAll(packet.NetId, packet.Frequency);
-            receivers.Add(connection);
+            if (device.ReceiveFrequency == frequency) return;
 
-            SendToConnections(receivers, packet);
+            var deviceNet = GetNetwork(device.DeviceNetId);
+            deviceNet.Remove(device);
+            device.ReceiveFrequency = frequency;
+            deviceNet.Add(device);
         }
 
-        private void BroadcastPacket(NetworkPacket packet)
+        public void SetTransmitFrequency(EntityUid uid, uint? frequency, DeviceNetworkComponent? device = null)
         {
-            var receivers = ConnectionsForFrequency(packet.NetId, packet.Frequency);
-            SendToConnections(receivers, packet);
+            if (Resolve(uid, ref device, false))
+                device.TransmitFrequency = frequency;
         }
 
-        private void SendToConnections(List<DeviceNetworkComponent> connections, NetworkPacket packet)
+        public void SetReceiveAll(EntityUid uid, bool receiveAll, DeviceNetworkComponent? device = null)
         {
-            foreach (var connection in connections)
+            if (!Resolve(uid, ref device, false))
+                return;
+
+            if (device.ReceiveAll == receiveAll) return;
+
+            var deviceNet = GetNetwork(device.DeviceNetId);
+            deviceNet.Remove(device);
+            device.ReceiveAll = receiveAll;
+            deviceNet.Add(device);
+        }
+
+        public void SetAddress(EntityUid uid, string address, DeviceNetworkComponent? device = null)
+        {
+            if (!Resolve(uid, ref device, false))
+                return;
+
+            if (device.Address == address && device.CustomAddress) return;
+
+            var deviceNet = GetNetwork(device.DeviceNetId);
+            deviceNet.Remove(device);
+            device.CustomAddress = true;
+            device.Address = address;
+            deviceNet.Add(device);
+        }
+
+        public void RandomizeAddress(EntityUid uid, DeviceNetworkComponent? device = null)
+        {
+            if (!Resolve(uid, ref device, false))
+                return;
+            var deviceNet = GetNetwork(device.DeviceNetId);
+            deviceNet.Remove(device);
+            device.CustomAddress = false;
+            device.Address = "";
+            deviceNet.Add(device);
+        }
+
+        /// <summary>
+        ///     Try to find a device on a network using its address.
+        /// </summary>
+        private bool TryGetDevice(int netId, string address, [NotNullWhen(true)] out DeviceNetworkComponent? device) =>
+            GetNetwork(netId).Devices.TryGetValue(address, out device);
+
+        private void SendPacket(DeviceNetworkPacketEvent packet)
+        {
+            var network = GetNetwork(packet.NetId);
+            if (packet.Address == null)
             {
-                var beforeEvent = new BeforePacketSentEvent(packet.Sender.Owner);
-                RaiseLocalEvent(connection.Owner, beforeEvent, false);
-
-                if (!beforeEvent.Cancelled)
+                // Broadcast to all listening devices
+                if (network.ListeningDevices.TryGetValue(packet.Frequency, out var devices) && CheckRecipientsList(packet, ref devices))
                 {
-                    RaiseLocalEvent(connection.Owner, new PacketSentEvent(connection.Frequency, packet.Sender.Address, packet.Data, packet.Broadcast) , false);
+                    var deviceCopy = ArrayPool<DeviceNetworkComponent>.Shared.Rent(devices.Count);
+                    devices.CopyTo(deviceCopy);
+                    SendToConnections(deviceCopy.AsSpan(0, devices.Count), packet);
+                    ArrayPool<DeviceNetworkComponent>.Shared.Return(deviceCopy);
                 }
+            }
+            else
+            {
+                var totalDevices = 0;
+                var hasTargetedDevice = false;
+                if (network.ReceiveAllDevices.TryGetValue(packet.Frequency, out var devices))
+                {
+                    totalDevices += devices.Count;
+                }
+                if (TryGetDevice(packet.NetId, packet.Address, out var device) &&
+                    !device.ReceiveAll &&
+                    device.ReceiveFrequency == packet.Frequency)
+                {
+                    totalDevices += 1;
+                    hasTargetedDevice = true;
+                }
+                var deviceCopy = ArrayPool<DeviceNetworkComponent>.Shared.Rent(totalDevices);
+                if (devices != null)
+                {
+                    devices.CopyTo(deviceCopy);
+                }
+                if (hasTargetedDevice)
+                {
+                    deviceCopy[totalDevices - 1] = device!;
+                }
+                SendToConnections(deviceCopy.AsSpan(0, totalDevices), packet);
+                ArrayPool<DeviceNetworkComponent>.Shared.Return(deviceCopy);
             }
         }
 
-        internal struct NetworkPacket
+        /// <summary>
+        /// Sends the <see cref="BeforeBroadcastAttemptEvent"/> to the sending entity if the packets SendBeforeBroadcastAttemptEvent field is set to true.
+        /// The recipients is set to the modified recipient list.
+        /// </summary>
+        /// <returns>false if the broadcast was canceled</returns>
+        private bool CheckRecipientsList(DeviceNetworkPacketEvent packet, ref HashSet<DeviceNetworkComponent> recipients)
         {
-            public DeviceNetworkComponent.ConnectionType NetId;
-            public int Frequency;
-            public string Address;
-            public bool Broadcast;
-            public NetworkPayload Data;
-            public DeviceNetworkComponent Sender;
-        }
-    }
+            if (!_networks.ContainsKey(packet.NetId) || !_networks[packet.NetId].Devices.ContainsKey(packet.SenderAddress))
+                return false;
 
-    /// <summary>
-    /// Event raised before a device network packet is send.
-    /// Subscribed to by other systems to prevent the packet from being sent.
-    /// </summary>
-    public sealed class BeforePacketSentEvent : CancellableEntityEventArgs
-    {
-        /// <summary>
-        /// The EntityUid of the entity the packet was sent from.
-        /// </summary>
-        public EntityUid Sender;
+            var sender = _networks[packet.NetId].Devices[packet.SenderAddress];
+            if (!sender.SendBroadcastAttemptEvent)
+                return true;
 
-        public BeforePacketSentEvent(EntityUid sender)
-        {
-            Sender = sender;
-        }
-    }
+            var beforeBroadcastAttemptEvent = new BeforeBroadcastAttemptEvent(recipients);
+            RaiseLocalEvent(packet.Sender, beforeBroadcastAttemptEvent, true);
 
-    /// <summary>
-    /// Event raised when a device network packet gets sent.
-    /// </summary>
-    public sealed class PacketSentEvent : EntityEventArgs
-    {
-        /// <summary>
-        /// The frequency the packet is sent on.
-        /// </summary>
-        public int Frequency;
+            if (beforeBroadcastAttemptEvent.Cancelled || beforeBroadcastAttemptEvent.ModifiedRecipients == null)
+                return false;
 
-        /// <summary>
-        /// The device network address of the sending entity.
-        /// </summary>
-        public string SenderAddress;
-
-        /// <summary>
-        /// The data that is beeing sent.
-        /// </summary>
-        public NetworkPayload Data;
-
-        /// <summary>
-        /// Whether the packet was broadcasted.
-        /// </summary>
-        public bool Broadcast;
-
-        public PacketSentEvent(int frequency, string senderAddress, NetworkPayload data, bool broadcast)
-        {
-            Frequency = frequency;
-            SenderAddress = senderAddress;
-            Data = data;
-            Broadcast = broadcast;
+            recipients = beforeBroadcastAttemptEvent.ModifiedRecipients;
+            return true;
         }
 
+        private void SendToConnections(ReadOnlySpan<DeviceNetworkComponent> connections, DeviceNetworkPacketEvent packet)
+        {
+            if (Deleted(packet.Sender))
+            {
+                return;
+            }
+
+            var xform = Transform(packet.Sender);
+
+            var senderPos = _transformSystem.GetWorldPosition(xform);
+
+            foreach (var connection in connections)
+            {
+                if (connection.Owner == packet.Sender)
+                    continue;
+
+                BeforePacketSentEvent beforeEv = new(packet.Sender, xform, senderPos, connection.NetIdEnum.ToString(), packet.Frequency);
+                RaiseLocalEvent(connection.Owner, beforeEv, false);
+
+                if (!beforeEv.Cancelled)
+                    RaiseLocalEvent(connection.Owner, packet, false);
+                else
+                    beforeEv.Uncancel();
+            }
+        }
     }
 }

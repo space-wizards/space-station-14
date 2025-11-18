@@ -1,51 +1,75 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
+using Robust.Shared.Player;
 
 namespace Content.Server.Objectives.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
-    public sealed class ListObjectivesCommand : IConsoleCommand
+    [AdminCommand(AdminFlags.Logs)]
+    public sealed class ListObjectivesCommand : LocalizedCommands
     {
-        public string Command => "lsobjectives";
-        public string Description => "Lists all objectives in a players mind.";
-        public string Help => "lsobjectives [<username>]";
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IPlayerManager _players = default!;
+
+        public override string Command => "lsobjectives";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            IPlayerData? data;
-            if (args.Length == 0 && player != null)
+            ICommonSession? player;
+            if (args.Length > 0)
+                _players.TryGetSessionByUsername(args[0], out player);
+            else
+                player = shell.Player;
+
+            if (player == null)
             {
-                data = player.Data;
-            }
-            else if (player == null || !IoCManager.Resolve<IPlayerManager>().TryGetPlayerDataByUsername(args[0], out data))
-            {
-                shell.WriteLine("Can't find the playerdata.");
+                shell.WriteError(LocalizationManager.GetString("shell-target-player-does-not-exist"));
                 return;
             }
 
-            var mind = data.ContentData()?.Mind;
-            if (mind == null)
+            var minds = _entities.System<SharedMindSystem>();
+            if (!minds.TryGetMind(player, out var mindId, out var mind))
             {
-                shell.WriteLine("Can't find the mind.");
+                shell.WriteError(LocalizationManager.GetString("shell-target-entity-does-not-have-message", ("missing", "mind")));
                 return;
             }
 
-            shell.WriteLine($"Objectives for player {data.UserId}:");
-            var objectives = mind.AllObjectives.ToList();
+            shell.WriteLine($"Objectives for player {player.UserId}:");
+            var objectives = mind.Objectives.ToList();
             if (objectives.Count == 0)
             {
                 shell.WriteLine("None.");
             }
+
+            var objectivesSystem = _entities.System<SharedObjectivesSystem>();
             for (var i = 0; i < objectives.Count; i++)
             {
-                shell.WriteLine($"- [{i}] {objectives[i]}");
+                var info = objectivesSystem.GetInfo(objectives[i], mindId, mind);
+                if (info == null)
+                {
+                    shell.WriteLine($"- [{i}] {objectives[i]} - INVALID");
+                }
+                else
+                {
+
+                    var progress = (int) (info.Value.Progress * 100f);
+                    shell.WriteLine($"- [{i}] {objectives[i]} ({info.Value.Title}) ({progress}%)");
+                }
+            }
+        }
+
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), LocalizationManager.GetString("shell-argument-username-hint"));
             }
 
+            return CompletionResult.Empty;
         }
     }
 }

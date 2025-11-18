@@ -1,50 +1,85 @@
 - type: reagent
   id: EZNutrient
-  name: EZ nutrient
+  name: reagent-name-e-z-nutrient
   group: Botanical
-  desc: Give your plants some of those EZ nutrients!
+  desc: reagent-desc-e-z-nutrient
+  flavor: bitter
   color: "#664330"
-  physicalDesc: thick
+  physicalDesc: reagent-physical-desc-thick
   plantMetabolism:
     - !type:PlantAdjustNutrition
-      amount: 1
+      amount: 2
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
 
 - type: reagent
   id: Left4Zed
-  name: left-4-zed
+  name: reagent-name-left4-zed
   group: Botanical
-  desc: A cocktail of mutagenic compounds, which cause plant life to become highly unstable.
+  desc: reagent-desc-left4-zed
+  flavor: bitter
   color: "#5b406c"
-  physicalDesc: heterogeneous
+  physicalDesc: reagent-physical-desc-heterogeneous
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 1
     - !type:PlantAdjustHealth
       amount: -0.5
     - !type:PlantAdjustMutationMod
-      prob: 0.3
-      amount: 0.2
+      probability: 0.3
+      amount: 0.4
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
 
 - type: reagent
   id: PestKiller
-  name: pest killer
+  name: reagent-name-pest-killer
   group: Botanical
-  desc: A mixture that targets pests.
+  desc: reagent-desc-pest-killer
+  flavor: bitter
   color: "#9e9886"
-  physicalDesc: bubbling
+  physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 4
     - !type:PlantAdjustPests
       amount: -6
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
 
 - type: reagent
   id: PlantBGone
-  name: plant-B-gone
+  name: reagent-name-plant-b-gone
   group: Botanical
-  desc: A harmful toxic mixture to kill plantlife. Do not ingest!
+  desc: reagent-desc-plant-b-gone
+  flavor: bitter
   color: "#49002E"
-  physicalDesc: bubbling
+  physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 6
@@ -54,44 +89,121 @@
       amount: -20
     - !type:PlantAdjustMutationMod
       amount: 0.1
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -4
+            Blunt: 2
+            Slash: 1
+            Piercing: 1
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
 
 - type: reagent
   id: RobustHarvest
-  name: robust harvest
+  name: reagent-name-robust-harvest
   group: Botanical
-  desc: Plant-enhancing hormones, good for increasing potency.
+  desc: reagent-desc-robust-harvest
+  flavor: bitter
   color: "#3e901c"
-  physicalDesc: robust
+  physicalDesc: reagent-physical-desc-robust
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 0.05
     - !type:PlantAdjustWeeds
-      prob: 0.025
+      probability: 0.025
       amount: 1
     - !type:PlantAdjustPests
-      prob: 0.025
+      probability: 0.025
       amount: 1
     - !type:RobustHarvest {}
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -2
+            Blunt: -3
+            Slash: -3
+            Piercing: -3
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
+        - !type:ReagentCondition
+          reagent: RobustHarvest
+          min: 30
+        damage:
+          types:
+            Asphyxiation: 1
+            Heat: 2
+            Poison: 1
+    Medicine:
+      effects:
+      - !type:Polymorph
+        prototype: TreeMorph
+        conditions:
+          - !type:MetabolizerTypeCondition
+            type: [Plant]
+          - !type:ReagentCondition
+            reagent: RobustHarvest
+            min: 80
+
+- type: reagent
+  id: Sedin
+  name: reagent-name-sedin
+  group: Botanical
+  desc: reagent-desc-sedin
+  flavor: bitter
+  color: "#3CB371"
+  physicalDesc: reagent-physical-desc-sickly
+  plantMetabolism:
+    - !type:PlantAdjustHealth
+      amount: -2
+    - !type:PlantRestoreSeeds
+      probability: 0.20
+    - !type:PlantAdjustPotency
+      amount: -3 # Match this with current rate of Robust Harvest potency increase
 
 - type: reagent
   id: WeedKiller
-  name: weed killer
+  name: reagent-name-weed-killer
   group: Botanical
-  desc: A mixture that targets weeds.
+  desc: reagent-desc-weed-killer
+  flavor: bitter
   color: "#968395"
-  physicalDesc: bubbling
+  physicalDesc: reagent-physical-desc-bubbling
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 4
     - !type:PlantAdjustWeeds
       amount: -6
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 4
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [Plant]
 
 - type: reagent
   id: Ammonia
-  name: ammonia
+  name: reagent-name-ammonia
   group: Botanical
-  desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
-  physicalDesc: pungent
+  desc: reagent-desc-ammonia
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
   color: "#77b58e"
   boilingPoint: -33.0
   meltingPoint: -77.7
@@ -105,15 +217,68 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: 1
+    Gas:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Rat ]
+          inverted: true
+        - !type:ReagentCondition
+          reagent: Ammonia
+          min: 1
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.25
+      - !type:Vomit
+        probability: 0.12
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Rat, Vox ]
+          inverted: true
+        - !type:ReagentCondition
+          reagent: Ammonia
+          min: 0.8
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "ammonia-smell" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ammonia
+          min: 0.25
+      - !type:HealthChange
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Rat ]
+        - !type:ReagentCondition
+          reagent: Ammonia
+          min: 1
+        ignoreResistances: true
+        damage:
+          groups:
+            Brute: -2.5
+            Burn: -2.5
+          types:
+            Bloodloss: -5
+      - !type:Oxygenate # ammonia displaces nitrogen in vox blood
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Vox ]
+        factor: -4
+
 
 - type: reagent
   id: Diethylamine
-  name: diethylamine
+  name: reagent-name-diethylamine
   group: Botanical
-  desc: A very potent fertilizer.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-diethylamine
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bitter
   color: "#a1000b"
   boilingPoint: 55.5
   meltingPoint: -50.0
@@ -121,12 +286,12 @@
   - !type:PlantAdjustNutrition
     amount: 0.1
   - !type:PlantAdjustPests
-    prob: 0.1
+    probability: 0.1
     amount: -1
   - !type:PlantAdjustHealth
     amount: 0.1
   - !type:PlantAffectGrowth
-    prob: 0.2
+    probability: 0.2
     amount: 1
   - !type:PlantDiethylamine {}
   metabolisms:
@@ -134,5 +299,5 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Caustic: 1

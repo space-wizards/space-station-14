@@ -1,17 +1,14 @@
-using Content.Shared.Sound;
+using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Shared.Movement.Components
+namespace Content.Shared.Movement.Components;
+
+/// <summary>
+/// Changes footstep sound
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class FootstepModifierComponent : Component
 {
-    /// <summary>
-    /// Changes footstep sound
-    /// </summary>
-    [RegisterComponent]
-    public sealed class FootstepModifierComponent : Component
-    {
-        [DataField("footstepSoundCollection", required: true)]
-        public SoundSpecifier SoundCollection = default!;
-
-        [DataField("variation")]
-        public float Variation = default;
-    }
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier? FootstepSoundCollection;
 }

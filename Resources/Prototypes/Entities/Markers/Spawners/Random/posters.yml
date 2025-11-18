@@ -6,7 +6,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Wallmounts/posters.rsi/random_anything.png
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_anything
   - type: RandomSpawner
     offset: 0
     prototypes:
@@ -25,14 +26,15 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Wallmounts/posters.rsi/random_contraband.png
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_contraband
   - type: RandomSpawner
     offset: 0
     prototypes:
       - PosterContrabandFreeTonto
       - PosterContrabandAtmosiaDeclarationIndependence
       - PosterContrabandFunPolice
-      - PosterContrabandLustyExomorph
+      - PosterContrabandRealExomorph
       - PosterContrabandSyndicateRecruitment
       - PosterContrabandClown
       - PosterContrabandSmoke
@@ -63,7 +65,7 @@
       - PosterContrabandPunchShit
       - PosterContrabandTheGriffin
       - PosterContrabandFreeDrone
-      - PosterContrabandBustyBackdoorExoBabes6
+      - PosterContrabandRouny
       - PosterContrabandRobustSoftdrinks
       - PosterContrabandShamblersJuice
       - PosterContrabandPwrGame
@@ -76,9 +78,23 @@
       - PosterContrabandFreeSyndicateEncryptionKey
       - PosterContrabandBountyHunters
       - PosterContrabandTheBigGasTruth
-      - PosterContrabandGotWood
       - PosterContrabandWehWatches
       - PosterContrabandVoteWeh
+      - PosterContrabandBeachStarYamamoto
+      - PosterContrabandHighEffectEngineering
+      - PosterContrabandNuclearDeviceInformational
+      - PosterContrabandRevolt
+      - PosterContrabandRise
+      - PosterContrabandMoth
+      - PosterContrabandCybersun600
+      - PosterContrabandDonk
+      - PosterContrabandEnlistGorlex
+      - PosterContrabandInterdyne
+      - PosterContrabandWaffleCorp
+      - PosterContrabandMissingSpacepen
+      - PosterContrabandExoAcid
+      - PosterContrabandExoRun
+      - PosterContrabandExoChomp
     chance: 1
 
 - type: entity
@@ -89,7 +105,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Wallmounts/posters.rsi/random_legit.png
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_legit
   - type: RandomSpawner
     offset: 0
     prototypes:
@@ -130,4 +147,19 @@
       - PosterLegitCarbonDioxide
       - PosterLegitDickGumshue
       - PosterLegitThereIsNoGasGiant
+      - PosterLegitJustAWeekAway
+      - PosterLegitSecWatch
+      - PosterLegitVacation
+      - PosterLegitRenault
+      - PosterLegitNTTGC
+      - PosterLegitSafetyMothDelam
+      - PosterLegitSafetyMothEpi
+      - PosterLegitSafetyMothPiping
+      - PosterLegitSafetyMothMeth
+      - PosterLegitSafetyMothHardhat
+      - PosterLegitSafetyMothSSD
+      - PosterLegitOppenhopper
+      - PosterLegitTyrone
+      - PosterLegitHelio
+      - PosterLegitBotanyFear
     chance: 1

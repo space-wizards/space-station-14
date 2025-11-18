@@ -1,0 +1,176 @@
+- type: constructionGraph
+  id: WallmountTelescreen
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: TelescreenFrame
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+
+
+    - node: TelescreenFrame
+      entity: WallmountTelescreenFrame
+      edges:
+        - to: Wired
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 3
+
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+
+    - node: Wired
+      edges:
+        - to: Screen
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tag: SurveillanceCameraMonitorCircuitboard
+              name: construction-graph-tag-surveillance-camera-monitor-board
+              icon:
+                sprite: Objects/Misc/module.rsi
+                state: cpuboard
+
+        - to: TelescreenFrame
+          completed:
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 5
+            - !type:GivePrototype
+              prototype: SurveillanceCameraMonitorCircuitboard
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 2
+
+
+    - node: Screen
+      entity: WallmountTelescreenFrame
+      edges:
+        - to: Telescreen
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - material: Glass
+              amount: 2
+              doAfter: 2
+
+        - to: Wired
+          completed:
+            - !type:GivePrototype
+              prototype: SheetGlass1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+
+    - node: Telescreen
+      entity: WallmountTelescreen
+      edges:
+        - to: Screen
+          steps:
+            - tool: Screwing
+              doAfter: 3
+
+# TVs
+
+- type: constructionGraph
+  id: WallmountTelevision
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: TelevisionFrame
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2
+
+
+    - node: TelevisionFrame
+      entity: WallmountTelevisionFrame
+      edges:
+        - to: Wired
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 3
+
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+
+    - node: Wired
+      edges:
+        - to: Screen
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tag: ComputerTelevisionCircuitboard
+              name: construction-graph-tag-television-board
+              icon:
+                sprite: Objects/Misc/module.rsi
+                state: cpuboard
+
+        - to: TelevisionFrame
+          completed:
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 5
+            - !type:GivePrototype
+              prototype: ComputerTelevisionCircuitboard
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 2
+
+
+    - node: Screen
+      entity: WallmountTelevisionFrame
+      edges:
+        - to: Television
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - material: Glass
+              amount: 2
+              doAfter: 2
+
+        - to: Wired
+          completed:
+            - !type:GivePrototype
+              prototype: SheetGlass1
+              amount: 2
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+
+    - node: Television
+      entity: WallmountTelevision
+      edges:
+        - to: Screen
+          steps:
+            - tool: Screwing
+              doAfter: 3
+

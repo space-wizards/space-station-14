@@ -1,59 +1,91 @@
 - type: entity
-  id: CartridgeMagnumBase
-  name: cartridge (.40 magnum)
-  parent: BaseCartridge
+  id: BaseCartridgeMagnum
+  name: cartridge (.45 magnum)
+  parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
-  - type: Ammo
-    caliber: Magnum
+  - type: Tag
+    tags:
+      - CartridgeMagnum
+  - type: CartridgeAmmo
+    proto: BulletMagnum
   - type: Sprite
-    netsync: false
-    noRot: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
   - type: Appearance
-    visuals:
-    - type: SpentAmmoVisualizer
+  - type: SpentAmmoVisuals
 
 - type: entity
   id: CartridgeMagnum
-  name: cartridge (.40 magnum)
-  parent: CartridgeMagnumBase
+  name: cartridge (.45 magnum)
+  parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Standard kinetic ammunition is common and useful in most situations.
   components:
-  - type: Ammo
-    projectile: BulletMagnum
-
-- type: entity
-  id: CartridgeMagnumFlash
-  name: cartridge (.40 magnum flash)
-  parent: CartridgeMagnumBase
-  components:
-  - type: Ammo
-    projectile: BulletMagnumFlash
-
-- type: entity
-  id: CartridgeMagnumHV
-  name: cartridge (.40 magnum high-velocity)
-  parent: CartridgeMagnumBase
-  components:
-  - type: Ammo
-    projectile: BulletMagnumHV
-    ammoVelocity: 30
+  - type: CartridgeAmmo
+    proto: BulletMagnum
 
 - type: entity
   id: CartridgeMagnumPractice
-  name: cartridge (.40 magnum practice)
-  parent: CartridgeMagnumBase
+  name: cartridge (.45 magnum practice)
+  parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Chalk ammunition is generally non-harmful, used for practice.
   components:
-  - type: Ammo
-    projectile: BulletMagnumPractice
+  - type: CartridgeAmmo
+    proto: BulletMagnumPractice
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#dbdbdb"
 
 - type: entity
-  id: CartridgeMagnumRubber
-  name: cartridge (.40 magnum rubber)
-  parent: CartridgeMagnumBase
+  id: CartridgeMagnumIncendiary
+  name: cartridge (.45 magnum incendiary)
+  parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Incendiary ammunition contains a self-igniting compound that sets the target ablaze.
   components:
-  - type: Ammo
-    projectile: BulletMagnumRubber
+  - type: CartridgeAmmo
+    proto: BulletMagnumIncendiary
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#ff6e52"
+
+- type: entity
+  id: CartridgeMagnumAP
+  name: cartridge (.45 magnum armor-piercing)
+  parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Armor piercing ammunition is renowned for its ability to cut straight through body armor.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumAP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#0a0a0a"
+
+- type: entity
+  id: CartridgeMagnumUranium
+  name: cartridge (.45 magnum uranium)
+  parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Uranium ammunition replaces the lead core of the bullet with fissile material, irradiating the target from the inside.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumUranium
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#65fe08"

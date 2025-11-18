@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 
@@ -13,7 +12,6 @@ namespace Content.Server.Administration
     /// </remarks>
     /// <seealso cref="AnyCommandAttribute"/>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
-    [BaseTypeRequired(typeof(IConsoleCommand))]
     [MeansImplicitUse]
     public sealed class AdminCommandAttribute : Attribute
     {

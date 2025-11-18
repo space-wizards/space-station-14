@@ -1,0 +1,97 @@
+# Flowers
+- type: decal
+  id: FlowersBROne
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_flowers.rsi
+    state: flowersbr1
+
+- type: decal
+  id: FlowersBRTwo
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_flowers.rsi
+    state: flowersbr2
+
+- type: decal
+  id: FlowersBRThree
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_flowers.rsi
+    state: flowersbr3
+
+# Grass
+- type: decal
+  id: BushAOne
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: busha1
+
+- type: decal
+  id: BushATwo
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: busha2
+
+- type: decal
+  id: BushAThree
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: busha3
+
+- type: decal
+  id: BushCOne
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushc1
+
+- type: decal
+  id: BushCTwo
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushc2
+
+- type: decal
+  id: BushCThree
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushc3
+
+- type: decal
+  id: BushDOne
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushd1
+
+- type: decal
+  id: BushDTwo
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushd2
+
+- type: decal
+  id: BushDThree
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushd3

@@ -1,0 +1,17 @@
+﻿<widgets:ChatBox
+    xmlns="https://spacestation14.io"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Chat.Controls"
+    MouseFilter="Stop"
+    HorizontalExpand="True"
+    VerticalExpand="True"
+    MinSize="465 225">
+    <PanelContainer Name="ChatWindowPanel" Access="Public" HorizontalExpand="True" VerticalExpand="True"
+                    StyleClasses="StyleNano.StyleClassChatPanel">
+        <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True" VerticalExpand="True">
+            <OutputPanel Name="Contents" HorizontalExpand="True" VerticalExpand="True" Margin="8 8 8 4" ShowScrollDownButton="True" />
+            <controls:ChatInputBox HorizontalExpand="True" Name="ChatInput" Access="Public" Margin="2"/>
+        </BoxContainer>
+    </PanelContainer>
+</widgets:ChatBox>

@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Based on flatpacker sprites from vgstation, adapted by EmoGarbage404 (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "screen"
+    },
+    {
+      "name": "packing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inserting",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

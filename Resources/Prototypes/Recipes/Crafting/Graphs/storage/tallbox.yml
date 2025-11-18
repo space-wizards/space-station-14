@@ -1,0 +1,174 @@
+- type: constructionGraph
+  id: ClosetSteel
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 4
+        doAfter: 5
+  - node: done
+    entity: ClosetSteelBase
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
+  id: ClosetSteelSecure
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 4
+      - material: Cable
+        amount: 2
+        doAfter: 5
+  - node: done
+    entity: LockerSteel
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
+  id: ClosetFreezer
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 4
+      - material: Cable
+        amount: 2
+        doAfter: 5
+      - tag: FreezerElectronics
+        name: construction-graph-tag-freezer-electronics
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: door_electronics
+  - node: done
+    entity: LockerFreezerBase
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: FreezerElectronics
+        amount: 1
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
+  id: GunSafe
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 10
+      - material: Cable
+        amount: 5
+        doAfter: 5
+      - material: Plasteel
+        amount: 10
+        doAfter: 10
+  - node: done
+    entity: GunSafe
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 10
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 10
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
+  id: ClosetWall
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 4
+        doAfter: 5
+  - node: done
+    entity: ClosetWall
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity

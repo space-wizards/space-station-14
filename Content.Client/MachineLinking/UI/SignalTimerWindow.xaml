@@ -1,0 +1,17 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc signal-timer-menu-title}">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <BoxContainer Name="TextEdit" Orientation="Horizontal">
+            <Label Name="CurrentLabel" Text="{Loc signal-timer-menu-label}" />
+            <LineEdit Name="CurrentTextEdit" MinWidth="80" />
+        </BoxContainer>
+        <BoxContainer Name="DelayEdit" Orientation="Horizontal">
+            <Label Name="CurrentDelay" Text="{Loc signal-timer-menu-delay}" />
+            <LineEdit Name="CurrentDelayEditMinutes" MinWidth="32" />
+            <Label Name="Colon" Text=":" />
+            <LineEdit Name="CurrentDelayEditSeconds" MinWidth="32" />
+            <Label Name="DelayInfo" Text=" (mm:ss)" />
+        </BoxContainer>
+        <Button Name="StartTimer" Text="{Loc signal-timer-menu-start}" />
+    </BoxContainer>
+</DefaultWindow>

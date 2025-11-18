@@ -1,6 +1,7 @@
-﻿- type: accessGroup
+- type: accessGroup
   id: AllAccess
   tags:
+  - EmergencyShuttleRepealAll
   - Captain
   - HeadOfPersonnel
   - ChiefEngineer
@@ -8,9 +9,12 @@
   - HeadOfSecurity
   - ResearchDirector
   - Command
+  - Cryogenics
   - Security
+  - Detective
   - Armory
   - Brig
+  - Lawyer
   - Engineering
   - Medical
   - Quartermaster
@@ -27,3 +31,11 @@
   - Kitchen
   - Chapel
   - Hydroponics
+  - Atmospherics
+  - GenpopEnter
+  - GenpopLeave
+
+- type: accessGroup
+  id: General
+  tags:
+  - Maintenance

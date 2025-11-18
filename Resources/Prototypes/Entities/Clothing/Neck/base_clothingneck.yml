@@ -3,14 +3,45 @@
   parent: Clothing
   id: ClothingNeckBase
   components:
+  - type: Item
+    size: Small
   - type: Clothing
-    size: 10
     quickEquip: true
-    Slots:
+    slots:
     - neck
   - type: Sprite
     state: icon
   - type: Butcherable
     butcheringType: Knife
-    spawned: MaterialCloth1
-    pieces: 2
+    spawned:
+    - id: MaterialCloth1
+      amount: 2
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 100
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+
+- type: entity
+  abstract: true
+  parent: ClothingNeckBase
+  id: ClothingScarfBase
+  components:
+  - type: Tag
+    tags:
+    - Scarf
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon

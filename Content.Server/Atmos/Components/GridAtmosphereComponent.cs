@@ -1,27 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Serialization;
 using Content.Server.NodeContainer.NodeGroups;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-using Dependency = Robust.Shared.IoC.DependencyAttribute;
+using Content.Shared.Atmos.Components;
 
 namespace Content.Server.Atmos.Components
 {
     /// <summary>
     ///     Internal Atmos class. Use <see cref="AtmosphereSystem"/> to interact with atmos instead.
     /// </summary>
-    [ComponentReference(typeof(IAtmosphereComponent))]
-    [RegisterComponent, Serializable]
-    [Virtual]
-    public class GridAtmosphereComponent : Component, IAtmosphereComponent, ISerializationHooks
+    [RegisterComponent, Serializable,
+     Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem))]
+    public sealed partial class GridAtmosphereComponent : Component
     {
-        public virtual bool Simulated => true;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Simulated { get; set; } = true;
 
         [ViewVariables]
         public bool ProcessingPaused { get; set; } = false;
@@ -30,16 +24,14 @@ namespace Content.Server.Atmos.Components
         public float Timer { get; set; } = 0f;
 
         [ViewVariables]
-        public int UpdateCounter { get; set; } = 0;
-
-        [DataField("uniqueMixes")]
-        public List<GasMixture>? UniqueMixes;
-
-        [DataField("tiles")]
-        public Dictionary<Vector2i, int>? TilesUniqueMixes;
+        public int UpdateCounter { get; set; } = 1; // DO NOT SET TO ZERO BY DEFAULT! It will break roundstart atmos...
 
         [ViewVariables]
-        public readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
+        [IncludeDataField(customTypeSerializer:typeof(TileAtmosCollectionSerializer))]
+        public Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
+
+        [ViewVariables]
+        public HashSet<TileAtmosphere> MapTiles = new(1000);
 
         [ViewVariables]
         public readonly HashSet<TileAtmosphere> ActiveTiles = new(1000);
@@ -71,29 +63,65 @@ namespace Content.Server.Atmos.Components
         [ViewVariables]
         public int HighPressureDeltaCount => HighPressureDelta.Count;
 
+        /// <summary>
+        /// A list of entities that have a <see cref="DeltaPressureComponent"/> and are to
+        /// be processed by the <see cref="DeltaPressureSystem"/>, if enabled.
+        ///
+        /// To prevent massive bookkeeping overhead, this list is processed in-place,
+        /// with add/remove/find operations helped via a dict.
+        /// </summary>
+        /// <remarks>If you want to add/remove/find entities in this list,
+        /// use the API methods in the Atmospherics API.</remarks>
+        [ViewVariables]
+        public readonly List<Entity<DeltaPressureComponent>> DeltaPressureEntities =
+            new(AtmosphereSystem.DeltaPressurePreAllocateLength);
+
+        /// <summary>
+        /// An index lookup for the <see cref="DeltaPressureEntities"/> list.
+        /// Used for add/remove/find operations to speed up processing.
+        /// </summary>
+        public readonly Dictionary<EntityUid, int> DeltaPressureEntityLookup =
+            new(AtmosphereSystem.DeltaPressurePreAllocateLength);
+
+        /// <summary>
+        /// Integer that indicates the current position in the
+        /// <see cref="DeltaPressureEntities"/> list that is being processed.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public int DeltaPressureCursor;
+
+        /// <summary>
+        /// Queue of entities that need to have damage applied to them.
+        /// </summary>
+        [ViewVariables]
+        public readonly ConcurrentQueue<AtmosphereSystem.DeltaPressureDamageResult> DeltaPressureDamageResults = new();
+
         [ViewVariables]
         public readonly HashSet<IPipeNet> PipeNets = new();
 
         [ViewVariables]
-        public readonly HashSet<AtmosDeviceComponent> AtmosDevices = new();
+        public readonly HashSet<Entity<AtmosDeviceComponent>> AtmosDevices = new();
 
         [ViewVariables]
-        public Queue<TileAtmosphere> CurrentRunTiles = new();
+        public readonly Queue<TileAtmosphere> CurrentRunTiles = new();
 
         [ViewVariables]
-        public Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
+        public readonly Queue<ExcitedGroup> CurrentRunExcitedGroups = new();
 
         [ViewVariables]
-        public Queue<IPipeNet> CurrentRunPipeNet = new();
+        public readonly Queue<IPipeNet> CurrentRunPipeNet = new();
 
         [ViewVariables]
-        public Queue<AtmosDeviceComponent> CurrentRunAtmosDevices = new();
+        public readonly Queue<Entity<AtmosDeviceComponent>> CurrentRunAtmosDevices = new();
 
         [ViewVariables]
         public readonly HashSet<Vector2i> InvalidatedCoords = new(1000);
 
         [ViewVariables]
-        public Queue<Vector2i> CurrentRunInvalidatedCoordinates = new();
+        public readonly Queue<TileAtmosphere> CurrentRunInvalidatedTiles = new();
+
+        [ViewVariables]
+        public readonly List<TileAtmosphere> PossiblyDisconnectedTiles = new(100);
 
         [ViewVariables]
         public int InvalidatedCoordsCount => InvalidatedCoords.Count;
@@ -102,35 +130,6 @@ namespace Content.Server.Atmos.Components
         public long EqualizationQueueCycleControl { get; set; }
 
         [ViewVariables]
-        public AtmosphereProcessingState State { get; set; } = AtmosphereProcessingState.TileEqualize;
-
-        void ISerializationHooks.BeforeSerialization()
-        {
-            var uniqueMixes = new List<GasMixture>();
-            var uniqueMixHash = new Dictionary<GasMixture, int>();
-            var tiles = new Dictionary<Vector2i, int>();
-
-            foreach (var (indices, tile) in Tiles)
-            {
-                if (tile.Air == null) continue;
-
-                if (uniqueMixHash.TryGetValue(tile.Air, out var index))
-                {
-                    tiles[indices] = index;
-                    continue;
-                }
-
-                uniqueMixes.Add(tile.Air);
-                var newIndex = uniqueMixes.Count - 1;
-                uniqueMixHash[tile.Air] = newIndex;
-                tiles[indices] = newIndex;
-            }
-
-            if (uniqueMixes.Count == 0) uniqueMixes = null;
-            if (tiles.Count == 0) tiles = null;
-
-            UniqueMixes = uniqueMixes;
-            TilesUniqueMixes = tiles;
-        }
+        public AtmosphereProcessingState State { get; set; } = AtmosphereProcessingState.Revalidate;
     }
 }

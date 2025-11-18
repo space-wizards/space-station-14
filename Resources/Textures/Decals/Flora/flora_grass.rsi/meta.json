@@ -1,0 +1,71 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commits https://github.com/tgstation/tgstation/commit/729d858807905263adab8b5a331c1d8a04982dd3, https://github.com/tgstation/tgstation/commit/79296e902cbdf2352c9303e4769ea39bf3b34e58",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "grassa1"
+        },
+        {
+            "name": "grassa2"
+        },
+        {
+            "name": "grassa3"
+        },
+        {
+            "name": "grassa4"
+        },
+        {
+            "name": "grassa5"
+        },
+        {
+            "name": "grassb1"
+        },
+        {
+            "name": "grassb2"
+        },
+        {
+            "name": "grassb3"
+        },
+        {
+            "name": "grassb4"
+        },
+        {
+            "name": "grassb5"
+        },
+        {
+            "name": "grassc1"
+        },
+        {
+            "name": "grassc2"
+        },
+        {
+            "name": "grassc3"
+        },
+        {
+            "name": "grassc4"
+        },
+        {
+            "name": "grassd1"
+        },
+        {
+            "name": "grassd2"
+        },
+        {
+            "name": "grassd3"
+        },
+        {
+            "name": "grasse1"
+        },
+        {
+            "name": "grasse2"
+        },
+        {
+            "name": "grasse3"
+        }
+    ]
+}

@@ -1,26 +1,26 @@
-using Content.Client.Traitor.Uplink;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Nuke
 {
     [UsedImplicitly]
     public sealed class NukeBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private NukeMenu? _menu;
 
-        public NukeBoundUserInterface([NotNull] ClientUserInterfaceComponent owner, [NotNull] object uiKey) : base(owner, uiKey)
+        public NukeBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
         protected override void Open()
         {
-            _menu = new NukeMenu();
-            _menu.OpenCentered();
-            _menu.OnClose += Close;
+            base.Open();
+
+            _menu = this.CreateWindow<NukeMenu>();
 
             _menu.OnKeypadButtonPressed += i =>
             {
@@ -37,7 +37,7 @@ namespace Content.Client.Nuke
 
             _menu.EjectButton.OnPressed += _ =>
             {
-                SendMessage(new NukeEjectMessage());
+                SendMessage(new ItemSlotButtonPressedEvent(SharedNukeComponent.NukeDiskSlotId));
             };
             _menu.AnchorButton.OnPressed += _ =>
             {
@@ -59,21 +59,9 @@ namespace Content.Client.Nuke
             switch (state)
             {
                 case NukeUiState msg:
-                {
                     _menu.UpdateState(msg);
                     break;
-                }
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            _menu?.Close();
-            _menu?.Dispose();
         }
     }
 }

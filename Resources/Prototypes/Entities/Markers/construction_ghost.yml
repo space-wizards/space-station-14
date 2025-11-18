@@ -1,11 +1,13 @@
 - type: entity
   name: construction ghost
   id: constructionghost
-  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     color: '#3F38'
   - type: ConstructionGhost
-  - type: Physics
   - type: Clickable
   - type: InteractionOutline
+  - type: GuideHelp
+    guides:
+    - Construction

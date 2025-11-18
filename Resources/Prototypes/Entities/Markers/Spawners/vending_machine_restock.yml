@@ -1,0 +1,63 @@
+- type: entity
+  id: SpawnVendingMachineRestockFoodDrink
+  name: Vending Machine Restock
+  suffix: "food or drink"
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Service/vending_machine_restock.rsi
+        state: base
+      - sprite: Objects/Specific/Service/vending_machine_restock.rsi
+        state: refill_discount
+  - type: ConditionalSpawner
+    prototypes:
+      - VendingMachineRestockDiscountDans
+      - VendingMachineRestockChang
+      - VendingMachineRestockDonut
+      - VendingMachineRestockGetmoreChocolateCorp
+      - VendingMachineRestockRobustSoftdrinks
+      - VendingMachineRestockHotDrinks
+      - VendingMachineRestockHappyHonk
+      - VendingMachineRestockCondimentStation
+
+- type: entity
+  id: SpawnVendingMachineRestockFood
+  name: Vending Machine Restock
+  suffix: "food"
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Service/vending_machine_restock.rsi
+        state: base
+      - sprite: Objects/Specific/Service/vending_machine_restock.rsi
+        state: refill_donuts
+  - type: ConditionalSpawner
+    prototypes:
+      - VendingMachineRestockDiscountDans
+      - VendingMachineRestockChang
+      - VendingMachineRestockDonut
+      - VendingMachineRestockGetmoreChocolateCorp
+      - VendingMachineRestockHappyHonk
+      - VendingMachineRestockCondimentStation
+
+- type: entity
+  id: SpawnVendingMachineRestockDrink
+  name: Vending Machine Restock
+  suffix: "drink"
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Service/vending_machine_restock.rsi
+        state: base
+      - sprite: Objects/Specific/Service/vending_machine_restock.rsi
+        state: refill_cola
+  - type: ConditionalSpawner
+    prototypes:
+      - VendingMachineRestockRobustSoftdrinks
+      - VendingMachineRestockHotDrinks

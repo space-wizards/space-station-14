@@ -1,0 +1,82 @@
+- type: inventoryTemplate
+  id: kangaroo
+  slots:
+  - name: mask
+    slotTexture: mask
+    slotFlags: MASK
+    uiWindowPos: 1,1
+    strippingWindowPos: 1,1
+    displayName: Mask
+    whitelist:
+      tags:
+        - PetWearable
+
+  - name: suitstorage
+    slotTexture: suit_storage
+    slotFlags: SUITSTORAGE
+    slotGroup: SecondHotbar
+    stripTime: 3
+    uiWindowPos: 2,0
+    strippingWindowPos: 2,5
+    displayName: Suit Storage
+    whitelist:
+      components:
+        - GasTank
+
+  - name: gloves
+    slotTexture: gloves
+    slotFlags: GLOVES
+    uiWindowPos: 0,1
+    strippingWindowPos: 2,2
+    displayName: Gloves
+    whitelist:
+      tags:
+        - Kangaroo
+
+  - name: belt
+    slotTexture: belt
+    fullTextureName: template_small
+    slotFlags: BELT
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 3,1
+    strippingWindowPos: 1,5
+    displayName: Belt
+    whitelist:
+      tags:
+        - Kangaroo
+
+  - name: pocket1
+    slotTexture: pocket
+    fullTextureName: template_small
+    slotFlags: POCKET
+    slotGroup: MainHotbar
+    stripTime: 3
+    uiWindowPos: 2,3
+    strippingWindowPos: 1,4
+    displayName: Pouch
+    stripHidden: true
+
+- type: inventoryTemplate
+  id: spacekangaroo
+  slots:
+  - name: pocket1
+    slotTexture: pocket
+    fullTextureName: template_small
+    slotFlags: POCKET
+    slotGroup: MainHotbar
+    stripTime: 3
+    uiWindowPos: 2,3
+    strippingWindowPos: 1,4
+    displayName: Pouch
+    stripHidden: true
+
+  - name: gloves
+    slotTexture: gloves
+    slotFlags: GLOVES
+    uiWindowPos: 1,0
+    strippingWindowPos: 2,2
+    displayName: Gloves
+    whitelist:
+      tags:
+        - Kangaroo

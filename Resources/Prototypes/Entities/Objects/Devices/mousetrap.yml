@@ -1,0 +1,76 @@
+- type: entity
+  name: mousetrap
+  parent: BaseItem
+  id: Mousetrap
+  description: Useful for catching rodents sneaking into your kitchen.
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/mousetrap.rsi
+      drawdepth: SmallMobs # if mice can hide under tables, so can mousetraps
+      layers:
+      - state: mousetrap
+        map: ["enum.ToggleableVisuals.Layer"]
+    - type: StepTrigger
+      intersectRatio: 0.2
+      requiredTriggeredSpeed: 2
+    - type: Mousetrap
+    - type: ItemToggle
+      soundActivate: "/Audio/Items/Handcuffs/cuff_end.ogg"
+      soundDeactivate: "/Audio/Items/snap.ogg"
+      popupActivate: mousetrap-on-activate
+      popupDeactivate: mousetrap-on-deactivate
+    - type: UseDelay
+    - type: ItemToggleOnTrigger
+      canActivate: false
+      showPopup: false # only show the popup when arming/disarming the trap in your hand
+    - type: TriggerOnStepTrigger
+    - type: PreventableStepTrigger
+    - type: DamageOnTrigger
+      targetUser: true
+      damage:
+        types:
+          Blunt: 2 # base damage, scales based on mass
+    - type: Item
+      sprite: Objects/Devices/mousetrap.rsi
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ToggleableVisuals.Enabled:
+          enum.ToggleableVisuals.Layer:
+            True: {state: mousetraparmed}
+            False: {state: mousetrap}
+    - type: Physics
+      bodyType: Dynamic
+    - type: CollisionWake
+      enabled: false
+    - type: Fixtures
+      fixtures:
+        slips:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.2,-0.2,0.2,0.2"
+          hard: false
+          layer:
+            - LowImpassable
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.2,-0.2,0.2,0.2"
+          density: 30
+          mask:
+            - ItemMask
+    - type: Rotatable
+
+- type: entity
+  name: mousetrap
+  suffix: Armed
+  parent: Mousetrap
+  id: MousetrapArmed
+  description: Useful for catching rodents sneaking into your kitchen.
+  components:
+  - type: Sprite
+    layers:
+    - state: mousetraparmed
+      map: ["enum.ToggleableVisuals.Layer"]
+  - type: ItemToggle
+    activated: true

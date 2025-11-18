@@ -1,15 +1,11 @@
-using System;
 using Content.Shared.Nutrition.EntitySystems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Nutrition.Components
 {
-    [Friend(typeof(SharedCreamPieSystem))]
+    [Access(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
-    public sealed class CreamPiedComponent : Component
+    public sealed partial class CreamPiedComponent : Component
     {
         [ViewVariables]
         public bool CreamPied { get; set; } = false;

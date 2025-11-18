@@ -1,107 +1,73 @@
-using System;
-using System.Collections.Generic;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
+using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Materials;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Research.Prototypes
 {
-    [NetSerializable, Serializable, Prototype("latheRecipe")]
-    public sealed class LatheRecipePrototype : IPrototype
+    [Prototype]
+    public sealed partial class LatheRecipePrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+        [IdDataField]
+        public string ID { get; private set; } = default!;
 
-        [DataField("name")]
-        private string _name = string.Empty;
+        /// <inheritdoc/>
+        [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<LatheRecipePrototype>))]
+        public string[]? Parents { get; private set; }
 
-        [DataField("icon")]
-        private SpriteSpecifier _icon = SpriteSpecifier.Invalid;
-
-        [DataField("description")]
-        private string _description = string.Empty;
-
-        [DataField("result", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string _result = string.Empty;
-
-        [DataField("completetime")]
-        private int _completeTime = 2500;
-
-        [DataField("materials", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
-        private Dictionary<string, int> _requiredMaterials = new();
+        /// <inheritdoc />
+        [NeverPushInheritance]
+        [AbstractDataField]
+        public bool Abstract { get; private set; }
 
         /// <summary>
         ///     Name displayed in the lathe GUI.
         /// </summary>
-        [ViewVariables]
-        public string Name
-        {
-            get
-            {
-                if (_name.Trim().Length != 0) return _name;
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype? prototype);
-                if (prototype?.Name != null)
-                    _name = prototype.Name;
-                return _name;
-            }
-        }
+        [DataField]
+        public LocId? Name;
 
         /// <summary>
         ///     Short description displayed in the lathe GUI.
         /// </summary>
-        [ViewVariables]
-        public string Description
-        {
-            get
-            {
-                if (_description.Trim().Length != 0) return _description;
-                var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null) return _description;
-                protoMan.TryIndex(_result, out EntityPrototype? prototype);
-                if (prototype?.Description != null)
-                    _description = prototype.Description;
-                return _description;
-            }
-        }
-
-        /// <summary>
-        ///     Texture path used in the lathe GUI.
-        /// </summary>
-        [ViewVariables]
-        public SpriteSpecifier Icon => _icon;
+        [DataField]
+        public LocId? Description;
 
         /// <summary>
         ///     The prototype name of the resulting entity when the recipe is printed.
         /// </summary>
-        [ViewVariables]
-        public string Result => _result;
+        [DataField]
+        public EntProtoId? Result;
+
+        [DataField]
+        public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2>? ResultReagents;
+
+        /// <summary>
+        ///     An entity whose sprite is displayed in the ui in place of the actual recipe result.
+        /// </summary>
+        [DataField]
+        public SpriteSpecifier? Icon;
+
+        [DataField("completetime")]
+        public TimeSpan CompleteTime = TimeSpan.FromSeconds(5);
 
         /// <summary>
         ///     The materials required to produce this recipe.
         ///     Takes a material ID as string.
         /// </summary>
-        [ViewVariables]
-        public Dictionary<string, int> RequiredMaterials
-        {
-            get => _requiredMaterials;
-            private set => _requiredMaterials = value;
-        }
+        [DataField]
+        public Dictionary<ProtoId<MaterialPrototype>, int> Materials = new();
 
+        [DataField]
+        public bool ApplyMaterialDiscount = true;
 
         /// <summary>
-        ///     How many milliseconds it'll take for the lathe to finish this recipe.
-        ///     Might lower depending on the lathe's upgrade level.
+        /// List of categories used for visually sorting lathe recipes in the UI.
         /// </summary>
-        [ViewVariables]
-        public int CompleteTime => _completeTime;
+        [DataField]
+        public List<ProtoId<LatheCategoryPrototype>> Categories = new();
     }
 }

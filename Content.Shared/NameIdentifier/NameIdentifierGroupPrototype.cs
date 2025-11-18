@@ -1,25 +1,35 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.NameIdentifier;
 
-[Prototype("nameIdentifierGroup")]
-public sealed class NameIdentifierGroupPrototype : IPrototype
+[Prototype]
+public sealed partial class NameIdentifierGroupPrototype : IPrototype
 {
-    [DataField("id", required: true)]
-    public string ID { get; } = default!;
+    [IdDataField]
+    public string ID { get; private set; } = default!;
 
     /// <summary>
-    ///     Should the identifier become the full name, or just append?
+    /// Should the identifier become the full name, or just append?
     /// </summary>
-    [DataField("fullName")]
+    [DataField]
     public bool FullName = false;
 
-    [DataField("prefix")]
-    public string? Prefix;
+    /// <summary>
+    /// Optional format identifier. If set, the name will be formatted using it (e.g., "MK-500").
+    /// If not set, only the numeric part will be used (e.g., "500").
+    /// </summary>
+    [DataField]
+    public LocId? Format;
 
-    [DataField("maxValue")]
-    public int MaxValue = 999;
+    /// <summary>
+    /// The maximal value appearing in an identifier.
+    /// </summary>
+    [DataField]
+    public int MaxValue = 1000;
 
-    [DataField("minValue")]
+    /// <summary>
+    /// The minimal value appearing in an identifier.
+    /// </summary>
+    [DataField]
     public int MinValue = 0;
 }

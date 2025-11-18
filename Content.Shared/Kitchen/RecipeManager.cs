@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.IoC;
+﻿using System.Linq;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen
@@ -15,7 +14,8 @@ namespace Content.Shared.Kitchen
             Recipes = new List<FoodRecipePrototype>();
             foreach (var item in _prototypeManager.EnumeratePrototypes<FoodRecipePrototype>())
             {
-                Recipes.Add(item);
+                if (!item.SecretRecipe)
+                    Recipes.Add(item);
             }
 
             Recipes.Sort(new RecipeComparer());
@@ -23,19 +23,9 @@ namespace Content.Shared.Kitchen
         /// <summary>
         /// Check if a prototype ids appears in any of the recipes that exist.
         /// </summary>
-        /// <param name="solidIds"></param>
-        /// <returns></returns>
         public bool SolidAppears(string solidId)
         {
-            foreach(var recipe in Recipes)
-            {
-                if(recipe.IngredientsSolids.ContainsKey(solidId))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return Recipes.Any(recipe => recipe.IngredientsSolids.ContainsKey(solidId));
         }
 
         private sealed class RecipeComparer : Comparer<FoodRecipePrototype>
@@ -47,7 +37,9 @@ namespace Content.Shared.Kitchen
                     return 0;
                 }
 
-                return -x.IngredientsReagents.Count.CompareTo(y.IngredientsReagents.Count);
+                var nx = x.IngredientCount();
+                var ny = y.IngredientCount();
+                return -nx.CompareTo(ny);
             }
         }
     }

@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Utility;
 
 namespace Content.Benchmarks
 {
     [SimpleJob]
-    public sealed class EntityFetchBenchmark
+    [Virtual]
+    public class EntityFetchBenchmark
     {
         [Params(1000)] public int N { get; set; }
 
@@ -187,9 +189,7 @@ namespace Content.Benchmarks
             public TEntity GetEntity(TEntityUid entityUid)
             {
                 if (!TryGetEntity(entityUid, out var entity))
-                {
-                    throw new ArgumentException();
-                }
+                    throw new ArgumentException($"Failed to get entity {entityUid} from storage.");
 
                 return entity;
             }
@@ -198,7 +198,7 @@ namespace Content.Benchmarks
         private sealed class GenEntityStorage : EntityStorage<GenEntity, GenEntityUid>
         {
             private (int generation, GenEntity entity)[] _entities = new (int, GenEntity)[1];
-            private readonly List<int> _availableSlots = new() {0};
+            private readonly List<int> _availableSlots = new() { 0 };
 
             public override bool TryGetEntity(GenEntityUid entityUid, out GenEntity entity)
             {

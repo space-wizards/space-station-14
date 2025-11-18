@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "created by deltanedas (github) for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "statue"
+    },
+    {
+      "name": "icon"
+    },
+    {
+      "name": "eyes"
+    },
+    {
+      "name": "eyes_unshaded"
+    },
+    {
+      "name": "teeth_unshaded"
+    }
+  ]
+}

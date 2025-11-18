@@ -1,32 +1,16 @@
-
 ## Traitor
 
-# Shown at the end of a round of Traitor
-traitor-round-end-result = {$traitorCount ->
-    [one] There was one traitor.
-    *[other] There were {$traitorCount} traitors.
-}
+traitor-round-end-codewords = The codewords were: [color=White]{$codewords}[/color]
+traitor-round-end-agent-name = traitor
+
+objective-issuer-syndicate = [color=crimson]The Syndicate[/color]
+objective-issuer-unknown = Unknown
 
 # Shown at the end of a round of Traitor
-traitor-user-was-a-traitor = [color=gray]{$user}[/color] was a traitor.
-traitor-user-was-a-traitor-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) was a traitor.
-traitor-was-a-traitor-named = [color=White]{$name}[/color] was a traitor.
-
-traitor-user-was-a-traitor-with-objectives = [color=gray]{$user}[/color] was a traitor who had the following objectives:
-traitor-user-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) was a traitor who had the following objectives:
-traitor-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] was a traitor who had the following objectives:
-
-preset-traitor-objective-issuer-syndicate = [color=#87cefa]The Syndicate[/color]
-
-# Shown at the end of a round of Traitor
-traitor-objective-condition-success = {$condition} | [color={$markupColor}]Success![/color]
-
-# Shown at the end of a round of Traitor
-traitor-objective-condition-fail = {$condition} | [color={$markupColor}]Failure![/color] ({$progress}%)
 
 traitor-title = Traitor
 traitor-description = There are traitors among us...
-traitor-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed.
+traitor-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Traitor.
 traitor-no-one-ready = No players readied up! Can't start Traitor.
 
 ## TraitorDeathMatch
@@ -39,5 +23,25 @@ traitor-death-match-end-round-description-entry = {$originalName}'s PDA, with {$
 ## TraitorRole
 
 # TraitorRole
-traitor-role-greeting = Hello Agent
-traitor-role-codewords = Your codewords are: {$codewords}
+traitor-role-greeting =
+    You are an agent sent by [color = darkred]The Syndicate[/color] on behalf of {$corporation}.
+    Your objectives and codewords are listed in the character menu. Use your uplink to buy the tools you'll need for this mission.
+    Death to Nanotrasen!
+traitor-role-codewords =
+    The codewords are: [color = lightgray]
+    {$codewords}.[/color]
+    Codewords can be used in regular conversation to identify yourself discreetly to other syndicate agents.
+    Listen for them, and keep them secret.
+traitor-role-uplink-code =
+    Set your ringtone to the notes [color = lightgray]{$code}[/color] to lock or unlock your uplink.
+    Remember to lock it after, or the station's crew might find it!
+traitor-role-uplink-implant =
+    Your uplink implant has been activated, access it from your hotbar.
+    The uplink is secure unless someone removes it from your body.
+
+# don't need all the flavour text for character menu
+traitor-role-codewords-short =
+    The codewords are:
+    {$codewords}.
+traitor-role-uplink-code-short = Your uplink code is {$code}. Set it as your PDA ringtone to access your uplink.
+traitor-role-uplink-implant-short = Your uplink was implanted. Access it from the action menu.

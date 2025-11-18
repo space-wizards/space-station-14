@@ -1,24 +1,17 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.Pow3r;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
+using System.Linq;
+using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
 
 namespace Content.Server.Power.NodeGroups
 {
     public interface IPowerNet : IBasePowerNet
     {
-        void AddSupplier(PowerSupplierComponent supplier);
-
-        void RemoveSupplier(PowerSupplierComponent supplier);
-
         void AddDischarger(BatteryDischargerComponent discharger);
 
         void RemoveDischarger(BatteryDischargerComponent discharger);
@@ -30,30 +23,22 @@ namespace Content.Server.Power.NodeGroups
 
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
     [UsedImplicitly]
-    public sealed class PowerNet : BaseNetConnectorNodeGroup<IPowerNet>, IPowerNet
+    public sealed partial class PowerNet : BasePowerNet<IPowerNet>, IPowerNet
     {
-        private readonly PowerNetSystem _powerNetSystem = EntitySystem.Get<PowerNetSystem>();
-
-        [ViewVariables] public readonly List<PowerSupplierComponent> Suppliers = new();
-        [ViewVariables] public readonly List<PowerConsumerComponent> Consumers = new();
         [ViewVariables] public readonly List<BatteryChargerComponent> Chargers = new();
         [ViewVariables] public readonly List<BatteryDischargerComponent> Dischargers = new();
 
-        [ViewVariables]
-        public PowerState.Network NetworkNode { get; } = new();
-
-        public override void Initialize(Node sourceNode)
+        public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
-            base.Initialize(sourceNode);
-
-            _powerNetSystem.InitPowerNet(this);
+            base.Initialize(sourceNode, entMan);
+            PowerNetSystem.InitPowerNet(this);
         }
 
         public override void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups)
         {
             base.AfterRemake(newGroups);
 
-            _powerNetSystem.DestroyPowerNet(this);
+            PowerNetSystem?.DestroyPowerNet(this);
         }
 
         protected override void SetNetConnectorNet(IBaseNetConnectorComponent<IPowerNet> netConnectorComponent)
@@ -61,74 +46,76 @@ namespace Content.Server.Power.NodeGroups
             netConnectorComponent.Net = this;
         }
 
-        public void AddSupplier(PowerSupplierComponent supplier)
-        {
-            supplier.NetworkSupply.LinkedNetwork = default;
-            Suppliers.Add(supplier);
-            _powerNetSystem.QueueReconnectPowerNet(this);
-        }
-
-        public void RemoveSupplier(PowerSupplierComponent supplier)
-        {
-            supplier.NetworkSupply.LinkedNetwork = default;
-            Suppliers.Remove(supplier);
-            _powerNetSystem.QueueReconnectPowerNet(this);
-        }
-
-        public void AddConsumer(PowerConsumerComponent consumer)
-        {
-            consumer.NetworkLoad.LinkedNetwork = default;
-            Consumers.Add(consumer);
-            _powerNetSystem.QueueReconnectPowerNet(this);
-        }
-
-        public void RemoveConsumer(PowerConsumerComponent consumer)
-        {
-            consumer.NetworkLoad.LinkedNetwork = default;
-            Consumers.Remove(consumer);
-            _powerNetSystem.QueueReconnectPowerNet(this);
-        }
-
         public void AddDischarger(BatteryDischargerComponent discharger)
         {
-            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
-            battery.NetworkBattery.LinkedNetworkCharging = default;
+            if (EntMan == null)
+                return;
+
+            var battery = EntMan.GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
+            DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == default);
+            battery.NetworkBattery.LinkedNetworkDischarging = default;
             Dischargers.Add(discharger);
-            _powerNetSystem.QueueReconnectPowerNet(this);
+            QueueNetworkReconnect();
         }
 
         public void RemoveDischarger(BatteryDischargerComponent discharger)
         {
+            if (EntMan == null)
+                return;
+
             // Can be missing if the entity is being deleted, not a big deal.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(discharger.Owner, out PowerNetworkBatteryComponent? battery))
-                battery.NetworkBattery.LinkedNetworkCharging = default;
+            if (EntMan.TryGetComponent(discharger.Owner, out PowerNetworkBatteryComponent? battery))
+            {
+                // Linked network can be default if it was re-connected twice in one tick.
+                DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == default || battery.NetworkBattery.LinkedNetworkDischarging == NetworkNode.Id);
+                battery.NetworkBattery.LinkedNetworkDischarging = default;
+            }
 
             Dischargers.Remove(discharger);
-            _powerNetSystem.QueueReconnectPowerNet(this);
+            QueueNetworkReconnect();
         }
 
         public void AddCharger(BatteryChargerComponent charger)
         {
-            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
+            if (EntMan == null)
+                return;
+
+            var battery = EntMan.GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
+            DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == default);
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Add(charger);
-            _powerNetSystem.QueueReconnectPowerNet(this);
+            QueueNetworkReconnect();
         }
 
         public void RemoveCharger(BatteryChargerComponent charger)
         {
+            if (EntMan == null)
+                return;
+
             // Can be missing if the entity is being deleted, not a big deal.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(charger.Owner, out PowerNetworkBatteryComponent? battery))
+            if (EntMan.TryGetComponent(charger.Owner, out PowerNetworkBatteryComponent? battery))
+            {
+                // Linked network can be default if it was re-connected twice in one tick.
+                DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == default || battery.NetworkBattery.LinkedNetworkCharging == NetworkNode.Id);
                 battery.NetworkBattery.LinkedNetworkCharging = default;
+            }
 
             Chargers.Remove(charger);
-            _powerNetSystem.QueueReconnectPowerNet(this);
+            QueueNetworkReconnect();
+        }
+
+        public override void QueueNetworkReconnect()
+        {
+            PowerNetSystem?.QueueReconnectPowerNet(this);
         }
 
         public override string? GetDebugData()
         {
+            if (PowerNetSystem == null)
+                return null;
+
             // This is just recycling the multi-tool examine.
-            var ps = _powerNetSystem.GetNetworkStatistics(NetworkNode);
+            var ps = PowerNetSystem.GetNetworkStatistics(NetworkNode);
 
             float storageRatio = ps.InStorageCurrent / Math.Max(ps.InStorageMax, 1.0f);
             float outStorageRatio = ps.OutStorageCurrent / Math.Max(ps.OutStorageMax, 1.0f);

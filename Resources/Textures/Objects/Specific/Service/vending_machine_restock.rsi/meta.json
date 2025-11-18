@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Original source: https://github.com/tgstation/tgstation/blob/master/icons/obj/vending_restock.dmi @ commit 014c44ef6279beb02a5f3e76824439fa57181c22 - Additions and cleanup by @Vordenburg. Refill_honk made by brainfood1183 (github) for ss14. Refill_robotics made by potato1234x (github) for ss14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "green_bit"
+    },
+    {
+      "name": "refill_booze"
+    },
+    {
+      "name": "refill_chef"
+    },
+    {
+      "name": "refill_chinese"
+    },
+    {
+      "name": "refill_clothes"
+    },
+    {
+      "name": "refill_cola"
+    },
+    {
+      "name": "refill_condiment"
+    },
+    {
+      "name": "refill_costume"
+    },
+    {
+      "name": "refill_custom"
+    },
+    {
+      "name": "refill_dinner"
+    },
+    {
+      "name": "refill_discount"
+    },
+    {
+      "name": "refill_donksoft"
+    },
+    {
+      "name": "refill_donuts"
+    },
+    {
+      "name": "refill_engi"
+    },
+    {
+      "name": "refill_games"
+    },
+    {
+      "name": "refill_joe"
+    },
+    {
+      "name": "refill_medical"
+    },
+    {
+      "name": "refill_parts"
+    },
+    {
+      "name": "refill_plant"
+    },
+    {
+      "name": "refill_ptech"
+    },
+    {
+      "name": "refill_robotics"
+    },
+    {
+      "name": "refill_salvage"
+    },
+    {
+      "name": "refill_sec"
+    },
+    {
+      "name": "refill_smoke"
+    },
+    {
+      "name": "refill_snack"
+    },
+	{
+      "name": "refill_honk"
+    },
+    {
+      "name": "refill_tanks"
+    }
+  ]
+}

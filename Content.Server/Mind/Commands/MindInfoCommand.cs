@@ -1,48 +1,46 @@
 ﻿using System.Text;
 using Content.Server.Administration;
-using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Mind.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class MindInfoCommand : IConsoleCommand
+    public sealed class MindInfoCommand : LocalizedEntityCommands
     {
-        public string Command => "mindinfo";
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SharedRoleSystem _roles = default!;
+        [Dependency] private readonly SharedMindSystem _minds = default!;
 
-        public string Description => "Lists info for the mind of a specific player.";
+        public override string Command => "mindinfo";
 
-        public string Help => "mindinfo <session ID>";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
             {
-                shell.WriteLine("Expected exactly 1 argument.");
+                shell.WriteLine(Loc.GetString($"shell-need-exactly-one-argument"));
                 return;
             }
 
-            var mgr = IoCManager.Resolve<IPlayerManager>();
-            if (!mgr.TryGetSessionByUsername(args[0], out var data))
+            if (!_playerManager.TryGetSessionByUsername(args[0], out var session))
             {
-                shell.WriteLine("Can't find that mind");
+                shell.WriteLine(Loc.GetString($"cmd-mindinfo-mind-not-found"));
                 return;
             }
 
-            var mind = data.ContentData()?.Mind;
-
-            if (mind == null)
+            if (!_minds.TryGetMind(session, out var mindId, out var mind))
             {
-                shell.WriteLine("Can't find that mind");
+                shell.WriteLine(Loc.GetString($"cmd-mindinfo-mind-not-found"));
                 return;
             }
 
             var builder = new StringBuilder();
-            builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedComponent?.Owner);
-            foreach (var role in mind.AllRoles)
+            builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedEntity);
+
+            foreach (var role in _roles.MindGetAllRoleInfo(mindId))
             {
                 builder.AppendFormat("{0} ", role.Name);
             }

@@ -10,7 +10,7 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public sealed class RequestServerVerbsEvent : EntityEventArgs
     {
-        public readonly EntityUid EntityUid;
+        public readonly NetEntity EntityUid;
 
         public readonly List<string> VerbTypes = new();
 
@@ -18,11 +18,11 @@ namespace Content.Shared.Verbs
         ///     If the target item is inside of some storage (e.g., backpack), this is the entity that owns that item
         ///     slot. Needed for validating that the user can access the target item.
         /// </summary>
-        public readonly EntityUid? SlotOwner;
+        public readonly NetEntity? SlotOwner;
 
         public readonly bool AdminRequest;
 
-        public RequestServerVerbsEvent(EntityUid entityUid, List<Type> verbTypes, EntityUid? slotOwner = null, bool adminRequest = false)
+        public RequestServerVerbsEvent(NetEntity entityUid, IEnumerable<Type> verbTypes, NetEntity? slotOwner = null, bool adminRequest = false)
         {
             EntityUid = entityUid;
             SlotOwner = slotOwner;
@@ -40,9 +40,9 @@ namespace Content.Shared.Verbs
     public sealed class VerbsResponseEvent : EntityEventArgs
     {
         public readonly List<Verb>? Verbs;
-        public readonly EntityUid Entity;
+        public readonly NetEntity Entity;
 
-        public VerbsResponseEvent(EntityUid entity, SortedSet<Verb>? verbs)
+        public VerbsResponseEvent(NetEntity entity, SortedSet<Verb>? verbs)
         {
             Entity = entity;
 
@@ -57,10 +57,10 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public sealed class ExecuteVerbEvent : EntityEventArgs
     {
-        public readonly EntityUid Target;
+        public readonly NetEntity Target;
         public readonly Verb RequestedVerb;
 
-        public ExecuteVerbEvent(EntityUid target, Verb requestedVerb)
+        public ExecuteVerbEvent(NetEntity target, Verb requestedVerb)
         {
             Target = target;
             RequestedVerb = requestedVerb;
@@ -76,6 +76,13 @@ namespace Content.Shared.Verbs
         ///     Event output. Set of verbs that can be executed.
         /// </summary>
         public readonly SortedSet<TVerb> Verbs = new();
+
+        /// <summary>
+        /// Additional verb categories to show in the pop-up menu, even if there are no verbs currently associated
+        /// with that category. This is mainly useful to prevent verb menu pop-in. E.g., admins will get admin/debug
+        /// related verbs on entities, even though most of those verbs are all defined server-side.
+        /// </summary>
+        public readonly List<VerbCategory> ExtraCategories;
 
         /// <summary>
         ///     Can the user physically access the target?
@@ -107,12 +114,17 @@ namespace Content.Shared.Verbs
         public readonly bool CanInteract;
 
         /// <summary>
+        /// Cached version of CanComplexInteract
+        /// </summary>
+        public readonly bool CanComplexInteract;
+
+        /// <summary>
         ///     The User's hand component.
         /// </summary>
         /// <remarks>
         ///     This may be null if the user has no hands.
         /// </remarks>
-        public readonly SharedHandsComponent? Hands;
+        public readonly HandsComponent? Hands;
 
         /// <summary>
         ///     The entity currently being held by the active hand.
@@ -123,14 +135,16 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public readonly EntityUid? Using;
 
-        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, SharedHandsComponent? hands, bool canInteract, bool canAccess)
+        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, HandsComponent? hands, bool canInteract, bool canComplexInteract, bool canAccess, List<VerbCategory> extraCategories)
         {
             User = user;
             Target = target;
             Using = @using;
             Hands = hands;
             CanAccess = canAccess;
+            CanComplexInteract = canComplexInteract;
             CanInteract = canInteract;
+            ExtraCategories = extraCategories;
         }
     }
 }

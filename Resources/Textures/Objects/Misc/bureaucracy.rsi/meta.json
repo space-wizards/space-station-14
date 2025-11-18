@@ -1,32 +1,20 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. paper_stamp-syndicate by Veritius. paper_receipt, paper_receipt_horizontal by eoineoineoin. paper_stamp-greytide by ubaser. paper_stamp-psychologist by clinux. syndicate_card by Aserovich. paper_stamp_wizard by brassicaprime69 (Discord), acquisition_form acquisition_form_words and acquisition_form_header by sowelipililimute (GitHub)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "chestdrawer"
+      "name": "acquisition_form"
     },
     {
-      "name": "chestdrawer-open",
-      "delays": [
-        [
-          0.5,
-          0.1
-        ]
-      ]
+      "name": "acquisition_form_words"
     },
     {
-      "name": "clipboard"
-    },
-    {
-      "name": "clipboard_over"
-    },
-    {
-      "name": "clipboard_pen"
+      "name": "acquisition_form_header"
     },
     {
       "name": "envelope_closed"
@@ -42,30 +30,6 @@
     },
     {
       "name": "envelope_torn_overlay"
-    },
-    {
-      "name": "filingcabinet"
-    },
-    {
-      "name": "filingcabinet-open",
-      "delays": [
-        [
-          0.5,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "folder-base"
-    },
-    {
-      "name": "folder-colormap"
-    },
-    {
-      "name": "folder-white"
-    },
-    {
-      "name": "folder-overlay-paper"
     },
     {
       "name": "label_cart"
@@ -121,58 +85,7 @@
       "name": "paper_bin1"
     },
     {
-      "name": "paper_bin2"
-    },
-    {
-      "name": "paper_bin3"
-    },
-    {
       "name": "paper_plane"
-    },
-    {
-      "name": "paper_stamp-cap"
-    },
-    {
-      "name": "paper_stamp-ce"
-    },
-    {
-      "name": "paper_stamp-cent"
-    },
-    {
-      "name": "paper_stamp-chaplain"
-    },
-    {
-      "name": "paper_stamp-clown"
-    },
-    {
-      "name": "paper_stamp-cmo"
-    },
-    {
-      "name": "paper_stamp-deny"
-    },
-    {
-      "name": "paper_stamp-hop"
-    },
-    {
-      "name": "paper_stamp-hos"
-    },
-    {
-      "name": "paper_stamp-iaa"
-    },
-    {
-      "name": "paper_stamp-mime"
-    },
-    {
-      "name": "paper_stamp-qm"
-    },
-    {
-      "name": "paper_stamp-rd"
-    },
-    {
-      "name": "paper_stamp-trader"
-    },
-    {
-      "name": "paper_stamp-warden"
     },
     {
       "name": "paper_talisman"
@@ -220,24 +133,22 @@
       "name": "paper_words-blood"
     },
     {
-      "name": "pen"
-    },
-	{
-      "name": "overpriced_pen"
+      "name": "paper_receipt"
     },
     {
-      "name": "pen_blue"
+      "name": "paper_receipt_words"
     },
     {
-      "name": "pen_red"
+      "name": "paper_receipt_horizontal"
     },
     {
-      "name": "pen-inhand-left",
-      "directions": 4
+      "name": "paper_receipt_horizontal_words"
     },
     {
-      "name": "pen-inhand-right",
-      "directions": 4
+      "name": "paper_dotmatrix"
+    },
+    {
+      "name": "paper_dotmatrix_words"
     },
     {
       "name": "scrap"
@@ -246,65 +157,73 @@
       "name": "scrap_bloodied"
     },
     {
-      "name": "stamp-cap"
+      "name": "paper_stamp-cap"
     },
     {
-      "name": "stamp-ce"
+      "name": "paper_stamp-ce"
     },
     {
-      "name": "stamp-cent"
+      "name": "paper_stamp-centcom"
     },
     {
-      "name": "stamp-chaplain"
+      "name": "paper_stamp-chaplain"
     },
     {
-      "name": "stamp-clown"
+      "name": "paper_stamp-lawyer"
     },
     {
-      "name": "stamp-cmo"
+      "name": "paper_stamp-clown"
     },
     {
-      "name": "stamp-deny"
+      "name": "paper_stamp-cmo"
     },
     {
-      "name": "stamp-hop"
+      "name": "paper_stamp-deny"
     },
     {
-      "name": "stamp-hos"
+      "name": "paper_stamp-detective"
     },
     {
-      "name": "stamp-iaa"
+      "name": "paper_stamp-hop"
     },
     {
-      "name": "stamp-mime"
+      "name": "paper_stamp-hos"
     },
     {
-      "name": "stamp-qm"
+      "name": "paper_stamp-ok"
     },
     {
-      "name": "stamp-rd"
+      "name": "paper_stamp-mime"
     },
     {
-      "name": "stamp-trader"
+      "name": "paper_stamp-qm"
     },
     {
-      "name": "stamp-warden"
+      "name": "paper_stamp-rd"
     },
     {
-      "name": "tallcabinet"
+      "name": "paper_stamp-syndicate"
     },
     {
-      "name": "tallcabinet-open",
-      "delays": [
-        [
-          0.5,
-          0.1
-        ]
-      ]
+      "name": "paper_stamp-trader"
     },
     {
-      "name": "clipboard-equipped-BELT",
-      "directions": 4
+      "name": "paper_stamp-warden"
+    },
+    {
+      "name": "paper_stamp-generic"
+    },
+    {
+      "name": "paper_stamp-greytide"
+    },
+    {
+      "name": "syndicate_card"
+    },
+    {
+      "name": "paper_stamp-psychologist"
+    },
+    {
+      "name": "paper_stamp-wizard"
     }
   ]
 }

@@ -1,25 +1,21 @@
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Nutrition.Components
 {
-    [Friend(typeof(SharedCreamPieSystem))]
+    [Access(typeof(SharedCreamPieSystem))]
     [RegisterComponent]
-    public sealed class CreamPieComponent : Component
+    public sealed partial class CreamPieComponent : Component
     {
-        [ViewVariables]
         [DataField("paralyzeTime")]
-        public float ParalyzeTime { get; } = 1f;
+        public float ParalyzeTime { get; private set; } = 1f;
 
-        [ViewVariables]
         [DataField("sound")]
-        public SoundSpecifier Sound { get; } = new SoundCollectionSpecifier("desecration");
+        public SoundSpecifier Sound { get; private set; } = new SoundCollectionSpecifier("desecration");
 
         [ViewVariables]
         public bool Splatted { get; set; } = false;
+
+        public const string PayloadSlotName = "payloadSlot";
     }
 }

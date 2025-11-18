@@ -1,128 +1,305 @@
 
 # Base Alcohol
 
-# TODO MIRROR: drunkenness
-
 - type: reagent
   id: Absinthe
-  name: absinthe
+  name: reagent-name-absinthe
   parent: BaseAlcohol
-  desc: A anise-flavoured spirit derived from botanicals.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-absinthe
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: absinthe
   color: "#33EE00"
-  spritePath: absintheglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/absintheglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.3
+    Narcotic: # The green fairy
+      metabolismRate : 0.01
+      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.05
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        conditions:
+        - !type:ReagentCondition
+          reagent: Absinthe
+          min: 10
+        type: Add
+        time: 5
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - absinthe-effect-hear-voice
+        - absinthe-effect-feel-tulips
+        probability: 0.02
+        conditions:
+        - !type:ReagentCondition
+          reagent: Absinthe
+          min: 10
 
 - type: reagent
   id: Ale
-  name: ale
+  name: reagent-name-ale
   parent: BaseAlcohol
-  desc: A dark alchoholic beverage made by malted barley and yeast.
-  physicalDesc: bubbly
+  desc: reagent-desc-ale
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: ale
   color: "#663100"
-  spritePath: aleglass.rsi
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/aleglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.6
 
 - type: reagent
   id: Beer
-  name: beer
+  name: reagent-name-beer
   parent: BaseAlcohol
-  desc: An alcoholic beverage made from malted grains, hops, yeast, and water.
-  physicalDesc: bubbly
-  color: "#cfa85f"
-  spritePath: beerglass.rsi
+  desc: reagent-desc-beer
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: beer
+  color: "#e3e77b"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  fizziness: 0.6
 
 - type: reagent
   id: BlueCuracao
-  name: blue curacao
+  name: reagent-name-blue-curacao
   parent: BaseAlcohol
-  desc: Exotically blue, fruity drink, distilled from oranges.
-  physicalDesc: strong-smelling
-  color: "#0000CD"
-  spritePath: curacaoglass.rsi
-
-- type: reagent
-  id: Cognac
-  name: cognac
-  parent: BaseAlcohol
-  desc: A sweet and strongly alcoholic drink, twice distilled and left to mature for several years. Classy as fornication.
-  physicalDesc: strong-smelling
-  color: "#AB3C05"
-  spritePath: cognacglass.rsi
-
-- type: reagent
-  id: DeadRum
-  name: deadrum
-  parent: BaseAlcohol
-  desc: Distilled alcoholic drink made from saltwater.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: rumglass.rsi
-
-- type: reagent
-  id: Ethanol
-  name: ethanol
-  parent: BaseAlcohol
-  desc: A simple alcohol, makes you drunk if consumed, flammable.
-  physicalDesc: strong-smelling
-  color: "#b05b3c"
-  boilingPoint: 78.2
-  meltingPoint: -114.1
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          groups:
-            Caustic: 1
-
-- type: reagent
-  id: Gin
-  name: gin
-  parent: BaseAlcohol
-  desc: A distilled alcoholic drink that derives its predominant flavour from juniper berries.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: ginvodkaglass.rsi
-
-- type: reagent
-  id: Kahlua
-  name: kahlua
-  parent: BaseAlcohol
-  desc: A widely known, Mexican coffee-flavoured liqueur.
-  physicalDesc: cloudy
-  color: "#664300"
-  spritePath: kahluaglass.rsi
-
-- type: reagent
-  id: MelonLiquor
-  name: melon liquor
-  parent: BaseAlcohol
-  desc: A relatively sweet and fruity 46 proof liquor.
-  physicalDesc: strong-smelling
-  color: "#138808"
-  spritePath: emeraldglass.rsi
-
-- type: reagent
-  id: NTCahors
-  name: NeoTheology Cahors Wine
-  parent: BaseAlcohol
-  desc: Fortified dessert wine made from cabernet sauvignon, saperavi and other grapes.
-  physicalDesc: strong-smelling
-  color: "#7E4043"
-  spritePath: wineglass.rsi
-
-- type: reagent
-  id: PoisonWine
-  name: poison wine
-  parent: BaseAlcohol
-  desc: Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!
-  physicalDesc: strong-smelling
-  color: "#000000"
-  spritePath: pwineglass.rsi
+  desc: reagent-desc-blue-curacao
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: bluecuracao
+  color: "#0099FF"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/curacaoglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
         factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.1
+
+- type: reagent
+  id: Cognac
+  name: reagent-name-cognac
+  parent: BaseAlcohol
+  desc: reagent-desc-cognac
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: cognac
+  color: "#AB3C05"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cognacglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: DeadRum
+  name: reagent-name-dead-rum
+  parent: BaseAlcohol
+  desc: reagent-desc-dead-rum
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: rum
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rumglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: Ethanol
+  name: reagent-name-ethanol
+  parent: BaseAlcohol
+  desc: reagent-desc-ethanol
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: alcohol
+  color: "#b05b3c"
+  boilingPoint: 78.2
+  meltingPoint: -114.1
+  metabolisms:
+    Alcohol:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 15
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+          inverted: true
+        damage:
+          types:
+            Poison: 0.1
+      # dwarves take less toxin damage and heal a marginal amount of brute
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 15
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+        damage:
+          types:
+            Poison: 0.02
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 15
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+        damage:
+          groups:
+            Brute: -0.1
+      - !type:Vomit
+        probability: 0.04
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 12
+        # dwarves immune to vomiting from alcohol
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+          inverted: true
+      - !type:Drunk
+        boozePower: 2
+
+- type: reagent
+  id: Gin
+  name: reagent-name-gin
+  parent: BaseAlcohol
+  desc: reagent-desc-gin
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: gin
+  color: "#664300"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: CoffeeLiqueur
+  name: reagent-name-coffeeliqueur
+  parent: BaseAlcohol
+  desc: reagent-desc-coffeeliqueur
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: coffeeliquor
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/coffeeliqueurglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
+  id: MelonLiquor
+  name: reagent-name-melon-liquor
+  parent: BaseAlcohol
+  desc: reagent-desc-melon-liquor
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: watermelon
+  color: "#00FF33"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/emeraldglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
+  id: NTCahors
+  name: reagent-name-n-t-cahors
+  parent: BaseAlcohol
+  desc: reagent-desc-n-t-cahors
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bitter
+  color: "#7E4043"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
+  id: PoisonWine
+  name: reagent-name-poison-wine
+  parent: BaseAlcohol
+  desc: reagent-desc-poison-wine
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bitter
+  color: "#990066"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/pwineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.05
     Poison:
       effects:
       - !type:HealthChange
@@ -132,255 +309,650 @@
 
 - type: reagent
   id: Rum
-  name: rum
+  name: reagent-name-rum
   parent: BaseAlcohol
-  desc: Distilled alcoholic drink made from sugarcane byproducts.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: rumglass.rsi
+  desc: reagent-desc-rum
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: rum
+  color: "#f09f42"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rumglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
 
 - type: reagent
   id: Sake
-  name: sake
+  name: reagent-name-sake
   parent: BaseAlcohol
-  desc: Alcoholic beverage made by fermenting rice that has been polished.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-sake
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: sake
   color: "#DDDDDD"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sakeglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
 
 - type: reagent
   id: Tequila
-  name: tequila
+  name: reagent-name-tequila
   parent: BaseAlcohol
-  desc: A strong and mildly flavoured, mexican produced spirit.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-tequila
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: tequila
   color: "#d7d1d155"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/tequillaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
 
 - type: reagent
   id: Vermouth
-  name: vermouth
+  name: reagent-name-vermouth
   parent: BaseAlcohol
-  desc: Aromatized, fortified white wine flavored with various botanicals.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-vermouth
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: vermouth
   color: "#91FF91"
-  spritePath: vermouthglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/vermouthglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Vodka
-  name: vodka
+  name: reagent-name-vodka
   parent: BaseAlcohol
-  desc: Clear distilled alcoholic beverage that originates from Poland and Russia.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-vodka
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: vodka
   color: "#d1d1d155"
-  spritePath: ginvodkaglass.rsi
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
 
 - type: reagent
   id: Whiskey
-  name: whiskey
+  name: reagent-name-whiskey
   parent: BaseAlcohol
-  desc: A type of distilled alcoholic beverage made from fermented grain mash.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: whiskeyglass.rsi
+  desc: reagent-desc-whiskey
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: whiskey
+  color: "#ee7732"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
 
 - type: reagent
   id: Wine
-  name: wine
+  name: reagent-name-wine
   parent: BaseAlcohol
-  desc: An premium alchoholic beverage made from distilled grape juice.
-  physicalDesc: translucent
+  desc: reagent-desc-wine
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: shittywine
   color: "#7E4043"
-  spritePath: wineglass.rsi
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
+  id: Champagne
+  name: reagent-name-champagne
+  parent: BaseAlcohol
+  desc: reagent-desc-champagne
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: champagne
+  color: "#FCFCEE"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/champagneglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.3
+  fizziness: 0.8
 
 # Mixed Alcohol
 
 - type: reagent
   id: AcidSpit
-  name: acidspit
+  name: reagent-name-acid-spit
   parent: BaseAlcohol
-  desc: A drink for the daring, can be deadly if incorrectly prepared!
-  physicalDesc: strong-smelling
+  desc: reagent-desc-acid-spit
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: acidspit
   color: "#365000"
-  spritePath: acidspitglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/acidspitglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
-  id: AlliesCocktail #haha, cock. that's hot
-  name: allies cocktail
+  id: AlienBrainHemorrhage
+  name: reagent-name-alien-brain-hemorrhage
   parent: BaseAlcohol
-  desc: A drink made from your allies, not as sweet as when made from your enemies.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-alien-brain-hemorrhage
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: alienbrainhemorrhage
+  color: "#FFFDD0"
+  metamorphicSprite:
+      sprite: Objects/Consumable/Drinks/alienbrainhemorrhage.rsi
+      state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: AlliesCocktail
+  name: reagent-name-allies-cocktail
+  parent: BaseAlcohol
+  desc: reagent-desc-allies-cocktail
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: alliescocktail
   color: "#00664d"
-  spritePath: alliescocktail.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/alliescocktail.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Aloe
-  name: aloe
+  name: reagent-name-aloe
   parent: BaseAlcohol
-  desc: So very, very, very good.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-aloe
+  physicalDesc: reagent-physical-desc-aromatic
+  flavor: aloe
   color: "#192c00"
-  spritePath: aloe.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/aloe.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Amasec
-  name: amasec
+  name: reagent-name-amasec
   parent: BaseAlcohol
-  desc: Official drink of the Gun Club!
-  physicalDesc: strong-smelling
+  desc: reagent-desc-amasec
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: amasec
   color: "#124da7"
-  spritePath: amasecglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/amasecglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Andalusia
-  name: andalusia
+  name: reagent-name-andalusia
   parent: BaseAlcohol
-  desc: A nice, strangely named drink.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-andalusia
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: andalusia
   color: "#665700"
-  spritePath: andalusia.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/andalusia.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+#Antifreeze as a drink is a bright blue color while it is an orangish red otherwise.
+#As a result this sprite doesn't need changing.
 
 - type: reagent
   id: Antifreeze
-  name: antifreeze
+  name: reagent-name-antifreeze
   parent: BaseAlcohol
-  desc: Ultimate refreshment.
-  physicalDesc: translucent
+  desc: reagent-desc-antifreeze
+  physicalDesc: reagent-physical-desc-translucent
+  flavor: antifreeze
   color: "#ff7d63"
-  spritePath: antifreeze.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/antifreeze.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
 
 - type: reagent
   id: AtomicBomb
-  name: atomic bomb
+  name: reagent-name-atomic-bomb
   parent: BaseAlcohol
-  desc: Nuclear proliferation never tasted so good.
-  physicalDesc: cloudy
+  desc: reagent-desc-atomic-bomb
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: atomicbomb
   color: "#666300"
-  spritePath: atomicbombglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/atomicbombglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+      - !type:AdjustReagent
+        reagent: Uranium
+        amount: 0.05
 
 - type: reagent
   id: B52
-  name: b-52
+  name: reagent-name-b52
   parent: BaseAlcohol
-  desc: Coffee, irish cream, and cognac. You will get bombed.
-  physicalDesc: bubbly
+  desc: reagent-desc-b52
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: b52
   color: "#664300"
-  spritePath: b52glass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/b52glass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
 
 - type: reagent
   id: BahamaMama
-  name: bahama mama
+  name: reagent-name-bahama-mama
   parent: BaseAlcohol
-  desc: Tropical cocktail.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-bahama-mama
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: bahamamama
   color: "#FF7F3B"
-  spritePath: bahama_mama.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bahama_mama.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: BananaHonk
-  name: banana honk
+  name: reagent-name-banana-honk
   parent: BaseAlcohol
-  desc: A drink from Clown Heaven.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-banana-honk
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: bananahonk
   color: "#ffff91"
-  spritePath: bananahonkglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bananahonkglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Barefoot
-  name: barefoot
+  name: reagent-name-barefoot
   parent: BaseAlcohol
-  desc: Barefoot and pregnant.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: b&p.rsi
+  desc: reagent-desc-barefoot
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: barefoot
+  color: "#ff66cc"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/b&p.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: BeepskySmash
-  name: beepsky smash
+  name: reagent-name-beepsky-smash
   parent: BaseAlcohol
-  desc: Deny drinking this and prepare for THE LAW.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-beepsky-smash
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: beepsky
   color: "#664300"
-  spritePath: beepskysmashglass.rsi
-
-- type: reagent
-  id: Bilk
-  name: bilk
-  parent: BaseAlcohol
-  desc: This appears to be beer mixed with milk. Disgusting.
-  physicalDesc: bilky...
-  color: "#895C4C"
-  spritePath: glass_brown.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beepskysmashglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+  fizziness: 0.3
 
 - type: reagent
   id: BlackRussian
-  name: black russian
+  name: reagent-name-black-russian
   parent: BaseAlcohol
-  desc: For the lactose-intolerant. Still as classy as a White Russian.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-black-russian
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: blackrussian
   color: "#360000"
-  spritePath: blackrussianglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/blackrussianglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
 
 - type: reagent
   id: BloodyMary
-  name: bloody mary
+  name: reagent-name-bloody-mary
   parent: BaseAlcohol
-  desc: A strange yet pleasurable mixture made of vodka, tomato, and lime juice.
-  physicalDesc: strong-smelling
-  color: "#660000"
-  spritePath: bloodymaryglass.rsi
+  desc: reagent-desc-bloody-mary
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bloodymary
+  color: "#df6a50"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bloodymaryglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id:  Booger
-  name: booger
+  name: reagent-name-booger
   parent: BaseAlcohol
-  desc: Ewww...
-  physicalDesc: strong-smelling
-  color: "#8CFF8C"
-  spritePath: booger.rsi
+  desc: reagent-desc-booger
+  physicalDesc: reagent-physical-desc-slimy
+  flavor: booger
+  color: "#99ff00"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/booger.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: BraveBull
-  name: brave bull
+  name: reagent-name-brave-bull
   parent: BaseAlcohol
-  desc: It's just as effective as Dutch-Courage!
-  physicalDesc: strong-smelling
+  desc: reagent-desc-brave-bull
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bravebull
   color: "#664300"
-  spritePath: bravebullglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bravebullglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: Bronx
+  name: reagent-name-bronx
+  parent: BaseAlcohol
+  desc: reagent-desc-bronx
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bronx
+  color: "#d68829"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bronx.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: CoconutRum
+  name: reagent-name-coconut-rum
+  parent: BaseAlcohol
+  desc: reagent-desc-coconut-rum
+  physicalDesc: reagent-physical-desc-milky
+  flavor: coconutrum
+  color: "#cccbc8"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/coconutrum.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: Cosmopolitan
+  name: reagent-name-cosmopolitan
+  parent: BaseAlcohol
+  desc: reagent-desc-cosmopolitan
+  physicalDesc: reagent-physical-desc-citric
+  flavor: cosmopolitan
+  color: "#f73030"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cosmopolitan.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: CrushDepth
+  name: reagent-name-crush-depth
+  parent: BaseAlcohol
+  desc: reagent-desc-crush-depth
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: crushdepth
+  color: "#0a0a33"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/crushdepth.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: CubaLibre
-  name: cuba libre
+  name: reagent-name-cuba-libre
   parent: BaseAlcohol
-  desc: Rum, mixed with cola. Viva la revolucion.
-  physicalDesc: bubbly
+  desc: reagent-desc-cuba-libre
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: cubalibre
   color: "#3E1B00"
-  spritePath: cubalibreglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+  fizziness: 0.2
+
+- type: reagent
+  id: DarkandStormy
+  name: reagent-name-dark-and-stormy
+  parent: BaseAlcohol
+  desc: reagent-desc-dark-and-stormy
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: darkandstormy
+  color: "#cf7f17"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/dark&stormy.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: DemonsBlood
-  name: demons blood
+  name: reagent-name-demons-blood
   parent: BaseAlcohol
-  desc: AHHHH!!!!
-  physicalDesc: strong-smelling
+  desc: reagent-desc-demons-blood
+  physicalDesc: reagent-physical-desc-ferrous
+  flavor: demonsblood
   color: "#a70000"
-  spritePath: demonsblood.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/demonsblood.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  fizziness: 0.3
 
 - type: reagent
   id: DevilsKiss
-  name: devils kiss
+  name: reagent-name-devils-kiss
   parent: BaseAlcohol
-  desc: Creepy time!
-  physicalDesc: strong-smelling
-  color: "#A68310"
-  spritePath: devilskiss.rsi
+  desc: reagent-desc-devils-kiss
+  physicalDesc: reagent-physical-desc-ferrous
+  flavor: devilskiss
+  color: "#ff0033"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/devilskiss.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: DoctorsDelight
-  name: the doctor's delight
-  parent: BaseAlcohol
-  desc: A gulp a day keeps the MediBot away. That's probably for the best.
-  physicalDesc: strong-smelling
+  name: reagent-name-doctors-delight
+  parent: BaseDrink
+  desc: reagent-desc-doctors-delight
+  physicalDesc: reagent-physical-desc-soothing
+  flavor: medicine
   color: "#FF8CFF"
-  spritePath: doctorsdelightglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/doctorsdelightglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -388,8 +960,9 @@
         factor: 2
       - !type:SatiateHunger
         factor: -2
-    Medicine:
-      effects:
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.05
       - !type:HealthChange
         damage:
           groups:
@@ -400,222 +973,535 @@
 
 - type: reagent
   id: DriestMartini
-  name: driest martini
+  name: reagent-name-driest-martini
   parent: BaseAlcohol
-  desc: Only for the experienced. You think you see sand floating in the glass.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-driest-martini
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: driestmartini
   color: "#2E6671"
-  spritePath: driestmartiniglass.rsi
-
-- type: reagent
-  id: ErikaSuprise
-  name: erika suprise
-  parent: BaseAlcohol
-  desc: The surprise is, it's green!
-  physicalDesc: strong-smelling
-  color: "#2E6671"
-  spritePath: erikasurprise.rsi
-
-- type: reagent
-  id: GargleBlaster
-  name: Pan-Galactic Gargle Blaster
-  parent: BaseAlcohol
-  desc: Whoah, this stuff looks volatile!
-  physicalDesc: volatile
-  color: "#9cc8b4"
-  spritePath: gargleblasterglass.rsi
-
-- type: reagent
-  id: GinFizz
-  name: gin fizz
-  parent: BaseAlcohol
-  desc: Refreshingly lemony, deliciously dry.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: ginfizzglass.rsi
-
-- type: reagent
-  id: GinTonic
-  name: gin and tonic
-  parent: BaseAlcohol
-  desc: An all time classic, mild cocktail.
-  physicalDesc: strong-smelling
-  color: "#004166"
-  spritePath: gintonicglass.rsi
-
-- type: reagent
-  id: Goldschlager
-  name: Goldschlager
-  parent: BaseAlcohol
-  desc: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
-  physicalDesc: strong-smelling
-  color: "#FFFF91"
-  spritePath: goldschlagerglass.rsi
-
-- type: reagent
-  id: Grog
-  name: grog
-  parent: BaseAlcohol
-  desc: Watered-down rum, pirate approved!
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: grogglass.rsi
-
-- type: reagent
-  id: HippiesDelight
-  name: hippies delight
-  parent: BaseAlcohol
-  desc: You just don't get it maaaan.
-  physicalDesc: strong-smelling
-  color: "#6eaa0c"
-  spritePath: hippiesdelightglass.rsi
-
-- type: reagent
-  id: Hooch
-  name: hooch
-  parent: BaseAlcohol
-  desc: Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?
-  physicalDesc: strong-smelling
-  color: "#664e00"
-  spritePath: glass_brown2.rsi
-
-- type: reagent
-  id: IcedBeer
-  name: iced beer
-  parent: BaseAlcohol
-  desc: A beer which is so cold the air around it freezes.
-  physicalDesc: bubbly
-  color: "#664300"
-  spritePath: iced_beerglass.rsi
-
-- type: reagent
-  id: IrishCarBomb
-  name: irish car bomb
-  parent: BaseAlcohol
-  desc: A troubling mixture of irish cream and ale.
-  physicalDesc: bubbly
-  color: "#2E6671"
-  spritePath: irishcarbomb.rsi
-
-- type: reagent
-  id: IrishCream
-  name: irish cream
-  parent: BaseAlcohol
-  desc: Whiskey-imbued cream. What else could you expect from the Irish.
-  physicalDesc: creamy
-  color: "#664300"
-  spritePath: irishcreamglass.rsi
-
-- type: reagent
-  id: IrishCoffee
-  name: irish coffee
-  parent: BaseAlcohol
-  desc: Coffee served with irish cream. Regular cream just isn't the same!
-  physicalDesc: cloudy
-  color: "#664300"
-  spritePath: irishcoffeeglass.rsi
-
-- type: reagent
-  id: KiraSpecial
-  name: kira special
-  parent: BaseAlcohol
-  desc: Long live the guy who everyone had mistaken for a girl. Baka!
-  physicalDesc: strong-smelling
-  color: "#CCCC99"
-  spritePath: kiraspecial.rsi
-
-- type: reagent
-  id: LongIslandIcedTea
-  name: long island iced tea
-  parent: BaseAlcohol
-  desc: The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: longislandicedteaglass.rsi
-
-- type: reagent
-  id: Manhattan
-  name: manhattan
-  parent: BaseAlcohol
-  desc: The Detective's undercover drink of choice. He never could stomach gin...
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: manhattanglass.rsi
-
-- type: reagent
-  id: ManhattanProject
-  name: manhattan project
-  parent: BaseAlcohol
-  desc: A scientist's drink of choice, for pondering ways to blow up the ship.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: proj_manhattanglass.rsi
-
-- type: reagent
-  id: ManlyDorf
-  name: manly dorf
-  parent: BaseAlcohol
-  desc: Beer and Ale, brought together in a delicious mix. Intended for stout dwarves only.
-  physicalDesc: bubbly
-  color: "#664300"
-  spritePath: manlydorfglass.rsi
-
-- type: reagent
-  id: Margarita
-  name: margarita
-  parent: BaseAlcohol
-  desc: On the rocks with salt on the rim. Arriba~!
-  physicalDesc: strong-smelling
-  color: "#8CFF8C"
-  spritePath: margaritaglass.rsi
-
-- type: reagent
-  id: Martini
-  name: classic martini
-  parent: BaseAlcohol
-  desc: Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: martiniglass.rsi
-
-- type: reagent
-  id: Mead
-  name: mead
-  parent: BaseAlcohol
-  desc: A Viking's drink, though a cheap one.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: meadglass.rsi
-
-- type: reagent
-  id: Mojito
-  name: mojito
-  parent: BaseAlcohol
-  desc: If it's good enough for Spesscuba, it's good enough for you.
-  physicalDesc: strong-smelling
-  color: "#664300"
-  spritePath: mojito.rsi
-
-- type: reagent
-  id: Moonshine
-  name: moonshine
-  parent: BaseAlcohol
-  desc: Artisanal homemade liquor. What could go wrong?
-  physicalDesc: strong-smelling
-  color: "#d1d7d155"
-
-- type: reagent
-  id: Neurotoxin
-  name: neurotoxin
-  parent: BaseAlcohol
-  desc: A strong neurotoxin that puts the subject into a death-like state.
-  physicalDesc: strong-smelling
-  color: "#2E2E61"
-  spritePath: neurotoxinglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/driestmartiniglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: Eggnog
+  name: reagent-name-eggnog
+  parent: BaseAlcohol
+  desc: reagent-desc-eggnog
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: eggnog
+  color: "#e6d6bc"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/eggnogglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: ElectricShark
+  name: reagent-name-electric-shark
+  parent: BaseAlcohol
+  desc: reagent-desc-electric-shark
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: electricshark
+  color: "#3097cf"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/electricshark.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: ErikaSurprise
+  name: reagent-name-erika-surprise
+  parent: BaseAlcohol
+  desc: reagent-desc-erika-surprise
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: erikasurprise
+  color: "#67bc50"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beerstein.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  fizziness: 0.15
+
+- type: reagent
+  id: GargleBlaster
+  name: reagent-name-gargle-blaster
+  parent: BaseAlcohol
+  desc: reagent-desc-gargle-blaster
+  physicalDesc: reagent-physical-desc-volatile
+  flavor: gargleblaster
+  color: "#9cc8b4"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/gargleblasterglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: GinFizz
+  name: reagent-name-gin-fizz
+  parent: BaseAlcohol
+  desc: reagent-desc-gin-fizz
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: ginfizz
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginfizzglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+  fizziness: 0.4 # A little high, but it has fizz in the name
+
+- type: reagent
+  id: GinTonic
+  name: reagent-name-gin-tonic
+  parent: BaseAlcohol
+  desc: reagent-desc-gin-tonic
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: gintonic
+  color: "#004166"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/gintonicglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+  fizziness: 0.4
+
+- type: reagent
+  id: Gildlager
+  name: reagent-name-gildlager
+  parent: BaseAlcohol
+  desc: reagent-desc-gildlager
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: gildlager
+  color: "#FFFF91"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/gildlagerglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: Grog
+  name: reagent-name-grog
+  parent: BaseAlcohol
+  desc: reagent-desc-grog
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: grog
+  color: "#e3e77b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beerstein.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
+  id: HippiesDelight
+  name: reagent-name-hippies-delight
+  parent: BaseAlcohol
+  desc: reagent-desc-hippies-delight
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: hippiesdelight
+  color: "#6eaa0c"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/hippiesdelightglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: Hooch
+  name: reagent-name-hooch
+  parent: BaseAlcohol
+  desc: reagent-desc-hooch
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: hooch
+  color: "#664e00"
+
+- type: reagent
+  id: IcedBeer
+  name: reagent-name-iced-beer
+  parent: BaseAlcohol
+  desc: reagent-desc-iced-beer
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: icedbeer
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/iced_beerglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.6
+
+- type: reagent
+  id: IrishSlammer
+  name: reagent-name-irish-slammer
+  parent: BaseAlcohol
+  desc: reagent-desc-irish-slammer
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: irishslammer
+  color: "#2E6671"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/irishslammer.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: IrishCream
+  name: reagent-name-irish-cream
+  parent: BaseAlcohol
+  desc: reagent-desc-irish-cream
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: creamy
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: IrishCoffee
+  name: reagent-name-irish-coffee
+  parent: BaseAlcohol
+  desc: reagent-desc-irish-coffee
+  physicalDesc: reagent-physical-desc-cloudy
+  flavor: irishcoffee
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: JackRose
+  name: reagent-name-jack-rose
+  parent: BaseAlcohol
+  desc: reagent-desc-jack-rose
+  physicalDesc: reagent-physical-desc-tart
+  flavor: jackrose
+  color: "#f53b3b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/jackrose.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: JungleBird
+  name: reagent-name-jungle-bird
+  parent: BaseAlcohol
+  desc: reagent-desc-jungle-bird
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: junglebird
+  color: "#f27c3d"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/junglebird.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: Kalimotxo
+  name: reagent-name-kalimotxo
+  parent: BaseAlcohol
+  desc: reagent-desc-kalimotxo
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: kalimotxo
+  color: "#360606"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/kalimotxo.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: LongIslandIcedTea
+  name: reagent-name-long-island-iced-tea
+  parent: BaseAlcohol
+  desc: reagent-desc-long-island-iced-tea
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: longisland
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/longislandicedteaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: Manhattan
+  name: reagent-name-manhattan
+  parent: BaseAlcohol
+  desc: reagent-desc-manhattan
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: manhattan
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/manhattanglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: ManhattanProject
+  name: reagent-name-manhattan-project
+  parent: BaseAlcohol
+  desc: reagent-desc-manhattan-project
+  physicalDesc: reagent-physical-desc-overpowering
+  flavor: manhattanproject
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/proj_manhattanglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: ManlyDorf
+  name: reagent-name-manly-dorf
+  parent: BaseAlcohol
+  desc: reagent-desc-manly-dorf
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: rocksandstones
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 2
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.7
+
+- type: reagent
+  id: Margarita
+  name: reagent-name-margarita
+  parent: BaseAlcohol
+  desc: reagent-desc-margarita
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: margarita
+  color: "#8CFF8C"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/margaritaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+
+- type: reagent
+  id: Martini
+  name: reagent-name-martini
+  parent: BaseAlcohol
+  desc: reagent-desc-martini
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: martini
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/martiniglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: Mead
+  name: reagent-name-mead
+  parent: BaseAlcohol
+  desc: reagent-desc-mead
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: mead
+  color: "#664300"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beerstein.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  fizziness: 0.4
+
+- type: reagent
+  id: Mojito
+  name: reagent-name-mojito
+  parent: BaseAlcohol
+  desc: reagent-desc-mojito
+  physicalDesc: reagent-physical-desc-refreshing
+  flavor: mojito
+  color: "#3ea99888"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/mojito.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.3
+
+- type: reagent
+  id: MonkeyBusiness
+  name: reagent-name-monkey-business
+  parent: BaseAlcohol
+  desc: reagent-desc-monkey-business
+  physicalDesc: reagent-physical-desc-tart
+  flavor: monkeybusiness
+  color: "#d6b929"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/monkeybusiness.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: Moonshine
+  name: reagent-name-moonshine
+  parent: BaseAlcohol
+  desc: reagent-desc-moonshine
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: moonshine
+  color: "#d1d7d155"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/moonshineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.25
+
+- type: reagent
+  id: Neurotoxin
+  name: reagent-name-neurotoxin
+  parent: BaseAlcohol
+  desc: reagent-desc-neurotoxin
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: neurotoxin
+  color: "#2E2E61"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.25
     Poison:
       effects:
       - !type:HealthChange
@@ -624,163 +1510,1048 @@
             Poison: 1
 
 - type: reagent
-  id: Patron
-  name: patron
+  id: Painkiller
+  name: reagent-name-painkiller
   parent: BaseAlcohol
-  desc: Tequila with silver in it, a favorite of alcoholic women in the club scene.
-  physicalDesc: metallic
+  desc: reagent-desc-painkiller
+  physicalDesc: reagent-physical-desc-refreshing
+  flavor: painkiller
+  color: "#e6cb47"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/painkiller.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: Patron
+  name: reagent-name-patron
+  parent: BaseAlcohol
+  desc: reagent-desc-patron
+  physicalDesc: reagent-physical-desc-metallic
+  flavor: patron
   color: "#585840"
-  spritePath: patronglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/patronglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
 
 - type: reagent
   id: RedMead
-  name: red mead
+  name: reagent-name-red-mead
   parent: BaseAlcohol
-  desc: The true Viking's drink! Even though it has a strange red color.
-  physicalDesc: strong-smelling
-  color: "#C73C00"
-  spritePath: red_meadglass.rsi
+  desc: reagent-desc-red-mead
+  physicalDesc: reagent-physical-desc-ferrous
+  flavor: redmead
+  color: "#bc5550"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/red_meadglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
 
 - type: reagent
-  id: Rewriter
-  name: rewriter
+  id: PinaColada
+  name: reagent-name-pina-colada
   parent: BaseAlcohol
-  desc: The secret of the sanctuary of the Librarian...
-  physicalDesc: strong-smelling
-  color: "#485000"
-  spritePath: rewriter.rsi
+  desc: reagent-desc-pina-colada
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: pinacolada
+  color: "#e8dba4"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/pinacolada.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: Radler
+  name: reagent-name-radler
+  parent: BaseAlcohol
+  desc: reagent-desc-radler
+  physicalDesc: reagent-physical-desc-citric
+  flavor: radler
+  color: "#edff2b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/radler.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: Sbiten
-  name: sbiten
+  name: reagent-name-sbiten
   parent: BaseAlcohol
-  desc: A spicy Vodka! Might be a little hot for the little guys!
-  physicalDesc: strong-smelling
+  desc: reagent-desc-sbiten
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: sbiten
   color: "#004166"
-  spritePath: sbitenglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sbitenglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
 
 - type: reagent
   id: ScrewdriverCocktail
-  name: screwdriver
+  name: reagent-name-screwdriver-cocktail
   parent: BaseAlcohol
-  desc: Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-screwdriver-cocktail
+  physicalDesc: reagent-physical-desc-citric
+  flavor: screwdriver
   color: "#A68310"
-  spritePath: screwdriverglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/screwdriverglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+
+- type: reagent
+  id: CogChamp
+  name: reagent-name-cogchamp
+  parent: BaseAlcohol
+  desc: reagent-desc-cogchamp
+  physicalDesc: reagent-physical-desc-ground-brass
+  flavor: cogchamp
+  color: "#B5A642"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cogchamp.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:GenericStatusEffect
+          key: RatvarianLanguage
+          component: RatvarianLanguage
+        - !type:SatiateThirst
+          factor: 2
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
 
 - type: reagent
   id: Silencer
-  name: silencer
+  name: reagent-name-silencer
   parent: BaseAlcohol
-  desc: A drink from Mime Heaven.
-  physicalDesc: strong-smelling
-  color: "#004666"
-  spritePath: silencerglass.rsi
+  desc: reagent-desc-silencer
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: nothing
+  color: "#878787"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/silencerglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:GenericStatusEffect
+        key: Muted
+        component: Muted
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Singulo
-  name: singulo
+  name: reagent-name-singulo
   parent: BaseAlcohol
-  desc: A blue-space beverage!
-  physicalDesc: strong-smelling
+  desc: reagent-desc-singulo
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: singulo
   color: "#3b0c0c"
-  spritePath: singulo.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/singulo.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: SnowWhite
-  name: snow white
+  name: reagent-name-snow-white
   parent: BaseAlcohol
-  desc: A cold refreshment.
-  physicalDesc: bubbly
+  desc: reagent-desc-snow-white
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: snowwhite
   color: "#FFFFFF"
-  spritePath: snowwhite.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/snowwhite.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  fizziness: 0.3
 
 - type: reagent
   id: SuiDream
-  name: sui dream
+  name: reagent-name-sui-dream
   parent: BaseAlcohol
-  desc: 'Comprised of: White soda, blue curacao, melon liquor.'
-  physicalDesc: strong-smelling
+  desc: reagent-desc-sui-dream
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: suidream
   color: "#00A86B"
-  spritePath: sdreamglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/sdreamglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.2
 
 - type: reagent
   id: SyndicateBomb
-  name: syndicate bomb
+  name: reagent-name-syndicate-bomb
   parent: BaseAlcohol
-  desc: Somebody set us up the bomb!
-  physicalDesc: opaque
-  color: "#2E6660"
-  spritePath: syndicatebomb.rsi
+  desc: reagent-desc-syndicate-bomb
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: syndiebomb
+  color: "#e3e77b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  fizziness: 0.6
 
 - type: reagent
   id: TequilaSunrise
-  name: tequila sunrise
+  name: reagent-name-tequila-sunrise
   parent: BaseAlcohol
-  desc: Tequila and orange juice. Much like a Screwdriver, only Mexican.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-tequila-sunrise
+  physicalDesc: reagent-physical-desc-citric
+  flavor: tequilasunrise
   color: "#FFE48C"
-  spritePath: tequillasunriseglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/tequillasunriseglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: TheMartinez
+  name: reagent-name-the-martinez
+  parent: BaseAlcohol
+  desc: reagent-desc-the-martinez
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: themartinez
+  color: "#75b1f0"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/the_martinez.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  fizziness: 0.2
 
 - type: reagent
   id: ThreeMileIsland
-  name: three mile island iced tea
+  name: reagent-name-three-mile-island
   parent: BaseAlcohol
-  desc: "Made for a woman, strong enough for a man."
-  physicalDesc: strong-smelling
+  desc: reagent-desc-three-mile-island
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: threemileisland
   color: "#666340"
-  spritePath: threemileislandglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/threemileislandglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 2
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+      - !type:AdjustReagent
+        reagent: Uranium
+        amount: 0.05
 
 - type: reagent
   id: ToxinsSpecial
-  name: toxins special
+  name: reagent-name-toxins-special
   parent: BaseAlcohol
-  desc: This thing is ON FIRE! CALL THE DAMN SHUTTLE!
-  physicalDesc: strong-smelling
+  desc: reagent-desc-toxins-special
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: toxinsspecial
   color: "#665c00"
-  spritePath: toxinsspecialglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: Vampiro
+  name: reagent-name-vampiro
+  parent: BaseAlcohol
+  desc: reagent-desc-vampiro
+  physicalDesc: reagent-physical-desc-spicy
+  flavor: vampiro
+  color: "#b51b1b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/vampiro.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: VodkaMartini
-  name: vodka martini
+  name: reagent-name-vodka-martini
   parent: BaseAlcohol
-  desc: Vodka with Gin. Not quite how 007 enjoyed it, but still delicious.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-vodka-martini
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: vodkamartini
   color: "#004666"
-  spritePath: martiniglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/martiniglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
 
 - type: reagent
   id: VodkaTonic
-  name: vodka tonic
+  name: reagent-name-vodka-tonic
   parent: BaseAlcohol
-  desc: For when a gin and tonic isn't russian enough.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-vodka-tonic
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: vodkatonic
   color: "#0064C8"
-  spritePath: vodkatonicglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+  fizziness: 0.4
 
 - type: reagent
   id: WhiskeyCola
-  name: whiskey cola
+  name: reagent-name-whiskey-cola
   parent: BaseAlcohol
-  desc: Whiskey, mixed with cola. Surprisingly refreshing.
-  physicalDesc: bubbly
+  desc: reagent-desc-whiskey-cola
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: whiskeycola
   color: "#3E1B00"
-  spritePath: whiskeycolaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+  fizziness: 0.3
 
 - type: reagent
   id: WhiskeySoda
-  name: whiskey soda
+  name: reagent-name-whiskey-soda
   parent: BaseAlcohol
-  desc: For the more refined griffon.
-  physicalDesc: strong-smelling
+  desc: reagent-desc-whiskey-soda
+  physicalDesc: reagent-physical-desc-fizzy
+  flavor: whiskeycola
   color: "#533600"
-  spritePath: whiskeysodaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiskeysodaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+  fizziness: 0.4
+
+- type: reagent
+  id: WhiteGilgamesh
+  name: reagent-name-white-gilgamesh
+  parent: BaseDrink
+  desc: reagent-desc-white-gilgamesh
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: white-gilgamesh
+  color: "#e5d27e"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
+  fizziness: 0.5
 
 - type: reagent
   id: WhiteRussian
-  name: white russian
+  name: reagent-name-white-russian
   parent: BaseAlcohol
-  desc: That's just, like, your opinion, man...
-  physicalDesc: strong-smelling
+  desc: reagent-desc-white-russian
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: whiterussian
   color: "#A68340"
-  spritePath: whiterussianglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiterussianglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: VodkaRedBool
+  name: reagent-name-vodka-red-bool
+  parent: BaseAlcohol
+  desc: reagent-desc-vodka-red-bool
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: vodkaredbool
+  color: "#c4c27655"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.10
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
+          type: Remove
+  fizziness: 0.25
+
+- type: reagent
+  id: XenoBasher
+  name: reagent-name-xeno-basher
+  parent: BaseAlcohol
+  desc: reagent-desc-xeno-basher
+  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  flavor: xenobasher
+  color: "#4d6600"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/xenobasher.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 2
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
+          type: Remove
+  fizziness: 0.15
+
+- type: reagent
+  id: IrishBool
+  name: reagent-name-irish-bool
+  parent: BaseAlcohol
+  desc: reagent-desc-irish-bool
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: irishbool
+  color: "#71672e99"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.10
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
+          type: Remove
+  fizziness: 0.15
+
+- type: reagent
+  id: BudgetInsulsDrink
+  name: reagent-name-budget-insuls
+  parent: BaseAlcohol
+  desc: reagent-desc-budget-insuls
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: budgetinsulsdrink
+  color: "#dede73"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/budgetinsulsdrink.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
+          type: Remove
+  fizziness: 0.25
+
+- type: reagent
+  id: WatermelonWakeup
+  name: reagent-name-watermelon-wakeup
+  parent: BaseAlcohol
+  desc: reagent-desc-watermelon-wakeup
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: watermelonwakeup
+  color: "#d49dca"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/champagneglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.07
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
+          type: Remove
+  fizziness: 0.15
+
+- type: reagent
+  id: Rubberneck
+  name: reagent-name-rubberneck
+  parent: BaseAlcohol
+  desc: reagent-desc-rubberneck
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: rubberneck
+  color: "#f0d74a"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rubberneck.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15
+        - !type:AdjustReagent
+          reagent: Theobromine
+          amount: 0.05
+        - !type:ModifyStatusEffect
+          effectProto: StatusEffectDrowsiness
+          time: 1
+          type: Remove
+  fizziness: 0.25
+
+- type: reagent
+  id: BlueHawaiian
+  name: reagent-name-blue-hawaiian
+  parent: BaseAlcohol
+  desc: reagent-desc-blue-hawaiian
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: bluehawaiian
+  color: "#47687b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bluehawaiian.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: Caipirinha
+  name: reagent-name-caipirinha
+  parent: BaseAlcohol
+  desc: reagent-desc-caipirinha
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: caipirinha
+  color: "#E6EE9C"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/caipirinha.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.1
+
+- type: reagent
+  id: MoscowMule
+  name: reagent-name-moscow-mule
+  parent: BaseAlcohol
+  desc: reagent-desc-moscow-mule
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: moscowmule
+  color: "#CECBAD"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/moscowmule.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+      - !type:AdjustReagent
+        reagent: Copper
+        amount: 0.05
+
+- type: reagent
+  id: Mimeosa
+  name: reagent-name-mimeosa
+  parent: BaseAlcohol
+  desc: reagent-desc-mimeosa
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: mimeosa
+  color: "#939393"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/mimeosa.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:GenericStatusEffect
+        key: Muted
+        component: Muted
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+
+- type: reagent
+  id: Mimosa
+  name: reagent-name-mimosa
+  parent: BaseAlcohol
+  desc: reagent-desc-mimosa
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: mimosa
+  color: "#FFCA48"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/mimosa.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.07
+
+- type: reagent
+  id: Mayojito
+  name: reagent-name-mayojito
+  parent: BaseAlcohol
+  desc: reagent-desc-mayojito
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: mayojito
+  color: "#6FBE44"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/mayojito.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:Vomit
+        conditions:
+        - !type:ReagentCondition
+          reagent: Mayojito
+          min: 5
+        probability: 0.5
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: .5
+      - !type:SatiateThirst
+        factor: 1
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.15
+
+- type: reagent
+  id: DeathInTheAfternoon
+  name: reagent-name-death-in-the-afternoon
+  parent: BaseAlcohol
+  desc: reagent-desc-death-in-the-afternoon
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: deathintheafternoon
+  color: "#57A87D"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/deathintheafternoon.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.3
+
+- type: reagent
+  id: Empress75
+  name: reagent-name-empress-75
+  parent: BaseAlcohol
+  desc: reagent-desc-empress-75
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: empress75
+  color: "#900296"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/empress75.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.3
+
+- type: reagent
+  id: EspressoMartini
+  name: reagent-name-espresso-martini
+  parent: BaseAlcohol
+  desc: reagent-desc-espresso-martini
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: espressomartini
+  color: "#170a0c"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/espressomartini.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: Daiquiri
+  name: reagent-name-daiquiri
+  parent: BaseAlcohol
+  desc: reagent-desc-daiquiri
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: daiquiri
+  color: "#DAC865"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/daiquiri.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.1
+
+- type: reagent
+  id: TheSunAlsoRises
+  name: reagent-name-the-sun-also-rises
+  parent: BaseAlcohol
+  desc: reagent-desc-the-sun-also-rises
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: thesunalsorises
+  color: "#DCE2DE"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/thesunalsorises.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.3
+
+- type: reagent
+  id: WhiskeySour
+  name: reagent-name-whiskey-sour
+  parent: BaseAlcohol
+  desc: reagent-desc-whiskey-sour
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: whiskeysour
+  color: "#8B7941"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whiskeysour.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+
+- type: reagent
+  id: ZombieCocktail
+  name: reagent-name-zombiecocktail
+  parent: BaseAlcohol
+  desc: reagent-desc-zombiecocktail
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: zombiecocktail
+  color: "#d17844"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/zombiecocktail.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.25
+
+- type: reagent
+  id: BacchusBlessing
+  name: reagent-name-bacchus-blessing
+  parent: BaseAlcohol
+  desc: reagent-desc-bacchus-blessing
+  physicalDesc: reagent-physical-desc-unidentifiable
+  flavor: bacchusblessing
+  color: "#331303"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bacchusblessing.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 2
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.45 # TODO: Figure out why setting this to 0 means this does more damage... WHAT BUG IS THIS?!!
+    Alcohol:
+      metabolismRate : 0.05
+      effects:
+      - !type:Drunk
+        boozePower: 10
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: BacchusBlessing
+          min: 6
+        - !type:MetabolizerTypeCondition
+          type: [Dwarf]
+          inverted: true
+        damage:
+          types:
+            Poison: 0.2 # TODO: Figure out poison amount. Ethanol does 0.1, this does 0.2 but also metabolises almost 3 to 4 times as fast as ethanol. This would be more Liver damage when that time arrives.
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: BacchusBlessing
+          min: 6
+        - !type:MetabolizerTypeCondition
+          type: [Dwarf]
+        damage:
+          types:
+            Poison: 0.04 # TODO: Might increase this, even though it's just double of ethanol from 0.02 to 0.04
+      - !type:Vomit
+        probability: 0.1 #TODO: Tweak vomit probability, maybe make this more violent and poisonous but the body aggressively purges it...
+        conditions:
+        - !type:ReagentCondition
+          reagent: BacchusBlessing
+          min: 8
+        - !type:MetabolizerTypeCondition
+          type: [Dwarf]
+          inverted: true

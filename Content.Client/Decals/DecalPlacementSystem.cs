@@ -1,14 +1,15 @@
+using System.Numerics;
 using Content.Client.Actions;
+using Content.Client.Decals.Overlays;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Actions.Components;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Client.Decals;
 
@@ -17,9 +18,15 @@ namespace Content.Client.Decals;
 public sealed class DecalPlacementSystem : EntitySystem
 {
     [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
+    public static readonly EntProtoId DecalAction = "BaseMappingDecalAction";
 
     private string? _decalId;
     private Color _decalColor = Color.White;
@@ -32,9 +39,17 @@ public sealed class DecalPlacementSystem : EntitySystem
     private bool _placing;
     private bool _erasing;
 
+    public (DecalPrototype? Decal, bool Snap, Angle Angle, Color Color) GetActiveDecal()
+    {
+        return _active && _decalId != null ?
+            (_protoMan.Index<DecalPrototype>(_decalId), _snap, _decalAngle, _decalColor) :
+            (null, false, Angle.Zero, Color.Wheat);
+    }
+
     public override void Initialize()
     {
         base.Initialize();
+        _overlay.AddOverlay(new DecalPlacementOverlay(this, _transform, _sprite));
 
         CommandBinds.Builder.Bind(EngineKeyFunctions.EditorPlaceObject, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
@@ -59,7 +74,7 @@ public sealed class DecalPlacementSystem : EntitySystem
                     return false;
 
                 var decal = new Decal(coords.Position, _decalId, _decalColor, _decalAngle, _zIndex, _cleanable);
-                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, coords));
+                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, GetNetCoordinates(coords)));
 
                 return true;
             },
@@ -79,7 +94,7 @@ public sealed class DecalPlacementSystem : EntitySystem
 
                 _erasing = true;
 
-                RaiseNetworkEvent(new RequestDecalRemovalEvent(coords));
+                RaiseNetworkEvent(new RequestDecalRemovalEvent(GetNetCoordinates(coords)));
 
                 return true;
             }, (session, coords, uid) =>
@@ -100,26 +115,24 @@ public sealed class DecalPlacementSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!_mapMan.TryFindGridAt(args.Target, out var grid))
+        if (_transform.GetGrid(args.Target) == null)
             return;
 
         args.Handled = true;
 
-        var coords =  EntityCoordinates.FromMap(grid.GridEntityId, args.Target, EntityManager);
-
         if (args.Snap)
         {
             var newPos = new Vector2(
-                (float) (MathF.Round(coords.X - 0.5f, MidpointRounding.AwayFromZero) + 0.5),
-                (float) (MathF.Round(coords.Y - 0.5f, MidpointRounding.AwayFromZero) + 0.5)
+                (float) (MathF.Round(args.Target.X - 0.5f, MidpointRounding.AwayFromZero) + 0.5),
+                (float) (MathF.Round(args.Target.Y - 0.5f, MidpointRounding.AwayFromZero) + 0.5)
             );
-            coords = coords.WithPosition(newPos);
+            args.Target = args.Target.WithPosition(newPos);
         }
 
-        coords = coords.Offset(new Vector2(-0.5f, -0.5f));
+        args.Target = args.Target.Offset(new Vector2(-0.5f, -0.5f));
 
-        var decal = new Decal(coords.Position, args.DecalId, args.Color, Angle.FromDegrees(args.Rotation), args.ZIndex, args.Cleanable);
-        RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, coords));
+        var decal = new Decal(args.Target.Position, args.DecalId, args.Color, Angle.FromDegrees(args.Rotation), args.ZIndex, args.Cleanable);
+        RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, GetNetCoordinates(args.Target)));
     }
 
     private void OnFillSlot(FillActionSlotEvent ev)
@@ -143,23 +156,23 @@ public sealed class DecalPlacementSystem : EntitySystem
             Cleanable = _cleanable,
         };
 
-        ev.Action = new WorldTargetAction()
-        {
-            Name = $"{_decalId} ({_decalColor.ToHex()}, {(int) _decalAngle.Degrees})", // non-unique actions may be considered duplicates when saving/loading.
-            Icon = decalProto.Sprite,
-            Repeat = true,
-            CheckCanAccess = false,
-            CheckCanInteract = false,
-            Range = -1,
-            Event = actionEvent,
-            IconColor = _decalColor,
-        };
+        var actionId = Spawn(DecalAction);
+        var action = Comp<ActionComponent>(actionId);
+        var ent = (actionId, action);
+        _actions.SetEvent(actionId, actionEvent);
+        _actions.SetIcon(ent, decalProto.Sprite);
+        _actions.SetIconColor(ent, _decalColor);
+
+        _metaData.SetEntityName(actionId, $"{_decalId} ({_decalColor.ToHex()}, {(int) _decalAngle.Degrees})");
+
+        ev.Action = actionId;
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
 
+        _overlay.RemoveOverlay<DecalPlacementOverlay>();
         CommandBinds.Unregister<DecalPlacementSystem>();
     }
 
@@ -181,25 +194,4 @@ public sealed class DecalPlacementSystem : EntitySystem
         else
             _inputSystem.SetEntityContextActive();
     }
-}
-
-public sealed class PlaceDecalActionEvent : PerformWorldTargetActionEvent
-{
-    [DataField("decalId", customTypeSerializer:typeof(PrototypeIdSerializer<DecalPrototype>))]
-    public string DecalId = string.Empty;
-
-    [DataField("color")]
-    public Color Color;
-
-    [DataField("rotation")]
-    public double Rotation;
-
-    [DataField("snap")]
-    public bool Snap;
-
-    [DataField("zIndex")]
-    public int ZIndex;
-
-    [DataField("cleanable")]
-    public bool Cleanable;
 }

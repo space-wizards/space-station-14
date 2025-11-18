@@ -1,16 +1,11 @@
 using Content.Server.Pointing.EntitySystems;
 using Content.Shared.Pointing.Components;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Pointing.Components
 {
     [RegisterComponent]
-    [Friend(typeof(RoguePointingSystem))]
-    public sealed class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
+    [Access(typeof(RoguePointingSystem))]
+    public sealed partial class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
     {
         [ViewVariables]
         public EntityUid? Chasing;
@@ -26,8 +21,5 @@ namespace Content.Server.Pointing.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("chasingTime")]
         public float ChasingTime = 1;
-
-        [DataField("explosionSound")]
-        public SoundSpecifier ExplosionSound = new SoundCollectionSpecifier("explosion");
     }
 }

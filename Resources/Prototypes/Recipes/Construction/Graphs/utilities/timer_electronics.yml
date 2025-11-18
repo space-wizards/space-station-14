@@ -1,0 +1,25 @@
+- type: constructionGraph
+  id: TimerElectronics
+  start: signal
+  graph:
+  - node: signal
+    entity: SignalTimerElectronics
+    edges:
+    - to: screen
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: screen
+    entity: ScreenTimerElectronics
+    edges:
+    - to: brig
+      steps:
+      - tool: Screwing
+        doAfter: 2
+  - node: brig
+    entity: BrigTimerElectronics
+    edges:
+    - to: signal
+      steps:
+      - tool: Screwing
+        doAfter: 2

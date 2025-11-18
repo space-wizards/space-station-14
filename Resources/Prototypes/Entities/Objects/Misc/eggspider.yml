@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseItem
+  id: EggSpider
+  name: egg spider
+  description: Is it a gemstone? Is it an egg? It looks expensive.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/eggspider.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 6
+        Structural: 2
+    animation: WeaponArcPunch
+  - type: Item
+    size: Small
+  - type: PointLight
+    radius: 1.5
+    energy: 3
+    color: "#4faffb"
+  - type: StaticPrice
+    price: 500

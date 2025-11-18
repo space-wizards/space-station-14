@@ -1,16 +1,19 @@
-using Content.Server.DoAfter;
-using Content.Server.Hands.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.Audio;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Guardian;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
+using Content.Shared.Mech.EntitySystems;
+using Content.Shared.Mobs;
+using Content.Shared.Popups;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -22,11 +25,15 @@ namespace Content.Server.Guardian
     /// </summary>
     public sealed class GuardianSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DamageableSystem _damageSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -34,13 +41,13 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianCreatorComponent, UseInHandEvent>(OnCreatorUse);
             SubscribeLocalEvent<GuardianCreatorComponent, AfterInteractEvent>(OnCreatorInteract);
             SubscribeLocalEvent<GuardianCreatorComponent, ExaminedEvent>(OnCreatorExamine);
-            SubscribeLocalEvent<GuardianCreatorInjectedEvent>(OnCreatorInject);
-            SubscribeLocalEvent<GuardianCreatorInjectCancelledEvent>(OnCreatorCancelled);
+            SubscribeLocalEvent<GuardianCreatorComponent, GuardianCreatorDoAfterEvent>(OnDoAfter);
 
+            SubscribeLocalEvent<GuardianComponent, ComponentShutdown>(OnGuardianShutdown);
             SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
             SubscribeLocalEvent<GuardianComponent, DamageChangedEvent>(OnGuardianDamaged);
-            SubscribeLocalEvent<GuardianComponent, PlayerAttachedEvent>(OnGuardianPlayer);
-            SubscribeLocalEvent<GuardianComponent, PlayerDetachedEvent>(OnGuardianUnplayer);
+            SubscribeLocalEvent<GuardianComponent, PlayerAttachedEvent>(OnGuardianPlayerAttached);
+            SubscribeLocalEvent<GuardianComponent, PlayerDetachedEvent>(OnGuardianPlayerDetached);
 
             SubscribeLocalEvent<GuardianHostComponent, ComponentInit>(OnHostInit);
             SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnHostMove);
@@ -50,6 +57,22 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianHostComponent, GuardianToggleActionEvent>(OnPerformAction);
 
             SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
+
+            SubscribeLocalEvent<GuardianHostComponent, MechPilotRelayedEvent<GettingAttackedAttemptEvent>>(OnPilotAttackAttempt);
+        }
+
+        private void OnGuardianShutdown(EntityUid uid, GuardianComponent component, ComponentShutdown args)
+        {
+            var host = component.Host;
+            component.Host = null;
+
+            if (!TryComp(host, out GuardianHostComponent? hostComponent))
+                return;
+
+            _container.Remove(uid, hostComponent.GuardianContainer);
+            hostComponent.HostedGuardian = null;
+            QueueDel(hostComponent.ActionEntity);
+            hostComponent.ActionEntity = null;
         }
 
         private void OnPerformAction(EntityUid uid, GuardianHostComponent component, GuardianToggleActionEvent args)
@@ -57,41 +80,61 @@ namespace Content.Server.Guardian
             if (args.Handled)
                 return;
 
+            if (_container.IsEntityInContainer(uid))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("guardian-inside-container"), uid, uid);
+                return;
+            }
+
             if (component.HostedGuardian != null)
-                ToggleGuardian(component);
+                ToggleGuardian(uid, component);
 
             args.Handled = true;
         }
 
-        private void OnGuardianUnplayer(EntityUid uid, GuardianComponent component, PlayerDetachedEvent args)
+        private void OnGuardianPlayerDetached(EntityUid uid, GuardianComponent component, PlayerDetachedEvent args)
         {
             var host = component.Host;
+            if (!TryComp<GuardianHostComponent>(host, out var hostComponent) || TerminatingOrDeleted(host.Value))
+            {
+                QueueDel(uid);
+                return;
+            }
 
-            if (!TryComp<GuardianHostComponent>(host, out var hostComponent)) return;
-
-            RetractGuardian(hostComponent, component);
+            RetractGuardian(host.Value, hostComponent, uid, component);
         }
 
-        private void OnGuardianPlayer(EntityUid uid, GuardianComponent component, PlayerAttachedEvent args)
+        private void OnGuardianPlayerAttached(EntityUid uid, GuardianComponent component, PlayerAttachedEvent args)
         {
             var host = component.Host;
 
-            if (!HasComp<GuardianHostComponent>(host)) return;
+            if (!HasComp<GuardianHostComponent>(host))
+            {
+                QueueDel(uid);
+                return;
+            }
 
-            _popupSystem.PopupEntity(Loc.GetString("guardian-available"), host, Filter.Entities(host));
+            _popupSystem.PopupEntity(Loc.GetString("guardian-available"), host.Value, host.Value);
         }
 
         private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
         {
-            component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
-            _actionSystem.AddAction(uid, component.Action, null);
+            component.GuardianContainer = _container.EnsureContainer<ContainerSlot>(uid, "GuardianContainer");
+            _actionSystem.AddAction(uid, ref component.ActionEntity, component.Action);
         }
 
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)
         {
-            if (component.HostedGuardian == null) return;
-            EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
-            _actionSystem.RemoveAction(uid, component.Action);
+            if (component.HostedGuardian is not {} guardian)
+                return;
+
+            // Ensure held items are dropped before deleting guardian.
+            if (HasComp<HandsComponent>(guardian))
+                _bodySystem.GibBody(component.HostedGuardian.Value);
+
+            QueueDel(guardian);
+            QueueDel(component.ActionEntity);
+            component.ActionEntity = null;
         }
 
         private void OnGuardianAttackAttempt(EntityUid uid, GuardianComponent component, AttackAttemptEvent args)
@@ -99,23 +142,30 @@ namespace Content.Server.Guardian
             if (args.Cancelled || args.Target != component.Host)
                 return;
 
-            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), Filter.Entities(uid));
+            // why is this server side code? This should be in shared
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), uid, PopupType.LargeCaution);
             args.Cancel();
         }
 
-        public void ToggleGuardian(GuardianHostComponent hostComponent)
+        private void OnPilotAttackAttempt(Entity<GuardianHostComponent> uid, ref MechPilotRelayedEvent<GettingAttackedAttemptEvent> args)
         {
-            if (hostComponent.HostedGuardian == null ||
-                !TryComp(hostComponent.HostedGuardian, out GuardianComponent? guardianComponent)) return;
+            if (args.Args.Cancelled)
+                return;
+
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), args.Args.Attacker, PopupType.LargeCaution);
+
+            args.Args.Cancelled = true;
+        }
+
+        public void ToggleGuardian(EntityUid user, GuardianHostComponent hostComponent)
+        {
+            if (!TryComp<GuardianComponent>(hostComponent.HostedGuardian, out var guardianComponent))
+                return;
 
             if (guardianComponent.GuardianLoose)
-            {
-                RetractGuardian(hostComponent, guardianComponent);
-            }
+                RetractGuardian(user, hostComponent, hostComponent.HostedGuardian.Value, guardianComponent);
             else
-            {
-                ReleaseGuardian(hostComponent, guardianComponent);
-            }
+                ReleaseGuardian(user, hostComponent, hostComponent.HostedGuardian.Value, guardianComponent);
         }
 
         /// <summary>
@@ -123,95 +173,84 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnCreatorUse(EntityUid uid, GuardianCreatorComponent component, UseInHandEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
+
             args.Handled = true;
-            UseCreator(args.User, args.User, component);
+            UseCreator(args.User, args.User, uid, component);
         }
 
         private void OnCreatorInteract(EntityUid uid, GuardianCreatorComponent component, AfterInteractEvent args)
         {
-            if (args.Handled || args.Target == null || !args.CanReach) return;
+            if (args.Handled || args.Target == null || !args.CanReach)
+                return;
+
             args.Handled = true;
-            UseCreator(args.User, args.Target.Value, component);
+            UseCreator(args.User, args.Target.Value, uid, component);
         }
-
-        private void OnCreatorCancelled(GuardianCreatorInjectCancelledEvent ev)
-        {
-            ev.Component.Injecting = false;
-        }
-
-        private void UseCreator(EntityUid user, EntityUid target, GuardianCreatorComponent component)
+        private void UseCreator(EntityUid user, EntityUid target, EntityUid injector, GuardianCreatorComponent component)
         {
             if (component.Used)
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-empty-invalid-creation"), user, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-empty-invalid-creation"), user, user);
                 return;
             }
 
             // Can only inject things with the component...
             if (!HasComp<CanHostGuardianComponent>(target))
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-invalid-target"), user, Filter.Entities(user));
+                var msg = Loc.GetString("guardian-activator-invalid-target", ("entity", Identity.Entity(target, EntityManager, user)));
+
+                _popupSystem.PopupEntity(msg, user, user);
                 return;
             }
-
 
             // If user is already a host don't duplicate.
             if (HasComp<GuardianHostComponent>(target))
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), user, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), user, user);
                 return;
             }
 
-            if (component.Injecting) return;
-
-            component.Injecting = true;
-
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.InjectionDelay, target: target)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
             {
-                BroadcastFinishedEvent = new GuardianCreatorInjectedEvent(user, target, component),
-                BroadcastCancelledEvent = new GuardianCreatorInjectCancelledEvent(target, component),
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
+                NeedHand = true,
+                BreakOnHandChange = true
             });
         }
 
-        private void OnCreatorInject(GuardianCreatorInjectedEvent ev)
+        private void OnDoAfter(EntityUid uid, GuardianCreatorComponent component, DoAfterEvent args)
         {
-            var comp = ev.Component;
-
-            if (comp.Deleted ||
-                comp.Used ||
-                !_handsSystem.IsHolding(ev.User, comp.Owner, out _) ||
-                HasComp<GuardianHostComponent>(ev.Target))
-            {
-                comp.Injecting = false;
+            if (args.Handled || args.Args.Target == null)
                 return;
-            }
 
-            var hostXform = EntityManager.GetComponent<TransformComponent>(ev.Target);
-            var host = EntityManager.EnsureComponent<GuardianHostComponent>(ev.Target);
+            if (args.Cancelled || component.Deleted || component.Used || !_handsSystem.IsHolding(args.Args.User, uid, out _) || HasComp<GuardianHostComponent>(args.Args.Target))
+                return;
+
+            var hostXform = Transform(args.Args.Target.Value);
+            var host = EnsureComp<GuardianHostComponent>(args.Args.Target.Value);
             // Use map position so it's not inadvertantly parented to the host + if it's in a container it spawns outside I guess.
-            var guardian = EntityManager.SpawnEntity(comp.GuardianProto, hostXform.MapPosition);
+            var guardian = Spawn(component.GuardianProto, _transform.GetMapCoordinates(args.Args.Target.Value, xform: hostXform));
 
-            host.GuardianContainer.Insert(guardian);
+            _container.Insert(guardian, host.GuardianContainer);
             host.HostedGuardian = guardian;
 
-            if (TryComp(guardian, out GuardianComponent? guardianComponent))
+            if (TryComp<GuardianComponent>(guardian, out var guardianComp))
             {
-                guardianComponent.Host = ev.Target;
-
-                SoundSystem.Play(Filter.Entities(ev.Target), "/Audio/Effects/guardian_inject.ogg", ev.Target);
-
-                _popupSystem.PopupEntity(Loc.GetString("guardian-created"), ev.Target, Filter.Entities(ev.Target));
+                guardianComp.Host = args.Args.Target.Value;
+                _audio.PlayPvs(guardianComp.InjectSound, args.Args.Target.Value);
+                _popupSystem.PopupEntity(Loc.GetString("guardian-created"), args.Args.Target.Value, args.Args.Target.Value);
                 // Exhaust the activator
-                comp.Used = true;
+                component.Used = true;
             }
             else
             {
-                Logger.ErrorS("guardian", $"Tried to spawn a guardian that doesn't have {nameof(GuardianComponent)}");
-                EntityManager.QueueDeleteEntity(guardian);
+                Log.Error($"Tried to spawn a guardian that doesn't have {nameof(GuardianComponent)}");
+                QueueDel(guardian);
             }
+
+            args.Handled = true;
         }
 
         /// <summary>
@@ -219,17 +258,22 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnHostStateChange(EntityUid uid, GuardianHostComponent component, MobStateChangedEvent args)
         {
-            if (component.HostedGuardian == null) return;
+            if (component.HostedGuardian == null)
+                return;
 
-            if (args.CurrentMobState.IsCritical())
+            TryComp<GuardianComponent>(component.HostedGuardian, out var guardianComp);
+
+            if (args.NewMobState == MobState.Critical)
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian.Value, Filter.Entities(component.HostedGuardian.Value));
-                SoundSystem.Play(Filter.Entities(component.HostedGuardian.Value), "/Audio/Effects/guardian_warn.ogg", component.HostedGuardian.Value);
+                _popupSystem.PopupEntity(Loc.GetString("guardian-host-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
+                if (guardianComp != null)
+                    _audio.PlayPvs(guardianComp.CriticalSound, component.HostedGuardian.Value);
             }
-            else if (args.CurrentMobState.IsDead())
+            else if (args.NewMobState == MobState.Dead)
             {
-                SoundSystem.Play(Filter.Pvs(uid), "/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioHelpers.WithVariation(0.20f));
-                EntityManager.RemoveComponent<GuardianHostComponent>(uid);
+                if (guardianComp != null)
+                    _audio.PlayPvs(guardianComp.DeathSound, uid);
+                RemComp<GuardianHostComponent>(uid);
             }
         }
 
@@ -238,10 +282,16 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnGuardianDamaged(EntityUid uid, GuardianComponent component, DamageChangedEvent args)
         {
-            if (args.DamageDelta == null) return;
+            if (args.DamageDelta == null || component.Host == null || component.DamageShare == 0)
+                return;
 
-            _damageSystem.TryChangeDamage(component.Host, args.DamageDelta * component.DamageShare);
-            _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host, Filter.Entities(component.Host));
+            _damageSystem.ChangeDamage(
+                component.Host.Value,
+                args.DamageDelta * component.DamageShare,
+                origin: args.Origin,
+                ignoreResistances: true,
+                interruptsDoAfters: false);
+            _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host.Value, component.Host.Value);
 
         }
 
@@ -251,9 +301,7 @@ namespace Content.Server.Guardian
         private void OnCreatorExamine(EntityUid uid, GuardianCreatorComponent component, ExaminedEvent args)
         {
            if (component.Used)
-           {
                args.PushMarkup(Loc.GetString("guardian-activator-empty-examine"));
-           }
         }
 
         /// <summary>
@@ -261,9 +309,11 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnHostMove(EntityUid uid, GuardianHostComponent component, ref MoveEvent args)
         {
-            if (component.HostedGuardian == null ||
-                !TryComp(component.HostedGuardian, out GuardianComponent? guardianComponent) ||
-                !guardianComponent.GuardianLoose) return;
+            if (!TryComp(component.HostedGuardian, out GuardianComponent? guardianComponent) ||
+                !guardianComponent.GuardianLoose)
+            {
+                return;
+            }
 
             CheckGuardianMove(uid, component.HostedGuardian.Value, component);
         }
@@ -273,9 +323,10 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnGuardianMove(EntityUid uid, GuardianComponent component, ref MoveEvent args)
         {
-            if (!component.GuardianLoose) return;
+            if (!component.GuardianLoose || component.Host == null)
+                return;
 
-            CheckGuardianMove(component.Host, uid, guardianComponent: component);
+            CheckGuardianMove(component.Host.Value, uid, guardianComponent: component);
         }
 
         /// <summary>
@@ -289,84 +340,49 @@ namespace Content.Server.Guardian
             TransformComponent? hostXform = null,
             TransformComponent? guardianXform = null)
         {
+            if (TerminatingOrDeleted(guardianUid) || TerminatingOrDeleted(hostUid))
+                return;
+
             if (!Resolve(hostUid, ref hostComponent, ref hostXform) ||
                 !Resolve(guardianUid, ref guardianComponent, ref guardianXform))
             {
                 return;
             }
 
-            if (!guardianComponent.GuardianLoose) return;
+            if (!guardianComponent.GuardianLoose)
+                return;
 
-            if (!guardianXform.Coordinates.InRange(EntityManager, hostXform.Coordinates, guardianComponent.DistanceAllowed))
-            {
-                RetractGuardian(hostComponent, guardianComponent);
-            }
+            if (!_transform.InRange(guardianXform.Coordinates, hostXform.Coordinates, guardianComponent.DistanceAllowed))
+                RetractGuardian(hostUid, hostComponent, guardianUid, guardianComponent);
         }
 
-        private bool CanRelease(GuardianHostComponent host, GuardianComponent guardian)
-        {
-            return HasComp<ActorComponent>(guardian.Owner);
-        }
-
-        private void ReleaseGuardian(GuardianHostComponent hostComponent, GuardianComponent guardianComponent)
+        private void ReleaseGuardian(EntityUid host, GuardianHostComponent hostComponent, EntityUid guardian, GuardianComponent guardianComponent)
         {
             if (guardianComponent.GuardianLoose)
             {
-                DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardianComponent.Owner));
+                DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardian));
                 return;
             }
 
-            if (!CanRelease(hostComponent, guardianComponent))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-no-soul"), hostComponent.Owner, Filter.Entities(hostComponent.Owner));
-                return;
-            }
-
-            DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardianComponent.Owner));
-            hostComponent.GuardianContainer.Remove(guardianComponent.Owner);
-            DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardianComponent.Owner));
+            DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardian));
+            _container.Remove(guardian, hostComponent.GuardianContainer);
+            DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardian));
 
             guardianComponent.GuardianLoose = true;
         }
 
-        private void RetractGuardian(GuardianHostComponent hostComponent, GuardianComponent guardianComponent)
+        private void RetractGuardian(EntityUid host,GuardianHostComponent hostComponent, EntityUid guardian, GuardianComponent guardianComponent)
         {
             if (!guardianComponent.GuardianLoose)
             {
-                DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardianComponent.Owner));
+                DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardian));
                 return;
             }
 
-            hostComponent.GuardianContainer.Insert(guardianComponent.Owner);
-            DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardianComponent.Owner));
-            _popupSystem.PopupEntity(Loc.GetString("guardian-entity-recall"), hostComponent.Owner, Filter.Pvs(hostComponent.Owner));
+            _container.Insert(guardian, hostComponent.GuardianContainer);
+            DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardian));
+            _popupSystem.PopupEntity(Loc.GetString("guardian-entity-recall"), host);
             guardianComponent.GuardianLoose = false;
-        }
-
-        private sealed class GuardianCreatorInjectedEvent : EntityEventArgs
-        {
-            public EntityUid User { get; }
-            public EntityUid Target { get; }
-            public GuardianCreatorComponent Component { get; }
-
-            public GuardianCreatorInjectedEvent(EntityUid user, EntityUid target, GuardianCreatorComponent component)
-            {
-                User = user;
-                Target = target;
-                Component = component;
-            }
-        }
-
-        private sealed class GuardianCreatorInjectCancelledEvent : EntityEventArgs
-        {
-            public EntityUid Target { get; }
-            public GuardianCreatorComponent Component { get; }
-
-            public GuardianCreatorInjectCancelledEvent(EntityUid target, GuardianCreatorComponent component)
-            {
-                Target = target;
-                Component = component;
-            }
         }
     }
 }

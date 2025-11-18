@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Shared.Alert;
 
@@ -10,15 +9,15 @@ namespace Content.Shared.Alert;
 /// falls back to the id.
 /// </summary>
 [Serializable, NetSerializable]
-public struct AlertKey : ISerializationHooks, IPopulateDefaultValues
+public struct AlertKey
 {
-    public AlertType? AlertType { get; private set; }
-    public readonly AlertCategory? AlertCategory;
+    public ProtoId<AlertPrototype>? AlertType { get; private set; } = default!;
+    public readonly ProtoId<AlertCategoryPrototype>? AlertCategory;
 
     /// NOTE: if the alert has a category you must pass the category for this to work
     /// properly as a key. I.e. if the alert has a category and you pass only the alert type, and you
     /// compare this to another AlertKey that has both the category and the same alert type, it will not consider them equal.
-    public AlertKey(AlertType? alertType, AlertCategory? alertCategory)
+    public AlertKey(ProtoId<AlertPrototype>? alertType, ProtoId<AlertCategoryPrototype>? alertCategory)
     {
         AlertCategory = alertCategory;
         AlertType = alertType;
@@ -47,15 +46,10 @@ public struct AlertKey : ISerializationHooks, IPopulateDefaultValues
         return AlertType.GetHashCode();
     }
 
-    public void PopulateDefaultValues()
-    {
-        AlertType = Alert.AlertType.Error;
-    }
-
     /// <param name="category">alert category, must not be null</param>
     /// <returns>An alert key for the provided alert category. This must only be used for
     /// queries and never storage, as it is lacking an alert type.</returns>
-    public static AlertKey ForCategory(AlertCategory category)
+    public static AlertKey ForCategory(ProtoId<AlertCategoryPrototype> category)
     {
         return new(null, category);
     }

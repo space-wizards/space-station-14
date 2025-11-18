@@ -1,27 +1,27 @@
 using System.Linq;
 using Content.Shared.Construction;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [DataDefinition]
-    public sealed class DeleteEntitiesInContainer : IGraphAction
+    public sealed partial class DeleteEntitiesInContainer : IGraphAction
     {
-        [DataField("container")] public string Container { get; } = string.Empty;
+        [DataField("container")] public string Container { get; private set; } = string.Empty;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (string.IsNullOrEmpty(Container)) return;
-            // TODO CONSTRUCTION: Use the new ContainerSystem methods here.
-            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerMan)) return;
-            if (!containerMan.TryGetContainer(Container, out var container)) return;
+            if (string.IsNullOrEmpty(Container))
+                return;
+            var containerSys = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
+
+            if (!containerSys.TryGetContainer(uid, Container, out var container))
+                return;
 
             foreach (var contained in container.ContainedEntities.ToArray())
             {
-                if(container.Remove(contained))
+                if(containerSys.Remove(contained, container))
                     entityManager.QueueDeleteEntity(contained);
             }
         }

@@ -1,25 +1,30 @@
-using System.Threading.Tasks;
 using Content.Server.GameTicking;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class RestartRoundTest : ContentIntegrationTest
+    public sealed class RestartRoundTest
     {
         [Test]
         public async Task Test()
         {
-            var (client, server) = await StartConnectedServerClientPair();
-
-            server.Post(() =>
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
-                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().RestartRound();
+                DummyTicker = false,
+                Connected = true,
+                Dirty = true
+            });
+            var server = pair.Server;
+            var sysManager = server.ResolveDependency<IEntitySystemManager>();
+
+            await server.WaitPost(() =>
+            {
+                sysManager.GetEntitySystem<GameTicker>().RestartRound();
             });
 
-            await RunTicksSync(client, server, 10);
+            await pair.RunTicksSync(10);
+            await pair.CleanReturnAsync();
         }
     }
 }

@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: CottonObjects
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cottoncloth
+      steps:
+      - material: Cotton
+        amount: 4
+        doAfter: 3
+  - node: cottoncloth
+    entity: MaterialCloth1

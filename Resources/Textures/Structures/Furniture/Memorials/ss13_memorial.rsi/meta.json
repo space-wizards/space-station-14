@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/66ae31b0be61d88cd95405026389fb0e093bd285. Derived from artwork by GitHub user @LanCartwright (https://github.com/LanCartwright).",
+  "size": {
+    "x": 32,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "memorial"
+    }
+  ]
+}

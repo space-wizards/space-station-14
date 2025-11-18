@@ -1,0 +1,73 @@
+- type: entity
+  id: BaseShowcaseRobot
+  abstract: true
+  parent: BaseStructure
+  name: security robot showcase
+  description: A non-functional replica of an old security robot.
+  components:
+    - type: Anchorable
+    - type: Damageable
+      damageContainer: StructuralInorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 75
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                PartRodMetal1:
+                  min: 5
+                  max: 10
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+
+- type: entity
+  id: ShowcaseRobot
+  parent: BaseShowcaseRobot
+  name: security robot showcase
+  description: A non-functional replica of an old security robot.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/showcase.rsi
+    state: showcase_1
+
+- type: entity
+  id: ShowcaseRobotWhite
+  parent: BaseShowcaseRobot
+  name: white robot showcase
+  description: A non-functional replica of an old robot.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/showcase.rsi
+    state: showcase_2
+
+- type: entity
+  id: ShowcaseRobotAntique
+  parent: BaseShowcaseRobot
+  name: cargo robot showcase
+  description: A non-functional replica of an old cargo robot.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/showcase.rsi
+    state: showcase_3
+
+- type: entity
+  id: ShowcaseRobotMarauder
+  parent: BaseShowcaseRobot
+  name: marauder showcase
+  description: A non-functional replica of a marauder, painted green.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/showcase.rsi
+    state: showcase_4

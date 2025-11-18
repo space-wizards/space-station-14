@@ -1,50 +1,52 @@
-﻿- type: entity
-  id: cargoTelepad
-  parent: BaseStructureDynamic
+- type: entity
+  id: CargoTelepad
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: cargo telepad
-  description: 'Temporary cargo delivery for developing Nanotrasen stations! Warning: destroying this while goods are in transit will lose them forever!'
+  description: Beam in the pizzas and dig in.
   components:
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Transform
     anchored: true
+    noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
+      fix1:
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.00"
-      mass: 25
-      layer:
-      - Passable
+        density: 190
+        mask:
+          - MachineMask
   - type: Sprite
-    netsync: false
     sprite: Structures/cargo_telepad.rsi
-    drawdepth: FloorObjects
+    drawdepth: HighFloorObjects
     layers:
     - state: offline
-      map: ["enum.CargoTelepadLayers.Base"]
+      map: [ "enum.CargoTelepadLayers.Base" ]
     - state: idle
       map: [ "enum.CargoTelepadLayers.Beam" ]
       shader: unshaded
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - OrderReceiver
   - type: ApcPowerReceiver
     powerLoad: 1000 # TODO if we keep this make it spike power draw when teleporting
-  - type: ExtensionCableReceiver
   - type: CargoTelepad
+  - type: Machine
+    board: CargoTelepadMachineCircuitboard
   - type: Appearance
+  - type: CollideOnAnchor
+  - type: NameIdentifier
+    group: CargoTelepads
+  - type: AnimationPlayer

@@ -1,0 +1,34 @@
+- type: constructionGraph
+  id: makeshiftstunprod
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: msstunprod
+          completed:
+          - !type:AdminLog
+            message: "Construction"
+            impact: High
+          steps:
+            - material: MetalRod
+              amount: 1
+            - tag: PowerCellSmall
+              name: construction-graph-tag-power-cell-small
+              icon:
+                sprite: Objects/Power/power_cells.rsi
+                state: small
+            - tag: Handcuffs
+              icon:
+                sprite: Objects/Misc/cablecuffs.rsi
+                state: cuff
+                color: red
+              name: construction-graph-tag-cuffs
+            - tag: Igniter
+              name: construction-graph-tag-igniter
+              icon:
+                sprite: Objects/Devices/igniter.rsi
+                state: icon
+              doAfter: 15
+    - node: msstunprod
+      entity: Stunprod
+

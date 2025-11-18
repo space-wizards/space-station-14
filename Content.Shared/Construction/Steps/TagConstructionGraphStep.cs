@@ -1,18 +1,16 @@
 using Content.Shared.Tag;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public sealed class TagConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed partial class TagConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("tag")]
-        private string? _tag = null;
+        private string? _tag;
 
-        public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
+        public override bool EntityValid(EntityUid uid, IEntityManager entityManager, IComponentFactory compFactory)
         {
-            var tagSystem = EntitySystem.Get<TagSystem>();
+            var tagSystem = entityManager.EntitySysManager.GetEntitySystem<TagSystem>();
             return !string.IsNullOrEmpty(_tag) && tagSystem.HasTag(uid, _tag);
         }
     }

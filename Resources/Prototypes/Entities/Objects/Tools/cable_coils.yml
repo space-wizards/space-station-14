@@ -12,40 +12,75 @@
   - type: Tag
     tags:
     - CableCoil
-    - DroneUsable
   - type: Stack
     stackType: Cable
   - type: Sprite
     sprite: Objects/Tools/cable-coils.rsi
-    netsync: false
   - type: Item
     sprite: Objects/Tools/cable-coils.rsi
+    size: Small
+    storedRotation: -90
   - type: CablePlacer
   - type: Clickable
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 2.25
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 15
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
 
 - type: entity
   id: CableHVStack
   parent: CableStack
   name: HV cable coil
   suffix: Full
+  description: HV cables for connecting engines to heavy duty machinery, SMESes, and substations.
   components:
   - type: Stack
     stackType: CableHV
+    baseLayer: base
+    layerStates:
+    - coilhv-10
+    - coilhv-20
+    - coilhv-30
   - type: Sprite
     state: coilhv-30
+    layers:
+    - state: coilhv-30
+      map: ["base"]
   - type: Item
-    size: 10
-    HeldPrefix: coilhv
+    heldPrefix: coilhv
   - type: CablePlacer
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coilhv-10
-          - coilhv-20
-          - coilhv-30
+  - type: Extractable
+    grindableSolutionName: hvcable
+  - type: SolutionContainerManager
+    solutions:
+      hvcable:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 3
+        - ReagentId: Copper
+          Quantity: 2
+        - ReagentId: Carbon #steel-reinforced
+          Quantity: 1
+
+- type: entity
+  parent: CableHVStack
+  id: CableHVStack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: coilhv-10
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: CableHVStack
@@ -54,8 +89,6 @@
   components:
   - type: Sprite
     state: coilhv-10
-  - type: Item
-    size: 3
   - type: Stack
     count: 1
 
@@ -64,24 +97,46 @@
   id: CableMVStack
   name: MV cable coil
   suffix: Full
+  description: MV cables for connecting substations to APCs, and also powering a select few things like emitters.
   components:
   - type: Stack
     stackType: CableMV
+    baseLayer: base
+    layerStates:
+    - coilmv-10
+    - coilmv-20
+    - coilmv-30
   - type: Sprite
     state: coilmv-30
+    layers:
+    - state: coilmv-30
+      map: ["base"]
   - type: Item
-    size: 10
-    HeldPrefix: coilmv
+    heldPrefix: coilmv
   - type: CablePlacer
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coilmv-10
-          - coilmv-20
-          - coilmv-30
+  - type: Extractable
+    grindableSolutionName: mvcable
+  - type: SolutionContainerManager
+    solutions:
+      mvcable:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 3
+        - ReagentId: Copper
+          Quantity: 2
+
+- type: entity
+  parent: CableMVStack
+  id: CableMVStack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: coilmv-10
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: CableMVStack
@@ -90,8 +145,6 @@
   components:
   - type: Sprite
     state: coilmv-10
-  - type: Item
-    size: 3
   - type: Stack
     count: 1
 
@@ -104,19 +157,41 @@
   components:
   - type: Sprite
     state: coillv-30
+    layers:
+    - state: coillv-30
+      map: ["base"]
   - type: Item
-    size: 10
-    HeldPrefix: coillv
+    heldPrefix: coillv
+  - type: Stack
+    baseLayer: base
+    layerStates:
+    - coillv-10
+    - coillv-20
+    - coillv-30
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coillv-10
-          - coillv-20
-          - coillv-30
+  - type: Extractable
+    grindableSolutionName: lvcable
+  - type: SolutionContainerManager
+    solutions:
+      lvcable:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 3
+        - ReagentId: Copper
+          Quantity: 2
+
+- type: entity
+  parent: CableApcStack
+  id: CableApcStack10
+  suffix: 10
+  components:
+    - type: Sprite
+      state: coillv-10
+    - type: Stack
+      count: 10
 
 - type: entity
   parent: CableApcStack
@@ -125,7 +200,5 @@
   components:
   - type: Sprite
     state: coillv-10
-  - type: Item
-    size: 3
   - type: Stack
     count: 1

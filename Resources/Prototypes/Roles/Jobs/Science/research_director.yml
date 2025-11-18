@@ -1,30 +1,51 @@
 - type: job
   id: ResearchDirector
-  name: "research director"
-  head: true
+  name: job-name-rd
+  description: job-description-rd
+  playTimeTracker: JobResearchDirector
+  requirements:
+  - !type:RoleTimeRequirement
+    role: JobScientist
+    time: 5h
+  - !type:DepartmentTimeRequirement
+    department: Science
+    time: 10h
+  weight: 10
   startingGear: ResearchDirectorGear
-  departments:
-  - Command
-  - Science
-  icon: "ResearchDirector"
-  requireAdminNotify: true
-  supervisors: "the captain"
+  icon: "JobIconResearchDirector"
+  supervisors: job-supervisors-captain
   canBeAntag: false
   access:
   - Research
   - Command
   - Maintenance
   - ResearchDirector
+  - Brig
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: ResearchDirectorGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitResearchDirector
-    back: ClothingBackpackScienceFilled
-    shoes: ClothingShoesColorBrown
-    outerClothing: ClothingOuterCoatLab
     id: RnDPDA
-    ears: ClothingHeadsetScience
-  innerclothingskirt: ClothingUniformJumpskirtResearchDirector
-  satchel: ClothingBackpackSatchelScienceFilled
-  duffelbag: ClothingBackpackDuffelScienceFilled
+    ears: ClothingHeadsetRD
+  storage:
+    back:
+    - Flash
+
+- type: chameleonOutfit
+  id: ResearchDirectorChameleonOutfit
+  job: ResearchDirector
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretRND
+    eyes: ClothingEyesGlasses
+    mask: ClothingMaskGas
+    neck: ClothingNeckCloakRd
+    outerClothing: ClothingOuterCoatRD
+    gloves: ClothingHandsGlovesColorPurple

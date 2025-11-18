@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Content.Shared.Alert;
 using NUnit.Framework;
@@ -15,9 +15,16 @@ namespace Content.Tests.Shared.Alert
     {
         private const string Prototypes = @"
 - type: alert
-  alertType: HumanHealth
+  id: HumanHealth
   category: Health
-  icon: /Textures/Interface/Alerts/Human/human.rsi/human.png
+  icons:
+  - /Textures/Interface/Alerts/Human/human.rsi/human0.png
+  - /Textures/Interface/Alerts/Human/human.rsi/human1.png
+  - /Textures/Interface/Alerts/Human/human.rsi/human2.png
+  - /Textures/Interface/Alerts/Human/human.rsi/human3.png
+  - /Textures/Interface/Alerts/Human/human.rsi/human4.png
+  - /Textures/Interface/Alerts/Human/human.rsi/human5.png
+  - /Textures/Interface/Alerts/Human/human.rsi/human6.png
   name: Health
   description: ""[color=green]Green[/color] good. [color=red]Red[/color] bad.""
   minSeverity: 0
@@ -32,9 +39,9 @@ namespace Content.Tests.Shared.Alert
         [Test]
         public void TestAlertKey()
         {
-            Assert.That(new AlertKey(AlertType.HumanHealth, null), Is.Not.EqualTo(AlertKey.ForCategory(AlertCategory.Health)));
-            Assert.That((new AlertKey(null, AlertCategory.Health)), Is.EqualTo(AlertKey.ForCategory(AlertCategory.Health)));
-            Assert.That((new AlertKey(AlertType.Buckled, AlertCategory.Health)), Is.EqualTo(AlertKey.ForCategory(AlertCategory.Health)));
+            Assert.That(new AlertKey("HumanHealth", null), Is.Not.EqualTo(AlertKey.ForCategory("Health")));
+            Assert.That((new AlertKey(null, "Health")), Is.EqualTo(AlertKey.ForCategory("Health")));
+            Assert.That((new AlertKey("Buckled", "Health")), Is.EqualTo(AlertKey.ForCategory("Health")));
         }
 
         [TestCase(0, "/Textures/Interface/Alerts/Human/human.rsi/human0.png")]
@@ -43,7 +50,7 @@ namespace Content.Tests.Shared.Alert
         public void GetsIconPath(short? severity, string expected)
         {
             var alert = GetTestPrototype();
-            Assert.That(alert.GetIcon(severity), Is.EqualTo(new SpriteSpecifier.Texture(new ResourcePath(expected))));
+            Assert.That(alert.GetIcon(severity), Is.EqualTo(new SpriteSpecifier.Texture(new (expected))));
         }
 
         [TestCase(null, "/Textures/Interface/Alerts/Human/human.rsi/human0.png")]
@@ -78,7 +85,7 @@ namespace Content.Tests.Shared.Alert
             var proto = (YamlMappingNode) rootNode[0];
             var serMan = IoCManager.Resolve<ISerializationManager>();
 
-            return serMan.ReadValue<AlertPrototype>(new MappingDataNode(proto));
+            return serMan.Read<AlertPrototype>(new MappingDataNode(proto));
         }
     }
 }

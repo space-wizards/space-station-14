@@ -1,130 +1,236 @@
-using System;
-using Content.Client.Weapons.Melee.Components;
+using System.Linq;
+using Content.Client.Gameplay;
+using Content.Shared.CombatMode;
+using Content.Shared.Effects;
+using Content.Shared.Hands.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
-using JetBrains.Annotations;
+using Content.Shared.Weapons.Melee.Components;
+using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
-using static Content.Shared.Weapons.Melee.MeleeWeaponSystemMessages;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
+using Robust.Client.Player;
+using Robust.Client.State;
+using Robust.Shared.Input;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 
-namespace Content.Client.Weapons.Melee
+namespace Content.Client.Weapons.Melee;
+
+public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
-    [UsedImplicitly]
-    public sealed class MeleeWeaponSystem : EntitySystem
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
+    [Dependency] private readonly IInputManager _inputManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private readonly AnimationPlayerSystem _animation = default!;
+    [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly MapSystem _map = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
+
+    private EntityQuery<TransformComponent> _xformQuery;
+
+    private const string MeleeLungeKey = "melee-lunge";
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly EffectSystem _effectSystem = default!;
+        base.Initialize();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+        SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
+        UpdatesOutsidePrediction = true;
+    }
 
-        public override void Initialize()
+    public override void FrameUpdate(float frameTime)
+    {
+        base.FrameUpdate(frameTime);
+        UpdateEffects();
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
+        var entityNull = _player.LocalEntity;
+
+        if (entityNull == null)
+            return;
+
+        var entity = entityNull.Value;
+
+        if (!TryGetWeapon(entity, out var weaponUid, out var weapon))
+            return;
+
+        if (!CombatMode.IsInCombatMode(entity) || !Blocker.CanAttack(entity, weapon: (weaponUid, weapon)))
         {
-            SubscribeNetworkEvent<PlayMeleeWeaponAnimationMessage>(PlayWeaponArc);
-            SubscribeNetworkEvent<PlayLungeAnimationMessage>(PlayLunge);
+            weapon.Attacking = false;
+            return;
         }
 
-        public override void FrameUpdate(float frameTime)
-        {
-            base.FrameUpdate(frameTime);
+        var useDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.Use);
+        var altDown = _inputSystem.CmdStates.GetState(EngineKeyFunctions.UseSecondary);
 
-            foreach (var arcAnimationComponent in EntityManager.EntityQuery<MeleeWeaponArcAnimationComponent>(true))
+        if (weapon.AutoAttack || useDown != BoundKeyState.Down && altDown != BoundKeyState.Down)
+        {
+            if (weapon.Attacking)
             {
-                arcAnimationComponent.Update(frameTime);
+                RaisePredictiveEvent(new StopAttackEvent(GetNetEntity(weaponUid)));
             }
         }
 
-        private void PlayWeaponArc(PlayMeleeWeaponAnimationMessage msg)
+        if (weapon.Attacking || weapon.NextAttack > Timing.CurTime)
         {
-            if (!_prototypeManager.TryIndex(msg.ArcPrototype, out MeleeWeaponAnimationPrototype? weaponArc))
+            return;
+        }
+
+        // TODO using targeted actions while combat mode is enabled should NOT trigger attacks.
+
+        var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
+
+        if (mousePos.MapId == MapId.Nullspace)
+        {
+            return;
+        }
+
+        EntityCoordinates coordinates;
+
+        if (MapManager.TryFindGridAt(mousePos, out var gridUid, out _))
+        {
+            coordinates = TransformSystem.ToCoordinates(gridUid, mousePos);
+        }
+        else
+        {
+            coordinates = TransformSystem.ToCoordinates(_map.GetMap(mousePos.MapId), mousePos);
+        }
+
+        // If the gun has AltFireComponent, it can be used to attack.
+        if (TryComp<GunComponent>(weaponUid, out var gun) && gun.UseKey)
+        {
+            if (!TryComp<AltFireMeleeComponent>(weaponUid, out var altFireComponent) || altDown != BoundKeyState.Down)
+                return;
+
+            switch(altFireComponent.AttackType)
             {
-                Logger.Error("Tried to play unknown weapon arc prototype '{0}'", msg.ArcPrototype);
+                case AltFireAttackType.Light:
+                    ClientLightAttack(entity, mousePos, coordinates, weaponUid, weapon);
+                    break;
+
+                case AltFireAttackType.Heavy:
+                    ClientHeavyAttack(entity, coordinates, weaponUid, weapon);
+                    break;
+
+                case AltFireAttackType.Disarm:
+                    ClientDisarm(entity, mousePos, coordinates);
+                    break;
+            }
+
+            return;
+        }
+
+        // Heavy attack.
+        if (altDown == BoundKeyState.Down)
+        {
+            // If it's an unarmed attack then do a disarm
+            if (weapon.AltDisarm && weaponUid == entity)
+            {
+                ClientDisarm(entity, mousePos, coordinates);
                 return;
             }
 
-            var attacker = msg.Attacker;
-            if (!EntityManager.EntityExists(msg.Attacker))
-            {
-                // FIXME: This should never happen.
-                Logger.Error($"Tried to play a weapon arc {msg.ArcPrototype}, but the attacker does not exist. attacker={msg.Attacker}, source={msg.Source}");
-                return;
-            }
-
-            if (!Deleted(attacker))
-            {
-                var lunge = attacker.EnsureComponent<MeleeLungeComponent>();
-                lunge.SetData(msg.Angle);
-
-                var entity = EntityManager.SpawnEntity(weaponArc.Prototype, EntityManager.GetComponent<TransformComponent>(attacker).Coordinates);
-                EntityManager.GetComponent<TransformComponent>(entity).LocalRotation = msg.Angle;
-
-                var weaponArcAnimation = EntityManager.GetComponent<MeleeWeaponArcAnimationComponent>(entity);
-                weaponArcAnimation.SetData(weaponArc, msg.Angle, attacker, msg.ArcFollowAttacker);
-
-                // Due to ISpriteComponent limitations, weapons that don't use an RSI won't have this effect.
-                if (EntityManager.EntityExists(msg.Source) &&
-                    msg.TextureEffect &&
-                    EntityManager.TryGetComponent(msg.Source, out ISpriteComponent? sourceSprite) &&
-                    sourceSprite.BaseRSI?.Path is { } path)
-                {
-                    var curTime = _gameTiming.CurTime;
-                    var effect = new EffectSystemMessage
-                    {
-                        EffectSprite = path.ToString(),
-                        RsiState = sourceSprite.LayerGetState(0).Name,
-                        Coordinates = EntityManager.GetComponent<TransformComponent>(attacker).Coordinates,
-                        Color = Vector4.Multiply(new Vector4(255, 255, 255, 125), 1.0f),
-                        ColorDelta = Vector4.Multiply(new Vector4(0, 0, 0, -10), 1.0f),
-                        Velocity = msg.Angle.ToWorldVec(),
-                        Acceleration = msg.Angle.ToWorldVec() * 5f,
-                        Born = curTime,
-                        DeathTime = curTime.Add(TimeSpan.FromMilliseconds(300f)),
-                    };
-
-                    _effectSystem.CreateEffect(effect);
-                }
-            }
-
-            foreach (var hit in msg.Hits)
-            {
-                if (!EntityManager.EntityExists(hit))
-                {
-                    continue;
-                }
-
-                if (!EntityManager.TryGetComponent(hit, out ISpriteComponent? sprite))
-                {
-                    continue;
-                }
-
-                var originalColor = sprite.Color;
-                var newColor = Color.Red * originalColor;
-                sprite.Color = newColor;
-
-                hit.SpawnTimer(100, () =>
-                {
-                    // Only reset back to the original color if something else didn't change the color in the mean time.
-                    if (sprite.Color == newColor)
-                    {
-                        sprite.Color = originalColor;
-                    }
-                });
-            }
+            ClientHeavyAttack(entity, coordinates, weaponUid, weapon);
+            return;
         }
 
-        private void PlayLunge(PlayLungeAnimationMessage msg)
+        // Light attack
+        if (useDown == BoundKeyState.Down)
+            ClientLightAttack(entity, mousePos, coordinates, weaponUid, weapon);
+    }
+
+    protected override bool InRange(EntityUid user, EntityUid target, float range, ICommonSession? session)
+    {
+        var xform = Transform(target);
+        var targetCoordinates = xform.Coordinates;
+        var targetLocalAngle = xform.LocalRotation;
+
+        return Interaction.InRangeUnobstructed(user, target, targetCoordinates, targetLocalAngle, range, overlapCheck: false);
+    }
+
+    protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
+    {
+        // Server never sends the event to us for predictiveeevent.
+        _color.RaiseEffect(Color.Red, targets, Filter.Local());
+    }
+
+    /// <summary>
+    /// Raises a heavy attack event with the relevant attacked entities.
+    /// This is to avoid lag effecting the client's perspective too much.
+    /// </summary>
+    private void ClientHeavyAttack(EntityUid user, EntityCoordinates coordinates, EntityUid meleeUid, MeleeWeaponComponent component)
+    {
+        // Only run on first prediction to avoid the potential raycast entities changing.
+        if (!_xformQuery.TryGetComponent(user, out var userXform) ||
+            !Timing.IsFirstTimePredicted)
         {
-            if (EntityManager.EntityExists(msg.Source))
-            {
-                msg.Source.EnsureComponent<MeleeLungeComponent>().SetData(msg.Angle);
-            }
-            else
-            {
-                // FIXME: This should never happen.
-                Logger.Error($"Tried to play a lunge animation, but the entity \"{msg.Source}\" does not exist.");
-            }
+            return;
         }
+
+        var targetMap = TransformSystem.ToMapCoordinates(coordinates);
+
+        if (targetMap.MapId != userXform.MapID)
+            return;
+
+        var userPos = TransformSystem.GetWorldPosition(userXform);
+        var direction = targetMap.Position - userPos;
+        var distance = MathF.Min(component.Range, direction.Length());
+
+        // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
+        // Server will validate it with InRangeUnobstructed.
+        var entities = GetNetEntityList(ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList());
+        RaisePredictiveEvent(new HeavyAttackEvent(GetNetEntity(meleeUid), entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), GetNetCoordinates(coordinates)));
+    }
+
+    private void ClientDisarm(EntityUid attacker, MapCoordinates mousePos, EntityCoordinates coordinates)
+    {
+        EntityUid? target = null;
+
+        if (_stateManager.CurrentState is GameplayStateBase screen)
+            target = screen.GetClickedEntity(mousePos);
+
+        RaisePredictiveEvent(new DisarmAttackEvent(GetNetEntity(target), GetNetCoordinates(coordinates)));
+    }
+
+    private void ClientLightAttack(EntityUid attacker, MapCoordinates mousePos, EntityCoordinates coordinates, EntityUid weaponUid, MeleeWeaponComponent meleeComponent)
+    {
+        var attackerPos = TransformSystem.GetMapCoordinates(attacker);
+
+        if (mousePos.MapId != attackerPos.MapId || (attackerPos.Position - mousePos.Position).Length() > meleeComponent.Range)
+            return;
+
+        EntityUid? target = null;
+
+        if (_stateManager.CurrentState is GameplayStateBase screen)
+            target = screen.GetClickedEntity(mousePos);
+
+        // Don't light-attack if interaction will be handling this instead
+        if (Interaction.CombatModeCanHandInteract(attacker, target))
+            return;
+
+        RaisePredictiveEvent(new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(coordinates)));
+    }
+
+    private void OnMeleeLunge(MeleeLungeEvent ev)
+    {
+        var ent = GetEntity(ev.Entity);
+        var entWeapon = GetEntity(ev.Weapon);
+
+        // Entity might not have been sent by PVS.
+        if (Exists(ent) && Exists(entWeapon))
+            DoLunge(ent, entWeapon, ev.Angle, ev.LocalPos, ev.Animation);
     }
 }

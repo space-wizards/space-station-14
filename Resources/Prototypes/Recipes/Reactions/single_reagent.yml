@@ -1,0 +1,58 @@
+# Food
+
+- type: reaction
+  id: ProteinCooking
+  impact: Low
+  minTemp: 347
+  reactants:
+    UncookedAnimalProteins:
+      amount: 0.5
+  products:
+    Protein: 0.5
+
+- type: reaction
+  id: EggCooking
+  impact: Low
+  minTemp: 344
+  reactants:
+    Egg:
+      amount: 0.5
+  products:
+    EggCooked: 0.5
+
+- type: reaction
+  id: SapBoiling
+  impact: Low
+  minTemp: 377
+  reactants:
+    Sap:
+      amount: 1
+  effects:
+  - !type:CreateGas
+    gas: WaterVapor
+  products:
+    Syrup: 0.5 #2:1 sap to syrup, killing diona for pancakes isn't really fun
+
+# Holy - TODO: make it so only the chaplain can use the bible to start these reactions, not anyone with a bible
+
+- type: reaction
+  id: BloodToWine
+  impact: Low
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    Blood:
+      amount: 1
+  products:
+    Wine: 1
+
+- type: reaction
+  id: WatertoHolyWater
+  impact: Low
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    Water:
+      amount: 1
+  products:
+    Holywater: 1

@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "created by discord: brainfood#7460 / github: brainfood1183.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "origin1"
+    },
+    {
+      "name": "origin2"
+    },
+    {
+      "name": "origin3"
+    },
+    {
+      "name": "origin4"
+    },
+    {
+      "name": "origin5"
+    },
+    {
+      "name": "origin6"
+    },
+    {
+      "name": "origin7"
+    },
+    {
+      "name": "origin8"
+    },
+    {
+      "name": "origin9"
+    },
+    {
+      "name": "origin10"
+    },
+    {
+      "name": "origin11"
+    },
+    {
+      "name": "origin12"
+    },
+    {
+      "name": "origin13"
+    }
+  ]
+}

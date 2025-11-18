@@ -1,0 +1,46 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               MinSize="270 420"
+               SetSize="360 420" Title="{Loc 'gas-analyzer-window-name'}">
+    <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
+        <BoxContainer Name="CTopBox" Orientation="Horizontal"/>
+        <!-- Gas Mix Data, Populated by function -->
+        <TabContainer Name="CTabContainer" VerticalExpand="True" Margin="1 1 1 2">
+            <!-- Scanned device mix data -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical">
+                    <GridContainer Name="CDeviceGrid" Columns="3" Rows="1" VerticalExpand="True" HorizontalExpand="True">
+                        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                            <Control MinHeight="5"/>
+                            <Label Name="LeftPanelLabel" HorizontalExpand="True" Align="Center"/>
+                            <Control MinHeight="27"/>
+                            <BoxContainer Name="LeftPanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center" Visible="False"/>
+                        </BoxContainer>
+                        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                            <SpriteView Name="GridIcon"
+                                        MinSize="32 32"
+                                        OverrideDirection="North"
+                                        RectClipContent="True"/>
+                            <Label Name="MiddlePanelLabel" HorizontalExpand="True" Align="Center"/>
+                            <BoxContainer Name="MiddlePanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center" Visible="False"/>
+                        </BoxContainer>
+                        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                            <Control MinHeight="5"/>
+                            <Label Name="RightPanelLabel" HorizontalExpand="True" Align="Center"/>
+                            <Control MinHeight="27"/>
+                            <BoxContainer Name="RightPanel" VerticalExpand="True" HorizontalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center" Visible="False"/>
+                        </BoxContainer>
+                    </GridContainer>
+                    <!-- this is for any leftover mixes for > trinary, but it'll look really ugly -->
+                    <BoxContainer Name="CDeviceMixes" HorizontalExpand="True" Orientation="Horizontal">
+                    </BoxContainer>
+                </BoxContainer>
+
+            </ScrollContainer>
+            <!-- Environment mix data -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="CEnvironmentMix" Orientation="Vertical" VerticalExpand="True" Margin="1 1 1 1" MinSize="315 150" Align="Center">
+                </BoxContainer>
+            </ScrollContainer>
+        </TabContainer>
+    </BoxContainer>
+</DefaultWindow>

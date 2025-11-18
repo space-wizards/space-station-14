@@ -1,44 +1,12 @@
-using System.Collections.Generic;
 using System.Linq;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.NodeContainer;
+using Content.Shared.NodeContainer.NodeGroups;
 using Robust.Shared.Map;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.NodeGroups
 {
-    /// <summary>
-    ///     Maintains a collection of <see cref="Node"/>s, and performs operations requiring a list of
-    ///     all connected <see cref="Node"/>s.
-    /// </summary>
-    public interface INodeGroup
-    {
-        bool Remaking { get; }
-
-        /// <summary>
-        ///     The list of nodes currently in this group.
-        /// </summary>
-        IReadOnlyList<Node> Nodes { get; }
-
-        void Create(NodeGroupID groupId);
-
-        void Initialize(Node sourceNode);
-
-        void RemoveNode(Node node);
-
-        void LoadNodes(List<Node> groupNodes);
-
-        // In theory, the SS13 curse ensures this method will never be called.
-        void AfterRemake(IEnumerable<IGrouping<INodeGroup?, Node>> newGroups);
-
-        /// <summary>
-        ///     Return any additional data to display for the node-visualizer debug overlay.
-        /// </summary>
-        string? GetDebugData();
-    }
-
     [NodeGroup(NodeGroupID.Default, NodeGroupID.WireNet)]
     [Virtual]
     public class BaseNodeGroup : INodeGroup
@@ -60,9 +28,6 @@ namespace Content.Server.NodeContainer.NodeGroups
         [ViewVariables]
         public bool Removed { get; set; } = false;
 
-        [ViewVariables]
-        protected GridId GridId { get; private set; }
-
         /// <summary>
         ///     Network ID of this group for client-side debug visualization of nodes.
         /// </summary>
@@ -77,10 +42,8 @@ namespace Content.Server.NodeContainer.NodeGroups
             GroupId = groupId;
         }
 
-        public virtual void Initialize(Node sourceNode)
+        public virtual void Initialize(Node sourceNode, IEntityManager entMan)
         {
-            // TODO: Can we get rid of this GridId?
-            GridId = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(sourceNode.Owner).GridID;
         }
 
         /// <summary>

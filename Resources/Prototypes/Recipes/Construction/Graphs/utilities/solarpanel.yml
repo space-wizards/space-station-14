@@ -6,11 +6,11 @@
       edges:
         - to: solarassembly
           steps:
-            - prototype: SolarAssemblyPart
-              name: Solar Assembly Parts
-              icon: 
-                sprite: Objects/Power/solar_parts.rsi
-                state: solar_assembly_parts
+            - tag: SolarAssemblyFlatpack
+              name: construction-graph-tag-solar-assembly-parts
+              icon:
+                sprite: Objects/Devices/flatpack.rsi
+                state: solar-assembly-part
               doAfter: 1
 
     - node: solarassembly
@@ -19,41 +19,89 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: SolarAssemblyPart
+              prototype: SolarAssemblyFlatpack
               amount: 1
             - !type:DeleteEntity {}
           steps:
             - tool: Screwing
               doAfter: 2
+        - to: solarpanelplasma
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - material: PlasmaGlass
+              amount: 2
+              doAfter: 0.5
+          completed:
+            - !type:SnapToGrid
+        - to: solarpaneluranium
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - material: UraniumGlass
+              amount: 2
+              doAfter: 0.5
+          completed:
+            - !type:SnapToGrid
         - to: solarpanel
           conditions:
             - !type:EntityAnchored
-              value: true
           steps:
             - material: Glass
               amount: 2
               doAfter: 0.5
           completed:
             - !type:SnapToGrid
-              offset: Center
         - to: solartracker
           conditions:
             - !type:EntityAnchored
-              value: true
           steps:
-            - prototype: SolarTrackerElectronics
-              name: Solar Tracker Electronics
-              icon: 
+            - tag: SolarTrackerElectronics
+              name: construction-graph-tag-solar-tracker-electronics
+              icon:
                 sprite: Objects/Misc/module.rsi
-                state: id_mod
+                state: engineering
               doAfter: 1
             - material: Glass
               amount: 2
               doAfter: 2
           completed:
             - !type:SnapToGrid
-              offset: Center
-          
+
+    - node: solarpanelplasma
+      entity: SolarPanelPlasma
+      edges:
+        - to: solarassembly
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SpawnPrototype
+              prototype: SheetPGlass1
+              amount: 2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
+    - node: solarpaneluranium
+      entity: SolarPanelUranium
+      edges:
+        - to: solarassembly
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
     - node: solarpanel
       entity: SolarPanel
       edges:
@@ -87,6 +135,40 @@
           steps:
             - tool: Prying
               doAfter: 0.5
+
+    - node: solarpanelplasma_broken
+      entity: SolarPanelPlasmaBroken
+      edges:
+      - to: solarassembly
+        completed:
+        - !type:SnapToGrid
+          southRotation: true
+        - !type:SpawnPrototype
+          prototype: ShardGlassPlasma
+          amount: 2
+        conditions:
+        - !type:EntityAnchored
+          anchored: true
+        steps:
+        - tool: Prying
+          doAfter: 0.5
+
+    - node: solarpaneluranium_broken
+      entity: SolarPanelUraniumBroken
+      edges:
+      - to: solarassembly
+        completed:
+        - !type:SnapToGrid
+          southRotation: true
+        - !type:SpawnPrototype
+          prototype: ShardGlassUranium
+          amount: 2
+        conditions:
+        - !type:EntityAnchored
+          anchored: true
+        steps:
+        - tool: Prying
+          doAfter: 0.5
 
     - node: solartracker
       entity: SolarTracker

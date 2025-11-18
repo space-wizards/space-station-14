@@ -1,35 +1,34 @@
-using Content.Shared.Markers;
 using Content.Shared.Roles;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Spawners.Components
+namespace Content.Server.Spawners.Components;
+
+[RegisterComponent]
+public sealed partial class SpawnPointComponent : Component, ISpawnPoint
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedSpawnPointComponent))]
-    public sealed class SpawnPointComponent : SharedSpawnPointComponent
+    /// <summary>
+    /// The job this spawn point is valid for.
+    /// Null will allow all jobs to spawn here.
+    /// </summary>
+    [DataField("job_id")]
+    public ProtoId<JobPrototype>? Job;
+
+    /// <summary>
+    /// The type of spawn point.
+    /// </summary>
+    [DataField("spawn_type"), ViewVariables(VVAccess.ReadWrite)]
+    public SpawnPointType SpawnType { get; set; } = SpawnPointType.Unset;
+
+    public override string ToString()
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("job_id")]
-        private string? _jobId;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("spawn_type")]
-        public SpawnPointType SpawnType { get; } = SpawnPointType.Unset;
-
-        public JobPrototype? Job => string.IsNullOrEmpty(_jobId) ? null : _prototypeManager.Index<JobPrototype>(_jobId);
+        return $"{Job} {SpawnType}";
     }
+}
 
-    public enum SpawnPointType
-    {
-        Unset = 0,
-        LateJoin,
-        Job,
-        Observer,
-    }
+public enum SpawnPointType
+{
+    Unset = 0,
+    LateJoin,
+    Job,
+    Observer,
 }

@@ -1,11 +1,15 @@
 - type: job
   id: SalvageSpecialist
-  name: "salvage specialist"
-  icon: "ShaftMiner"
+  name: job-name-salvagespec
+  description: job-description-salvagespec
+  playTimeTracker: JobSalvageSpecialist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 2.5h
+  icon: "JobIconShaftMiner"
   startingGear: SalvageSpecialistGear
-  departments:
-  - Cargo
-  supervisors: "the quartermaster and head of personnel"
+  supervisors: job-supervisors-qm
   access:
   - Cargo
   - Salvage
@@ -16,9 +20,20 @@
   id: SalvageSpecialistGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
-    back: ClothingBackpackFilled
-    shoes: ClothingShoesBootsSalvage
     id: SalvagePDA
     ears: ClothingHeadsetCargo
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: SalvageSpecialistChameleonOutfit
+  job: SalvageSpecialist
+  equipment:
+    head: ClothingHeadHatCargosoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskGasExplorer
+    outerClothing: ClothingOuterWinterMiner
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesColorBlack
+

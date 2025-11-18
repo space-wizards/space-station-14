@@ -11,13 +11,18 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: 135
+    swingLeft: true
     damage:
       types:
-        Slash: 10
+        Slash: 6
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
+    storedRotation: -135
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   name: plant clippers
@@ -31,13 +36,17 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/clippers.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: 90
     damage:
       types:
         Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
+    storedRotation: -90
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   name: scythe
@@ -49,17 +58,23 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     state: icon
-    netsync: false
-  - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: 135
     damage:
       types:
         Slash: 10
+  - type: Item
+    size: Normal
   - type: Clothing
     sprite: Objects/Tools/Hydroponics/scythe.rsi
-    size: 20
-    Slots:
+    slots:
     - back
+  - type: StaticPrice
+    price: 40
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Plastic: 100
 
 - type: entity
   name: hatchet
@@ -74,15 +89,19 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
-    netsync: false
-  - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: 135
+    swingLeft: true
     damage:
       types:
-        Slash: 10
-        Piercing: 5
+        Slash: 8
+        Piercing: 2
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
+    storedRotation: -135
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   name: spade
@@ -92,41 +111,50 @@
   components:
   - type: Tag
     tags:
-    - Shovel
     - BotanyShovel
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon
-  - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: 45
     damage:
       types:
-        Blunt: 10
-        Piercing: 5 # I guess you can stab it into them?
+        Blunt: 8
+        Piercing: 2 # I guess you can stab it into them?
+    soundHit:
+      collection: MetalThud
   - type: Item
     sprite: Objects/Tools/Hydroponics/spade.rsi
+    storedRotation: -45
+  - type: Shovel
+    speedModifier: 0.75 # slower at digging than a full-sized shovel
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   name: plant bag
   id: PlantBag
-  parent: BaseItem
+  parent: BaseStorageItem
   description: A bag for botanists to easily move their huge harvests.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     state: icon
+  - type: Item
+    storedRotation: -90
   - type: Clothing
-    sprite: Objects/Specific/Hydroponics/Equipment/plant_bag.rsi
     quickEquip: false
-    Slots:
+    slots:
     - belt
-    size: 200
   - type: Storage
-    capacity: 200
+    grid:
+    - 0,0,7,4
+    maxItemSize: Small
     quickInsert: true
     areaInsert: true
     whitelist:
       components:
         - Produce
         - Seed
+  - type: Dumpable

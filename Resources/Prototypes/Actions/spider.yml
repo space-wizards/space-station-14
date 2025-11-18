@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseAction
+  id: ActionSpiderWeb
+  name: Spider Web
+  description: Spawns a web that slows your prey down.
+  components:
+  - type: Action
+    icon: Interface/Actions/web.png
+    useDelay: 25
+  - type: InstantAction
+    event: !type:SpiderWebActionEvent
+
+- type: entity
+  parent: BaseAction
+  id: ActionSericulture
+  name: Weave silk
+  description: Weave a bit of silk for use in arts and crafts.
+  components:
+  - type: Action
+    icon: Interface/Actions/web.png
+    useDelay: 1
+  - type: InstantAction
+    event: !type:SericultureActionEvent

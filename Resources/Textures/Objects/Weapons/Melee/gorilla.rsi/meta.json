@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Design, inhands, and storage sprite by SpaceRox1244 (github) and icon by EmoGarbage404 (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "icon"
+    },
+    {
+        "name":  "storage"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

@@ -1,148 +1,199 @@
 - type: barSign
   id: Harmbaton
-  name: "The Harmbaton"
-  icon: "theharmbaton"
-  description: "A great dining experience for both security members and assistants."
+  name: barsign-prototype-name-harmbaton
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: theharmbaton
+  description: barsign-prototype-description-harmbaton
 
 - type: barSign
   id: TheSingulo
-  name: "The Singulo"
-  icon: "thesingulo"
-  description: "Where people go that'd rather not be called by their name."
+  name: barsign-prototype-name-singulo
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thesingulo
+  description: barsign-prototype-description-singulo
 
 - type: barSign
   id: TheDrunkCarp
-  name: "The Drunk Carp"
-  icon: "thedrunkcarp"
-  description: "Don't drink and swim."
+  name: barsign-prototype-name-drunk-carp
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thedrunkcarp
+  description: barsign-prototype-description-drunk-carp
 
 - type: barSign
   id: OfficerBeersky
-  name: "Officer Beersky's"
-  icon: "officerbeersky"
-  description: "Man eat a dong, these drinks are great."
+  name: barsign-prototype-name-officer-beersky
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: officerbeersky
+  description: barsign-prototype-description-officer-beersky
 
 - type: barSign
   id: TheOuterSpess
-  name: "The Outer Spess"
-  icon: "theouterspess"
-  description: "This bar isn't actually located in outer space."
+  name: barsign-prototype-name-outer-spess
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: theouterspess
+  description: barsign-prototype-description-outer-spess
 
 - type: barSign
   id: TheCoderbus
-  name: "The Coderbus"
-  icon: "thecoderbus"
-  description: "A very controversial bar known for its wide variety of constantly-changing drinks."
+  name: barsign-prototype-name-coderbus
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thecoderbus
+  description: barsign-prototype-description-coderbus
 
 - type: barSign
   id: RobustaCafe
-  name: "The Robusta Cafe"
-  icon: "robustacafe"
-  description: "Holder of the 'Most Lethal Barfights' record 5 years uncontested."
+  name: barsign-prototype-name-robusta-cafe
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: robustacafe
+  description: barsign-prototype-description-robusta-cafe
 
 - type: barSign
   id: EmergencyRumParty
-  name: "The Emergency Rum Party"
-  icon: "emergencyrumparty"
-  description: "Recently relicensed after a long closure."
+  name: barsign-prototype-name-emergency-rum-party
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: emergencyrumparty
+  description: barsign-prototype-description-emergency-rum-party
 
 - type: barSign
   id: ComboCafe
-  name: "The Combo Cafe"
-  icon: "combocafe"
-  description: "Renowned system-wide for their utterly uncreative drink combinations."
+  name: barsign-prototype-name-combo-cafe
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: combocafe
+  description: barsign-prototype-description-combo-cafe
 
 - type: barSign
   id: TheAleNath
-  name: "The Ale' Nath"
-  icon: "thealenath"
-  description: "All right, buddy. I think you've had EI NATH. Time to get a cab."
+  name: barsign-prototype-name-ale-nath
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thealenath
+  description: barsign-prototype-description-ale-nath
 
 - type: barSign
   id: TheNet
-  name: "The Net"
-  icon: "thenet"
-  description: "You just seem to get caught up in it for hours."
+  name: barsign-prototype-name-the-net
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thenet
+  description: barsign-prototype-description-the-net
 
 - type: barSign
   id: MaidCafe
-  name: "Maid Cafe"
-  icon: "maidcafe"
-  description: "Welcome back, master!"
+  name: barsign-prototype-name-maid-cafe
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: maidcafe
+  description: barsign-prototype-description-maid-cafe
 
 - type: barSign
   id: MalteseFalcon
-  name: "Maltese Falcon"
-  icon: "maltesefalcon"
-  description: "Play it again, sam."
+  name: barsign-prototype-name-maltese-falcon
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: maltesefalcon
+  description: barsign-prototype-description-maltese-falcon
 
 - type: barSign
   id: TheSun
-  name: "The Sun"
-  icon: "thesun"
-  description: "Ironically bright for such a shady bar."
+  name: barsign-prototype-name-the-sun
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thesun
+  description: barsign-prototype-description-the-sun
 
 - type: barSign
   id: TheBirdCage
-  name: "The Birdcage"
-  icon: "birdcage"
-  description: "Caw caw!"
+  name: barsign-prototype-name-the-birdcage
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: birdcage
+  description: barsign-prototype-description-the-birdcage
 
 - type: barSign
   id: Zocalo
-  name: "Zocalo"
-  icon: "zocalo"
-  description: "Anteriormente ubicado en Spessmerica."
+  name: barsign-prototype-name-zocalo
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: zocalo
+  description: barsign-prototype-description-zocalo
 
 - type: barSign
   id: LV426
-  name: "LV-426"
-  icon: "lv426"
-  description: "Drinking with fancy facemasks is clearly more important than going to medbay."
+  name: barsign-prototype-name-lv426
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: lv426
+  description: barsign-prototype-description-lv426
 
 - type: barSign
   id: WiggleRoom
-  name: "The Wiggle Roomm"
-  icon: "thewiggleroom"
-  description: "MoMMIs got moves."
+  name: barsign-prototype-name-wiggle-room
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thewiggleroom
+  description: barsign-prototype-description-wiggle-room
 
 - type: barSign
   id: TheLightbulb
-  name: "The Lightbulb"
-  icon: "the_lightbulb"
-  description: "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
+  name: barsign-prototype-name-the-lightbulb
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: the_lightbulb
+  description: barsign-prototype-description-the-lightbulb
 
 - type: barSign
   id: Goose
-  name: "The Loose Goose"
-  icon: "goose"
-  description: "Drink till you puke and/or break the laws of reality!"
+  name: barsign-prototype-name-goose
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: goose
+  description: barsign-prototype-description-goose
 
 - type: barSign
   id: EngineChange
-  name: "The Engine Change"
-  icon: "enginechange"
-  description: "Still waiting."
+  name: barsign-prototype-name-enginechange
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: enginechange
+  description: barsign-prototype-description-enginechange
 
 - type: barSign
   id: Emprah
-  name: "4 The Emprah"
-  icon: "emprah"
-  description: "Enjoyed by fanatics, heretics, and brain-damaged patrons alike."
-
-# Hidden signs list below this point
-- type: barSign
-  id: EmpBarSign
-  name: ""
-  icon: "empbarsign"
-  description: "Something has gone very wrong."
-  rename_area: false
-  hidden: true
+  name: barsign-prototype-name-emprah
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: emprah
+  description: barsign-prototype-description-emprah
 
 - type: barSign
-  id: SignOff
-  name: ""
-  icon: "empty"
-  description: "This sign doesn't seem to be on."
-  rename_area: false
-  hidden: true
+  id: Spacebucks
+  name: barsign-prototype-name-spacebucks
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: spacebucks
+  description: barsign-prototype-description-spacebucks
+
+- type: barSign
+  id: Maltroach
+  name: barsign-prototype-name-maltroach
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: maltroach
+  description: barsign-prototype-description-maltroach
+
+- type: barSign
+  id: WhiskeyEchoes
+  name: barsign-prototype-name-whiskeyechoes
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: whiskeyechoes
+  description: barsign-prototype-description-whiskeyechoes

@@ -1,4 +1,3 @@
-using System;
 using Content.Shared.Atmos.Monitor.Components;
 using Robust.Shared.Serialization;
 
@@ -10,10 +9,11 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public bool Enabled { get; set; }
         public bool Dirty { get; set; }
         public bool IgnoreAlarms { get; set; } = false;
-        public VentPumpDirection? PumpDirection { get; set; }
-        public VentPressureBound? PressureChecks { get; set; }
-        public float? ExternalPressureBound { get; set; }
-        public float? InternalPressureBound { get; set; }
+        public VentPumpDirection PumpDirection { get; set; } = VentPumpDirection.Releasing;
+        public VentPressureBound PressureChecks { get; set; } = VentPressureBound.ExternalBound;
+        public float ExternalPressureBound { get; set; } = Atmospherics.OneAtmosphere;
+        public float InternalPressureBound { get; set; } = 0f;
+        public bool PressureLockoutOverride { get; set; } = false;
 
         // Presets for 'dumb' air alarm modes
 
@@ -23,7 +23,8 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             PumpDirection = VentPumpDirection.Releasing,
             PressureChecks = VentPressureBound.ExternalBound,
             ExternalPressureBound = Atmospherics.OneAtmosphere,
-            InternalPressureBound = 0f
+            InternalPressureBound = 0f,
+            PressureLockoutOverride = false
         };
 
         public static GasVentPumpData FillModePreset = new GasVentPumpData
@@ -33,7 +34,8 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             PumpDirection = VentPumpDirection.Releasing,
             PressureChecks = VentPressureBound.ExternalBound,
             ExternalPressureBound = Atmospherics.OneAtmosphere * 50,
-            InternalPressureBound = 0f
+            InternalPressureBound = 0f,
+            PressureLockoutOverride = true
         };
 
         public static GasVentPumpData PanicModePreset = new GasVentPumpData
@@ -43,20 +45,21 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             PumpDirection = VentPumpDirection.Releasing,
             PressureChecks = VentPressureBound.ExternalBound,
             ExternalPressureBound = Atmospherics.OneAtmosphere,
-            InternalPressureBound = 0f
+            InternalPressureBound = 0f,
+            PressureLockoutOverride = false
         };
 
-        public static GasVentPumpData Default()
+        public static GasVentPumpData ReplaceModePreset = new GasVentPumpData
         {
-            return new GasVentPumpData
-            {
-                Enabled = true,
-                PumpDirection = VentPumpDirection.Releasing,
-                PressureChecks = VentPressureBound.ExternalBound,
-                ExternalPressureBound = Atmospherics.OneAtmosphere,
-                InternalPressureBound = 0f
-            };
-        }
+            Enabled = false,
+            IgnoreAlarms = true,
+            Dirty = true,
+            PumpDirection = VentPumpDirection.Releasing,
+            PressureChecks = VentPressureBound.ExternalBound,
+            ExternalPressureBound = Atmospherics.OneAtmosphere,
+            InternalPressureBound = 0f,
+            PressureLockoutOverride = false
+        };
     }
 
     [Serializable, NetSerializable]

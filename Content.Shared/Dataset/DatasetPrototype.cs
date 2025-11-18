@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+﻿using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Dataset
 {
-    [Prototype("dataset")]
-    public sealed class DatasetPrototype : IPrototype
+    [Prototype]
+    public sealed partial class DatasetPrototype : IPrototype
     {
         [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+        [IdDataField]
+        public string ID { get; private set; } = default!;
 
-        [DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();
+        [DataField("values")] public IReadOnlyList<string> Values { get; private set; } = new List<string>();
     }
 }

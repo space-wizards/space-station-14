@@ -1,215 +1,461 @@
 - type: entity
-  name: paper
   parent: BaseItem
+  id: BasePaper
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+  - type: Appearance
+  - type: Flammable
+    fireSpread: true
+    alwaysCombustible: true
+    damage:
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Edible
+    delay: 7
+    forceFeedDelay: 7
+  - type: FlavorProfile
+    flavors:
+    - paper
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 1
+  - type: Item
+    size: Tiny
+  - type: PhysicalComposition
+
+- type: entity
+  name: paper
+  parent: BasePaper
   id: Paper
   description: 'A piece of white paper.'
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    netsync: false
     layers:
     - state: paper
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
   - type: Paper
+  - type: PaperLabelType
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
+    requiresComplex: false
   - type: UserInterface
     interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: Appearance
-    visuals:
-      - type: GenericEnumVisualizer
-        key: enum.PaperVisuals.Status
-        layer: 0
-        states:
-          # This default isn't actually explicitly used right now.
-          enum.PaperStatus.Blank: paper
-          enum.PaperStatus.Written: paper_words
-  - type: Item
-    size: 1
+      enum.PaperUiKey.Key:
+        type: PaperBoundUserInterface
+  - type: FaxableObject
+  - type: PaperVisuals
+
+- type: entity
+  name: paper scrap
+  parent: BasePaper
+  id: PaperScrap
+  description: 'A crumpled up piece of white paper.'
+  components:
   - type: Tag
     tags:
     - Document
+    - Trash
+    - Paper
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: scrap
+
+- type: entity
+  name: office paper
+  parent: Paper
+  id: PaperOffice
+  description: 'A plain sheet of office paper.'
+  components:
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+
+- type: entity
+  name: artifact analyzer printout
+  parent: Paper
+  id: PaperArtifactAnalyzer
+  description: The readout of a device forgotten to time.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper_dotmatrix
+    - state: paper_dotmatrix_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
+    headerMargin: 0.0, 0.0, 0.0, 16.0
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
+    backgroundImageTile: true
+    backgroundPatchMargin: 37.0, 0.0, 37.0, 0.0
+    contentImagePath: "/Textures/Interface/Paper/paper_content_dotmatrix.svg.96dpi.png"
+    contentImageNumLines: 2
+    contentMargin: 16.0, 16.0, 16.0, 0.0
+    # Make this a wide dot-matrix printer
+    maxWritableArea: 400.0, 0.0
+
+- type: entity
+  name: captain's thoughts
+  parent: Paper
+  id: PaperCaptainsThoughts
+  description: "A page of the captain's journal. In luxurious lavender."
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+      color: "#e6e6fa"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#e6e6fa"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperLabelType
+    paperType: CaptainsPaper
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundModulate: "#e6e6fa"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: cargo invoice
+  parent: Paper
+  id: PaperCargoInvoice
+  description: 'A single unit of bureaucracy.'
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+      color: "#9ef5ff"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#9ef5ff"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperLabelType
+    paperType: Invoice
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#9ef5ff"
+    contentImageModulate: "#9ef5ff"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
+    headerMargin: 0.0, 12.0, 0.0, 0.0
+
+- type: entity
+  id: PaperNanoTaskItem
+  parent: Paper
+  name: NanoTask item
+  description: A printed NanoTask item. Can be inserted into your PDA to add it to your tasks.
+  components:
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
+  - type: StaticPrice
+    price: 0
+  - type: NanoTaskPrinted
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: paper_receipt
+    - state: paper_receipt_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_nanotask.svg.96dpi.png"
+    headerMargin: 0.0, 0.0, 0.0, 6.0
+    backgroundImageTile: true
+    backgroundPatchMargin: 0.0, 6.0, 0.0, 6.0
+    contentMargin: 12.0, 0.0, 12.0, 0.0
+    # This is a narrow piece of paper
+    maxWritableArea: 256.0, 0.0
+
+- type: entity
+  id: PaperCargoBountyManifest
+  parent: PaperCargoInvoice
+  name: bounty manifest
+  description: A paper label designating a crate as containing a bounty. Selling a crate with this label will fulfill the bounty.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+      color: "#f7e574"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#f7e574"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperLabelType
+    paperType: Bounty
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#f7e574"
+    contentImageModulate: "#f7e574"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
+    headerMargin: 0.0, 12.0, 0.0, 0.0
+  - type: CargoBountyLabel
+  - type: StaticPrice
+    price: 0
+  - type: GuideHelp
+    guides:
+    - CargoBounties
+    - Cargo
+
+- type: entity
+  id: PaperSalvageJobLabel
+  parent: PaperCargoInvoice
+  name: salvage job shipment label
+  description: A paper label designating a crate as containing a shipment to fulfill a salvage job. Selling a crate with this will fulfill the job.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+      color: "#f7e574"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#f7e574"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperLabelType
+    paperType: Bounty
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#f7e574"
+    contentImageModulate: "#f7e574"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+  - type: JobBoardLabel
+  - type: StaticPrice #infinitely printable
+    price: 0
+
+- type: entity
+  name: character sheet
+  parent: Paper
+  id: PaperCNCSheet # legally gray zone of using "D&D" and "DND"
+  description: 'A sheet for your Carps and Crypts characters.'
+  components:
+  - type: Paper
+    contentSize: 10000
+    content: book-cnc-sheet
+  - type: Sprite
+    layers:
+      - state: paper
+        color: "#cccccc"
+      - state: paper_words
+        map: ["enum.PaperVisualLayers.Writing"]
+        color: "#cccccc" #aaaaaaaaaaaaaaaaaaaaaaa
+        visible: false
+      - state: paper_stamp-generic
+        map: ["enum.PaperVisualLayers.Stamp"]
+        visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#cccccc"
+    contentImageModulate: "#cccccc"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
 
 - type: entity
   parent: Paper
   id: PaperWritten
-  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Paper
   - type: Sprite
     layers:
     # Changing it here is fine - if the PaperStatus key is actually added,
     #  something happened, so that ought to override this either way.
     - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
 
 - type: entity
-  parent: PaperWritten
+  parent: Paper
   id: NukeCodePaper
   name: nuclear authentication codes
   components:
-    - type: NukeCodePaper
-    - type: Paper
-      content: |
-        [color=red]TOP SECRET![/color]
-        Nuclear device activation code:
+  - type: NukeCodePaper
+    allNukesAvailable: true
 
 - type: entity
-  name: pen
+  parent: NukeCodePaper
+  id: NukeCodePaperStation
+  suffix: Station Only
+  components:
+  - type: NukeCodePaper
+
+- type: entity
+  parent: [Paper, BaseSyndicateContraband] # eat or burn your damn piece of paper damn thieves
+  id: TraitorCodePaper
+  name: syndicate codeword
+  description: A leaked codeword to possibly get in touch with the Syndicate.
+  categories: [ DoNotMap ]
+  components:
+  - type: TraitorCodePaper
+
+- type: entity
+  parent: [Paper, BaseSyndicateContraband]
+  id: AllTraitorCodesPaper
+  name: syndicate codewords registry
+  description: A registry of all active Syndicate codewords.
+  suffix: Admeme
+  components:
+  - type: TraitorCodePaper
+    fakeCodewords: false
+    codewordShowAll: true
+
+- type: entity
+  name: envelope
   parent: BaseItem
-  id: Pen
-  description: 'A dark ink pen.'
-  components:
-  - type: Tag
-    tags:
-    - Write
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: pen
-  - type: Item
-    sprite: Objects/Misc/bureaucracy.rsi
-    HeldPrefix: pen
-    size: 2
-
-- type: entity
-  name: Cybersun pen
-  parent: BaseItem
-  id: CyberPen
-  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. It's not literally pointless, only figuratively.
-  components:
-  - type: Tag
-    tags:
-    - Write
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: overpriced_pen
-    netsync: false
-  - type: Pickaxe
-    damage:
-      types:
-        Piercing: 5
-  - type: Item
-    sprite: Objects/Misc/bureaucracy.rsi
-    HeldPrefix: overpriced_pen
-    size: 2
-
-- type: entity
-  id: BoxFolderBase
-  parent: BoxBase
-  name: folder
-  description: A folder filled with top secret paperwork.
+  id: Envelope
+  description: 'A small envelope for keeping prying eyes off of your sensitive documents.'
   components:
   - type: Sprite
-#    netsync: true
     sprite: Objects/Misc/bureaucracy.rsi
     layers:
-    - state: folder-colormap
-    - state: folder-base
-# RandomSpriteColor requires netsync which is currently incompatible with ItemMapper
-#  - type: RandomSpriteColor
-#    sprite: Objects/Misc/bureaucracy.rsi
-#    state: folder-colormap
-#    colors:
-#      red: "#cc2323"
-#      blue: "#355d99"
-#      yellow: "#b38e3c"
-#      white: "#e6e6e6"
-#      grey: "#999999"
-#      black: "#3f3f3f"
-  - type: Item
-    sprite: Objects/Misc/bureaucracy.rsi
-    size: 20
-  - type: Storage
-    capacity: 10
-    size: 10
-    whitelist:
-      tags:
-        - Document
-  - type: ItemMapper
-    mapLayers:
-      folder-overlay-paper:
+    - state: envelope_open
+      map: ["enum.EnvelopeVisualLayers.Open"]
+    - state: envelope_closed
+      map: ["enum.EnvelopeVisualLayers.Sealed"]
+      visible: false
+    - state: envelope_torn
+      map: ["enum.EnvelopeVisualLayers.Torn"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: Paper
+    content: envelope-default-message
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_postage_stamp.svg.96dpi.png"
+    headerMargin: 216.0, 0.0, 0.0, 0.0
+    contentMargin: 0.0, 0.0, 0.0, 0.0
+    maxWritableArea: 368.0, 256.0
+  - type: Envelope
+  - type: ContainerContainer
+    containers:
+      letter_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      letter_slot:
+        name: envelope-letter-slot
+        insertSound: /Audio/Effects/packetrip.ogg
+        ejectSound: /Audio/Effects/packetrip.ogg
         whitelist:
           tags:
-          - Document
-  - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
-
-    
-    
-- type: entity
-  id: BoxFolderRed
-  parent: BoxFolderBase
-  suffix: Red
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    layers:
-    - state: folder-colormap
-      color: "#cc2323"
-    - state: folder-base
-
-- type: entity
-  id: BoxFolderBlue
-  parent: BoxFolderBase
-  suffix: Blue
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    layers:
-    - state: folder-colormap
-      color: "#355d99"
-    - state: folder-base
-
-- type: entity
-  id: BoxFolderYellow
-  parent: BoxFolderBase
-  suffix: Yellow
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    layers:
-    - state: folder-colormap
-      color: "#b38e3c"
-    - state: folder-base
-
-- type: entity
-  id: BoxFolderWhite
-  parent: BoxFolderBase
-  suffix: White
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    layers:
-    - state: folder-white
-    - state: folder-base
-
-- type: entity
-  id: BoxFolderGrey
-  parent: BoxFolderBase
-  suffix: Grey
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    layers:
-    - state: folder-colormap
-      color: "#999999"
-    - state: folder-base
-
-- type: entity
-  id: BoxFolderBlack
-  parent: BoxFolderBase
-  suffix: Black
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    layers:
-    - state: folder-colormap
-      color: "#3f3f3f"
-    - state: folder-base
+            - Paper
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+    requiresComplex: false
+  - type: UserInterface
+    interfaces:
+      enum.PaperUiKey.Key:
+        type: PaperBoundUserInterface
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - Trash
+    - Document
+  #- type: Appearance, hide stamp marks until we have some kind of displacement
+  - type: Flammable
+    fireSpread: true
+    canResistFire: false
+    alwaysCombustible: true
+    canExtinguish: true
+    damage:
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

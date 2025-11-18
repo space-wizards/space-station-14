@@ -1,0 +1,62 @@
+{
+  "version":1,
+  "size":{
+    "x":96,
+    "y":96
+  },
+  "license":"CC0-1.0",
+  "copyright":"Created by EmoGarbage",
+  "states":[
+    {
+      "name": "generating",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name":"base"
+    },
+    {
+      "name": "inserting",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "unshaded",
+      "delays": [
+        [
+          1.0,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.5
+        ]
+      ]
+    }
+  ]
+}

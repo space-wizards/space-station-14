@@ -1,0 +1,33 @@
+- type: entity
+  id: MedalCase
+  name: medal case
+  description: Case with medals.
+  parent: [ BaseStorageItem, BaseBagOpenClose, BaseCommandContraband ]
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/medalcase.rsi
+    layers:
+    - state: closed
+      map: ["closeLayer"]
+    - state: open
+      map: ["openLayer"]
+  - type: Appearance
+  - type: Item
+    sprite: Objects/Storage/medalcase.rsi
+    size: Normal
+  - type: Storage
+    grid:
+    - 0,0,7,1
+    whitelist:
+      tags:
+        - Medal
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckGoldmedal
+    - id: ClothingNeckBronzeheart
+    - id: ClothingNeckCargomedal
+    - id: ClothingNeckEngineermedal
+    - id: ClothingNeckMedicalmedal
+    - id: ClothingNeckSciencemedal
+    - id: ClothingNeckSecuritymedal
+    - id: ClothingNeckClownmedal

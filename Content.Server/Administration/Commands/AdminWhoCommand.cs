@@ -2,43 +2,55 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands;
 
-[AnyCommand]
-public sealed class AdminWhoCommand : IConsoleCommand
+[AdminCommand(AdminFlags.AdminWho)]
+public sealed class AdminWhoCommand : LocalizedCommands
 {
-    public string Command => "adminwho";
-    public string Description => "Returns a list of all admins on the server";
-    public string Help => "Usage: adminwho";
+    [Dependency] private readonly IAfkManager _afkManager = default!;
+    [Dependency] private readonly IAdminManager _adminManager = default!;
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "adminwho";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var adminMgr = IoCManager.Resolve<IAdminManager>();
-        var afk = IoCManager.Resolve<IAfkManager>();
+        var seeStealth = true;
+
+        // If null it (hopefully) means it is being called from the console.
+        if (shell.Player != null)
+        {
+            var playerData = _adminManager.GetAdminData(shell.Player);
+
+            seeStealth = playerData != null && playerData.CanStealth();
+        }
 
         var sb = new StringBuilder();
         var first = true;
-        foreach (var admin in adminMgr.ActiveAdmins)
+        foreach (var admin in _adminManager.ActiveAdmins)
         {
+            var adminData = _adminManager.GetAdminData(admin)!;
+            DebugTools.AssertNotNull(adminData);
+
+            if (adminData.Stealth && !seeStealth)
+                continue;
+
             if (!first)
                 sb.Append('\n');
             first = false;
-
-            var adminData = adminMgr.GetAdminData(admin)!;
-            DebugTools.AssertNotNull(adminData);
 
             sb.Append(admin.Name);
             if (adminData.Title is { } title)
                 sb.Append($": [{title}]");
 
-            if (shell.Player is IPlayerSession player && adminMgr.HasAdminFlag(player, AdminFlags.Admin))
+            if (adminData.Stealth)
+                sb.Append(" (S)");
+
+            if (shell.Player is { } player && _adminManager.HasAdminFlag(player, AdminFlags.Admin))
             {
-                if (afk.IsAfk(admin))
+                if (_afkManager.IsAfk(admin))
                     sb.Append(" [AFK]");
             }
         }

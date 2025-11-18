@@ -1,17 +1,15 @@
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Fluids.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Fluids.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class SpillBehavior : IThresholdBehavior
+    public sealed partial class SpillBehavior : IThresholdBehavior
     {
-        [DataField("solution")]
+        [DataField]
         public string? Solution;
 
         /// <summary>
@@ -21,23 +19,23 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// </summary>
         /// <param name="owner">Entity on which behavior is executed</param>
         /// <param name="system">system calling the behavior</param>
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        /// <param name="cause"></param>
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
-            var spillableSystem = EntitySystem.Get<SpillableSystem>();
+            var solutionContainerSystem = system.EntityManager.System<SharedSolutionContainerSystem>();
+            var spillableSystem = system.EntityManager.System<PuddleSystem>();
 
             var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 
             if (system.EntityManager.TryGetComponent(owner, out SpillableComponent? spillableComponent) &&
-                solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName,
-                    out var compSolution))
+                solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName, out _, out var compSolution))
             {
-                spillableSystem.SpillAt(compSolution, coordinates, "PuddleSmear", false);
+                spillableSystem.TrySplashSpillAt(owner, coordinates, compSolution, out _, false, user: cause);
             }
             else if (Solution != null &&
-                     solutionContainerSystem.TryGetSolution(owner, Solution, out var behaviorSolution))
+                     solutionContainerSystem.TryGetSolution(owner, Solution, out _, out var behaviorSolution))
             {
-                spillableSystem.SpillAt(behaviorSolution, coordinates, "PuddleSmear");
+                spillableSystem.TrySplashSpillAt(owner, coordinates, behaviorSolution, out _, user: cause);
             }
         }
     }

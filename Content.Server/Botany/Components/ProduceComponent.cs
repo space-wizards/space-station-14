@@ -1,15 +1,24 @@
 using Content.Server.Botany.Systems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Content.Shared.Botany.Components;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
-[Friend(typeof(BotanySystem))]
-public sealed class ProduceComponent : Component
+[Access(typeof(BotanySystem))]
+public sealed partial class ProduceComponent : SharedProduceComponent
 {
     [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
 
-    [DataField("seed", required: true)] public string SeedName = default!;
+    /// <summary>
+    ///     Seed data used to create a <see cref="SeedComponent"/> when this produce has its seeds extracted.
+    /// </summary>
+    [DataField]
+    public SeedData? Seed;
+
+    /// <summary>
+    ///     Seed data used to create a <see cref="SeedComponent"/> when this produce has its seeds extracted.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
+    public string? SeedId;
 }

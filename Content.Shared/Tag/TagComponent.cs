@@ -1,13 +1,11 @@
-﻿using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Tag
+namespace Content.Shared.Tag;
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(TagSystem))]
+public sealed partial class TagComponent : Component
 {
-    [RegisterComponent, Friend(typeof(TagSystem))]
-    public sealed class TagComponent : Component, ISerializationHooks
-    {
-        [ViewVariables]
-        [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TagPrototype>))]
-        public readonly HashSet<string> Tags = new();
-    }
+    [DataField, ViewVariables, AutoNetworkedField]
+    public HashSet<ProtoId<TagPrototype>> Tags = new();
 }

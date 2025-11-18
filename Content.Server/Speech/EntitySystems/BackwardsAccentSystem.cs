@@ -1,6 +1,5 @@
-using System;
 using Content.Server.Speech.Components;
-using Robust.Shared.GameObjects;
+using Content.Shared.Speech;
 
 namespace Content.Server.Speech.EntitySystems
 {

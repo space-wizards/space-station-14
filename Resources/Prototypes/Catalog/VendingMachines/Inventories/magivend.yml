@@ -1,8 +1,5 @@
 - type: vendingMachineInventory
   id: MagiVendInventory
-  name: MagiVend
-  animationDuration: 1.5
-  spriteName: magivend
   startingInventory:
     ClothingHeadHatWizard: 3
     ClothingOuterWizard: 3
@@ -11,7 +8,8 @@
     ClothingOuterWizardRed: 3
     ClothingHeadHatVioletwizard: 3
     ClothingOuterWizardViolet: 3
+    ClothingHeadHelmetWizardHelm: 3
     ClothingShoesWizard: 9
-    #TO DO:
+    #TODO:
     #only missing staff
     #and if wizarditis reagent when hacked if we want this.

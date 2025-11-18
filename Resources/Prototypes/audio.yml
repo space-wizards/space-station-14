@@ -1,0 +1,337 @@
+- type: ambientMusic
+  id: Morgue
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceSpooky
+  rules: NearMorgue
+  priority: 4
+
+- type: ambientMusic
+  id: SpookyFog
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceSpookyFog
+  rules: NearSpookyFog
+  priority: 5
+
+- type: ambientMusic
+  id: Holy
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceHoly
+  rules: NearPrayable
+  priority: 4
+
+- type: ambientMusic
+  id: Train
+  sound:
+    params:
+      volume: -8
+    collection: AmbienceTrain
+  rules: NearTrain
+  priority: 4
+
+# Departments
+- type: ambientMusic
+  id: Medical
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMedical
+  rules: NearMedical
+  priority: 3
+
+- type: ambientMusic
+  id: Engineering
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceEngineering
+  rules: NearEngineering
+  priority: 3
+
+# General areas
+- type: ambientMusic
+  id: Maintenance
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMaintenance
+  rules: NearMaintenance
+  priority: 2
+
+- type: ambientMusic
+  id: Space
+  sound:
+    params:
+      volume: -10
+    collection: AmbienceSpace
+  fadeIn: true
+  interruptable: true
+  rules: InSpace
+  priority: 1
+
+- type: ambientMusic
+  id: Mining
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceMining
+  rules: OnMapGrid
+  fadeIn: true
+  interruptable: true
+  priority: 1
+
+## Fallback if nothing else found
+- type: ambientMusic
+  id: General
+  sound:
+    params:
+      volume: -12
+    collection: AmbienceGeneral
+  rules: AlwaysTrue
+
+# Sound collections
+- type: soundCollection
+  id: AmbienceEngineering
+  files:
+    - /Audio/Ambience/ambiatmos.ogg
+    - /Audio/Ambience/ambiatmos2.ogg
+    - /Audio/Ambience/ambisin1.ogg
+    - /Audio/Ambience/ambisin2.ogg
+    - /Audio/Ambience/ambisin3.ogg
+    - /Audio/Ambience/ambisin4.ogg
+    - /Audio/Ambience/ambitech.ogg
+    - /Audio/Ambience/ambitech2.ogg
+    - /Audio/Ambience/ambitech3.ogg
+
+- type: soundCollection
+  id: AmbienceGeneral
+  files:
+    - /Audio/Ambience/ambigen1.ogg
+    - /Audio/Ambience/ambigen3.ogg
+    - /Audio/Ambience/ambigen4.ogg
+    - /Audio/Ambience/ambigen5.ogg
+    - /Audio/Ambience/ambigen6.ogg
+    - /Audio/Ambience/ambigen7.ogg
+    - /Audio/Ambience/ambigen8.ogg
+    - /Audio/Ambience/ambigen9.ogg
+    - /Audio/Ambience/ambigen10.ogg
+    - /Audio/Ambience/ambigen11.ogg
+    - /Audio/Ambience/ambigen12.ogg
+    - /Audio/Ambience/ambigen14.ogg
+    - /Audio/Ambience/ambigen15.ogg
+
+- type: soundCollection
+  id: AmbienceHoly
+  files:
+    - /Audio/Ambience/ambicha1.ogg
+    - /Audio/Ambience/ambicha2.ogg
+    - /Audio/Ambience/ambicha3.ogg
+    - /Audio/Ambience/ambicha4.ogg
+    - /Audio/Ambience/ambiholy.ogg
+    - /Audio/Ambience/ambiholy2.ogg
+    - /Audio/Ambience/ambiholy3.ogg
+
+- type: soundCollection
+  id: AmbienceMaintenance
+  files:
+    - /Audio/Ambience/ambimaint1.ogg
+    - /Audio/Ambience/ambimaint2.ogg
+    - /Audio/Ambience/ambimaint3.ogg
+    - /Audio/Ambience/ambimaint4.ogg
+    - /Audio/Ambience/ambimaint5.ogg
+    - /Audio/Ambience/ambitech2.ogg
+    - /Audio/Voice/Misc/lowHiss1.ogg
+    - /Audio/Voice/Misc/lowHiss2.ogg
+    - /Audio/Voice/Misc/lowHiss3.ogg
+    - /Audio/Voice/Misc/lowHiss4.ogg
+    - /Audio/Ambience/maintambience.ogg
+
+- type: soundCollection
+  id: AmbienceMedical
+  files:
+    - /Audio/Ambience/ambinice.ogg
+
+- type: soundCollection
+  id: AmbienceMining
+  files:
+    - /Audio/Ambience/ambicave.ogg
+    - /Audio/Ambience/ambidanger.ogg
+    - /Audio/Ambience/ambidanger2.ogg
+    - /Audio/Ambience/ambilava1.ogg
+    - /Audio/Ambience/ambilava2.ogg
+    - /Audio/Ambience/ambilava3.ogg
+    - /Audio/Ambience/ambimaint1.ogg
+    - /Audio/Ambience/ambimine.ogg
+    - /Audio/Ambience/ambiruin.ogg
+    - /Audio/Ambience/ambiruin2.ogg
+    - /Audio/Ambience/ambiruin3.ogg
+    - /Audio/Ambience/ambiruin4.ogg
+    - /Audio/Ambience/ambiruin5.ogg
+    - /Audio/Ambience/ambiruin6.ogg
+    - /Audio/Ambience/ambiruin7.ogg
+    - /Audio/Ambience/voyage_neverending.ogg
+    - /Audio/Ambience/unanchored.ogg
+
+- type: soundCollection
+  id: AmbienceRuins
+  files:
+    - /Audio/Ambience/ambicave.ogg
+    - /Audio/Ambience/ambidanger.ogg
+    - /Audio/Ambience/ambidanger2.ogg
+    - /Audio/Ambience/ambimaint1.ogg
+    - /Audio/Ambience/ambimine.ogg
+    - /Audio/Ambience/ambimystery.ogg
+    - /Audio/Ambience/ambiruin.ogg
+    - /Audio/Ambience/ambiruin2.ogg
+    - /Audio/Ambience/ambiruin3.ogg
+    - /Audio/Ambience/ambiruin4.ogg
+    - /Audio/Ambience/ambiruin5.ogg
+    - /Audio/Ambience/ambiruin6.ogg
+    - /Audio/Ambience/ambiruin7.ogg
+
+- type: soundCollection
+  id: AmbienceSpace
+  files:
+    - /Audio/Ambience/constellations.ogg
+    - /Audio/Ambience/starlight.ogg
+    - /Audio/Ambience/drifting.ogg
+    - /Audio/Ambience/spookyspace1.ogg
+    - /Audio/Ambience/spookyspace2.ogg
+    - /Audio/Ambience/ambispace2.ogg
+    - /Audio/Lobby/title2.ogg
+
+- type: soundCollection
+  id: AmbienceSpooky
+  files:
+    - /Audio/Ambience/ambimo1.ogg
+    - /Audio/Ambience/ambimo2.ogg
+    - /Audio/Ambience/ambimystery.ogg
+    - /Audio/Ambience/ambiodd.ogg
+    - /Audio/Ambience/ambiruin6.ogg
+    - /Audio/Ambience/ambiruin7.ogg
+
+- type: soundCollection
+  id: AmbienceTrain
+  files:
+    - /Audio/Ambience/ambitrain1.ogg
+    - /Audio/Ambience/ambitrain2.ogg
+    - /Audio/Ambience/ambitrain3.ogg
+    - /Audio/Ambience/ambiruin3.ogg
+    - /Audio/Ambience/ambiruin5.ogg
+    - /Audio/Ambience/ambiruin6.ogg
+
+- type: soundCollection
+  id: AmbienceSpookyFog
+  files:
+    - /Audio/Ambience/spookyspace1.ogg
+    - /Audio/Ambience/spookyspace2.ogg
+    - /Audio/Ambience/ambimo2.ogg
+    - /Audio/Ambience/ambilava1.ogg
+    - /Audio/Ambience/ambilava2.ogg
+    - /Audio/Ambience/ambiruin2.ogg
+    - /Audio/Ambience/ambiruin3.ogg
+    - /Audio/Ambience/ambiruin4.ogg
+    - /Audio/Ambience/ambiruin5.ogg
+    - /Audio/Ambience/ambiruin6.ogg
+    - /Audio/Ambience/ambiruin7.ogg
+    - /Audio/Ambience/ambidanger.ogg
+    - /Audio/Ambience/ambidanger2.ogg
+    - /Audio/Ambience/ambimine.ogg
+
+## Background noise on station, separate to ambient music.
+- type: soundCollection
+  id: AmbienceStation
+  files:
+    - /Audio/Ambience/shipambience.ogg
+
+# Rules
+- type: rules
+  id: AlwaysTrue
+  rules:
+    - !type:AlwaysTrueRule
+
+- type: rules
+  id: InSpace
+  rules:
+    - !type:InSpaceRule
+    - !type:GridInRangeRule
+      inverted: true
+      range: 3
+
+# TODO
+- type: rules
+  id: NearEngineering
+  rules:
+    - !type:NearbyAccessRule
+      access:
+        - Engineering
+      range: 2.5
+
+- type: rules
+  id: NearMaintenance
+  rules:
+    - !type:NearbyTilesPercentRule
+      ignoreAnchored: true
+      percent: 0.25
+      tiles:
+        - Plating
+      range: 2
+
+- type: rules
+  id: NearTrain
+  rules:
+    - !type:NearbyTilesPercentRule
+      ignoreAnchored: true
+      percent: 0.05
+      tiles:
+        - TrainLattice
+      range: 4
+
+- type: rules
+  id: NearMedical
+  rules:
+    - !type:NearbyTilesPercentRule
+      ignoreAnchored: true
+      percent: 0.5
+      tiles:
+      - FloorWhite
+      range: 3
+
+- type: rules
+  id: NearPrayable
+  rules:
+    - !type:NearbyComponentsRule
+      anchored: true
+      components:
+        - type: Prayable
+      range: 5
+
+- type: rules
+  id: NearMorgue
+  rules:
+    - !type:NearbyComponentsRule
+      anchored: true
+      count: 2
+      components:
+        - type: Morgue
+      range: 3
+
+- type: rules
+  id: NearSpookyFog
+  rules:
+    - !type:NearbyEntitiesRule
+      count: 5
+      whitelist:
+        tags:
+          - SpookyFog
+      range: 4
+
+- type: rules
+  id: OnMapGrid
+  rules:
+    - !type:OnMapGridRule

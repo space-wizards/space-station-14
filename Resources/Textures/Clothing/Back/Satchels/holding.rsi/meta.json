@@ -36,7 +36,7 @@
       ]
     },
     {
-      "name": "broken",
+      "name": "broken"
     },
     {
       "name": "equipped-BACKPACK",
@@ -82,11 +82,11 @@
     },
     {
       "name": "broken-inhand-left",
-      "directions": 4,
+      "directions": 4
     },
     {
       "name": "broken-inhand-right",
-      "directions": 4,
+      "directions": 4
     },
     {
       "name": "inhand-left",

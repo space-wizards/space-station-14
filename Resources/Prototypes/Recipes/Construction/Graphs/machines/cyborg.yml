@@ -1,0 +1,39 @@
+- type: constructionGraph
+  id: Cyborg
+  start: start
+  graph:
+  - node: start
+    entity: CyborgEndoskeleton
+    edges:
+    - to: cyborg
+      steps:
+      - assemblyId: generic
+        guideString: borg-construction-guide-string
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: construction-graph-component-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: construction-graph-component-second-flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+  - node: cyborg
+    entity: BorgChassisSelectable
+
+  - node: derelictcyborg
+    entity: BorgChassisDerelict

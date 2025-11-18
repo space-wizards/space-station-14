@@ -1,81 +1,89 @@
-﻿using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.NameModifier.EntitySystems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
-namespace Content.Server.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems;
+
+public sealed class TransformableContainerSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public sealed class TransformableContainerSystem : EntitySystem
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metadataSystem = default!;
+    [Dependency] private readonly NameModifierSystem _nameMod = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<TransformableContainerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TransformableContainerComponent, SolutionContainerChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<TransformableContainerComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
+    }
+
+    private void OnMapInit(Entity<TransformableContainerComponent> entity, ref MapInitEvent args)
+    {
+        var meta = MetaData(entity.Owner);
+        if (string.IsNullOrEmpty(entity.Comp.InitialDescription))
         {
-            base.Initialize();
+            entity.Comp.InitialDescription = meta.EntityDescription;
+        }
+    }
 
-            SubscribeLocalEvent<TransformableContainerComponent, SolutionChangedEvent>(OnSolutionChange);
+    private void OnSolutionChange(Entity<TransformableContainerComponent> entity, ref SolutionContainerChangedEvent args)
+    {
+        if (!_solutionsSystem.TryGetFitsInDispenser(entity.Owner, out _, out var solution))
+            return;
+
+        //Transform container into initial state when emptied
+        if (entity.Comp.CurrentReagent != null && solution.Contents.Count == 0)
+        {
+            CancelTransformation(entity);
         }
 
-        private void OnSolutionChange(EntityUid owner, TransformableContainerComponent component,
-            SolutionChangedEvent args)
+        //the biggest reagent in the solution decides the appearance
+        var reagentId = solution.GetPrimaryReagentId();
+
+        //If biggest reagent didn't change - don't change anything at all
+        if (entity.Comp.CurrentReagent != null && entity.Comp.CurrentReagent == reagentId?.Prototype)
         {
-            if (!_solutionsSystem.TryGetFitsInDispenser(owner, out var solution))
-                return;
-            //Transform container into initial state when emptied
-            if (component.CurrentReagent != null && solution.Contents.Count == 0)
-            {
-                CancelTransformation(component);
-            }
-
-            //the biggest reagent in the solution decides the appearance
-            var reagentId = solution.GetPrimaryReagentId();
-
-            //If biggest reagent didn't changed - don't change anything at all
-            if (component.CurrentReagent != null && component.CurrentReagent.ID == reagentId)
-            {
-                return;
-            }
-
-            //Only reagents with spritePath property can change appearance of transformable containers!
-            if (!string.IsNullOrWhiteSpace(reagentId)
-                && _prototypeManager.TryIndex(reagentId, out ReagentPrototype? proto)
-                && !string.IsNullOrWhiteSpace(proto.SpriteReplacementPath))
-            {
-                var spriteSpec =
-                    new SpriteSpecifier.Rsi(
-                        new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath), "icon");
-                if (EntityManager.TryGetComponent(owner, out SpriteComponent? sprite))
-                {
-                    sprite?.LayerSetSprite(0, spriteSpec);
-                }
-
-                string val = proto.Name + " glass";
-                EntityManager.GetComponent<MetaDataComponent>(owner).EntityName = val;
-                EntityManager.GetComponent<MetaDataComponent>(owner).EntityDescription = proto.Description;
-                component.CurrentReagent = proto;
-                component.Transformed = true;
-            }
+            return;
         }
 
-        private void CancelTransformation(TransformableContainerComponent component)
+        //Only reagents with spritePath property can change appearance of transformable containers!
+        if (!string.IsNullOrWhiteSpace(reagentId?.Prototype)
+            && _prototypeManager.TryIndex(reagentId.Value.Prototype, out ReagentPrototype? proto))
         {
-            component.CurrentReagent = null;
-            component.Transformed = false;
+            var metadata = MetaData(entity.Owner);
+            _metadataSystem.SetEntityDescription(entity.Owner, proto.LocalizedDescription, metadata);
+            entity.Comp.CurrentReagent = proto;
+            entity.Comp.Transformed = true;
+        }
 
-            if (EntityManager.TryGetComponent(component.Owner, out SpriteComponent? sprite) &&
-                component.InitialSprite != null)
-            {
-                sprite.LayerSetSprite(0, component.InitialSprite);
-            }
+        _nameMod.RefreshNameModifiers(entity.Owner);
+    }
 
-            EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = component.InitialName;
-            EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityDescription = component.InitialDescription;
+    private void OnRefreshNameModifiers(Entity<TransformableContainerComponent> entity, ref RefreshNameModifiersEvent args)
+    {
+        if (_prototypeManager.Resolve(entity.Comp.CurrentReagent, out var currentReagent))
+        {
+            args.AddModifier("transformable-container-component-glass", priority: -1, ("reagent", currentReagent.LocalizedName));
+        }
+    }
+
+    private void CancelTransformation(Entity<TransformableContainerComponent> entity)
+    {
+        entity.Comp.CurrentReagent = null;
+        entity.Comp.Transformed = false;
+
+        var metadata = MetaData(entity);
+
+        _nameMod.RefreshNameModifiers(entity.Owner);
+
+        if (!string.IsNullOrEmpty(entity.Comp.InitialDescription))
+        {
+            _metadataSystem.SetEntityDescription(entity.Owner, entity.Comp.InitialDescription, metadata);
         }
     }
 }

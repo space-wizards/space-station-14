@@ -1,0 +1,100 @@
+﻿- type: constructionGraph
+  id: FenceMetal
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DeleteEntity { }
+    edges:
+    - to: straight
+      steps:
+      - material: MetalRod
+        amount: 5
+        doAfter: 6
+    - to: corner
+      steps:
+      - material: MetalRod
+        amount: 5
+        doAfter: 6
+    - to: end
+      steps:
+      - material: MetalRod
+        amount: 5
+        doAfter: 6
+    - to: gate
+      steps:
+      - material: MetalRod
+        amount: 5
+        doAfter: 6
+
+  - node: straight
+    entity: FenceMetalStraight
+    edges:
+    - to: broken
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 1
+      steps:
+      - tool: Welding
+        doAfter: 4.0
+      - tool: Cutting
+        doAfter: 1.0
+
+  - node: corner
+    entity: FenceMetalCorner
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 5
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 4.0
+      - tool: Cutting
+        doAfter: 2.0
+
+  - node: end
+    entity: FenceMetalEnd
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 5
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 4.0
+      - tool: Cutting
+        doAfter: 2.0
+
+  - node: gate
+    entity: FenceMetalGate
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 5
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 4.0
+      - tool: Cutting
+        doAfter: 2.0
+
+  - node: broken
+    entity: FenceMetalBroken
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Cutting
+        doAfter: 1.0

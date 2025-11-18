@@ -6,32 +6,32 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    [Friend(typeof(GasVentScrubberSystem))]
-    public sealed class GasVentScrubberComponent : Component
+    [Access(typeof(GasVentScrubberSystem))]
+    public sealed partial class GasVentScrubberComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)]
+        /// <summary>
+        /// Identifies if the device is enabled by an air alarm. Does not indicate if the device is powered.
+        /// By default, all air scrubbers start enabled, whether linked to an alarm or not.
+        /// </summary>
+        [DataField]
         public bool Enabled { get; set; } = true;
 
-        [ViewVariables]
+        [DataField]
         public bool IsDirty { get; set; } = false;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Welded { get; set; } = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]
         public string OutletName { get; set; } = "pipe";
 
-        [ViewVariables]
-        public readonly HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
+        [DataField]
+        public HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
 
         /// <summary>
         ///     Target volume to transfer. If <see cref="WideNet"/> is enabled, actual transfer rate will be much higher.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public float TransferRate
         {
             get => _transferRate;
@@ -40,24 +40,21 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         private float _transferRate = Atmospherics.MaxTransferRate;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxTransferRate")]
+        [DataField]
         public float MaxTransferRate = Atmospherics.MaxTransferRate;
 
         /// <summary>
         ///     As pressure difference approaches this number, the effective volume rate may be smaller than <see
         ///     cref="TransferRate"/>
         /// </summary>
-        [DataField("maxPressure")]
+        [DataField]
         public float MaxPressure = Atmospherics.MaxOutputPressure;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
         public bool WideNet { get; set; } = false;
 
         public GasVentScrubberData ToAirAlarmData()
         {
-            if (!IsDirty) return new GasVentScrubberData { Dirty = IsDirty };
-
             return new GasVentScrubberData
             {
                 Enabled = Enabled,
@@ -73,14 +70,14 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         {
             Enabled = data.Enabled;
             IsDirty = data.Dirty;
-            PumpDirection = (ScrubberPumpDirection) data.PumpDirection!;
-            TransferRate = (float) data.VolumeRate!;
+            PumpDirection = data.PumpDirection;
+            TransferRate = data.VolumeRate;
             WideNet = data.WideNet;
 
-            if (!data.FilterGases!.SequenceEqual(FilterGases))
+            if (!data.FilterGases.SequenceEqual(FilterGases))
             {
                 FilterGases.Clear();
-                foreach (var gas in data.FilterGases!)
+                foreach (var gas in data.FilterGases)
                     FilterGases.Add(gas);
             }
         }

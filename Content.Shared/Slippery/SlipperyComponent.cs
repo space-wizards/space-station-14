@@ -1,185 +1,99 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Shared.Sound;
-using Robust.Shared.GameObjects;
+using Content.Shared.StepTrigger.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Maths;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Slippery
 {
-    [RegisterComponent]
-    [NetworkedComponent()]
-    public sealed class SlipperyComponent : Component
+    /// <summary>
+    /// Causes somebody to slip when they walk over this entity.
+    /// </summary>
+    /// <remarks>
+    /// Requires <see cref="StepTriggerComponent"/>, see that component for some additional properties.
+    /// </remarks>
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    public sealed partial class SlipperyComponent : Component
     {
-        private float _paralyzeTime = 5f;
-        private float _intersectPercentage = 0.3f;
-        private float _requiredSlipSpeed = 3.5f;
-        private float _launchForwardsMultiplier = 1f;
-        private bool _slippery = true;
-        private SoundSpecifier _slipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
+        /// <summary>
+        /// Path to the sound to be played when a mob slips.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        [Access(Other = AccessPermissions.ReadWriteExecute)]
+        public SoundSpecifier SlipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
 
         /// <summary>
-        ///     List of entities that are currently colliding with the entity.
+        /// Should this component's friction factor into sliding friction?
         /// </summary>
-        public readonly HashSet<EntityUid> Colliding = new();
+        [DataField, AutoNetworkedField]
+        public bool AffectsSliding;
 
         /// <summary>
-        ///     The list of entities that have been slipped by this component, which shouldn't be slipped again.
+        /// How long should this component apply the FrictionStatusComponent?
+        /// Note: This does stack with SlidingComponent since they are two separate Components
         /// </summary>
-        public readonly HashSet<EntityUid> Slipped = new();
+        [DataField, AutoNetworkedField]
+        public TimeSpan FrictionStatusTime = TimeSpan.FromSeconds(0.5f);
 
         /// <summary>
-        ///     Path to the sound to be played when a mob slips.
+        /// How much stamina damage should this component do on slip?
         /// </summary>
-        [ViewVariables]
-        [DataField("slipSound")]
-        public SoundSpecifier SlipSound
-        {
-            get => _slipSound;
-            set
-            {
-                if (value == _slipSound)
-                    return;
-
-                _slipSound = value;
-                Dirty();
-            }
-        }
+        [DataField, AutoNetworkedField]
+        public float StaminaDamage = 25f;
 
         /// <summary>
-        ///     How many seconds the mob will be paralyzed for.
+        /// Loads the data needed to determine how slippery something is.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("paralyzeTime")]
-        public float ParalyzeTime
-        {
-            get => _paralyzeTime;
-            set
-            {
-                if (MathHelper.CloseToPercent(_paralyzeTime, value)) return;
-
-                _paralyzeTime = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     Percentage of shape intersection for a slip to occur.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("intersectPercentage")]
-        public float IntersectPercentage
-        {
-            get => _intersectPercentage;
-            set
-            {
-                if (MathHelper.CloseToPercent(_intersectPercentage, value)) return;
-
-                _intersectPercentage = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     Entities will only be slipped if their speed exceeds this limit.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("requiredSlipSpeed")]
-        public float RequiredSlipSpeed
-        {
-            get => _requiredSlipSpeed;
-            set
-            {
-                if (MathHelper.CloseToPercent(_requiredSlipSpeed, value)) return;
-
-                _requiredSlipSpeed = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     The entity's speed will be multiplied by this to slip it forwards.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("launchForwardsMultiplier")]
-        public float LaunchForwardsMultiplier
-        {
-            get => _launchForwardsMultiplier;
-            set
-            {
-                if (MathHelper.CloseToPercent(_launchForwardsMultiplier, value)) return;
-
-                _launchForwardsMultiplier = value;
-                Dirty();
-            }
-        }
-
-        /// <summary>
-        ///     Whether or not this component will try to slip entities.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("slippery")]
-        public bool Slippery
-        {
-            get => _slippery;
-            set
-            {
-                if (_slippery == value) return;
-
-                _slippery = value;
-                Dirty();
-            }
-        }
-
-        public override ComponentState GetComponentState()
-        {
-            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound.GetSound(), Slipped.ToArray());
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            if (curState is not SlipperyComponentState state) return;
-
-            _slippery = state.Slippery;
-            _intersectPercentage = state.IntersectPercentage;
-            _paralyzeTime = state.ParalyzeTime;
-            _requiredSlipSpeed = state.RequiredSlipSpeed;
-            _launchForwardsMultiplier = state.LaunchForwardsMultiplier;
-            _slipSound = new SoundPathSpecifier(state.SlipSound);
-            Slipped.Clear();
-
-            foreach (var slipped in state.Slipped)
-            {
-                Slipped.Add(slipped);
-            }
-        }
+        [DataField, AutoNetworkedField]
+        public SlipperyEffectEntry SlipData = new();
     }
-
-    [Serializable, NetSerializable]
-    public sealed class SlipperyComponentState : ComponentState
+    /// <summary>
+    /// Stores the data for slipperiness that way reagents and this component can use it.
+    /// </summary>
+    [DataDefinition, Serializable, NetSerializable]
+    public sealed partial class SlipperyEffectEntry
     {
-        public float ParalyzeTime { get; }
-        public float IntersectPercentage { get; }
-        public float RequiredSlipSpeed { get; }
-        public float LaunchForwardsMultiplier { get; }
-        public bool Slippery { get; }
-        public string SlipSound { get; }
-        public readonly EntityUid[] Slipped;
+        /// <summary>
+        /// How many seconds the mob will be stunned for.
+        /// </summary>
+        [DataField]
+        public TimeSpan StunTime = TimeSpan.FromSeconds(0.5);
 
-        public SlipperyComponentState(float paralyzeTime, float intersectPercentage, float requiredSlipSpeed, float launchForwardsMultiplier, bool slippery, string slipSound, EntityUid[] slipped)
-        {
-            ParalyzeTime = paralyzeTime;
-            IntersectPercentage = intersectPercentage;
-            RequiredSlipSpeed = requiredSlipSpeed;
-            LaunchForwardsMultiplier = launchForwardsMultiplier;
-            Slippery = slippery;
-            SlipSound = slipSound;
-            Slipped = slipped;
-        }
+        /// <summary>
+        /// How many seconds the mob will be knocked down for.
+        /// </summary>
+        [DataField]
+        public TimeSpan KnockdownTime = TimeSpan.FromSeconds(1.5);
+
+        /// <summary>
+        /// Should the slipped entity try to stand up when Knockdown ends?
+        /// </summary>
+        [DataField]
+        public bool AutoStand = true;
+
+        /// <summary>
+        /// The entity's speed will be multiplied by this to slip it forwards.
+        /// </summary>
+        [DataField]
+        public float LaunchForwardsMultiplier = 1.5f;
+
+        /// <summary>
+        /// Minimum speed entity must be moving to slip.
+        /// </summary>
+        [DataField]
+        public float RequiredSlipSpeed = 3.5f;
+
+        /// <summary>
+        /// If this is true, any slipping entity loses its friction until
+        /// it's not colliding with any SuperSlippery entities anymore.
+        /// They also will fail any attempts to stand up unless they have no-slips.
+        /// </summary>
+        [DataField]
+        public bool SuperSlippery;
+
+        /// <summary>
+        /// This is used to store the friction modifier that is used on a sliding entity.
+        /// </summary>
+        [DataField]
+        public float SlipFriction = 0.5f;
     }
 }

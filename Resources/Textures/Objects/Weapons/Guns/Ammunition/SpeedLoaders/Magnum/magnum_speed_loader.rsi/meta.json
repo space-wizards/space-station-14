@@ -1,0 +1,113 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/tgstation/tgstation/pull/1684/commits/19e51caef09e78ca1122d26455b539ff5968d334, https://github.com/tgstation/tgstation/blob/master/icons/obj/weapons/guns/ammo.dmi, inhands by TiniestShark",
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "icon"
+        },
+        {
+            "name": "base-1"
+        },
+        {
+            "name": "base-2"
+        },
+        {
+            "name": "base-3"
+        },
+        {
+            "name": "base-4"
+        },
+        {
+            "name": "base-5"
+        },
+        {
+            "name": "base-6"
+        },
+        {
+            "name": "practice-1"
+        },
+        {
+            "name": "practice-2"
+        },
+        {
+            "name": "practice-3"
+        },
+        {
+            "name": "practice-4"
+        },
+        {
+            "name": "practice-5"
+        },
+        {
+            "name": "practice-6"
+        },
+        {
+            "name": "uranium-1"
+        },
+        {
+            "name": "uranium-2"
+        },
+        {
+            "name": "uranium-3"
+        },
+        {
+            "name": "uranium-4"
+        },
+        {
+            "name": "uranium-5"
+        },
+        {
+            "name": "uranium-6"
+        },
+        {
+            "name": "piercing-1"
+        },
+        {
+            "name": "piercing-2"
+        },
+        {
+            "name": "piercing-3"
+        },
+        {
+            "name": "piercing-4"
+        },
+        {
+            "name": "piercing-5"
+        },
+        {
+            "name": "piercing-6"
+        },
+        {
+            "name": "inhand-left-mag",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-stripe",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-ammo",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-mag",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-stripe",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-ammo",
+            "directions": 4
+        }
+    ]
+}

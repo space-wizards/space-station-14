@@ -1,0 +1,57 @@
+- type: constructionGraph
+  id: SurveillanceCamera
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 2.0
+
+    - node: assembly
+      entity: SurveillanceCameraAssembly
+      edges:
+        - to: wired
+          steps:
+            - material: Cable
+              amount: 1
+              doAfter: 1
+        - to: start
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
+
+    - node: wired
+      entity: SurveillanceCameraAssembly
+      edges:
+        - to: camera
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    # once a camera is constructed, it will
+    # instead just require wire cutting + welding
+    # to immediately deconstruct
+    - node: camera
+      entity: SurveillanceCameraConstructed
+      edges:
+        - to: start
+          conditions:
+            - !type:AllWiresCut {}
+            - !type:WirePanel {}
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Welding
+              doAfter: 2
+

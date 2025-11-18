@@ -1,85 +1,100 @@
 - type: reagent
   id: JuiceApple
-  name: apple juice
-  parent: BaseDrink
-  desc: It's a little piece of Eden.
-  physicalDesc: crisp
+  name: reagent-name-juice-apple
+  parent: BaseJuice
+  desc: reagent-desc-juice-apple
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: apple
   color: "#FDAD01"
+  recognizable: true
 
 - type: reagent
   id: JuiceBanana
-  name: banana juice
-  parent: BaseDrink
-  desc: The raw essence of a banana. HONK.
-  physicalDesc: crisp
+  name: reagent-name-juice-banana
+  parent: BaseJuice
+  desc: reagent-desc-juice-banana
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: banana
   color: "#FFE777"
 
 - type: reagent
   id: JuiceBerry
-  name: berry juice
-  parent: BaseDrink
-  desc: A delicious blend of several different kinds of berries.
-  physicalDesc: sweet
+  name: reagent-name-juice-berry
+  parent: BaseJuice
+  desc: reagent-desc-juice-berry
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: berry
   color: "#660099"
 
 - type: reagent
-  id: JuiceBerryPoison
-  name: poison berry juice
-  desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
-  physicalDesc: sickly
-  color: "#6600CC"
+  id: JuiceBluePumpkin
+  name: reagent-name-juice-blue-pumpkin
+  parent: BaseJuice
+  desc: reagent-desc-juice-blue-pumpkin
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: bluepumpkin
+  color: "#00BFFF"
+
+- type: reagent
+  id: JuiceBungo
+  name: reagent-name-juice-bungo
+  parent: BaseJuice
+  desc: reagent-desc-juice-bungo
+  physicalDesc: reagent-physical-desc-tart
+  flavor: bungo
+  color: "#F9E43D"
+
+- type: reagent
+  id: JuiceCarrot
+  name: reagent-name-juice-carrot
+  parent: BaseJuice
+  desc: reagent-desc-juice-carrot
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: carrot
+  color: "#FF8820"
   metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 1
-
-#TODO: restore eyesight
-#if(..())
-#return 1
-# M.eye_blurry = max(M.eye_blurry - 1 , 0)
-# M.eye_blind = max(M.eye_blind - 1 , 0)
-# switch(data)
-# if(21 to INFINITY)
-# if(prob(data - 10))
-# M.disabilities &= ~NEARSIGHTED
-# data++
-
-- type: reagent
-  id: JuiceCarrot
-  name: carrot juice
-  parent: BaseDrink
-  desc: It's like a carrot, but less crunchy.
-  physicalDesc: crisp
-  color: "#FF8820"
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Oculine
+        amount: 0.5
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.5
 
 - type: reagent
   id: JuiceGrape
-  name: grape juice
-  parent: BaseDrink
-  desc: Freshly squeezed juice from red grapes. Quite sweet.
-  physicalDesc: crisp
+  name: reagent-name-juice-grape
+  parent: BaseJuice
+  desc: reagent-desc-juice-grape
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: juice
   color: "#512284"
 
 - type: reagent
   id: JuiceLemon
-  name: lemon juice
-  parent: BaseDrink
-  desc: This juice is VERY sour.
-  physicalDesc: citric
+  name: reagent-name-juice-lemon
+  parent: BaseJuice
+  desc: reagent-desc-juice-lemon
+  physicalDesc: reagent-physical-desc-citric
+  flavor: sour
   color: "#fff690"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonjuiceglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: JuiceLime
-  name: lime juice
-  parent: BaseDrink
-  desc: The sweet-sour juice of limes.
-  physicalDesc: citric
+  name: reagent-name-juice-lime
+  parent: BaseJuice
+  desc: reagent-desc-juice-lime
+  physicalDesc: reagent-physical-desc-citric
+  flavor: sour
   color: "#99bb43"
 
 # /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
@@ -92,40 +107,66 @@
 
 - type: reagent
   id: JuiceOrange
-  name: orange juice
-  parent: BaseDrink
-  desc: Both delicious AND rich in Vitamin C. What more do you need?
-  physicalDesc: citric
+  name: reagent-name-juice-orange
+  parent: BaseJuice
+  desc: reagent-desc-juice-orange
+  physicalDesc: reagent-physical-desc-citric
+  flavor: orange
   color: "#E78108"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/orangejuiceglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
 
 - type: reagent
   id: JuicePineapple
-  name: pineapple juice
-  parent: BaseDrink
-  desc: The delicious juice of a pineapple.
-  physicalDesc: tropical
+  name: reagent-name-juice-pineapple
+  parent: BaseJuice
+  desc: reagent-desc-juice-pineapple
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: pineapple
   color: yellow
 
 - type: reagent
   id: JuicePotato
-  name: potato juice
-  parent: BaseDrink
-  desc: Juice of the potato. Bleh.
-  physicalDesc: starchy
+  name: reagent-name-juice-potato
+  parent: BaseJuice
+  desc: reagent-desc-juice-potato
+  physicalDesc: reagent-physical-desc-starchy
+  flavor: potatoes
   color: "#302000"
 
 - type: reagent
   id: JuiceTomato
-  name: tomato juice
-  parent: BaseDrink
-  desc: Tomatoes made into juice. What a waste of good tomatoes, huh?
-  physicalDesc: saucey
+  name: reagent-name-juice-tomato
+  parent: BaseJuice
+  desc: reagent-desc-juice-tomato
+  physicalDesc: reagent-physical-desc-saucey
+  flavor: tomato
   color: "#731008"
 
 - type: reagent
   id: JuiceWatermelon
-  name: water melon juice
-  parent: BaseDrink
-  desc: The delicious juice of a watermelon.
-  physicalDesc: sweet
+  name: reagent-name-juice-watermelon
+  parent: BaseJuice
+  desc: reagent-desc-juice-watermelon
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: watermelon
   color: "#EF3520"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/watermelonglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: JuiceCherry
+  name: reagent-name-juice-cherry
+  parent: BaseJuice
+  desc: reagent-desc-juice-cherry
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: cherry
+  color: "#84031a"

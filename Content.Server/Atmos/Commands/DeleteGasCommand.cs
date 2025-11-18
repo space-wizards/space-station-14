@@ -1,30 +1,26 @@
-using System;
 using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
     public sealed class DeleteGasCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "deletegas";
         public string Description => "Removes all gases from a grid, or just of one type if specified.";
         public string Help => $"Usage: {Command} <GridId> <Gas> / {Command} <GridId> / {Command} <Gas> / {Command}";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            GridId gridId;
+            var player = shell.Player;
+            EntityUid? gridId;
             Gas? gas = null;
-
-            var entMan = IoCManager.Resolve<IEntityManager>();
 
             switch (args.Length)
             {
@@ -42,9 +38,9 @@ namespace Content.Server.Atmos.Commands
                         return;
                     }
 
-                    gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
+                    gridId = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
 
-                    if (gridId == GridId.Invalid)
+                    if (gridId == null)
                     {
                         shell.WriteLine("You aren't on a grid to delete gas from.");
                         return;
@@ -54,7 +50,7 @@ namespace Content.Server.Atmos.Commands
                 }
                 case 1:
                 {
-                    if (!int.TryParse(args[0], out var number))
+                    if (!NetEntity.TryParse(args[0], out var numberEnt) || !_entManager.TryGetEntity(numberEnt, out var number))
                     {
                         // Argument is a gas
                         if (player == null)
@@ -69,9 +65,9 @@ namespace Content.Server.Atmos.Commands
                             return;
                         }
 
-                        gridId = entMan.GetComponent<TransformComponent>(playerEntity).GridID;
+                        gridId = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
 
-                        if (gridId == GridId.Invalid)
+                        if (gridId == null)
                         {
                             shell.WriteLine("You aren't on a grid to delete gas from.");
                             return;
@@ -88,27 +84,20 @@ namespace Content.Server.Atmos.Commands
                     }
 
                     // Argument is a grid
-                    gridId = new GridId(number);
-
-                    if (gridId == GridId.Invalid)
-                    {
-                        shell.WriteLine($"{gridId} is not a valid grid id.");
-                        return;
-                    }
-
+                    gridId = number;
                     break;
                 }
                 case 2:
                 {
-                    if (!int.TryParse(args[0], out var first))
+                    if (!NetEntity.TryParse(args[0], out var firstNet) || !_entManager.TryGetEntity(firstNet, out var first))
                     {
                         shell.WriteLine($"{args[0]} is not a valid integer for a grid id.");
                         return;
                     }
 
-                    gridId = new GridId(first);
+                    gridId = first;
 
-                    if (gridId == GridId.Invalid)
+                    if (gridId.Value.IsValid())
                     {
                         shell.WriteLine($"{gridId} is not a valid grid id.");
                         return;
@@ -129,24 +118,23 @@ namespace Content.Server.Atmos.Commands
                     return;
             }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-
-            if (!mapManager.TryGetGrid(gridId, out _))
+            if (!_entManager.TryGetComponent<MapGridComponent>(gridId, out _))
             {
                 shell.WriteLine($"No grid exists with id {gridId}");
                 return;
             }
 
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+            var atmosphereSystem = _entManager.System<AtmosphereSystem>();
 
             var tiles = 0;
             var moles = 0f;
 
             if (gas == null)
             {
-                foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
+                foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
                 {
-                    if (tile.Immutable) continue;
+                    if (tile.Immutable)
+                        continue;
 
                     tiles++;
                     moles += tile.TotalMoles;
@@ -156,9 +144,10 @@ namespace Content.Server.Atmos.Commands
             }
             else
             {
-                foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
+                foreach (var tile in atmosphereSystem.GetAllMixtures(gridId.Value, true))
                 {
-                    if (tile.Immutable) continue;
+                    if (tile.Immutable)
+                        continue;
 
                     tiles++;
                     moles += tile.TotalMoles;

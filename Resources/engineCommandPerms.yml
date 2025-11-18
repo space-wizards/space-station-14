@@ -1,31 +1,3 @@
-# Available to everybody
-- Commands:
-  - disconnect
-  - help
-  - list
-  - quit
-  - hardquit
-  - cvar
-  - svbind
-  - bind
-  - exec # macro moment
-  - clear
-  - vram
-  - monitor
-  - setmonitor
-  - keyinfo
-  - setclipboard
-  - getclipboard
-  - gcf
-  - net_graph
-  - net_watchent
-  - net_draw_interp
-  - devwindow
-  - fill
-  - dumpentities
-  - getcomponentregistration
-  - fuck
-
 - Flags: VAREDIT
   Commands:
   - addcomp
@@ -33,7 +5,9 @@
   - rmcomp
   - rmcompc
   - vv
-  - scale
+  - vvread
+  - vvwrite
+  - vvinvoke
   - spin
 
 - Flags: DEBUG
@@ -42,7 +16,6 @@
   - inrangeunoccluded
   - lsgrid
   - lsmap
-  - listplayers
   - loc
   - mem
   - netaudit
@@ -57,16 +30,20 @@
   - togglelight
   - togglelightbuf
   - toggleshadows
-  - testbed
   - lightbb
   - vv
   - szr_stats
   - addview
   - removeview
   - hwid
+  - showaudio
   - showpos
+  - showvel
+  - showrot
+  - showangvel
   - showray
   - showchunkbb
+  - showgridnodes
   - entfo
   - sggcell
   - ldrsc
@@ -84,36 +61,45 @@
   - watch
   - sendgarbage
   - setinputcontext
-  - showvelocities
+  - showplayervelocity
   - tilelookup
   - net_entityreport
   - scene
-
+  - replay_recording_stats
+  - print_pvs_ack
+  - pvs_override_info
+  - merge_grids
 
 - Flags: MAPPING
   Commands:
   - addmap
-  - loadbp
+  - loadgrid
   - loadmap
   - pausemap
   - querymappaused
   - rmgrid
   - rmmap
   - mapinit
-  - savebp
+  - savegrid
   - savemap
+  - setambientlight
   - tpgrid
   - gridtc
   - togglespritenetsync
 
 - Flags: ADMIN
   Commands:
-  - delete
-  - kick
-  - listplayers
   - tp
   - tpto
-  - respawn
+
+- Flags: PII
+  Commands:
+  - listplayers
+
+- Flags: FUN
+  Commands:
+  - tippy
+  - tip
 
 - Flags: SERVER
   Commands:
@@ -127,19 +113,36 @@
   Commands:
   - spawn
   - cspawn
+  - delete
+
+- Flags: MODERATOR
+  Commands:
+  - kick
+  - respawn
 
 - Flags: HOST
   Commands:
   - gc_mode
   - gc
-  - loglevel
   - saveconfig
   - testlog
   - sudo
   - scsi
   - csi
   - lsasm
+  - cvar
+  - gcf
+  - getcomponentregistration
+  - fuck
+  - replay_recording_start
+  - replay_recording_stop
 
 - Flags: QUERY
   Commands:
-  - forall
+  - uploadfile
+  - loadprototype
+  - uploadfolder
+
+- Commands:
+  - "|"
+  - oldhelp

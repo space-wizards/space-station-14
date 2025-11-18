@@ -1,8 +1,5 @@
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Guardian
 {
@@ -10,7 +7,7 @@ namespace Content.Server.Guardian
     /// Creates a GuardianComponent attached to the user's GuardianHost.
     /// </summary>
     [RegisterComponent]
-    public sealed class GuardianCreatorComponent : Component
+    public sealed partial class GuardianCreatorComponent : Component
     {
         /// <summary>
         /// Counts as spent upon exhausting the injection
@@ -23,7 +20,6 @@ namespace Content.Server.Guardian
         /// <summary>
         /// The prototype of the guardian entity which will be created
         /// </summary>
-        [ViewVariables]
         [DataField("guardianProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
         public string GuardianProto { get; set; } = default!;
 
@@ -32,7 +28,5 @@ namespace Content.Server.Guardian
         /// </summary>
         [DataField("delay")]
         public float InjectionDelay = 5f;
-
-        public bool Injecting = false;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light
@@ -22,6 +21,7 @@ namespace Content.Shared.Light
 
     public enum PoweredLightLayers : byte
     {
-        Base
+        Base,
+        Glow
     }
 }

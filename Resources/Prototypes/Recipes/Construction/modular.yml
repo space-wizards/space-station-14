@@ -1,0 +1,15 @@
+- type: construction
+  id: ModularGrenadeRecipe
+  graph: ModularGrenadeGraph
+  startNode: start
+  targetNode: grenade
+  category: construction-category-weapons
+  objectType: Item
+
+- type: construction
+  id: ModularMineRecipe
+  graph: ModularMineGraph
+  startNode: start
+  targetNode: mine
+  category: construction-category-weapons
+  objectType: Item

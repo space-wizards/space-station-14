@@ -11,13 +11,25 @@
     Dylovene: 3
 
 - type: reaction
+  id: Ethylredoxrazine
+  reactants:
+    Oxygen:
+      amount: 1
+    Dylovene:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Ethylredoxrazine: 3
+
+- type: reaction
   id: Cryptobiolin
   reactants:
     Potassium:
       amount: 1
     Oxygen:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
   products:
     Cryptobiolin: 3
@@ -55,35 +67,28 @@
     Cryoxadone: 3
 
 - type: reaction
+  id: Doxarubixadone
+  reactants:
+    Cryoxadone:
+      amount: 1
+    UnstableMutagen:
+      amount: 1
+  products:
+    Doxarubixadone: 2
+
+- type: reaction
   id: Epinephrine
   reactants:
     Phenol:
       amount: 1
     Acetone:
       amount: 1
-    Diethylamine:
-      amount: 1
-    Oxygen:
-      amount: 1
     Chlorine:
       amount: 1
-    Hydrogen:
+    Hydroxide:
       amount: 1
   products:
-    Epinephrine: 6
-
-- type: reaction
-  id: Clonexadone
-  reactants:
-    Cryoxadone:
-      amount: 1
-    Sodium:
-      amount: 1
-    Plasma:
-      amount: 5
-      catalyst: true
-  products:
-    Clonexadone: 2
+    Epinephrine: 4
 
 - type: reaction
   id: Dermaline
@@ -103,7 +108,7 @@
     Oxygen:
       amount: 2
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Dexalin: 3
@@ -137,10 +142,22 @@
       amount: 1
     Carbon:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
   products:
     Inaprovaline: 3
+
+- type: reaction
+  id: Ipecac
+  reactants:
+    Potassium:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Ammonia:
+      amount: 1
+  products:
+    Ipecac: 2
 
 - type: reaction
   id: TranexamicAcid
@@ -149,7 +166,7 @@
       amount: 1
     SulfuricAcid:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
   products:
     TranexamicAcid: 3
@@ -167,12 +184,12 @@
 - type: reaction
   id: Leporazine
   reactants:
-    Silicon:
-      amount: 1
     Copper:
       amount: 1
+    Fersilicite:
+      amount: 1
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Leporazine: 2
@@ -190,11 +207,33 @@
     Phalanximine: 3
 
 - type: reaction
+  id: Ambuzol
+  reactants:
+    Dylovene:
+      amount: 1
+    Ammonia:
+      amount: 1
+    ZombieBlood:
+      amount: 2
+  products:
+    Ambuzol: 4
+
+- type: reaction
+  id: AmbuzolPlus
+  reactants:
+    Ambuzol:
+      amount: 5
+    Omnizine:
+      amount: 5
+  products:
+    AmbuzolPlus: 10
+
+- type: reaction
   id: Synaptizine
   reactants:
     Lithium:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
     Water:
       amount: 1
@@ -212,9 +251,9 @@
     Tricordrazine: 2
 
 - type: reaction
-  id: HeartbreakerToxin #heat to 37C once temperatures supported
+  id: HeartbreakerToxin
   reactants:
-    Dexalin:
+    DexalinPlus:
       amount: 1
     MindbreakerToxin:
       amount: 1
@@ -223,23 +262,26 @@
 
 - type: reaction
   id: Impedrezene
+  minTemp: 370
   reactants:
     Mercury:
       amount: 1
     Oxygen:
       amount: 1
-    Glucose:
+    Water:
       amount: 1
   products:
-    Impedrezene: 3
+    Impedrezene: 1
 
 - type: reaction
   id: Lexorin
   impact: High
   reactants:
-    Ammonia:
+    HeartbreakerToxin:
       amount: 1
     Plasma:
+      amount: 1
+    Vestine:
       amount: 1
   products:
     Lexorin: 2
@@ -257,7 +299,20 @@
     Lipozine: 3
 
 - type: reaction
+  id: Mannitol
+  reactants:
+    Hydrogen:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Mannitol: 3
+
+- type: reaction
   id: MindbreakerToxin
+  minTemp: 370
   reactants:
     Silicon:
       amount: 1
@@ -273,7 +328,7 @@
   reactants:
     Mercury:
       amount: 1
-    Glucose:
+    Sugar:
       amount: 1
     Lithium:
       amount: 1
@@ -286,10 +341,22 @@
     Histamine:
       amount: 2
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Ultravasculine: 2
+
+- type: reaction
+  id: Oculine
+  reactants:
+    TableSalt:
+      amount: 1
+    Blood:
+      amount: 1
+    Hydroxide:
+      amount: 2
+  products:
+    Oculine: 4
 
 - type: reaction
   id: Siderlac
@@ -302,11 +369,296 @@
     Siderlac: 2
 
 - type: reaction
-  id: Spaceacillin
+  id: Cognizine
   reactants:
-    Cryptobiolin:
+    CarpoToxin:
       amount: 1
-    Inaprovaline:
+    Siderlac:
+      amount: 1
+    Acetone:
       amount: 1
   products:
-    Spaceacillin: 2
+    Cognizine: 1
+
+- type: reaction
+  id: Sigynate
+  impact: Medium
+  minTemp: 370
+  reactants:
+    SodiumCarbonate:
+      amount: 1
+    SodiumHydroxide:
+      amount: 1
+    Kelotane:
+      amount: 1
+    Water:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Sigynate: 4
+
+- type: reaction
+  id: Saline
+  reactants:
+    Water:
+      amount: 4
+    TableSalt:
+      amount: 1
+  products:
+    Saline: 5
+
+- type: reaction
+  id: Lacerinol
+  impact: Medium
+  minTemp: 335
+  reactants:
+    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+      amount: 1
+    Benzene:
+      amount: 1
+  products:
+    Lacerinol: 2
+
+- type: reaction
+  id: Puncturase
+  impact: Medium
+  minTemp: 325
+  reactants:
+    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+      amount: 1
+    Hydroxide:
+      amount: 1
+  products:
+    Puncturase: 2
+
+- type: reaction
+  id: Bruizine
+  impact: Medium
+  reactants:
+    Bicaridine: # Bicaridine is a conflicting brute medication and if mixed incorrectly will make Razorium. This is intended.
+      amount: 1
+    Lithium:
+      amount: 0.9
+    Sugar:
+      amount: 1
+  products:
+    Bruizine: 2
+
+- type: reaction
+  id: BicarLacerinol # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Lacerinol:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BicarPuncturase # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Puncturase:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BicarBruizine # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Bruizine:
+      amount: 1
+    Bicaridine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BruizineLacerinol # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Lacerinol:
+      amount: 1
+    Bruizine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: BruizinePuncturase # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Puncturase:
+      amount: 1
+    Bruizine:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: PuncturaseLacerinol # mixing any two brute medications will make Razorium
+  impact: Medium
+  reactants:
+    Lacerinol:
+      amount: 1
+    Puncturase:
+      amount: 1
+  products:
+    Razorium: 1
+
+- type: reaction
+  id: Diphenhydramine
+  impact: Medium
+  minTemp: 377.59
+  reactants:
+    Diethylamine:
+      amount: 1
+    Oil:
+      amount: 1
+    TableSalt:
+      amount: 1
+    Carbon:
+      amount: 1
+    Ethanol:
+      amount: 1
+  products:
+    Diphenhydramine: 3
+
+- type: reaction
+  id: Pyrazine
+  impact: Medium
+  minTemp: 540
+  reactants:
+    Leporazine:
+      amount: 1
+    Dermaline:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Pyrazine: 3
+
+- type: reaction
+  id: Insuzine
+  impact: Medium
+  minTemp: 433
+  reactants:
+    Leporazine:
+      amount: 1
+    Kelotane:
+      amount: 1
+    Silicon:
+      amount: 1
+  products:
+    Insuzine: 3
+
+- type: reaction
+  id: Opporozidone
+  minTemp: 400 #Maybe if a method of reducing reagent temp exists one day, this could be -50
+  reactants:
+    Cognizine:
+      amount: 1
+    Plasma:
+      amount: 2
+    Doxarubixadone:
+      amount: 1
+  products:
+    Opporozidone: 3
+
+- type: reaction
+  id: Necrosol
+  impact: Medium
+  minTemp: 370
+  reactants:
+    Blood:
+      amount: 3
+    Omnizine:
+      amount: 1
+    Cryoxadone:
+      amount: 2
+  products:
+    Necrosol: 2
+
+- type: reaction
+  id: Aloxadone
+  impact: Medium
+  reactants:
+    Cryoxadone:
+      amount: 2
+    Aloe:
+      amount: 1
+    Leporazine:
+      amount: 2
+  products:
+      Aloxadone: 4
+
+- type: reaction
+  id: Psicodine
+  impact: Medium
+  reactants:
+    Mannitol:
+      amount: 2
+    Impedrezene:
+      amount: 1
+    Water:
+      amount: 2
+  products:
+      Psicodine: 4
+
+- type: reaction
+  id: Lipolicide
+  reactants:
+    Ephedrine:
+      amount: 1
+    Diethylamine:
+      amount: 1
+    Mercury:
+      amount: 1
+  products:
+    Lipolicide: 3
+
+- type: reaction
+  id: Happiness
+  reactants:
+    Laughter:
+      amount: 2
+    Epinephrine:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Plasma:
+      amount: 5
+      catalyst: true
+  products:
+    Happiness: 4
+
+- type: reaction
+  id: PotassiumIodide
+  reactants:
+    Potassium:
+      amount: 1
+    Iodine:
+      amount: 1
+  products:
+    PotassiumIodide: 2
+
+- type: reaction
+  id: Haloperidol
+  reactants:
+    Aluminium:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Fluorine:
+      amount: 1
+    Oil:
+      amount: 1
+    PotassiumIodide:
+      amount: 1
+  products:
+    Haloperidol: 5

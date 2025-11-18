@@ -1,6 +1,10 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
+using Content.Server.Administration.BanList;
+using Content.Server.EUI;
 using Content.Server.Database;
 using Content.Shared.Administration;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
@@ -8,9 +12,15 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Ban)]
 public sealed class RoleBanListCommand : IConsoleCommand
 {
+    [Dependency] private readonly IServerDbManager _dbManager = default!;
+
+    [Dependency] private readonly EuiManager _eui = default!;
+
+    [Dependency] private readonly IPlayerLocator _locator = default!;
+
     public string Command => "rolebanlist";
-    public string Description => "Lists the user's role bans";
-    public string Help => "Usage: <name or user ID> [include unbanned]";
+    public string Description => Loc.GetString("cmd-rolebanlist-desc");
+    public string Help => Loc.GetString("cmd-rolebanlist-help");
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -27,65 +37,48 @@ public sealed class RoleBanListCommand : IConsoleCommand
             return;
         }
 
-        var dbMan = IoCManager.Resolve<IServerDbManager>();
+        var data = await _locator.LookupIdByNameOrIdAsync(args[0]);
 
-        var target = args[0];
-
-        var locator = IoCManager.Resolve<IPlayerLocator>();
-        var located = await locator.LookupIdByNameOrIdAsync(target);
-        if (located == null)
+        if (data == null)
         {
             shell.WriteError("Unable to find a player with that name or id.");
             return;
         }
 
-        var targetUid = located.UserId;
-        var targetHWid = located.LastHWId;
-        var targetAddress = located.LastAddress;
-
-        var bans = await dbMan.GetServerRoleBansAsync(targetAddress, targetUid, targetHWid, includeUnbanned);
-
-        if (bans.Count == 0)
+        if (shell.Player is not { } player)
         {
-            shell.WriteLine("That user has no bans in their record.");
+
+            var bans = await _dbManager.GetServerRoleBansAsync(data.LastAddress, data.UserId, data.LastLegacyHWId, data.LastModernHWIds, includeUnbanned);
+
+            if (bans.Count == 0)
+            {
+                shell.WriteLine("That user has no bans in their record.");
+                return;
+            }
+
+            foreach (var ban in bans)
+            {
+                var msg = $"ID: {ban.Id}: Role: {ban.Role} Reason: {ban.Reason}";
+                shell.WriteLine(msg);
+            }
             return;
         }
 
-        var bansString = new StringBuilder("Bans in record:\n");
+        var ui = new BanListEui();
+        _eui.OpenEui(ui, player);
+        await ui.ChangeBanListPlayer(data.UserId);
 
-        var first = true;
-        foreach (var ban in bans)
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        return args.Length switch
         {
-            if (!first)
-                bansString.Append("\n\n");
-            else
-                first = false;
-
-            bansString
-                .Append("Ban ID: ")
-                .Append(ban.Id)
-                .Append('\n')
-                .Append("Role: ")
-                .Append(ban.Role)
-                .Append('\n')
-                .Append("Banned on ")
-                .Append(ban.BanTime);
-
-            if (ban.ExpirationTime != null)
-            {
-                bansString
-                    .Append(" until ")
-                    .Append(ban.ExpirationTime.Value);
-            }
-
-            bansString
-                .Append('\n');
-
-            bansString
-                .Append("Reason: ")
-                .Append(ban.Reason);
-        }
-
-        shell.WriteLine(bansString.ToString());
+            1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(),
+                Loc.GetString("cmd-rolebanlist-hint-1")),
+            2 => CompletionResult.FromHintOptions(CompletionHelper.Booleans,
+                Loc.GetString("cmd-rolebanlist-hint-2")),
+            _ => CompletionResult.Empty
+        };
     }
 }

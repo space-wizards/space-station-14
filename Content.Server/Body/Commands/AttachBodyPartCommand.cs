@@ -1,27 +1,27 @@
 using Content.Server.Administration;
+using Content.Server.Body.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
-using Robust.Server.Player;
+using Content.Shared.Body.Part;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
     public sealed class AttachBodyPartCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
+
         public string Command => "attachbodypart";
         public string Description => "Attaches a body part to you or someone else.";
         public string Help => $"{Command} <partEntityUid> / {Command} <entityUid> <partEntityUid>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var player = shell.Player;
 
-            EntityUid entity;
-            EntityUid partUid;
+            EntityUid bodyId;
+            EntityUid? partUid;
 
             switch (args.Length)
             {
@@ -38,66 +38,86 @@ namespace Content.Server.Body.Commands
                         return;
                     }
 
-                    if (!EntityUid.TryParse(args[0], out partUid))
+                    if (!NetEntity.TryParse(args[0], out var partNet) || !_entManager.TryGetEntity(partNet, out partUid))
                     {
                         shell.WriteLine($"{args[0]} is not a valid entity uid.");
                         return;
                     }
 
-                    entity = player.AttachedEntity.Value;
+                    bodyId = player.AttachedEntity.Value;
 
                     break;
                 case 2:
-                    if (!EntityUid.TryParse(args[0], out var entityUid))
+                    if (!NetEntity.TryParse(args[0], out var entityNet) || !_entManager.TryGetEntity(entityNet, out var entityUid))
                     {
                         shell.WriteLine($"{args[0]} is not a valid entity uid.");
                         return;
                     }
 
-                    if (!EntityUid.TryParse(args[1], out partUid))
+                    if (!NetEntity.TryParse(args[1], out partNet) || !_entManager.TryGetEntity(partNet, out partUid))
                     {
                         shell.WriteLine($"{args[1]} is not a valid entity uid.");
                         return;
                     }
 
-                    if (!entityManager.EntityExists(entityUid))
+                    if (!_entManager.EntityExists(entityUid))
                     {
                         shell.WriteLine($"{entityUid} is not a valid entity.");
                         return;
                     }
 
-                    entity = entityUid;
+                    bodyId = entityUid.Value;
                     break;
                 default:
                     shell.WriteLine(Help);
                     return;
             }
 
-            if (!entityManager.TryGetComponent(entity, out SharedBodyComponent? body))
+            if (!_entManager.TryGetComponent(bodyId, out BodyComponent? body))
             {
-                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity} does not have a {nameof(SharedBodyComponent)} component.");
+                shell.WriteLine($"Entity {_entManager.GetComponent<MetaDataComponent>(bodyId).EntityName} with uid {bodyId} does not have a {nameof(BodyComponent)}.");
                 return;
             }
 
-            if (!entityManager.EntityExists(partUid))
+            if (!_entManager.EntityExists(partUid))
             {
                 shell.WriteLine($"{partUid} is not a valid entity.");
                 return;
             }
 
-            if (!entityManager.TryGetComponent(partUid, out SharedBodyPartComponent? part))
+            if (!_entManager.TryGetComponent(partUid, out BodyPartComponent? part))
             {
-                shell.WriteLine($"Entity {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {args[0]} does not have a {nameof(SharedBodyPartComponent)} component.");
+                shell.WriteLine($"Entity {_entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName} with uid {args[0]} does not have a {nameof(BodyPartComponent)}.");
                 return;
             }
 
-            if (body.HasPart(part))
+            var bodySystem = _entManager.System<BodySystem>();
+            if (bodySystem.BodyHasChild(bodyId, partUid.Value, body, part))
             {
-                shell.WriteLine($"Body part {entityManager.GetComponent<MetaDataComponent>(partUid).EntityName} with uid {partUid} is already attached to entity {entityManager.GetComponent<MetaDataComponent>(entity).EntityName} with uid {entity}");
+                shell.WriteLine($"Body part {_entManager.GetComponent<MetaDataComponent>(partUid.Value).EntityName} with uid {partUid} is already attached to entity {_entManager.GetComponent<MetaDataComponent>(bodyId).EntityName} with uid {bodyId}");
                 return;
             }
 
-            body.SetPart($"AttachBodyPartVerb-{partUid}", part);
+            var slotId = $"AttachBodyPartVerb-{partUid}";
+
+            if (body.RootContainer.ContainedEntity is null && !bodySystem.AttachPartToRoot(bodyId, partUid.Value, body, part))
+            {
+                shell.WriteError("Body container does not have a root entity to attach to the body part!");
+                return;
+            }
+
+            var (rootPartId, rootPart) = bodySystem.GetRootPartOrNull(bodyId, body)!.Value;
+            if (!bodySystem.TryCreatePartSlotAndAttach(rootPartId,
+                    slotId,
+                    partUid.Value,
+                    part.PartType,
+                    rootPart,
+                    part))
+            {
+                shell.WriteError($"Could not create slot {slotId} on entity {_entManager.ToPrettyString(bodyId)}");
+                return;
+            }
+            shell.WriteLine($"Attached part {_entManager.ToPrettyString(partUid.Value)} to {_entManager.ToPrettyString(bodyId)}");
         }
     }
 }

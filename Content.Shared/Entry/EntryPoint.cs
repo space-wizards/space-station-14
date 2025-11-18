@@ -1,16 +1,18 @@
-using System;
-using System.Collections.Generic;
-using Content.Shared.CharacterAppearance;
-using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Reagent;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Linq;
+using Content.Shared.Humanoid.Markings;
 using Content.Shared.IoC;
-using Content.Shared.Localizations;
 using Content.Shared.Maps;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Sequence;
+using Robust.Shared.Serialization.Markdown.Value;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Entry
 {
@@ -18,65 +20,53 @@ namespace Content.Shared.Entry
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private readonly IResourceManager _resMan = default!;
+
+        private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
 
         public override void PreInit()
         {
             IoCManager.InjectDependencies(this);
-            SharedContentIoC.Register();
+        }
 
-            Localization.Init();
+        public override void Shutdown()
+        {
+            _prototypeManager.PrototypesReloaded -= PrototypeReload;
         }
 
         public override void Init()
         {
+            IgnorePrototypes();
         }
 
         public override void PostInit()
         {
             base.PostInit();
 
-            _initTileDefinitions();
-            CheckReactions();
-            IoCManager.Resolve<SpriteAccessoryManager>().Initialize();
+            InitTileDefinitions();
+            IoCManager.Resolve<MarkingManager>().Initialize();
+
+#if DEBUG
+            var configMan = IoCManager.Resolve<IConfigurationManager>();
+            configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
+            configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
+            configMan.OverrideDefault(CVars.NetFakeDuplicates, 0.005f);
+#endif
         }
 
-        private void CheckReactions()
+        private void InitTileDefinitions()
         {
-            foreach (var reaction in _prototypeManager.EnumeratePrototypes<ReactionPrototype>())
-            {
-                foreach (var reactant in reaction.Reactants.Keys)
-                {
-                    if (!_prototypeManager.HasIndex<ReagentPrototype>(reactant))
-                    {
-                        Logger.ErrorS(
-                            "chem", "Reaction {reaction} has unknown reactant {reagent}.",
-                            reaction.ID, reactant);
-                    }
-                }
+            _prototypeManager.PrototypesReloaded += PrototypeReload;
 
-                foreach (var product in reaction.Products.Keys)
-                {
-                    if (!_prototypeManager.HasIndex<ReagentPrototype>(product))
-                    {
-                        Logger.ErrorS(
-                            "chem", "Reaction {reaction} has unknown product {product}.",
-                            reaction.ID, product);
-                    }
-                }
-            }
-        }
-
-        private void _initTileDefinitions()
-        {
             // Register space first because I'm a hard coding hack.
-            var spaceDef = _prototypeManager.Index<ContentTileDefinition>("space");
+            var spaceDef = _prototypeManager.Index<ContentTileDefinition>(ContentTileDefinition.SpaceID);
 
             _tileDefinitionManager.Register(spaceDef);
 
             var prototypeList = new List<ContentTileDefinition>();
             foreach (var tileDef in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
             {
-                if (tileDef.ID == "space")
+                if (tileDef.ID == ContentTileDefinition.SpaceID)
                 {
                     continue;
                 }
@@ -94,6 +84,65 @@ namespace Content.Shared.Entry
             }
 
             _tileDefinitionManager.Initialize();
+        }
+
+        private void PrototypeReload(PrototypesReloadedEventArgs obj)
+        {
+            /* I am leaving this here commented out to re-iterate
+             - our game is shitcode
+             - tiledefmanager no likey proto reloads and you must re-assign the tile ids.
+            if (!obj.WasModified<ContentTileDefinition>())
+                return;
+                */
+
+            // Need to re-allocate tiledefs due to how prototype reloads work
+            foreach (var def in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
+            {
+                def.AssignTileId(_tileDefinitionManager[def.ID].TileId);
+            }
+        }
+
+        private void IgnorePrototypes()
+        {
+            if (!TryReadFile(out var sequences))
+                return;
+
+            foreach (var sequence in sequences)
+            {
+                foreach (var node in sequence.Sequence)
+                {
+                    var path = new ResPath(((ValueDataNode) node).Value);
+
+                    if (string.IsNullOrEmpty(path.Extension))
+                    {
+                        _prototypeManager.AbstractDirectory(path);
+                    }
+                    else
+                    {
+                        _prototypeManager.AbstractFile(path);
+                    }
+                }
+            }
+        }
+
+        private bool TryReadFile([NotNullWhen(true)] out List<SequenceDataNode>? sequence)
+        {
+            sequence = new();
+
+            foreach (var path in _resMan.ContentFindFiles(_ignoreFileDirectory))
+            {
+                if (!_resMan.TryContentFileRead(path, out var stream))
+                    continue;
+
+                using var reader = new StreamReader(stream, EncodingHelpers.UTF8);
+                var documents = DataNodeParser.ParseYamlStream(reader).FirstOrDefault();
+
+                if (documents == null)
+                    continue;
+
+                sequence.Add((SequenceDataNode) documents.Root);
+            }
+            return true;
         }
     }
 }

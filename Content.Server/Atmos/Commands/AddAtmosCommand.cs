@@ -1,10 +1,9 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.Commands
 {
@@ -25,37 +24,29 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (!int.TryParse(args[0], out var id))
+            if (!NetEntity.TryParse(args[0], out var eNet) || !_entities.TryGetEntity(eNet, out var euid))
             {
-                shell.WriteLine($"{args[0]} is not a valid integer.");
+                shell.WriteError($"Failed to parse euid '{args[0]}'.");
                 return;
             }
 
-            var gridId = new GridId(id);
-
-            var mapMan = IoCManager.Resolve<IMapManager>();
-
-            if (!gridId.IsValid() || !mapMan.TryGetGrid(gridId, out var gridComp))
+            if (!_entities.HasComponent<MapGridComponent>(euid))
             {
-                shell.WriteLine($"{gridId} is not a valid grid id.");
+                shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                 return;
             }
 
-            if (!_entities.EntityExists(gridComp.GridEntityId))
-            {
-                shell.WriteLine("Failed to get grid entity.");
-                return;
-            }
+            var atmos = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 
-            if (_entities.HasComponent<IAtmosphereComponent>(gridComp.GridEntityId))
+            if (atmos.HasAtmosphere(euid.Value))
             {
                 shell.WriteLine("Grid already has an atmosphere.");
                 return;
             }
 
-            _entities.AddComponent<GridAtmosphereComponent>(gridComp.GridEntityId);
+            _entities.AddComponent<GridAtmosphereComponent>(euid.Value);
 
-            shell.WriteLine($"Added atmosphere to grid {id}.");
+            shell.WriteLine($"Added atmosphere to grid {euid}.");
         }
     }
 }

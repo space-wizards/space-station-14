@@ -1,0 +1,44 @@
+- type: gameMap
+  id: Empty
+  mapName: Empty
+  mapPath: /Maps/Test/empty.yml
+  minPlayers: 0
+  stations:
+    Empty:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Empty"
+        - type: StationJobs
+          availableJobs:
+            Passenger: [ -1, -1 ]
+
+- type: gameMap
+  id: Dev
+  mapName: Dev
+  mapPath: /Maps/Test/dev_map.yml
+  minPlayers: 0
+  stations:
+    Dev:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Dev"
+        - type: StationJobs
+          availableJobs:
+            Captain: [ -1, -1 ]
+
+- type: gameMap
+  id: TestTeg
+  mapName: Test TEG
+  mapPath: /Maps/Test/test_teg.yml
+  minPlayers: 0
+  stations:
+    TEG:
+      stationProto: TestStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "TEG"
+        - type: StationJobs
+          availableJobs:
+            ChiefEngineer: [ -1, -1 ]

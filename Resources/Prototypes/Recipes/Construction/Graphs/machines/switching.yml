@@ -1,0 +1,206 @@
+# Levers
+- type: constructionGraph
+  id: LeverGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 1
+      - !type:DeleteEntity {}
+    edges:
+      - to: LeverNode
+        completed:
+          - !type:SnapToGrid {}
+        steps:
+          - material: Steel
+            amount: 2
+            doAfter: 1
+          - material: Cable
+            amount: 1
+  - node: LeverNode
+    entity: TwoWayLever
+    edges:
+      - to: start
+        steps:
+          - tool: Anchoring
+            doAfter: 1
+
+# Switches
+- type: constructionGraph
+  id: LightSwitchGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: LightSwitchNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+            - material: Cable
+              amount: 1
+    - node: LightSwitchNode
+      entity: ApcNetSwitch
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 1
+            - !type:DeleteEntity {}
+
+- type: constructionGraph
+  id: SignalSwitchGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: SignalSwitchNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+            - material: Cable
+              amount: 1
+    - node: SignalSwitchNode
+      entity: SignalSwitch
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 1
+            - !type:DeleteEntity {}
+
+- type: constructionGraph
+  id: SignalButtonGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: SignalButtonNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+            - material: Cable
+              amount: 1
+    - node: SignalButtonNode
+      entity: SignalButton
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 1
+            - !type:DeleteEntity {}
+
+- type: constructionGraph
+  id: LightSwitchDirectionalGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: LightSwitchDirectionalNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+            - material: Cable
+              amount: 1
+    - node: LightSwitchDirectionalNode
+      entity: ApcNetSwitchDirectional
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 1
+            - !type:DeleteEntity {}
+
+- type: constructionGraph
+  id: SignalSwitchDirectionalGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: SignalSwitchDirectionalNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+            - material: Cable
+              amount: 1
+    - node: SignalSwitchDirectionalNode
+      entity: SignalSwitchDirectional
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 1
+            - !type:DeleteEntity {}
+
+- type: constructionGraph
+  id: SignalButtonDirectionalGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: SignalButtonDirectionalNode
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+            - material: Cable
+              amount: 1
+    - node: SignalButtonDirectionalNode
+      entity: SignalButtonDirectional
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:GivePrototype
+              prototype: CableApcStack1
+              amount: 1
+            - !type:DeleteEntity {}

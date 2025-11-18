@@ -1,0 +1,308 @@
+- type: entity
+  id: BaseMech
+  save: false
+  abstract: true
+  components:
+  - type: MobMover
+  - type: Mech
+  - type: MechAir
+  - type: AirFilter
+    # everything except oxygen and nitrogen
+    gases:
+    - CarbonDioxide
+    - Plasma
+    - Tritium
+    - WaterVapor
+    - Ammonia
+    - NitrousOxide
+    - Frezon
+    #- Helium3 TODO: fusion
+    # remove everything except oxygen to maintain oxygen ratio
+    overflowGases:
+    - Nitrogen
+    - CarbonDioxide
+    - Plasma
+    - Tritium
+    - WaterVapor
+    - Ammonia
+    - NitrousOxide
+    - Frezon
+    #- Helium3 TODO: fusion
+  - type: AirIntake
+  # for intake and filter to work
+  - type: AtmosDevice
+    requireAnchored: false
+    joinSystem: true
+  - type: DoAfter
+  - type: Repairable
+    fuelCost: 25
+    doAfterDelay: 10
+  - type: UserInterface
+    interfaces:
+      enum.MechUiKey.Key:
+        type: MechBoundUserInterface
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 25 #thwack
+        Structural: 20
+    soundHit:
+      collection: MetalThud
+  - type: Puller
+    needsHands: false
+  - type: InputMover
+  - type: InteractionOutline
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1
+    baseSprintSpeed: 2
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+  - type: Pullable
+  - type: Physics
+    bodyType: KinematicController
+  - type: GravityAffected
+  - type: Clickable
+  - type: WiresPanel
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 1000
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      mech-pilot-slot: !type:ContainerSlot
+      mech-equipment-container: !type:Container
+      mech-battery-slot: !type:ContainerSlot
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/mechmove03.ogg
+  - type: GuideHelp
+    guides:
+    - Robotics
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: start
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  id: MechRipley
+  parent: BaseMech
+  name: Ripley APLU
+  description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Autonomous Power Loading Unit.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: ripley
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: ripley
+    openState: ripley-open
+    brokenState: ripley-broken
+    mechToPilotDamageMultiplier: 0.75
+    pilotWhitelist:
+      components:
+        - HumanoidAppearance
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 14 #intentionally shit so people realize that going into combat with the ripley is usually a bad idea.
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6
+
+- type: entity
+  id: MechRipleyBattery
+  parent: MechRipley
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
+
+# TODO: have a whitelist for honker equipment
+- type: entity
+  parent: BaseMech
+  id: MechHonker
+  name: H.O.N.K.
+  description: "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. Used to spread the fun and joy of life. HONK!"
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: honker
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+      params:
+        variation: 0.17
+  - type: Mech
+    baseState: honker
+    openState: honker-open
+    brokenState: honker-broken
+    mechToPilotDamageMultiplier: 0.5
+    pilotWhitelist:
+      components:
+      - HumanoidAppearance
+
+- type: entity
+  parent: MechHonker
+  id: MechHonkerBattery
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
+
+- type: entity
+  parent: BaseMech
+  id: MechHamtr
+  name: HAMTR
+  description: "An experimental mech which uses a brain–computer interface to connect directly to a hamsters brain."
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: hamtr
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: Mech
+    baseState: hamtr
+    openState: hamtr-open
+    brokenState: hamtr-broken
+    mechToPilotDamageMultiplier: 0.2
+    maxEquipmentAmount: 2
+    airtight: true
+    equipmentWhitelist:
+      tags:
+      - SmallMech
+    pilotWhitelist:
+      tags:
+      - Hamster
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 10 #thwack
+        Structural: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.4
+    baseSprintSpeed: 3.7
+
+- type: entity
+  parent: MechHamtr
+  id: MechHamtrBattery
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
+
+# Vim!!!!!!!
+
+- type: entity
+  parent: BaseMech
+  id: MechVim
+  name: Vim
+  description: A miniature exosuit from Nanotrasen, developed to let the irreplaceable station pets live a little longer.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: vim
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.15
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/mechmove03.ogg
+      params:
+        volume: -10
+  - type: Mech
+    baseState: vim
+    openState: vim-open
+    brokenState: vim-broken
+    maxEquipmentAmount: 0
+    # keep mouse safe
+    mechToPilotDamageMultiplier: 0.1
+    airtight: true
+    pilotWhitelist:
+      tags:
+      - VimPilot
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 10 #thwack
+        Structural: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6
+  - type: Access
+    tags:
+    - Maintenance
+  # TOOD: buzz / chime actions
+  # TODO: builtin flashlight
+
+- type: entity
+  parent: MechVim
+  id: MechVimBattery
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh

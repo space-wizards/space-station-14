@@ -17,6 +17,7 @@ namespace Content.Tests.Shared.Alert
   id: testAlertOrder
   order:
     - alertType: Handcuffed
+    - alertType: Ensnared
     - category: Pressure
     - category: Hunger
     - alertType: Hot
@@ -25,50 +26,49 @@ namespace Content.Tests.Shared.Alert
     - category: Temperature
 
 - type: alert
-  name: AlertLowPressure
+  id: LowPressure
+  icons: []
   category: Pressure
-  alertType: LowPressure
 
 - type: alert
-  name: AlertOverfed
-  category: Hunger
-  alertType: Overfed
-
-- type: alert
-  name: AlertHighPressure
+  id: HighPressure
+  icons: []
   category: Pressure
-  alertType: HighPressure
 
 - type: alert
-  name: AlertPeckish
+  id: Peckish
+  icons: []
   category: Hunger
-  alertType: Peckish
 
 - type: alert
-  name: AlertStun
-  alertType: Stun
+  id: Stun
+  icons: []
 
 - type: alert
-  name: AlertHandcuffed
-  alertType: Handcuffed
+  id: Handcuffed
+  icons: []
 
 - type: alert
-  name: AlertHot
+  id: Ensnared
+  icons: []
+
+- type: alert
+  id: Hot
+  icons: []
   category: Temperature
-  alertType: Hot
 
 - type: alert
-  name: AlertCold
+  id: Cold
+  icons: []
   category: Temperature
-  alertType: Cold
 
 - type: alert
-  name: AlertWeightless
-  alertType: Weightless
+  id: Weightless
+  icons: []
 
 - type: alert
-  name: AlertPilotingShuttle
-  alertType: PilotingShuttle
+  id: PilotingShuttle
+  icons: []
 ";
 
         [Test]
@@ -78,31 +78,31 @@ namespace Content.Tests.Shared.Alert
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
-            prototypeManager.Resync();
+            prototypeManager.ResolveResults();
 
             var alertOrder = prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
 
             var alerts = prototypeManager.EnumeratePrototypes<AlertPrototype>();
 
             // ensure they sort according to our expected criteria
-            var expectedOrder = new List<AlertType>();
-            expectedOrder.Add(AlertType.Handcuffed);
-            expectedOrder.Add(AlertType.HighPressure);
+            var expectedOrder = new List<string>();
+            expectedOrder.Add("Handcuffed");
+            expectedOrder.Add("Ensnared");
+            expectedOrder.Add("HighPressure");
             // stuff with only category + same category ordered by enum value
-            expectedOrder.Add(AlertType.Overfed);
-            expectedOrder.Add(AlertType.Peckish);
-            expectedOrder.Add(AlertType.Hot);
-            expectedOrder.Add(AlertType.Stun);
-            expectedOrder.Add(AlertType.LowPressure);
-            expectedOrder.Add(AlertType.Cold);
-            // stuff at end of list ordered by enum value
-            expectedOrder.Add(AlertType.Weightless);
-            expectedOrder.Add(AlertType.PilotingShuttle);
+            expectedOrder.Add("Peckish");
+            expectedOrder.Add("Hot");
+            expectedOrder.Add("Stun");
+            expectedOrder.Add("LowPressure");
+            expectedOrder.Add("Cold");
+            // stuff at end of list ordered by ID
+            expectedOrder.Add("PilotingShuttle");
+            expectedOrder.Add("Weightless");
 
             var actual = alerts.ToList();
             actual.Sort(alertOrder);
 
-            Assert.That(actual.Select(a => a.AlertType).ToList(), Is.EqualTo(expectedOrder));
+            Assert.That(actual.Select(a => a.ID).ToList(), Is.EqualTo(expectedOrder));
         }
     }
 }

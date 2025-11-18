@@ -1,0 +1,6 @@
+﻿<controls:PanicBunkerStatusWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.Administration.UI.Tabs.PanicBunkerTab"
+    Title="{Loc admin-ui-panic-bunker-window-title}">
+    <Label Name="MessageLabel" Access="Public" Text="{Loc admin-ui-panic-bunker-is-enabled}" />
+</controls:PanicBunkerStatusWindow>

@@ -17,19 +17,19 @@
       "name": "seclite-overlay"
     },
     {
-      "name": "off-inhand-left",
+      "name": "inhand-left",
       "directions": 4
     },
     {
-      "name": "off-inhand-right",
+      "name": "inhand-right",
       "directions": 4
     },
     {
-      "name": "on-inhand-left",
+      "name": "inhand-left-light",
       "directions": 4
     },
     {
-      "name": "on-inhand-right",
+      "name": "inhand-right-light",
       "directions": 4
     },
     {

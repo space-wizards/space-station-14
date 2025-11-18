@@ -1,64 +1,42 @@
-﻿using System;
-using Content.Client.Stylesheets;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Strip
 {
     public sealed class StrippingMenu : DefaultWindow
     {
-        private readonly BoxContainer _vboxContainer;
+        public LayoutContainer InventoryContainer = new();
+        public LayoutContainer HandsContainer = new();
+        public BoxContainer SnareContainer = new();
+        public bool Dirty = true;
 
-        public StrippingMenu(string title)
+        public event Action? OnDirty;
+
+        public StrippingMenu()
         {
-            MinSize = SetSize = (400, 600);
-            Title = title;
-
-            _vboxContainer = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                VerticalExpand = true,
-                SeparationOverride = 5,
-            };
-
-            Contents.AddChild(_vboxContainer);
+            var box = new BoxContainer() { Orientation = LayoutOrientation.Vertical, Margin = new Thickness(0, 8) };
+            ContentsContainer.AddChild(box);
+            box.AddChild(SnareContainer);
+            box.AddChild(HandsContainer);
+            box.AddChild(InventoryContainer);
         }
 
         public void ClearButtons()
         {
-            _vboxContainer.DisposeAllChildren();
+            InventoryContainer.RemoveAllChildren();
+            HandsContainer.RemoveAllChildren();
+            SnareContainer.RemoveAllChildren();
         }
 
-        public void AddButton(string title, string name, Action<BaseButton.ButtonEventArgs> onPressed)
+        protected override void FrameUpdate(FrameEventArgs args)
         {
-            var button = new Button()
-            {
-                Text = name,
-                StyleClasses = { StyleBase.ButtonOpenRight }
-            };
+            if (!Dirty)
+                return;
 
-            button.OnPressed += onPressed;
-
-            _vboxContainer.AddChild(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                HorizontalExpand = true,
-                SeparationOverride = 5,
-                Children =
-                {
-                    new Label()
-                    {
-                        Text = $"{title}:"
-                    },
-                    new Control()
-                    {
-                        HorizontalExpand = true
-                    },
-                    button,
-                }
-            });
+            Dirty = false;
+            OnDirty?.Invoke();
         }
     }
 }

@@ -1,9 +1,0 @@
-#- type: entity
-#  id: AnimationsTest
-#  components:
-#  - type: Sprite
-#    texture: Objects/Toolbox_b.png
-#    offset: 2, 0
-#    noRot: false
-#  - type: AnimationPlayer
-#  - type: AnimationsTest

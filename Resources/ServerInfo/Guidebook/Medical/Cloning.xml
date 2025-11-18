@@ -1,0 +1,23 @@
+<Document>
+# Cloning
+If all else fails, patients will need to be cloned. This should only be used as a last resort, if recovery is impossible. This is most often the case when the body has started to rot, or if they have excessive amounts of damage.
+
+Cloning itself is relatively simple. (Assuming the network is set.) Just drag a body into the scanner, check the cloning console, and clone! If they've taken cellular damage, or have rotted for too long, the results can be... less than pleasant.
+
+As a note: Cloning isn't always available, and it would be best not to rely on it. 
+<Box>
+<GuideEntityEmbed Entity="ComputerCloningConsole" Caption="cloning console"/>
+<GuideEntityEmbed Entity="MedicalScanner"/>
+<GuideEntityEmbed Entity="CloningPod"/>
+<GuideEntityEmbed Entity="NetworkConfigurator"/>
+</Box>
+## Biomass
+Creating a clone requires biomass, which, gruesomely, involves recycling organic material. Be it crew members without a soul, station pets, or hostile creatures that have been 'taken care of', things can often be recycled.
+
+Dragging a body onto the biomass reclaimer (with your cursor) will mulch it for re-use. If it's a crew member, it's common practice to strip the body and return departmental gear before doing such.
+<Box>
+<GuideEntityEmbed Entity="BiomassReclaimer"/>
+<GuideEntityEmbed Entity="MaterialBiomass"/>
+</Box>
+
+</Document>

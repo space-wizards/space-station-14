@@ -11,7 +11,7 @@
             "name": "base"
         },
         {
-            "name": "spent"
+            "name": "base-spent"
         }
     ]
 }

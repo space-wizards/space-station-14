@@ -1,54 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
-using Content.Shared.CCVar;
 using Content.Shared.Database;
-using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public sealed class AddTests : ContentIntegrationTest
+public sealed class AddTests
 {
+    public static PoolSettings LogTestSettings = new()
+    {
+        AdminLogsEnabled = true,
+        DummyTicker = false,
+        Connected = true
+    };
+
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        var server = StartServer(new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            },
-            Pool = true
-        });
-        await server.WaitIdleAsync();
-
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
+        await pair.CreateTestMap();
+        var coordinates = pair.TestMap.GridCoords;
         await server.WaitPost(() =>
         {
-            var coordinates = GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {guid}");
         });
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             var logs = sAdminLogSystem.CurrentRoundJson(new LogFilter
             {
@@ -69,34 +62,29 @@ public sealed class AddTests : ContentIntegrationTest
 
             return false;
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AddAndGetUnformattedLog()
     {
-        var server = StartServer(new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            },
-            Pool = true
-        });
-        await server.WaitIdleAsync();
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var guid = Guid.NewGuid();
 
+        var testMap = await pair.CreateTestMap();
+        var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
-            var coordinates = GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity} test log: {guid}");
@@ -104,7 +92,7 @@ public sealed class AddTests : ContentIntegrationTest
 
         SharedAdminLog log = default;
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
@@ -124,43 +112,39 @@ public sealed class AddTests : ContentIntegrationTest
         {
             Round = sGamerTicker.RoundId,
             Search = log.Message,
-            Types = new HashSet<LogType> {log.Type},
+            Types = new HashSet<LogType> { log.Type },
         };
 
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))
         {
             var root = json.RootElement;
 
-            Assert.That(root.TryGetProperty("entity", out _), Is.True);
-            Assert.That(root.TryGetProperty("guid", out _), Is.True);
+            Assert.Multiple(() =>
+            {
+                Assert.That(root.TryGetProperty("entity", out _), Is.True);
+                Assert.That(root.TryGetProperty("guid", out _), Is.True);
+            });
 
             json.Dispose();
         }
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        var server = StartServer(new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            },
-            Pool = true
-        });
-        await server.WaitIdleAsync();
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
-
+        var testMap = await pair.CreateTestMap();
+        var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
-            var coordinates = GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             for (var i = 0; i < amount; i++)
@@ -169,36 +153,29 @@ public sealed class AddTests : ContentIntegrationTest
             }
         });
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             var messages = await sAdminLogSystem.CurrentRoundLogs();
             return messages.Count >= amount;
         });
+
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task AddPlayerSessionLog()
     {
-        var (client, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            },
-            Pool = true
-        });
-
-        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         Guid playerGuid = default;
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.ServerSessions.First();
+            var player = sPlayers.Sessions.First();
             playerGuid = player.UserId;
 
             Assert.DoesNotThrow(() =>
@@ -207,7 +184,7 @@ public sealed class AddTests : ContentIntegrationTest
             });
         });
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs();
             if (logs.Count == 0)
@@ -218,25 +195,26 @@ public sealed class AddTests : ContentIntegrationTest
             Assert.That(logs.First().Players, Does.Contain(playerGuid));
             return true;
         });
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task PreRoundAddAndGetSingle()
     {
-        var server = StartServer(new ServerContentIntegrationOption
+        var setting = new PoolSettings
         {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0",
-                [CCVars.GameLobbyEnabled.Name] = "true"
-            },
-        });
-        await server.WaitIdleAsync();
+            Dirty = true,
+            InLobby = true,
+            AdminLogsEnabled = true
+        };
+
+        await using var pair = await PoolManager.GetServerClient(setting);
+        var server = pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         var sGamerTicker = sSystems.GetEntitySystem<GameTicker>();
 
         var guid = Guid.NewGuid();
@@ -253,7 +231,7 @@ public sealed class AddTests : ContentIntegrationTest
 
         SharedAdminLog log = default;
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
@@ -273,47 +251,39 @@ public sealed class AddTests : ContentIntegrationTest
         {
             Round = sGamerTicker.RoundId,
             Search = log.Message,
-            Types = new HashSet<LogType> {log.Type},
+            Types = new HashSet<LogType> { log.Type },
         };
 
         await foreach (var json in sDatabase.GetAdminLogsJson(filter))
         {
             var root = json.RootElement;
-            
+
             Assert.That(root.TryGetProperty("guid", out _), Is.True);
 
             json.Dispose();
         }
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task DuplicatePlayerDoesNotThrowTest()
     {
-        var (client, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            },
-        });
-
-        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
-
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.ServerSessions.Single();
+            var player = sPlayers.Sessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player} {player} test log: {guid}");
         });
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
@@ -328,37 +298,30 @@ public sealed class AddTests : ContentIntegrationTest
             return true;
         });
 
+        await pair.CleanReturnAsync();
         Assert.Pass();
     }
 
     [Test]
     public async Task DuplicatePlayerIdDoesNotThrowTest()
     {
-        var (client, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            },
-        });
-
-        await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
+        await using var pair = await PoolManager.GetServerClient(LogTestSettings);
+        var server = pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
 
         await server.WaitPost(() =>
         {
-            var player = sPlayers.ServerSessions.Single();
+            var player = sPlayers.Sessions.Single();
 
             sAdminLogSystem.Add(LogType.Unknown, $"{player:first} {player:second} test log: {guid}");
         });
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             var logs = await sAdminLogSystem.CurrentRoundLogs(new LogFilter
             {
@@ -373,6 +336,7 @@ public sealed class AddTests : ContentIntegrationTest
             return true;
         });
 
+        await pair.CleanReturnAsync();
         Assert.Pass();
     }
 }

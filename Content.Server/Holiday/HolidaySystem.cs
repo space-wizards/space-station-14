@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
+using Content.Shared.Holiday;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Holiday
 {
@@ -17,6 +13,7 @@ namespace Content.Server.Holiday
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         [ViewVariables]
         private readonly List<HolidayPrototype> _currentHolidays = new();
@@ -26,9 +23,9 @@ namespace Content.Server.Holiday
 
         public override void Initialize()
         {
-            _configManager.OnValueChanged(CCVars.HolidaysEnabled, OnHolidaysEnableChange, true);
-
+            Subs.CVar(_configManager, CCVars.HolidaysEnabled, OnHolidaysEnableChange);
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
+            SubscribeLocalEvent<HolidayVisualsComponent, ComponentInit>(OnVisualsInit);
         }
 
         public void RefreshCurrentHolidays()
@@ -105,6 +102,17 @@ namespace Content.Server.Holiday
                     break;
                 case GameRunLevel.PostRound:
                     break;
+            }
+        }
+
+        private void OnVisualsInit(Entity<HolidayVisualsComponent> ent, ref ComponentInit args)
+        {
+            foreach (var (key, holidays) in ent.Comp.Holidays)
+            {
+                if (!holidays.Any(h => IsCurrentlyHoliday(h)))
+                    continue;
+                _appearance.SetData(ent, HolidayVisuals.Holiday, key);
+                break;
             }
         }
     }

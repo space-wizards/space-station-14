@@ -1,16 +1,19 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
-using Robust.Shared.IoC;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.NodeContainer;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
     public sealed class ApcNetworkSystem : EntitySystem
     {
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -26,7 +29,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, ApcNetworkComponent receiver, BeforePacketSentEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.Sender, out ApcNetworkComponent? sender)) return;
+            if (!TryComp(args.Sender, out ApcNetworkComponent? sender)) return;
 
             if (sender.ConnectedNode?.NodeGroup == null || !sender.ConnectedNode.NodeGroup.Equals(receiver.ConnectedNode?.NodeGroup))
             {
@@ -36,13 +39,13 @@ namespace Content.Server.DeviceNetwork.Systems
 
         private void OnProviderConnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderConnectedEvent args)
         {
-            if (!EntityManager.TryGetComponent(args.Provider.Owner, out NodeContainerComponent? nodeContainer)) return;
+            if (!TryComp(args.Provider.Owner, out NodeContainerComponent? nodeContainer)) return;
 
-            if (nodeContainer.TryGetNode("power", out CableNode? node))
+            if (_nodeContainer.TryGetNode(nodeContainer, "power", out CableNode? node))
             {
                 component.ConnectedNode = node;
             }
-            else if (nodeContainer.TryGetNode("output", out CableDeviceNode? deviceNode))
+            else if (_nodeContainer.TryGetNode(nodeContainer, "output", out CableDeviceNode? deviceNode))
             {
                 component.ConnectedNode = deviceNode;
             }

@@ -1,11 +1,15 @@
 - type: job
   id: Scientist
-  name: "scientist"
+  name: job-name-scientist
+  description: job-description-scientist
+  playTimeTracker: JobScientist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 2.5h
   startingGear: ScientistGear
-  departments:
-  - Science
-  icon: "Scientist"
-  supervisors: "the research director"
+  icon: "JobIconScientist"
+  supervisors: job-supervisors-rd
   access:
   - Research
   - Maintenance
@@ -13,12 +17,18 @@
 - type: startingGear
   id: ScientistGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitScientist
-    back: ClothingBackpackScienceFilled
-    shoes: ClothingShoesColorWhite
-    outerClothing: ClothingOuterCoatLab
-    id: SciencePDA
     ears: ClothingHeadsetScience
-  innerclothingskirt: ClothingUniformJumpskirtScientist
-  satchel: ClothingBackpackSatchelScienceFilled
-  duffelbag: ClothingBackpackDuffelScienceFilled
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: ScientistChameleonOutfit
+  job: Scientist
+  equipment:
+    head: ClothingHeadBandSkull
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskGas
+    neck: ClothingNeckTieSci
+    outerClothing: ClothingOuterCoatRnd
+    gloves: ClothingHandsGlovesLatex

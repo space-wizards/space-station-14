@@ -1,199 +1,176 @@
-using System;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
-using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
-using Content.Client.EscapeMenu;
+using Content.Client.DebugMon;
 using Content.Client.Eui;
-using Content.Client.Flash;
-using Content.Client.HUD;
-using Content.Client.Info;
+using Content.Client.Fullscreen;
+using Content.Client.GameTicking.Managers;
+using Content.Client.GhostKick;
+using Content.Client.Guidebook;
 using Content.Client.Input;
 using Content.Client.IoC;
 using Content.Client.Launcher;
+using Content.Client.Lobby;
 using Content.Client.MainMenu;
-using Content.Client.MobState.Overlays;
-using Content.Client.Parallax;
 using Content.Client.Parallax.Managers;
-using Content.Client.Preferences;
-using Content.Client.Sandbox;
+using Content.Client.Players.PlayTimeTracking;
+using Content.Client.Playtime;
+using Content.Client.Radiation.Overlays;
+using Content.Client.Replay;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
-using Content.Client.StationEvents;
-using Content.Client.StationEvents.Managers;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface;
 using Content.Client.Viewport;
 using Content.Client.Voting;
-using Content.Shared.Actions;
-using Content.Shared.Administration;
-using Content.Shared.Alert;
-using Content.Shared.AME;
-using Content.Shared.Cargo.Components;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Dispenser;
+using Content.Shared.Ame.Components;
 using Content.Shared.Gravity;
-using Content.Shared.Lathe;
-using Content.Shared.Markers;
-using Content.Shared.Research.Components;
-using Content.Shared.VendingMachines;
-using Content.Shared.Wires;
+using Content.Shared.Localizations;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.Player;
+using Robust.Client.Replays.Loading;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Entry
 {
     public sealed class EntryPoint : GameClient
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
-        [Dependency] private readonly IEscapeMenuOwner _escapeMenuOwner = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly IParallaxManager _parallaxManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IStylesheetManager _stylesheetManager = default!;
+        [Dependency] private readonly IScreenshotHook _screenshotHook = default!;
+        [Dependency] private readonly FullscreenHook _fullscreenHook = default!;
+        [Dependency] private readonly ChangelogManager _changelogManager = default!;
+        [Dependency] private readonly ViewportManager _viewportManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
+        [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
+        [Dependency] private readonly GhostKickManager _ghostKick = default!;
+        [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
+        [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
+        [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
+        [Dependency] private readonly ContentReplayPlaybackManager _playbackMan = default!;
+        [Dependency] private readonly IResourceManager _resourceManager = default!;
+        [Dependency] private readonly IReplayLoadManager _replayLoad = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly DebugMonitorManager _debugMonitorManager = default!;
+        [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+        [Dependency] private readonly ClientsidePlaytimeTrackingManager _clientsidePlaytimeManager = default!;
 
-        public override void Init()
+        public override void PreInit()
         {
-            var factory = IoCManager.Resolve<IComponentFactory>();
-            var prototypes = IoCManager.Resolve<IPrototypeManager>();
-
-            factory.DoAutoRegistrations();
-
-            foreach (var ignoreName in IgnoredComponents.List)
-            {
-                factory.RegisterIgnore(ignoreName);
-            }
-
-            factory.RegisterClass<SharedResearchConsoleComponent>();
-            factory.RegisterClass<SharedLatheComponent>();
-            factory.RegisterClass<SharedSpawnPointComponent>();
-            factory.RegisterClass<SharedVendingMachineComponent>();
-            factory.RegisterClass<SharedWiresComponent>();
-            factory.RegisterClass<SharedCargoConsoleComponent>();
-            factory.RegisterClass<SharedReagentDispenserComponent>();
-            factory.RegisterClass<SharedChemMasterComponent>();
-            factory.RegisterClass<SharedGravityGeneratorComponent>();
-            factory.RegisterClass<SharedAMEControllerComponent>();
-
-            prototypes.RegisterIgnore("accent");
-            prototypes.RegisterIgnore("material");
-            prototypes.RegisterIgnore("reaction"); //Chemical reactions only needed by server. Reactions checks are server-side.
-            prototypes.RegisterIgnore("gasReaction");
-            prototypes.RegisterIgnore("seed"); // Seeds prototypes are server-only.
-            prototypes.RegisterIgnore("barSign");
-            prototypes.RegisterIgnore("objective");
-            prototypes.RegisterIgnore("holiday");
-            prototypes.RegisterIgnore("aiFaction");
-            prototypes.RegisterIgnore("gameMap");
-            prototypes.RegisterIgnore("behaviorSet");
-            prototypes.RegisterIgnore("advertisementsPack");
-            prototypes.RegisterIgnore("metabolizerType");
-            prototypes.RegisterIgnore("metabolismGroup");
-            prototypes.RegisterIgnore("salvageMap");
-            prototypes.RegisterIgnore("gamePreset");
-            prototypes.RegisterIgnore("gameRule");
-            prototypes.RegisterIgnore("worldSpell");
-            prototypes.RegisterIgnore("entitySpell");
-            prototypes.RegisterIgnore("instantSpell");
-
-            ClientContentIoC.Register();
+            ClientContentIoC.Register(Dependencies);
 
             foreach (var callback in TestingCallbacks)
             {
                 var cast = (ClientModuleTestingCallbacks) callback;
                 cast.ClientBeforeIoC?.Invoke();
             }
-
-            IoCManager.BuildGraph();
-            factory.GenerateNetIds();
-
-            IoCManager.Resolve<IClientAdminManager>().Initialize();
-            IoCManager.Resolve<IParallaxManager>().LoadParallax();
-            IoCManager.Resolve<IBaseClient>().PlayerJoinedServer += SubscribePlayerAttachmentEvents;
-            IoCManager.Resolve<IStylesheetManager>().Initialize();
-            IoCManager.Resolve<IScreenshotHook>().Initialize();
-            IoCManager.Resolve<ChangelogManager>().Initialize();
-            IoCManager.Resolve<RulesManager>().Initialize();
-            IoCManager.Resolve<ViewportManager>().Initialize();
-
-            IoCManager.InjectDependencies(this);
-
-            _escapeMenuOwner.Initialize();
-
-            _baseClient.PlayerJoinedServer += (_, _) =>
-            {
-                IoCManager.Resolve<IMapManager>().CreateNewMapEntity(MapId.Nullspace);
-            };
         }
 
-        /// <summary>
-        /// Subscribe events to the player manager after the player manager is set up
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public void SubscribePlayerAttachmentEvents(object? sender, EventArgs args)
+        public override void Init()
         {
-            if (_playerManager.LocalPlayer != null)
-            {
-                _playerManager.LocalPlayer.EntityAttached += AttachPlayerToEntity;
-                _playerManager.LocalPlayer.EntityDetached += DetachPlayerFromEntity;
-            }
-        }
+            Dependencies.BuildGraph();
+            Dependencies.InjectDependencies(this);
 
-        /// <summary>
-        /// Add the character interface master which combines all character interfaces into one window
-        /// </summary>
-        public void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
-        {
-            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
-            _entityManager.AddComponent<CharacterInterfaceComponent>(eventArgs.NewEntity);
-        }
+            _contentLoc.Initialize();
+            _componentFactory.DoAutoRegistrations();
+            _componentFactory.IgnoreMissingComponents();
 
-        /// <summary>
-        /// Remove the character interface master from this entity now that we have detached ourselves from it
-        /// </summary>
-        public void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
-        {
-            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
-            if (!_entityManager.Deleted(eventArgs.OldEntity))
-            {
-                _entityManager.RemoveComponent<CharacterInterfaceComponent>(eventArgs.OldEntity);
-            }
+            // Do not add to these, they are legacy.
+            _componentFactory.RegisterClass<SharedAmeControllerComponent>();
+            // Do not add to the above, they are legacy
+
+            _prototypeManager.RegisterIgnore("utilityQuery");
+            _prototypeManager.RegisterIgnore("utilityCurvePreset");
+            _prototypeManager.RegisterIgnore("accent");
+            _prototypeManager.RegisterIgnore("gasReaction");
+            _prototypeManager.RegisterIgnore("seed"); // Seeds prototypes are server-only.
+            _prototypeManager.RegisterIgnore("objective");
+            _prototypeManager.RegisterIgnore("holiday");
+            _prototypeManager.RegisterIgnore("htnCompound");
+            _prototypeManager.RegisterIgnore("htnPrimitive");
+            _prototypeManager.RegisterIgnore("gameMap");
+            _prototypeManager.RegisterIgnore("gameMapPool");
+            _prototypeManager.RegisterIgnore("lobbyBackground");
+            _prototypeManager.RegisterIgnore("gamePreset");
+            _prototypeManager.RegisterIgnore("noiseChannel");
+            _prototypeManager.RegisterIgnore("playerConnectionWhitelist");
+            _prototypeManager.RegisterIgnore("spaceBiome");
+            _prototypeManager.RegisterIgnore("worldgenConfig");
+            _prototypeManager.RegisterIgnore("gameRule");
+            _prototypeManager.RegisterIgnore("worldSpell");
+            _prototypeManager.RegisterIgnore("entitySpell");
+            _prototypeManager.RegisterIgnore("instantSpell");
+            _prototypeManager.RegisterIgnore("roundAnnouncement");
+            _prototypeManager.RegisterIgnore("wireLayout");
+            _prototypeManager.RegisterIgnore("alertLevels");
+            _prototypeManager.RegisterIgnore("nukeopsRole");
+            _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
+            _prototypeManager.RegisterIgnore("codewordGenerator");
+            _prototypeManager.RegisterIgnore("codewordFaction");
+
+            _componentFactory.GenerateNetIds();
+            _adminManager.Initialize();
+            _screenshotHook.Initialize();
+            _fullscreenHook.Initialize();
+            _changelogManager.Initialize();
+            _viewportManager.Initialize();
+            _ghostKick.Initialize();
+            _extendedDisconnectInformation.Initialize();
+            _jobRequirements.Initialize();
+            _playbackMan.Initialize();
+            _clientsidePlaytimeManager.Initialize();
+
+            //AUTOSCALING default Setup!
+            _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
+            _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffY", 720);
+            _configManager.SetCVar("interface.resolutionAutoScaleLowerCutoffX", 520);
+            _configManager.SetCVar("interface.resolutionAutoScaleLowerCutoffY", 240);
+            _configManager.SetCVar("interface.resolutionAutoScaleMinimum", 0.5f);
         }
 
         public override void PostInit()
         {
             base.PostInit();
 
+            _stylesheetManager.Initialize();
+
             // Setup key contexts
-            var inputMan = IoCManager.Resolve<IInputManager>();
-            ContentContexts.SetupContexts(inputMan.Contexts);
+            ContentContexts.SetupContexts(_inputManager.Contexts);
 
-            IoCManager.Resolve<IGameHud>().Initialize();
+            _parallaxManager.LoadDefaultParallax();
 
-            var overlayMgr = IoCManager.Resolve<IOverlayManager>();
-            overlayMgr.AddOverlay(new ParallaxOverlay());
-            overlayMgr.AddOverlay(new SingularityOverlay());
-            overlayMgr.AddOverlay(new CritOverlay()); //Hopefully we can cut down on this list... don't see why a death overlay needs to be instantiated here.
-            overlayMgr.AddOverlay(new CircleMaskOverlay());
-            overlayMgr.AddOverlay(new FlashOverlay());
-            overlayMgr.AddOverlay(new RadiationPulseOverlay());
-
-            IoCManager.Resolve<IChatManager>().Initialize();
-            IoCManager.Resolve<IClientPreferencesManager>().Initialize();
-            IoCManager.Resolve<IStationEventManager>().Initialize();
-            IoCManager.Resolve<EuiManager>().Initialize();
-            IoCManager.Resolve<IVoteManager>().Initialize();
-            IoCManager.Resolve<IGamePrototypeLoadManager>().Initialize();
+            _overlayManager.AddOverlay(new SingularityOverlay());
+            _overlayManager.AddOverlay(new RadiationPulseOverlay());
+            _chatManager.Initialize();
+            _clientPreferencesManager.Initialize();
+            _euiManager.Initialize();
+            _voteManager.Initialize();
+            _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
+            _userInterfaceManager.SetActiveTheme(_configManager.GetCVar(CVars.InterfaceTheme));
+            _documentParsingManager.Initialize();
+            _titleWindowManager.Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {
@@ -205,7 +182,7 @@ namespace Content.Client.Entry
             };
 
             // Disable engine-default viewport since we use our own custom viewport control.
-            IoCManager.Resolve<IUserInterfaceManager>().MainViewport.Visible = false;
+            _userInterfaceManager.MainViewport.Visible = false;
 
             SwitchToDefaultState();
         }
@@ -214,7 +191,21 @@ namespace Content.Client.Entry
         {
             // Fire off into state dependent on launcher or not.
 
-            if (_gameController.LaunchState.FromLauncher)
+            // Check if we're loading a replay via content bundle!
+            if (_configManager.GetCVar(CVars.LaunchContentBundle)
+                && _resourceManager.ContentFileExists(
+                    ReplayConstants.ReplayZipFolder.ToRootedPath() / ReplayConstants.FileMeta))
+            {
+                _logManager.GetSawmill("entry").Info("Loading content bundle replay from VFS!");
+
+                var reader = new ReplayFileReaderResources(
+                    _resourceManager,
+                    ReplayConstants.ReplayZipFolder.ToRootedPath());
+
+                _playbackMan.LastLoad = (null, ReplayConstants.ReplayZipFolder.ToRootedPath());
+                _replayLoad.LoadAndStartReplay(reader);
+            }
+            else if (_gameController.LaunchState.FromLauncher)
             {
                 _stateManager.RequestStateChange<LauncherConnecting>();
                 var state = (LauncherConnecting) _stateManager.CurrentState;
@@ -232,14 +223,18 @@ namespace Content.Client.Entry
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
         {
-            base.Update(level, frameEventArgs);
-
-            switch (level)
+            if (level == ModUpdateLevel.FramePreEngine)
             {
-                case ModUpdateLevel.FramePreEngine:
-                    // TODO: Turn IChatManager into an EntitySystem and remove the line below.
-                    IoCManager.Resolve<IChatManager>().FrameUpdate(frameEventArgs);
-                    break;
+                _debugMonitorManager.FrameUpdate();
+            }
+
+            if (level == ModUpdateLevel.PreEngine)
+            {
+                if (_baseClient.RunLevel is ClientRunLevel.InGame or ClientRunLevel.SinglePlayerGame)
+                {
+                    var updateSystem = _entitySystemManager.GetEntitySystem<BuiPreTickUpdateSystem>();
+                    updateSystem.RunUpdates();
+                }
             }
         }
     }

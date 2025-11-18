@@ -1,74 +1,111 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Access
 {
     [TestFixture]
     [TestOf(typeof(AccessReaderComponent))]
-    public sealed class AccessReaderTest : ContentIntegrationTest
+    public sealed class AccessReaderTest
     {
+        [TestPrototypes]
+        private const string Prototypes = @"
+- type: entity
+  id: TestAccessReader
+  name: access reader
+  components:
+  - type: AccessReader
+";
+
         [Test]
         public async Task TestTags()
         {
-            var server = StartServer();
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var entityManager = server.ResolveDependency<IEntityManager>();
+
             await server.WaitAssertion(() =>
             {
-                var system = EntitySystem.Get<AccessReaderSystem>();
+                var system = entityManager.System<AccessReaderSystem>();
+                var ent = entityManager.SpawnEntity("TestAccessReader", MapCoordinates.Nullspace);
+                var reader = new Entity<AccessReaderComponent>(ent, entityManager.GetComponent<AccessReaderComponent>(ent));
 
                 // test empty
-                var reader = new AccessReaderComponent();
-                Assert.That(system.IsAllowed(reader, new[] { "Foo" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new[] { "Bar" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new string[] { }), Is.True);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "Foo" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "Bar" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<ProtoId<AccessLevelPrototype>>(), reader), Is.True);
+                });
 
                 // test deny
-                reader = new AccessReaderComponent();
-                reader.DenyTags.Add("A");
-                Assert.That(system.IsAllowed(reader, new[] { "Foo" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.False);
-                Assert.That(system.IsAllowed(reader, new[] { "A", "Foo" }), Is.False);
-                Assert.That(system.IsAllowed(reader, new string[] { }), Is.True);
+                system.AddDenyTag(reader, "A");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "Foo" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A" }, reader), Is.False);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A", "Foo" }, reader), Is.False);
+                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<ProtoId<AccessLevelPrototype>>(), reader), Is.True);
+                });
+                system.ClearDenyTags(reader);
 
                 // test one list
-                reader = new AccessReaderComponent();
-                reader.AccessLists.Add(new HashSet<string> { "A" });
-                Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new[] { "B" }), Is.False);
-                Assert.That(system.IsAllowed(reader, new[] { "A", "B" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new string[] { }), Is.False);
+                system.TryAddAccess(reader, "A");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "B" }, reader), Is.False);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A", "B" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<ProtoId<AccessLevelPrototype>>(), reader), Is.False);
+                });
+                system.TryClearAccesses(reader);
 
                 // test one list - two items
-                reader = new AccessReaderComponent();
-                reader.AccessLists.Add(new HashSet<string> { "A", "B" });
-                Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.False);
-                Assert.That(system.IsAllowed(reader, new[] { "B" }), Is.False);
-                Assert.That(system.IsAllowed(reader, new[] { "A", "B" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new string[] { }), Is.False);
+                system.TryAddAccess(reader, new HashSet<ProtoId<AccessLevelPrototype>> { "A", "B" });
+                Assert.Multiple(() =>
+                {
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A" }, reader), Is.False);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "B" }, reader), Is.False);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A", "B" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<ProtoId<AccessLevelPrototype>>(), reader), Is.False);
+                });
+                system.TryClearAccesses(reader);
 
                 // test two list
-                reader = new AccessReaderComponent();
-                reader.AccessLists.Add(new HashSet<string> { "A" });
-                reader.AccessLists.Add(new HashSet<string> { "B", "C" });
-                Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new[] { "B" }), Is.False);
-                Assert.That(system.IsAllowed(reader, new[] { "A", "B" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new[] { "C", "B" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new[] { "C", "B", "A" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new string[] { }), Is.False);
+                var accesses = new List<HashSet<ProtoId<AccessLevelPrototype>>>() {
+                    new HashSet<ProtoId<AccessLevelPrototype>> () { "A" },
+                    new HashSet<ProtoId<AccessLevelPrototype>> () { "B", "C" }
+                };
+                system.TryAddAccesses(reader, accesses);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "B" }, reader), Is.False);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A", "B" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "C", "B" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "C", "B", "A" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<ProtoId<AccessLevelPrototype>>(), reader), Is.False);
+                });
+                system.TryClearAccesses(reader);
 
                 // test deny list
-                reader = new AccessReaderComponent();
-                reader.AccessLists.Add(new HashSet<string> { "A" });
-                reader.DenyTags.Add("B");
-                Assert.That(system.IsAllowed(reader, new[] { "A" }), Is.True);
-                Assert.That(system.IsAllowed(reader, new[] { "B" }), Is.False);
-                Assert.That(system.IsAllowed(reader, new[] { "A", "B" }), Is.False);
-                Assert.That(system.IsAllowed(reader, new string[] { }), Is.False);
+                system.TryAddAccess(reader, new HashSet<ProtoId<AccessLevelPrototype>> { "A" });
+                system.AddDenyTag(reader, "B");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A" }, reader), Is.True);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "B" }, reader), Is.False);
+                    Assert.That(system.AreAccessTagsAllowed(new List<ProtoId<AccessLevelPrototype>> { "A", "B" }, reader), Is.False);
+                    Assert.That(system.AreAccessTagsAllowed(Array.Empty<ProtoId<AccessLevelPrototype>>(), reader), Is.False);
+                });
+                system.TryClearAccesses(reader);
+                system.ClearDenyTags(reader);
             });
+            await pair.CleanReturnAsync();
         }
 
     }

@@ -1,30 +1,58 @@
+- type: entityTable
+  id: GenericTrashItems
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 95
+      children:
+      - id: FoodPacketBoritosTrash
+      - id: FoodPacketCheesieTrash
+      - id: FoodPacketChipsTrash
+      - id: FoodPacketChocolateTrash
+      - id: FoodPacketChowMeinTrash
+      - id: FoodPacketCnDsTrash
+      - id: FoodPacketDanDanTrash
+      - id: FoodPacketPistachioTrash
+      - id: FoodPacketEnergyTrash
+      - id: FoodPacketPopcornTrash
+      - id: FoodPacketRaisinsTrash
+      - id: FoodPacketSemkiTrash
+      - id: FoodPacketSusTrash
+      - id: FoodPacketSyndiTrash
+      - id: BrokenBottle
+    - !type:GroupSelector
+      weight: 5
+      children:
+      - id: FoodPlateSmallTrash
+      - id: FoodBowlBigTrash
+
 - type: entity
   name: Trash Spawner
   id: RandomSpawner
   parent: MarkerBase
+  suffix: 50
   components:
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Consumable/Food/snacks.rsi/pistachio-trash.png
-    - type: RandomSpawner
-      rarePrototypes:
-        - PuddleVomit
-        - FoodPlateSmallTrash
-        - FoodBowlBigTrash
-      rareChance: 0.03
-      prototypes:
-#        - TrashCandy
-        - FoodPacketCheesieTrash
-        - FoodPacketChipsTrash
-        - FoodPacketPistachioTrash
-#        - TrashPlasticBag
-        - FoodPacketPopcornTrash
-        - FoodPacketRaisinsTrash
-        - FoodPacketSemkiTrash
-        - FoodPacketSusTrash
-        - FoodPacketSyndiTrash
-      chance: 0.5
+        - sprite: Objects/Consumable/Food/snacks.rsi
+          state: pistachio-trash
+    - type: EntityTableSpawner
       offset: 0.2
+      table: !type:NestedSelector
+        tableId: GenericTrashItems
+        prob: 0.5
   placement:
     mode: AlignTileAny
+
+- type: entity
+  parent: RandomSpawner
+  id: RandomSpawner100
+  suffix: 100
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: EntityTableSpawner
+    offset: 0.2
+    table: !type:NestedSelector
+      tableId: GenericTrashItems

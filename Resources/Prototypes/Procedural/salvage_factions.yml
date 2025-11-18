@@ -1,0 +1,46 @@
+- type: salvageFaction
+  id: Xenos
+  desc: salvage-faction-xenos
+  entries:
+    - proto: MobXeno
+    - proto: MobXenoDrone
+      cost: 2
+    - proto: MobXenoPraetorian
+      cost: 5
+      prob: 0.1
+    - proto: MobXenoQueen
+      cost: 10
+      prob: 0.02
+    - proto: MobXenoRavager
+      cost: 5
+    - proto: MobXenoRouny
+      cost: 3
+      prob: 0.02
+    - proto: MobXenoSpitter
+    - proto: WeaponTurretXeno
+      prob: 0.1
+  configs:
+    DefenseStructure: XenoWardingTower
+    Megafauna: MobXenoQueen
+
+- type: salvageFaction
+  id: Carps
+  desc: salvage-faction-carps
+  entries:
+    - proto: MobCarpDungeon
+    # These do too much damage for salvage, need nerfs
+    #- proto: MobCarpHolo
+    #  cost: 5
+    #  prob: 0.1
+    #- proto: MobCarpMagic
+    #  cost: 5
+    #  prob: 0.1
+    - proto: MobCarpRainbow # carp version of rouny...
+      cost: 3
+      prob: 0.05
+    - proto: MobDragonDungeon
+      cost: 10
+      prob: 0.02
+  configs:
+    DefenseStructure: CarpStatue
+    Megafauna: MobDragonDungeon

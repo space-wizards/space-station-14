@@ -1,0 +1,129 @@
+- type: sinkPort
+  id: AutoClose
+  name: signal-port-name-hold-open
+  description: signal-port-description-hold-open
+
+- type: sinkPort
+  id: Toggle
+  name: signal-port-name-toggle
+  description: signal-port-description-toggle
+
+- type: sinkPort
+  id: On
+  name: signal-port-name-on-receiver
+  description: signal-port-description-on-receiver
+
+- type: sinkPort
+  id: Off
+  name: signal-port-name-off-receiver
+  description: signal-port-description-off-receiver
+
+- type: sinkPort
+  id: Forward
+  name: signal-port-name-forward
+  description: signal-port-description-forward
+
+- type: sinkPort
+  id: Reverse
+  name: signal-port-name-reverse
+  description: signal-port-description-reverse
+
+- type: sinkPort
+  id: Open
+  name: signal-port-name-open
+  description: signal-port-description-open
+
+- type: sinkPort
+  id: Close
+  name: signal-port-name-close
+  description: signal-port-description-close
+
+- type: sinkPort
+  id: DoorBolt
+  name: signal-port-name-doorbolt
+  description: signal-port-description-doorbolt
+
+- type: sinkPort
+  id: Trigger
+  name: signal-port-name-trigger-receiver
+  description: signal-port-description-trigger-receiver
+
+- type: sinkPort
+  id: Timer
+  name: signal-port-name-timer
+  description: signal-port-description-timer
+
+- type: sinkPort
+  id: OrderReceiver
+  name: signal-port-name-order-receiver
+  description: signal-port-description-order-receiver
+
+- type: sinkPort
+  id: Pressurize
+  name: signal-port-name-pressurize
+  description: signal-port-description-pressurize
+
+- type: sinkPort
+  id: Depressurize
+  name: signal-port-name-depressurize
+  description: signal-port-description-depressurize
+
+- type: sinkPort
+  id: CloningPodReceiver
+  name: signal-port-name-pod-receiver
+  description: signal-port-description-pod-receiver
+
+- type: sinkPort
+  id: MedicalScannerReceiver
+  name: signal-port-name-med-scanner-receiver
+  description: signal-port-description-med-scanner-receiver
+
+- type: sinkPort
+  id: ArtifactAnalyzerReceiver
+  name: signal-port-name-artifact-analyzer-receiver
+  description: signal-port-description-artifact-analyzer-receiver
+
+- type: sinkPort
+  id: InputA
+  name: signal-port-name-logic-input-a
+  description: signal-port-description-logic-input-a
+
+- type: sinkPort
+  id: InputB
+  name: signal-port-name-logic-input-b
+  description: signal-port-description-logic-input-b
+
+- type: sinkPort
+  id: Input
+  name: signal-port-name-logic-input
+  description: signal-port-description-logic-input
+
+- type: sinkPort
+  id: MemoryInput
+  name: signal-port-name-logic-input
+  description: signal-port-description-logic-memory-input
+
+- type: sinkPort
+  id: MemoryEnable
+  name: signal-port-name-logic-enable
+  description: signal-port-description-logic-enable
+
+- type: sinkPort
+  id: SetParticleDelta
+  name: signal-port-name-set-particle-delta
+  description: signal-port-description-set-particle-delta
+
+- type: sinkPort
+  id: SetParticleEpsilon
+  name: signal-port-name-set-particle-epsilon
+  description: signal-port-description-set-particle-epsilon
+
+- type: sinkPort
+  id: SetParticleZeta
+  name: signal-port-name-set-particle-zeta
+  description: signal-port-description-set-particle-zeta
+
+- type: sinkPort
+  id: SetParticleSigma
+  name: signal-port-name-set-particle-sigma
+  description: signal-port-description-set-particle-sigma

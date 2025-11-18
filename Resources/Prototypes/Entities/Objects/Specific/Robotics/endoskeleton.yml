@@ -1,0 +1,81 @@
+﻿- type: entity
+  id: CyborgEndoskeleton
+  name: cyborg endoskeleton
+  description: A frame that cyborgs are built on. Significantly less spooky than expected.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+        restitution: 0.3
+        friction: 0.2
+  - type: Sprite
+    noRot: true
+    drawdepth: Items
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+    state: robo_suit
+  - type: Appearance
+  - type: ItemMapper
+    sprite: Objects/Specific/Robotics/cyborg_parts.rsi
+    mapLayers:
+      borg_l_arm+o:
+        whitelist:
+          tags:
+          - BorgLArm
+      borg_r_arm+o:
+        whitelist:
+          tags:
+          - BorgRArm
+      borg_l_leg+o:
+        whitelist:
+          tags:
+          - BorgLLeg
+      borg_r_leg+o:
+        whitelist:
+          tags:
+          - BorgRLeg
+      borg_head+o:
+        whitelist:
+          tags:
+          - BorgHead
+      borg_chest+o:
+        whitelist:
+          tags:
+          - BorgTorso
+  - type: ContainerContainer
+    containers:
+      part-container: !type:Container
+      cell_slot: !type:Container
+  - type: PartAssembly
+    parts:
+      generic:
+      - BorgLArm
+      - BorgRArm
+      - BorgLLeg
+      - BorgRLeg
+      - BorgHead
+      - BorgTorso
+  - type: Construction
+    graph: Cyborg
+    node: start
+    defaultTarget: cyborg
+    containers:
+    - part-container
+    - cell_slot
+  - type: Pullable
+  - type: GuideHelp
+    guides:
+    - Cyborgs
+    - Robotics

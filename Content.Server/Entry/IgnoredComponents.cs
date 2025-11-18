@@ -3,23 +3,25 @@ namespace Content.Server.Entry
 {
     public static class IgnoredComponents
     {
-        public static string[] List => new [] {
+        public static string[] List => new[] {
             "ConstructionGhost",
             "IconSmooth",
-            "ReinforcedWall",
             "InteractionOutline",
-            "MeleeWeaponArcAnimation",
-            "AnimationsTest",
-            "ItemStatus",
             "Marker",
+            "GuidebookControlsTest",
+            "GuideHelp",
             "Clickable",
             "Icon",
-            "ClientEntitySpawner",
-            "CharacterInfo",
-            "ItemCabinetVisuals",
-            "DiseaseMachineVisuals",
-            "HandheldGPS",
-            "PotencyVisuals"
+            "CableVisualizer",
+            "SolutionItemStatus",
+            "UIFragment",
+            "PdaBorderColor",
+            "InventorySlots",
+            "LightFade",
+            "HolidayRsiSwap",
+            "OptionsVisualizer",
+            "AnomalyScannerScreen",
+            "MultipartMachineGhost"
         };
     }
 }

@@ -8,7 +8,15 @@
     - type: MachineBoard
     - type: Sprite
       sprite: Objects/Misc/module.rsi
-      state: id_mod
-    - type: Tag
-      tags:
-        - DroneUsable
+      state: generic
+    - type: Item
+      storedRotation: -90
+    - type: StaticPrice
+      price: 100
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 230
+      chemicalComposition:
+        Silicon: 20
+    - type: Circuitboard
+

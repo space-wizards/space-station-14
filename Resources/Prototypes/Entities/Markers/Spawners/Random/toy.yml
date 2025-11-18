@@ -6,13 +6,16 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Fun/toys.rsi/plushie_h.png
+        - sprite: Objects/Fun/Plushies/bee.rsi
+          state: icon
     - type: RandomSpawner
       rarePrototypes:
         - FoamBlade
+        - PlushieGhost
       rareChance: 0.03
       prototypes:
         - PlushieBee
+        - PlushieAtmosian
         - PlushieNuke
         - PlushieLizard
         - PlushieNar
@@ -23,32 +26,40 @@
         - PlushieRatvar
         - PlushieSpaceLizard
         - PlushieRouny
+        - PlushieLamp
+        - PlushieSharkBlue
+        - PlushieSharkPink
+        - PlushieSharkGrey
+        - ToyAmongPequeno
         - ToyMouse
+        - PlushieDiona
+        - PlushieArachind
       chance: 0.5
       offset: 0.2
 
 - type: entity
-  name: Figure Spawner
+  name: Prize Figurine Spawner
   id: FigureSpawner
   parent: MarkerBase
   components:
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Fun/toys.rsi/ripleytoy.png
+        - sprite: Objects/Fun/mech_figurines.rsi
+          state: ripley
     - type: RandomSpawner
       prototypes:
         - ToyAi
         - ToyNuke
-        - ToyAssistant
-        - ToyGriffin
+        - ToyFigurinePassenger
+        - ToyFigurineGriffin
         - ToyHonk
         - ToyIan
         - ToyMarauder
         - ToyMauler
         - ToyGygax
         - ToyOdysseus
-        - ToyOwlman
+        - ToyFigurineOwlman
         - ToyDeathRipley
         - ToyPhazon
         - ToyFireRipley
@@ -56,6 +67,72 @@
         - ToyRipley
         - ToySeraph
         - ToyDurand
-        - ToySkeleton
+        - ToyFigurineSkeleton
+        - MysteryFigureBox
       chance: 0.5
+      offset: 0.2
+
+- type: entity
+  name: Spacemen Minifigure Spawner
+  suffix: Librarian only, map with care!
+  id: SpacemenFigureSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Objects/Fun/figurines.rsi
+          state: figurine_spawner
+    - type: RandomSpawner
+      rarePrototypes:
+      - ToyFigurineNukieElite
+      - ToyFigurineNukieCommander
+      rareChance: 0.05
+      prototypes:
+      - ToyFigurinePassenger
+      - ToyFigurineClown
+      - ToyFigurineMime
+      - ToyFigurineMusician
+      - ToyFigurineBoxer
+      - ToyFigurineCaptain
+      - ToyFigurineHeadOfSecurity
+      - ToyFigurineWarden
+      - ToyFigurineDetective
+      - ToyFigurineSecurity
+      - ToyFigurineLawyer
+      - ToyFigurineCargoTech
+      - ToyFigurineSalvage
+      - ToyFigurineQuartermaster
+      - ToyFigurineChiefEngineer
+      - ToyFigurineAtmosTech
+      - ToyFigurineEngineer
+      - ToyFigurineResearchDirector
+      - ToyFigurineScientist
+      - ToyFigurineChiefMedicalOfficer
+      - ToyFigurineChemist
+      - ToyFigurineParamedic
+      - ToyFigurineMedicalDoctor
+      - ToyFigurineHeadOfPersonnel
+      - ToyFigurineLibrarian
+      - ToyFigurineChaplain
+      - ToyFigurineChef
+      - ToyFigurineBartender
+      - ToyFigurineBotanist
+      - ToyFigurineJanitor
+      - ToyFigurineNukie
+      - ToyFigurineFootsoldier
+      - ToyFigurineWizardFake
+      - ToyFigurineSlime
+      - ToyFigurineGreytider
+      - ToyFigurineWizard
+      - ToyFigurineGriffin
+      - ToyFigurineOwlman
+      - ToyFigurineSkeleton
+      - ToyFigurineQueen
+      - ToyFigurineSpaceDragon
+      - ToyFigurineRatKing
+      - ToyFigurineRatServant
+      - ToyFigurineMouse
+      - ToyFigurineHamlet
+      - ToyFigurineThief
+      chance: 0.90
       offset: 0.2

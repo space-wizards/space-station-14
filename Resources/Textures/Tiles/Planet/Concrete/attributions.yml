@@ -1,0 +1,9 @@
+- files: ["asphalt.png", "oldconcrete.png", "oldconcrete_mono.png", "oldconcrete_smooth.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from vgstation13, modified by EmoGarbage404 (github)"
+  source: "https://github.com/vgstation-coders/vgstation13/commit/02b9f6894af4419c9f7e699a22c402b086d8067e"
+
+- files: ["concrete.png", "concrete_mono.png", "concrete_smooth.png", "grayconcrete.png", "grayconcrete_mono.png", "grayconcrete_smooth.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from goonstation, modified by EmoGarbage404 (github)"
+  source: "https://github.com/goonstation/goonstation/commit/1a76b08389014ec88f703fdb1ae916c2a6e57bd8"

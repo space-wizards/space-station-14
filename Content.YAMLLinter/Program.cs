@@ -1,33 +1,34 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
-using Content.Shared.CCVar;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.UnitTesting;
 
 namespace Content.YAMLLinter
 {
-    internal class Program : ContentIntegrationTest
+    internal static class Program
     {
-        private static int Main(string[] args)
+        private static async Task<int> Main(string[] _)
         {
-            return new Program().Run();
-        }
-
-        private int Run()
-        {
+            PoolManager.Startup();
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var errors = RunValidation().Result;
+            var (errors, fieldErrors) = await RunValidation();
 
-            if (errors.Count == 0)
+            var count = errors.Count + fieldErrors.Count;
+
+            if (count == 0)
             {
                 Console.WriteLine($"No errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+                PoolManager.Shutdown();
                 return 0;
             }
 
@@ -35,81 +36,160 @@ namespace Content.YAMLLinter
             {
                 foreach (var errorNode in errorHashset)
                 {
-                    Console.WriteLine($"::error file={file},line={errorNode.Node.Start.Line},col={errorNode.Node.Start.Column}::{file}({errorNode.Node.Start.Line},{errorNode.Node.Start.Column})  {errorNode.ErrorReason}");
+                    // TODO YAML LINTER Fix inheritance
+                    // If a parent/abstract prototype has na error, this will misreport the file name (but with the correct line/column).
+                    Console.WriteLine($"::error in {file}({errorNode.Node.Start.Line},{errorNode.Node.Start.Column})  {errorNode.ErrorReason}");
                 }
             }
 
-            Console.WriteLine($"{errors.Count} errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+            foreach (var error in fieldErrors)
+            {
+                Console.WriteLine(error);
+            }
+
+            Console.WriteLine($"{count} errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+            PoolManager.Shutdown();
             return -1;
         }
 
-        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
+        private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
+            ValidateClient()
         {
-            var client = StartClient(new ClientContentIntegrationOption()
-            {
-                FailureLogLevel = null,
-            });
-
-            await client.WaitIdleAsync();
-
-            var cPrototypeManager = client.ResolveDependency<IPrototypeManager>();
-            var clientErrors = new Dictionary<string, HashSet<ErrorNode>>();
-
-            await client.WaitAssertion(() =>
-            {
-                clientErrors = cPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
-            });
-
-            client.Stop();
-
-            return clientErrors;
+            await using var pair = await PoolManager.GetServerClient();
+            var client = pair.Client;
+            var result = await ValidateInstance(client);
+            await pair.CleanReturnAsync();
+            return result;
         }
 
-        private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
+        private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
+            ValidateServer()
         {
-            var server = StartServer(new ServerContentIntegrationOption()
-            {
-                FailureLogLevel = null,
-                CVarOverrides = { {CCVars.GameDummyTicker.Name, "true"} }
-            });
-
-            await server.WaitIdleAsync();
-
-            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var serverErrors = new Dictionary<string, HashSet<ErrorNode>>();
-
-            await server.WaitAssertion(() =>
-            {
-                serverErrors = sPrototypeManager.ValidateDirectory(new ResourcePath("/Prototypes"));
-            });
-
-            server.Stop();
-
-            return serverErrors;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var result = await ValidateInstance(server);
+            await pair.CleanReturnAsync();
+            return result;
         }
 
-        public async Task<Dictionary<string, HashSet<ErrorNode>>> RunValidation()
+        private static async Task<(Dictionary<string, HashSet<ErrorNode>>, List<string>)> ValidateInstance(
+            RobustIntegrationTest.IntegrationInstance instance)
         {
-            var allErrors = new Dictionary<string, HashSet<ErrorNode>>();
+            var protoMan = instance.ResolveDependency<IPrototypeManager>();
+            Dictionary<string, HashSet<ErrorNode>> yamlErrors = default!;
+            List<string> fieldErrors = default!;
 
-            var tasks = await Task.WhenAll(ValidateClient(), ValidateServer());
-            var clientErrors = tasks[0];
-            var serverErrors = tasks[1];
-
-            foreach (var (key, val) in serverErrors)
+            await instance.WaitPost(() =>
             {
-                var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
-                if (clientErrors.TryGetValue(key, out var clientVal))
+                var engineErrors = protoMan.ValidateDirectory(new ResPath("/EnginePrototypes"), out var engPrototypes);
+                yamlErrors = protoMan.ValidateDirectory(new ResPath("/Prototypes"), out var prototypes);
+
+                // Merge engine & content prototypes
+                foreach (var (kind, instances) in engPrototypes)
                 {
-                    newErrors.UnionWith(val.Intersect(clientVal));
-                    newErrors.UnionWith(clientVal.Where(n => n.AlwaysRelevant));
+                    if (prototypes.TryGetValue(kind, out var existing))
+                        existing.UnionWith(instances);
+                    else
+                        prototypes[kind] = instances;
                 }
 
-                if (newErrors.Count == 0) continue;
-                allErrors[key] = newErrors;
+                foreach (var (kind, set) in engineErrors)
+                {
+                    if (yamlErrors.TryGetValue(kind, out var existing))
+                        existing.UnionWith(set);
+                    else
+                        yamlErrors[kind] = set;
+                }
+
+                fieldErrors = protoMan.ValidateStaticFields(prototypes);
+            });
+
+            return (yamlErrors, fieldErrors);
+        }
+
+        public static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
+            RunValidation()
+        {
+            var (clientAssemblies, serverAssemblies) = await GetClientServerAssemblies();
+            var serverTypes = serverAssemblies.SelectMany(n => n.GetTypes()).Select(t => t.Name).ToHashSet();
+            var clientTypes = clientAssemblies.SelectMany(n => n.GetTypes()).Select(t => t.Name).ToHashSet();
+
+            var yamlErrors = new Dictionary<string, HashSet<ErrorNode>>();
+
+            var serverErrors = await ValidateServer();
+            var clientErrors = await ValidateClient();
+
+            foreach (var (key, val) in serverErrors.YamlErrors)
+            {
+                // Include all server errors marked as always relevant
+                var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
+
+                // We include sometimes-relevant errors if they exist both for the client & server
+                if (clientErrors.YamlErrors.TryGetValue(key, out var clientVal))
+                    newErrors.UnionWith(val.Intersect(clientVal));
+
+                // Include any errors that relate to server-only types
+                foreach (var errorNode in val)
+                {
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode && !clientTypes.Contains(fieldNotFoundNode.FieldType.Name))
+                    {
+                        newErrors.Add(errorNode);
+                    }
+                }
+
+                if (newErrors.Count != 0)
+                    yamlErrors[key] = newErrors;
             }
 
-            return allErrors;
+            // Next add any always-relevant client errors.
+            foreach (var (key, val) in clientErrors.YamlErrors)
+            {
+                var newErrors = val.Where(n => n.AlwaysRelevant).ToHashSet();
+
+                // Include any errors that relate to client-only types
+                foreach (var errorNode in val)
+                {
+                    if (errorNode is FieldNotFoundErrorNode fieldNotFoundNode
+                        && !serverTypes.Contains(fieldNotFoundNode.FieldType.Name))
+                    {
+                        newErrors.Add(errorNode);
+                    }
+                }
+
+                if (newErrors.Count == 0)
+                    continue;
+
+                if (yamlErrors.TryGetValue(key, out var errors))
+                    errors.UnionWith(newErrors);
+                else
+                    yamlErrors[key] = newErrors;
+            }
+
+            // Finally, combine the prototype ID field errors.
+            var fieldErrors = serverErrors.FieldErrors
+                .Concat(clientErrors.FieldErrors)
+                .Distinct()
+                .ToList();
+
+            return (yamlErrors, fieldErrors);
+        }
+
+        private static async Task<(Assembly[] clientAssemblies, Assembly[] serverAssemblies)>
+            GetClientServerAssemblies()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+
+            var result = (GetAssemblies(pair.Client), GetAssemblies(pair.Server));
+
+            await pair.CleanReturnAsync();
+
+            return result;
+
+            Assembly[] GetAssemblies(RobustIntegrationTest.IntegrationInstance instance)
+            {
+                var refl = instance.ResolveDependency<IReflectionManager>();
+                return refl.Assemblies.ToArray();
+            }
         }
     }
 }

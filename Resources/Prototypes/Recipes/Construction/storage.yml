@@ -1,0 +1,152 @@
+#bureaucracy
+- type: construction
+  id: FilingCabinet
+  graph: FilingCabinet
+  startNode: start
+  targetNode: filingCabinet
+  category: construction-category-storage
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: TallCabinet
+  graph: FilingCabinet
+  startNode: start
+  targetNode: tallCabinet
+  category: construction-category-storage
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  id: ChestDrawer
+  graph: FilingCabinet
+  startNode: start
+  targetNode: chestDrawer
+  category: construction-category-storage
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# ItemCabinets
+- type: construction
+  id: ShowCase
+  graph: GlassBox
+  startNode: start
+  targetNode: glassBox
+  category: construction-category-storage
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Shelfs
+# Normals
+- type: construction
+  id: ShelfWood
+  graph: Shelf
+  startNode: start
+  targetNode: ShelfWood
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  id: ShelfMetal
+  graph: Shelf
+  startNode: start
+  targetNode: ShelfMetal
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  id: ShelfGlass
+  graph: Shelf
+  startNode: start
+  targetNode: ShelfGlass
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+# Reinforced
+- type: construction
+  id: ShelfRWood
+  graph: Shelf
+  startNode: start
+  targetNode: ShelfRWood
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  id: ShelfRMetal
+  graph: Shelf
+  startNode: start
+  targetNode: ShelfRMetal
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  id: ShelfRGlass
+  graph: Shelf
+  startNode: start
+  targetNode: ShelfRGlass
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+# Departmental
+- type: construction
+  id: ShelfBar
+  graph: Shelf
+  startNode: start
+  targetNode: ShelfBar
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  id: ShelfKitchen
+  graph: Shelf
+  startNode: start
+  targetNode: ShelfKitchen
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  id: ShelfChemistry
+  graph: Shelf
+  startNode: start
+  targetNode: ShelfChemistry
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition

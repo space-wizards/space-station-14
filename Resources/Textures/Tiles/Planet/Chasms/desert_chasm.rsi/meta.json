@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by TheShuEd (github) for ss14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "chasm0",
+      "directions": 4
+    },
+    {
+      "name": "chasm1",
+      "directions": 4
+    },
+    {
+      "name": "chasm2",
+      "directions": 4
+    },
+    {
+      "name": "chasm3",
+      "directions": 4
+    },
+    {
+      "name": "chasm4",
+      "directions": 4
+    },
+    {
+      "name": "chasm5",
+      "directions": 4
+    },
+    {
+      "name": "chasm6",
+      "directions": 4
+    },
+    {
+      "name": "chasm7",
+      "directions": 4
+    },
+    {
+      "name": "chasm"
+    }
+  ]
+}

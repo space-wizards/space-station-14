@@ -1,76 +1,113 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Clothing.Components;
-using Content.Server.Nutrition.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Forensics;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem : EntitySystem
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
+        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedItemSystem _items = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly ForensicsSystem _forensics = default!;
 
         private const float UpdateTimer = 3f;
 
-        private float _timer = 0f;
-
-        /// <summary>
-        ///     We keep a list of active smokables, because iterating all existing smokables would be dumb.
-        /// </summary>
-        private readonly HashSet<EntityUid> _active = new();
+        private float _timer;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<SmokableComponent, IsHotEvent>(OnSmokableIsHotEvent);
             SubscribeLocalEvent<SmokableComponent, ComponentShutdown>(OnSmokableShutdownEvent);
+            SubscribeLocalEvent<SmokableComponent, GotEquippedEvent>(OnSmokeableEquipEvent);
+            Subs.SubscribeWithRelay<SmokableComponent, ExtinguishEvent>(OnExtinguishEvent);
 
             InitializeCigars();
+            InitializePipes();
+            InitializeVapes();
+        }
+
+        private void OnExtinguishEvent(Entity<SmokableComponent> ent, ref ExtinguishEvent args)
+        {
+            if (ent.Comp.State == SmokableState.Lit)
+                SetSmokableState(ent, SmokableState.Burnt, ent);
         }
 
         public void SetSmokableState(EntityUid uid, SmokableState state, SmokableComponent? smokable = null,
             AppearanceComponent? appearance = null, ClothingComponent? clothing = null)
         {
-            if (!Resolve(uid, ref smokable, ref appearance, ref clothing))
+            if (!Resolve(uid, ref smokable, ref appearance, ref clothing) || smokable.State == state)
                 return;
 
             smokable.State = state;
-            appearance.SetData(SmokingVisuals.Smoking, state);
+            _appearance.SetData(uid, SmokingVisuals.Smoking, state, appearance);
 
-            clothing.EquippedPrefix = state switch
+            var newState = state switch
             {
                 SmokableState.Lit => smokable.LitPrefix,
                 SmokableState.Burnt => smokable.BurntPrefix,
                 _ => smokable.UnlitPrefix
             };
 
+            _clothing.SetEquippedPrefix(uid, newState, clothing);
+            _items.SetHeldPrefix(uid, newState);
+
             if (state == SmokableState.Lit)
-                _active.Add(uid);
+            {
+                EnsureComp<BurningComponent>(uid);
+                _audio.PlayPvs(smokable.LightSound, uid);
+                var igniteEvent = new IgnitedEvent();
+                RaiseLocalEvent(uid, ref igniteEvent);
+            }
             else
-                _active.Remove(uid);
+            {
+                RemComp<BurningComponent>(uid);
+                _audio.PlayPvs(smokable.SnuffSound, uid);
+                var extinguishEvent = new ExtinguishedEvent();
+                RaiseLocalEvent(uid, ref extinguishEvent);
+            }
         }
 
-        private void OnSmokableIsHotEvent(EntityUid uid, SmokableComponent component, IsHotEvent args)
+        private void OnSmokableIsHotEvent(Entity<SmokableComponent> entity, ref IsHotEvent args)
         {
-            args.IsHot = component.State == SmokableState.Lit;
+            args.IsHot = entity.Comp.State == SmokableState.Lit;
         }
 
-        private void OnSmokableShutdownEvent(EntityUid uid, SmokableComponent component, ComponentShutdown args)
+        private void OnSmokableShutdownEvent(Entity<SmokableComponent> entity, ref ComponentShutdown args)
         {
-            _active.Remove(uid);
+            RemComp<BurningComponent>(entity);
+        }
+
+        private void OnSmokeableEquipEvent(Entity<SmokableComponent> entity, ref GotEquippedEvent args)
+        {
+            if (args.Slot == "mask")
+            {
+                _forensics.TransferDna(entity.Owner, args.Equipee, false);
+            }
         }
 
         public override void Update(float frameTime)
@@ -80,44 +117,47 @@ namespace Content.Server.Nutrition.EntitySystems
             if (_timer < UpdateTimer)
                 return;
 
-            foreach (var uid in _active.ToArray())
+            var query = EntityQueryEnumerator<BurningComponent, SmokableComponent>();
+            while (query.MoveNext(out var uid, out _, out var smokable))
             {
-                if (!TryComp(uid, out SmokableComponent? smokable))
+                if (!_solutionContainerSystem.TryGetSolution(uid, smokable.Solution, out var soln, out var solution))
                 {
-                    _active.Remove(uid);
-                    continue;
-                }
-
-                if (!_solutionContainerSystem.TryGetSolution(uid, smokable.Solution, out var solution))
-                {
-                    _active.Remove(uid);
+                    SetSmokableState(uid, SmokableState.Unlit, smokable);
                     continue;
                 }
 
                 if (smokable.ExposeTemperature > 0 && smokable.ExposeVolume > 0)
                 {
                     var transform = Transform(uid);
-                    _atmos.HotspotExpose(transform.Coordinates, smokable.ExposeTemperature, smokable.ExposeVolume, true);
+
+                    if (transform.GridUid is { } gridUid)
+                    {
+                        var position = _transformSystem.GetGridOrMapTilePosition(uid, transform);
+                        _atmos.HotspotExpose(gridUid, position, smokable.ExposeTemperature, smokable.ExposeVolume, uid, true);
+                    }
                 }
 
-                var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
+                var inhaledSolution = _solutionContainerSystem.SplitSolution(soln.Value, smokable.InhaleAmount * _timer);
 
-                if (solution.TotalVolume == FixedPoint2.Zero)
+                if (solution.Volume == FixedPoint2.Zero)
                 {
-                    RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent());
+                    RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent(), true);
                 }
 
-                if (inhaledSolution.TotalVolume == FixedPoint2.Zero)
+                if (inhaledSolution.Volume == FixedPoint2.Zero)
                     continue;
 
                 // This is awful. I hate this so much.
                 // TODO: Please, someone refactor containers and free me from this bullshit.
-                if (!smokable.Owner.TryGetContainerMan(out var containerManager) ||
+                if (!_container.TryGetContainingContainer((uid, null, null), out var containerManager) ||
+                    !(_inventorySystem.TryGetSlotEntity(containerManager.Owner, "mask", out var inMaskSlotUid) && inMaskSlotUid == uid) ||
                     !TryComp(containerManager.Owner, out BloodstreamComponent? bloodstream))
+                {
                     continue;
+                }
 
-                _reactiveSystem.ReactionEntity(containerManager.Owner, ReactionMethod.Ingestion, inhaledSolution);
-                _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);
+                _reactiveSystem.DoEntityReaction(containerManager.Owner, inhaledSolution, ReactionMethod.Ingestion);
+                _bloodstreamSystem.TryAddToChemicals((containerManager.Owner, bloodstream), inhaledSolution);
             }
 
             _timer -= UpdateTimer;

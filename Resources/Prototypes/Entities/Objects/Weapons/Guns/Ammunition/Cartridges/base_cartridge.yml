@@ -1,0 +1,42 @@
+- type: entity
+  id: BaseCartridge
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.05,0.10,0.05"
+        density: 20
+        mask:
+          - ItemMask
+        restitution: 0.3  # fite me
+        friction: 0.2
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StrongMetallic # We only want explosions breaking them (for the most part)
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Cartridge
+  - type: Item
+    size: Tiny
+  - type: SpaceGarbage
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Weapons/Guns/Casings/casing_fall_2.ogg
+      params:
+        volume: -1
+  - type: StaticPrice
+    price: 1

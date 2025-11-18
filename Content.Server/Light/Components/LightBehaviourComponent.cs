@@ -1,5 +1,4 @@
-﻿using Content.Shared.Light.Component;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Light.Components;
 
 namespace Content.Server.Light.Components
 {
@@ -7,7 +6,7 @@ namespace Content.Server.Light.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
-    public sealed class LightBehaviourComponent : SharedLightBehaviourComponent
+    public sealed partial class LightBehaviourComponent : SharedLightBehaviourComponent
     {
 
     }

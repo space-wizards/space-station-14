@@ -1,14 +1,14 @@
-using Robust.Server.Player;
-using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Players;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Administration;
+using Content.Shared.Chat;
+using Content.Shared.Players.RateLimiting;
+using Robust.Shared.Network;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chat.Managers
 {
-    public interface IChatManager
+    public interface IChatManager : ISharedChatManager
     {
-        void Initialize();
-
         /// <summary>
         ///     Dispatch a server announcement to every connected player.
         /// </summary>
@@ -16,39 +16,38 @@ namespace Content.Server.Chat.Managers
         /// <param name="colorOverride">Override the color of the message being sent.</param>
         void DispatchServerAnnouncement(string message, Color? colorOverride = null);
 
-        /// <summary>
-        ///     Station announcement to every player
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="sender"></param>
-        /// <param name="playDefaultSound">If the default 'PA' sound should be played.</param>
-        /// <param name="colorOverride">Override the color of the message being sent.</param>
-        void DispatchStationAnnouncement(string message, string sender = "CentComm", bool playDefaultSound = true, Color? colorOverride = null);
+        void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false);
 
-        void DispatchServerMessage(IPlayerSession player, string message);
-
-        /// <summary>
-        /// Tries to use entity say or entity whisper to speak a message.
-        /// </summary>
-        void TrySpeak(EntityUid source, string message, bool whisper = false, IConsoleShell? shell = null, IPlayerSession? player = null);
-
-        void TryEmote(EntityUid source, string message, IConsoleShell? shell = null, IPlayerSession? player = null);
-
-        /// <param name="hideChat">If true, message will not be logged to chat boxes but will still produce a speech bubble.</param>
-        void EntitySay(EntityUid source, string message, bool hideChat=false);
-        void EntityWhisper(EntityUid source, string message, bool hideChat = false);
-        void EntityMe(EntityUid source, string action);
-        void SendLOOC(IPlayerSession player, string message);
-
-        void SendOOC(IPlayerSession player, string message);
-        void SendAdminChat(IPlayerSession player, string message);
-        void SendDeadChat(IPlayerSession player, string message);
-        void SendAdminDeadChat(IPlayerSession player, string message);
+        void TrySendOOCMessage(ICommonSession player, string message, OOCChatType type);
 
         void SendHookOOC(string sender, string message);
+        void SendHookAdmin(string sender, string message);
+        void SendAdminAnnouncement(string message, AdminFlags? flagBlacklist = null, AdminFlags? flagWhitelist = null);
+        void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true);
 
-        delegate string TransformChat(EntityUid speaker, string message);
-        void RegisterChatTransform(TransformChat handler);
-        void SendAdminAnnouncement(string message);
+        void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat,
+            INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
+
+        void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay,
+            IEnumerable<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
+
+        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride, string? audioPath = null, float audioVolume = 0);
+
+        void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
+
+        bool MessageCharacterLimit(ICommonSession player, string message);
+
+        void DeleteMessagesBy(NetUserId uid);
+
+        [return: NotNullIfNotNull(nameof(author))]
+        ChatUser? EnsurePlayer(NetUserId? author);
+
+        /// <summary>
+        /// Called when a player sends a chat message to handle rate limits.
+        /// Will update counts and do necessary actions if breached.
+        /// </summary>
+        /// <param name="player">The player sending a chat message.</param>
+        /// <returns>False if the player has violated rate limits and should be blocked from sending further messages.</returns>
+        RateLimitStatus HandleRateLimit(ICommonSession player);
     }
 }

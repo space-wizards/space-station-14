@@ -1,0 +1,27 @@
+<Popup xmlns="https://spacestation14.io"
+       xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    <PanelContainer>
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#18181B" BackgroundColor="#25252a"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical" Margin="4 4 4 4">
+            <Label Name="PlayerNameLabel"/>
+            <Label Name="IdLabel"/>
+            <Label Name="TypeLabel"/>
+            <Label Name="SeverityLabel"/>
+            <Label Name="RoundIdLabel"/>
+            <Label Name="CreatedByLabel"/>
+            <Label Name="CreatedAtLabel"/>
+            <Label Name="EditedByLabel"/>
+            <Label Name="EditedAtLabel"/>
+            <Label Name="ExpiryTimeLabel"/>
+            <TextEdit Name="NoteTextEdit" Editable="False" MinHeight="24" />
+            <BoxContainer Orientation="Horizontal">
+                <Button Name="EditButton" Text="{Loc admin-notes-edit}"/>
+                <Control HorizontalExpand="True"/>
+                <controls:ConfirmButton Name="DeleteButton" Text="{Loc admin-notes-delete}" ConfirmationText="{Loc 'admin-player-actions-confirm'}" HorizontalAlignment="Right"/>
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</Popup>

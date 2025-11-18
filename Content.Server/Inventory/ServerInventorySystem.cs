@@ -1,45 +1,38 @@
-using Content.Server.Atmos;
-using Content.Server.Clothing.Components;
-using Content.Server.Storage.Components;
-using Content.Server.Temperature.Systems;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Explosion;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
-using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Inventory
 {
-    sealed class ServerInventorySystem : InventorySystem
+    public sealed class ServerInventorySystem : InventorySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(RelayInventoryEvent);
-            SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(RelayInventoryEvent);
-            SubscribeLocalEvent<InventoryComponent, ModifyChangedTemperatureEvent>(RelayInventoryEvent);
-
-            SubscribeLocalEvent<ClothingComponent, UseInHandEvent>(OnUseInHand);
-
-            SubscribeNetworkEvent<OpenSlotStorageNetworkMessage>(OnOpenSlotStorage);
+            SubscribeLocalEvent<InventoryComponent, BeforeExplodeEvent>(OnExploded);
         }
 
-        private void OnUseInHand(EntityUid uid, ClothingComponent component, UseInHandEvent args)
+        private void OnExploded(Entity<InventoryComponent> ent, ref BeforeExplodeEvent args)
         {
-            if (args.Handled || !component.QuickEquip)
+            // explode each item in their inventory too
+            var slots = new InventorySlotEnumerator(ent);
+            while (slots.MoveNext(out var slot))
+            {
+                if (slot.ContainedEntity != null)
+                    args.Contents.Add(slot.ContainedEntity.Value);
+            }
+        }
+
+        public void TransferEntityInventories(Entity<InventoryComponent?> source, Entity<InventoryComponent?> target)
+        {
+            if (!Resolve(source.Owner, ref source.Comp) || !Resolve(target.Owner, ref target.Comp))
                 return;
 
-            QuickEquip(uid, component, args);
-        }
-
-        private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
-        {
-            if (args.SenderSession.AttachedEntity is not EntityUid { Valid: true } uid)
-                    return;
-
-            if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<ServerStorageComponent>(entityUid, out var storageComponent))
+            var enumerator = new InventorySlotEnumerator(source.Comp);
+            while (enumerator.NextItem(out var item, out var slot))
             {
-                storageComponent.OpenStorageUI(uid);
+                if (TryUnequip(source, slot.Name, true, true, inventory: source.Comp, triggerHandContact: true))
+                    TryEquip(target, item, slot.Name , true, true, inventory: target.Comp, triggerHandContact: true);
             }
         }
     }

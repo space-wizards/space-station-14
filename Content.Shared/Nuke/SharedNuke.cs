@@ -1,9 +1,29 @@
-using System;
-using Robust.Shared.GameObjects;
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nuke
 {
+    public enum NukeVisualLayers
+    {
+        Base,
+        Unlit
+    }
+
+    [NetSerializable, Serializable]
+    public enum NukeVisuals
+    {
+        Deployed,
+        State,
+    }
+
+    [NetSerializable, Serializable]
+    public enum NukeVisualState
+    {
+        Idle,
+        Armed,
+        YoureFucked
+    }
+
     [Serializable, NetSerializable]
     public enum NukeUiKey : byte
     {
@@ -30,5 +50,10 @@ namespace Content.Shared.Nuke
         public int EnteredCodeLength;
         public int MaxCodeLength;
         public bool AllowArm;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed partial class NukeDisarmDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

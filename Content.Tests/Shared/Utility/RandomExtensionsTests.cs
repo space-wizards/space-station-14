@@ -29,12 +29,13 @@ namespace Content.Tests.Shared.Utility
             prototypeManager.Initialize();
 
             prototypeManager.LoadFromStream(new StringReader(Prototypes));
+            prototypeManager.ResolveResults();
 
             var dataSet = prototypeManager.Index<DatasetPrototype>(TestDatasetId);
             var random = IoCManager.Resolve<IRobustRandom>();
             var id = random.Pick(dataSet);
 
-            Assert.NotNull(id);
+            Assert.That(id, Is.Not.Null);
         }
     }
 }

@@ -1,19 +1,20 @@
+using System.Linq;
 using Content.Server.Administration.Managers;
+using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Verbs;
-using Robust.Server.Player;
-using Robust.Shared.Player;
-using System.Linq;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Verbs
 {
     public sealed class VerbSystem : SharedVerbSystem
     {
-        [Dependency] private readonly SharedAdminLogSystem _logSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly HandsSystem _hands = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IAdminManager _adminMgr = default!;
 
@@ -26,17 +27,17 @@ namespace Content.Server.Verbs
 
         private void HandleVerbRequest(RequestServerVerbsEvent args, EntitySessionEventArgs eventArgs)
         {
-            var player = (IPlayerSession) eventArgs.SenderSession;
+            var player = eventArgs.SenderSession;
 
-            if (!EntityManager.EntityExists(args.EntityUid))
+            if (!Exists(GetEntity(args.EntityUid)))
             {
-                Logger.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
+                Log.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
                 return;
             }
 
             if (player.AttachedEntity is not {} attached)
             {
-                Logger.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
+                Log.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
             }
 
@@ -44,7 +45,7 @@ namespace Content.Server.Verbs
             // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
             // the entity menu or not.
 
-            var force = args.AdminRequest && eventArgs.SenderSession is IPlayerSession playerSession &&
+            var force = args.AdminRequest && eventArgs.SenderSession is { } playerSession &&
                         _adminMgr.HasAdminFlag(playerSession, AdminFlags.Admin);
 
             List<Type> verbTypes = new();
@@ -55,12 +56,12 @@ namespace Content.Server.Verbs
                 if (type != null)
                     verbTypes.Add(type);
                 else
-                    Logger.Error($"Unknown verb type received: {key}");
+                    Log.Error($"Unknown verb type received: {key}");
             }
 
             var response =
-                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(args.EntityUid, attached, verbTypes, force));
-            RaiseNetworkEvent(response, player.ConnectedClient);
+                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(GetEntity(args.EntityUid), attached, verbTypes, force));
+            RaiseNetworkEvent(response, player.Channel);
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Content.Server.Verbs
             {
                 // Send an informative pop-up message
                 if (!string.IsNullOrWhiteSpace(verb.Message))
-                    _popupSystem.PopupEntity(verb.Message, user, Filter.Entities(user));
+                    _popupSystem.PopupEntity(FormattedMessage.RemoveMarkupOrThrow(verb.Message), user, user);
 
                 return;
             }
@@ -84,31 +85,20 @@ namespace Content.Server.Verbs
             // first, lets log the verb. Just in case it ends up crashing the server or something.
             LogVerb(verb, user, target, forced);
 
-            // then invoke any relevant actions
-            verb.Act?.Invoke();
-
-            // Maybe raise a local event
-            if (verb.ExecutionEventArgs != null)
-            {
-                if (verb.EventTarget.IsValid())
-                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
-                else
-                    RaiseLocalEvent(verb.ExecutionEventArgs);
-            }
+            base.ExecuteVerb(verb, user, target, forced);
         }
 
         public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)
         {
             // first get the held item. again.
             EntityUid? holding = null;
-            if (TryComp(user, out SharedHandsComponent? hands) &&
-                hands.ActiveHandEntity is EntityUid heldEntity)
+            if (_hands.GetActiveItem(user) is { } heldEntity)
             {
                 holding = heldEntity;
             }
 
             // if this is a virtual pull, get the held entity
-            if (holding != null && TryComp(holding, out HandVirtualItemComponent? pull))
+            if (holding != null && TryComp(holding, out VirtualItemComponent? pull))
                 holding = pull.BlockingEntity;
 
             var verbText = $"{verb.Category?.Text} {verb.Text}".Trim();
@@ -118,12 +108,12 @@ namespace Content.Server.Verbs
 
             if (holding == null)
             {
-                _logSystem.Add(LogType.Verb, verb.Impact,
+                _adminLogger.Add(LogType.Verb, verb.Impact,
                         $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target}");
             }
             else
             {
-                _logSystem.Add(LogType.Verb, verb.Impact,
+                _adminLogger.Add(LogType.Verb, verb.Impact,
                        $"{ToPrettyString(user):user} {executionText} the [{verbText:verb}] verb targeting {ToPrettyString(target):target} while holding {ToPrettyString(holding.Value):held}");
             }
         }

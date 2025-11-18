@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage404 (github) for Space Station 14.",
+  "size": {
+    "x": 8,
+    "y": 8
+  },
+  "states": [
+    {
+      "name": "arsenal"
+    },
+    {
+      "name": "biochemical"
+    },
+    {
+      "name": "civilianservices"
+    },
+    {
+      "name": "experimental"
+    },
+    {
+      "name": "industrial"
+    }
+  ]
+}

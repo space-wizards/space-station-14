@@ -1,25 +1,20 @@
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Hands.Components;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.PDA;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
-using Robust.Server.GameObjects;
 using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Sandbox
 {
@@ -29,7 +24,7 @@ namespace Content.Server.Sandbox
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IServerConsoleHost _host = default!;
-        [Dependency] private readonly AccessSystem _access = default!;
+        [Dependency] private readonly SharedAccessSystem _access = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly ItemSlotsSystem _slots = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
@@ -100,7 +95,7 @@ namespace Content.Server.Sandbox
             if (e.NewStatus != SessionStatus.Connected || e.OldStatus != SessionStatus.Connecting)
                 return;
 
-            RaiseNetworkEvent(new MsgSandboxStatus {SandboxAllowed = IsSandboxEnabled}, e.Session.ConnectedClient);
+            RaiseNetworkEvent(new MsgSandboxStatus { SandboxAllowed = IsSandboxEnabled }, e.Session.Channel);
         }
 
         private void SandboxRespawnReceived(MsgSandboxRespawn message, EntitySessionEventArgs args)
@@ -108,7 +103,7 @@ namespace Content.Server.Sandbox
             if (!IsSandboxEnabled)
                 return;
 
-            var player = _playerManager.GetSessionByChannel(args.SenderSession.ConnectedClient);
+            var player = _playerManager.GetSessionByChannel(args.SenderSession.Channel);
             if (player.AttachedEntity == null) return;
 
             _ticker.Respawn(player);
@@ -119,15 +114,15 @@ namespace Content.Server.Sandbox
             if (!IsSandboxEnabled)
                 return;
 
-            var player = _playerManager.GetSessionByChannel(args.SenderSession.ConnectedClient);
-            if (player.AttachedEntity is not {} attached)
+            var player = _playerManager.GetSessionByChannel(args.SenderSession.Channel);
+            if (player.AttachedEntity is not { } attached)
             {
                 return;
             }
 
             var allAccess = PrototypeManager
                 .EnumeratePrototypes<AccessLevelPrototype>()
-                .Select(p => p.ID).ToArray();
+                .Select(p => new ProtoId<AccessLevelPrototype>(p.ID)).ToList();
 
             if (_inventory.TryGetSlotEntity(attached, "id", out var slotEntity))
             {
@@ -135,19 +130,19 @@ namespace Content.Server.Sandbox
                 {
                     UpgradeId(slotEntity.Value);
                 }
-                else if (TryComp<PDAComponent>(slotEntity, out var pda))
+                else if (TryComp<PdaComponent>(slotEntity, out var pda))
                 {
-                    if (pda.ContainedID == null)
+                    if (pda.ContainedId is null)
                     {
                         var newID = CreateFreshId();
-                        if (TryComp<ItemSlotsComponent>(pda.Owner, out var itemSlots))
+                        if (TryComp<ItemSlotsComponent>(slotEntity, out var itemSlots))
                         {
                             _slots.TryInsert(slotEntity.Value, pda.IdSlot, newID, null);
                         }
                     }
                     else
                     {
-                        UpgradeId(pda.ContainedID.Owner);
+                        UpgradeId(pda.ContainedId!.Value);
                     }
                 }
             }
@@ -163,11 +158,6 @@ namespace Content.Server.Sandbox
             void UpgradeId(EntityUid id)
             {
                 _access.TrySetTags(id, allAccess);
-
-                if (TryComp<SpriteComponent>(id, out var sprite))
-                {
-                    sprite.LayerSetState(0, "gold");
-                }
             }
 
             EntityUid CreateFreshId()
@@ -185,7 +175,7 @@ namespace Content.Server.Sandbox
             if (!IsSandboxEnabled)
                 return;
 
-            var player = _playerManager.GetSessionByChannel(args.SenderSession.ConnectedClient);
+            var player = _playerManager.GetSessionByChannel(args.SenderSession.Channel);
 
             _host.ExecuteCommand(player, _conGroupController.CanCommand(player, "aghost") ? "aghost" : "ghost");
         }
@@ -195,13 +185,13 @@ namespace Content.Server.Sandbox
             if (!IsSandboxEnabled)
                 return;
 
-            var player = _playerManager.GetSessionByChannel(args.SenderSession.ConnectedClient);
+            var player = _playerManager.GetSessionByChannel(args.SenderSession.Channel);
             _host.ExecuteCommand(player, "suicide");
         }
 
         private void UpdateSandboxStatusForAll()
         {
-            RaiseNetworkEvent(new MsgSandboxStatus {SandboxAllowed = IsSandboxEnabled});
+            RaiseNetworkEvent(new MsgSandboxStatus { SandboxAllowed = IsSandboxEnabled });
         }
     }
 }

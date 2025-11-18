@@ -1,62 +1,69 @@
 - type: entity
   parent: BaseItem
   id: SpaceCash
-  name: credit
+  name: spesos
   description: You gotta have money.
   components:
+  - type: Cash
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
   - type: Material
-    materials:
-    - Credit
+  - type: PhysicalComposition
+    materialComposition:
+      Credit: 1
+  - type: StaticPrice
+    price: 0
   - type: Stack
     stackType: Credit
-    max: 1000000 # if you somehow get this rich consider buying a second station
     count: 1
+    baseLayer: base
+    layerStates:
+    - cash
+    - cash_10
+    - cash_100
+    - cash_500
+    - cash_1000
+    - cash_5000
+    - cash_10000
+    - cash_25000
+    - cash_50000
+    - cash_100000
+    - cash_1000000
+    layerFunction: Threshold
+  - type: StackLayerThreshold
+    thresholds: [10, 100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 1000000]
   - type: Sprite
     sprite: Objects/Economy/cash.rsi
-    netsync: false
     state: cash
+    layers:
+    - state: cash
+      map: ["base"]
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - mass: 5
-      shape:
-        !type:PhysShapeAabb
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.35,-0.2,0.25,0.1"
-      mask:
-      - Impassable
-      - VaultImpassable
+        mask:
+        - ItemMask
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      # TODO: This won't work because stackvisualizer works based off of an even count and not denominations.
-      # Ideally we'd just be able to specify at what count does the new layer take place e.g.
-      # - 10: cash_10
-      # - 100: cash_100
-      stackLayers:
-      - cash
-      - cash_10
-      - cash_100
-      - cash_500
-      - cash_1000
-      - cash_1000000
 
 - type: material
   id: Credit
-  name: credit
-  stack: Credit
-  icon: /Textures/Objects/Economy/cash.rsi/cash.png
-
-- type: stack
-  id: Credit
-  name: credit
-  icon: /Textures/Objects/Economy/cash.rsi/cash.png
-  spawn: SpaceCash
+  name: speso
+  unit: materials-unit-bill
+  stackEntity: SpaceCash
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
+  price: 1
 
 - type: entity
   parent: SpaceCash
   id: SpaceCash10
-  name: credit
   suffix: 10
   components:
   - type: Icon
@@ -68,7 +75,6 @@
 - type: entity
   parent: SpaceCash
   id: SpaceCash100
-  name: credit
   suffix: 100
   components:
   - type: Icon
@@ -80,7 +86,6 @@
 - type: entity
   parent: SpaceCash
   id: SpaceCash500
-  name: credit
   suffix: 500
   components:
   - type: Icon
@@ -92,7 +97,6 @@
 - type: entity
   parent: SpaceCash
   id: SpaceCash1000
-  name: credit
   suffix: 1000
   components:
   - type: Icon
@@ -103,8 +107,62 @@
 
 - type: entity
   parent: SpaceCash
+  id: SpaceCash2500
+  suffix: 2500
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_1000
+  - type: Stack
+    count: 2500
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash5000
+  suffix: 5000
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_5000
+  - type: Stack
+    count: 5000
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash10000
+  suffix: 10000
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_10000
+  - type: Stack
+    count: 10000
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash20000
+  suffix: 20000
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_10000
+  - type: Stack
+    count: 20000
+
+- type: entity
+  parent: SpaceCash
+  id: SpaceCash30000
+  suffix: 30000
+  components:
+  - type: Icon
+    sprite: Objects/Economy/cash.rsi
+    state: cash_25000
+  - type: Stack
+    count: 30000
+
+- type: entity
+  parent: SpaceCash
   id: SpaceCash1000000
-  name: credit
   suffix: 1000000
   components:
   - type: Icon

@@ -1,41 +1,54 @@
 - type: entity
   name: bang, ded
-  parent: PistolBase
-  id: PistolDebug
+  parent: BaseWeaponPistol
+  id: WeaponPistolDebug
   description: ded
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
-  - type: Icon
+    state: icon
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
-  - type: Item
-    size: 1
-    sprite: Objects/Weapons/Guns/Pistols/debug.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: Pistol
-    magazineTypes:
-    - Pistol
+  - type: Gun
     fireRate: 100
-    magFillPrototype: MagazinePistolDebug
-    minAngle: 10
-    maxAngle: 10
+    selectedMode: FullAuto
+    availableModes:
+      - SemiAuto
+      - FullAuto
+  - type: AmmoCounter
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolDebug
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineDebug
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeDebug
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeDebug
 
 - type: entity
   id: MagazinePistolDebug
   name: bang, ded mag
-  parent: MagazinePistolBase
+  parent: BaseMagazinePistol
   suffix: DEBUG
   components:
   - type: Tag
     tags:
-      - Debug
-  - type: RangedMagazine
-    fillPrototype: CartridgeDebug
+      - MagazineDebug
+  - type: BallisticAmmoProvider
+    proto: CartridgeDebug
     capacity: 1000
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
@@ -43,13 +56,10 @@
 - type: entity
   id: BulletDebug
   name: bang, ded bullet
-  parent: BulletBase
-  abstract: true
+  parent: BaseBullet
+  categories: [ Debug, HideSpawnMenu ]
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Projectile
     damage:
       types:
@@ -58,14 +68,14 @@
 - type: entity
   id: CartridgeDebug
   name: bang, ded cartridge
-  parent: CartridgePistolBase
+  parent: BaseCartridgePistol
   suffix: DEBUG
   components:
   - type: Tag
     tags:
-      - Debug
-  - type: Ammo
-    projectile: BulletDebug
+    - CartridgeDebug
+  - type: CartridgeAmmo
+    proto: BulletDebug
 
 - type: entity
   name: bang stick gibber
@@ -74,9 +84,6 @@
   description: hit hard ye
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Sprite
     sprite: Objects/Weapons/Melee/debug.rsi
     state: icon
@@ -85,18 +92,14 @@
       types:
         Blunt: 20000
   - type: Item
-    size: 1
+    size: Tiny
     sprite: Objects/Weapons/Melee/debug.rsi
-    prefix: inhand
 
 - type: entity
   name: bang stick 100dmg
   parent: MeleeDebugGib
   id: MeleeDebug100
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: MeleeWeapon
     damage:
       types:
@@ -107,9 +110,6 @@
   parent: MeleeDebugGib
   id: MeleeDebug200
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: MeleeWeapon
     damage:
       types:

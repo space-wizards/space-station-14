@@ -1,24 +1,30 @@
-using System.Threading.Tasks;
-using Content.Shared.Audio;
 using Content.Shared.Construction;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class PlaySound : IGraphAction
+    public sealed partial class PlaySound : IGraphAction
     {
         [DataField("sound", required: true)] public SoundSpecifier Sound { get; private set; } = default!;
 
+        [DataField("AudioParams")]
+        public AudioParams AudioParams = AudioParams.Default;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("variation")]
+        public float Variation = 0.125f;
+
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            SoundSystem.Play(Filter.Pvs(uid), Sound.GetSound(), uid, AudioHelpers.WithVariation(0.125f));
+            var scale = (float) IoCManager.Resolve<IRobustRandom>().NextGaussian(1, Variation);
+            if (entityManager.TryGetComponent<TransformComponent>(uid, out var xform))
+                entityManager.EntitySysManager.GetEntitySystem<SharedAudioSystem>()
+                .PlayPvs(Sound, xform.Coordinates, AudioParams.WithPitchScale(scale));
         }
     }
 }

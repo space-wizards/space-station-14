@@ -1,5 +1,4 @@
 using Robust.Shared.Serialization;
-using System;
 
 namespace Content.Shared.Light
 {

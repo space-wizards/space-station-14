@@ -1,0 +1,20 @@
+- type: entity
+  id: RandomFloraTree
+  name: random tree spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Decoration/Flora/flora_trees.rsi
+        state: tree01
+  - type: RandomSpawner
+    prototypes:
+      - FloraTreeLarge
+      - FloraTreeConifer
+      - FloraTreeSnow
+      - FloraTree
+    chance: 0.95
+    rarePrototypes:
+      - ShadowTree
+    rareChance: 0.05

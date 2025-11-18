@@ -1,7 +1,4 @@
-﻿using System;
-using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+﻿using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Prototypes
@@ -32,7 +29,7 @@ namespace Content.Shared.Prototypes
         {
             prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
 
-            return prototypeManager.TryIndex(prototype, out EntityPrototype? proto) && proto!.HasComponent(component, componentFactory);
+            return prototypeManager.TryIndex(prototype, out EntityPrototype? proto) && proto.HasComponent(component, componentFactory);
         }
     }
 }

@@ -1,0 +1,171 @@
+- type: constructionGraph
+  id: ShivConstruct
+  start: start
+  graph:
+  - node: start
+    entity: ShardGlass
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: Shiv
+
+- type: constructionGraph
+  id: Shiv
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - tag: GlassShard
+        name: construction-graph-tag-glass-shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: Shiv
+
+- type: constructionGraph
+  id: ReinforcedShivConstruct
+  start: start
+  graph:
+  - node: start
+    entity: ShardGlassReinforced
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: ReinforcedShiv
+
+- type: constructionGraph
+  id: ReinforcedShiv
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - tag: ReinforcedGlassShard
+        name: construction-graph-tag-reinforced-glass-shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: ReinforcedShiv
+
+- type: constructionGraph
+  id: PlasmaShivConstruct
+  start: start
+  graph:
+  - node: start
+    entity: ShardGlassPlasma
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: PlasmaShiv
+
+- type: constructionGraph
+  id: PlasmaShiv
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - tag: PlasmaGlassShard
+        name: construction-graph-tag-plasma-glass-shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: PlasmaShiv
+
+- type: constructionGraph
+  id: UraniumShivConstruct
+  start: start
+  graph:
+  - node: start
+    entity: ShardGlassUranium
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: UraniumShiv
+
+- type: constructionGraph
+  id: UraniumShiv
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: icon
+      completed:
+      - !type:AdminLog
+        message: "Construction"
+        impact: High
+      steps:
+      - tag: UraniumGlassShard
+        name: construction-graph-tag-uranium-glass-shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 1
+      - material: Cloth
+        amount: 1
+        doAfter: 1
+  - node: icon
+    entity: UraniumShiv

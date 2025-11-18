@@ -1,0 +1,59 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'comp-pda-ui-menu-title'}"
+            SetSize="400 400"
+            MinSize="400 400">
+    <TabContainer Name="MasterTabContainer">
+        <BoxContainer Name="Scanner"
+                      Orientation="Vertical"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      MinSize="100 150">
+            <PanelContainer VerticalExpand="True" StyleClasses="Inset">
+                <BoxContainer Name="GeneticScannerContents" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                    <Label HorizontalAlignment="Center" Text="{Loc 'cloning-console-window-scanner-details-label'}" />
+                    <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
+                        <RichTextLabel Name="ScannerInfoLabel"
+                                       Access="Public"
+                                       HorizontalExpand="True" />
+                        <Button Name="CloneButton"
+                                Access="Public"
+                                Text="{Loc 'cloning-console-window-clone-button-text'}"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center" />
+                    </BoxContainer>
+                    <Label Name="CloningActivity"
+                            Text="{Loc 'cloning-console-component-msg-empty'}"
+                            Access="Public"
+                            HorizontalAlignment="Center"
+                            HorizontalExpand="True" />
+                </BoxContainer>
+                <BoxContainer Name="GeneticScannerMissing" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'cloning-console-window-no-scanner-detected-label'}" />
+                </BoxContainer>
+                <BoxContainer Name="GeneticScannerFar" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'cloning-console-window-scanner-far-label'}" />
+                </BoxContainer>
+            </PanelContainer>
+            <Control MinSize="50 5" />
+            <PanelContainer VerticalExpand="True" StyleClasses="Inset">
+                <BoxContainer Name="CloningPodContents" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                    <Label HorizontalAlignment="Center" Text="{Loc 'cloning-console-window-pod-details-label'}" />
+                    <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                        <RichTextLabel Name="ClonerInfoLabel"
+                                Access="Public"
+                                HorizontalExpand="True" />
+                        <RichTextLabel Name="ClonerBrainActivity"
+                                Access="Public"
+                                HorizontalExpand="True"/>
+                    </BoxContainer>
+                </BoxContainer>
+                <BoxContainer Name="CloningPodMissing" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'cloning-console-window-no-clone-pod-detected-label'}" />
+                </BoxContainer>
+                <BoxContainer Name="CloningPodFar" Margin="5 5 5 5" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'cloning-console-window-clone-pod-far-label'}" />
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </TabContainer>
+</DefaultWindow>

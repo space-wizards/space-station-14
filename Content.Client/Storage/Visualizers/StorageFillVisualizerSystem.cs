@@ -1,4 +1,4 @@
-﻿using Content.Shared.Storage;
+using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Robust.Client.GameObjects;
 
@@ -8,15 +8,13 @@ public sealed class StorageFillVisualizerSystem : VisualizerSystem<StorageFillVi
 {
     protected override void OnAppearanceChange(EntityUid uid, StorageFillVisualizerComponent component, ref AppearanceChangeEvent args)
     {
-        base.OnAppearanceChange(uid, component, ref args);
-
-        if (!TryComp(uid, out SpriteComponent? sprite))
+        if (args.Sprite == null)
             return;
 
-        if (!args.Component.TryGetData(StorageFillVisuals.FillLevel, out int level))
+        if (!AppearanceSystem.TryGetData<int>(uid, StorageFillVisuals.FillLevel, out var level, args.Component))
             return;
 
         var state = $"{component.FillBaseName}-{level}";
-        sprite.LayerSetState(StorageFillLayers.Fill, state);
+        SpriteSystem.LayerSetRsiState((uid, args.Sprite), StorageFillLayers.Fill, state);
     }
 }

@@ -1,0 +1,55 @@
+- type: constructionGraph
+  id: GrilleDiagonal
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: grilleDiagonal
+          completed:
+            - !type:AdminLog
+              message: "Construction"
+              impact: High
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+              
+        - to: clockworkGrilleDiagonal
+          completed:
+            - !type:AdminLog
+              message: "Construction"
+              impact: High
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+
+    - node: grilleDiagonal
+      entity: GrilleDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:AdminLog
+              message: "A grille was cut"
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:DeleteEntity
+          steps:
+            - tool: Cutting
+              doAfter: 0.25
+              
+    - node: clockworkGrilleDiagonal
+      entity: ClockworkGrilleDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:AdminLog
+              message: "A grille was cut"
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+            - !type:DeleteEntity
+          steps:
+            - tool: Cutting
+              doAfter: 0.25

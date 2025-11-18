@@ -1,4 +1,3 @@
-using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Nutrition.Components
@@ -12,9 +11,16 @@ namespace Content.Shared.Nutrition.Components
     }
 
     [Serializable, NetSerializable]
-    public enum DrinkCanStateVisual : byte
+    public enum OpenableVisuals : byte
     {
-        Closed,
-        Opened
+        Opened,
+        Layer
+    }
+
+    [Serializable, NetSerializable]
+    public enum SealableVisuals : byte
+    {
+        Sealed,
+        Layer,
     }
 }

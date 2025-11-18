@@ -1,0 +1,43 @@
+- type: entity
+  id: StatueVenusRed
+  parent: BaseStructure
+  name: statue of a pure maiden
+  suffix: Red
+  description: An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a red toolbox.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/statues.rsi
+    state: venus_red
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+
+- type: entity
+  id: StatueVenusBlue
+  parent: BaseStructure
+  name: statue of a pure maiden
+  suffix: Blue
+  description: An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a blue toolbox.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/statues.rsi
+    state: venus_blue
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+
+- type: entity
+  id: StatueBananiumClown
+  parent: BaseStructure
+  name: bananium savior statue
+  description: A bananium statue. It portrays the return of the savior who will rise up and lead the clowns to the great honk.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Decoration/statues.rsi
+    state: bananium_clown
+    drawdepth: Mobs
+    offset: "0.0,0.5"
+  - type: Construction
+    graph: BananiumStatueClown
+    node: bananiumStatue

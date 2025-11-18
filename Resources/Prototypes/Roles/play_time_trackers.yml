@@ -1,0 +1,155 @@
+# Overall play time, across all roles.
+# This tracker must exist, it is used directly by PlayTimeTrackingManager
+- type: playTimeTracker
+  id: Overall
+
+# Jobs
+- type: playTimeTracker
+  id: JobAtmosphericTechnician
+
+- type: playTimeTracker
+  id: JobBartender
+
+- type: playTimeTracker # Used as a tracker for all borgs and midround borging.
+  id: JobBorg
+
+- type: playTimeTracker
+  id: JobBotanist
+
+- type: playTimeTracker
+  id: JobCaptain
+
+- type: playTimeTracker
+  id: JobCargoTechnician
+
+- type: playTimeTracker
+  id: JobCentralCommandOfficial
+
+- type: playTimeTracker
+  id: JobChaplain
+
+- type: playTimeTracker
+  id: JobChef
+
+- type: playTimeTracker
+  id: JobChemist
+
+- type: playTimeTracker
+  id: JobChiefEngineer
+
+- type: playTimeTracker
+  id: JobChiefMedicalOfficer
+
+- type: playTimeTracker
+  id: JobClown
+
+- type: playTimeTracker
+  id: JobDetective
+
+- type: playTimeTracker
+  id: JobERTChaplain
+
+- type: playTimeTracker
+  id: JobERTEngineer
+
+- type: playTimeTracker
+  id: JobERTJanitor
+
+- type: playTimeTracker
+  id: JobERTLeader
+
+- type: playTimeTracker
+  id: JobERTMedical
+
+- type: playTimeTracker
+  id: JobERTSecurity
+
+- type: playTimeTracker
+  id: JobDeathSquad
+
+- type: playTimeTracker
+  id: JobCBURN
+
+- type: playTimeTracker
+  id: JobHeadOfPersonnel
+
+- type: playTimeTracker
+  id: JobHeadOfSecurity
+
+- type: playTimeTracker
+  id: JobJanitor
+
+- type: playTimeTracker
+  id: JobLawyer
+
+- type: playTimeTracker
+  id: JobLibrarian
+
+- type: playTimeTracker
+  id: JobMedicalDoctor
+
+- type: playTimeTracker
+  id: JobMedicalIntern
+
+- type: playTimeTracker
+  id: JobMime
+
+- type: playTimeTracker
+  id: JobMusician
+
+- type: playTimeTracker
+  id: JobPassenger
+
+- type: playTimeTracker
+  id: JobParamedic
+
+- type: playTimeTracker
+  id: JobPsychologist
+
+- type: playTimeTracker
+  id: JobQuartermaster
+
+- type: playTimeTracker
+  id: JobReporter
+
+- type: playTimeTracker
+  id: JobResearchAssistant
+
+- type: playTimeTracker
+  id: JobResearchDirector
+
+- type: playTimeTracker
+  id: JobSalvageSpecialist
+
+- type: playTimeTracker
+  id: JobScientist
+
+- type: playTimeTracker
+  id: JobSecurityCadet
+
+- type: playTimeTracker
+  id: JobSecurityOfficer
+
+- type: playTimeTracker
+  id: JobServiceWorker
+
+- type: playTimeTracker
+  id: JobStationAi
+
+- type: playTimeTracker
+  id: JobStationEngineer
+
+- type: playTimeTracker
+  id: JobTechnicalAssistant
+
+- type: playTimeTracker
+  id: JobVisitor
+
+- type: playTimeTracker
+  id: JobWarden
+
+- type: playTimeTracker
+  id: JobBoxer
+
+- type: playTimeTracker
+  id: JobZookeeper

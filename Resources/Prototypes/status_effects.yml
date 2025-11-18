@@ -1,12 +1,11 @@
 ﻿# Status effect prototypes.
 # Holds no actual logic, just some basic data about the effect.
 
-- type: statusEffect
-  id: Stun
-  alert: Stun
+# Note: We have a new status effect system that needs all of these status effects to be fully ported to.
+# Adding new status effects under the old system is NOT RECOMMENDED.
 
 - type: statusEffect
-  id: KnockedDown
+  id: Stun
   alert: Stun
 
 - type: statusEffect
@@ -24,3 +23,42 @@
 
 - type: statusEffect
   id: Electrocution
+
+- type: statusEffect
+  id: Drunk
+
+- type: statusEffect
+  id: SlurredSpeech
+
+- type: statusEffect
+  id: PressureImmunity
+
+- type: statusEffect
+  id: Muted
+  alert: Muted
+
+- type: statusEffect
+  id: Corporeal
+  alert: Corporeal
+
+- type: statusEffect
+  id: TemporaryBlindness
+
+- type: statusEffect
+  id: Pacified #cannot attack
+
+- type: statusEffect
+  id: RatvarianLanguage #Praise him
+
+- type: statusEffect
+  id: StaminaModifier
+
+- type: statusEffect
+  id: Flashed
+
+- type: statusEffect
+  id: RadiationProtection
+
+- type: statusEffect
+  id: Adrenaline
+  alert: Adrenaline

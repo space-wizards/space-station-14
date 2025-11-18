@@ -1,14 +1,15 @@
+using Content.Shared.Research.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using static Content.Shared.Research.Components.SharedResearchClientComponent;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Research.UI
 {
     public sealed class ResearchClientBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private ResearchClientServerSelectionMenu? _menu;
 
-        public ResearchClientBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ResearchClientBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             SendMessage(new ResearchClientSyncMessage());
         }
@@ -16,10 +17,9 @@ namespace Content.Client.Research.UI
         protected override void Open()
         {
             base.Open();
-
-            _menu = new ResearchClientServerSelectionMenu(this);
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
+            _menu = this.CreateWindow<ResearchClientServerSelectionMenu>();
+            _menu.OnServerSelected += SelectServer;
+            _menu.OnServerDeselected += DeselectServer;
         }
 
         public void SelectServer(int serverId)
@@ -37,13 +37,6 @@ namespace Content.Client.Research.UI
             base.UpdateState(state);
             if (state is not ResearchClientBoundInterfaceState rState) return;
             _menu?.Populate(rState.ServerCount, rState.ServerNames, rState.ServerIds, rState.SelectedServerId);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _menu?.Dispose();
         }
     }
 }

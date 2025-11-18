@@ -1,13 +1,14 @@
-﻿using Content.Shared.CharacterAppearance;
-using Robust.Shared.IoC;
+﻿using Content.Shared.Humanoid.Markings;
+using Content.Shared.Localizations;
 
 namespace Content.Shared.IoC
 {
     public static class SharedContentIoC
     {
-        public static void Register()
+        public static void Register(IDependencyCollection deps)
         {
-            IoCManager.Register<SpriteAccessoryManager, SpriteAccessoryManager>();
+            deps.Register<MarkingManager, MarkingManager>();
+            deps.Register<ContentLocalizationManager, ContentLocalizationManager>();
         }
     }
 }

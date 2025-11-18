@@ -1,30 +1,58 @@
 - type: job
   id: Captain
-  name: "captain"
-  head: true
+  name: job-name-captain
+  description: job-description-captain
+  playTimeTracker: JobCaptain
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 4h
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 4h
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 4h
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 4h
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 4h
+  weight: 20
   startingGear: CaptainGear
-  departments:
-  - Command
-  icon: "Captain"
-  requireAdminNotify: true
+  icon: "JobIconCaptain"
   joinNotifyCrew: true
-  supervisors: "Nanotrasen officials"
+  supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
   - AllAccess
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: CaptainGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitCaptain
-    back: ClothingBackpackCaptainFilled
-    shoes: ClothingShoesColorBlack
-    head: ClothingHeadHatCaptain
-    eyes: ClothingEyesGlassesSunglasses
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesCommand
     gloves: ClothingHandsGlovesCaptain
-    outerClothing: ClothingOuterArmorCaptainCarapace
     id: CaptainPDA
     ears: ClothingHeadsetAltCommand
-  innerclothingskirt: ClothingUniformJumpskirtCaptain
-  satchel: ClothingBackpackSatchelCaptainFilled
-  duffelbag: ClothingBackpackDuffelCaptainFilled
+  storage:
+    back:
+    - Flash
+    # - StationCharter
+
+- type: chameleonOutfit
+  id: CaptainChameleonOutfit
+  job: Captain
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatCapcap
+    eyes: ClothingEyesGlassesCommand
+    mask: ClothingMaskGasCaptain
+    neck: ClothingNeckCloakCap

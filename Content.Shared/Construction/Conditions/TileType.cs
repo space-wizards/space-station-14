@@ -1,42 +1,36 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Maps;
+﻿using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class TileType : IConstructionCondition
+    public sealed partial class TileType : IConstructionCondition
     {
         [DataField("targets")]
-        public List<string> TargetTiles { get; } = new();
+        public List<string> TargetTiles { get; private set; } = new();
 
         [DataField("guideText")]
-        public string? GuideText = null;
+        public string? GuideText;
 
         [DataField("guideIcon")]
-        public SpriteSpecifier? GuideIcon = null;
+        public SpriteSpecifier? GuideIcon;
 
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
-            if (TargetTiles == null) return true;
-
-            var tileFound = location.GetTileRef();
-
-            if (tileFound == null)
+            if (!IoCManager.Resolve<IEntityManager>().TrySystem<TurfSystem>(out var turfSystem))
                 return false;
 
-            var tile = tileFound.Value.Tile.GetContentTileDefinition();
+            if (!turfSystem.TryGetTileRef(location, out var tileFound))
+                return false;
+
+            var tile = turfSystem.GetContentTileDefinition(tileFound.Value);
             foreach (var targetTile in TargetTiles)
             {
-                if (tile.ID == targetTile) {
+                if (tile.ID == targetTile)
                     return true;
-                }
             }
             return false;
         }

@@ -1,0 +1,491 @@
+- type: marking
+  id: GauzeLefteyePatch
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lefteye_2
+
+- type: marking
+  id: GauzeLefteyePad
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lefteye_1
+
+- type: marking
+  id: GauzeRighteyePatch
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_righteye_2
+
+- type: marking
+  id: GauzeRighteyePad
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_righteye_1
+
+- type: marking
+  id: GauzeBlindfold
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_blindfold
+
+- type: marking
+  id: GauzeShoulder
+  bodyPart: Chest
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_shoulder
+    
+- type: marking
+  id: GauzeStomach
+  bodyPart: Chest
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_abdomen
+
+- type: marking
+  id: GauzeUpperArmRight
+  bodyPart: RArm
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_upperarm_r
+
+- type: marking
+  id: GauzeLowerArmRight
+  bodyPart: RArm, RHand
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lowerarm_r
+
+- type: marking
+  id: GauzeLeftArm
+  bodyPart: LArm, LHand
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_leftarm
+
+- type: marking
+  id: GauzeLowerLegLeft
+  bodyPart: LFoot
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lowerleg_l
+
+- type: marking
+  id: GauzeUpperLegLeft
+  bodyPart: LLeg
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_upperleg_l
+
+- type: marking
+  id: GauzeUpperLegRight
+  bodyPart: RLeg
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_upperleg_r
+    
+- type: marking
+  id: GauzeLowerLegRight
+  bodyPart: RFoot
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lowerleg_r
+    
+- type: marking
+  id: GauzeBoxerWrapRight
+  bodyPart: RHand
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_boxerwrap_r
+    
+- type: marking
+  id: GauzeBoxerWrapLeft
+  bodyPart: LHand
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_boxerwrap_l
+
+- type: marking
+  id: GauzeHead
+  bodyPart: Head
+  markingCategory: Overlay
+  speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_head
+
+# Lizard Specific Markings
+- type: marking
+  id: GauzeLizardLefteyePatch
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lizard_lefteye
+
+- type: marking
+  id: GauzeLizardRighteyePatch
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lizard_righteye
+
+- type: marking
+  id: GauzeLizardFootRight
+  bodyPart: RFoot
+  markingCategory: Overlay
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lizard_foot_r
+
+- type: marking
+  id: GauzeLizardFootLeft
+  bodyPart: LFoot
+  markingCategory: Overlay
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lizard_foot_l
+
+- type: marking
+  id: GauzeLizardBlindfold
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Reptilian]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_lizard_blindfold
+
+# Moth Specific Markings
+- type: marking
+  id: GauzeMothBlindfold
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_blindfold
+
+- type: marking
+  id: GauzeMothShoulder
+  bodyPart: Chest
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_shoulder
+
+- type: marking
+  id: GauzeMothStomach
+  bodyPart: Chest
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_abdomen
+
+- type: marking
+  id: GauzeMothLeftEyePatch
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_lefteye_2
+
+- type: marking
+  id: GauzeMothLeftEyePad
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_lefteye_1
+
+- type: marking
+  id: GauzeMothRightEyePatch
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_righteye_2
+
+- type: marking
+  id: GauzeMothRightEyePad
+  bodyPart: Eyes
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_righteye_1
+
+- type: marking
+  id: GauzeMothUpperArmRight
+  bodyPart: RArm
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_upperarm_r
+
+- type: marking
+  id: GauzeMothUpperArmLeft
+  bodyPart: LArm
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_upperarm_l
+
+- type: marking
+  id: GauzeMothUpperLegRight
+  bodyPart: RLeg
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_upperleg_r
+
+- type: marking
+  id: GauzeMothUpperLegLeft
+  bodyPart: LLeg
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_upperleg_l
+
+- type: marking
+  id: GauzeMothLowerLegRight
+  bodyPart: RFoot
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_lowerleg_r
+
+- type: marking
+  id: GauzeMothLowerLegLeft
+  bodyPart: LFoot
+  markingCategory: Overlay
+  speciesRestriction: [Moth]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/gauze.rsi
+    state: gauze_moth_lowerleg_l

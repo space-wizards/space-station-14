@@ -4,68 +4,46 @@
         "x": 32,
         "y": 32
     },
-    "license": "AGPL v3",
-    "copyright": "Taken from https://github.com/discordia-space/CEV-Eris",
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from /tg/station at commit 9065b811726ae52be5d1889f436c01a24efbf47a, edited by github user @Flareguy for Space Station 14, inhands by BoskiYourk (GitHub)",
     "states": [
         {
-            "name": "mw",
-
+            "name": "mw"
         },
         {
-            "name": "mw_unlit",
-
-        },		
-        {
-            "name": "mw0",
-
+            "name": "mw_unlit"
         },
         {
-            "name": "mw_running_unlit",
-            "delays": [
-                [
-                    1.0,
-                    1.0
-                ]
-            ]
+            "name": "mw0"
         },
         {
-            "name": "mwb",
-
+            "name": "mw_running_unlit"
         },
         {
-            "name": "mwbloody",
-
+            "name": "mwb"
         },
         {
-            "name": "mwbloody0",
-
+            "name": "mwbloody"
         },
         {
-            "name": "mwbloody1",
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
+            "name": "mwbloody0"
         },
         {
-            "name": "mwbloodyo",
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
+            "name": "mwbloody1"
         },
         {
-            "name": "mwo",
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ]
-            ]
+            "name": "mwbloodyo"
+        },
+        {
+            "name": "mwo"
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
         }
-    ]
-}
+      ]
+    }

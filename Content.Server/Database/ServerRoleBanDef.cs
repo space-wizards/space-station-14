@@ -1,5 +1,5 @@
-﻿using System.Collections.Immutable;
 using System.Net;
+using Content.Shared.Database;
 using Robust.Shared.Network;
 
 namespace Content.Server.Database;
@@ -9,11 +9,14 @@ public sealed class ServerRoleBanDef
     public int? Id { get; }
     public NetUserId? UserId { get; }
     public (IPAddress address, int cidrMask)? Address { get; }
-    public ImmutableArray<byte>? HWId { get; }
+    public ImmutableTypedHwid? HWId { get; }
 
     public DateTimeOffset BanTime { get; }
     public DateTimeOffset? ExpirationTime { get; }
+    public int? RoundId { get; }
+    public TimeSpan PlaytimeAtNote { get; }
     public string Reason { get; }
+    public NoteSeverity Severity { get; set; }
     public NetUserId? BanningAdmin { get; }
     public ServerRoleUnbanDef? Unban { get; }
     public string Role { get; }
@@ -22,10 +25,13 @@ public sealed class ServerRoleBanDef
         int? id,
         NetUserId? userId,
         (IPAddress, int)? address,
-        ImmutableArray<byte>? hwId,
+        ImmutableTypedHwid? hwId,
         DateTimeOffset banTime,
         DateTimeOffset? expirationTime,
+        int? roundId,
+        TimeSpan playtimeAtNote,
         string reason,
+        NoteSeverity severity,
         NetUserId? banningAdmin,
         ServerRoleUnbanDef? unban,
         string role)
@@ -48,7 +54,10 @@ public sealed class ServerRoleBanDef
         HWId = hwId;
         BanTime = banTime;
         ExpirationTime = expirationTime;
+        RoundId = roundId;
+        PlaytimeAtNote = playtimeAtNote;
         Reason = reason;
+        Severity = severity;
         BanningAdmin = banningAdmin;
         Unban = unban;
         Role = role;

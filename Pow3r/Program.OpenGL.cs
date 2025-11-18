@@ -15,7 +15,7 @@ namespace Pow3r
         private void InitOpenGL()
         {
             if (GL.GetString(StringName.Extensions).Split(' ').Contains("GL_ARB_debug_output"))
-                GL.Arb.DebugMessageCallback(GLDebugCallbackDelegate, (nint) 0x0105);
+                GL.Arb.DebugMessageCallback(GLDebugCallbackDelegate, 0x0105);
 
             GL.Enable(EnableCap.ScissorTest);
             GL.Enable(EnableCap.Blend);
@@ -44,7 +44,7 @@ namespace Pow3r
             GL.TextureParameter(_fontTexture, TextureParameterName.TextureSwizzleB, 1);
             GL.TextureParameter(_fontTexture, TextureParameterName.TextureSwizzleA, (int) All.Red);*/
 
-            io.Fonts.SetTexID((nint) _glFontTexture);
+            io.Fonts.SetTexID(_glFontTexture);
             io.Fonts.ClearTexData();
         }
 

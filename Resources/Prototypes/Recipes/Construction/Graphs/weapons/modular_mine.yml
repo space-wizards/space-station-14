@@ -1,0 +1,71 @@
+﻿- type: constructionGraph
+  id: ModularMineGraph
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: emptyCase
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 1
+
+  - node: emptyCase
+    entity: LandMineModularUnarmed
+    edges:
+    - to: wiredCase
+      steps:
+      - material: Cable
+        doAfter: 0.5
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: construction-graph-tag-proximity-sensor
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: wiredCase
+    entity: LandMineModularUnarmed
+    actions:
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    edges:
+    - to: emptyCase
+      steps:
+      - tool: Cutting
+        doAfter: 0.5
+        completed:
+        - !type:SpawnPrototype
+          prototype: CableApcStack1
+        - !type:SpawnPrototype
+          prototype: ProximitySensor
+    - to: mine
+      steps:
+      - tag: Payload
+        store: payload
+        name: construction-graph-tag-payload
+        doAfter: 0.5
+
+  - node: mine
+    actions:
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    - !type:AdminLog
+      message: "A mine was crafted"
+    edges:
+    - to: wiredCase
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+        completed:
+        - !type:EmptyContainer
+          container: payload

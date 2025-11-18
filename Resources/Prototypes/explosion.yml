@@ -1,0 +1,141 @@
+#  Does not currently support prototype hot-reloading. See comments in c# file.
+
+# Note that for every explosion type you define, explosions & nukes will start performing worse
+# You should only define a new explopsion type if you really need to
+#
+# If you just want to modify properties other than `damagePerIntensity`, it'd be better to
+# split off explosion damage & explosion visuals/effects into their own separate prototypes.
+
+- type: explosion
+  id: Default
+  damagePerIntensity:
+    types:
+      Heat: 5
+      Blunt: 5
+      Piercing: 5
+  tileBreakChance: [0, 0.5, 1]
+  tileBreakIntensity: [0, 10, 30]
+  tileBreakRerollReduction: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
+- type: explosion
+  id: DemolitionCharge
+  damagePerIntensity:
+    types:
+      Heat: 3
+      Blunt: 3
+      Piercing: 3
+      Structural: 50
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 0, 10, 30 ]
+  tileBreakRerollReduction: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
+- type: explosion
+  id: MicroBomb
+  damagePerIntensity:
+    types:
+      Heat: 6
+      Blunt: 6
+      Piercing: 6
+      Structural: 20
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 1, 10, 15 ]
+  tileBreakRerollReduction: 30
+  intensityPerState: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
+- type: explosion
+  id: Radioactive
+  damagePerIntensity:
+    types:
+      Radiation: 5
+      Heat: 4
+      Blunt: 3
+      Piercing: 3
+  lightColor: Green
+  fireColor: Green
+  texturePath: /Textures/Effects/fire_greyscale.rsi
+  fireStates: 3
+
+- type: explosion
+  id: Cryo
+  damagePerIntensity:
+    types:
+      Cold: 5
+      Blunt: 2
+      Structural: 20
+  tileBreakChance: [0]
+  tileBreakIntensity: [0]
+  lightColor: Blue
+  fireColor: Blue
+  texturePath: /Textures/Effects/fire_greyscale.rsi
+  fireStates: 3
+
+- type: explosion
+  id: Minibomb
+  damagePerIntensity:
+    types:
+      Heat: 4
+      Blunt: 7
+      Piercing: 4
+  tileBreakChance: [0, 0.5, 1]
+  tileBreakIntensity: [0, 10, 30]
+  tileBreakRerollReduction: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
+- type: explosion
+  id: PowerSink
+  damagePerIntensity:
+    types:
+      Heat: 12
+      Blunt: 12
+      Piercing: 12
+      Structural: 30
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 1, 5, 10 ]
+  tileBreakRerollReduction: 3
+  intensityPerState: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
+- type: explosion
+  id: HardBomb
+  damagePerIntensity:
+    types:
+      Heat: 15
+      Blunt: 15
+      Piercing: 6
+      Structural: 40
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 0, 10, 30 ]
+  tileBreakRerollReduction: 10
+  intensityPerState: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
+- type: explosion
+  id: FireBomb
+  damagePerIntensity:
+    types:
+      Heat: 1
+      Blunt: 2
+      Piercing: 3
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+  fireStacks: 2
+
+# STOP
+# BEFORE YOU ADD MORE EXPLOSION TYPES CONSIDER IF AN EXISTING ONE IS SUITABLE
+# ADDING NEW ONES IS PROHIBITIVELY EXPENSIVE

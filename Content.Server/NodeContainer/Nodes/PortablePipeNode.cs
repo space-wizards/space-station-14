@@ -1,17 +1,16 @@
-using System.Collections.Generic;
-using Robust.Shared.GameObjects;
+using Content.Shared.NodeContainer;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.NodeContainer.Nodes
 {
     [DataDefinition]
-    public sealed class PortablePipeNode : PipeNode
+    public sealed partial class PortablePipeNode : PipeNode
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            IMapGrid? grid,
+            MapGridComponent? grid,
             IEntityManager entMan)
         {
             if (!xform.Anchored || grid == null)

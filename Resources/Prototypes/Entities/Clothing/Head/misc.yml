@@ -31,29 +31,60 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/chickenhead.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatHairflower
-  name: hairflower
-  description: A red rose for beautiful ladies.
+  id: ClothingHeadHatFlowerWreath
+  name: flower wreath
+  description: A wreath of colourful flowers. Can be worn both on head and neck.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Misc/hairflower.rsi
+    sprite: Clothing/Head/Misc/flower-wreath.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/hairflower.rsi
+    sprite: Clothing/Head/Misc/flower-wreath.rsi
+    slots:
+    - HEAD
+    - neck
+  - type: Construction
+    graph: flowerwreath
+    node: flowerwreath
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadLightBase
   id: ClothingHeadHatPumpkin
   name: pumpkin hat
   description: A jack o' lantern! Believed to ward off evil spirits.
   components:
-    - type: Sprite
-      sprite: Clothing/Head/Misc/pumpkin.rsi
-    - type: Clothing
-      sprite: Clothing/Head/Misc/pumpkin.rsi
-    - type: IngestionBlocker
+  - type: Sprite
+    sprite: Clothing/Head/Misc/pumpkin.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/pumpkin.rsi
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 1
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    color: "#cc6600"
+    netsync: false
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+    - FacialHair
 
 - type: entity
   parent: ClothingHeadBase
@@ -65,6 +96,20 @@
     sprite: Clothing/Head/Misc/pwig.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/pwig.rsi
+  - type: HideLayerClothing
+    slots:
+    - HeadTop
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadMirror
+  name: head mirror
+  description: I doubt even the CMO knows how to use this thing.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/head_mirror.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/head_mirror.rsi
 
 - type: entity
   parent: ClothingHeadBase
@@ -76,7 +121,16 @@
     sprite: Clothing/Head/Misc/richard.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/richard.rsi
+  - type: Item
+    storedRotation: 0
   - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+    - FacialHair
 
 - type: entity
   parent: ClothingHeadBase
@@ -89,6 +143,12 @@
   - type: Clothing
     sprite: Clothing/Head/Misc/skubhead.rsi
   - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
 
 - type: entity
   parent: ClothingHeadBase
@@ -100,6 +160,15 @@
     sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/shrine-maidens-wig.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
 
 - type: entity
   parent: ClothingHeadBase
@@ -111,3 +180,210 @@
     sprite: Clothing/Head/Misc/cone.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/cone.rsi
+  - type: Item
+    storedRotation: 0
+  - type: PhysicalComposition #you can't just pass up some free plastic!
+    materialComposition:
+      Plastic: 100
+  - type: StaticPrice
+    price: 25
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFancyCrown
+  name: fancy crown
+  description: It smells like dead rat. Lets you speak like one!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/fancycrown.rsi
+  - type: TypingIndicatorClothing
+    proto: regal
+  - type: StaticPrice
+    price: 3000
+  - type: AddAccentClothing
+    accent: MobsterAccent
+
+- type: entity
+  parent: [ ClothingHeadBase, BaseSyndicateContraband ]
+  id: ClothingHeadHatCatEars
+  name: cat ears
+  description: "NYAH!"
+  categories: [ DoNotMap ]
+  components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Sprite
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: AddAccentClothing
+    accent: OwOAccent
+  - type: StaticPrice
+    price: 15000
+
+- type: entity
+  parent: [ClothingHeadHatCatEars, BaseToggleClothing]
+  id: ClothingHeadHatCatEarsValid
+  suffix: Valid, DO NOT MAP
+  categories: [ DoNotMap ]
+  components:
+  - type: ToggleClothing
+    action: ActionBecomeValid
+    disableOnUnequip: true
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: KillSign
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: Sprite
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/catears.rsi
+  - type: AddAccentClothing
+    accent: OwOAccent
+
+- type: entity
+  parent: BaseToggleAction
+  id: ActionBecomeValid
+  name: Become Valid
+  description: "*notices your killsign* owo whats this"
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatDogEars
+  name: doggy ears
+  description: Only for good boys.
+  categories: [ DoNotMap ]
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/dogears.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/dogears.rsi
+  - type: AddAccentClothing
+    accent: BarkAccent
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSquid
+  name: squiddy
+  description: "Scare your friends with this eldritch mask."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/squiddy.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/squiddy.rsi
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+    - FacialHair
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatRedRacoon
+  name: red racoon hat
+  description: Fluffy hat of red racoon!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/red_racoon.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/red_racoon.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
+    - FacialHair
+
+- type: entity
+  parent: Clothing
+  id: WaterDropletHat
+  name: water droplet
+  description: Makes 8-eyed friends 8 times more adorable!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/waterdroplet.rsi
+    state: icon
+  - type: Item
+    sprite: Clothing/Head/Misc/waterdroplet.rsi
+    size: Tiny
+    storedRotation: -90
+  - type: Clothing
+    slots:
+    - HEAD
+  - type: Edible
+    edible: Drink
+    solution: drink
+    delay: 0.5
+    forceFeedDelay: 1.5
+    utensil: Spoon
+  - type: FlavorProfile
+    flavors:
+      - water
+  - type: DrainableSolution
+    solution: drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 2
+        reagents:
+        - ReagentId: Water
+          Quantity: 2
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpillBehavior
+        solution: drink
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+  - type: StaticPrice
+    price: 1
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHairflower
+  name: hairflower
+  description: A beautiful hairflower that can be inserted between locks of hair.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadPerformerWig
+  name: performer's wig
+  description: On a closer inspection, it appears that it is made from optic fiber.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/performer-wig.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/performer-wig.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide

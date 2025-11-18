@@ -1,13 +1,12 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Components
 {
     /// <summary>
     /// Used by FixGridAtmos. Entities with this may get magically auto-deleted on map initialization in future.
     /// </summary>
-    [RegisterComponent]
-    public sealed class AtmosFixMarkerComponent : Component
+    [RegisterComponent, EntityCategory("Mapping")]
+    public sealed partial class AtmosFixMarkerComponent : Component
     {
         // See FixGridAtmos for more details
         [DataField("mode")]

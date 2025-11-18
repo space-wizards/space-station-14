@@ -1,7 +1,6 @@
 using System.Text;
 using Content.Server.Speech.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Speech;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;

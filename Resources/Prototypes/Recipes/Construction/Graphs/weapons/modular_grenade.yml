@@ -1,0 +1,114 @@
+- type: constructionGraph
+  id: ModularGrenadeGraph
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: emptyCase
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 1
+
+  - node: emptyCase
+    entity: ModularGrenade
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: wiredCase
+      steps:
+      - material: Cable
+        doAfter: 0.5
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: wiredCase
+    entity: ModularGrenade
+    actions:
+    - !type:AppearanceChange
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    edges:
+    - to: emptyCase
+      steps:
+      - tool: Cutting
+        doAfter: 0.5
+        completed:
+        - !type:SpawnPrototype
+          prototype: CableApcStack1
+    - to: caseWithTrigger
+      steps:
+      - component: PayloadTrigger
+        store: payloadTrigger
+        name: construction-graph-component-payload-trigger
+        doAfter: 0.5
+    - to: caseWithPayload
+      steps:
+      - tag: Payload
+        store: payload
+        name: construction-graph-tag-payload
+        doAfter: 0.5
+
+  - node: caseWithTrigger
+    actions:
+    - !type:AppearanceChange
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    edges:
+    - to: wiredCase
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+        completed:
+        - !type:EmptyContainer
+          container: payloadTrigger
+    - to: grenade
+      steps:
+      - tag: Payload
+        store: payload
+        name: construction-graph-tag-payload
+        doAfter: 0.5
+
+  - node: caseWithPayload
+    actions:
+    - !type:AppearanceChange
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    edges:
+    - to: wiredCase
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+        completed:
+        - !type:EmptyContainer
+          container: payload
+    - to: grenade
+      steps:
+      - component: PayloadTrigger
+        store: payloadTrigger
+        name: construction-graph-component-payload-trigger
+        doAfter: 0.5
+
+  - node: grenade
+    actions:
+    - !type:AppearanceChange
+    - !type:PlaySound
+      sound: /Audio/Machines/button.ogg
+    - !type:AdminLog
+      message: "A grenade was crafted"
+    edges:
+    - to: caseWithTrigger
+      steps:
+      - tool: Prying
+        doAfter: 0.5
+        completed:
+        - !type:EmptyContainer
+          container: payload

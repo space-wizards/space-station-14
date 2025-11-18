@@ -1,0 +1,96 @@
+- type: entity
+  id: RandomFoodBakedSingle
+  name: random baked food spawner
+  suffix: Single Serving
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Food/Baked/pie.rsi
+        state: plain-slice
+  - type: RandomSpawner
+    prototypes:
+      - FoodBreadPlainSlice
+      - FoodBreadMeatSlice
+      - FoodBreadBananaSlice
+      - FoodBreadCreamcheeseSlice
+      - FoodBreadMoldySlice
+      - FoodBreadGarlicSlice
+      - FoodBreadCornSlice
+      - FoodBreadSausageSlice
+      - FoodBreadButteredToast
+      - FoodBreadJellySlice
+      - FoodBreadFrenchToast
+      - FoodBreadTwoSlice
+      - FoodBreadVolcanicSlice
+      - FoodBreadTofuSlice
+      - FoodBreadBaguetteSlice
+      - FoodCakeBlueberrySlice
+      - FoodCakePlainSlice
+      - FoodCakeCarrotSlice
+      - FoodCakeCheeseSlice
+      - FoodCakeOrangeSlice
+      - FoodCakeLimeSlice
+      - FoodCakeLemonSlice
+      - FoodCakeChocolateSlice
+      - FoodCakeAppleSlice
+      - FoodCakeSlimeSlice
+      - FoodCakePumpkinSlice
+      - FoodCakeChristmasSlice
+      - FoodCakeVanillaSlice
+      - FoodCakeBirthdaySlice
+      - FoodCakeBerryDelightSlice
+      - FoodCakeCottonSlice
+      - FoodBakedMuffin
+      - FoodBakedMuffinBerry
+      - FoodBakedMuffinCherry
+      - FoodBakedMuffinBluecherry
+      - FoodBakedMuffinChocolate
+      - FoodBakedMuffinBanana
+      - FoodBakedBunHoney
+      - FoodBakedBunHotX
+      - FoodBakedBunMeat
+      - FoodBakedCookie
+      - FoodBakedCookieOatmeal
+      - FoodBakedCookieRaisin
+      - FoodBakedCookieSugar
+      - FoodBakedGrilledCheeseSandwich
+      - FoodBakedGrilledCheeseSandwichCotton
+      - FoodBakedNugget
+      - FoodBakedPancake
+      - FoodBakedPancakeBb
+      - FoodBakedPancakeCc
+      - FoodBakedWaffle
+      - FoodBakedWaffleSoy
+      - FoodBakedWaffleSoylent
+      - FoodBakedWaffleRoffle
+      - FoodBakedPretzel
+      - FoodBakedCannoli
+      - FoodPieAppleSlice
+      - FoodPieBaklavaSlice
+      - FoodPieClafoutisSlice
+      - FoodPieMeatSlice
+      - FoodPieCherrySlice
+      - FoodPieFrostySlice
+      - FoodTartGrape
+      - FoodTartCoco
+      - FoodBakedBrownie
+      - FoodPieBananaCreamSlice
+      - FoodTartMimeSlice
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - FoodBreadMeatSpiderSlice
+      - FoodBreadMimanaSlice
+      - FoodCakeBrainSlice
+      - FoodCakeClownSlice
+      - FoodCakeSpacemanSlice
+      - FoodTartGapple
+      - FoodBreadMeatXenoSlice
+      - FoodPieXenoSlice
+      - FoodBakedCannabisBrownie
+    rareChance: 0.05

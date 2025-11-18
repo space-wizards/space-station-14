@@ -3,14 +3,41 @@
   id: SeedBase
   abstract: true
   components:
-    - type: Seed
     - type: SolutionContainerManager
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi
-      state: seed
-      netsync: true
+      layers:
+      - state: seed
+      - state: paper
+        visible: false
+        map: ["enum.PaperLabelVisuals.Layer"]
+        sprite: Objects/Specific/Hydroponics/seeds.rsi
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.PaperLabelVisuals.HasLabel:
+          enum.PaperLabelVisuals.Layer:
+            True: { visible: true }
+            False: { visible: false }
     - type: Item
-      size: 2
+      size: Tiny
+    - type: StaticPrice
+      price: 20
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        paper_label: !type:ContainerSlot
+    - type: PaperLabel
+      labelSlot:
+        insertVerbText: comp-paper-label-insert
+        ejectVerbText: comp-paper-label-eject
+        whitelist:
+          components:
+          - Paper
+        blacklist:
+          tags:
+          - Book
+    - type: PhysicalComposition
 
 - type: entity
   parent: SeedBase
@@ -18,9 +45,20 @@
   id: WheatSeeds
   components:
     - type: Seed
-      seed: wheat
+      seedId: wheat
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/wheat.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of meatwheat seeds
+  description: "If you ever wanted to drive a vegetarian to insanity, here's how."
+  id: MeatwheatSeeds
+  components:
+    - type: Seed
+      seedId: meatwheat
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/meatwheat.rsi
 
 - type: entity
   parent: SeedBase
@@ -28,7 +66,7 @@
   id: OatSeeds
   components:
     - type: Seed
-      seed: oat
+      seedId: oat
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/oat.rsi
 
@@ -38,9 +76,19 @@
   id: BananaSeeds
   components:
     - type: Seed
-      seed: banana
+      seedId: banana
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/banana.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of mimana seeds
+  id: MimanaSeeds
+  components:
+    - type: Seed
+      seedId: mimana
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/mimana.rsi
 
 - type: entity
   parent: SeedBase
@@ -48,9 +96,40 @@
   id: CarrotSeeds
   components:
     - type: Seed
-      seed: carrots
+      seedId: carrots
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/carrot.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of cabbage seeds
+  id: CabbageSeeds
+  components:
+    - type: Seed
+      seedId: cabbage
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cabbage.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of garlic seeds
+  id: GarlicSeeds
+  components:
+    - type: Seed
+      seedId: garlic
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/garlic.rsi
+
+- type: entity
+  parent: SeedBase
+  id: LaughinPeaSeeds
+  name: packet of laughin' pea pods
+  description: "These seeds give off a very soft purple glow.. they should grow into Laughin' Peas."
+  components:
+    - type: Seed
+      seedId: laughinPea
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/laughin_pea.rsi
 
 - type: entity
   parent: SeedBase
@@ -58,9 +137,50 @@
   id: LemonSeeds
   components:
     - type: Seed
-      seed: lemon
+      seedId: lemon
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/lemon.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of lemoon seeds
+  id: LemoonSeeds
+  components:
+    - type: Seed
+      seedId: lemoon
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lemoon.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of lime seeds
+  id: LimeSeeds
+  components:
+    - type: Seed
+      seedId: lime
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lime.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of orange seeds
+  id: OrangeSeeds
+  components:
+    - type: Seed
+      seedId: orange
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/orange.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of extradimensional orange seeds
+  description: "Polygonal seeds."
+  id: ExtradimensionalOrangeSeeds
+  components:
+    - type: Seed
+      seedId: extradimensionalOrange
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
 
 - type: entity
   parent: SeedBase
@@ -68,7 +188,7 @@
   id: PineappleSeeds
   components:
     - type: Seed
-      seed: pineapple
+      seedId: pineapple
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/pineapple.rsi
 
@@ -78,7 +198,7 @@
   id: PotatoSeeds
   components:
     - type: Seed
-      seed: potato
+      seedId: potato
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/potato.rsi
 
@@ -88,19 +208,49 @@
   id: SugarcaneSeeds
   components:
     - type: Seed
-      seed: sugarcane
+      seedId: sugarcane
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/sugarcane.rsi
 
 - type: entity
   parent: SeedBase
-  name: packet of tower cap seeds
+  name: packet of tea plant seeds
+  id: TeaPlantSeeds
+  components:
+    - type: Seed
+      seedId: teaPlant
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tea_plant.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of papercane seeds
+  id: PapercaneSeeds
+  components:
+    - type: Seed
+      seedId: papercane
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/papercane.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of tower cap spores
   id: TowercapSeeds
   components:
     - type: Seed
-      seed: towercap
+      seedId: towercap
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/towercap.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of steel cap spores
+  id: SteelcapSeeds
+  components:
+    - type: Seed
+      seedId: steelcap
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/steelcap.rsi
 
 - type: entity
   parent: SeedBase
@@ -108,9 +258,39 @@
   id: TomatoSeeds
   components:
     - type: Seed
-      seed: tomato
+      seedId: tomato
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/tomato.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of blue tomato seeds
+  id: BlueTomatoSeeds
+  components:
+    - type: Seed
+      seedId: blueTomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of blood tomato seeds
+  id: BloodTomatoSeeds
+  components:
+    - type: Seed
+      seedId: bloodTomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of killer tomato seeds
+  id: KillerTomatoSeeds
+  components:
+    - type: Seed
+      seedId: killerTomato
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/tomatokiller.rsi
 
 - type: entity
   parent: SeedBase
@@ -118,7 +298,7 @@
   id: EggplantSeeds
   components:
     - type: Seed
-      seed: eggplant
+      seedId: eggplant
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/eggplant.rsi
 
@@ -128,9 +308,19 @@
   id: AppleSeeds
   components:
     - type: Seed
-      seed: apple
+      seedId: apple
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/apple.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of golden apple seeds
+  id: GoldenAppleSeeds
+  components:
+    - type: Seed
+      seedId: goldenApple
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/golden_apple.rsi
 
 - type: entity
   parent: SeedBase
@@ -138,7 +328,7 @@
   id: CornSeeds
   components:
     - type: Seed
-      seed: corn
+      seedId: corn
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/corn.rsi
 
@@ -148,7 +338,7 @@
   id: ChanterelleSeeds
   components:
     - type: Seed
-      seed: chanterelle
+      seedId: chanterelle
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/chanterelle.rsi
 
@@ -158,7 +348,7 @@
   id: EggySeeds
   components:
     - type: Seed
-      seed: eggy
+      seedId: eggy
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/eggy.rsi
 
@@ -169,7 +359,7 @@
   id: TobaccoSeeds
   components:
     - type: Seed
-      seed: tobacco
+      seedId: tobacco
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/tobacco.rsi
 
@@ -180,9 +370,20 @@
   id: CannabisSeeds
   components:
     - type: Seed
-      seed: cannabis
+      seedId: cannabis
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/cannabis.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of rainbow cannabis seeds
+  description: "These seeds grow into rainbow weed. Groovy... and also highly addictive."
+  id: RainbowCannabisSeeds
+  components:
+    - type: Seed
+      seedId: rainbowCannabis
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
 
 - type: entity
   parent: SeedBase
@@ -191,9 +392,20 @@
   id: NettleSeeds
   components:
     - type: Seed
-      seed: nettle
+      seedId: nettle
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/nettle.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of death nettle seeds
+  description: "Handle with very thick gloves."
+  id: DeathNettleSeeds
+  components:
+    - type: Seed
+      seedId: deathNettle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/death_nettle.rsi
 
 - type: entity
   parent: SeedBase
@@ -202,9 +414,20 @@
   id: ChiliSeeds
   components:
     - type: Seed
-      seed: chili
+      seedId: chili
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/chili.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of chilly seeds
+  description: "Frostburn."
+  id: ChillySeeds
+  components:
+    - type: Seed
+      seedId: chilly
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/chilly.rsi
 
 - type: entity
   parent: SeedBase
@@ -213,7 +436,7 @@
   id: AloeSeeds
   components:
     - type: Seed
-      seed: aloe
+      seedId: aloe
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/aloe.rsi
 
@@ -224,18 +447,29 @@
   id: PoppySeeds
   components:
     - type: Seed
-      seed: poppy
+      seedId: poppy
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/poppy.rsi
 
 - type: entity
   parent: SeedBase
-  name: packet of lingzhi seeds
+  name: packet of lily seeds
+  description: "These seeds grow into lilies."
+  id: LilySeeds
+  components:
+    - type: Seed
+      seedId: lily
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/lily.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of lingzhi spores
   description: "Also known as reishi."
   id: LingzhiSeeds
   components:
     - type: Seed
-      seed: lingzhi
+      seedId: lingzhi
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/lingzhi.rsi
 
@@ -246,9 +480,20 @@
   id: AmbrosiaVulgarisSeeds
   components:
     - type: Seed
-      seed: ambrosiaVulgaris
+      seedId: ambrosiaVulgaris
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of ambrosia deus seeds
+  description: "A medicinal plant for the gods themselves."
+  id: AmbrosiaDeusSeeds
+  components:
+    - type: Seed
+      seedId: ambrosiaDeus
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
 
 - type: entity
   parent: SeedBase
@@ -257,29 +502,40 @@
   id: GalaxythistleSeeds
   components:
     - type: Seed
-      seed: galaxythistle
+      seedId: galaxythistle
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
 
 - type: entity
   parent: SeedBase
-  name: packet of fly amanita seeds
+  name: packet of glasstle seeds
+  description: "Scars of gloomy nights."
+  id: GlasstleSeeds
+  components:
+    - type: Seed
+      seedId: glasstle
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/glasstle.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of fly amanita spores
   description: "The iconic, extremely deadly mushroom to be used for purely ornamental purposes."
   id: FlyAmanitaSeeds
   components:
     - type: Seed
-      seed: flyAmanita
+      seedId: flyAmanita
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
 
 - type: entity
-  parent: SeedBase
+  parent: [SeedBase, BaseSyndicateContraband]
   name: packet of gatfruit seeds
   description: "These are no peashooters."
   id: GatfruitSeeds
   components:
     - type: Seed
-      seed: gatfruit
+      seedId: gatfruit
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/gatfruit.rsi
 
@@ -290,6 +546,229 @@
   id: OnionSeeds
   components:
     - type: Seed
-      seed: onion
+      seedId: onion
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/onion.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of rice seeds
+  id: RiceSeeds
+  components:
+    - type: Seed
+      seedId: rice
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/rice.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of soybean seeds
+  id: SoybeanSeeds
+  components:
+    - type: Seed
+      seedId: soybeans
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/soybeans.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of spaceman's trumpet seeds
+  id: SpacemansTrumpetSeeds
+  components:
+    - type: Seed
+      seedId: spacemansTrumpet
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of koibean seeds
+  id: KoibeanSeeds
+  components:
+    - type: Seed
+      seedId: koibean
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/koibean.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of red onion seeds
+  description: "Purple despite the name."
+  id: OnionRedSeeds
+  components:
+    - type: Seed
+      seedId: onionred
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/onion_red.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of watermelon seeds
+  id: WatermelonSeeds
+  components:
+    - type: Seed
+      seedId: watermelon
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/watermelon.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of holymelon seeds
+  id: HolymelonSeeds
+  components:
+    - type: Seed
+      seedId: holymelon
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/holymelon.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of grape seeds
+  id: GrapeSeeds
+  components:
+    - type: Seed
+      seedId: grape
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/grape.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of cocoa seeds
+  id: CocoaSeeds
+  components:
+    - type: Seed
+      seedId: cocoa
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cocoa.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of berry seeds
+  id: BerrySeeds
+  components:
+    - type: Seed
+      seedId: berries
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/berries.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of bungo seeds
+  description: "Don't eat the pits."
+  id: BungoSeeds
+  components:
+    - type: Seed
+      seedId: bungo
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/bungo.rsi
+
+- type: entity
+  parent: SeedBase
+  id: PeaSeeds
+  name: packet of pea pods
+  description: "These humble plants were once a vital part in the study of genetics."
+  components:
+    - type: Seed
+      seedId: pea
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pea.rsi
+
+- type: entity
+  parent: SeedBase
+  id: WorldPeaSeeds
+  name: packet of world pea seeds
+  description: "These rather large seeds give off a soothing blue glow."
+  components:
+    - type: Seed
+      seedId: worldPea
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/world_pea.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of pumpkin seeds
+  id: PumpkinSeeds
+  components:
+    - type: Seed
+      seedId: pumpkin
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pumpkin.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of blue pumpkin seeds
+  id: BluePumpkinSeeds
+  components:
+    - type: Seed
+      seedId: bluePumpkin
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/blue_pumpkin.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of cotton seeds
+  id: CottonSeeds
+  components:
+    - type: Seed
+      seedId: cotton
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cotton.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of pyrotton seeds
+  id: PyrottonSeeds
+  components:
+    - type: Seed
+      seedId: pyrotton
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/pyrotton.rsi
+
+- type: entity
+  parent: SeedBase
+  id: RealCapfruitSeeds
+  name: packet of capfruit seeds
+  description: "Is it real, or is it fake?"
+  components:
+    - type: Seed
+      seedId: realCapfruit
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/capfruit.rsi
+
+- type: entity
+  parent: RealCapfruitSeeds
+  id: FakeCapfruitSeeds
+  suffix: Fake
+  components:
+    - type: Seed
+      seedId: fakeCapfruit
+
+- type: entity
+  parent: SeedBase
+  name: packet of cherry seeds
+  id: CherrySeeds
+  components:
+    - type: Seed
+      seedId: cherry
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/cherry.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of anomaly berry seeds
+  id: AnomalyBerrySeeds
+  components:
+    - type: Seed
+      seedId: anomalyBerry
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of bloonion seeds
+  id: BloonionSeeds
+  components:
+  - type: Seed
+    seedId: bloonion
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/bloonion.rsi

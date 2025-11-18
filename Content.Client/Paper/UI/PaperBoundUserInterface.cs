@@ -1,58 +1,53 @@
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using static Content.Shared.Paper.SharedPaperComponent;
+using Robust.Shared.Utility;
+using Content.Shared.Paper;
+using static Content.Shared.Paper.PaperComponent;
 
-namespace Content.Client.Paper.UI
+namespace Content.Client.Paper.UI;
+
+[UsedImplicitly]
+public sealed class PaperBoundUserInterface : BoundUserInterface
 {
-    [UsedImplicitly]
-    public sealed class PaperBoundUserInterface : BoundUserInterface
+    [ViewVariables]
+    private PaperWindow? _window;
+
+    public PaperBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        private PaperWindow? _window;
+    }
 
-        public PaperBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+    protected override void Open()
+    {
+        base.Open();
+
+        _window = this.CreateWindow<PaperWindow>();
+        _window.OnSaved += InputOnTextEntered;
+
+        if (EntMan.TryGetComponent<PaperComponent>(Owner, out var paper))
         {
+            _window.MaxInputLength = paper.ContentSize;
         }
-
-        protected override void Open()
+        if (EntMan.TryGetComponent<PaperVisualsComponent>(Owner, out var visuals))
         {
-            base.Open();
-            _window = new PaperWindow
-            {
-                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
-            };
-            _window.OnClose += Close;
-            _window.Input.OnTextEntered += Input_OnTextEntered;
-            _window.OpenCentered();
-
+            _window.InitVisuals(Owner, visuals);
         }
+    }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+        _window?.Populate((PaperBoundUserInterfaceState) state);
+    }
+
+    private void InputOnTextEntered(string text)
+    {
+        SendMessage(new PaperInputTextMessage(text));
+
+        if (_window != null)
         {
-            base.UpdateState(state);
-            _window?.Populate((PaperBoundUserInterfaceState) state);
-        }
-
-        private void Input_OnTextEntered(LineEdit.LineEditEventArgs obj)
-        {
-            if (!string.IsNullOrEmpty(obj.Text))
-            {
-                SendMessage(new PaperInputText(obj.Text));
-
-                if (_window != null)
-                {
-                    _window.Input.Text = string.Empty;
-                }
-            }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
+            _window.Input.TextRope = Rope.Leaf.Empty;
+            _window.Input.CursorPosition = new TextEdit.CursorPos(0, TextEdit.LineBreakBias.Top);
         }
     }
 }

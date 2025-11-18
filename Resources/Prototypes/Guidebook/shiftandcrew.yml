@@ -1,0 +1,12 @@
+- type: guideEntry
+  id: Jobs
+  name: guide-entry-jobs
+  text: "/ServerInfo/Guidebook/Jobs.xml"
+  children:
+  - Service
+  - Cargo
+  - Medical
+  - Science
+  - Engineering
+  - Security
+  - Command

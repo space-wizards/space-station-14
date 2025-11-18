@@ -1,0 +1,34 @@
+﻿- type: constructionGraph
+  id: HudMedSec
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: medsecHud
+          steps:
+            - tag: HudMedical
+              name: construction-graph-tag-medical-hud
+              icon:
+                sprite: Clothing/Eyes/Hud/med.rsi
+                state: icon
+              doAfter: 5
+            - tag: HudSecurity
+              name: construction-graph-tag-security-hud
+              icon:
+                sprite: Clothing/Eyes/Hud/sec.rsi
+                state: icon
+              doAfter: 5
+            - material: Cable
+              amount: 5
+              doAfter: 5
+            - tag: Radio
+              name: construction-graph-tag-radio
+              icon:
+                sprite: Objects/Devices/communication.rsi
+                state: walkietalkie
+              doAfter: 5
+            - material: Manipulator
+              amount: 2
+              doAfter: 5
+    - node: medsecHud
+      entity: ClothingEyesHudMedSec

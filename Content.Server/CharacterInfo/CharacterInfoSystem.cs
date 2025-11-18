@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
-using Content.Server.Mind.Components;
+﻿using Content.Server.Mind;
 using Content.Server.Roles;
+using Content.Server.Roles.Jobs;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Player;
+using Content.Shared.Objectives.Components;
+using Content.Shared.Objectives.Systems;
 
 namespace Content.Server.CharacterInfo;
 
 public sealed class CharacterInfoSystem : EntitySystem
 {
+    [Dependency] private readonly JobSystem _jobs = default!;
+    [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private readonly RoleSystem _roles = default!;
+    [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -20,44 +25,37 @@ public sealed class CharacterInfoSystem : EntitySystem
     private void OnRequestCharacterInfoEvent(RequestCharacterInfoEvent msg, EntitySessionEventArgs args)
     {
         if (!args.SenderSession.AttachedEntity.HasValue
-            || args.SenderSession.AttachedEntity != msg.EntityUid)
+            || args.SenderSession.AttachedEntity != GetEntity(msg.NetEntity))
             return;
 
         var entity = args.SenderSession.AttachedEntity.Value;
 
-        var conditions = new Dictionary<string, List<ConditionInfo>>();
-        var jobTitle = "No Profession";
-        var briefing = "!!ERROR: No Briefing!!"; //should never show on the UI unless there's a bug
-        if (EntityManager.TryGetComponent(entity, out MindComponent? mindComponent) && mindComponent.Mind != null)
+        var objectives = new Dictionary<string, List<ObjectiveInfo>>();
+        var jobTitle = Loc.GetString("character-info-no-profession");
+        string? briefing = null;
+        if (_minds.TryGetMind(entity, out var mindId, out var mind))
         {
-            var mind = mindComponent.Mind;
-
             // Get objectives
-            foreach (var objective in mind.AllObjectives)
+            foreach (var objective in mind.Objectives)
             {
-                if (!conditions.ContainsKey(objective.Prototype.Issuer))
-                    conditions[objective.Prototype.Issuer] = new List<ConditionInfo>();
-                foreach (var condition in objective.Conditions)
-                {
-                    conditions[objective.Prototype.Issuer].Add(new ConditionInfo(condition.Title,
-                        condition.Description, condition.Icon, condition.Progress));
-                }
+                var info = _objectives.GetInfo(objective, mindId, mind);
+                if (info == null)
+                    continue;
+
+                // group objectives by their issuer
+                var issuer = Comp<ObjectiveComponent>(objective).LocIssuer;
+                if (!objectives.ContainsKey(issuer))
+                    objectives[issuer] = new List<ObjectiveInfo>();
+                objectives[issuer].Add(info.Value);
             }
 
-            // Get job title
-            foreach (var role in mind.AllRoles)
-            {
-                if (role.GetType() != typeof(Job)) continue;
-
-                jobTitle = role.Name;
-                break;
-            }
+            if (_jobs.MindTryGetJobName(mindId, out var jobName))
+                jobTitle = jobName;
 
             // Get briefing
-            briefing = mind.Briefing;
+            briefing = _roles.MindGetBriefing(mindId);
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(entity, jobTitle, conditions, briefing),
-            Filter.SinglePlayer(args.SenderSession));
+        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, objectives, briefing), args.SenderSession);
     }
 }

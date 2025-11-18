@@ -1,0 +1,20 @@
+﻿- type: constructionGraph
+  id: WoodenBuckler
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodenBuckler
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 2
+            - material: WoodPlank
+              amount: 5
+              doAfter: 2
+            - material: Steel
+              amount: 5
+              doAfter: 2
+
+    - node: woodenBuckler
+      entity: WoodenBuckler

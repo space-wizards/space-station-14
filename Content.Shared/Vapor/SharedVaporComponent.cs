@@ -1,20 +1,10 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.Vapor
+namespace Content.Shared.Vapor;
+
+[Serializable, NetSerializable]
+public enum VaporVisuals
 {
-    [Virtual]
-    public class SharedVaporComponent : Component
-    {
-        public const string SolutionName = "vapor";
-    }
-
-    [Serializable, NetSerializable]
-    public enum VaporVisuals
-    {
-        Rotation,
-        Color,
-        State,
-    }
+    Color,
+    State,
 }

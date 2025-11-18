@@ -1,0 +1,253 @@
+- type: entity
+  id: CrystalGreen
+  parent: BaseStructure
+  suffix: green
+  name: crystal
+  description: A crystaline solid.
+  components:
+    - type: Sprite
+      sprite: Structures/Decoration/crystal.rsi
+      state: crystal_grey
+      color: "#52ff39"
+      noRot: true
+    - type: Reflect
+      reflectProb: 0.5
+      reflects:
+      - Energy
+      spread: 75
+    - type: Anchorable
+      delay: 2
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          density: 60
+          mask:
+            - MachineMask
+          layer:
+            - MidImpassable
+            - LowImpassable
+            - BulletImpassable
+            - Opaque
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#52ff39"
+    - type: Damageable
+      damageContainer: StructuralInorganic
+      damageModifierSet: Glass
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalGreen:
+                  min: 1
+                  max: 1
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+
+- type: entity
+  id: CrystalPink
+  parent: CrystalGreen
+  suffix: pink
+  components:
+    - type: Sprite
+      color: "#ff66cc"
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#ff66cc"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalPink:
+                  min: 1
+                  max: 1
+
+- type: entity
+  id: CrystalGrey
+  parent: CrystalGreen
+  suffix: red
+  components:
+    - type: Sprite
+      state: crystal_grey
+      color: "#fb4747"
+    - type: PointLight
+      color: "#fb4747"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalRed:
+                  min: 1
+                  max: 2
+
+- type: entity
+  id: CrystalOrange
+  parent: CrystalGreen
+  suffix: orange
+  components:
+    - type: Sprite
+      color: "#ff8227"
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#ff8227"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalOrange:
+                  min: 1
+                  max: 2
+
+- type: entity
+  id: CrystalBlack
+  parent: CrystalGreen
+  suffix: black
+  components:
+    - type: Sprite
+      color: "#363636"
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#363636"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalBlack:
+                  min: 1
+                  max: 2
+
+- type: entity
+  id: CrystalBlue
+  parent: CrystalGreen
+  suffix: blue
+  components:
+    - type: Sprite
+      color: "#39a1ff"
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#39a1ff"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalBlue:
+                  min: 1
+                  max: 2
+
+- type: entity
+  id: CrystalYellow
+  parent: CrystalGreen
+  suffix: yellow
+  components:
+    - type: Sprite
+      color: "#ffde46"
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#ffde46"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalYellow:
+                  min: 1
+                  max: 2
+
+- type: entity
+  id: CrystalCyan
+  parent: CrystalGreen
+  suffix: cyan
+  components:
+    - type: Sprite
+      color: "#47f8ff"
+    - type: PointLight
+      radius: 3
+      energy: 3
+      color: "#47f8ff"
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                ShardCrystalCyan:
+                  min: 1
+                  max: 2
+            - !type:DoActsBehavior
+               acts: [ "Destruction" ]

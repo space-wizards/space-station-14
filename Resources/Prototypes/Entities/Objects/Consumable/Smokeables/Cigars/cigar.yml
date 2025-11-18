@@ -1,6 +1,3 @@
-- type: Tag
-  id: Cigar
-
 - type: entity
   id: Cigar
   parent: BaseCigar
@@ -9,16 +6,38 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
-    netsync: false
     state: unlit-icon
   - type: Tag
     tags:
       - Cigar
+      - Trash
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
-    Slots: [ mask ]
-    HeldPrefix: unlit
-    size: 1
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
+    size: Tiny
+    sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
+    heldPrefix: unlit
+
+- type: entity
+  id: CigarSpent
+  parent: Cigar
+  suffix: spent
+  components:
+  - type: Sprite
+    state: burnt-icon
+  - type: Smokable
+    state: Burnt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+  - type: Tag
+    tags:
+      - Cigar
+      - Trash
+      - Burnt
 
 - type: entity
   id: CigarGold
@@ -28,10 +47,24 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
-    netsync: false
     state: unlit-icon
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
-    Slots: [ mask ]
-    HeldPrefix: unlit
-    size: 1
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
+    size: Tiny
+
+- type: entity
+  id: CigarGoldSpent
+  parent: CigarGold
+  suffix: spent
+  components:
+  - type: Sprite
+    state: burnt-icon
+  - type: Smokable
+    state: Burnt
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20

@@ -5,16 +5,20 @@
   description: A sheet of metal, used often on the station in various applications.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/Sheets/metal.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/metal.rsi
-  - type: ItemStatus
+    size: Normal
+  - type: StaticPrice
+    price: 0
   - type: Tag
     tags:
     - Sheet
     - Metal
-    - DroneUsable
+    - ConstructionMaterial
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -23,6 +27,13 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        canReact: false
+  - type: GuideHelp
+    guides:
+    - ExpandingRepairingStation
 
 - type: entity
   parent: SheetMetalBase
@@ -31,24 +42,46 @@
   suffix: Full
   components:
   - type: Material
-    materials:
-    - Steel
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: Stack
     stackType: Steel
+    baseLayer: base
+    layerStates:
+    - steel
+    - steel_2
+    - steel_3
   - type: Sprite
     state: steel_3
+    layers:
+    - state: steel_3
+      map: ["base"]
   - type: Item
-    HeldPrefix: steel
+    heldPrefix: steel
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - steel
-      - steel_2
-      - steel_3
-  - type: FloorTile
-    outputs:
-    - plating
+  - type: Extractable
+    grindableSolutionName: steel
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 9
+        - ReagentId: Carbon
+          Quantity: 1
+
+- type: entity
+  parent: SheetSteel
+  id: SheetSteel10
+  name: steel
+  suffix: 10
+  components:
+  - type: Sprite
+    state: steel
+  - type: Stack
+    stackType: Steel
+    count: 10
 
 - type: entity
   parent: SheetSteel
@@ -64,131 +97,55 @@
 
 - type: entity
   parent: SheetMetalBase
-  id: SheetPlasteel
-  name: plasteel
-  suffix: Full
-  components:
-  - type: Material
-    materials:
-    - Plasteel
-  - type: Stack
-    stackType: Plasteel
-  - type: Sprite
-    state: plasteel_3
-  - type: Item
-    HeldPrefix: plasteel
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plasteel
-      - plasteel_2
-      - plasteel_3
-
-- type: entity
-  parent: SheetPlasteel
-  id: SheetPlasteel1
-  name: plasteel
-  suffix: Single
-  components:
-  - type: Sprite
-    state: plasteel
-  - type: Stack
-    stackType: Plasteel
-    count: 1
-
-- type: entity
-  parent: SheetMetalBase
-  id: SheetTitanium
-  name: titanium
-  suffix: Full
-  components:
-  - type: Material
-    materials:
-    - Titanium
-  - type: Stack
-    stackType: Titanium
-  - type: Sprite
-    state: titanium_3
-  - type: Item
-    HeldPrefix: titanium
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - titanium
-      - titanium_2
-      - titanium_3
-
-- type: entity
-  parent: SheetTitanium
-  id: SheetTitanium1
-  name: titanium
-  suffix: Single
-  components:
-  - type: Sprite
-    state: titanium
-  - type: Stack
-    stackType: Titanium
-    count: 1
-
-- type: entity
-  parent: SheetMetalBase
-  id: SheetPlastitanium
-  name: plastitanium
-  suffix: Full
-  components:
-  - type: Material
-    materials:
-    - Plastitanium
-  - type: Stack
-    stackType: Plastitanium
-  - type: Sprite
-    state: plastitanium_3
-  - type: Item
-    HeldPrefix: plastitanium
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plastitanium
-      - plastitanium_2
-      - plastitanium_3
-
-- type: entity
-  parent: SheetPlastitanium
-  id: SheetPlastitanium1
-  name: plastitanium
-  suffix: Single
-  components:
-  - type: Sprite
-    state: plastitanium
-  - type: Stack
-    stackType: Plastitanium
-    count: 1
-
-- type: entity
-  parent: SheetMetalBase
   id: SheetBrass
   name: brass
+  description: A sheet of brass, primarily used by clockwork enthusiasts and the remnants of Ratvarian cults.
   suffix: Full
   components:
   - type: Material
-    materials:
-    - Brass
+  - type: PhysicalComposition
+    materialComposition:
+      Brass: 100
   - type: Stack
     stackType: Brass
+    baseLayer: base
+    layerStates:
+    - brass
+    - brass_2
+    - brass_3
   - type: Sprite
     state: brass_3
+    layers:
+    - state: brass_3
+      map: ["base"]
   - type: Item
-    HeldPrefix: brass
+    heldPrefix: brass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - brass
-      - brass_2
-      - brass_3
+  - type: FloorTile
+    outputs:
+    - PlatingBrass
+  - type: Extractable
+    grindableSolutionName: brass
+  - type: SolutionContainerManager
+    solutions:
+      brass:
+        reagents:
+        - ReagentId: Zinc
+          Quantity: 3.3
+        - ReagentId: Copper
+          Quantity: 6.7
+
+- type: entity
+  parent: SheetBrass
+  id: SheetBrass10
+  name: brass
+  suffix: 10
+  components:
+  - type: Sprite
+    state: brass
+  - type: Stack
+    stackType: Brass
+    count: 10
 
 - type: entity
   parent: SheetBrass
@@ -200,4 +157,67 @@
     state: brass
   - type: Stack
     stackType: Brass
+    count: 1
+
+- type: entity
+  parent: SheetMetalBase
+  id: SheetPlasteel
+  name: plasteel
+  suffix: Full
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Plasteel: 100
+  - type: Stack
+    stackType: Plasteel
+    baseLayer: base
+    layerStates:
+    - plasteel
+    - plasteel_2
+    - plasteel_3
+  - type: Sprite
+    state: plasteel_3
+    layers:
+    - state: plasteel_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: plasteel
+  - type: Appearance
+  - type: Extractable
+    grindableSolutionName: plasteel
+  - type: SolutionContainerManager
+    solutions:
+      plasteel:
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 10
+        - ReagentId: Iron
+          Quantity: 9
+        - ReagentId: Carbon
+          Quantity: 1
+        canReact: false
+
+- type: entity
+  parent: SheetPlasteel
+  id: SheetPlasteel10
+  name: plasteel
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plasteel
+  - type: Stack
+    stackType: Plasteel
+    count: 10
+
+- type: entity
+  parent: SheetPlasteel
+  id: SheetPlasteel1
+  name: plasteel
+  suffix: Single
+  components:
+  - type: Sprite
+    state: plasteel
+  - type: Stack
+    stackType: Plasteel
     count: 1

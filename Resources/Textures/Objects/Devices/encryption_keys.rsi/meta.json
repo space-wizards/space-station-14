@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by DSC@300074782328750080 for Space Station 14, borg_label taken from https://github.com/vgstation-coders/vgstation13/blob/e71d6c4fba5a51f99b81c295dcaec4fc2f58fb19/icons/mob/screen1.dmi and modified by ArtisticRoomba, crypt states modified by Flareguy for Space Station 14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {"name": "crypt_gray"},
+    {"name": "crypt_rusted"},
+    {"name": "crypt_gold"},
+    {"name": "crypt_orange"},
+    {"name": "crypt_silver"},
+    {"name": "crypt_red"},
+    {"name": "crypt_blue"},
+    {"name": "common_label"},
+    {"name": "cap_label"},
+    {"name": "cargo_label"},
+    {"name": "ce_label"},
+    {"name": "cmo_label"},
+    {"name": "com_label"},
+    {"name": "eng_label"},
+    {"name": "hop_label"},
+    {"name": "hos_label"},
+    {"name": "medsci_label"},
+    {"name": "med_label"},
+    {"name": "miner_label"},
+    {"name": "nano_label"},
+    {"name": "pirate_label"},
+    {"name": "qm_label"},
+    {"name": "rd_label"},
+    {"name": "robotics_label"},
+    {"name": "sci_label"},
+    {"name": "sec_label"},
+    {"name": "service_label"},
+    {"name": "synd_label"},
+    {"name": "borg_label"},
+    {"name": "ai_label"}
+  ]
+}

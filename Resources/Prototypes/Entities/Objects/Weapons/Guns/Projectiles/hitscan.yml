@@ -1,51 +1,160 @@
+# Used to animate the hitscan effects because effectsystem doesn't support it
 - type: entity
-  name: red laser
+  id: HitscanEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 2.0
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
+
+- type: entity
+  id: BasicHitscan
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanAmmo
+  - type: HitscanBasicRaycast
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_laser
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_laser
+  - type: HitscanReflect
+  - type: HitscanBasicEffects
+
+- type: entity
+  parent: BasicHitscan
+  id: RedLightLaser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 7
+
+- type: entity
+  parent: BasicHitscan
   id: RedLaser
-  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Hitscan
+  - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 15
-    spriteName: Objects/Weapons/Guns/Projectiles/laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/laser_impact.png
+        Heat: 14
 
 - type: entity
-  name: pulse
-  id: Pulse
-  abstract: true
+  parent: BasicHitscan
+  id: RedMediumLaser
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Hitscan
+  - type: HitscanBasicDamage
     damage:
       types:
-        Heat: 25
-    spriteName: Objects/Weapons/Guns/Projectiles/pulse.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/pulse_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/pulse_impact.png
+        Heat: 17
 
 - type: entity
-  name: red heavy laser
+  parent: BasicHitscan
   id: RedHeavyLaser
-  abstract: true
+  categories: [ HideSpawnMenu ]
   components:
-  - type: Hitscan
-    spriteName: Objects/Weapons/Guns/Projectiles/heavy_laser.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/heavy_laser_impact.png
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 28
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_beam_heavy
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_heavy
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_beam_heavy
+
+- type: entity
+  parent: BasicHitscan
+  id: RedLaserPractice
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 1
+
+- type: entity
+  parent: BasicHitscan
+  id: XrayLaser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 10
+        Radiation: 10
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_xray
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: xray
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_xray
+
+- type: entity
+  parent: BasicHitscan
+  id: Pulse
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 35
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_blue
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_blue
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_blue
+
+- type: entity
+  parent: BasicHitscan
+  id: RedShuttleLaser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HitscanBasicRaycast
+    maxDistance: 60.0
+  - type: HitscanBasicDamage
     damage:
       types:
         Heat: 45
-
-- type: entity
-  name: x-ray laser
-  id: XrayLaser
-  abstract: true
-  components:
-  - type: Hitscan
-    spriteName: Objects/Weapons/Guns/Projectiles/xray.png
-    muzzleFlash: Objects/Weapons/Guns/Projectiles/xray_muzzle.png
-    impactFlash: Objects/Weapons/Guns/Projectiles/xray_impact.png
-    damage:
-      types:
-        Heat: 60
+        Structural: 10
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_beam_heavy2
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_heavy2
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_beam_heavy2

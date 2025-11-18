@@ -1,6 +1,0 @@
-﻿- type: vendingMachineInventory
-  id: DwarvenMiningEquipmentInventory
-  name: Dwarven Mining Equipment
-  spriteName: mining
-  startingInventory:
-    Pickaxe: 4

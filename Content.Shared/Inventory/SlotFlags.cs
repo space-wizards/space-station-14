@@ -1,4 +1,3 @@
-﻿using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Inventory;
@@ -26,5 +25,8 @@ public enum SlotFlags
     POCKET = 1 << 12,
     LEGS = 1 << 13,
     FEET = 1 << 14,
+    SUITSTORAGE = 1 << 15,
     All = ~NONE,
+
+    WITHOUT_POCKET = All & ~POCKET
 }

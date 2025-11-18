@@ -9,3 +9,8 @@ ui-actionmenu-clear-button = Clear
 ui-actionsui-function-lock-action-slots = (Un)lock dragging and clearing action slots
 ui-actionsui-function-open-abilities-menu = Open action menu
 
+ui-actionmenu-enabled = Enabled
+ui-actionmenu-item = Item
+ui-actionmenu-innate = Innate
+ui-actionmenu-instant = Instant
+ui-actionmenu-targeted = Targeted

@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: flowerwreath
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: flowerwreath
+          steps:
+            - tag: Flower
+              name: construction-graph-tag-flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                state: produce
+            - tag: Flower
+              name: construction-graph-tag-flower
+              icon:
+                sprite: Objects/Specific/Hydroponics/poppy.rsi
+                state: produce
+            - tag: Ambrosia
+              name: construction-graph-tag-ambrosia
+              icon:
+                sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+                state: produce
+              doAfter: 10
+    - node: flowerwreath
+      entity: ClothingHeadHatFlowerWreath

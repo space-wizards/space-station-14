@@ -1,10 +1,14 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: DiscountDansInventory
-  name: Discount Dan's
-  spriteName: discount
   startingInventory:
     FoodSnackCheesie: 3
     FoodSnackChips: 3
-    FoodSnackBoritos: 2
-    FoodSnackPopcorn: 1
-    FoodSnackEnergy: 2
+    FoodSnackBoritos: 3
+    DrinkEnergyDrinkCan: 4
+    FoodSnackPopcorn: 3
+    FoodSnackEnergy: 3
+    CigPackMixed: 2
+    DiscountDanLighter: 1
+  contrabandInventory:
+    FoodSnackDanDanNoodles: 3
+    FoodBakedBunHoney: 3

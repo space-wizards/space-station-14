@@ -1,21 +1,19 @@
-using System;
-using System.Collections.Generic;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
     public sealed class CableVisSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
 
         public override void Initialize()
         {
@@ -26,19 +24,15 @@ namespace Content.Server.Power.EntitySystems
 
         private void UpdateAppearance(EntityUid uid, CableVisComponent cableVis, ref NodeGroupsRebuilt args)
         {
-            if (cableVis.Node == null)
-                return;
-
-            if (!TryComp(uid, out NodeContainerComponent? nodeContainer) || !TryComp(uid, out AppearanceComponent? appearance))
+            if (!_nodeContainer.TryGetNode(uid, cableVis.Node, out CableNode? node))
                 return;
 
             var transform = Transform(uid);
-            if (!_mapManager.TryGetGrid(transform.GridID, out var grid))
+            if (!TryComp<MapGridComponent>(transform.GridUid, out var grid))
                 return;
 
             var mask = WireVisDirFlags.None;
-            var tile = grid.TileIndicesFor(transform.Coordinates);
-            var node = nodeContainer.GetNode<CableNode>(cableVis.Node);
+            var tile = _map.TileIndicesFor((transform.GridUid.Value, grid), transform.Coordinates);
 
             foreach (var reachable in node.ReachableNodes)
             {
@@ -46,7 +40,7 @@ namespace Content.Server.Power.EntitySystems
                     continue;
 
                 var otherTransform = Transform(reachable.Owner);
-                var otherTile = grid.TileIndicesFor(otherTransform.Coordinates);
+                var otherTile = _map.TileIndicesFor((transform.GridUid.Value, grid), otherTransform.Coordinates);
                 var diff = otherTile - tile;
 
                 mask |= diff switch
@@ -59,7 +53,7 @@ namespace Content.Server.Power.EntitySystems
                 };
             }
 
-            appearance.SetData(WireVisVisuals.ConnectedMask, mask);
+            _appearance.SetData(uid, WireVisVisuals.ConnectedMask, mask);
         }
     }
 }

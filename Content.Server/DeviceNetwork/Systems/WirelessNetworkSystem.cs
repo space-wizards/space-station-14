@@ -1,12 +1,14 @@
 using Content.Server.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
     public sealed class WirelessNetworkSystem : EntitySystem
     {
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -18,11 +20,15 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WirelessNetworkComponent component, BeforePacketSentEvent args)
         {
-            var ownPosition = EntityManager.GetComponent<TransformComponent>(component.Owner).WorldPosition;
-            var position = EntityManager.GetComponent<TransformComponent>(args.Sender).WorldPosition;
-            var distance = (ownPosition - position).Length;
+            var ownPosition = args.SenderPosition;
+            var xform = Transform(uid);
 
-            if (EntityManager.TryGetComponent<WirelessNetworkComponent?>(args.Sender, out var sendingComponent) && distance > sendingComponent.Range)
+            // not a wireless to wireless connection, just let it happen
+            if (!TryComp<WirelessNetworkComponent>(args.Sender, out var sendingComponent))
+                return;
+
+            if (xform.MapID != args.SenderTransform.MapID
+                || (ownPosition - _transformSystem.GetWorldPosition(xform)).Length() > sendingComponent.Range)
             {
                 args.Cancel();
             }

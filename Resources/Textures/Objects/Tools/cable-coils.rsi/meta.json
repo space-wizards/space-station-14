@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "license": "CC BY-SA 3.0",
+  "license": "CC-BY-SA-3.0",
   "copyright": "Taken from tgstation and modified by SweptWasTaken at commit https://github.com/tgstation/tgstation/commit/77608a9f46b06a46f0f6b1be061755f68cc255a3",
   "size": {
     "x": 32,
@@ -29,6 +29,14 @@
     },
     {
       "name": "coillv-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "coilex-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "coilex-inhand-right",
       "directions": 4
     },
     {
@@ -71,6 +79,15 @@
       "name": "coilall-30"
     },
     {
+      "name": "coilex-30"
+    },
+    {
+      "name": "coilex-20"
+    },
+    {
+      "name": "coilex-10"
+    },
+    {
       "name": "coil-equipped-BELT",
       "directions": 4
     },
@@ -84,6 +101,10 @@
     },
     {
       "name": "coilhv-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "coilex-equipped-BELT",
       "directions": 4
     }
   ]

@@ -1,212 +1,96 @@
 # TODO BODY: Part damage
 - type: entity
   id: PartSlime
-  parent: BaseItem
+  parent: [BaseItem, BasePart]
   name: "slime body part"
   abstract: true
-  components:
-  - type: Damageable
-    damageContainer: Biological
 
 - type: entity
   id: TorsoSlime
   name: "slime torso"
-  parent: PartSlime
+  parent: [PartSlime, BaseTorso]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "torso_m"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "torso_m"
-    - type: BodyPart
-      partType: Torso
-      size: 14
-      compatibility: Slime
-      mechanisms:
-        - SentientSlimeCore
-#    criticalThreshold: 100
-#    deadThreshold: 150
 
 - type: entity
   id: HeadSlime
   name: "slime head"
-  parent: PartSlime
+  parent: [PartSlime, BaseHead]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "head_m"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "head_m"
-    - type: BodyPart
-      partType: Head
-      size: 7
-      compatibility: Slime
-      vital: true
-    #    criticalThreshold: 50
-    #    deadThreshold: 120
-    - type: Input
-      context: "ghost"
-    - type: DummyInputMover
-    - type: GhostOnMove
-
+  
 - type: entity
   id: LeftArmSlime
   name: "left slime arm"
-  parent: PartSlime
+  parent: [PartSlime, BaseLeftArm]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "l_arm"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "l_arm"
-    - type: BodyPart
-      partType: Arm
-      size: 5
-      compatibility: Slime
-      symmetry: Left
-    #    criticalThreshold: 40
-    #    deadThreshold: 80
 
 - type: entity
   id: RightArmSlime
   name: "right slime arm"
-  parent: PartSlime
+  parent: [PartSlime, BaseRightArm]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "r_arm"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "r_arm"
-    - type: BodyPart
-      partType: Arm
-      size: 5
-      compatibility: Slime
-      symmetry: Right
-    #    criticalThreshold: 40
-    #    deadThreshold: 80
 
 - type: entity
   id: LeftHandSlime
   name: "left slime hand"
-  parent: PartSlime
+  parent: [PartSlime, BaseLeftHand]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "l_hand"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "l_hand"
-    - type: BodyPart
-      partType: Hand
-      size: 3
-      compatibility: Slime
-      symmetry: Left
-    #    criticalThreshold: 30
-    #    deadThreshold: 60
 
 - type: entity
   id: RightHandSlime
   name: "right slime hand"
-  parent: PartSlime
+  parent: [PartSlime, BaseRightHand]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "r_hand"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "r_hand"
-    - type: BodyPart
-      partType: Hand
-      size: 3
-      compatibility: Slime
-      symmetry: Right
-    #    criticalThreshold: 30
-    #    deadThreshold: 60
 
 - type: entity
   id: LeftLegSlime
   name: "left slime leg"
-  parent: PartSlime
+  parent: [PartSlime, BaseLeftLeg]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "l_leg"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "l_leg"
-    - type: BodyPart
-      partType: Leg
-      size: 6
-      compatibility: Slime
-      symmetry: Left
 
 - type: entity
   id: RightLegSlime
   name: "right slime leg"
-  parent: PartSlime
+  parent: [PartSlime, BaseRightLeg]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "r_leg"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "r_leg"
-    - type: BodyPart
-      partType: Leg
-      size: 6
-      compatibility: Slime
-      symmetry: Right
-    #    criticalThreshold: 45
-    #    deadThreshold: 90
 
 - type: entity
   id: LeftFootSlime
   name: "left slime foot"
-  parent: PartSlime
+  parent: [PartSlime, BaseLeftFoot]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "l_foot"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "l_foot"
-    - type: BodyPart
-      partType: Foot
-      size: 2
-      compatibility: Slime
-      symmetry: Left
-#    criticalThreshold: 30
-#    deadThreshold: 60
 
 - type: entity
   id: RightFootSlime
   name: "right slime foot"
-  parent: PartSlime
+  parent: [PartSlime, BaseRightFoot]
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Slime/parts.rsi
       state: "r_foot"
-    - type: Icon
-      sprite: Mobs/Species/Slime/parts.rsi
-      state: "r_foot"
-    - type: BodyPart
-      partType: Foot
-      size: 2
-      compatibility: Slime
-      symmetry: Right
-#    criticalThreshold: 30
-#    deadThreshold: 60

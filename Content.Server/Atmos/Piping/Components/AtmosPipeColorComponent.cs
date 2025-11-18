@@ -1,23 +1,24 @@
 using Content.Server.Atmos.Piping.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Atmos.Piping.Components
+namespace Content.Server.Atmos.Piping.Components;
+
+[RegisterComponent]
+public sealed partial class AtmosPipeColorComponent : Component
 {
-    [RegisterComponent]
-    public sealed class AtmosPipeColorComponent : Component
-    {
-        [DataField("color")]
-        public Color Color { get; set; } = Color.White;
+    [DataField]
+    public Color Color { get; set; } = Color.White;
 
-        [ViewVariables(VVAccess.ReadWrite), UsedImplicitly]
-        public Color ColorVV
-        {
-            get => Color;
-            set => EntitySystem.Get<AtmosPipeColorSystem>().SetColor(Owner, this, value);
-        }
+    [ViewVariables(VVAccess.ReadWrite), UsedImplicitly]
+    public Color ColorVV
+    {
+        get => Color;
+        set => IoCManager.Resolve<IEntityManager>().System<AtmosPipeColorSystem>().SetColor(Owner, this, value);
     }
+}
+
+[ByRefEvent]
+public record struct AtmosPipeColorChangedEvent(Color color)
+{
+    public Color Color = color;
 }

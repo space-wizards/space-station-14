@@ -1,20 +1,17 @@
 ﻿using Content.Shared.Examine;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public sealed class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed partial class ComponentConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
-        [DataField("component")] public string Component { get; } = string.Empty;
+        [DataField("component")] public string Component { get; private set; } = string.Empty;
 
-        public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
+        public override bool EntityValid(EntityUid uid, IEntityManager entityManager, IComponentFactory compFactory)
         {
             foreach (var component in entityManager.GetComponents(uid))
             {
-                if (component.Name == Component)
+                if (compFactory.GetComponentName(component.GetType()) == Component)
                     return true;
             }
 
@@ -23,13 +20,13 @@ namespace Content.Shared.Construction.Steps
 
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
-            examinedEvent.Message.AddMarkup(string.IsNullOrEmpty(Name)
+            examinedEvent.PushMarkup(string.IsNullOrEmpty(Name)
                 ? Loc.GetString(
                     "construction-insert-entity-with-component",
                     ("componentName", Component))// Terrible.
                 : Loc.GetString(
                     "construction-insert-exact-entity",
-                    ("entityName", Name)));
+                    ("entityName", Loc.GetString(Name))));
         }
     }
 }

@@ -1,0 +1,60 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'ame-window-title'}"
+            MinSize="250 250">
+    <GridContainer Columns="2">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'ame-window-engine-status-label'}" />
+            <Label Text=" " />
+            <Label Name="InjectionStatus" Text="{Loc 'ame-window-engine-injection-status-not-injecting-label'}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="ToggleInjection"
+                    Text="{Loc 'ame-window-toggle-injection-button'}"
+                    StyleClasses="OpenBoth"
+                    Disabled="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'ame-window-fuel-status-label'}" />
+            <Label Text=" " />
+            <Label Name="FuelAmount" Text="{Loc 'ame-window-fuel-not-inserted-text'}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="EjectButton"
+                    Text="{Loc 'ame-window-eject-button'}"
+                    StyleClasses="OpenBoth"
+                    Disabled="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'ame-window-injection-amount-label'}" />
+            <Label Text=" " />
+            <Label Name="InjectionAmount" Text="0" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="IncreaseFuelButton"
+                    Text="{Loc 'ame-window-increase-fuel-button'}"
+                    StyleClasses="OpenRight" />
+            <Button Name="DecreaseFuelButton"
+                    Text="{Loc 'ame-window-decrease-fuel-button'}"
+                    StyleClasses="OpenLeft" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'ame-window-core-count-label'}" />
+            <Label Text=" " />
+            <Label Name="CoreCount" Text="0" />
+        </BoxContainer>
+        <BoxContainer></BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'ame-window-power-currentsupply-label'}" />
+            <Label Text=" " />
+            <Label Name="CurrentPowerSupply" Text="0" />
+            <Label Text=" kW" />
+        </BoxContainer>
+        <BoxContainer></BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'ame-window-power-targetsupply-label'}" />
+            <Label Text=" " />
+            <Label Name="TargetedPowerSupply" Text="0" />
+            <Label Text=" kW" />
+        </BoxContainer>
+    </GridContainer>
+</DefaultWindow>

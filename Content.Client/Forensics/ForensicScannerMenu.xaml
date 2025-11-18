@@ -1,0 +1,27 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'forensic-scanner-interface-title'}"
+            MinSize="350 200"
+            SetSize="350 500">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="Print"
+                TextAlign="Center"
+                HorizontalExpand="True"
+                Access="Public"
+                Disabled="True"
+                Text="{Loc 'forensic-scanner-interface-print'}" />
+            <Button Name="Clear"
+                TextAlign="Center"
+                HorizontalExpand="True"
+                Access="Public"
+                Disabled="True"
+                Text="{Loc 'forensic-scanner-interface-clear'}" />
+        </BoxContainer>
+        <Label
+            Name="NameLabel"
+            Align="Center" />
+        <Label
+            Name="Diagnostics"
+            Text="{Loc forensic-scanner-interface-no-data}"/>
+    </BoxContainer>
+</DefaultWindow>

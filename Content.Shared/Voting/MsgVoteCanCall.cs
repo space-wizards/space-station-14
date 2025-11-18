@@ -1,6 +1,6 @@
-﻿using System;
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Voting
 {
@@ -24,7 +24,7 @@ namespace Content.Shared.Voting
         // It's possible to be able to call votes but all standard votes to be timed out.
         // In this case you can open the interface and see the timeout listed there, I suppose.
 
-        public override void ReadFromBuffer(NetIncomingMessage buffer)
+        public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
         {
             CanCall = buffer.ReadBoolean();
             buffer.ReadPadBits();
@@ -41,7 +41,7 @@ namespace Content.Shared.Voting
             }
         }
 
-        public override void WriteToBuffer(NetOutgoingMessage buffer)
+        public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
         {
             buffer.Write(CanCall);
             buffer.WritePadBits();

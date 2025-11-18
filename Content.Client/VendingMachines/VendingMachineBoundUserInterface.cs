@@ -1,56 +1,70 @@
+using Content.Client.UserInterface.Controls;
 using Content.Client.VendingMachines.UI;
 using Content.Shared.VendingMachines;
-using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
-using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
+using Robust.Client.UserInterface;
+using Robust.Shared.Input;
+using System.Linq;
 
 namespace Content.Client.VendingMachines
 {
     public sealed class VendingMachineBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables] private VendingMachineMenu? _menu;
+        [ViewVariables]
+        private VendingMachineMenu? _menu;
 
-        public SharedVendingMachineComponent? VendingMachine { get; private set; }
+        [ViewVariables]
+        private List<VendingMachineInventoryEntry> _cachedInventory = new();
 
-        public VendingMachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public VendingMachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-            SendMessage(new InventorySyncRequestMessage());
         }
 
         protected override void Open()
         {
             base.Open();
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.TryGetComponent(Owner.Owner, out SharedVendingMachineComponent? vendingMachine))
-            {
+            _menu = this.CreateWindowCenteredLeft<VendingMachineMenu>();
+            _menu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+            _menu.OnItemSelected += OnItemSelected;
+            Refresh();
+        }
+
+        public void Refresh()
+        {
+            var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
+
+            var system = EntMan.System<VendingMachineSystem>();
+            _cachedInventory = system.GetAllInventory(Owner);
+
+            _menu?.Populate(_cachedInventory, enabled);
+        }
+
+        public void UpdateAmounts()
+        {
+            var enabled = EntMan.TryGetComponent(Owner, out VendingMachineComponent? bendy) && !bendy.Ejecting;
+
+            var system = EntMan.System<VendingMachineSystem>();
+            _cachedInventory = system.GetAllInventory(Owner);
+            _menu?.UpdateAmounts(_cachedInventory, enabled);
+        }
+
+        private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)
+        {
+            if (args.Function != EngineKeyFunctions.UIClick)
                 return;
-            }
 
-            VendingMachine = vendingMachine;
+            if (data is not VendorItemsListData { ItemIndex: var itemIndex })
+                return;
 
-            _menu = new VendingMachineMenu(this) {Title = entMan.GetComponent<MetaDataComponent>(Owner.Owner).EntityName};
-            _menu.Populate(VendingMachine.Inventory);
+            if (_cachedInventory.Count == 0)
+                return;
 
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
-        }
+            var selectedItem = _cachedInventory.ElementAtOrDefault(itemIndex);
 
-        public void Eject(string id)
-        {
-            SendMessage(new VendingMachineEjectMessage(id));
-        }
+            if (selectedItem == null)
+                return;
 
-        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-        {
-            switch (message)
-            {
-                case VendingMachineInventoryMessage msg:
-                    _menu?.Populate(msg.Inventory);
-                    break;
-            }
+            SendPredictedMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
         }
 
         protected override void Dispose(bool disposing)
@@ -59,7 +73,12 @@ namespace Content.Client.VendingMachines
             if (!disposing)
                 return;
 
-            _menu?.Dispose();
+            if (_menu == null)
+                return;
+
+            _menu.OnItemSelected -= OnItemSelected;
+            _menu.OnClose -= Close;
+            _menu.Dispose();
         }
     }
 }

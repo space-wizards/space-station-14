@@ -1,9 +1,11 @@
-﻿using Content.Shared.Atmos;
-using Content.Shared.Atmos.Piping.Binary.Components;
+﻿using Content.Client.Power.EntitySystems;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Atmos.Piping.Unary.Systems;
+using Content.Shared.Power.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -13,12 +15,19 @@ namespace Content.Client.Atmos.UI
     [UsedImplicitly]
     public sealed class GasThermomachineBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private GasThermomachineWindow? _window;
 
+        [ViewVariables]
         private float _minTemp = 0.0f;
+
+        [ViewVariables]
         private float _maxTemp = 0.0f;
 
-        public GasThermomachineBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        [ViewVariables]
+        private bool _isHeater = true;
+
+        public GasThermomachineBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -26,17 +35,12 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            _window = new GasThermomachineWindow();
-
-            if(State != null)
-                UpdateState(State);
-
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
+            _window = this.CreateWindow<GasThermomachineWindow>();
 
             _window.ToggleStatusButton.OnPressed += _ => OnToggleStatusButtonPressed();
             _window.TemperatureSpinbox.OnValueChanged += _ => OnTemperatureChanged(_window.TemperatureSpinbox.Value);
+            _window.Entity = Owner;
+            Update();
         }
 
         private void OnToggleStatusButtonPressed()
@@ -44,49 +48,54 @@ namespace Content.Client.Atmos.UI
             if (_window is null) return;
 
             _window.SetActive(!_window.Active);
-            SendMessage(new GasThermomachineToggleMessage());
+            SendPredictedMessage(new GasThermomachineToggleMessage());
         }
 
         private void OnTemperatureChanged(float value)
         {
-            var actual = Math.Clamp(value, _minTemp, _maxTemp);
+            var actual = 0f;
+            if (_isHeater)
+                actual = Math.Min(value, _maxTemp);
+            else
+                actual = Math.Max(value, _minTemp);
+            actual = Math.Max(actual, Atmospherics.TCMB);
             if (!MathHelper.CloseTo(actual, value, 0.09))
             {
                 _window?.SetTemperature(actual);
                 return;
             }
 
-            SendMessage(new GasThermomachineChangeTemperatureMessage(actual));
+            SendPredictedMessage(new GasThermomachineChangeTemperatureMessage(actual));
         }
 
-        /// <summary>
-        /// Update the UI state based on server-sent info
-        /// </summary>
-        /// <param name="state"></param>
-        protected override void UpdateState(BoundUserInterfaceState state)
+        public override void Update()
         {
-            base.UpdateState(state);
-            if (_window == null || state is not GasThermomachineBoundUserInterfaceState cast)
+            if (_window == null || !EntMan.TryGetComponent(Owner, out GasThermoMachineComponent? thermo))
                 return;
 
-            _minTemp = cast.MinTemperature;
-            _maxTemp = cast.MaxTemperature;
+            var system = EntMan.System<SharedGasThermoMachineSystem>();
+            _minTemp = thermo.MinTemperature;
+            _maxTemp = thermo.MaxTemperature;
+            _isHeater = system.IsHeater(thermo);
 
-            _window.SetTemperature(cast.Temperature);
-            _window.SetActive(cast.Enabled);
-            _window.Title = cast.Mode switch
+            _window.SetTemperature(thermo.TargetTemperature);
+
+            var receiverSys = EntMan.System<PowerReceiverSystem>();
+            SharedApcPowerReceiverComponent? receiver = null;
+
+            receiverSys.ResolveApc(Owner, ref receiver);
+
+            // Also set in frameupdates.
+            if (receiver != null)
             {
-                ThermoMachineMode.Freezer => Loc.GetString("comp-gas-thermomachine-ui-title-freezer"),
-                ThermoMachineMode.Heater => Loc.GetString("comp-gas-thermomachine-ui-title-heater"),
-                _ => string.Empty
-            };
-        }
+                _window.SetActive(!receiver.PowerDisabled);
+            }
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
+            _window.Title = _isHeater switch
+            {
+                false => Loc.GetString("comp-gas-thermomachine-ui-title-freezer"),
+                true => Loc.GetString("comp-gas-thermomachine-ui-title-heater")
+            };
         }
     }
 }

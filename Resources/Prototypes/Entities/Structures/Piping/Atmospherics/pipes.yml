@@ -1,77 +1,82 @@
-﻿- type: entity
+- type: entity
   abstract: true
-  id: GasPipeBase
-  name: pipe
+  parent: BaseItem
+  id: GasPipeSansLayers
+  name: gas pipe
   description: Holds gas.
   placement:
     mode: SnapgridCenter
   components:
+  - type: Visibility
+    layer: 1
   - type: Item
-    size: 10
-  - type: Clickable
-  - type: InteractionOutline
-  - type: MovedByPressure
-  - type: DamageOnHighSpeedImpact
-    damage:
-      types:
-        Blunt: 5
-    soundHit:
-      path: /Audio/Effects/hit_kick.ogg
-  - type: CollisionWake
-  - type: TileFrictionModifier
-    modifier: 0.5
-  - type: Physics
-    bodyType: Dynamic
-    fixedRotation: false
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-        mass: 5
-        mask:
-          - Impassable
-          - VaultImpassable
-        restitution: 0.3  # fite me
-        friction: 0.2
+    size: Normal
   - type: Transform
     anchored: true
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: SubFloorHide
-  - type: PipeAppearance
+  - type: CollideOnAnchor
   - type: Anchorable
   - type: Rotatable
-  - type: Pullable
   - type: Destructible
     thresholds:
-    - trigger:
+    - trigger: # for nukes
         !type:DamageTrigger
-        damage: 100
+        damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+    - trigger: # regular damage trigger (replace with broken pipe)
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -8
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          GasPipeBroken:
+            min: 1
+            max: 1
+        offset: 0
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     drawdepth: ThinPipe
-    netsync: false
+    visible: false
   - type: Appearance
-    visuals:
-    - type: PipeColorVisualizer
+  - type: PipeAppearance
+  - type: PipeColorVisuals
   - type: NodeContainer
+  - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
+  - type: AtmosMonitoringConsoleDevice
   - type: Tag
     tags:
     - Pipe
-  - type: AmbientSound
-    enabled: true
-    volume: -15
-    range: 2
-    sound:
-      path: /Audio/Ambience/Objects/gas_hiss.ogg
-  - type: GasAnalyzable
+  - type: Physics
+    canCollide: false
+    bodyType: static
+  - type: StaticPrice
+    price: 30
+
+- type: entity
+  abstract: true
+  parent: GasPipeSansLayers
+  id: GasPipeBase
+  components:
+  - type: AtmosPipeLayers
+    spriteLayersRsiPaths:
+      enum.PipeVisualLayers.Pipe:
+        Primary: Structures/Piping/Atmospherics/pipe.rsi
+        Secondary: Structures/Piping/Atmospherics/pipe_alt1.rsi
+        Tertiary: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
@@ -79,6 +84,8 @@
   parent: GasPipeBase
   id: GasPipeHalf
   suffix: Half
+  placement:
+    mode: AlignAtmosPipeLayers
   components:
   - type: NodeContainer
     nodes:
@@ -88,16 +95,32 @@
         pipeDirection: South
   - type: Sprite
     layers:
-      - state: pipeHalf
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+    - state: pipeHalf
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeHalf
+      Secondary: GasPipeHalfAlt1
+      Tertiary: GasPipeHalfAlt2
   - type: Construction
     graph: GasPipe
     node: half
+  - type: Item
+    size: Small
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageHalf
+  - type: GuideHelp
+    guides:
+    - Pipes
+    - PipeNetworks
 
 - type: entity
   parent: GasPipeBase
   id: GasPipeStraight
   suffix: Straight
+  placement:
+    mode: AlignAtmosPipeLayers
   components:
   - type: NodeContainer
     nodes:
@@ -107,16 +130,40 @@
         pipeDirection: Longitudinal
   - type: Sprite
     layers:
-      - state: pipeStraight
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+    - state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeStraight
+      Secondary: GasPipeStraightAlt1
+      Tertiary: GasPipeStraightAlt2
   - type: Construction
     graph: GasPipe
     node: straight
+  - type: Item
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageStraight
+    shape:
+    - 0,0,0,2
+  - type: MeleeWeapon
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 8
+    soundHit:
+      collection: MetalThud # this NEEDS to changed to the metal pipe falling sound effect on april first every year
+  - type: GuideHelp
+    guides:
+    - Pipes
+    - PipeNetworks
 
 - type: entity
   parent: GasPipeBase
   id: GasPipeBend
   suffix: Bend
+  placement:
+    mode: AlignAtmosPipeLayers
   components:
   - type: NodeContainer
     nodes:
@@ -127,14 +174,45 @@
   - type: Sprite
     layers:
       - state: pipeBend
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeBend
+      Secondary: GasPipeBendAlt1
+      Tertiary: GasPipeBendAlt2
   - type: Construction
     graph: GasPipe
     node: bend
+  - type: Item
+    shape:
+    - 0,0,1,0
+    - 1,1,1,1
+    heldPrefix: Bend
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageBend
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 6
+    soundHit:
+      collection: MetalThud
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 8 # Woe, pipe be upon ye!
+  - type: GuideHelp
+    guides:
+    - Pipes
+    - PipeNetworks
 
 - type: entity
   parent: GasPipeBase
   id: GasPipeTJunction
+  placement:
+    mode: AlignAtmosPipeLayers
   suffix: TJunction
   components:
   - type: NodeContainer
@@ -146,15 +224,39 @@
   - type: Sprite
     layers:
       - state: pipeTJunction
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeTJunction
+      Secondary: GasPipeTJunctionAlt1
+      Tertiary: GasPipeTJunctionAlt2
   - type: Construction
     graph: GasPipe
     node: tjunction
+  - type: Item
+    heldPrefix: TJunction
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageTJunction
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 10
+    soundHit:
+      collection: MetalThud
+  - type: GuideHelp
+    guides:
+    - Pipes
+    - PipeNetworks
 
 - type: entity
   parent: GasPipeBase
   id: GasPipeFourway
   suffix: Fourway
+  placement:
+    mode: AlignAtmosPipeLayers
   components:
   - type: Transform
     noRot: true
@@ -167,7 +269,139 @@
   - type: Sprite
     layers:
       - state: pipeFourway
-        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeFourway
+      Secondary: GasPipeFourwayAlt1
+      Tertiary: GasPipeFourwayAlt2
   - type: Construction
     graph: GasPipe
     node: fourway
+  - type: Item
+    heldPrefix: Fourway
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageFourway
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 10
+    soundHit:
+      collection: MetalThud
+  - type: GuideHelp
+    guides:
+    - Pipes
+    - PipeNetworks
+
+- type: entity
+  id: GasPipeBroken
+  parent: GasPipeBase
+  name: broken pipe
+  description: It used to hold gas.
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    drawdepth: ThinPipe
+    state: pipeBroken
+    layers:
+      - state: pipeBroken
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayers
+    numberOfPipeLayers: 1
+  - type: Construction
+    graph: GasPipe
+    node: broken
+  - type: Item
+    size: Small
+  - type: Destructible
+    thresholds: # override parent to avoid recursive destruction
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: GuideHelp
+    guides:
+    - Pipes
+    - PipeNetworks
+
+- type: entity
+  parent: GasPipeSansLayers
+  id: GasPipeManifold
+  name: gas pipe manifold
+  description: Allows gas pipes of different configurations to be connected together.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/manifold.rsi
+    layers:
+    - state: pipeManifold
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayers
+    pipeLayersLocked: true
+  - type: PipeAppearance
+    sprite:
+    - { sprite: Structures/Piping/Atmospherics/manifold.rsi, state: pipeConnector }
+    - { sprite: Structures/Piping/Atmospherics/manifold.rsi, state: pipeConnector_alt1 }
+    - { sprite: Structures/Piping/Atmospherics/manifold.rsi, state: pipeConnector_alt2 }
+  - type: Construction
+    graph: GasPipe
+    node: manifold
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/manifold.rsi
+      state: storageManifold
+  - type: NodeContainer
+    nodes:
+      south0:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+        pipeLayer: 0
+        volume: 50
+      south1:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+        pipeLayer: 1
+        volume: 50
+      south2:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+        pipeLayer: 2
+        volume: 50
+      north0:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+        pipeLayer: 0
+        volume: 50
+      north1:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+        pipeLayer: 1
+        volume: 50
+      north2:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North
+        pipeLayer: 2
+        volume: 50
+  - type: GasPipeManifold
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasPipeManifold
+    showAbsentConnections: false
+  - type: AtmosDevice
+  - type: Tag
+    tags:
+    - Unstackable

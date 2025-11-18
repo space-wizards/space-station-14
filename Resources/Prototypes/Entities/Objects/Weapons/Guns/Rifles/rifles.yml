@@ -1,398 +1,322 @@
 - type: entity
-  name: BaseRifle
-  parent: BaseItem
-  id: RifleBase
+  name: BaseWeaponRifle
+  parent: [BaseItem, BaseGunWieldable]
+  id: BaseWeaponRifle
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
-    netsync: false
-  - type: Icon
-    state: icon
   - type: Item
-    size: 24
-    state: icon
-  - type: MagazineBarrel
-    currentSelector: Automatic
-    allSelectors:
-    - Automatic
-    magFillPrototype: MagazineLRifle
+    size: Huge
+    shape:
+    - 0,0,3,2
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: Gun
     fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 90
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
-    soundBoltOpen:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed:
-      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLightRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   name: AKMS
-  parent: RifleBase
-  id: RifleAk
-  description: An iconic weapon of war.
+  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  id: WeaponRifleAk
+  description: A somewhat battered combat rifle of a design originating from old Earth. Favored by criminals, militias, and terrorists due to its famed reliability and easy-to-manufacture design. Feeds from .30 rifle magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/ak.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: LRifle
-    magazineTypes:
-    - Rifle
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 20
-    angleDecay: 90
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+  - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLightRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLightRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
-  name: black AK
-  parent: RifleBase
-  id: RifleBlackAk
-  description: An iconic weapon of war; painted black.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/black_ak.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: LRifle
-    magazineTypes:
-    - Rifle
-    fireRate: 6
-    minAngle: 0
-    maxAngle: 60
-    angleIncrease: 15
-    angleDecay: 60
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
-  name: Z8 Bulldog
-  parent: RifleBase
-  id: RifleCarbine
-  description: An older bullpup carbine model, with an attached underbarrel grenade launcher.
+  name: M90 GL
+  parent: [BaseWeaponRifle, BaseSyndicateContraband]
+  id: WeaponRifleM90GrenadeLauncher
+  description: "An older bullpup carbine model, with an attached underbarrel grenade launcher.\nFeeds from .20 rifle magazines."
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: SRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineSRifle
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 60
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/batrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
-  name: Dallas
-  parent: RifleBase
-  id: RifleDallas
-  description: A pulse-action air-cooled automatic assault rifle.
+  name: Lecter
+  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  id: WeaponRifleLecter
+  description: "Popular gas-operated combat rifle used heavily by Nanotrasen and SolGov. Operating in semi or fully automatic, its accuracy, stopping power, and reliability make it excel in all manner of environments.\nFeeds from .20 rifle magazines."
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
+    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
     layers:
       - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
+        map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/dallas.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: ClRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineClRifle
-    fireRate: 8
-    minAngle: 10
-    maxAngle: 60
-    angleIncrease: 10
-    angleDecay: 60
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/m41.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/m41_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/m41_reload.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
-- type: entity
-  name: STS-35
-  parent: RifleBase
-  id: RifleSTS
-  description: A rugged and durable automatic weapon.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/sts.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: LRifle
-    magazineTypes:
-    - Rifle
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 60
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+  - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
-  name: Vintorez
-  parent: RifleBase
-  id: RifleVintorez
-  description: Highly prized for its armor piercing capabilities.
+  parent: WeaponRifleLecter
+  id: WeaponRifleLecterXL8
+  name: XL8
+  description: |-
+    The Experimental Lecter 8
+    An unreasonably expensive military grade assault rifle with integrated optic. 
+    Uses .20 rifle ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/vintorez.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: SRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineSRifle
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 60
-  - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
-
+    sprite: Objects/Weapons/Guns/Rifles/XL8.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/XL8.rsi
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 2
+    pvsIncrease: 0.2
+  - type: StaticPrice
+    price: 1500 #3x lecter
+  - type: Gun
+    shotsPerBurst: 3
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    - SemiAuto
+    - FullAuto
+  
 - type: entity
-  name: Wintermute
-  parent: RifleBase
-  id: RifleWintermute
-  description: A high end military grade assault rifle.
+  name: Estoc DMR
+  parent: [BaseWeaponRifle, BaseSyndicateContraband]
+  id: WeaponRifleEstoc
+  description: "A designated marksman rifle firing in 3-round bursts. The Estoc was designed as the Lecter’s long-range counterpart, equipped with an extended 20-inch barrel and telescopic sight.\nFeeds from .20 rifle magazines."
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
+    sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
     layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: bolt-closed
-        map: ["enum.RangedBarrelVisualLayers.Bolt"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
   - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/wintermute.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    caliber: SRifle
-    magazineTypes:
-    - Rifle
-    magFillPrototype: MagazineSRifle
-    autoEjectMag: true
-    fireRate: 5
-    minAngle: 0
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 60
+    shape:
+    - 0,0,4,2
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/estoc.rsi
+  - type: Gun
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+      path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
+    minAngle: 30
+    maxAngle: 43
+    shotsPerBurst: 3
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    - SemiAuto
+    burstFireRate: 14
+  - type: GunWieldBonus
+    minAngle: -28
+    maxAngle: -25
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifle
+        priority: 1
+        whitelist:
+          tags:
+          - CartridgeRifle
+  - type: SpeedModifiedOnWield
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 2
+    pvsIncrease: 0.2
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
 
 - type: entity
-  name: calico m900
-  parent: RifleBase
-  id: RifleCalico
-  description: A carbine with a unique cylindrical magazine design which allows for high capacity loads.
+  name: Foam Force Astro Ace
+  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  id: WeaponRifleFoam
+  description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
-    layers:
-      - state: base
-        map: ["enum.RangedBarrelVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.RangedBarrelVisualLayers.Mag"]
-  - type: Icon
-    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
+    sprite: Objects/Fun/Foam/foam_rifle.rsi
+  - type: Clothing
+    sprite: Objects/Fun/Foam/foam_rifle.rsi
   - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Rifles/calico.rsi
-  - type: RangedWeapon
-  - type: MagazineBarrel
-    magFillPrototype: MagazinePistolCalicoTopMounted
-    caliber: Pistol
-    magazineTypes:
-    - CalicoTopMounted
-    fireRate: 3
-    minAngle: 0
-    maxAngle: 25
-    angleIncrease: 15
-    angleDecay: 25
+    sprite: Objects/Fun/Foam/foam_rifle_inhand_64x.rsi
+    shape:
+    - 0,0,3,0
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - BulletFoam
+    capacity: 10
+    proto: BulletFoam
+  - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert:
-      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject:
-      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
-  - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 1
-      zeroVisible: true
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    clumsyProof: true
+  - type: PacifismAllowedGun

@@ -1,0 +1,32 @@
+- type: constructionGraph
+  id: Vim
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: vim
+      steps:
+      - assemblyId: Vim
+        guideString: mech-construction-guide-string
+
+      - tag: VoiceTrigger
+        name: construction-graph-tag-voice-trigger
+        icon:
+          sprite: "Objects/Devices/voice.rsi"
+          state: "voice"
+        completed:
+        - !type:VisualizerDataInt
+          key: "enum.MechAssemblyVisuals.State"
+          data: 1
+      - component: PowerCell
+        name: construction-graph-component-power-cell
+        store: battery-container
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+      - tool: Screwing
+        doAfter: 1
+  - node: vim
+    actions:
+    - !type:BuildMech
+      mechPrototype: MechVim

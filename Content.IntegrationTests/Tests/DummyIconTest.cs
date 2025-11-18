@@ -1,38 +1,38 @@
 #nullable enable
 using System.Linq;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    public sealed class DummyIconTest : ContentIntegrationTest
+    public sealed class DummyIconTest
     {
         [Test]
         public async Task Test()
         {
-            var (client, _) = await StartConnectedServerClientPair(new ClientContentIntegrationOption(){ Pool = false }, new ServerContentIntegrationOption() { Pool = false });
-
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var client = pair.Client;
             var prototypeManager = client.ResolveDependency<IPrototypeManager>();
             var resourceCache = client.ResolveDependency<IResourceCache>();
+            var spriteSys = client.System<SpriteSystem>();
 
             await client.WaitAssertion(() =>
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.Abstract || !proto.Components.ContainsKey("Sprite")) continue;
+                    if (proto.HideSpawnMenu || proto.Abstract || pair.IsTestPrototype(proto) || !proto.Components.ContainsKey("Sprite"))
+                        continue;
 
                     Assert.DoesNotThrow(() =>
                     {
-                        var _ = SpriteComponent.GetPrototypeTextures(proto, resourceCache).ToList();
+                        var _ = spriteSys.GetPrototypeTextures(proto).ToList();
                     }, "Prototype {0} threw an exception when getting its textures.",
                         proto.ID);
                 }
             });
+            await pair.CleanReturnAsync();
         }
     }
 }

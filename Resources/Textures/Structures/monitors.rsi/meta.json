@@ -1,0 +1,16 @@
+{
+    "version": 1,
+    "size": {"x": 32, "y": 32},
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "From Goonstation at https://github.com/goonstation/goonstation/commit/ed3b3c552e384bb3eb7056468a125f6a8c661261",
+    "states": [
+        {"name": "mobilevision", "directions": 4},
+        {"name": "party", "directions": 1, "delays": [[1.0]]},
+        {"name": "rad0", "directions": 1, "delays": [[1.0]]},
+        {"name": "rad1", "directions": 1, "delays": [[0.1, 0.1]]},
+        {"name": "shipalert0", "directions": 1, "delays": [[1.0]]},
+        {"name": "shipalert1", "directions": 1, "delays": [[1.0]]},
+        {"name": "shipalert2", "directions": 1, "delays": [[1.0]]},
+        {"name": "television", "directions": 4}
+    ]
+}

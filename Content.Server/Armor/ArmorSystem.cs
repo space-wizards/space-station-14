@@ -1,20 +1,34 @@
-﻿using Content.Shared.Damage;
-using Robust.Shared.GameObjects;
+using Content.Shared.Armor;
+using Content.Shared.Cargo;
+using Robust.Shared.Prototypes;
+using Content.Shared.Damage.Prototypes;
 
-namespace Content.Server.Armor
+namespace Content.Server.Armor;
+
+/// <inheritdoc/>
+public sealed class ArmorSystem : SharedArmorSystem
 {
-    public sealed class ArmorSystem : EntitySystem
-    {
-        public override void Initialize()
-        {
-            base.Initialize();
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
-            SubscribeLocalEvent<ArmorComponent, DamageModifyEvent>(OnDamageModify);
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<ArmorComponent, PriceCalculationEvent>(GetArmorPrice);
+    }
+
+    private void GetArmorPrice(EntityUid uid, ArmorComponent component, ref PriceCalculationEvent args)
+    {
+        foreach (var modifier in component.Modifiers.Coefficients)
+        {
+            var damageType = _protoManager.Index<DamageTypePrototype>(modifier.Key);
+            args.Price += component.PriceMultiplier * damageType.ArmorPriceCoefficient * 100 * (1 - modifier.Value);
         }
 
-        private void OnDamageModify(EntityUid uid, ArmorComponent component, DamageModifyEvent args)
+        foreach (var modifier in component.Modifiers.FlatReduction)
         {
-            args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, component.Modifiers);
+            var damageType = _protoManager.Index<DamageTypePrototype>(modifier.Key);
+            args.Price += component.PriceMultiplier * damageType.ArmorPriceFlat * modifier.Value;
         }
     }
 }

@@ -1,30 +1,8 @@
 - type: entity
   id: BulletMagnum
-  name: bullet (.40 magnum)
-  parent: BulletBase
-  abstract: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 32
-
-- type: entity
-  id: BulletMagnumFlash
-  name: bullet (.40 magnum flash)
-  parent: BulletBaseFlash
-  abstract: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Blunt: 3
-
-- type: entity
-  id: BulletMagnumHV
-  name: bullet (.40 magnum high-velocity)
-  parent: BulletBaseHV
-  abstract: true
+  name: bullet (.45 magnum)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -33,9 +11,9 @@
 
 - type: entity
   id: BulletMagnumPractice
-  name: bullet (.40 magnum practice)
-  parent: BulletBasePractice
-  abstract: true
+  name: bullet (.45 magnum practice)
+  parent: BaseBulletPractice
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -43,12 +21,37 @@
         Blunt: 1
 
 - type: entity
-  id: BulletMagnumRubber
-  name: bullet (.40 magnum rubber)
-  parent: BulletBaseRubber
-  abstract: true
+  id: BulletMagnumIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (.45 magnum incendiary)
+  categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
       types:
-        Blunt: 3
+        Piercing: 26
+        Heat: 9
+
+- type: entity
+  id: BulletMagnumAP
+  name: bullet (.45 magnum armor-piercing)
+  parent: BaseBulletAP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 26 # 20% decrease
+    ignoreResistances: true
+
+- type: entity
+  id: BulletMagnumUranium
+  name: bullet (.45 magnum uranium)
+  parent: BaseBulletUranium
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 15
+        Piercing: 20

@@ -1,50 +1,50 @@
-using Content.Server.Morgue.Components;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
-using Content.Shared.Verbs;
-using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
+using Content.Shared.Morgue;
+using Content.Shared.Morgue.Components;
+using Content.Shared.Storage.Components;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
-namespace Content.Server.Morgue
+namespace Content.Server.Morgue;
+
+public sealed class MorgueSystem : SharedMorgueSystem
 {
-    [UsedImplicitly]
-    public sealed class MorgueSystem : EntitySystem
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    public override void Initialize()
     {
+        base.Initialize();
 
-        private float _accumulatedFrameTime;
+        SubscribeLocalEvent<MorgueComponent, MapInitEvent>(OnMapInit);
+    }
 
-        public override void Initialize()
+    private void OnMapInit(Entity<MorgueComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextBeep = _timing.CurTime + ent.Comp.NextBeep;
+    }
+
+    /// <summary>
+    /// Handles the periodic beeping that morgues do when a live body is inside.
+    /// </summary>
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = _timing.CurTime;
+        var query = EntityQueryEnumerator<MorgueComponent, EntityStorageComponent, AppearanceComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var storage, out var appearance))
         {
-            base.Initialize();
+            if (curTime < comp.NextBeep)
+                continue;
 
-            SubscribeLocalEvent<CrematoriumEntityStorageComponent, GetVerbsEvent<AlternativeVerb>>(AddCremateVerb);
-        }
+            comp.NextBeep += comp.BeepTime;
 
-        private void AddCremateVerb(EntityUid uid, CrematoriumEntityStorageComponent component, GetVerbsEvent<AlternativeVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract || component.Cooking || component.Open)
-                return;
+            CheckContents(uid, comp, storage);
 
-            AlternativeVerb verb = new();
-            verb.Text = Loc.GetString("cremate-verb-get-data-text");
-            // TODO VERB ICON add flame/burn symbol?
-            verb.Act = () => component.TryCremate();
-            verb.Impact = LogImpact.Medium; // could be a body? or evidence? I dunno.
-            args.Verbs.Add(verb);
-        }
-
-        public override void Update(float frameTime)
-        {
-            _accumulatedFrameTime += frameTime;
-
-            if (_accumulatedFrameTime >= 10)
+            if (comp.DoSoulBeep && _appearance.TryGetData<MorgueContents>(uid, MorgueVisuals.Contents, out var contents, appearance) && contents == MorgueContents.HasSoul)
             {
-                foreach (var morgue in EntityManager.EntityQuery<MorgueEntityStorageComponent>())
-                {
-                    morgue.Update();
-                }
-                _accumulatedFrameTime -= 10;
+                _audio.PlayPvs(comp.OccupantHasSoulAlarmSound, uid);
             }
         }
     }

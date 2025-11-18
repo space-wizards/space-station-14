@@ -1,27 +1,41 @@
 - type: entity
   id: ToolboxBase
-  parent: BaseItem
+  parent: BaseStorageItem
   abstract: true
   components:
   - type: Sprite
-    netsync: false
+    layers:
+      - map: [ base ]
+        state: icon
   - type: EmitSoundOnLand
     sound:
       path: /Audio/Items/toolbox_drop.ogg
   - type: Storage
-    capacity: 60
+    maxItemSize: Normal
+    grid:
+    - 0,0,6,3
+    storageOpenSound: /Audio/Items/toolbox_open.ogg
+    storageCloseSound: /Audio/Items/toolbox_close.ogg
+    storageInsertSound: /Audio/Items/toolbox_insert.ogg
+    storageRemoveSound: /Audio/Items/toolbox_remove.ogg
   - type: Item
-    size: 9999
-  - type: ItemCooldown
+    size: Ginormous
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 10
-    hitSound:
+        Blunt: 12
+    soundHit:
       path: "/Audio/Weapons/smash.ogg"
   - type: Tag
     tags:
-      - DroneUsable
+    - Toolbox
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: icon-open }
+          False: { state: icon }
+  - type: Appearance
 
 - type: entity
   name: emergency toolbox
@@ -60,6 +74,37 @@
     sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
 
 - type: entity
+  name: electrical toolbox
+  suffix: Syndicate, Turret
+  parent: ToolboxElectrical
+  id: ToolboxElectricalTurret
+  description: A toolbox typically stocked with electrical gear.
+  components:
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 1
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              WeaponTurretSyndicateDisposable:
+                min: 1
+                max: 1
+  - type: StaticPrice
+    price: 1350
+
+- type: entity
   name: artistic toolbox
   parent: ToolboxBase
   id: ToolboxArtistic
@@ -73,7 +118,7 @@
 
 - type: entity
   name: suspicious toolbox
-  parent: ToolboxBase
+  parent: [ToolboxBase, BaseSyndicateContraband]
   id: ToolboxSyndicate
   description: A sinister looking toolbox filled with elite syndicate tools.
   components:
@@ -82,10 +127,14 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,7,3
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 15
+        Blunt: 20
 
 - type: entity
   name: golden toolbox

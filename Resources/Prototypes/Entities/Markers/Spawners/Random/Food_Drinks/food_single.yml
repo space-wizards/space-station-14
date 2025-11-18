@@ -1,0 +1,71 @@
+- type: entity
+  id: RandomFoodSingle
+  name: random food spawner
+  suffix: Single Serving
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Food/burger.rsi
+        state: plain
+  - type: RandomSpawner
+    prototypes:
+      - FoodBagel
+      - FoodBagelPoppy
+      - FoodBurgerJelly
+      - FoodBurgerCarp
+      - FoodBurgerTofu
+      - FoodBurgerXeno
+      - FoodBurgerBig
+      - FoodBurgerFive
+      - FoodBurgerRat
+      - FoodBurgerBacon
+      - FoodBurgerEmpowered
+      - FoodBurgerCrab
+      - FoodBurgerHuman
+      - FoodBurgerSoy
+      - FoodBurgerMcrib
+      - FoodBurgerMcguffin
+      - FoodBurgerChicken
+      - FoodBurgerDuck
+      - FoodBurgerCheese
+      - FoodNoodlesBoiled
+      - FoodNoodles
+      - FoodNoodlesCopy
+      - FoodNoodlesButter
+      - FoodPizzaMargheritaSlice
+      - FoodPizzaMeatSlice
+      - FoodPizzaMushroomSlice
+      - FoodPizzaVegetableSlice
+      - FoodPizzaDonkpocketSlice
+      - FoodPizzaDankSlice
+      - FoodPizzaSassysageSlice
+      - FoodPizzaPineappleSlice
+      - FoodPizzaMoldySlice
+      - FoodBakedDumplings
+      - FoodBakedChevreChaud
+      - FoodBakedNugget
+      - FoodTacoShell
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - FoodBurgerAppendix
+      - FoodBurgerRobot
+      - FoodBurgerBaseball
+      - FoodBurgerBear
+      - FoodBurgerCat
+      - FoodBurgerClown
+      - FoodBurgerMime
+      - FoodBurgerBrain
+      - FoodBurgerGhost
+      - FoodBurgerSpell
+      - FoodBurgerSuper
+      - FoodBurgerCrazy
+      - FoodPizzaArnoldSlice
+      - FoodPizzaUraniumSlice
+      - FoodPizzaWorldpeasSlice
+    rareChance: 0.05

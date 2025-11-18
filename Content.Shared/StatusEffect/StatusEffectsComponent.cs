@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.StatusEffect
 {
     [RegisterComponent]
     [NetworkedComponent]
-    [Friend(typeof(StatusEffectsSystem))]
-    public sealed class StatusEffectsComponent : Component
+    [Access(typeof(StatusEffectsSystem))]
+    public sealed partial class StatusEffectsComponent : Component
     {
         [ViewVariables]
         public Dictionary<string, StatusEffectState> ActiveEffects = new();
@@ -20,9 +14,12 @@ namespace Content.Shared.StatusEffect
         /// <summary>
         ///     A list of status effect IDs to be allowed
         /// </summary>
-        [DataField("allowed", required: true)]
+        [DataField("allowed", required: true), Access(typeof(StatusEffectsSystem), Other = AccessPermissions.ReadExecute)]
         public List<string> AllowedEffects = default!;
     }
+
+    [RegisterComponent]
+    public sealed partial class ActiveStatusEffectsComponent : Component {}
 
     /// <summary>
     ///     Holds information about an active status effect.
@@ -55,6 +52,13 @@ namespace Content.Shared.StatusEffect
             Cooldown = cooldown;
             CooldownRefresh = refresh;
             RelevantComponent = relevantComponent;
+        }
+
+        public StatusEffectState(StatusEffectState toCopy)
+        {
+            Cooldown = (toCopy.Cooldown.Item1, toCopy.Cooldown.Item2);
+            CooldownRefresh = toCopy.CooldownRefresh;
+            RelevantComponent = toCopy.RelevantComponent;
         }
     }
 

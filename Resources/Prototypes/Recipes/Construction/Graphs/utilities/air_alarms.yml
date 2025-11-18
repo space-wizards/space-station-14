@@ -13,8 +13,7 @@
   - node: assembly
     entity: AirAlarmAssembly
     actions:
-    - !type:SpriteStateChange
-      state: alarm_b1
+    - !type:AppearanceChange
     edges:
     - to: wired
       steps:
@@ -23,7 +22,7 @@
         doAfter: 1
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:GivePrototype
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity {}
@@ -38,14 +37,14 @@
       steps:
       - tag: AirAlarmElectronics
         store: board
-        name: "air alarm electronics"
+        name: construction-graph-tag-air-alarm-electronics
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "door_electronics" # /tg/ uses the same sprite, right?
         doAfter: 1
     - to: assembly
       completed:
-      - !type:SpawnPrototype
+      - !type:GivePrototype
         prototype: CableApcStack1
         amount: 2
       steps:
@@ -54,8 +53,7 @@
 
   - node: electronics
     actions:
-    - !type:SpriteStateChange
-      state: alarm_b2
+    - !type:AppearanceChange
     edges:
     - to: air_alarm
       steps:
@@ -72,7 +70,9 @@
       - !type:ContainerNotEmpty
         container: board
       completed:
-      - !type:EmptyAllContainers {}
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
       steps:
       - tool: Prying
         doAfter: 1
@@ -92,8 +92,7 @@
   - node: assembly
     entity: FireAlarmAssembly
     actions:
-    - !type:SpriteStateChange
-      state: fire_b1
+    - !type:AppearanceChange
     edges:
     - to: wired
       steps:
@@ -102,7 +101,7 @@
         doAfter: 1
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:GivePrototype
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity {}
@@ -117,14 +116,14 @@
       steps:
       - tag: FireAlarmElectronics
         store: board
-        name: "fire alarm electronics"
+        name: construction-graph-tag-fire-alarm-electronics
         icon:
           sprite: "Objects/Misc/module.rsi"
           state: "door_electronics" # /tg/ uses the same sprite, right?
         doAfter: 1
     - to: assembly
       completed:
-      - !type:SpawnPrototype
+      - !type:GivePrototype
         prototype: CableApcStack1
         amount: 2
       steps:
@@ -133,8 +132,7 @@
 
   - node: electronics
     actions:
-    - !type:SpriteStateChange
-      state: fire_b2
+    - !type:AppearanceChange
     edges:
     - to: fire_alarm
       steps:
@@ -151,7 +149,9 @@
       - !type:ContainerNotEmpty
         container: board
       completed:
-      - !type:EmptyAllContainers {}
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
       steps:
       - tool: Prying
         doAfter: 1

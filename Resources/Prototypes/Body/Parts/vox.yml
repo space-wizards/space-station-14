@@ -1,223 +1,111 @@
 ﻿# TODO: Add descriptions (many)
 # TODO BODY: Part damage
 - type: entity
-  id: PartVox
-  parent: BaseItem
-  name: "vox body part"
   abstract: true
+  parent: [ BaseItem, BasePart ]
+  id: PartVox
+  name: "vox body part"
   components:
-  - type: Damageable
-    damageContainer: Biological
+  - type: Sprite
+    sprite: Mobs/Species/Vox/parts.rsi
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: AmmoniaBlood
+        Quantity: 10
 
 - type: entity
+  parent: [PartVox, BaseTorso]
   id: TorsoVox
   name: "vox torso"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "torso_m"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "torso_m"
-    - type: BodyPart
-      partType: Torso
-      size: 14
-      compatibility: Biological
-      mechanisms:
-        - OrganHumanHeart
-        - OrganHumanLungs
-        - OrganHumanStomach
-        - OrganHumanLiver
-        - OrganHumanKidneys
-      # TODO BODY DettachableDamageableComponent?
-#    criticalThreshold: 100
-#    deadThreshold: 150
+  - type: Sprite
+    state: "torso"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: AmmoniaBlood
+        Quantity: 20
 
 - type: entity
+  parent: [ PartVox, BaseHead ]
   id: HeadVox
   name: "vox head"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "head_m"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "head_m"
-    - type: BodyPart
-      partType: Head
-      size: 7
-      compatibility: Biological
-      vital: true
-      mechanisms:
-        - OrganHumanBrain
-        - OrganHumanEyes
-    #    criticalThreshold: 50
-    #    deadThreshold: 120
-    - type: Input
-      context: "ghost"
-    - type: DummyInputMover
-    - type: GhostOnMove
+  - type: Sprite
+    state: "head"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: AmmoniaBlood
+        Quantity: 10
 
 - type: entity
+  parent: [ PartVox, BaseLeftArm ]
   id: LeftArmVox
   name: "left vox arm"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_arm"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_arm"
-    - type: BodyPart
-      partType: Arm
-      size: 5
-      compatibility: Biological
-      symmetry: Left
-    #    criticalThreshold: 40
-    #    deadThreshold: 80
+  - type: Sprite
+    state: "l_arm"
 
 - type: entity
+  parent: [ PartVox, BaseRightArm ]
   id: RightArmVox
   name: "right vox arm"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_arm"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_arm"
-    - type: BodyPart
-      partType: Arm
-      size: 5
-      compatibility: Biological
-      symmetry: Right
-    #    criticalThreshold: 40
-    #    deadThreshold: 80
+  - type: Sprite
+    state: "r_arm"
 
 - type: entity
+  parent: [ PartVox, BaseLeftHand ]
   id: LeftHandVox
   name: "left vox hand"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_hand"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_hand"
-    - type: BodyPart
-      partType: Hand
-      size: 3
-      compatibility: Biological
-      symmetry: Left
-    #    criticalThreshold: 30
-    #    deadThreshold: 60
+  - type: Sprite
+    state: "l_hand"
 
 - type: entity
+  parent: [ PartVox, BaseRightHand ]
   id: RightHandVox
   name: "right vox hand"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_hand"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_hand"
-    - type: BodyPart
-      partType: Hand
-      size: 3
-      compatibility: Biological
-      symmetry: Right
-    #    criticalThreshold: 30
-    #    deadThreshold: 60
+  - type: Sprite
+    state: "r_hand"
 
 - type: entity
+  parent:  [ PartVox, BaseLeftLeg ]
   id: LeftLegVox
   name: "left vox leg"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_leg"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_leg"
-    - type: BodyPart
-      partType: Leg
-      size: 6
-      compatibility: Biological
-      symmetry: Left
-    #    criticalThreshold: 45
-    #    deadThreshold: 90
+  - type: Sprite
+    state: "l_leg"
 
 - type: entity
+  parent:  [ PartVox, BaseRightLeg ]
   id: RightLegVox
   name: "right vox leg"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_leg"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_leg"
-    - type: BodyPart
-      partType: Leg
-      size: 6
-      compatibility: Biological
-      symmetry: Right
-    #    criticalThreshold: 45
-    #    deadThreshold: 90
+  - type: Sprite
+    state: "r_leg"
 
 - type: entity
+  parent: [ PartVox, BaseLeftFoot ]
   id: LeftFootVox
   name: "left vox foot"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_foot"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "l_foot"
-    - type: BodyPart
-      partType: Foot
-      size: 2
-      compatibility: Biological
-      symmetry: Left
-#    criticalThreshold: 30
-#    deadThreshold: 60
+  - type: Sprite
+    state: "l_foot"
 
 - type: entity
+  parent: [ PartVox, BaseRightFoot ]
   id: RightFootVox
   name: "right vox foot"
-  parent: PartVox
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_foot"
-    - type: Icon
-      sprite: Mobs/Species/Vox/parts.rsi
-      state: "r_foot"
-    - type: BodyPart
-      partType: Foot
-      size: 2
-      compatibility: Biological
-      symmetry: Right
-#    criticalThreshold: 30
-#    deadThreshold: 60
+  - type: Sprite
+    state: "r_foot"

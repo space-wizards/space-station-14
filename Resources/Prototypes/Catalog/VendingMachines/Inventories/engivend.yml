@@ -1,12 +1,16 @@
 - type: vendingMachineInventory
   id: EngiVendInventory
-  name: Engi-Vend
-  animationDuration: 2.1
-  spriteName: engivend
   startingInventory:
     ClothingEyesGlassesMeson: 4
+    ClothingEyesHudDiagnostic: 4
+    ClothingHeadHatWelding: 6
+    CrowbarYellow: 8
     Multitool: 4
-    PowerCellSmallHigh: 5
+    NetworkConfigurator: 5
+    PowerCellMedium: 5
     ClothingHandsGlovesColorYellow: 6
-    InflatableWallStack1: 24
-    InflatableDoorStack1: 8
+    BoxInflatable: 2
+    ClothingHeadHatCone: 4
+  contrabandInventory:
+    CowToolboxFilled: 1
+    DrinkBeerCan: 3

@@ -1,0 +1,30 @@
+- type: entity
+  name: books bag
+  id: BooksBag
+  parent: BaseStorageItem
+  description: A refined bag to carry your own library.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Library/Equipment/books_bag.rsi
+      state: icon
+    - type: Clothing
+      sprite: Objects/Specific/Library/Equipment/books_bag.rsi
+      quickEquip: false
+      slots:
+        - belt
+    - type: Item
+      size: Ginormous
+    - type: Storage
+      grid:
+      - 0,0,7,3
+      quickInsert: true
+      areaInsert: true
+      whitelist:
+        tags:
+          - Book
+          - Dice
+          - Document
+          - Figurine
+          - TabletopBoard
+          - Write
+    - type: Dumpable

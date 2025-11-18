@@ -1,19 +1,25 @@
 using Content.Server.Electrocution;
+using Content.Shared.Electrocution;
 using Content.Shared.Construction;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Construction.Completions
+namespace Content.Server.Construction.Completions;
+
+[DataDefinition]
+public sealed partial class AttemptElectrocute : IGraphAction
 {
-    [DataDefinition]
-    public sealed class AttemptElectrocute : IGraphAction
+    public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
-        {
-            if (userUid == null)
-                return;
+        if (userUid == null)
+            return;
 
-            EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(uid, userUid.Value);
-        }
+        if (!entityManager.TryGetComponent<ElectrifiedComponent>(uid, out var electrified))
+            return;
+
+        var currentValue = electrified.Enabled;
+        electrified.Enabled = true;
+
+        entityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>().TryDoElectrifiedAct(uid, userUid.Value, electrified: electrified);
+
+        electrified.Enabled = currentValue;
     }
 }

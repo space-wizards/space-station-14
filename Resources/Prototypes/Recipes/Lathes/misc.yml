@@ -1,96 +1,240 @@
+# Base Prototypes
+
 - type: latheRecipe
+  abstract: true
+  id: BaseLightRecipe
+  categories:
+  - Lights
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 200
+
+# Recipes
+
+## Lights
+
+- type: latheRecipe
+  parent: BaseLightRecipe
   id: LightTube
-  icon: Objects/Power/light_tube.rsi/normal.png
   result: LightTube
-  completetime: 500
-  materials:
-    Steel: 50
-    Glass: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
+  id: LedLightTube
+  result: LedLightTube
+
+- type: latheRecipe
+  parent: BaseLightRecipe
+  id: SodiumLightTube
+  result: SodiumLightTube
+
+- type: latheRecipe
+  parent: BaseLightRecipe
+  id: ExteriorLightTube
+  result: ExteriorLightTube
+
+- type: latheRecipe
+  parent: BaseLightRecipe
   id: LightBulb
-  icon: Objects/Power/light_bulb.rsi/normal.png
   result: LightBulb
-  completetime: 500
-  materials:
-    Steel: 50
-    Glass: 50
 
 - type: latheRecipe
-  id: PowerCellSmallHigh
-  icon: Objects/Power/PowerCells/power_cell_small_hi.rsi
-  result: PowerCellSmallHigh
-  completetime: 500
-  materials:
-    Steel: 100
-    Glass: 100
+  parent: BaseLightRecipe
+  id: LedLightBulb
+  result: LedLightBulb
 
 - type: latheRecipe
+  parent: BaseLightRecipe
+  id: DimLightBulb
+  result: DimLightBulb
+
+- type: latheRecipe
+  parent: BaseLightRecipe
+  id: WarmLightBulb
+  result: WarmLightBulb
+
+- type: latheRecipe
+  parent: BaseLightRecipe
   id: GlowstickRed
-  icon: Objects/Misc/glowstick.rsi
   result: GlowstickRed
-  completetime: 500
   materials:
     Plastic: 50
 
 - type: latheRecipe
+  parent: GlowstickRed
   id: Flare
-  icon: Objects/Misc/flare.rsi
   result: Flare
-  completetime: 500
-  materials:
-    Plastic: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
   id: FlashlightLantern
-  icon:
-    sprite: Objects/Tools/flashlight.rsi
-    state: flashlight
-  result: FlashlightLantern
-  completetime: 500
+  result: EmptyFlashlightLantern
   materials:
     Steel: 100
     Glass: 100
     Plastic: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: FireExtinguisher
-  icon:
-    sprite: Objects/Misc/fire_extinguisher.rsi
-    state: fire_extinguisher_closed
   result: FireExtinguisher
-  completetime: 500
   materials:
     Steel: 200
 
 - type: latheRecipe
   id: Matchbox
-  icon: Objects/Tools/matches.rsi
   result: Matchbox
-  completetime: 10
+  completetime: 1
   materials:
     Wood: 100
 
 - type: latheRecipe
-  id: Drone
-  icon:
-    sprite: Mobs/Silicon/drone.rsi
-    state: shell
-  result: Drone
-  completetime: 1500
-  materials:
-    Steel: 500
-    Glass: 500
-    Plastic: 500
-
-- type: latheRecipe
   id: SynthesizerInstrument
-  icon:
-    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
-    state: icon
   result: SynthesizerInstrument
-  completetime: 1000
+  completetime: 4
   materials:
     Steel: 300
     Plastic: 300
     Glass: 100
+
+- type: latheRecipe
+  id: PushHorn
+  result: PushHorn
+  completetime: 5
+  materials:
+    Steel: 500
+    Plastic: 500
+    Plasma: 200
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: NodeScanner
+  result: NodeScanner
+  materials:
+    Steel: 100
+    Plastic: 50
+
+- type: latheRecipe
+  id: AirTank
+  result: AirTank
+  completetime: 4
+  materials:
+    Steel: 400
+
+- type: latheRecipe
+  id: DoubleEmergencyOxygenTank
+  result: DoubleEmergencyOxygenTank
+  completetime: 4
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: DoubleEmergencyNitrogenTank
+  result: DoubleEmergencyNitrogenTank
+  completetime: 4
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: ClothingShoesBootsMagSci
+  result: ClothingShoesBootsMagSci
+  completetime: 10
+  materials:
+    Steel: 1000
+    Plastic: 500
+
+- type: latheRecipe
+  id: ClothingShoesBootsMoon
+  result: ClothingShoesBootsMoon
+  completetime: 2
+  materials:
+    Steel: 600
+
+- type: latheRecipe
+  id: ClothingShoesBootsSpeed
+  result: ClothingShoesBootsSpeed
+  completetime: 2
+  materials:
+    Steel: 1500
+    Plastic: 1000
+    Silver: 500
+
+- type: latheRecipe
+  id: ClothingShoesBootsJump
+  result: ClothingShoesBootsJump
+  completetime: 2
+  materials:
+    Steel: 1400
+    Plastic: 600
+    Silver: 200
+    Plasma: 200
+
+- type: latheRecipe
+  id: ModularReceiver
+  result: ModularReceiver
+  completetime: 12
+  materials:
+    Steel: 750
+    Plastic: 100
+
+- type: latheRecipe
+  id: HandheldStationMap
+  result: HandheldStationMapEmpty
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: ClothingHeadHatWelding
+  result: ClothingHeadHatWelding
+  completetime: 2
+  materials:
+    Steel: 400
+    Glass: 200
+
+- type: latheRecipe
+  id: ClothingHeadHatCone
+  result: ClothingHeadHatCone
+  completetime: 3
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
+  id: ClothingOuterVestTank
+  result: ClothingOuterVestTank
+  completetime: 2
+  materials:
+    Cloth: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: Ashtray
+  result: Ashtray
+  completetime: 1
+  materials:
+    Steel: 30
+
+- type: latheRecipe
+  id: BoxFolderClipboardEmpty
+  result: BoxFolderClipboardEmpty
+  completetime: 2
+  materials:
+    Wood: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: BoxFolderPlasticClipboardEmpty
+  result: BoxFolderPlasticClipboardEmpty
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: TowelColorWhite
+  result: TowelColorWhite
+  completetime: 2
+  materials:
+    Cloth: 300

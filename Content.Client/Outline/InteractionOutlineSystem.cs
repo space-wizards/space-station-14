@@ -1,5 +1,5 @@
 using Content.Client.ContextMenu.UI;
-using Content.Client.Interactable;
+using Content.Client.Gameplay;
 using Content.Client.Interactable.Components;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
@@ -40,14 +40,8 @@ public sealed class InteractionOutlineSystem : EntitySystem
     {
         base.Initialize();
 
-        _configManager.OnValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-
-        _configManager.UnsubValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
+        Subs.CVar(_configManager, CCVars.OutlineEnabled, SetCvarEnabled);
+        UpdatesAfter.Add(typeof(SharedEyeSystem));
     }
 
     public void SetCvarEnabled(bool cvarEnabled)
@@ -63,7 +57,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            outline.OnMouseLeave();
+            outline.OnMouseLeave(_lastHoveredEntity.Value);
     }
 
     public void SetEnabled(bool enabled)
@@ -82,7 +76,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         if (TryComp(_lastHoveredEntity, out InteractionOutlineComponent? outline))
-            outline.OnMouseLeave();
+            outline.OnMouseLeave(_lastHoveredEntity.Value);
     }
 
     public override void FrameUpdate(float frameTime)
@@ -93,8 +87,8 @@ public sealed class InteractionOutlineSystem : EntitySystem
             return;
 
         // If there is no local player, there is no session, and therefore nothing to do here.
-        var localPlayer = _playerManager.LocalPlayer;
-        if (localPlayer == null)
+        var localSession = _playerManager.LocalSession;
+        if (localSession == null)
             return;
 
         // TODO InteractionOutlineComponent
@@ -108,19 +102,23 @@ public sealed class InteractionOutlineSystem : EntitySystem
         // Potentially change someday? who knows.
         var currentState = _stateManager.CurrentState;
 
-        if (currentState is not GameScreen screen) return;
+        if (currentState is not GameplayStateBase screen) return;
 
         EntityUid? entityToClick = null;
         var renderScale = 1;
         if (_uiManager.CurrentlyHovered is IViewportControl vp
             && _inputManager.MouseScreenPosition.IsValid)
         {
-            var mousePosWorld = vp.ScreenToMap(_inputManager.MouseScreenPosition.Position);
-            entityToClick = screen.GetEntityUnderPosition(mousePosWorld);
+            var mousePosWorld = vp.PixelToMap(_inputManager.MouseScreenPosition.Position);
 
             if (vp is ScalingViewport svp)
             {
                 renderScale = svp.CurrentRenderScale;
+                entityToClick = screen.GetClickedEntity(mousePosWorld, svp.Eye);
+            }
+            else
+            {
+                entityToClick = screen.GetClickedEntity(mousePosWorld);
             }
         }
         else if (_uiManager.CurrentlyHovered is EntityMenuElement element)
@@ -134,9 +132,9 @@ public sealed class InteractionOutlineSystem : EntitySystem
         }
 
         var inRange = false;
-        if (localPlayer.ControlledEntity != null && entityToClick != null)
+        if (localSession.AttachedEntity != null && !Deleted(entityToClick))
         {
-            inRange = _interactionSystem.InRangeUnobstructed(localPlayer.ControlledEntity.Value, entityToClick.Value);
+            inRange = _interactionSystem.InRangeUnobstructed(localSession.AttachedEntity.Value, entityToClick.Value);
         }
 
         InteractionOutlineComponent? outline;
@@ -145,7 +143,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         {
             if (entityToClick != null && TryComp(entityToClick, out outline))
             {
-                outline.UpdateInRange(inRange, renderScale);
+                outline.UpdateInRange(entityToClick.Value, inRange, renderScale);
             }
 
             return;
@@ -154,14 +152,14 @@ public sealed class InteractionOutlineSystem : EntitySystem
         if (_lastHoveredEntity != null && !Deleted(_lastHoveredEntity) &&
             TryComp(_lastHoveredEntity, out outline))
         {
-            outline.OnMouseLeave();
+            outline.OnMouseLeave(_lastHoveredEntity.Value);
         }
 
         _lastHoveredEntity = entityToClick;
 
         if (_lastHoveredEntity != null && TryComp(_lastHoveredEntity, out outline))
         {
-            outline.OnMouseEnter(inRange, renderScale);
+            outline.OnMouseEnter(_lastHoveredEntity.Value, inRange, renderScale);
         }
     }
 }

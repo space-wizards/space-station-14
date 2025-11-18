@@ -1,0 +1,18 @@
+# egg explodes when heated!!!
+- type: constructionGraph
+  id: Egg
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: explode
+      completed:
+      - !type:DamageEntity
+        damage:
+          types:
+            Blunt: 10
+      steps:
+      # egg explodes some time after the water in it boils and increases pressure
+      # high enough so you can still microwave them for 5 seconds safely
+      - minTemperature: 473.15 # 200°C
+  - node: explode

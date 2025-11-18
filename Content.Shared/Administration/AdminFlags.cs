@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Content.Shared.Administration
+﻿namespace Content.Shared.Administration
 {
     /// <summary>
     ///     Permissions that admins can have.
@@ -27,6 +25,7 @@ namespace Content.Shared.Administration
 
         /// <summary>
         ///     !!FUN!!
+        ///     This is stuff that trial administrators shouldn't quite have access to yet, e.g. for running events.
         /// </summary>
         Fun = 1 << 3,
 
@@ -79,6 +78,51 @@ namespace Content.Shared.Administration
         ///     Lets you use the admin help system.
         /// </summary>
         Adminhelp = 1 << 12,
+
+        /// <summary>
+        ///     Lets you view admin notes.
+        /// </summary>
+        ViewNotes = 1 << 13,
+
+        /// <summary>
+        ///     Lets you create, edit and delete admin notes.
+        /// </summary>
+        EditNotes = 1 << 14,
+
+        /// <summary>
+        ///     Lets you Massban, on SS14.Admin
+        /// </summary>
+        MassBan = 1 << 15,
+
+        /// <summary>
+        /// Allows you to remain hidden from adminwho except to other admins with this flag.
+        /// </summary>
+        Stealth = 1 << 16,
+
+        ///<summary>
+		/// Allows you to use Admin chat
+		///</summary>
+		Adminchat = 1 << 17,
+
+        ///<summary>
+        /// Permits the visibility of Pii in game and on SS14 Admin
+        ///</summary>
+        Pii = 1 << 18,
+
+        /// <summary>
+        ///     Lets you take moderator actions on the game server.
+        /// </summary>
+        Moderator = 1 << 19,
+
+        /// <summary>
+        ///     Lets you check currently online admins.
+        /// </summary>
+        AdminWho = 1 << 20,
+
+        /// <summary>
+        ///     Lets you set the color of your OOC name.
+        /// </summary>
+        NameColor = 1 << 21,
 
         /// <summary>
         ///     Dangerous host permissions like scsi.

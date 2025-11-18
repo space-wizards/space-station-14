@@ -6,8 +6,10 @@
     - type: Sprite
       layers:
         - state: blue
-        - texture: Mobs/Species/Human/parts.rsi/full.png
+        - sprite: Mobs/Species/Human/parts.rsi
+          state: full
         - state: ai
+    - type: Timer
     - type: TimedSpawner
       prototypes:
         - MobSpirate
@@ -25,8 +27,10 @@
     - type: Sprite
       layers:
       - state: blue
-      - texture: Mobs/Aliens/Xenos/burrower.rsi/crit.png
+      - sprite: Mobs/Aliens/Xenos/burrower.rsi
+        state: crit
       - state: ai
+    - type: Timer
     - type: TimedSpawner
       prototypes:
       - MobXeno
@@ -34,3 +38,44 @@
       intervalSeconds: 30
       minimumEntitiesSpawned: 2
       maximumEntitiesSpawned: 4
+
+- type: entity
+  name: Mouse Timed Spawner
+  id: MouseTimedSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/mouse.rsi
+          state: icon-2
+        - state: timed
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+        - MobMouse
+        - MobMouse1
+        - MobMouse2
+      # round ~90m
+      # one spawner should only spawn ~5 mice for sanity reasons
+      # therefore 18m
+      # use 50% chance for randomness and balance with halved interval
+      chance: 0.5
+      intervalSeconds: 540
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1
+
+- type: entity
+  name: Cockroach Timed Spawner
+  id: CockroachTimedSpawner
+  parent: MouseTimedSpawner
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/cockroach.rsi
+          state: cockroach_icon
+        - state: timed
+    - type: TimedSpawner
+      prototypes:
+        - MobCockroach

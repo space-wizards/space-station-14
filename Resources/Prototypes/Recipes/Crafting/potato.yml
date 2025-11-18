@@ -1,0 +1,23 @@
+- type: construction
+  id: PowerCellPotato
+  graph: PowerCellPotato
+  startNode: start
+  targetNode: potatobattery
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: PotatoAI
+  graph: PotatoAI
+  startNode: start
+  targetNode: potatoai
+  category: construction-category-misc
+  objectType: Item
+
+- type: construction
+  id: PotatoAIChip
+  graph: PotatoAIChip
+  startNode: start
+  targetNode: potatoaichip
+  category: construction-category-misc
+  objectType: Item

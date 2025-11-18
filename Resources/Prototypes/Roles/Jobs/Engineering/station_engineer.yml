@@ -1,27 +1,39 @@
 - type: job
   id: StationEngineer
-  name: "station engineer"
+  name: job-name-engineer
+  description: job-description-engineer
+  playTimeTracker: JobStationEngineer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 2.5h
   startingGear: StationEngineerGear
-  departments:
-  - Engineering
-  icon: "StationEngineer"
-  supervisors: "the chief engineer"
+  icon: "JobIconStationEngineer"
+  supervisors: job-supervisors-ce
   access:
   - Maintenance
   - Engineering
   - External
+  extendedAccess:
+  - Atmospherics
 
 - type: startingGear
   id: StationEngineerGear
   equipment:
-    head: ClothingHeadHatHardhatYellow
-    jumpsuit: ClothingUniformJumpsuitEngineering
-    back: ClothingBackpackEngineeringFilled
-    shoes: ClothingShoesBootsWork
-    outerClothing: ClothingOuterVestHazard
-    id: EngineerPDA
-    belt: ClothingBeltUtilityFilled
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  innerclothingskirt: ClothingUniformJumpskirtEngineering
-  satchel: ClothingBackpackSatchelEngineeringFilled
-  duffelbag: ClothingBackpackDuffelEngineeringFilled
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: StationEngineerChameleonOutfit
+  job: StationEngineer
+  equipment:
+    head: ClothingHeadHatHardhatYellow
+    mask: ClothingMaskBreath
+    neck: ClothingNeckScarfStripedOrange
+    outerClothing: ClothingOuterWinterEngi
+    gloves: ClothingHandsGlovesColorYellow
+    shoes: ClothingShoesBootsMag

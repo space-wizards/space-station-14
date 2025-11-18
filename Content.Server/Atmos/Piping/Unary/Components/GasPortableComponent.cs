@@ -1,11 +1,7 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public sealed class GasPortableComponent : Component
+    public sealed partial class GasPortableComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("port")]

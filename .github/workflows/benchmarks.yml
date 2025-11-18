@@ -1,0 +1,47 @@
+﻿name: Benchmarks
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
+
+concurrency: benchmarks
+
+jobs:
+  benchmark:
+    name: Run Benchmarks
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.2.2
+      with:
+        submodules: 'recursive'
+    - name: Get Engine version
+      run: |
+        cd RobustToolbox
+        git fetch --depth=1
+        echo "::set-output name=out::$(git rev-parse HEAD)"
+      id: engine_version
+    - name: Run script on centcomm
+      uses: appleboy/ssh-action@master
+      with:
+        host: centcomm.spacestation14.io
+        username: robust-benchmark-runner
+        key: ${{ secrets.CENTCOMM_ROBUST_BENCHMARK_RUNNER_KEY }}
+        command_timeout: 100000m
+        script: |
+          mkdir benchmark_run_content_${{ github.sha }}
+          cd benchmark_run_content_${{ github.sha }}
+          git clone https://github.com/space-wizards/space-station-14.git repo_dir --recursive
+          cd repo_dir
+          git checkout ${{ github.sha }}
+          cd Content.Benchmarks
+          dotnet restore
+          export ROBUST_BENCHMARKS_ENABLE_SQL=1
+          export ROBUST_BENCHMARKS_SQL_ADDRESS="${{ secrets.BENCHMARKS_WRITE_ADDRESS }}"
+          export ROBUST_BENCHMARKS_SQL_PORT="${{ secrets.BENCHMARKS_WRITE_PORT }}"
+          export ROBUST_BENCHMARKS_SQL_USER="${{ secrets.BENCHMARKS_WRITE_USER }}"
+          export ROBUST_BENCHMARKS_SQL_PASSWORD="${{ secrets.BENCHMARKS_WRITE_PASSWORD  }}"
+          export ROBUST_BENCHMARKS_SQL_DATABASE="content_benchmarks"
+          export GITHUB_SHA="${{ github.sha }}"
+          dotnet run --filter '*' --configuration Release
+          cd ../../..
+          rm -rf benchmark_run_content_${{ github.sha }}

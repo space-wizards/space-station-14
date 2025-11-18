@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Text;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Graphics;
+using Robust.Shared.Graphics.RSI;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -14,7 +11,16 @@ namespace Content.Client.Clickable
 {
     internal sealed class ClickMapManager : IClickMapManager, IPostInjectInit
     {
-        private const float Threshold = 0.25f;
+        private static readonly string[] IgnoreTexturePaths =
+        {
+            // These will probably never need click maps so skip em.
+            "/Textures/Interface",
+            "/Textures/LobbyScreens",
+            "/Textures/Parallaxes",
+            "/Textures/Logo",
+        };
+
+        private const float Threshold = 0.1f;
         private const int ClickRadius = 2;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -46,6 +52,13 @@ namespace Content.Client.Clickable
         {
             if (obj.Image is Image<Rgba32> rgba)
             {
+                var pathStr = obj.Path.ToString();
+                foreach (var path in IgnoreTexturePaths)
+                {
+                    if (pathStr.StartsWith(path, StringComparison.Ordinal))
+                        return;
+                }
+
                 _textureMaps[obj.Resource] = ClickMap.FromImage(rgba, Threshold);
             }
         }
@@ -60,7 +73,7 @@ namespace Content.Client.Clickable
             return SampleClickMap(clickMap, pos, clickMap.Size, Vector2i.Zero);
         }
 
-        public bool IsOccluding(RSI rsi, RSI.StateId state, RSI.State.Direction dir, int frame, Vector2i pos)
+        public bool IsOccluding(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos)
         {
             if (!_rsiMaps.TryGetValue(rsi, out var rsiData))
             {
@@ -199,6 +212,6 @@ namespace Content.Client.Clickable
     {
         public bool IsOccluding(Texture texture, Vector2i pos);
 
-        public bool IsOccluding(RSI rsi, RSI.StateId state, RSI.State.Direction dir, int frame, Vector2i pos);
+        public bool IsOccluding(RSI rsi, RSI.StateId state, RsiDirection dir, int frame, Vector2i pos);
     }
 }

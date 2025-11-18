@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at commit https://github.com/Baystation12/Baystation12/commit/a929584d9db319eb7484113221be25cfa1d5dc09. Label sprites by Vermidia.",
+  "states": [
+    {
+      "name": "artifact_container"
+    },
+    {
+      "name": "artifact_container_door"
+    },
+    {
+      "name": "artifact_container_open"
+    },
+    {
+      "name": "artifact_container_icon"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "welded"
+    },
+    {
+      "name": "paper"
+    },
+    {
+      "name": "bounty"
+    },
+    {
+      "name": "captains_paper"
+    },
+    {
+      "name": "invoice"
+    }
+  ]
+}

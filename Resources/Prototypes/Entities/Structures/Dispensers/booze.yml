@@ -1,28 +1,47 @@
 - type: entity
-  id: BoozeDispenser
+  id: BoozeDispenserEmpty
   name: booze dispenser
+  suffix: Empty
   description: A booze dispenser with a single slot for a container to be filled.
   parent: ReagentDispenserBase
   components:
   - type: Rotatable
   - type: Sprite
-    sprite: Structures/dispensers.rsi
+    sprite: Structures/smalldispensers.rsi
     drawdepth: SmallObjects
     state: booze
-    netsync: false
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
-      mass: 25
-      mask:
-        - Impassable
-        - VaultImpassable
-      layer:
-        - Opaque
-        - MobImpassable
-        - SmallImpassable
-  - type: ReagentDispenser
-    pack: BoozeDispenserInventory
-    emagPack: BoozeDispenserEmagInventory
+  - type: Storage
+    openOnActivate: false
+    whitelist:
+      tags:
+      - DrinkBottle
+  - type: Transform
+    noRot: false
+  - type: Machine
+    board: BoozeDispenserMachineCircuitboard
+  - type: GuideHelp
+    guides:
+    - Bartender
+    - Drinks
+  - type: StealTarget
+    stealGroup: BoozeDispenser
+
+- type: entity
+  id: BoozeDispenser
+  suffix: Filled
+  parent: BoozeDispenserEmpty
+  components:
+  - type: StorageFill
+    contents:
+    - id: DrinkAleBottleFullGrowler
+    - id: DrinkBeerGrowler
+    - id: DrinkCoffeeLiqueurBottleFull
+    - id: DrinkCognacBottleFull
+    - id: DrinkGinBottleFull
+    - id: DrinkMeadJug
+    - id: DrinkRumBottleFull
+    - id: DrinkTequilaBottleFull
+    - id: DrinkVermouthBottleFull
+    - id: DrinkVodkaBottleFull
+    - id: DrinkWhiskeyBottleFull
+    - id: DrinkWineBottleFull

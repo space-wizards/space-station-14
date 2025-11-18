@@ -1,0 +1,7 @@
+﻿<controls:CharacterObjectiveControl
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Character.Controls"
+    Orientation="Vertical"
+    Modulate="#808080">
+    <Label Name="Group" Modulate="#87CEFA" Access="Public"/>
+</controls:CharacterObjectiveControl>

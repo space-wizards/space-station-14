@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos.Prototypes;
@@ -11,6 +11,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Client.Administration.UI.Tabs.AtmosTab
 {
@@ -18,27 +19,36 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     [UsedImplicitly]
     public sealed partial class FillGasWindow : DefaultWindow
     {
-        private IEnumerable<IMapGrid>? _gridData;
+        private List<NetEntity>? _gridData;
         private IEnumerable<GasPrototype>? _gasData;
 
         protected override void EnteredTree()
         {
             // Fill out grids
-            _gridData = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0);
-            foreach (var grid in _gridData)
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var playerManager = IoCManager.Resolve<IPlayerManager>();
+
+            var gridQuery = entManager.AllEntityQueryEnumerator<MapGridComponent>();
+            _gridData ??= new List<NetEntity>();
+            _gridData.Clear();
+
+            while (gridQuery.MoveNext(out var uid, out _))
             {
-                var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
-                var playerGrid = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<TransformComponent>(player)?.GridID;
-                GridOptions.AddItem($"{grid.Index} {(playerGrid == grid.Index ? " (Current)" : "")}");
+                var player = playerManager.LocalEntity;
+                var playerGrid = entManager.GetComponentOrNull<TransformComponent>(player)?.GridUid;
+                GridOptions.AddItem($"{uid} {(playerGrid == uid ? Loc.GetString($"admin-ui-atmos-grid-current") : "")}");
+                _gridData.Add(entManager.GetNetEntity(uid));
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
 
             // Fill out gases
-            _gasData = EntitySystem.Get<AtmosphereSystem>().Gases;
+            _gasData = entManager.System<AtmosphereSystem>().Gases;
+
             foreach (var gas in _gasData)
             {
-                GasOptions.AddItem($"{gas.Name} ({gas.ID})");
+                var gasName = Loc.GetString(gas.Name);
+                GasOptions.AddItem($"{gasName} ({gas.ID})");
             }
 
             GasOptions.OnItemSelected += eventArgs => GasOptions.SelectId(eventArgs.Id);
@@ -51,8 +61,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             if (_gridData == null || _gasData == null)
                 return;
 
-            var gridList = _gridData.ToList();
-            var gridIndex = gridList[GridOptions.SelectedId].Index;
+            var gridIndex = _gridData[GridOptions.SelectedId];
 
             var gasList = _gasData.ToList();
             var gasId = gasList[GasOptions.SelectedId].ID;

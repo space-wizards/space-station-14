@@ -1,23 +1,14 @@
-using System;
 using System.Threading;
 using Content.Server.Chat.Managers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
+using Content.Server.GameTicking.Rules.Components;
+using Content.Shared.GameTicking.Components;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class MaxTimeRestartRuleSystem : GameRuleSystem
+public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRuleComponent>
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
-
-    public override string Prototype => "MaxTimeRestart";
-
-    private CancellationTokenSource _timerCancel = new();
-
-    public TimeSpan RoundMaxTime { get; set; } = TimeSpan.FromMinutes(5);
-    public TimeSpan RoundEndDelay { get; set; } = TimeSpan.FromSeconds(10);
 
     public override void Initialize()
     {
@@ -26,55 +17,62 @@ public sealed class MaxTimeRestartRuleSystem : GameRuleSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(RunLevelChanged);
     }
 
-    public override void Started()
+    protected override void Started(EntityUid uid, MaxTimeRestartRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
+        base.Started(uid, component, gameRule, args);
+
         if(GameTicker.RunLevel == GameRunLevel.InRound)
-            RestartTimer();
+            RestartTimer(component);
     }
 
-    public override void Ended()
+    protected override void Ended(EntityUid uid, MaxTimeRestartRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
     {
-        RoundMaxTime = TimeSpan.FromMinutes(5);
-        RoundEndDelay = TimeSpan.FromMinutes(10);
+        base.Ended(uid, component, gameRule, args);
 
-        StopTimer();
+        StopTimer(component);
     }
 
-    public void RestartTimer()
+    public void RestartTimer(MaxTimeRestartRuleComponent component)
     {
-        _timerCancel.Cancel();
-        _timerCancel = new CancellationTokenSource();
-        Timer.Spawn(RoundMaxTime, TimerFired, _timerCancel.Token);
+        // TODO FULL GAME SAVE
+        component.TimerCancel.Cancel();
+        component.TimerCancel = new CancellationTokenSource();
+        Timer.Spawn(component.RoundMaxTime, () => TimerFired(component), component.TimerCancel.Token);
     }
 
-    public void StopTimer()
+    public void StopTimer(MaxTimeRestartRuleComponent component)
     {
-        _timerCancel.Cancel();
+        component.TimerCancel.Cancel();
     }
 
-    private void TimerFired()
+    private void TimerFired(MaxTimeRestartRuleComponent component)
     {
         GameTicker.EndRound(Loc.GetString("rule-time-has-run-out"));
 
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) RoundEndDelay.TotalSeconds)));
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",("seconds", (int) component.RoundEndDelay.TotalSeconds)));
 
-        Timer.Spawn(RoundEndDelay, () => GameTicker.RestartRound());
+        // TODO FULL GAME SAVE
+        Timer.Spawn(component.RoundEndDelay, () => GameTicker.RestartRound());
     }
 
     private void RunLevelChanged(GameRunLevelChangedEvent args)
     {
-        if (!Enabled)
-            return;
-
-        switch (args.New)
+        var query = EntityQueryEnumerator<MaxTimeRestartRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var timer, out var gameRule))
         {
-            case GameRunLevel.InRound:
-                RestartTimer();
-                break;
-            case GameRunLevel.PreRoundLobby:
-            case GameRunLevel.PostRound:
-                StopTimer();
-                break;
+            if (!GameTicker.IsGameRuleActive(uid, gameRule))
+                return;
+
+            switch (args.New)
+            {
+                case GameRunLevel.InRound:
+                    RestartTimer(timer);
+                    break;
+                case GameRunLevel.PreRoundLobby:
+                case GameRunLevel.PostRound:
+                    StopTimer(timer);
+                    break;
+            }
         }
     }
 }

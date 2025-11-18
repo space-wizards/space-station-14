@@ -1,11 +1,21 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation, plant-26 made by Fazansen(https://github.com/Fazansen), inhand-left and right made by Xeri(https://github.com/Xeri7)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-  	    {
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
       "name": "random",
       "delays": [
         [
@@ -225,7 +235,12 @@
       "name": "plant-26",
       "delays": [
         [
-          1.0
+          5,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
         ]
       ]
     },
@@ -247,6 +262,14 @@
     },
     {
       "name": "plant-29",
+      "delays": [
+        [
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "plant-30",
       "delays": [
         [
           1.0

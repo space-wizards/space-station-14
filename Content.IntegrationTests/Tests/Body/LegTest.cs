@@ -1,23 +1,19 @@
-﻿using System.Threading.Tasks;
-using Content.Server.Body;
-using Content.Server.Body.Components;
+﻿using System.Numerics;
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Rotation;
-using NUnit.Framework;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Body
 {
     [TestFixture]
-    [TestOf(typeof(SharedBodyComponent))]
+    [TestOf(typeof(BodyPartComponent))]
     [TestOf(typeof(BodyComponent))]
-    public sealed class LegTest : ContentIntegrationTest
+    public sealed class LegTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: HumanBodyAndAppearanceDummy
@@ -25,47 +21,59 @@ namespace Content.IntegrationTests.Tests.Body
   components:
   - type: Appearance
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
-    centerSlot: torso
+    prototype: Human
   - type: StandingState
 ";
 
         [Test]
         public async Task RemoveLegsFallTest()
         {
-            var options = new ServerContentIntegrationOption{ExtraPrototypes = Prototypes};
-            var server = StartServer(options);
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
+            EntityUid human = default!;
             AppearanceComponent appearance = null;
+
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var appearanceSystem = entityManager.System<SharedAppearanceSystem>();
+            var xformSystem = entityManager.System<SharedTransformSystem>();
+
+            var map = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
+                BodyComponent body = null;
 
-                var mapId = mapManager.CreateMap();
+                human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy",
+                    new MapCoordinates(Vector2.Zero, map.MapId));
 
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var human = entityManager.SpawnEntity("HumanBodyAndAppearanceDummy", new MapCoordinates(Vector2.Zero, mapId));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(entityManager.TryGetComponent(human, out body));
+                    Assert.That(entityManager.TryGetComponent(human, out appearance));
+                });
 
-                Assert.That(entityManager.TryGetComponent(human, out SharedBodyComponent body));
-                Assert.That(entityManager.TryGetComponent(human, out appearance));
+                Assert.That(!appearanceSystem.TryGetData(human, RotationVisuals.RotationState, out RotationState _, appearance));
 
-                Assert.That(!appearance.TryGetData(RotationVisuals.RotationState, out RotationState _));
-
-                var legs = body.GetPartsOfType(BodyPartType.Leg);
+                var bodySystem = entityManager.System<BodySystem>();
+                var legs = bodySystem.GetBodyChildrenOfType(human, BodyPartType.Leg, body);
 
                 foreach (var leg in legs)
                 {
-                    body.RemovePart(leg);
+                    xformSystem.DetachEntity(leg.Id, entityManager.GetComponent<TransformComponent>(leg.Id));
                 }
             });
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(appearance.TryGetData(RotationVisuals.RotationState, out RotationState state));
+#pragma warning disable NUnit2045
+                // Interdependent assertions.
+                Assert.That(appearanceSystem.TryGetData(human, RotationVisuals.RotationState, out RotationState state, appearance));
                 Assert.That(state, Is.EqualTo(RotationState.Horizontal));
+#pragma warning restore NUnit2045
             });
+            await pair.CleanReturnAsync();
         }
     }
 }

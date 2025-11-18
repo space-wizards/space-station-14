@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "taken from Cit Git at commit https://github.com/Citadel-Station-13/Citadel-Station-13/commit/5138d86655131bf8d60c0fec3f826c7c67997cb0",
+    "size": {
+        "x": 64,
+        "y": 32
+    },
+    "states": [
+        { "name": "metamap64x" }
+    ]
+}

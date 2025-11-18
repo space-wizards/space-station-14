@@ -1,0 +1,76 @@
+- type: constructionGraph
+  id: ImprovisedShotgunShellGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shell
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 0.5
+            - material: Plastic
+              amount: 1
+              doAfter: 0.5
+            - tag: GlassShard
+              name: construction-graph-tag-glass-shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+              doAfter: 0.5
+            - tag: GlassShard
+              name: construction-graph-tag-glass-shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard2
+              doAfter: 0.5
+            - tag: GlassShard
+              name: construction-graph-tag-glass-shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+              doAfter: 0.5
+            - tag: GlassShard
+              name: construction-graph-tag-glass-shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard3
+              doAfter: 0.5
+            - tag: Matchstick
+              name: construction-graph-tag-match-stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5
+            - tag: Matchstick
+              name: construction-graph-tag-match-stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5
+            - tag: Matchstick
+              name: construction-graph-tag-match-stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5
+            - tag: Matchstick
+              name: construction-graph-tag-match-stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5
+            - tag: Matchstick
+              name: construction-graph-tag-match-stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5
+            - tag: Matchstick
+              name: construction-graph-tag-match-stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5
+    - node: shell
+      entity: ShellShotgunImprovised

@@ -6,7 +6,8 @@ namespace Content.Benchmarks
 {
     // To actually run this benchmark you'll have to make DependencyCollection public so it's accessible.
 
-    public sealed class DependencyInjectBenchmark
+    [Virtual]
+    public class DependencyInjectBenchmark
     {
         [Params(InjectMode.Reflection, InjectMode.DynamicMethod)]
         public InjectMode Mode { get; set; }

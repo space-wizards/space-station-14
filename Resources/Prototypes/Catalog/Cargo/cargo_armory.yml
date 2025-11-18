@@ -1,23 +1,79 @@
 - type: cargoProduct
-  name: "smg crate"
   id: ArmorySmg
-  description: "Contains three WT-550 SMGs with six mags. Requires Armory access to open."
   icon:
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
     state: icon
   product: CrateArmorySMG
-  cost: 8000
-  category: Armory
+  cost: 9000
+  category: cargoproduct-category-name-armory
   group: market
 
 - type: cargoProduct
-  name: "shotgun crate"
   id: ArmoryShotgun
-  description: "For when the enemy absolutely needs to be replaced with lead. Contains three Gladstone Combat Shotguns, and some standard shotgun shells. Requires Armory access to open."
   icon:
-    sprite: Objects/Weapons/Guns/Shotguns/gladstone.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
     state: icon
   product: CrateArmoryShotgun
+  cost: 7000
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: SecurityRiot
+  icon:
+    sprite: Clothing/OuterClothing/Armor/riot.rsi
+    state: icon
+  product: CrateSecurityRiot
+  cost: 7500
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: TrackingImplant
+  icon:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  product: CrateTrackingImplants
+  cost: 1000
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: TrainingBombs
+  icon:
+    sprite: Structures/Machines/bomb.rsi
+    state: training-bomb
+  product: CrateTrainingBombs
+  cost: 3000
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryLaser
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    state: icon
+  product: CrateArmoryLaser
+  cost: 4800
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryPistol
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: icon
+  product: CrateArmoryPistols
+  cost: 5200
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryRifle
+  icon:
+    sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+    state: icon
+  product: CrateArmoryRifle
   cost: 8000
-  category: Armory
+  category: cargoproduct-category-name-armory
   group: market

@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Hanzdegloker",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "ashtray1"
+    },
+    {
+      "name": "ashtray2"
+    },
+    {
+      "name": "ashtray3"
+    },
+    {
+      "name": "ashtray4"
+    },
+    {
+      "name": "ashtray5"
+    },
+    {
+      "name": "ashtray6"
+    },
+    {
+      "name": "ashtray7"
+    },
+    {
+      "name": "ashtray8"
+    },
+    {
+      "name": "ashtray9"
+    },
+    {
+      "name": "ashtray10"
+    }
+  ]
+}

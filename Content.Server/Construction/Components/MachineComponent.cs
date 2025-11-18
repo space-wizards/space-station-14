@@ -1,18 +1,17 @@
-﻿using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Construction.Components;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Construction.Components
+namespace Content.Server.Construction.Components;
+
+[RegisterComponent]
+public sealed partial class MachineComponent : Component
 {
-    [RegisterComponent, ComponentProtoName("Machine")]
-    public sealed class MachineComponent : Component
-    {
-        [DataField("board", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? BoardPrototype { get; private set; }
+    [DataField]
+    public EntProtoId<MachineBoardComponent>? Board { get; private set; }
 
-        public Container BoardContainer = default!;
-        public Container PartContainer = default!;
-    }
+    [ViewVariables]
+    public Container BoardContainer = default!;
+    [ViewVariables]
+    public Container PartContainer = default!;
 }

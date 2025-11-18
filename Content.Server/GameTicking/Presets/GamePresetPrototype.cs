@@ -1,34 +1,44 @@
-using System;
-using System.Collections.Generic;
-using Content.Server.GameTicking.Rules;
+using Content.Server.Maps;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Presets
 {
     /// <summary>
     ///     A round-start setup preset, such as which antagonists to spawn.
     /// </summary>
-    [Prototype("gamePreset")]
-    public sealed class GamePresetPrototype : IPrototype
+    [Prototype]
+    public sealed partial class GamePresetPrototype : IPrototype
     {
-        [DataField("id", required:true)]
-        public string ID { get; } = default!;
+        [IdDataField]
+        public string ID { get; private set; } = default!;
 
         [DataField("alias")]
-        public string[] Alias { get; } = Array.Empty<string>();
+        public string[] Alias = Array.Empty<string>();
 
         [DataField("name")]
-        public string ModeTitle { get; } = "????";
+        public string ModeTitle = "????";
 
         [DataField("description")]
-        public string Description { get; } = string.Empty;
+        public string Description = string.Empty;
 
         [DataField("showInVote")]
-        public bool ShowInVote { get; } = false;
+        public bool ShowInVote;
 
-        [DataField("rules", customTypeSerializer:typeof(PrototypeIdListSerializer<GameRulePrototype>))]
-        public IReadOnlyList<string> Rules { get; } = Array.Empty<string>();
+        [DataField("minPlayers")]
+        public int? MinPlayers;
+
+        [DataField("maxPlayers")]
+        public int? MaxPlayers;
+
+        [DataField]
+        public IReadOnlyList<EntProtoId> Rules { get; private set; } = Array.Empty<EntProtoId>();
+
+        /// <summary>
+        /// If specified, the gamemode will only be run with these maps.
+        /// If none are elligible, the global fallback will be used.
+        /// </summary>
+        [DataField("supportedMaps", customTypeSerializer: typeof(PrototypeIdSerializer<GameMapPoolPrototype>))]
+        public string? MapPool;
     }
 }

@@ -1,9 +1,8 @@
-using Robust.Shared.GameObjects;
+using Content.Shared.Database;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
-using Content.Shared.Database;
-using System.Collections.Generic;
 
 namespace Content.Shared.Verbs
 {
@@ -56,7 +55,8 @@ namespace Content.Shared.Verbs
         public EntityUid EventTarget = EntityUid.Invalid;
 
         /// <summary>
-        ///     If a verb is only defined client-side, this should be set to true.
+        ///     Whether a verb is only defined client-side. Note that this has nothing to do with whether the target of
+        ///     the verb is client-side
         /// </summary>
         /// <remarks>
         ///     If true, the client will not also ask the server to run this verb when executed locally. This just
@@ -73,14 +73,7 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
         /// </summary>
-        public SpriteSpecifier? Icon
-        {
-            get => _icon ??=
-                IconTexture == null ? null : new SpriteSpecifier.Texture(new ResourcePath(IconTexture));
-            set => _icon = value;
-        }
-        [NonSerialized]
-        private SpriteSpecifier? _icon;
+        public SpriteSpecifier? Icon;
 
         /// <summary>
         ///     Name of the category this button is under. Used to group verbs in the context menu.
@@ -117,15 +110,10 @@ namespace Content.Shared.Verbs
         public int Priority;
 
         /// <summary>
-        ///     Raw texture path used to load the <see cref="Icon"/> for displaying on the client.
-        /// </summary>
-        public string? IconTexture;
-
-        /// <summary>
         ///     If this is not null, and no icon or icon texture were specified, a sprite view of this entity will be
         ///     used as the icon for this verb.
         /// </summary>
-        public EntityUid? IconEntity;
+        public NetEntity? IconEntity;
 
         /// <summary>
         ///     Whether or not to close the context menu after using it to run this verb.
@@ -134,7 +122,9 @@ namespace Content.Shared.Verbs
         ///     Setting this to false may be useful for repeatable actions, like rotating an object or maybe knocking on
         ///     a window.
         /// </remarks>
-        public bool CloseMenu = true;
+        public bool? CloseMenu;
+
+        public virtual bool CloseMenuDefault => true;
 
         /// <summary>
         ///     How important is this verb, for the purposes of admin logging?
@@ -148,6 +138,15 @@ namespace Content.Shared.Verbs
         ///     Whether this verb requires confirmation before being executed.
         /// </summary>
         public bool ConfirmationPopup = false;
+
+        /// <summary>
+        ///     If true, this verb will raise <see cref="ContactInteractionEvent"/>s when executed. If not explicitly
+        ///     specified, this will just default to raising the event if <see cref="DefaultDoContactInteraction"/> is
+        ///     true and the user is in range.
+        /// </summary>
+        public bool? DoContactInteraction;
+
+        public virtual bool DefaultDoContactInteraction => false;
 
         /// <summary>
         ///     Compares two verbs based on their <see cref="Priority"/>, <see cref="Category"/>, <see cref="Text"/>,
@@ -190,12 +189,24 @@ namespace Content.Shared.Verbs
                 return string.Compare(Text, otherVerb.Text, StringComparison.CurrentCulture);
             }
 
+            if (IconEntity != otherVerb.IconEntity)
+            {
+                if (IconEntity == null)
+                    return -1;
+
+                if (otherVerb.IconEntity == null)
+                    return 1;
+
+                return IconEntity.Value.CompareTo(otherVerb.IconEntity.Value);
+            }
+
             // Finally, compare icon texture paths. Note that this matters for verbs that don't have any text (e.g., the rotate-verbs)
-            return string.Compare(IconTexture, otherVerb.IconTexture, StringComparison.CurrentCulture);
+            return string.Compare(Icon?.ToString(), otherVerb.Icon?.ToString(), StringComparison.CurrentCulture);
         }
 
+        // I hate this. Please somebody allow generics to be networked.
         /// <summary>
-        ///     Collection of all verb types, along with string keys.
+        ///     Collection of all verb types,
         /// </summary>
         /// <remarks>
         ///     Useful when iterating over verb types, though maybe this should be obtained and stored via reflection or
@@ -204,13 +215,26 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public static List<Type> VerbTypes = new()
         {
-            { typeof(Verb) },
-            { typeof(InteractionVerb) },
-            { typeof(UtilityVerb) },
-            { typeof(AlternativeVerb) },
-            { typeof(ActivationVerb) },
-            { typeof(ExamineVerb) }
+            typeof(Verb),
+            typeof(VvVerb),
+            typeof(InteractionVerb),
+            typeof(UtilityVerb),
+            typeof(InnateVerb),
+            typeof(AlternativeVerb),
+            typeof(ActivationVerb),
+            typeof(ExamineVerb),
+            typeof(EquipmentVerb)
         };
+    }
+
+    /// <summary>
+    ///     View variables verbs.
+    /// </summary>
+    /// <remarks>Currently only used for the verb that opens the view variables panel.</remarks>
+    [Serializable, NetSerializable]
+    public sealed class VvVerb : Verb
+    {
+        public override int TypePriority => int.MaxValue;
     }
 
     /// <summary>
@@ -226,6 +250,7 @@ namespace Content.Shared.Verbs
     {
         public new static string DefaultTextStyleClass = "InteractionVerb";
         public override int TypePriority => 4;
+        public override bool DefaultDoContactInteraction => true;
 
         public InteractionVerb() : base()
         {
@@ -247,8 +272,26 @@ namespace Content.Shared.Verbs
     public sealed class UtilityVerb : Verb
     {
         public override int TypePriority => 3;
+        public override bool DefaultDoContactInteraction => true;
 
         public UtilityVerb() : base()
+        {
+            TextStyleClass = InteractionVerb.DefaultTextStyleClass;
+        }
+    }
+
+    /// <summary>
+    ///     This is for verbs facilitated by components on the user or their clothing.
+    ///     Verbs from clothing, species, etc. rather than a held item.
+    /// </summary>
+    /// <remarks>
+    ///     This will get relayed to all clothing (Not pockets) through an inventory relay event.
+    /// </remarks>
+    [Serializable, NetSerializable]
+    public sealed class InnateVerb : Verb
+    {
+        public override int TypePriority => 3;
+        public InnateVerb() : base()
         {
             TextStyleClass = InteractionVerb.DefaultTextStyleClass;
         }
@@ -266,6 +309,7 @@ namespace Content.Shared.Verbs
     {
         public override int TypePriority => 2;
         public new static string DefaultTextStyleClass = "AlternativeVerb";
+        public override bool DefaultDoContactInteraction => true;
 
         public AlternativeVerb() : base()
         {
@@ -287,6 +331,7 @@ namespace Content.Shared.Verbs
     {
         public override int TypePriority => 1;
         public new static string DefaultTextStyleClass = "ActivationVerb";
+        public override bool DefaultDoContactInteraction => true;
 
         public ActivationVerb() : base()
         {
@@ -298,7 +343,21 @@ namespace Content.Shared.Verbs
     public sealed class ExamineVerb : Verb
     {
         public override int TypePriority => 0;
+        public override bool CloseMenuDefault => false; // for examine verbs, this will close the examine tooltip.
 
         public bool ShowOnExamineTooltip = true;
+        public bool HoverVerb = false; // aligned to the left, gives text on hover
+    }
+
+    /// <summary>
+    ///     Verbs specifically for interactions that occur with equipped entities. These verbs are unique in that they
+    ///     can be used via the stripping UI. Additionally, when getting verbs on an entity with an inventory it will
+    ///     these automatically relay the <see cref="GetVerbsEvent{EquipmentVerb}"/> event to all equipped items via a
+    ///     <see cref="InventoryRelayedEvent{T}"/>.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class EquipmentVerb : Verb
+    {
+        public override int TypePriority => 5;
     }
 }

@@ -1,8 +1,23 @@
 # Chat window radio wrap (prefix and postfix)
-chat-radio-message-wrap = {$channel} {$name} says, "{"{"}0{"}"}"
+chat-radio-message-wrap = [color={$color}]{$channel} [bold]{$name}[/bold] {$verb}, [font={$fontType} size={$fontSize}]"{$message}"[/font][/color]
+chat-radio-message-wrap-bold = [color={$color}]{$channel} [bold]{$name}[/bold] {$verb}, [font={$fontType} size={$fontSize}][bold]"{$message}"[/bold][/font][/color]
 
-examine-radio-frequency = It is set to broadcast over the {$frequency} frequency.
+examine-headset-default-channel = Use {$prefix} for the default channel ([color={$color}]{$channel}[/color]).
 
-examine-headset = A small screen on the headset displays the following available frequencies:
+chat-radio-common = Common
+chat-radio-centcom = CentComm
+chat-radio-command = Command
+chat-radio-engineering = Engineering
+chat-radio-medical = Medical
+chat-radio-science = Science
+chat-radio-security = Security
+chat-radio-service = Service
+chat-radio-supply = Supply
+chat-radio-syndicate = Syndicate
+chat-radio-freelance = Freelance
 
-examine-headset-chat-prefix = Use {$prefix} for the currently tuned frequency.
+# not headset but whatever
+chat-radio-handheld = Handheld
+chat-radio-binary = Binary
+chat-radio-xenoborg = Xenoborg
+chat-radio-mothership = Mothership

@@ -1,115 +1,114 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
-using Robust.Server.Player;
+using Content.Shared.Tag;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Construction.Commands
+namespace Content.Server.Construction.Commands;
+
+[AdminCommand(AdminFlags.Mapping)]
+public sealed class TileWallsCommand : IConsoleCommand
 {
-    [AdminCommand(AdminFlags.Mapping)]
-    sealed class TileWallsCommand : IConsoleCommand
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+
+    // ReSharper disable once StringLiteralTypo
+    public string Command => "tilewalls";
+    public string Description => "Puts an underplating tile below every wall on a grid.";
+    public string Help => $"Usage: {Command} <gridId> | {Command}";
+
+    public static readonly ProtoId<ContentTileDefinition> TilePrototypeId = "Plating";
+    public static readonly ProtoId<TagPrototype> WallTag = "Wall";
+    public static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
+
+    public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        // ReSharper disable once StringLiteralTypo
-        public string Command => "tilewalls";
-        public string Description => "Puts an underplating tile below every wall on a grid.";
-        public string Help => $"Usage: {Command} <gridId> | {Command}";
+        var player = shell.Player;
+        EntityUid? gridId;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        switch (args.Length)
         {
-            var player = shell.Player as IPlayerSession;
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            GridId gridId;
-
-            switch (args.Length)
-            {
-                case 0:
-                    if (player?.AttachedEntity is not {Valid: true} playerEntity)
-                    {
-                        shell.WriteLine("Only a player can run this command.");
-                        return;
-                    }
-
-                    gridId = entityManager.GetComponent<TransformComponent>(playerEntity).GridID;
-                    break;
-                case 1:
-                    if (!int.TryParse(args[0], out var id))
-                    {
-                        shell.WriteLine($"{args[0]} is not a valid integer.");
-                        return;
-                    }
-
-                    gridId = new GridId(id);
-                    break;
-                default:
-                    shell.WriteLine(Help);
+            case 0:
+                if (player?.AttachedEntity is not { Valid: true } playerEntity)
+                {
+                    shell.WriteError("Only a player can run this command.");
                     return;
-            }
+                }
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            if (!mapManager.TryGetGrid(gridId, out var grid))
-            {
-                shell.WriteLine($"No grid exists with id {gridId}");
+                gridId = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
+                break;
+            case 1:
+                if (!NetEntity.TryParse(args[0], out var idNet) || !_entManager.TryGetEntity(idNet, out var id))
+                {
+                    shell.WriteError($"{args[0]} is not a valid entity.");
+                    return;
+                }
+
+                gridId = id;
+                break;
+            default:
+                shell.WriteLine(Help);
                 return;
-            }
-
-            if (!entityManager.EntityExists(grid.GridEntityId))
-            {
-                shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
-                return;
-            }
-
-            var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            var underplating = tileDefinitionManager["underplating"];
-            var underplatingTile = new Tile(underplating.TileId);
-            var changed = 0;
-            foreach (var child in entityManager.GetComponent<TransformComponent>(grid.GridEntityId).ChildEntities)
-            {
-                if (!entityManager.EntityExists(child))
-                {
-                    continue;
-                }
-
-                var prototype = entityManager.GetComponent<MetaDataComponent>(child).EntityPrototype;
-                while (true)
-                {
-                    if (prototype?.Parent == null)
-                    {
-                        break;
-                    }
-
-                    prototype = prototypeManager.Index<EntityPrototype>(prototype.Parent);
-                }
-
-                if (prototype?.ID != "base_wall")
-                {
-                    continue;
-                }
-
-                var childTransform = entityManager.GetComponent<TransformComponent>(child);
-
-                if (!childTransform.Anchored)
-                {
-                    continue;
-                }
-
-                var tile = grid.GetTileRef(childTransform.Coordinates);
-                var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
-
-                if (tileDef.ID == "underplating")
-                {
-                    continue;
-                }
-
-                grid.SetTile(childTransform.Coordinates, underplatingTile);
-                changed++;
-            }
-
-            shell.WriteLine($"Changed {changed} tiles.");
         }
+
+        if (!_entManager.TryGetComponent(gridId, out MapGridComponent? grid))
+        {
+            shell.WriteError($"No grid exists with id {gridId}");
+            return;
+        }
+
+        if (!_entManager.EntityExists(gridId))
+        {
+            shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
+            return;
+        }
+
+        var tagSystem = _entManager.EntitySysManager.GetEntitySystem<TagSystem>();
+        var underplating = _tileDefManager[TilePrototypeId];
+        var underplatingTile = new Tile(underplating.TileId);
+        var changed = 0;
+        var enumerator = _entManager.GetComponent<TransformComponent>(gridId.Value).ChildEnumerator;
+        while (enumerator.MoveNext(out var child))
+        {
+            if (!_entManager.EntityExists(child))
+            {
+                continue;
+            }
+
+            if (!tagSystem.HasTag(child, WallTag))
+            {
+                continue;
+            }
+
+            if (tagSystem.HasTag(child, DiagonalTag))
+            {
+                continue;
+            }
+
+            var childTransform = _entManager.GetComponent<TransformComponent>(child);
+
+            if (!childTransform.Anchored)
+            {
+                continue;
+            }
+
+            var mapSystem = _entManager.System<MapSystem>();
+            var tile = mapSystem.GetTileRef(gridId.Value, grid, childTransform.Coordinates);
+            var tileDef = (ContentTileDefinition)_tileDefManager[tile.Tile.TypeId];
+
+            if (tileDef.ID == TilePrototypeId)
+            {
+                continue;
+            }
+
+            mapSystem.SetTile(gridId.Value, grid, childTransform.Coordinates, underplatingTile);
+            changed++;
+        }
+
+        shell.WriteLine($"Changed {changed} tiles.");
     }
 }

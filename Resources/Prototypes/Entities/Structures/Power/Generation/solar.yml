@@ -1,59 +1,163 @@
 - type: entity
   id: SolarPanelBasePhysSprite
-  abstract: true
+  categories: [ HideSpawnMenu ]
   name: solar panel
   placement:
     mode: SnapgridCenter
   components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
   - type: Clickable
   - type: InteractionOutline
   - type: Transform
     anchored: true
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
+      fix1:
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.45,-0.1,0.45,0.1"
-      mass: 100
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+        density: 550
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable, LowImpassable, BulletImpassable
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
-    state: normal
-    netsync: false
+    state: solar_panel_glass
   - type: NodeContainer
     examinable: true
     nodes:
       output:
         !type:CableDeviceNode
         nodeGroupID: HVPower
+  - type: PowerMonitoringDevice
+    group: Generator
+    loadNode: output
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: solar_panel_glass
+    collectionName: SolarPanel
   - type: Anchorable
   - type: Pullable
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
+  - type: RequireProjectileTarget
+  - type: GuideHelp
+    guides:
+    - SolarPanels
 
 - type: entity
-  id: SolarPanel
+  id: SolarPanelPlasma
   parent: SolarPanelBasePhysSprite
-  name: solar panel
+  name: solar panel plasma
+  description: A few sheets of plasma glass that generate electricity when hit by photons.
   components:
   - type: PowerSupplier
     supplyRampTolerance: 500
     supplyRampRate: 500
   - type: SolarPanel
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    maxSupply: 1000
+  - type: Sprite
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: solar_panel_plasma
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: solarpanelplasma_broken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpanelplasma
+
+- type: entity
+  id: SolarPanelUranium
+  parent: SolarPanelBasePhysSprite
+  name: solar panel uranium
+  description: A few sheets of uranium glass that generate electricity when hit by photons.
+  components:
+  - type: PowerSupplier
+    supplyRampTolerance: 500
+    supplyRampRate: 500
+  - type: SolarPanel
+    maxSupply: 1500
+  - type: Sprite
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: solar_panel_uranium
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: solarpaneluranium_broken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpaneluranium
+
+- type: entity
+  id: SolarPanel
+  parent: SolarPanelBasePhysSprite
+  name: solar panel
+  description: A few sheets of glass that generate electricity when hit by photons.
+  components:
+  - type: PowerSupplier
+    supplyRampTolerance: 500
+    supplyRampRate: 500
+  - type: SolarPanel
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -68,20 +172,28 @@
   - type: Construction
     graph: SolarPanel
     node: solarpanel
+  - type: SolarPanelReplacementMarker
 
 - type: entity
   id: SolarPanelBroken
   parent: SolarPanelBasePhysSprite
   name: solar panel
+  description: A broken solar panel.
   suffix: Broken
   components:
   - type: Sprite
-    state: broken
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    state: solar_panel_glass_broken
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 50
@@ -101,6 +213,82 @@
     node: solarpanel_broken
 
 - type: entity
+  id: SolarPanelPlasmaBroken
+  parent: SolarPanelBasePhysSprite
+  name: plasma solar panel
+  description: A broken plasma solar panel.
+  suffix: Broken
+  components:
+  - type: Sprite
+    state: solar_panel_plasma_broken
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpanelplasma_broken
+
+- type: entity
+  id: SolarPanelUraniumBroken
+  parent: SolarPanelBasePhysSprite
+  name: uranium solar panel
+  description: A broken uranium solar panel.
+  suffix: Broken
+  components:
+  - type: Sprite
+    state: solar_panel_uranium_broken
+  - type: Destructible
+    thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassUranium:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpaneluranium_broken
+
+- type: entity
   id: SolarAssembly
   name: solar assembly
   description: A solar assembly. Anchor to a wire to start building a solar panel.
@@ -113,24 +301,32 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.25
-      mass: 75
-      mask:
-      - VaultImpassable
-      layer:
-      - VaultImpassable
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 375
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_assembly
   - type: Transform
     anchored: true
+    noRot: true
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -142,10 +338,16 @@
   - type: Construction
     graph: SolarPanel
     node: solarassembly
+    defaultTarget: solarpanel
+  - type: RequireProjectileTarget
+  - type: GuideHelp
+    guides:
+    - SolarPanels
 
 - type: entity
   id: SolarTracker
   name: solar tracker
+  description: A solar tracker. Tracks the nearest star.
   placement:
     mode: SnapgridCenter
   components:
@@ -155,28 +357,23 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      mass: 100
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_tracker
-    netsync: false
   - type: Transform
     anchored: true
+    noRot: true
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -190,3 +387,7 @@
   - type: Construction
     graph: SolarPanel
     node: solartracker
+  - type: RequireProjectileTarget
+  - type: GuideHelp
+    guides:
+    - SolarPanels

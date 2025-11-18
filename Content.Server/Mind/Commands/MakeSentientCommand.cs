@@ -1,62 +1,30 @@
 using Content.Server.Administration;
-using Content.Server.AI.Components;
-using Content.Server.Mind.Components;
 using Content.Shared.Administration;
-using Content.Shared.Emoting;
-using Content.Shared.Examine;
-using Content.Shared.Movement.Components;
-using Content.Shared.Speech;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.Mind.Commands
+namespace Content.Server.Mind.Commands;
+
+[AdminCommand(AdminFlags.Admin)]
+public sealed class MakeSentientCommand : LocalizedEntityCommands
 {
-    [AdminCommand(AdminFlags.Fun)]
-    public sealed class MakeSentientCommand : IConsoleCommand
+    [Dependency] private readonly MindSystem _mindSystem = default!;
+
+    public override string Command => "makesentient";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        public string Command => "makesentient";
-        public string Description => "Makes an entity sentient (able to be controlled by a player)";
-        public string Help => "makesentient <entity id>";
-
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        if (args.Length != 1)
         {
-            if (args.Length != 1)
-            {
-                shell.WriteLine("Wrong number of arguments.");
-                return;
-            }
-
-            if (!EntityUid.TryParse(args[0], out var entId))
-            {
-                shell.WriteLine("Invalid argument.");
-                return;
-            }
-
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-
-            if (!entityManager.EntityExists(entId))
-            {
-                shell.WriteLine("Invalid entity specified!");
-                return;
-            }
-
-            MakeSentient(entId, entityManager);
+            shell.WriteLine(Loc.GetString("shell-need-exactly-one-argument"));
+            return;
         }
 
-        public static void MakeSentient(EntityUid uid, IEntityManager entityManager)
+        if (!NetEntity.TryParse(args[0], out var entNet) || !EntityManager.TryGetEntity(entNet, out var entId) || !EntityManager.EntityExists(entId))
         {
-            if(entityManager.HasComponent<AiControllerComponent>(uid))
-                entityManager.RemoveComponent<AiControllerComponent>(uid);
-
-
-            entityManager.EnsureComponent<MindComponent>(uid);
-            entityManager.EnsureComponent<SharedPlayerInputMoverComponent>(uid);
-            entityManager.EnsureComponent<SharedPlayerMobMoverComponent>(uid);
-            entityManager.EnsureComponent<SharedSpeechComponent>(uid);
-            entityManager.EnsureComponent<SharedEmotingComponent>(uid);
-            entityManager.EnsureComponent<ExaminerComponent>(uid);
+            shell.WriteLine(Loc.GetString("shell-could-not-find-entity-with-uid", ("uid", args[0])));
+            return;
         }
+
+        _mindSystem.MakeSentient(entId.Value);
     }
 }

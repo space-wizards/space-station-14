@@ -1,12 +1,5 @@
-using System;
-using Content.Server.Power.Components;
 using Content.Server.Solar.EntitySystems;
-using Robust.Server.GameObjects;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
+using Content.Shared.Guidebook;
 
 namespace Content.Server.Solar.Components
 {
@@ -16,15 +9,15 @@ namespace Content.Server.Solar.Components
     ///     It generates power from the sun based on coverage.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(PowerSolarSystem))]
-    public sealed class SolarPanelComponent : Component
+    [Access(typeof(PowerSolarSystem))]
+    public sealed partial class SolarPanelComponent : Component
     {
         /// <summary>
         /// Maximum supply output by this panel (coverage = 1)
         /// </summary>
         [DataField("maxSupply")]
-        [ViewVariables]
-        public int MaxSupply = 1500;
+        [GuidebookData]
+        public int MaxSupply = 750;
 
         /// <summary>
         /// Current coverage of this panel (from 0 to 1).

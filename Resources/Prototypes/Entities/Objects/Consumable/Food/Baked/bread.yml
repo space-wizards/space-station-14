@@ -1,14 +1,21 @@
+# When adding new food also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\food_baked_whole.yml & food_baked_single.yml
 # Base
 
 - type: entity
+  abstract: true
   parent: FoodInjectableBase
   id: FoodBreadBase
-  abstract: true
   components:
-  - type: Food
+  - type: Item
+    size: Normal
+  - type: FlavorProfile
+    flavors:
+      - bread
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
-    netsync: false
+  - type: Tag
+    tags:
+    - Bread
   - type: SolutionContainerManager
     solutions:
       food:
@@ -22,6 +29,15 @@
   id: FoodBreadSliceBase
   abstract: true
   components:
+  - type: Item
+    size: Tiny
+  - type: FlavorProfile
+    flavors:
+      - bread
+  - type: Tag
+    tags:
+    - Bread
+    - Slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -38,11 +54,8 @@
   id: FoodBreadVolcanic
   description: A dark loaf. Resembles pumice.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: alpha
       color: "#281415"
     - state: alpha-filling
@@ -56,11 +69,8 @@
   id: FoodBreadVolcanicSlice
   description: A slice of dark loaf. Resembles pumice.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
-    - state: plate
     - state: alpha-slice
       color: "#281415"
     - state: alpha-slice-filling
@@ -69,253 +79,150 @@
 # Bread
 
 - type: entity
-  name: bread
-  parent: FoodBreadBase
-  id: FoodBreadPlain
-  description: Some plain old earthen bread.
-  components:
-  - type: Food
-    trash: FoodPlate
-  - type: Sprite
-    layers:
-    - state: plate
-    - state: plain
-  - type: SliceableFood
-    slice: FoodBreadPlainSlice
-
-- type: entity
-  name: bread slice
-  parent: FoodBreadSliceBase
-  id: FoodBreadPlainSlice
-  description: A slice of home.
-  components:
-  - type: Food
-    trash: FoodPlate
-  - type: Sprite
-    layers:
-    - state: plate
-    - state: plain-slice
-
-- type: entity
-  name: meatbread loaf
-  parent: FoodBreadBase
-  id: FoodBreadMeat
-  description: The culinary base of every self-respecting eloquen/tg/entleman.
-  components:
-  - type: Food
-    trash: FoodPlate
-  - type: Sprite
-    layers:
-    - state: plate
-    - state: meat
-  - type: SliceableFood
-    slice: FoodBreadMeatSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 45
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
-# Tastes like bread, meat.
-
-- type: entity
-  name: meatbread slice
-  parent: FoodBreadSliceBase
-  id: FoodBreadMeatSlice
-  description: A slice of delicious meatbread.
-  components:
-  - type: Food
-    trash: FoodPlate
-  - type: Sprite
-    layers:
-    - state: plate
-    - state: meat-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
-
-- type: entity
-  name: xeno-meat bread
-  parent: FoodBreadBase
-  id: FoodBreadMeatXeno
-  description: Reassuringly green meatloaf made from xeno meat. Extra heretical.
-  components:
-  - type: Food
-    trash: FoodPlate
-  - type: Sprite
-    layers:
-    - state: plate
-    - state: xenomeat
-  - type: SliceableFood
-    slice: FoodBreadMeatXenoSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 45
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
-# Tastes like bread, acid.
-
-- type: entity
-  name: xeno-meatbread slice
-  parent: FoodBreadSliceBase
-  id: FoodBreadMeatXenoSlice
-  description: A slice of delicious meatbread. Extra heretical.
-  components:
-  - type: Food
-    trash: FoodPlate
-  - type: Sprite
-    layers:
-    - state: plate
-    - state: xenomeat-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
-
-- type: entity
-  name: spider-meatbread
-  parent: FoodBreadBase
-  id: FoodBreadMeatSpider
-  description: Reassuringly green meatloaf made from spider meat.
-  components:
-  - type: Food
-    trash: FoodPlate
-  - type: Sprite
-    layers:
-    - state: plate
-    - state: spidermeat
-  - type: SliceableFood
-    slice: FoodBreadMeatSpiderSlice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 60
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
-        - ReagentId: Toxin
-          Quantity: 15
-# Tastes like bread, cobwebs.
-
-- type: entity
-  name: spider-meatbread slice
-  parent: FoodBreadSliceBase
-  id: FoodBreadMeatSpiderSlice
-  description: A slice of meatloaf made from an animal that most likely still wants you dead.
-  components:
-  - type: Food
-    trash: FoodPlate
-  - type: Sprite
-    layers:
-    - state: plate
-    - state: spidermeat-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
-        - ReagentId: Toxin
-          Quantity: 3
-
-- type: entity
-  name: banana-nut bread
+  name: banana bread
   parent: FoodBreadBase
   id: FoodBreadBanana
   description: A heavenly and filling treat.
   components:
-  - type: Food
-    trash: FoodPlate
+  - type: FlavorProfile
+    flavors:
+      - banana
+      - bread
   - type: Sprite
     layers:
-    - state: plate
     - state: banana
   - type: SliceableFood
     slice: FoodBreadBananaSlice
+  - type: Tag
+    tags:
+    - Fruit
+    - Bread
 # Tastes like bread, banana, nut.
 
 - type: entity
-  name: banana-nut bread slice
+  name: banana bread slice
   parent: FoodBreadSliceBase
   id: FoodBreadBananaSlice
   description: A slice of delicious banana bread.
   components:
-  - type: Food
-    trash: FoodPlate
+  - type: FlavorProfile
+    flavors:
+      - banana
+      - bread
   - type: Sprite
     layers:
-    - state: plate
     - state: banana-slice
+  - type: Tag
+    tags:
+    - Fruit
+    - Bread
+    - Slice
 
 - type: entity
-  name: tofu bread
   parent: FoodBreadBase
-  id: FoodBreadTofu
-  description: Like meatbread but for vegetarians. Brag to your crewmates about how much better it is.
+  id: FoodBreadCotton
+  name: cotton bread
+  description: Bread, but for moff.
   components:
-  - type: Food
-    trash: FoodPlate
+  - type: FlavorProfile
+    flavors:
+    - cotton
+    - bread
+  - type: Edible
+    requiresSpecialDigestion: true
   - type: Sprite
     layers:
-    - state: plate
-    - state: tofu
+    - state: cotton
   - type: SliceableFood
-    slice: FoodBreadTofuSlice
+    slice: FoodBreadCottonSlice
+  - type: Tag
+    tags:
+    - ClothMade
+    - Bread
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 26
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
-# Tastes like bread, tofu.
+          Quantity: 10
+        - ReagentId: Fiber
+          Quantity: 10
 
 - type: entity
-  name: tofu bread slice
+  name: cotton bread slice
   parent: FoodBreadSliceBase
-  id: FoodBreadTofuSlice
-  description: A slice of delicious tofu bread.
+  id: FoodBreadCottonSlice
+  description: A slice of (maybe) delicious cotton bread.
   components:
-  - type: Food
-    trash: FoodPlate
+  - type: FlavorProfile
+    flavors:
+    - cotton
+    - bread
+  - type: Edible
+    requiresSpecialDigestion: true
   - type: Sprite
     layers:
-    - state: plate
-    - state: tofu-slice
+    - state: cotton-slice
+  - type: Tag
+    tags:
+    - ClothMade
+    - Bread
+    - Slice
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 8
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 2
+        - ReagentId: Fiber
+          Quantity: 2
+
+- type: entity
+  name: cornbread
+  parent: FoodBreadBase
+  id: FoodBreadCorn
+  description: Some good down-home country-style, rootin'-tootin', revolver-shootin', dad-gum yeehaw cornbread.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - corn
+  - type: Sprite
+    layers:
+    - state: cornbread
+  - type: SliceableFood
+    slice: FoodBreadCornSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+# Tastes like bread, banana, nut.
+
+- type: entity
+  name: cornbread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadCornSlice
+  description: A slice of cornbread.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - corn
+  - type: Sprite
+    layers:
+    - state: cornbread-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
 
 - type: entity
   name: cream cheese bread
@@ -323,11 +230,13 @@
   id: FoodBreadCreamcheese
   description: Yum yum yum!
   components:
-  - type: Food
-    trash: FoodPlate
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - creamy
+      - bread
   - type: Sprite
     layers:
-    - state: plate
     - state: creamcheese
   - type: SliceableFood
     slice: FoodBreadCreamcheeseSlice
@@ -348,11 +257,13 @@
   id: FoodBreadCreamcheeseSlice
   description: A slice of yum!
   components:
-  - type: Food
-    trash: FoodPlate
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - creamy
+      - bread
   - type: Sprite
     layers:
-    - state: plate
     - state: creamcheese-slice
   - type: SolutionContainerManager
     solutions:
@@ -365,16 +276,75 @@
           Quantity: 1.2
 
 - type: entity
+  name: meat bread
+  parent: FoodBreadBase
+  id: FoodBreadMeat
+  description: The culinary base of every self-respecting eloquen/tg/entleman.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bread
+  - type: Sprite
+    layers:
+    - state: meat
+  - type: SliceableFood
+    slice: FoodBreadMeatSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
+# Tastes like bread, meat.
+
+- type: entity
+  name: meat bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadMeatSlice
+  description: A slice of delicious meatbread.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bread
+  - type: Sprite
+    layers:
+    - state: meat-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 1.2
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
+    - Slice
+
+- type: entity
   name: mimana bread
   parent: FoodBreadBase
   id: FoodBreadMimana
   description: Best eaten in silence.
   components:
-  - type: Food
-    trash: FoodPlate
+  - type: FlavorProfile
+    flavors:
+      - nothing
+      - bread
   - type: Sprite
     layers:
-    - state: plate
     - state: mimana
   - type: SliceableFood
     slice: FoodBreadMimanaSlice
@@ -384,24 +354,27 @@
         maxVol: 40
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 15
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Nothing
           Quantity: 5
+        - ReagentId: MuteToxin
+          Quantity: 5
 # Tastes like bread, cheese.
 
 - type: entity
-  name: Mimana bread slice
+  name: mimana bread slice
   parent: FoodBreadSliceBase
   id: FoodBreadMimanaSlice
   description: A slice of silence!
   components:
-  - type: Food
-    trash: FoodPlate
+  - type: FlavorProfile
+    flavors:
+      - nothing
+      - bread
   - type: Sprite
     layers:
-    - state: plate
     - state: mimana-slice
   - type: SolutionContainerManager
     solutions:
@@ -409,46 +382,275 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Nothing
+          Quantity: 1
+        - ReagentId: MuteToxin
+          Quantity: 1
+
+- type: entity
+  name: bread
+  parent: FoodBreadBase
+  id: FoodBreadPlain
+  description: Some plain old earthen bread.
+  components:
+  - type: Sprite
+    layers:
+    - state: plain
+  - type: SliceableFood
+    slice: FoodBreadPlainSlice
+
+- type: entity
+  name: bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadPlainSlice
+  description: A slice of home.
+  components:
+  - type: Sprite
+    layers:
+    - state: plain-slice
+
+- type: entity
+  name: sausage bread
+  parent: FoodBreadBase
+  id: FoodBreadSausage
+  description: Dont think too much about it.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bread
+  - type: Sprite
+    layers:
+    - state: sausage
+  - type: SliceableFood
+    slice: FoodBreadSausageSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
+
+- type: entity
+  name: sausage bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadSausageSlice
+  description: Dont think too much about it.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - meaty
+      - bread
+  - type: Sprite
+    layers:
+    - state: sausage-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Protein
+          Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
+    - Slice
+
+- type: entity
+  name: spider meat bread
+  parent: FoodBreadBase
+  id: FoodBreadMeatSpider
+  description: Reassuringly green meatloaf made from spider meat.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+      - bread
+  - type: Sprite
+    layers:
+    - state: spidermeat
+  - type: SliceableFood
+    slice: FoodBreadMeatSpiderSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
+# Tastes like bread, cobwebs.
+
+- type: entity
+  name: spider meat bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadMeatSpiderSlice
+  description: A slice of meatloaf made from an animal that most likely still wants you dead.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+      - bread
+  - type: Sprite
+    layers:
+    - state: spidermeat-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 12
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
         - ReagentId: Vitamin
           Quantity: 1.2
-        - ReagentId: Nothing
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
+    - Slice
+
+- type: entity
+  name: tofu bread
+  parent: FoodBreadBase
+  id: FoodBreadTofu
+  description: Like meatbread but for vegetarians. Brag to your crewmates about how much better it is.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - tofu
+      - bread
+  - type: Sprite
+    layers:
+    - state: tofu
+  - type: SliceableFood
+    slice: FoodBreadTofuSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 48
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Protein
+          Quantity: 12
+# Tastes like bread, tofu.
+
+- type: entity
+  name: tofu bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadTofuSlice
+  description: A slice of delicious tofu bread.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - tofu
+      - bread
+  - type: Sprite
+    layers:
+    - state: tofu-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 2.4
+
+- type: entity
+  name: xeno meat bread
+  parent: FoodBreadBase
+  id: FoodBreadMeatXeno
+  description: A fitting, and filling, end to xeno scum.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - acid
+      - bread
+  - type: Sprite
+    layers:
+    - state: xenomeat
+  - type: SliceableFood
+    slice: FoodBreadMeatXenoSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Vitamin
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
+# Tastes like bread, acid.
+
+- type: entity
+  name: xeno meat bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadMeatXenoSlice
+  description: A slice of xeno scum.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - acid
+      - bread
+  - type: Sprite
+    layers:
+    - state: xenomeat-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
           Quantity: 1.2
+  - type: Tag
+    tags:
+    - Meat
+    - Bread
+    - Slice
 
 # Other than bread/slices
 
 - type: entity
-  name: moldy slice
-  parent: FoodBreadSliceBase
-  id: FoodBreadMoldySlice
-  description: Entire stations have been ripped apart over arguing whether this is still good to eat.
-  components:
-  - type: Sprite
-    layers:
-    - state: plate
-    - state: moldy-slice
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 15
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Amatoxin
-          Quantity: 7
-# Tastes like decaying fungus.
-
-- type: entity
-  name: baguette
   parent: FoodBreadBase
   id: FoodBreadBaguette
+  name: baguette
   description: Bon appétit!
   components:
-  - type: Tag
-    tags:
-    - Baguette
   - type: Sprite
     state: baguette
+  - type: SliceableFood
+    count: 12
+    slice: FoodBreadBaguetteSlice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -462,28 +664,121 @@
           Quantity: 1
         - ReagentId: Blackpepper
           Quantity: 1
+  - type: Clothing
+    slots: [ BELT ]
+    equippedPrefix: baguette
+    quickEquip: false
+  - type: Item
+    shape:
+    - 0,0,0,3
+    storedRotation: -45
+    inhandVisuals:
+      left:
+      - state: baguette-inhand-left
+      right:
+      - state: baguette-inhand-right
+  - type: MeleeWeapon
+    wideAnimationRotation: -120
+    damage:
+      types:
+        Blunt: 1 # bonk
 # Tastes like France.
 
 - type: entity
-  name: garlic bread
-  parent: FoodBreadSliceBase
-  id: FoodBreadGarlicSlice
-  description: Alas, it is limited.
+  parent: FoodBreadBaguette
+  id: FoodBreadBaguetteCotton
+  name: cotton baguette
+  description: Bon azzétit!
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: garlic-slice
+    state: baguette-cotton
+  - type: SliceableFood
+    slice: FoodBreadBaguetteCottonSlice
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - Bread
+    - ClothMade
+  - type: Clothing
+    equippedPrefix: baguette-cotton
+  - type: Item
+    shape:
+    - 0,0,0,3
+    storedRotation: -45
+    inhandVisuals:
+      left:
+      - state: baguette-cotton-inhand-left
+      right:
+      - state: baguette-cotton-inhand-right
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 3
+        - ReagentId: Fiber
+          Quantity: 3
         - ReagentId: Vitamin
-          Quantity: 4
-# Tastes like garlic, Italy.
+          Quantity: 1
+        - ReagentId: TableSalt
+          Quantity: 1
+        - ReagentId: Blackpepper
+          Quantity: 1
+
+- type: entity
+  name: crostini
+  parent: FoodBreadSliceBase
+  id: FoodBreadBaguetteSlice
+  description: Bon ap-pétite!
+  components:
+  - type: Sprite
+    state: crostini
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 0.5
+        - ReagentId: Vitamin
+          Quantity: 0.1
+        - ReagentId: TableSalt
+          Quantity: 0.1
+        - ReagentId: Blackpepper
+          Quantity: 0.1
+
+- type: entity
+  parent: FoodBreadBaguetteSlice
+  id: FoodBreadBaguetteCottonSlice
+  name: cotton crostini
+  description: Bon az-zétite!
+  components:
+  - type: Sprite
+    state: crostini-cotton
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - Bread
+    - Slice
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 0.25
+        - ReagentId: Fiber
+          Quantity: 0.25
+        - ReagentId: Vitamin
+          Quantity: 0.1
+        - ReagentId: TableSalt
+          Quantity: 0.1
+        - ReagentId: Blackpepper
+          Quantity: 0.1
 
 - type: entity
   name: buttered toast
@@ -491,6 +786,10 @@
   id: FoodBreadButteredToast
   description: Crunchy.
   components:
+  - type: FlavorProfile
+    flavors:
+      - butter
+      - bread
   - type: Sprite
     state: buttered-toast
   - type: SolutionContainerManager
@@ -503,3 +802,256 @@
         - ReagentId: Vitamin
           Quantity: 1
 # Tastes like bread, butter.
+
+- type: entity
+  name: french toast
+  parent: FoodBreadSliceBase
+  id: FoodBreadFrenchToast
+  description: A slice of bread soaked in a beaten egg mixture.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - syrupy
+      - bread
+  - type: Sprite
+    state: french-toast
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 2
+# Tastes like bread, butter.
+
+- type: entity
+  name: garlic bread
+  parent: FoodBreadSliceBase
+  id: FoodBreadGarlicSlice
+  description: Alas, it is limited.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - garlic
+  - type: Sprite
+    layers:
+    - state: garlic-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Vitamin
+          Quantity: 5
+# Tastes like garlic, Italy.
+
+- type: entity
+  name: jelly toast
+  parent: FoodBreadSliceBase
+  id: FoodBreadJellySlice
+  description: As if science are gonna give up their slimes for toast!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - slimy
+  - type: Sprite
+    layers:
+    - state: jelly-toast
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 4
+# Tastes like garlic, Italy.
+
+- type: entity
+  name: moldy bread slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadMoldySlice
+  description: Entire stations have been ripped apart over arguing whether this is still good to eat.
+  components:
+  - type: Sprite
+    layers:
+    - state: moldy-slice
+  - type: Tag
+    tags:
+    - Trash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Mold
+          Quantity: 7
+# Tastes like decaying fungus.
+
+- type: entity
+  name: two slice
+  parent: FoodBreadSliceBase
+  id: FoodBreadTwoSlice
+  description: Classy.
+  components:
+  - type: Sprite
+    layers:
+    - state: two-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Wine
+          Quantity: 5
+# Tastes like decaying fungus.
+
+- type: entity
+  name: bread dog
+  id: MobBreadDog
+  parent: EdibleBase
+  description: It's a bread. It's a dog. It's a... breaddog?
+  components:
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - bread
+  - type: SliceableFood
+    slice: FoodBreadSausageSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    sprite: Mobs/Pets/breaddog.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: base
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
+  - type: Item
+    size: Ginormous
+  - type: GhostRole
+    prob: 1
+    name: ghost-role-information-BreadDog-name
+    allowMovement: true
+    description: ghost-role-information-BreadDog-description
+    rules: ghost-role-information-nonantagonist-rules
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
+  - type: BarkAccent
+  - type: Speech
+    speechSounds: Dog
+    speechVerb: SmallMob
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 3
+  - type: Tag
+    tags:
+    - VimPilot
+    - DoorBumpOpener
+    - Bread
+    - Meat
+  - type: CanEscapeInventory
+    baseResistTime: 2
+  - type: Puller
+    needsHands: false
+  - type: Examiner
+  - type: DoAfter
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Animals/dog_bark1.ogg
+    hidden: true
+    damage:
+      groups:
+        Brute: 1
+
+- type: entity
+  parent: FoodBreadBase
+  id: FoodBreadNutriBatard
+  name: nutri-bâtard
+  description: bon 'pétite!
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    state: batard
+  - type: Item
+    size: Small
+    storedOffset: -1,0
+    heldPrefix: batard
+  - type: Tag
+    tags:
+    - ReptilianFood
+  - type: FlavorProfile
+    flavors:
+    - nutribrick
+    - peppery
+    - salty
+    - bread
+
+- type: entity
+  parent: FoodBreadNutriBatard
+  id: FoodBreadCottonNutriBatard
+  name: cotton nutri-bâtard
+  description: bon 'pétite!
+  components:
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    state: batard-cotton
+  - type: FlavorProfile
+    flavors:
+    - peppery
+    - salty
+    - bread
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: Item
+    size: Small
+    storedOffset: -1,0
+    heldPrefix: batard-cotton
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 20

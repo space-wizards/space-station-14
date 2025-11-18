@@ -1,7 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
+using System.Numerics;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.EntitySystems
@@ -13,23 +10,18 @@ namespace Content.Shared.Atmos.EntitySystems
         protected float AccumulatedFrameTime;
 
         [Serializable, NetSerializable]
-        public readonly struct AtmosDebugOverlayData
-        {
-            public readonly float Temperature;
-            public readonly float[] Moles;
-            public readonly AtmosDirection PressureDirection;
-            public readonly bool InExcitedGroup;
-            public readonly AtmosDirection BlockDirection;
-
-            public AtmosDebugOverlayData(float temperature, float[] moles, AtmosDirection pressureDirection, bool inExcited, AtmosDirection blockDirection)
-            {
-                Temperature = temperature;
-                Moles = moles;
-                PressureDirection = pressureDirection;
-                InExcitedGroup = inExcited;
-                BlockDirection = blockDirection;
-            }
-        }
+        public readonly record struct AtmosDebugOverlayData(
+            Vector2 Indices,
+            float Temperature,
+            float[]? Moles,
+            AtmosDirection PressureDirection,
+            AtmosDirection LastPressureDirection,
+            AtmosDirection BlockDirection,
+            int? InExcitedGroup,
+            bool IsSpace,
+            bool MapAtmosphere,
+            bool NoGrid,
+            bool Immutable);
 
         /// <summary>
         ///     Invalid tiles for the gas overlay.
@@ -38,13 +30,13 @@ namespace Content.Shared.Atmos.EntitySystems
         [Serializable, NetSerializable]
         public sealed class AtmosDebugOverlayMessage : EntityEventArgs
         {
-            public GridId GridId { get; }
+            public NetEntity GridId { get; }
 
             public Vector2i BaseIdx { get; }
             // LocalViewRange*LocalViewRange
-            public AtmosDebugOverlayData[] OverlayData { get; }
+            public AtmosDebugOverlayData?[] OverlayData { get; }
 
-            public AtmosDebugOverlayMessage(GridId gridIndices, Vector2i baseIdx, AtmosDebugOverlayData[] overlayData)
+            public AtmosDebugOverlayMessage(NetEntity gridIndices, Vector2i baseIdx, AtmosDebugOverlayData?[] overlayData)
             {
                 GridId = gridIndices;
                 BaseIdx = baseIdx;

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Botany;
+using System.Numerics;
+using Content.Shared.Botany;
+using Content.Client.Botany.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Botany;
@@ -7,15 +9,13 @@ public sealed class PotencyVisualsSystem : VisualizerSystem<PotencyVisualsCompon
 {
     protected override void OnAppearanceChange(EntityUid uid, PotencyVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        base.OnAppearanceChange(uid, component, ref args);
-
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData(ProduceVisuals.Potency, out float potency))
+        if (AppearanceSystem.TryGetData<float>(uid, ProduceVisuals.Potency, out var potency, args.Component))
         {
             var scale = MathHelper.Lerp(component.MinimumScale, component.MaximumScale, potency / 100);
-            sprite.Scale = new Vector2(scale, scale);
+            SpriteSystem.SetScale((uid, args.Sprite), new Vector2(scale, scale));
         }
     }
 }

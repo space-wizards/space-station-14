@@ -1,0 +1,206 @@
+- type: entity
+  id: PortableScrubber
+  parent: [BaseMachinePowered, SmallConstructibleMachine, StructureWheeled]
+  name: portable scrubber
+  description: It scrubs, portably!
+  components:
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: AtmosDevice
+    joinSystem: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi
+    noRot: true
+    layers:
+    - state: icon
+      map: ["enum.PortableScrubberVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+    - state: draining
+      shader: unshaded
+      visible: false
+      map: ["enum.PortableScrubberVisualLayers.IsDraining"]
+  - type: PortableScrubber
+    gasMixture:
+      volume: 1250
+  - type: NodeContainer
+    nodes:
+      port:
+        !type:PortablePipeNode
+        nodeGroupID: Pipe
+        rotationsEnabled: false
+        volume: 1
+  - type: ApcPowerReceiver
+    powerLoad: 2000
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {visible: true}
+          False: {visible: false}
+  - type: PortableScrubberVisuals
+    idleState: icon
+    runningState: icon-running
+    readyState: unlit
+    fullState: unlit-full
+  - type: AmbientSound
+    enabled: false
+    volume: -5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/portable_scrubber.ogg
+  - type: Machine
+    board: PortableScrubberMachineCircuitBoard
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
+                max: 3
+              SheetGlass1:
+                min: 1
+                max: 2
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: GuideHelp
+    guides:
+    - PortableScrubber
+
+- type: entity
+  id: SpaceHeater
+  parent: [BaseMachinePowered, ConstructibleMachine]
+  name: space heater
+  description: A bluespace technology device that alters local temperature. Commonly referred to as a "Space Heater".
+  suffix: Unanchored
+  components:
+  - type: StationAiWhitelist
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: AtmosDevice
+    joinSystem: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.35,0.15,0.5"
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: ApcPowerReceiver
+    powerDisabled: true #starts off
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
+    noRot: true
+    layers:
+    - state: sheaterOff
+      map: ["enum.SpaceHeaterVisualLayers.Main"]
+    - state: sheaterPanelOpen
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SpaceHeaterVisuals.State:
+        SpaceHeaterVisualLayers.Main:
+          Off: { state: sheaterOff }
+          StandBy: { state: sheaterStandby }
+          Heating: { state: sheaterHeat }
+          Cooling: { state: sheaterCool }
+  - type: Machine
+    board: SpaceHeaterMachineCircuitBoard
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: UserInterface
+    interfaces:
+      enum.SpaceHeaterUiKey.Key:
+        type: SpaceHeaterBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: false
+    key: enum.SpaceHeaterUiKey.Key
+  - type: SpaceHeater
+  - type: GasThermoMachine
+    temperatureTolerance: 0.2
+    atmospheric: true
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalBreak
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
+                max: 3
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: GuideHelp
+    guides:
+    - Thermomachines
+
+- type: entity
+  parent: SpaceHeater
+  id: SpaceHeaterAnchored
+  suffix: Anchored
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+
+- type: entity
+  parent: SpaceHeaterAnchored
+  id: SpaceHeaterEnabled
+  suffix: Anchored, Enabled
+  components:
+  - type: ApcPowerReceiver
+    powerDisabled: false

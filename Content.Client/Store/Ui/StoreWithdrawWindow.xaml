@@ -1,0 +1,16 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    Title="{Loc 'store-ui-default-withdraw-text'}"
+    MinSize="256 128">
+    <BoxContainer
+        HorizontalExpand="True"
+        Orientation="Vertical"
+        VerticalExpand="True">
+        <SliderIntInput Name="WithdrawSlider" HorizontalExpand="True" />
+        <BoxContainer
+            Name="ButtonContainer"
+            VerticalAlignment="Bottom"
+            Orientation="Vertical"
+            VerticalExpand="True" />
+    </BoxContainer>
+</DefaultWindow>

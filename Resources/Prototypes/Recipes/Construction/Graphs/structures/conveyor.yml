@@ -10,7 +10,7 @@
               icon:
                 sprite: Structures/conveyor.rsi
                 state: conveyor_loose
-              name: conveyor belt assembly
+              name: construction-graph-tag-conveyor-belt-assembly
               doAfter: 2
     - node: item
       entity: ConveyorBeltAssembly
@@ -23,35 +23,11 @@
         - !type:SetAnchor
           value: true
         - !type:SnapToGrid
-          offset: Center
       edges:
         - to: item
           steps:
             - tool: Prying
               doAfter: 3
-
-- type: constructionGraph
-  id: LeverGraph
-  start: start
-  graph:
-  - node: start
-    actions:
-      - !type:SpawnPrototype
-        prototype: SheetSteel1
-        amount: 2
-      - !type:DeleteEntity {}
-    edges:
-      - to: lever
-        completed:
-          - !type:SnapToGrid {}
-        steps:
-          - material: Steel
-            amount: 2
-            doAfter: 1
-  - node: lever
-    entity: TwoWayLever
-    edges:
-      - to: start
-        steps:
-          - tool: Anchoring
-            doAfter: 1
+          completed:
+            - !type:SetAnchor
+              value: false

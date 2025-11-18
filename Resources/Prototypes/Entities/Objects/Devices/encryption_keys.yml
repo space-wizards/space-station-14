@@ -1,0 +1,288 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: EncryptionKey
+  name: encryption key
+  description: A small cypher chip for headsets.
+  components:
+  - type: EncryptionKey
+  - type: Item
+    sprite: Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    sprite: Objects/Devices/encryption_keys.rsi
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyCommon
+  name: common encryption key
+  description: An encryption key used by anyone.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    defaultChannel: Common
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: common_label
+  - type: Tag
+    tags:
+    - EncryptionCommon
+
+- type: entity
+  parent: [ EncryptionKey, BaseCargoContraband ]
+  id: EncryptionKeyCargo
+  name: cargo encryption key
+  description: An encryption key used by supply employees.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Supply
+    defaultChannel: Supply
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: cargo_label
+  - type: Tag
+    tags:
+    - EncryptionCargo
+
+- type: entity
+  parent: [ EncryptionKey, BaseCentcommContraband ]
+  id: EncryptionKeyCentCom
+  name: central command encryption key
+  description: An encryption key used by captain's bosses.
+  components:
+  - type: EncryptionKey
+    channels:
+    - CentCom
+    defaultChannel: CentCom
+  - type: Sprite
+    layers:
+    - state: crypt_blue
+    - state: nano_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseCentcommCommandContraband ]
+  id: EncryptionKeyStationMaster
+  name: station master encryption key
+  description: An encryption key used by station's bosses.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    defaultChannel: Command
+  - type: Sprite
+    layers:
+    - state: crypt_gold
+    - state: cap_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseCommandContraband ]
+  id: EncryptionKeyCommand
+  name: command encryption key
+  description: An encryption key used by crew's bosses.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Command
+    defaultChannel: Command
+  - type: Sprite
+    layers:
+    - state: crypt_silver
+    - state: com_label
+  - type: Tag
+    tags:
+    - EncryptionCommand
+
+- type: entity
+  parent: [ EncryptionKey, BaseEngineeringContraband ]
+  id: EncryptionKeyEngineering
+  name: engineering encryption key
+  description: An encryption key used by the engineers.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Engineering
+    defaultChannel: Engineering
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: eng_label
+  - type: Tag
+    tags:
+    - EncryptionEngineering
+
+- type: entity
+  parent: [ EncryptionKey, BaseMedicalContraband ]
+  id: EncryptionKeyMedical
+  name: medical encryption key
+  description: An encryption key used by those who save lives.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Medical
+    defaultChannel: Medical
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: med_label
+  - type: Tag
+    tags:
+    - EncryptionMedical
+
+- type: entity
+  parent: [ EncryptionKey, BaseMedicalScienceContraband ]
+  id: EncryptionKeyMedicalScience
+  name: med-sci encryption key
+  description: An encryption key used by someone who hasn't decided which side to take.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Medical
+    - Science
+    defaultChannel: Science
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: medsci_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseScienceContraband ]
+  id: EncryptionKeyScience
+  name: science encryption key
+  description: An encryption key used by scientists. Maybe it is plasmaproof?
+  components:
+  - type: EncryptionKey
+    channels:
+    - Science
+    defaultChannel: Science
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: sci_label
+  - type: Tag
+    tags:
+    - EncryptionScience
+
+- type: entity
+  parent: [ EncryptionKey, BaseScienceContraband ]
+  id: EncryptionKeyRobo
+  name: robotech encryption key
+  description: An encryption key used by robototech engineers. Maybe it has a LAH-6000 on it?
+  components:
+  - type: EncryptionKey
+    channels:
+    - Science
+    defaultChannel: Science
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: robotics_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseSecurityLawyerContraband ]
+  id: EncryptionKeySecurity
+  name: security encryption key
+  description: An encryption key used by security.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Security
+    defaultChannel: Security
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: sec_label
+  - type: Tag
+    tags:
+    - EncryptionSecurity
+
+- type: entity
+  parent: [ EncryptionKey, BaseCivilianContraband ]
+  id: EncryptionKeyService
+  name: service encryption key
+  description: An encryption key used by the service staff, tasked with keeping the station full, happy and clean.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Service
+    defaultChannel: Service
+  - type: Sprite
+    layers:
+    - state: crypt_gray
+    - state: service_label
+  - type: Tag
+    tags:
+    - EncryptionService
+
+- type: entity
+  parent: [ EncryptionKey, BaseSyndicateContraband ]
+  id: EncryptionKeySyndie
+  name: blood-red encryption key
+  description: An encryption key used by... wait... Who is the owner of this chip?
+  components:
+  - type: EncryptionKey
+    channels:
+    - Syndicate
+    defaultChannel: Syndicate
+  - type: Sprite
+    layers:
+    - state: crypt_red
+    - state: synd_label
+  - type: StaticPrice
+    price: 500 # 1000 for 2
+
+- type: entity
+  parent: [ EncryptionKey, BaseSiliconScienceContraband ]
+  id: EncryptionKeyBinary
+  name: binary translator key
+  description: An encryption key that translates binary signals used by silicons.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Binary
+    defaultChannel: Binary
+  - type: Sprite
+    layers:
+    - state: crypt_silver
+    - state: ai_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseSyndicateContraband ]
+  id: EncryptionKeyBinarySyndicate
+  name: binary translator key
+  description: A syndicate encryption key that translates binary signals used by silicons.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Binary
+    defaultChannel: Binary
+  - type: Sprite
+    layers:
+    - state: crypt_red
+    - state: ai_label
+  - type: StaticPrice
+    price: 1000
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyFreelance
+  name: freelancer encryption key
+  description: An encryption key used by freelancers, who may or may not have an affiliation. It looks like it's worn out.
+  components:
+    - type: EncryptionKey
+      channels:
+        - Freelance
+      defaultChannel: Freelance
+    - type: Sprite
+      layers:
+        - state: crypt_rusted
+        - state: pirate_label

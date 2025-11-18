@@ -1,14 +1,15 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class VariantizeCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public string Command => "variantize";
 
@@ -24,26 +25,27 @@ public sealed class VariantizeCommand : IConsoleCommand
             return;
         }
 
-        var mapManager = IoCManager.Resolve<IMapManager>();
-        var random = IoCManager.Resolve<IRobustRandom>();
-
-        if (!int.TryParse(args[0], out var targetId))
+        if (!NetEntity.TryParse(args[0], out var euidNet) || !_entManager.TryGetEntity(euidNet, out var euid))
         {
-            shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
+            shell.WriteError($"Failed to parse euid '{args[0]}'.");
             return;
         }
 
-        var gridId = new GridId(targetId);
-        if (!mapManager.TryGetGrid(gridId, out var grid))
+        if (!_entManager.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
-            shell.WriteError(Loc.GetString("shell-invalid-grid-id"));
+            shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
             return;
         }
-        foreach (var tile in grid.GetAllTiles())
+
+        var mapsSystem = _entManager.System<SharedMapSystem>();
+        var tileSystem = _entManager.System<TileSystem>();
+        var turfSystem = _entManager.System<TurfSystem>();
+
+        foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
         {
-            var def = tile.GetContentTileDefinition();
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, random.Pick(def.PlacementVariants));
-            grid.SetTile(tile.GridIndices, newTile);
+            var def = turfSystem.GetContentTileDefinition(tile);
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def), tile.Tile.RotationMirroring);
+            mapsSystem.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
         }
     }
 }

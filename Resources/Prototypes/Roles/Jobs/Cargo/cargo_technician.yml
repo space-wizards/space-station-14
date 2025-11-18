@@ -1,25 +1,37 @@
 - type: job
   id: CargoTechnician
-  name: "cargo technician"
+  name: job-name-cargotech
+  description: job-description-cargotech
+  playTimeTracker: JobCargoTechnician
   startingGear: CargoTechGear
-  departments:
-  - Cargo
-  icon: "CargoTechnician"
-  supervisors: "the quartermaster and head of personnel"
+  icon: "JobIconCargoTechnician"
+  supervisors: job-supervisors-qm
   access:
   - Cargo
   - Maintenance
-  - External
+  extendedAccess:
+  - Salvage
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: BoxingDay
+    prototype: BoxCardboard
 
 - type: startingGear
   id: CargoTechGear
   equipment:
-    head: ClothingHeadHatCargosoft
-    jumpsuit: ClothingUniformJumpsuitCargo
-    back: ClothingBackpackFilled
-    shoes: ClothingShoesColorBlack
-    id: CargoPDA
     ears: ClothingHeadsetCargo
-  innerclothingskirt: ClothingUniformJumpskirtCargo
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+    pocket1: AppraisalTool
+  #storage:
+    #back:
+    #- Stuff
+
+- type: chameleonOutfit
+  id: CargoTechnicianChameleonOutfit
+  job: CargoTechnician
+  equipment:
+    head: ClothingHeadHatCargosoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterCargo
+    neck: ClothingNeckScarfStripedBrown
+    gloves: ClothingHandsGlovesFingerless

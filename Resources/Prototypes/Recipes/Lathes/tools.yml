@@ -1,145 +1,226 @@
+# Base prototypes
+
 - type: latheRecipe
-  id: Wirecutter
-  icon: Objects/Tools/wirecutters.rsi/cutters-map.png
-  result: Wirecutter
-  completetime: 500
+  abstract: true
+  id: BaseToolRecipe
+  categories:
+  - Tools
+  completetime: 2
   materials:
     Steel: 200
     Plastic: 50
 
 - type: latheRecipe
+  abstract: true
+  parent: BaseToolRecipe
+  id: BaseBigToolRecipe
+  materials:
+    Steel: 800
+    Glass: 300
+
+# Recipes
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: Wirecutter
+  result: Wirecutter
+  icon:
+    sprite: Objects/Tools/wirecutters.rsi
+    state: cutters-map
+
+- type: latheRecipe
+  parent: BaseToolRecipe
   id: Screwdriver
+  result: Screwdriver
   icon:
     sprite: Objects/Tools/screwdriver.rsi
     state: screwdriver-map
-  result: Screwdriver
-  completetime: 500
-  materials:
-    Steel: 200
-    Plastic: 50
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Welder
-  icon:
-    sprite: /Textures/Objects/Tools/welder.rsi
-    state: icon
   result: Welder
-  completetime: 500
   materials:
     Steel: 400
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Wrench
-  icon: Objects/Tools/wrench.rsi/icon.png
   result: Wrench
-  completetime: 500
   materials:
     Steel: 200
 
 - type: latheRecipe
   id: CableStack
-  name: LV cable
-  icon: /Textures/Objects/Tools/cable-coils.rsi/coillv-30.png
   result: CableApcStack1
-  completetime: 500
+  categories:
+  - Parts
+  completetime: 0.1
   materials:
-    Steel: 100
+    Steel: 30
 
 - type: latheRecipe
+  parent: CableStack
   id: CableMVStack
-  name: MV cable coil
-  icon: /Textures/Objects/Tools/cable-coils.rsi/coilmv-30.png
   result: CableMVStack1
-  completetime: 500
-  materials:
-    Steel: 150
 
 - type: latheRecipe
+  parent: CableStack
   id: CableHVStack
-  name: HV cable coil
-  icon: /Textures/Objects/Tools/cable-coils.rsi/coilhv-30.png
   result: CableHVStack1
-  completetime: 500
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: CrowbarGreen
+  result: CrowbarGreen
   materials:
     Steel: 200
 
 - type: latheRecipe
-  id: Crowbar
-  icon: Objects/Tools/crowbar.rsi/icon.png
-  result: Crowbar
-  completetime: 500
-  materials:
-    Steel: 200
-
-- type: latheRecipe
+  parent: BaseToolRecipe
   id: Pickaxe
-  icon: Objects/Weapons/Melee/pickaxe.rsi
   result: Pickaxe
-  completetime: 500
+  completetime: 4
   materials:
-    Steel: 200
-    Wood: 100
+    Steel: 1000
+    Wood: 500
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Shovel
-  icon:
-    sprite: Objects/Tools/shovel.rsi
-    state: icon
   result: Shovel
-  completetime: 500
   materials:
     Steel: 200
     Wood: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Multitool
-  icon:
-    sprite: Objects/Tools/multitool.rsi
-    state: icon
   result: Multitool
-  completetime: 500
   materials:
     Steel: 200
     Plastic: 200
 
 - type: latheRecipe
+  parent: Multitool
+  id: NetworkConfigurator
+  result: NetworkConfigurator
+
+- type: latheRecipe
+  parent: BaseToolRecipe
   id: PowerDrill
-  icon:
-    sprite: Objects/Tools/drill.rsi
-    state: drill_screw
   result: PowerDrill
-  completetime: 500
   materials:
     Steel: 600
     Plastic: 200
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: RCD
-  icon:
-    sprite: Objects/Tools/rcd.rsi
-    state: icon
-  result: RCD
-  completetime: 1000
+  result: RCDEmpty
+  completetime: 4
   materials:
     Steel: 1000
     Plastic: 300
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: RCDAmmo
-  icon:
-    sprite: Objects/Tools/rcd.rsi
-    state: ammo
   result: RCDAmmo
-  completetime: 600
   materials:
     Steel: 500
     Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBigToolRecipe
+  id: HandHeldMassScanner
+  result: HandHeldMassScannerEmpty
+
+- type: latheRecipe
+  parent: BaseBigToolRecipe
   id: HandheldGPSBasic
-  icon: Objects/Devices/gps.rsi/icon.png
   result: HandheldGPSBasic
-  completetime: 2000
+
+- type: latheRecipe
+  parent: BaseBigToolRecipe
+  id: TRayScanner
+  result: trayScanner
+
+- type: latheRecipe
+  parent: BaseBigToolRecipe
+  id: GasAnalyzer
+  result: GasAnalyzer
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: SprayPainter
+  result: SprayPainterEmpty
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: SprayPainterAmmo
+  result: SprayPainterAmmo
+  materials:
+    Steel: 150
+    Plastic: 50
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: UtilityBelt
+  result: ClothingBeltUtility
+  materials:
+    Cloth: 100
+    Steel: 50
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: HolofanProjector
+  result: HolofanProjectorEmpty
+  completetime: 8
+  materials:
+    Steel: 300
+    Glass: 50
+    Plastic: 50
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: WelderExperimental
+  result: WelderExperimental
+  completetime: 6
   materials:
     Steel: 800
-    Glass: 300
+    Plasma: 200
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: JawsOfLife
+  result: JawsOfLife
+  completetime: 6
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plasma: 300
+    Gold: 50
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: HoloprojectorField
+  result: HoloprojectorFieldEmpty
+  completetime: 3
+  materials:
+    Steel: 500
+    Plasma: 300
+    Glass: 100
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: WeaponParticleDecelerator
+  result: WeaponParticleDecelerator
+  completetime: 6
+  materials:
+    Steel: 750
+    Plasma: 150
+    Uranium: 150

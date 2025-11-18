@@ -1,47 +1,34 @@
-using System;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration.Logs;
-using Content.Shared.CCVar;
 using Content.Shared.Database;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
 [TestFixture]
 [TestOf(typeof(AdminLogSystem))]
-public sealed class FilterTests : ContentIntegrationTest
+public sealed class FilterTests
 {
     [Test]
     [TestCase(DateOrder.Ascending)]
     [TestCase(DateOrder.Descending)]
     public async Task Date(DateOrder order)
     {
-        var server = StartServer(new ServerContentIntegrationOption
-        {
-            CVarOverrides =
-            {
-                [CCVars.AdminLogsQueueSendDelay.Name] = "0"
-            },
-            Pool = true
-        });
-        await server.WaitIdleAsync();
+        await using var pair = await PoolManager.GetServerClient(AddTests.LogTestSettings);
+        var server = pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
-        var sAdminLogSystem = sSystems.GetEntitySystem<AdminLogSystem>();
+        var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var commonGuid = Guid.NewGuid();
         var firstGuid = Guid.NewGuid();
         var secondGuid = Guid.NewGuid();
+        var testMap = await pair.CreateTestMap();
+        var coordinates = testMap.GridCoords;
 
         await server.WaitPost(() =>
         {
-            var coordinates = GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {firstGuid}");
@@ -51,13 +38,12 @@ public sealed class FilterTests : ContentIntegrationTest
 
         await server.WaitPost(() =>
         {
-            var coordinates = GetMainEntityCoordinates(sMaps);
             var entity = sEntities.SpawnEntity(null, coordinates);
 
             sAdminLogSystem.Add(LogType.Unknown, $"{entity:Entity} test log: {commonGuid} {secondGuid}");
         });
 
-        await WaitUntil(server, async () =>
+        await PoolManager.WaitUntil(server, async () =>
         {
             var commonGuidStr = commonGuid.ToString();
 
@@ -110,5 +96,6 @@ public sealed class FilterTests : ContentIntegrationTest
 
             return firstFound && secondFound;
         });
+        await pair.CleanReturnAsync();
     }
 }

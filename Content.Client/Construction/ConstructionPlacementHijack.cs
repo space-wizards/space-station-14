@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Construction;
+using System.Linq;
 using Content.Shared.Construction.Prototypes;
-using Robust.Client.Graphics;
+using Robust.Client.GameObjects;
 using Robust.Client.Placement;
-using Robust.Client.Utility;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Construction
 {
@@ -14,6 +12,9 @@ namespace Content.Client.Construction
     {
         private readonly ConstructionSystem _constructionSystem;
         private readonly ConstructionPrototype? _prototype;
+
+        public ConstructionSystem? CurrentConstructionSystem { get { return _constructionSystem; } }
+        public ConstructionPrototype? CurrentPrototype { get { return _prototype; } }
 
         public override bool CanRotate { get; }
 
@@ -38,9 +39,9 @@ namespace Content.Client.Construction
         /// <inheritdoc />
         public override bool HijackDeletion(EntityUid entity)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ConstructionGhostComponent? ghost))
+            if (IoCManager.Resolve<IEntityManager>().HasComponent<ConstructionGhostComponent>(entity))
             {
-                _constructionSystem.ClearGhost(ghost.GhostId);
+                _constructionSystem.ClearGhost(entity.GetHashCode());
             }
             return true;
         }
@@ -50,15 +51,13 @@ namespace Content.Client.Construction
         {
             base.StartHijack(manager);
 
-            var frame = _prototype?.Icon.DirFrame0();
-            if (frame == null)
-            {
-                manager.CurrentTextures = null;
-            }
-            else
-            {
-                manager.CurrentTextures = new List<IDirectionalTextureProvider> {frame};
-            }
+            if (_prototype is null || !_constructionSystem.TryGetRecipePrototype(_prototype.ID, out var targetProtoId))
+                return;
+
+            if (!IoCManager.Resolve<IPrototypeManager>().TryIndex(targetProtoId, out EntityPrototype? proto))
+                return;
+
+            manager.CurrentTextures = SpriteComponent.GetPrototypeTextures(proto, IoCManager.Resolve<IResourceCache>()).ToList();
         }
     }
 }

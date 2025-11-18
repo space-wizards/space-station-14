@@ -14,9 +14,6 @@
       "name": "dead"
     },
     {
-      "name": "crit"
-    },
-    {
       "name": "alive",
       "directions": 4,
       "delays": [

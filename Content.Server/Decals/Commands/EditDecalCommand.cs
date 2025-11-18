@@ -1,16 +1,16 @@
-﻿using Content.Server.Administration;
+using System.Numerics;
+using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Decals;
 
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class EditDecalCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+
     public string Command => "editdecal";
     public string Description => "Edits a decal.";
     public string Help => $@"{Command} <gridId> <uid> <mode>\n
@@ -30,7 +30,7 @@ Possible modes are:\n
             return;
         }
 
-        if (!int.TryParse(args[0], out var gridIdRaw))
+        if (!NetEntity.TryParse(args[0], out var gridIdNet) || !_entManager.TryGetEntity(gridIdNet, out var gridId))
         {
             shell.WriteError($"Failed parsing gridId '{args[3]}'.");
             return;
@@ -42,14 +42,13 @@ Possible modes are:\n
             return;
         }
 
-        var gridId = new GridId(gridIdRaw);
-        if (!IoCManager.Resolve<IMapManager>().GridExists(gridId))
+        if (!_entManager.HasComponent<MapGridComponent>(gridId))
         {
             shell.WriteError($"No grid with gridId {gridId} exists.");
             return;
         }
 
-        var decalSystem = EntitySystem.Get<DecalSystem>();
+        var decalSystem = _entManager.System<DecalSystem>();
         switch (args[2].ToLower())
         {
             case "position":
@@ -65,7 +64,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalPosition(gridId, uid, gridId, new Vector2(x, y)))
+                if (!decalSystem.SetDecalPosition(gridId.Value, uid, new(gridId.Value, new Vector2(x, y))))
                 {
                     shell.WriteError("Failed changing decalposition.");
                 }
@@ -83,7 +82,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalColor(gridId, uid, color))
+                if (!decalSystem.SetDecalColor(gridId.Value, uid, color))
                 {
                     shell.WriteError("Failed changing decal color.");
                 }
@@ -95,7 +94,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalId(gridId, uid, args[3]))
+                if (!decalSystem.SetDecalId(gridId.Value, uid, args[3]))
                 {
                     shell.WriteError("Failed changing decal id.");
                 }
@@ -113,7 +112,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalRotation(gridId, uid, Angle.FromDegrees(degrees)))
+                if (!decalSystem.SetDecalRotation(gridId.Value, uid, Angle.FromDegrees(degrees)))
                 {
                     shell.WriteError("Failed changing decal rotation.");
                 }
@@ -131,7 +130,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalZIndex(gridId, uid, zIndex))
+                if (!decalSystem.SetDecalZIndex(gridId.Value, uid, zIndex))
                 {
                     shell.WriteError("Failed changing decal zIndex.");
                 }
@@ -149,7 +148,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalCleanable(gridId, uid, cleanable))
+                if (!decalSystem.SetDecalCleanable(gridId.Value, uid, cleanable))
                 {
                     shell.WriteError("Failed changing decal cleanable flag.");
                 }

@@ -1,0 +1,195 @@
+﻿- type: constructionGraph
+  id: AirlockShuttle
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: assembly
+      completed:
+      - !type:SetAnchor
+        value: false
+      steps:
+      - material: Plasteel
+        amount: 2
+        doAfter: 2
+
+  - node: assembly
+    entity: AirlockShuttleAssembly
+    actions:
+    - !type:SnapToGrid {}
+    - !type:SetAnchor {}
+    edges:
+    - to: electronics
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - component: DoorElectronics
+        store: board
+        name: construction-graph-component-door-electronics-circuit-board
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "door_electronics"
+        doAfter: 1
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 2
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 3
+
+  - node: electronics
+    edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: Cable
+        amount: 5
+        doAfter: 2.5
+    - to: assembly
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 1
+
+  - node: wired
+    edges:
+    - to: electronics
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 5
+      steps:
+      - tool: Cutting
+        doAfter: 2
+    - to: skeleton
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: Plasteel
+        amount: 2
+        doAfter: 1
+
+  - node: skeleton
+    edges:
+    - to: skeletonWrenched
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Anchoring
+        doAfter: 2
+    - to: wired
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetPlasteel1
+        amount: 2
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+  - node: skeletonWrenched
+    edges:
+    - to: skeletonWelded
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Welding
+        doAfter: 2
+    - to: skeleton
+      steps:
+      - tool: Anchoring
+        doAfter: 2
+
+  - node: skeletonWelded
+    edges:
+    - to: skeletonSilver
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: Silver
+        amount: 2
+        doAfter: 1
+    - to: skeletonWrenched
+      steps:
+      - tool: Welding
+        doAfter: 2
+
+  - node: skeletonSilver
+    entity: AirlockShuttleAssembly
+    edges:
+    - to: airlock
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Screwing
+        doAfter: 2
+    - to: skeletonGlass
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - material: ReinforcedGlass
+        amount: 2
+        doAfter: 2
+    - to: skeletonWelded
+      completed:
+      - !type:SpawnPrototype
+        prototype: IngotSilver1
+        amount: 2
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+  - node: airlock
+    entity: AirlockShuttle
+    edges:
+    - to: skeletonSilver
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorWelded {}
+      - !type:DoorBolted
+        value: false
+      - !type:WirePanel {}
+      steps:
+      - tool: Prying
+        doAfter: 5
+
+  - node: skeletonGlass
+    entity: AirlockShuttleAssembly
+    edges:
+    - to: skeletonSilver
+      completed:
+        - !type:SpawnPrototype
+          prototype: SheetRGlass1
+          amount: 2
+      steps:
+      - tool: Prying
+        doAfter: 4
+    - to: airlockGlass
+      conditions:
+      - !type:EntityAnchored {}
+      steps:
+      - tool: Screwing
+        doAfter: 2
+
+  - node: airlockGlass
+    entity: AirlockGlassShuttle
+    edges:
+      - to: skeletonGlass
+        conditions:
+          - !type:EntityAnchored {}
+          - !type:DoorWelded {}
+          - !type:DoorBolted
+            value: false
+          - !type:WirePanel {}
+        steps:
+          - tool: Prying
+            doAfter: 5

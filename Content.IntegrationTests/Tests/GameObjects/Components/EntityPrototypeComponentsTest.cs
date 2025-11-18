@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
@@ -12,24 +10,23 @@ using YamlDotNet.RepresentationModel;
 namespace Content.IntegrationTests.Tests.GameObjects.Components
 {
     [TestFixture]
-    [TestOf(typeof(Client.Entry.IgnoredComponents))]
     [TestOf(typeof(Server.Entry.IgnoredComponents))]
-    public sealed class EntityPrototypeComponentsTest : ContentIntegrationTest
+    public sealed class EntityPrototypeComponentsTest
     {
         [Test]
         public async Task PrototypesHaveKnownComponents()
         {
-            var (client, server) = await StartConnectedServerDummyTickerClientPair();
-
-            await server.WaitIdleAsync();
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var client = pair.Client;
 
             var sResourceManager = server.ResolveDependency<IResourceManager>();
-            var prototypePath = new ResourcePath("/Prototypes/");
+            var prototypePath = new ResPath("/Prototypes/");
             var paths = sResourceManager.ContentFindFiles(prototypePath)
                 .ToList()
                 .AsParallel()
                 .Where(filePath => filePath.Extension == "yml" &&
-                                   !filePath.Filename.StartsWith("."))
+                                   !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
 
             var cComponentFactory = client.ResolveDependency<IComponentFactory>();
@@ -96,22 +93,23 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
 
             if (unknownComponentsClient.Count + unknownComponentsServer.Count == 0)
             {
+                await pair.CleanReturnAsync();
                 Assert.Pass($"Validated {entitiesValidated} entities with {componentsValidated} components in {paths.Length} files.");
                 return;
             }
 
             var message = new StringBuilder();
 
-            foreach (var unknownComponent in unknownComponentsClient)
+            foreach (var (entityId, component) in unknownComponentsClient)
             {
                 message.Append(
-                    $"CLIENT: Unknown component {unknownComponent.component} in prototype {unknownComponent.entityId}\n");
+                    $"CLIENT: Unknown component {component} in prototype {entityId}\n");
             }
 
-            foreach (var unknownComponent in unknownComponentsServer)
+            foreach (var (entityId, component) in unknownComponentsServer)
             {
                 message.Append(
-                    $"SERVER: Unknown component {unknownComponent.component} in prototype {unknownComponent.entityId}\n");
+                    $"SERVER: Unknown component {component} in prototype {entityId}\n");
             }
 
             Assert.Fail(message.ToString());
@@ -120,24 +118,14 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
         [Test]
         public async Task IgnoredComponentsExistInTheCorrectPlaces()
         {
-            var (client, server) = await StartConnectedServerClientPair();
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var client = pair.Client;
             var serverComponents = server.ResolveDependency<IComponentFactory>();
             var ignoredServerNames = Server.Entry.IgnoredComponents.List;
             var clientComponents = client.ResolveDependency<IComponentFactory>();
-            var ignoredClientNames = Client.Entry.IgnoredComponents.List;
 
             var failureMessages = "";
-            foreach (var clientIgnored in ignoredClientNames)
-            {
-                if (clientComponents.TryGetRegistration(clientIgnored, out _))
-                {
-                    failureMessages = $"{failureMessages}\nComponent {clientIgnored} was ignored on client, but exists on client";
-                }
-                if (!serverComponents.TryGetRegistration(clientIgnored, out _))
-                {
-                    failureMessages = $"{failureMessages}\nComponent {clientIgnored} was ignored on client, but does not exist on server";
-                }
-            }
             foreach (var serverIgnored in ignoredServerNames)
             {
                 if (serverComponents.TryGetRegistration(serverIgnored, out _))
@@ -149,7 +137,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
                     failureMessages = $"{failureMessages}\nComponent {serverIgnored} was ignored on server, but does not exist on client";
                 }
             }
-            Assert.IsEmpty(failureMessages);
+            Assert.That(failureMessages, Is.Empty);
+            await pair.CleanReturnAsync();
         }
     }
 }

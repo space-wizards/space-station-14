@@ -9,8 +9,60 @@
   "states": [
     {
       "name": "salvage-magnet",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-o0",
       "directions": 4,
-      "commentary": "So presumably the lights would represent the power usage of the magnet, when that's in, and the big red lamp would mean something's being lost."
+      "commentary": "o0 - 04 represent the amount of time remaining during holding/detaching and cooldown."
+    },
+    {
+      "name": "salvage-magnet-o1",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-o2",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-o3",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-o4",
+      "directions": 4
+    },
+    {
+      "name": "salvage-magnet-unready",
+      "directions": 4,
+      "commentary": "Cooldown state"
+    },
+    {
+      "name": "salvage-magnet-ready",
+      "directions": 4,
+      "commentary": "Holding state"
+    },
+    {
+      "name": "salvage-magnet-ready-blinking",
+      "directions": 4,
+      "delays": [
+        [ 0.2, 0.2],
+        [ 0.2, 0.2],
+        [ 0.2, 0.2],
+        [ 0.2, 0.2]
+      ],
+      "commentary": "Attaching state"
+    },
+    {
+      "name": "salvage-magnet-unready-blinking",
+      "directions": 4,
+      "delays": [
+        [ 0.2, 0.2],
+        [ 0.2, 0.2],
+        [ 0.2, 0.2],
+        [ 0.2, 0.2]
+      ],
+      "commentary": "Detaching state"
     }
   ]
 }

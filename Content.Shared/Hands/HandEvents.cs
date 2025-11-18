@@ -1,12 +1,20 @@
+using System.Numerics;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using static Robust.Shared.GameObjects.SharedSpriteComponent;
-
 
 namespace Content.Shared.Hands
 {
+    /// <summary>
+    /// Raised directed on an entity when attempting to drop its hand items.
+    /// </summary>
+    public sealed class DropAttemptEvent : CancellableEntityEventArgs
+    {
+        public readonly EntityUid Uid;
+    }
+
     /// <summary>
     ///     Raised directed at an item that needs to update its in-hand sprites/layers.
     /// </summary>
@@ -107,19 +115,29 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    /// Plays a clientside pickup animation by copying the specified entity.
+    /// </summary>
     [Serializable, NetSerializable]
     public sealed class PickupAnimationEvent : EntityEventArgs
     {
-        public EntityUid ItemUid { get; }
-        public EntityCoordinates InitialPosition { get; }
-        public Vector2 FinalPosition { get; }
+        /// <summary>
+        /// Entity to be copied for the clientside animation.
+        /// </summary>
+        public readonly NetEntity ItemUid;
+        public readonly NetCoordinates InitialPosition;
+        public readonly NetCoordinates FinalPosition;
+        public readonly Angle InitialAngle;
 
-        public PickupAnimationEvent(EntityUid itemUid, EntityCoordinates initialPosition,
-            Vector2 finalPosition)
+        public PickupAnimationEvent(NetEntity itemUid,
+            NetCoordinates initialPosition,
+            NetCoordinates finalPosition,
+            Angle initialAngle)
         {
             ItemUid = itemUid;
             FinalPosition = finalPosition;
             InitialPosition = initialPosition;
+            InitialAngle = initialAngle;
         }
     }
 
@@ -138,6 +156,32 @@ namespace Content.Shared.Hands
             User = user;
         }
     }
+
+    /// <summary>
+    /// Raised against an item being picked up before it is actually inserted
+    /// into the pick-up-ers hand container. This can be handled with side
+    /// effects, and may be canceled preventing the pickup in a way that
+    /// <see cref="SharedHandsSystem.CanPickupToHand"/> and similar don't see.
+    /// </summary>
+    /// <param name="User">The user picking up the item.</param>
+    /// <param name="Cancelled">
+    /// If true, the item will not be equipped into the user's hand.
+    /// </param>
+    [ByRefEvent]
+    public record struct BeforeGettingEquippedHandEvent(EntityUid User, bool Cancelled = false);
+
+    /// <summary>
+    /// Raised against a mob picking up and item before it is actually inserted
+    /// into the pick-up-ers hand container. This can be handled with side
+    /// effects, and may be canceled preventing the pickup in a way that
+    /// <see cref="SharedHandsSystem.CanPickupToHand"/> and similar don't see.
+    /// </summary>
+    /// <param name="Item">The item being picked up.</param>
+    /// <param name="Cancelled">
+    /// If true, the item will not be equipped into the user's hand.
+    /// </param>
+    [ByRefEvent]
+    public record struct BeforeEquippingHandEvent(EntityUid Item, bool Cancelled = false);
 
     /// <summary>
     ///     Raised when putting an entity into a hand slot
@@ -197,21 +241,33 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    /// Raised directed on an entity when it is equipped into hands.
+    /// </summary>
     public sealed class GotEquippedHandEvent : EquippedHandEvent
     {
         public GotEquippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on an entity when it is unequipped from hands.
+    /// </summary>
     public sealed class GotUnequippedHandEvent : UnequippedHandEvent
     {
         public GotUnequippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on a user when it picks something up.
+    /// </summary>
     public sealed class DidEquipHandEvent : EquippedHandEvent
     {
         public DidEquipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on a user when something leaves its hands.
+    /// </summary>
     public sealed class DidUnequipHandEvent : UnequippedHandEvent
     {
         public DidUnequipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
@@ -267,6 +323,20 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    ///     Event raised by a client when they want to alt interact with the item currently in their hands.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class RequestHandAltInteractEvent : EntityEventArgs
+    {
+        public string HandName { get; }
+
+        public RequestHandAltInteractEvent(string handName)
+        {
+            HandName = handName;
+        }
+    }
+
     public sealed class HandCountChangedEvent : EntityEventArgs
     {
         public HandCountChangedEvent(EntityUid sender)
@@ -275,5 +345,16 @@ namespace Content.Shared.Hands
         }
 
         public EntityUid Sender { get; }
+    }
+
+    [ByRefEvent]
+    public sealed class HeldRelayedEvent<TEvent> : EntityEventArgs
+    {
+        public TEvent Args;
+
+        public HeldRelayedEvent(TEvent args)
+        {
+            Args = args;
+        }
     }
 }

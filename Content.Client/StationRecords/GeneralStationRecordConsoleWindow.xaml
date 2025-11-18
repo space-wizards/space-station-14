@@ -1,0 +1,26 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'general-station-record-console-window-title'}"
+               MinSize="750 500">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Margin="5 5 5 10" HorizontalExpand="true" VerticalAlignment="Center">
+            <OptionButton Name="StationRecordsFilterType" MinWidth="200" Margin="0 0 10 0"/>
+            <LineEdit Name="StationRecordsFiltersValue"
+                PlaceHolder="{Loc 'general-station-record-for-filter-line-placeholder'}" HorizontalExpand="True"/>
+            <Button Name="StationRecordsFilters" Text="{Loc 'general-station-record-console-search-records'}"/>
+            <Button Name="StationRecordsFiltersReset" Text="{Loc 'general-station-record-console-reset-filters'}"/>
+        </BoxContainer>
+        <BoxContainer VerticalExpand="True">
+            <!-- Record listing -->
+            <BoxContainer Orientation="Vertical" Margin="5" MinWidth="250" MaxWidth="250">
+                <Label Name="RecordListingStatus" Visible="False" />
+                <ScrollContainer VerticalExpand="True">
+                    <ItemList Name="RecordListing" />
+                </ScrollContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Vertical" Margin="5">
+                <Label Name="RecordContainerStatus" Visible="False" Text="{Loc 'general-station-record-console-select-record-info'}"/>
+                <Control Name="RecordContainer" Visible="False"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

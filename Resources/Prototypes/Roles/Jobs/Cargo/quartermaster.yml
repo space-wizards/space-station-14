@@ -1,28 +1,58 @@
 - type: job
   id: Quartermaster
-  name: "quartermaster"
-  head: true
+  name: job-name-qm
+  description: job-description-qm
+  playTimeTracker: JobQuartermaster
+  requirements:
+    - !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 5h
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 2.5h
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 10h
+  weight: 10
   startingGear: QuartermasterGear
-  departments:
-  - Cargo
-  icon: "QuarterMaster"
-  supervisors: "the head of personnel"
+  icon: "JobIconQuarterMaster"
+  supervisors: job-supervisors-captain
+  canBeAntag: false
   access:
   - Cargo
   - Salvage
   - Quartermaster
   - Maintenance
   - External
+  - Command
+  - Brig
+  - Cryogenics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
 
 - type: startingGear
   id: QuartermasterGear
   equipment:
-    head: ClothingHeadHatCargosoft
-    jumpsuit: ClothingUniformJumpsuitQM
-    back: ClothingBackpackFilled
-    shoes: ClothingShoesColorBrown
     id: QuartermasterPDA
-    ears: ClothingHeadsetCargo
-  innerclothingskirt: ClothingUniformJumpskirtQM
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+    ears: ClothingHeadsetQM
+    belt: BoxFolderClipboardThreePapers
+    pocket1: AppraisalTool
+  storage:
+    back:
+    - Flash
+
+- type: chameleonOutfit
+  id: QuartermasterChameleonOutfit
+  job: Quartermaster
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatQMsoft
+    eyes: ClothingEyesGlassesSunglasses
+    mask: ClothingMaskBreath
+    outerClothing: ClothingOuterWinterQM
+    neck: ClothingNeckCloakQm
+    gloves: ClothingHandsKnuckleDustersQM

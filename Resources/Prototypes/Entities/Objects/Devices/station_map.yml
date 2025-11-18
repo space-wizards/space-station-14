@@ -1,0 +1,54 @@
+- type: entity
+  parent: BaseItem
+  id: BaseHandheldStationMap
+  name: station map
+  description: Displays a readout of the current station.
+  abstract: true
+  components:
+    - type: StationMap
+    - type: Sprite
+      sprite: Objects/Devices/tablets.rsi
+      layers:
+        - state: tablet
+        - state: generic
+          shader: unshaded
+    - type: ActivatableUI
+      inHandsOnly: true
+      singleUser: true
+      key: enum.StationMapUiKey.Key
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: UserInterface
+      interfaces:
+        enum.StationMapUiKey.Key:
+          type: StationMapBoundUserInterface
+
+- type: entity
+  id: HandheldStationMap
+  parent:
+  - BaseHandheldStationMap
+  - BaseHandheldComputer
+  suffix: Handheld
+
+- type: entity
+  id: HandheldStationMapEmpty
+  parent: HandheldStationMap
+  suffix: Handheld, Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  id: HandheldStationMapUnpowered
+  parent: BaseHandheldStationMap
+  suffix: Handheld, Always Powered

@@ -1,89 +1,179 @@
-# ALL SALVAGE MAPS SHOULD BE SETUP SUCH THAT TILE REF -1,-1 IS THEIR OFFICIAL CENTRE,
-# AND FOR EASE OF UNDERSTANDING, USE - pos: 0.5, 0.5 FOR SAVED POSITION.
+# Dear god please stop adding ones with thousands of entities, learn how procgen works.
 
 # "Small"-class maps - Max size square: 7x7, indicated size: 3.5
 
 - type: salvageMap
-  id: small1
-  name: "Small / Engineering Storage 1"
+  id: Small1
   mapPath: /Maps/Salvage/small-1.yml
-  size: 3.5
+  sizeString: salvage-map-wreck-size-small
 
 - type: salvageMap
-  id: small2
-  name: "Small / Gaming Nook 1"
+  id: Small2
   mapPath: /Maps/Salvage/small-2.yml
-  size: 3.5
+  sizeString: salvage-map-wreck-size-small
 
 - type: salvageMap
-  id: small-ship-1
-  name: "Small / Ship 1 (Pill)"
+  id: SmallShip1
   mapPath: /Maps/Salvage/small-ship-1.yml
-  size: 3.5
+  sizeString: salvage-map-wreck-size-small
 
 - type: salvageMap
-  id: small3
-  name: "Small / Laundromat 1"
+  id: Small3
   mapPath: /Maps/Salvage/small-3.yml
-  size: 3.5
+  sizeString: salvage-map-wreck-size-small
 
 - type: salvageMap
-  id: smallAISurveyDrone
-  name: "Small / AI Survey Drone"
+  id: SmallAISurveyDrone
   mapPath: /Maps/Salvage/small-ai-survey-drone.yml
-  size: 3.5
+  sizeString: salvage-map-wreck-size-small
 
 - type: salvageMap
-  id: small4
-  name: "Small / Bar Salvage"
+  id: Small4
   mapPath: /Maps/Salvage/small-4.yml
-  size: 3.5
+  sizeString: salvage-map-wreck-size-small
+
+- type: salvageMap
+  id: SmallCargo
+  mapPath: /Maps/Salvage/small-cargo.yml
+  sizeString: salvage-map-wreck-size-small
+
+- type: salvageMap
+  id: SmallChapel
+  mapPath: /Maps/Salvage/small-chapel.yml
+  sizeString: salvage-map-wreck-size-small
+
+- type: salvageMap
+  id: SmallChef
+  mapPath: /Maps/Salvage/small-chef.yml
+  sizeString: salvage-map-wreck-size-small
+
+- type: salvageMap
+  id: SmallParty
+  mapPath: /Maps/Salvage/small-party.yml
+  sizeString: salvage-map-wreck-size-small
+
+- type: salvageMap
+  id: SmallSyndicate
+  mapPath: /Maps/Salvage/small-syndicate.yml
+  sizeString: salvage-map-wreck-size-small
+
+- type: salvageMap
+  id: SmallTesla
+  mapPath: /Maps/Salvage/small-tesla.yml
+  sizeString: salvage-map-wreck-size-small
 
 # Small - Asteroids
 
 - type: salvageMap
-  id: smallA1
-  name: "Small / Asteroid 1 Plasmafire"
+  id: SmallA1
   mapPath: /Maps/Salvage/small-a-1.yml
-  size: 3.5
+  sizeString: salvage-map-wreck-size-small
 
 # "Medium"-class maps - Max size square: 15x15, indicated size: 7.5
 
 - type: salvageMap
-  id: medium1
-  name: "Medium / Plasma-Trapped Cache 1"
+  id: Medium1
   mapPath: /Maps/Salvage/medium-1.yml
-  size: 7.5
+  sizeString: salvage-map-wreck-size-medium
 
 - type: salvageMap
-  id: mediumvault1
-  name: "Medium / Vault 1"
+  id: MediumVault1
   mapPath: /Maps/Salvage/medium-vault-1.yml
-  size: 7.5
+  sizeString: salvage-map-wreck-size-medium
 
 - type: salvageMap
-  id: mediumOrchestra
-  name: "Medium / Silent Orchestra"
+  id: MediumOrchestra
   mapPath: /Maps/Salvage/medium-silent-orchestra.yml
-  size: 7.5
+  sizeString: salvage-map-wreck-size-medium
 
 - type: salvageMap
-  id: mediumLibraryWreck
-  name: "Medium / Abandoned Library"
+  id: MediumLibraryWreck
   mapPath: /Maps/Salvage/medium-library.yml
-  size: 7.5
+  sizeString: salvage-map-wreck-size-medium
 
 - type: salvageMap
-  id: mediumShuttleWreck
-  name: "Medium / Ruined Emergency Shuttle"
+  id: MediumCargoWreck
+  mapPath: /Maps/Salvage/cargo-1.yml
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: MediumPirateWreck
+  mapPath: /Maps/Salvage/medium-pirate.yml
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: TickColony
+  mapPath: /Maps/Salvage/tick-colony.yml
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: CargoDock
+  mapPath: /Maps/Salvage/medium-dock.yml
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: SpaceWaffleHome
+  sizeString: salvage-map-wreck-size-medium
+  mapPath: /Maps/Salvage/wh-salvage.yml
+
+- type: salvageMap
+  id: MediumShuttleWreck
   mapPath: /Maps/Salvage/medium-ruined-emergency-shuttle.yml
-  size: 8.5 # Over standard medium wreck size, may need future adjustment.
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: MediumPetHospital
+  mapPath: /Maps/Salvage/medium-pet-hospital.yml
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: MediumCrashedShuttle
+  mapPath: /Maps/Salvage/medium-crashed-shuttle.yml
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: Meatball
+  mapPath: /Maps/Salvage/meatball.yml
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: VeganMeatball
+  mapPath: /Maps/Salvage/vegan-meatball.yml
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: MediumHaulingShuttleWreck
+  mapPath: /Maps/Salvage/hauling-shuttle.yml
+  sizeString: salvage-map-wreck-size-medium
 
 # """Large""" maps
 
 - type: salvageMap
-  id: stationstation
-  name: "StationStation"
+  id: StationStation
   mapPath: /Maps/Salvage/stationstation.yml
-  size: 16
+  sizeString: salvage-map-wreck-size-large
 
+- type: salvageMap
+  id: AsteroidBase
+  mapPath: /Maps/Salvage/asteroid-base.yml
+  sizeString: salvage-map-wreck-size-large
+
+- type: salvageMap
+  id: RuinCargoBase
+  mapPath: /Maps/Salvage/ruin-cargo-salvage.yml
+  sizeString: salvage-map-wreck-size-large
+
+- type: salvageMap
+  id: SecurityChunk
+  mapPath: /Maps/Salvage/security-chunk.yml
+  sizeString: salvage-map-wreck-size-large
+
+- type: salvageMap
+  id: EngineeringChunk
+  mapPath: /Maps/Salvage/engineering-chunk.yml
+  sizeString: salvage-map-wreck-size-large
+
+- type: salvageMap
+  id: OutpostArm
+  mapPath: /Maps/Salvage/outpost-arm.yml
+  sizeString: salvage-map-wreck-size-large

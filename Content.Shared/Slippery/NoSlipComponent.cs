@@ -1,9 +1,9 @@
-using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 
-namespace Content.Shared.Slippery
+namespace Content.Shared.Slippery;
+
+[RegisterComponent, NetworkedComponent]
+public sealed partial class NoSlipComponent : Component
 {
-    [RegisterComponent]
-    public sealed class NoSlipComponent : Component
-    {
-    }
+
 }

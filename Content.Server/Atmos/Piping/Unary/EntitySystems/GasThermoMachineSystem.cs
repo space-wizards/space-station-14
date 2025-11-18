@@ -1,132 +1,142 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Construction;
-using Content.Server.NodeContainer;
+using Content.Server.DeviceNetwork.Systems;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.Atmos.Piping.Unary.Systems;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.Examine;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasThermoMachineSystem : EntitySystem
+    public sealed class GasThermoMachineSystem : SharedGasThermoMachineSystem
     {
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
-            SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceDisabledEvent>(OnThermoMachineLeaveAtmosphere);
-            SubscribeLocalEvent<GasThermoMachineComponent, RefreshPartsEvent>(OnGasThermoRefreshParts);
 
-            // UI events
-            SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineToggleMessage>(OnToggleMessage);
-            SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineChangeTemperatureMessage>(OnChangeTemperature);
+            // Device network
+            SubscribeLocalEvent<GasThermoMachineComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
-        private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
+        private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, ref AtmosDeviceUpdateEvent args)
         {
-            var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(thermoMachine.Owner);
+            thermoMachine.LastEnergyDelta = 0f;
+            if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver)))
+                return;
 
-            if (!thermoMachine.Enabled
-                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
+            GetHeatExchangeGasMixture(uid, thermoMachine, out var heatExchangeGasMixture);
+            if (heatExchangeGasMixture == null)
+                return;
+
+            float sign = Math.Sign(thermoMachine.Cp); // 1 if heater, -1 if freezer
+            float targetTemp = thermoMachine.TargetTemperature;
+            float highTemp = targetTemp + sign * thermoMachine.TemperatureTolerance;
+            float temp = heatExchangeGasMixture.Temperature;
+
+            if (sign * temp >= sign * highTemp) // upper bound
+                thermoMachine.HysteresisState = false; // turn off
+            else if (sign * temp < sign * targetTemp) // lower bound
+                thermoMachine.HysteresisState = true; // turn on
+
+            if (thermoMachine.HysteresisState)
+                targetTemp = highTemp; // when on, target upper hysteresis bound
+            else // Hysteresis is the same as "Should this be on?"
             {
-                DirtyUI(uid, thermoMachine);
-                appearance?.SetData(ThermoMachineVisuals.Enabled, false);
+                // Turn dynamic load back on when power has been adjusted to not cause lights to
+                // blink every time this heater comes on.
+                //receiver.Load = 0f;
                 return;
             }
 
-            var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(inlet.Air);
-            var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
-            var oldTemperature = inlet.Air.Temperature;
+            // Multiply power in by coefficient of performance, add that heat to gas
+            float dQ = thermoMachine.HeatCapacity * thermoMachine.Cp * args.dt;
 
-            if (!MathHelper.CloseTo(combinedHeatCapacity, 0, 0.001f))
+            // Clamps the heat transferred to not overshoot
+            float Cin = _atmosphereSystem.GetHeatCapacity(heatExchangeGasMixture, true);
+            float dT = targetTemp - temp;
+            float dQLim = dT * Cin;
+            float scale = 1f;
+            if (Math.Abs(dQ) > Math.Abs(dQLim))
             {
-                appearance?.SetData(ThermoMachineVisuals.Enabled, true);
-                var combinedEnergy = thermoMachine.HeatCapacity * thermoMachine.TargetTemperature + airHeatCapacity * inlet.Air.Temperature;
-                inlet.Air.Temperature = combinedEnergy / combinedHeatCapacity;
+                scale = dQLim / dQ; // reduce power consumption
+                thermoMachine.HysteresisState = false; // turn off
             }
 
-            // TODO ATMOS: Active power usage.
-        }
-
-        private void OnThermoMachineLeaveAtmosphere(EntityUid uid, GasThermoMachineComponent component, AtmosDeviceDisabledEvent args)
-        {
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            float dQActual = dQ * scale;
+            if (thermoMachine.Atmospheric)
             {
-                appearance.SetData(ThermoMachineVisuals.Enabled, false);
+                _atmosphereSystem.AddHeat(heatExchangeGasMixture, dQActual);
+                thermoMachine.LastEnergyDelta = dQActual;
+            }
+            else
+            {
+                float dQLeak = dQActual * thermoMachine.EnergyLeakPercentage;
+                float dQPipe = dQActual - dQLeak;
+                _atmosphereSystem.AddHeat(heatExchangeGasMixture, dQPipe);
+                thermoMachine.LastEnergyDelta = dQPipe;
+
+                if (dQLeak != 0f && _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map, excite: true) is { } containingMixture)
+                    _atmosphereSystem.AddHeat(containingMixture, dQLeak);
             }
 
-            DirtyUI(uid, component);
+            receiver.Load = thermoMachine.HeatCapacity;// * scale; // we're not ready for dynamic load yet, see note above
         }
 
-        private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent component, RefreshPartsEvent args)
+        /// <summary>
+        /// Returns the gas mixture with which the thermomachine will exchange heat (the local atmosphere if atmospheric or the inlet pipe
+        /// air if not). Returns null if no gas mixture is found.
+        /// </summary>
+        private void GetHeatExchangeGasMixture(EntityUid uid, GasThermoMachineComponent thermoMachine, out GasMixture? heatExchangeGasMixture)
         {
-            var matterBinRating = 0;
-            var laserRating = 0;
-
-            foreach (var part in args.Parts)
+            heatExchangeGasMixture = null;
+            if (thermoMachine.Atmospheric)
             {
-                switch (part.PartType)
-                {
-                    case MachinePart.MatterBin:
-                        matterBinRating += part.Rating;
-                        break;
-                    case MachinePart.Laser:
-                        laserRating += part.Rating;
-                        break;
-                }
+                heatExchangeGasMixture = _atmosphereSystem.GetContainingMixture(uid, excite: true);
             }
-
-            component.HeatCapacity = 5000 * MathF.Pow((matterBinRating - 1), 2);
-
-            switch (component.Mode)
+            else
             {
-                // 573.15K with stock parts.
-                case ThermoMachineMode.Heater:
-                    component.MaxTemperature = Atmospherics.T20C + (component.InitialMaxTemperature * laserRating);
-                    break;
-                // 73.15K with stock parts.
-                case ThermoMachineMode.Freezer:
-                    component.MinTemperature = MathF.Max(Atmospherics.T0C - component.InitialMinTemperature + laserRating * 15f, Atmospherics.TCMB);
-                    break;
+                if (!_nodeContainer.TryGetNode(uid, thermoMachine.InletName, out PipeNode? inlet))
+                    return;
+                heatExchangeGasMixture = inlet.Air;
             }
-
-            DirtyUI(uid, component);
         }
 
-        private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent component, GasThermomachineToggleMessage args)
+        private void OnPacketRecv(EntityUid uid, GasThermoMachineComponent component, DeviceNetworkPacketEvent args)
         {
-            component.Enabled = !component.Enabled;
-
-            DirtyUI(uid, component);
-        }
-
-        private void OnChangeTemperature(EntityUid uid, GasThermoMachineComponent component, GasThermomachineChangeTemperatureMessage args)
-        {
-            component.TargetTemperature =
-                Math.Clamp(args.Temperature, component.MinTemperature, component.MaxTemperature);
-
-            DirtyUI(uid, component);
-        }
-
-        private void DirtyUI(EntityUid uid, GasThermoMachineComponent? thermo, ServerUserInterfaceComponent? ui=null)
-        {
-            if (!Resolve(uid, ref thermo, ref ui, false))
+            if (!TryComp(uid, out DeviceNetworkComponent? netConn)
+                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
                 return;
 
-            _userInterfaceSystem.TrySetUiState(uid, ThermomachineUiKey.Key,
-                new GasThermomachineBoundUserInterfaceState(thermo.MinTemperature, thermo.MaxTemperature, thermo.TargetTemperature, thermo.Enabled, thermo.Mode), null, ui);
+            var payload = new NetworkPayload();
+
+            switch (cmd)
+            {
+                case AtmosDeviceNetworkSystem.SyncData:
+                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
+                    payload.Add(AtmosDeviceNetworkSystem.SyncData, new GasThermoMachineData(component.LastEnergyDelta));
+
+                    _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
+
+                    return;
+            }
         }
     }
 }

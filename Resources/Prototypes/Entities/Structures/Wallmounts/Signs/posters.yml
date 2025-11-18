@@ -3,16 +3,25 @@
   id: PosterBase
   abstract: true
   components:
-  - type: WallMount
-    arc: 360
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Wallmounts/posters.rsi
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Card
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
-        damage: 5
+        damage: 15
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -78,9 +87,9 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandLustyExomorph
-  name: "Lusty Exomorph"
-  description: "A heretical poster depicting the titular star of an equally heretical book."
+  id: PosterContrabandRealExomorph
+  name: "Real! Exomorph"
+  description: "A conspiratorial poster about dangerous alien lifeforms."
   components:
   - type: Sprite
     state: poster4_contraband
@@ -116,7 +125,7 @@
   parent: PosterBase
   id: PosterContrabandGreyTide
   name: "Grey Tide"
-  description: "A rebellious poster symbolizing assistant solidarity."
+  description: "A rebellious poster symbolizing passenger solidarity."
   components:
   - type: Sprite
     state: poster8_contraband
@@ -179,7 +188,7 @@
   parent: PosterBase
   id: PosterContrabandTools
   name: "Tools"
-  description: "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentCom."
+  description: "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentComm."
   components:
   - type: Sprite
     state: poster15_contraband
@@ -242,7 +251,7 @@
   parent: PosterBase
   id: PosterContrabandKosmicheskayaStantsiya
   name: "Kosmicheskaya Stantsiya 13 Does Not Exist"
-  description: "A poster mocking CentCom's denial of the existence of the derelict station near Space Station 13."
+  description: "A poster mocking CentComm's denial of the existence of the derelict station near Space Station 13."
   components:
   - type: Sprite
     state: poster22_contraband
@@ -296,7 +305,7 @@
   parent: PosterBase
   id: PosterContrabandSyndicatePistol
   name: "Syndicate Pistol"
-  description: "A poster advertising syndicate pistols as being 'classy as fuck'. It is covered in faded gang tags."
+  description: "A poster advertising syndicate pistols as being 'classy as fuck'. It's covered in faded gang tags."
   components:
   - type: Sprite
     state: poster28_contraband
@@ -350,16 +359,16 @@
   parent: PosterBase
   id: PosterContrabandFreeDrone
   name: "Free Drone"
-  description: "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentCom."
+  description: "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentComm."
   components:
   - type: Sprite
     state: poster35_contraband
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandBustyBackdoorExoBabes6
-  name: "Busty Backdoor Exo Babes 6"
-  description: "Get a load, or give, of these all natural Exos!"
+  id: PosterContrabandRouny
+  name: "Have You Seen Him?"
+  description: "An old poster for a missing alien. Where did he run off to?"
   components:
   - type: Sprite
     state: poster36_contraband
@@ -440,7 +449,7 @@
   parent: PosterBase
   id: PosterContrabandUnreadableAnnouncement
   name: "Unreadable Announcement"
-  description: "A poster announcing something by someone, oddly enough  they seem to have forgotten making it readable"
+  description: "A poster announcing something by someone, oddly enough they seem to have forgotten making it readable."
   components:
   - type: Sprite
     state: poster45_contraband
@@ -467,19 +476,10 @@
   parent: PosterBase
   id: PosterContrabandTheBigGasTruth
   name: "The Big Gas Giant Truth"
-  description: "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOM?"
+  description: "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOMM?"
   components:
   - type: Sprite
     state: poster48_contraband
-
-- type: entity
-  parent: PosterBase
-  id: PosterContrabandGotWood
-  name: "Got Wood?"
-  description: "A grimy old advert for a seedy lumber company. \"You got a friend in me.\" is scrawled in the corner."
-  components:
-  - type: Sprite
-    state: poster49_contraband
 
 - type: entity
   parent: PosterBase
@@ -498,6 +498,142 @@
   components:
   - type: Sprite
     state: poster51_contraband
+
+# These 3 originally from VEEGEE
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandBeachStarYamamoto
+  name: "Beach Star Yamamoto!"
+  description: "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
+  components:
+  - type: Sprite
+    state: poster52_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandHighEffectEngineering
+  name: "High Effect Engineering"
+  description: "There are 3 shards and a singularity.  The shards are singing.  The engineers are crying."
+  components:
+  - type: Sprite
+    state: poster53_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandNuclearDeviceInformational
+  name: "Nuclear Device Informational"
+  description: "This poster depicts an image of an old style nuclear explosive device, as well as some helpful information on what to do if one has been set. It suggests lying on the floor and crying."
+  components:
+  - type: Sprite
+    state: poster54_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRise
+  name: "Rise Up"
+  description: "A poster depicting a grey shirted man holding a crowbar with the word Rise written below it."
+  components:
+  - type: Sprite
+    state: poster55_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRevolt
+  name: "Revolt"
+  description: "Revolutionist propaganda, manufactured by the Syndicate."
+  components:
+  - type: Sprite
+    state: poster56_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandMoth
+  name: "Syndie Moth - Nuclear Operation"
+  description: "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
+  components:
+    - type: Sprite
+      state: poster57_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandCybersun600
+  name: "Cybersun: 600 Years Commemorative Poster"
+  description: "An artistic poster commemorating 600 years of continual business for Cybersun Industries."
+  components:
+    - type: Sprite
+      state: poster58_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandDonk
+  name: "DONK CO. BRAND MICROWAVEABLE FOOD"
+  description: "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
+  components:
+    - type: Sprite
+      state: poster59_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandEnlistGorlex
+  name: "Enlist"
+  description: "Enlist with the Gorlex Marauders today! See the galaxy, kill corpos, get paid!"
+  components:
+    - type: Sprite
+      state: poster60_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandInterdyne
+  name: "Interdyne Pharmaceutics: For the Health of Humankind"
+  description: "An advertisement for Interdyne Pharmaceutics' GeneClean clinics. 'Become the master of your own body!'"
+  components:
+    - type: Sprite
+      state: poster61_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandWaffleCorp
+  name: "Make Mine a Waffle Corp: Fine Rifles, Economic Prices"
+  description: "An old advertisement for Waffle Corp rifles. 'Better weapons, lower prices!'"
+  components:
+    - type: Sprite
+      state: poster62_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandMissingSpacepen
+  name: "Missing Spacepen"
+  description: "This poster depicts something you will never find."
+  components:
+    - type: Sprite
+      state: poster63_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandExoAcid
+  name: "Exomorph Warning: Acid Spit!"
+  description: "This poster warns you about an exomorph's acidic spit. Not that such exomorphs are real... Right?"
+  components:
+  - type: Sprite
+    state: poster64_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandExoRun
+  name: "Exomorph Warning: Run Away!"
+  description: "This poster warns you about an athletic exomorph capable of dragging away anyone who gets caught; so don't get caught!"
+  components:
+  - type: Sprite
+    state: poster65_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandExoChomp
+  name: "Exomorph Warning: Dangerous Bites!"
+  description: "This poster warns you about the lethal bites exomorphs can have. Don't become an alien snack!"
+  components:
+  - type: Sprite
+    state: poster66_contraband
 
 # Legit
 - type: entity
@@ -773,7 +909,7 @@
 - type: entity
   parent: PosterBase
   id: PosterLegit12Gauge
-  name: "12 Gauge"
+  name: "12 gauge"
   description: "A poster boasting about the superiority of 12 gauge shotgun shells."
   components:
   - type: Sprite
@@ -832,3 +968,275 @@
   components:
   - type: Sprite
     state: poster37_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitJustAWeekAway
+  name: "Just a Week Away..."
+  description: A poster advertising a long delayed project, it still claims it to be 'just a week away...'
+  components:
+  - type: Sprite
+    state: poster38_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSecWatch
+  name: "Sec is Watching You"
+  description: "A poster reminding you that security is watching your every move."
+  components:
+  - type: Sprite
+    state: poster39_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitAnatomyPoster
+  name: "Anatomy of a spessman"
+  description: "A poster showing the bits and bobs that makes you... you!"
+  components:
+  - type: Sprite
+    state: poster40_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitMime
+  name: "Mime Postmodern"
+  description: "A postmodern depiction of a mime, superb!"
+  components:
+  - type: Sprite
+    state: poster41_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitCarpMount
+  name: "Wall-mounted Carp"
+  description: "Carpe diem!"
+  components:
+  - type: Sprite
+    state: poster42_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothDelam
+  name: "Safety Moth - Delamination Safety Precautions"
+  description: "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
+  components:
+    - type: Sprite
+      state: poster43_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothEpi
+  name: "Safety Moth - Epinephrine"
+  description: "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
+  components:
+    - type: Sprite
+      state: poster44_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothPiping
+  name: "Safety Moth - Piping"
+  description: "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
+  components:
+    - type: Sprite
+      state: poster45_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothMeth
+  name: "Safety Moth - Methamphetamine"
+  description: "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't ever be making this."
+  components:
+    - type: Sprite
+      state: poster46_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothHardhat
+  name: "Safety Moth - Hardhats"
+  description: "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
+  components:
+    - type: Sprite
+      state: poster47_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitVacation
+  name: "Nanotrasen Corporate Perks: Vacation"
+  description: "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
+  components:
+    - type: Sprite
+      state: poster48_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitPeriodicTable
+  name: "Periodic Table of the Elements"
+  description: "A periodic table of the elements, from Hydrogen to Oganesson, and everything inbetween."
+  components:
+    - type: Sprite
+      state: poster49_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitRenault
+  name: "Renault Poster"
+  description: "Yap."
+  components:
+    - type: Sprite
+      state: poster50_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitNTTGC
+  name: "Nanotrasen Tactical Game Cards"
+  description: "An advertisement for Nanotrasen's TCG cards: BUY MORE CARDS."
+  components:
+    - type: Sprite
+      state: poster51_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothSSD
+  name: "Safety Moth - Space Sleep Disorder"
+  description: "This informational poster uses Safety Moth™ to tell the viewer about Space Sleep Disorder (SSD), a condition where the person stops reacting to things. \"Treat SSD crew with care! They might wake up at any time!\""
+  components:
+  - type: Sprite
+    state: poster52_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitOppenhopper
+  name: "Oppenhopper"
+  description: "A poster for a long-forgotten movie. It follows a group of tenacious greenhorns from the Grasshopper Sector as they defend against onslaughts of the infamous Nuclear Operatives. The tagline reads: \"Nuke Ops will continue until robustness improves.\""
+  components:
+  - type: Sprite
+    state: poster53_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitTyrone
+  name: "Tyrone's Guide to Space"
+  description: "A poster advertising online schooling about space. The classes listed seem to cover things from the basic usage of station equipment to complicated subjects like creating pipebombs or covering entire hallways in spacelube. A disclaimer reads \"It's never THAT bad, and at the end you might even get a tortilla.\""
+  components:
+  - type: Sprite
+    state: poster54_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitHelio
+  name: Helio Logistics ad
+  description: "A poster advertising Helio Logistics and their adorable mascot. The slogan reads 'Come rain or shine, we deliver on time.'"
+  components:
+  - type: Sprite
+    state: poster55_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitBotanyFear
+  name: "Fear of hydroponics"
+  description: "Think three times before opening the airlock to hydroponics, a red threat might be hiding there."
+  components:
+  - type: Sprite
+    state: poster56_legit
+
+#maps
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapBagel
+  name: "Bagel Map"
+  description: "A map of Bagel Station."
+  components:
+  - type: Sprite
+    state: bagelmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapDelta
+  name: "Delta Map"
+  description: "A map of Delta Station."
+  components:
+  - type: Sprite
+    state: deltamap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapMarathon
+  name: "Marathon Map"
+  description: "A map of Marathon Station."
+  components:
+  - type: Sprite
+    state: marathonmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapMoose
+  name: "Moose Map"
+  description: "A map of Moose Station."
+  components:
+  - type: Sprite
+    state: moosemap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapPacked
+  name: "Packed Map"
+  description: "A map of Packed Station."
+  components:
+  - type: Sprite
+    state: packedmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapPillar
+  name: "Pillar Map"
+  description: "A map of NSS Pillar."
+  components:
+  - type: Sprite
+    state: pillarmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapSaltern
+  name: "Saltern Map"
+  description: "A map of Saltern Station."
+  components:
+  - type: Sprite
+    state: salternmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapSplit
+  name: "Split Station Map"
+  description: "A map of Split Station."
+  components:
+  - type: Sprite
+    state: splitmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapLighthouse
+  name: "Lighthouse Map"
+  description: "A map of Lighthouse."
+  components:
+  - type: Sprite
+    state: lighthousemap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapWaystation
+  name: "Waystation Map"
+  description: "A map of Waystation... wait isn't this packed upside down?"
+  components:
+  - type: Sprite
+    state: waystationmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapOrigin
+  name: "origin map"
+  description: "A map of Origin Station."
+  components:
+  - type: Sprite
+    state: originmap

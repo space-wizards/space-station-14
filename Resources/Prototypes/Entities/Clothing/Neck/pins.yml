@@ -1,0 +1,263 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPinBase
+  abstract: true
+  name: pin
+  description: Be nothing do crime.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingGenderPinBase
+  abstract: true
+  components:
+  - type: ChameleonClothing
+    slot: Neck
+#    default: ClothingNeckLGBTPin
+    requireTag: GenderPin
+    affectedByEmp: false
+  - type: UserInterface
+    interfaces:
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
+  - type: Tag
+    tags:
+    - ClothMade #idk man its on the parent
+    - WhitelistChameleon
+    - GenderPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckLGBTPin
+  name: LGBT pin
+  description: Be gay do crime.
+  components:
+  - type: Sprite
+    state: lgbt
+  - type: Clothing
+    equippedPrefix: lgbt
+  - type: ChameleonClothing
+    default: ClothingNeckLGBTPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckAllyPin
+  name: straight ally pin
+  description: Be ally do crime.
+  components:
+  - type: Sprite
+    state: ally
+  - type: Clothing
+    equippedPrefix: ally
+  - type: ChameleonClothing
+    default: ClothingNeckAllyPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckAromanticPin
+  name: aromantic pin
+  description: Be aro do crime.
+  components:
+  - type: Sprite
+    state: aro
+  - type: Clothing
+    equippedPrefix: aro
+  - type: ChameleonClothing
+    default: ClothingNeckAromanticPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckAroacePin
+  name: aroace pin
+  description: Be aroace do crime.
+  components:
+  - type: Sprite
+    state: aroace
+  - type: Clothing
+    equippedPrefix: aroace
+  - type: ChameleonClothing
+    default: ClothingNeckAroacePin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckAsexualPin
+  name: asexual pin
+  description: Be ace do crime.
+  components:
+  - type: Sprite
+    state: asex
+  - type: Clothing
+    equippedPrefix: asex
+  - type: ChameleonClothing
+    default: ClothingNeckAsexualPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckBisexualPin
+  name: bisexual pin
+  description: Be bi do crime.
+  components:
+  - type: Sprite
+    state: bi
+  - type: Clothing
+    equippedPrefix: bi
+  - type: ChameleonClothing
+    default: ClothingNeckBisexualPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckGayPin
+  name: gay pin
+  description: Be gay~ do crime.
+  components:
+  - type: Sprite
+    state: gay
+  - type: Clothing
+    equippedPrefix: gay
+  - type: ChameleonClothing
+    default: ClothingNeckGayPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckIntersexPin
+  name: intersex pin
+  description: Be intersex do crime.
+  components:
+  - type: Sprite
+    state: inter
+  - type: Clothing
+    equippedPrefix: inter
+  - type: ChameleonClothing
+    default: ClothingNeckIntersexPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckLesbianPin
+  name: lesbian pin
+  description: Be lesbian do crime.
+  components:
+  - type: Sprite
+    state: les
+  - type: Clothing
+    equippedPrefix: les
+  - type: ChameleonClothing
+    default: ClothingNeckLesbianPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckNonBinaryPin
+  name: non-binary pin
+  description: "01100010 01100101 00100000 01100101 01101110 01100010 01111001 00100000 01100100 01101111 00100000 01100011 01110010 01101001 01101101 01100101"
+  components:
+  - type: Sprite
+    state: non
+  - type: Clothing
+    equippedPrefix: non
+  - type: ChameleonClothing
+    default: ClothingNeckNonBinaryPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckPansexualPin
+  name: pansexual pin
+  description: Be pan do crime.
+  components:
+  - type: Sprite
+    state: pan
+  - type: Clothing
+    equippedPrefix: pan
+  - type: ChameleonClothing
+    default: ClothingNeckPansexualPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckPluralPin
+  name: plural pin
+  description: Be plural, do crimes.
+  components:
+  - type: Sprite
+    state: plural
+  - type: Clothing
+    equippedPrefix: plural
+  - type: ChameleonClothing
+    default: ClothingNeckPluralPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckOmnisexualPin
+  name: omnisexual pin
+  description: Be omni do crime.
+  components:
+  - type: Sprite
+    state: omni
+  - type: Clothing
+    equippedPrefix: omni
+  - type: ChameleonClothing
+    default: ClothingNeckOmnisexualPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckGenderqueerPin
+  name: genderqueer pin
+  description: be crime, do gender
+  components:
+  - type: Sprite
+    state: gender
+  - type: Clothing
+    equippedPrefix: gender
+  - type: ChameleonClothing
+    default: ClothingNeckGenderqueerPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckGenderfluidPin
+  name: genderfluid pin
+  description: be gender, be fluid
+  components:
+  - type: Sprite
+    state: fluid
+  - type: Clothing
+    equippedPrefix: fluid
+  - type: ChameleonClothing
+    default: ClothingNeckGenderfluidPin
+
+- type: entity
+  parent: ClothingGenderPinBase
+  id: ClothingNeckTransPin
+  name: transgender pin
+  description: Be trans do crime.
+  components:
+  - type: Sprite
+    state: trans
+  - type: Clothing
+    equippedPrefix: trans
+  - type: ChameleonClothing
+    default: ClothingNeckTransPin
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckAutismPin
+  name: neurodivergent pin
+  description: Be neurodivergent, do crime.
+  components:
+  - type: Sprite
+    state: autism
+  - type: Clothing
+    equippedPrefix: autism
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckGoldAutismPin
+  name: autism pin
+  description: Be autistic, do crime.
+  components:
+  - type: Sprite
+    state: goldautism
+  - type: Clothing
+    equippedPrefix: goldautism

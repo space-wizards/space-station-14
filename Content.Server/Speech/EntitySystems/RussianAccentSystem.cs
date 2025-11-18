@@ -1,21 +1,20 @@
 using System.Text;
 using Content.Server.Speech.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Random;
+using Content.Shared.Speech;
 
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed class RussianAccentSystem : EntitySystem
 {
+    [Dependency] private readonly ReplacementAccentSystem _replacement = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<RussianAccentComponent, AccentGetEvent>(OnAccent);
     }
 
-    public static string Accentuate(string message)
+    public string Accentuate(string message)
     {
-        var accentedMessage = new StringBuilder(message);
+        var accentedMessage = new StringBuilder(_replacement.ApplyReplacements(message, "russian"));
 
         for (var i = 0; i < accentedMessage.Length; i++)
         {
@@ -23,6 +22,7 @@ public sealed class RussianAccentSystem : EntitySystem
 
             accentedMessage[i] = c switch
             {
+                'A' => 'Д',
                 'b' => 'в',
                 'N' => 'И',
                 'n' => 'и',

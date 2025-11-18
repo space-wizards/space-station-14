@@ -1,7 +1,9 @@
-﻿- type: reagent
+- type: reagent
   id: BaseDrink
   group: Drinks
   abstract: true
+  slipData:
+    requiredSlipSpeed: 3.5
   metabolisms:
     Drink:
       effects:
@@ -11,7 +13,7 @@
     Extinguish:
       methods: [ Touch ]
       effects:
-      - !type:ExtinguishReaction
+      - !type:Extinguish
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
@@ -35,21 +37,30 @@
     amount: 0.1
   - !type:PlantAdjustHealth
     amount: -0.1
+  footstepSound:
+    collection: FootstepSlime
+  fizziness: 0.5
 
 - type: reagent
   id: BaseAlcohol
   group: Drinks
   abstract: true
+  slipData:
+    requiredSlipSpeed: 3.5
+  friction: 0.4
   metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
         factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.06
   reactiveEffects:
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 1.35
@@ -58,3 +69,11 @@
     amount: 0.25
   - !type:PlantAdjustWater
     amount: 0.7
+
+- type: reagent
+  id: BaseJuice
+  parent: BaseDrink
+  abstract: true
+  flavor: sweet
+  footstepSound:
+    collection: FootstepSlime

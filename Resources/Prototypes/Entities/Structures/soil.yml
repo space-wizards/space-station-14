@@ -1,6 +1,7 @@
 - type: entity
-  name: soil
   id: hydroponicsSoil
+  name: soil
+  description: A mix of organic matter and minerals creating a soil to grow your plant in space. Seems to be dry.
   placement:
     mode: SnapgridCenter
   components:
@@ -10,21 +11,16 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.1"
-      mass: 25
-      hard: false
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      layer:
-      - Opaque
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.1"
+        density: 190
+        hard: false
+        mask:
+        - FullTileMask
+        layer:
+        - FullTileMask
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -39,7 +35,7 @@
   - type: Sprite
     sprite: Structures/Hydroponics/misc.rsi
     state: soil
-    netsync: false
+    noRot: true
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainerManager
@@ -56,8 +52,25 @@
     - reagents: [Water]
       methods: [Touch, Ingestion, Injection]
       effects:
-      - !type:AddToSolutionReaction
+      - !type:AddReagentToSolution
+        reagent: Water
         solution: soil
   - type: Appearance
-    visuals:
-      - type: PlantHolderVisualizer
+  - type: PlantHolderVisuals
+
+- type: entity
+  parent: hydroponicsSoil
+  id: FungalSoil
+  name: fungal soil
+  description: A mix of organic matter and fungal root creating a soil to grow your plant in space. Seems to be dry.
+  components:
+  - type: Construction
+    graph: Soil
+    node: fungalSoil
+  - type: Sprite
+    sprite: Structures/Hydroponics/misc.rsi
+    state: fungal_soil
+    noRot: true
+  - type: PlantHolder
+    waterLevel: 0
+    nutritionLevel: 0

@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from cev eris at https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/guns/energy/nt_svalinn.dmi",
+    "copyright": "Taken from CEV Eris at commit https://github.com/discordia-space/CEV-Eris/commit/d75bd7c51620423bacf0b8accc8d29ffbfc387d8, edited by Emisse for SS14",
     "size": {
         "x": 32,
         "y": 32
@@ -14,6 +14,9 @@
             "name": "base"
         },
         {
+            "name": "mag-unshaded-0"
+        },
+        {
             "name": "mag-unshaded-1"
         },
         {
@@ -24,6 +27,38 @@
         },
         {
             "name": "mag-unshaded-4"
+        },
+        {
+            "name": "inhand-left-0",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-0",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-3",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-3",
+            "directions": 4
         },
         {
             "name": "inhand-left",

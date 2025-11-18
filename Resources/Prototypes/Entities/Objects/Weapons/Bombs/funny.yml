@@ -1,0 +1,133 @@
+- type: entity
+  name: hot potato
+  description: Once activated, you can't drop this time bomb - hit someone else with it to save yourself! Don't burn your hands!
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: HotPotato
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Bombs/hot_potato.rsi
+      state: icon
+      layers:
+      - state: icon
+        map: ["base"]
+    - type: Item
+      sprite: Objects/Specific/Hydroponics/potato.rsi
+      heldPrefix: produce
+      size: Small
+    - type: AmbientSound
+      enabled: false
+      range: 8
+      sound:
+        path: /Audio/Effects/lightburn.ogg
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 5
+    - type: TriggerOnUse
+    - type: TimerTrigger
+      delay: 120
+      beepSound:
+        path: /Audio/Machines/Nuke/general_beep.ogg
+        params:
+          volume: -2
+    - type: ExplodeOnTrigger
+      keysIn:
+      - timer
+    - type: Explosive
+      explosionType: Default
+      maxIntensity: 50
+      intensitySlope: 25
+      totalIntensity: 100
+      canCreateVacuum: false
+    - type: DeleteOnTrigger
+      keysIn:
+      - timer
+    - type: HotPotato
+    - type: DamageOnHolding
+      enabled: false
+      damage:
+        types:
+          Heat: 2
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.Trigger.TriggerVisuals.VisualState:
+          base:
+            Primed: { state: activated }
+            Unprimed: { state: icon }
+
+- type: entity
+  id: HotPotatoEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 0.6
+  - type: Sprite
+    noRot: true
+    drawdepth: Effects
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+    scale: "0.15, 0.15"
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+  - type: AnimationPlayer
+
+- type: entity
+  name: banana peel
+  suffix: Explosive
+  parent: TrashBananaPeel
+  id: TrashBananaPeelExplosive
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    layers:
+    - state: peel
+    - state: primed
+      shader: unshaded
+  - type: TriggerOnSlip
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 3.4
+    intensitySlope: 3
+    totalIntensity: 20
+    canCreateVacuum: false
+  - type: DeleteOnTrigger
+  - type: AnimationPlayer
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+    - BananaPeel
+
+- type: entity
+  parent: BaseItem
+  id: TrashBananaPeelExplosiveUnarmed
+  name: banana
+  suffix: Unarmed
+  description: There's something unusual about this banana.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: produce
+  - type: SpawnItemsOnUse
+    items:
+    - id: TrashBananaPeelExplosive
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: Tag
+    tags:
+    - Banana

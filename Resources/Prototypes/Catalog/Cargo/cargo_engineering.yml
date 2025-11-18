@@ -1,47 +1,149 @@
 - type: cargoProduct
-  name: "LV cables crate"
   id: EngineeringCableLv
-  description: "3 coils of LV cables."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coillv-30
   product: CrateEngineeringCableLV
-  cost: 1000
-  category: Engineering
+  cost: 300
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
-  name: "MV cables crate"
   id: EngineeringCableMv
-  description: "3 coils of MV cables."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coilmv-30
   product: CrateEngineeringCableMV
-  cost: 1500
-  category: Engineering
+  cost: 300
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
-  name: "HV cables crate"
   id: EngineeringCableHv
-  description: "3 coils of HV cables."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coilhv-30
   product: CrateEngineeringCableHV
-  cost: 2000
-  category: Engineering
+  cost: 300
+  category: cargoproduct-category-name-engineering
   group: market
 
 - type: cargoProduct
-  name: "bulk cables crate"
+  id: EngineeringFoamGrenade
+  icon:
+    sprite: Objects/Weapons/Grenades/metalfoam.rsi
+    state: icon
+  product: CrateEngineeringFoamGrenade
+  cost: 2500
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
   id: EngineeringCableBulk
-  description: "2 coils each for every cable type."
   icon:
     sprite: Objects/Tools/cable-coils.rsi
     state: coilall-30
   product: CrateEngineeringCableBulk
-  cost: 3000
-  category: Engineering
+  cost: 600
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringElectricalSupplies
+  icon:
+    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+    state: icon
+  product: CrateEngineeringElectricalSupplies
+  cost: 4500
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: StationBeaconBundle
+  icon:
+    sprite: Objects/Devices/station_beacon.rsi
+    state: icon
+  product: CrateEngineeringStationBeaconBundle
+  cost: 500
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/blue.rsi
+    state: icon
+  product: CrateEngineeringJetpack
+  cost: 1000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringMiniJetpack
+  icon:
+    sprite: Objects/Tanks/Jetpacks/mini.rsi
+    state: icon
+  product: CrateEngineeringMiniJetpack
+  cost: 750
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: AirlockKit
+  icon:
+    sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
+    state: icon
+  product: CrateAirlockKit
+  cost: 1100
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: EvaKit
+  icon:
+    sprite: Clothing/Head/Helmets/eva.rsi
+    state: icon
+  product: CrateEvaKit
+  cost: 5000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringRCDAmmo
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: ammo
+  product: CrateRCDAmmo
+  cost: 2500
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringRCD
+  icon:
+    sprite: Objects/Tools/rcd.rsi
+    state: icon
+  product: CrateRCD
+  cost: 800
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringParticleDecelerators
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/particle_decelerator.rsi
+    state: base
+  product: CrateParticleDecelerators
+  cost: 15000
+  category: cargoproduct-category-name-engineering
+  group: market
+
+- type: cargoProduct
+  id: EngineeringSpaceHeater
+  icon:
+    sprite: Structures/Piping/Atmospherics/Portable/portable_sheater.rsi
+    state: sheaterOff
+  product: CrateEngineeringSpaceHeater
+  cost: 350
+  category: cargoproduct-category-name-engineering
   group: market

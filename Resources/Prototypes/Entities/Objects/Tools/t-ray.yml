@@ -2,23 +2,26 @@
   name: t-ray scanner
   parent: BaseItem
   id: trayScanner
+  description: A high-tech scanning device that uses Terahertz Radiation to detect subfloor infrastructure.
   components:
   - type: Sprite
     sprite: Objects/Tools/t-ray.rsi
-    netsync: false
     layers:
     - state: tray-off
+      map: ["base"]
   - type: TrayScanner
   - type: Item
     sprite: Objects/Tools/t-ray.rsi
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: GenericEnumVisualizer
-      key: enum.TrayScannerVisual.Visual
-      layer: 0
-      states:
-        enum.TrayScannerVisual.On: tray-on
-        enum.TrayScannerVisual.Off: tray-off
-  - type: Tag
-    tags:
-      - DroneUsable
+      enum.TrayScannerVisual.Visual:
+        base:
+          On: { state: tray-on }
+          Off: { state: tray-off }
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+      Glass: 150
+  - type: StaticPrice
+    price: 85

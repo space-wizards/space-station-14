@@ -1,0 +1,163 @@
+- type: entity
+  name: food cart
+  id: FoodCartBase
+  abstract: true
+  parent: BaseStructureDynamic
+  description: A cart for food.
+  components:
+    - type: Sprite
+      netsync: false
+    - type: Rotatable
+    - type: InteractionOutline
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.3
+          density: 125
+          layer:
+          - MobLayer
+          mask:
+          - MobMask
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 400
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:EmptyAllContainersBehaviour
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+    - type: Appearance
+    - type: UserInterface
+      interfaces:
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
+    - type: Storage
+      maxItemSize: Normal
+      grid:
+      - 0,0,7,4
+    - type: TileFrictionModifier
+      modifier: 0.4 # makes it slide
+
+# Add this if freezing/heating container/objects thermodynamics becomes a thing
+
+    #- type: PowerCellSlot
+    #  cellSlotId: cell_slot
+    #- type: ContainerContainer
+    #  containers:
+    #    cell_slot: !type:ContainerSlot
+    #- type: ItemSlots
+    #  slots:
+    #    cell_slot:
+    #      name: power-cell-slot-component-slot-name-default
+    #      startingItem: PowerCellMedium
+
+- type: entity
+  name: hot food cart
+  id: FoodCartHot
+  parent: FoodCartBase
+  description: Get out there and slang some dogs.
+  components:
+    - type: Sprite
+      noRot: true
+      sprite: Objects/Specific/Kitchen/food_carts.rsi
+      layers:
+        - state: stand-food
+    - type: Storage
+      blacklist:
+        tags:
+          - Coldsauce
+          - Hotsauce
+          - BBQsauce
+          - Ketchup
+    - type: ItemSlots
+      slots:
+        coldsauce_slot:
+          name: foodcart-slot-component-slot-name-coldsauce
+          insertSound: /Audio/Items/bottle_clunk.ogg
+          ejectSound: /Audio/Items/bottle_clunk_2.ogg
+          whitelist:
+            tags:
+              - Coldsauce
+          priority: 6
+        hotsauce_slot:
+          name: foodcart-slot-component-slot-name-hotsauce
+          insertSound: /Audio/Items/bottle_clunk.ogg
+          ejectSound: /Audio/Items/bottle_clunk_2.ogg
+          whitelist:
+            tags:
+              - Hotsauce
+          priority: 5
+        bbqsauce_slot:
+          name: foodcart-slot-component-slot-name-bbqsauce
+          insertSound: /Audio/Items/bottle_clunk.ogg
+          ejectSound: /Audio/Items/bottle_clunk_2.ogg
+          whitelist:
+            tags:
+              - BBQsauce
+          priority: 4
+        ketchup_slot:
+          name: foodcart-slot-component-slot-name-ketchup
+          insertSound: /Audio/Items/bottle_clunk.ogg
+          ejectSound: /Audio/Items/bottle_clunk_2.ogg
+          whitelist:
+            tags:
+              - Ketchup
+          priority: 3
+    - type: ItemMapper
+      mapLayers:
+        cart_hotsauce:
+          whitelist:
+            tags:
+              - Hotsauce
+        cart_coldsauce:
+          whitelist:
+            tags:
+              - Coldsauce
+        cart_bbqsauce:
+          whitelist:
+            tags:
+              - BBQsauce
+        cart_ketchup:
+          whitelist:
+            tags:
+              - Ketchup
+      sprite: Objects/Specific/Kitchen/food_carts.rsi
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          ents: []
+        coldsauce_slot: !type:ContainerSlot {}
+        hotsauce_slot: !type:ContainerSlot {}
+        bbqsauce_slot: !type:ContainerSlot {}
+        ketchup_slot: !type:ContainerSlot {}
+
+- type: entity
+  name: cold food cart
+  id: FoodCartCold
+  parent: FoodCartBase
+  description: It's the Ice Cream Man! It's the Ice Cream Man!
+  components:
+    - type: Sprite
+      noRot: true
+      sprite: Objects/Specific/Kitchen/food_carts.rsi
+      layers:
+        - state: stand-ice
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+    - type: AntiRottingContainer

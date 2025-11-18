@@ -1,0 +1,22 @@
+- type: entity
+  name: Crystal Spawner
+  suffix: 70%
+  id: CrystalSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Decoration/crystal.rsi
+          state: crystal_grey
+    - type: RandomSpawner
+      prototypes:
+        - CrystalGreen
+        - CrystalPink
+        - CrystalOrange
+        - CrystalBlue
+        - CrystalCyan
+        - CrystalYellow
+        - CrystalBlack
+        - CrystalGrey
+      chance: 0.7

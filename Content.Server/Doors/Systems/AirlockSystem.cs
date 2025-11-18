@@ -1,150 +1,81 @@
-using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
-using Content.Server.WireHacking;
-using Content.Shared.Doors;
+using Content.Server.Wires;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
-using Robust.Server.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using System;
+using Content.Shared.Power;
+using Content.Shared.Wires;
+using Robust.Shared.Player;
 
-namespace Content.Server.Doors.Systems
+namespace Content.Server.Doors.Systems;
+
+public sealed class AirlockSystem : SharedAirlockSystem
 {
-    public sealed class AirlockSystem : SharedAirlockSystem
+    [Dependency] private readonly WiresSystem _wiresSystem = default!;
+
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
-            SubscribeLocalEvent<AirlockComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
-            SubscribeLocalEvent<AirlockComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
-            SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
-            SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
+        SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
+
+        SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
+        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new[] { typeof(DoorSystem) });
+    }
+
+    private void OnSignalReceived(EntityUid uid, AirlockComponent component, ref SignalReceivedEvent args)
+    {
+        if (args.Port == component.AutoClosePort && component.AutoClose)
+        {
+            component.AutoClose = false;
+            Dirty(uid, component);
         }
+    }
 
-        private void OnPowerChanged(EntityUid uid, AirlockComponent component, PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, AirlockComponent component, ref PowerChangedEvent args)
+    {
+        component.Powered = args.Powered;
+        Dirty(uid, component);
+
+        if (!TryComp(uid, out DoorComponent? door))
+            return;
+
+        if (!args.Powered)
         {
-            if (TryComp<AppearanceComponent>(uid, out var appearanceComponent))
-            {
-                appearanceComponent.SetData(DoorVisuals.Powered, args.Powered);
-            }
+            // stop any scheduled auto-closing
+            if (door.State == DoorState.Open)
+                DoorSystem.SetNextStateChange(uid, null);
+        }
+        else
+        {
+            UpdateAutoClose(uid, door: door);
+        }
+    }
 
-            if (!TryComp(uid, out DoorComponent? door))
+    private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
+    {
+        if (args.Handled || !args.Complex)
+            return;
+
+        if (TryComp<WiresPanelComponent>(uid, out var panel) &&
+            panel.Open &&
+            TryComp<ActorComponent>(args.User, out var actor))
+        {
+            if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+                !wiresPanelSecurity.WiresAccessible)
                 return;
 
-            if (!args.Powered)
-            {
-                // stop any scheduled auto-closing
-                if (door.State == DoorState.Open)
-                    DoorSystem.SetNextStateChange(uid, null);
-            }
-            else
-            {
-                UpdateAutoClose(uid, door: door);
-            }
-
-            // BoltLights also got out
-            component.UpdateBoltLightStatus();
+            _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
+            args.Handled = true;
+            return;
         }
 
-        private void OnStateChanged(EntityUid uid, AirlockComponent component, DoorStateChangedEvent args)
+        if (component.KeepOpenIfClicked && component.AutoClose)
         {
-            // TODO move to shared? having this be server-side, but having client-side door opening/closing & prediction
-            // means that sometimes the panels & bolt lights may be visible despite a door being completely open.
-
-            // Only show the maintenance panel if the airlock is closed
-            if (TryComp<WiresComponent>(uid, out var wiresComponent))
-            {
-                wiresComponent.IsPanelVisible =
-                    component.OpenPanelVisible
-                    ||  args.State != DoorState.Open;
-            }
-            // If the door is closed, we should look if the bolt was locked while closing
-            component.UpdateBoltLightStatus();
-
-            UpdateAutoClose(uid, component);
-        }
-
-        /// <summary>
-        /// Updates the auto close timer.
-        /// </summary>
-        public void UpdateAutoClose(EntityUid uid, AirlockComponent? airlock = null, DoorComponent? door = null)
-        {
-            if (!Resolve(uid, ref airlock, ref door))
-                return;
-
-            if (door.State != DoorState.Open)
-                return;
-
-            if (!airlock.CanChangeState())
-                return;
-
-            var autoev = new BeforeDoorAutoCloseEvent();
-            RaiseLocalEvent(uid, autoev, false);
-            if (autoev.Cancelled)
-                return;
-
-            DoorSystem.SetNextStateChange(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
-        }
-
-        private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)
-        {
-            if (!component.CanChangeState())
-                args.Cancel();
-        }
-
-        protected override void OnBeforeDoorClosed(EntityUid uid, SharedAirlockComponent component, BeforeDoorClosedEvent args)
-        {
-            base.OnBeforeDoorClosed(uid, component, args);
-
-            if (args.Cancelled)
-                return;
-
-            // only block based on bolts / power status when initially closing the door, not when its already
-            // mid-transition. Particularly relevant for when the door was pried-closed with a crowbar, which bypasses
-            // the initial power-check.
-
-            if (TryComp(uid, out DoorComponent? door)
-                && !door.Partial
-                && !Comp<AirlockComponent>(uid).CanChangeState())
-            {
-                args.Cancel();
-            }
-        }
-
-        private void OnBeforeDoorDenied(EntityUid uid, AirlockComponent component, BeforeDoorDeniedEvent args)
-        {
-            if (!component.CanChangeState())
-                args.Cancel();
-        }
-
-        private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
-        {
-            if (TryComp<WiresComponent>(uid, out var wiresComponent) && wiresComponent.IsPanelOpen &&
-                EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
-            {
-                wiresComponent.OpenInterface(actor.PlayerSession);
-                args.Handled = true;
-            }
-        }
-
-        private void OnDoorPry(EntityUid uid, AirlockComponent component, BeforeDoorPryEvent args)
-        {
-            if (component.IsBolted())
-            {
-                component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-bolted-message"));
-                args.Cancel();
-            }
-            if (component.IsPowered())
-            {
-                component.Owner.PopupMessage(args.User, Loc.GetString("airlock-component-cannot-pry-is-powered-message"));
-                args.Cancel();
-            }
+            // Disable auto close
+            component.AutoClose = false;
+            Dirty(uid, component);
         }
     }
 }

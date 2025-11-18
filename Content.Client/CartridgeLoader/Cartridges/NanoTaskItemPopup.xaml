@@ -1,0 +1,67 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc nano-task-ui-item-title}"
+               MinSize="300 300">
+    <PanelContainer StyleClasses="AngleRect">
+        <BoxContainer Orientation="Vertical" Margin="4">
+            <!-- Task Description Input -->
+            <BoxContainer Orientation="Vertical" Margin="0 4">
+                <Label Text="{Loc nano-task-ui-description-label}"
+                       StyleClasses="LabelHeading" />
+                <PanelContainer StyleClasses="ButtonSquare">
+                    <LineEdit Name="DescriptionInput"
+                              PlaceHolder="{Loc nano-task-ui-description-placeholder}" />
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Task Requester Input -->
+            <BoxContainer Orientation="Vertical" Margin="0 4">
+                <Label Text="{Loc nano-task-ui-requester-label}"
+                       StyleClasses="LabelHeading" />
+                <PanelContainer StyleClasses="ButtonSquare">
+                    <LineEdit Name="RequesterInput"
+                              PlaceHolder="{Loc nano-task-ui-requester-placeholder}" />
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Severity Buttons -->
+            <BoxContainer Orientation="Horizontal"
+                          HorizontalAlignment="Center"
+                          Margin="0 8 0 0">
+                <Button Name="LowButton"
+                        Text="{Loc nano-task-ui-priority-low}"
+                        StyleClasses="OpenRight"
+                        MinSize="60 0" />
+                <Button Name="MediumButton"
+                        Text="{Loc nano-task-ui-priority-medium}"
+                        StyleClasses="ButtonSquare"
+                        MinSize="60 0" />
+                <Button Name="HighButton"
+                        Text="{Loc nano-task-ui-priority-high}"
+                        StyleClasses="OpenLeft"
+                        MinSize="60 0" />
+            </BoxContainer>
+
+            <!-- Verb Buttons -->
+            <BoxContainer Orientation="Horizontal"
+                          HorizontalAlignment="Right"
+                          Margin="0 8 0 0">
+                <Button Name="CancelButton"
+                        Text="{Loc nano-task-ui-cancel}"
+                        StyleClasses="OpenRight"
+                        MinSize="60 0" />
+                <Button Name="DeleteButton"
+                        Text="{Loc nano-task-ui-delete}"
+                        StyleClasses="ButtonSquare"
+                        MinSize="60 0" />
+                <Button Name="PrintButton"
+                        Text="{Loc nano-task-ui-print}"
+                        StyleClasses="ButtonSquare"
+                        MinSize="60 0" />
+                <Button Name="SaveButton"
+                        Text="{Loc nano-task-ui-save}"
+                        StyleClasses="OpenLeft"
+                        MinSize="60 0" />
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</DefaultWindow>

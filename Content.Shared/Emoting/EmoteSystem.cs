@@ -1,20 +1,30 @@
-﻿using Robust.Shared.GameObjects;
+﻿namespace Content.Shared.Emoting;
 
-namespace Content.Shared.Emoting
+public sealed class EmoteSystem : EntitySystem
 {
-    public sealed class EmoteSystem : EntitySystem
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            base.Initialize();
+        base.Initialize();
 
-            SubscribeLocalEvent<EmoteAttemptEvent>(OnEmoteAttempt);
-        }
+        SubscribeLocalEvent<EmoteAttemptEvent>(OnEmoteAttempt);
+    }
 
-        private void OnEmoteAttempt(EmoteAttemptEvent args)
-        {
-            if (!TryComp(args.Uid, out SharedEmotingComponent? emote) || !emote.Enabled)
-                args.Cancel();
-        }
+    public void SetEmoting(EntityUid uid, bool value, EmotingComponent? component = null)
+    {
+        if (value && !Resolve(uid, ref component))
+            return;
+
+        component = EnsureComp<EmotingComponent>(uid);
+
+        if (component.Enabled == value)
+            return;
+
+        Dirty(uid, component);
+    }
+
+    private void OnEmoteAttempt(EmoteAttemptEvent args)
+    {
+        if (!TryComp(args.Uid, out EmotingComponent? emote) || !emote.Enabled)
+            args.Cancel();
     }
 }

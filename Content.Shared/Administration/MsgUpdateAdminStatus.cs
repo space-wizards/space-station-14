@@ -1,6 +1,6 @@
-﻿using System;
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration
 {
@@ -11,7 +11,7 @@ namespace Content.Shared.Administration
         public AdminData? Admin;
         public string[] AvailableCommands = Array.Empty<string>();
 
-        public override void ReadFromBuffer(NetIncomingMessage buffer)
+        public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
         {
             var count = buffer.ReadVariableInt32();
 
@@ -39,7 +39,7 @@ namespace Content.Shared.Administration
 
         }
 
-        public override void WriteToBuffer(NetOutgoingMessage buffer)
+        public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
         {
             buffer.WriteVariableInt32(AvailableCommands.Length);
 

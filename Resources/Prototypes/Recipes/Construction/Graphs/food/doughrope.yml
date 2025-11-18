@@ -1,0 +1,27 @@
+- type: constructionGraph
+  id: DoughRope
+  start: start
+  graph:
+  - node: start
+    entity: FoodDoughSlice
+    edges:
+    - to: rolled
+      steps:
+      - tool: Rolling
+        doAfter: 1
+  - node: rolled
+    entity: FoodDoughRope
+
+- type: constructionGraph
+  id: DoughRopeCotton
+  start: start
+  graph:
+  - node: start
+    entity: FoodDoughCottonSlice
+    edges:
+    - to: rolled
+      steps:
+      - tool: Rolling
+        doAfter: 1
+  - node: rolled
+    entity: FoodDoughCottonRope

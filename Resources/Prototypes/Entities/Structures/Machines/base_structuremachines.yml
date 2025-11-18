@@ -3,27 +3,36 @@
   parent: BaseStructure
   id: BaseMachine
   components:
+  - type: Animateable
   - type: InteractionOutline
   - type: Anchorable
     delay: 2
   - type: Physics
     bodyType: Static
+  - type: Transform
+    noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
+      fix1:
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.45,-0.45,0.45,0.45"
-      mass: 25
-      layer:
-      - MobMask
-      - Opaque
-      mask:
-      - MobMask
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -32,7 +41,7 @@
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          collection: MetalBreak
 
 - type: entity
   abstract: true
@@ -42,3 +51,31 @@
   - type: ApcPowerReceiver
     powerLoad: 1000
   - type: ExtensionCableReceiver
+  - type: LightningTarget
+    priority: 1
+
+- type: entity
+  abstract: true
+  id: ConstructibleMachine
+  components:
+  - type: Animateable
+  - type: Machine
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: Construction
+    graph: Machine
+    node: machine
+    containers:
+    - machine_parts
+    - machine_board
+  - type: LightningTarget
+    priority: 1
+
+- type: entity
+  abstract: true
+  parent: ConstructibleMachine
+  id: SmallConstructibleMachine
+  components:
+    - type: RequireProjectileTarget

@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Examine;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+﻿using Content.Shared.Examine;
 
 namespace Content.Shared.Construction
 {
     [ImplicitDataDefinitionForInheritors]
-    public interface IGraphCondition
+    public partial interface IGraphCondition
     {
         bool Condition(EntityUid uid, IEntityManager entityManager);
         bool DoExamine(ExaminedEvent args);

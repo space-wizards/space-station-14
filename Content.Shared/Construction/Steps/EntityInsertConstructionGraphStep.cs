@@ -1,13 +1,10 @@
-﻿using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-
-namespace Content.Shared.Construction.Steps
+﻿namespace Content.Shared.Construction.Steps
 {
     [ImplicitDataDefinitionForInheritors]
-    public abstract class EntityInsertConstructionGraphStep : ConstructionGraphStep
+    public abstract partial class EntityInsertConstructionGraphStep : ConstructionGraphStep
     {
-        [DataField("store")] public string Store { get; } = string.Empty;
+        [DataField("store")] public string Store { get; private set; } = string.Empty;
 
-        public abstract bool EntityValid(EntityUid uid, IEntityManager entityManager);
+        public abstract bool EntityValid(EntityUid uid, IEntityManager entityManager, IComponentFactory compFactory);
     }
 }

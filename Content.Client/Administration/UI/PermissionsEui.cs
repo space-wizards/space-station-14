@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.Eui;
 using Content.Client.Stylesheets;
@@ -26,7 +27,7 @@ namespace Content.Client.Administration.UI
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
         private readonly Menu _menu;
-        private readonly List<DefaultWindow> _subWindows = new();
+        private readonly List<BaseWindow> _subWindows = new();
 
         private Dictionary<int, PermissionsEuiState.AdminRankData> _ranks =
             new();
@@ -45,6 +46,7 @@ namespace Content.Client.Administration.UI
         {
             base.Closed();
 
+            SendMessage(new CloseEuiMessage());
             CloseEverything();
         }
 
@@ -128,6 +130,7 @@ namespace Content.Client.Administration.UI
             }
 
             var title = string.IsNullOrWhiteSpace(popup.TitleEdit.Text) ? null : popup.TitleEdit.Text;
+            var suspended = popup.SuspendedCheckbox.Pressed;
 
             if (popup.SourceData is { } src)
             {
@@ -137,7 +140,8 @@ namespace Content.Client.Administration.UI
                     Title = title,
                     PosFlags = pos,
                     NegFlags = neg,
-                    RankId = rank
+                    RankId = rank,
+                    Suspended = suspended,
                 });
             }
             else
@@ -150,7 +154,8 @@ namespace Content.Client.Administration.UI
                     Title = title,
                     PosFlags = pos,
                     NegFlags = neg,
-                    RankId = rank
+                    RankId = rank,
+                    Suspended = suspended,
                 });
             }
 
@@ -169,7 +174,7 @@ namespace Content.Client.Administration.UI
                 {
                     Id = src,
                     Flags = flags,
-                    Name = name
+                    Name = name,
                 });
             }
             else
@@ -201,7 +206,7 @@ namespace Content.Client.Administration.UI
             _ranks = s.AdminRanks;
 
             _menu.AdminsList.RemoveAllChildren();
-            foreach (var admin in s.Admins)
+            foreach (var admin in s.Admins.OrderBy(d => d.UserName))
             {
                 var al = _menu.AdminsList;
                 var name = admin.UserName ?? admin.UserId.ToString();
@@ -211,7 +216,7 @@ namespace Content.Client.Administration.UI
                 var titleControl = new Label { Text = admin.Title ?? Loc.GetString("permissions-eui-edit-admin-title-control-text").ToLowerInvariant() };
                 if (admin.Title == null) // none
                 {
-                    titleControl.StyleClasses.Add(StyleBase.StyleClassItalic);
+                    titleControl.StyleClasses.Add(StyleClass.Italic);
                 }
 
                 al.AddChild(titleControl);
@@ -235,7 +240,7 @@ namespace Content.Client.Administration.UI
                 var rankControl = new Label { Text = rank };
                 if (italic)
                 {
-                    rankControl.StyleClasses.Add(StyleBase.StyleClassItalic);
+                    rankControl.StyleClasses.Add(StyleClass.Italic);
                 }
 
                 al.AddChild(rankControl);
@@ -335,10 +340,9 @@ namespace Content.Client.Administration.UI
                 tab.AddChild(adminVBox);
                 tab.AddChild(rankVBox);
 
-                Contents.AddChild(tab);
+                ContentsContainer.AddChild(tab);
+                ContentsContainer.MinSize = new(600, 400);
             }
-
-            protected override Vector2 ContentsMinimumSize => (600, 400);
         }
 
         private sealed class EditAdminWindow : DefaultWindow
@@ -349,13 +353,14 @@ namespace Content.Client.Administration.UI
             public readonly OptionButton RankButton;
             public readonly Button SaveButton;
             public readonly Button? RemoveButton;
+            public readonly CheckBox SuspendedCheckbox;
 
             public readonly Dictionary<AdminFlags, (Button inherit, Button sub, Button plus)> FlagButtons
                 = new();
 
             public EditAdminWindow(PermissionsEui ui, PermissionsEuiState.AdminData? data)
             {
-                MinSize = (600, 400);
+                MinSize = new Vector2(600, 400);
                 SourceData = data;
 
                 Control nameControl;
@@ -378,6 +383,12 @@ namespace Content.Client.Administration.UI
                 TitleEdit = new LineEdit { PlaceHolder = Loc.GetString("permissions-eui-edit-admin-window-title-edit-placeholder") };
                 RankButton = new OptionButton();
                 SaveButton = new Button { Text = Loc.GetString("permissions-eui-edit-admin-window-save-button"), HorizontalAlignment = HAlignment.Right };
+
+                SuspendedCheckbox = new CheckBox
+                {
+                    Text = Loc.GetString("permissions-eui-edit-admin-window-suspended"),
+                    Pressed = data?.Suspended ?? false,
+                };
 
                 RankButton.AddItem(Loc.GetString("permissions-eui-edit-admin-window-no-rank-button"), NoRank);
                 foreach (var (rId, rank) in ui._ranks)
@@ -407,21 +418,21 @@ namespace Content.Client.Administration.UI
                     var inherit = new Button
                     {
                         Text = "I",
-                        StyleClasses = { StyleBase.ButtonOpenRight },
+                        StyleClasses = { StyleClass.ButtonOpenRight },
                         Disabled = disable,
                         Group = group,
                     };
                     var sub = new Button
                     {
                         Text = "-",
-                        StyleClasses = { StyleBase.ButtonOpenBoth },
+                        StyleClasses = { StyleClass.ButtonOpenBoth },
                         Disabled = disable,
                         Group = group
                     };
                     var plus = new Button
                     {
                         Text = "+",
-                        StyleClasses = { StyleBase.ButtonOpenLeft },
+                        StyleClasses = { StyleClass.ButtonOpenLeft },
                         Disabled = disable,
                         Group = group
                     };
@@ -467,7 +478,7 @@ namespace Content.Client.Administration.UI
 
                 bottomButtons.AddChild(SaveButton);
 
-                Contents.AddChild(new BoxContainer
+                ContentsContainer.AddChild(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
                     Children =
@@ -486,7 +497,8 @@ namespace Content.Client.Administration.UI
                                     {
                                         nameControl,
                                         TitleEdit,
-                                        RankButton
+                                        RankButton,
+                                        SuspendedCheckbox,
                                     }
                                 },
                                 permGrid
@@ -533,7 +545,7 @@ namespace Content.Client.Administration.UI
             public EditAdminRankWindow(PermissionsEui ui, KeyValuePair<int, PermissionsEuiState.AdminRankData>? data)
             {
                 Title = Loc.GetString("permissions-eui-edit-admin-rank-window-title");
-                MinSize = (600, 400);
+                MinSize = new Vector2(600, 400);
                 SourceId = data?.Key;
 
                 NameEdit = new LineEdit
@@ -592,7 +604,7 @@ namespace Content.Client.Administration.UI
 
                 bottomButtons.AddChild(SaveButton);
 
-                Contents.AddChild(new BoxContainer
+                ContentsContainer.AddChild(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
                     Children =

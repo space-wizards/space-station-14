@@ -3,9 +3,10 @@
   parent: BaseGenerator
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-      - Debug
+  - type: PowerSupplier
+    supplyRate: 300000
+    supplyRampRate: 50000
+    supplyRampTolerance: 500
 
 - type: entity
   id: DebugConsumer
@@ -14,18 +15,16 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
+      fix1:
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-      layer: [MobMask, Opaque]
+        layer: [MobMask, Opaque]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -58,18 +57,16 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
+      fix1:
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-      layer: [MobMask, Opaque]
+        layer: [MobMask, Opaque]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -90,18 +87,17 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Clickable
+  - type: PowerNetworkBattery
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
+      fix1:
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-      layer: [MobMask, Opaque]
+        layer: [MobMask, Opaque]
   - type: Transform
     anchored: true
   - type: Sprite
@@ -117,31 +113,56 @@
   - type: Anchorable
 
 - type: entity
-  id: DebugSMES
   parent: BaseSMES
-  suffix: DEBUG
-  components:
-  - type: Tag
-    tags:
-      - Debug
+  id: DebugSMES
+  suffix: DEBUG, Empty
 
 - type: entity
-  id: DebugSubstation
+  parent: BaseSMES
+  id: DebugSMESRecharging
+  suffix: DEBUG, AutoRecharge
+  components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50000
+
+- type: entity
   parent: BaseSubstation
-  suffix: DEBUG
-  components:
-  - type: Tag
-    tags:
-      - Debug
+  id: DebugSubstation
+  suffix: DEBUG, Empty
 
 - type: entity
-  id: DebugAPC
-  parent: BaseAPC
-  suffix: DEBUG
+  parent: BaseSubstation
+  id: DebugSubstationRecharging
+  suffix: DEBUG, AutoRecharge
   components:
-  - type: Tag
-    tags:
-      - Debug
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50000
+
+- type: entity
+  parent: BaseSubstationWall
+  id: DebugSubstationWall
+  suffix: DEBUG, Empty
+
+- type: entity
+  parent: BaseSubstationWall
+  id: DebugSubstationWallRecharging
+  suffix: DEBUG, AutoRecharge
+  components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50000
+
+- type: entity
+  parent: BaseAPC
+  id: DebugAPC
+  suffix: DEBUG, Empty
+
+- type: entity
+  parent: BaseAPC
+  id: DebugAPCRecharging
+  suffix: DEBUG, AutoRecharge
+  components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 50000
 
 - type: entity
   id: DebugPowerReceiver
@@ -150,18 +171,16 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
+      fix1:
+        shape:
+          !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
-      layer: [MobMask, Opaque]
+        layer: [MobMask, Opaque]
   - type: Transform
     anchored: true
   - type: Sprite

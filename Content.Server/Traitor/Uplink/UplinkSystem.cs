@@ -1,226 +1,141 @@
 using System.Linq;
-using Content.Server.Hands.Components;
-using Content.Server.Traitor.Uplink.Account;
-using Content.Server.Traitor.Uplink.Components;
-using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Hands.Components;
+using Content.Server.Store.Systems;
+using Content.Server.StoreDiscount.Systems;
+using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
+using Content.Shared.Implants;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
+using Content.Shared.Mind;
 using Content.Shared.PDA;
-using Content.Shared.Traitor.Uplink;
-using Robust.Server.GameObjects;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Player;
+using Content.Shared.Store;
+using Content.Shared.Store.Components;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server.Traitor.Uplink
+namespace Content.Server.Traitor.Uplink;
+
+public sealed class UplinkSystem : EntitySystem
 {
-    public sealed class UplinkSystem : EntitySystem
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+
+    public static readonly ProtoId<CurrencyPrototype> TelecrystalCurrencyPrototype = "Telecrystal";
+    private static readonly EntProtoId FallbackUplinkImplant = "UplinkImplant";
+    private static readonly ProtoId<ListingPrototype> FallbackUplinkCatalog = "UplinkUplinkImplanter";
+
+    /// <summary>
+    /// Adds an uplink to the target
+    /// </summary>
+    /// <param name="user">The person who is getting the uplink</param>
+    /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
+    /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
+    /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
+    /// <returns>Whether or not the uplink was added successfully</returns>
+    public bool AddUplink(
+        EntityUid user,
+        FixedPoint2 balance,
+        EntityUid? uplinkEntity = null,
+        bool giveDiscounts = false)
     {
-        [Dependency]
-        private readonly UplinkAccountsSystem _accounts = default!;
-        [Dependency]
-        private readonly UplinkListingSytem _listing = default!;
+        // Try to find target item if none passed
 
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        uplinkEntity ??= FindUplinkTarget(user);
 
-        public override void Initialize()
+        if (uplinkEntity == null)
+            return ImplantUplink(user, balance, giveDiscounts);
+
+        EnsureComp<UplinkComponent>(uplinkEntity.Value);
+
+        SetUplink(user, uplinkEntity.Value, balance, giveDiscounts);
+
+        // TODO add BUI. Currently can't be done outside of yaml -_-
+        // ^ What does this even mean?
+
+        return true;
+    }
+
+    /// <summary>
+    /// Configure TC for the uplink
+    /// </summary>
+    private void SetUplink(EntityUid user, EntityUid uplink, FixedPoint2 balance, bool giveDiscounts)
+    {
+        if (!_mind.TryGetMind(user, out var mind, out _))
+            return;
+
+        var store = EnsureComp<StoreComponent>(uplink);
+
+        store.AccountOwner = mind;
+
+        store.Balance.Clear();
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance } },
+            uplink,
+            store);
+
+        var uplinkInitializedEvent = new StoreInitializedEvent(
+            TargetUser: mind,
+            Store: uplink,
+            UseDiscounts: giveDiscounts,
+            Listings: _store.GetAvailableListings(mind, uplink, store)
+                .ToArray());
+        RaiseLocalEvent(ref uplinkInitializedEvent);
+    }
+
+    /// <summary>
+    /// Implant an uplink as a fallback measure if the traitor had no PDA
+    /// </summary>
+    private bool ImplantUplink(EntityUid user, FixedPoint2 balance, bool giveDiscounts)
+    {
+        if (!_proto.Resolve<ListingPrototype>(FallbackUplinkCatalog, out var catalog))
+            return false;
+
+        if (!catalog.Cost.TryGetValue(TelecrystalCurrencyPrototype, out var cost))
+            return false;
+
+        if (balance < cost) // Can't use Math functions on FixedPoint2
+            balance = 0;
+        else
+            balance = balance - cost;
+
+        var implant = _subdermalImplant.AddImplant(user, FallbackUplinkImplant);
+
+        if (!HasComp<StoreComponent>(implant))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<UplinkComponent, ActivateInWorldEvent>(OnActivate);
-
-            // UI events
-            SubscribeLocalEvent<UplinkComponent, UplinkBuyListingMessage>(OnBuy);
-            SubscribeLocalEvent<UplinkComponent, UplinkRequestUpdateInterfaceMessage>(OnRequestUpdateUI);
-            SubscribeLocalEvent<UplinkComponent, UplinkTryWithdrawTC>(OnWithdrawTC);
-
-            SubscribeLocalEvent<UplinkAccountBalanceChanged>(OnBalanceChangedBroadcast);
+            Log.Error($"Implant does not have the store component {implant}");
+            return false;
         }
 
-        public void SetAccount(UplinkComponent component, UplinkAccount account)
+        SetUplink(user, implant.Value, balance, giveDiscounts);
+        return true;
+    }
+
+    /// <summary>
+    /// Finds the entity that can hold an uplink for a user.
+    /// Usually this is a pda in their pda slot, but can also be in their hands. (but not pockets or inside bag, etc.)
+    /// </summary>
+    public EntityUid? FindUplinkTarget(EntityUid user)
+    {
+        // Try to find PDA in inventory
+        if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
         {
-            if (component.UplinkAccount != null)
+            while (containerSlotEnumerator.MoveNext(out var containerSlot))
             {
-                Logger.Error("Can't init one uplink with different account!");
-                return;
-            }
+                var pdaUid = containerSlot.ContainedEntity;
 
-            component.UplinkAccount = account;
-        }
-
-        private void OnInit(EntityUid uid, UplinkComponent component, ComponentInit args)
-        {
-            RaiseLocalEvent(uid, new UplinkInitEvent(component));
-
-            // if component has a preset info (probably spawn by admin)
-            // create a new account and register it for this uplink
-            if (component.PresetInfo != null)
-            {
-                var account = new UplinkAccount(component.PresetInfo.StartingBalance);
-                _accounts.AddNewAccount(account);
-                SetAccount(component, account);
+                if (HasComp<PdaComponent>(pdaUid) && HasComp<StoreComponent>(pdaUid))
+                    return pdaUid;
             }
         }
 
-        private void OnRemove(EntityUid uid, UplinkComponent component, ComponentRemove args)
+        // Also check hands
+        foreach (var item in _handsSystem.EnumerateHeld(user))
         {
-            RaiseLocalEvent(uid, new UplinkRemovedEvent());
+            if (HasComp<PdaComponent>(item) && HasComp<StoreComponent>(item))
+                return item;
         }
 
-        private void OnActivate(EntityUid uid, UplinkComponent component, ActivateInWorldEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            // check if uplinks activates directly or use some proxy, like a PDA
-            if (!component.ActivatesInHands)
-                return;
-            if (component.UplinkAccount == null)
-                return;
-
-            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
-                return;
-
-            ToggleUplinkUI(component, actor.PlayerSession);
-            args.Handled = true;
-        }
-
-        private void OnBalanceChangedBroadcast(UplinkAccountBalanceChanged ev)
-        {
-            foreach (var uplink in EntityManager.EntityQuery<UplinkComponent>())
-            {
-                if (uplink.UplinkAccount == ev.Account)
-                {
-                    UpdateUserInterface(uplink);
-                }
-            }
-        }
-
-        private void OnRequestUpdateUI(EntityUid uid, UplinkComponent uplink, UplinkRequestUpdateInterfaceMessage args)
-        {
-            UpdateUserInterface(uplink);
-        }
-
-        private void OnBuy(EntityUid uid, UplinkComponent uplink, UplinkBuyListingMessage message)
-        {
-            if (message.Session.AttachedEntity is not {Valid: true} player) return;
-            if (uplink.UplinkAccount == null) return;
-
-            if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, message.ItemId,
-                EntityManager.GetComponent<TransformComponent>(player).Coordinates, out var entity))
-            {
-                SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.InsufficientFundsSound.GetSound(),
-                    uplink.Owner, AudioParams.Default);
-                RaiseNetworkEvent(new UplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
-                return;
-            }
-
-            _handsSystem.PickupOrDrop(player, entity.Value);
-
-            SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.BuySuccessSound.GetSound(),
-                uplink.Owner, AudioParams.Default.WithVolume(-8f));
-
-            RaiseNetworkEvent(new UplinkBuySuccessMessage(), message.Session.ConnectedClient);
-        }
-
-        private void OnWithdrawTC(EntityUid uid, UplinkComponent uplink, UplinkTryWithdrawTC args)
-        {
-            var acc = uplink.UplinkAccount;
-            if (acc == null)
-                return;
-
-            if (args.Session.AttachedEntity is not {Valid: true} player) return;
-            var cords = EntityManager.GetComponent<TransformComponent>(player).Coordinates;
-
-            // try to withdraw TCs from account
-            if (!_accounts.TryWithdrawTC(acc, args.TC, cords, out var tcUid))
-                return;
-
-            // try to put it into players hands
-            _handsSystem.PickupOrDrop(player, tcUid.Value);
-
-            // play buying sound
-            SoundSystem.Play(Filter.SinglePlayer(args.Session), uplink.BuySuccessSound.GetSound(),
-                    uplink.Owner, AudioParams.Default.WithVolume(-8f));
-
-            UpdateUserInterface(uplink);
-        }
-
-        public void ToggleUplinkUI(UplinkComponent component, IPlayerSession session)
-        {
-            var ui = component.Owner.GetUIOrNull(UplinkUiKey.Key);
-            ui?.Toggle(session);
-
-            UpdateUserInterface(component);
-        }
-
-        private void UpdateUserInterface(UplinkComponent component)
-        {
-            var ui = component.Owner.GetUIOrNull(UplinkUiKey.Key);
-            if (ui == null)
-                return;
-
-            var listings = _listing.GetListings().Values.ToArray();
-            var acc = component.UplinkAccount;
-
-            UplinkAccountData accData;
-            if (acc != null)
-                accData = new UplinkAccountData(acc.AccountHolder, acc.Balance);
-            else
-                accData = new UplinkAccountData(null, 0);
-
-            ui.SetState(new UplinkUpdateState(accData, listings));
-        }
-
-        public bool AddUplink(EntityUid user, UplinkAccount account, EntityUid? uplinkEntity = null)
-        {
-            // Try to find target item
-            if (uplinkEntity == null)
-            {
-                uplinkEntity = FindUplinkTarget(user);
-                if (uplinkEntity == null)
-                    return false;
-            }
-
-            var uplink = uplinkEntity.Value.EnsureComponent<UplinkComponent>();
-            SetAccount(uplink, account);
-
-            return true;
-        }
-
-        private EntityUid? FindUplinkTarget(EntityUid user)
-        {
-            // Try to find PDA in inventory
-
-            if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
-            {
-                while (containerSlotEnumerator.MoveNext(out var pdaUid))
-                {
-                    if(!pdaUid.ContainedEntity.HasValue) continue;
-
-                    if(HasComp<PDAComponent>(pdaUid.ContainedEntity.Value))
-                        return pdaUid.ContainedEntity.Value;
-                }
-            }
-
-            // Also check hands
-            foreach (var item in _handsSystem.EnumerateHeld(user))
-            {
-                if (HasComp<PDAComponent>(item))
-                    return item;
-            }
-
-            return null;
-        }
+        return null;
     }
 }

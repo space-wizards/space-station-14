@@ -1,0 +1,63 @@
+- type: construction
+  id: cleanbot
+  graph: CleanBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: firebot
+  graph: FireBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: honkbot
+  graph: HonkBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: jonkbot
+  graph: JonkBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: medibot
+  graph: MediBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: mimebot
+  graph: MimeBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: supplybot
+  graph: SupplyBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+
+- type: construction
+  id: hugbot
+  graph: HugBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item

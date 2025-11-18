@@ -1,145 +1,37 @@
-using Content.Server.Cuffs.Components;
-using Content.Server.Hands.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs;
-using Content.Shared.Hands;
-using Content.Shared.MobState.Components;
-using Content.Shared.Popups;
-using Content.Shared.Verbs;
+using Content.Shared.Cuffs.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Player;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Cuffs
 {
     [UsedImplicitly]
     public sealed class CuffableSystem : SharedCuffableSystem
     {
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<HandCountChangedEvent>(OnHandCountChanged);
-            SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
-
-            SubscribeLocalEvent<CuffableComponent, GetVerbsEvent<Verb>>(AddUncuffVerb);
+            SubscribeLocalEvent<CuffableComponent, ComponentGetState>(OnCuffableGetState);
         }
 
-        private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetVerbsEvent<Verb> args)
+        private void OnCuffableGetState(Entity<CuffableComponent> entity, ref ComponentGetState args)
         {
-            // Can the user access the cuffs, and is there even anything to uncuff?
-            if (!args.CanAccess || component.CuffedHandCount == 0)
-                return;
-
-            // We only check can interact if the user is not uncuffing themselves. As a result, the verb will show up
-            // when the user is incapacitated & trying to uncuff themselves, but TryUncuff() will still fail when
-            // attempted.
-            if (args.User != args.Target && !args.CanInteract)
-                return;
-
-            Verb verb = new();
-            verb.Act = () => component.TryUncuff(args.User);
-            verb.Text = Loc.GetString("uncuff-verb-get-data-text");
-            //TODO VERB ICON add uncuffing symbol? may re-use the alert symbol showing that you are currently cuffed?
-            args.Verbs.Add(verb);
-        }
-
-        private void OnUncuffAttempt(UncuffAttemptEvent args)
-        {
-            if (args.Cancelled)
-            {
-                return;
-            }
-            if (!EntityManager.EntityExists(args.User))
-            {
-                // Should this even be possible?
-                args.Cancel();
-                return;
-            }
-            // If the user is the target, special logic applies.
-            // This is because the CanInteract blocking of the cuffs prevents self-uncuff.
-            if (args.User == args.Target)
-            {
-                // This UncuffAttemptEvent check should probably be In MobStateSystem, not here?
-                if (EntityManager.TryGetComponent<MobStateComponent?>(args.User, out var state))
-                {
-                    // Manually check this.
-                    if (state.IsIncapacitated())
-                    {
-                        args.Cancel();
-                    }
-                }
-                else
-                {
-                    // Uh... let it go through???
-                    // TODO CUFFABLE/STUN add UncuffAttemptEvent subscription to StunSystem
-                }
-            }
-            else
-            {
-                // Check if the user can interact.
-                if (!_actionBlockerSystem.CanInteract(args.User, args.Target))
-                {
-                    args.Cancel();
-                }
-            }
-            if (args.Cancelled)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, Filter.Entities(args.User));
-            }
-        }
-
-        /// <summary>
-        ///     Check the current amount of hands the owner has, and if there's less hands than active cuffs we remove some cuffs.
-        /// </summary>
-        private void OnHandCountChanged(HandCountChangedEvent message)
-        {
-            var owner = message.Sender;
-
-            if (!EntityManager.TryGetComponent(owner, out CuffableComponent? cuffable) ||
-                !cuffable.Initialized) return;
-
-            var dirty = false;
-            var handCount = EntityManager.GetComponentOrNull<HandsComponent>(owner)?.Count ?? 0;
-
-            while (cuffable.CuffedHandCount > handCount && cuffable.CuffedHandCount > 0)
-            {
-                dirty = true;
-
-                var container = cuffable.Container;
-                var entity = container.ContainedEntities[^1];
-
-                container.Remove(entity);
-                EntityManager.GetComponent<TransformComponent>(entity).WorldPosition = EntityManager.GetComponent<TransformComponent>(owner).WorldPosition;
-            }
-
-            if (dirty)
-            {
-                cuffable.CanStillInteract = handCount > cuffable.CuffedHandCount;
-                cuffable.CuffedStateChanged();
-                Dirty(cuffable);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Event fired on the User when the User attempts to cuff the Target.
-    /// Should generate popups on the User.
-    /// </summary>
-    public sealed class UncuffAttemptEvent : CancellableEntityEventArgs
-    {
-        public readonly EntityUid User;
-        public readonly EntityUid Target;
-
-        public UncuffAttemptEvent(EntityUid user, EntityUid target)
-        {
-            User = user;
-            Target = target;
+            // there are 2 approaches i can think of to handle the handcuff overlay on players
+            // 1 - make the current RSI the handcuff type that's currently active. all handcuffs on the player will appear the same.
+            // 2 - allow for several different player overlays for each different cuff type.
+            // approach #2 would be more difficult/time consuming to do and the payoff doesn't make it worth it.
+            // right now we're doing approach #1.
+            HandcuffComponent? cuffs = null;
+            if (TryGetLastCuff((entity, entity.Comp), out var cuff))
+                TryComp(cuff, out cuffs);
+            args.State = new CuffableComponentState(entity.Comp.CuffedHandCount,
+                entity.Comp.CanStillInteract,
+                cuffs?.CuffedRSI,
+                $"{cuffs?.BodyIconState}-{entity.Comp.CuffedHandCount}",
+                cuffs?.Color);
+            // the iconstate is formatted as blah-2, blah-4, blah-6, etc.
+            // the number corresponds to how many hands are cuffed.
         }
     }
 }

@@ -4,7 +4,6 @@
   id: BaseDice
   components:
   - type: Dice
-  - type: ItemCooldown
   - type: UseDelay
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
@@ -13,19 +12,21 @@
     tags:
     - Dice
   - type: Item
-    size: 2
+    size: Tiny
 
 - type: entity
   parent: BaseDice
-  id: d100Dice
-  name: d100
+  id: PercentileDie
+  name: percentile die
   description: A die with ten sides. Works better for d100 rolls than a golf ball.
   components:
   - type: Dice
-    sides: 100
-    step: 10
+    sides: 10
+    multiplier: 10
+    offset: 1 # first side is a 0
+    currentValue: 0
   - type: Sprite
-    state: d100100
+    state: percentile_0
 
 - type: entity
   parent: BaseDice
@@ -35,8 +36,9 @@
   components:
   - type: Dice
     sides: 20
+    currentValue: 20
   - type: Sprite
-    state: d2020
+    state: d20_20
 
 - type: entity
   parent: BaseDice
@@ -46,8 +48,9 @@
   components:
   - type: Dice
     sides: 12
+    currentValue: 12
   - type: Sprite
-    state: d1212
+    state: d12_12
 
 - type: entity
   parent: BaseDice
@@ -57,8 +60,10 @@
   components:
   - type: Dice
     sides: 10
+    offset: 1
+    currentValue: 0
   - type: Sprite
-    state: d1010
+    state: d10_0
 
 - type: entity
   parent: BaseDice
@@ -68,8 +73,9 @@
   components:
   - type: Dice
     sides: 8
+    currentValue: 8
   - type: Sprite
-    state: d88
+    state: d8_8
 
 - type: entity
   parent: BaseDice
@@ -79,8 +85,9 @@
   components:
   - type: Dice
     sides: 6
+    currentValue: 6
   - type: Sprite
-    state: d66
+    state: d6_6
 
 - type: entity
   parent: BaseDice
@@ -90,5 +97,39 @@
   components:
   - type: Dice
     sides: 4
+    currentValue: 4
   - type: Sprite
-    state: d44
+    state: d4_4
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: TriggerOnStepTrigger
+  - type: PreventableStepTrigger
+  - type: Slippery
+    slipSound:
+      path: /Audio/Effects/glass_step.ogg
+    slipData:
+      launchForwardsMultiplier: 0
+  - type: DamageOnTrigger
+    targetUser: true
+    damage:
+      types:
+        Piercing: 5
+    # I love this

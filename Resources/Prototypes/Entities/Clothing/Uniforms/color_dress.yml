@@ -1,0 +1,455 @@
+# Black elegant dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtBlackElegantDress
+  name: black elegant dress
+  description: Elegant dress with a beautiful bow.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#212030"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#212030"
+      right:
+      - state: inhand-right
+        color: "#212030"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#212030"
+      - state: equipped-INNERCLOTHING
+
+# Red elegant dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtRedElegantDress
+  name: red elegant dress
+  description: Elegant dress with a beautiful bow.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#60171d"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#60171d"
+      right:
+      - state: inhand-right
+        color: "#60171d"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#60171d"
+      - state: equipped-INNERCLOTHING
+
+# Green elegant dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtGreenElegantDress
+  name: green elegant dress
+  description: Elegant dress with a beautiful bow.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#0e6316"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#0e6316"
+      right:
+      - state: inhand-right
+        color: "#0e6316"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#0e6316"
+      - state: equipped-INNERCLOTHING
+
+# Blue elegant dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtBlueElegantDress
+  name: blue elegant dress
+  description: Elegant dress with a beautiful bow.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#076183"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#076183"
+      right:
+      - state: inhand-right
+        color: "#076183"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#076183"
+      - state: equipped-INNERCLOTHING
+
+# Purple elegant dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPurpleElegantDress
+  name: purple elegant dress
+  description: Elegant dress with a beautiful bow.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#630767"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#630767"
+      right:
+      - state: inhand-right
+        color: "#630767"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/elegantdress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#630767"
+      - state: equipped-INNERCLOTHING
+
+# Cyan striped dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCyanStripedDress
+  name: cyan striped dress
+  description: Cute striped dress.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#009a9a"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#009a9a"
+      right:
+      - state: inhand-right
+        color: "#009a9a"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#009a9a"
+      - state: equipped-INNERCLOTHING
+
+# Red striped dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtRedStripedDress
+  name: red striped dress
+  description: Cute striped dress.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#a40000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#a40000"
+      right:
+      - state: inhand-right
+        color: "#a40000"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#a40000"
+      - state: equipped-INNERCLOTHING
+
+# Green striped dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtGreenStripedDress
+  name: green striped dress
+  description: Cute striped dress.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#008c1f"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#008c1f"
+      right:
+      - state: inhand-right
+        color: "#008c1f"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#008c1f"
+      - state: equipped-INNERCLOTHING
+
+
+# Pink striped dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPinkStripedDress
+  name: pink striped dress
+  description: Cute striped dress.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#a40086"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#a40086"
+      right:
+      - state: inhand-right
+        color: "#a40086"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#a40086"
+      - state: equipped-INNERCLOTHING
+
+# Orange striped dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtOrangeStripedDress
+  name: orange striped dress
+  description: Cute striped dress.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#9d4000"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#9d4000"
+      right:
+      - state: inhand-right
+        color: "#9d4000"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/stripeddress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#9d4000"
+      - state: equipped-INNERCLOTHING
+
+# Purple turtleneck dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPurpleTurtleneckDress
+  name: purple turtleneck dress
+  description: Turtleneck dress with a unique design.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#341255"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#341255"
+      right:
+      - state: inhand-right
+        color: "#341255"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#341255"
+      - state: equipped-INNERCLOTHING
+
+# Red turtleneck dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtRedTurtleneckDress
+  name: red turtleneck dress
+  description: Turtleneck dress with a unique design.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#730404"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#730404"
+      right:
+      - state: inhand-right
+        color: "#730404"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#730404"
+      - state: equipped-INNERCLOTHING
+
+# Green turtleneck dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtGreenTurtleneckDress
+  name: green turtleneck dress
+  description: Turtleneck dress with a unique design.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#0e6316"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#0e6316"
+      right:
+      - state: inhand-right
+        color: "#0e6316"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#0e6316"
+      - state: equipped-INNERCLOTHING
+
+# Blue turtleneck dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtBlueTurtleneckDress
+  name: blue turtleneck dress
+  description: Turtleneck dress with a unique design.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#193f68"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#193f68"
+      right:
+      - state: inhand-right
+        color: "#193f68"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#193f68"
+      - state: equipped-INNERCLOTHING
+
+# Yellow turtleneck dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtYellowTurtleneckDress
+  name: yellow turtleneck dress
+  description: Turtleneck dress with a unique design.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    layers:
+    - state: icon
+    - state: icon-color
+      color: "#684519"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#684519"
+      right:
+      - state: inhand-right
+        color: "#684519"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/turtledress.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: color-equipped-INNERCLOTHING
+        color: "#684519"
+      - state: equipped-INNERCLOTHING
+
+# Yellow old dress
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtYellowOldDress
+  name: yellow old dress
+  description: Classic western dress.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/dresswestern.rsi
+    layers:
+    - state: icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/dresswestern.rsi

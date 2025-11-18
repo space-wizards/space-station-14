@@ -1,20 +1,4 @@
 - type: entity
   save: false
-  parent: MobSlimePersonBase
+  parent: BaseMobSlimePerson
   id: MobSlimePerson
-  components:
-    - type: Mind
-      showExamineInfo: true
-    - type: Input
-      context: "human"
-    - type: PlayerMobMover
-    - type: PlayerInputMover
-    - type: Alerts
-    - type: Actions
-    - type: Eye
-    - type: CameraRecoil
-    - type: Examiner
-    - type: CanHostGuardian
-    - type: AiFactionTag
-      factions:
-        - NanoTrasen

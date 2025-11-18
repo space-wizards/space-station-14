@@ -1,28 +1,45 @@
-using System;
-using System.Collections.Generic;
-using Content.Client.Stylesheets;
+using System.Linq;
+using Content.Shared.Containers;
+using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
+using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Robust.Shared.Collections;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Popups
 {
     public sealed class PopupSystem : SharedPopupSystem
     {
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IOverlayManager _overlay = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
+        [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
+        [Dependency] private readonly ExamineSystemShared _examine = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-        private readonly List<PopupLabel> _aliveLabels = new();
+        public IReadOnlyCollection<WorldPopupLabel> WorldLabels => _aliveWorldLabels.Values;
+        public IReadOnlyCollection<CursorPopupLabel> CursorLabels => _aliveCursorLabels.Values;
+
+        private readonly Dictionary<WorldPopupData, WorldPopupLabel> _aliveWorldLabels = new();
+        private readonly Dictionary<CursorPopupData, CursorPopupLabel> _aliveCursorLabels = new();
+
+        public const float MinimumPopupLifetime = 0.7f;
+        public const float MaximumPopupLifetime = 5f;
+        public const float PopupLifetimePerCharacter = 0.04f;
 
         public override void Initialize()
         {
@@ -30,72 +47,216 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupCoordinatesEvent>(OnPopupCoordinatesEvent);
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+            _overlay
+                .AddOverlay(new PopupOverlay(
+                    _configManager,
+                    EntityManager,
+                    _playerManager,
+                    _prototype,
+                    _uiManager,
+                    _uiManager.GetUIController<PopupUIController>(),
+                    _examine,
+                    _transform,
+                    this));
         }
 
-        #region Actual Implementation
-
-        public void PopupCursor(string message)
+        public override void Shutdown()
         {
-            PopupMessage(message, _inputManager.MouseScreenPosition);
+            base.Shutdown();
+            _overlay
+                .RemoveOverlay<PopupOverlay>();
         }
 
-        public void PopupCoordinates(string message, EntityCoordinates coordinates)
+        private void WrapAndRepeatPopup(PopupLabel existingLabel, string popupMessage)
         {
-            PopupMessage(message, _eyeManager.CoordinatesToScreen(coordinates));
+            existingLabel.TotalTime = 0;
+            existingLabel.Repeats += 1;
+            existingLabel.Text = Loc.GetString("popup-system-repeated-popup-stacking-wrap",
+                ("popup-message", popupMessage),
+                ("count", existingLabel.Repeats));
         }
 
-        public void PopupEntity(string message, EntityUid uid)
+        private void PopupMessage(string? message, PopupType type, EntityCoordinates coordinates, EntityUid? entity, bool recordReplay)
         {
-            if (!EntityManager.EntityExists(uid))
+            if (message == null)
                 return;
 
-            var transform = EntityManager.GetComponent<TransformComponent>(uid);
-            PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates));
-        }
-
-        public void PopupMessage(string message, ScreenCoordinates coordinates, EntityUid? entity = null)
-        {
-            var label = new PopupLabel(_eyeManager, EntityManager)
+            if (recordReplay && _replayRecording.IsRecording)
             {
-                Entity = entity,
+                if (entity != null)
+                    _replayRecording.RecordClientMessage(new PopupEntityEvent(message, type, GetNetEntity(entity.Value)));
+                else
+                    _replayRecording.RecordClientMessage(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)));
+            }
+
+            var popupData = new WorldPopupData(message, type, coordinates, entity);
+            if (_aliveWorldLabels.TryGetValue(popupData, out var existingLabel))
+            {
+                WrapAndRepeatPopup(existingLabel, popupData.Message);
+                return;
+            }
+
+            var label = new WorldPopupLabel(coordinates)
+            {
                 Text = message,
-                StyleClasses = { StyleNano.StyleClassPopupMessage },
+                Type = type,
             };
 
-            _userInterfaceManager.PopupRoot.AddChild(label);
-            label.Measure(Vector2.Infinity);
-
-            label.InitialPos = coordinates.Position / label.UIScale - label.DesiredSize / 2;
-            LayoutContainer.SetPosition(label, label.InitialPos);
-            _aliveLabels.Add(label);
+            _aliveWorldLabels.Add(popupData, label);
         }
-
-        #endregion
 
         #region Abstract Method Implementations
-
-        public override void PopupCursor(string message, Filter filter)
+        public override void PopupCoordinates(string? message, EntityCoordinates coordinates, PopupType type = PopupType.Small)
         {
-            if (!filter.CheckPrediction)
-                return;
-
-            PopupCursor(message);
+            PopupMessage(message, type, coordinates, null, true);
         }
 
-        public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter)
+        public override void PopupCoordinates(string? message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small)
         {
-            if (!filter.CheckPrediction)
-                return;
-
-            PopupCoordinates(message, coordinates);
+            if (_playerManager.LocalSession == recipient)
+                PopupMessage(message, type, coordinates, null, true);
         }
 
-        public override void PopupEntity(string message, EntityUid uid, Filter filter)
+        public override void PopupCoordinates(string? message, EntityCoordinates coordinates, EntityUid recipient, PopupType type = PopupType.Small)
         {
-            if (!filter.CheckPrediction)
+            if (_playerManager.LocalEntity == recipient)
+                PopupMessage(message, type, coordinates, null, true);
+        }
+
+        public override void PopupPredictedCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupCoordinates(message, coordinates, recipient.Value, type);
+        }
+
+        private void PopupCursorInternal(string? message, PopupType type, bool recordReplay)
+        {
+            if (message == null)
                 return;
 
-            PopupEntity(message, uid);
+            if (recordReplay && _replayRecording.IsRecording)
+                _replayRecording.RecordClientMessage(new PopupCursorEvent(message, type));
+
+            var popupData = new CursorPopupData(message, type);
+            if (_aliveCursorLabels.TryGetValue(popupData, out var existingLabel))
+            {
+                WrapAndRepeatPopup(existingLabel, popupData.Message);
+                return;
+            }
+
+            var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
+            {
+                Text = message,
+                Type = type,
+            };
+
+            _aliveCursorLabels.Add(popupData, label);
+        }
+
+        public override void PopupCursor(string? message, PopupType type = PopupType.Small)
+        {
+            if (!_timing.IsFirstTimePredicted)
+                return;
+
+            PopupCursorInternal(message, type, true);
+        }
+
+        public override void PopupCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalSession == recipient)
+                PopupCursor(message, type);
+        }
+
+        public override void PopupCursor(string? message, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalEntity == recipient)
+                PopupCursor(message, type);
+        }
+
+        public override void PopupPredictedCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            PopupCursor(message, recipient, type);
+        }
+
+        public override void PopupPredictedCursor(string? message, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            PopupCursor(message, recipient, type);
+        }
+
+        public override void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
+        {
+            PopupCoordinates(message, coordinates, type);
+        }
+
+        public override void PopupEntity(string? message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalEntity == recipient)
+                PopupEntity(message, uid, type);
+        }
+
+        public override void PopupEntity(string? message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalSession == recipient)
+                PopupEntity(message, uid, type);
+        }
+
+        public override void PopupEntity(string? message, EntityUid uid, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
+        {
+            if (!filter.Recipients.Contains(_playerManager.LocalSession))
+                return;
+
+            PopupEntity(message, uid, type);
+        }
+
+        public override void PopupClient(string? message, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient == null)
+                return;
+
+            if (_timing.IsFirstTimePredicted)
+                PopupCursor(message, recipient.Value, type);
+        }
+
+        public override void PopupClient(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient == null)
+                return;
+
+            if (_timing.IsFirstTimePredicted)
+                PopupEntity(message, uid, recipient.Value, type);
+        }
+
+        public override void PopupClient(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient == null)
+                return;
+
+            if (_timing.IsFirstTimePredicted)
+                PopupCoordinates(message, coordinates, recipient.Value, type);
+        }
+
+        public override void PopupEntity(string? message, EntityUid uid, PopupType type = PopupType.Small)
+        {
+            if (TryComp(uid, out TransformComponent? transform))
+                PopupMessage(message, type, transform.Coordinates, uid, true);
+        }
+
+        public override void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupEntity(message, uid, recipient.Value, type);
+        }
+
+        public override void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupEntity(message, uid, recipient.Value, type);
+        }
+
+        public override void PopupPredicted(string? recipientMessage, string? othersMessage, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupEntity(recipientMessage, uid, recipient.Value, type);
         }
 
         #endregion
@@ -104,75 +265,108 @@ namespace Content.Client.Popups
 
         private void OnPopupCursorEvent(PopupCursorEvent ev)
         {
-            PopupCursor(ev.Message);
+            PopupCursorInternal(ev.Message, ev.Type, false);
         }
 
         private void OnPopupCoordinatesEvent(PopupCoordinatesEvent ev)
         {
-            PopupCoordinates(ev.Message, ev.Coordinates);
+            PopupMessage(ev.Message, ev.Type, GetCoordinates(ev.Coordinates), null, false);
         }
 
         private void OnPopupEntityEvent(PopupEntityEvent ev)
         {
-            PopupEntity(ev.Message, ev.Uid);
+            var entity = GetEntity(ev.Uid);
+
+            if (TryComp(entity, out TransformComponent? transform))
+                PopupMessage(ev.Message, ev.Type, transform.Coordinates, entity, false);
         }
 
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
         {
-            foreach (var label in _aliveLabels)
-            {
-                label.Dispose();
-            }
-
-            _aliveLabels.Clear();
+            _aliveCursorLabels.Clear();
+            _aliveWorldLabels.Clear();
         }
 
         #endregion
 
-        public override void FrameUpdate(float frameTime)
+        public static float GetPopupLifetime(PopupLabel label)
         {
-            foreach (var l in _aliveLabels)
-            {
-                if (l.TimeLeft > 3f)
-                    l.Dispose();
-            }
-
-            _aliveLabels.RemoveAll(l => l.Disposed);
+            return Math.Clamp(PopupLifetimePerCharacter * label.Text.Length,
+                MinimumPopupLifetime,
+                MaximumPopupLifetime);
         }
 
-        private sealed class PopupLabel : Label
+        public override void FrameUpdate(float frameTime)
         {
-            private readonly IEyeManager _eyeManager;
-            private readonly IEntityManager _entityManager;
+            if (_aliveWorldLabels.Count == 0 && _aliveCursorLabels.Count == 0)
+                return;
 
-            public float TimeLeft { get; private set; }
-            public Vector2 InitialPos { get; set; }
-            public EntityUid? Entity { get; set; }
-
-            public PopupLabel(IEyeManager eyeManager, IEntityManager entityManager)
+            if (_aliveWorldLabels.Count > 0)
             {
-                _eyeManager = eyeManager;
-                _entityManager = entityManager;
-                ShadowOffsetXOverride = 1;
-                ShadowOffsetYOverride = 1;
-                FontColorShadowOverride = Color.Black;
+                var aliveWorldToRemove = new ValueList<WorldPopupData>();
+                foreach (var (data, label) in _aliveWorldLabels)
+                {
+                    label.TotalTime += frameTime;
+                    if (label.TotalTime > GetPopupLifetime(label) || Deleted(label.InitialPos.EntityId))
+                    {
+                        aliveWorldToRemove.Add(data);
+                    }
+                }
+                foreach (var data in aliveWorldToRemove)
+                {
+                    _aliveWorldLabels.Remove(data);
+                }
             }
 
-            protected override void FrameUpdate(FrameEventArgs eventArgs)
+            if (_aliveCursorLabels.Count > 0)
             {
-                TimeLeft += eventArgs.DeltaSeconds;
-
-                var position = Entity == null
-                    ? InitialPos
-                    : (_eyeManager.CoordinatesToScreen(_entityManager.GetComponent<TransformComponent>(Entity.Value).Coordinates).Position / UIScale) - DesiredSize / 2;
-
-                LayoutContainer.SetPosition(this, position - (0, 20 * (TimeLeft * TimeLeft + TimeLeft)));
-
-                if (TimeLeft > 0.5f)
+                var aliveCursorToRemove = new ValueList<CursorPopupData>();
+                foreach (var (data, label) in _aliveCursorLabels)
                 {
-                    Modulate = Color.White.WithAlpha(1f - 0.2f * (float)Math.Pow(TimeLeft - 0.5f, 3f));
+                    label.TotalTime += frameTime;
+                    if (label.TotalTime > GetPopupLifetime(label))
+                    {
+                        aliveCursorToRemove.Add(data);
+                    }
+                }
+                foreach (var data in aliveCursorToRemove)
+                {
+                    _aliveCursorLabels.Remove(data);
                 }
             }
         }
+
+        public abstract class PopupLabel
+        {
+            public PopupType Type = PopupType.Small;
+            public string Text { get; set; } = string.Empty;
+            public float TotalTime { get; set; }
+            public int Repeats = 1;
+        }
+
+        public sealed class WorldPopupLabel(EntityCoordinates coordinates) : PopupLabel
+        {
+            /// <summary>
+            /// The original EntityCoordinates of the label.
+            /// </summary>
+            public EntityCoordinates InitialPos = coordinates;
+        }
+
+        public sealed class CursorPopupLabel(ScreenCoordinates screenCoords) : PopupLabel
+        {
+            public ScreenCoordinates InitialPos = screenCoords;
+        }
+
+        [UsedImplicitly]
+        private record struct WorldPopupData(
+            string Message,
+            PopupType Type,
+            EntityCoordinates Coordinates,
+            EntityUid? Entity);
+
+        [UsedImplicitly]
+        private record struct CursorPopupData(
+            string Message,
+            PopupType Type);
     }
 }

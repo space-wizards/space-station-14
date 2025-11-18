@@ -1,24 +1,22 @@
-﻿using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
-using Robust.Server.Player;
+using Content.Shared.Chat;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Chat.Commands
 {
     [AnyCommand]
-    internal sealed class WhisperCommand : IConsoleCommand
+    internal sealed class WhisperCommand : LocalizedEntityCommands
     {
-        public string Command => "whisper";
-        public string Description => "Send chat messages to the local channel as a whisper";
-        public string Help => "whisper <text>";
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        public override string Command => "whisper";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not IPlayerSession player)
+            if (shell.Player is not { } player)
             {
-                shell.WriteError("This command cannot be run from the server.");
+                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 
@@ -27,7 +25,7 @@ namespace Content.Server.Chat.Commands
 
             if (player.AttachedEntity is not {} playerEntity)
             {
-                shell.WriteError("You don't have an entity!");
+                shell.WriteError(Loc.GetString($"shell-must-be-attached-to-entity"));
                 return;
             }
 
@@ -38,7 +36,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().TrySpeak(playerEntity, message, true, shell, player);
+            _chatSystem.TrySendInGameICMessage(playerEntity, message, InGameICChatType.Whisper, ChatTransmitRange.Normal, false, shell, player);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Content.Shared.Follower.Components;
 
 [RegisterComponent]
 [NetworkedComponent]
-public sealed class OrbitVisualsComponent : Component
+public sealed partial class OrbitVisualsComponent : Component
 {
     /// <summary>
     ///     How long should the orbit animation last in seconds, before being randomized?
@@ -21,10 +21,4 @@ public sealed class OrbitVisualsComponent : Component
     ///     How long should the orbit stop animation last in seconds?
     /// </summary>
     public float OrbitStopLength = 1.0f;
-
-    /// <summary>
-    ///     How far along in the orbit, from 0 to 1, is this entity?
-    /// </summary>
-    [Animatable]
-    public float Orbit { get; set; } = 0.0f;
 }

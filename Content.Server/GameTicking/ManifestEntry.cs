@@ -1,5 +1,3 @@
-using Robust.Shared.ViewVariables;
-
 namespace Content.Server.GameTicking
 {
     /// <summary>

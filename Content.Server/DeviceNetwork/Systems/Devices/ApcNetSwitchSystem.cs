@@ -1,8 +1,8 @@
-﻿using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Components.Devices;
+using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Interaction;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.DeviceNetwork.Systems.Devices
 {
@@ -15,7 +15,7 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
             base.Initialize();
 
             SubscribeLocalEvent<ApcNetSwitchComponent, InteractHandEvent>(OnInteracted);
-            SubscribeLocalEvent<ApcNetSwitchComponent, PacketSentEvent>(OnPackedReceived);
+            SubscribeLocalEvent<ApcNetSwitchComponent, DeviceNetworkPacketEvent>(OnPackedReceived);
         }
 
         /// <summary>
@@ -24,9 +24,12 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
         /// </summary>
         private void OnInteracted(EntityUid uid, ApcNetSwitchComponent component, InteractHandEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? networkComponent)) return;
+            if (!TryComp(uid, out DeviceNetworkComponent? networkComponent)) return;
 
             component.State = !component.State;
+
+            if (networkComponent.TransmitFrequency == null)
+                return;
 
             var payload = new NetworkPayload
             {
@@ -34,7 +37,7 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
                 [DeviceNetworkConstants.StateEnabled] = component.State,
             };
 
-            _deviceNetworkSystem.QueuePacket(uid, DeviceNetworkConstants.NullAddress, networkComponent.Frequency, payload, true);
+            _deviceNetworkSystem.QueuePacket(uid, null, payload, device: networkComponent);
 
             args.Handled = true;
         }
@@ -42,9 +45,9 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
         /// <summary>
         /// Listens to the <see cref="DeviceNetworkConstants.CmdSetState"/> command of other switches to sync state
         /// </summary>
-        private void OnPackedReceived(EntityUid uid, ApcNetSwitchComponent component, PacketSentEvent args)
+        private void OnPackedReceived(EntityUid uid, ApcNetSwitchComponent component, DeviceNetworkPacketEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? networkComponent) || args.SenderAddress == networkComponent.Address) return;
+            if (!TryComp(uid, out DeviceNetworkComponent? networkComponent) || args.SenderAddress == networkComponent.Address) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
 

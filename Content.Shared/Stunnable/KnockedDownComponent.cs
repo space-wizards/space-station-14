@@ -1,39 +1,46 @@
-﻿using System;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
+using Content.Shared.DoAfter;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Stunnable
+namespace Content.Shared.Stunnable;
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas:true), AutoGenerateComponentPause, Access(typeof(SharedStunSystem))]
+public sealed partial class KnockedDownComponent : Component
 {
-    [RegisterComponent]
-    [NetworkedComponent]
-    [Friend(typeof(SharedStunSystem))]
-    public sealed class KnockedDownComponent : Component
-    {
-        [DataField("helpInterval")]
-        public float HelpInterval { get; set; } = 1f;
+    /// <summary>
+    /// Game time that we can stand up.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextUpdate;
 
-        [DataField("helpAttemptSound")]
-        public SoundSpecifier StunAttemptSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+    /// <summary>
+    /// Should we try to stand up?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool AutoStand = true;
 
-        [ViewVariables]
-        public float HelpTimer { get; set; } = 0f;
-    }
+    /// <summary>
+    /// The Standing Up DoAfter.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ushort? DoAfterId;
 
-    [Serializable, NetSerializable]
-    public sealed class KnockedDownComponentState : ComponentState
-    {
-        public float HelpInterval { get; set; }
-        public float HelpTimer { get; set; }
+    /// <summary>
+    /// Friction modifier for knocked down players.
+    /// Makes them accelerate and deccelerate slower.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float FrictionModifier = 1f; // Should add a friction modifier to slipping to compensate for this
 
-        public KnockedDownComponentState(float helpInterval, float helpTimer)
-        {
-            HelpInterval = helpInterval;
-            HelpTimer = helpTimer;
-        }
-    }
+    /// <summary>
+    /// Modifier to the maximum movement speed of a knocked down mover.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float SpeedModifier = 1f;
+
+    /// <summary>
+    /// How long does it take us to get up?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan GetUpDoAfter = TimeSpan.FromSeconds(1);
 }

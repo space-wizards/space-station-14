@@ -1,3 +1,45 @@
+# Available to everybody
+- Commands:
+    - echo
+    - disconnect
+    - help
+    - list
+    - quit
+    - hardquit
+    - svbind
+    - bind
+    - exec # macro moment
+    - cls
+    - vram
+    - monitor
+    - setmonitor
+    - keyinfo
+    - setclipboard
+    - getclipboard
+    - net_graph
+    - net_watchent
+    - devwindow
+    - fill
+    - ">"
+    - gcf
+    - gc
+    - gc_mode
+    - cvar
+    - fuckrules
+    - midipanic
+    - replay_recording_start
+    - replay_recording_stop
+    - replay_recording_stats
+    - replay_play
+    - replay_pause
+    - replay_toggle
+    - replay_skip
+    - replay_set_time
+    - replay_stop
+    - replay_load
+    - saveconfig
+    - chatwindow
+
 - Flags: DEBUG
   Commands:
     - atvrange
@@ -10,21 +52,46 @@
     - hidemechanisms
     - showmechanisms
     - menuvis
-    - togglehealthoverlay
+    - resetent
+    - resetallents
+    - showhealthbars
     - toggledecals
     - nodevis
     - nodevisfilter
+    - showbiome
+    - net_draw_interp
+    - showmeleespread
+    - showgunspread
+    - showambient
+    - showemergencyshuttle
+    - zoom
+    - showsubfloor
+    - showmarkers
+    - nodevis
+    - nodevisfilter
+    - detachent
+    - localdelete
+    - fullstatereset
+    - dumpentities
+    - showaccessreaders
+    - quickinspect
 
 - Flags: MAPPING
   Commands:
-    - showmarkers
+    - mapping
+    - mappingclientsidesetup
     - showsubfloor
     - showsubfloorforever
-    - mapping
+    - toggleautosave
     - toggledecals
-    - nodevis
-    - nodevisfilter
+    - showaccessreaders
 
-- Flags: ADMIN
+- Flags: QUERY
   Commands:
-    - togglehealthoverlay
+    - uploadfile
+    - loadprototype
+    - uploadfolder
+
+- Flags: ADMINCHAT
+  Commands:
+    - achatwindow

@@ -1,94 +1,128 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Projectiles.Components;
-using Content.Shared.Body.Components;
+using Content.Server.Destructible;
+using Content.Server.Effects;
+using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
-using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Physics.Dynamics;
+using Content.Shared.FixedPoint;
+using Content.Shared.Projectiles;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 
-namespace Content.Server.Projectiles
-{
-    [UsedImplicitly]
-    internal sealed class ProjectileSystem : EntitySystem
-    {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly AdminLogSystem _adminLogSystem = default!;
-        [Dependency] private readonly CameraRecoilSystem _cameraRecoil = default!;
+namespace Content.Server.Projectiles;
 
-        public override void Initialize()
+public sealed class ProjectileSystem : SharedProjectileSystem
+{
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
+    [Dependency] private readonly GunSystem _guns = default!;
+    [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
+    }
+
+    private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
+    {
+        // This is so entities that shouldn't get a collision are ignored.
+        if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard
+            || component.ProjectileSpent || component is { Weapon: null, OnlyCollideWhenShot: true })
+            return;
+
+        var target = args.OtherEntity;
+        // it's here so this check is only done once before possible hit
+        var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
+        RaiseLocalEvent(target, ref attemptEv);
+        if (attemptEv.Cancelled)
         {
-            base.Initialize();
-            SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(HandleCollide);
+            SetShooter(uid, component, target);
+            return;
         }
 
-        private void HandleCollide(EntityUid uid, ProjectileComponent component, StartCollideEvent args)
+        var ev = new ProjectileHitEvent(component.Damage * _damageableSystem.UniversalProjectileDamageModifier, target, component.Shooter);
+        RaiseLocalEvent(uid, ref ev);
+
+        var otherName = ToPrettyString(target);
+        var damageRequired = _destructibleSystem.DestroyedAt(target);
+        if (TryComp<DamageableComponent>(target, out var damageableComponent))
         {
-            // This is so entities that shouldn't get a collision are ignored.
-            if (!args.OtherFixture.Hard || component.DamagedEntity)
+            damageRequired -= damageableComponent.TotalDamage;
+            damageRequired = FixedPoint2.Max(damageRequired, FixedPoint2.Zero);
+        }
+        var deleted = Deleted(target);
+
+        if (_damageableSystem.TryChangeDamage((target, damageableComponent), ev.Damage, out var damage, component.IgnoreResistances, origin: component.Shooter) && Exists(component.Shooter))
+        {
+            if (!deleted)
             {
-                return;
+                _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
-            var otherEntity = args.OtherFixture.Body.Owner;
+            _adminLogger.Add(LogType.BulletHit,
+                LogImpact.Medium,
+                $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {damage:damage} damage");
 
-            var coordinates = EntityManager.GetComponent<TransformComponent>(args.OtherFixture.Body.Owner).Coordinates;
-            var playerFilter = Filter.Pvs(coordinates);
-
-            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted && component.SoundHitSpecies != null &&
-                EntityManager.HasComponent<SharedBodyComponent>(otherEntity))
+            // If penetration is to be considered, we need to do some checks to see if the projectile should stop.
+            if (component.PenetrationThreshold != 0)
             {
-                SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
+                // If a damage type is required, stop the bullet if the hit entity doesn't have that type.
+                if (component.PenetrationDamageTypeRequirement != null)
+                {
+                    var stopPenetration = false;
+                    foreach (var requiredDamageType in component.PenetrationDamageTypeRequirement)
+                    {
+                        if (!damage.DamageDict.Keys.Contains(requiredDamageType))
+                        {
+                            stopPenetration = true;
+                            break;
+                        }
+                    }
+                    if (stopPenetration)
+                        component.ProjectileSpent = true;
+                }
+
+                // If the object won't be destroyed, it "tanks" the penetration hit.
+                if (damage.GetTotal() < damageRequired)
+                {
+                    component.ProjectileSpent = true;
+                }
+
+                if (!component.ProjectileSpent)
+                {
+                    component.PenetrationAmount += damageRequired;
+                    // The projectile has dealt enough damage to be spent.
+                    if (component.PenetrationAmount >= component.PenetrationThreshold)
+                    {
+                        component.ProjectileSpent = true;
+                    }
+                }
             }
             else
             {
-                var soundHit = component.SoundHit?.GetSound();
-
-                if (!string.IsNullOrEmpty(soundHit))
-                    SoundSystem.Play(playerFilter, soundHit, coordinates);
+                component.ProjectileSpent = true;
             }
-
-            if (!EntityManager.GetComponent<MetaDataComponent>(otherEntity).EntityDeleted)
-            {
-                var dmg = _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
-                component.DamagedEntity = true;
-
-                if (dmg is not null && EntityManager.EntityExists(component.Shooter))
-                    _adminLogSystem.Add(LogType.BulletHit,
-                        HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
-                        $"Projectile {ToPrettyString(component.Owner):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {dmg.Total:damage} damage");
-            }
-
-            // Damaging it can delete it
-            if (!Deleted(otherEntity) && HasComp<CameraRecoilComponent>(otherEntity))
-            {
-                var direction = args.OurFixture.Body.LinearVelocity.Normalized;
-                _cameraRecoil.KickCamera(otherEntity, direction);
-            }
-
-            if (component.DeleteOnCollide)
-                EntityManager.QueueDeleteEntity(uid);
         }
 
-        public override void Update(float frameTime)
+        if (!deleted)
         {
-            base.Update(frameTime);
+            _guns.PlayImpactSound(target, damage, component.SoundHit, component.ForceSound);
 
-            foreach (var component in EntityManager.EntityQuery<ProjectileComponent>())
-            {
-                component.TimeLeft -= frameTime;
+            if (!args.OurBody.LinearVelocity.IsLengthZero())
+                _sharedCameraRecoil.KickCamera(target, args.OurBody.LinearVelocity.Normalized());
+        }
 
-                if (component.TimeLeft <= 0)
-                {
-                    EntityManager.DeleteEntity(component.Owner);
-                }
-            }
+        if (component.DeleteOnCollide && component.ProjectileSpent)
+            QueueDel(uid);
+
+        if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
+        {
+            RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
         }
     }
 }

@@ -1,16 +1,21 @@
+using System.Linq;
+using Content.Client.Administration.Managers;
+using Content.Client.Administration.Systems;
+using Content.Client.UserInterface;
+using Content.Shared.Administration;
+using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
+using Robust.Client.Player;
 
 namespace Content.Client.ContextMenu.UI
 {
-    public sealed partial class EntityMenuElement : ContextMenuElement
+    public sealed partial class EntityMenuElement : ContextMenuElement, IEntityControl
     {
-        public const string StyleClassEntityMenuCountText = "contextMenuCount";
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        [Dependency] private IEntityManager _entityManager = default!;
+        private AdminSystem _adminSystem;
 
         /// <summary>
         ///     The entity that can be accessed by interacting with this element.
@@ -20,32 +25,20 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     How many entities are accessible through this element's sub-menus.
         /// </summary>
-        /// <remarks>
-        ///     This is used for <see cref="CountLabel"/>
-        /// </remarks>
-        public int Count;
-
-        public readonly Label CountLabel;
-        public readonly SpriteView EntityIcon = new() { OverrideDirection = Direction.South};
+        public int Count { get; private set; }
 
         public EntityMenuElement(EntityUid? entity = null)
         {
             IoCManager.InjectDependencies(this);
 
-            CountLabel = new Label { StyleClasses = { StyleClassEntityMenuCountText } };
-            Icon.AddChild(new LayoutContainer() { Children = { EntityIcon, CountLabel } });
-
-            LayoutContainer.SetAnchorPreset(CountLabel, LayoutContainer.LayoutPreset.BottomRight);
-            LayoutContainer.SetGrowHorizontal(CountLabel, LayoutContainer.GrowDirection.Begin);
-            LayoutContainer.SetGrowVertical(CountLabel, LayoutContainer.GrowDirection.Begin);
+            _adminSystem = _entityManager.System<AdminSystem>();
 
             Entity = entity;
-            if (Entity != null)
-            {
-                Count = 1;
-                CountLabel.Visible = false;
-                UpdateEntity();
-            }
+            if (Entity == null)
+                return;
+
+            Count = 1;
+            UpdateEntity();
         }
 
         protected override void Dispose(bool disposing)
@@ -53,6 +46,54 @@ namespace Content.Client.ContextMenu.UI
             base.Dispose(disposing);
             Entity = null;
             Count = 0;
+        }
+
+        private string? SearchPlayerName(EntityUid entity)
+        {
+            var netEntity = _entityManager.GetNetEntity(entity);
+            return _adminSystem.PlayerList.FirstOrDefault(player => player.NetEntity == netEntity)?.Username;
+        }
+
+        /// <summary>
+        ///     Update the entity count
+        /// </summary>
+        public void UpdateCount()
+        {
+            if (SubMenu == null)
+                return;
+
+            Count = 0;
+            foreach (var subElement in SubMenu.MenuBody.Children)
+            {
+                if (subElement is EntityMenuElement entityElement)
+                    Count += entityElement.Count;
+            }
+
+            IconLabel.Visible = Count > 1;
+            if (IconLabel.Visible)
+                IconLabel.Text = Count.ToString();
+        }
+
+        private string GetEntityDescriptionAdmin(EntityUid entity)
+        {
+            var representation = _entityManager.ToPrettyString(entity);
+
+            var name = representation.Name;
+            var prototype = representation.Prototype;
+            var playerName = representation.Session?.Name ?? SearchPlayerName(entity);
+            var deleted = representation.Deleted;
+
+            return $"{name} ({_entityManager.GetNetEntity(entity).ToString()}{(prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
+        }
+
+        private string GetEntityDescription(EntityUid entity)
+        {
+            if (_adminManager.HasFlag(AdminFlags.Admin | AdminFlags.Debug))
+            {
+                return GetEntityDescriptionAdmin(entity);
+            }
+
+            return Identity.Name(entity, _entityManager, _playerManager.LocalEntity!);
         }
 
         /// <summary>
@@ -67,17 +108,16 @@ namespace Content.Client.ContextMenu.UI
             // _entityManager.Deleted() implicitly checks all of these.
             if (_entityManager.Deleted(entity))
             {
+                Icon.SetEntity(null);
                 Text = string.Empty;
-                EntityIcon.Sprite = null;
-                return;
             }
-
-            EntityIcon.Sprite = _entityManager.GetComponentOrNull<ISpriteComponent>(entity);
-
-            if (UserInterfaceManager.DebugMonitors.Visible)
-                Text = _entityManager.ToPrettyString(entity.Value);
             else
-                Text = _entityManager.GetComponent<MetaDataComponent>(entity.Value).EntityName;
+            {
+                Icon.SetEntity(entity);
+                Text = GetEntityDescription(entity.Value);
+            }
         }
+
+        EntityUid? IEntityControl.UiEntity => Entity;
     }
 }

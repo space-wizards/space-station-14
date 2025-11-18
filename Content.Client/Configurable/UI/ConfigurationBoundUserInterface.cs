@@ -1,66 +1,91 @@
-﻿using System.Collections.Generic;
+﻿using System.Numerics;
 using System.Text.RegularExpressions;
-using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using static Content.Shared.Configurable.SharedConfigurationComponent;
+using Content.Shared.Configurable;
+using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
+using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Client.Configurable.UI
 {
     public sealed class ConfigurationBoundUserInterface : BoundUserInterface
     {
-        public Regex? Validation { get; internal set; }
+        [ViewVariables]
+        private ConfigurationMenu? _menu;
 
-        public ConfigurationBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public ConfigurationBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
-
-        private ConfigurationMenu? _menu;
 
         protected override void Open()
         {
             base.Open();
-            _menu = new ConfigurationMenu(this);
-
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
+            _menu = this.CreateWindow<ConfigurationMenu>();
+            _menu.OnConfiguration += SendConfiguration;
+            if (EntMan.TryGetComponent(Owner, out ConfigurationComponent? component))
+                Refresh((Owner, component));
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        public void Refresh(Entity<ConfigurationComponent> entity)
         {
-            base.UpdateState(state);
-
-            if (state is not ConfigurationBoundUserInterfaceState configurationState)
-            {
+            if (_menu == null)
                 return;
-            }
 
-            _menu?.Populate(configurationState);
+            _menu.Column.Children.Clear();
+            _menu.Inputs.Clear();
+
+            foreach (var field in entity.Comp.Config)
+            {
+                var label = new Label
+                {
+                    Margin = new Thickness(0, 0, 8, 0),
+                    Name = field.Key,
+                    Text = field.Key + ":",
+                    VerticalAlignment = Control.VAlignment.Center,
+                    HorizontalExpand = true,
+                    SizeFlagsStretchRatio = .2f,
+                    MinSize = new Vector2(60, 0)
+                };
+
+                var input = new LineEdit
+                {
+                    Name = field.Key + "-input",
+                    Text = field.Value ?? "",
+                    IsValid = _menu.Validate,
+                    HorizontalExpand = true,
+                    SizeFlagsStretchRatio = .8f
+                };
+
+                _menu.Inputs.Add((field.Key, input));
+
+                var row = new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal
+                };
+
+                ConfigurationMenu.CopyProperties(_menu.Row, row);
+
+                row.AddChild(label);
+                row.AddChild(input);
+                _menu.Column.AddChild(row);
+            }
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
             base.ReceiveMessage(message);
 
+            if (_menu == null)
+                return;
+
             if (message is ValidationUpdateMessage msg)
             {
-                Validation = new Regex(msg.ValidationString, RegexOptions.Compiled);
+                _menu.Validation = new Regex(msg.ValidationString, RegexOptions.Compiled);
             }
         }
 
         public void SendConfiguration(Dictionary<string, string> config)
         {
             SendMessage(new ConfigurationUpdatedMessage(config));
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing && _menu != null)
-            {
-                _menu.OnClose -= Close;
-                _menu.Close();
-            }
         }
     }
 }

@@ -6,14 +6,10 @@ guardian-already-present-invalid-creation = You are NOT re-living that haunting 
 guardian-no-actions-invalid-creation = You don't have the ability to host a guardian!
 guardian-activator-empty-invalid-creation = The injector is spent.
 guardian-activator-empty-examine = [color=#ba1919]The injector is spent.[/color]
-guardian-activator-invalid-target = Only humans can be injected! # Change this once other species can inject it?
+guardian-activator-invalid-target = {CAPITALIZE(THE($entity))} cannot be injected!
 guardian-no-soul = Your guardian has no soul.
 guardian-available = Your guardian now has a soul.
-
-# Guardian action
-
-action-name-guardian = Toggle Guardian
-action-description-guardian = Either manifests the guardian or recalls it back into your body
+guardian-inside-container = There's no room to release your guardian!
 
 ## Guardian entity specific
 

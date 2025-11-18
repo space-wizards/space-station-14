@@ -1,7 +1,5 @@
-using System;
 using Content.Server.Holiday.Interfaces;
 using JetBrains.Annotations;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Holiday.ShouldCelebrate
 {
@@ -10,7 +8,7 @@ namespace Content.Server.Holiday.ShouldCelebrate
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class DayOfYear : IHolidayShouldCelebrate
+    public sealed partial class DayOfYear : IHolidayShouldCelebrate
     {
         [DataField("dayOfYear")]
         private uint _dayOfYear = 1;

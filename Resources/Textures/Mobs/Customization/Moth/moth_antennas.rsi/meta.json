@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commits https://github.com/tgstation/tgstation/commit/b30e2934e7585bad901dd12a35d0635f1fc292c1 and https://github.com/tgstation/tgstation/commit/6b0af0febe578f47ae280781682ea7a3d77f508a, modified by https://github.com/PixelTheKermit & https://github.com/MilenVolf, Underwing is drawn by Ubaser",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "default",
+      "directions": 4
+    },
+    {
+      "name": "charred",
+      "directions": 4
+    },
+    {
+      "name": "dbushy",
+      "directions": 4
+    },
+    {
+      "name": "dcurvy",
+      "directions": 4
+    },
+    {
+      "name": "dfan",
+      "directions": 4
+    },
+    {
+      "name": "dpointy",
+      "directions": 4
+    },
+    {
+      "name": "feathery",
+      "directions": 4
+    },
+    {
+      "name": "firewatch",
+      "directions": 4
+    },
+    {
+      "name": "gray",
+      "directions": 4
+    },
+    {
+      "name": "jungle",
+      "directions": 4
+    },
+    {
+      "name": "maple",
+      "directions": 4
+    },
+    {
+      "name": "moffra",
+      "directions": 4
+    },
+    {
+      "name": "oakworm",
+      "directions": 4
+    },
+    {
+      "name": "plasmafire",
+      "directions": 4
+    },
+    {
+      "name": "royal",
+      "directions": 4
+    },
+    {
+      "name": "striped",
+      "directions": 4
+    },
+    {
+      "name": "whitefly",
+      "directions": 4
+    },
+    {
+      "name": "witchwing",
+      "directions": 4
+    },
+    {
+      "name": "underwing_primary",
+      "directions": 4
+    },
+    {
+      "name": "underwing_secondary",
+      "directions": 4
+    }
+  ]
+}

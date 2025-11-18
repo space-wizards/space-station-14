@@ -1,11 +1,10 @@
 ﻿using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Chemistry.Reaction;
 
-[Prototype("reactiveGroup")]
-public sealed class ReactiveGroupPrototype : IPrototype
+[Prototype]
+public sealed partial class ReactiveGroupPrototype : IPrototype
 {
-    [DataField("id", required: true)]
-    public string ID { get; } = default!;
+    [IdDataField]
+    public string ID { get; private set; } = default!;
 }

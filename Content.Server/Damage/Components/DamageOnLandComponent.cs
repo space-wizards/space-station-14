@@ -1,17 +1,20 @@
 using Content.Shared.Damage;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
 {
     [RegisterComponent]
-    public sealed class DamageOnLandComponent : Component
+    public sealed partial class DamageOnLandComponent : Component
     {
+        /// <summary>
+        /// Should this entity be damaged when it lands regardless of its resistances?
+        /// </summary>
         [DataField("ignoreResistances")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool IgnoreResistances = false;
 
+        /// <summary>
+        /// How much damage.
+        /// </summary>
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;

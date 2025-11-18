@@ -1,0 +1,80 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/a2764fbfc554d41074f110b64315d8c241d7d577",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "grasssnowa1"
+        },
+        {
+            "name": "grasssnowa2"
+        },
+        {
+            "name": "grasssnowa3"
+        },
+        {
+            "name": "grasssnowb1"
+        },
+        {
+            "name": "grasssnowb2"
+        },
+        {
+            "name": "grasssnowb3"
+        },
+        {
+            "name": "grasssnowc1"
+        },
+        {
+            "name": "grasssnowc2"
+        },
+        {
+            "name": "grasssnowc3"
+        },
+        {
+            "name": "grasssnow01"
+        },
+        {
+            "name": "grasssnow02"
+        },
+        {
+            "name": "grasssnow03"
+        },
+        {
+            "name": "grasssnow"
+        },
+        {
+            "name": "grasssnow04"
+        },
+        {
+            "name": "grasssnow05"
+        },
+        {
+            "name": "grasssnow06"
+        },
+        {
+            "name": "grasssnow07"
+        },
+        {
+            "name": "grasssnow08"
+        },
+        {
+            "name": "grasssnow09"
+        },
+        {
+            "name": "grasssnow10"
+        },
+        {
+            "name": "grasssnow11"
+        },
+        {
+            "name": "grasssnow12"
+        },
+        {
+            "name": "grasssnow13"
+        }
+    ]
+}

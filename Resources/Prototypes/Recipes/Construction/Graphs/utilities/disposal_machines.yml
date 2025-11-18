@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: DisposalMachine
   start: start
   graph:
@@ -11,11 +11,6 @@
               doAfter: 1
     - node: frame
       entity: DisposalMachineFrame
-      actions:
-        - !type:SpriteChange
-          specifier:
-            sprite: /Textures/Structures/Piping/high_pressure_machine_frame.rsi
-            state: frame
       edges:
         - to: start
           completed:
@@ -34,8 +29,7 @@
     - node: frame_cable
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_cables"
+      - !type:AppearanceChange
       edges:
         - to: frame
           completed:
@@ -53,8 +47,7 @@
     - node: frame_electronics
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_electronics"
+      - !type:AppearanceChange
       edges:
         - to: frame_cable
           completed:
@@ -68,17 +61,19 @@
           steps:
             - tool: Screwing
               doAfter: 0.25
-        #- to: frame_mailing
-        #  steps:
-        #    - ... # 1x mailing unit electronics
-        #      amount: 1
-        #    - tool: Screwing
-        #      doAfter: 0.25
+        - to: frame_mailing
+          steps:
+            - tag: MailingUnitElectronics
+              name: construction-graph-tag-mailing-unit-electronics
+              icon:
+                sprite: "Objects/Misc/module.rsi"
+                state: "net_wired"
+            - tool: Screwing
+              doAfter: 0.25
     - node: frame_unit
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_unit"
+      - !type:AppearanceChange
       edges:
         - to: frame_inlet
           steps:
@@ -105,11 +100,40 @@
           steps:
             - tool: Prying
               doAfter: 1
+    - node: frame_mailing
+      entity: DisposalMachineFrame
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: frame_electronics
+          steps:
+            - tool: Prying
+              doAfter: 0.25
+        - to: mailing_unit
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+    - node: mailing_unit
+      entity: MailingUnit
+      edges:
+        - to: frame_mailing
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:EmptyAllContainers
+          conditions:
+            - !type:EntityAnchored
+          steps:
+            - tool: Prying
+              doAfter: 1
     - node: frame_inlet
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_inlet"
+      - !type:AppearanceChange
       edges:
         - to: frame_outlet
           steps:
@@ -139,8 +163,7 @@
     - node: frame_outlet
       entity: DisposalMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "frame_outlet"
+      - !type:AppearanceChange
       edges:
         - to: frame_electronics
           steps:

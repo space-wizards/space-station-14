@@ -1,50 +1,30 @@
-using System;
-using Content.Shared.Sound;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Players;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Standing
 {
-    [Friend(typeof(StandingStateSystem))]
-    [RegisterComponent, NetworkedComponent]
-    public sealed class StandingStateComponent : Component
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [Access(typeof(StandingStateSystem))]
+    public sealed partial class StandingStateComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("downSoundCollection")]
-        public SoundSpecifier DownSoundCollection { get; } = new SoundCollectionSpecifier("BodyFall");
+        [DataField]
+        public SoundSpecifier? DownSound { get; private set; } = new SoundCollectionSpecifier("BodyFall");
 
-        [ViewVariables]
-        [DataField("standing")]
+        [DataField, AutoNetworkedField]
         public bool Standing { get; set; } = true;
 
-        public override ComponentState GetComponentState()
-        {
-            return new StandingComponentState(Standing);
-        }
+        /// <summary>
+        /// Friction modifier applied to an entity in the downed state.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float DownFrictionMod = 0.4f;
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-            if (curState is not StandingComponentState state) return;
-
-            Standing = state.Standing;
-        }
-
-        // I'm not calling it StandingStateComponentState
-        [Serializable, NetSerializable]
-        private sealed class StandingComponentState : ComponentState
-        {
-            public bool Standing { get; }
-
-            public StandingComponentState(bool standing)
-            {
-                Standing = standing;
-            }
-        }
+        /// <summary>
+        ///     List of fixtures that had their collision mask changed when the entity was downed.
+        ///     Required for re-adding the collision mask.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public List<string> ChangedFixtures = new();
     }
 }

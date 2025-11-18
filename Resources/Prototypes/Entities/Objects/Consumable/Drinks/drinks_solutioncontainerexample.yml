@@ -16,7 +16,6 @@
         - ReagentId: JuiceWatermelon
           Quantity: 30
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Drinks/pitcher.rsi
     layers:
       - state: icon
@@ -25,10 +24,9 @@
         # REMEMBER IF YOU'RE SPAWNING WITH LIQUID ALREADY IN IT YOU WANT THIS TRUE
         visible: true
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: fill-
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: fill-
 
 # Without (For food, non cut-out stuff)
 
@@ -46,16 +44,14 @@
         - ReagentId: JuiceWatermelon
           Quantity: 30
   - type: Sprite
-    netsync: false
     sprite: Objects/Consumable/Drinks/pitcher.rsi
     layers:
       - state: icon-6
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: true
   - type: Appearance
-    visuals:
-    - type: SolutionContainerVisualizer
-      maxFillLevels: 6
-      fillBaseName: icon-
-      changeColor: false
-      emptySpriteName: icon
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: icon-
+    changeColor: false
+    emptySpriteName: icon

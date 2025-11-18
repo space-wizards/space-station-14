@@ -1,0 +1,19 @@
+- type: entity
+  id: FTLPoint
+  parent: MarkerBase
+  name: FTL point
+  components:
+    - type: FTLSmashImmune
+    - type: FTLBeacon
+    - type: Sprite
+      state: pink
+
+- type: entity
+  id: FTLExclusion
+  parent: MarkerBase
+  name: FTL exclusion point
+  components:
+    - type: FTLExclusion
+      range: 32
+    - type: Sprite
+      state: pink

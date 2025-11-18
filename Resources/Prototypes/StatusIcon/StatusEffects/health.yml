@@ -1,0 +1,35 @@
+- type: healthIcon
+  id: HealthIcon
+  abstract: true
+  priority: 3
+  locationPreference: Left
+  isShaded: true
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconFine
+  icon:
+    sprite: /Textures/Interface/Misc/health_icons.rsi
+    state: Fine
+
+- type: healthIcon
+  id: HealthIconCritical
+  parent: HealthIcon
+  icon:
+    sprite: /Textures/Interface/Misc/health_icons.rsi
+    state: Critical
+
+- type: healthIcon
+  id: HealthIconDead
+  parent: HealthIcon
+  icon:
+    sprite: /Textures/Interface/Misc/health_icons.rsi
+    state: Dead
+
+- type: healthIcon
+  id: HealthIconRotting
+  parent: HealthIcon
+  icon:
+    sprite: /Textures/Interface/Misc/health_icons.rsi
+    state: Rotting
+

@@ -1,0 +1,7 @@
+# BEHOLD:
+# FIRST EVER USAGE OF ROBUST GENERIC ATTRIBUTION STANDARD IN SPACE STATION 14
+
+- files: [ "staff_animation.ogg", "staff_change.ogg", "staff_chaos.ogg", "staff_door.ogg", "staff_healing.ogg" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "https://github.com/tgstation/tgstation/commit/906fb0682bab6a0975b45036001c54f021f58ae7"
+  source: "https://github.com/tgstation/tgstation/commit/906fb0682bab6a0975b45036001c54f021f58ae7"

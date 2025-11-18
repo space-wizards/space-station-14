@@ -1,33 +1,40 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+using Content.Server.Hands.Systems;
 using Content.Shared.Construction;
+using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EmptyContainer : IGraphAction
+    public sealed partial class EmptyContainer : IGraphAction
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 
+        /// <summary>
+        ///     Whether or not the user should attempt to pick up the removed entities.
+        /// </summary>
+        [DataField("pickup")]
+        public bool Pickup = false;
+
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager) ||
-                !containerManager.TryGetContainer(Container, out var container)) return;
+            var containerSys = entityManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>();
 
-            // TODO: Use container system methods.
-            var transform = entityManager.GetComponent<TransformComponent>(uid);
-            foreach (var contained in container.ContainedEntities.ToArray())
+            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager) ||
+                !containerSys.TryGetContainer(uid, Container, out var container, containerManager)) return;
+
+            var handSys = entityManager.EntitySysManager.GetEntitySystem<HandsSystem>();
+
+            HandsComponent? hands = null;
+            var pickup = Pickup && entityManager.TryGetComponent(userUid, out hands);
+
+            foreach (var ent in containerSys.EmptyContainer(container, true, reparent: !pickup))
             {
-                container.ForceRemove(contained);
-                var cTransform = entityManager.GetComponent<TransformComponent>(contained);
-                cTransform.Coordinates = transform.Coordinates;
-                cTransform.AttachToGridOrMap();
+                if (pickup)
+                    handSys.PickupOrDrop(userUid, ent, handsComp: hands);
             }
         }
     }

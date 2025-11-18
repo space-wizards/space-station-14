@@ -1,27 +1,36 @@
-<!-- The text between the arrows are comments - they will not be visible on your PR. -->
+<!-- Guidelines: https://docs.spacestation14.io/en/getting-started/pr-guideline -->
 
-## About the PR <!-- Describe the Pull Request here. What does it change? What other things could this impact? -->
+## About the PR
+<!-- What did you change? -->
 
-**Screenshots**
-<!-- If applicable, add screenshots to showcase your PR. If your PR is a visual change, add
-screenshots or it's liable to be closed by maintainers. -->
+## Why / Balance
+<!-- Discuss how this would affect game balance or explain why it was changed. Link any relevant discussions or issues. -->
+
+## Technical details
+<!-- Summary of code changes for easier review. -->
+
+## Media
+<!-- Attach media if the PR makes in-game changes (clothing, items, features, etc).
+Small fixes/refactors are exempt. Media may be used in SS14 progress reports with credit. -->
+
+## Requirements
+<!-- Confirm the following by placing an X in the brackets [X]: -->
+- [ ] I have read and am following the [Pull Request and Changelog Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
+- [ ] I have added media to this PR or it does not require an in-game showcase.
+<!-- You should understand that not following the above may get your PR closed at maintainer’s discretion -->
+
+## Breaking changes
+<!-- List any breaking changes, including namespaces, public class/method/field changes, prototype renames; and provide instructions for fixing them.
+This will be posted in #codebase-changes. -->
 
 **Changelog**
+<!-- Add a Changelog entry to make players aware of new features or changes that could affect gameplay.
+Make sure to read the guidelines and take this Changelog template out of the comment block in order for it to show up.
+Changelog must have a :cl: symbol, so the bot recognizes the changes and adds them to the game's changelog. -->
 <!--
-Here you can fill out a changelog that will automatically be added to the game when your PR is merged
-There are 4 icons for changelog entries: add, remove, tweak, fix. I trust you can figure out the rest.
-
-You can put your name after the :cl: symbol to change the name that shows in the changelog (otherwise it takes your GitHub username)
-Like so: :cl: PJB
-
-Generally, only put things in changelogs that players actually care about. Stuff like "Refactored X system, no changes should be visible" shouldn't be on a changelog.
-
-For writing actual entries, don't consider the entry type suffix (e.g. add) to be "part" of the sentence:
-bad: - add: a new tool for engineers
-good: - add: added a new tool for engineers
--->
-
 :cl:
 - add: Added fun!
 - remove: Removed fun!
-
+- tweak: Changed fun!
+- fix: Fixed fun!
+-->

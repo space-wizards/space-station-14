@@ -1,4 +1,4 @@
-using System;
+using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
@@ -11,10 +11,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Animations;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using static Content.Shared.Wires.SharedWiresComponent;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
@@ -22,8 +18,6 @@ namespace Content.Client.Wires.UI
     public sealed class WiresMenu : BaseWindow
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-
-        public WiresBoundUserInterface Owner { get; }
 
         private readonly Control _wiresHBox;
         private readonly Control _topContainer;
@@ -34,11 +28,12 @@ namespace Content.Client.Wires.UI
 
         public TextureButton CloseButton { get; set; }
 
-        public WiresMenu(WiresBoundUserInterface owner)
+        public event Action<int, WiresAction>? OnAction;
+
+        public WiresMenu()
         {
             IoCManager.InjectDependencies(this);
 
-            Owner = owner;
             var rootContainer = new LayoutContainer {Name = "WireRoot"};
             AddChild(rootContainer);
 
@@ -74,7 +69,7 @@ namespace Content.Client.Wires.UI
                 {
                     new PanelContainer
                     {
-                        MinSize = (2, 0),
+                        MinSize = new Vector2(2, 0),
                         PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
                     },
                     new PanelContainer
@@ -86,7 +81,7 @@ namespace Content.Client.Wires.UI
                     },
                     new PanelContainer
                     {
-                        MinSize = (2, 0),
+                        MinSize = new Vector2(2, 0),
                         PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
                     },
                 }
@@ -103,9 +98,9 @@ namespace Content.Client.Wires.UI
                 VerticalAlignment = VAlignment.Bottom
             };
 
-            wrappingHBox.AddChild(new Control {MinSize = (20, 0)});
+            wrappingHBox.AddChild(new Control {MinSize = new Vector2(20, 0)});
             wrappingHBox.AddChild(_wiresHBox);
-            wrappingHBox.AddChild(new Control {MinSize = (20, 0)});
+            wrappingHBox.AddChild(new Control {MinSize = new Vector2(20, 0)});
 
             bottomWrap.AddChild(bottomPanel);
 
@@ -142,7 +137,7 @@ namespace Content.Client.Wires.UI
                     {
                         Orientation = LayoutOrientation.Vertical
                     }),
-                    new Control {MinSize = (0, 110)}
+                    new Control {MinSize = new Vector2(0, 110)}
                 }
             };
 
@@ -164,8 +159,8 @@ namespace Content.Client.Wires.UI
                     {
                         Text = Loc.GetString("wires-menu-name-label"),
                         FontOverride = font,
-                        FontColorOverride = StyleNano.NanoGold,
                         VerticalAlignment = VAlignment.Center,
+                        StyleClasses = { StyleClass.LabelKeyText },
                     }),
                     (_serialLabel = new Label
                     {
@@ -195,7 +190,7 @@ namespace Content.Client.Wires.UI
                 var popup = new HelpPopup();
                 UserInterfaceManager.ModalRoot.AddChild(popup);
 
-                popup.Open(UIBox2.FromDimensions(a.Event.PointerLocation.Position, (400, 200)));
+                popup.Open(UIBox2.FromDimensions(a.Event.PointerLocation.Position, new Vector2(400, 200)));
             };
 
             var middle = new PanelContainer
@@ -211,8 +206,7 @@ namespace Content.Client.Wires.UI
                             (_statusContainer = new GridContainer
                             {
                                 Margin = new Thickness(8, 4),
-                                // TODO: automatically change columns count.
-                                Columns = 3
+                                Rows = 2
                             })
                         }
                     }
@@ -222,17 +216,18 @@ namespace Content.Client.Wires.UI
             _topContainer.AddChild(topRow);
             _topContainer.AddChild(new PanelContainer
             {
-                MinSize = (0, 2),
+                MinSize = new Vector2(0, 2),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             _topContainer.AddChild(middle);
             _topContainer.AddChild(new PanelContainer
             {
-                MinSize = (0, 2),
+                MinSize = new Vector2(0, 2),
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             CloseButton.OnPressed += _ => Close();
-            SetSize = (320, 200);
+            SetHeight = 200;
+            MinWidth = 320;
         }
 
 
@@ -256,17 +251,17 @@ namespace Content.Client.Wires.UI
 
                 control.WireClicked += () =>
                 {
-                    Owner.PerformAction(wire.Id, wire.IsCut ? WiresAction.Mend : WiresAction.Cut);
+                    OnAction?.Invoke(wire.Id, wire.IsCut ? WiresAction.Mend : WiresAction.Cut);
                 };
 
                 control.ContactsClicked += () =>
                 {
-                    Owner.PerformAction(wire.Id, WiresAction.Pulse);
+                    OnAction?.Invoke(wire.Id, WiresAction.Pulse);
                 };
             }
 
-
             _statusContainer.RemoveAllChildren();
+
             foreach (var status in state.Statuses)
             {
                 if (status.Value is StatusLightData statusLightData)
@@ -341,7 +336,7 @@ namespace Content.Client.Wires.UI
                 };
 
                 layout.AddChild(contact1);
-                LayoutContainer.SetPosition(contact1, (0, 0));
+                LayoutContainer.SetPosition(contact1, new Vector2(0, 0));
 
                 var contact2 = new TextureRect
                 {
@@ -350,15 +345,15 @@ namespace Content.Client.Wires.UI
                 };
 
                 layout.AddChild(contact2);
-                LayoutContainer.SetPosition(contact2, (0, 60));
+                LayoutContainer.SetPosition(contact2, new Vector2(0, 60));
 
                 var wire = new WireRender(color, isCut, flip, mirror, type, _resourceCache);
 
                 layout.AddChild(wire);
-                LayoutContainer.SetPosition(wire, (2, 16));
+                LayoutContainer.SetPosition(wire, new Vector2(2, 16));
 
                 ToolTip = color.Name();
-                MinSize = (20, 102);
+                MinSize = new Vector2(20, 102);
             }
 
             protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -423,7 +418,7 @@ namespace Content.Client.Wires.UI
                     _mirror = mirror;
                     _type = type;
 
-                    SetSize = (16, 50);
+                    SetSize = new Vector2(16, 50);
                 }
 
                 protected override void Draw(DrawingHandleScreen handle)
@@ -508,6 +503,8 @@ namespace Content.Client.Wires.UI
 
             public StatusLight(StatusLightData data, IResourceCache resourceCache)
             {
+                HorizontalAlignment = HAlignment.Right;
+
                 var hsv = Color.ToHsv(data.Color);
                 hsv.Z /= 2;
                 var dimColor = Color.FromHsv(hsv);
@@ -515,7 +512,7 @@ namespace Content.Client.Wires.UI
 
                 var lightContainer = new Control
                 {
-                    SetSize = (20, 20),
+                    SetSize = new Vector2(20, 20),
                     Children =
                     {
                         new TextureRect
@@ -582,24 +579,17 @@ namespace Content.Client.Wires.UI
                     VerticalAlignment = VAlignment.Center,
                 });
                 hBox.AddChild(lightContainer);
-                hBox.AddChild(new Control {MinSize = (6, 0)});
+                hBox.AddChild(new Control {MinSize = new Vector2(6, 0)});
                 AddChild(hBox);
             }
         }
 
         private sealed class HelpPopup : Popup
         {
-            private const string Text = "Click on the gold contacts with a multitool in hand to pulse their wire.\n" +
-                                        "Click on the wires with a pair of wirecutters in hand to cut/mend them.\n\n" +
-                                        "The lights at the top show the state of the machine, " +
-                                        "messing with wires will probably do stuff to them.\n" +
-                                        "Wire layouts are different each round, " +
-                                        "but consistent between machines of the same type.";
-
             public HelpPopup()
             {
                 var label = new RichTextLabel();
-                label.SetMessage(Text);
+                label.SetMessage(Loc.GetString("wires-menu-help-popup"));
                 AddChild(new PanelContainer
                 {
                     StyleClasses = {ExamineSystem.StyleClassEntityTooltip},

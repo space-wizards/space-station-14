@@ -1,0 +1,161 @@
+﻿- type: entity
+  name: lightning
+  id: BaseLightning
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
+    layers:
+    - state: "lightning_1"
+      shader: unshaded
+  - type: Physics
+    canCollide: false
+  - type: Electrified
+    requirePower: false
+  - type: Lightning
+  - type: PointLight
+    enabled: true
+    color: "#4080FF"
+    radius: 3.5
+    softness: 1
+    autoRot: true
+    castShadows: false
+  - type: Beam
+    sound: /Audio/Effects/Lightning/lightningshock.ogg
+  - type: TimedDespawn
+    lifetime: 3
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
+  name: lightning
+  id: Lightning
+  parent: BaseLightning
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Lightning
+      canArc: true
+
+- type: entity
+  name: spooky lightning
+  id: LightningRevenant
+  parent: BaseLightning
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/lightning.rsi
+      drawdepth: Effects
+      layers:
+        - state: "lightning_3"
+          color: plum
+          shader: unshaded
+    - type: PointLight
+      enabled: true
+      color: plum
+      radius: 3.5
+      softness: 1
+      autoRot: true
+      castShadows: false
+    - type: Lightning
+      canArc: false
+      shockDamage: 30
+
+- type: entity
+  name: charged lightning
+  id: ChargedLightning
+  parent: BaseLightning
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/lightning.rsi
+      drawdepth: Effects
+      layers:
+        - state: "blue_lightning"
+          shader: unshaded
+    - type: Electrified
+      requirePower: false
+      shockDamage: 40
+    - type: Lightning
+      canArc: true
+      lightningPrototype: ChargedLightning
+
+- type: entity
+  name: lightning
+  id: Spark
+  parent: BaseLightning
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
+    layers:
+    - state: "lightning_1"
+      shader: unshaded
+  - type: Electrified
+    shockDamage: 0
+  - type: Lightning
+    lightningPrototype: Spark
+  - type: PointLight
+    radius: 0.2
+    softness: .4
+  - type: Beam
+    sound: /Audio/Effects/sparks4.ogg
+  - type: TimedDespawn
+    lifetime: .3
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
+  name: supercharged lightning
+  id: SuperchargedLightning
+  parent: ChargedLightning
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/lightning.rsi
+      drawdepth: Effects
+      layers:
+        - state: "yellow_lightning"
+          shader: unshaded
+    - type: Electrified
+      requirePower: false
+      shockDamage: 50
+    - type: Lightning
+      canArc: true
+      lightningPrototype: SuperchargedLightning
+    - type: PointLight
+      enabled: true
+      color: "#FFFF00"
+      radius: 3.5
+      softness: 1
+      autoRot: true
+      castShadows: false
+
+- type: entity
+  name: hypercharged lightning
+  id: HyperchargedLightning
+  parent: ChargedLightning
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: /Textures/Effects/lightning.rsi
+      drawdepth: Effects
+      layers:
+        - state: "red_lightning"
+          shader: unshaded
+    - type: Electrified
+      requirePower: false
+      shockDamage: 60
+    - type: Lightning
+      canArc: true
+      lightningPrototype: HyperchargedLightning
+    - type: PointLight
+      enabled: true
+      color: "#ff0000"
+      radius: 3.5
+      softness: 1
+      autoRot: true
+      castShadows: false

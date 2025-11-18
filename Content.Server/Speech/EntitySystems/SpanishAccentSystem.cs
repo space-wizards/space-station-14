@@ -1,5 +1,6 @@
+using System.Text;
 using Content.Server.Speech.Components;
-using Robust.Shared.GameObjects;
+using Content.Shared.Speech;
 
 namespace Content.Server.Speech.EntitySystems
 {
@@ -15,7 +16,7 @@ namespace Content.Server.Speech.EntitySystems
             // Insert E before every S
             message = InsertS(message);
             // If a sentence ends with ?, insert a reverse ? at the beginning of the sentence
-            message = ReplaceQuestionMark(message);
+            message = ReplacePunctuation(message);
             return message;
         }
 
@@ -25,11 +26,11 @@ namespace Content.Server.Speech.EntitySystems
             var msg = message.Replace(" s", " es").Replace(" S", " Es");
 
             // Still need to check if the beginning of the message starts
-            if (msg.StartsWith("s"))
+            if (msg.StartsWith("s", StringComparison.Ordinal))
             {
                 return msg.Remove(0, 1).Insert(0, "es");
             }
-            else if (msg.StartsWith("S"))
+            else if (msg.StartsWith("S", StringComparison.Ordinal))
             {
                 return msg.Remove(0, 1).Insert(0, "Es");
             }
@@ -37,24 +38,32 @@ namespace Content.Server.Speech.EntitySystems
             return msg;
         }
 
-        private string ReplaceQuestionMark(string message)
+        private string ReplacePunctuation(string message)
         {
             var sentences = AccentSystem.SentenceRegex.Split(message);
-            var msg = "";
+            var msg = new StringBuilder();
             foreach (var s in sentences)
             {
-                if (s.EndsWith("?")) // We've got a question => add ¿ to the beginning
+                var toInsert = new StringBuilder();
+                for (var i = s.Length - 1; i >= 0 && "?!‽".Contains(s[i]); i--)
                 {
-                    // Because we don't split by whitespace, we may have some spaces in front of the sentence.
-                    // So we add the symbol before the first non space char
-                    msg += s.Insert(s.Length - s.TrimStart().Length, "¿");
+                    toInsert.Append(s[i] switch
+                    {
+                        '?' => '¿',
+                        '!' => '¡',
+                        '‽' => '⸘',
+                        _ => ' '
+                    });
                 }
-                else
+                if (toInsert.Length == 0)
                 {
-                    msg += s;
+                    msg.Append(s);
+                } else
+                {
+                    msg.Append(s.Insert(s.Length - s.TrimStart().Length, toInsert.ToString()));
                 }
             }
-            return msg;
+            return msg.ToString();
         }
 
         private void OnAccent(EntityUid uid, SpanishAccentComponent component, AccentGetEvent args)

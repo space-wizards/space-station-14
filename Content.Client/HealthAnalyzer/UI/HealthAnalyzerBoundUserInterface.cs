@@ -1,28 +1,26 @@
-﻿using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-
-using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
+﻿using Content.Shared.MedicalScanner;
+using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.HealthAnalyzer.UI
 {
     [UsedImplicitly]
     public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private HealthAnalyzerWindow? _window;
 
-        public HealthAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
+        public HealthAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
         protected override void Open()
         {
             base.Open();
-            _window = new HealthAnalyzerWindow
-            {
-                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
-            };
-            _window.OnClose += Close;
-            _window.OpenCentered();
+
+            _window = this.CreateWindow<HealthAnalyzerWindow>();
+
+            _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
         }
 
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
@@ -34,18 +32,6 @@ namespace Content.Client.HealthAnalyzer.UI
                 return;
 
             _window.Populate(cast);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            if (_window != null)
-                _window.OnClose -= Close;
-
-            _window?.Dispose();
         }
     }
 }

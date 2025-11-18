@@ -1,0 +1,19 @@
+{
+   "copyright" : "Taken from https://github.com/tgstation/tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, jonkbot made by Alekshhh (github) for ss14",
+   "license" : "CC-BY-SA-3.0",
+   "size" : {
+      "x" : 32,
+      "y" : 32
+   },
+   "states" : [
+      {
+         "directions" : 1,
+         "name" : "honkbot"
+      },
+      {
+         "directions" : 1,
+         "name" : "jonkbot"
+      }
+   ],
+   "version" : 1
+}

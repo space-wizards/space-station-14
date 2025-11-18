@@ -1,0 +1,33 @@
+- type: entity
+  name: random curtain spawner
+  id: CurtainSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Structures/Decoration/Curtains/hospital.rsi
+          state: closed
+    - type: RandomSpawner
+      prototypes:
+        - HospitalCurtains
+        - CurtainsBlack
+        - CurtainsBlue
+        - CurtainsCyan
+        - CurtainsGreen
+        - CurtainsOrange
+        - CurtainsPink
+        - CurtainsPurple
+        - CurtainsRed
+        - CurtainsWhite
+        - CurtainsWhiteOpen
+        - CurtainsRedOpen
+        - CurtainsPurpleOpen
+        - CurtainsPinkOpen
+        - CurtainsOrangeOpen
+        - CurtainsGreenOpen
+        - CurtainsCyanOpen
+        - CurtainsBlueOpen
+        - CurtainsBlackOpen
+        - HospitalCurtainsOpen
+      offset: 0.0

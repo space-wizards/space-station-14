@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by brainfood118 (github) for ss14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "crate"
+    },
+    {
+      "name": "crate_door"
+    },
+    {
+      "name": "welded"
+    },
+    {
+      "name": "crate_icon"
+    },
+    {
+        "name": "sparking",
+        "directions": 1,
+        "delays": [
+            [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ]
+        ]
+    },
+    {
+      "name": "crate_open"
+    }
+  ]
+}

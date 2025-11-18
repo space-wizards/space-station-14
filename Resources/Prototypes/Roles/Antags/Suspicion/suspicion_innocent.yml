@@ -1,6 +1,0 @@
-- type: antag
-  id: SuspicionInnocent
-  name: "Innocent"
-  antagonist: false
-  setPreference: false
-  objective: "Discover and eliminate all traitors."

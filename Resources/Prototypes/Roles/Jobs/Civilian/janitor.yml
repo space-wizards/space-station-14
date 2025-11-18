@@ -1,29 +1,48 @@
 - type: job
   id: Janitor
-  name: "janitor"
+  name: job-name-janitor
+  description: job-description-janitor
+  playTimeTracker: JobJanitor
   startingGear: JanitorGear
-  departments:
-  - Civilian
-  icon: "Janitor"
-  supervisors: "the head of personnel"
+  icon: "JobIconJanitor"
+  supervisors: job-supervisors-hop
   access:
+  - Service
   - Janitor
   - Maintenance
   special:
   - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
-    prototype: RevolverInspector
+    prototype: WeaponRevolverInspector
 
 - type: startingGear
   id: JanitorGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitJanitor
-    back: ClothingBackpackFilled
     shoes: ClothingShoesGaloshes
-    head: ClothingHeadHatPurplesoft
     id: JanitorPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltJanitorFilled
-  innerclothingskirt: ClothingUniformJumpskirtJanitor
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  #storage:
+    #back:
+    #- Stuff
+
+- type: startingGear
+  id: JanitorMaidGear
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtJanimaid
+    id: JanitorPDA
+    gloves: ClothingHandsGlovesJanitor
+    head: ClothingHeadHatCatEars
+    ears: ClothingHeadsetService
+    belt: ClothingBeltJanitorFilled
+
+- type: chameleonOutfit
+  id: JanitorChameleonOutfit
+  job: Janitor
+  equipment:
+    head: ClothingHeadHatPurplesoft
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskGas
+    neck: ClothingNeckScarfStripedPurple
+    outerClothing: ClothingOuterWinterJani
+    gloves: ClothingHandsGlovesJanitor

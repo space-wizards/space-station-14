@@ -1,0 +1,207 @@
+- type: entity
+  name: dart
+  description: Light throwing dart for playing darts. Don't get in the eye!
+  parent: BaseItem
+  id: Dart
+  components:
+  - type: EmbeddableProjectile
+    minimumSpeed: 3
+    removalTime: 0.5
+    offset: 0.0,0.0
+  - type: ThrowingAngle
+    angle: 315
+  - type: LandAtCursor
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.20,0.10
+            - -0.10,0.20
+            - 0.20,-0.10
+            - 0.10,-0.20
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dart_red.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -45
+    damage:
+      types:
+        Piercing: 2
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 4
+  - type: Item
+    size: Tiny
+    sprite: Objects/Fun/Darts/dart_red.rsi
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 2
+  - type: MeleeChemicalInjector
+    solution: melee
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
+  - type: SolutionInjectOnEmbed
+    transferAmount: 2
+    solution: melee
+    blockSlots: OUTERCLOTHING
+  - type: SolutionTransfer
+    maxTransferAmount: 2
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30 #excess damage avoids cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: BalloonPopper
+
+- type: entity
+  parent: Dart
+  id: DartBlue
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dart_blue.rsi
+  - type: Item
+    sprite: Objects/Fun/Darts/dart_blue.rsi
+
+- type: entity
+  parent: Dart
+  id: DartPurple
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dart_purple.rsi
+  - type: Item
+    sprite: Objects/Fun/Darts/dart_purple.rsi
+
+- type: entity
+  parent: Dart
+  id: DartYellow
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dart_yellow.rsi
+  - type: Item
+    sprite: Objects/Fun/Darts/dart_yellow.rsi
+
+- type: entity
+  parent: Dart
+  id: HypoDart
+  suffix: HypoDart
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 7
+  - type: SolutionInjectOnEmbed
+    transferAmount: 7
+    blockSlots: NONE
+    solution: melee
+  - type: SolutionTransfer
+    maxTransferAmount: 7
+
+- type: entity
+  name: dartboard
+  id: TargetDarts
+  parent: BaseStructureDynamic
+  description: A target for playing darts.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/target.rsi
+    state: target_dart
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: InteractionOutline
+  - type: Physics
+  - type: Damageable
+  - type: DamageRandomPopup
+    popups:
+      - darts-popup-bullseye
+      - darts-popup-25
+      - darts-popup-10
+      - darts-popup-10
+      - darts-popup-5
+      - darts-popup-5
+      - darts-popup-5
+      - darts-popup-1
+      - darts-popup-1
+      - darts-popup-1
+      - darts-popup-miss
+      - darts-popup-miss
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 5
+            max: 5
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/tree_fell.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: [ BaseItem, BaseSyndicateContraband ]
+  id: HypoDartBox
+  name: hypodart box
+  suffix: HypoDart
+  description: A small box containing a hypodart. Packaging disintegrates when opened, leaving no evidence behind.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/dartbox.rsi
+    state: icon
+  - type: SpawnItemsOnUse
+    items:
+    - id: HypoDart
+    sound:
+      path: /Audio/Effects/unwrap.ogg

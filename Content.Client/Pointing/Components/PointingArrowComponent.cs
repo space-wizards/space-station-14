@@ -1,21 +1,16 @@
 using Content.Shared.Pointing.Components;
-using Robust.Client.GameObjects;
-using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
+using System.Numerics;
 
-namespace Content.Client.Pointing.Components
+namespace Content.Client.Pointing.Components;
+[RegisterComponent]
+public sealed partial class PointingArrowComponent : SharedPointingArrowComponent
 {
-    [RegisterComponent]
-    [ComponentReference(typeof(SharedPointingArrowComponent))]
-    public sealed class PointingArrowComponent : SharedPointingArrowComponent
-    {
-        protected override void Startup()
-        {
-            base.Startup();
+    /// <summary>
+    /// How far the arrow moves up and down during the floating phase.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("offset")]
+    public Vector2 Offset = new(0, 0.25f);
 
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner, out SpriteComponent? sprite))
-            {
-                sprite.DrawDepth = (int) DrawDepth.Overlays;
-            }
-        }
-    }
+    public readonly string AnimationKey = "pointingarrow";
 }

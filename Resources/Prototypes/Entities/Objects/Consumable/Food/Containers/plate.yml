@@ -15,7 +15,15 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate
-    netsync: false
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-6
+    inhandVisuals:
+      left:
+      - state: plate-inhand-left
+      right:
+      - state: plate-inhand-right
   - type: DamageOnLand
     damage:
       types:
@@ -35,6 +43,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -8
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodPlateTrash:
@@ -44,9 +54,11 @@
         acts: [ "Destruction" ]
   - type: Tag
     tags:
-    - Recyclable
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+  - type: SpaceGarbage
 
 - type: entity
   name: broken plate
@@ -57,12 +69,14 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-trash
-    netsync: false
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-6
   - type: Tag
     tags:
-    - Recyclable
     - Trash
-  - type: Recyclable
+  - type: SpaceGarbage
 
 # Small Plate
 
@@ -75,6 +89,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small
+  - type: Item
+    storedOffset: 0,-3
+    inhandVisuals:
+      left:
+      - state: plate-inhand-left
+      right:
+      - state: plate-inhand-right
 # Needs the full thing because inherting is dumb sometimes.
   - type: Destructible
     thresholds:
@@ -85,6 +106,8 @@
       - !type:PlaySoundBehavior
         sound:
           collection: GlassBreak
+          params:
+            volume: -8
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodPlateSmallTrash:
@@ -92,6 +115,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 25
 
 - type: entity
   parent: FoodPlateTrash
@@ -100,31 +126,54 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-trash
-    netsync: false
+  - type: Item
+    storedOffset: 0,-3
 
 # Plastic Plate
 
 - type: entity
-  name: plastic plate
   parent: BaseItem
   id: FoodPlatePlastic
+  name: large plastic plate
   description: A large blue plastic plate, excellent for a birthday cake.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-plastic
-    netsync: false
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-6
+    inhandVisuals:
+      left:
+      - state: plate-plastic-inhand-left
+      right:
+      - state: plate-plastic-inhand-right
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
-  name: plastic plate
   parent: BaseItem
   id: FoodPlateSmallPlastic
+  name: small plastic plate
   description: A blue plastic plate, excellent for slices of birthday cake.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-plastic
-    netsync: false
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
+    inhandVisuals:
+      left:
+      - state: plate-plastic-inhand-left
+      right:
+      - state: plate-plastic-inhand-right
+  - type: Tag
+    tags:
+    - Trash
 
 # Pie Tin
 
@@ -132,13 +181,44 @@
   name: pie tin
   parent: BaseItem
   id: FoodPlateTin
-  description: A cheap, foil tin for pies.
+  description: A cheap foil tin for pies.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/plates.rsi
     state: tin
-    netsync: false
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+  - type: SpaceGarbage
+
+# Muffin Tin
+
+- type: entity
+  parent: BaseItem
+  id: FoodPlateMuffinTin
+  name: muffin tin
+  description: A cheap foil tin for muffins.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: muffin-tin
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+    storedOffset: 0,-2
+  - type: Tag
+    tags:
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 25
+  - type: SpaceGarbage

@@ -6,6 +6,9 @@
     mode: SnapgridCenter
   components:
     - type: AtmosDevice
+    - type: Tag
+      tags:
+        - Unstackable
     - type: SubFloorHide
       blockInteractions: false
       blockAmbience: false
@@ -32,28 +35,33 @@
   placement:
     mode: SnapgridCenter
   components:
-    # TODO ATMOS Improve this sprite and appearance...
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/gasfilter.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeTJunction
-          rotation: -90 # fuck you!!! who cares
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          state: pipeTrinaryConnectors
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasFilter
-          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: PipeColorVisualizer
-        - type: GasFilterVisualizer
-          disabledState: gasFilter
-          enabledState: gasFilterOn
+        enum.FilterVisuals.Enabled:
+          enabled:
+            True: { state: gasFilterOn }
+            False: { state: gasFilter }
+    - type: PipeColorVisuals
     - type: UserInterface
       interfaces:
-        - key: enum.GasFilterUiKey.Key
+        enum.GasFilterUiKey.Key:
           type: GasFilterBoundUserInterface
     - type: GasFilter
+      enabled: false
+      transferRate: 1000
+      maxTransferRate: 1000
     - type: Flippable
       mirrorEntity: GasFilterFlipped
     - type: Construction
@@ -65,6 +73,11 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
+    - type: GuideHelp
+      guides:
+      - MixingAndFiltering
 
 - type: entity
   parent: GasFilter
@@ -74,24 +87,30 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTJunction
-      rotation: -90
-      map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+      state: pipeTrinaryConnectors
+      map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasFilterF
-      map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
   - type: Flippable
     mirrorEntity: GasFilter
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: PipeColorVisualizer
-    - type: GasFilterVisualizer
-      disabledState: gasFilterF
-      enabledState: gasFilterFOn
+      enum.FilterVisuals.Enabled:
+        enabled:
+          True: { state: gasFilterFOn }
+          False: { state: gasFilterF }
+  - type: Construction
+    node: filterflipped
+
+  - type: PipeColorVisuals
   - type: NodeContainer
     nodes:
       inlet:
@@ -115,27 +134,31 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: SubFloorHide
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/gasmixer.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
-          state: pipeTJunction
-          rotation: -90
-          map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+          state: pipeTrinaryConnectors
+          map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: gasMixer
-          map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: PipeColorVisualizer
-        - type: GasFilterVisualizer
-          disabledState: gasMixer
-          enabledState: gasMixerOn
+        enum.FilterVisuals.Enabled:
+          enabled:
+            True: { state: gasMixerOn }
+            False: { state: gasMixer }
+    - type: PipeColorVisuals
     - type: UserInterface
       interfaces:
-        - key: enum.GasMixerUiKey.Key
+        enum.GasMixerUiKey.Key:
           type: GasMixerBoundUserInterface
     - type: GasMixer
+      enabled: false
       inletOne: inlet
       inletTwo: filter
     - type: Flippable
@@ -149,6 +172,11 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
+    - type: GuideHelp
+      guides:
+      - MixingAndFiltering
 
 - type: entity
   parent: GasMixer
@@ -159,21 +187,21 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/Atmospherics/gasmixer.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTJunction
-      rotation: -90
-      map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+      state: pipeTrinaryConnectors
+      map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasMixerF
-      map: [ "enum.SubfloorLayers.FirstLayer", "enum.GasFilterVisualizer+Layers.Enabled" ]
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: PipeColorVisualizer
-    - type: GasFilterVisualizer
-      disabledState: gasMixerF
-      enabledState: gasMixerFOn
+      enum.FilterVisuals.Enabled:
+        enabled:
+          True: { state: gasMixerFOn }
+          False: { state: gasMixerF }
+  - type: PipeColorVisuals
   - type: Flippable
     mirrorEntity: GasMixer
   - type: NodeContainer
@@ -190,3 +218,70 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: North
+  - type: Construction
+    node: mixerflipped
+
+- type: entity
+  parent: GasPipeBase
+  id: PressureControlledValve
+  name: pneumatic valve
+  description: A bidirectional valve controlled by pressure. Opens if the output pipe is lower than the pressure of the control pipe by 101.325 kPa.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: AtmosDevice
+    - type: Tag
+      tags:
+        - Unstackable
+    - type: SubFloorHide
+      blockInteractions: false
+      blockAmbience: false
+      visibleLayers:
+      - enum.SubfloorLayers.FirstLayer
+    - type: NodeContainer
+      nodes:
+        inlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: North
+        control:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: West
+        outlet:
+          !type:PipeNode
+          nodeGroupID: Pipe
+          pipeDirection: South
+    - type: Sprite
+      sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
+      layers:
+        - sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeTrinaryConnectors
+          map: [ "enum.PipeVisualLayers.Pipe" ]
+        - state: off
+          map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FilterVisuals.Enabled:
+          enabled:
+            True: { state: on }
+            False: { state: off }
+    - type: PipeColorVisuals
+    - type: PressureControlledValve
+    - type: AmbientSound
+      enabled: false
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: Construction
+      graph: GasTrinary
+      node: pneumaticvalve
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
+    - type: GuideHelp
+      guides:
+      - PneumaticValve
+      - Pumps
+      - Valves

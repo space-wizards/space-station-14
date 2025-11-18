@@ -1,43 +1,77 @@
 - type: entity
   abstract: true
   parent: Clothing
-  id: ClothingWithSuitSensor
+  id: UnsensoredClothingUniformBase
   components:
-  - type: SuitSensor
-  - type: DeviceNetworkComponent
-    deviceNetId: Wireless
-  - type: WirelessNetworkConnection
-    range: 500
+  - type: Sprite
+    state: icon
+  - type: Clothing
+    slots: [innerclothing]
+    equipSound:
+      path: /Audio/Items/jumpsuit_equip.ogg
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 3
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 150
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 30
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
 
 - type: entity
   abstract: true
-  parent: ClothingWithSuitSensor
+  parent: UnsensoredClothingUniformBase
+  id: UnsensoredClothingUniformSkirtBase
+  components:
+  - type: Clothing
+    slots: [innerclothing]
+    femaleMask: UniformTop
+
+
+- type: entity
+  abstract: true
+  parent: UnsensoredClothingUniformBase
   id: ClothingUniformBase
   components:
-  - type: Sprite
-    state: icon
-  - type: Clothing
-    Slots: [innerclothing]
-    EquipSound:
-      path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned: MaterialCloth1
-    pieces: 3
+  - type: SuitSensor
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: SuitSensor
+    savableAddress: false
+  - type: WirelessNetworkConnection
+    range: 1200
+  - type: StationLimitedNetwork
 
 - type: entity
   abstract: true
-  parent: ClothingWithSuitSensor
+  parent: ClothingUniformBase
   id: ClothingUniformSkirtBase
   components:
-  - type: Sprite
-    state: icon
   - type: Clothing
-    Slots: [innerclothing]
+    slots: [innerclothing]
     femaleMask: UniformTop
-    EquipSound:
-      path: /Audio/Items/jumpsuit_equip.ogg
-  - type: Butcherable
-    butcheringType: Knife
-    spawned: MaterialCloth1
-    pieces: 3
+
+- type: entity
+  abstract: true
+  id: ClothingUniformFoldableBase
+  components:
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: unfold-verb-clothing-jacket
+    foldVerbText: fold-verb-clothing-jacket
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded

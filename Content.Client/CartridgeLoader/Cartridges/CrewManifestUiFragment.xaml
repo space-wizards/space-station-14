@@ -1,0 +1,20 @@
+﻿<cartridges:CrewManifestUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                   xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                                   xmlns:ui="clr-namespace:Content.Client.CrewManifest.UI"
+                                   xmlns="https://spacestation14.io" Margin="1 0 2 0">
+    <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+        <controls:StripeBack Name="StationNameContainer">
+            <PanelContainer>
+                <Label Name="StationName" Align="Center" Text="{Loc 'crew-manifest-cartridge-loading'}"/>
+            </PanelContainer>
+        </controls:StripeBack>
+        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+            <ui:CrewManifestListing
+                Name="CrewManifestListing"
+                Orientation="Vertical"
+                HorizontalExpand="True"
+                Margin="8,0,0,0"/>
+        </ScrollContainer>
+    </BoxContainer>
+</cartridges:CrewManifestUiFragment>

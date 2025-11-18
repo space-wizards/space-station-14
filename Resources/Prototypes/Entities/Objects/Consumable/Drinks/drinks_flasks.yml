@@ -1,59 +1,121 @@
 - type: entity
-  parent: DrinkGlassBase
+  abstract: true
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable]
+  id: FlaskBase
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/flask.rsi
+  - type: FitsInDispenser
+    solution: drink
+  - type: Openable
+    sound:
+      collection: flaskOpenSounds
+    closeable: true
+    closeSound:
+      collection: flaskCloseSounds
+
+# Flasks
+
+- type: entity
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase]
+  id: DrinkFlaskOld
+  name: old flask
+  description: A decrepit old flask, its lid seems to be missing.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/flask_old.rsi
+  - type: FitsInDispenser
+    solution: drink
+
+- type: entity
+  parent: FlaskBase
   id: DrinkShinyFlask
   name: shiny flask
   description: A shiny metal flask. It appears to have a Greek symbol inscribed on it.
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shinyflask.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: FlaskBase
+  id: DrinkMREFlask
+  suffix: Full
+  name: MRE flask
+  description: An old military flask, filled with the finest contents for soldiers.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mreflask.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 50
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  parent: FlaskBase
   id: DrinkDetFlask
   name: inspector's flask
   description: A metal flask with a leather band and golden badge belonging to the inspector.
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/detflask.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: FlaskBase
+  id: DrinkHosFlask
+  name: hos's flask
+  description: A metal flask, fit for a hard working HoS.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/hosflask.rsi
+
+- type: entity
+  parent: FlaskBase
   id: DrinkFlask
   name: captain's flask
-  description: A metal flask belonging to the captain
+  description: A metal flask belonging to the captain.
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask.rsi
 
 - type: entity
-  parent: DrinkGlassBase
-  id: DrinkFlaskOld
+  parent: FlaskBase
+  id: DrinkFlaskBar
   name: flask
-  description: ''
+  description: A reusable metal flask. Classier than drinking straight from a bottle.
   components:
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/flask_old.rsi
+    - type: Sprite
+      sprite: Objects/Consumable/Drinks/barflask.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: FlaskBase
   id: DrinkLithiumFlask
   name: lithium flask
   description: A flask with a Lithium Atom symbol on it.
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lithiumflask.rsi
 
 - type: entity
-  parent: DrinkGlassBase
+  parent: FlaskBase
   id: DrinkVacuumFlask
   name: vacuum flask
   description: Keeping your drinks at the perfect temperature since 1892.
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vacuumflask.rsi
+  - type: Tool
+    qualities:
+    - Rolling # Perfectly cylindrical flask
+    speedModifier: 0.75

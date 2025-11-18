@@ -1,23 +1,22 @@
 ﻿using Content.Shared.Alert;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.StatusEffect
 {
-    [Prototype("statusEffect")]
-    public sealed class StatusEffectPrototype : IPrototype
+    [Prototype]
+    public sealed partial class StatusEffectPrototype : IPrototype
     {
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+        [IdDataField]
+        public string ID { get; private set; } = default!;
 
         [DataField("alert")]
-        public AlertType? Alert { get; }
+        public ProtoId<AlertPrototype>? Alert { get; private set; }
 
         /// <summary>
         ///     Whether a status effect should be able to apply to any entity,
         ///     regardless of whether it is in ALlowedEffects or not.
         /// </summary>
         [DataField("alwaysAllowed")]
-        public bool AlwaysAllowed { get; }
+        public bool AlwaysAllowed { get; private set; }
     }
 }

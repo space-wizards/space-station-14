@@ -1,19 +1,33 @@
 # Bowls
 
 - type: entity
-  name: bowl
   parent: ReagentContainerBase
   id: FoodBowlBig
+  name: bowl
   description: A simple bowl, used for soups and salads.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 50 # enough to make cheese in.
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
-    state: bowl
-    netsync: false
+    layers:
+    - state: bowl
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: MixableSolution
+    solution: food
+  - type: Edible
+    edible: Drink
+    solution: food
+    destroyOnEmpty: false
+    utensil: Spoon
   - type: DamageOnLand
     damage:
       types:
@@ -22,13 +36,16 @@
     damage:
       types:
         Blunt: 5
-  - type: Drink
-    solution: food
-    isOpen: true
-  - type: DrawableSolution
-    solution: food
-  - type: Damageable
-    damageContainer: Inorganic
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: fill-
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Destructible
     thresholds:
     - trigger:
@@ -46,22 +63,32 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Trash
 
 - type: entity
-  name: broken bowl
   parent: BaseItem
   id: FoodBowlBigTrash
+  name: broken bowl
   description: A simple bowl, broken and useless.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl-trash
-    netsync: false
   - type: Tag
     tags:
-    - Recyclable
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+  - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: bowl
@@ -70,4 +97,9 @@
   description: A fancy bowl, used for SPECIAL soups and salads.
   components:
   - type: Sprite
-    state: bowl2
+    sprite: Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl2
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false

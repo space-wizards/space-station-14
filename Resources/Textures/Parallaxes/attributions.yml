@@ -1,0 +1,39 @@
+- files: ["planet.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "by Adipemdragon for tgstation, taken at commit 3839e860a7f3102b1488285d3319f61bbfe1fa51 from parallax.dmi"
+  source: "https://github.com/tgstation/tgstation"
+
+- files: ["KettleParallaxNeb.png", "KettleParallaxBG.png", "AspidParallaxBG.png", "AspidParallaxBG.png", "purple_nebula.png"]
+  license: "CC0-1.0"
+  copyright: "adapted from Screaming Brain Studios"
+  source: "https://opengameart.org/content/seamless-space-backgrounds"
+
+- files: ["gas_giant.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "made by brainfood1183 (github) for ss14"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/gas_giant.png"
+
+- files: ["Asteroids.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "taken from tgstation on https://github.com/tgstation/tgstation/commit/3df5d3b42bfb6b3b5adba1067ab41f83816255bb from parallax.dmi"
+  source: "https://github.com/tgstation/tgstation"
+
+- files: ["core_planet.png"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Drawn by Ubaser"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/core_planet.png"
+
+- files: ["debris_small.png"]
+  license: "CC-BY-NC-SA-4.0"
+  copyright: "Drawn by Southbridge"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/debris_small.png"
+
+- files: [ "space_map3.png", "XenoParallaxNeb.png" ]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Made by SlamBamActionman"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Textures/Parallaxes/space_map3.png"
+
+- files: [ "layer1.png", "layer2.png", "layer3.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TGstation13"
+  source: "https://github.com/tgstation/tgstation/blob/bce9afc2cf39c229f2799c6ad2124f4d69a2dbbf/icons/effects/parallax.dmi"

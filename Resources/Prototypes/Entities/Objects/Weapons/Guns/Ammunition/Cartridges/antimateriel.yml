@@ -1,0 +1,19 @@
+- type: entity
+  parent: [ BaseCartridge, BaseMajorContraband ]
+  id: CartridgeAntiMateriel
+  name: cartridge (.60 anti-materiel)
+  components:
+  - type: Tag
+    tags:
+    - CartridgeAntiMateriel
+  - type: CartridgeAmmo
+    proto: BulletAntiMateriel
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/large_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 20

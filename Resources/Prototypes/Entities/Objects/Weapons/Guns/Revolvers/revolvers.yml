@@ -1,165 +1,191 @@
 - type: entity
-  name: RevolverBase
+  name: BaseWeaponRevolver
   parent: BaseItem
-  id: RevolverBase
+  id: BaseWeaponRevolver
   description: A rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     state: icon
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: 0,-6
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: AmmoCounter
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 1.5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+  - type: UseDelay
+    delay: 0.66
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
+        - SpeedLoaderMagnum
+    proto: CartridgeMagnum
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   name: Deckard
-  parent: RevolverBase
-  id: RevolverDeckard
-  description: A rare, custom-built revolver. Use when there is no time for Voight-Kampff test.
+  parent: [BaseWeaponRevolver, BaseSecurityCommandContraband]
+  id: WeaponRevolverDeckard
+  description: A beautifully machined, custom-built revolver. Used when there is no time for the Voight-Kampff test. Loads 5 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: bolt-closed
-      map: ["enum.RangedBarrelVisualLayers.Bolt"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-unshaded-3
-      map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+      map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
-  - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Revolvers/deckard.rsi
-  - type: RangedWeapon
-  - type: BoltActionBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeMagnum
-    caliber: Magnum
+  - type: Gun
+    fireRate: 2
+  - type: RevolverAmmoProvider
     capacity: 5
-    autoCycle: true
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    chambers: [ True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null ]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
   - type: Appearance
-    visuals:
-    - type: BarrelBoltVisualizer
-    - type: MagVisualizer
-      magState: mag
-      steps: 4
-      zeroVisible: true
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   name: Inspector
-  parent: RevolverBase
-  id: RevolverInspector
-  description: A detective's best friend.
+  parent: [BaseWeaponRevolver, BaseSecurityContraband]
+  id: WeaponRevolverInspector
+  description: A double-action revolver manufactured by various companies. It is readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
-  - type: Item
-    size: 24
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeMagnum
-    caliber: Magnum
+  - type: Item
+    storedOffset: 0,-2
+  - type: RevolverAmmoProvider
     capacity: 6
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+  - type: StealTarget
+    stealGroup: OfficerHandgun
 
 - type: entity
   name: Mateba
-  parent: RevolverBase
-  id: RevolverMateba
-  description: The iconic sidearm of the dreaded death squads.
+  parent: [BaseWeaponRevolver, BaseMajorContraband]
+  id: WeaponRevolverMateba
+  description: A modern revolver used by Nanotrasen’s elite, near mythical ‘Death Squad’ task force. Its unique trigger action and barrel placement enable a high fire rate with minimal muzzle flip. Many have looked down this barrel, but few have lived to tell of it. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
-  - type: Item
-    size: 24
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeMagnum
-    caliber: Magnum
-    capacity: 7
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: Item
+    storedOffset: 0,-3
+  - type: Gun
+    fireRate: 3
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
 
 - type: entity
-  name: Predator
-  parent: RevolverBase
-  id: RevolverPredator
-  description: A robust revolver favoured by Syndicate agents.
+  parent: WeaponRevolverMateba
+  id: WeaponRevolverMatebaAP # For deathsquad
+  suffix: armor-piercing
+  components:
+  - type: RevolverAmmoProvider
+    proto: CartridgeMagnumAP
+
+- type: entity
+  name: Python
+  parent: [BaseWeaponRevolver, BaseSyndicateContraband]
+  id: WeaponRevolverPython
+  description: A powerful double-action revolver manufactured by the Syndicate. Loud and flashy, perfect for any agent looking to make a statement. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
+    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Item
-    size: 24
-    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgeMagnum
-    caliber: Magnum
-    capacity: 7
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    storedOffset: 0,-2
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2
+    availableModes:
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+      params:
+        volume: 2.25
+  - type: StaticPrice
+    price: 1500 # Botany can shit these out like candy, but let's see how it goes
+
+- type: entity
+  parent: WeaponRevolverPython
+  id: WeaponRevolverPythonAP # For the uplink.
+  suffix: armor-piercing
+  components:
+  - type: RevolverAmmoProvider
+    proto: CartridgeMagnumAP
+
 
 - type: entity
   name: pirate revolver
-  parent: RevolverBase
-  id: RevolverPirate
-  description: An odd, muzzle-loading revolver, favoured by pirate crews.
+  parent: [BaseWeaponRevolver, BaseMajorContraband]
+  id: WeaponRevolverPirate
+  description: A crude single-action revolver handmade by a space pirate. Old and covered in rust, it somehow still works. Loads 5 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
-  - type: Item
-    size: 24
+  - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
-  - type: RangedWeapon
-  - type: RevolverBarrel
+  - type: Item
+    storedOffset: 1,-5
+  - type: Gun
     fireRate: 1
-    currentSelector: Single
-    allSelectors:
-    - Single
-    fillPrototype: CartridgePistol  
-    caliber: Pistol
+  - type: ContainerContainer
+    containers:
+      revolver-ammo: !type:Container
+  - type: RevolverAmmoProvider
     capacity: 5
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject:
-      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert:
-      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    chambers: [ True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null ]
+
+- type: entity
+  parent: WeaponRevolverPirate
+  id: WeaponRevolverPirateEmpty
+  suffix: Empty
+  components:
+  - type: RevolverAmmoProvider
+    proto: null
+    capacity: 5
+    chambers: [ null, null, null, null, null ]
+    ammoSlots: [ null, null, null, null, null ]
+

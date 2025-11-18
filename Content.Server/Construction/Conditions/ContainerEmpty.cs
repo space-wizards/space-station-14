@@ -1,33 +1,27 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ContainerEmpty : IGraphCondition
+    public sealed partial class ContainerEmpty : IGraphCondition
     {
         [DataField("container")]
-        public string Container { get; } = string.Empty;
+        public string Container { get; private set; } = string.Empty;
 
         [DataField("examineText")]
-        public string? ExamineText { get; }
+        public string? ExamineText { get; private set; }
 
         [DataField("guideStep")]
-        public string? GuideText { get; }
+        public string? GuideText { get; private set; }
 
         [DataField("guideIcon")]
-        public SpriteSpecifier? GuideIcon { get; }
+        public SpriteSpecifier? GuideIcon { get; private set; }
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
@@ -45,8 +39,9 @@ namespace Content.Server.Construction.Conditions
 
             var entity = args.Examined;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ContainerManagerComponent? containerManager) ||
-                !containerManager.TryGetContainer(Container, out var container)) return false;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            if (!entityManager.TryGetComponent(entity, out ContainerManagerComponent? containerManager) ||
+                !entityManager.System<SharedContainerSystem>().TryGetContainer(entity, Container, out var container, containerManager)) return false;
 
             if (container.ContainedEntities.Count == 0)
                 return false;

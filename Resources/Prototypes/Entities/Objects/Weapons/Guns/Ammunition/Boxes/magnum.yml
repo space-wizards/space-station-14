@@ -1,92 +1,104 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: BoxMagnumBase
+  id: BaseMagazineBoxMagnum
   components:
-  - type: AmmoBox
-    caliber: Magnum
-    capacity: 60
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeMagnum
+    proto: CartridgeMagnum
+    capacity: 12
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
-    netsync: false
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: false
   - type: Appearance
-    visuals:
-    - type: MagVisualizer
-      magState: mag
-      steps: 2
-      zeroVisible: false
 
 # Boxes
 - type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnum
-  name: ammunition box (.40 magnum)
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnum
+  name: ammunition box (.45 magnum)
+  description: A cardboard box of .45 magnum rounds. Intended to hold general-purpose kinetic ammunition.
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnum
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnum
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnumFlash
-  name: ammunition box (.40 magnum flash)
+  parent: BaseMagazineBoxMagnum
+  id: MagazineBoxMagnumPractice
+  name: ammunition box (.45 magnum practice)
+  description: A cardboard box of .45 magnum rounds. Intended to hold non-harmful chalk ammunition.
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnumFlash
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumPractice
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
-    - state: flash
-
-- type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnumHV
-  name: ammunition box (.40 magnum high-velocity)
-  components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnumHV
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
-    - state: hv
-
-- type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnumPractice
-  name: ammunition box (.40 magnum practice)
-  components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnumPractice
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
+      map: ["enum.GunVisualLayers.Mag"]
     - state: practice
 
 - type: entity
-  parent: BoxMagnumBase
-  id: BoxMagnumRubber
-  name: ammunition box (.40 magnum rubber)
+  id: MagazineBoxMagnumIncendiary
+  parent: BaseMagazineBoxMagnum
+  name: ammunition box (.45 magnum incendiary)
+  description: A cardboard box of .45 magnum rounds. Intended to hold self-igniting incendiary ammunition.
   components:
-  - type: AmmoBox
-    fillPrototype: CartridgeMagnumRubber
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumIncendiary
   - type: Sprite
     layers:
     - state: base
-      map: ["enum.RangedBarrelVisualLayers.Base"]
+      map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
-      map: ["enum.RangedBarrelVisualLayers.Mag"]
-    - state: rubber
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary
+
+- type: entity
+  id: MagazineBoxMagnumUranium
+  parent: BaseMagazineBoxMagnum
+  name: ammunition box (.45 magnum uranium)
+  description: A cardboard box of .45 magnum rounds. Intended to hold exotic uranium-core ammunition.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumUranium
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: uranium
+
+- type: entity
+  id: MagazineBoxMagnumAP
+  parent: BaseMagazineBoxMagnum
+  name: ammunition box (.45 magnum armor-piercing)
+  description: A cardboard box of .45 magnum rounds. Intended to hold rare armor-piercing ammunition.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumAP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: piercing

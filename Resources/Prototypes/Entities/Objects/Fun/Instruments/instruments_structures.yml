@@ -1,0 +1,170 @@
+﻿- type: entity
+  name: piano
+  parent: BasePlaceableInstrumentRotatable
+  id: PianoInstrument
+  description: Play Needles Piano Now.
+  components:
+  - type: Instrument
+    program: 1
+  - type: Sprite
+    state: piano
+  - type: Climbable
+
+- type: entity
+  name: upright piano
+  parent: BasePlaceableInstrumentRotatable
+  id: UprightPianoInstrument
+  description: I said Piannie!
+  components:
+  - type: Instrument
+    program: 3
+  - type: Sprite
+    state: piano-upright
+  - type: Climbable
+
+- type: entity
+  name: vibraphone
+  id: VibraphoneInstrument
+  parent: BasePlaceableInstrumentRotatable
+  description: Good vibes all around.
+  components:
+  - type: Instrument
+    program: 11
+  - type: Sprite
+    state: vibraphone
+
+- type: entity
+  name: marimba
+  id: MarimbaInstrument
+  parent: BasePlaceableInstrumentRotatable
+  components:
+  - type: Instrument
+    program: 12
+  - type: Sprite
+    state: marimba
+
+- type: entity
+  name: church organ
+  parent: BasePlaceableInstrumentRotatable
+  id: ChurchOrganInstrument
+  description: This thing really blows!
+  components:
+  - type: Instrument
+    program: 19
+  - type: Sprite
+    state: church-organ
+
+- type: entity
+  name: tuba
+  parent: BasePlaceableInstrument
+  id: TubaInstrument
+  description: The big daddy of the brass family. Standing next to its majesty makes you feel insecure.
+  components:
+  - type: Instrument
+    program: 58
+  - type: Sprite
+    state: tuba
+
+- type: entity
+  id: HarpInstrument
+  parent: BasePlaceableInstrument
+  name: harp
+  description: Plucking at the strings cuts your fingers, but at least the music is pretty.
+  components:
+  - type: Instrument
+    program: 46
+  - type: Sprite
+    state: harp
+
+- type: entity
+  id: TimpaniInstrument
+  parent: BasePlaceableInstrumentRotatable
+  name: timpani
+  description: It goes BOOM BOOM BOOM BOOM!
+  components:
+  - type: Instrument
+    program: 47
+  - type: Sprite
+    state: timpani
+
+- type: entity
+  id: TaikoInstrument
+  parent: BasePlaceableInstrumentRotatable
+  name: taiko
+  description: A large drum. Looking at it fills you with the urge to slap it.
+  components:
+  - type: Instrument
+    program: 116
+  - type: Sprite
+    state: taiko
+
+- type: entity
+  id: ContrabassInstrument
+  parent: BasePlaceableInstrument
+  name: contrabass
+  description: Perfect for laying down a nice jazzy beat.
+  components:
+  - type: Instrument
+    program: 43
+  - type: Sprite
+    state: contrabass
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 180
+        mask:
+        - Impassable
+        - HighImpassable
+        - MidImpassable
+        layer:
+        - Opaque
+        - HighImpassable
+        - MidImpassable
+        - BulletImpassable
+
+- type: entity
+  name: minimoog
+  parent: BasePlaceableInstrumentRotatable
+  id: MinimoogInstrument
+  description: This is a minimoog, like a space piano, but more spacey!
+  components:
+  - type: Instrument
+    program: 81
+  - type: Sprite
+    state: minimoog
+
+- type: entity
+  id: TomDrumsInstrument
+  parent: BasePlaceableInstrumentRotatable
+  name: tom drums
+  description: Where'd the rest of the kit go?
+  components:
+  - type: Instrument
+    program: 117
+  - type: Sprite
+    state: toms
+
+- type: entity
+  parent: [ BasePlaceableInstrumentRotatable, ConstructibleMachine]
+  id: DawInstrument
+  name: digital audio workstation
+  description: Cutting edge music technology, straight from the 90s.
+  components:
+  - type: Sprite
+    layers:
+    - state: daw-base
+    - state: daw-display
+      shader: unshaded
+    - state: daw-panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Appearance
+  - type: WiresVisuals
+  - type: WiresPanel
+  - type: Machine
+    board: DawInstrumentMachineCircuitboard
+  - type: Instrument
+    allowPercussion: true
+    allowProgramChange: true

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NpgsqlTypes;
 
 namespace Content.Server.Database
 {
@@ -15,6 +17,9 @@ namespace Content.Server.Database
     {
         public SqliteServerDbContext(DbContextOptions<SqliteServerDbContext> options) : base(options)
         {
+#if USE_SYSTEM_SQLITE
+            SQLitePCL.raw.SetProvider(new SQLitePCL.SQLite3Provider_sqlite3());
+#endif
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -47,8 +52,8 @@ namespace Content.Server.Database
                 .Property(p => p.LastSeenAddress)
                 .HasConversion(ipConverter);
 
-            var ipMaskConverter = new ValueConverter<(IPAddress address, int mask), string>(
-                v => InetToString(v.address, v.mask),
+            var ipMaskConverter = new ValueConverter<NpgsqlInet, string>(
+                v => InetToString(v.Address, v.Netmask),
                 v => StringToInet(v)
             );
 
@@ -64,13 +69,31 @@ namespace Content.Server.Database
                 .HasColumnType("TEXT")
                 .HasConversion(ipMaskConverter);
 
-            var jsonConverter = new ValueConverter<JsonDocument, string>(
+            var jsonStringConverter = new ValueConverter<JsonDocument, string>(
                 v => JsonDocumentToString(v),
                 v => StringToJsonDocument(v));
 
+            var jsonByteArrayConverter = new ValueConverter<JsonDocument?, byte[]>(
+                v => JsonDocumentToByteArray(v),
+                v => ByteArrayToJsonDocument(v));
+
             modelBuilder.Entity<AdminLog>()
                 .Property(log => log.Json)
-                .HasConversion(jsonConverter);
+                .HasConversion(jsonStringConverter);
+
+            modelBuilder.Entity<Profile>()
+                .Property(log => log.Markings)
+                .HasConversion(jsonByteArrayConverter);
+
+            // EF core can make this automatically unique on sqlite but not psql.
+            modelBuilder.Entity<IPIntelCache>()
+                .HasIndex(p => p.Address)
+                .IsUnique();
+        }
+
+        public override int CountAdminLogs()
+        {
+            return AdminLog.Count();
         }
 
         private static string InetToString(IPAddress address, int mask) {
@@ -84,11 +107,11 @@ namespace Content.Server.Database
             return $"{address}/{mask}";
         }
 
-        private static (IPAddress, int) StringToInet(string inet) {
+        private static NpgsqlInet StringToInet(string inet) {
             var idx = inet.IndexOf('/', StringComparison.Ordinal);
-            return (
+            return new NpgsqlInet(
                 IPAddress.Parse(inet.AsSpan(0, idx)),
-                int.Parse(inet.AsSpan(idx + 1), provider: CultureInfo.InvariantCulture)
+                byte.Parse(inet.AsSpan(idx + 1), provider: CultureInfo.InvariantCulture)
             );
         }
 
@@ -104,6 +127,27 @@ namespace Content.Server.Database
         }
 
         private static JsonDocument StringToJsonDocument(string str)
+        {
+            return JsonDocument.Parse(str);
+        }
+
+        private static byte[] JsonDocumentToByteArray(JsonDocument? document)
+        {
+            if (document == null)
+            {
+                return Array.Empty<byte>();
+            }
+
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream, new JsonWriterOptions {Indented = false});
+
+            document.WriteTo(writer);
+            writer.Flush();
+
+            return stream.ToArray();
+        }
+
+        private static JsonDocument ByteArrayToJsonDocument(byte[] str)
         {
             return JsonDocument.Parse(str);
         }

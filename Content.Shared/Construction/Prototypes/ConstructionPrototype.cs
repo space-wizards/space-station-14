@@ -1,84 +1,101 @@
-﻿using System.Collections.Generic;
 using Content.Shared.Construction.Conditions;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Construction.Prototypes
+namespace Content.Shared.Construction.Prototypes;
+
+[Prototype]
+public sealed partial class ConstructionPrototype : IPrototype
 {
-    [Prototype("construction")]
-    public sealed class ConstructionPrototype : IPrototype
-    {
-        [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
+    [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
 
-        /// <summary>
-        ///     Friendly name displayed in the construction GUI.
-        /// </summary>
-        [DataField("name")]
-        public string Name { get; } = string.Empty;
+    /// <summary>
+    ///     Hide from the construction list
+    /// </summary>
+    [DataField]
+    public bool Hide = false;
 
-        /// <summary>
-        ///     "Useful" description displayed in the construction GUI.
-        /// </summary>
-        [DataField("description")]
-        public string Description { get; } = string.Empty;
+    /// <summary>
+    ///     Friendly name displayed in the construction GUI.
+    /// </summary>
+    [DataField("name")]
+    public LocId? SetName;
 
-        /// <summary>
-        ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
-        /// </summary>
-        [DataField("graph", customTypeSerializer:typeof(PrototypeIdSerializer<ConstructionGraphPrototype>))]
-        public string Graph { get; } = string.Empty;
+    public string? Name;
 
-        /// <summary>
-        ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.
-        /// </summary>
-        [DataField("targetNode")]
-        public string TargetNode { get; } = string.Empty;
+    /// <summary>
+    ///     "Useful" description displayed in the construction GUI.
+    /// </summary>
+    [DataField("description")]
+    public LocId? SetDescription;
 
-        /// <summary>
-        ///     The starting <see cref="ConstructionGraphNode"/> this construction will start at.
-        /// </summary>
-        [DataField("startNode")]
-        public string StartNode { get; } = string.Empty;
+    public string? Description;
 
-        /// <summary>
-        ///     Texture path inside the construction GUI.
-        /// </summary>
-        [DataField("icon")]
-        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
+    /// <summary>
+    ///     The <see cref="ConstructionGraphPrototype"/> this construction will be using.
+    /// </summary>
+    [DataField(required: true)]
+    public ProtoId<ConstructionGraphPrototype> Graph { get; private set; } = string.Empty;
 
-        /// <summary>
-        ///     If you can start building or complete steps on impassable terrain.
-        /// </summary>
-        [DataField("canBuildInImpassable")]
-        public bool CanBuildInImpassable { get; private set; }
+    /// <summary>
+    ///     The target <see cref="ConstructionGraphNode"/> this construction will guide the user to.
+    /// </summary>
+    [DataField(required: true)]
+    public string TargetNode { get; private set; } = default!;
 
-        [DataField("category")] public string Category { get; private set; } = string.Empty;
+    /// <summary>
+    ///     The starting <see cref="ConstructionGraphNode"/> this construction will start at.
+    /// </summary>
+    [DataField(required: true)]
+    public string StartNode { get; private set; } = default!;
 
-        [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
+    /// <summary>
+    ///     If you can start building or complete steps on impassable terrain.
+    /// </summary>
+    [DataField]
+    public bool CanBuildInImpassable { get; private set; }
 
-        [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+    /// <summary>
+    /// If not null, then this is used to check if the entity trying to construct this is whitelisted.
+    /// If they're not whitelisted, hide the item.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? EntityWhitelist { get; private set; }
 
-        [DataField("placementMode")]
-        public string PlacementMode { get; } = "PlaceFree";
+    [DataField] public string Category { get; private set; } = string.Empty;
 
-        /// <summary>
-        ///     Whether this construction can be constructed rotated or not.
-        /// </summary>
-        [DataField("canRotate")]
-        public bool CanRotate { get; } = true;
+    [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
 
-        public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
-    }
+    [ViewVariables]
+    [IdDataField]
+    public string ID { get; private set; } = default!;
 
-    public enum ConstructionType
-    {
-        Structure,
-        Item,
-    }
+    [DataField]
+    public string PlacementMode = "PlaceFree";
+
+    /// <summary>
+    ///     Whether this construction can be constructed rotated or not.
+    /// </summary>
+    [DataField]
+    public bool CanRotate = true;
+
+    /// <summary>
+    ///     Construction to replace this construction with when the current one is 'flipped'
+    /// </summary>
+    [DataField]
+    public ProtoId<ConstructionPrototype>? Mirror { get; private set; }
+
+    /// <summary>
+    ///     Possible constructions to replace this one with as determined by the placement mode
+    /// </summary>
+    [DataField]
+    public ProtoId<ConstructionPrototype>[] AlternativePrototypes = [];
+
+    public IReadOnlyList<IConstructionCondition> Conditions => _conditions;
 }
 
+public enum ConstructionType
+{
+    Structure,
+    Item,
+}

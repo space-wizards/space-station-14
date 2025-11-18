@@ -1,0 +1,29 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc admin-fax-title}"
+               MinWidth="400">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc admin-fax-fax}" />
+            <Control MinWidth="4" />
+            <OptionButton Name="FaxSelector" HorizontalExpand="True" />
+            <Control MinWidth="4" />
+            <Button Name="FollowButton" Text="{Loc admin-fax-follow}" />
+        </BoxContainer>
+        <Control MinHeight="5" />
+        <LineEdit Name="TitleEdit" HorizontalExpand="True" PlaceHolder="{Loc admin-fax-title-placeholder}"></LineEdit>
+        <Control MinHeight="5" />
+        <LineEdit Name="FromEdit" HorizontalExpand="True" PlaceHolder="{Loc admin-fax-from-placeholder}"></LineEdit>
+        <Control MinHeight="5" />
+        <TextEdit Name="MessageEdit" HorizontalExpand="True" MinHeight="200"></TextEdit>
+        <Control MinHeight="5" />
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc admin-fax-stamp}" />
+            <Control MinWidth="5" />
+            <OptionButton Name="StampSelector" HorizontalExpand="True" />
+        </BoxContainer>
+        <Label Text="{Loc admin-fax-stamp-color}" />
+        <ColorSelectorSliders Margin="12 0 0 0" Name="StampColorSelector" Color="#BB3232"/>
+        <CheckBox Name="LockPageCheckbox" Text="{Loc admin-fax-lock-page}" ToolTip="{Loc admin-fax-lock-page-tooltip}"/>
+        <Button Name="SendButton" Text="{Loc admin-fax-send}" Margin="0 10 0 0" />
+    </BoxContainer>
+</DefaultWindow>

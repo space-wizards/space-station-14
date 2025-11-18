@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Reflection.Metadata;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Construction.Prototypes
 {
-    [Prototype("constructionGraph")]
-    public sealed class ConstructionGraphPrototype : IPrototype, ISerializationHooks
+    [Prototype]
+    public sealed partial class ConstructionGraphPrototype : IPrototype, ISerializationHooks
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
         private readonly Dictionary<(string, string), ConstructionGraphNode[]?> _paths = new();
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode?>> _pathfinding = new();
 
         [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+        [IdDataField]
+        public string ID { get; private set; } = default!;
 
-        [ViewVariables]
         [DataField("start")]
-        public string? Start { get; }
+        public string? Start { get; private set; }
 
         [DataField("graph", priority: 0)]
         private List<ConstructionGraphNode> _graph = new();

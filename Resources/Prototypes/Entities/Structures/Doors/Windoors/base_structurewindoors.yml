@@ -1,27 +1,34 @@
-﻿- type: entity
+#Normal windoors
+- type: entity
   id: BaseWindoor
-  parent: BaseStructure
+  parent: [BaseDeltaPressureGlassQuarter, BaseStructure]
   abstract: true
   placement:
     mode: SnapgridCenter
   components:
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Rotatable
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
   - type: InteractionOutline
+  - type: StationAiWhitelist
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,-0.3"
-      mass: 50
-      layer:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-      mask:
-      - VaultImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,-0.36"
+        density: 1500
+        mask:
+        - TabletopMachineMask
+        layer:
+        - GlassAirlockLayer
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: closed
@@ -29,8 +36,9 @@
     - state: closed_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
+      visible: false
     - state: welded
-      map: ["enum.DoorVisualLayers.BaseWelded"]
+      map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseBolted"]
@@ -39,13 +47,50 @@
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.HUD"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
+  - type: AnimationPlayer
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: DoorSignalControl
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - Open
+      - Close
+      - Toggle
+      - AutoClose
+      - DoorBolt
+  - type: DeviceLinkSource
+    ports:
+    - DoorStatus
+    lastSignals:
+      DoorStatus: false
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Glass
   - type: ExaminableDamage
     messages: WindowMessages
+  - type: RCDDeconstructable
+    cost: 8
+    delay: 8
+    fx: EffectRCDDeconstruct8
   - type: Destructible
     thresholds:
     - trigger:
@@ -68,52 +113,75 @@
             max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
   - type: AccessReader
-  - type: Airlock
-    openPanelVisible: true
-    # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
-    safety: false
+    containerAccessProvider: board
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Door
     canCrush: false
-    weldable: false
-    board: DoorElectronics
+    openingAnimationTime: 0.9
+    closingAnimationTime: 0.9
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
       path: /Audio/Machines/windoor_open.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+  - type: Airlock
+    keepOpenIfClicked: true
+    openPanelVisible: true
+    denyAnimationTime: 0.4
+    animatePanel: false
+    openUnlitVisible: true
+    # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
+    safety: false
+  - type: NavMapDoor
+  - type: DoorBolt
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: WiresPanel
   - type: Wires
-    BoardName: "Windoor Control"
-    LayoutId: Windoors
+    boardName: wires-board-name-windoor
+    layoutId: Airlock
   - type: UserInterface
     interfaces:
-    - key: enum.WiresUiKey.Key
-      type: WiresBoundUserInterface
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: AirlockVisualizer
-        animationTime: 0.9
-        denyAnimationTime: 0.4
-        animatedPanel: false
-        openUnlitVisible: true
-      - type: WiresVisualizer
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
+          True: { visible: True }
+          False: { visible: False }
+  - type: WiresVisuals
+  - type: ElectrocutionHUDVisuals
   - type: Airtight
-    fixVacuum: true
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
       - South
   - type: Construction
     graph: Windoor
     node: windoor
+    containers:
+    - board
+  - type: StaticPrice
+    price: 150
+  - type: PryUnpowered
 
 - type: entity
   id: BaseSecureWindoor
-  parent: BaseWindoor
+  parent: [BaseDeltaPressureReinforcedGlassQuarter, BaseWindoor]
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: secure_underlay
@@ -122,8 +190,9 @@
     - state: closed_unlit
       shader: unshaded
       map: [ "enum.DoorVisualLayers.BaseUnlit" ]
+      visible: false
     - state: welded
-      map: [ "enum.DoorVisualLayers.BaseWelded" ]
+      map: [ "enum.WeldableLayers.BaseWelded" ]
     - state: bolted_unlit
       shader: unshaded
       map: [ "enum.DoorVisualLayers.BaseBolted" ]
@@ -133,8 +202,22 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-  - type: Wires
-    LayoutId: Secure Windoors
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
+  - type: Damageable
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
@@ -160,3 +243,299 @@
   - type: Construction
     graph: Windoor
     node: windoorSecure
+  - type: StaticPrice
+    price: 350
+  - type: Tag
+    tags:
+      - SecureWindoor
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+
+
+#Plasma Windoors
+- type: entity
+  id: BasePlasmaWindoor
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoor]
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/plasma.rsi
+    layers:
+    - state: closed
+      map: [ "enum.DoorVisualLayers.Base" ]
+    - state: closed_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
+      visible: false
+    - state: welded
+      map: [ "enum.WeldableLayers.BaseWelded" ]
+    - state: bolted_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseBolted" ]
+    - state: emergency_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
+    - state: panel_open
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 480
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 240
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+          SheetSteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Windoor
+    node: pwindoor
+  - type: StaticPrice
+    price: 500
+  - type: RadiationBlocker
+    resistance: 2
+
+- type: entity
+  id: BaseSecurePlasmaWindoor
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoor]
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/plasma.rsi
+    layers:
+    - state: secure_underlay
+    - state: closed
+      map: [ "enum.DoorVisualLayers.Base" ]
+    - state: closed_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
+      visible: false
+    - state: welded
+      map: [ "enum.WeldableLayers.BaseWelded" ]
+    - state: bolted_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseBolted" ]
+    - state: emergency_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
+    - state: panel_open
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 800
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 530
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+          SheetPlasteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Windoor
+    node: pwindoorSecure
+  - type: StaticPrice
+    price: 500
+  - type: RadiationBlocker
+    resistance: 4
+  - type: Tag
+    tags:
+      - SecurePlasmaWindoor
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+
+
+#Uranium Windoors
+- type: entity
+  id: BaseUraniumWindoor
+  parent: [BaseDeltaPressurePlasmaQuarter, BaseWindoor]
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/uranium.rsi
+    layers:
+    - state: closed
+      map: [ "enum.DoorVisualLayers.Base" ]
+    - state: closed_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
+      visible: false
+    - state: welded
+      map: [ "enum.WeldableLayers.BaseWelded" ]
+    - state: bolted_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseBolted" ]
+    - state: emergency_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
+    - state: panel_open
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 240
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassUranium:
+            min: 1
+            max: 2
+          SheetSteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Windoor
+    node: uwindoor
+  - type: StaticPrice
+    price: 560
+  - type: RadiationBlocker
+    resistance: 3
+
+- type: entity
+  id: BaseSecureUraniumWindoor
+  parent: [BaseDeltaPressureReinforcedPlasmaQuarter, BaseSecureWindoor]
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Windoors/uranium.rsi
+    layers:
+    - state: secure_underlay
+    - state: closed
+      map: [ "enum.DoorVisualLayers.Base" ]
+    - state: closed_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
+      visible: false
+    - state: welded
+      map: [ "enum.WeldableLayers.BaseWelded" ]
+    - state: bolted_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseBolted" ]
+    - state: emergency_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseEmergencyAccess" ]
+    - state: panel_open
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
+    - state: electrified_ai
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
+    - state: sparks
+      map: ["enum.DoorVisualLayers.BaseEmagging"]
+      shader: unshaded
+      visible: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassUranium:
+            min: 1
+            max: 2
+          SheetPlasteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: Windoor
+    node: uwindoorSecure
+  - type: StaticPrice
+    price: 750
+  - type: RadiationBlocker
+    resistance: 5
+  - type: Tag
+    tags:
+      - SecureUraniumWindoor
+      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor

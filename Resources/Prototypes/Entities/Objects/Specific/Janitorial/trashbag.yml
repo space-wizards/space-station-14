@@ -1,35 +1,41 @@
 - type: entity
   name: trash bag
   id: TrashBag
-  parent: BaseItem
+  parent: BaseStorageItem
   components:
   - type: Sprite
-    netSync: false
     sprite: Objects/Specific/Janitorial/trashbag.rsi
     layers:
       - state: icon-0
         map: ["enum.StorageFillLayers.Fill"]
-  - type: Item
-    sprite: Objects/Specific/Janitorial/trashbag.rsi
-    size: 125
   - type: Storage
-    capacity: 125
+    maxItemSize: Normal
+    grid:
+    - 0,0,7,5
     quickInsert: true
     areaInsert: true
-    storageSoundCollection:
+    storageOpenSound:
+      collection: trashBagRustle
+    storageInsertSound:
       collection: trashBagRustle
     whitelist:
       tags:
-        - Cartridge
         - Trash
+  - type: UseDelay
+    delay: 0.5
   - type: Tag
     tags:
     - TrashBag
-    - DroneUsable
   - type: Appearance
   - type: StorageFillVisualizer
     maxFillLevels: 4
     fillBaseName: icon
+  - type: Dumpable
+  - type: Clothing
+    slots: [belt]
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+  - type: Item
+    size: Normal
 
 - type: entity
   name: trash bag
@@ -41,7 +47,7 @@
       - state: blue-icon-0
         map: ["enum.StorageFillLayers.Fill"]
   - type: Item
-    HeldPrefix: blue
+    heldPrefix: blue
   - type: StorageFillVisualizer
     fillBaseName: blue-icon
 
@@ -51,9 +57,20 @@
   parent: TrashBagBlue
   components:
   - type: Storage
-    capacity: 125000
+    maxItemSize: Huge
+    grid:
+    - 0,0,19,9
     quickInsert: true
     areaInsert: true
-    areaInsertRadius: 1000
-    storageSoundCollection:
-      collection: trashBagRustle
+    areaInsertRadius: 5
+
+- type: entity
+  parent: TrashBag
+  id: BorgTrashBag
+  name: internal trash bag
+  description: An upgraded trash bag with a larger internal volume, installed directly into a custodial cyborg.
+  components:
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,7,6

@@ -1,21 +1,37 @@
-using Content.Server.Clothing.Components;
 using Content.Server.Light.Components;
+using Content.Server.Stack;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.IgnitionSource;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
+using Content.Shared.NameModifier.EntitySystems;
+using Content.Shared.Stacks;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Player;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
     public sealed class ExpendableLightSystem : EntitySystem
     {
+        [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+
+        private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -23,19 +39,24 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<ExpendableLightComponent, ComponentInit>(OnExpLightInit);
             SubscribeLocalEvent<ExpendableLightComponent, UseInHandEvent>(OnExpLightUse);
             SubscribeLocalEvent<ExpendableLightComponent, GetVerbsEvent<ActivationVerb>>(AddIgniteVerb);
+            SubscribeLocalEvent<ExpendableLightComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<ExpendableLightComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var light in EntityManager.EntityQuery<ExpendableLightComponent>())
+            var query = EntityQueryEnumerator<ExpendableLightComponent>();
+            while (query.MoveNext(out var uid, out var light))
             {
-                UpdateLight(light, frameTime);
+                UpdateLight((uid, light), frameTime);
             }
         }
 
-        private void UpdateLight(ExpendableLightComponent component, float frameTime)
+        private void UpdateLight(Entity<ExpendableLightComponent> ent, float frameTime)
         {
-            if (!component.Activated) return;
+            var component = ent.Comp;
+            if (!component.Activated)
+                return;
 
             component.StateExpiryTime -= frameTime;
 
@@ -45,25 +66,25 @@ namespace Content.Server.Light.EntitySystems
                 {
                     case ExpendableLightState.Lit:
                         component.CurrentState = ExpendableLightState.Fading;
-                        component.StateExpiryTime = component.FadeOutDuration;
+                        component.StateExpiryTime = (float)component.FadeOutDuration.TotalSeconds;
 
-                        UpdateVisualizer(component);
+                        UpdateVisualizer(ent);
 
                         break;
 
                     default:
                     case ExpendableLightState.Fading:
                         component.CurrentState = ExpendableLightState.Dead;
-                        var meta = MetaData(component.Owner);
-                        meta.EntityName = component.SpentName;
-                        meta.EntityDescription = component.SpentDesc;
+                        _nameModifier.RefreshNameModifiers(ent.Owner);
 
-                        UpdateSpriteAndSounds(component);
-                        UpdateVisualizer(component);
+                        _tagSystem.AddTag(ent, TrashTag);
 
-                        if (TryComp<SharedItemComponent>(component.Owner, out var item))
+                        UpdateSounds(ent);
+                        UpdateVisualizer(ent);
+
+                        if (TryComp<ItemComponent>(ent, out var item))
                         {
-                            item.EquippedPrefix = "unlit";
+                            _item.SetHeldPrefix(ent, "unlit", component: item);
                         }
 
                         break;
@@ -74,117 +95,138 @@ namespace Content.Server.Light.EntitySystems
         /// <summary>
         ///     Enables the light if it is not active. Once active it cannot be turned off.
         /// </summary>
-        public bool TryActivate(ExpendableLightComponent component)
+        public bool TryActivate(Entity<ExpendableLightComponent> ent)
         {
+            var component = ent.Comp;
             if (!component.Activated && component.CurrentState == ExpendableLightState.BrandNew)
             {
-                if (TryComp<SharedItemComponent>(component.Owner, out var item))
+                if (TryComp<ItemComponent>(ent, out var item))
                 {
-                    item.EquippedPrefix = "lit";
+                    _item.SetHeldPrefix(ent, "lit", component: item);
                 }
 
+                var ignite = new IgnitionEvent(true);
+                RaiseLocalEvent(ent, ref ignite);
+
                 component.CurrentState = ExpendableLightState.Lit;
-                component.StateExpiryTime = component.GlowDuration;
 
-                UpdateSpriteAndSounds(component);
-                UpdateVisualizer(component);
-
-                return true;
+                UpdateSounds(ent);
+                UpdateVisualizer(ent);
             }
-
-            return false;
+            return true;
         }
 
-        private void UpdateVisualizer(ExpendableLightComponent component, AppearanceComponent? appearance = null)
+        private void OnInteractUsing(EntityUid uid, ExpendableLightComponent component, ref InteractUsingEvent args)
         {
-            if (!Resolve(component.Owner, ref appearance, false)) return;
+            if (args.Handled)
+                return;
 
-            appearance.SetData(ExpendableLightVisuals.State, component.CurrentState);
+            if (!TryComp(args.Used, out StackComponent? stack))
+                return;
+
+            if (stack.StackTypeId != component.RefuelMaterialID)
+                return;
+
+            if (component.StateExpiryTime + component.RefuelMaterialTime.TotalSeconds >= component.RefuelMaximumDuration.TotalSeconds)
+                return;
+
+            if (component.CurrentState is ExpendableLightState.Dead)
+            {
+                component.CurrentState = ExpendableLightState.BrandNew;
+                component.StateExpiryTime = (float)component.RefuelMaterialTime.TotalSeconds;
+
+                _nameModifier.RefreshNameModifiers(uid);
+                _stackSystem.ReduceCount((args.Used, stack), 1);
+                UpdateVisualizer((uid, component));
+                return;
+            }
+
+            component.StateExpiryTime += (float)component.RefuelMaterialTime.TotalSeconds;
+            _stackSystem.ReduceCount((args.Used, stack), 1);
+            args.Handled = true;
+        }
+
+        private void OnRefreshNameModifiers(Entity<ExpendableLightComponent> entity, ref RefreshNameModifiersEvent args)
+        {
+            if (entity.Comp.CurrentState is ExpendableLightState.Dead)
+                args.AddModifier("expendable-light-spent-prefix");
+        }
+
+        private void UpdateVisualizer(Entity<ExpendableLightComponent> ent, AppearanceComponent? appearance = null)
+        {
+            var component = ent.Comp;
+            if (!Resolve(ent, ref appearance, false))
+                return;
+
+            _appearance.SetData(ent, ExpendableLightVisuals.State, component.CurrentState, appearance);
 
             switch (component.CurrentState)
             {
                 case ExpendableLightState.Lit:
-                    appearance.SetData(ExpendableLightVisuals.Behavior, component.TurnOnBehaviourID);
+                    _appearance.SetData(ent, ExpendableLightVisuals.Behavior, component.TurnOnBehaviourID, appearance);
                     break;
 
                 case ExpendableLightState.Fading:
-                    appearance.SetData(ExpendableLightVisuals.Behavior, component.FadeOutBehaviourID);
+                    _appearance.SetData(ent, ExpendableLightVisuals.Behavior, component.FadeOutBehaviourID, appearance);
                     break;
 
                 case ExpendableLightState.Dead:
-                    appearance.SetData(ExpendableLightVisuals.Behavior, string.Empty);
+                    _appearance.SetData(ent, ExpendableLightVisuals.Behavior, string.Empty, appearance);
+                    var ignite = new IgnitionEvent(false);
+                    RaiseLocalEvent(ent, ref ignite);
                     break;
             }
         }
 
-        private void UpdateSpriteAndSounds(ExpendableLightComponent component)
+        private void UpdateSounds(Entity<ExpendableLightComponent> ent)
         {
-            if (TryComp<SpriteComponent>(component.Owner, out var sprite))
+            var component = ent.Comp;
+
+            switch (component.CurrentState)
             {
-                switch (component.CurrentState)
-                {
-                    case ExpendableLightState.Lit:
-                    {
-                        SoundSystem.Play(Filter.Pvs(component.Owner), component.LitSound.GetSound(), component.Owner);
-
-                        if (component.IconStateLit != string.Empty)
-                        {
-                            sprite.LayerSetState(2, component.IconStateLit);
-                            sprite.LayerSetShader(2, "shaded");
-                        }
-
-                        sprite.LayerSetVisible(1, true);
-                        break;
-                    }
-                    case ExpendableLightState.Fading:
-                    {
-                        break;
-                    }
-                    default:
-                    case ExpendableLightState.Dead:
-                    {
-                        if (component.DieSound != null)
-                            SoundSystem.Play(Filter.Pvs(component.Owner), component.DieSound.GetSound(), component.Owner);
-
-                        sprite.LayerSetState(0, component.IconStateSpent);
-                        sprite.LayerSetShader(0, "shaded");
-                        sprite.LayerSetVisible(1, false);
-                        break;
-                    }
-                }
+                case ExpendableLightState.Lit:
+                    _audio.PlayPvs(component.LitSound, ent);
+                    break;
+                case ExpendableLightState.Fading:
+                    break;
+                default:
+                    _audio.PlayPvs(component.DieSound, ent);
+                    break;
             }
 
-            if (TryComp<ClothingComponent>(component.Owner, out var clothing))
+            if (TryComp<ClothingComponent>(ent, out var clothing))
             {
-                clothing.EquippedPrefix = component.Activated ? "Activated" : string.Empty;
+                _clothing.SetEquippedPrefix(ent, component.Activated ? "Activated" : string.Empty, clothing);
             }
         }
 
         private void OnExpLightInit(EntityUid uid, ExpendableLightComponent component, ComponentInit args)
         {
-            if (TryComp<SharedItemComponent?>(uid, out var item))
+            if (TryComp<ItemComponent>(uid, out var item))
             {
-                item.EquippedPrefix = "unlit";
+                _item.SetHeldPrefix(uid, "unlit", component: item);
             }
 
             component.CurrentState = ExpendableLightState.BrandNew;
-            EntityManager.EnsureComponent<PointLightComponent>(uid);
+            component.StateExpiryTime = (float)component.GlowDuration.TotalSeconds;
+            EnsureComp<PointLightComponent>(uid);
         }
 
-        private void OnExpLightUse(EntityUid uid, ExpendableLightComponent component, UseInHandEvent args)
+        private void OnExpLightUse(Entity<ExpendableLightComponent> ent, ref UseInHandEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
 
-            if (TryActivate(component))
+            if (TryActivate(ent))
                 args.Handled = true;
         }
 
-        private void AddIgniteVerb(EntityUid uid, ExpendableLightComponent component, GetVerbsEvent<ActivationVerb> args)
+        private void AddIgniteVerb(Entity<ExpendableLightComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (component.CurrentState != ExpendableLightState.BrandNew)
+            if (ent.Comp.CurrentState != ExpendableLightState.BrandNew)
                 return;
 
             // Ignite the flare or make the glowstick glow.
@@ -192,8 +234,8 @@ namespace Content.Server.Light.EntitySystems
             ActivationVerb verb = new()
             {
                 Text = Loc.GetString("expendable-light-start-verb"),
-                IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png",
-                Act = () => TryActivate(component)
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
+                Act = () => TryActivate(ent)
             };
             args.Verbs.Add(verb);
         }

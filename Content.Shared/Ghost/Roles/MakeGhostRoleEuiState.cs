@@ -1,6 +1,4 @@
-﻿using System;
-using Content.Shared.Eui;
-using Robust.Shared.GameObjects;
+﻿using Content.Shared.Eui;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost.Roles
@@ -8,11 +6,11 @@ namespace Content.Shared.Ghost.Roles
     [Serializable, NetSerializable]
     public sealed class MakeGhostRoleEuiState : EuiStateBase
     {
-        public MakeGhostRoleEuiState(EntityUid entityUid)
+        public MakeGhostRoleEuiState(NetEntity entity)
         {
-            EntityUid = entityUid;
+            Entity = entity;
         }
 
-        public EntityUid EntityUid { get; }
+        public NetEntity Entity { get; }
     }
 }

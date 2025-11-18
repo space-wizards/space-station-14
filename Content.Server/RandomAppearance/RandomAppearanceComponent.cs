@@ -1,40 +1,17 @@
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Reflection;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.RandomAppearance;
 
 [RegisterComponent]
-[Friend(typeof(RandomAppearanceSystem))]
-public sealed class RandomAppearanceComponent : Component, ISerializationHooks
+[Access(typeof(RandomAppearanceSystem))]
+public sealed partial class RandomAppearanceComponent : Component
 {
     [DataField("spriteStates")]
-    public string[] SpriteStates = {"0", "1", "2", "3", "4"};
+    public string[] SpriteStates = { "0", "1", "2", "3", "4" };
 
     /// <summary>
     ///     What appearance enum key should be set to the random sprite state?
     /// </summary>
-    [DataField("key", required: true)]
-    public string EnumKeyRaw = default!;
-
-    /// <summary>
-    ///     The actual enum after reflection.
-    /// </summary>
-    public System.Enum? EnumKey;
-
-    void ISerializationHooks.AfterDeserialization()
-    {
-        if (IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(EnumKeyRaw, out var @enum))
-        {
-            EnumKey = @enum;
-        }
-        else
-        {
-            Logger.Error($"RandomAppearance enum key {EnumKeyRaw} could not be parsed!");
-        }
-    }
+    [DataField(required: true, customTypeSerializer: typeof(EnumSerializer))]
+    public Enum? EnumKey;
 }

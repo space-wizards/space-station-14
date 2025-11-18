@@ -4,9 +4,12 @@ using Content.Shared.Throwing;
 
 namespace Content.Server.Damage.Systems
 {
+    /// <summary>
+    /// Damages the thrown item when it lands.
+    /// </summary>
     public sealed class DamageOnLandSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly Shared.Damage.Systems.DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {
@@ -14,7 +17,7 @@ namespace Content.Server.Damage.Systems
             SubscribeLocalEvent<DamageOnLandComponent, LandEvent>(DamageOnLand);
         }
 
-        private void DamageOnLand(EntityUid uid, DamageOnLandComponent component, LandEvent args)
+        private void DamageOnLand(EntityUid uid, DamageOnLandComponent component, ref LandEvent args)
         {
             _damageableSystem.TryChangeDamage(uid, component.Damage, component.IgnoreResistances);
         }

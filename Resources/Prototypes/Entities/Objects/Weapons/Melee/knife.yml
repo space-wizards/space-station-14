@@ -7,19 +7,21 @@
     tags:
     - Knife
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: Utensil
     types:
       - Knife
-  - type: ItemCooldown
   - type: MeleeWeapon
+    wideAnimationRotation: -135
     damage:
       types:
-        Slash: 12
-    hitSound:
+        Slash: 10
+    soundHit:
       path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
-    netsync: false
   - type: Item
+    size: Small
   - type: Tool
     qualities:
       - Slicing
@@ -27,23 +29,26 @@
       path: /Audio/Items/Culinary/chop.ogg
 
 - type: entity
-  name: kitchen knife
   parent: BaseKnife
   id: KitchenKnife
+  name: kitchen knife
   description: A general purpose Chef's Knife made by Asters Merchant Guild. Guaranteed to stay sharp for years to come..
   components:
   - type: Tag
     tags:
     - Knife
+    - KitchenKnife
   - type: Sprite
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
-    size: 2
     state: icon
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
-    prefix: inhand
-
+    storedOffset: -1,1
+    storedRotation: -45
+  - type: GuideHelp
+    guides:
+    - Chef
+    - FoodRecipes
 
 - type: entity
   name: butcher's cleaver
@@ -54,22 +59,27 @@
   - type: Tag
     tags:
     - Knife
+    - Cleaver
   - type: Sprite
     sprite: Objects/Weapons/Melee/cleaver.rsi
-    size: 4
     state: butch
   - type: MeleeWeapon
+    wideAnimationRotation: -115
+    attackRate: 1.5
     damage:
       types:
-        Slash: 15
+        Slash: 13
   - type: Item
-    size: 10
+    size: Normal
     sprite: Objects/Weapons/Melee/cleaver.rsi
-    prefix: inhand
+  - type: GuideHelp
+    guides:
+    - Chef
+    - FoodRecipes
 
 - type: entity
   name: combat knife
-  parent: BaseKnife
+  parent: [BaseKnife, BaseSecurityContraband]
   id: CombatKnife
   description: A deadly knife intended for melee confrontations.
   components:
@@ -79,28 +89,314 @@
     - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/combat_knife.rsi
-    size: 2
     state: icon
   - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.5
     damage:
       types:
-        Slash: 15
+        Slash: 12
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 10
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi
-    prefix: inhand
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/combat_knife.rsi
+  - type: DisarmMalus
+    malus: 0.225
+  - type: ThrowingAngle
+    angle: 225
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.4,-0.2
+          - -0.2,-0.4
+          - 0.4,0.2
+          - 0.2,0.4
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity
   name: survival knife
-  parent: CombatKnife
+  parent: [BaseSecurityCargoContraband, CombatKnife]
   id: SurvivalKnife
   description: Weapon of first and last resort for combatting space carp.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/survival_knife.rsi
-    size: 2
     state: icon
   - type: Item
-    size: 10
     sprite: Objects/Weapons/Melee/survival_knife.rsi
-    prefix: inhand
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/survival_knife.rsi
+
+- type: entity
+  name: kukri knife
+  parent: [BaseSecurityCargoContraband, CombatKnife]
+  id: KukriKnife
+  description: Professionals have standards. Be polite. Be efficient. Have a plan to kill everyone you meet.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/kukri_knife.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.0
+    damage:
+      types:
+        Slash: 15
+  - type: Item
+    sprite: Objects/Weapons/Melee/kukri_knife.rsi
+    storedSprite: null
+
+- type: entity
+  parent: [ClothingHeadHatGreyFlatcap, BaseMinorContraband]
+  id: BladedFlatcapGrey
+  name: grey flatcap
+  description: Fashionable for both the working class and old man Jenkins. It has glass shards hidden in the brim.
+  suffix: Bladed
+  components:
+  - type: Construction
+    graph: BladedFlatcapGrey
+    node: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    attackRate: 1.2
+    damage:
+      types:
+        Slash: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 10
+  - type: LandAtCursor
+  - type: Sprite
+    sprite: Clothing/Head/Hats/greyflatcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/greyflatcap.rsi
+
+- type: entity
+  parent: BladedFlatcapGrey
+  id: BladedFlatcapBrown
+  name: brown flatcap
+  description: "\"Stupid clown! You made me look bad!\" It has glass shards hidden in the brim."
+  components:
+  - type: Construction
+    graph: BladedFlatcapBrown
+  - type: Sprite
+    sprite: Clothing/Head/Hats/brownflatcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/brownflatcap.rsi
+
+- type: entity
+  name: shiv
+  parent: [BaseKnife, BaseMinorContraband]
+  id: Shiv
+  description: A crude weapon fashioned from a piece of cloth and a glass shard.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+    - Shiv
+  - type: Construction
+    graph: Shiv
+    node: icon
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/shiv.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 5.5
+  - type: Item
+    sprite: Objects/Weapons/Melee/shiv.rsi
+  - type: DisarmMalus
+    malus: 0.225
+
+- type: entity
+  name: reinforced shiv
+  parent: Shiv
+  id: ReinforcedShiv
+  description: A crude weapon fashioned from a piece of cloth and a reinforced glass shard.
+  components:
+  - type: Construction
+    graph: ReinforcedShiv
+    node: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 7 #each "tier" grants an additional 2 damage
+  - type: Item
+    sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
+
+- type: entity
+  name: plasma shiv
+  parent: Shiv
+  id: PlasmaShiv
+  description: A crude weapon fashioned from a piece of cloth and a plasma glass shard.
+  components:
+  - type: Construction
+    graph: PlasmaShiv
+    node: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 9
+  - type: Item
+    sprite: Objects/Weapons/Melee/plasma_shiv.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/plasma_shiv.rsi
+
+- type: entity
+  name: uranium shiv
+  parent: Shiv
+  id: UraniumShiv
+  description: A crude weapon fashioned from a piece of cloth and a uranium glass shard. Violates the geneva convention!
+  components:
+  - type: Construction
+    graph: UraniumShiv
+    node: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 7
+        Radiation: 4
+  - type: Item
+    sprite: Objects/Weapons/Melee/uranium_shiv.rsi
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/uranium_shiv.rsi
+
+- type: entity
+  name: throwing knife
+  parent: [BaseKnife, BaseSyndicateContraband]
+  id: ThrowingKnife
+  description: This blood-red knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/throwing_knife.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 2
+    damage:
+      types:
+        Slash: 5
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    ignoreResistances: true
+    damage:
+      types:
+        Slash: 10
+        Piercing: 15
+  - type: Item
+    sprite: Objects/Weapons/Melee/throwing_knife.rsi
+  - type: ThrowingAngle
+    angle: 225
+  - type: StaticPrice
+    price: 500 # 2000 for a set of 4
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.475,-0.225
+          - -0.225,-0.475
+          - 0.525,0.275
+          - 0.275,0.525
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+
+- type: entity
+  name: utility knife
+  parent: BaseItem
+  id: UtilityKnife
+  description: A knife with a retractable, tiny blade. Useful as a box cutter and letter opener, among other things.
+  components:
+  - type: Appearance
+  - type: ComponentToggler
+    components:
+    - type: Execution
+      doAfterDuration: 4.0
+    - type: Sharp
+    - type: Utensil
+      types:
+      - Knife
+    - type: Tool
+      qualities:
+      - Slicing
+      useSound:
+        path: /Audio/Items/Culinary/chop.ogg
+  - type: Item
+    size: Tiny
+    sprite: Objects/Weapons/Melee/utility_knife.rsi
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/utilityknifeopen.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/utilityknifeclose.ogg
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    activatedDamage:
+      types:
+        Slash: 4
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/utility_knife.rsi
+    layers:
+    - state: utility_knife_handle
+    - state: utility_knife_blade
+      visible: false
+      map: [ "blade" ]
+  - type: Tag
+    tags:
+    - Knife
+    - UtilityKnife
+  - type: ToggleableVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+      right:
+      - state: inhand-right-blade
+  - type: UseDelay
+    delay: 0.2

@@ -4,30 +4,68 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: true
     layers:
     - state: icon
     - state: light-icon
       shader: unshaded
       visible: false
+      map: [ "light" ]
   - type: Clothing
-    HeldPrefix: off
+    equippedPrefix: off
   - type: PointLight
     enabled: false
-    radius: 3
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 7
+    netsync: false
   - type: Appearance
-    visuals:
-      - type: FlashLightVisualizer
   - type: HandheldLight
-    toggleAction:
-      name: action-name-toggle-light
-      description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
-      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-      event: !type:ToggleActionEvent
+    addPrefix: false
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      id: radiating
+      interpolate: Linear
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      startValue: 0.1
+      endValue: 2.0
+      isLooped: true
+  - type: ToggleableVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: on-inhand-left
+      right:
+      - state: on-inhand-right
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+  - type: ItemTogglePointLight
   - type: PowerCellSlot
-    cellSlot:
-      startingItem: PowerCellSmallHigh
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: Item
+    heldPrefix: off
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -83,3 +121,32 @@
     sprite: Clothing/Head/Hardhats/yellow.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardhats/yellow.rsi
+
+- type: entity
+  parent: ClothingHeadHatHardhatBase
+  id: ClothingHeadHatHardhatYellowDark
+  name: dark yellow hard hat
+  description: A hard hat, painted in dark yellow, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardhats/dark_yellow.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardhats/dark_yellow.rsi
+
+- type: entity
+  parent: ClothingHeadHatHardhatBase
+  id: ClothingHeadHatHardhatArmored
+  name: armored hard hat
+  description: An armored hard hat. Provides the best of both worlds in both protection & utility - perfect for the engineer on the frontlines.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardhats/armored.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardhats/armored.rsi
+  - type: Armor #Copied from the sec helmet, as it's hard to give these sane values without locational damage existing.
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.9
+        Heat: 0.8

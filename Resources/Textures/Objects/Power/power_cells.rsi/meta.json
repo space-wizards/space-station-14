@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprites based on https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068. power cells edited by EmoGarbage404, potato edited by @Doru991",
+    "states": [
+        {
+            "name": "potato"
+        },
+        {
+            "name": "small"
+        },
+        {
+            "name": "medium"
+        },
+        {
+            "name": "high"
+        },
+        {
+            "name": "hyper"
+        },
+        {
+            "name": "microreactor"
+        },
+        {
+            "name": "antique"
+        },
+        {
+            "name": "o1"
+        },
+        {
+            "name": "o2"
+        }
+    ]
+}

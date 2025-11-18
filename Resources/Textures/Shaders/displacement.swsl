@@ -1,0 +1,18 @@
+uniform sampler2D displacementMap;
+uniform highp float displacementSize;
+uniform highp vec4 displacementUV;
+
+varying highp vec2 displacementUVOut;
+
+void vertex() {
+    displacementUVOut = mix(displacementUV.xy, displacementUV.zw, tCoord2);
+}
+
+void fragment() {
+    highp vec4 displacementSample = texture2D(displacementMap, displacementUVOut);
+    highp vec2 displacementValue = (displacementSample.xy - vec2(128.0 / 255.0)) / (1.0 - 128.0 / 255.0);
+    COLOR = zTexture(UV + displacementValue * TEXTURE_PIXEL_SIZE * displacementSize * vec2(1.0, -1.0));
+    COLOR.a *= displacementSample.a;
+}
+
+

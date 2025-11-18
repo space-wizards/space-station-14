@@ -1,4 +1,3 @@
-# TODO: Add description (1)
 - type: entity
   parent: BaseItem
   name: mop
@@ -7,70 +6,369 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
+    layers:
+      - state: mop
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-3
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-
+    inHandsFillBaseName: -fill-
+    inHandsMaxFillLevels: 2
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+    soundHit:
+      collection: MetalThud
+  - type: Spillable
+    solution: absorbed
+    spillWhenThrown: false
+    preventMelee: false
+  - type: DrainableSolution
+    solution: absorbed
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
   - type: Item
-    size: 10
+    size: Large
     sprite: Objects/Specific/Janitorial/mop.rsi
+    storedRotation: 45
   - type: Absorbent
+    useAbsorberSolution: true
   - type: SolutionContainerManager
     solutions:
       absorbed:
-        maxVol: 50
+        maxVol: 100
+  - type: UseDelay
+    delay: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
   - type: Tag
     tags:
-      - DroneUsable #No bucket because it holds chems, they can drag the thing around instead
       - Mop
+      - MopBasic
+  - type: GuideHelp
+    guides:
+    - Janitorial
+  - type: DnaSubstanceTrace
 
 - type: entity
-  name: mop bucket
-  id: MopBucket
-  description: Holds water and the tears of the janitor.
-  suffix: Full
+  parent: MopItem
+  name: advanced mop
+  id: AdvMopItem
+  description: Motorized mop that has a bigger reservoir and quickly replaces reagents inside with water. Automatic Clown Countermeasure not included.
   components:
-  - type: Clickable
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/janitorial.rsi
-    layers:
-    - state: mopbucket
-    - state: mopbucket_water
-    drawdepth: Objects
-  - type: InteractionOutline
-  - type: SolutionContainerManager
-    solutions:
-      bucket:
-        maxVol: 500
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/advmop.rsi
+      layers:
+      - state: advmop
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-2
+        visible: false
+    - type: SolutionContainerVisuals
+      maxFillLevels: 2
+    - type: Item
+      sprite: Objects/Specific/Janitorial/advmop.rsi
+    - type: Absorbent
+      pickupAmount: 100
+    - type: SolutionRegeneration
+      solution: absorbed
+      generated:
         reagents:
         - ReagentId: Water
-          Quantity: 250 # half-full at roundstart to leave room for puddles
-  - type: DrainableSolution
-    solution: bucket
-  - type: RefillableSolution
-    solution: bucket
-  - type: Tag
-    tags:
-      - Wringer
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.40,0.25,0.25"
-      mass: 20
-      mask:
-      - Impassable
-      layer:
-      - Opaque
-  - type: Pullable
+          Quantity: 5
+    - type: SolutionPurge
+      solution: absorbed
+      preserve:
+      - Water
+      quantity: 10
+    - type: Tag
+      tags:
+        - Mop
+        - MopAdv
 
 - type: entity
   name: wet floor sign
   id: WetFloorSign
-  parent: BaseItem
+  parent: ClothingOuterBase
   description: Caution! Wet Floor!
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
-    state: caution
   - type: Item
     sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    size: Normal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
+  - type: Tag
+    tags:
+      - WetFloorSign
+      - WhitelistChameleon
+
+
+- type: entity
+  suffix: Explosive
+  parent: WetFloorSign
+  id: WetFloorSignMineExplosive
+  components:
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+    stepOn: true
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+          - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+  - type: LandMine
+    sound:
+      path: /Audio/Effects/beep_landmine.ogg
+      params:
+        maxDistance: 10
+  - type: Explosive
+    explosionType: HardBomb  # normally Default and max 5 total 60
+    maxIntensity: 10 # about a ~67.5 total damage
+    totalIntensity: 30 # about a ~3 tile radius
+    canCreateVacuum: false
+  - type: ExplodeOnTrigger
+    keysIn:
+    - timer
+    - trigger # directly explode from the landmine
+  - type: DeleteOnTrigger
+    keysIn:
+    - timer
+    - trigger
+  - type: TimerTrigger
+    beepInterval: .25
+    beepSound:
+      path: /Audio/Items/Janitor/floor_sign_beep.ogg
+      params:
+        volume: 1
+    examinable: false
+  - type: TriggerOnVerb
+    text: trigger-on-verb-detonation
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag
+    - WetFloorSign
+
+- type: entity
+  name: plunger
+  id: Plunger
+  parent: BaseItem
+  description: A plunger with a red plastic suction-cup and a wooden handle. Used to unclog drains.
+  components:
+  - type: Tag
+    tags:
+       - Plunger
+       - WhitelistChameleon
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/plunger.rsi
+    state: plunger
+  - type: Item
+    sprite: Objects/Specific/Janitorial/plunger.rsi
+    heldPrefix: plunger
+  - type: GuideHelp
+    guides:
+    - Janitorial
+  - type: Clothing
+    sprite: Objects/Specific/Janitorial/plunger.rsi
+    slots:
+      - HEAD
+    clothingVisuals:
+      head:
+        - state: equipped-HELMET
+          offset: "0, 0.15625"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.4,0.2,-0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/pop.ogg
+    embedOnThrow: True
+    offset: "0,-0.1"
+  - type: ThrowingAngle
+    angle: 0
+  - type: LandAtCursor
+  - type: Ammo
+    muzzleFlash: null
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Blunt: 3
+  - type: Plunger
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100
+
+- type: entity
+  name: golden plunger
+  id: GoldenPlunger
+  parent: Plunger
+  description: A plunger with a plastic suction cup coated in a thin layer of gold given as a token of appreciation for years of service. Still used to unclog drains.
+  components:
+  - type: Tag # TODO change Plunger into a tool so we dont got to layer Tags like below.
+    tags:
+    - GoldenPlunger
+    - Plunger
+    - WhitelistChameleon
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/golden_plunger.rsi
+    state: plunger
+  - type: Item
+    sprite: Objects/Specific/Janitorial/golden_plunger.rsi
+    heldPrefix: plunger
+  - type: Clothing
+    sprite: Objects/Specific/Janitorial/golden_plunger.rsi
+    slots:
+      - HEAD
+    clothingVisuals:
+      head:
+        - state: equipped-HELMET
+          offset: "0, 0.15625"
+  - type: PointLight
+    radius: 1.5
+    energy: 0.75
+    color: "#ffc20e"
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
+      Gold: 10
+      Wood: 25
+
+- type: weightedRandomEntity
+  id: PlungerLoot
+  weights:
+    RandomSpawner100: 56
+    SpacemenFigureSpawner: 28
+    SpawnMobCockroach: 5
+    MaintenanceToolSpawner: 5
+    SpawnMobMoproach: 2
+
+- type: entity
+  parent: BaseItem
+  name: damp rag
+  id: RagItem
+  description: For cleaning up messes, you suppose.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Janitorial/rag.rsi
+      layers:
+      - state: rag
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-3
+        visible: false
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: fill-
+    - type: Spillable
+      solution: absorbed
+      spillWhenThrown: false
+    - type: DrainableSolution
+      solution: absorbed
+    - type: MeleeWeapon
+      soundNoDamage:
+        path: "/Audio/Effects/Fluids/splat.ogg"
+      damage:
+        types:
+          Blunt: 0
+    - type: Item
+      size: Small
+      sprite: Objects/Specific/Janitorial/rag.rsi
+    - type: Absorbent
+      pickupAmount: 15
+      useAbsorberSolution: true
+    - type: Construction
+      graph: Rag
+      node: rag
+    - type: SolutionContainerManager
+      solutions:
+        absorbed:
+          maxVol: 30
+    - type: UseDelay
+      delay: 1.5
+    - type: Tag
+      tags:
+        - Mop
+    - type: Fiber
+      fiberColor: fibers-white
+    - type: DnaSubstanceTrace
+
+- type: entity
+  parent: BaseItem
+  id: WireBrush
+  name: wire brush
+  description: A bristly steel wire brush, perfect for scraping away even the toughest patches of rust.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/wirebrush.rsi
+    state: icon
+  - type: Item
+    storedSprite:
+      sprite: Objects/Specific/Janitorial/wirebrush.rsi
+      state: storage
+    size: Small
+  - type: Tag
+    tags:
+    - WireBrush
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 50
+  - type: Tool
+    qualities:
+    - Brushing
+    useSound:
+      path: /Audio/Items/wirebrushing.ogg
+  - type: StaticPrice
+    price: 22
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Piercing: 3
+    soundHit:
+      path: "/Audio/Weapons/bladeslice.ogg"

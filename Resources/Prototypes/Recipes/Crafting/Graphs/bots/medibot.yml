@@ -1,0 +1,33 @@
+- type: constructionGraph
+  id: MediBot
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: Medkit
+        icon:
+          sprite: Objects/Specific/Medical/firstaidkits.rsi
+          state: firstaid
+        name: construction-graph-tag-medkit
+      - tag: DiscreteHealthAnalyzer
+        icon:
+          sprite: Objects/Specific/Medical/healthanalyzer.rsi
+          state: analyzer
+        name: construction-graph-tag-health-analyzer
+        doAfter: 2
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: construction-graph-tag-proximity-sensor
+        doAfter: 2
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: construction-graph-tag-borg-arm
+        doAfter: 2
+  - node: bot
+    entity: MobMedibot

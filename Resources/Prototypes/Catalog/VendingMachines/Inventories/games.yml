@@ -1,10 +1,7 @@
 - type: vendingMachineInventory
   id: GoodCleanFunInventory
-  name: Good Clean Fun
-  animationDuration: 1.3
-  spriteName: games
   startingInventory:
-    DiceBag: 4
+    DiceBag: 6
     Paper: 8
     d6Dice: 8
     ChessBoard: 1
@@ -12,3 +9,15 @@
     ParchisBoard: 1
     CheckerBoard: 1
     BaccaratTable: 5
+    ShipBattlemap: 1
+    SnowBattlemap: 1
+    SandBattlemap: 1
+    MoonBattlemap: 1
+    GrassBattlemap: 1
+    PaperCNCSheet: 6
+    MysteryFigureBox: 2
+    BooksBag: 3
+  contrabandInventory:
+    Basketball: 1
+    FoodSnackBoritos: 3
+    DrinkSpaceMountainWindCan: 3

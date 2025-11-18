@@ -1,48 +1,43 @@
 ﻿using Content.Shared.Administration;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.VarEdit)]
-    public sealed class DeleteComponent : IConsoleCommand
+    [AdminCommand(AdminFlags.Spawn)]
+    public sealed class DeleteComponent : LocalizedEntityCommands
     {
-        public string Command => "deletecomponent";
-        public string Description => "Deletes all instances of the specified component.";
-        public string Help => $"Usage: {Command} <name>";
+        [Dependency] private readonly IComponentFactory _compFactory = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "deletecomponent";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             switch (args.Length)
             {
                 case 0:
-                    shell.WriteLine($"Not enough arguments.\n{Help}");
+                    shell.WriteLine(Loc.GetString($"shell-need-exactly-one-argument"));
                     break;
                 default:
                     var name = string.Join(" ", args);
-                    var componentFactory = IoCManager.Resolve<IComponentFactory>();
-                    var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                    if (!componentFactory.TryGetRegistration(name, out var registration))
+                    if (!_compFactory.TryGetRegistration(name, out var registration))
                     {
-                        shell.WriteLine($"No component exists with name {name}.");
+                        shell.WriteLine(Loc.GetString($"cmd-deletecomponent-no-component-exists", ("name", name)));
                         break;
                     }
 
                     var componentType = registration.Type;
-                    var components = entityManager.GetAllComponents(componentType, true);
+                    var components = EntityManager.GetAllComponents(componentType, true);
 
                     var i = 0;
 
-                    foreach (var component in components)
+                    foreach (var (uid, component) in components)
                     {
-                        var uid = component.Owner;
-                        entityManager.RemoveComponent(uid, component);
+                        EntityManager.RemoveComponent(uid, component);
                         i++;
                     }
 
-                    shell.WriteLine($"Removed {i} components with name {name}.");
+                    shell.WriteLine(Loc.GetString($"cmd-deletecomponent-success", ("count", i), ("name", name)));
 
                     break;
             }

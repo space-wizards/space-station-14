@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.SubFloor
 {
@@ -11,8 +10,8 @@ namespace Content.Shared.SubFloor
     /// <seealso cref="P:Content.Shared.Maps.ContentTileDefinition.IsSubFloor" />
     [NetworkedComponent]
     [RegisterComponent]
-    [Friend(typeof(SharedSubFloorHideSystem))]
-    public sealed class SubFloorHideComponent : Component
+    [Access(typeof(SharedSubFloorHideSystem))]
+    public sealed partial class SubFloorHideComponent : Component
     {
         /// <summary>
         ///     Whether the entity's current position has a "Floor-type" tile above its current position.
@@ -26,7 +25,7 @@ namespace Content.Shared.SubFloor
         /// <remarks>
         ///     Useful for entities like vents, which are only partially hidden. Anchor attempts will still be blocked.
         /// </remarks>
-        [DataField("blockInteractions")]
+        [DataField]
         public bool BlockInteractions { get; set; } = true;
 
         /// <summary>
@@ -35,19 +34,21 @@ namespace Content.Shared.SubFloor
         /// <remarks>
         /// Useful for cables and piping, gives maint it's distinct noise.
         /// </remarks>
-        [DataField("blockAmbience")]
+        [DataField]
         public bool BlockAmbience { get; set; } = true;
 
         /// <summary>
-        ///     When revealed using some scanning tool, what transparency should be used to draw this item?
+        ///     Sprite layer keys for the layers that are always visible, even if the entity is below a floor tile. E.g.,
+        ///     the vent part of a vent is always visible, even though the piping is hidden.
         /// </summary>
-        [DataField("scannerTransparency")]
-        public float ScannerTransparency = 0.8f;
+        [DataField]
+        public HashSet<Enum> VisibleLayers = new();
 
         /// <summary>
-        ///     The entities this subfloor is revealed by.
+        /// This is used for storing the original draw depth of a t-ray revealed entity.
+        /// e.g. when a t-ray revealed cable is drawn above a carpet.
         /// </summary>
-        [ViewVariables]
-        public HashSet<EntityUid> RevealedBy { get; set; } = new();
+        [DataField]
+        public int? OriginalDrawDepth;
     }
 }

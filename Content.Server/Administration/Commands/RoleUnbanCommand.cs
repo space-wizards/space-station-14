@@ -1,23 +1,18 @@
-﻿using System.Text;
-using Content.Server.Database;
+using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
-using Robust.Server.Player;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class RoleUnbanCommand : IConsoleCommand
+public sealed class RoleUnbanCommand : LocalizedCommands
 {
-    public string Command => "roleunban";
-    public string Description => "Pardons a player's role ban";
-    public string Help => $"Usage: {Command} <role ban id>";
+    [Dependency] private readonly IBanManager _banManager = default!;
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "roleunban";
+
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player as IPlayerSession;
-        var dbMan = IoCManager.Resolve<IServerDbManager>();
-
         if (args.Length != 1)
         {
             shell.WriteLine(Help);
@@ -26,35 +21,21 @@ public sealed class RoleUnbanCommand : IConsoleCommand
 
         if (!int.TryParse(args[0], out var banId))
         {
-            shell.WriteLine($"Unable to parse {args[1]} as a ban id integer.\n{Help}");
+            shell.WriteLine(Loc.GetString($"cmd-roleunban-unable-to-parse-id", ("id", args[0]), ("help", Help)));
             return;
         }
 
-        var ban = await dbMan.GetServerRoleBanAsync(banId);
+        var response = await _banManager.PardonRoleBan(banId, shell.Player?.UserId, DateTimeOffset.Now);
+        shell.WriteLine(response);
+    }
 
-        if (ban == null)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        // Can't think of good way to do hint options for this
+        return args.Length switch
         {
-            shell.WriteLine($"No ban found with id {banId}");
-            return;
-        }
-
-        if (ban.Unban != null)
-        {
-            var response = new StringBuilder("This ban has already been pardoned");
-
-            if (ban.Unban.UnbanningAdmin != null)
-            {
-                response.Append($" by {ban.Unban.UnbanningAdmin.Value}");
-            }
-
-            response.Append($" in {ban.Unban.UnbanTime}.");
-
-            shell.WriteLine(response.ToString());
-            return;
-        }
-
-        await dbMan.AddServerRoleUnbanAsync(new ServerRoleUnbanDef(banId, player?.UserId, DateTimeOffset.Now));
-
-        shell.WriteLine($"Pardoned ban with id {banId}");
+            1 => CompletionResult.FromHint(Loc.GetString("cmd-roleunban-hint-1")),
+            _ => CompletionResult.Empty
+        };
     }
 }

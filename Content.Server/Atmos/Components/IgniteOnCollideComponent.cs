@@ -1,17 +1,20 @@
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Content.Server.Atmos.EntitySystems;
 
-namespace Content.Server.Atmos.Components
+namespace Content.Server.Atmos.Components;
+
+[RegisterComponent, Access(typeof(FlammableSystem))]
+public sealed partial class IgniteOnCollideComponent : Component
 {
-    [RegisterComponent]
-    public sealed class IgniteOnCollideComponent : Component
-    {
-        [DataField("fireStacks")]
-        public float FireStacks { get; set; }
-    }
+    /// <summary>
+    /// How many more times the ignition can be applied.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("count")]
+    public int Count = 1;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("fireStacks")]
+    public float FireStacks;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("fixtureId")]
+    public string FixtureId = "ignition";
+
 }

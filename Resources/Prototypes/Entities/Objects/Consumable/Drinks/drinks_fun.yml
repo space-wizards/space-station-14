@@ -1,0 +1,157 @@
+- type: entity
+  abstract: true
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAllFilled ]
+  id: BaseSqueezeBottle
+  components:
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
+  - type: Sprite
+    layers:
+    - state: icon_empty
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill-6
+      map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  parent: BaseSqueezeBottle
+  id: DrinkSpaceGlue
+  name: space glue tube
+  description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glue-tube.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: SpaceGlue
+          Quantity: 30
+  - type: Glue
+
+- type: entity
+  parent: BaseSqueezeBottle
+  id: DrinkSpaceLube
+  name: space lube tube
+  description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/lube-tube.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 30
+  - type: Lube
+
+# Find your nearest clown and give them a gift :o)
+- type: entity
+  parent: BluespaceBeaker
+  id: BottomlessLube
+  name: bottomless lube beaker
+  suffix: DEBUG
+  description: This anomalous beaker infinitely produces space lube and as such is to be closely guarded such that it doesn't fall in the wrong hands.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 1000
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 1000
+  - type: SolutionRegeneration
+    solution: beaker
+    generated:
+      reagents:
+      - ReagentId: SpaceLube
+        Quantity: 200
+
+- type: entity
+  parent: [DrinkBaseMaterialGlass, DrinkBase]
+  id: DrinkJarWhat
+  name: jar of something
+  description: You can't really tell what this is.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/jar_what.rsi
+  - type: FitsInDispenser
+    solution: drink
+
+# Mopwata
+- type: weightedRandomFillSolution
+  id: RandomFillMopwata
+  fills:
+  - quantity: 10
+    weight: 5
+    reagents:
+    - Blood
+    - CopperBlood
+    - Slime
+    - Vomit
+  - quantity: 10
+    weight: 4
+    reagents:
+    - Coffee
+    - Tea
+    - Cola
+    - RootBeer
+    - DrGibb
+    - GrapeSoda
+    - Starkist
+    - SpaceUp
+    - SpaceMountainWind
+    - LemonLime
+    - LemonLimeCranberry
+    - PwrGame
+  - quantity: 10
+    weight: 3
+    reagents:
+    - Whiskey
+    - Vodka
+    - Beer
+    - Ale
+    - Rum
+    - Tequila
+    - Absinthe
+  - quantity: 10
+    weight: 1
+    reagents:
+    - SpaceDrugs
+    - Mold
+    - SpaceLube
+    - SpaceGlue
+    - SpaceCleaner
+    - MilkSpoiled
+    - FourteenLoko
+
+- type: entity
+  parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
+  id: DrinkMopwataBottleRandom
+  name: delicious mopwata
+  description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Mopwata
+          Quantity: 40
+  - type: RandomFillSolution
+    solution: drink
+    weightedRandomId: RandomFillMopwata
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mopwata.rsi

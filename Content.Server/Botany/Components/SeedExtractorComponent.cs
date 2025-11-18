@@ -1,16 +1,20 @@
 using Content.Server.Botany.Systems;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
-[Friend(typeof(SeedExtractorSystem))]
-public sealed class SeedExtractorComponent : Component
+[Access(typeof(SeedExtractorSystem))]
+public sealed partial class SeedExtractorComponent : Component
 {
-    // TODO: Upgradeable machines.
-    [DataField("minSeeds")] public int MinSeeds = 1;
+    /// <summary>
+    /// The minimum amount of seed packets dropped.
+    /// </summary>
+    [DataField("baseMinSeeds"), ViewVariables(VVAccess.ReadWrite)]
+    public int BaseMinSeeds = 1;
 
-    [DataField("maxSeeds")] public int MaxSeeds = 4;
+    /// <summary>
+    /// The maximum amount of seed packets dropped.
+    /// </summary>
+    [DataField("baseMaxSeeds"), ViewVariables(VVAccess.ReadWrite)]
+    public int BaseMaxSeeds = 3;
 }

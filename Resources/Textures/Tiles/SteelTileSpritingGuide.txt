@@ -1,0 +1,11 @@
+[ NOTE: This is not a guide for making tiles "look good" or a general spriting guide for all floor tiles, this is just for anything based off of steel tiles!]
+
+You might be looking at these tiles and going: "What the fuck? How on earth did they get anything salvagable out of the supernorn tiles!"
+Well, believe it or not - they've actually been resprited! Gone are the days of 80+ color potentially-jpeged-but-that's-just-a-theory-but-they-are-definitely-nearly-uneditable tiles. They now use a color palette around the size of 10, give or take a few colors from color errors.
+
+The process to make something like them is now dead-simple, and should be doable by even non-spriters if need be.
+1. Lay out the base of the tile you're trying to make (look at tile-reference-sheet.png)
+2. Semi-randomly (or deliberately) add imperfections, shine, noise, or whatever you need to do to make the tile sufficiently detailed
+
+For variants (the extra "copies" of the tile in the png file,) you can usually just replace the inner part of the tile sprite (NOT including the shine!) with another corner of the tile. There are some exceptions to this, like the monotile - where there is no corner to speak of (this is why they do not have variants as of writing.)
+For tiles that tile continuously (ie. diagonal tiles,) you'll need to be a lot more careful with variants, and will likely end up needing to manually edit them outside of just copy-pasting the inner parts of the tile.

@@ -1,0 +1,190 @@
+- type: entity
+  parent: BaseHandheldInstrument
+  id: BaseStringInstrument
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - StringInstrument
+
+- type: entity
+  parent: BaseStringInstrument
+  id: BaseStringInstrumentClothing
+  abstract: true
+  components:
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+
+- type: entity
+  parent: BaseStringInstrumentClothing
+  id: ElectricGuitarInstrument
+  name: electric guitar
+  description: Now this makes you feel like a rock star!
+  components:
+  - type: Instrument
+    program: 27
+  - type: SwappableInstrument
+    instrumentList:
+      "Clean": {27: 0}
+      "Jazz": {26: 0}
+      "Muted": {28: 0}
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/eguitar.rsi
+
+- type: entity
+  parent: BaseStringInstrumentClothing
+  id: BassGuitarInstrument
+  name: bass guitar
+  description: You feel really cool holding this. Shame you're the only one that thinks that.
+  components:
+  - type: Instrument
+    program: 33
+  - type: SwappableInstrument
+    instrumentList:
+      "Fingered": {33: 0}
+      "Pick": {34: 0}
+      "Slap": {36: 0}
+      "Slap (XTra Funky)": {37: 0}
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/bassguitar.rsi
+
+- type: entity
+  parent: BaseStringInstrumentClothing
+  id: RockGuitarInstrument
+  name: rock guitar
+  description: What an axe!
+  components:
+  - type: Instrument
+    program: 29
+  - type: SwappableInstrument
+    instrumentList:
+      "Overdrive": {29: 0}
+      "Distortion": {30: 0}
+      "Harmonics": {31: 0}
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/rockguitar.rsi
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 6
+        Slash: 2
+  - type: Wieldable
+  - type: IncreaseDamageOnWield #they don't call it an axe for nothing
+    damage:
+      types:
+        Blunt: 4
+        Slash: 2
+
+- type: entity
+  parent: BaseStringInstrumentClothing
+  id: AcousticGuitarInstrument
+  name: acoustic guitar
+  description: Anyway, here's Wonderwall.
+  components:
+  - type: Instrument
+    program: 24
+  - type: SwappableInstrument
+    instrumentList:
+      "Nylon": {24: 0}
+      "Steel": {25: 0}
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/guitar.rsi
+  - type: Wieldable
+  - type: Damageable # Smash it! Does 20 damage a hit, but breaks after 1 hit.
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Weapons/guitarsmash.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 2
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnHit # This makes it destroy after one hit.
+    damage:
+      types:
+        Blunt: 20
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 5
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 15
+
+- type: entity
+  parent: BaseStringInstrument
+  id: GuitarlessFretsInstrument
+  name: guitarless frets
+  description: Who even needs a body?
+  suffix: Admeme #the sound is awful
+  components:
+  - type: Instrument
+    program: 120
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/guitarlessfrets.rsi
+
+- type: entity
+  parent: BaseStringInstrumentClothing
+  id: BanjoInstrument
+  name: banjo
+  components:
+  - type: Instrument
+    program: 105
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/banjo.rsi
+
+- type: entity
+  parent: BaseStringInstrument
+  id: ViolinInstrument
+  name: violin
+  description: The favorite of musical virtuosos and bluegrass bands.
+  components:
+  - type: Instrument
+    program: 40
+  - type: SwappableInstrument
+    instrumentList:
+      "Classical": {40: 0}
+      "Bluegrass": {110: 0}
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/violin.rsi
+
+- type: entity
+  parent: BaseStringInstrument
+  id: ViolaInstrument
+  name: viola
+  description: Like a violin, but worse.
+  components:
+  - type: Instrument
+    program: 41
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/viola.rsi
+
+- type: entity
+  parent: BaseStringInstrument
+  id: CelloInstrument
+  name: cello
+  description: The nerds call these violoncellos.
+  components:
+  - type: Instrument
+    program: 42
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/cello.rsi
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,1,3

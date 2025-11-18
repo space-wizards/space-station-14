@@ -1,4 +1,3 @@
-using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Visuals
@@ -16,5 +15,6 @@ namespace Content.Shared.Atmos.Visuals
         In,
         Out,
         Welded,
+        Lockout,
     }
 }

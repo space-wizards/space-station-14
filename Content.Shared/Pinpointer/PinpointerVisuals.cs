@@ -1,5 +1,4 @@
 using Robust.Shared.Serialization;
-using System;
 
 namespace Content.Shared.Pinpointer
 {
@@ -7,7 +6,7 @@ namespace Content.Shared.Pinpointer
     public enum PinpointerVisuals : byte
     {
         IsActive,
-        TargetDirection,
+        ArrowAngle,
         TargetDistance
     }
 

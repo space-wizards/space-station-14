@@ -1,0 +1,275 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from goonstation at commit https://github.com/goonstation/goonstation/commit/8c9738746d1222a80dddff25af1bceda58bbccac and created by Flaborized. ano11/ano11_on created by brainfood#7460. Inhands created by brainfood#7460 and modified by EmoGarbage404 (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ano01"
+    },
+    {
+      "name": "ano01_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano01-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano01-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano02"
+    },
+    {
+      "name": "ano02_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano02-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano02-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano03"
+    },
+    {
+      "name": "ano03_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano03-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano03-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano04"
+    },
+    {
+      "name": "ano04_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano04-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano04-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano05"
+    },
+    {
+      "name": "ano05_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano05-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano05-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano06"
+    },
+    {
+      "name": "ano06_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano06-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano06-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano07"
+    },
+    {
+      "name": "ano07_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano07-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano07-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano08"
+    },
+    {
+      "name": "ano08_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano08-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano08-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano09"
+    },
+    {
+      "name": "ano09_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano09-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano09-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano10"
+    },
+    {
+      "name": "ano10_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "ano10-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano10-inhand-right",
+	  "directions": 4
+    },
+    {
+      "name": "ano11"
+    },
+    {
+      "name": "ano11_on",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "ano11-inhand-left",
+	  "directions": 4
+    },
+    {
+      "name": "ano11-inhand-right",
+	  "directions": 4
+    }
+  ]
+}

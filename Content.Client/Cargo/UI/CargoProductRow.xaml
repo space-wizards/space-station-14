@@ -1,10 +1,11 @@
 ﻿<PanelContainer xmlns="https://spacestation14.io"
-                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                 HorizontalExpand="True">
     <Button Name="MainButton"
+            ToolTip=""
             Access="Public"
             HorizontalExpand="True"
-            VerticalExpand="True" />
+            VerticalExpand="True"
+            StyleClasses="OpenBoth"/>
     <BoxContainer Orientation="Horizontal"
                   HorizontalExpand="True">
         <TextureRect Name="Icon"
@@ -14,14 +15,12 @@
         <Label Name="ProductName"
                Access="Public"
                HorizontalExpand="True" />
-        <PanelContainer>
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="#25252A" />
-            </PanelContainer.PanelOverride>
+        <PanelContainer StyleClasses="BackgroundDark">
             <Label Name="PointCost"
                    Access="Public"
-                   MinSize="40 32"
-                   Align="Right" />
+                   MinSize="52 32"
+                   Align="Right"
+                   Margin="0 0 5 0"/>
         </PanelContainer>
     </BoxContainer>
 </PanelContainer>

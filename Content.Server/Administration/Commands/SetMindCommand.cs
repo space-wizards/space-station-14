@@ -1,54 +1,57 @@
-using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
+using Content.Shared.Players;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    sealed class SetMindCommand : IConsoleCommand
+    public sealed class SetMindCommand : LocalizedEntityCommands
     {
-        public string Command => "setmind";
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
-        public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindComponent)));
+        public override string Command => "setmind";
 
-        public string Help => Loc.GetString("set-mind-command-help-text", ("command", Command));
+        public override string Description => Loc.GetString("cmd-setmind-desc", ("requiredComponent", nameof(MindContainerComponent)));
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length < 2)
             {
                 shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
                 return;
             }
 
-            if (!int.TryParse(args[0], out var entityUid))
+            if (!int.TryParse(args[0], out var entInt))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var ghostOverride = true;
+            if (args.Length > 2)
+            {
+                ghostOverride = bool.Parse(args[2]);
+            }
 
-            var eUid = new EntityUid(entityUid);
+            var nent = new NetEntity(entInt);
 
-            if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
+            if (!EntityManager.TryGetEntity(nent, out var eUid))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-id"));
                 return;
             }
 
-            if (!entityManager.HasComponent<MindComponent>(eUid))
+            if (!EntityManager.HasComponent<MindContainerComponent>(eUid))
             {
-                shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-mind-message"));
+                shell.WriteLine(Loc.GetString("cmd-setmind-target-has-no-mind-message"));
                 return;
             }
 
-            if (!IoCManager.Resolve<IPlayerManager>().TryGetSessionByUsername(args[1], out var session))
+            if (!_playerManager.TryGetSessionByUsername(args[1], out var session))
             {
                 shell.WriteLine(Loc.GetString("shell-target-player-does-not-exist"));
                 return;
@@ -58,20 +61,23 @@ namespace Content.Server.Administration.Commands
             var playerCData = session.ContentData();
             if (playerCData == null)
             {
-                shell.WriteLine(Loc.GetString("set-mind-command-target-has-no-content-data-message"));
+                shell.WriteLine(Loc.GetString("cmd-setmind-target-has-no-content-data-message"));
                 return;
             }
 
-            var mind = playerCData.Mind;
-            if (mind == null)
-            {
-                mind = new Mind.Mind(session.UserId)
-                {
-                    CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName
-                };
-                mind.ChangeOwningPlayer(session.UserId);
-            }
-            mind.TransferTo(eUid);
+            var metadata = EntityManager.GetComponent<MetaDataComponent>(eUid.Value);
+
+            var mind = playerCData.Mind ?? _mindSystem.CreateMind(session.UserId, metadata.EntityName);
+
+            _mindSystem.TransferTo(mind, eUid, ghostOverride);
+        }
+
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 2)
+                return CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Help);
+
+            return CompletionResult.Empty;
         }
     }
 }

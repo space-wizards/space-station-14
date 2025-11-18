@@ -1,23 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Managers;
 using Robust.Client.Console;
-using Robust.Shared.Console;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
+using Robust.Client.Player;
+using Robust.Client.UserInterface;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
-using Robust.Shared.Reflection;
+using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Managers
 {
-    public sealed class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit
+    public sealed class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit, ISharedAdminManager
     {
+        [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IClientNetManager _netMgr = default!;
         [Dependency] private readonly IClientConGroupController _conGroup = default!;
+        [Dependency] private readonly IClientConsoleHost _host = default!;
+        [Dependency] private readonly IResourceManager _res = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
 
         private AdminData? _adminData;
         private readonly HashSet<string> _availableCommands = new();
+
+        private readonly AdminCommandPermissions _localCommandPermissions = new();
+        private ISawmill _sawmill = default!;
 
         public event Action? AdminStatusUpdated;
 
@@ -33,6 +40,16 @@ namespace Content.Client.Administration.Managers
 
         public bool CanCommand(string cmdName)
         {
+            if (_adminData != null && _adminData.HasFlag(AdminFlags.Host))
+            {
+                // Host can execute all commands when connected.
+                // Kind of a shortcut to avoid pains during development.
+                return true;
+            }
+
+            if (_localCommandPermissions.CanCommand(cmdName, _adminData))
+                return true;
+
             return _availableCommands.Contains(cmdName);
         }
 
@@ -59,32 +76,41 @@ namespace Content.Client.Administration.Managers
         public void Initialize()
         {
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>(UpdateMessageRx);
+
+            // Load flags for engine commands, since those don't have the attributes.
+            if (_res.TryContentFileRead(new ResPath("/clientCommandPerms.yml"), out var efs))
+            {
+                _localCommandPermissions.LoadPermissionsFromStream(efs);
+            }
         }
 
         private void UpdateMessageRx(MsgUpdateAdminStatus message)
         {
             _availableCommands.Clear();
-            var host = IoCManager.Resolve<IClientConsoleHost>();
 
             // Anything marked as Any we'll just add even if the server doesn't know about it.
-            foreach (var (command, instance) in host.RegisteredCommands)
+            foreach (var (command, instance) in _host.AvailableCommands)
             {
-                if (Attribute.GetCustomAttribute(instance.GetType(), typeof(AnyCommandAttribute)) == null) continue;
+                if (Attribute.GetCustomAttribute(instance.GetType(), typeof(AnyCommandAttribute)) == null)
+                    continue;
                 _availableCommands.Add(command);
             }
 
             _availableCommands.UnionWith(message.AvailableCommands);
-            Logger.DebugS("admin", $"Have {message.AvailableCommands.Length} commands available");
+            _sawmill.Debug($"Have {message.AvailableCommands.Length} commands available");
 
             _adminData = message.Admin;
             if (_adminData != null)
             {
                 var flagsText = string.Join("|", AdminFlagsHelper.FlagsToNames(_adminData.Flags));
-                Logger.InfoS("admin", $"Updated admin status: {_adminData.Active}/{_adminData.Title}/{flagsText}");
+                _sawmill.Info($"Updated admin status: {_adminData.Active}/{_adminData.Title}/{flagsText}");
+
+                if (_adminData.Active)
+                    _userInterface.DebugMonitors.SetMonitor(DebugMonitor.Coords, true);
             }
             else
             {
-                Logger.InfoS("admin", "Updated admin status: Not admin");
+                _sawmill.Info("Updated admin status: Not admin");
             }
 
             AdminStatusUpdated?.Invoke();
@@ -96,6 +122,31 @@ namespace Content.Client.Administration.Managers
         void IPostInjectInit.PostInject()
         {
             _conGroup.Implementation = this;
+            _sawmill = _logManager.GetSawmill("admin");
+        }
+
+        public AdminData? GetAdminData(EntityUid uid, bool includeDeAdmin = false)
+        {
+            if (uid == _player.LocalEntity && (_adminData?.Active ?? includeDeAdmin))
+                return _adminData;
+
+            return null;
+        }
+
+        public AdminData? GetAdminData(ICommonSession session, bool includeDeAdmin = false)
+        {
+            if (_player.LocalUser == session.UserId && (_adminData?.Active ?? includeDeAdmin))
+                return _adminData;
+
+            return null;
+        }
+
+        public AdminData? GetAdminData(bool includeDeAdmin = false)
+        {
+            if (_player.LocalSession is { } session)
+                return GetAdminData(session, includeDeAdmin);
+
+            return null;
         }
     }
 }

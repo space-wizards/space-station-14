@@ -2,17 +2,43 @@
   parent: BaseItem
   id: DoorRemoteDefault
   name: door remote
-  description: A gadget which can open and bolt doors remotely
+  description: A gadget which can open and bolt doors remotely.
   abstract: true
   components:
   - type: Sprite
     sprite: Objects/Devices/door_remote.rsi
-    netsync: false
+  - type: Item
+    storedRotation: -90
   - type: Access
   - type: DoorRemote
+    options:
+    - mode: OpenClose
+      tooltip: door-remote-open-close-text
+      icon:
+        sprite: /Textures/Structures/Doors/Airlocks/Standard/basic.rsi
+        state: assembly
+    - mode: ToggleBolts
+      tooltip: door-remote-toggle-bolt-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: bolt_door
+    - mode: ToggleEmergencyAccess
+      tooltip: door-remote-emergency-access-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: emergency_on
+  - type: StealTarget
+    stealGroup: DoorRemote
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.DoorRemoteUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.DoorRemoteUiKey.Key:
+        type: DoorRemoteBoundUserInterface
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteCommand
   name: command door remote
   components:
@@ -24,13 +50,29 @@
     - state: door_remotescreencolour
       color: "#9f9f00"
   - type: Access
-    tags: 
-    - Captain
-    - HeadOfPersonnel
+    groups:
     - Command
+  - type: DoorRemote
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
+  id: DoorRemoteCustom
+  name: custom door remote
+  description: A gadget which can open and bolt doors remotely. This advanced variant does not have built-in access, instead inheriting the ID access of the user.
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#0077FF"
+    - state: door_remotescreencolour
+      color: "#0033EE"
+  - type: Access
+  - type: DoorRemote
+    includeUserAccess: true
+
+- type: entity
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteSecurity
   name: security door remote
   components:
@@ -42,13 +84,27 @@
     - state: door_remotescreencolour
       color: "#830000"
   - type: Access
-    tags:
-    - HeadOfSecurity
+    groups:
     - Security
+
+- type: entity
+  parent: [DoorRemoteDefault, BaseSecurityCommandContraband]
+  id: DoorRemoteArmory
+  name: armory door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#e80000"
+    - state: door_remotescreencolour
+      color: "#a80000"
+  - type: Access
+    groups:
     - Armory
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteService
   name: service door remote
   components:
@@ -60,17 +116,11 @@
     - state: door_remotescreencolour
       color: "#3a7231"
   - type: Access
-    tags:
-    - HeadOfPersonnel
+    groups:
     - Service
-    - Bar
-    - Janitor
-    - Theatre
-    - Kitchen
-    - Hydroponics
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteResearch
   name: research door remote
   components:
@@ -82,12 +132,11 @@
     - state: door_remotescreencolour
       color: "#652368"
   - type: Access
-    tags:
-    - ResearchDirector
+    groups:
     - Research
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteCargo
   name: cargo door remote
   components:
@@ -99,13 +148,11 @@
     - state: door_remotescreencolour
       color: "#5b4523"
   - type: Access
-    tags:
+    groups:
     - Cargo
-    - Quartermaster
-    - Salvage
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteMedical
   name: medical door remote
   components:
@@ -117,12 +164,11 @@
     - state: door_remotescreencolour
       color: "#325f7a"
   - type: Access
-    tags:
+    groups:
     - Medical
-    - ChiefMedicalOfficer
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteEngineering
   name: engineering door remote
   components:
@@ -134,6 +180,46 @@
     - state: door_remotescreencolour
       color: "#bc5b00"
   - type: Access
-    tags:
-    - ChiefEngineer
+    groups:
     - Engineering
+
+- type: entity
+  parent: [DoorRemoteDefault, BaseCommandContraband]
+  id: DoorRemoteAll
+  name: super door remote
+  suffix: Admeme
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#2eba22"
+    - state: door_remotescreencolour
+      color: "#22871a"
+  - type: DoorRemote
+    includeUserAccess: true
+  - type: Access
+    groups:
+    - AllAccess
+    tags:
+    - CentralCommand
+    - NuclearOperative
+    - SyndicateAgent
+    - Wizard
+    - Xenoborg
+
+- type: entity
+  parent: [ DoorRemoteDefault, BaseXenoborgContraband ]
+  id: DoorRemoteXenoborg
+  name: xenoborg door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#2eba22"
+    - state: door_remotescreencolour
+      color: "#22871a"
+  - type: Access
+    tags:
+    - Xenoborg

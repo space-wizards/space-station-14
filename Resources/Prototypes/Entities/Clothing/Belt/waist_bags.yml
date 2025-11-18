@@ -1,0 +1,33 @@
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltStorageWaistbag
+  name: leather waist bag
+  description: A leather waist bag meant for carrying small items.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/waistbag_leather.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/waistbag_leather.rsi
+  - type: Storage
+    grid:
+    - 0,0,3,1
+
+#Colorization on worn items doesn't work. If this ever gets fixed, you can duplicate this entry and change the color on the sprite to add color variants.
+#- type: entity
+#  parent: ClothingBeltStorageWaistbag
+#  id: ClothingBeltWaistbagColorRed
+#  name: red waist bag
+#  description: A waist bag meant for carrying small items.
+#  components:
+#  - type: Sprite
+#    sprite: Clothing/Belt/waistbag.rsi
+#    layers:
+#    - state: "waistbag"
+#      color: "#bf1313"
+#    - state: "waistbag-trinkets"
+#  - type: Clothing
+#    sprite: Clothing/Belt/waistbag.rsi
+#    layers:
+#    - state: "equipped-BELT"
+#      color: "#bf1313"
+#    - state: "equipped-trinkets"

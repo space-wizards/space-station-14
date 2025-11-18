@@ -1,26 +1,19 @@
 using Content.Shared.Damage;
 using Content.Shared.Tools;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
-using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
 
-namespace Content.Server.Damage.Components
+namespace Content.Server.Damage.Components;
+
+[RegisterComponent]
+public sealed partial class DamageOnToolInteractComponent : Component
 {
-    [RegisterComponent]
-    public sealed class DamageOnToolInteractComponent : Component
-    {
-        [DataField("tools")]
-        public PrototypeFlags<ToolQualityPrototype> Tools { get; } = new ();
+    [DataField]
+    public ProtoId<ToolQualityPrototype> Tools { get; private set; }
 
-        // TODO: Remove this snowflake stuff, make damage per-tool quality perhaps?
-        [DataField("weldingDamage")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier? WeldingDamage { get; }
+    // TODO: Remove this snowflake stuff, make damage per-tool quality perhaps?
+    [DataField]
+    public DamageSpecifier? WeldingDamage { get; private set; }
 
-        [DataField("defaultDamage")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier? DefaultDamage { get; }
-    }
+    [DataField]
+    public DamageSpecifier? DefaultDamage { get; private set; }
 }

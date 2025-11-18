@@ -1,0 +1,11 @@
+status = [ 
+  "Build & Test Debug",
+  "Build & Test Release",
+  "Test Packaging",
+  "YAML Linter",
+  "YAML RGA schema validator",
+  "YAML map schema validator",
+  "Validate RSIs",
+]
+timeout_sec = 1800 # 30 minutes
+use_squash_merge = true # Shame this can't use GH squash but what can you do

@@ -1,8 +1,10 @@
 # Base
 
+# uses "icon" and "icon-open" states for the main item.
+# trash prototypes use "trash" state
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [FoodBase, FoodOpenableBase]
   id: FoodTinBase
   name: tin
   description: A tin of something, sealed tight.
@@ -11,13 +13,31 @@
     solutions:
       food:
         maxVol: 20
-  - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
-    netsync: false
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+  - type: Openable
+    openableByHand: false
+    sound:
+      path: /Audio/Items/can_open3.ogg
+  - type: Destructible
+    thresholds:
+    # if tinned food is nuked just delete it, no sound
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 6
+      behaviors:
+      - !type:OpenBehavior
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
-    color: gray
+    heldPrefix: packet
+    size: Small
   - type: DamageOnLand
     damage:
       types:
@@ -28,6 +48,8 @@
         Blunt: 3
   - type: Damageable
     damageContainer: Inorganic
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   abstract: true
@@ -37,12 +59,17 @@
   description: An empty tin. Could get a bit of metal from this.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/snacks.rsi
-    netsync: false
+    state: trash
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
-    HeldPrefix: packet
-    color: gray
+    heldPrefix: packet
+    size: Small
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  - type: Tag
+    tags:
+    - Trash
 
 # Tins
 
@@ -54,100 +81,65 @@
   name: tinned peaches
   description: Just a nice can of ripe peaches swimming in their own juices.
   components:
+  - type: Item
+    storedOffset: 0,-3
   - type: Sprite
-    state: peachtin
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 6
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: canOpenSounds
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodTinPeachesOpen:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-
-- type: entity
-  parent: FoodTinBase
-  id: FoodTinPeachesOpen
-  name: tinned peaches
-  description: Just a nice can of ripe peaches swimming in their own juices.
-  components:
-  - type: Sprite
-    state: peachtin-open
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 20
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-  - type: Food
-    trash: FoodTinPeachesTrash
+    sprite: Objects/Consumable/Food/Tins/peaches.rsi
+  - type: FlavorProfile
+    flavors:
+    - sweet
+    - funny
+  - type: Edible
+    trash:
+    - FoodTinPeachesTrash
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   parent: FoodTinBaseTrash
   id: FoodTinPeachesTrash
   name: tinned peaches
   components:
+  - type: Item
+    storedOffset: 0,-3
   - type: Sprite
-    state: peachtin-empty
+    sprite: Objects/Consumable/Food/Tins/peaches.rsi
 
+# slightly run down texture and different name
 - type: entity
-  parent: FoodTinBase
+  parent: FoodTinPeaches
   id: FoodTinPeachesMaint
-  name: Maintenance Peaches
-  description: Just a nice can of ripe peaches swimming in their own juices.
+  name: maintenance peaches
   components:
   - type: Sprite
-    state: peachtinmaint
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 6
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: canOpenSounds
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodTinPeachesMaintOpen:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
+  - type: Edible
+    trash:
+    - FoodTinPeachesMaintTrash
 
+# only exists for backwards compatibility with a few maps, nothing else uses it
 - type: entity
-  parent: FoodTinBase
+  parent: FoodTinPeachesMaint
   id: FoodTinPeachesMaintOpen
-  name: Maintenance Peaches
-  description: Just a nice can of ripe peaches swimming in their own juices.
+  suffix: Open
   components:
   - type: Sprite
-    state: peachtinmaint-open
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-  - type: Food
-    trash: FoodTinPeachesMaintTrash
+    layers:
+    - state: icon-open
+      map: ["icon"]
+  - type: Openable
+    opened: true
 
 - type: entity
   parent: FoodTinBaseTrash
   id: FoodTinPeachesMaintTrash
-  name: Maintenance Peaches
+  name: maintenance peaches
   components:
+  - type: Item
+    storedOffset: 0,-3
   - type: Sprite
-    state: peachtinmaint-empty
+    sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
 
 - type: entity
   parent: FoodTinBase
@@ -155,49 +147,28 @@
   name: tin of beans
   description: Musical fruit in a slightly less musical container.
   components:
+  - type: Item
+    storedOffset: 0,-3
   - type: Sprite
-    state: beans
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 6
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: canOpenSounds
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodTinBeansOpen:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-
-- type: entity
-  parent: FoodTinBase
-  id: FoodTinBeansOpen
-  name: tin of beans
-  description: Musical fruit in a slightly less musical container.
-  components:
-  - type: Sprite
-    state: beans-open
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-  - type: Food
-    trash: FoodTinBeansTrash
+    sprite: Objects/Consumable/Food/Tins/beans.rsi
+  - type: FlavorProfile
+    flavors:
+    - savory
+    - salty
+    - cheap
+  - type: Edible
+    trash:
+    - FoodTinBeansTrash
 
 - type: entity
   parent: FoodTinBaseTrash
   id: FoodTinBeansTrash
   name: tin of beans
   components:
+  - type: Item
+    storedOffset: 0,-3
   - type: Sprite
-    state: beans-empty
+    sprite: Objects/Consumable/Food/Tins/beans.rsi
 
 # MRE can
 
@@ -205,49 +176,37 @@
   parent: FoodTinBase
   id: FoodTinMRE
   name: tinned meat
+  description: A standard issue tin of meat with a convenient pull tab.
   components:
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
   - type: Sprite
-    sprite: Objects/Consumable/Food/mre.rsi
-    state: tin-closed
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 6
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: canOpenSounds
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          FoodTinMREOpen:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-
-- type: entity
-  parent: FoodTinBase
-  id: FoodTinMREOpen
-  name: tinned meat
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Food/mre.rsi
-    state: tin-open
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 15
-  - type: Food
-    trash: FoodTinMRETrash
+    sprite: Objects/Consumable/Food/Tins/meat.rsi
+  # the convenient pull tab
+  - type: Openable
+    openableByHand: true
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - salty
+    - cheap
+  - type: Edible
+    trash:
+    - FoodTinMRETrash
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   parent: FoodTinBaseTrash
   id: FoodTinMRETrash
   name: tinned meat
   components:
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
   - type: Sprite
-    sprite: Objects/Consumable/Food/mre.rsi
-    state: tin-trash
+    sprite: Objects/Consumable/Food/Tins/meat.rsi

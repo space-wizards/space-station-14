@@ -1,30 +1,45 @@
 - type: job
   id: SecurityOfficer
-  name: "security officer"
+  name: job-name-security
+  description: job-description-security
+  playTimeTracker: JobSecurityOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 2.5h
   startingGear: SecurityOfficerGear
-  departments:
-  - Security
-  icon: "SecurityOfficer"
-  supervisors: "the head of security"
+  icon: "JobIconSecurityOfficer"
+  supervisors: job-supervisors-hos
   canBeAntag: false
   access:
   - Security
   - Brig
   - Maintenance
-  - Service
+  - External
+  - Cryogenics
+  - GenpopEnter
+  - GenpopLeave
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
 
 - type: startingGear
   id: SecurityOfficerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitSec
-    back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsJack
     eyes: ClothingEyesGlassesSecurity
-    head: ClothingHeadHelmetHelmetOld
-    outerClothing: ClothingOuterVestKevlar
-    id: SecurityPDA
     ears: ClothingHeadsetSecurity
-    belt: ClothingBeltSecurityFilled
-  innerclothingskirt: ClothingUniformJumpskirtSec
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+    pocket1: WeaponPistolMk58
+  storage:
+    back:
+    - Flash
+    - MagazinePistol
+
+- type: chameleonOutfit
+  id: SecurityOfficerChameleonOutfit
+  job: SecurityOfficer
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretSecurity
+    mask: ClothingMaskGasSecurity
+    neck: Dinkystar
+    gloves: ClothingHandsGlovesColorBlack

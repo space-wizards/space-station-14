@@ -1,5 +1,4 @@
-﻿using System;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Alert;
@@ -10,9 +9,9 @@ namespace Content.Shared.Alert;
 [Serializable, NetSerializable]
 public sealed class ClickAlertEvent : EntityEventArgs
 {
-    public readonly AlertType Type;
+    public readonly ProtoId<AlertPrototype> Type;
 
-    public ClickAlertEvent(AlertType alertType)
+    public ClickAlertEvent(ProtoId<AlertPrototype> alertType)
     {
         Type = alertType;
     }

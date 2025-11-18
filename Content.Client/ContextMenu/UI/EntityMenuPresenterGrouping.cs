@@ -1,19 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using System.Linq;
 
 namespace Content.Client.ContextMenu.UI
 {
-    public sealed partial class EntityMenuPresenter : ContextMenuPresenter
+    public sealed partial class EntityMenuUIController
     {
         public const int GroupingTypesCount = 2;
         private int GroupingContextMenuType { get; set; }
         public void OnGroupingChanged(int obj)
         {
-            Close();
+            _context.Close();
             GroupingContextMenuType = obj;
         }
 
@@ -21,7 +18,7 @@ namespace Content.Client.ContextMenu.UI
         {
             if (GroupingContextMenuType == 0)
             {
-                var newEntities = entities.GroupBy(e => _entityManager.GetComponent<MetaDataComponent>(e).EntityName + (_entityManager.GetComponent<MetaDataComponent>(e).EntityPrototype?.ID ?? string.Empty)).ToList();
+                var newEntities = entities.GroupBy(e => Identity.Name(e, _entityManager)).ToList();
                 return newEntities.Select(grp => grp.ToList()).ToList();
             }
             else
@@ -38,8 +35,8 @@ namespace Content.Client.ContextMenu.UI
                 (a, b, entMan) => entMan.GetComponent<MetaDataComponent>(a).EntityPrototype!.ID == entMan.GetComponent<MetaDataComponent>(b).EntityPrototype!.ID,
                 (a, b, entMan) =>
                 {
-                    entMan.TryGetComponent<ISpriteComponent?>(a, out var spriteA);
-                    entMan.TryGetComponent<ISpriteComponent?>(b, out var spriteB);
+                    entMan.TryGetComponent(a, out SpriteComponent? spriteA);
+                    entMan.TryGetComponent(b, out SpriteComponent? spriteB);
 
                     if (spriteA == null || spriteB == null)
                         return spriteA == spriteB;
@@ -56,7 +53,7 @@ namespace Content.Client.ContextMenu.UI
                 (e, entMan) =>
                 {
                     var hash = 0;
-                    foreach (var element in entMan.GetComponent<ISpriteComponent>(e).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
+                    foreach (var element in entMan.GetComponent<SpriteComponent>(e).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
                     {
                         hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
                     }

@@ -1,0 +1,25 @@
+<BoxContainer xmlns="https://spacestation14.io" HorizontalExpand="True">
+    <Collapsible>
+        <CollapsibleHeading Name="SensorAddress" />
+        <CollapsibleBody Margin="20 2 2 2">
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
+                    <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-thresholds-copy'}" ToolTip="{Loc 'air-alarm-ui-thresholds-copy-tooltip'}" />
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" Margin="0 0 2 0" HorizontalExpand="True">
+                    <RichTextLabel Name="AlarmStateLabel" />
+                    <RichTextLabel Name="PressureLabel" />
+                    <Control Name="PressureThresholdContainer" Margin="20 0 2 0" />
+                    <RichTextLabel Name="TemperatureLabel" />
+                    <Control Name="TemperatureThresholdContainer" Margin="20 0 2 0" />
+                </BoxContainer>
+                <Collapsible Margin="2">
+                    <CollapsibleHeading Title="{Loc 'air-alarm-ui-sensor-gases'}" />
+                    <CollapsibleBody Margin="20 0 0 0">
+                        <BoxContainer Name="GasContainer" Orientation="Vertical" Margin="2" />
+                    </CollapsibleBody>
+                </Collapsible>
+            </BoxContainer>
+        </CollapsibleBody>
+    </Collapsible>
+</BoxContainer>

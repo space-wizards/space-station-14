@@ -1,24 +1,67 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
-using Robust.Shared.Analyzers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Content.Shared.Roles;
+using Content.Shared.StatusIcon;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Access.Components
+namespace Content.Shared.Access.Components;
+
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
+[Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
+public sealed partial class IdCardComponent : Component
 {
-    // TODO BUI NETWORKING if ever clients can open their own BUI's (id card console, pda), then this data should be
-    // networked.
-    [RegisterComponent]
-    [Friend(typeof(SharedIdCardSystem), typeof(SharedPDASystem))]
-    public sealed class IdCardComponent : Component
-    {
-        [DataField("originalOwnerName")]
-        public string OriginalOwnerName = default!;
+    [DataField]
+    [AutoNetworkedField]
+    // FIXME Friends
+    public string? FullName;
 
-        [DataField("fullName")]
-        public string? FullName;
+    [DataField]
+    [AutoNetworkedField]
+    [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
+    public LocId? JobTitle;
 
-        [DataField("jobTitle")]
-        public string? JobTitle;
-    }
+    [DataField]
+    [AutoNetworkedField]
+    private string? _jobTitle;
+
+    [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWriteExecute)]
+    public string? LocalizedJobTitle { set => _jobTitle = value; get => _jobTitle ?? Loc.GetString(JobTitle ?? string.Empty); }
+
+    /// <summary>
+    /// The state of the job icon rsi.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public ProtoId<JobIconPrototype> JobIcon = "JobIconUnknown";
+
+    /// <summary>
+    /// Holds the job prototype when the ID card has no associated station record
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public ProtoId<JobPrototype>? JobPrototype;
+
+    /// <summary>
+    /// The proto IDs of the departments associated with the job
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public List<ProtoId<DepartmentPrototype>> JobDepartments = new();
+
+    /// <summary>
+    /// Determines if accesses from this card should be logged by <see cref="AccessReaderComponent"/>
+    /// </summary>
+    [DataField]
+    public bool BypassLogging;
+
+    [DataField]
+    public LocId NameLocId = "access-id-card-component-owner-name-job-title-text";
+
+    [DataField]
+    public LocId FullNameLocId = "access-id-card-component-owner-full-name-job-title-text";
+
+    [DataField]
+    public bool CanMicrowave = true;
 }

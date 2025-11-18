@@ -1,0 +1,12 @@
+- type: constructionGraph
+  id: ShotgunSawn
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shotgunsawn
+          steps:
+            - tool: Sawing
+              doAfter: 2
+    - node: shotgunsawn
+      entity: WeaponShotgunSawnEmpty # Makes the sawn-off spawn empty. At max they're losing 2 shells.

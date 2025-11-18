@@ -1,47 +1,42 @@
-﻿- type: entity
+- type: entity
   name: green glowstick
   parent: BaseItem
   id: GlowstickBase
   description: Useful for raves and emergencies.
   components:
-    - type: Tag
-      tags:
-      - Recyclable
-      - Trash
-    - type: Recyclable
+    - type: SpaceGarbage
     - type: ExpendableLight
-      spentName: spent green glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
       glowDuration: 900 # time in seconds
+      glowColorLit: "#00FF00"
       fadeOutDuration: 300
-      iconStateOn: glowstick_lit
-      iconStateSpent: glowstick_unlit
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
+      iconStateLit: glowstick_lit
+      iconStateSpent: glowstick_unlit
       litSound:
         path: /Audio/Items/Handcuffs/rope_breakout.ogg
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#00FF00"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#00FF00"
+      - map: [ enum.ExpendableLightVisualLayers.Base ]
+        state: glowstick_base
+      - map: [ enum.ExpendableLightVisualLayers.Glow ]
+        state: glowstick_glow
+        visible: false
+        shader: unshaded
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: glowstick_unlit
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      color: "#00FF00"
-      HeldPrefix: off
+      heldPrefix: unlit
+      storedRotation: -45
     - type: Appearance
-      visuals:
-        - type: ExpendableLightVisualizer
     - type: PointLight
       enabled: false
       color: "#00FF00"
       radius: 5
       energy: 0
+      netsync: false
     - type: LightBehaviour
       behaviours:
         - !type:FadeBehaviour # slowly fade in once activated
@@ -64,7 +59,9 @@
           maxDuration: 10 # 300.0
           startValue: 5.0
           endValue: 1.5
-          property: Radius
+    - type: Tag
+      tags:
+      - Trash
 
 - type: entity
   name: red glowstick
@@ -72,35 +69,10 @@
   id: GlowstickRed
   components:
     - type: ExpendableLight
-      spentName: spent red glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowDuration: 900
-      fadeOutDuration: 300
-      iconStateOn: glowstick_lit
-      iconStateSpent: glowstick_unlit
-      turnOnBehaviourID: turn_on
-      fadeOutBehaviourID: fade_out
-      litSound:
-        path: /Audio/Items/Handcuffs/rope_breakout.ogg
-    - type: Sprite
-      sprite: Objects/Misc/glowstick.rsi
-      layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#FF0000"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#FF0000"
-    - type: Item
-      sprite: Objects/Misc/glowstick.rsi
-      color: "#FF0000"
-      HeldPrefix: off
+      spentName: expendable-light-spent-red-glowstick-name
+      glowColorLit: "#FF0000"
     - type: PointLight
-      enabled: false
       color: "#FF0000"
-      radius: 5
-      energy: 0
 
 - type: entity
   name: purple glowstick
@@ -108,35 +80,10 @@
   id: GlowstickPurple
   components:
     - type: ExpendableLight
-      spentName: spent purple glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowDuration: 900
-      fadeOutDuration: 300
-      iconStateOn: glowstick_lit
-      iconStateSpent: glowstick_unlit
-      turnOnBehaviourID: turn_on
-      fadeOutBehaviourID: fade_out
-      litSound:
-        path: /Audio/Items/Handcuffs/rope_breakout.ogg
-    - type: Sprite
-      sprite: Objects/Misc/glowstick.rsi
-      layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#FF00FF"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#FF00FF"
-    - type: Item
-      sprite: Objects/Misc/glowstick.rsi
-      color: "#FF00FF"
-      HeldPrefix: off
+      spentName: expendable-light-spent-purple-glowstick-name
+      glowColorLit: "#FF00FF"
     - type: PointLight
-      enabled: false
       color: "#FF00FF"
-      radius: 5
-      energy: 0
 
 - type: entity
   name: yellow glowstick
@@ -144,35 +91,10 @@
   id: GlowstickYellow
   components:
     - type: ExpendableLight
-      spentName: spent yellow glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowDuration: 900
-      fadeOutDuration: 300
-      iconStateOn: glowstick_lit
-      iconStateSpent: glowstick_unlit
-      turnOnBehaviourID: turn_on
-      fadeOutBehaviourID: fade_out
-      litSound:
-        path: /Audio/Items/Handcuffs/rope_breakout.ogg
-    - type: Sprite
-      sprite: Objects/Misc/glowstick.rsi
-      layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#FFFF00"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#FFFF00"
-    - type: Item
-      sprite: Objects/Misc/glowstick.rsi
-      color: "#FFFF00"
-      HeldPrefix: off
+      spentName: expendable-light-spent-yellow-glowstick-name
+      glowColorLit: "#FFFF00"
     - type: PointLight
-      enabled: false
       color: "#FFFF00"
-      radius: 5
-      energy: 0
 
 - type: entity
   name: blue glowstick
@@ -180,35 +102,10 @@
   id: GlowstickBlue
   components:
     - type: ExpendableLight
-      spentName: spent blue glowstick
-      spentDesc: It looks like this glowstick has stopped glowing. How tragic.
-      glowDuration: 900
-      fadeOutDuration: 300
-      iconStateOn: glowstick_lit
-      iconStateSpent: glowstick_unlit
-      turnOnBehaviourID: turn_on
-      fadeOutBehaviourID: fade_out
-      litSound:
-        path: /Audio/Items/Handcuffs/rope_breakout.ogg
-    - type: Sprite
-      sprite: Objects/Misc/glowstick.rsi
-      layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#0000FF"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#0000FF"
-    - type: Item
-      sprite: Objects/Misc/glowstick.rsi
-      color: "#0000FF"
-      HeldPrefix: off
+      spentName: expendable-light-spent-blue-glowstick-name
+      glowColorLit: "#0000FF"
     - type: PointLight
-      enabled: false
       color: "#0000FF"
-      radius: 5
-      energy: 0
 
 # ----------------------------------------------------------------------------
 # THE FOLLOWING ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
@@ -217,6 +114,7 @@
   name: light pulse test
   parent: BaseItem
   id: LightBehaviourTest1
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -227,7 +125,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: unlit
     - type: PointLight
       enabled: true
       color: "#FF0000"
@@ -237,8 +135,8 @@
         - !type:PulseBehaviour
           interpolate: Cubic
           maxDuration: 10.0
-          minValue: 1.0
-          maxValue: 7.0
+          startValue: 1.0
+          endValue: 7.0
           isLooped: true
           property: Energy
           enabled: true
@@ -247,6 +145,7 @@
   name: color cycle test
   parent: BaseItem
   id: LightBehaviourTest2
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -257,7 +156,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: unlit
     - type: PointLight
       enabled: true
       color: "#FF0000"
@@ -278,6 +177,7 @@
   name: multi-behaviour light test
   parent: BaseItem
   id: LightBehaviourTest3
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -288,7 +188,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: unlit
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -299,8 +199,8 @@
           interpolate: Nearest
           minDuration: 0.2
           maxDuration: 1.0
-          maxValue: 0.2
-          property: Enabled
+          endValue: 0.2
+          property: AnimatedEnable
           isLooped: true
           enabled: true
         - !type:ColorCycleBehaviour
@@ -317,6 +217,7 @@
   name: light fade in test
   parent: BaseItem
   id: LightBehaviourTest4
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -327,7 +228,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: unlit
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -337,8 +238,8 @@
         - !type:FadeBehaviour
           interpolate: Cubic
           maxDuration: 5.0
-          minValue: 0.0
-          maxValue: 10.0
+          startValue: 0.0
+          endValue: 10.0
           isLooped: true
           property: Energy
           enabled: true
@@ -347,6 +248,7 @@
   name: light pulse radius test
   parent: BaseItem
   id: LightBehaviourTest5
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -357,7 +259,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: unlit
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -368,16 +270,16 @@
           interpolate: Cubic
           minDuration: 1.0
           maxDuration: 5.0
-          minValue: 2.0
-          maxValue: 10.0
+          startValue: 2.0
+          endValue: 10.0
           isLooped: true
-          property: Radius
           enabled: true
 
 - type: entity
   name: light randomize radius test
   parent: BaseItem
   id: LightBehaviourTest6
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
@@ -388,7 +290,7 @@
           color: "#FF0000"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
-      HeldPrefix: off
+      heldPrefix: unlit
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -399,8 +301,7 @@
         - !type:RandomizeBehaviour
           interpolate: Nearest
           maxDuration: 0.5
-          minValue: 10.0
-          maxValue: 25.0
+          startValue: 10.0
+          endValue: 25.0
           isLooped: true
-          property: Radius
           enabled: true

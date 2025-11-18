@@ -3,27 +3,27 @@
   id: CultLeaderGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
-    back: ClothingBackpackFilled
+    back: ClothingBackpack
     head: ClothingHeadHelmetCult
     neck: BedsheetCult
     outerClothing: ClothingOuterArmorCult
     shoes: ClothingShoesCult
-    id: AssistantPDA
+    id: PassengerPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtColorBlack
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  storage:
+    back:
+    - BoxSurvival
 
 - type: startingGear
   id: CultistGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
-    back: ClothingBackpackFilled
+    back: ClothingBackpack
     head: ClothingHeadHatHoodCulthood
     outerClothing: ClothingOuterRobesCult
     shoes: ClothingShoesColorRed
-    id: AssistantPDA
+    id: PassengerPDA
     ears: ClothingHeadsetService
-  innerclothingskirt: ClothingUniformJumpskirtColorBlack
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  storage:
+    back:
+    - BoxSurvival

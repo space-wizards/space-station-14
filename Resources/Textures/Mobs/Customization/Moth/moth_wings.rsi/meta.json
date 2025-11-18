@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commits https://github.com/tgstation/tgstation/commit/b30e2934e7585bad901dd12a35d0635f1fc292c1 and https://github.com/tgstation/tgstation/commit/6b0af0febe578f47ae280781682ea7a3d77f508a, modified by https://github.com/PixelTheKermit & https://github.com/MilenVolf, Underwing is drawn by Ubaser",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "default",
+      "directions": 4
+    },
+    {
+      "name": "charred",
+      "directions": 4
+    },
+    {
+      "name": "dbushy_primary",
+      "directions": 4
+    },
+    {
+      "name": "dbushy_secondary",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_primary",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_secondary",
+      "directions": 4
+    },
+    {
+      "name": "fan",
+      "directions": 4
+    },
+    {
+      "name": "dfan",
+      "directions": 4
+    },
+    {
+      "name": "feathery",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_primary",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_secondary",
+      "directions": 4
+    },
+    {
+      "name": "gothic",
+      "directions": 4
+    },
+    {
+      "name": "jungle",
+      "directions": 4
+    },
+    {
+      "name": "ladybug",
+      "directions": 4
+    },
+    {
+      "name": "maple_primary",
+      "directions": 4
+    },
+    {
+      "name": "maple_secondary",
+      "directions": 4
+    },
+    {
+      "name": "moffra_primary",
+      "directions": 4
+    },
+    {
+      "name": "moffra_secondary",
+      "directions": 4
+    },
+    {
+      "name": "oakworm",
+      "directions": 4
+    },
+    {
+      "name": "plasmafire_primary",
+      "directions": 4
+    },
+    {
+      "name": "plasmafire_secondary",
+      "directions": 4
+    },
+    {
+      "name": "pointy",
+      "directions": 4
+    },
+    {
+      "name": "royal_primary",
+      "directions": 4
+    },
+    {
+      "name": "royal_secondary",
+      "directions": 4
+    },
+    {
+      "name": "stellar",
+      "directions": 4
+    },
+    {
+      "name": "striped",
+      "directions": 4
+    },
+    {
+      "name": "swirly",
+      "directions": 4
+    },
+    {
+      "name": "whitefly",
+      "directions": 4
+    },
+    {
+      "name": "witchwing",
+      "directions": 4
+    },
+    {
+      "name": "underwing_primary",
+      "directions": 4
+    },
+    {
+      "name": "underwing_secondary",
+      "directions": 4
+    }
+  ]
+}

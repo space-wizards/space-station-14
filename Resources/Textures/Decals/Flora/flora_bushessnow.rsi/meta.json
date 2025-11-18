@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/a2764fbfc554d41074f110b64315d8c241d7d577",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bushsnowa1"
+        },
+        {
+            "name": "bushsnowa2"
+        },
+        {
+            "name": "bushsnowa3"
+        },
+        {
+            "name": "bushsnowb1"
+        },
+        {
+            "name": "bushsnowb2"
+        },
+        {
+            "name": "bushsnowb3"
+        }
+    ]
+}

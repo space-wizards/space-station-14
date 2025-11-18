@@ -1,49 +1,23 @@
 using System.Text.RegularExpressions;
-using Content.Server.Chat.Managers;
-using Content.Server.Speech.Components;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
+using Content.Shared.Chat;
+using Content.Shared.Speech;
 
-namespace Content.Server.Speech
+namespace Content.Server.Speech;
+
+public sealed class AccentSystem : EntitySystem
 {
-    public sealed class AccentSystem : EntitySystem
+    public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?‽])(?![\.!\?‽])", RegexOptions.Compiled);
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
-
-        public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?])", RegexOptions.Compiled);
-
-        public override void Initialize()
-        {
-            _chatManager.RegisterChatTransform(AccentHandler);
-        }
-
-        public string AccentHandler(EntityUid playerUid, string message)
-        {
-            var accentEvent = new AccentGetEvent(playerUid, message);
-
-            RaiseLocalEvent(playerUid, accentEvent);
-
-            return accentEvent.Message;
-        }
+        SubscribeLocalEvent<TransformSpeechEvent>(AccentHandler);
     }
 
-    public sealed class AccentGetEvent : EntityEventArgs
+    private void AccentHandler(TransformSpeechEvent args)
     {
-        /// <summary>
-        ///     The entity to apply the accent to.
-        /// </summary>
-        public EntityUid Entity { get; }
+        var accentEvent = new AccentGetEvent(args.Sender, args.Message);
 
-        /// <summary>
-        ///     The message to apply the accent transformation to.
-        ///     Modify this to apply the accent.
-        /// </summary>
-        public string Message { get; set; }
-
-        public AccentGetEvent(EntityUid entity, string message)
-        {
-            Entity = entity;
-            Message = message;
-        }
+        RaiseLocalEvent(args.Sender, accentEvent, true);
+        args.Message = accentEvent.Message;
     }
 }

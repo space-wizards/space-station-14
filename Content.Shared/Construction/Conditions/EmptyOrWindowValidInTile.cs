@@ -1,28 +1,27 @@
-﻿using System.Collections.Generic;
-using Content.Shared.Maps;
+﻿using Content.Shared.Maps;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EmptyOrWindowValidInTile : IConstructionCondition
+    public sealed partial class EmptyOrWindowValidInTile : IConstructionCondition
     {
         [DataField("tileNotBlocked")]
-        private readonly TileNotBlocked _tileNotBlocked = new();
+        private TileNotBlocked _tileNotBlocked = new();
 
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var lookupSys = entManager.System<EntityLookupSystem>();
+
             var result = false;
 
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
+
+            foreach (var entity in lookupSys.GetEntitiesIntersecting(location, LookupFlags.Approximate | LookupFlags.Static))
             {
-                if (IoCManager.Resolve<IEntityManager>().HasComponent<SharedCanBuildWindowOnTopComponent>(entity))
+                if (entManager.HasComponent<SharedCanBuildWindowOnTopComponent>(entity))
                     result = true;
             }
 
@@ -32,9 +31,9 @@ namespace Content.Shared.Construction.Conditions
             return result;
         }
 
-        public ConstructionGuideEntry? GenerateGuideEntry()
+        public ConstructionGuideEntry GenerateGuideEntry()
         {
-            return new ConstructionGuideEntry()
+            return new ConstructionGuideEntry
             {
                 Localization = "construction-guide-condition-empty-or-window-valid-in-tile"
             };

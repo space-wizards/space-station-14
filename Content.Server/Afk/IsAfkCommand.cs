@@ -2,35 +2,44 @@
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Afk
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class IsAfkCommand : IConsoleCommand
+    public sealed class IsAfkCommand : LocalizedCommands
     {
-        public string Command => "isafk";
-        public string Description => "Checks if a specified player is AFK";
-        public string Help => "Usage: isafk <playerName>";
+        [Dependency] private readonly IAfkManager _afkManager = default!;
+        [Dependency] private readonly IPlayerManager _players = default!;
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override string Command => "isafk";
+
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
-            var afkManager = IoCManager.Resolve<IAfkManager>();
-
             if (args.Length == 0)
             {
-                shell.WriteError("Need one argument");
+                shell.WriteError(Loc.GetString($"shell-need-exactly-one-argument"));
                 return;
             }
 
-            if (!playerManager.TryGetSessionByUsername(args[0], out var player))
+            if (!_players.TryGetSessionByUsername(args[0], out var player))
             {
-                shell.WriteError("Unable to find that player");
+                shell.WriteError(Loc.GetString($"shell-target-player-does-not-exist"));
                 return;
             }
 
-            shell.WriteLine(afkManager.IsAfk(player) ? "They are indeed AFK" : "They are not AFK");
+            shell.WriteLine(Loc.GetString(_afkManager.IsAfk(player) ? "cmd-isafk-true" : "cmd-isafk-false"));
+        }
+
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                return CompletionResult.FromHintOptions(
+                    CompletionHelper.SessionNames(players: _players),
+                    "<playerName>");
+            }
+
+            return CompletionResult.Empty;
         }
     }
 }

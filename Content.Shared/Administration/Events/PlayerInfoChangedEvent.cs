@@ -1,12 +1,9 @@
-﻿using System;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.Administration.Events
+namespace Content.Shared.Administration.Events;
+
+[NetSerializable, Serializable]
+public sealed class PlayerInfoChangedEvent : EntityEventArgs
 {
-    [NetSerializable, Serializable]
-    public sealed class PlayerInfoChangedEvent : EntityEventArgs
-    {
-        public PlayerInfo? PlayerInfo;
-    }
+    public PlayerInfo? PlayerInfo;
 }

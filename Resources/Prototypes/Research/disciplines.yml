@@ -1,0 +1,47 @@
+- type: techDiscipline
+  id: Industrial
+  name: research-discipline-industrial
+  color: "#eeac34"
+  icon:
+    sprite: Interface/Misc/research_disciplines.rsi
+    state: industrial
+  tierPrerequisites:
+    1: 0
+    2: 0.75
+    3: 0.75
+
+- type: techDiscipline
+  id: Arsenal
+  name: research-discipline-arsenal
+  color: "#dc373b"
+  icon:
+    sprite: Interface/Misc/research_disciplines.rsi
+    state: arsenal
+  tierPrerequisites:
+    1: 0
+    2: 0.75
+    3: 0.75
+
+- type: techDiscipline
+  id: Experimental
+  name: research-discipline-experimental
+  color: "#9a6ef0"
+  icon:
+    sprite: Interface/Misc/research_disciplines.rsi
+    state: experimental
+  tierPrerequisites:
+    1: 0
+    2: 0.75
+    3: 0.75
+
+- type: techDiscipline
+  id: CivilianServices
+  name: research-discipline-civilian-services
+  color: "#7ecd48"
+  icon:
+    sprite: Interface/Misc/research_disciplines.rsi
+    state: civilianservices
+  tierPrerequisites:
+    1: 0
+    2: 0.75
+    3: 0.75

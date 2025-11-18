@@ -1,0 +1,111 @@
+﻿- type: constructionGraph
+  id: ImprovisedArrow
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ImprovisedArrow
+      steps:
+      - material: MetalRod
+        amount: 1
+        doAfter: 0.5
+      - material: Cloth
+        amount: 1
+        doAfter: 0.5
+      - tag: GlassShard
+        name: construction-graph-tag-glass-shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 0.5
+
+  - node: ImprovisedArrow
+    entity: ArrowImprovised
+
+- type: constructionGraph
+  id: ImprovisedArrowPlasma
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ImprovisedArrowPlasma
+      steps:
+      - material: MetalRod
+        amount: 1
+        doAfter: 0.5
+      - material: Cloth
+        amount: 1
+        doAfter: 0.5
+      - tag: PlasmaGlassShard
+        name: construction-graph-tag-plasma-glass-shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 0.5
+
+  - node: ImprovisedArrowPlasma
+    entity: ArrowImprovisedPlasma
+
+- type: constructionGraph
+  id: ImprovisedArrowUranium
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ImprovisedArrowUranium
+      steps:
+      - material: MetalRod
+        amount: 1
+        doAfter: 0.5
+      - material: Cloth
+        amount: 1
+        doAfter: 0.5
+      - tag: UraniumGlassShard
+        name: construction-graph-tag-uranium-glass-shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 0.5
+
+  - node: ImprovisedArrowUranium
+    entity: ArrowImprovisedUranium
+
+- type: constructionGraph
+  id: ImprovisedArrowCarp
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ImprovisedArrowCarp
+      steps:
+      - material: MetalRod
+        amount: 1
+        doAfter: 0.5
+      - material: Cloth
+        amount: 1
+        doAfter: 0.5
+      - material: SpaceCarpTooth
+        amount: 1
+        doAfter: 0.5
+
+  - node: ImprovisedArrowCarp
+    entity: ArrowImprovisedCarp
+
+- type: constructionGraph
+  id: CardArrow
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: CardArrow
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 0.5
+      - material: Cardboard
+        amount: 1
+        doAfter: 0.5
+
+  - node: CardArrow
+    entity: ArrowCard
+

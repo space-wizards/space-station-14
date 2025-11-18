@@ -1,13 +1,8 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
@@ -17,13 +12,13 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class MachineFrameComplete : IGraphCondition
+    public sealed partial class MachineFrameComplete : IGraphCondition
     {
         [DataField("guideIconBoard")]
-        public SpriteSpecifier? GuideIconBoard { get; }
+        public SpriteSpecifier? GuideIconBoard { get; private set; }
 
         [DataField("guideIconParts")]
-        public SpriteSpecifier? GuideIconPart { get; }
+        public SpriteSpecifier? GuideIconParts { get; private set; }
 
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
@@ -31,14 +26,18 @@ namespace Content.Server.Construction.Conditions
             if (!entityManager.TryGetComponent(uid, out MachineFrameComponent? machineFrame))
                 return false;
 
-            return machineFrame.IsComplete;
+            return entityManager.EntitySysManager.GetEntitySystem<MachineFrameSystem>().IsComplete(machineFrame);
         }
 
         public bool DoExamine(ExaminedEvent args)
         {
             var entity = args.Examined;
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<MachineFrameComponent?>(entity, out var machineFrame))
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var protoManager = IoCManager.Resolve<IPrototypeManager>();
+            var constructionSys = entityManager.System<ConstructionSystem>();
+
+            if (!entityManager.TryGetComponent(entity, out MachineFrameComponent? machineFrame))
                 return false;
 
             if (!machineFrame.HasBoard)
@@ -47,55 +46,50 @@ namespace Content.Server.Construction.Conditions
                 return true;
             }
 
-            if (machineFrame.IsComplete) return false;
+            if (entityManager.EntitySysManager.GetEntitySystem<MachineFrameSystem>().IsComplete(machineFrame))
+                return false;
 
-            args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-requirement-label") + "\n");
-            foreach (var (part, required) in machineFrame.Requirements)
-            {
-                var amount = required - machineFrame.Progress[part];
-
-                if(amount == 0) continue;
-
-                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
-                                           ("amount", amount),
-                                           ("elementName", Loc.GetString(part.ToString())))
-                                       + "\n");
-            }
+            args.PushMarkup(Loc.GetString("construction-condition-machine-frame-requirement-label"));
 
             foreach (var (material, required) in machineFrame.MaterialRequirements)
             {
                 var amount = required - machineFrame.MaterialProgress[material];
 
-                if(amount == 0) continue;
+                if(amount == 0)
+                    continue;
+                var stack = protoManager.Index(material);
+                var stackEnt = protoManager.Index(stack.Spawn);
 
-                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                args.PushMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
                                            ("amount", amount),
-                                           ("elementName", Loc.GetString(material.ToString())))
-                                       + "\n");
+                                           ("elementName", stackEnt.Name)));
             }
 
             foreach (var (compName, info) in machineFrame.ComponentRequirements)
             {
                 var amount = info.Amount - machineFrame.ComponentProgress[compName];
 
-                if(amount == 0) continue;
+                if(amount == 0)
+                    continue;
 
-                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                var examineName = constructionSys.GetExamineName(info);
+                args.PushMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
                                                 ("amount", info.Amount),
-                                                ("elementName", Loc.GetString(info.ExamineName)))
-                                  + "\n");
+                                                ("elementName", examineName)));
             }
 
             foreach (var (tagName, info) in machineFrame.TagRequirements)
             {
                 var amount = info.Amount - machineFrame.TagProgress[tagName];
 
-                if(amount == 0) continue;
+                if(amount == 0)
+                    continue;
 
-                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
-                                           ("amount", info.Amount),
-                                           ("elementName", Loc.GetString(info.ExamineName)))
-                                       + "\n");
+                var examineName = constructionSys.GetExamineName(info);
+                args.PushMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                                    ("amount", info.Amount),
+                                    ("elementName", examineName))
+                                + "\n");
             }
 
             return true;
@@ -113,7 +107,7 @@ namespace Content.Server.Construction.Conditions
             yield return new ConstructionGuideEntry()
             {
                 Localization = "construction-step-condition-machine-frame-parts",
-                Icon = GuideIconPart,
+                Icon = GuideIconParts,
                 EntryNumber = 0, // Set this to anything so the guide generation takes this as a numbered step.
             };
         }
