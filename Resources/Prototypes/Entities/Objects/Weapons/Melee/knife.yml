@@ -336,3 +336,67 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+
+- type: entity
+  name: utility knife
+  parent: BaseItem
+  id: UtilityKnife
+  description: A knife with a retractable, tiny blade. Useful as a box cutter and letter opener, among other things.
+  components:
+  - type: Appearance
+  - type: ComponentToggler
+    components:
+    - type: Execution
+      doAfterDuration: 4.0
+    - type: Sharp
+    - type: Utensil
+      types:
+      - Knife
+    - type: Tool
+      qualities:
+      - Slicing
+      useSound:
+        path: /Audio/Items/Culinary/chop.ogg
+  - type: Item
+    size: Tiny
+    sprite: Objects/Weapons/Melee/utility_knife.rsi
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/utilityknifeopen.ogg
+    soundDeactivate:
+      path: /Audio/Weapons/utilityknifeclose.ogg
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Weapons/bladeslice.ogg
+    activatedDamage:
+      types:
+        Slash: 4
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/utility_knife.rsi
+    layers:
+    - state: utility_knife_handle
+    - state: utility_knife_blade
+      visible: false
+      map: [ "blade" ]
+  - type: Tag
+    tags:
+    - Knife
+    - UtilityKnife
+  - type: ToggleableVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+      - state: inhand-left-blade
+      right:
+      - state: inhand-right-blade
+  - type: UseDelay
+    delay: 0.2

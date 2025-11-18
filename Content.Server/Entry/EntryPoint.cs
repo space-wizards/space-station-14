@@ -15,8 +15,6 @@ using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.Objectives;
-using Content.Server.Players;
 using Content.Server.Players.JobWhitelist;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Players.RateLimiting;
@@ -42,124 +40,131 @@ namespace Content.Server.Entry
         internal const string ConfigPresetsDir = "/ConfigPresets/";
         private const string ConfigPresetsDirBuild = $"{ConfigPresetsDir}Build/";
 
-        private EuiManager _euiManager = default!;
-        private IVoteManager _voteManager = default!;
-        private ServerUpdateManager _updateManager = default!;
-        private PlayTimeTrackingManager? _playTimeTracking;
-        private IEntitySystemManager? _sysMan;
-        private IServerDbManager? _dbManager;
-        private IWatchlistWebhookManager _watchlistWebhookManager = default!;
-        private IConnectionManager? _connectionManager;
+        [Dependency] private readonly CVarControlManager _cvarCtrl = default!;
+        [Dependency] private readonly ContentLocalizationManager _loc = default!;
+        [Dependency] private readonly ContentNetworkResourceManager _netResMan = default!;
+        [Dependency] private readonly DiscordChatLink _discordChatLink = default!;
+        [Dependency] private readonly DiscordLink _discordLink = default!;
+        [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly GhostKickManager _ghostKick = default!;
+        [Dependency] private readonly IAdminManager _admin = default!;
+        [Dependency] private readonly IAdminLogManager _adminLog = default!;
+        [Dependency] private readonly IAfkManager _afk = default!;
+        [Dependency] private readonly IBanManager _ban = default!;
+        [Dependency] private readonly IChatManager _chatSan = default!;
+        [Dependency] private readonly IChatSanitizationManager _chat = default!;
+        [Dependency] private readonly IComponentFactory _factory = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private readonly IConnectionManager _connection = default!;
+        [Dependency] private readonly IEntitySystemManager _entSys = default!;
+        [Dependency] private readonly IGameMapManager _gameMap = default!;
+        [Dependency] private readonly ILogManager _log = default!;
+        [Dependency] private readonly INodeGroupFactory _nodeFactory = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly IResourceManager _res = default!;
+        [Dependency] private readonly IServerDbManager _dbManager = default!;
+        [Dependency] private readonly IServerPreferencesManager _preferences = default!;
+        [Dependency] private readonly IStatusHost _host = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private readonly IWatchlistWebhookManager _watchlistWebhookManager = default!;
+        [Dependency] private readonly JobWhitelistManager _job = default!;
+        [Dependency] private readonly MultiServerKickManager _multiServerKick = default!;
+        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+        [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
+        [Dependency] private readonly RecipeManager _recipe = default!;
+        [Dependency] private readonly RulesManager _rules = default!;
+        [Dependency] private readonly ServerApi _serverApi = default!;
+        [Dependency] private readonly ServerInfoManager _serverInfo = default!;
+        [Dependency] private readonly ServerUpdateManager _updateManager = default!;
+
+        public override void PreInit()
+        {
+            ServerContentIoC.Register(Dependencies);
+            foreach (var callback in TestingCallbacks)
+            {
+                var cast = (ServerModuleTestingCallbacks)callback;
+                cast.ServerBeforeIoC?.Invoke();
+            }
+        }
 
         /// <inheritdoc />
         public override void Init()
         {
             base.Init();
+            Dependencies.BuildGraph();
+            Dependencies.InjectDependencies(this);
 
-            var cfg = IoCManager.Resolve<IConfigurationManager>();
-            var res = IoCManager.Resolve<IResourceManager>();
-            var logManager = IoCManager.Resolve<ILogManager>();
+            LoadConfigPresets(_cfg, _res, _log.GetSawmill("configpreset"));
 
-            LoadConfigPresets(cfg, res, logManager.GetSawmill("configpreset"));
+            var aczProvider = new ContentMagicAczProvider(Dependencies);
+            _host.SetMagicAczProvider(aczProvider);
 
-            var aczProvider = new ContentMagicAczProvider(IoCManager.Resolve<IDependencyCollection>());
-            IoCManager.Resolve<IStatusHost>().SetMagicAczProvider(aczProvider);
+            _factory.DoAutoRegistrations();
+            _factory.IgnoreMissingComponents("Visuals");
+            _factory.RegisterIgnore(IgnoredComponents.List);
+            _factory.GenerateNetIds();
 
-            var factory = IoCManager.Resolve<IComponentFactory>();
-            var prototypes = IoCManager.Resolve<IPrototypeManager>();
+            _proto.RegisterIgnore("parallax");
 
-            factory.DoAutoRegistrations();
-            factory.IgnoreMissingComponents("Visuals");
+            _loc.Initialize();
 
-            factory.RegisterIgnore(IgnoredComponents.List);
+            var dest = _cfg.GetCVar(CCVars.DestinationFile);
+            if (!string.IsNullOrEmpty(dest))
+                return; //hacky but it keeps load times for the generator down.
 
-            prototypes.RegisterIgnore("parallax");
+            _log.GetSawmill("Storage").Level = LogLevel.Info;
+            _log.GetSawmill("db.ef").Level = LogLevel.Info;
 
-            ServerContentIoC.Register();
-
-            foreach (var callback in TestingCallbacks)
-            {
-                var cast = (ServerModuleTestingCallbacks) callback;
-                cast.ServerBeforeIoC?.Invoke();
-            }
-
-            IoCManager.BuildGraph();
-            factory.GenerateNetIds();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            var dest = configManager.GetCVar(CCVars.DestinationFile);
-            IoCManager.Resolve<ContentLocalizationManager>().Initialize();
-            if (string.IsNullOrEmpty(dest)) //hacky but it keeps load times for the generator down.
-            {
-                _euiManager = IoCManager.Resolve<EuiManager>();
-                _voteManager = IoCManager.Resolve<IVoteManager>();
-                _updateManager = IoCManager.Resolve<ServerUpdateManager>();
-                _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
-                _connectionManager = IoCManager.Resolve<IConnectionManager>();
-                _sysMan = IoCManager.Resolve<IEntitySystemManager>();
-                _dbManager = IoCManager.Resolve<IServerDbManager>();
-                _watchlistWebhookManager = IoCManager.Resolve<IWatchlistWebhookManager>();
-
-                logManager.GetSawmill("Storage").Level = LogLevel.Info;
-                logManager.GetSawmill("db.ef").Level = LogLevel.Info;
-
-                IoCManager.Resolve<IAdminLogManager>().Initialize();
-                IoCManager.Resolve<IConnectionManager>().Initialize();
-                _dbManager.Init();
-                IoCManager.Resolve<IServerPreferencesManager>().Init();
-                IoCManager.Resolve<INodeGroupFactory>().Initialize();
-                IoCManager.Resolve<ContentNetworkResourceManager>().Initialize();
-                IoCManager.Resolve<GhostKickManager>().Initialize();
-                IoCManager.Resolve<ServerInfoManager>().Initialize();
-                IoCManager.Resolve<ServerApi>().Initialize();
-
-                _voteManager.Initialize();
-                _updateManager.Initialize();
-                _playTimeTracking.Initialize();
-                _watchlistWebhookManager.Initialize();
-                IoCManager.Resolve<JobWhitelistManager>().Initialize();
-                IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
-            }
+            _adminLog.Initialize();
+            _connection.Initialize();
+            _dbManager.Init();
+            _preferences.Init();
+            _nodeFactory.Initialize();
+            _netResMan.Initialize();
+            _ghostKick.Initialize();
+            _serverInfo.Initialize();
+            _serverApi.Initialize();
+            _voteManager.Initialize();
+            _updateManager.Initialize();
+            _playTimeTracking.Initialize();
+            _watchlistWebhookManager.Initialize();
+            _job.Initialize();
+            _rateLimit.Initialize();
         }
 
         public override void PostInit()
         {
             base.PostInit();
 
-            IoCManager.Resolve<IChatSanitizationManager>().Initialize();
-            IoCManager.Resolve<IChatManager>().Initialize();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-            var resourceManager = IoCManager.Resolve<IResourceManager>();
-            var dest = configManager.GetCVar(CCVars.DestinationFile);
+            _chatSan.Initialize();
+            _chat.Initialize();
+            var dest = _cfg.GetCVar(CCVars.DestinationFile);
             if (!string.IsNullOrEmpty(dest))
             {
                 var resPath = new ResPath(dest).ToRootedPath();
-                var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
+                var file = _res.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
                 ChemistryJsonGenerator.PublishJson(file);
                 file.Flush();
-                file = resourceManager.UserData.OpenWriteText(resPath.WithName("react_" + dest));
+                file = _res.UserData.OpenWriteText(resPath.WithName("react_" + dest));
                 ReactionJsonGenerator.PublishJson(file);
                 file.Flush();
-                IoCManager.Resolve<IBaseServer>().Shutdown("Data generation done");
+                Dependencies.Resolve<IBaseServer>().Shutdown("Data generation done");
+                return;
             }
-            else
-            {
-                IoCManager.Resolve<RecipeManager>().Initialize();
-                IoCManager.Resolve<IAdminManager>().Initialize();
-                IoCManager.Resolve<IAfkManager>().Initialize();
-                IoCManager.Resolve<RulesManager>().Initialize();
 
-                IoCManager.Resolve<DiscordLink>().Initialize();
-                IoCManager.Resolve<DiscordChatLink>().Initialize();
-
-                _euiManager.Initialize();
-
-                IoCManager.Resolve<IGameMapManager>().Initialize();
-                IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
-                IoCManager.Resolve<IBanManager>().Initialize();
-                IoCManager.Resolve<IConnectionManager>().PostInit();
-                IoCManager.Resolve<MultiServerKickManager>().Initialize();
-                IoCManager.Resolve<CVarControlManager>().Initialize();
-            }
+            _recipe.Initialize();
+            _admin.Initialize();
+            _afk.Initialize();
+            _rules.Initialize();
+            _discordLink.Initialize();
+            _discordChatLink.Initialize();
+            _euiManager.Initialize();
+            _gameMap.Initialize();
+            _entSys.GetEntitySystem<GameTicker>().PostInitialize();
+            _ban.Initialize();
+            _connection.PostInit();
+            _multiServerKick.Initialize();
+            _cvarCtrl.Initialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
@@ -177,21 +182,27 @@ namespace Content.Server.Entry
 
                 case ModUpdateLevel.FramePostEngine:
                     _updateManager.Update();
-                    _playTimeTracking?.Update();
+                    _playTimeTracking.Update();
                     _watchlistWebhookManager.Update();
-                    _connectionManager?.Update();
+                    _connection.Update();
                     break;
             }
         }
 
         protected override void Dispose(bool disposing)
         {
-            _playTimeTracking?.Shutdown();
-            _dbManager?.Shutdown();
-            IoCManager.Resolve<ServerApi>().Shutdown();
+            var dest = _cfg.GetCVar(CCVars.DestinationFile);
+            if (!string.IsNullOrEmpty(dest))
+            {
+                _playTimeTracking.Shutdown();
+                _dbManager.Shutdown();
+            }
 
-            IoCManager.Resolve<DiscordLink>().Shutdown();
-            IoCManager.Resolve<DiscordChatLink>().Shutdown();
+            _serverApi.Shutdown();
+
+            // TODO Should this be awaited?
+            _discordLink.Shutdown();
+            _discordChatLink.Shutdown();
         }
 
         private static void LoadConfigPresets(IConfigurationManager cfg, IResourceManager res, ISawmill sawmill)
