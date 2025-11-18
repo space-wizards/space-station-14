@@ -149,7 +149,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/centcomm_carapace.rsi
 
-#Web vests
+#Plate Carriers
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
   id: ClothingOuterVestWeb
