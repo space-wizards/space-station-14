@@ -20,6 +20,10 @@
       whitelist:
         tags:
         - LetterDelivery
+        - Paper
+        - Document
+        - BoxCardboard
+        - Folder
     - type: ItemSlots
       slots:
         package_1:
