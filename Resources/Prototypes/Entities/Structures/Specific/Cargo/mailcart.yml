@@ -12,95 +12,123 @@
         - state: base
     # - type: Rotatable
     - type: InteractionOutline
-    # Removing storage until OnInteractUsing logic resolved
-    #- type: Storage
-    #  popup: false
-    #  capacity: 80
-    #  blacklist: # there is exclusive item slots for that
-    #    tags:
-    #      - Package
+    - type: Storage
+      popup: true
+      capacity: 80
+      blacklist: # there is exclusive item slots for that
+       tags:
+         - PackageDelivery
     - type: ItemSlots
       slots:
-        package_slot1:
+        package_1:
           name: mailcart-slot-component-slot-name-package-1
           whitelist:
             tags:
               - PackageDelivery
-          # insertOnInteract: true
           priority: 1
-        package_slot2:
+        package_2:
           name: mailcart-slot-component-slot-name-package-2
           whitelist:
             tags:
               - PackageDelivery
-          # insertOnInteract: true
           priority: 2
-        package_slot3:
+        package_3:
           name: mailcart-slot-component-slot-name-package-3
           whitelist:
             tags:
               - PackageDelivery
-          # insertOnInteract: true
           priority: 3
-        package_slot4:
+        package_4:
           name: mailcart-slot-component-slot-name-package-4
           whitelist:
             tags:
               - PackageDelivery
-          # insertOnInteract: true
           priority: 4
-        letter_slot1:
-          name: mailcart-slot-component-slot-name-letter-1
+        package_5:
+          name: mailcart-slot-component-slot-name-package-4
           whitelist:
             tags:
-              - LetterDelivery
-          insertOnInteract: true
+              - PackageDelivery
           priority: 5
-    # - type: Fixtures
-    #   fixtures:
-    #     fix1:
-    #       shape:
-    #         !type:PhysShapeCircle
-    #         radius: 0.3
-    #       density: 250
-    #       layer:
-    #       - MobLayer
-    #       mask:
-    #       - MobMask
-    # - type: Damageable
-    #   damageContainer: Inorganic
-    #   damageModifierSet: Metallic
-    # - type: Destructible
-    #   thresholds:
-    #     - trigger: !type:DamageTrigger
-    #         damage: 400
-    #       behaviors:
-    #         - !type:DoActsBehavior
-    #           acts: ["Destruction"]
-    #     - trigger: !type:DamageTrigger
-    #         damage: 200
-    #       behaviors:
-    #         - !type:EmptyAllContainersBehaviour
-    #         - !type:DoActsBehavior
-    #           acts: ["Destruction"]
-    #         - !type:PlaySoundBehavior
-    #           sound:
-    #             collection: MetalBreak
+        package_6:
+          name: mailcart-slot-component-slot-name-package-4
+          whitelist:
+            tags:
+              - PackageDelivery
+          priority: 6
+        package_7:
+          name: mailcart-slot-component-slot-name-package-4
+          whitelist:
+            tags:
+              - PackageDelivery
+          priority: 7
+        package_8:
+          name: mailcart-slot-component-slot-name-package-4
+          whitelist:
+            tags:
+              - PackageDelivery
+          priority: 8
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.3
+          density: 250
+          layer:
+          - MobLayer
+          mask:
+          - MobMask
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger: !type:DamageTrigger
+            damage: 400
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+        - trigger: !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:EmptyAllContainersBehaviour
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
     - type: ItemMapper
       mapLayers:
-        package_slot1:
+        package_1:
           whitelist:
             tags:
               - PackageDelivery
-        package_slot2:
+        package_2:
           whitelist:
             tags:
               - PackageDelivery
-        package_slot3:
+        package_3:
           whitelist:
             tags:
               - PackageDelivery
-        package_slot4:
+        package_4:
+          whitelist:
+            tags:
+              - PackageDelivery
+        package_5:
+          whitelist:
+            tags:
+              - PackageDelivery
+        package_6:
+          whitelist:
+            tags:
+              - PackageDelivery
+        package_7:
+          whitelist:
+            tags:
+              - PackageDelivery
+        package_8:
           whitelist:
             tags:
               - PackageDelivery
@@ -110,15 +138,15 @@
       interfaces:
         enum.StorageUiKey.Key:
           type: StorageBoundUserInterface
-    # - type: ContainerContainer
-    #   containers:
-    #     storagebase: !type:Container
-    #       ents: []
-    #     package_slot1: !type:ContainerSlot {}
-    #     package_slot2: !type:ContainerSlot {}
-    #     package_slot3: !type:ContainerSlot {}
-    #     package_slot4: !type:ContainerSlot {}
-    #     letter_slot1: !type:ContainerSlot {}
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          ents: []
+    #     package_1: !type:ContainerSlot {}
+    #     package_2: !type:ContainerSlot {}
+    #     package_3: !type:ContainerSlot {}
+    #     package_4: !type:ContainerSlot {}
+    #     letter_1: !type:ContainerSlot {}
     # - type: GuideHelp
     #   guides:
     #   - Cargo

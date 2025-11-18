@@ -8,32 +8,31 @@
   },
   "states": [
     {
-      "name": "icon"
+      "name": "mailcart_base"
     },
     {
-      "name": "base"
+      "name": "package_1"
     },
     {
-      "name": "closed"
+      "name": "package_2"
     },
     {
-      "name": "open"
+      "name": "package_3"
     },
     {
-      "name": "welded"
+      "name": "package_4"
     },
     {
-      "name": "sparking",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
+      "name": "package_5"
+    },
+    {
+      "name": "package_6"
+    },
+    {
+      "name": "package_7"
+    },
+    {
+      "name": "package_8"
     }
   ]
 }
