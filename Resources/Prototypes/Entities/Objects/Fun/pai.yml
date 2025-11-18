@@ -42,11 +42,12 @@
     examineTextMindSearching: pai-system-still-searching
     examineTextNoMind: pai-system-off
     beginSearchingText: pai-system-searching
-    roleName: pai-system-role-name
-    roleDescription: pai-system-role-description
-    roleRules: ghost-role-information-familiar-rules
-    mindRoles:
-    - MindRoleGhostRoleFamiliar
+    ghostRole:
+      roleName: pai-system-role-name
+      roleDescription: pai-system-role-description
+      roleRules: ghost-role-information-familiar-rules
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
     wipeVerbText: pai-system-wipe-device-verb-text
     wipeVerbPopup: pai-system-wiped-device
     stopSearchVerbText: pai-system-stop-searching-verb-text
@@ -117,11 +118,12 @@
       shader: unshaded
       map: ["screen"]
   - type: ToggleableGhostRole
-    roleName: pai-system-role-name-syndicate
-    roleDescription: pai-system-role-description-syndicate
-    roleRules: ghost-role-information-familiar-rules
-    mindRoles:
-    - MindRoleGhostRoleFamiliar
+    ghostRole:
+      roleName: pai-system-role-name-syndicate
+      roleDescription: pai-system-role-description-syndicate
+      roleRules: ghost-role-information-familiar-rules
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
   - type: IntrinsicRadioTransmitter
     channels:
     - Syndicate
@@ -173,11 +175,12 @@
       shader: unshaded
       map: ["screen"]
   - type: ToggleableGhostRole
-    roleName: pai-system-role-name-potato
-    roleDescription: pai-system-role-description-potato
-    roleRules: ghost-role-information-familiar-rules
-    mindRoles:
-    - MindRoleGhostRoleFamiliar
+    ghostRole:
+      roleName: pai-system-role-name-potato
+      roleDescription: pai-system-role-description-potato
+      roleRules: ghost-role-information-familiar-rules
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
   - type: Appearance
   - type: GenericVisualizer
     visuals:
