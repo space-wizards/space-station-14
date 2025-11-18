@@ -18,6 +18,7 @@
     whitelist:
       components:
       - Item
+      - ParcelWrapOverride
     blacklist:
       components:
       - NukeDisk # Don't try to hide the disk.
@@ -38,18 +39,77 @@
   - type: ParcelWrap
     whitelist: null
     blacklist: null
+    canSelfUnwrap: false # admins held me at gunpoint until I added this bool
 
 - type: entity
-  parent: BaseItem
-  id: WrappedParcel
-  categories: [ HideSpawnMenu ]
+  abstract: true
+  id: BaseWrappedParcel
   name: wrapped parcel
   description: Something wrapped up in paper. I wonder what's inside...
   components:
+  - type: Physics
+    bodyType: Dynamic
+  - type: GravityAffected
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Pullable
   - type: ContainerContainer
     containers:
       contents: !type:ContainerSlot
       paper_label: !type:ContainerSlot
+  - type: WrappedParcel
+    unwrapDelay: 0.5
+    unwrapSound:
+      path: /Audio/Effects/poster_broken.ogg
+      params:
+        volume: -4
+    unwrapTrash: ParcelWrapTrash
+  - type: ItemSlots
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
+      whitelist:
+        components:
+        - Paper
+      blacklist:
+        tags:
+        - Book
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 8
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+          params:
+            volume: -4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Slash
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+          params:
+            volume: -4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Recyclable # Parcel entity is recyclable, and when it's destroyed, it'll drop its contents.
+
+- type: entity
+  parent: [BaseItem, BaseWrappedParcel]
+  id: WrappedParcel
+  components:
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -80,43 +140,31 @@
       visible: false
       sprite: Objects/Misc/ParcelWrap/paper_labels.rsi
       map: ["enum.PaperLabelVisuals.Layer"]
-  - type: WrappedParcel
-    unwrapDelay: 0.5
-    unwrapSound:
-      path: /Audio/Effects/poster_broken.ogg
-      params:
-        volume: -4
-    unwrapTrash: ParcelWrapTrash
-  - type: ItemSlots
-  - type: PaperLabel
-    labelSlot:
-      insertVerbText: comp-paper-label-insert
-      ejectVerbText: comp-paper-label-eject
-      whitelist:
-        components:
-        - Paper
-      blacklist:
-        tags:
-        - Book
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Slash
-        damage: 5
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/poster_broken.ogg
-          params:
-            volume: -4
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Tag
-    tags:
-    - Recyclable # Parcel entity is recyclable, and when it's destroyed, it'll drop its contents.
+
+- type: entity
+  parent: BaseWrappedParcel
+  id: WrappedParcelHumanoid
+  description: Something wrapped up in paper. It's suspiciously human-shaped.
+  components:
+  - type: Physics
+    fixedRotation: false
+  - type: Sprite
+    sprite: Objects/Misc/ParcelWrap/wrapped_parcel.rsi
+    state: human
+    noRot: true
+    drawdepth: Mobs
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
 
 - type: entity
   parent: BaseItem

@@ -124,6 +124,5 @@
       maxCharge: 10000
       startingCharge: 10000
     - type: BatterySelfRecharger
-      autoRecharge: true
       autoRechargeRate: 25
     - type: AmmoCounter
