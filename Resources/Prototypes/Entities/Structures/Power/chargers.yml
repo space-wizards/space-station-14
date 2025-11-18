@@ -305,3 +305,45 @@
       entity_storage: !type:Container
       machine_board: !type:Container
       machine_parts: !type:Container
+
+- type: entity
+  parent: BorgCharger
+  id: BorgChargerXenoborg
+  name: xenoborg recharging station
+  description: A stationary charger for xenoborgs. Feels claustrophobic.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/xenoborg_charger.rsi
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: borgcharger-u0 }
+          False: { state: borgcharger-u1 }
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: borgcharger0 }
+          False: { state: borgcharger2 }
+        charged:
+          True: { visible: false }
+          False: { visible: true }
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { state: borgdecon1 }
+          False: { state: borgdecon2 }
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+        charged:
+          True: { visible: true }
+          False: { visible: false }
+      enum.CellVisual.Light:
+        charged:
+          Off: { visible: false }
+          Empty: { visible: false }
+          Charging:
+            visible: true
+            state: borgcharger3
+          Charged:
+            visible: true
+            state: borgcharger1
+
