@@ -337,14 +337,12 @@
     unwrapTrash: PresentTrash
 
 - type: entity
-  parent: BaseWrappedParcel
+  parent: [BaseItem, BaseWrappedParcel]
   id: WrappedPresentFish
   name: present
   suffix: Hand Wrapped, Fish
   description: There's something fishy going on here.
   components:
-  - type: Physics
-    fixedRotation: false
   - type: Sprite
     sprite: Objects/Decoration/present.rsi
     state: fish
@@ -380,8 +378,9 @@
   - type: Sprite
     sprite: Objects/Decoration/xenopresent.rsi # Had to make a separate rsi because it's a different sprite size
     state: xeno
+    noRot: true
   - type: WrappedParcel
-    unwrapDelay: 0.5 #todo
+    unwrapDelay: 3 # That's a lotta wrapping paper
     unwrapSound:
       path: /Audio/Effects/unwrap.ogg
     unwrapTrash: PresentTrash

@@ -565,6 +565,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - XenoParcelShape
   - type: SolutionContainerManager # Being hit speeds you up so you can escape
     solutions:
       bite:
