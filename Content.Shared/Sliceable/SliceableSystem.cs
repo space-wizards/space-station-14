@@ -8,8 +8,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Nutrition;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Storage;
@@ -143,13 +141,13 @@ public sealed class SliceableSystem : EntitySystem
             }
 
             // Fills new slice if original entity allows.
-            if (solutionInfo.HasValue)
+            if (solutionInfo.HasValue && ent.Comp.SolutionToSet != null)
             {
                 var (sourceSoln, sourceSolution) = solutionInfo.Value;
                 var sliceVolume = sourceSolution.Volume / FixedPoint2.New(slices.Count);
 
                 var lostSolution = _solutionContainer.SplitSolution(sourceSoln, sliceVolume);
-                FillSlice(sliceUid, lostSolution);
+                FillSlice(sliceUid, ent.Comp.SolutionToSet, lostSolution);
             }
         }
 
@@ -226,10 +224,9 @@ public sealed class SliceableSystem : EntitySystem
         return true;
     }
 
-    private void FillSlice(EntityUid sliceUid, Solution solution)
+    private void FillSlice(EntityUid sliceUid, string solutionName, Solution solution)
     {
-        if (TryComp<EdibleComponent>(sliceUid, out var sliceFoodComp)
-            && _solutionContainer.TryGetSolution(sliceUid, sliceFoodComp.Solution, out var itsSoln, out var itsSolution))
+        if (_solutionContainer.TryGetSolution(sliceUid, solutionName, out var itsSoln, out var itsSolution))
         {
             _solutionContainer.RemoveAllSolution(itsSoln.Value);
 
@@ -250,3 +247,15 @@ public sealed partial class TrySliceDoAfterEvent : SimpleDoAfterEvent;
 /// </summary>
 [ByRefEvent]
 public record struct SliceEvent;
+
+/// <summary>
+/// Raised directed at the entity being sliced, before it's deleted.
+/// Cancel this if you want to do something special before an entity is deleted.
+/// </summary>
+public sealed class BeforeFullySlicedEvent : CancellableEntityEventArgs
+{
+    /// <summary>
+    /// The person slicing the food.
+    /// </summary>
+    public EntityUid User;
+}

@@ -42,4 +42,10 @@ public sealed partial class SliceableComponent : Component
     /// </summary>
     [DataField]
     public string? SolutionToSplit = "food";
+
+    /// <summary>
+    /// Name of the solution to which reagents from <see cref="SolutionToSplit"/> should be placed.
+    /// </summary>
+    [DataField]
+    public string? SolutionToSet = "food";
 }
