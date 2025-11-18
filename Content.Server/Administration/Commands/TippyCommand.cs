@@ -39,12 +39,15 @@ public sealed class TippyCommand : LocalizedEntityCommands
         EntProtoId? prototype = null;
         if (args.Length > 2)
         {
-            if (!_prototype.HasIndex<EntityPrototype>(args[2]))
+            if (args[2] == "null")
+                prototype = null;
+            else if (!_prototype.HasIndex<EntityPrototype>(args[2]))
             {
                 shell.WriteError(Loc.GetString("cmd-tippy-error-no-prototype", ("proto", args[2])));
                 return;
             }
-            prototype = args[2];
+            else
+                prototype = args[2];
         }
 
         var speakTime = _tips.GetSpeechTime(msg);
