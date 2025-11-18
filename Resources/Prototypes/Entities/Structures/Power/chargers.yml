@@ -327,8 +327,8 @@
           True: { visible: false }
           False: { visible: true }
         enum.WiresVisualLayers.MaintenancePanel:
-          True: { state: borgdecon1 }
-          False: { state: borgdecon2 }
+          True: { state: borgdecon2 }
+          False: { state: borgdecon1 }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
