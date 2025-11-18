@@ -2,7 +2,9 @@ using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.VendingMachines;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.VendingMachines;
 using Robust.Shared.Prototypes;
@@ -200,7 +202,7 @@ public sealed class VendingInteractionTest : InteractionTest
         // Damage the vending machine to the point that it breaks
         var damageType = ProtoMan.Index(TestDamageType);
         var damage = new DamageSpecifier(damageType, FixedPoint2.New(100));
-        await Server.WaitPost(() => damageableSys.TryChangeDamage(SEntMan.GetEntity(Target), damage, ignoreResistances: true));
+        await Server.WaitPost(() => damageableSys.TryChangeDamage(SEntMan.GetEntity(Target).Value, damage, ignoreResistances: true));
         await RunTicks(5);
         Assert.That(damageableComp.Damage.GetTotal(), Is.GreaterThan(FixedPoint2.Zero), $"{VendingMachineProtoId} did not take damage.");
     }
