@@ -85,6 +85,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         {
             args.AddLine(Loc.GetString("xenoborgs-list", ("name", name), ("user", sessionData.UserName)));
         }
+        args.AddLine("");
     }
 
     private void CheckRoundEnd(XenoborgsRuleComponent xenoborgsRuleComponent)
