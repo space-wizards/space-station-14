@@ -94,8 +94,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         GameRuleComponent gameRule,
         ref RoundEndTextAppendEvent args)
     {
-        args.AddLine("");
-
         var winText = Loc.GetString($"nukeops-{component.WinType.ToString().ToLower()}");
         args.AddLine(winText);
 
@@ -113,6 +111,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         {
             args.AddLine(Loc.GetString("nukeops-list-name-user", ("name", name), ("user", sessionData.UserName)));
         }
+        args.AddLine("");
     }
 
     private void OnNukeExploded(NukeExplodedEvent ev)
