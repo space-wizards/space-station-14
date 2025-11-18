@@ -452,6 +452,50 @@
   - type: SpeakOnTrigger
     pack: FigurinesWizard
 
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineGriffin
+  name: griffin figure
+  description: A figurine depicting 'The Griffin', criminal mastermind.
+  components:
+  - type: Sprite
+    state: griffin
+  - type: SpeakOnTrigger
+    pack: FigurinesGriffin
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineOwlman
+  name: owlman figure
+  description: A figurine depicting 'Owlman', the defender of justice.
+  components:
+  - type: Sprite
+    state: owlman
+  - type: SpeakOnTrigger
+    pack: FigurinesOwlman
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineSkeleton
+  name: skeleton figure
+  description: A figurine depicting a spooky scary skeleton.
+  components:
+  - type: Sprite
+    state: skeleton
+  - type: SpeakOnTrigger
+    pack: FigurinesSkeleton
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineThief
+  name: thief figure
+  description: A figurine depicting a kleptomaniac that hides in the shadows.
+  components:
+  - type: Sprite
+    state: thief
+  - type: SpeakOnTrigger
+    pack: FigurinesThief
+
 #Nonhuman Figurines
 
 - type: entity
@@ -473,8 +517,8 @@
   components:
   - type: Sprite
     state: queen
-  # - type: SpeakOnTrigger # TODO add something
-  #   pack: FigurinesQueen
+  - type: SpeakOnTrigger
+    pack: FigurinesQueen
 
 - type: entity
   parent: BaseFigurine
@@ -530,42 +574,3 @@
     state: hamlet
   - type: SpeakOnTrigger
     pack: FigurinesHamlet
-
-#TODO: Convert these to the new figurine sprite template and rename their sprite name.
-#Yes, these are humanoids, but they need to be updated first.
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyGriffin
-  name: griffin figure
-  description: An action figure modeled after 'The Griffin', criminal mastermind.
-  components:
-  - type: Sprite
-    state: griffinprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyOwlman
-  name: owl figure
-  description: An action figure modeled after 'The Owl', defender of justice.
-  components:
-  - type: Sprite
-    state: owlprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToySkeleton
-  name: skeleton figure
-  description: Spooked ya!
-  components:
-  - type: Sprite
-    state: skeletonprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyFigurineThief
-  name: thief character figure
-  description: Hiding in the shadows...
-  components:
-  - type: Sprite
-    state: thiefcharacter

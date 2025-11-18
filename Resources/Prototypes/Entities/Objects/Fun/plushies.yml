@@ -1,3 +1,5 @@
+# When adding new plushies, also add them to id: AllPlushiesTable
+
 ## Plushies
 
 - type: entity
@@ -617,7 +619,8 @@
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:
-      - !type:AddToSolutionReaction
+      - !type:AddReagentToSolution
+        reagent: Water
         solution: plushie
   - type: Fixtures
     fixtures:

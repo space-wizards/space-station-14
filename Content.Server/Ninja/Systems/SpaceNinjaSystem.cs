@@ -106,7 +106,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <inheritdoc/>
     public override bool TryUseCharge(EntityUid user, float charge)
     {
-        return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
+        return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge((uid.Value, battery), charge);
     }
 
     /// <summary>

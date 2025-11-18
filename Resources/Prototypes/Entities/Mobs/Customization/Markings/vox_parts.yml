@@ -14,6 +14,52 @@
         color: "#937e3d"
 
 - type: marking
+  # The cere is the base of the top part of the beak, the cere on this beak, is a square.
+  id: VoxBeakSquareCere
+  bodyPart: Snout
+  markingCategory: Snout
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: beak_squarecere
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxBeakShaved
+  bodyPart: Snout
+  markingCategory: Snout
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: beak_shaved
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
+  id: VoxBeakHooked
+  bodyPart: Snout
+  markingCategory: Snout
+  forcedColoring: true
+  speciesRestriction: [Vox]
+  sprites:
+  - sprite: Mobs/Customization/vox_parts.rsi
+    state: beak_hooked
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#937e3d"
+
+- type: marking
   id: VoxLArmScales
   bodyPart: LArm
   markingCategory: Arms
