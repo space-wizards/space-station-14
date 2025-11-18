@@ -140,7 +140,7 @@
     - Bee
     - Trash
   - type: Bloodstream
-    bloodReagent: InsectBlood
+    bloodReagents: [InsectBlood]
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
@@ -388,7 +388,7 @@
       Dead:
         Base: cockroach_dead
   - type: Bloodstream
-    bloodReagent: InsectBlood
+    bloodReagents: [InsectBlood]
     bloodMaxVolume: 20
   - type: Edible
   - type: FlavorProfile
@@ -552,7 +552,7 @@
     damageContainer: Biological
     damageModifierSet: Moth
   - type: Bloodstream
-    bloodReagent: InsectBlood
+    bloodReagents: [InsectBlood]
   - type: Respirator
     damage:
       types:
@@ -832,7 +832,7 @@
     tags:
     - Trash
   - type: Bloodstream
-    bloodReagent: InsectBlood
+    bloodReagents: [InsectBlood]
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
@@ -990,7 +990,7 @@
     accent: crab
   - type: Bloodstream
     bloodMaxVolume: 50
-    bloodReagent: CopperBlood
+    bloodReagents: [CopperBlood]
   - type: Tag
     tags:
     - VimPilot
@@ -1995,7 +1995,7 @@
   - type: RadiationSource
     intensity: 0.3
   - type: Bloodstream
-    bloodReagent: UnstableMutagen
+    bloodReagents: [UnstableMutagen]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -2514,7 +2514,7 @@
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
-    bloodReagent: CopperBlood
+    bloodReagents: [CopperBlood]
   - type: Speech
     speechVerb: Arachnid
     speechSounds: Arachnid
@@ -2660,7 +2660,7 @@
       speechVerb: Cluwne
     - type: Bloodstream
       bloodMaxVolume: 150
-      bloodReagent: Laughter
+      bloodReagents: [Laughter]
 
 - type: entity
   name: wizard spider
@@ -2990,7 +2990,7 @@
     attributes:
       gender: epicene
   - type: Bloodstream
-    bloodReagent: DemonsBlood
+    bloodReagents: [DemonsBlood]
   - type: Damageable
     damageContainer: BiologicalMetaphysical
     damageModifierSet: Infernal
@@ -3630,7 +3630,7 @@
     speciesId: cat
     templateId: pet
   - type: Bloodstream
-    bloodReagent: Sap
+    bloodReagents: [Sap]
     bloodMaxVolume: 60
   - type: DamageStateVisuals
     states:

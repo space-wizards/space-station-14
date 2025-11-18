@@ -29,7 +29,7 @@
       - id: FoodBakedCookie #should be replaced with gingerbread sheets or something... provided you're willing to make a full spriteset of those.
         amount: 5
   - type: Bloodstream
-    bloodReagent: Sugar
+    bloodReagents: [Sugar, Butter]
   - type: Fixtures
     fixtures:
       fix1:

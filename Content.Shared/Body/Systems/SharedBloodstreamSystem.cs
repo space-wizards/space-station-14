@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -370,7 +371,15 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             return false;
 
         if (amount >= 0)
-            return SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount, null, GetEntityBloodData(ent));
+        {
+            var min = FixedPoint2.Min(ent.Comp.BloodSolution.Value.Comp.Solution.AvailableVolume, amount);
+            var fraction = min / ent.Comp.BloodReagents.Count;
+            var success = true;
+            foreach (var reagent in ent.Comp.BloodReagents)
+                success &= SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, reagent, fraction, null, GetEntityBloodData(ent));
+
+            return success;
+        }
 
         // Removal is more involved,
         // since we also wanna handle moving it to the temporary solution
@@ -463,27 +472,43 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// <summary>
     /// Change what someone's blood is made of, on the fly.
     /// </summary>
+    [Obsolete("ChangeBloodReagent is obsolete, please use ChangeBloodReagents.")]
     public void ChangeBloodReagent(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype> reagent)
     {
+        ChangeBloodReagents(ent, [reagent]);
+    }
+
+    /// <summary>
+    /// Change what someone's blood is made of, on the fly.
+    /// </summary>
+    public void ChangeBloodReagents(Entity<BloodstreamComponent?> ent, IEnumerable<ProtoId<ReagentPrototype>> reagents)
+    {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
-            || reagent == ent.Comp.BloodReagent)
+            || reagents.SequenceEqual(ent.Comp.BloodReagents))
         {
             return;
         }
 
         if (!SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
         {
-            ent.Comp.BloodReagent = reagent;
+            ent.Comp.BloodReagents = reagents.ToList();
+            DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReagents));
             return;
         }
 
-        var currentVolume = bloodSolution.RemoveReagent(ent.Comp.BloodReagent, bloodSolution.Volume, ignoreReagentData: true);
+        var currentVolume = FixedPoint2.Zero;
+        foreach (var reagent in ent.Comp.BloodReagents)
+            currentVolume += bloodSolution.RemoveReagent(reagent, bloodSolution.Volume, ignoreReagentData: true);
 
-        ent.Comp.BloodReagent = reagent;
-        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReagent));
+        ent.Comp.BloodReagents = reagents.ToList();
+        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReagents));
 
         if (currentVolume > 0)
-            SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, currentVolume, null, GetEntityBloodData(ent));
+        {
+            var fraction = currentVolume / ent.Comp.BloodReagents.Count;
+            foreach (var reagent in ent.Comp.BloodReagents)
+                SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, reagent, fraction, null, GetEntityBloodData(ent));
+        }
     }
 
     /// <summary>

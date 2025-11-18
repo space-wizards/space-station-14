@@ -195,7 +195,7 @@ public sealed partial class ZombieSystem
             zombiecomp.BeforeZombifiedEyeColor = huApComp.EyeColor;
             zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
             if (TryComp<BloodstreamComponent>(target, out var stream))
-                zombiecomp.BeforeZombifiedBloodReagent = stream.BloodReagent;
+                zombiecomp.BeforeZombifiedBloodReagents = stream.BloodReagents;
 
             _humanoidAppearance.SetSkinColor(target, zombiecomp.SkinColor, verify: false, humanoid: huApComp);
 
@@ -229,7 +229,7 @@ public sealed partial class ZombieSystem
         //NOTE: they are supposed to bleed, just not take damage
         _bloodstream.SetBloodLossThreshold(target, 0f);
         //Give them zombie blood
-        _bloodstream.ChangeBloodReagent(target, zombiecomp.NewBloodReagent);
+        _bloodstream.ChangeBloodReagents(target, zombiecomp.NewBloodReagents);
 
         //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
         _inventory.TryUnequip(target, "gloves", true, true);

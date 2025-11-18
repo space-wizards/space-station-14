@@ -158,7 +158,7 @@ public sealed partial class BloodstreamComponent : Component
     /// Slime-people might use slime as their blood or something like that.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public ProtoId<ReagentPrototype> BloodReagent = "Blood";
+    public List<ProtoId<ReagentPrototype>> BloodReagents = new() { "Blood" };
 
     /// <summary>
     /// Name/Key that <see cref="BloodSolution"/> is indexed by.

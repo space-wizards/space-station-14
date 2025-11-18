@@ -68,10 +68,12 @@ namespace Content.Server.Medical.BiomassReclaimer
 
                 if (reclaimer.RandomMessTimer <= 0)
                 {
-                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagent is not null)
+                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagents.Count > 0)
                     {
                         Solution blood = new();
-                        blood.AddReagent(reclaimer.BloodReagent, 50);
+                        var fraction = 50 / reclaimer.BloodReagents.Count;
+                        foreach (var reagent in reclaimer.BloodReagents)
+                            blood.AddReagent(reagent, fraction);
                         _puddleSystem.TrySpillAt(uid, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
@@ -92,7 +94,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 reclaimer.CurrentExpectedYield = reclaimer.CurrentExpectedYield - actualYield; // store non-integer leftovers
                 _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(uid).Coordinates);
 
-                reclaimer.BloodReagent = null;
+                reclaimer.BloodReagents.Clear();
                 reclaimer.SpawnedEntities.Clear();
                 RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
             }
@@ -210,7 +212,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             if (TryComp<BloodstreamComponent>(toProcess, out var stream))
             {
-                component.BloodReagent = stream.BloodReagent;
+                component.BloodReagents = stream.BloodReagents;
             }
             if (TryComp<ButcherableComponent>(toProcess, out var butcherableComponent))
             {
