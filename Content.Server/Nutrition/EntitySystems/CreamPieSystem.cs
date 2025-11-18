@@ -5,7 +5,6 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Content.Shared.Nutrition;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Sliceable;
 using Content.Shared.Throwing;

@@ -85,7 +85,7 @@
     maxTransferAmount: 2
   - type: Tool
     qualities: Slicing
-    speedModifier: 2 #It's a bayonet
+    speedModifier: 0.5 #It's a bayonet
   - type: GunRequiresWield
   - type: StaticPrice
     price: 500

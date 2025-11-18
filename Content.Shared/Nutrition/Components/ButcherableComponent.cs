@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Nutrition.Components;
 
 /// <summary>
-/// Indicates that the entity can be butchered.
+/// Indicates that the entity can be butchered through use of butcher hook.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ButcherableComponent : Component

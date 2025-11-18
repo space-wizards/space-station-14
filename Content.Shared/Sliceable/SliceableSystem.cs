@@ -38,7 +38,6 @@ public sealed class SliceableSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -49,27 +48,26 @@ public sealed class SliceableSystem : EntitySystem
         SubscribeLocalEvent<SliceableComponent, InteractUsingEvent>(OnInteraction);
     }
 
-    private void OnInteraction(EntityUid uid, SliceableComponent comp, InteractUsingEvent args)
+    private void OnInteraction(Entity<SliceableComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        SliceableComponent sliceableComp = ent;
+        if (args.Handled || !_toolSystem.HasQuality(args.Used, sliceableComp.ToolQuality))
             return;
 
-        if (_toolSystem.HasQuality(args.Used, comp.ToolQuality))
-        {
-            args.Handled = true;
-            CreateDoAfter(uid, args.User, args.Used, comp.SliceTime.Seconds, comp.ToolQuality);
-        }
+        args.Handled = true;
+        CreateDoAfter(ent, args.User, args.Used, sliceableComp.SliceTime.Seconds, sliceableComp.ToolQuality);
     }
 
-    private void AddSliceVerb(EntityUid uid, SliceableComponent comp, GetVerbsEvent<InteractionVerb> args)
+    private void AddSliceVerb(Entity<SliceableComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
             return;
 
         var user = args.User;
-        if (!TryGetTool(uid, comp, args, user, out var verbDisabled, out var verbMessage, out var tool))
+        if (!TryGetTool(ent, ent, args, user, out var verbDisabled, out var verbMessage, out var tool))
             return;
 
+        SliceableComponent sliceableComp = ent;
         InteractionVerb verb = new()
         {
             Text = Loc.GetString("slice-verb-name"),
@@ -78,7 +76,7 @@ public sealed class SliceableSystem : EntitySystem
             Message = verbMessage ?? Loc.GetString("slice-verb-message-default"),
             Act = () =>
             {
-                CreateDoAfter(uid, user, tool.Value, comp.SliceTime.Seconds, comp.ToolQuality);
+                CreateDoAfter(ent, user, tool.Value, sliceableComp.SliceTime.Seconds, sliceableComp.ToolQuality);
             },
         };
         args.Verbs.Add(verb);
@@ -118,7 +116,7 @@ public sealed class SliceableSystem : EntitySystem
             RaiseLocalEvent(ent, ref ev);
 
             _body.GibBody(ent);
-            _destructible.DestroyEntity(ent);
+            _destructible.DestroyEntity(ent.Owner);
         }
     }
 
@@ -136,8 +134,6 @@ public sealed class SliceableSystem : EntitySystem
         foreach (var sliceProtoId in slices)
         {
             var sliceUid = PredictedSpawnNextToOrDrop(sliceProtoId, ent);
-            _transform.SetLocalRotation(sliceUid, 0);
-
             if (slices.Count != 0 && !_container.IsEntityOrParentInContainer(sliceUid))
             {
                 var randVect = rng.NextPolarVector2(2.0f, 2.5f);
@@ -155,8 +151,7 @@ public sealed class SliceableSystem : EntitySystem
             }
         }
 
-        var transform = Transform(ent);
-        _audio.PlayPredicted(ent.Comp.Sound, transform.Coordinates, user, AudioParams.Default.WithVolume(-2));
+        _audio.PlayPredicted(ent.Comp.Sound, Transform(ent).Coordinates, user, AudioParams.Default.WithVolume(-2));
 
         var ev = new BeforeFullySlicedEvent
         {

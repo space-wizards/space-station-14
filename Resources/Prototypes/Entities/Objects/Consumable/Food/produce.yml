@@ -208,6 +208,7 @@
     seedId: towercap
   - type: Sliceable
     toolQuality: Sawing
+    transferSolution: false
     slices:
     - id: MaterialWoodPlank1
       amount: 2
@@ -230,6 +231,8 @@
   - type: Produce
     seedId: steelcap
   - type: Sliceable
+    transferSolution: false
+    toolQuality: Sawing
     slices:
     - id: SheetSteel1
 
