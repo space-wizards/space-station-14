@@ -10,7 +10,6 @@
       sprite: Objects/Specific/Cargo/mailcart.rsi
       layers:
         - state: mailcart_base
-    # - type: Rotatable
     - type: InteractionOutline
     - type: Storage
       maxItemSize: Small
@@ -27,49 +26,41 @@
     - type: ItemSlots
       slots:
         package_1:
-          name: mailcart-slot-component-slot-name-package-1
           whitelist:
             tags:
               - PackageDelivery
           priority: 1
         package_2:
-          name: mailcart-slot-component-slot-name-package-2
           whitelist:
             tags:
               - PackageDelivery
           priority: 2
         package_3:
-          name: mailcart-slot-component-slot-name-package-3
           whitelist:
             tags:
               - PackageDelivery
           priority: 3
         package_4:
-          name: mailcart-slot-component-slot-name-package-4
           whitelist:
             tags:
               - PackageDelivery
           priority: 4
         package_5:
-          name: mailcart-slot-component-slot-name-package-5
           whitelist:
             tags:
               - PackageDelivery
           priority: 5
         package_6:
-          name: mailcart-slot-component-slot-name-package-6
           whitelist:
             tags:
               - PackageDelivery
           priority: 6
         package_7:
-          name: mailcart-slot-component-slot-name-package-7
           whitelist:
             tags:
               - PackageDelivery
           priority: 7
         package_8:
-          name: mailcart-slot-component-slot-name-package-8
           whitelist:
             tags:
               - PackageDelivery
@@ -107,34 +98,42 @@
     - type: ItemMapper
       mapLayers:
         package_1:
+          minCount: 1
           whitelist:
             tags:
               - PackageDelivery
         package_2:
+          minCount: 2
           whitelist:
             tags:
               - PackageDelivery
         package_3:
+          minCount: 3
           whitelist:
             tags:
               - PackageDelivery
         package_4:
+          minCount: 4
           whitelist:
             tags:
               - PackageDelivery
         package_5:
+          minCount: 5
           whitelist:
             tags:
               - PackageDelivery
         package_6:
+          minCount: 6
           whitelist:
             tags:
               - PackageDelivery
         package_7:
+          minCount: 7
           whitelist:
             tags:
               - PackageDelivery
         package_8:
+          minCount: 8
           whitelist:
             tags:
               - PackageDelivery
@@ -144,16 +143,4 @@
       interfaces:
         enum.StorageUiKey.Key:
           type: StorageBoundUserInterface
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          ents: []
-    #     package_1: !type:ContainerSlot {}
-    #     package_2: !type:ContainerSlot {}
-    #     package_3: !type:ContainerSlot {}
-    #     package_4: !type:ContainerSlot {}
-    #     letter_1: !type:ContainerSlot {}
-    # - type: GuideHelp
-    #   guides:
-    #   - Cargo
     - type: DnaSubstanceTrace
