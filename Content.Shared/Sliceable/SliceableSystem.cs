@@ -125,6 +125,7 @@ public sealed class SliceableSystem : EntitySystem
     {
         var slices = EntitySpawnCollection.GetSpawns(ent.Comp.Slices);
 
+        // TODO: Use RandomPredicted https://github.com/space-wizards/RobustToolbox/pull/5849
         var rndSeed = SharedRandomExtensions.HashCodeCombine((int) _gameTiming.CurTick.Value, user.Id, ent.Owner.Id);
         var rng = new System.Random(rndSeed);
 
