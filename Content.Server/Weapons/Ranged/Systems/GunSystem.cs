@@ -133,113 +133,25 @@ public sealed partial class GunSystem : SharedGunSystem
                     CreateAndFireProjectiles(ent.Value, newAmmo);
 
                     break;
-                case HitscanPrototype hitscan:
-
-                    EntityUid? lastHit = null;
-
-                    var from = fromMap;
-                    // can't use map coords above because funny FireEffects
-                    var fromEffect = fromCoordinates;
-                    var dir = mapDirection.Normalized();
+                case HitscanAmmoComponent:
+                    if (ent == null)
+                        break;
 
                     var shooterEvent = new GetShootingEntityEvent();
-                    if (user != null)
-                        RaiseLocalEvent(user.Value, ref shooterEvent);
+                    RaiseLocalEvent(user.Value, ref shooterEvent);
+                    var effectiveShooter = shooterEvent.ShootingEntity ?? user;
 
-                    var effectiveShooter = shooterEvent.ShootingEntity ?? user ?? gunUid;
-
-                    //in the situation when user == null, means that the cannon fires on its own (via signals). And we need the gun to not fire by itself in this case
-                    var lastUser = effectiveShooter;
-
-                    if (hitscan.Reflective != ReflectType.None)
+                    var hitscanEv = new HitscanTraceEvent
                     {
-                        for (var reflectAttempt = 0; reflectAttempt < 3; reflectAttempt++)
-                        {
-                            var ray = new CollisionRay(from.Position, dir, hitscan.CollisionMask);
-                            var rayCastResults =
-                                Physics.IntersectRay(from.MapId, ray, hitscan.MaxLength, lastUser, false).ToList();
-                            if (!rayCastResults.Any())
-                                break;
+                        FromCoordinates = fromCoordinates,
+                        ShotDirection = mapDirection.Normalized(),
+                        Gun = gunUid,
+                        Shooter = effectiveShooter,
+                        Target = gun.Target,
+                    };
+                    RaiseLocalEvent(ent.Value, ref hitscanEv);
 
-                            var result = rayCastResults[0];
-
-                            // Check if laser is shot from in a container
-                            if (!_container.IsEntityOrParentInContainer(lastUser))
-                            {
-                                // Checks if the laser should pass over unless targeted by its user
-                                foreach (var collide in rayCastResults)
-                                {
-                                    if (collide.HitEntity != gun.Target &&
-                                        CompOrNull<RequireProjectileTargetComponent>(collide.HitEntity)?.Active == true)
-                                    {
-                                        continue;
-                                    }
-
-                                    result = collide;
-                                    break;
-                                }
-                            }
-
-                            var hit = result.HitEntity;
-                            lastHit = hit;
-
-                            FireEffects(fromEffect, result.Distance, dir.Normalized().ToAngle(), hitscan, hit);
-
-                            var ev = new HitScanReflectAttemptEvent(effectiveShooter, gunUid, hitscan.Reflective, dir, false);
-                            RaiseLocalEvent(hit, ref ev);
-
-                            if (!ev.Reflected)
-                                break;
-
-                            fromEffect = Transform(hit).Coordinates;
-                            from = TransformSystem.ToMapCoordinates(fromEffect);
-                            dir = ev.Direction;
-                            lastUser = hit;
-                        }
-                    }
-
-                    if (lastHit != null)
-                    {
-                        var hitEntity = lastHit.Value;
-                        if (hitscan.StaminaDamage > 0f)
-                            _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source: effectiveShooter);
-
-                        var dmg = hitscan.Damage;
-
-                        var hitName = ToPrettyString(hitEntity);
-                        if (dmg != null)
-                            dmg = Damageable.TryChangeDamage(hitEntity, dmg * Damageable.UniversalHitscanDamageModifier, origin: effectiveShooter);
-
-                        // check null again, as TryChangeDamage returns modified damage values
-                        if (dmg != null)
-                        {
-                            if (!Deleted(hitEntity))
-                            {
-                                if (dmg.AnyPositive())
-                                {
-                                    _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity }, Filter.Pvs(hitEntity, entityManager: EntityManager));
-                                }
-
-                                // TODO get fallback position for playing hit sound.
-                                PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
-                            }
-
-                            if (effectiveShooter != null)
-                            {
-                                Logs.Add(LogType.HitScanHit,
-                                    $"{ToPrettyString(effectiveShooter):user} hit {hitName:target} using hitscan and dealt {dmg.GetTotal():damage} damage");
-                            }
-                            else
-                            {
-                                Logs.Add(LogType.HitScanHit,
-                                    $"{hitName:target} hit by hitscan dealing {dmg.GetTotal():damage} damage");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        FireEffects(fromEffect, hitscan.MaxLength, dir.ToAngle(), hitscan);
-                    }
+                    Del(ent);
 
                     Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
                     break;

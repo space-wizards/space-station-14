@@ -406,6 +406,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (!userImpulse || !TryComp<PhysicsComponent>(shootingEntity, out var recoilPhysics))
             return true;
+
         var shooterEv = new ShooterImpulseEvent();
         RaiseLocalEvent(shootingEntity, ref shooterEv);
 
