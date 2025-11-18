@@ -46,9 +46,9 @@ public sealed class MechEquipmentRadialUIController : UIController
         _menu.OpenCentered();
     }
 
-    private IEnumerable<RadialMenuOption> ConvertToButtons(MechComponent mechComp)
+    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(MechComponent mechComp)
     {
-        var options = new List<RadialMenuOption>();
+        var options = new List<RadialMenuOptionBase>();
 
         // Add "No Equipment" option
         options.Add(new RadialMenuActionOption<string>(data =>
@@ -57,7 +57,7 @@ public sealed class MechEquipmentRadialUIController : UIController
         }, "no_equipment")
         {
             ToolTip = Loc.GetString("mech-radial-no-equipment"),
-            Sprite = null
+            IconSpecifier = null
         });
 
         // Add equipment options
@@ -100,7 +100,7 @@ public sealed class MechEquipmentRadialUIController : UIController
             }, metaData.EntityName)
             {
                 ToolTip = tooltip,
-                Sprite = sprite
+                IconSpecifier = RadialMenuIconSpecifier.With(sprite)
             });
         }
 

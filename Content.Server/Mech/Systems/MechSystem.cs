@@ -1,12 +1,13 @@
-using Content.Server.Emp;
 using Content.Server.Construction.Components;
 using Content.Server.Construction;
 using Content.Server.Mech.Components;
 using Content.Server.Mech.Events;
 using Content.Server.Mech.Equipment.Components;
+using Content.Shared.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Emp;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -17,7 +18,6 @@ using Content.Shared.Popups;
 using System.Linq;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Components;
-using Content.Shared.Power.Components;
 using Content.Shared.Tools;
 using Content.Shared.Actions.Components;
 using Content.Shared.Tools.Components;
@@ -412,7 +412,7 @@ public sealed partial class MechSystem : SharedMechSystem
     private void OnEmpAttempt(EntityUid uid, MechComponent component, EmpAttemptEvent args)
     {
         // mech (battery) is immune to emp
-        args.Cancel();
+        args.Cancelled = true;
     }
 
     private void OnBeingGibbed(EntityUid uid, MechComponent component, ref BeingGibbedEvent args)

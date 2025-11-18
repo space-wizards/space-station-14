@@ -1,11 +1,12 @@
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Mech.Components;
 using Robust.Shared.Containers;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.Mech.Equipment.EntitySystems;
+
 public sealed class MechChargerSystem : EntitySystem
 {
     [Dependency] private readonly BatterySystem _battery = default!;
@@ -14,8 +15,7 @@ public sealed class MechChargerSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     private readonly Dictionary<EntityUid, float> _weaponEnergyBuffer = new();
 
-    /// TODO: need a ChargerSystem.cs refractor so it can charge batteries from another battery in the slot.
-    /// To avoid most of this crap.
+    /// TODO: need a ChargerSystem refractor so it can charge batteries from another battery in the slot.
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -57,7 +57,7 @@ public sealed class MechChargerSystem : EntitySystem
                 if (additionalNeeded > 0f)
                 {
                     var toReserve = MathF.Min(additionalNeeded, mechBattery.CurrentCharge);
-                    if (toReserve > 0f && _battery.TryUseCharge(mechBatteryEnt.Value, toReserve, mechBattery))
+                    if (toReserve > 0f && _battery.TryUseCharge((mechBatteryEnt.Value, mechBattery), toReserve))
                     {
                         buffered += toReserve;
                         _weaponEnergyBuffer[weapon] = buffered;
@@ -69,7 +69,7 @@ public sealed class MechChargerSystem : EntitySystem
                 if (transfer > 0f)
                 {
                     var newCharge = battery.CurrentCharge + transfer;
-                    _battery.SetCharge(weapon, newCharge, battery);
+                    _battery.SetCharge((weapon, battery), newCharge);
                     buffered -= transfer;
 
                     if (buffered <= 0f || newCharge >= battery.MaxCharge)
