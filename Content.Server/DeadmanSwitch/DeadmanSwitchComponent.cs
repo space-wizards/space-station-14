@@ -1,0 +1,21 @@
+namespace Content.Server.DeadmanSwitch;
+
+/// <summary>
+/// Component holding the state of a deadman's switch, which is mainly 'armed' or 'disarmed'.
+/// </summary>
+
+[RegisterComponent]
+public sealed partial class DeadmanSwitchComponent : Component
+{
+    /// <summary>
+    /// Whether the switch is armed or not
+    /// </summary>
+    [DataField]
+    public bool Armed = false;
+
+    /// <summary>
+    /// How long it takes to arm / disarm it
+    /// </summary>
+    [DataField]
+    public float ArmDelay = 1;
+}

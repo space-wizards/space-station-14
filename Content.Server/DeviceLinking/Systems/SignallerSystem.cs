@@ -23,14 +23,19 @@ public sealed class SignallerSystem : EntitySystem
     {
         _link.EnsureSourcePorts(uid, component.Port);
     }
+    
+    public void Trigger(EntityUid uid, EntityUid user, SignallerComponent component)
+    {
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):actor} triggered signaler {ToPrettyString(uid):tool}");
+        _link.InvokePort(uid, component.Port);
+    }
 
     private void OnUseInHand(EntityUid uid, SignallerComponent component, UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):actor} triggered signaler {ToPrettyString(uid):tool}");
-        _link.InvokePort(uid, component.Port);
+        Trigger(uid, args.User, component);
         args.Handled = true;
     }
 }

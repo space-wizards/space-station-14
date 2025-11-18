@@ -48,3 +48,32 @@
     range: 50
   - type: StaticPrice
     price: 30
+
+- type: entity
+  parent: RemoteSignaller
+  id: RemoteSignallerDeadman
+  name: deadman's switch
+  description: A handheld device rigged to send a remote signal to objects within a radius of about 50 meters. Once armed, it will trigger if it is dropped for any reason.
+  components:
+  - type: Sprite
+    layers:
+    - state: deadman
+      map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: {state: deadman-armed}
+          False: {state: deadman}
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: deadman-inhand-left
+      right:
+      - state: deadman-inhand-right
+  - type: DeadmanSwitch
+  - type: WirelessNetworkConnection
+    range: 50
+  - type: StaticPrice
+    price: 60
