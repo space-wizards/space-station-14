@@ -146,4 +146,12 @@
       containers:
         storagebase: !type:Container
           ents: []
+        package_1: !type:ContainerSlot {}
+        package_2: !type:ContainerSlot {}
+        package_3: !type:ContainerSlot {}
+        package_4: !type:ContainerSlot {}
+        package_5: !type:ContainerSlot {}
+        package_6: !type:ContainerSlot {}
+        package_7: !type:ContainerSlot {}
+        package_8: !type:ContainerSlot {}
     - type: DnaSubstanceTrace
