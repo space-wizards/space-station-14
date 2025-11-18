@@ -14,7 +14,7 @@ public static partial class HeatContainerHelpers
     /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
     /// <returns>The amount of heat in joules that is needed
     /// to bring the containers to thermal equilibrium.</returns>
-    /// <example>A positive value indicates heat transfer from a hot cA to a cold cB.</example>
+    /// <example>A positive value indicates heat transfer from a hot cB to a cold cA.</example>
     [PublicAPI]
     public static float FullyExchangeHeatQuery(this HeatContainer cA, HeatContainer cB)
     {

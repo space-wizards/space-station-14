@@ -42,11 +42,12 @@ public static partial class HeatContainerHelpers
             throw new ArgumentException("Cannot divide by zero.", nameof(num));
 
         var fraction = 1f / num;
+        var cFrac = c.Split(fraction);
         var containers = new HeatContainer[num];
 
         for (var i = 0; i < num; i++)
         {
-            containers[i] = c.Split(fraction);
+            containers[i] = cFrac;
         }
 
         return containers;

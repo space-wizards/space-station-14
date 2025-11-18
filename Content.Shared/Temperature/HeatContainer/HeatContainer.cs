@@ -34,7 +34,7 @@ public partial struct HeatContainer : IRobustCloneable<HeatContainer>
     /// Ideal if you just need to read the temperature for UI.
     /// Do not perform computations in Celsius/set this value, use Kelvin instead.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables]
     public float TemperatureC => TemperatureHelpers.KelvinToCelsius(Temperature);
 
     /// <summary>

@@ -55,7 +55,10 @@ public static partial class HeatContainerHelpers
     [PublicAPI]
     public static float ConductHeatQuery(this HeatContainer c, float temp, float deltaTime, float k)
     {
-        return k * (temp - c.Temperature) * deltaTime;
+        var dQ = k * (temp - c.Temperature) * deltaTime;
+        var q = ConductHeatToTempQuery(c, temp);
+
+        return Math.Min(Math.Abs(dQ), Math.Abs(q)) * Math.Sign(q);
     }
 
     /// <summary>
@@ -82,6 +85,7 @@ public static partial class HeatContainerHelpers
     /// <param name="targetTemp">The desired temperature to reach.</param>
     /// <returns>The amount of heat in joules that was transferred to or from the <see cref="HeatContainer"/>
     /// to reach the target temperature.</returns>
+    /// <example>A positive value indicates heat must be added to reach the target temperature.</example>
     [PublicAPI]
     public static float ConductHeatToTemp(this HeatContainer c, float targetTemp)
     {
@@ -98,6 +102,7 @@ public static partial class HeatContainerHelpers
     /// <param name="targetTemp">The desired temperature to reach.</param>
     /// <returns>The amount of heat in joules that must be transferred to or from the <see cref="HeatContainer"/>
     /// to reach the target temperature.</returns>
+    /// <example>A positive value indicates heat must be added to reach the target temperature.</example>
     [PublicAPI]
     public static float ConductHeatToTempQuery(this HeatContainer c, float targetTemp)
     {
