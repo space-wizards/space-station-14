@@ -9,7 +9,7 @@
       noRot: true
       sprite: Objects/Specific/Cargo/mailcart.rsi
       layers:
-        - state: base
+        - state: mailcart_base
     # - type: Rotatable
     - type: InteractionOutline
     - type: Storage
@@ -47,25 +47,25 @@
               - PackageDelivery
           priority: 4
         package_5:
-          name: mailcart-slot-component-slot-name-package-4
+          name: mailcart-slot-component-slot-name-package-5
           whitelist:
             tags:
               - PackageDelivery
           priority: 5
         package_6:
-          name: mailcart-slot-component-slot-name-package-4
+          name: mailcart-slot-component-slot-name-package-6
           whitelist:
             tags:
               - PackageDelivery
           priority: 6
         package_7:
-          name: mailcart-slot-component-slot-name-package-4
+          name: mailcart-slot-component-slot-name-package-7
           whitelist:
             tags:
               - PackageDelivery
           priority: 7
         package_8:
-          name: mailcart-slot-component-slot-name-package-4
+          name: mailcart-slot-component-slot-name-package-8
           whitelist:
             tags:
               - PackageDelivery
