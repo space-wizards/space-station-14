@@ -4,10 +4,4 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Fluids;
 
-public sealed class SpraySystem : SharedSpaySystem
-{
-    public override void Spray(Entity<SprayComponent> entity, EntityUid user, MapCoordinates mapcoord)
-    {
-        // nothing on client
-    }
-}
+public sealed class SpraySystem : SharedSpaySystem;

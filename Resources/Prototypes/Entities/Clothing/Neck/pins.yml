@@ -294,12 +294,7 @@
     pushbackAmount: 30
     spraySound:
       path: /Audio/Effects/spray3.ogg
-    sprayedPrototype: FlowerSpraySpray
+    sprayedPrototype: FlowerVapor
     vaporAmount: 1
     vaporSpread: 90
     sprayVelocity: 1.0
-
-
-# todo:
-#   Update spray sprite
-#   When you inspect it it shoots you? think about this...

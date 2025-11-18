@@ -5,5 +5,8 @@ namespace Content.Shared.Fluids.EntitySystems;
 
 public abstract class SharedSpaySystem : EntitySystem
 {
-    public abstract void Spray(Entity<SprayComponent> entity, EntityUid user, MapCoordinates mapcoord);
+    public virtual void Spray(Entity<SprayComponent> entity, EntityUid user, MapCoordinates mapcoord)
+    {
+        // do nothing!
+    }
 }

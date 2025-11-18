@@ -1,6 +1,5 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Fluids.Components;
 using Content.Server.Gravity;
 using Content.Server.Popups;
 using Content.Shared.CCVar;
@@ -46,8 +45,6 @@ public sealed class SpraySystem : SharedSpaySystem
         SubscribeLocalEvent<SprayComponent, UserActivateInWorldEvent>(OnActivateInWorld);
         Subs.CVar(_cfg, CCVars.GridImpulseMultiplier, UpdateGridMassMultiplier, true);
     }
-
-
 
     private void OnActivateInWorld(Entity<SprayComponent> entity, ref UserActivateInWorldEvent args)
     {
