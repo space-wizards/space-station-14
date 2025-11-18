@@ -6,6 +6,8 @@
     snap:
     - Wall
   components:
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: PlacementReplacement
     key: web
   - type: MeleeSound

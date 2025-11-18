@@ -9,6 +9,8 @@
       sprite: Structures/Power/cable_terminal.rsi
       state: term
       drawdepth: BelowFloor
+    - type: ExaminableDamage
+      messages: StructureMessages
     - type: Clickable
     - type: InteractionOutline
     - type: CollideOnAnchor

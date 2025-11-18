@@ -7,6 +7,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: Clickable
   - type: Sprite
     sprite: Structures/Decoration/cobweb.rsi

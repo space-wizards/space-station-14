@@ -19,6 +19,8 @@
     anchored: true
   - type: Clickable
   - type: InteractionOutline
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: Sprite
     sprite: Structures/Specific/xeno_building.rsi
     layers:

@@ -8,6 +8,8 @@
     - type: Transform
       anchored: true
       noRot: true
+    - type: ExaminableDamage
+      messages: StructureMessages
     - type: Physics
       bodyType: Static
     - type: Fixtures

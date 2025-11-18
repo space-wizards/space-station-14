@@ -17,6 +17,8 @@
     drawdepth: BlastDoors
     noRot: true
   - type: Physics
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: Fixtures
     fixtures:
       fix1:
