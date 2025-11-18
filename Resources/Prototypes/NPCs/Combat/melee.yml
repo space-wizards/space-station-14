@@ -3,7 +3,10 @@
 - type: htnCompound
   id: MeleeCombatCompound
   branches:
-    - tasks:
+    - preconditions:
+        - !type:InPacifyingContainerPrecondition
+          isInPacifyingContainer: false
+      tasks:
         - !type:HTNPrimitiveTask
           operator: !type:UtilityOperator
             proto: NearbyMeleeTargets

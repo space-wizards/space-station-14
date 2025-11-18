@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made with love by Shaeone, modified by ps3moira (github)",
+  "copyright": "Made with love by Shaeone, modified by ps3moira (github), human and fish made by TheSecondLord (Github) / @livelaughlord (Discord) based off of human package by Davyei (Discord)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,21 @@
     },
     {
       "name": "unwrapped"
+    },
+    {
+      "name": "fish"
+    },
+    {
+      "name": "fish-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "fish-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "human",
+      "directions": 4
     }
   ]
 }

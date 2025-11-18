@@ -151,6 +151,12 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - DoorBumpOpener
+      - FootstepSound
+      - XenoParcelShape
 
 - type: entity
   name: drone

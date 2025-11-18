@@ -812,6 +812,7 @@
     - Payload
     - ClothMade
     - PlushieCarp
+    - FishParcelShape
 
 - type: entity
   parent: PlushieCarp
@@ -835,6 +836,7 @@
     - Payload
     - ClothMade
     - PlushieCarpMagi
+    - FishParcelShape
 
 - type: entity
   parent: PlushieCarp
@@ -880,6 +882,7 @@
     - Payload
     - ClothMade
     - PlushieCarpHolo
+    - FishParcelShape
 
 - type: entity
   parent: BasePlushie
