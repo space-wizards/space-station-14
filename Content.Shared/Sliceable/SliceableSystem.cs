@@ -64,7 +64,7 @@ public sealed class SliceableSystem : EntitySystem
             return;
 
         var user = args.User;
-        if (!TryGetTool(ent, ent, args, user, out var verbDisabled, out var verbMessage, out var tool))
+        if (!TryGetVerbDataAndTool(ent, ent, args, user, out var verbDisabled, out var verbMessage, out var tool))
             return;
 
         SliceableComponent sliceableComp = ent;
@@ -76,7 +76,8 @@ public sealed class SliceableSystem : EntitySystem
             Message = verbMessage ?? Loc.GetString("slice-verb-message-default"),
             Act = () =>
             {
-                CreateDoAfter(ent, user, tool.Value, sliceableComp.SliceTime.Seconds, sliceableComp.ToolQuality);
+                if(tool.HasValue)
+                    CreateDoAfter(ent, user, tool.Value, sliceableComp.SliceTime.Seconds, sliceableComp.ToolQuality);
             },
         };
         args.Verbs.Add(verb);
@@ -128,8 +129,8 @@ public sealed class SliceableSystem : EntitySystem
         var rng = new System.Random(rndSeed);
 
         (Entity<SolutionComponent> sourceSoln, Solution sourceSolution)? solutionInfo = default;
-        if (ent.Comp.TransferSolution && !TryGetSourceSolutionForTransfer(ent, out solutionInfo))
-            return false;
+        if (ent.Comp.SolutionToSplit != null)
+            TryGetSourceSolutionForTransfer(ent, ent.Comp.SolutionToSplit, out solutionInfo);
 
         foreach (var sliceProtoId in slices)
         {
@@ -162,14 +163,14 @@ public sealed class SliceableSystem : EntitySystem
         return true;
     }
 
-    private bool TryGetTool(
+    private bool TryGetVerbDataAndTool(
         EntityUid uid,
         SliceableComponent comp,
         GetVerbsEvent<InteractionVerb> args,
         EntityUid user,
         out bool verbDisabled,
         out string? verbMessage,
-        [NotNullWhen(true)] out EntityUid? tool
+        out EntityUid? tool
     )
     {
         tool = null;
@@ -204,19 +205,18 @@ public sealed class SliceableSystem : EntitySystem
             verbMessage = Loc.GetString("slice-verb-target-isnt-dead");
         }
 
-        return false;
+        return true;
     }
 
     private bool TryGetSourceSolutionForTransfer(
-        Entity<SliceableComponent> ent,
+        EntityUid source,
+        string solutionName,
         [NotNullWhen(true)] out (Entity<SolutionComponent> sourceSoln, Solution sourceSolution)? solutionInfo
     )
     {
         solutionInfo = default;
-        if (!TryComp<EdibleComponent>(ent, out var edible))
-            return false;
 
-        if (!_solutionContainer.TryGetSolution(ent.Owner, edible.Solution, out var sourceSoln, out var sourceSolution))
+        if (!_solutionContainer.TryGetSolution(source, solutionName, out var sourceSoln, out var sourceSolution))
         {
             return false;
         }

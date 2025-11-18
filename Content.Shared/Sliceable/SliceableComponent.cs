@@ -20,13 +20,6 @@ public sealed partial class SliceableComponent : Component
     public List<EntitySpawnEntry> Slices = [];
 
     /// <summary>
-    /// If true, entity will transfer split solution into <see cref="Slices"/>
-    /// (if they have components to support process and have required empty volume).
-    /// </summary>
-    [DataField]
-    public bool TransferSolution = true;
-
-    /// <summary>
     /// ToolQuality for slicing.
     /// </summary>
     [DataField]
@@ -43,4 +36,10 @@ public sealed partial class SliceableComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan SliceTime = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// Name of the solution that stores reagents to be split. Should be null in case solution should not be split into slices.
+    /// </summary>
+    [DataField]
+    public string? SolutionToSplit = "food";
 }
