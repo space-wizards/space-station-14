@@ -892,24 +892,24 @@
     passiveVisibilityRate: -0.10
     movementVisibilityRate: 0.10
 
-- type: entity
-  parent: [StructureWheeled, CrateBaseWeldable]
-  id: CrateMailCart
-  name: mail cart
-  components:
-  - type: Icon
-    sprite: Structures/Storage/Crates/mailcart.rsi
-  - type: Sprite
-    sprite: Structures/Storage/Crates/mailcart.rsi
-    layers:
-    - state: base
-    - state: closed
-      map: ["enum.StorageVisualLayers.Door"]
-    - state: welded
-      visible: false
-      map: ["enum.WeldableLayers.BaseWelded"]
-  - type: Paintable
-    group: null
+# - type: entity
+#   parent: [StructureWheeled, CrateBaseWeldable]
+#   id: CrateMailCart
+#   name: mail cart
+#   components:
+#   - type: Icon
+#     sprite: Structures/Storage/Crates/mailcart.rsi
+#   - type: Sprite
+#     sprite: Structures/Storage/Crates/mailcart.rsi
+#     layers:
+#     - state: base
+#     - state: closed
+#       map: ["enum.StorageVisualLayers.Door"]
+#     - state: welded
+#       visible: false
+#       map: ["enum.WeldableLayers.BaseWelded"]
+#   - type: Paintable
+#     group: null
 
 #TODO: Figure out how to make mailcart similar to a filing cabinet with inventory space.
 #------Then figure out how to make custom package / letter slots

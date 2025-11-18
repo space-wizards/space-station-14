@@ -1025,6 +1025,9 @@
 ## P ##
 
 - type: Tag
+  id: PackageDelivery # Storage whitelist: MailCart. ItemMapper: MailCart.
+
+- type: Tag
   id: Packet # Storage whitelist: ClothingBeltChef
 
 - type: Tag
