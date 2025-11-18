@@ -138,9 +138,10 @@ public sealed partial class GunSystem : SharedGunSystem
                         break;
 
                     var shooterEvent = new GetShootingEntityEvent();
-                    RaiseLocalEvent(user.Value, ref shooterEvent);
-                    var effectiveShooter = shooterEvent.ShootingEntity ?? user;
+                    if (user != null)
+                        RaiseLocalEvent(user.Value, ref shooterEvent);
 
+                    var effectiveShooter = shooterEvent.ShootingEntity ?? user;
                     var hitscanEv = new HitscanTraceEvent
                     {
                         FromCoordinates = fromCoordinates,
