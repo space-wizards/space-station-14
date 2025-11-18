@@ -16,6 +16,13 @@ public sealed partial class KnockdownOnTriggerComponent : BaseXOnTriggerComponen
     public TimeSpan KnockdownAmount;
 
     /// <summary>
+    /// If true, refresh the duration.
+    /// If false, time is added on-top of any existing forced knockdown.
+    /// </summary>
+    [DataField]
+    public bool Refresh = true;
+
+    /// <summary>
     /// Should the entity try and stand automatically?
     /// </summary>
     [DataField]

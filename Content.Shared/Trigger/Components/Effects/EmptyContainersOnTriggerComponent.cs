@@ -7,9 +7,10 @@ namespace Content.Shared.Trigger.Components.Effects;
 /// </summary>
 /// <remarks>
 /// Be very careful when setting <see cref="BaseXOnTriggerComponent.TargetUser"/> to true, or all your organs might fall out.
+/// In fact, never set it to true.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class EmptyContentsOnTriggerComponent : BaseXOnTriggerComponent
+public sealed partial class EmptyContainersOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>
     /// Names of containers to empty.
