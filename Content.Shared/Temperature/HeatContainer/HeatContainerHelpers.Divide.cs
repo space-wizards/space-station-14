@@ -11,7 +11,7 @@ public static partial class HeatContainerHelpers
     /// <param name="fraction">The fraction of the heat capacity to move to the new container. Clamped between 0 and 1.</param>
     /// <returns>A new <see cref="HeatContainer"/> containing the specified fraction of the original container's heat capacity and the same temperature.</returns>
     [PublicAPI]
-    public static HeatContainer Split(this HeatContainer c, float fraction = 0.5f)
+    public static HeatContainer Split(this ref HeatContainer c, float fraction = 0.5f)
     {
         fraction = Math.Clamp(fraction, 0f, 1f);
         var newHeatCapacity = c.HeatCapacity * fraction;
