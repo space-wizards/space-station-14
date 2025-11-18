@@ -10,18 +10,6 @@ namespace Content.Shared.Fluids.Components;
 public sealed partial class EquipSprayComponent : Component
 {
     /// <summary>
-    /// The action that gets displayed when the sprayer is equipped.
-    /// </summary>
-    [DataField]
-    public EntProtoId Action = "ActionShootWater";
-
-    /// <summary>
-    /// Reference to the action.
-    /// </summary>
-    [DataField]
-    public EntityUid? ActionEntity;
-
-    /// <summary>
     /// Verb locid that will come up when interacting with the sprayer. Set to null for no verb!
     /// </summary>
     [DataField]

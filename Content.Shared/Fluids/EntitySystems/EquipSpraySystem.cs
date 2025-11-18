@@ -8,7 +8,6 @@ namespace Content.Shared.Fluids.EntitySystems;
 
 public sealed class EquipSpraySystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedSpaySystem _spray = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -16,14 +15,8 @@ public sealed class EquipSpraySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EquipSprayComponent, ClothingGotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<EquipSprayComponent, GetVerbsEvent<Verb>>(OnGetVerb);
         SubscribeLocalEvent<SprayLiquidEvent>(SprayLiquid);
-    }
-
-    private void OnEquip(EntityUid uid, EquipSprayComponent component, ClothingGotEquippedEvent args)
-    {
-        _actions.AddAction(args.Wearer, ref component.ActionEntity, component.Action, uid);
     }
 
     private void SprayLiquid(SprayLiquidEvent ev)

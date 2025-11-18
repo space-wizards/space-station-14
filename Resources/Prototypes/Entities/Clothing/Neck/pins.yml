@@ -298,3 +298,10 @@
     vaporAmount: 1
     vaporSpread: 90
     sprayVelocity: 1.0
+  - type: ActionGrant
+    actions:
+    - ActionShootWater
+  - type: ItemActionGrant
+    actions:
+    - ActionShootWater
+    activeIfWorn: true
