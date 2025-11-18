@@ -149,3 +149,64 @@
       - id: IngotGold
       - id: DrinkGoldenCup
         prob: 0.05
+
+- type: entity
+  parent: Foolbox
+  id: FoolboxFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: FooboxTable
+
+- type: entityTable
+  id: FooboxTable
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: FoolboxTableImportantItem
+    - !type:NestedSelector
+      tableId: FoolboxTableMinorItems
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - !type:NestedSelector
+      tableId: FoolboxTableDisposableItems
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+
+- type: entityTable
+  id: FoolboxTableImportantItem
+  table: !type:GroupSelector
+    children:
+    - id: CrayonBox
+      weight: 1.25
+    - id: ToyHammer
+    - id: RevolverCapGun
+    - id: ToySword
+      weight: 0.25
+
+- type: entityTable
+  id: FoolboxTableMinorItems
+  table: !type:GroupSelector
+    children:
+    - id: TrashBananaPeel
+      weight: 1.25
+    - id: FoodBanana
+    - id: FoodPieBananaCream
+      weight: 1.5
+    - id: ClothingHandsGlovesColorYellowBudget
+    - id: BikeHorn
+      weight: 0.25
+    - id: MysteryFigureBox
+      weight: 0.25
+
+- type: entityTable
+  id: FoolboxTableDisposableItems
+  table: !type:GroupSelector
+    children:
+    - id: TrashBananaPeel
+    - id: FoodBanana
+    - id: FoodPieBananaCream
+    - id: BoxCartridgeCap
+      weight: 0.5
