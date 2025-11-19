@@ -951,9 +951,9 @@
   id: XenoborgLaserGun
 
 - type: entity
-  name: xenoborg heavy laser gun
-  parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
-  id: XenoborgHeavyLaserGun
+  name: xenoborg laser cannon
+  parent: [WeaponLaserCannon, BaseXenoborgContraband]
+  id: XenoborgLaserCannon
   components:
-  - type: HitscanBatteryAmmoProvider
-    proto: RedHeavyLaser
+  - type: BatterySelfRecharger
+    autoRechargeRate: 30
