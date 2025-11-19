@@ -12,13 +12,13 @@ public sealed partial class StunOnTriggerComponent : BaseXOnTriggerComponent
     /// <summary>
     /// How long to stun the target.
     /// </summary>
-    [DataField(required: true)]
-    public TimeSpan StunAmount;
+    [DataField, AutoNetworkedField]
+    public TimeSpan StunAmount = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// If true, refresh the stun duration.
     /// If false, stun is added on-top of any existing stun.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Refresh = true;
 }

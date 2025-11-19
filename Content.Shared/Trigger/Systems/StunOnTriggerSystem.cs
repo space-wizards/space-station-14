@@ -10,8 +10,8 @@ public sealed class StunOnTriggerSystem : XOnTriggerSystem<StunOnTriggerComponen
     protected override void OnTrigger(Entity<StunOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
         if (ent.Comp.Refresh)
-            _stun.TryUpdateStunDuration(target, ent.Comp.StunAmount);
+            args.Handled |= _stun.TryUpdateStunDuration(target, ent.Comp.StunAmount);
         else
-            _stun.TryAddStunDuration(target, ent.Comp.StunAmount);
+            args.Handled |= _stun.TryAddStunDuration(target, ent.Comp.StunAmount);
     }
 }

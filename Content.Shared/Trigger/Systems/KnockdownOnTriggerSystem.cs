@@ -9,13 +9,13 @@ public sealed class KnockdownOnTriggerSystem : XOnTriggerSystem<KnockdownOnTrigg
 
     protected override void OnTrigger(Entity<KnockdownOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        _stun.TryKnockdown(
-            target,
-            ent.Comp.KnockdownAmount,
-            ent.Comp.Refresh,
-            ent.Comp.AutoStand,
-            ent.Comp.Drop,
-            true
-            );
+        args.Handled |= _stun.TryKnockdown(
+                        target,
+                        ent.Comp.KnockdownAmount,
+                        ent.Comp.Refresh,
+                        ent.Comp.AutoStand,
+                        ent.Comp.Drop,
+                        true
+                        );
     }
 }

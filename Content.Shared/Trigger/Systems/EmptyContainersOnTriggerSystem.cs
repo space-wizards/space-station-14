@@ -22,6 +22,8 @@ public sealed class EmptyContainersOnTriggerSystem : XOnTriggerSystem<EmptyConta
             {
                 _container.EmptyContainer(container);
             }
+
+            args.Handled = true;
         }
 
         // Empty containers in a sane way
@@ -33,6 +35,7 @@ public sealed class EmptyContainersOnTriggerSystem : XOnTriggerSystem<EmptyConta
                     continue;
 
                 _container.EmptyContainer(container);
+                args.Handled = true;
             }
         }
     }
@@ -57,6 +60,8 @@ public sealed class CleanContainersOnTriggerSystem : XOnTriggerSystem<CleanConta
             {
                 _container.CleanContainer(container);
             }
+
+            args.Handled = true;
         }
 
         // Empty containers in a sane way
@@ -68,6 +73,7 @@ public sealed class CleanContainersOnTriggerSystem : XOnTriggerSystem<CleanConta
                     continue;
 
                 _container.CleanContainer(container);
+                args.Handled = true;
             }
         }
     }

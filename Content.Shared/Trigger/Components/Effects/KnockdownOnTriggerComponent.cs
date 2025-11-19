@@ -12,25 +12,25 @@ public sealed partial class KnockdownOnTriggerComponent : BaseXOnTriggerComponen
     /// <summary>
     /// How long the target is forced to be on the ground.
     /// </summary>
-    [DataField(required: true)]
-    public TimeSpan KnockdownAmount;
+    [DataField, AutoNetworkedField]
+    public TimeSpan KnockdownAmount =  TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// If true, refresh the duration.
     /// If false, time is added on-top of any existing forced knockdown.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Refresh = true;
 
     /// <summary>
     /// Should the entity try and stand automatically?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool AutoStand = true;
 
     /// <summary>
     /// Should the entity drop their items upon first being knocked down?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Drop = true;
 }
