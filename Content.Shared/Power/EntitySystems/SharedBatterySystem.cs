@@ -12,33 +12,61 @@ public abstract class SharedBatterySystem : EntitySystem
         SubscribeLocalEvent<BatteryComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
-    private void OnEmpPulse(Entity<BatteryComponent> entity, ref EmpPulseEvent args)
+    private void OnEmpPulse(Entity<BatteryComponent> ent, ref EmpPulseEvent args)
     {
         args.Affected = true;
-        UseCharge(entity, args.EnergyConsumption, entity.Comp);
+        UseCharge(ent.AsNullable(), args.EnergyConsumption);
         // Apply a cooldown to the entity's self recharge if needed to avoid it immediately self recharging after an EMP.
-        TrySetChargeCooldown(entity);
+        TrySetChargeCooldown(ent.Owner);
     }
 
-    public virtual float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
-    {
-        return 0f;
-    }
-
-    public virtual void SetMaxCharge(EntityUid uid, float value, BatteryComponent? battery = null) { }
-
-    public virtual float ChangeCharge(EntityUid uid, float value, BatteryComponent? battery = null)
+    /// <summary>
+    /// Changes the battery's charge by the given amount.
+    /// A positive value will add charge, a negative value will remove charge.
+    /// </summary>
+    /// <returns>The actually changed amount.</returns>
+    public virtual float ChangeCharge(Entity<BatteryComponent?> ent, float amount)
     {
         return 0f;
     }
 
     /// <summary>
-    /// Checks if the entity has a self recharge and puts it on cooldown if applicable.
+    /// Removes the given amount of charge from the battery.
     /// </summary>
-    public virtual void TrySetChargeCooldown(EntityUid uid, float value = -1) { }
+    /// <returns>The actually changed amount.</returns>
+    public virtual float UseCharge(Entity<BatteryComponent?> ent, float amount)
+    {
+        return 0f;
+    }
 
-    public virtual bool TryUseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
+    /// <summary>
+    /// If sufficient charge is available on the battery, use it. Otherwise, don't.
+    /// Always returns false on the client.
+    /// </summary>
+    /// <returns>If the full amount was able to be removed.</returns>
+    public virtual bool TryUseCharge(Entity<BatteryComponent?> ent, float amount)
     {
         return false;
     }
+
+    /// <summary>
+    /// Sets the battery's charge.
+    /// </summary>
+    public virtual void SetCharge(Entity<BatteryComponent?> ent, float value) { }
+
+    /// <summary>
+    /// Sets the battery's maximum charge.
+    /// </summary>
+    public virtual void SetMaxCharge(Entity<BatteryComponent?> ent, float value) { }
+
+    /// <summary>
+    /// Checks if the entity has a self recharge and puts it on cooldown if applicable.
+    /// Uses the cooldown time given in the component.
+    /// </summary>
+    public virtual void TrySetChargeCooldown(Entity<BatterySelfRechargerComponent?> ent) { }
+
+    /// <summary>
+    /// Puts the entity's self recharge on cooldown for the specified time.
+    /// </summary>
+    public virtual void SetChargeCooldown(Entity<BatterySelfRechargerComponent?> ent, TimeSpan cooldown) { }
 }

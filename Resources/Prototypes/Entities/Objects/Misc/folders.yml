@@ -319,9 +319,6 @@
   - type: Storage
     grid:
     - 0,0,5,3
-    whitelist: # Redundant
-      tags:
-      - Document
   - type: ItemMapper
     mapLayers:
       clipboard_paper:
