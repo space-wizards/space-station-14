@@ -1706,7 +1706,7 @@
     - state: icon-xenoborg-laser
   - type: ItemBorgModule
     hands:
-    - item: XenoborgLaserGun
+    - item: WeaponLaserGunXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser-module }
 
@@ -1722,7 +1722,7 @@
     - state: icon-xenoborg-laser2
   - type: ItemBorgModule
     hands:
-    - item: XenoborgLaserCannon
+    - item: WeaponLaserCannonXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser2-module }
 
