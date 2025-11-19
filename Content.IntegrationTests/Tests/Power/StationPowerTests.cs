@@ -7,6 +7,7 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
 using Content.Shared.Power.Components;
 using Content.Shared.NodeContainer;
+using Robust.Server.GameObjects;
 using Robust.Shared.EntitySerialization;
 
 namespace Content.IntegrationTests.Tests.Power;
@@ -107,6 +108,7 @@ public sealed class StationPowerTests
         var entMan = server.EntMan;
         var protoMan = server.ProtoMan;
         var ticker = entMan.System<GameTicker>();
+        var xform = entMan.System<TransformSystem>();
 
         // Load the map
         await server.WaitAssertion(() =>
@@ -125,10 +127,11 @@ public sealed class StationPowerTests
         {
             while (apcQuery.MoveNext(out var uid, out var apc, out var battery))
             {
+                var coord = xform.GetMapCoordinates(uid);
                 // Uncomment the following line to log starting APC load to the console
                 //Console.WriteLine($"ApcLoad:{mapProtoId}:{uid}:{battery.CurrentSupply}");
                 Assert.That(apc.MaxLoad, Is.GreaterThanOrEqualTo(battery.CurrentSupply),
-                        $"APC {uid} on {mapProtoId} is overloaded {battery.CurrentSupply} / {apc.MaxLoad}");
+                        $"APC {uid} on {mapProtoId} ({coord.X}, {coord.Y}) is overloaded {battery.CurrentSupply} / {apc.MaxLoad}");
             }
         });
 
