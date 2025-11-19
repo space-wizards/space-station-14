@@ -966,6 +966,12 @@
   id: MopBasic # ItemMapper: JanitorialTrolley. ConstructionGraph: MoproachShoes
 
 - type: Tag
+  id: MothershipCoreGhostrole # spawn whitelist : SpawnPointGhostRoleMothershipCore
+
+- type: Tag
+  id: MothershipModule # Cyborg module category for evil xenoborg core
+
+- type: Tag
   id: Mouse # CargoBounty: BountyMouse
 
 - type: Tag
@@ -980,6 +986,9 @@
 
 - type: Tag
   id: NoConsoleSound # Blacklist on BaseComputer, StationMap. Tagged entity will not make sound when opening the UI.
+
+- type: Tag
+  id: NotGhostnadoWarpable # Prevents the entity from being selected via "Warp to most followed" ghost warp
 
 - type: Tag
   id: NozzleBackTank # Used by WeaponSprayNozzle to find a tagged entity for supplying ammo.
@@ -1537,19 +1546,22 @@
 ## X ##
 
 - type: Tag
-  id: XenoborgModuleEngi # Cyborg module category
+  id: XenoborgGhostrole # spawn whitelist : SpawnPointGhostRoleXenoborg
 
 - type: Tag
-  id: XenoborgModuleGeneric # Cyborg module category
+  id: XenoborgModuleEngi # Cyborg module category for evil engineer xenoborg
 
 - type: Tag
-  id: XenoborgModuleHeavy # Cyborg module category
+  id: XenoborgModuleGeneric # Cyborg module category for evil xenoborg
 
 - type: Tag
-  id: XenoborgModuleScout # Cyborg module category
+  id: XenoborgModuleHeavy # Cyborg module category for evil heavy xenoborg
 
 - type: Tag
-  id: XenoborgModuleStealth # Cyborg module category
+  id: XenoborgModuleScout # Cyborg module category for evil scout xenoborg
+
+- type: Tag
+  id: XenoborgModuleStealth # Cyborg module category for evil stealth xenoborg
 
 ## Y ##
 ## Z ##
