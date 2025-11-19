@@ -18,7 +18,7 @@ public sealed partial class AdminLogOnTriggerComponent : BaseXOnTriggerComponent
     /// This entity and the user will be included alongside the message.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public LocId Message;
+    public LocId Message = string.Empty;
 
     /// <summary>
     /// What type of action took place?
