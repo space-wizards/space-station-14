@@ -36,12 +36,19 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
         if (!args.EntityManager.TryGetComponent<MindComponent>(args.Buyer, out var mindComp))
             return false;
 
+        var whitelisted = false;
+
         foreach (var objective in mindComp.Objectives)
         {
             if (whitelistSystem.IsBlacklistPass(Blacklist, objective))
                 return false;
             if (whitelistSystem.IsWhitelistPass(Whitelist, objective))
-                return true;
+                whitelisted = true;
+        }
+
+        if (whitelisted)
+        {
+            return true;
         }
 
         if (!AvailableByDefault)
