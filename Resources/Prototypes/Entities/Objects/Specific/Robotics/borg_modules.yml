@@ -1647,6 +1647,22 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-fulton-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleDrill
+  name: drill xenoborg module
+  description: Module with a drill.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-drill
+  - type: ItemBorgModule
+    hands:
+    - item: MiningDrillDiamond
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-drill-module }
+
+- type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleJammer
   name: jammer xenoborg module

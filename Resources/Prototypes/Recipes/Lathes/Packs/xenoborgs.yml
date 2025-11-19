@@ -17,6 +17,7 @@
   - XenoborgModuleDoorControlRecipe
   - XenoborgModuleHoloWallProjectorRecipe
   - XenoborgModuleFultonKitRecipe
+  - XenoborgModuleDrillRecipe
   # heavy xenoborg
   - XenoborgModuleHeavyLaserRecipe
   # scout xenoborg

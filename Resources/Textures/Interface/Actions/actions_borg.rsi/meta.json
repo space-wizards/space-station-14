@@ -146,6 +146,9 @@
             "name":"xenoborg-door-remote-module"
         },
         {
+            "name":"xenoborg-drill-module"
+        },
+        {
             "name":"xenoborg-extinguisher-module"
         },
         {

@@ -91,6 +91,14 @@
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleDrillRecipe
+  result: XenoborgModuleDrill
+  materials:
+    Plasteel: 2000
+    Steel: 1000
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleHeavyLaserRecipe
   result: XenoborgModuleHeavyLaser
   materials:
