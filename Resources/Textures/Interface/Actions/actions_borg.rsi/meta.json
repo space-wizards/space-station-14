@@ -191,6 +191,9 @@
             "name":"xenoborg-sword2-module"
         },
         {
+            "name":"xenoborg-tile-module"
+        },
+        {
             "name":"xenoborg-tool-module"
         },
         {
