@@ -13,6 +13,7 @@
   recipes:
   - XenoborgModuleC4Recipe
   - XenoborgModuleBorgingRecipe
+  - XenoborgModuleDoorControlRecipe
   - XenoborgModuleHeavyLaserRecipe
   - XenoborgModuleEnergySwordRecipe
   - XenoborgModuleSuperCloakDeviceRecipe
