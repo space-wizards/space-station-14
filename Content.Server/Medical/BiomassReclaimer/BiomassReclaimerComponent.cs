@@ -36,7 +36,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         public float CurrentExpectedYield = 0f;
 
         /// <summary>
-        /// The reagent that will be spilled while processing a mob.
+        /// The reagents that will be spilled while processing a mob.
         /// </summary>
         [ViewVariables]
         public List<ProtoId<ReagentPrototype>> BloodReagents;

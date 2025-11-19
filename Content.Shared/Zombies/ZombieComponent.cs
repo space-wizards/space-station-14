@@ -164,13 +164,13 @@ public sealed partial class ZombieComponent : Component
     public SoundSpecifier BiteSound = new SoundPathSpecifier("/Audio/Effects/bite.ogg");
 
     /// <summary>
-    /// The blood reagent of the humanoid to restore in case of cloning
+    /// The blood reagents of the humanoid to restore in case of cloning
     /// </summary>
     [DataField("beforeZombifiedBloodReagents")]
     public List<ProtoId<ReagentPrototype>> BeforeZombifiedBloodReagents = new();
 
     /// <summary>
-    /// The blood reagent to give the zombie. In case you want zombies that bleed milk, or something.
+    /// The blood reagents to give the zombie. In case you want zombies that bleed milk, or something.
     /// </summary>
     [DataField("newBloodReagents")]
     public List<ProtoId<ReagentPrototype>> NewBloodReagents = new() { "ZombieBlood" };
