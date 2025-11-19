@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Body.Systems;
 using Content.Server.Botany.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
@@ -53,6 +54,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly MaterialStorageSystem _material = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
 
         public static readonly ProtoId<MaterialPrototype> BiomassPrototype = "Biomass";
 
@@ -70,10 +72,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 {
                     if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagents.Count > 0)
                     {
-                        Solution blood = new();
-                        var fraction = 50 / reclaimer.BloodReagents.Count;
-                        foreach (var reagent in reclaimer.BloodReagents)
-                            blood.AddReagent(reagent, fraction);
+                        Solution blood = _bloodstream.GenerateBloodSolution(reclaimer.BloodReagents, 50, reclaimer.BloodReagentsData);
                         _puddleSystem.TrySpillAt(uid, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
@@ -95,6 +94,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(uid).Coordinates);
 
                 reclaimer.BloodReagents.Clear();
+                reclaimer.BloodReagentsData = null;
                 reclaimer.SpawnedEntities.Clear();
                 RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
             }
@@ -213,6 +213,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (TryComp<BloodstreamComponent>(toProcess, out var stream))
             {
                 component.BloodReagents = stream.BloodReagents;
+                component.BloodReagentsData = _bloodstream.GetEntityBloodData(toProcess);
             }
             if (TryComp<ButcherableComponent>(toProcess, out var butcherableComponent))
             {

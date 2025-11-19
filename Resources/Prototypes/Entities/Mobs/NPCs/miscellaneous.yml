@@ -150,7 +150,9 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
   - type: Bloodstream
-    bloodReagents: [JuiceTomato]
+    bloodReagents:
+    - ReagentId: JuiceTomato
+      Quantity: 1
     bloodMaxVolume: 50
     chemicalMaxVolume: 30
   - type: DamageStateVisuals
