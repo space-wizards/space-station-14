@@ -1544,6 +1544,46 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-c4-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleBorging
+  name: borging xenoborg module
+  description: Module that allows engi xenoborgs to help in the process of installing brains and modules into other xenoborgs.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-basic
+  - type: ItemBorgModule
+    hands:
+    - hand:
+        emptyRepresentative: MMIFilled
+        emptyLabel: borg-slot-brains-empty
+        whitelist:
+          components:
+          - Brain
+          - BorgBrain
+    - hand:
+        emptyRepresentative: XenoborgModuleBasic
+        emptyLabel: borg-slot-modules-empty
+        whitelist:
+          components:
+          - BorgModule
+    - hand:
+        emptyRepresentative: BorgModuleConstructionMaterialPlaceholder
+        emptyLabel: borg-slot-construction-empty
+        whitelist:
+          tags:
+          - ConstructionMaterial
+    - hand:
+        emptyRepresentative: PowerCellHigh
+        emptyLabel: borg-slot-powercell-empty
+        whitelist:
+          components:
+          - PowerCell
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-module-module }
+
+- type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleJammer
   name: jammer xenoborg module

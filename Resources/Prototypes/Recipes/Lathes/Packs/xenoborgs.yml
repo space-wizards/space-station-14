@@ -12,6 +12,7 @@
   id: XenoborgUpgradeModules
   recipes:
   - XenoborgModuleC4Recipe
+  - XenoborgModuleBorgingRecipe
   - XenoborgModuleHeavyLaserRecipe
   - XenoborgModuleEnergySwordRecipe
   - XenoborgModuleSuperCloakDeviceRecipe
