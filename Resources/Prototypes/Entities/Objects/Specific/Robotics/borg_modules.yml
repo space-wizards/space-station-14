@@ -1674,6 +1674,25 @@
     - state: icon-xenoborg-tile
   - type: ItemBorgModule
     hands:
+    - item: Crowbar
+    - hand:
+      emptyRepresentative: FloorTileItemSteel
+      emptyLabel: borg-slot-tiles-empty
+      whitelist:
+        components:
+        - FloorTile
+    - hand:
+      emptyRepresentative: FloorTileItemWhite
+      emptyLabel: borg-slot-tiles-empty
+      whitelist:
+        components:
+        - FloorTile
+    - hand:
+      emptyRepresentative: FloorTileItemDark
+      emptyLabel: borg-slot-tiles-empty
+      whitelist:
+        components:
+        - FloorTile
     - item: WeaponTileGunEmpty
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tile-module }
