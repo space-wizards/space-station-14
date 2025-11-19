@@ -5,7 +5,7 @@
   description: Exchange bodies with another person!
   components:
   - type: Action
-    useDelay: 300
+    useDelay: 180
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/staff_animation.ogg
     icon:

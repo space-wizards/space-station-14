@@ -1,6 +1,6 @@
 ﻿<PanelContainer xmlns="https://spacestation14.io"
                 HorizontalExpand="True"
-                StyleClasses="PanelBackgroundLight"
+                StyleClasses="PanelLight"
                 Margin="5 5 5 0">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5 5 0 5">
         <SpriteView Name="ModuleView" Margin="0 0 5 0"/>

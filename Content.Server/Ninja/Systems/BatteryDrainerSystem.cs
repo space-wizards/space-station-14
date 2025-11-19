@@ -95,17 +95,17 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         // higher tier storages can charge more
         var maxDrained = pnb.MaxSupply * comp.DrainTime;
         var input = Math.Min(Math.Min(available, required / comp.DrainEfficiency), maxDrained);
-        if (!_battery.TryUseCharge(target, input, targetBattery))
+        if (!_battery.TryUseCharge((target, targetBattery), input))
             return false;
 
         var output = input * comp.DrainEfficiency;
-        _battery.SetCharge(comp.BatteryUid.Value, battery.CurrentCharge + output, battery);
+        _battery.SetCharge((comp.BatteryUid.Value, battery), battery.CurrentCharge + output);
         // TODO: create effect message or something
         Spawn("EffectSparks", Transform(target).Coordinates);
         _audio.PlayPvs(comp.SparkSound, target);
         _popup.PopupEntity(Loc.GetString("battery-drainer-success", ("battery", target)), uid, uid);
 
         // repeat the doafter until battery is full
-        return !_battery.IsFull(comp.BatteryUid.Value, battery);
+        return !_battery.IsFull((comp.BatteryUid.Value, battery));
     }
 }

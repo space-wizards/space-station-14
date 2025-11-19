@@ -187,7 +187,7 @@ namespace Content.Server.Construction
 
                             // TODO allow taking from several stacks.
                             // Also update crafting steps to check if it works.
-                            var splitStack = _stackSystem.Split(entity, materialStep.Amount, user.ToCoordinates(0, 0), stack);
+                            var splitStack = _stackSystem.Split((entity, stack), materialStep.Amount, user.ToCoordinates(0, 0));
 
                             if (splitStack == null)
                                 continue;

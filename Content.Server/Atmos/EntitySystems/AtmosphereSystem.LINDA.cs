@@ -129,9 +129,16 @@ namespace Content.Server.Atmos.EntitySystems
 
             switch (tile.LastShare)
             {
+                // Refresh this tile's suspension cooldown if it had significant sharing.
                 case > Atmospherics.MinimumAirToSuspend:
                     ExcitedGroupResetCooldowns(tile.ExcitedGroup);
                     break;
+
+                // If this tile moved a very small amount of air, but not enough to matter,
+                // we set the dismantle cooldown to 0.
+                // This dissolves the group without performing an equalization as we expect
+                // the group to be mostly equalized already if we're moving around miniscule
+                // amounts of air.
                 case > Atmospherics.MinimumMolesDeltaToMove:
                     tile.ExcitedGroup.DismantleCooldown = 0;
                     break;

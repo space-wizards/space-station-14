@@ -81,7 +81,6 @@
       methods: [ Touch ]
       effects: # TODO: when magic is around - make a milk transformation to a skeleton monster
       - !type:HealthChange
-        scaling: true
         damage:
           groups:
             Burn: -1 # healing obviously up to discussion

@@ -805,4 +805,25 @@
   id: 97
   time: '2025-10-13T21:06:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40717
-Order: 1
+- author: F1restar4
+  changes:
+  - message: On Oasis, reworked the TEG
+    type: Tweak
+  id: 98
+  time: '2025-11-02T23:14:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40623
+- author: Hitlinemoss
+  changes:
+  - message: On Reach, Clown and Mime are now playable jobs.
+    type: Add
+  id: 99
+  time: '2025-11-03T09:45:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41072
+- author: F1restar4
+  changes:
+  - message: On Exo, connected medbay's dispo units to the network
+    type: Fix
+  id: 100
+  time: '2025-11-07T08:36:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41329
+Order: 2

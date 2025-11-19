@@ -42,7 +42,7 @@
         - to: chairRitual
           completed:
             - !type:SpawnPrototype
-              prototype: HeadHuman
+              prototype: HeadSkeleton
               amount: 1
           steps:
             - tool: Prying

@@ -13,7 +13,7 @@
         shader: unshaded
   - type: PointLight
     radius: 1.6
-    energy: 1.2
+    energy: 2.0
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true

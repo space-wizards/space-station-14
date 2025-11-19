@@ -119,7 +119,7 @@ public sealed class LockSystem : EntitySystem
         if (!lockComp.ShowExamine)
             return;
 
-        args.PushText(Loc.GetString(lockComp.Locked
+        args.PushMarkup(Loc.GetString(lockComp.Locked
                 ? "lock-comp-on-examined-is-locked"
                 : "lock-comp-on-examined-is-unlocked",
             ("entityName", Identity.Name(uid, EntityManager))));
@@ -351,7 +351,7 @@ public sealed class LockSystem : EntitySystem
 
         if (!quiet)
         {
-            var denyReason = accessEv.DenyReason ?? _defaultDenyReason;
+            var denyReason = accessEv.DenyReason ?? Loc.GetString(_defaultDenyReason);
             _sharedPopupSystem.PopupClient(denyReason, ent, user);
         }
 

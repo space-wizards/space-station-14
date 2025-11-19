@@ -52,6 +52,7 @@ namespace Content.Client.Changelog
             // Open changelog purely to compare to the last viewed date.
             var changelogs = await LoadChangelog();
             UpdateChangelogs(changelogs);
+            _configManager.OnValueChanged(CCVars.ServerId, OnServerIdCVarChanged);
         }
 
         private void UpdateChangelogs(List<Changelog> changelogs)
@@ -81,6 +82,11 @@ namespace Content.Client.Changelog
 
             MaxId = changelog.Entries.Max(c => c.Id);
 
+            CheckLastSeenEntry();
+        }
+
+        private void CheckLastSeenEntry()
+        {
             var path = new ResPath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
             if (_resource.UserData.TryReadAllText(path, out var lastReadIdText))
             {
@@ -90,6 +96,11 @@ namespace Content.Client.Changelog
             NewChangelogEntries = LastReadId < MaxId;
 
             NewChangelogEntriesChanged?.Invoke();
+        }
+
+        private void OnServerIdCVarChanged(string newValue)
+        {
+            CheckLastSeenEntry();
         }
 
         public Task<List<Changelog>> LoadChangelog()

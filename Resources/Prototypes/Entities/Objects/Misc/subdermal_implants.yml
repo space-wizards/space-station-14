@@ -313,7 +313,6 @@
       tags:
       - SubdermalImplant
       - HideContextMenu
-      - MacroBomb
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -339,7 +338,6 @@
     tags:
     - SubdermalImplant
     - HideContextMenu
-    - DeathAcidifier
 
 - type: entity
   parent: BaseSubdermalImplant

@@ -1,17 +1,17 @@
-- type: startingGear
-  id: MothershipCoreGear
-  inhand:
-  - DoorRemoteXenoborg
-  - Omnitool
-
 - type: entity
-  parent: [ BaseControllable, BaseMachinePowered ]
+  parent: [ BaseControllable, BaseStructure ]
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
   components:
+  - type: InputMover # needs this to pilot the mothership
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 0 # shouldn't move
+    baseSprintSpeed : 0 # shouldn't move
   - type: Appearance
   - type: WiresVisuals
+  - type: Damageable
+    damageContainer: Inorganic
   - type: Fixtures
     fixtures:
       fix1:
@@ -22,7 +22,8 @@
         mask:
         - MachineMask
         layer:
-          - MachineLayer
+        - MidImpassable
+        - LowImpassable
   - type: Sprite
     sprite: Mobs/Silicon/mothership_core.rsi
     layers:
@@ -32,6 +33,9 @@
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: core-o
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: core-e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
   - type: Machine
     board: null
   - type: Lathe
@@ -116,8 +120,6 @@
         type: LatheBoundUserInterface
       enum.ResearchClientUiKey.Key:
         type: ResearchClientBoundUserInterface
-  - type: Transform
-    anchored: true
   - type: Pullable
   - type: StaticPrice
     price: 800
@@ -148,35 +150,55 @@
     - Mothership
     - Xenoborg
     - Binary
-  - type: XenoborgMothership
+  - type: Xenoborg
+    mindRole: MindRoleMothershipCore
+    briefingText: mothership-welcome
+  - type: MothershipCore
   - type: Tag
     tags:
     - SiliconEmotes
     - CanPilot
     - Structure
+  - type: GuideHelp
+    guides:
+    - Robotics
+    - Xenoborgs
   - type: Inventory
     templateId: borg
-  - type: Loadout
-    prototypes: [MothershipCoreGear]
   - type: NpcFactionMember
     factions:
     - Xenoborg
   - type: Hands
-    hands:
-      hand_right1:
-        location: Right
-      hand_right2:
-        location: Right
-      hand_left1:
-        location: Left
-      hand_left2:
-        location: Left
-    sortedHands:
-    - hand_right1
-    - hand_right2
-    - hand_left1
-    - hand_left2
-  # - type: Puller # use the conveyor
+    showInHands: false
+    disableExplosionRecursion: true
+    canBeStripped: false
+  - type: BorgChassis
+    canOpenSelfUi: true
+    maxModules: 2
+    hasMindState: core-e
+    noMindState: core-e
+    moduleWhitelist:
+      tags:
+      - MothershipModule
+      - BorgModuleEngineering
+  - type: ContainerFill
+    containers:
+      borg_module:
+      - MothershipModule
+      - BorgModuleAdvancedTool
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot { }
+      borg_module: !type:Container { }
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+  - type: Puller
+    needsHands: false
   - type: Eye
     drawFov: false
   # - type: StationAiOverlay # removed until is no longer buggy
@@ -222,8 +244,8 @@
   description: View the Xenoborgs Control Console
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
-    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-basic-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-control-computer }
+    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-control-computer }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction
@@ -236,8 +258,8 @@
   description: View the Xenoborgs Camera Monitor
   components:
   - type: Action
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
-    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-camera-computer }
+    iconOn: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-camera-computer }
     keywords: [ "Mothership Core", "console", "interface" ]
     priority: -6
   - type: InstantAction

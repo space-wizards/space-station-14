@@ -1,0 +1,25 @@
+<Document>
+  # Gas Recycling
+  Gas recycler is a machine that converts waste gasses into breathable ones.
+
+  <Box>
+    <GuideEntityEmbed Entity="GasRecycler"/>
+  </Box>
+  Specificaly it can recycle Carbon Dioxide and Nitrous Oxide into Oxygen and Nitrogen.
+
+  The machine has a two [textlink="pipenet" link="PipeNetworks"] connections, for gas input and output.
+
+  For recycler to work, tha gas needs to be pressurized to [color=#a4885c]3000 kPa[/color] heated to [color=#a4885c]573,15K[/color], and the pressure at the inlet needs to be higher than outlet.
+  If these conditions are not met, the gases will just pass through without getting recycled (as will unrecyclable gases).
+
+  <Box>
+    <GuideEntityEmbed Entity="GasRecyclerMachineCircuitboard" Caption="Gas recycler circuit board"/>
+  </Box>
+
+  The machine can be constructed using a circuit board, which can be made at a circuit imprinter.
+  It first needs to be researched by [textlink="science" link="Science"] though.
+
+  Gas recycling can be used as an alternative to gas miners, or as a backup to build a redundancy in the atmospheric system.
+  [color=#a4885c]Just don't forget to cool the gas before releasing it into the station![/color]
+
+</Document>

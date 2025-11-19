@@ -221,7 +221,7 @@ public sealed class ChargerSystem : SharedChargerSystem
         if (!SearchForBattery(container.ContainedEntities[0], out var heldEnt, out var heldBattery))
             return CellChargerStatus.Off;
 
-        if (_battery.IsFull(heldEnt.Value, heldBattery))
+        if (_battery.IsFull((heldEnt.Value, heldBattery)))
             return CellChargerStatus.Charged;
 
         return CellChargerStatus.Charging;
@@ -241,7 +241,7 @@ public sealed class ChargerSystem : SharedChargerSystem
         if (!SearchForBattery(targetEntity, out var batteryUid, out var heldBattery))
             return;
 
-        _battery.SetCharge(batteryUid.Value, heldBattery.CurrentCharge + component.ChargeRate * frameTime, heldBattery);
+        _battery.SetCharge((batteryUid.Value, heldBattery), heldBattery.CurrentCharge + component.ChargeRate * frameTime);
         UpdateStatus(uid, component);
     }
 

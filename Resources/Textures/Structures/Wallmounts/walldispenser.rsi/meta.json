@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Modifications made by [scrivoy], Dispenser originally taken from paradise at https://github.com/ParadiseSS13/Paradise/commit/846ce475b2258a4336d8895f07f2c0f4053963bc",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cleanerdispenser"
+        },
+        {
+            "name": "fueldispenser"
+        },
+        {
+            "name": "fill-1"
+        },
+        {
+            "name": "fill-2"
+        },
+        {
+            "name": "fill-3"
+        },
+        {
+            "name": "fill-4"
+        },
+        {
+            "name": "fill-5"
+        }
+    ]
+}

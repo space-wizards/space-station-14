@@ -2,7 +2,7 @@
                  xmlns:ui="clr-namespace:Content.Client.Voting.UI"
                  xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                  MouseFilter="Stop" MinSize="350 200">
-    <PanelContainer StyleClasses="AngleRect" />
+    <PanelContainer StyleClasses="BackgroundPanel" />
     <BoxContainer Orientation="Vertical">
         <BoxContainer Margin="8 0" Orientation="Horizontal">
             <Label Text="{Loc 'ui-vote-create-title'}"
@@ -15,7 +15,7 @@
         <BoxContainer Orientation="Vertical" Margin="8 2 8 0" VerticalExpand="True" VerticalAlignment="Top">
             <BoxContainer Orientation="Vertical">
                 <OptionButton Margin="2 1" Name="VoteTypeButton" HorizontalExpand="False" />
-                <BoxContainer Name="VoteOptionsButtonContainer" HorizontalExpand="False" Orientation="Vertical"> 
+                <BoxContainer Name="VoteOptionsButtonContainer" HorizontalExpand="False" Orientation="Vertical">
                 </BoxContainer>
                 <Button Margin="64 4" Name="FollowButton" Text="{Loc 'ui-vote-follow-button'}" Visible="False" />
                 <Label Margin="2 2" Name="VoteNotTrustedLabel" Text="{Loc 'ui-vote-trusted-users-notice'}" Visible="False" />
@@ -23,7 +23,7 @@
             </BoxContainer>
             <Label Margin="8 2" Name="VoteTypeTimeoutLabel" Visible="False" />
         </BoxContainer>
-        
+
         <Button Margin="8 32 8 2" Name="CreateButton" Text="{Loc 'ui-vote-create-button'}" />
 
         <PanelContainer StyleClasses="LowDivider" />

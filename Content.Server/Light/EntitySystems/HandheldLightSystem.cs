@@ -253,7 +253,7 @@ namespace Content.Server.Light.EntitySystems
                 _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.Dying, appearanceComponent);
             }
 
-            if (component.Activated && !_battery.TryUseCharge(batteryUid.Value, component.Wattage * frameTime, battery))
+            if (component.Activated && !_battery.TryUseCharge((batteryUid.Value, battery), component.Wattage * frameTime))
                 TurnOff(uid, false);
 
             UpdateLevel(uid);

@@ -83,20 +83,19 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
     }
 
     /// <summary>
-    /// Clone a target humanoid into nullspace and add it to the Changelings list of identities.
-    /// It creates a perfect copy of the target and can be used to pull components down for future use
+    /// Clone a target humanoid to a paused map.
+    /// It creates a perfect copy of the target and can be used to pull components down for future use.
     /// </summary>
-    /// <param name="ent">the Changeling</param>
-    /// <param name="target">the targets uid</param>
-    public EntityUid? CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    /// <param name="settings">The settings to use for cloning.</param>
+    /// <param name="target">The target to clone.</param>
+    public EntityUid? CloneToPausedMap(CloningSettingsPrototype settings, EntityUid target)
     {
         // Don't create client side duplicate clones or a clientside map.
         if (_net.IsClient)
             return null;
 
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
-            || !_prototype.Resolve(humanoid.Species, out var speciesPrototype)
-            || !_prototype.Resolve(ent.Comp.IdentityCloningSettings, out var settings))
+            || !_prototype.Resolve(humanoid.Species, out var speciesPrototype))
             return null;
 
         EnsurePausedMap();
@@ -117,10 +116,30 @@ public abstract class SharedChangelingIdentitySystem : EntitySystem
 
         var targetName = _nameMod.GetBaseName(target);
         _metaSystem.SetEntityName(clone, targetName);
-        ent.Comp.ConsumedIdentities.Add(clone);
+
+        return clone;
+    }
+
+    /// <summary>
+    /// Clone a target humanoid to a paused map and add it to the Changelings list of identities.
+    /// It creates a perfect copy of the target and can be used to pull components down for future use.
+    /// </summary>
+    /// <param name="ent">The Changeling.</param>
+    /// <param name="target">The target to clone.</param>
+    public EntityUid? CloneToPausedMap(Entity<ChangelingIdentityComponent> ent, EntityUid target)
+    {
+        if (!_prototype.Resolve(ent.Comp.IdentityCloningSettings, out var settings))
+            return null;
+
+        var clone = CloneToPausedMap(settings, target);
+
+        if (clone == null)
+            return null;
+
+        ent.Comp.ConsumedIdentities.Add(clone.Value);
 
         Dirty(ent);
-        HandlePvsOverride(ent, clone);
+        HandlePvsOverride(ent, clone.Value);
 
         return clone;
     }

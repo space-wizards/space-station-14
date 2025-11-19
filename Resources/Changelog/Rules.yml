@@ -1,0 +1,19 @@
+﻿Entries:
+- author: Errant
+  changes:
+  - message: Tab created.
+    type: Add
+  id: 1
+  time: '2025-10-30'
+- author: Errant
+  changes:
+  - message: Changes to Rules can now be tracked here.
+    type: Add
+  - message: Rule changes are now tracked, on a new tab in the changelog window.
+    type: Add
+  - message: Automation test. You like reading rules, don't you, you are a Rulesreader.
+    type: Tweak
+  id: 2
+  time: '2025-10-30T21:42:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40257
+Order: 1

@@ -154,6 +154,10 @@
       "directions": 4
     },
     {
+      "name": "core-e",
+      "directions": 4
+    },
+    {
       "name": "core-o",
       "directions": 4
     },

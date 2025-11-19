@@ -1,0 +1,383 @@
+﻿# This base is created so we don't have to define the different sprite path for each plushie job.
+- type: entity
+  parent: PlushieLizard
+  id: BasePlushieLizardJob
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/plushielizard_jobs.rsi
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobAtmospherictechnician
+  name: atmospheric technician lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as an atmospheric technician. Smells faintly of frezon.
+  components:
+  - type: Sprite
+    state: atmospherictechnician
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobBartender
+  name: bartender lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a bartender. Its tongue has alcohol stains on it.
+  components:
+  - type: Sprite
+    state: bartender
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobBotanist
+  name: botanist lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a botanist. There's prickly bits on its feet and it smells faintly of plant fertilizer.
+  components:
+  - type: Sprite
+    state: botanist
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobBoxer
+  name: boxer lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a boxer. The threads on its gloves are starting to come loose.
+  components:
+  - type: Sprite
+    state: boxer
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobCaptain
+  name: captain lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as the captain. There's bits of pie on its face.
+  components:
+  - type: Sprite
+    state: captain
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobCargotechnician
+  name: cargo technician lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a cargo technician. Crumbs of packing peanuts are stuck to its scales.
+  components:
+  - type: Sprite
+    state: cargotechnician
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobChaplain
+  name: chaplain lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a chaplain. It smells faintly of incense.
+  components:
+  - type: Sprite
+    state: chaplain
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobChef
+  name: chef lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a chef. It smells faintly of spices, with spots of oil on its apron.
+  components:
+  - type: Sprite
+    state: chef
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobChemist
+  name: chemist lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a chemist. Parts of the plushie are stained with chemicals.
+  components:
+  - type: Sprite
+    state: chemist
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobChiefengineer
+  name: chief engineer lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as the chief engineer. It's covered in metal shavings and welding splatter.
+  components:
+  - type: Sprite
+    state: chiefengineer
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobChiefmedicalofficer
+  name: chief medical officer lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as the chief medical officer. The plushie's tail has been sewn off and on again, probably from practicing surgery.
+  components:
+  - type: Sprite
+    state: chiefmedicalofficer
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobClown
+  name: clown lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a clown. Its nose squeaks when you press it.
+  components:
+  - type: Sprite
+    state: clown
+  - type: EmitSoundOnUse
+    sound:
+      collection: BikeHorn
+  - type: EmitSoundOnActivate
+    sound:
+      collection: BikeHorn
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: BikeHorn
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobDetective
+  name: detective lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a detective. Seems ready for a mystery.
+  components:
+  - type: Sprite
+    state: detective
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobHeadofpersonnel
+  name: head of personnel lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as the head of personnel. While it seems thrilled on the outside, it's probably just as bored as you are.
+  components:
+  - type: Sprite
+    state: headofpersonnel
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobHeadofsecurity
+  name: head of security lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as the head of security. It seems to have been ripped and re-stitched a few times.
+  components:
+  - type: Sprite
+    state: headofsecurity
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobJanitor
+  name: janitor lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a janitor. It smells faintly of cleaning supplies.
+  components:
+  - type: Sprite
+    state: janitor
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobLawyer
+  name: lawyer lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a lawyer. Its lawyer pin is barely hanging on from hours of fidgeting.
+  components:
+  - type: Sprite
+    state: lawyer
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobLibrarian
+  name: librarian lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a librarian. The color of the plushie has faded from years of desk-watching.
+  components:
+  - type: Sprite
+    state: librarian
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobMedicaldoctor
+  name: medical doctor lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a medical doctor. Seems to be well-washed.
+  components:
+  - type: Sprite
+    state: medicaldoctor
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobMedicalintern
+  name: medical intern lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a medical intern. It smells faintly of antiseptic.
+  components:
+  - type: Sprite
+    state: medicalintern
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobMime
+  name: mime lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a mime. It stares at you silently, its motives unknown.
+  components:
+  - type: Sprite
+    state: mime
+  - type: EmitSoundOnUse
+    sound: null # mime is silent...
+  - type: EmitSoundOnLand
+    sound: null
+  - type: EmitSoundOnActivate
+    sound: null
+  - type: EmitSoundOnTrigger
+    sound: null
+  - type: EmitSoundOnCollide
+    sound: null
+  - type: Edible
+    useSound: null
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit: null
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobMusician
+  name: musician lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a musician. It smells faintly of sweat and has a few strings coming loose.
+  components:
+  - type: Sprite
+    state: musician
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobParamedic
+  name: paramedic lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a paramedic. The plushie has a few little bandages sewn on it.
+  components:
+  - type: Sprite
+    state: paramedic
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobPassenger
+  name: passenger lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a passenger. Its eyes look at you, a little bit more beady than the rest.
+  components:
+  - type: Sprite
+    state: passenger
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobPsychologist
+  name: psychologist lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a psychologist. It seems to like to quietly listen to you.
+  components:
+  - type: Sprite
+    state: psychologist
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobQuartermaster
+  name: quartermaster lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as the quartermaster. Its covered in sticky residue left behind from thousands of shipment invoices.
+  components:
+  - type: Sprite
+    state: quartermaster
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobReporter
+  name: reporter lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a reporter. It smells faintly of ink.
+  components:
+  - type: Sprite
+    state: reporter
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobResearchassistant
+  name: research assistant lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a research assistant. It smells faintly of burnt paper.
+  components:
+  - type: Sprite
+    state: researchassistant
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobResearchdirector
+  name: research director lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as the research director. There's a few burn marks on the plushie.
+  components:
+  - type: Sprite
+    state: researchdirector
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobSalvagespecialist
+  name: salvage specialist lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a salvage specialist. Seems like it's seen the coldness of space for a while.
+  components:
+  - type: Sprite
+    state: salvager
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobScientist
+  name: scientist lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a scientist. There's a few bite marks on the plushie, probably from a curious monkey.
+  components:
+  - type: Sprite
+    state: scientist
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobSecuritycadet
+  name: security cadet lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a security cadet. Seems to have shock marks across the plushie.
+  components:
+  - type: Sprite
+    state: securitycadet
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobSecurityofficer
+  name: security officer lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a security officer. The stuffing has been padded down from a lot of punching.
+  components:
+  - type: Sprite
+    state: securityofficer
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobServiceworker
+  name: service worker lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a service worker. Smells like a mix of cleaning supplies and food.
+  components:
+  - type: Sprite
+    state: serviceworker
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobStationengineer
+  name: station engineer lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a station engineer. It has oil stains on its hands.
+  components:
+  - type: Sprite
+    state: stationengineer
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobTechnicalassistant
+  name: technical assistant lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a technical assistant. It smells faintly of burnt wires.
+  components:
+  - type: Sprite
+    state: technicalassistant
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobWarden
+  name: warden lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a warden. Smells like black powder and gun oil.
+  components:
+  - type: Sprite
+    state: warden
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobZookeeper
+  name: zookeeper lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a zookeeper. It has some gorilla fur stuck to it.
+  components:
+  - type: Sprite
+    state: zookeeper
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobMultiweh
+  name: multiweh lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as every job! It's a plushie of many talents. You can hear a HoP crying in the distance.
+  components:
+  - type: Sprite
+    state: multiweh

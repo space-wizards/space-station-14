@@ -1,6 +1,8 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Item.ItemToggle;
+using Content.Shared.Localizations;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
@@ -35,8 +37,28 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
+        SubscribeLocalEvent<BorgModuleComponent, ExaminedEvent>(OnModuleExamine);
 
         InitializeRelay();
+    }
+
+    private void OnModuleExamine(Entity<BorgModuleComponent> ent, ref ExaminedEvent args)
+    {
+        if (ent.Comp.BorgFitTypes == null)
+            return;
+
+        if (ent.Comp.BorgFitTypes.Count == 0)
+            return;
+
+        var typeList = new List<string>();
+
+        foreach (var type in ent.Comp.BorgFitTypes)
+        {
+            typeList.Add(Loc.GetString(type));
+        }
+
+        var types = ContentLocalizationManager.FormatList(typeList);
+        args.PushMarkup(Loc.GetString("borg-module-fit", ("types", types)));
     }
 
     private void OnTryGetIdentityShortInfo(TryGetIdentityShortInfoEvent args)
@@ -98,8 +120,8 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnUIOpenAttempt(EntityUid uid, BorgChassisComponent component, ActivatableUIOpenAttemptEvent args)
     {
-        // borgs can't view their own ui
-        if (args.User == uid)
+        // borgs generaly can't view their own ui
+        if (args.User == uid && !component.CanOpenSelfUi)
             args.Cancel();
     }
 

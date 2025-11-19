@@ -2,7 +2,8 @@
   id: CreateSoapRegular
   impact: Low
   quantized: true
-  minTemp: 383 # Water boiling point + 10 Kelvin. We are boiling it
+  minTemp: 373 # Water boiling point. We are boiling it
+  priority: -1 # Ensures that the more complicated soaps get made instead
   reactants:
     Oil:
       amount: 10
@@ -18,7 +19,7 @@
   id: CreateSoapNT
   impact: Low
   quantized: true
-  minTemp: 373 # Water boiling point. We are boiling it too, but with higher priority!
+  minTemp: 373
   reactants:
     Oil:
       amount: 15

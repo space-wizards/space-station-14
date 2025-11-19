@@ -11,10 +11,8 @@ namespace Content.Shared.Power.Components;
 [Access(typeof(SharedBatterySystem))]
 public partial class BatteryComponent : Component
 {
-    public string SolutionName = "battery";
-
     /// <summary>
-    /// Maximum charge of the battery in joules (ie. watt seconds)
+    /// Maximum charge of the battery in joules (i.e. watt seconds)
     /// </summary>
     [DataField]
     [GuidebookData]
@@ -23,11 +21,11 @@ public partial class BatteryComponent : Component
     /// <summary>
     /// Current charge of the battery in joules (ie. watt seconds)
     /// </summary>
-    [DataField("startingCharge")]
+    [DataField("startingCharge")] // TODO: rename this datafield to currentCharge
     public float CurrentCharge;
 
     /// <summary>
-    /// The price per one joule. Default is 1 credit for 10kJ.
+    /// The price per one joule. Default is 1 speso for 10kJ.
     /// </summary>
     [DataField]
     public float PricePerJoule = 0.0001f;

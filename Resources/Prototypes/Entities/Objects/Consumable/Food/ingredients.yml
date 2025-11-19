@@ -35,10 +35,6 @@
     solution: food
   - type: TrashOnSolutionEmpty
     solution: food
-  - type: Tag
-    tags:
-      - Ingredient
-
 - type: entity
   abstract: true
   parent: ReagentContainerBase
@@ -278,9 +274,6 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
-  - type: Tag
-    tags:
-      - Ingredient
 
 - type: entity
   parent: FoodBakingBase
@@ -468,7 +461,6 @@
     node: start
   - type: Tag
     tags:
-    - Ingredient
     - ClothMade
   - type: SolutionContainerManager
     solutions:
@@ -540,7 +532,6 @@
   - type: Tag
     tags:
      - ClothMade
-     - Ingredient
 
 - type: entity
   name: raw pastry base
@@ -934,9 +925,6 @@
       reagents:
       - ReagentId: CocoaPowder
         Quantity: 2
-  - type: Tag
-    tags:
-      - Ingredient
 
 - type: entity
   parent: FoodBakingBase

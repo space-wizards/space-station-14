@@ -402,8 +402,8 @@ namespace Content.IntegrationTests.Tests.Power
                 battery = entityManager.GetComponent<BatteryComponent>(generatorEnt);
                 consumer = entityManager.GetComponent<PowerConsumerComponent>(consumerEnt);
 
-                batterySys.SetMaxCharge(generatorEnt, startingCharge, battery);
-                batterySys.SetCharge(generatorEnt, startingCharge, battery);
+                batterySys.SetMaxCharge((generatorEnt, battery), startingCharge);
+                batterySys.SetCharge((generatorEnt, battery), startingCharge);
                 netBattery.MaxSupply = 400;
                 netBattery.SupplyRampRate = 400;
                 netBattery.SupplyRampTolerance = 100;
@@ -513,8 +513,8 @@ namespace Content.IntegrationTests.Tests.Power
                 supplier.SupplyRampRate = rampRate;
                 supplier.SupplyRampTolerance = rampTol;
 
-                batterySys.SetMaxCharge(batteryEnt, 100_000, battery);
-                batterySys.SetCharge(batteryEnt, 100_000, battery);
+                batterySys.SetMaxCharge((batteryEnt, battery), 100_000);
+                batterySys.SetCharge((batteryEnt, battery), 100_000);
                 netBattery.MaxSupply = draw / 2;
                 netBattery.SupplyRampRate = rampRate;
                 netBattery.SupplyRampTolerance = rampTol;
@@ -600,7 +600,7 @@ namespace Content.IntegrationTests.Tests.Power
 
                 supplier.MaxSupply = 500;
                 supplier.SupplyRampTolerance = 500;
-                batterySys.SetMaxCharge(batteryEnt, 100_000, battery);
+                batterySys.SetMaxCharge((batteryEnt, battery), 100_000);
                 netBattery.MaxChargeRate = 1_000;
                 netBattery.Efficiency = 0.5f;
             });
@@ -670,8 +670,8 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery.MaxSupply = 400;
                 netBattery.SupplyRampTolerance = 400;
                 netBattery.SupplyRampRate = 100_000;
-                batterySys.SetMaxCharge(batteryEnt, 100_000, battery);
-                batterySys.SetCharge(batteryEnt, 100_000, battery);
+                batterySys.SetMaxCharge((batteryEnt, battery), 100_000);
+                batterySys.SetCharge((batteryEnt, battery), 100_000);
             });
 
             // Run some ticks so everything is stable.
@@ -750,8 +750,8 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery.SupplyRampTolerance = 400;
                 netBattery.SupplyRampRate = 100_000;
                 netBattery.Efficiency = 0.5f;
-                batterySys.SetMaxCharge(batteryEnt, 1_000_000, battery);
-                batterySys.SetCharge(batteryEnt, 1_000_000, battery);
+                batterySys.SetMaxCharge((batteryEnt, battery), 1_000_000);
+                batterySys.SetCharge((batteryEnt, battery), 1_000_000);
             });
 
             // Run some ticks so everything is stable.
@@ -841,8 +841,8 @@ namespace Content.IntegrationTests.Tests.Power
                 supplier.MaxSupply = 1000;
                 supplier.SupplyRampTolerance = 1000;
 
-                batterySys.SetMaxCharge(batteryEnt1, 1_000_000, battery1);
-                batterySys.SetMaxCharge(batteryEnt2, 1_000_000, battery2);
+                batterySys.SetMaxCharge((batteryEnt1, battery1), 1_000_000);
+                batterySys.SetMaxCharge((batteryEnt2, battery2), 1_000_000);
 
                 netBattery1.MaxChargeRate = 1_000;
                 netBattery2.MaxChargeRate = 1_000;
@@ -945,10 +945,10 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery2.SupplyRampTolerance = 1000;
                 netBattery1.SupplyRampRate = 100_000;
                 netBattery2.SupplyRampRate = 100_000;
-                batterySys.SetMaxCharge(batteryEnt1, 100_000, battery1);
-                batterySys.SetMaxCharge(batteryEnt2, 100_000, battery2);
-                batterySys.SetCharge(batteryEnt1, 100_000, battery1);
-                batterySys.SetCharge(batteryEnt2, 100_000, battery2);
+                batterySys.SetMaxCharge((batteryEnt1, battery1), 100_000);
+                batterySys.SetMaxCharge((batteryEnt2, battery2), 100_000);
+                batterySys.SetCharge((batteryEnt1, battery1), 100_000);
+                batterySys.SetCharge((batteryEnt2, battery2), 100_000);
             });
 
             // Run some ticks so everything is stable.
@@ -1031,8 +1031,8 @@ namespace Content.IntegrationTests.Tests.Power
                 supplier.MaxSupply = 1000;
                 supplier.SupplyRampTolerance = 1000;
 
-                batterySys.SetMaxCharge(batteryEnt1, 1_000_000, battery1);
-                batterySys.SetMaxCharge(batteryEnt2, 1_000_000, battery2);
+                batterySys.SetMaxCharge((batteryEnt1, battery1), 1_000_000);
+                batterySys.SetMaxCharge((batteryEnt2, battery2), 1_000_000);
 
                 netBattery1.MaxChargeRate = 20;
                 netBattery2.MaxChargeRate = 20;
@@ -1107,8 +1107,8 @@ namespace Content.IntegrationTests.Tests.Power
                 netBattery.MaxSupply = 1000;
                 netBattery.SupplyRampTolerance = 200;
                 netBattery.SupplyRampRate = 10;
-                batterySys.SetMaxCharge(batteryEnt, 100_000, battery);
-                batterySys.SetCharge(batteryEnt, 100_000, battery);
+                batterySys.SetMaxCharge((batteryEnt, battery), 100_000);
+                batterySys.SetCharge((batteryEnt, battery), 100_000);
             });
 
             // Run some ticks so everything is stable.
@@ -1253,7 +1253,7 @@ namespace Content.IntegrationTests.Tests.Power
                 generatorSupplier.MaxSupply = 1000;
                 generatorSupplier.SupplyRampTolerance = 1000;
 
-                batterySys.SetCharge(apcEnt, 0, apcBattery);
+                batterySys.SetCharge((apcEnt, apcBattery), 0);
             });
 
             server.RunTicks(5); //let run a few ticks for PowerNets to reevaluate and start charging apc
@@ -1314,8 +1314,8 @@ namespace Content.IntegrationTests.Tests.Power
                 extensionCableSystem.SetProviderTransferRange(apcExtensionEnt, range);
                 extensionCableSystem.SetReceiverReceptionRange(powerReceiverEnt, range);
 
-                batterySys.SetMaxCharge(apcEnt, 10000, battery);  //arbitrary nonzero amount of charge
-                batterySys.SetCharge(apcEnt, battery.MaxCharge, battery); //fill battery
+                batterySys.SetMaxCharge((apcEnt, battery), 10000);  //arbitrary nonzero amount of charge
+                batterySys.SetCharge((apcEnt, battery), battery.MaxCharge); //fill battery
 
                 receiver.Load = 1; //arbitrary small amount of power
             });

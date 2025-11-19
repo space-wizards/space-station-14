@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.EntityEffects.Effects.Transform;
 
@@ -20,15 +21,21 @@ public sealed partial class PopupMessageEntityEffectSystem : EntityEffectSystem<
         if (_net.IsClient)
             return;
 
-        var msg = _random.Pick(args.Effect.Messages);
+        var msg = Loc.GetString(_random.Pick(args.Effect.Messages), ("entity", entity));
 
-        switch (args.Effect.Type)
+        switch ((args.Effect.Method, args.Effect.Type))
         {
-            case PopupRecipients.Local:
-                _popup.PopupEntity(Loc.GetString(msg, ("entity", entity)), entity, entity, args.Effect.VisualType);
+            case (PopupMethod.PopupEntity, PopupRecipients.Local):
+                _popup.PopupEntity(msg, entity, entity, args.Effect.VisualType);
                 break;
-            case PopupRecipients.Pvs:
-                _popup.PopupEntity(Loc.GetString(msg, ("entity", entity)), entity, args.Effect.VisualType);
+            case (PopupMethod.PopupEntity, PopupRecipients.Pvs):
+                _popup.PopupEntity(msg, entity, args.Effect.VisualType);
+                break;
+            case (PopupMethod.PopupCoordinates, PopupRecipients.Local):
+                _popup.PopupCoordinates(msg, Transform(entity).Coordinates, entity, args.Effect.VisualType);
+                break;
+            case (PopupMethod.PopupCoordinates, PopupRecipients.Pvs):
+                _popup.PopupCoordinates(msg, Transform(entity).Coordinates, args.Effect.VisualType);
                 break;
         }
     }
@@ -51,14 +58,29 @@ public sealed partial class PopupMessage : EntityEffectBase<PopupMessage>
     public PopupRecipients Type = PopupRecipients.Local;
 
     /// <summary>
+    /// Which popup API method to use.
+    /// Use PopupCoordinates in case the entity will be deleted while the popup is shown.
+    /// </summary>
+    [DataField]
+    public PopupMethod Method = PopupMethod.PopupEntity;
+
+    /// <summary>
     /// Size of the popup.
     /// </summary>
     [DataField]
     public PopupType VisualType = PopupType.Small;
 }
 
-public enum PopupRecipients
+[Serializable, NetSerializable]
+public enum PopupRecipients : byte
 {
     Pvs,
-    Local
+    Local,
+}
+
+[Serializable, NetSerializable]
+public enum PopupMethod : byte
+{
+    PopupEntity,
+    PopupCoordinates,
 }

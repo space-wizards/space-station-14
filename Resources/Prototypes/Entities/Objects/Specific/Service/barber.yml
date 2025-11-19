@@ -7,6 +7,8 @@
   - type: Sprite
     sprite: Objects/Tools/scissors.rsi
     state: icon
+  - type: Item
+    storedRotation: 135
   - type: MagicMirror
   - type: ActivatableUI
     key: enum.MagicMirrorUiKey.Key

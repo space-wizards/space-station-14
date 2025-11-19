@@ -111,6 +111,10 @@ public record struct BeforeIngestedEvent(FixedPoint2 Min, FixedPoint2 Max, Solut
     // Whether this event, and therefore eat attempt, should be cancelled.
     public bool Cancelled;
 
+    // When and if we eat this solution, should we actually remove solution or should it get replaced?
+    // This bool basically only exists because of stackable system.
+    public bool Refresh;
+
     public bool TryNewMinimum(FixedPoint2 newMin)
     {
         if (newMin > Max)
@@ -130,6 +134,12 @@ public record struct BeforeIngestedEvent(FixedPoint2 Min, FixedPoint2 Max, Solut
     }
 }
 
+/// <summary>
+/// Raised on an entity while it is eating
+/// </summary>
+/// <param name="Food">The item being ingested</param>
+/// <param name="Split">The solution being ingested</param>
+/// <param name="ForceFed">Whether or not we're being forced</param>
 [ByRefEvent]
 public record struct IngestingEvent(EntityUid Food, Solution Split, bool ForceFed);
 
@@ -143,10 +153,6 @@ public record struct IngestingEvent(EntityUid Food, Solution Split, bool ForceFe
 [ByRefEvent]
 public record struct IngestedEvent(EntityUid User, EntityUid Target, Solution Split, bool ForceFed)
 {
-    // Should we refill the solution now that we've eaten it?
-    // This bool basically only exists because of stackable system.
-    public bool Refresh;
-
     // Should we destroy the ingested entity?
     public bool Destroy;
 

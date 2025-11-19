@@ -23,9 +23,6 @@
   - type: Sprite
     noRot: true
   - type: Appearance
-  - type: Tag
-    tags:
-      - TabletopPiece
 
 - type: entity
   id: BaseBoardTabletop

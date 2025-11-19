@@ -6,7 +6,7 @@
   - type: Sprite
     sprite: Mobs/Species/Diona/organs.rsi
   - type: Organ
-  - type: Food
+  - type: Edible
   - type: Extractable
     grindableSolutionName: organ
   - type: SolutionContainerManager
@@ -19,7 +19,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: UncookedAnimalProteins
+        - ReagentId: Cellulose
           Quantity: 5
   - type: FlavorProfile
     flavors:
@@ -78,7 +78,7 @@
       food:
         maxVol: 5
         reagents:
-        - ReagentId: UncookedAnimalProteins
+        - ReagentId: Cellulose
           Quantity: 5
   - type: Stomach
   - type: Metabolizer
@@ -92,7 +92,6 @@
       - id: Poison
       - id: Narcotic
       - id: Alcohol
-        rateModifier: 0.1
   - type: Item
     size: Small
     heldPrefix: stomach
@@ -108,7 +107,7 @@
   - type: Item
     size: Small
     heldPrefix: lungs
-  - type: Lung 
+  - type: Lung
   - type: Metabolizer
     removeEmpty: true
     solutionOnBody: false
@@ -127,6 +126,11 @@
       Lung:
         maxVol: 100
         canReact: False
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 5
 
 # Organs that turn into nymphs on removal
 - type: entity
@@ -137,7 +141,7 @@
   description: "The source of incredible, unending intelligence. Honk."
   components:
   - type: Brain
-  - type: Nymph # This will make the organs turn into a nymph when they're removed. 
+  - type: Nymph # This will make the organs turn into a nymph when they're removed.
     entityPrototype: OrganDionaNymphBrain
     transferMind: true
 
@@ -176,11 +180,11 @@
 
 - type: entity
   id: OrganDionaNymphStomach
-  parent: MobDionaNymphAccent 
+  parent: MobDionaNymphAccent
   categories: [ HideSpawnMenu ]
   name: diona nymph
   suffix: Stomach
-  description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it. 
+  description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it.
   components:
   - type: IsDeadIC
   - type: Body
@@ -192,7 +196,7 @@
   categories: [ HideSpawnMenu ]
   name: diona nymph
   suffix: Lungs
-  description: Contains the lungs of a formerly fully-formed Diona. Breathtaking. 
+  description: Contains the lungs of a formerly fully-formed Diona. Breathtaking.
   components:
   - type: IsDeadIC
   - type: Body

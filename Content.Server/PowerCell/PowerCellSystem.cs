@@ -174,7 +174,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
             return false;
         }
 
-        if (!_battery.TryUseCharge(batteryEnt.Value, charge, battery))
+        if (!_battery.TryUseCharge((batteryEnt.Value, battery), charge))
         {
             if (user != null)
                 _popup.PopupEntity(Loc.GetString("power-cell-insufficient"), uid, user.Value);

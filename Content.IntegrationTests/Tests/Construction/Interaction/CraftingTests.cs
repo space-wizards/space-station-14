@@ -95,8 +95,8 @@ public sealed class CraftingTests : InteractionTest
         Assert.That(sys.IsEntityInContainer(shard), Is.True);
         Assert.That(sys.IsEntityInContainer(rods), Is.False);
         Assert.That(sys.IsEntityInContainer(wires), Is.False);
-        Assert.That(rodStack, Has.Count.EqualTo(8));
-        Assert.That(wireStack, Has.Count.EqualTo(7));
+        Assert.That(rodStack.Count, Is.EqualTo(8));
+        Assert.That(wireStack.Count, Is.EqualTo(7));
 
         await FindEntity(Spear, shouldSucceed: false);
 

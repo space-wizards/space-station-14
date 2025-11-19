@@ -33,8 +33,6 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
-            // activate BEFORE entity is deleted and trash is spawned
-            SubscribeLocalEvent<CreamPieComponent, ConsumeDoAfterEvent>(OnConsume, before: [typeof(FoodSystem)]);
             SubscribeLocalEvent<CreamPieComponent, SliceFoodEvent>(OnSlice);
 
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
@@ -59,10 +57,10 @@ namespace Content.Server.Nutrition.EntitySystems
             QueueDel(entity);
         }
 
-        private void OnConsume(Entity<CreamPieComponent> entity, ref ConsumeDoAfterEvent args)
-        {
-            ActivatePayload(entity);
-        }
+        // TODO
+        // A regression occured here. Previously creampies would activate their hidden payload if you tried to eat them.
+        // However, the refactor to IngestionSystem caused the event to not be reached,
+        // because eating is blocked if an item is inside the food.
 
         private void OnSlice(Entity<CreamPieComponent> entity, ref SliceFoodEvent args)
         {
