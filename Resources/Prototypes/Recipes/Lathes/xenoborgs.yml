@@ -131,6 +131,13 @@
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleThrowingKnifesRecipe
+  result: XenoborgModuleThrowingKnifes
+  materials:
+    Steel: 3000
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleSuperCloakDeviceRecipe
   result: XenoborgModuleSuperCloakDevice
   materials:

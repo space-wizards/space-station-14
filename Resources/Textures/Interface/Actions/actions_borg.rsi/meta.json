@@ -194,6 +194,9 @@
             "name":"xenoborg-temp-gun-module"
         },
         {
+            "name":"xenoborg-throwing-knife-module"
+        },
+        {
             "name":"xenoborg-tile-module"
         },
         {

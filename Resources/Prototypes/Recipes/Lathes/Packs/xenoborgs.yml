@@ -24,5 +24,6 @@
   - XenoborgModuleTemperatureGunRecipe
   # scout xenoborg
   - XenoborgModuleEnergySwordRecipe
+  - XenoborgModuleThrowingKnifesRecipe
   # stealth xenoborg
   - XenoborgModuleSuperCloakDeviceRecipe

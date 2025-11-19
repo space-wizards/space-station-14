@@ -1817,6 +1817,56 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-sword2-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleThrowingKnifes
+  name: throwing knifes xenoborg module
+  description: Module with five throwing knifes.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_scout
+    - state: icon-xenoborg-knife
+  - type: ItemBorgModule
+    hands:
+    - item: ThrowingKnife
+      hand:
+        emptyRepresentative: ThrowingKnife
+        emptyLabel: borg-slot-throwing-knife-empty
+        whitelist:
+          components:
+          - DamageOtherOnHit
+    - item: ThrowingKnife
+      hand:
+        emptyRepresentative: ThrowingKnife
+        emptyLabel: borg-slot-throwing-knife-empty
+        whitelist:
+          components:
+          - DamageOtherOnHit
+    - item: ThrowingKnife
+      hand:
+        emptyRepresentative: ThrowingKnife
+        emptyLabel: borg-slot-throwing-knife-empty
+        whitelist:
+          components:
+          - DamageOtherOnHit
+    - item: ThrowingKnife
+      hand:
+        emptyRepresentative: ThrowingKnife
+        emptyLabel: borg-slot-throwing-knife-empty
+        whitelist:
+          components:
+          - DamageOtherOnHit
+    - item: ThrowingKnife
+      hand:
+        emptyRepresentative: ThrowingKnife
+        emptyLabel: borg-slot-throwing-knife-empty
+        whitelist:
+          components:
+          - DamageOtherOnHit
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-throwing-knife-module }
+
+- type: entity
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleHypo
   name: nocturine hypo xenoborg module
