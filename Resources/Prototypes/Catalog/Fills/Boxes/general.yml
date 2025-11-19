@@ -400,7 +400,7 @@
   - type: EntityTableContainerFill
     containers:
       storagebase:
-        id: BoxEncryptionKeySyndie
+        id: EncryptionKeySyndie
         amount: 2
   - type: Storage
 
