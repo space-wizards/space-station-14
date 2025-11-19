@@ -5,6 +5,8 @@ using Content.Shared.DeadmanSwitch;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Toggleable;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.DeadmanSwitch;
@@ -21,6 +23,7 @@ public sealed class DeadmanSwitchSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SignallerSystem _signal = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     
     public override void Initialize()
     {
@@ -29,13 +32,14 @@ public sealed class DeadmanSwitchSystem : EntitySystem
         SubscribeLocalEvent<DeadmanSwitchComponent, DroppedEvent>(OnDropped);
         SubscribeLocalEvent<DeadmanSwitchComponent, UseInHandEvent>(OnUseInHand, before: [typeof(SignallerSystem)]);
         SubscribeLocalEvent<DeadmanSwitchComponent, DeadmanSwitchDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<DeadmanSwitchComponent, ExaminedEvent>(OnExamined);
     }
 
     private void ToggleArmed(EntityUid uid, EntityUid user, DeadmanSwitchComponent component)
     {
         component.Armed = !component.Armed;
         _appearance.SetData(uid, ToggleableVisuals.Enabled, component.Armed);
-        _popup.PopupEntity(Loc.GetString(component.Armed ? "deadman-on-activate" : "deadman-on-deactivate"), uid, user);
+        _audio.PlayPvs(component.SwitchSound, uid);
     }
     
     private void OnDropped(EntityUid uid, DeadmanSwitchComponent component, DroppedEvent args)
@@ -47,6 +51,7 @@ public sealed class DeadmanSwitchSystem : EntitySystem
             return;
         
         ToggleArmed(uid, args.User, component);
+        _popup.PopupEntity(Loc.GetString("deadman-on-trigger", ("name", uid)), uid, args.User);
         _signal.Trigger(uid, args.User, signaller);
     }
     
@@ -67,5 +72,18 @@ public sealed class DeadmanSwitchSystem : EntitySystem
         return;
     
     ToggleArmed(uid, args.User, component);
+    _popup.PopupEntity(Loc.GetString(component.Armed ? "deadman-on-activate" : "deadman-on-deactivate", ("name", uid)), uid, args.User);
     }
+
+    private void OnExamined(EntityUid uid, DeadmanSwitchComponent component, ExaminedEvent args)
+    {
+        if (component.Armed)
+        {
+            args.PushMarkup(Loc.GetString("deadman-examine-armed"));
+        }
+        else
+        {
+            args.PushMarkup(Loc.GetString("deadman-examine-disarmed"));
+        }
+}
 }

@@ -516,6 +516,11 @@
     Telecrystal: 2
   categories:
     - UplinkExplosives
+  conditions:
+  - !type:StoreWhitelistCondition
+     blacklist:
+       tags:
+       - NukeOpsUplink
 
 # Ammo
 
