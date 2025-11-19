@@ -13,57 +13,17 @@
     - type: InteractionOutline
     - type: Storage
       grid:
-      - 0,0,6,8
+      - 0,0,15,7
       quickInsert: true
+      maxItemSize: Huge
       whitelist:
         tags:
+        - PackageDelivery
         - LetterDelivery
         - Paper
         - Document
         - BoxCardboard
         - Folder
-    - type: ItemSlots
-      slots:
-        package_1:
-          whitelist:
-            tags:
-              - PackageDelivery
-          priority: 1
-        package_2:
-          whitelist:
-            tags:
-              - PackageDelivery
-          priority: 2
-        package_3:
-          whitelist:
-            tags:
-              - PackageDelivery
-          priority: 3
-        package_4:
-          whitelist:
-            tags:
-              - PackageDelivery
-          priority: 4
-        package_5:
-          whitelist:
-            tags:
-              - PackageDelivery
-          priority: 5
-        package_6:
-          whitelist:
-            tags:
-              - PackageDelivery
-          priority: 6
-        package_7:
-          whitelist:
-            tags:
-              - PackageDelivery
-          priority: 7
-        package_8:
-          whitelist:
-            tags:
-              - PackageDelivery
-          priority: 8
     - type: Fixtures
       fixtures:
         fix1:
@@ -146,12 +106,3 @@
       containers:
         storagebase: !type:Container
           ents: []
-        package_1: !type:ContainerSlot {}
-        package_2: !type:ContainerSlot {}
-        package_3: !type:ContainerSlot {}
-        package_4: !type:ContainerSlot {}
-        package_5: !type:ContainerSlot {}
-        package_6: !type:ContainerSlot {}
-        package_7: !type:ContainerSlot {}
-        package_8: !type:ContainerSlot {}
-    - type: DnaSubstanceTrace
