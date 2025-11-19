@@ -83,6 +83,14 @@
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleFultonKitRecipe
+  result: XenoborgModuleFultonKit
+  materials:
+    Steel: 1000
+    Cloth: 1000
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleHeavyLaserRecipe
   result: XenoborgModuleHeavyLaser
   materials:

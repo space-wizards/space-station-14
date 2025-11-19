@@ -1579,6 +1579,35 @@
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleFultonKit
+  name: fulton xenoborg module
+  description: Module with six fultons and a fulton beacon.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-fulton
+  - type: ItemBorgModule
+    hands:
+    - item: FultonBeacon
+      hand:
+          emptyRepresentative: FultonBeacon
+          emptyLabel: borg-slot-fulton-beacon-empty
+          whitelist:
+            components:
+            - FultonBeacon
+    - item: Fulton6
+      hand:
+          emptyRepresentative: Fulton
+          emptyLabel: borg-slot-fulton-empty
+          whitelist:
+            components:
+            - Fulton
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-fulton-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleBorging
   name: borging xenoborg module
   description: Module that allows engi xenoborgs to help in the process of installing brains and modules into other xenoborgs.

@@ -96,6 +96,15 @@
     count: 1
 
 - type: entity
+  id: Fulton6
+  parent: Fulton
+  name: fulton
+  suffix: Six
+  components:
+  - type: Stack
+    count: 6
+
+- type: entity
   id: FultonEffect
   categories: [ HideSpawnMenu ]
   name: fulton effect
