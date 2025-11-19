@@ -72,6 +72,13 @@
       - state: deadman-inhand-left
       right:
       - state: deadman-inhand-right
+  - type: Signaller
+    port: Dropped
+  - type: SignalOnTrigger
+    port: Dropped
+  - type: DeviceLinkSource
+    ports:
+      - Dropped
   - type: DeadmanSwitch
     armDelay: 1
     switchSound:
