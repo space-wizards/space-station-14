@@ -1,3 +1,4 @@
+borg-slot-c4-empty = Explosives
 borg-slot-cables-empty = Cables
 borg-slot-construction-empty = Construction materials
 borg-slot-circuitboards-empty = Circuitboards

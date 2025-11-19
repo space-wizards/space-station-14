@@ -51,6 +51,14 @@
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleC4Recipe
+  result: XenoborgModuleC4
+  materials:
+    Plastic: 1500
+    Steel: 500
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleHeavyLaserRecipe
   result: XenoborgModuleHeavyLaser
   materials:

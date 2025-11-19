@@ -1506,6 +1506,44 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-extinguisher-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleC4
+  name: C4 xenoborg module
+  description: Module with three C4s.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-c4
+  - type: ItemBorgModule
+    hands:
+    - item: C4
+      hand:
+        emptyRepresentative: C4
+        emptyLabel: borg-slot-c4-empty
+        whitelist:
+          components:
+          - Explosive
+    - item: C4
+      hand:
+        emptyRepresentative: C4
+        emptyLabel: borg-slot-c4-empty
+        whitelist:
+          components:
+          - Explosive
+    - item: C4
+      hand:
+        emptyRepresentative: C4
+        emptyLabel: borg-slot-c4-empty
+        whitelist:
+          components:
+          - Explosive
+    - item: Multitool
+    - item: RemoteSignallerAdvanced
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-c4-module }
+
+- type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleJammer
   name: jammer xenoborg module
