@@ -620,6 +620,8 @@
     containers:
       storagebase: !type:AllSelector
         children:
+        - !type:NestedSelector # First since it can spawn a 3x3
+          tableId: HappyHonkToySafeEntityTable
         - id: FoodBurgerCheese
         - !type:GroupSelector
           children:
@@ -627,8 +629,6 @@
           - id: DrinkLemonLimeCan
           - id: DrinkLemonLimeCranberryCan
           - id: DrinkIcedTeaCan
-        - !type:NestedSelector
-          tableId: HappyHonkToySafeEntityTable
 
 - type: entity
   id: FoodMealHappyHonkBigBite
