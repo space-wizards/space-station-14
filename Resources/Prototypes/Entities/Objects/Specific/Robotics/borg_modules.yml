@@ -1631,18 +1631,18 @@
     hands:
     - item: FultonBeacon
       hand:
-          emptyRepresentative: FultonBeacon
-          emptyLabel: borg-slot-fulton-beacon-empty
-          whitelist:
-            components:
-            - FultonBeacon
+        emptyRepresentative: FultonBeacon
+        emptyLabel: borg-slot-fulton-beacon-empty
+        whitelist:
+          components:
+          - FultonBeacon
     - item: Fulton6
       hand:
-          emptyRepresentative: Fulton
-          emptyLabel: borg-slot-fulton-empty
-          whitelist:
-            components:
-            - Fulton
+        emptyRepresentative: Fulton
+        emptyLabel: borg-slot-fulton-empty
+        whitelist:
+          components:
+          - Fulton
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-fulton-module }
 
