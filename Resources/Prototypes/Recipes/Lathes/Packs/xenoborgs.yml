@@ -21,6 +21,7 @@
   - XenoborgModuleTileGunRecipe
   # heavy xenoborg
   - XenoborgModuleHeavyLaserRecipe
+  - XenoborgModuleTemperatureGunRecipe
   # scout xenoborg
   - XenoborgModuleEnergySwordRecipe
   # stealth xenoborg
