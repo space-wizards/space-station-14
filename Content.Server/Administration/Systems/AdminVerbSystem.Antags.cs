@@ -199,6 +199,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Interface/Misc/job_icons.rsi"), "Wizard"),
             Act = () =>
             {
+                // Wizard has no rule components as of writing, but I gotta put something here to satisfy the machine so just make it wizard mind rule :)
                 _antag.ForceMakeAntag<WizardRoleComponent>(targetPlayer, DefaultWizardRule);
             },
             Impact = LogImpact.High,
