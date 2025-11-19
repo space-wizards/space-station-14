@@ -10,6 +10,7 @@ apc-menu-charge-label = {$percent} Charged
 apc-menu-power-state-good = Good
 apc-menu-power-state-low = Low
 apc-menu-power-state-none = None
+apc-menu-power-state-label-text = { POWERWATTS($power) }
 
 # For the flavor text on the footer
 

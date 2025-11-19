@@ -1,7 +1,7 @@
 using Content.Server.Administration;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration;
+using Content.Shared.Power.Components;
 using Robust.Shared.Console;
 
 namespace Content.Server.Power
@@ -40,7 +40,7 @@ namespace Content.Server.Power
                 shell.WriteLine(Loc.GetString($"cmd-setbatterypercent-battery-not-found", ("id", id)));
                 return;
             }
-            _batterySystem.SetCharge(id.Value, battery.MaxCharge * percent / 100, battery);
+            _batterySystem.SetCharge((id.Value, battery), battery.MaxCharge * percent / 100);
             // Don't acknowledge b/c people WILL forall this
         }
     }
