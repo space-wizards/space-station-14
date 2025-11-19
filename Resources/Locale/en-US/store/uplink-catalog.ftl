@@ -5,6 +5,9 @@ uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowere
 uplink-estoc-bundle-name = Estoc DMR bundle
 uplink-estoc-bundle-desc = A designated marksman rifle, fitted with a mid-range optic for longer-range combat. Bundled with two rifle magazines (.20 rifle).
 
+uplink-kingcobra-bundle-name = Kingcobra bundle
+uplink-kingcobra-bundle-desc = Silent Death: The elite Kingcobra Submachine Gun, bundled with three pistol magazines (.25 caseless).
+
 uplink-revolver-python-name = Python
 uplink-revolver-python-desc = A brutally simple, effective, and loud Syndicate revolver. Comes loaded with armor-piercing rounds. Uses .45 magnum.
 

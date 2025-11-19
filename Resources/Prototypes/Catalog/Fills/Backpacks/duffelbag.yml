@@ -59,6 +59,18 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledEliteSMG
+  name: Kingcobra bundle
+  description: "Silent Death: The elite Kingcobra Submachine Gun, bundled with three magazines."
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponSubMachineGunKingcobra
+    - id: MagazinePistolCaselessRifle
+      amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRifle
   name: Estoc DMR bundle
   description: "For medium-range sharpshooting, the Estoc DMR. Bundled with three magazines."
