@@ -7,28 +7,27 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
-/// When triggered this component will choose a key and send a new trigger.
-/// Trigger is sent to user if <see cref="BaseXOnTriggerComponent.TargetUser"/> is true.
+/// This component creates an admin log when receiving a trigger.
+/// <see cref="BaseXOnTriggerComponent.TargetUser"/> is ignored.
 /// </summary>
-/// <remarks>Does not support recursive loops where this component triggers itself. Use <see cref="RepeatingTriggerComponent"/> instead.</remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class AdminLogOnTriggerComponent : BaseXOnTriggerComponent
 {
     /// <summary>
     /// The message displayed in the logs describing what specifically was done by this trigger.
-    /// The entity and user will be included alongside this message.
+    /// This entity and the user will be included alongside the message.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public LocId Message;
 
     /// <summary>
-    /// The trigger keys and their weights.
+    /// What type of action took place?
     /// </summary>
     [DataField, AutoNetworkedField]
     public LogType LogType = LogType.Trigger;
 
     /// <summary>
-    /// The trigger keys and their weights.
+    /// How important is this trigger?
     /// </summary>
     [DataField, AutoNetworkedField]
     public LogImpact LogImpact = LogImpact.Low;
