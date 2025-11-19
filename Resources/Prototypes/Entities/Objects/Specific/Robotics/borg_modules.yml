@@ -1563,6 +1563,22 @@
 
 - type: entity
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleHoloWallProjector
+  name: holowall projector xenoborg module
+  description: Module with a holowall projector.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-holowall
+  - type: ItemBorgModule
+    hands:
+    - item: HoloprojectorField
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-holoprojector-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleBorging
   name: borging xenoborg module
   description: Module that allows engi xenoborgs to help in the process of installing brains and modules into other xenoborgs.

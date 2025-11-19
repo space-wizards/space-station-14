@@ -155,6 +155,9 @@
             "name":"xenoborg-eye2-module"
         },
         {
+            "name":"xenoborg-holoprojector-module"
+        },
+        {
             "name":"xenoborg-hypo-module"
         },
         {
