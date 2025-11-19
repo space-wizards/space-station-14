@@ -374,11 +374,10 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         {
             var min = FixedPoint2.Min(ent.Comp.BloodSolution.Value.Comp.Solution.AvailableVolume, amount);
             var fraction = min / ent.Comp.BloodReagents.Count;
-            var success = true;
             foreach (var reagent in ent.Comp.BloodReagents)
-                success &= SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, reagent, fraction, null, GetEntityBloodData(ent));
+                SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, reagent, fraction, null, GetEntityBloodData(ent));
 
-            return success;
+            return min == amount;
         }
 
         // Removal is more involved,
