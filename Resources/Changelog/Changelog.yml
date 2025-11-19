@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AreYouConfused
-  changes:
-  - message: Bulldog bundle now accurately says what is included
-    type: Fix
-  id: 8712
-  time: '2025-06-24T21:58:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38558
 - author: Dragonjspider
   changes:
   - message: The Cutter Machine no longer makes Dark Techmaints floor tiles for free
@@ -3925,3 +3918,11 @@
   id: 9212
   time: '2025-11-19T02:58:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41487
+- author: korczoczek
+  changes:
+  - message: Packed's evac shuttle will no longer have its air chamber glass break
+      upon loading
+    type: Fix
+  id: 9213
+  time: '2025-11-19T22:15:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41500
