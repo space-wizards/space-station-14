@@ -156,7 +156,7 @@
   parent: BlastDoor
   id: BlastDoorXenoborg
   name: xenoborg blast door
-  description: Don't lose an head!
+  description: Don't lose a head!
   components:
   - type: Sprite
     sprite: Structures/Doors/Shutters/xenoborg_blastdoor.rsi
