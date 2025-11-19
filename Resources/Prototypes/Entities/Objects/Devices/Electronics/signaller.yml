@@ -50,9 +50,9 @@
     price: 30
 
 - type: entity
-  parent: RemoteSignaller
+  parent: [RemoteSignaller, BaseSyndicateContraband]
   id: RemoteSignallerDeadman
-  name: deadman's switch
+  name: dead man's switch
   description: A handheld device rigged to send a remote signal to objects within a radius of about 50 meters. Once armed, it will trigger if it is dropped for any reason.
   components:
   - type: Sprite
