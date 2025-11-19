@@ -119,9 +119,10 @@ public sealed partial class MeleeWeaponSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.0f), length * 0.0f),
-                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.5f), length * 0.3f),
-                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,1.0f), length * 0.6f),
-                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.8f), length * 1.0f),
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.5f), length * 0.10f),
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,1.0f), length * 0.15f),
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.9f), length * 0.20f),
+                        new AnimationTrackProperty.KeyFrame(Angle.Lerp(startRotation,endRotation,0.80f), length * 0.6f),
                     }
                 },
                 new AnimationTrackComponentProperty()
@@ -131,9 +132,9 @@ public sealed partial class MeleeWeaponSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,0.0f), length * 0.0f),
-                        new AnimationTrackProperty.KeyFrame(minRotationOffset, length * 0.3f),
-                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,1.0f), length * 0.6f),
-                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,0.8f), length * 1.0f),
+                        new AnimationTrackProperty.KeyFrame(minRotationOffset, length * 0.10f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,1.0f), length * 0.15f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startRotationOffset,endRotationOffset,0.80f), length * 0.6f),
                     }
                 },
             }
@@ -143,7 +144,7 @@ public sealed partial class MeleeWeaponSystem
     private Animation GetThrustAnimation(Entity<SpriteComponent> sprite, float offset, Angle spriteRotation, float length)
     {
         var startOffset = sprite.Comp.Rotation.RotateVec(new Vector2(0f, 0f));
-        var endOffset = sprite.Comp.Rotation.RotateVec(new Vector2(0f, -offset));
+        var endOffset = sprite.Comp.Rotation.RotateVec(new Vector2(0f, -offset * 1.2f));
 
         _sprite.SetRotation(sprite.AsNullable(), sprite.Comp.Rotation + spriteRotation);
 
@@ -159,8 +160,10 @@ public sealed partial class MeleeWeaponSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 0f), length * 0f),
-                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 1f), length * 0.5f),
-                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 0.9f), length * 0.8f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 0.65f), length * 0.10f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 1f), length * 0.20f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 0.9f), length * 0.30f),
+                        new AnimationTrackProperty.KeyFrame(Vector2.Lerp(startOffset, endOffset, 0.7f), length * 0.60f),
                     }
                 },
             }
