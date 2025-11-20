@@ -97,15 +97,11 @@
   id: StunbatonSelfRecharge
   suffix: self-recharge
   components:
-  - type: Stunbaton
-    energyPerUse: 50
   - type: Battery
-    maxCharge: 150
-    startingCharge: 150 # can only do 3 hits before needs to recharge
-  - type: StaminaDamageOnHit
-    damage: 50 # two hit to stun
+    maxCharge: 200
+    startingCharge: 200 # can only do 4 hits before needs to recharge
   - type: BatterySelfRecharger
-    autoRechargeRate: 15 # 10 seconds to recharge
+    autoRechargeRate: 20 # 10 seconds to recharge
     autoRechargePauseTime: 30
 
 - type: entity
