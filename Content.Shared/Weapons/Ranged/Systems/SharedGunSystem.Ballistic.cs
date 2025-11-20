@@ -59,8 +59,7 @@ public abstract partial class SharedGunSystem
 
         if (TryComp<StackComponent>(args.Used, out var stackComp))
         {
-            Entity<StackComponent?> stack = (args.Used, stackComp);
-            if (!_stack.TryUse(stack, 1))
+            if (!_stack.TryUse((args.Used, stackComp), 1))
                 ammo = args.Used;
             else
             {
