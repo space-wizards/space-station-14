@@ -1555,6 +1555,7 @@
     - state: icon-xenoborg-basic
   - type: ItemBorgModule
     hands:
+    - item: Crowbar
     - hand:
         emptyRepresentative: MMIFilled
         emptyLabel: borg-slot-brains-empty
