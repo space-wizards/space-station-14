@@ -1467,6 +1467,7 @@ namespace Content.Shared.Interaction
 
         /// <summary>
         /// Get a list of entities which are currently considered to be interacting with the specified target entity.
+        /// Note: the result set is cleared on call.
         /// </summary>
         public void GetEntitiesInteractingWithTarget(EntityUid target, HashSet<EntityUid> result)
         {
