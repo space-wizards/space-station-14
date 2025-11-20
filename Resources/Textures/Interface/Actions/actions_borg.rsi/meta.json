@@ -170,6 +170,9 @@
             "name":"xenoborg-hypo-module"
         },
         {
+            "name":"xenoborg-hypo2-module"
+        },
+        {
             "name":"xenoborg-jammer-module"
         },
         {

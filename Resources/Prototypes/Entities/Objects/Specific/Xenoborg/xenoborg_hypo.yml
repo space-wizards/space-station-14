@@ -17,3 +17,23 @@
       reagents:
       - ReagentId: Nocturine
         Quantity: 0.2
+
+- type: entity
+  parent: [ BorgHypo, BaseXenoborgContraband ]
+  id: AmatoxinHypo
+  name: amatoxin hypo
+  description: A self-refilling injector for rapid administration of amatoxin to victms.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 12
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 12
+  - type: SolutionRegeneration
+    solution: hypospray
+    generated:
+      reagents:
+      - ReagentId: Amatoxin
+        Quantity: 0.2

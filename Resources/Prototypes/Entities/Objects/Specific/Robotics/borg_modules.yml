@@ -1982,3 +1982,19 @@
     - item: StunbatonSelfRecharge
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-stun-baton-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModulePoison
+  name: amatoxin hypo xenoborg module
+  description: Module with a self-refilling amatoxin hypo.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_stealth
+    - state: icon-xenoborg-hypo2
+  - type: ItemBorgModule
+    hands:
+    - item: AmatoxinHypo
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-hypo2-module }

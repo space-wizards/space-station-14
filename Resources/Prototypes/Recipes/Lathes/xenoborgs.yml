@@ -157,3 +157,11 @@
   materials:
     Steel: 1000
     Plastic: 2000
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModulePoisonRecipe
+  result: XenoborgModulePoison
+  materials:
+    Plastic: 1000
+    Glass: 2000
