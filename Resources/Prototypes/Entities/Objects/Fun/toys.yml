@@ -280,14 +280,14 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/click.ogg
+      path: /Audio/Weapons/Guns/Gunshots/energycrossbow_shoot.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
       - BulletFoam
     capacity: 1
     soundInsert:
-      path: /Audio/Items/bow_pull.ogg
+      path: /Audio/Weapons/Guns/MagIn/energycrossbow_reload.ogg
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -533,7 +533,6 @@
   parent: BeachBall
   id: EvilBeachBall
   suffix: evil
-  name: beach ball
   description: Someone's drawn ">:3c" on the side of this beach ball in indelible ink.
   components:
     - type: LaunchOnTrigger
@@ -1083,9 +1082,6 @@
       collection: packetOpenSounds
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkSpaceGlue
 
 - type: entity
   parent: DrinkBase
