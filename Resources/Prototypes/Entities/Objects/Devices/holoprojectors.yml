@@ -140,6 +140,18 @@
 
 - type: entity
   parent: HoloprojectorField
+  id: HoloprojectorFieldXenoborg
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmallNuclear
+        disableEject: true
+        swap: false
+
+- type: entity
+  parent: HoloprojectorField
   id: HoloprojectorFieldEmpty
   suffix: Empty
   components:
