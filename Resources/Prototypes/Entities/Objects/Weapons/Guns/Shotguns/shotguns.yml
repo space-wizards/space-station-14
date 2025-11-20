@@ -294,3 +294,30 @@
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunImprovised
+
+- type: entity
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseSyndicateContraband]
+  id: WeaponShotgunHushpup
+  name: Hushpup
+  description: An obscure modification of the Enforcer, fitted with an experimental muffler. Great for those with a strict moral code. Uses .50 shotgun shells.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/hushpup.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/hushpup.rsi
+  - type: Item
+    sprite: Objects/Weapons/Guns/Shotguns/hushpup_inhands_64x.rsi
+    shape:
+    - 0,0,3,0 # smaller than BaseShotgun by 1 tile
+  - type: BallisticAmmoProvider
+    capacity: 4
+  - type: GunRequiresWield
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/hushpup.ogg
+      params:
+        volume: -3
+    fireRate: 2
+    selectedMode: SemiAuto
+  - type: GunSpreadModifier
+    spread: 1.2
