@@ -59,7 +59,7 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
-  id: ClothingBackpackDuffelSyndicateFilledEliteSMG
+  id: ClothingBackpackDuffelSyndicateFilledKingcobraSMG
   name: Kingcobra bundle
   description: "Silent Death: The elite Kingcobra Submachine Gun, bundled with three magazines."
   components:

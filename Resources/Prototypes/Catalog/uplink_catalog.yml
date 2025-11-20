@@ -189,6 +189,20 @@
   - UplinkWeaponry
 
 - type: listing
+  id: UplinkKingcobraBundle
+  name: uplink-kingcobra-bundle-name
+  description: uplink-kingcobra-bundle-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledKingcobraSMG
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 7
+  cost:
+    Telecrystal: 14
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: UplinkC20RBundle
   name: uplink-c20r-bundle-name
   description: uplink-c20r-bundle-desc
@@ -199,20 +213,6 @@
     Telecrystal: 10
   cost:
     Telecrystal: 17
-  categories:
-  - UplinkWeaponry
-
-- type: listing
-  id: UplinkKingcobraBundle
-  name: uplink-kingcobra-bundle-name
-  description: uplink-kingcobra-bundle-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
-  productEntity: ClothingBackpackDuffelSyndicateFilledEliteSMG
-  discountCategory: veryRareDiscounts
-  discountDownTo:
-    Telecrystal: 11
-  cost:
-    Telecrystal: 18
   categories:
   - UplinkWeaponry
 

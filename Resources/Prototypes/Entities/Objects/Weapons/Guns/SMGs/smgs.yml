@@ -330,14 +330,14 @@
   description: An elite, robust, and integrally suppressed submachine gun, firing caseless subsonic rounds. Infamous for its low magazine count. Feeds from .25 caseless pistol magazines.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/kingcobra.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/kingcobra.rsi
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
   - type: Wieldable
@@ -348,9 +348,7 @@
   - type: Gun
     minAngle: 23
     maxAngle: 34
-    shotsPerBurst: 2
     availableModes:
-    - Burst
     - FullAuto
     - SemiAuto
     soundGunshot:
@@ -376,14 +374,10 @@
         whitelist:
           tags:
           - CartridgeCaselessRifle
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
   - type: MagazineVisuals
     magState: mag
-    steps: 6
+    steps: 1
     zeroVisible: true
   - type: Appearance
   - type: StaticPrice
-    price: 5500
+    price: 4000
