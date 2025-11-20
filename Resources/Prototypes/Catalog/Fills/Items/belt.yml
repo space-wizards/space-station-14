@@ -192,11 +192,8 @@
   components:
   - type: ContainerFill
     containers:
-        item:
+        item1:
         - WeaponRevolverInspector
-  - type: StorageFill
-    contents:
-        - id: SpeedLoaderMagnum
 
 - type: entity
   id: ClothingBeltChefFilled

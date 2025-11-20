@@ -113,12 +113,18 @@
     sprite: Clothing/Belt/holster.rsi
   - type: ContainerContainer
     containers:
-       item: !type:ContainerSlot
+       item1: !type:ContainerSlot
+         item2: !type:ContainerSlot
        storagebase: !type:Container
          ents: []
   - type: ItemSlots
     slots:
-      item:
+      item1:
+        name: clothing-holster-handgun
+        whitelist:
+          tags:
+          - Sidearm
+      item2:
         name: clothing-holster-handgun
         whitelist:
           tags:
@@ -136,7 +142,12 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: ItemSlots
     slots:
-      item:
+      item1:
+        name: clothing-holster-gun
+        whitelist:
+          components:
+          - Gun
+      item2:
         name: clothing-holster-gun
         whitelist:
           components:
