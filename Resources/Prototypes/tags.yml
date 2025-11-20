@@ -846,7 +846,7 @@
   id: Lemon # CargoBounty: BountyLemon
 
 - type: Tag
-  id: LetterDelivery # Storage whitelist: MailCart
+  id: LetterDelivery
 
 - type: Tag
   id: LightBulb # Storage whitelist: BoxLightbulb. ConstructionGraph: HelmetJustice
@@ -1028,7 +1028,7 @@
 ## P ##
 
 - type: Tag
-  id: PackageDelivery # Storage whitelist: MailCart. ItemMapper: MailCart
+  id: PackageDelivery # ItemMapper: MailCart
 
 - type: Tag
   id: Packet # Storage whitelist: ClothingBeltChef
