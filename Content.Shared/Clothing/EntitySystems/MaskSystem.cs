@@ -139,7 +139,7 @@ public sealed class MaskSystem : EntitySystem
 
             var messageWearer =
                 Loc.GetString($"verb-mask-other-pulled-{dir}-popup-message", ("puller", Identity.Entity(args.User, EntityManager)), ("mask", mask));
-            _popupSystem.PopupClient(messageWearer, args.Target.Value, args.Target.Value);
+            _popupSystem.PopupEntity(messageWearer, args.Target.Value, args.Target.Value);
 
             var messagePuller =
                 Loc.GetString($"verb-mask-pulled-{dir}-popup-message", ("wearer", Identity.Entity(args.Target.Value, EntityManager)), ("mask", mask));
