@@ -10,6 +10,7 @@ borg-slot-flatpacks-empty = Flatpacks
 borg-slot-fulton-beacon-empty = Fulton beacon
 borg-slot-fulton-empty = Fultons
 borg-slot-handcuff-empty = Handcuffs
+borg-slot-id-card-empty = ID cards
 borg-slot-inflatable-door-empty = Inflatable Door
 borg-slot-inflatable-wall-empty = Inflatable Wall
 borg-slot-instruments-empty = Instruments
