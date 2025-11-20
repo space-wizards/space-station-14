@@ -17,9 +17,9 @@
       quickInsert: true
       maxItemSize: Huge
       whitelist:
+        components:
+        - Delivery
         tags:
-        - PackageDelivery
-        - LetterDelivery
         - Paper
         - Document
         - BoxCardboard
@@ -58,44 +58,30 @@
       mapLayers:
         package_1:
           minCount: 1
-          whitelist:
+          whitelist: &PackageWhitelist
             tags:
               - PackageDelivery
         package_2:
           minCount: 2
-          whitelist:
-            tags:
-              - PackageDelivery
+          whitelist: *PackageWhitelist
         package_3:
           minCount: 3
-          whitelist:
-            tags:
-              - PackageDelivery
+          whitelist: *PackageWhitelist
         package_4:
           minCount: 4
-          whitelist:
-            tags:
-              - PackageDelivery
+          whitelist: *PackageWhitelist
         package_5:
           minCount: 5
-          whitelist:
-            tags:
-              - PackageDelivery
+          whitelist: *PackageWhitelist
         package_6:
           minCount: 6
-          whitelist:
-            tags:
-              - PackageDelivery
+          whitelist: *PackageWhitelist
         package_7:
           minCount: 7
-          whitelist:
-            tags:
-              - PackageDelivery
+          whitelist: *PackageWhitelist
         package_8:
           minCount: 8
-          whitelist:
-            tags:
-              - PackageDelivery
+          whitelist: *PackageWhitelist
       sprite: Objects/Specific/Cargo/mailcart.rsi
     - type: Appearance
     - type: UserInterface
