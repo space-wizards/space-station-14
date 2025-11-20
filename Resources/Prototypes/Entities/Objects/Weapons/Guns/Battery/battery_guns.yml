@@ -946,14 +946,6 @@
     price: 100
 
 - type: entity
-  parent: [WeaponTemperatureGun, BaseXenoborgContraband]
-  id: WeaponTemperatureGunXenoborg
-  name: xenoborg temperature gun
-  components:
-  - type: BatterySelfRecharger
-    autoRechargeRate: 30
-
-- type: entity
   parent: [WeaponAdvancedLaser, BaseXenoborgContraband]
   id: WeaponLaserGunXenoborg
   name: xenoborg laser gun
@@ -965,3 +957,23 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 30
+  - type: GunWieldBonus
+    minAngle: 0
+    maxAngle: 0
+  - type: Gun
+    minAngle: 1
+    maxAngle: 2
+
+- type: entity
+  parent: [WeaponTemperatureGun, BaseXenoborgContraband]
+  id: WeaponTemperatureGunXenoborg
+  name: xenoborg temperature gun
+  components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 30
+  - type: GunWieldBonus
+    minAngle: 0
+    maxAngle: 0
+  - type: Gun
+    minAngle: 1
+    maxAngle: 2
