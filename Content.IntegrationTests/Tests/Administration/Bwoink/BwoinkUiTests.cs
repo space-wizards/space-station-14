@@ -81,6 +81,8 @@ public sealed class BwoinkUiTests : InteractionTest
          * i spent like
          * too many hours on trying to get this to work.
          * :(
+         *
+         * so: to at least make rejoining work, we do this in lobby only. That way the PlayerJoinRound DB call doesn't execute
          */
         await Client.ExecuteCommand("golobby");
         await RunTicks(5);
