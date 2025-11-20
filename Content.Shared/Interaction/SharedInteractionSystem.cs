@@ -1473,8 +1473,7 @@ namespace Content.Shared.Interaction
             result.Clear();
 
             var ev = new GetInteractingEntitiesEvent(target, result);
-            RaiseLocalEvent(ref ev);
-            RaiseLocalEvent(target, ref ev);
+            RaiseLocalEvent(target, ref ev, true);
         }
 
         [Obsolete("Use ActionBlockerSystem")]
