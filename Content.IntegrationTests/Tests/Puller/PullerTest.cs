@@ -15,6 +15,8 @@ namespace Content.IntegrationTests.Tests.Puller;
 [TestFixture]
 public sealed class PullerTest
 {
+    private static readonly EntProtoId MobHumanProtoId = "MobHuman";
+
     /// <summary>
     /// Checks that needsHands on PullerComponent is not set on mobs that don't even have hands.
     /// </summary>
@@ -58,8 +60,8 @@ public sealed class PullerTest
 
         await server.WaitAssertion(() =>
         {
-            var puller = entityManager.SpawnEntity("MobHuman", map.MapCoords);
-            var pulled = entityManager.SpawnEntity("MobHuman", map.MapCoords);
+            var puller = entityManager.SpawnEntity(MobHumanProtoId, map.MapCoords);
+            var pulled = entityManager.SpawnEntity(MobHumanProtoId, map.MapCoords);
 
             var coords = xformSys.GetWorldPosition(puller);
             xformSys.SetWorldPosition(pulled, coords);
