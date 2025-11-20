@@ -192,7 +192,7 @@
   id: UplinkKingcobraBundle
   name: uplink-kingcobra-bundle-name
   description: uplink-kingcobra-bundle-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
+  icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/kingcobra.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledKingcobraSMG
   discountCategory: veryRareDiscounts
   discountDownTo:

@@ -348,7 +348,9 @@
   - type: Gun
     minAngle: 23
     maxAngle: 34
+    shotsPerBurst: 2
     availableModes:
+    - Burst
     - FullAuto
     - SemiAuto
     soundGunshot:
