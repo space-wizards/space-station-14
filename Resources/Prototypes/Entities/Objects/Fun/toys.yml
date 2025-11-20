@@ -533,7 +533,6 @@
   parent: BeachBall
   id: EvilBeachBall
   suffix: evil
-  name: beach ball
   description: Someone's drawn ">:3c" on the side of this beach ball in indelible ink.
   components:
     - type: LaunchOnTrigger
