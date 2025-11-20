@@ -532,7 +532,7 @@
     - id: SolarPanelEmptyVariationPass
     - id: BasicDecalDirtVariationPass
     - id: BasicDecalGraffitiVariationPass
-    - id: BasicDecalBrunsVariationPass
+    - id: BasicDecalBurnsVariationPass
       prob: 0.50
       orGroup: monospaceDecals
     - id: BasicDecalDirtMonospaceVariationPass
