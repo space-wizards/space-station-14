@@ -188,6 +188,9 @@
             "name":"xenoborg-space-movement-module"
         },
         {
+            "name":"xenoborg-stun-baton-module"
+        },
+        {
             "name":"xenoborg-sword-module"
         },
         {

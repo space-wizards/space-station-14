@@ -28,3 +28,4 @@
   # stealth xenoborg
   - XenoborgModuleSuperCloakDeviceRecipe
   - XenoborgModuleCuffsRecipe
+  - XenoborgModuleStunBatonRecipe

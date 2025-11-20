@@ -1966,3 +1966,19 @@
           - Handcuff
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-handcuffs-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleStunBaton
+  name: stun baton xenoborg module
+  description: Module with a stun baton.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_stealth
+    - state: icon-xenoborg-stun
+  - type: ItemBorgModule
+    hands:
+    - item: StunbatonSelfRecharge
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-stun-baton-module }

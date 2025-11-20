@@ -93,6 +93,22 @@
     - Antagonists
 
 - type: entity
+  parent: [Stunbaton, BaseXenoborgContraband]
+  id: StunbatonSelfRecharge
+  suffix: self-recharge
+  components:
+  - type: Stunbaton
+    energyPerUse: 50
+  - type: Battery
+    maxCharge: 150
+    startingCharge: 150 # can only do 3 hits before needs to recharge
+  - type: StaminaDamageOnHit
+    damage: 50 # two hit to stun
+  - type: BatterySelfRecharger
+    autoRechargeRate: 15 # 10 seconds to recharge
+    autoRechargePauseTime: 30
+
+- type: entity
   name: truncheon
   parent: [BaseItem, BaseSecurityContraband]
   id: Truncheon

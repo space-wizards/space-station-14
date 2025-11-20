@@ -149,3 +149,11 @@
   result: XenoborgModuleCuffs
   materials:
     Steel: 3000
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleStunBatonRecipe
+  result: XenoborgModuleStunBaton
+  materials:
+    Steel: 1000
+    Plastic: 2000
