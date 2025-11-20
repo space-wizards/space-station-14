@@ -4,10 +4,16 @@ using Content.Shared.Administration.Managers.Bwoink.Features;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio.Sources;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Markdown;
+using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Managers;
 
@@ -17,12 +23,16 @@ namespace Content.Client.Administration.Managers;
 /// <seealso cref="SharedBwoinkManager"/>
 public sealed partial class ClientBwoinkManager : SharedBwoinkManager
 {
+    public const string CustomActionRowPrefix = "bwoink_row_";
+
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly IResourceCache _res = default!;
     [Dependency] private readonly IAudioManager _audio = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IResourceManager _resourceManager = default!;
+    [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
     /// <summary>
     /// Our fancy cache of player channels. This keeps track of unread messages and when we last received a message.
@@ -40,6 +50,11 @@ public sealed partial class ClientBwoinkManager : SharedBwoinkManager
     /// Dictionary that contains the sounds to play for a specified channel, source may be null.
     /// </summary>
     public readonly Dictionary<ProtoId<BwoinkChannelPrototype>, IAudioSource?> CachedSounds = new();
+
+    /// <summary>
+    /// Dictionary that contains the user defined action rows for a given channel.
+    /// </summary>
+    public readonly Dictionary<ProtoId<BwoinkChannelPrototype>, ActionRow> CustomChannelActionRows = new();
 
     /// <summary>
     /// Called whenever we receive a <see cref="MsgBwoinkTypings"/>
@@ -89,22 +104,61 @@ public sealed partial class ClientBwoinkManager : SharedBwoinkManager
 
     protected override void UpdatedChannels()
     {
+        CustomChannelActionRows.Clear();
         foreach (var (key, channel) in ProtoCache)
         {
             foreach (var feature in channel.Features)
             {
-                if (feature is not SoundOnMessage soundOnMessage)
-                    continue;
+                switch (feature)
+                {
+                    case SoundOnMessage soundOnMessage:
+                        UpdateSoundOnMessage(key, soundOnMessage);
+                        break;
+                    case AllowClientActionRow:
+                        UpdateCustomActionRow(key);
+                        break;
 
-                if (CachedSounds.TryGetValue(key, out var cachedSound))
-                    cachedSound?.Dispose();
+                    default:
+                        continue;
+                }
+            }
+        }
+        return;
 
-                var sound = _audio.CreateAudioSource(_res.GetResource<AudioResource>(soundOnMessage.Sound.Path));
-                if (sound != null)
-                    sound.Global = true;
+        void UpdateSoundOnMessage(ProtoId<BwoinkChannelPrototype> key, SoundOnMessage soundOnMessage)
+        {
+            if (CachedSounds.TryGetValue(key, out var cachedSound))
+                cachedSound?.Dispose();
 
-                CachedSounds[key] = sound;
-                break;
+            var sound = _audio.CreateAudioSource(_res.GetResource<AudioResource>(soundOnMessage.Sound.Path));
+            if (sound != null)
+                sound.Global = true;
+
+            CachedSounds[key] = sound;
+        }
+
+        void UpdateCustomActionRow(ProtoId<BwoinkChannelPrototype> key)
+        {
+            var path = new ResPath($"/{CustomActionRowPrefix}{key.Id}.yml");
+            Log.Info($"Checking: {path} for custom action buttons!");
+            if (!_resourceManager.UserData.Exists(path))
+                return;
+
+            using var stream = _resourceManager.UserData.OpenText(path);
+            try
+            {
+                var documents = DataNodeParser.ParseYamlStream(stream).First();
+                var mapping = documents.Root;
+                var buttons = _serializationManager.Read<ActionButton[]>(mapping, notNullableOverride: true);
+                CustomChannelActionRows.Add(key, new ActionRow()
+                {
+                    Buttons = buttons.ToList(),
+                });
+                Log.Info("Loaded custom action buttons!");
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Failed loading custom action buttons! {e}");
             }
         }
     }

@@ -17,3 +17,26 @@
   - !type:DiscordRelay
     channelCvar: discord.bwoink.channel.ahelp
   - !type:StatusMessages
+  - !type:AllowClientActionRow
+  - !type:ActionRow
+    buttons:
+    - label: admin-player-actions-bans
+      command: 'banlist "$ID"'
+      flags: Ban
+    - label: admin-player-actions-notes
+      command: 'adminnotes "$ID"'
+      flags: ViewNotes
+    - label: admin-player-actions-kick
+      command: 'kick "$ID"'
+      flags: Moderator
+      confirm: true
+    - label: admin-player-actions-ban
+      command: 'banpanel "$ID"'
+      flags: Ban
+    - label: admin-player-actions-respawn
+      command: 'respawn "$ID"'
+      flags: Moderator
+      confirm: true
+    - label: admin-player-actions-follow
+      command: 'follow $NetEnt'
+      flags: Admin

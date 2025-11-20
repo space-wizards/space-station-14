@@ -11,7 +11,9 @@
             </SplitContainer>
             <BoxContainer Orientation="Horizontal" SetHeight="30" >
                 <Control HorizontalExpand="True" />
-                <Button Visible="False" Name="Playerpanel" Text="{Loc 'admin-player-actions-player-panel'}" />
+                <BoxContainer Name="ActionRowsContainer" Orientation="Vertical">
+
+                </BoxContainer>
             </BoxContainer>
         </SplitContainer>
     </PanelContainer>
