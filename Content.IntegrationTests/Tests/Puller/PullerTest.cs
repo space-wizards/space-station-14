@@ -21,30 +21,20 @@ public sealed class PullerTest : InteractionTest
     [Test]
     public async Task PullerSanityTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
+        var compFactory = Server.ResolveDependency<IComponentFactory>();
+        var protoManager = Server.ResolveDependency<IPrototypeManager>();
 
-        var compFactory = server.ResolveDependency<IComponentFactory>();
-        var protoManager = server.ResolveDependency<IPrototypeManager>();
-
-        await server.WaitAssertion(() =>
+        foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
-            Assert.Multiple(() =>
-            {
-                foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
-                {
-                    if (!proto.TryGetComponent(out PullerComponent? puller, compFactory))
-                        continue;
+            if (!proto.TryGetComponent(out PullerComponent? puller, compFactory))
+                continue;
 
-                    if (!puller.NeedsHands)
-                        continue;
+            if (!puller.NeedsHands)
+                continue;
 
-                    Assert.That(proto.HasComponent<HandsComponent>(compFactory), $"Found puller {proto} with NeedsHand pulling but has no hands?");
-                }
-            });
-        });
-
-        await pair.CleanReturnAsync();
+            Assert.That(proto.HasComponent<HandsComponent>(compFactory),
+                $"Found puller {proto} with NeedsHand pulling but has no hands?");
+        }
     }
 
     [Test]
