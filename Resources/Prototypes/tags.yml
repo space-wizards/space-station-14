@@ -846,9 +846,6 @@
   id: Lemon # CargoBounty: BountyLemon
 
 - type: Tag
-  id: LetterDelivery
-
-- type: Tag
   id: LightBulb # Storage whitelist: BoxLightbulb. ConstructionGraph: HelmetJustice
 
 - type: Tag
