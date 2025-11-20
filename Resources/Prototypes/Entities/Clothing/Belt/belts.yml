@@ -111,12 +111,28 @@
     sprite: Clothing/Belt/holster.rsi
   - type: Clothing
     sprite: Clothing/Belt/holster.rsi
+  - type: ContainerContainer
+    containers:
+       item: !type:ContainerSlot
+       storagebase: !type:Container
+         ents: []
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-holster-handgun
+        whitelist:
+          tags:
+          - Sidearm
   - type: Storage
     grid:
     - 0,0,3,1
+    whitelist:
+      components:
+        - BallisticAmmoProvider
+        - CartridgeAmmo
 
 - type: entity
-  parent: [ClothingBeltStorageBase, BaseSyndicateContraband]
+  parent: [ClothingBeltHolster, BaseSyndicateContraband]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
   description: A deep shoulder holster capable of holding many types of ballistics.
@@ -125,15 +141,13 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
-  - type: Storage
-    maxItemSize: Huge
-    grid:
-    - 0,0,3,3
-    whitelist:
-      components:
-      - Gun
-      - BallisticAmmoProvider
-      - CartridgeAmmo
+  - type: ItemSlots
+    slots:
+      item:
+        name: clothing-holster-gun
+        whitelist:
+          components:
+          - Gun
   - type: StaticPrice
     price: 500
 
