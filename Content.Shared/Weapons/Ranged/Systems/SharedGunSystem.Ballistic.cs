@@ -55,25 +55,19 @@ public abstract partial class SharedGunSystem
         if (GetBallisticShots(component) >= component.Capacity)
             return;
 
-        EntityUid ammo;
-
         if (TryComp<StackComponent>(args.Used, out var stackComp))
         {
-            if (!_stack.TryUse((args.Used, stackComp), 1))
-                ammo = args.Used;
-            else
-            {
-                if (!ProtoManager.Resolve(stackComp.StackTypeId, out var stackType))
-                    return;
+            _stack.TryUse((args.Used, stackComp), 1);
 
-                ammo = PredictedSpawnInContainerOrDrop(stackType.Spawn, uid, component.Container.ID);
-            }
+            if (!ProtoManager.Resolve(stackComp.StackTypeId, out var stackType))
+                return;
+
+            var ammo = PredictedSpawnInContainerOrDrop(stackType.Spawn, uid, component.Container.ID);
+            FillAmmo((uid, component), ammo);
         }
         else
-            ammo = args.Used;
+            FillAmmo((uid, component), args.Used);
 
-        component.Entities.Add(ammo);
-        Containers.Insert(ammo, component.Container);
         // Not predicted so
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
@@ -289,6 +283,18 @@ public abstract partial class SharedGunSystem
     {
         args.Count = GetBallisticShots(component);
         args.Capacity = component.Capacity;
+    }
+
+    /// <summary>
+    /// Adds one ammo to the ammo provider entity.
+    /// This assumes the ammo already passed the whitelist check from <see cref="BallisticAmmoProviderComponent.Whitelist">
+    /// </summary>
+    /// <param name="ammoProvider"></param>
+    /// <param name="ammo"></param>
+    public void FillAmmo(Entity<BallisticAmmoProviderComponent> ammoProvider, EntityUid ammo)
+    {
+        ammoProvider.Comp.Entities.Add(ammo);
+        Containers.Insert(ammo, ammoProvider.Comp.Container);
     }
 
     public void UpdateBallisticAppearance(EntityUid uid, BallisticAmmoProviderComponent component)
