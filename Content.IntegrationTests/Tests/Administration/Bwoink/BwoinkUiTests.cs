@@ -67,11 +67,21 @@ public sealed class BwoinkUiTests : InteractionTest
     {
         var cBwoinkManager = Client.ResolveDependency<ClientBwoinkManager>();
         var sBwoinkManager = Server.ResolveDependency<ServerBwoinkManager>();
-        var sDbManager = Server.ResolveDependency<IServerDbManager>();
 
         // important, we do this here because GameTopMenuBar is not real inside the lobby
         var bwoinkWindow = await GetBwoinkWindow(cBwoinkManager, sBwoinkManager);
 
+        /*
+         * ok so:
+         * rejoining a dummy client throws.
+         * Why?
+         * well they dont have any db records.
+         * fucking hell man
+         * this is the same reason for why banning is not working (probably???ßß??)
+         * i spent like
+         * too many hours on trying to get this to work.
+         * :(
+         */
         await Client.ExecuteCommand("golobby");
         await RunTicks(5);
         Assert.That(Server.EntMan.System<GameTicker>().RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
