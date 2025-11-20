@@ -161,6 +161,9 @@
             "name":"xenoborg-fulton-module"
         },
         {
+            "name":"xenoborg-handcuffs-module"
+        },
+        {
             "name":"xenoborg-holoprojector-module"
         },
         {

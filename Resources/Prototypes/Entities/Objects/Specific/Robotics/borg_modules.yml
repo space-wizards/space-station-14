@@ -1929,3 +1929,39 @@
     - item: SuperCloakingDevice
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye2-module }
+
+- type: entity
+  parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleCuffs
+  name: handcuffs xenoborg module
+  description: Module with three handcuffs.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_stealth
+    - state: icon-xenoborg-handcuffs
+  - type: ItemBorgModule
+    hands:
+    - item: Handcuffs
+      hand:
+        emptyRepresentative: Handcuffs
+        emptyLabel: borg-slot-handcuff-empty
+        whitelist:
+          components:
+          - Handcuff
+    - item: Handcuffs
+      hand:
+        emptyRepresentative: Handcuffs
+        emptyLabel: borg-slot-handcuff-empty
+        whitelist:
+          components:
+          - Handcuff
+    - item: Handcuffs
+      hand:
+        emptyRepresentative: Handcuffs
+        emptyLabel: borg-slot-handcuff-empty
+        whitelist:
+          components:
+          - Handcuff
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-handcuffs-module }
