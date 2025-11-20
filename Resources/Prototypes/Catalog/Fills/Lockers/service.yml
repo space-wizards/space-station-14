@@ -201,7 +201,6 @@
       amount: 3
     - id: FoodPieBananaCream
       amount: 2
-    - id: LauncherCreamPie
 
 - type: entity
   id: LockerMimeFilled
