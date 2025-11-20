@@ -14,7 +14,7 @@
   - type: EffectVisuals
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
   - type: AnimationPlayer
 
 - type: entity
@@ -47,10 +47,10 @@
 
 # One bullet to bring them all into the darkness and bind them
 - type: entity
+  abstract: true
   id: BaseBullet
   name: BaseBullet
   description: If you can see this you're probably dead!
-  abstract: true
   components:
   - type: Reflective
   - type: FlyBySound
@@ -95,8 +95,8 @@
     lifetime: 10
 
 - type: entity
-  id: BaseBulletTrigger # Trigger-on-collide bullets
   parent: BaseBullet
+  id: BaseBulletTrigger # Trigger-on-collide bullets
   categories: [ HideSpawnMenu ]
   components:
   - type: TriggerOnCollide
@@ -119,9 +119,9 @@
       fly-by: *flybyfixture
 
 - type: entity
+  parent: BaseBullet
   id: BaseBulletPractice
   name: base bullet practice
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -134,9 +134,9 @@
         Blunt: 1
 
 - type: entity
+  parent: BaseBullet
   id: BaseBulletIncendiary
   name: base bullet incendiary
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -153,9 +153,9 @@
     fireStacks: 0.25
 
 - type: entity
+  parent: BaseBullet
   id: BaseBulletAP
   name: base bullet armor-piercing
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -169,9 +169,9 @@
     ignoreResistances: true
 
 - type: entity
+  parent: BaseBullet
   id: BaseBulletUranium
   name: base bullet uranium
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -185,9 +185,9 @@
 
 # Energy projectiles
 - type: entity
+  parent: BaseBullet
   name: taser bolt
   id: BulletTaser
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: FlyBySound
@@ -263,9 +263,9 @@
     sprintSpeedModifier: 0.5
 
 - type: entity
+  parent: BaseBullet
   name : disabler bolt
   id: BulletDisabler
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
@@ -307,9 +307,9 @@
     forceSound: true
 
 - type: entity
+  parent: BaseBullet
   name : disabler bolt practice
   id: BulletDisablerPractice
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: FlyBySound
@@ -348,9 +348,9 @@
     forceSound: true
 
 - type: entity
+  parent: BaseBullet
   name: emitter bolt
   id: EmitterBolt
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -385,9 +385,9 @@
     lifetime: 3
 
 - type: entity
+  parent: BaseBullet
   name: watcher bolt
   id: WatcherBolt
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: FlyBySound
@@ -427,9 +427,9 @@
     heat: -50000
 
 - type: entity
+  parent: WatcherBolt
   name: freezing bolt
   id: BoltTempgunCold
-  parent: WatcherBolt
   categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
@@ -447,9 +447,9 @@
     heat: -100000
 
 - type: entity
+  parent: WatcherBolt
   name: magmawing watcher bolt
   id: WatcherBoltMagmawing
-  parent: WatcherBolt
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -470,9 +470,9 @@
     heat: 50000
 
 - type: entity
+  parent: WatcherBoltMagmawing
   name: scorching bolt
   id: BoltTempgunHot
-  parent: WatcherBoltMagmawing
   categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
@@ -527,15 +527,15 @@
     heat: -50000
 
 - type: entity
+  parent: BaseBullet
   id: BulletKinetic
   name: kinetic bolt
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   description: Not too bad, but you still don't want to get hit by it.
   components:
   - type: Reflective
     reflective:
-      - NonEnergy
+    - NonEnergy
   - type: Sprite
     noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
@@ -554,8 +554,8 @@
   - type: GatheringProjectile
 
 - type: entity
-  id: BulletKineticShuttle
   parent: BaseBullet
+  id: BulletKineticShuttle
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -581,9 +581,9 @@
   - type: GatheringProjectile
 
 - type: entity
+  parent: BaseBullet
   id: BulletCharge
   name: charge bolt
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   description: Marks a target for additional damage.
   components:
@@ -594,13 +594,13 @@
     noRot: false
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: chronobolt
-        shader: unshaded
+    - state: chronobolt
+      shader: unshaded
   - type: GatheringProjectile
   - type: DamageMarkerOnCollide
     whitelist:
       components:
-        - MobState
+      - MobState
     damage:
       types:
         Blunt: 18
@@ -623,7 +623,7 @@
   - type: DamageMarkerOnCollide
     whitelist:
       components:
-        - MobState
+      - MobState
     damage:
       types:
         Blunt: 1
@@ -645,8 +645,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm_red
-        shader: unshaded
+    - state: magicm_red
+      shader: unshaded
   - type: Ammo
     muzzleFlash: null
   - type: Physics
@@ -696,8 +696,8 @@
     energy: 7.0
   - type: Sprite
     layers:
-      - state: magicm_cyan
-        shader: unshaded
+    - state: magicm_cyan
+      shader: unshaded
   - type: AnomalousParticle
     particleType: Epsilon
 
@@ -726,8 +726,8 @@
     energy: 7.0
   - type: Sprite
     layers:
-      - state: magicm_yellow
-        shader: unshaded
+    - state: magicm_yellow
+      shader: unshaded
   - type: AnomalousParticle
     particleType: Zeta
 
@@ -757,8 +757,8 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm_green
-        shader: unshaded
+    - state: magicm_green
+      shader: unshaded
   - type: AnomalousParticle
     particleType: Default
     severityOverride: true
@@ -785,8 +785,8 @@
     energy: 7.0
   - type: Sprite
     layers:
-      - state: magicm
-        shader: unshaded
+    - state: magicm
+      shader: unshaded
   - type: AnomalousParticle
     particleType: Sigma
 
@@ -801,15 +801,15 @@
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
+  parent: BaseBulletTrigger
   id: BulletRocket
   name: rocket
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: frag
+    - state: frag
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -823,15 +823,15 @@
     energy: 0.5
 
 - type: entity
+  parent: BaseBulletTrigger
   id: BulletWeakRocket
   name: weak rocket
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: frag
+    - state: frag
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -845,15 +845,15 @@
     energy: 0.5
 
 - type: entity
+  parent: BaseBullet
   id: BulletGrenadeBaton
   name: baton grenade
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: grenade
+    - state: grenade
   - type: Projectile
     deleteOnCollide: false
     damage:
@@ -865,15 +865,15 @@
     damage: 80
 
 - type: entity
+  parent: BaseBulletTrigger
   id: BulletGrenadeBlast
   name: blast grenade
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: grenade
+    - state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -883,15 +883,15 @@
     canCreateVacuum: false
 
 - type: entity
+  parent: BaseBulletTrigger
   id: BulletGrenadeFlash
   name: flash grenade
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: grenade
+    - state: grenade
   - type: FlashOnTrigger
     range: 7
   - type: SpawnOnTrigger
@@ -899,15 +899,15 @@
   - type: DeleteOnTrigger
 
 - type: entity
+  parent: BaseBulletTrigger
   id: BulletGrenadeFrag
   name: frag grenade
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: grenade
+    - state: grenade
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
@@ -953,15 +953,15 @@
     tileBreakScale: 0.01
 
 - type: entity
+  parent: BaseBulletTrigger
   id: BulletGrenadeEMP
   name: EMP rocket
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: frag
+    - state: frag
   - type: EmpOnTrigger
     range: 5
     energyConsumption: 50000
@@ -974,15 +974,15 @@
     energy: 0.5
 
 - type: entity
+  parent: BaseBullet
   id: BulletCap
   name: cap bullet
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/capgun.rsi
     layers:
-      - state: capbullet
+    - state: capbullet
   - type: Projectile
     deleteOnCollide: true
     damage:
@@ -990,9 +990,9 @@
         Piercing: 0
 
 - type: entity
+  parent: BaseBullet
   id: BulletAcid
   name: acid spit
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
     - type: Projectile
@@ -1002,7 +1002,7 @@
     - type: Sprite
       sprite: Objects/Weapons/Guns/Projectiles/xeno_toxic.rsi
       layers:
-        - state: xeno_toxic
+      - state: xeno_toxic
     - type: Ammo
       muzzleFlash: null
 
@@ -1050,9 +1050,9 @@
   - type: VaporVisuals
 
 - type: entity
+  parent: BaseBullet
   id: BulletHivebot
   name: hivebot bullet
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
@@ -1061,15 +1061,15 @@
         Piercing: 10
 
 - type: entity
+  parent: BaseBulletTrigger
   id: BulletCannonBall
   name: cannonball
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: ball
+    - state: ball
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: DemolitionCharge
@@ -1095,7 +1095,7 @@
       noRot: false
       sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
       layers:
-        - state: hook
+      - state: hook
     - type: Physics
       bodyType: Dynamic
       linearDamping: 0
@@ -1113,14 +1113,14 @@
             bounds: "-0.1,-0.1,0.1,0.1"
           hard: false
           mask:
-            - Impassable
-            - HighImpassable
+          - Impassable
+          - HighImpassable
     - type: GrapplingProjectile
 
 - type: entity
+  parent: BaseBullet
   name : disabler bolt smg
   id: BulletDisablerSmg
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
@@ -1162,9 +1162,9 @@
     forceSound: true
 
 - type: entity
+  parent: BaseBullet
   name : energy bolt
   id: BulletEnergyTurretBase
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
@@ -1194,9 +1194,9 @@
   - type: Ammo
 
 - type: entity
+  parent: BulletEnergyTurretBase
   name : laser bolt
   id: BulletEnergyTurretLaser
-  parent: BulletEnergyTurretBase
   categories: [ HideSpawnMenu ]
   components:
   - type: Ammo
@@ -1237,9 +1237,9 @@
     forceSound: true
 
 - type: entity
+  parent: BaseBullet
   name: tesla gun lightning
   id: TeslaGunBullet
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
@@ -1267,12 +1267,12 @@
     requirePower: false
   - type: Tag
     tags:
-      - HideContextMenu
+    - HideContextMenu
 
 - type: entity
+  parent: BaseBullet
   name: laser bolt
   id: BulletLaser
-  parent: BaseBullet
   categories: [ HideSpawnMenu ]
   components:
   - type: Reflective
@@ -1309,10 +1309,10 @@
         Heat: 13
 
 - type: entity
+  parent: BulletLaser
   name: wide laser barrage
   id: BulletLaserSpread
   categories: [ HideSpawnMenu ]
-  parent: BulletLaser
   components:
   - type: ProjectileSpread
     proto: BulletLaser
@@ -1320,10 +1320,10 @@
     spread: 30
 
 - type: entity
+  parent: BulletLaser
   name: lethal laser barrage
   id: BulletLaserSpreadNarrow
   categories: [ HideSpawnMenu ]
-  parent: BulletLaser
   components:
   - type: ProjectileSpread
     proto: BulletLaser
@@ -1331,10 +1331,10 @@
     spread: 10
 
 - type: entity
+  parent: BulletDisablerSmg
   name: disabling laser barrage
   id: BulletDisablerSmgSpread
   categories: [ HideSpawnMenu ]
-  parent: BulletDisablerSmg
   components:
   - type: ProjectileSpread
     proto: BulletDisablerSmg
@@ -1342,10 +1342,10 @@
     spread: 9
 
 - type: entity
+  parent: BulletLaser
   name: magnum laser bolt
   id: BulletLaserMagnum
   categories: [ HideSpawnMenu ]
-  parent: BulletLaser
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi
@@ -1362,10 +1362,10 @@
         Heat: 30
 
 - type: entity
+  parent: BulletLaser
   name: magnum window-piercing bolt
   id: BulletLaserWindowPiercingMagnum
   categories: [ HideSpawnMenu ]
-  parent: BulletLaser
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles_magnum.rsi

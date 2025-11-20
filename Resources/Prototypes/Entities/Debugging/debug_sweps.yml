@@ -1,9 +1,9 @@
 - type: entity
-  name: bang, ded
   parent: BaseWeaponPistol
   id: WeaponPistolDebug
-  description: ded
+  name: bang, ded
   suffix: DEBUG
+  description: ded
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
@@ -14,8 +14,8 @@
     fireRate: 100
     selectedMode: FullAuto
     availableModes:
-      - SemiAuto
-      - FullAuto
+    - SemiAuto
+    - FullAuto
   - type: AmmoCounter
   - type: ChamberMagazineAmmoProvider
     boltClosed: null
@@ -29,24 +29,24 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineDebug
+          - MagazineDebug
       gun_chamber:
         name: Chamber
         startingItem: CartridgeDebug
         priority: 1
         whitelist:
           tags:
-            - CartridgeDebug
+          - CartridgeDebug
 
 - type: entity
+  parent: BaseMagazinePistol
   id: MagazinePistolDebug
   name: bang, ded mag
-  parent: BaseMagazinePistol
   suffix: DEBUG
   components:
   - type: Tag
     tags:
-      - MagazineDebug
+    - MagazineDebug
   - type: BallisticAmmoProvider
     proto: CartridgeDebug
     capacity: 1000
@@ -54,11 +54,11 @@
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
 
 - type: entity
+  parent: BaseBullet
   id: BulletDebug
   name: bang, ded bullet
-  parent: BaseBullet
-  categories: [ Debug, HideSpawnMenu ]
   suffix: DEBUG
+  categories: [ Debug, HideSpawnMenu ]
   components:
   - type: Projectile
     damage:
@@ -66,9 +66,9 @@
         Blunt: 20000
 
 - type: entity
+  parent: BaseCartridgePistol
   id: CartridgeDebug
   name: bang, ded cartridge
-  parent: BaseCartridgePistol
   suffix: DEBUG
   components:
   - type: Tag
@@ -78,11 +78,11 @@
     proto: BulletDebug
 
 - type: entity
-  name: bang stick gibber
   parent: BaseItem
   id: MeleeDebugGib
-  description: hit hard ye
+  name: bang stick gibber
   suffix: DEBUG
+  description: hit hard ye
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/debug.rsi
@@ -96,9 +96,9 @@
     sprite: Objects/Weapons/Melee/debug.rsi
 
 - type: entity
-  name: bang stick 100dmg
   parent: MeleeDebugGib
   id: MeleeDebug100
+  name: bang stick 100dmg
   components:
   - type: MeleeWeapon
     damage:
@@ -106,9 +106,9 @@
         Blunt: 100
 
 - type: entity
-  name: bang stick 200dmg
   parent: MeleeDebugGib
   id: MeleeDebug200
+  name: bang stick 200dmg
   components:
   - type: MeleeWeapon
     damage:

@@ -27,18 +27,18 @@
     sprite: Objects/Devices/pda.rsi
     state: pda
   - type: Pda
-    paiSlot:
+    paiSlot: &PaiSlot
       priority: -2
       whitelist:
         components:
         - PAI
-    penSlot:
+    penSlot: &PenSlot
       startingItem: Pen
       priority: -1
       whitelist:
         tags:
         - Write
-    idSlot:
+    idSlot: &IdSlot
       name: access-id-card-component-default
       ejectSound: /Audio/Machines/id_swipe.ogg
       insertSound: /Audio/Machines/id_insert.ogg
@@ -80,18 +80,18 @@
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NanoTaskCartridge
-      - NewsReaderCartridge
-    cartridgeSlot:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    cartridgeSlot: &CartridgeSlot
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
       ejectSound: /Audio/Machines/id_swipe.ogg
       insertSound: /Audio/Machines/id_insert.ogg
       whitelist:
         components:
-          - Cartridge
+        - Cartridge
   - type: ActivatableUI
     key: enum.PdaUiKey.Key
     singleUser: true
@@ -125,9 +125,9 @@
     speechVerb: Robotic
 
 - type: entity
+  abstract: true
   parent: BasePDA
   id: BaseWidePDA
-  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
@@ -144,9 +144,9 @@
       visible: false
 
 - type: entity
+  abstract: true
   parent: BasePDA
   id: BaseSecurityPDA
-  abstract: true
   components:
   - type: CartridgeLoader
     preinstalled:
@@ -157,18 +157,17 @@
     - WantedListCartridge
 
 - type: entity
+  abstract: true
   parent: BasePDA
   id: BaseMedicalPDA
-  abstract: true
   components:
   - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
     preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NanoTaskCartridge
-      - NewsReaderCartridge
-      - MedTekCartridge
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - MedTekCartridge
 
 - type: entity
   parent: BasePDA
@@ -327,14 +326,16 @@
   - type: Pda
     id: ClownIDCard
     penSlot:
+      <<: *PenSlot # yaml magic
       startingItem: CrayonOrange # no pink crayon?!?
       # ^ Still unacceptable.
       # ^ I would have to concur.
-      ejectSound: /Audio/Items/bikehorn.ogg
-      priority: -1
-      whitelist:
-        tags:
-        - Write
+      # ^ 4th'd'ed :o)
+      insertSound: &ClownSound
+        collection: BikeHorn
+        params:
+          variation: 0.125
+      ejectSound: *ClownSound
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -387,34 +388,22 @@
   - type: Pda
     id: MimeIDCard
     paiSlot:
-      priority: -2
+      <<: *PaiSlot
       ejectSound: null
       insertSound: null
-      whitelist:
-        components:
-        - PAI
-    idSlot:
-      name: access-id-card-component-default
-      ejectSound: null # mime is silent
-      insertSound: null
-      whitelist:
-        components:
-        - IdCard
     penSlot:
-      startingItem: Pen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
+      <<: *PenSlot
+      ejectSound: null
+      insertSound: null
+    idSlot:
+      <<: *IdSlot
       ejectSound: null
       insertSound: null
   - type: CartridgeLoader
     cartridgeSlot:
+      <<: *CartridgeSlot
       ejectSound: null
       insertSound: null
-      whitelist:
-        components:
-        - Cartridge
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -519,13 +508,12 @@
   - type: Icon
     state: pda-miner
   - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
     preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NanoTaskCartridge
-      - NewsReaderCartridge
-      - AstroNavCartridge
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - AstroNavCartridge
 
 - type: entity
   parent: BasePDA
@@ -553,12 +541,9 @@
   components:
   - type: Pda
     id: LibrarianIDCard
-    penSlot:
+    penSlot: &LuxuryPenSlot
+      <<: *PenSlot
       startingItem: LuxuryPen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -588,12 +573,7 @@
   components:
   - type: Pda
     id: LawyerIDCard
-    penSlot:
-      startingItem: LuxuryPen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
+    penSlot: *LuxuryPenSlot
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -642,11 +622,8 @@
   - type: Pda
     id: CaptainIDCard
     penSlot:
+      <<: *PenSlot
       startingItem: PenCap
-      priority: -1
-      whitelist:
-        tags:
-        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -666,11 +643,8 @@
   - type: Pda
     id: HoPIDCard
     penSlot:
+      <<: *PenSlot
       startingItem: PenHop
-      priority: -1
-      whitelist:
-        tags:
-        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -923,11 +897,8 @@
   - type: Pda
     id: CentcomIDCard
     penSlot:
+      <<: *PenSlot
       startingItem: PenCentcom
-      priority: -1
-      whitelist:
-        tags:
-        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -938,16 +909,15 @@
   - type: Icon
     state: pda-centcom
   - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
     preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NanoTaskCartridge
-      - NewsReaderCartridge
-      - MedTekCartridge
-      - WantedListCartridge
-      - LogProbeCartridge
-      - AstroNavCartridge
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - MedTekCartridge
+    - WantedListCartridge
+    - LogProbeCartridge
+    - AstroNavCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -963,17 +933,16 @@
     scanDelay: 0
     silent: true
   - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
     notificationsEnabled: false
     preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NanoTaskCartridge
-      - NewsReaderCartridge
-      - LogProbeCartridge
-      - WantedListCartridge
-      - MedTekCartridge
-      - AstroNavCartridge
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - LogProbeCartridge
+    - WantedListCartridge
+    - MedTekCartridge
+    - AstroNavCartridge
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1088,10 +1057,9 @@
   - type: Icon
     state: pda-syndi
   - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
     preinstalled:
-      - NotekeeperCartridge
-      - NanoTaskCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
 
 - type: entity
   parent: [ SyndiPDA, BaseSyndicateContraband ]
@@ -1125,11 +1093,10 @@
   - type: Icon
     state: pda-syndi-corpsman
   - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
     preinstalled:
-      - NotekeeperCartridge
-      - NanoTaskCartridge
-      - MedTekCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - MedTekCartridge
 
 - type: entity
   parent: [ SyndiOperativePDA, BaseSyndicateContraband ]
@@ -1168,16 +1135,15 @@
   - type: Icon
     state: pda-ert
   - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
     preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NanoTaskCartridge
-      - NewsReaderCartridge
-      - MedTekCartridge
-      - WantedListCartridge
-      - LogProbeCartridge
-      - AstroNavCartridge
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - MedTekCartridge
+    - WantedListCartridge
+    - LogProbeCartridge
+    - AstroNavCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1269,12 +1235,7 @@
   components:
   - type: Pda
     id: ReporterIDCard
-    penSlot:
-      startingItem: LuxuryPen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
+    penSlot: *LuxuryPenSlot
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1386,12 +1347,13 @@
   - type: Pda
     id: CluwneIDCard
     penSlot:
+      <<: *PenSlot
       startingItem: CrayonGreen
-      ejectSound: /Audio/Items/bikehorn.ogg
-      priority: -1
-      whitelist:
-        tags:
-        - Write
+      insertSound: &CluwneSound
+        collection: CluwneHorn
+        params:
+          variation: 0.125
+      ejectSound: *CluwneSound
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1556,11 +1518,8 @@
   - type: Pda
     id: WizardIDCard
     penSlot:
+      <<: *PenSlot
       startingItem: PenWiz
-      priority: -1
-      whitelist:
-        tags:
-        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
