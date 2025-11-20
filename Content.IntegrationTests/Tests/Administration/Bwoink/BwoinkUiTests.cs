@@ -78,7 +78,6 @@ public sealed class BwoinkUiTests : InteractionTest
 
         var dummySes = await Server.AddDummySession(TestUserName);
         await RunTicks(5);
-        await sDbManager.UpdatePlayerRecordAsync(dummySes.UserId, dummySes.Name, IPAddress.Parse("83.240.187.182"), new ImmutableTypedHwid(ImmutableArray<byte>.Empty, HwidType.Legacy)); // the ipv4 address is random. no idea where it points to.
 
         bwoinkWindow.Channels.CurrentTab = 0; // Select the correct tab
         Assert.That(bwoinkWindow.Channels.Children[0], Is.TypeOf<BwoinkControl>()); // Check that the channel is manager
