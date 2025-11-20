@@ -102,7 +102,7 @@
 ## Holsters
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltBase, ClothingSlotBase]
   id: ClothingBeltHolster
   name: shoulder holster
   description: 'A holster to carry a handgun and ammo. WARNING: Badasses only.'
@@ -123,13 +123,6 @@
         whitelist:
           tags:
           - Sidearm
-  - type: Storage
-    grid:
-    - 0,0,3,1
-    whitelist:
-      components:
-        - BallisticAmmoProvider
-        - CartridgeAmmo
 
 - type: entity
   parent: [ClothingBeltHolster, BaseSyndicateContraband]
