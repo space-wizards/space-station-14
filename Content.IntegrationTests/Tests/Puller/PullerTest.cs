@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Prototypes;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Puller;
@@ -13,10 +13,8 @@ namespace Content.IntegrationTests.Tests.Puller;
 #nullable enable
 
 [TestFixture]
-public sealed class PullerTest
+public sealed class PullerTest : InteractionTest
 {
-    private static readonly EntProtoId MobHumanProtoId = "MobHuman";
-
     /// <summary>
     /// Checks that needsHands on PullerComponent is not set on mobs that don't even have hands.
     /// </summary>
@@ -52,30 +50,15 @@ public sealed class PullerTest
     [Test]
     public async Task PullerIsConsideredInteractingTest()
     {
-        await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Server;
-        var entityManager = server.EntMan;
-        var xformSys = entityManager.System<SharedTransformSystem>();
-        var map = await pair.CreateTestMap();
+        await SpawnTarget("MobHuman");
+        var puller = await SpawnEntity("MobHuman", SEntMan.GetCoordinates(TargetCoords));
 
-        await server.WaitAssertion(() =>
-        {
-            var puller = entityManager.SpawnEntity(MobHumanProtoId, map.MapCoords);
-            var pulled = entityManager.SpawnEntity(MobHumanProtoId, map.MapCoords);
+        var pullSys = SEntMan.System<PullingSystem>();
+        await Server.WaitPost(() => pullSys.TryStartPull(puller, SEntMan.GetEntity(Target.Value)));
 
-            var coords = xformSys.GetWorldPosition(puller);
-            xformSys.SetWorldPosition(pulled, coords);
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(server.System<PullingSystem>().TryStartPull(puller, pulled));
-
-                var list = new HashSet<EntityUid>();
-                server.System<SharedInteractionSystem>().GetEntitiesInteractingWithTarget(pulled, list);
-                Assert.That(list, Is.EquivalentTo([puller]));
-            });
-        });
-
-        await pair.CleanReturnAsync();
+        var list = new HashSet<EntityUid>();
+        Server.System<SharedInteractionSystem>()
+            .GetEntitiesInteractingWithTarget(SEntMan.GetEntity(Target.Value), list);
+        Assert.That(list, Is.EquivalentTo([puller]));
     }
 }
