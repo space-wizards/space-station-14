@@ -2,15 +2,12 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using YamlDotNet.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -18,7 +15,7 @@ public abstract partial class SharedGunSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
+
 
     protected virtual void InitializeBallistic()
     {
@@ -55,26 +52,8 @@ public abstract partial class SharedGunSystem
         if (GetBallisticShots(component) >= component.Capacity)
             return;
 
-        EntityUid ammo;
-
-        if (TryComp<StackComponent>(args.Used, out var stackComp))
-        {
-            Entity<StackComponent?> stack = (args.Used, stackComp);
-            if (!_stack.TryUse(stack, 1))
-                ammo = args.Used;
-            else
-            {
-                if (!ProtoManager.Resolve(stackComp.StackTypeId, out var stackType))
-                    return;
-
-                ammo = PredictedSpawnInContainerOrDrop(stackType.Spawn, uid, component.Container.ID);
-            }
-        }
-        else
-            ammo = args.Used;
-
-        component.Entities.Add(ammo);
-        Containers.Insert(ammo, component.Container);
+        component.Entities.Add(args.Used);
+        Containers.Insert(args.Used, component.Container);
         // Not predicted so
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
