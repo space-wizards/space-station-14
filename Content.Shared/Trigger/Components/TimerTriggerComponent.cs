@@ -93,6 +93,12 @@ public sealed partial class TimerTriggerComponent : Component
     public bool Examinable = true;
 
     /// <summary>
+    /// If true, the timer's next activation will be blocked.
+    /// </summary>
+    [DataField]
+    public bool Disabled = false;
+
+    /// <summary>
     /// The popup to show the user when starting the timer, if any.
     /// </summary>
     [DataField, AutoNetworkedField]

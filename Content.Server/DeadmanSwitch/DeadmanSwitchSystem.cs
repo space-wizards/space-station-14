@@ -1,11 +1,18 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceLinking.Systems;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
 using Content.Shared.DeadmanSwitch;
+using Content.Shared.Trigger.Components.Triggers;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Trigger.Components;
+using Content.Shared.Trigger.Systems;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Toggleable;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects;
 
@@ -22,8 +29,14 @@ public sealed class DeadmanSwitchSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SignallerSystem _signal = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SignallerSystem _signal = default!;
+    [Dependency] private readonly WirelessNetworkSystem _wirelessNetwork = default!;
+    [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+
     
     public override void Initialize()
     {
@@ -52,6 +65,40 @@ public sealed class DeadmanSwitchSystem : EntitySystem
         
         ToggleArmed(uid, args.User, component);
         _popup.PopupEntity(Loc.GetString("deadman-on-trigger", ("name", uid)), uid, args.User);
+
+        // Immediately trigger linked timers on networked entities within InstantTriggerRange
+        var linkedDevices = _deviceLink.GetLinkedSinks(uid, signaller.Port);
+        if (linkedDevices.Count == 0)
+            return;
+
+        var switchXform = Transform(uid);
+        var switchMapID = switchXform.MapID;
+        var switchPos = _transformSystem.GetWorldPosition(switchXform);
+        
+        foreach (var linkedUid in linkedDevices)
+        {
+            if (!_wirelessNetwork.CheckRange(linkedUid, switchMapID, switchPos, component.InstantTriggerRange))
+                continue;
+            
+            if (!TryComp<TimerTriggerComponent>(linkedUid, out var timerTrigger))
+                continue;
+            
+            if (!TryComp<TriggerOnSignalComponent>(linkedUid, out var signalTrigger))
+                continue;
+            
+            if (signalTrigger.KeyOut == null || !timerTrigger.KeysIn.Contains(signalTrigger.KeyOut))
+                continue;
+
+            // Manually call the trigger that would fire when the timer completes
+            _trigger.Trigger(linkedUid, user: args.User, timerTrigger.KeyOut);
+            // Block the _signal.Trigger event from starting a new countdown
+            timerTrigger.Disabled = true;
+            
+            _adminLogger.Add(LogType.Trigger,
+                $"{ToPrettyString(args.User):user} instant-triggered {ToPrettyString(linkedUid):target} with {ToPrettyString(uid):device}");
+        }
+
+        // Activate signaller the normal way
         _signal.Trigger(uid, args.User, signaller);
     }
     

@@ -53,7 +53,7 @@
   parent: [RemoteSignaller, BaseSyndicateContraband]
   id: RemoteSignallerDeadman
   name: deadman's switch
-  description: A handheld device rigged to send a remote signal to objects within a radius of about 50 meters. Once armed, it will trigger if it is dropped for any reason.
+  description: A handheld device rigged to send a remote signal to objects within a radius of about 50 meters. Within a much shorter radius of about 1 meter, the signal is powerful enough to instantly trigger devices that would normally require a countdown. Once armed, it will trigger if it is dropped for any reason.
   components:
   - type: Sprite
     layers:
@@ -80,6 +80,7 @@
     ports:
       - Dropped
   - type: DeadmanSwitch
+    instantTriggerRange: 1
     armDelay: 1
     switchSound:
       path: /Audio/Weapons/click.ogg

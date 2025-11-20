@@ -26,4 +26,10 @@ public sealed partial class DeadmanSwitchComponent : Component
     /// </summary>
     [DataField("switchSound")]
     public SoundSpecifier? SwitchSound;
+
+    /// <summary>
+    /// At this distance, the deadman's switch triggers linked explosives instantly, bypassing timers.
+    /// </summary>
+    [DataField("instantTriggerRange")]
+    public int InstantTriggerRange;
 }
