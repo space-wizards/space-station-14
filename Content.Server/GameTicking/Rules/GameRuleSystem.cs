@@ -12,14 +12,11 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
     [Dependency] protected readonly IRobustRandom RobustRandom = default!;
     [Dependency] protected readonly IChatManager ChatManager = default!;
     [Dependency] protected readonly GameTicker GameTicker = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
 
     // Not protected, just to be used in utility methods
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly MapSystem _map = default!;
-
-    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
@@ -30,8 +27,6 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         SubscribeLocalEvent<T, GameRuleStartedEvent>(OnGameRuleStarted);
         SubscribeLocalEvent<T, GameRuleEndedEvent>(OnGameRuleEnded);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
-
-        _sawmill = _logManager.GetSawmill("game.rule");
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent args)
@@ -56,7 +51,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
                     ("presetName", name)));
                 args.Cancel();
                 //TODO remove this once announcements are logged
-                _sawmill.Info($"Rule '{name}' requires {minPlayers} players, but only {args.Players.Length} are ready.");
+                Log.Info($"Rule '{name}' requires {minPlayers} players, but only {args.Players.Length} are ready.");
             }
             else
             {
