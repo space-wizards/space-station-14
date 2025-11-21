@@ -64,7 +64,11 @@
   - type: Sprite
     sprite: Clothing/Head/Misc/pumpkin.rsi
   - type: Clothing
-    sprite: Clothing/Head/Misc/pumpkin.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+      head-vox:
+      - state: equipped-helmet-vox
   - type: IngestionBlocker
   - type: IdentityBlocker
   - type: PointLight
@@ -75,6 +79,14 @@
     autoRot: true
     color: "#cc6600"
     netsync: false
+  - type: ToggleableVisuals
+    clothingVisuals:
+      head:
+      - state: equipped-helmet-light
+        shader: unshaded
+      head-vox:
+      - state: equipped-helmet-light-vox
+        shader: unshaded
   - type: ItemSlots
     slots:
       cell_slot:
@@ -85,6 +97,12 @@
     - HeadTop
     - HeadSide
     - FacialHair
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadBase

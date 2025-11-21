@@ -44,12 +44,15 @@
     spriteLayer: light
     inhandVisuals:
       left:
-      - state: on-inhand-left
+      - state: inhand-left-light
+        shader: unshaded
       right:
-      - state: on-inhand-right
+      - state: inhand-right-light
+        shader: unshaded
     clothingVisuals:
       head:
-      - state: on-equipped-HELMET
+      - state: equipped-helmet-light
+        shader: unshaded
   - type: ItemTogglePointLight
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -76,7 +79,15 @@
   - type: Sprite
     sprite: Clothing/Head/Hardhats/blue.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/blue.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -87,7 +98,15 @@
   - type: Sprite
     sprite: Clothing/Head/Hardhats/orange.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/orange.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -98,7 +117,15 @@
   - type: Sprite
     sprite: Clothing/Head/Hardhats/red.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/red.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -109,7 +136,15 @@
   - type: Sprite
     sprite: Clothing/Head/Hardhats/white.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/white.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -120,7 +155,15 @@
   - type: Sprite
     sprite: Clothing/Head/Hardhats/yellow.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/yellow.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -131,7 +174,15 @@
   - type: Sprite
     sprite: Clothing/Head/Hardhats/dark_yellow.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/dark_yellow.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -142,7 +193,15 @@
   - type: Sprite
     sprite: Clothing/Head/Hardhats/armored.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hardhats/armored.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
   - type: Armor #Copied from the sec helmet, as it's hard to give these sane values without locational damage existing.
     modifiers:
       coefficients:

@@ -1,49 +1,68 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Based on tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, modified by EmoGarbage404 (github). Vox states by Flareguy for Space Station 14. Vulpkanin and Reptilian states by TiniestShark (Github).",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Based on tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, modified by EmoGarbage404 (github). Vox states by Flareguy for Space Station 14. Vulpkanin and Reptilian states by TiniestShark (Github).",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "icon-flash"
-    },
-    {
-      "name": "off-equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "off-equipped-HELMET-vox",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-HELMET-vox",
-      "directions": 4
-    },
-    {
-      "name": "off-equipped-HELMET-vulpkanin",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-HELMET-vulpkanin",
-      "directions": 4
-    },
-    {
-      "name": "off-equipped-HELMET-reptilian",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-HELMET-reptilian",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-unshaded"
+        },
+        {
+            "name": "light-overlay"
+        },
+        {
+            "name": "equipped-head",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-vulpkanin",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-light-reptilian",
+            "directions": 4
+        },
+        {
+            "name": "equipped-head-unshaded-reptilian",
+            "directions": 4
+        }
+    ]
 }
