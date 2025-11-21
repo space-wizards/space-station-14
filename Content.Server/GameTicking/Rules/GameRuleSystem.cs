@@ -38,6 +38,10 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         while (query.MoveNext(out var uid, out _, out var gameRule))
         {
             var minPlayers = gameRule.MinPlayers;
+
+            if(HasComp<EndedGameRuleComponent>(uid))
+                continue;
+
             if (args.Players.Length >= minPlayers)
                 continue;
 
@@ -83,6 +87,9 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         while (query.MoveNext(out var uid, out var comp))
         {
             if (!TryComp<GameRuleComponent>(uid, out var ruleData))
+                continue;
+
+            if(HasComp<EndedGameRuleComponent>(uid))
                 continue;
 
             AppendRoundEndText(uid, comp, ruleData, ref ev);
