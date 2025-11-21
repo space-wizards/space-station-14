@@ -3,17 +3,16 @@ using Content.Shared.Instruments;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
+/// <summary>
+/// The owner accompanies the music played by the target entity
+/// This is the NPC equivalent to using the 'join band' menu
+/// If there is no target, or the target is not playing music, will instead stop playing
+/// </summary>
 public sealed partial class JoinBandOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    /// <summary>
-    /// The owner accompanies the music played by the target entity
-    /// This is the NPC equivalent to using the 'join band' menu
-    /// If there is no target, or the target is not playing music, will instead stop playing
-    /// </summary>
-
-    [DataField("targetKey")]
+    [DataField]
     public string TargetKey = "Target";
 
     public override void Startup(NPCBlackboard blackboard)
@@ -26,14 +25,14 @@ public sealed partial class JoinBandOperator : HTNOperator
         var instrumentSystem = _entManager.System<InstrumentSystem>();
 
         // If target is null, clean and deactivate instrument
-        if (!blackboard.TryGetValue<EntityUid>("Target", out var target, _entManager))
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager))
         {
+            instrumentSystem.DeactivateInstrument(owner);
             instrumentSystem.Clean(owner, instrument);
-            _entManager.RemoveComponentDeferred<ActiveInstrumentComponent>(owner);
             return;
         }
 
-        _entManager.EnsureComponent<ActiveInstrumentComponent>(owner);
+        instrumentSystem.PrepareInstrument(owner);
         instrumentSystem.SetMaster(owner, target);
     }
 }

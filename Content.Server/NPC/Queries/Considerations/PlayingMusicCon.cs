@@ -1,6 +1,3 @@
 namespace Content.Server.NPC.Queries.Considerations;
 
-public sealed partial class PlayingMusicCon : UtilityConsideration
-{
-
-}
+public sealed partial class PlayingMusicCon : UtilityConsideration;

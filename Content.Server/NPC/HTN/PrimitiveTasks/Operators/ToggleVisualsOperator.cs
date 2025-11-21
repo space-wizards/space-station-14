@@ -2,16 +2,16 @@ using Content.Shared.Toggleable;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
+/// <summary>
+/// Sets enabled or disabled on a ToggleableVisuals enum, and communicates that change to the appearance system
+/// If the entity using this has a visualizer that uses the ToggleableVisuals enum, this allows changing the sprite state
+/// </summary>
+/// <see cref="ToggleableVisuals"/>
 public sealed partial class ToggleVisualsOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    /// <summary>
-    /// Sets enabled or disabled on a ToggleableVisuals enum
-    /// If the entity using this has a visualizer that uses the ToggleableVisuals enum, this allows changing the sprite state
-    /// </summary>
-
-    [DataField("enabled")]
+    [DataField]
     public bool Enabled = true;
 
     public override void Startup(NPCBlackboard blackboard)
