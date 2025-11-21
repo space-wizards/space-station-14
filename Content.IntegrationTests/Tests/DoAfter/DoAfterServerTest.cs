@@ -151,10 +151,10 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             var list = new HashSet<EntityUid>();
             interactionSystem.GetEntitiesInteractingWithTarget(target, list);
-            Assert.That(list, Is.EquivalentTo([mob]));
+            Assert.That(list, Is.EquivalentTo([mob]), $"{mob} was not considered to be interacting with {target}");
 
             interactionSystem.GetEntitiesInteractingWithTarget(target2, list);
-            Assert.That(list, Is.EquivalentTo([mob2]));
+            Assert.That(list, Is.EquivalentTo([mob2]), $"{mob2} was not considered to be interacting with {target2}");
 
             await pair.CleanReturnAsync();
         }

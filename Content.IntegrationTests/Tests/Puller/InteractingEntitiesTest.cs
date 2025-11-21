@@ -21,11 +21,14 @@ public sealed class InteractingEntitiesTest : InteractionTest
         var puller = await SpawnEntity(MobHuman, ToServer(TargetCoords));
 
         var pullSys = SEntMan.System<PullingSystem>();
-        await Server.WaitPost(() => pullSys.TryStartPull(puller, ToServer(Target.Value)));
+        await Server.WaitAssertion(() =>
+        {
+            Assert.That(pullSys.TryStartPull(puller, ToServer(Target.Value)), $"{puller} failed to start pulling {Target}");
+        });
 
         var list = new HashSet<EntityUid>();
         Server.System<SharedInteractionSystem>()
             .GetEntitiesInteractingWithTarget(ToServer(Target.Value), list);
-        Assert.That(list, Is.EquivalentTo([puller]));
+        Assert.That(list, Is.EquivalentTo([puller]), $"{puller} was not considered to be interacting with {Target}");
     }
 }
