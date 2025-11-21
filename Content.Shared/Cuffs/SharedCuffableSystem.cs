@@ -153,8 +153,7 @@ namespace Content.Shared.Cuffs
 
         private void OnStartup(EntityUid uid, CuffableComponent component, ComponentInit args)
         {
-            component.Container =
-                _container.EnsureContainer<Container>(uid, Factory.GetComponentName(component.GetType()));
+            component.Container = _container.EnsureContainer<Container>(uid, Factory.GetComponentName(component.GetType()));
         }
 
         private void OnRejuvenate(EntityUid uid, CuffableComponent component, RejuvenateEvent args)
@@ -162,9 +161,7 @@ namespace Content.Shared.Cuffs
             _container.EmptyContainer(component.Container, true);
         }
 
-        private void OnCuffsRemovedFromContainer(EntityUid uid,
-            CuffableComponent component,
-            EntRemovedFromContainerMessage args)
+        private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
         {
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
             if (args.Container.ID != component.Container?.ID)
@@ -179,9 +176,7 @@ namespace Content.Shared.Cuffs
             UpdateCuffState(uid, component);
         }
 
-        private void OnCuffsInsertedIntoContainer(EntityUid uid,
-            CuffableComponent component,
-            ContainerModifiedMessage args)
+        private void OnCuffsInsertedIntoContainer(EntityUid uid, CuffableComponent component, ContainerModifiedMessage args)
         {
             if (args.Container == component.Container)
                 UpdateCuffState(uid, component);
@@ -212,16 +207,11 @@ namespace Content.Shared.Cuffs
             if (!TryComp<PullableComponent>(uid, out var pullable))
                 return;
 
-            if (pullable.Puller != null &&
-                !component.CanStillInteract) // If we are being pulled already and cuffed, we can't get pulled again.
+            if (pullable.Puller != null && !component.CanStillInteract) // If we are being pulled already and cuffed, we can't get pulled again.
                 args.Cancel();
         }
 
-        private void OnBuckleAttempt(Entity<CuffableComponent> ent,
-            EntityUid? user,
-            ref bool cancelled,
-            bool buckling,
-            bool popup)
+        private void OnBuckleAttempt(Entity<CuffableComponent> ent, EntityUid? user, ref bool cancelled, bool buckling, bool popup)
         {
             if (cancelled || user != ent.Owner)
                 return;
@@ -429,33 +419,22 @@ namespace Content.Shared.Cuffs
                     ? "handcuff-component-cuff-self-observer-success-message"
                     : "handcuff-component-cuff-observer-success-message";
                 _popup.PopupEntity(Loc.GetString(popupText,
-                        ("user", Identity.Name(user, EntityManager)),
-                        ("target", Identity.Entity(target, EntityManager))),
-                    target,
-                    Filter.Pvs(target, entityManager: EntityManager)
-                        .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user),
-                    true);
+                        ("user", Identity.Name(user, EntityManager)), ("target", Identity.Entity(target, EntityManager))),
+                    target, Filter.Pvs(target, entityManager: EntityManager)
+                        .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user), true);
 
                 if (target == user)
                 {
                     _popup.PopupClient(Loc.GetString("handcuff-component-cuff-self-success-message"), user, user);
-                    _adminLog.Add(LogType.Action,
-                        LogImpact.Medium,
-                        $"{ToPrettyString(user):player} has cuffed himself");
+                    _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} has cuffed himself");
                 }
                 else
                 {
                     _popup.PopupClient(Loc.GetString("handcuff-component-cuff-other-success-message",
-                            ("otherName", Identity.Name(target, EntityManager, user))),
-                        user,
-                        user);
+                            ("otherName", Identity.Name(target, EntityManager, user))), user, user);
                     _popup.PopupClient(Loc.GetString("handcuff-component-cuff-by-other-success-message",
-                            ("otherName", Identity.Name(user, EntityManager, target))),
-                        target,
-                        target);
-                    _adminLog.Add(LogType.Action,
-                        LogImpact.High,
-                        $"{ToPrettyString(user):player} has cuffed {ToPrettyString(target):player}");
+                            ("otherName", Identity.Name(user, EntityManager, target))), target, target);
+                    _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(user):player} has cuffed {ToPrettyString(target):player}");
                 }
             }
             else
@@ -470,14 +449,10 @@ namespace Content.Shared.Cuffs
                     // This message assumes that the user being handcuffed is the one that caused the handcuff to fail.
 
                     _popup.PopupClient(Loc.GetString("handcuff-component-cuff-interrupt-message",
-                            ("targetName", Identity.Name(target, EntityManager, user))),
-                        user,
-                        user);
+                            ("targetName", Identity.Name(target, EntityManager, user))), user, user);
                     _popup.PopupClient(Loc.GetString("handcuff-component-cuff-interrupt-other-message",
                             ("otherName", Identity.Name(user, EntityManager, target)),
-                            ("otherEnt", user)),
-                        target,
-                        target);
+                            ("otherEnt", user)), target, target);
                 }
             }
         }
@@ -558,11 +533,7 @@ namespace Content.Shared.Cuffs
         /// <summary>
         /// Add a set of cuffs to an existing CuffedComponent.
         /// </summary>
-        public bool TryAddNewCuffs(EntityUid target,
-            EntityUid user,
-            EntityUid handcuff,
-            CuffableComponent? component = null,
-            HandcuffComponent? cuff = null)
+        public bool TryAddNewCuffs(EntityUid target, EntityUid user, EntityUid handcuff, CuffableComponent? component = null, HandcuffComponent? cuff = null)
         {
             if (!Resolve(target, ref component) || !Resolve(handcuff, ref cuff))
                 return false;
@@ -595,11 +566,7 @@ namespace Content.Shared.Cuffs
         }
 
         /// <returns>False if the target entity isn't cuffable.</returns>
-        public bool TryCuffing(EntityUid user,
-            EntityUid target,
-            EntityUid handcuff,
-            HandcuffComponent? handcuffComponent = null,
-            CuffableComponent? cuffable = null)
+        public bool TryCuffing(EntityUid user, EntityUid target, EntityUid handcuff, HandcuffComponent? handcuffComponent = null, CuffableComponent? cuffable = null)
         {
             if (!Resolve(handcuff, ref handcuffComponent) || !Resolve(target, ref cuffable, false))
                 return false;
@@ -607,27 +574,21 @@ namespace Content.Shared.Cuffs
             if (!TryComp<HandsComponent>(target, out var hands))
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-target-has-no-hands-error",
-                        ("targetName", Identity.Name(target, EntityManager, user))),
-                    user,
-                    user);
+                        ("targetName", Identity.Name(target, EntityManager, user))), user, user);
                 return true;
             }
 
             if (cuffable.CuffedHandCount >= hands.Count)
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-target-has-no-free-hands-error",
-                        ("targetName", Identity.Name(target, EntityManager, user))),
-                    user,
-                    user);
+                        ("targetName", Identity.Name(target, EntityManager, user))), user, user);
                 return true;
             }
 
             if (!_hands.CanDrop(user, handcuff))
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-cannot-drop-cuffs",
-                        ("target", Identity.Name(target, EntityManager, user))),
-                    user,
-                    user);
+                        ("target", Identity.Name(target, EntityManager, user))), user, user);
                 return false;
             }
 
@@ -639,13 +600,7 @@ namespace Content.Shared.Cuffs
             if (HasComp<DisarmProneComponent>(target))
                 cuffTime = 0.0f; // cuff them instantly.
 
-            var doAfterEventArgs = new DoAfterArgs(EntityManager,
-                user,
-                cuffTime,
-                new AddCuffDoAfterEvent(),
-                handcuff,
-                target,
-                handcuff)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, cuffTime, new AddCuffDoAfterEvent(), handcuff, target, handcuff)
             {
                 BreakOnMove = true,
                 BreakOnWeightlessMove = false,
@@ -661,12 +616,9 @@ namespace Content.Shared.Cuffs
                 ? "handcuff-component-start-cuffing-self-observer"
                 : "handcuff-component-start-cuffing-observer";
             _popup.PopupEntity(Loc.GetString(popupText,
-                    ("user", Identity.Name(user, EntityManager)),
-                    ("target", Identity.Entity(target, EntityManager))),
-                target,
-                Filter.Pvs(target, entityManager: EntityManager)
-                    .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user),
-                true);
+                    ("user", Identity.Name(user, EntityManager)), ("target", Identity.Entity(target, EntityManager))),
+                target, Filter.Pvs(target, entityManager: EntityManager)
+                    .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user), true);
 
             if (target == user)
             {
@@ -675,13 +627,9 @@ namespace Content.Shared.Cuffs
             else
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-start-cuffing-target-message",
-                        ("targetName", Identity.Name(target, EntityManager, user))),
-                    user,
-                    user);
+                        ("targetName", Identity.Name(target, EntityManager, user))), user, user);
                 _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",
-                        ("otherName", Identity.Name(user, EntityManager, target))),
-                    target,
-                    target);
+                        ("otherName", Identity.Name(user, EntityManager, target))), target, target);
             }
 
             _audio.PlayPredicted(handcuffComponent.StartCuffSound, handcuff, user);
@@ -732,8 +680,7 @@ namespace Content.Shared.Cuffs
             var isOwner = user == target.Owner;
 
             if (!target.Comp.Container.ContainedEntities.Contains(cuff))
-                Log.Warning(
-                    "A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
+                Log.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
 
             var attempt = new UncuffAttemptEvent(user, target);
             RaiseLocalEvent(user, ref attempt, true);
@@ -749,9 +696,7 @@ namespace Content.Shared.Cuffs
                 return;
             }
 
-            var ev = new ModifyUncuffDurationEvent(user,
-                target,
-                isOwner ? cuff.Comp.BreakoutTime : cuff.Comp.UncuffTime);
+            var ev = new ModifyUncuffDurationEvent(user, target, isOwner ? cuff.Comp.BreakoutTime : cuff.Comp.UncuffTime);
             RaiseLocalEvent(user, ref ev);
             var uncuffTime = ev.Duration;
 
@@ -766,13 +711,7 @@ namespace Content.Shared.Cuffs
                 }
             }
 
-            var doAfterEventArgs = new DoAfterArgs(EntityManager,
-                user,
-                uncuffTime,
-                new UnCuffDoAfterEvent(),
-                target,
-                target,
-                cuff)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuff)
             {
                 BreakOnMove = true,
                 BreakOnWeightlessMove = false,
@@ -808,11 +747,11 @@ namespace Content.Shared.Cuffs
             else
             {
                 _popup.PopupClient(Loc.GetString("cuffable-component-start-uncuffing-target-message",
-                        ("targetName", Identity.Name(target, EntityManager, user))),
+                    ("targetName", Identity.Name(target, EntityManager, user))),
                     user,
                     user);
                 _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-by-other-message",
-                        ("otherName", Identity.Name(user, EntityManager, target))),
+                    ("otherName", Identity.Name(user, EntityManager, target))),
                     target,
                     target);
             }
@@ -820,11 +759,7 @@ namespace Content.Shared.Cuffs
             _audio.PlayPredicted(isOwner ? cuff.Comp.StartBreakoutSound : cuff.Comp.StartUncuffSound, target, user);
         }
 
-        public void Uncuff(EntityUid target,
-            EntityUid? user,
-            EntityUid cuffsToRemove,
-            CuffableComponent? cuffable = null,
-            HandcuffComponent? cuff = null)
+        public void Uncuff(EntityUid target, EntityUid? user, EntityUid cuffsToRemove, CuffableComponent? cuffable = null, HandcuffComponent? cuff = null)
         {
             if (!Resolve(target, ref cuffable) || !Resolve(cuffsToRemove, ref cuff))
                 return;
@@ -877,32 +812,26 @@ namespace Content.Shared.Cuffs
                     if (shoved)
                     {
                         _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-push-success-message",
-                                ("otherName", Identity.Name(user.Value, EntityManager, user))),
+                            ("otherName", Identity.Name(user.Value, EntityManager, user))),
                             user.Value,
                             user.Value);
                     }
                     else
                     {
-                        _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-success-message"),
-                            user.Value,
-                            user.Value);
+                        _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
                     }
                 }
 
                 if (target != user && user != null)
                 {
                     _popup.PopupEntity(Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",
-                            ("otherName", Identity.Name(user.Value, EntityManager, user))),
-                        target,
-                        target);
-                    _adminLog.Add(LogType.Action,
-                        LogImpact.High,
+                            ("otherName", Identity.Name(user.Value, EntityManager, user))), target, target);
+                    _adminLog.Add(LogType.Action, LogImpact.High,
                         $"{ToPrettyString(user):player} has successfully uncuffed {ToPrettyString(target):player}");
                 }
                 else
                 {
-                    _adminLog.Add(LogType.Action,
-                        LogImpact.High,
+                    _adminLog.Add(LogType.Action, LogImpact.High,
                         $"{ToPrettyString(user):player} has successfully uncuffed themselves");
                 }
             }
@@ -911,23 +840,17 @@ namespace Content.Shared.Cuffs
                 if (user != target)
                 {
                     _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
-                            ("cuffedHandCount", cuffable.CuffedHandCount),
-                            ("otherName", Identity.Name(user.Value, EntityManager, user.Value))),
-                        user.Value,
-                        user.Value);
+                        ("cuffedHandCount", cuffable.CuffedHandCount),
+                        ("otherName", Identity.Name(user.Value, EntityManager, user.Value))), user.Value, user.Value);
                     _popup.PopupEntity(Loc.GetString(
-                            "cuffable-component-remove-cuffs-by-other-partial-success-message",
-                            ("otherName", Identity.Name(user.Value, EntityManager, user.Value)),
-                            ("cuffedHandCount", cuffable.CuffedHandCount)),
-                        target,
-                        target);
+                        "cuffable-component-remove-cuffs-by-other-partial-success-message",
+                        ("otherName", Identity.Name(user.Value, EntityManager, user.Value)),
+                        ("cuffedHandCount", cuffable.CuffedHandCount)), target, target);
                 }
                 else
                 {
                     _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",
-                            ("cuffedHandCount", cuffable.CuffedHandCount)),
-                        user.Value,
-                        user.Value);
+                        ("cuffedHandCount", cuffable.CuffedHandCount)), user.Value, user.Value);
                 }
             }
 
@@ -1007,45 +930,38 @@ namespace Content.Shared.Cuffs
             if (!Resolve(entity, ref entity.Comp))
                 return null;
 
-            return entity.Comp.Container.ContainedEntities.Count == 0
-                ? null
-                : entity.Comp.Container.ContainedEntities.Last();
+            return entity.Comp.Container.ContainedEntities.Count == 0 ? null : entity.Comp.Container.ContainedEntities.Last();
         }
     }
-}
 
-[Serializable, NetSerializable]
-public sealed partial class UnCuffDoAfterEvent : SimpleDoAfterEvent;
+    [Serializable, NetSerializable]
+    public sealed partial class UnCuffDoAfterEvent : SimpleDoAfterEvent;
 
-[Serializable, NetSerializable]
-public sealed partial class AddCuffDoAfterEvent : SimpleDoAfterEvent;
+    [Serializable, NetSerializable]
+    public sealed partial class AddCuffDoAfterEvent : SimpleDoAfterEvent;
 
-/// <summary>
-/// Raised on the target when they get handcuffed.
-/// Relayed to their held items.
-/// </summary>
-[ByRefEvent]
-public record struct TargetHandcuffedEvent : IInventoryRelayEvent
-{
     /// <summary>
-    /// All slots to relay to
+    /// Raised on the target when they get handcuffed.
+    /// Relayed to their held items.
     /// </summary>
-    public SlotFlags TargetSlots { get; set; }
-}
+    [ByRefEvent]
+    public record struct TargetHandcuffedEvent : IInventoryRelayEvent
+    {
+        /// <summary>
+        /// All slots to relay to
+        /// </summary>
+        public SlotFlags TargetSlots { get; set; }
+    }
 
-/// <summary>
-/// Raised on the cuffs when they are applied
-/// </summary>
-[ByRefEvent]
-public record struct CuffsAppliedEvent(EntityUid Target)
-{
-}
+    /// <summary>
+    /// Raised on the cuffs when they are applied
+    /// </summary>
+    [ByRefEvent]
+    public record struct CuffsAppliedEvent(EntityUid Target);
 
-/// <summary>
-/// Raised on the cuffs when they are removed
-/// </summary>
-[ByRefEvent]
-public record struct CuffsRemovedEvent(EntityUid Target)
-{
+    /// <summary>
+    /// Raised on the cuffs when they are removed
+    /// </summary>
+    [ByRefEvent]
+    public record struct CuffsRemovedEvent(EntityUid Target);
 }
-
