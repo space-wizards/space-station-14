@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lukasz825700516
-  changes:
-  - message: Closed eyes and binoculars no longer allow you to see through walls.
-    type: Fix
-  id: 8715
-  time: '2025-06-25T20:22:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38534
 - author: Hitlinemoss
   changes:
   - message: Various hats have had their descriptions updated.
@@ -3927,3 +3920,10 @@
   id: 9215
   time: '2025-11-21T11:32:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41450
+- author: notafet
+  changes:
+  - message: APCs will now trip off when supplying excessive loads.
+    type: Add
+  id: 9216
+  time: '2025-11-21T15:14:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41377
