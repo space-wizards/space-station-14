@@ -117,6 +117,10 @@ namespace Content.IntegrationTests.Tests.DoAfter
             await pair.CleanReturnAsync();
         }
 
+        /// <summary>
+        /// Spawns two pairs of mobs with a targeted DoAfter to check that the GetEntitiesInteractingWithTarget result
+        /// includes the correct interacting entities.
+        /// </summary>
         [Test]
         public async Task TestGetInteractingEntities()
         {

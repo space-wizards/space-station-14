@@ -13,6 +13,10 @@ public sealed class InteractingEntitiesTest : InteractionTest
 {
     private static readonly EntProtoId MobHuman = "MobHuman";
 
+    /// <summary>
+    /// Spawns a Target mob, and a second mob which drags it,
+    /// and checks that the dragger is considered to be interacting with the dragged mob.
+    /// </summary>
     [Test]
     public async Task PullerIsConsideredInteractingTest()
     {
@@ -22,7 +26,8 @@ public sealed class InteractingEntitiesTest : InteractionTest
         var pullSys = SEntMan.System<PullingSystem>();
         await Server.WaitAssertion(() =>
         {
-            Assert.That(pullSys.TryStartPull(puller, ToServer(Target.Value)), $"{puller} failed to start pulling {Target}");
+            Assert.That(pullSys.TryStartPull(puller, ToServer(Target.Value)),
+                $"{puller} failed to start pulling {Target}");
         });
 
         var list = new HashSet<EntityUid>();
