@@ -55,9 +55,6 @@ public abstract partial class InteractionTest
         public static implicit operator EntitySpecifier((string, int) tuple)
             => new(tuple.Item1, tuple.Item2);
 
-        public static implicit operator EntitySpecifier((EntProtoId, int) tuple)
-            => new(tuple.Item1.Id, tuple.Item2);
-
         /// <summary>
         /// Convert applicable entity prototypes into stack prototypes.
         /// </summary>
