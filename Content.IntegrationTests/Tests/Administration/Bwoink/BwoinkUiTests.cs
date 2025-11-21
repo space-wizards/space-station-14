@@ -1,31 +1,15 @@
-﻿using System.Collections.Immutable;
-using System.Linq;
-using System.Net;
+﻿using System.Linq;
 using Content.Client.Administration.Managers;
-using Content.Client.Administration.UI.BanList;
-using Content.Client.Administration.UI.BanPanel;
 using Content.Client.Administration.UI.Bwoink;
 using Content.Client.Administration.UI.CustomControls;
-using Content.Client.Administration.UI.PlayerPanel;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.IntegrationTests.Tests.Interaction;
-using Content.Server.Administration.Managers;
 using Content.Server.Administration.Managers.Bwoink;
-using Content.Server.Database;
-using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Managers.Bwoink;
-using Content.Shared.CCVar;
-using Content.Shared.Database;
-using Robust.Server.Player;
-using Robust.Shared.Configuration;
-using Robust.Shared.Enums;
-using Robust.Shared.Localization;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Administration.Bwoink;
 
@@ -35,7 +19,7 @@ public sealed class BwoinkUiTests : InteractionTest
 {
     // TODO: Make this test not use the in-sim InteractionTest
 
-    protected override PoolSettings Settings => new() {Connected = true, Dirty = true, AdminLogsEnabled = true, DummyTicker = false};
+    protected override PoolSettings Settings => new() {Connected = true, Dirty = true, AdminLogsEnabled = false, DummyTicker = false, Destructive = true};
 
     private const string TestMessage = "Nik is a cat!";
     private const string TestUserName = "voidnerd";
@@ -275,5 +259,13 @@ public sealed class BwoinkUiTests : InteractionTest
         Assert.That(manager.Conversations[channel][userChannel].Messages, Has.Count.AtLeast(1));
 
         return manager.Conversations[channel][userChannel].Messages.Last();
+    }
+
+    [TearDown]
+    public async Task Down()
+    {
+        await Server.WaitPost(() => MapSystem.DeleteMap(MapId));
+        await Pair.CleanReturnAsync();
+        await TearDown();
     }
 }
