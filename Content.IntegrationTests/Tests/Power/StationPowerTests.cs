@@ -127,11 +127,18 @@ public sealed class StationPowerTests
         {
             while (apcQuery.MoveNext(out var uid, out var apc, out var battery))
             {
-                var coord = xform.GetMapCoordinates(uid);
                 // Uncomment the following line to log starting APC load to the console
                 //Console.WriteLine($"ApcLoad:{mapProtoId}:{uid}:{battery.CurrentSupply}");
-                Assert.That(apc.MaxLoad, Is.GreaterThanOrEqualTo(battery.CurrentSupply),
-                        $"APC {uid} on {mapProtoId} ({coord.X}, {coord.Y}) is overloaded {battery.CurrentSupply} / {apc.MaxLoad}");
+                if (xform.TryGetMapOrGridCoordinates(uid, out var coord))
+                {
+                    Assert.That(apc.MaxLoad, Is.GreaterThanOrEqualTo(battery.CurrentSupply),
+                            $"APC {uid} on {mapProtoId} ({coord.Value.X}, {coord.Value.Y}) is overloaded {battery.CurrentSupply} / {apc.MaxLoad}");
+                }
+                else
+                {
+                    Assert.That(apc.MaxLoad, Is.GreaterThanOrEqualTo(battery.CurrentSupply),
+                            $"APC {uid} on {mapProtoId} is overloaded {battery.CurrentSupply} / {apc.MaxLoad}");
+                }
             }
         });
 
