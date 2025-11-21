@@ -38,7 +38,7 @@ public sealed class ConstantsTest
                 Assert.That(Atmospherics.GasAbbreviations, Has.Count.EqualTo(Atmospherics.TotalNumberOfGases),
                      $"GasAbbreviations size is not equal to TotalNumberOfGases.");
 
-                // the ID for each gas has to be a number from 0 to TotalNumberOfGases-1
+                // the ID for each gas has to correspond to a value in the Gas enum (converted to a string)
                 foreach (var gas in gasProtos)
                 {
                     Assert.That(Enum.TryParse<Gas>(gas.ID, out _), $"GasPrototype {gas.ID} has an invalid ID. It must correspond to a value in the {nameof(Gas)} enum.");
