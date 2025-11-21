@@ -1530,10 +1530,8 @@
         whitelist: *TileHandWhitelist
     - hand:
         emptyRepresentative: FloorTileItemDark
-        emptyLabel: borg-slot-tiles-empty
-        whitelist:
-          components:
-          - FloorTile
+        emptyLabel: *TileEmptyLabel
+        whitelist: *TileHandWhitelist
     - item: WeaponTileGunEmpty
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tile-module }
