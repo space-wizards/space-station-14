@@ -156,6 +156,11 @@ namespace Content.IntegrationTests.Tests.DoAfter
             interactionSystem.GetEntitiesInteractingWithTarget(target2, list);
             Assert.That(list, Is.EquivalentTo([mob2]), $"{mob2} was not considered to be interacting with {target2}");
 
+            entityManager.DeleteEntity(mob);
+            entityManager.DeleteEntity(mob2);
+            entityManager.DeleteEntity(target);
+            entityManager.DeleteEntity(target2);
+
             await pair.CleanReturnAsync();
         }
     }
