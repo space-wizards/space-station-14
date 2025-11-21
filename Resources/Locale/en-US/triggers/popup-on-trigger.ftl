@@ -1,4 +1,7 @@
-### Locale for wavable items
+### Locales for PopupOnTrigger
 
-popup-on-trigger-wave = You wave { THE($entity) }.
-popup-on-trigger-wave-other = { CAPITALIZE(THE($user)) } waves { THE($entity) }.
+popup-on-trigger-use = You use { THE($entity) }.
+popup-on-trigger-use-other = { CAPITALIZE(THE($user)) } uses { THE($entity) }.
+
+popup-on-trigger-activate = You activate { THE($entity) }.
+popup-on-trigger-activate-other = { CAPITALIZE(THE($user)) } activates { THE($entity) }.
