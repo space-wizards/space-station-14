@@ -12,21 +12,16 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
 {
     /// <summary>
     /// A whitelist of objective types.
+    /// If there is no whitelist, the object will appear by default.
     /// </summary>
-    [DataField("whitelist")]
+    [DataField]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
     /// A blacklist of objective types.
     /// </summary>
-    [DataField("blacklist")]
+    [DataField]
     public EntityWhitelist? Blacklist;
-
-    /// <summary>
-    /// The default availability of the entry.
-    /// </summary>
-    [DataField("availableByDefault")]
-    public bool AvailableByDefault;
 
     public override bool Condition(ListingConditionArgs args)
     {
@@ -34,7 +29,7 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
         var whitelistSystem = ent.System<EntityWhitelistSystem>();
 
         if (!args.EntityManager.TryGetComponent<MindComponent>(args.Buyer, out var mindComp))
-            return false;
+            return true; // inanimate objects don't have minds
 
         var whitelisted = false;
 
@@ -42,19 +37,16 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
         {
             if (whitelistSystem.IsBlacklistPass(Blacklist, objective))
                 return false;
-            if (whitelistSystem.IsWhitelistPass(Whitelist, objective))
+            if (whitelistSystem.IsWhitelistPassOrNull(Whitelist, objective))
                 whitelisted = true;
         }
 
-        if (whitelisted)
+        if (whitelisted || Whitelist == null)
         {
             return true;
         }
 
-        if (!AvailableByDefault)
-        {
-            return false;
-        }
-        return true;
+        return false;
+
     }
 }
