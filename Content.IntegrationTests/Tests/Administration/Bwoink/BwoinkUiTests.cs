@@ -260,12 +260,4 @@ public sealed class BwoinkUiTests : InteractionTest
 
         return manager.Conversations[channel][userChannel].Messages.Last();
     }
-
-    [TearDown]
-    public async Task Down()
-    {
-        await Server.WaitPost(() => MapSystem.DeleteMap(MapId));
-        await Pair.CleanReturnAsync();
-        await TearDown();
-    }
 }
