@@ -18,11 +18,11 @@ public sealed class InteractingEntitiesTest : InteractionTest
         var puller = await SpawnEntity("MobHuman", SEntMan.GetCoordinates(TargetCoords));
 
         var pullSys = SEntMan.System<PullingSystem>();
-        await Server.WaitPost(() => pullSys.TryStartPull(puller, SEntMan.GetEntity(Target.Value)));
+        await Server.WaitPost(() => pullSys.TryStartPull(puller, ToServer(Target.Value)));
 
         var list = new HashSet<EntityUid>();
         Server.System<SharedInteractionSystem>()
-            .GetEntitiesInteractingWithTarget(SEntMan.GetEntity(Target.Value), list);
+            .GetEntitiesInteractingWithTarget(ToServer(Target.Value), list);
         Assert.That(list, Is.EquivalentTo([puller]));
     }
 }
