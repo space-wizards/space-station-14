@@ -57,23 +57,18 @@ public abstract partial class SharedGunSystem
 
         if (TryComp<StackComponent>(args.Used, out var stackComp))
         {
-            _stack.TryUse((args.Used, stackComp), 1);
+            _stack.ReduceCount((args.Used, stackComp), 1);
 
             if (!ProtoManager.Resolve(stackComp.StackTypeId, out var stackType))
                 return;
 
             var ammo = PredictedSpawnInContainerOrDrop(stackType.Spawn, uid, component.Container.ID);
-            FillAmmo((uid, component), ammo);
+            FillAmmo((uid, component), ammo, args);
         }
         else
-            FillAmmo((uid, component), args.Used);
+            FillAmmo((uid, component), args.Used, args);
 
-        // Not predicted so
-        Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
-        UpdateBallisticAppearance(uid, component);
-        UpdateAmmoCount(args.Target);
-        DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
     }
 
     private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
@@ -289,12 +284,17 @@ public abstract partial class SharedGunSystem
     /// Adds one ammo to the ammo provider entity.
     /// This assumes the ammo already passed the whitelist check from <see cref="BallisticAmmoProviderComponent.Whitelist">
     /// </summary>
-    /// <param name="ammoProvider"></param>
-    /// <param name="ammo"></param>
-    public void FillAmmo(Entity<BallisticAmmoProviderComponent> ammoProvider, EntityUid ammo)
+    private void FillAmmo(Entity<BallisticAmmoProviderComponent> ammoProvider, EntityUid ammo, InteractUsingEvent args)
     {
         ammoProvider.Comp.Entities.Add(ammo);
         Containers.Insert(ammo, ammoProvider.Comp.Container);
+
+        // Not predicted so
+        Audio.PlayPredicted(ammoProvider.Comp.SoundInsert, ammoProvider, args.User);
+
+        UpdateBallisticAppearance(ammoProvider, ammoProvider.Comp);
+        UpdateAmmoCount(args.Target);
+        DirtyField(ammoProvider, ammoProvider.Comp, nameof(BallisticAmmoProviderComponent.Entities));
     }
 
     public void UpdateBallisticAppearance(EntityUid uid, BallisticAmmoProviderComponent component)
