@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: Crayon
+  id: CrayonInedible
   name: crayon
   description: A colourful crayon. Looks tasty. Mmmm...
   components:
@@ -24,7 +24,25 @@
     selectedState: like
   - type: LimitedCharges
     maxCharges: 25
-  - type: Food
+  - type: StaticPrice
+    price: 5
+
+- type: entity
+  abstract: true
+  parent: CrayonInedible
+  id: Crayon
+  name: crayon
+  description: A colourful crayon. Looks tasty. Mmmm...
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: Tiny
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: Edible
   - type: FlavorProfile
     flavors:
     - chewy
@@ -37,8 +55,6 @@
           Quantity: 3
         - ReagentId: MindbreakerToxin
           Quantity: 2
-  - type: StaticPrice
-    price: 5
 
 - type: entity
   parent: Crayon
@@ -108,6 +124,30 @@
     deleteEmpty: false
   - type: AutoRecharge
     rechargeDuration: 5
+
+- type: entity
+  parent: CrayonInedible
+  id: CrayonBorg
+  name: electric crayon
+  description: Supposedly the most delicious crayon type in all the universes; unfortunately, you cannot eat.
+  components:
+  - type: Sprite
+    state: electric
+  - type: Item
+    heldPrefix: electric
+  - type: Crayon
+    deleteEmpty: false
+    color: Red
+    selectableColor: true
+  - type: LimitedCharges
+    maxCharges: 30
+  - type: AutoRecharge
+    rechargeDuration: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
+    - Trash
 
 - type: entity
   parent: Crayon

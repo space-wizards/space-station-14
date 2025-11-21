@@ -216,7 +216,7 @@ public sealed partial class MeleeWeaponSystem
         var query = EntityQueryEnumerator<TrackUserComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var arcComponent, out var xform))
         {
-            if (arcComponent.User == null)
+            if (arcComponent.User == null || EntityManager.Deleted(arcComponent.User))
                 continue;
 
             Vector2 targetPos = TransformSystem.GetWorldPosition(arcComponent.User.Value);
