@@ -973,7 +973,7 @@
 
 - type: Tag
   id: Mouse # CargoBounty: BountyMouse
- 
+
 - type: Tag
   id: Multitool # Storage whitelist: BaseClothingBeltEngineering. ItemMapper: BaseClothingBeltEngineering. ConstructionGraph: LogicGate
 
@@ -1260,7 +1260,7 @@
   id: Shiv # CargoBounty: BountyShiv
 
 - type: Tag
-  id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase
+  id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase, ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: SignalTrigger # ConstructionGraph: GlassBox
@@ -1352,6 +1352,9 @@
 
 - type: Tag
   id: SubdermalImplant # Storage whitelist: BaseImplanter
+
+- type: Tag
+  id: SubMachineGun # Storage whitelist: ClothingBeltSyndieHolster
 
 - type: Tag
   id: SuitEVA # ConstructionGraph: ClownHardsuit, MimeHardsuit

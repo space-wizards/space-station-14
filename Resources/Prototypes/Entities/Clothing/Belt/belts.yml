@@ -102,10 +102,10 @@
 ## Holsters
 
 - type: entity
-  parent: [ClothingBeltBase, ClothingSlotBase]
+  parent: [ClothingBeltBase, ClothingSlotBase, BaseSecurityContraband]
   id: ClothingBeltHolster
   name: shoulder holster
-  description: 'A holster to carry a handgun and ammo. WARNING: Badasses only.'
+  description: 'Two holsters to carry handguns, ammo, and knives. WARNING: Badasses only.'
   components:
   - type: Sprite
     sprite: Clothing/Belt/holster.rsi
@@ -121,17 +121,31 @@
     slots:
       item1:
         name: clothing-holster-handgun
+        priority: 2
         whitelist:
           tags:
           - Sidearm
+          - CombatKnife
+          - MagazinePistol
+          - MagazinePistolHighCapacity
+          - MagazinePistolCaselessRifle
+          - MagazineMagnum
+          - SpeedLoaderMagnum
       item2:
         name: clothing-holster-handgun
+        priority: 1
         whitelist:
           tags:
           - Sidearm
+          - CombatKnife
+          - MagazinePistol
+          - MagazinePistolHighCapacity
+          - MagazinePistolCaselessRifle
+          - MagazineMagnum
+          - SpeedLoaderMagnum
 
 - type: entity
-  parent: [ClothingBeltHolster, BaseSyndicateContraband]
+  parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
   description: A deep shoulder holster capable of holding many types of ballistics.
@@ -140,18 +154,50 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
+  - type: ContainerContainer
+    containers:
+      item1: !type:ContainerSlot
+        item2: !type:ContainerSlot
+      storagebase: !type:Container
+        ents: []
   - type: ItemSlots
     slots:
       item1:
         name: clothing-holster-gun
+        priority: 2
         whitelist:
-          components:
-          - Gun
+          tags:
+          - Sidearm
+          - CombatKnife
+          - SubMachineGun
+          - MagazinePistol
+          - MagazinePistolHighCapacity
+          - MagazinePistolCaselessRifle
+          - MagazinePistolSubMachineGun
+          - MagazinePistolSubMachineGunTopMounted
+          - MagazineMagnum
+          - SpeedLoaderMagnum
+          - MagazineRifle
+          - MagazineLightRifle
+          - MagazineShotgun
       item2:
         name: clothing-holster-gun
+        priority: 1
         whitelist:
-          components:
-          - Gun
+          tags:
+          - Sidearm
+          - CombatKnife
+          - SubMachineGun
+          - MagazinePistol
+          - MagazinePistolHighCapacity
+          - MagazinePistolCaselessRifle
+          - MagazinePistolSubMachineGun
+          - MagazinePistolSubMachineGunTopMounted
+          - MagazineMagnum
+          - SpeedLoaderMagnum
+          - MagazineRifle
+          - MagazineLightRifle
+          - MagazineShotgun
   - type: StaticPrice
     price: 500
 

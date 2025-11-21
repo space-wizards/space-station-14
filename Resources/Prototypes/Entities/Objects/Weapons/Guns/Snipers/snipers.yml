@@ -185,6 +185,9 @@
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
+  - type: Tag
+    tags:
+    - Sidearm
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 8 #it's a flintlock

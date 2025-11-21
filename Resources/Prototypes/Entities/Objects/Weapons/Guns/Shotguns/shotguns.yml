@@ -234,6 +234,9 @@
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Gun
     fireRate: 4
   - type: BallisticAmmoProvider
