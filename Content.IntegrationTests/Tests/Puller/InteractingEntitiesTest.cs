@@ -9,7 +9,6 @@ namespace Content.IntegrationTests.Tests.Puller;
 
 #nullable enable
 
-[TestFixture]
 public sealed class InteractingEntitiesTest : InteractionTest
 {
     private static readonly EntProtoId MobHuman = "MobHuman";
