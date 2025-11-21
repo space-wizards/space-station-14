@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: Multi-handed items can be picked up again.
-    type: Fix
-  id: 8717
-  time: '2025-06-26T15:29:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38603
-- author: slarticodefast
-  changes:
   - message: Fixed smart equip not retrieving items.
     type: Fix
   id: 8718
@@ -3927,3 +3920,10 @@
   id: 9217
   time: '2025-11-21T18:57:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41317
+- author: K-Dynamic, Cadunkus
+  changes:
+  - message: Added new vox hairstyle called "Vox Catfish."
+    type: Add
+  id: 9218
+  time: '2025-11-21T22:09:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40689
