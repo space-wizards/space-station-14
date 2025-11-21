@@ -18,7 +18,7 @@ public sealed class InteractingEntitiesTest : InteractionTest
     public async Task PullerIsConsideredInteractingTest()
     {
         await SpawnTarget(MobHuman);
-        var puller = await SpawnEntity(MobHuman.ToString(), SEntMan.GetCoordinates(TargetCoords));
+        var puller = await SpawnEntity(MobHuman.ToString(), ToServer(TargetCoords));
 
         var pullSys = SEntMan.System<PullingSystem>();
         await Server.WaitPost(() => pullSys.TryStartPull(puller, ToServer(Target.Value)));
