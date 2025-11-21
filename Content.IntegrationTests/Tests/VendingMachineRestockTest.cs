@@ -9,6 +9,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.Prototypes;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.VendingMachines;
 using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
@@ -116,8 +117,7 @@ namespace Content.IntegrationTests.Tests
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var compFact = server.ResolveDependency<IComponentFactory>();
-            var entMan = server.ResolveDependency<IEntityManager>();
-            var entityTable = entMan.System<EntityTableSystem>();
+            var entityTable = server.EntMan.System<EntityTableSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -143,10 +143,9 @@ namespace Content.IntegrationTests.Tests
                     if (!proto.TryGetComponent<EntityTableContainerFillComponent>(out var storage, compFact))
                         continue;
 
-                    var entityStorageKey = "entity_storage"; // We only care about this container type.
                     var containers = storage.Containers;
 
-                    if (!containers.TryGetValue(entityStorageKey, out var container))
+                    if (!containers.TryGetValue(SharedEntityStorageSystem.ContainerName, out var container)) // We only care about this container type.
                         continue;
 
                     List<string> restockStore = new();
