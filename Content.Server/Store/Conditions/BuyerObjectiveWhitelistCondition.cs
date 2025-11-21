@@ -19,6 +19,7 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
 
     /// <summary>
     /// A blacklist of objective types.
+    /// If an objective is both whitelisted and blacklisted the blacklist will take priority and the entry will not appear.
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
