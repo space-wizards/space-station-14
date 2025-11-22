@@ -63,6 +63,22 @@
       gas_tank: !type:ContainerSlot
 
 - type: entity
+  id: LauncherDelivery
+  name: delivery cannon
+  parent: WeaponImprovisedPneumaticCannon
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,3 # Just large enough to fit packages.
+    maxItemSize: Huge # Second verse, same as the first
+    whitelist:
+      tags:
+      - LetterDelivery
+      - PackageDelivery
+      - Parcel
+      - Present
+
+- type: entity
   name: pie cannon
   parent: BaseStorageItem
   id: LauncherCreamPie
