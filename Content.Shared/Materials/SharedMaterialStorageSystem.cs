@@ -357,7 +357,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         // test if the whole stack fits
         var multiplier = TryComp<StackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
         var totalVolume = 0;
-        bool partialStack = false;
+        var partialStack = false;
         foreach (var (mat, vol) in composition.MaterialComposition)
         {
             if (!CanChangeMaterialAmount(receiver, mat, vol * multiplier, storage))
@@ -383,9 +383,9 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
                 return false;
             }
 
-        if (partialStack && storage.StorageLimit is not null) // try and calculate the in the maximum possible stack that would fit
+        if (partialStack && storage.StorageLimit is not null) // try and calculate the maximum possible stack that would fit
         {
-            var availableVolume = (int)storage.StorageLimit - GetTotalMaterialAmount(receiver, storage);
+            var availableVolume = storage.StorageLimit.Value - GetTotalMaterialAmount(receiver, storage);
             var volumePerSheet = 0;
             foreach (var vol in composition.MaterialComposition.Values)
             {
@@ -404,7 +404,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
 
         if (partialStack)
         {
-            _sharedStackSystem.Use(toInsert, multiplier);
+            _sharedStackSystem.TryUse(toInsert, multiplier);
         }
 
         var insertingComp = EnsureComp<InsertingMaterialStorageComponent>(receiver);

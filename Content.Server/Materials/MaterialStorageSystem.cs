@@ -127,7 +127,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         // Logging
         _adminLogger.Add(LogType.Action,
             LogImpact.Low,
-            $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
+            $"{ToPrettyString(user):player} inserted {amountUsed} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
         return true;
     }
 
