@@ -159,6 +159,7 @@
     - id: RCD
     - id: RCDAmmo
     - id: AirGrenade
+    - id: ClothingHandsGlovesColorYellow
 
 - type: entityTable
   id: FillAtmosphericsHardsuit
