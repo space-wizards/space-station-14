@@ -20,7 +20,7 @@
 
        <BoxContainer Align="Center">
            <GridContainer Rows="6">
-            <Button Name="NotesButton" Text="{Loc player-panel-show-notes}" SetWidth="136" Disabled="True"/>
+            <Button Name="NotesButton" Text="{Loc player-panel-show-notes}" SetWidth="136" Disabled="True" Access="Public"/>
             <Button Name="AhelpButton" Text="{Loc player-panel-help}" Disabled="True"/>
             <Button Name="FreezeButton" Text = "{Loc player-panel-freeze}" Disabled="True"/>
             <controls:ConfirmButton Name="KickButton" Text="{Loc player-panel-kick}" Disabled="True"/>
