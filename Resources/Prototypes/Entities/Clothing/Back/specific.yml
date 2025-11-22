@@ -122,3 +122,34 @@
         location: Middle
       extra_hand_2:
         location: Middle
+
+- type: entity
+  parent: ClothingBackpack
+  id: XenoborgMaterialBag
+  name: silicon storage square
+  description: A knockoff version of a bluespace bag, can vacumn up select materials, unfit for use by humanoids due to harmful emissions.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Robotics/silicon_storage_cube.rsi
+    state: xenoborg
+  - type: MagnetPickup
+  - type: Dumpable
+  - type: Storage
+    grid:
+    - 0,0,7,3
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      tags:
+        - Sheet
+        - ConstructionMaterial
+        - RawMaterial
+        - Ingot
+      components:
+        - ConstructionMaterial
+        - Circuitboard
+        - Flatpack
+        - FloorTile
+    blacklist:
+      components:
+      - SiliconLawProvider

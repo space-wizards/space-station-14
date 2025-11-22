@@ -8,13 +8,41 @@ namespace Content.Shared.Damage.Systems;
 public sealed partial class DamageableSystem
 {
     /// <summary>
-    ///     Directly sets the damage specifier of a damageable component.
+    ///     Directly sets the damage in a damageable component.
+    ///     This method keeps the damage types supported by the DamageContainerPrototype in the component.
+    ///     If a type is given in <paramref name="damage"/>, but not supported then it will not be set.
+    ///     If a type is supported but not given in <paramref name="damage"/> then it will be set to 0.
     /// </summary>
     /// <remarks>
     ///     Useful for some unfriendly folk. Also ensures that cached values are updated and that a damage changed
     ///     event is raised.
     /// </remarks>
     public void SetDamage(Entity<DamageableComponent?> ent, DamageSpecifier damage)
+    {
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+            return;
+
+        foreach (var type in ent.Comp.Damage.DamageDict.Keys)
+        {
+            if (damage.DamageDict.TryGetValue(type, out var value))
+                ent.Comp.Damage.DamageDict[type] = value;
+            else
+                ent.Comp.Damage.DamageDict[type] = 0;
+        }
+
+        OnEntityDamageChanged((ent, ent.Comp));
+    }
+
+    /// <summary>
+    ///     Directly sets the damage specifier of a damageable component.
+    ///     This will overwrite the complete damage dict, meaning it will bulldoze the supported damage types.
+    /// </summary>
+    /// <remarks>
+    ///     This may break persistance as the supported types are reset in case the component is initialized again.
+    ///     So this only makes sense if you also change the DamageContainerPrototype in the component at the same time.
+    ///     Only use this method if you know what you are doing.
+    /// </remarks>
+    public void SetDamageSpecifier(Entity<DamageableComponent?> ent, DamageSpecifier damage)
     {
         if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
             return;
