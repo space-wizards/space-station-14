@@ -306,22 +306,7 @@ namespace Content.Client.Construction
                 var targetSprite = EnsureComp<SpriteComponent>(dummy);
                 EntityManager.System<AppearanceSystem>().OnChangeData(dummy, targetSprite);
 
-                for (var i = 0; i < targetSprite.AllLayers.Count(); i++)
-                {
-                    if (!targetSprite[i].Visible || !targetSprite[i].RsiState.IsValid)
-                        continue;
-
-                    var rsi = targetSprite[i].Rsi ?? targetSprite.BaseRSI;
-                    if (rsi is null || !rsi.TryGetState(targetSprite[i].RsiState, out var state) ||
-                        state.StateId.Name is null)
-                        continue;
-
-                    _sprite.AddBlankLayer((ghost.Value, sprite), i);
-                    _sprite.LayerSetSprite((ghost.Value, sprite), i, new SpriteSpecifier.Rsi(rsi.Path, state.StateId.Name));
-                    sprite.LayerSetShader(i, "unshaded");
-                    _sprite.LayerSetVisible((ghost.Value, sprite), i, true);
-                }
-
+                CopyVisibleSpriteLayersToGhost((ghost.Value, sprite), targetSprite);
                 Del(dummy);
             }
             else
@@ -331,6 +316,28 @@ namespace Content.Client.Construction
                 EnsureComp<WallMountComponent>(ghost.Value).Arc = new(Math.Tau);
 
             return true;
+        }
+
+        private void CopyVisibleSpriteLayersToGhost(Entity<SpriteComponent> ghost, SpriteComponent source)
+        {
+            // Uses sequential indexing for ghost layers to handle cases where
+            // invisible layers are between visible ones in the source sprite
+            var visibleLayers = 0;
+            foreach (var layer in source.AllLayers)
+            {
+                if (!layer.Visible || !layer.RsiState.IsValid)
+                    continue;
+
+                var rsi = layer.Rsi ?? source.BaseRSI;
+                if (rsi is null || !rsi.TryGetState(layer.RsiState, out var state) || state.StateId.Name is null)
+                    continue;
+
+                _sprite.AddBlankLayer(ghost, visibleLayers);
+                _sprite.LayerSetSprite(ghost.Owner, visibleLayers, new SpriteSpecifier.Rsi(rsi.Path, state.StateId.Name));
+                ghost.Comp.LayerSetShader(visibleLayers, "unshaded");
+                _sprite.LayerSetVisible(ghost.Owner, visibleLayers, true);
+                visibleLayers++;
+            }
         }
 
         private bool CheckConstructionConditions(ConstructionPrototype prototype, EntityCoordinates loc, Direction dir,
