@@ -2,6 +2,7 @@
 - type: entity
   parent: BaseItem
   id: BaseLinkingUtility
+  abstract: true
   components:
   - type: StaticPrice
     price: 40
