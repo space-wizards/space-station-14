@@ -64,6 +64,13 @@
     size: Normal
   - type: ToggleableVisuals
     spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: inhand-left-light
+        shader: unshaded
+      right:
+      - state: inhand-right-light
+        shader: unshaded
   - type: ItemTogglePointLight
   - type: PointLight
     enabled: false
@@ -155,7 +162,10 @@
 #    slots: [ears, eyes, mask]
   - type: BreathMask
   - type: Sprite
-    state: icon # default state used by most inheritors
+    layers:
+    - state: icon # default state used by most inheritors
+    - state: icon-unshaded
+      shader: unshaded
   - type: Clickable
   - type: InteractionOutline
   - type: Clothing
@@ -206,8 +216,9 @@
   - type: Sprite
     layers:
     - state: icon
-    - state: icon-flash
+    - state: light-overlay
       visible: false
+      shader: unshaded
       map: [ "light" ]
   - type: Clothing
     equippedPrefix: off
