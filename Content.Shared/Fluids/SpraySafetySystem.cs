@@ -35,10 +35,10 @@ public sealed class SpraySafetySystem : EntitySystem
 
     private void OnSprayAttempt(Entity<SpraySafetyComponent> ent, ref SprayAttemptEvent args)
     {
-        if (!_toggle.IsActivated(ent.Owner))
-        {
-            _popup.PopupEntity(Loc.GetString(ent.Comp.Popup), ent, args.User);
-            args.Cancel();
-        }
+        if (_toggle.IsActivated(ent.Owner) || args.Cancelled)
+            return;
+
+        args.Cancel();
+        args.CancelPopupMessage = Loc.GetString(ent.Comp.Popup);
     }
 }

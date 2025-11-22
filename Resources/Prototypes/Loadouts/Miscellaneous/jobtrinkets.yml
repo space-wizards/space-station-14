@@ -154,6 +154,18 @@
     - PlushieLizardJobClown
 
 - type: loadout
+  id: FlowerWaterClown
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 4h
+  storage:
+    back:
+    - SprayFlowerPin
+
+- type: loadout
   id: LizardPlushieMime
   effects:
   - !type:JobRequirementLoadoutEffect
