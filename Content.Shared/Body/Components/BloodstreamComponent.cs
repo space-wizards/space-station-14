@@ -152,13 +152,13 @@ public sealed partial class BloodstreamComponent : Component
     public FixedPoint2 BloodMaxVolume = FixedPoint2.New(300);
 
     /// <summary>
-    /// Which reagent is considered this entities 'blood'?
+    /// Which reagents are considered this entities 'blood'?
     /// </summary>
     /// <remarks>
     /// Slime-people might use slime as their blood or something like that.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public ProtoId<ReagentPrototype> BloodReagent = "Blood";
+    public List<ReagentQuantity> BloodReagents = new() { new("Blood", 1) };
 
     /// <summary>
     /// Name/Key that <see cref="BloodSolution"/> is indexed by.

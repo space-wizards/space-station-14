@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -29,9 +30,9 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 {
     public static readonly EntProtoId Bloodloss = "StatusEffectBloodloss";
 
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
     [Dependency] protected readonly SharedSolutionContainerSystem SolutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
@@ -193,7 +194,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         }
 
         // TODO probably cache this or something. humans get hurt a lot
-        if (!_prototypeManager.Resolve(ent.Comp.DamageBleedModifiers, out var modifiers))
+        if (!PrototypeManager.Resolve(ent.Comp.DamageBleedModifiers, out var modifiers))
             return;
 
         // some reagents may deal and heal different damage types in the same tick, which means DamageIncreased will be true
@@ -370,7 +371,12 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             return false;
 
         if (amount >= 0)
-            return SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, amount, null, GetEntityBloodData(ent));
+        {
+            var min = FixedPoint2.Min(ent.Comp.BloodSolution.Value.Comp.Solution.AvailableVolume, amount);
+            var solution = GenerateBloodSolution(ent.Comp.BloodReagents, min, GetEntityBloodData(ent));
+            SolutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
+            return min == amount;
+        }
 
         // Removal is more involved,
         // since we also wanna handle moving it to the temporary solution
@@ -380,7 +386,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (!SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodTemporarySolutionName, ref ent.Comp.TemporarySolution, out var tempSolution))
             return true;
 
-        tempSolution.AddSolution(newSol, _prototypeManager);
+        tempSolution.AddSolution(newSol, PrototypeManager);
 
         if (tempSolution.Volume > ent.Comp.BleedPuddleThreshold)
         {
@@ -388,7 +394,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.ChemicalSolutionName, ref ent.Comp.ChemicalSolution))
             {
                 var temp = SolutionContainer.SplitSolution(ent.Comp.ChemicalSolution.Value, tempSolution.Volume / 10);
-                tempSolution.AddSolution(temp, _prototypeManager);
+                tempSolution.AddSolution(temp, PrototypeManager);
             }
 
             _puddle.TrySpillAt(ent.Owner, tempSolution, out _, sound: false);
@@ -439,21 +445,21 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
         {
             tempSol.MaxVolume += bloodSolution.MaxVolume;
-            tempSol.AddSolution(bloodSolution, _prototypeManager);
+            tempSol.AddSolution(bloodSolution, PrototypeManager);
             SolutionContainer.RemoveAllSolution(ent.Comp.BloodSolution.Value);
         }
 
         if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.ChemicalSolutionName, ref ent.Comp.ChemicalSolution, out var chemSolution))
         {
             tempSol.MaxVolume += chemSolution.MaxVolume;
-            tempSol.AddSolution(chemSolution, _prototypeManager);
+            tempSol.AddSolution(chemSolution, PrototypeManager);
             SolutionContainer.RemoveAllSolution(ent.Comp.ChemicalSolution.Value);
         }
 
         if (SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodTemporarySolutionName, ref ent.Comp.TemporarySolution, out var tempSolution))
         {
             tempSol.MaxVolume += tempSolution.MaxVolume;
-            tempSol.AddSolution(tempSolution, _prototypeManager);
+            tempSol.AddSolution(tempSolution, PrototypeManager);
             SolutionContainer.RemoveAllSolution(ent.Comp.TemporarySolution.Value);
         }
 
@@ -463,27 +469,42 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// <summary>
     /// Change what someone's blood is made of, on the fly.
     /// </summary>
+    [Obsolete("ChangeBloodReagent is obsolete, please use ChangeBloodReagents.")]
     public void ChangeBloodReagent(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype> reagent)
     {
+        ChangeBloodReagents(ent, [new(reagent, 1)]);
+    }
+
+    /// <summary>
+    /// Change what someone's blood is made of, on the fly.
+    /// </summary>
+    public void ChangeBloodReagents(Entity<BloodstreamComponent?> ent, IEnumerable<ReagentQuantity> reagents)
+    {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
-            || reagent == ent.Comp.BloodReagent)
+            || reagents.SequenceEqual(ent.Comp.BloodReagents))
         {
             return;
         }
 
         if (!SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
         {
-            ent.Comp.BloodReagent = reagent;
+            ent.Comp.BloodReagents = reagents.ToList();
+            DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReagents));
             return;
         }
 
-        var currentVolume = bloodSolution.RemoveReagent(ent.Comp.BloodReagent, bloodSolution.Volume, ignoreReagentData: true);
+        var currentVolume = FixedPoint2.Zero;
+        foreach (var reagent in ent.Comp.BloodReagents)
+            currentVolume += bloodSolution.RemoveReagent(reagent.Reagent, quantity: bloodSolution.Volume, ignoreReagentData: true);
 
-        ent.Comp.BloodReagent = reagent;
-        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReagent));
+        ent.Comp.BloodReagents = reagents.ToList();
+        DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReagents));
 
         if (currentVolume > 0)
-            SolutionContainer.TryAddReagent(ent.Comp.BloodSolution.Value, ent.Comp.BloodReagent, currentVolume, null, GetEntityBloodData(ent));
+        {
+            var solution = GenerateBloodSolution(ent.Comp.BloodReagents, currentVolume, GetEntityBloodData(ent));
+            SolutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
+        }
     }
 
     /// <summary>
@@ -502,5 +523,27 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         bloodData.Add(dnaData);
 
         return bloodData;
+    }
+
+    /// <summary>
+    /// Generates a Solution according to the given blood profile and amount.
+    /// </summary>
+    /// <param name="data">If specified overwrites the data on all the reagents.</param>
+    public Solution GenerateBloodSolution(IEnumerable<ReagentQuantity> blood, FixedPoint2 amount, List<ReagentData>? data)
+    {
+        var solution = new Solution(blood.Count());
+
+        var bloodCount = blood.Select(x => x.Quantity).Aggregate(FixedPoint2.Zero, (x, y) => x + y);
+        var fraction = amount / bloodCount;
+        foreach (var reagent in blood)
+        {
+            var toAdd = fraction * reagent.Quantity;
+            if (data is { } reagentData)
+                solution.AddReagent(new ReagentId(reagent.Reagent.Prototype, reagentData), toAdd);
+            else
+                solution.AddReagent(reagent.Reagent, toAdd);
+        }
+
+        return solution;
     }
 }
