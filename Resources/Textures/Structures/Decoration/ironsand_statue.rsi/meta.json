@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created for Space Station 14 by SeaWyrm (github Aearo-Deepwater)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "small_pillar"
+    },
+    {
+      "name": "small_pillar_2"
+    }
+  ]
+}
