@@ -88,11 +88,10 @@
           Quantity: 100
 
 - type: entity
-  name: space cleaner
   description: BLAM!-brand non-foaming space cleaner!
   id: SprayBottleSpaceCleaner
   parent: SprayBottle
-  suffix: ""
+  suffix: Space Cleaner
   components:
   - type: SolutionContainerManager
     solutions:
@@ -101,9 +100,27 @@
         reagents:
         - ReagentId: SpaceCleaner
           Quantity: 100
+  - type: Label
+    currentLabel: space cleaner
   - type: Tag
     tags:
       - Spray
+
+- type: entity
+  parent: MegaSprayBottle
+  id: MegaSprayBottleSpaceCleaner
+  description: BLAM!-brand non-foaming space cleaner, now in a bigger package for those huge blood puddles!
+  suffix: Space Cleaner
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 250
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 250
+  - type: Label
+    currentLabel: space cleaner
 
 - type: entity
   parent: SprayBottle
