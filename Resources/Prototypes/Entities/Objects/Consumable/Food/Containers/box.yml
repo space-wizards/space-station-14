@@ -254,27 +254,24 @@
         - !type:GroupSelector
           children:
           - id: FoodPizzaArnold
-            weight: 0.15
-          - id: FoodPizzaDank
-            weight: 0.10
+            weight: 1.5
           - id: FoodPizzaSassysage
-            weight: 0.15
+            weight: 1.5
           - id: FoodPizzaMargherita
-            weight: 0.15
+            weight: 1.5
           - id: FoodPizzaMeat
-            weight: 0.15
+            weight: 1.5
           - id: FoodPizzaMushroom
-            weight: 0.15
+            weight: 1.5
           - id: FoodPizzaPineapple
-            weight: 0.15
+            weight: 1.5
           - id: FoodPizzaVegetable
-            weight: 0.15
+            weight: 1.5
+          - id: FoodPizzaDank
           - id: FoodPizzaDonkpocket
-            weight: 0.10
           - id: FoodPizzaCotton
-            weight: 0.10
           - id: FoodPizzaWorldpeas
-            weight: 0.05
+            weight: 0.5
 
 - type: entity
   parent: FoodBoxPizza
