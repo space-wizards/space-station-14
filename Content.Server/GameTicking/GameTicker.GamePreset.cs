@@ -65,6 +65,8 @@ public sealed partial class GameTicker
             {
                 _sawmill.Info($"Fallback - Clearing up gamerules");
                 ClearGameRules();
+                _allPreviousGameRules.Clear();
+
                 if (fallbackDecoy && decoyPreset is not null)
                     _sawmill.Info($"Fallback - Attempting to start '{preset}', but showing '{decoyPreset}' decoy to the Lobby. ");
                 else
