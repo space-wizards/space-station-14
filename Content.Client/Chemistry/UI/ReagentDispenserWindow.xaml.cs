@@ -21,6 +21,7 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private readonly IEntityManager _entityManager = default!;
         public event Action<ItemStorageLocation>? OnDispenseReagentButtonPressed;
         public event Action<ItemStorageLocation>? OnEjectJugButtonPressed;
+        public event Action? OnInsertStorageButtonPressed;
 
         /// <summary>
         /// Create and initialize the dispenser UI client-side. Creates the basic layout,
@@ -52,6 +53,14 @@ namespace Content.Client.Chemistry.UI
                 card.OnEjectButtonPressed += OnEjectJugButtonPressed;
                 ReagentList.Children.Add(card);
             }
+
+            var insertButton = new Button()
+            {
+                Label = { Text = Loc.GetString("reagent-dispenser-window-insert-storage-button") },
+                StyleClasses = { "OpenLeft" },
+            };
+            insertButton.OnPressed += _ => OnInsertStorageButtonPressed?.Invoke();
+            ReagentList.Children.Add(insertButton);
         }
 
         /// <summary>
@@ -69,7 +78,9 @@ namespace Content.Client.Chemistry.UI
 
             // Disable the Clear & Eject button if no beaker
             ClearButton.Disabled = castState.OutputContainer is null;
-            EjectButton.Disabled = castState.OutputContainer is null;
+            EjectButton.Text = castState.OutputContainer is null ?
+                Loc.GetString("reagent-dispenser-window-insert-button") :
+                Loc.GetString("reagent-dispenser-window-eject-button");
 
             AmountGrid.Selected = ((int)castState.SelectedDispenseAmount).ToString();
         }
