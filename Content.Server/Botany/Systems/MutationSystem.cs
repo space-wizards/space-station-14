@@ -1,3 +1,5 @@
+using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
 using Content.Shared.Random;
@@ -9,10 +11,11 @@ namespace Content.Server.Botany;
 
 public sealed class MutationSystem : EntitySystem
 {
-    private static ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
+    private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
 
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly BotanySystem _botanySystem = default!;
     [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
@@ -54,40 +57,43 @@ public sealed class MutationSystem : EntitySystem
         }
 
         CheckRandomMutations(plantHolder, ref seed, severity);
+        EnsureGrowthComponents(plantHolder, seed);
+    }
+
+    /// <summary>
+    /// Ensures that the plant has all the growth components specified in the seed data.
+    /// </summary>
+    private void EnsureGrowthComponents(EntityUid plantHolder, SeedData seed)
+    {
+        // Fill missing components in the seed with defaults.
+        seed.GrowthComponents.EnsureGrowthComponents();
+
+        foreach (var prop in typeof(GrowthComponentsHolder).GetProperties())
+        {
+            if (prop.GetValue(seed.GrowthComponents) is PlantGrowthComponent component && !EntityManager.HasComponent(plantHolder, component.GetType()))
+            {
+                var newComponent = component.DupeComponent();
+                EntityManager.AddComponent(plantHolder, newComponent);
+            }
+        }
     }
 
     public SeedData Cross(SeedData a, SeedData b)
     {
-        SeedData result = b.Clone();
+        var result = b.Clone();
 
         CrossChemicals(ref result.Chemicals, a.Chemicals);
 
-        CrossFloat(ref result.NutrientConsumption, a.NutrientConsumption);
-        CrossFloat(ref result.WaterConsumption, a.WaterConsumption);
-        CrossFloat(ref result.IdealHeat, a.IdealHeat);
-        CrossFloat(ref result.HeatTolerance, a.HeatTolerance);
-        CrossFloat(ref result.IdealLight, a.IdealLight);
-        CrossFloat(ref result.LightTolerance, a.LightTolerance);
-        CrossFloat(ref result.ToxinsTolerance, a.ToxinsTolerance);
-        CrossFloat(ref result.LowPressureTolerance, a.LowPressureTolerance);
-        CrossFloat(ref result.HighPressureTolerance, a.HighPressureTolerance);
-        CrossFloat(ref result.PestTolerance, a.PestTolerance);
-        CrossFloat(ref result.WeedTolerance, a.WeedTolerance);
+        var aTraits = BotanySystem.GetPlantTraits(a);
+        var resultTraits = BotanySystem.GetPlantTraits(result);
 
-        CrossFloat(ref result.Endurance, a.Endurance);
-        CrossInt(ref result.Yield, a.Yield);
-        CrossFloat(ref result.Lifespan, a.Lifespan);
-        CrossFloat(ref result.Maturation, a.Maturation);
-        CrossFloat(ref result.Production, a.Production);
-        CrossFloat(ref result.Potency, a.Potency);
-
-        CrossBool(ref result.Seedless, a.Seedless);
-        CrossBool(ref result.Ligneous, a.Ligneous);
-        CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
-        CrossBool(ref result.CanScream, a.CanScream);
-
-        CrossGasses(ref result.ExudeGasses, a.ExudeGasses);
-        CrossGasses(ref result.ConsumeGasses, a.ConsumeGasses);
+        if (aTraits != null && resultTraits != null)
+        {
+            CrossBool(ref resultTraits.Seedless, aTraits.Seedless);
+            CrossBool(ref resultTraits.Ligneous, aTraits.Ligneous);
+            CrossBool(ref resultTraits.CanScream, aTraits.CanScream);
+            CrossBool(ref resultTraits.TurnIntoKudzu, aTraits.TurnIntoKudzu);
+        }
 
         // LINQ Explanation
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.
@@ -98,7 +104,11 @@ public sealed class MutationSystem : EntitySystem
         // effective hybrid crossings.
         if (a.Name != result.Name && Random(0.7f))
         {
-            result.Seedless = true;
+            var traits = BotanySystem.GetPlantTraits(result);
+            if (traits != null)
+            {
+                traits.Seedless = true;
+            }
         }
 
         return result;
@@ -110,9 +120,9 @@ public sealed class MutationSystem : EntitySystem
         foreach (var otherChem in other)
         {
             // if both have same chemical, randomly pick potency ratio from the two.
-            if (val.ContainsKey(otherChem.Key))
+            if (val.TryGetValue(otherChem.Key, out var value))
             {
-                val[otherChem.Key] = Random(0.5f) ? otherChem.Value : val[otherChem.Key];
+                val[otherChem.Key] = Random(0.5f) ? otherChem.Value : value;
             }
             // if target plant doesn't have this chemical, has 50% chance to add it.
             else
@@ -148,9 +158,9 @@ public sealed class MutationSystem : EntitySystem
         foreach (var otherGas in other)
         {
             // if both have same gas, randomly pick ammount from the two.
-            if (val.ContainsKey(otherGas.Key))
+            if (val.TryGetValue(otherGas.Key, out var value))
             {
-                val[otherGas.Key] = Random(0.5f) ? otherGas.Value : val[otherGas.Key];
+                val[otherGas.Key] = Random(0.5f) ? otherGas.Value : value;
             }
             // if target plant doesn't have this gas, has 50% chance to add it.
             else

@@ -11,6 +11,7 @@ public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSy
         if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
             return;
 
-        entity.Comp.Seed.Viable = true;
+        if (TryComp<PlantTraitsComponent>(entity, out var traits))
+            traits.Viable = true;
     }
 }
