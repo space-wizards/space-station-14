@@ -1,5 +1,5 @@
 using Content.Shared.Construction.EntitySystems;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -41,7 +41,7 @@ public sealed class SecretStashSystem : EntitySystem
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
         SubscribeLocalEvent<SecretStashComponent, GotReclaimedEvent>(OnReclaimed);
         SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem), typeof(AnchorableSystem) });
-        SubscribeLocalEvent<SecretStashComponent, AfterFullyEatenEvent>(OnEaten);
+        SubscribeLocalEvent<SecretStashComponent, FullyEatenEvent>(OnFullyEaten);
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
     }
@@ -61,7 +61,7 @@ public sealed class SecretStashSystem : EntitySystem
         DropContentsAndAlert(entity, args.ReclaimerCoordinates);
     }
 
-    private void OnEaten(Entity<SecretStashComponent> entity, ref AfterFullyEatenEvent args)
+    private void OnFullyEaten(Entity<SecretStashComponent> entity, ref FullyEatenEvent args)
     {
         // TODO: When newmed is finished should do damage to teeth (Or something like that!)
         var damage = entity.Comp.DamageEatenItemInside;

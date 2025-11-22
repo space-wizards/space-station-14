@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
@@ -21,7 +22,6 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
@@ -46,7 +46,6 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _move = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -58,13 +57,9 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly UseDelaySystem _delay = default!;
         [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
-        private EntityQuery<HandcuffComponent> _cuffQuery;
-
         public override void Initialize()
         {
             base.Initialize();
-
-            _cuffQuery = GetEntityQuery<HandcuffComponent>();
 
             SubscribeLocalEvent<CuffableComponent, HandCountChangedEvent>(OnHandCountChanged);
             SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
@@ -95,9 +90,6 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<HandcuffComponent, MeleeHitEvent>(OnCuffMeleeHit);
             SubscribeLocalEvent<HandcuffComponent, AddCuffDoAfterEvent>(OnAddCuffDoAfter);
             SubscribeLocalEvent<HandcuffComponent, VirtualItemDeletedEvent>(OnCuffVirtualItemDeleted);
-            SubscribeLocalEvent<CuffableComponent, GetStandUpTimeEvent>(OnCuffableStandupArgs);
-            SubscribeLocalEvent<CuffableComponent, KnockedDownRefreshEvent>(OnCuffableKnockdownRefresh);
-            SubscribeLocalEvent<CuffableComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         }
 
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
@@ -251,20 +243,25 @@ namespace Content.Shared.Cuffs
             args.Cancel();
         }
 
-        private void HandleStopPull(EntityUid uid, CuffableComponent component, AttemptStopPullingEvent args)
+        private void HandleStopPull(EntityUid uid, CuffableComponent component, ref AttemptStopPullingEvent args)
         {
             if (args.User == null || !Exists(args.User.Value))
                 return;
 
             if (args.User.Value == uid && !component.CanStillInteract)
+            {
+                //TODO: UX feedback. Simply blocking the normal interaction feels like an interface bug
+
                 args.Cancelled = true;
+            }
+
         }
 
         private void OnRemoveCuffsAlert(Entity<CuffableComponent> ent, ref RemoveCuffsAlertEvent args)
         {
             if (args.Handled)
                 return;
-            TryUncuff(ent, ent, cuffable: ent.Comp);
+            TryUncuff((ent, ent.Comp), ent);
             args.Handled = true;
         }
 
@@ -282,7 +279,7 @@ namespace Content.Shared.Cuffs
 
             Verb verb = new()
             {
-                Act = () => TryUncuff(uid, args.User, cuffable: component),
+                Act = () => TryUncuff((uid, component), args.User),
                 DoContactInteraction = true,
                 Text = Loc.GetString("uncuff-verb-get-data-text")
             };
@@ -375,9 +372,6 @@ namespace Content.Shared.Cuffs
                     _adminLog.Add(LogType.Action, LogImpact.High,
                         $"{ToPrettyString(user):player} has cuffed {ToPrettyString(target):player}");
                 }
-
-                if (!MathHelper.CloseTo(component.MovementMod, 1f))
-                    _move.RefreshMovementSpeedModifiers(target);
             }
             else
             {
@@ -430,72 +424,6 @@ namespace Content.Shared.Cuffs
             {
                 UpdateCuffState(ent.Owner, ent.Comp);
             }
-        }
-
-        /// <summary>
-        ///     Takes longer to stand up when cuffed
-        /// </summary>
-        private void OnCuffableStandupArgs(Entity<CuffableComponent> ent, ref GetStandUpTimeEvent time)
-        {
-            if (!HasComp<KnockedDownComponent>(ent) || !IsCuffed(ent))
-                return;
-
-            var cuffs = GetAllCuffs(ent.Comp);
-            var mod = 1f;
-
-            if (cuffs.Count == 0)
-                return;
-
-            foreach (var cuff in cuffs)
-            {
-                if (!_cuffQuery.TryComp(cuff, out var comp))
-                    continue;
-
-                // Get the worst modifier
-                mod = Math.Max(mod, comp.StandupMod);
-            }
-
-            time.DoAfterTime *= mod;
-        }
-
-        private void OnCuffableKnockdownRefresh(Entity<CuffableComponent> ent, ref KnockedDownRefreshEvent args)
-        {
-            var cuffs = GetAllCuffs(ent.Comp);
-            var mod = 1f;
-
-            if (cuffs.Count == 0)
-                return;
-
-            foreach (var cuff in cuffs)
-            {
-                if (!_cuffQuery.TryComp(cuff, out var comp))
-                    continue;
-
-                // Get the worst modifier
-                mod = Math.Min(mod, comp.KnockedMovementMod);
-            }
-
-            args.SpeedModifier *= mod;
-        }
-
-        private void OnRefreshMovementSpeedModifiers(Entity<CuffableComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
-        {
-            var cuffs = GetAllCuffs(ent.Comp);
-            var mod = 1f;
-
-            if (cuffs.Count == 0)
-                return;
-
-            foreach (var cuff in cuffs)
-            {
-                if (!_cuffQuery.TryComp(cuff, out var comp))
-                    continue;
-
-                // Get the worst modifier
-                mod = Math.Min(mod, comp.MovementMod);
-            }
-
-            args.ModifySpeed(mod);
         }
 
         /// <summary>
@@ -555,14 +483,16 @@ namespace Content.Shared.Cuffs
             if (TryComp<HandsComponent>(target, out var hands) && hands.Count <= component.CuffedHandCount)
                 return false;
 
-            var ev = new TargetHandcuffedEvent();
-            RaiseLocalEvent(target, ref ev);
-
             // Success!
             _hands.TryDrop(user, handcuff);
 
             _container.Insert(handcuff, component.Container);
+
+            var ev = new TargetHandcuffedEvent();
+            RaiseLocalEvent(target, ref ev);
+
             UpdateHeldItems(target, handcuff, component);
+
             return true;
         }
 
@@ -656,41 +586,31 @@ namespace Content.Shared.Cuffs
             return true;
         }
 
+        /// <inheritdoc cref="TryUncuff(Entity{CuffableComponent?},EntityUid,Entity{HandcuffComponent?})"/>
+        public void TryUncuff(Entity<CuffableComponent?> target, EntityUid user)
+        {
+            if (!TryGetLastCuff(target, out var cuff))
+                return;
+
+            TryUncuff(target, user, cuff.Value);
+        }
+
         /// <summary>
         /// Attempt to uncuff a cuffed entity. Can be called by the cuffed entity, or another entity trying to help uncuff them.
         /// If the uncuffing succeeds, the cuffs will drop on the floor.
         /// </summary>
-        /// <param name="target"></param>
-        /// <param name="user">The cuffed entity</param>
-        /// <param name="cuffsToRemove">Optional param for the handcuff entity to remove from the cuffed entity. If null, uses the most recently added handcuff entity.</param>
-        /// <param name="cuffable"></param>
-        /// <param name="cuff"></param>
-        public void TryUncuff(EntityUid target, EntityUid user, EntityUid? cuffsToRemove = null, CuffableComponent? cuffable = null, HandcuffComponent? cuff = null)
+        /// <param name="target">The entity we're trying to remove cuffs from.</param>
+        /// <param name="user">The entity doing the cuffing.</param>
+        /// <param name="cuff">The handcuff entity we're attempting to remove.</param>
+        public void TryUncuff(Entity<CuffableComponent?> target, EntityUid user, Entity<HandcuffComponent?> cuff)
         {
-            if (!Resolve(target, ref cuffable))
+            if (!Resolve(target, ref target.Comp) || !Resolve(cuff, ref cuff.Comp))
                 return;
 
-            var isOwner = user == target;
+            var isOwner = user == target.Owner;
 
-            if (cuffsToRemove == null)
-            {
-                if (cuffable.Container.ContainedEntities.Count == 0)
-                {
-                    return;
-                }
-
-                cuffsToRemove = cuffable.LastAddedCuffs;
-            }
-            else
-            {
-                if (!cuffable.Container.ContainedEntities.Contains(cuffsToRemove.Value))
-                {
-                    Log.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
-                }
-            }
-
-            if (!Resolve(cuffsToRemove.Value, ref cuff))
-                return;
+            if (!target.Comp.Container.ContainedEntities.Contains(cuff))
+                Log.Warning("A user is trying to remove handcuffs that aren't in the owner's container. This should never happen!");
 
             var attempt = new UncuffAttemptEvent(user, target);
             RaiseLocalEvent(user, ref attempt, true);
@@ -700,29 +620,28 @@ namespace Content.Shared.Cuffs
                 return;
             }
 
-            if (!isOwner && !_interaction.InRangeUnobstructed(user, target))
+            if (!isOwner && !_interaction.InRangeUnobstructed(user, target.Owner))
             {
                 _popup.PopupClient(Loc.GetString("cuffable-component-cannot-remove-cuffs-too-far-message"), user, user);
                 return;
             }
 
-
-            var ev = new ModifyUncuffDurationEvent(user, target, isOwner ? cuff.BreakoutTime : cuff.UncuffTime);
+            var ev = new ModifyUncuffDurationEvent(user, target, isOwner ? cuff.Comp.BreakoutTime : cuff.Comp.UncuffTime);
             RaiseLocalEvent(user, ref ev);
             var uncuffTime = ev.Duration;
 
             if (isOwner)
             {
-                if (!TryComp(cuffsToRemove.Value, out UseDelayComponent? useDelay))
+                if (!TryComp(cuff, out UseDelayComponent? useDelay))
                     return;
 
-                if (!_delay.TryResetDelay((cuffsToRemove.Value, useDelay), true))
+                if (!_delay.TryResetDelay((cuff, useDelay), true))
                 {
                     return;
                 }
             }
 
-            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuffsToRemove)
+            var doAfterEventArgs = new DoAfterArgs(EntityManager, user, uncuffTime, new UnCuffDoAfterEvent(), target, target, cuff)
             {
                 BreakOnMove = true,
                 BreakOnWeightlessMove = false,
@@ -737,7 +656,7 @@ namespace Content.Shared.Cuffs
 
             _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(user):player} is trying to uncuff {ToPrettyString(target):subject}");
 
-            var popupText = user == target
+            var popupText = user == target.Owner
                 ? "cuffable-component-start-uncuffing-self-observer"
                 : "cuffable-component-start-uncuffing-observer";
             _popup.PopupEntity(
@@ -749,7 +668,7 @@ namespace Content.Shared.Cuffs
                     .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user),
                 true);
 
-            if (target == user)
+            if (isOwner)
             {
                 _popup.PopupClient(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
             }
@@ -765,7 +684,7 @@ namespace Content.Shared.Cuffs
                     target);
             }
 
-            _audio.PlayPredicted(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, target, user);
+            _audio.PlayPredicted(isOwner ? cuff.Comp.StartBreakoutSound : cuff.Comp.StartUncuffSound, target, user);
         }
 
         public void Uncuff(EntityUid target, EntityUid? user, EntityUid cuffsToRemove, CuffableComponent? cuffable = null, HandcuffComponent? cuff = null)
@@ -813,9 +732,6 @@ namespace Content.Shared.Cuffs
                 RaiseLocalEvent(target, ref eventArgs);
                 shoved = true;
             }
-
-            if (!MathHelper.CloseTo(cuff.MovementMod, 1f))
-                _move.RefreshMovementSpeedModifiers(target);
 
             if (cuffable.CuffedHandCount == 0)
             {
@@ -892,9 +808,56 @@ namespace Content.Shared.Cuffs
 
         #endregion
 
-        public IReadOnlyList<EntityUid> GetAllCuffs(CuffableComponent component)
+        /// <summary>
+        /// Tries to get a list of all the handcuffs stored in an entity's <see cref="CuffableComponent"/>.
+        /// </summary>
+        /// <param name="entity">The cuffable entity in question.</param>
+        /// <param name="cuffs">A list of cuffs if it exists.</param>
+        /// <returns>True if a list of cuffs with cuffs exists. False if no list exists or if it is empty.</returns>
+        public bool TryGetAllCuffs(Entity<CuffableComponent?> entity, out IReadOnlyList<EntityUid> cuffs)
         {
-            return component.Container.ContainedEntities;
+            cuffs = GetAllCuffs(entity);
+
+            return cuffs.Count > 0;
+        }
+
+        /// <summary>
+        /// Tries to get a list of all the handcuffs stored in a entity's <see cref="CuffableComponent"/>.
+        /// </summary>
+        /// <param name="entity">The cuffable entity in question.</param>
+        /// <returns>A list of cuffs if it exists, or null if there are no cuffs.</returns>
+        public IReadOnlyList<EntityUid> GetAllCuffs(Entity<CuffableComponent?> entity)
+        {
+            if (!Resolve(entity, ref entity.Comp))
+                return [];
+
+            return entity.Comp.Container.ContainedEntities;
+        }
+
+        /// <summary>
+        /// Tries to get the most recently added pair of handcuffs added to an entity with <see cref="CuffableComponent"/>.
+        /// </summary>
+        /// <param name="entity">The cuffable entity in question.</param>
+        /// <param name="cuff">The most recently added cuff.</param>
+        /// <returns>Returns true if a cuff exists and false if one doesn't.</returns>
+        public bool TryGetLastCuff(Entity<CuffableComponent?> entity, [NotNullWhen(true)] out EntityUid? cuff)
+        {
+            cuff = GetLastCuffOrNull(entity);
+
+            return cuff != null;
+        }
+
+        /// <summary>
+        /// Tries to get the most recently added pair of handcuffs added to an entity with <see cref="CuffableComponent"/>.
+        /// </summary>
+        /// <param name="entity">The cuffable entity in question.</param>
+        /// <returns>The most recently added cuff or null if none exists.</returns>
+        public EntityUid? GetLastCuffOrNull(Entity<CuffableComponent?> entity)
+        {
+            if (!Resolve(entity, ref entity.Comp))
+                return null;
+
+            return entity.Comp.Container.ContainedEntities.Count == 0 ? null : entity.Comp.Container.ContainedEntities.Last();
         }
     }
 

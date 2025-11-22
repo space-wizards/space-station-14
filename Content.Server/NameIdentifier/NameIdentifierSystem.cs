@@ -92,7 +92,7 @@ public sealed class NameIdentifierSystem : EntitySystem
         if (ent.Comp.Group is null)
             return;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.Group, out var group))
+        if (!_prototypeManager.Resolve(ent.Comp.Group, out var group))
             return;
 
         int id;
@@ -131,7 +131,7 @@ public sealed class NameIdentifierSystem : EntitySystem
         if (ent.Comp.LifeStage > ComponentLifeStage.Running)
             return;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.Group, out var group))
+        if (!_prototypeManager.Resolve(ent.Comp.Group, out var group))
             return;
 
         var format = group.FullName ? "name-identifier-format-full" : "name-identifier-format-append";
