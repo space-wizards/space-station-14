@@ -26,6 +26,7 @@
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobHumanTorso
     Eyes: MobHumanoidEyes
+    Scleras: MobHumanoidScleras
     HeadTop: MobHumanoidAnyMarking
     LArm: MobHumanLArm
     RArm: MobHumanRArm
@@ -78,6 +79,12 @@
   baseSprite:
     sprite: Mobs/Customization/eyes.rsi
     state: eyes
+
+- type: humanoidBaseSprite
+  id: MobHumanoidScleras
+  baseSprite:
+    sprite: Mobs/Customization/scleras.rsi
+    state: scleras
 
 - type: humanoidBaseSprite
   id: MobHumanoidAnyMarking

@@ -72,6 +72,9 @@ public sealed partial class HumanoidAppearanceComponent : Component
     public Sex Sex = Sex.Male;
 
     [DataField, AutoNetworkedField]
+    public Color ScleraColor = Color.White;
+
+    [DataField, AutoNetworkedField]
     public Color EyeColor = Color.Brown;
 
     /// <summary>
