@@ -199,7 +199,7 @@
   name: XL8
   description: |-
     The Experimental Lecter 8
-    An unreasonably expensive military grade assault rifle with integrated optic. 
+    An unreasonably expensive military grade assault rifle with integrated optic.
     Uses .20 rifle ammo.
   components:
   - type: Sprite
@@ -219,7 +219,7 @@
     - Burst
     - SemiAuto
     - FullAuto
-  
+
 - type: entity
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
@@ -241,17 +241,12 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
-    minAngle: 30
-    maxAngle: 43
     shotsPerBurst: 3
     selectedMode: Burst
     availableModes:
     - Burst
     - SemiAuto
     burstFireRate: 14
-  - type: GunWieldBonus
-    minAngle: -28
-    maxAngle: -25
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -272,12 +267,13 @@
           tags:
           - CartridgeRifle
   - type: SpeedModifiedOnWield
-    walkModifier: 0.75
-    sprintModifier: 0.75
-  - type: CursorOffsetRequiresWield
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: GunRequiresWield
   - type: EyeCursorOffset
     maxOffset: 2
     pvsIncrease: 0.2
+  - type: CursorOffsetRequiresWield
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
