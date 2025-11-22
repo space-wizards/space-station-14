@@ -34,7 +34,7 @@ public sealed class ScatteringGrenadeSystem : SharedScatteringGrenadeSystem
     /// </summary>
     private void OnScatteringTrigger(Entity<ScatteringGrenadeComponent> entity, ref TriggerEvent args)
     {
-        if (args.Key != entity.Comp.TriggerKey)
+        if (args.Keys != null && !args.Keys.Contains(entity.Comp.TriggerKey))
             return;
 
         entity.Comp.IsTriggered = true;
