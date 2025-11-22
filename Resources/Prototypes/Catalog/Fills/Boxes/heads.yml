@@ -1,143 +1,133 @@
 - type: entity
-  name: circuit tote [QM]
-  parent: ToteBase
-  id: BoxQMCircuitboards
-  description: A Tote filled with QM's Circuit boards.
-  components:
-  - type: StorageFill
-    contents:
-      - id: CargoBountyComputerCircuitboard
-      - id: CargoRequestComputerCircuitboard
-      - id: CargoSaleComputerCircuitboard
-      - id: CargoShuttleConsoleCircuitboard
-      - id: SalvageMagnetMachineCircuitboard
-      - id: SalvageJobBoardComputerCircuitboard
-      - id: MailTeleporterMachineCircuitboard
-
-- type: entity
-  name: stamp box [QM]
-  parent: BoxCardboard
-  id: BoxQMStamps
-  description: A box filled with QM's Stamps. Stamped of course.
-  components:
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,1
-  - type: StorageFill
-    contents:
-      - id: RubberStampApproved
-      - id: RubberStampDenied
-      - id: RubberStampQm
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    whitelist:
-      components:
-      - Stamp
-  - type: Sprite
-    layers:
-      - state: box
-      - state: stamp
-
-- type: entity
-  name: circuit tote [HoP]
-  parent: ToteBase
-  id: BoxHoPCircuitboards
-  description: A Tote filled with HoP's Circuit boards.
-  components:
-  - type: StorageFill
-    contents:
-      - id: IDComputerCircuitboard
-      - id: FundingAllocationComputerCircuitboard
-      - id: CargoRequestServiceComputerCircuitboard
-
-- type: entity
-  name: stamp box [HoP]
-  parent: BoxCardboard
-  id: BoxHoPStamps
-  description: A box filled with HoP's Stamps. Stamped of course.
-  components:
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,1
-  - type: StorageFill
-    contents:
-      - id: RubberStampApproved
-      - id: RubberStampDenied
-      - id: RubberStampHop
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    whitelist:
-      components:
-      - Stamp
-  - type: Sprite
-    layers:
-      - state: box
-      - state: stamp
-
-- type: entity
-  name: circuit tote [CE]
-  parent: ToteBase
-  id: BoxCECircuitboards
-  description: A Tote filled with CE's Circuit boards.
-  components:
-  - type: StorageFill
-    contents:
-      - id: CargoRequestEngineeringComputerCircuitboard
-      - id: AlertsComputerCircuitboard
-      - id: AtmosMonitoringComputerCircuitboard
-      - id: PowerComputerCircuitboard
-      - id: SolarControlComputerCircuitboard
-
-- type: entity
-  name: circuit tote [Captain]
   parent: ToteBase
   id: BoxCaptainCircuitboards
-  description: A Tote filled with Captain's Circuit boards.
+  suffix: Captain
   components:
-  - type: StorageFill
-    contents:
-      - id: CommsComputerCircuitboard
-      - id: StationRecordsComputerCircuitboard
+  - type: Label
+    currentLabel: captain
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - CommsComputerCircuitboard
+      - StationRecordsComputerCircuitboard
 
 - type: entity
-  name: circuit tote [CMO]
+  parent: ToteBase
+  id: BoxCECircuitboards
+  suffix: CE
+  components:
+  - type: Label
+    currentLabel: chief engineer
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - CargoRequestEngineeringComputerCircuitboard
+      - AlertsComputerCircuitboard
+      - AtmosMonitoringComputerCircuitboard
+      - PowerComputerCircuitboard
+      - SolarControlComputerCircuitboard
+
+- type: entity
   parent: ToteBase
   id: BoxCMOCircuitboards
-  description: A Tote filled with CMO's Circuit boards.
+  suffix: CMO
   components:
-  - type: StorageFill
-    contents:
-      - id: MedicalTechFabCircuitboard
-      - id: CargoRequestMedicalComputerCircuitboard
+  - type: Label
+    currentLabel: chief medical officer
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - MedicalTechFabCircuitboard
+      - CargoRequestMedicalComputerCircuitboard
 
 - type: entity
-  name: circuit tote [RD]
   parent: ToteBase
-  id: BoxRDCircuitboards
-  description: A Tote filled with RD's Circuit boards.
+  id: BoxHoPCircuitboards
+  suffix: HoP
   components:
-  - type: StorageFill
-    contents:
-      - id: CircuitImprinterMachineCircuitboard
-      - id: ProtolatheMachineCircuitboard
-      - id: ResearchComputerCircuitboard
-      - id: CargoRequestScienceComputerCircuitboard
-      - id: RoboticsConsoleCircuitboard
-      - id: AnalysisComputerCircuitboard #Because sometimes round start artis just fucking explode on the pad.
-      - id: ArtifactAnalyzerMachineCircuitboard
-      - id: StationAiFixerCircuitboard
+  - type: Label
+    currentLabel: head of personnel
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - IDComputerCircuitboard
+      - FundingAllocationComputerCircuitboard
+      - CargoRequestServiceComputerCircuitboard
 
 - type: entity
-  name: circuit tote [HoS]
+  parent: BoxStamps
+  id: BoxHoPStamps
+  suffix: HoP
+  components:
+  - type: Label
+    currentLabel: head of personnel
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - RubberStampApproved
+      - RubberStampDenied
+      - RubberStampHop
+
+- type: entity
   parent: ToteBase
   id: BoxHoSCircuitboards
-  description: A Tote filled with HoS's Circuit boards.
+  suffix: HoS
   components:
-  - type: StorageFill
-    contents:
-      - id: SecurityTechFabCircuitboard
-      - id: CargoRequestSecurityComputerCircuitboard
+  - type: Label
+    currentLabel: head of security
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - SecurityTechFabCircuitboard
+      - CargoRequestSecurityComputerCircuitboard
+
+- type: entity
+  parent: ToteBase
+  id: BoxQMCircuitboards
+  suffix: QM
+  components:
+  - type: Label
+    currentLabel: quartermaster
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - CargoBountyComputerCircuitboard
+      - CargoRequestComputerCircuitboard
+      - CargoSaleComputerCircuitboard
+      - CargoShuttleConsoleCircuitboard
+      - SalvageMagnetMachineCircuitboard
+      - SalvageJobBoardComputerCircuitboard
+      - MailTeleporterMachineCircuitboard
+
+- type: entity
+  parent: BoxStamps
+  id: BoxQMStamps
+  suffix: QM
+  components:
+  - type: Label
+    currentLabel: quartermaster
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - RubberStampApproved
+      - RubberStampDenied
+      - RubberStampQm
+
+- type: entity
+  parent: ToteBase
+  id: BoxRDCircuitboards
+  suffix: RD
+  components:
+  - type: Label
+    currentLabel: research director
+  - type: ContainerFill
+    containers:
+      storagebase:
+      - CircuitImprinterMachineCircuitboard
+      - ProtolatheMachineCircuitboard
+      - ResearchComputerCircuitboard
+      - CargoRequestScienceComputerCircuitboard
+      - RoboticsConsoleCircuitboard
+      - AnalysisComputerCircuitboard #Because sometimes round start artis just fucking explode on the pad.
+      - ArtifactAnalyzerMachineCircuitboard
+      - StationAiFixerCircuitboard
