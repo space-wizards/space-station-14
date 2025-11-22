@@ -154,3 +154,24 @@
       - state: inhand-right-mag
       - state: inhand-right-stripe
         color: "#00cd42"
+
+- type: entity
+  id: MagazineRifleBox
+  name: "ammo belt (.20 rifle)"
+  parent: BaseMagazineRifle
+  description: Box containing a 100-round belt of linked .20 rifle rounds, used by light machine guns. Intended to hold general-purpose kinetic ammunition.
+  components:
+  - type: Tag
+    tags:
+    - MagazineRifleBox
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifle
+    capacity: 100
+  - type: Item
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/LightRifle/light_rifle_box.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
