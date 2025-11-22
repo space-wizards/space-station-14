@@ -1,7 +1,10 @@
-using Content.Server.Holiday.Interfaces;
+using Content.Shared.Holiday.Interfaces;
 
-namespace Content.Server.Holiday.Greet
+namespace Content.Shared.Holiday.Greet
 {
+    /// <summary>
+    ///     Default greeting used by <see cref="HolidayPrototype"/>.
+    /// </summary>
     [DataDefinition]
     public sealed partial class DefaultHolidayGreet : IHolidayGreet
     {
