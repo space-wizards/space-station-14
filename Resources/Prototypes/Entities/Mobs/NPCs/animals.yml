@@ -1441,8 +1441,9 @@
       effects:
       - !type:WashCreamPie
   - type: Crawler
-
-
+  - type: StatusIcon # marks them as crew
+    bounds: -0.5,-0.5,0.5,0.5
+  - type: JobStatus
 
 - type: entity
   name: monkey
@@ -3850,6 +3851,7 @@
     - DoorBumpOpener
   - type: StatusIcon # marks them as crew
     bounds: -0.5,-0.5,0.5,0.5
+  - type: JobStatus
   - type: NpcFactionMember
     factions:
     - NanoTrasen
