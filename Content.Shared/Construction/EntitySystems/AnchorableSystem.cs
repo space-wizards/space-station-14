@@ -151,10 +151,7 @@ public sealed partial class AnchorableSystem : EntitySystem
         var rot = xform.LocalRotation;
         xform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
 
-        if (TryComp<PullableComponent>(uid, out var pullable) && pullable.Puller != null)
-        {
-            _pulling.TryStopPull(uid, pullable);
-        }
+        _pulling.TryStopPull(uid);
 
         // TODO: Anchoring snaps rn anyway!
         if (component.Snap)
