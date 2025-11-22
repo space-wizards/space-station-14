@@ -40,6 +40,13 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
             var minPlayers = gameRule.MinPlayers;
             var name = ToPrettyString(uid);
 
+            // There should only be Ended game rules at roundstart if they are from a failed start, during a fallback start attempt
+            if (HasComp<EndedGameRuleComponent>(uid))
+            {
+                Log.Debug($"Ended gamerule ignored from startup check: {name}");
+                continue;
+            }
+
             if (args.Players.Length >= minPlayers)
                 continue;
 
@@ -88,6 +95,14 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
         {
             if (!TryComp<GameRuleComponent>(uid, out var ruleData))
                 continue;
+
+            // If a gamepreset fails to start, and the round goes into fallback, its rules will still exist, just marked as ended
+            // This check makes it so these gamerules won't show up on the round end screen
+            if (HasComp<EndedGameRuleComponent>(uid))
+            {
+                Log.Debug($"Ended gamerule ignored from round end: {ToPrettyString(uid)}");
+                continue;
+            }
 
             AppendRoundEndText(uid, comp, ruleData, ref ev);
         }
