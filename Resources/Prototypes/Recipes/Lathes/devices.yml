@@ -73,6 +73,14 @@
 
 - type: latheRecipe
   parent: BasePartRecipe
+  id: PressurePlate
+  result: pressureplate
+  materials:
+    Steel: 200
+    Plastic: 300
+
+- type: latheRecipe
+  parent: BasePartRecipe
   id: SignallerAdvanced
   result: RemoteSignallerAdvanced
   materials:
