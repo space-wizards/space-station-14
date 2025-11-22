@@ -15,6 +15,7 @@
             <cc:CommandButton Command="adminlogs" Text="{Loc admin-player-actions-window-admin-logs}"/>
             <cc:CommandButton Command="faxui" Text="{Loc admin-player-actions-window-admin-fax}"/>
             <cc:CommandButton Command="achatwindow" Text="{Loc admin-player-actions-window-admin-chat}"/>
+            <cc:CommandButton Command="parrotmemories" Text="{Loc admin-player-actions-window-parrot-memories}"/>
         </GridContainer>
     </BoxContainer>
 </Control>
