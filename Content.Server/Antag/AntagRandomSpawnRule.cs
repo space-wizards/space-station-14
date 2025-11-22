@@ -22,7 +22,7 @@ public sealed class AntagRandomSpawnSystem : GameRuleSystem<AntagRandomSpawnComp
         // we have to select this here because AntagSelectLocationEvent is raised twice because MakeAntag is called twice
         // once when a ghost role spawner is created and once when someone takes the ghost role
 
-        if (TryFindRandomTile(out _, out _, out _, out var coords))
+        if (TryFindRandomTile(out _, out _, out _, out var coords, true))
             comp.Coords = coords;
     }
 
