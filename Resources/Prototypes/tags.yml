@@ -456,6 +456,9 @@
   id: DiscreteHealthAnalyzer # Storage whitelist: ClothingBeltMedical. ConstructionGraph: MediBot
 
 - type: Tag
+  id: Directional # directional structures that can be ignored for collision when anchoring by certain entities. EG: Windoors.
+
+- type: Tag
   id: DNASolutionScannable # Used by ForensicScannerSystem for scanning a tagged entity's solution container. Exists only on Puddle.
 
 - type: Tag

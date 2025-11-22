@@ -6,7 +6,7 @@
   description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
   components:
   - type: Anchorable
-    flags: 
+    flags:
     - Anchorable
   - type: Rotatable
   - type: Fixtures

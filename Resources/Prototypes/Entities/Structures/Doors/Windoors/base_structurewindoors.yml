@@ -175,6 +175,9 @@
   - type: StaticPrice
     price: 150
   - type: PryUnpowered
+  - type: Tag
+    tags:
+    - Directional
 
 - type: entity
   id: BaseSecureWindoor
@@ -247,6 +250,7 @@
     price: 350
   - type: Tag
     tags:
+      - Directional
       - SecureWindoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
 
@@ -392,6 +396,7 @@
     resistance: 4
   - type: Tag
     tags:
+      - Directional
       - SecurePlasmaWindoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
 
@@ -537,5 +542,6 @@
     resistance: 5
   - type: Tag
     tags:
+      - Directional
       - SecureUraniumWindoor
       # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
