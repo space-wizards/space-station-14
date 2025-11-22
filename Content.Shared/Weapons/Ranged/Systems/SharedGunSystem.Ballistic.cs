@@ -59,6 +59,7 @@ public abstract partial class SharedGunSystem
         {
             _stack.ReduceCount((args.Used, stackComp), 1);
 
+            // TODO: call a method from the stack system when it gets predicted
             if (!ProtoManager.Resolve(stackComp.StackTypeId, out var stackType))
                 return;
 
