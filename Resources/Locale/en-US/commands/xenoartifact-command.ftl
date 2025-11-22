@@ -13,8 +13,8 @@ cmd-spawnartifactwithnode-invalid-prototype-id = Spawned artifact from prototype
 cmd-removenodefromartifact-desc = Removes node from xeno artifact, breaking all connected edges
 cmd-removenodefromartifact-help = <artifact uid> <node uid>
 
-cmd-addedgebetweeennodes-desc = Creates edge, linking two nodes inside one xeno artifact
-cmd-addedgebetweeennodes-help = <artifact uid> <node uid from> <node uid to>
+cmd-addedgebetweennodes-desc = Creates edge, linking two nodes inside one xeno artifact
+cmd-addedgebetweennodes-help = <artifact uid> <node uid from> <node uid to>
 
 cmd-createnodeinartifact-desc = Create node in xeno artifact,
 cmd-createnodeinartifact-help = <artifact uid> <effect ent proto id> <trigger proto id> <node uid from>
