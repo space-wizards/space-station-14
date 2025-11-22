@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Grid
-  engineVersion: 266.0.0
+  engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 08/14/2025 23:46:23
-  entityCount: 435
+  time: 11/16/2025 15:37:41
+  entityCount: 441
 maps: []
 grids:
 - 1
@@ -1100,10 +1100,11 @@ entities:
       parent: 1
 - proto: ComputerIFFSyndicate
   entities:
-  - uid: 278
+  - uid: 437
     components:
     - type: Transform
-      pos: 2.5,5.5
+      rot: -1.5707963267948966 rad
+      pos: 2.5,1.5
       parent: 1
 - proto: ComputerPowerMonitoring
   entities:
@@ -1132,6 +1133,11 @@ entities:
       parent: 1
 - proto: ComputerSurveillanceCameraMonitor
   entities:
+  - uid: 278
+    components:
+    - type: Transform
+      pos: 2.5,5.5
+      parent: 1
   - uid: 426
     components:
     - type: Transform
@@ -1579,21 +1585,17 @@ entities:
       rot: 3.141592653589793 rad
       pos: -6.5,-0.5
       parent: 1
-- proto: MachineArtifactCrusher
+- proto: MachineArtifactCrusherXenoborg
   entities:
-  - uid: 372
+  - uid: 111
     components:
-    - type: MetaData
-      name: body crusher
-    - type: Transform
-      pos: 3.5,-4.5
-      parent: 1
-  - uid: 373
-    components:
-    - type: MetaData
-      name: body crusher
     - type: Transform
       pos: 2.5,-4.5
+      parent: 1
+  - uid: 112
+    components:
+    - type: Transform
+      pos: 3.5,-4.5
       parent: 1
 - proto: PlasticFlapsAirtightClear
   entities:
@@ -1748,6 +1750,35 @@ entities:
     - type: Transform
       pos: -9.5,1.5
       parent: 1
+- proto: SpawnPointMothershipCore
+  entities:
+  - uid: 436
+    components:
+    - type: Transform
+      pos: 0.5,0.5
+      parent: 1
+- proto: SpawnPointXenoborg
+  entities:
+  - uid: 438
+    components:
+    - type: Transform
+      pos: 1.5,-0.5
+      parent: 1
+  - uid: 439
+    components:
+    - type: Transform
+      pos: 1.5,1.5
+      parent: 1
+  - uid: 440
+    components:
+    - type: Transform
+      pos: -0.5,1.5
+      parent: 1
+  - uid: 441
+    components:
+    - type: Transform
+      pos: -0.5,-0.5
+      parent: 1
 - proto: SubstationBasic
   entities:
   - uid: 135
@@ -1845,100 +1876,6 @@ entities:
     components:
     - type: Transform
       pos: -2.5,5.5
-      parent: 1
-- proto: Thruster
-  entities:
-  - uid: 111
-    components:
-    - type: Transform
-      pos: -10.5,3.5
-      parent: 1
-  - uid: 112
-    components:
-    - type: Transform
-      pos: -9.5,3.5
-      parent: 1
-  - uid: 113
-    components:
-    - type: Transform
-      pos: -7.5,3.5
-      parent: 1
-  - uid: 114
-    components:
-    - type: Transform
-      pos: -6.5,3.5
-      parent: 1
-  - uid: 115
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -7.5,-2.5
-      parent: 1
-  - uid: 116
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -6.5,-2.5
-      parent: 1
-  - uid: 117
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -10.5,-2.5
-      parent: 1
-  - uid: 118
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -9.5,-2.5
-      parent: 1
-  - uid: 119
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -12.5,-0.5
-      parent: 1
-  - uid: 120
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -12.5,0.5
-      parent: 1
-  - uid: 121
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -12.5,1.5
-      parent: 1
-  - uid: 122
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 8.5,1.5
-      parent: 1
-  - uid: 123
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 8.5,0.5
-      parent: 1
-  - uid: 124
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 8.5,-0.5
-      parent: 1
-  - uid: 125
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -2.5,-6.5
-      parent: 1
-  - uid: 126
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 3.5,-6.5
       parent: 1
 - proto: TwoWayLever
   entities:
@@ -2537,6 +2474,100 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,2.5
+      parent: 1
+- proto: ThrusterXenoborg
+  entities:
+  - uid: 113
+    components:
+    - type: Transform
+      pos: -7.5,3.5
+      parent: 1
+  - uid: 114
+    components:
+    - type: Transform
+      pos: -6.5,3.5
+      parent: 1
+  - uid: 115
+    components:
+    - type: Transform
+      pos: -9.5,3.5
+      parent: 1
+  - uid: 116
+    components:
+    - type: Transform
+      pos: -10.5,3.5
+      parent: 1
+  - uid: 117
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -6.5,-2.5
+      parent: 1
+  - uid: 118
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.5,-2.5
+      parent: 1
+  - uid: 119
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -10.5,-2.5
+      parent: 1
+  - uid: 120
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -9.5,-2.5
+      parent: 1
+  - uid: 121
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -12.5,-0.5
+      parent: 1
+  - uid: 122
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -12.5,0.5
+      parent: 1
+  - uid: 123
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -12.5,1.5
+      parent: 1
+  - uid: 124
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,-0.5
+      parent: 1
+  - uid: 125
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,0.5
+      parent: 1
+  - uid: 126
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,1.5
+      parent: 1
+  - uid: 372
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,-6.5
+      parent: 1
+  - uid: 373
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,-6.5
       parent: 1
 - proto: XenoborgWindow
   entities:
