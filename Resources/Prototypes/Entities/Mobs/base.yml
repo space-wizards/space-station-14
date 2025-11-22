@@ -242,6 +242,20 @@
   abstract: true
   components:
   - type: Internals
+  - type: Cpr
+    change:
+      types:
+        Bloodloss: -0.5
+        Blunt: 0.2
+    bonusHeal:
+      types:
+        Asphyxiation: -5
+        Bloodloss: -1.5
+    sound:
+      path: "/Audio/Effects/cprpulse.ogg"
+      params:
+        volume: 0.5
+        variation: 0.125
   - type: Respirator
     damage:
       types:
