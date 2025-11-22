@@ -219,9 +219,22 @@ namespace Content.Server.Database
             // So just pull down the whole list into memory.
             var queryBans = await GetAllRoleBans(db.SqliteDbContext, includeUnbanned);
 
+            var exempt = await GetBanExemptionCore(db, userId) ?? default;
+
+            var playerInfo = new BanMatcher.PlayerInfo
+            {
+                Address = address,
+                UserId = userId,
+                ExemptFlags = exempt,
+                HWId = hwId,
+                ModernHWIds = modernHWIds,
+                // This does not matter for rolebans
+                IsNewPlayer = false,
+            };
+
             return queryBans
-                .Where(b => RoleBanMatches(b, address, userId, hwId, modernHWIds))
                 .Select(ConvertRoleBan)
+                .Where(b => BanMatcher.BanMatches(b!, playerInfo))
                 .ToList()!;
         }
 
@@ -237,46 +250,6 @@ namespace Content.Server.Database
             }
 
             return await query.ToListAsync();
-        }
-
-        private static bool RoleBanMatches(
-            ServerRoleBan ban,
-            IPAddress? address,
-            NetUserId? userId,
-            ImmutableArray<byte>? hwId,
-            ImmutableArray<ImmutableArray<byte>>? modernHWIds)
-        {
-            if (address != null && ban.Address is not null && address.IsInSubnet(ban.Address.ToTuple().Value))
-            {
-                return true;
-            }
-
-            if (userId is { } id && ban.PlayerUserId == id.UserId)
-            {
-                return true;
-            }
-
-            switch (ban.HWId?.Type)
-            {
-                case HwidType.Legacy:
-                    if (hwId is { Length: > 0 } hwIdVar && hwIdVar.AsSpan().SequenceEqual(ban.HWId.Hwid))
-                        return true;
-                    break;
-
-                case HwidType.Modern:
-                    if (modernHWIds != null)
-                    {
-                        foreach (var modernHWId in modernHWIds)
-                        {
-                            if (modernHWId.AsSpan().SequenceEqual(ban.HWId.Hwid))
-                                return true;
-                        }
-                    }
-
-                    break;
-            }
-
-            return false;
         }
 
         public override async Task<ServerRoleBanDef> AddServerRoleBanAsync(ServerRoleBanDef serverBan)
