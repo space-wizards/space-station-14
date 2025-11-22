@@ -64,10 +64,10 @@ public abstract partial class SharedGunSystem
                 return;
 
             var ammo = PredictedSpawnInContainerOrDrop(stackType.Spawn, uid, component.Container.ID);
-            FillAmmo((uid, component), ammo, args);
+            FillAmmo((uid, component), ammo, args.User);
         }
         else
-            FillAmmo((uid, component), args.Used, args);
+            FillAmmo((uid, component), args.Used, args.User);
 
         args.Handled = true;
     }
@@ -291,10 +291,10 @@ public abstract partial class SharedGunSystem
         Containers.Insert(ammo, ammoProvider.Comp.Container);
 
         // Not predicted so
-        Audio.PlayPredicted(ammoProvider.Comp.SoundInsert, ammoProvider, args.User);
+        Audio.PlayPredicted(ammoProvider.Comp.SoundInsert, ammoProvider, user);
 
         UpdateBallisticAppearance(ammoProvider, ammoProvider.Comp);
-        UpdateAmmoCount(args.Target);
+        UpdateAmmoCount(ammoProvider);
         DirtyField(ammoProvider, ammoProvider.Comp, nameof(BallisticAmmoProviderComponent.Entities));
     }
 
