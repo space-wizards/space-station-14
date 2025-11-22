@@ -25,13 +25,13 @@ public sealed partial class FaxWindow : DefaultWindow
 
         PaperButtonPressed += OnPaperButtonPressed;
 
-        FileButton.OnPressed += _ => FileButtonPressed?.Invoke(); 
-        PaperButton.OnPressed += _ => PaperButtonPressed?.Invoke(); 
+        FileButton.OnPressed += _ => FileButtonPressed?.Invoke();
+        PaperButton.OnPressed += _ => PaperButtonPressed?.Invoke();
         CopyButton.OnPressed += _ => CopyButtonPressed?.Invoke();
         SendButton.OnPressed += _ => SendButtonPressed?.Invoke();
         RefreshButton.OnPressed += _ => RefreshButtonPressed?.Invoke();
         PeerSelector.OnItemSelected += args =>
-            PeerSelected?.Invoke((string) args.Button.GetItemMetadata(args.Id)!);
+            PeerSelected?.Invoke((string)args.Button.GetItemMetadata(args.Id)!);
     }
 
     public void UpdateState(FaxUiState state)
