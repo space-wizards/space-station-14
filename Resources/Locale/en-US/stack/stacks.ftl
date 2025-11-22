@@ -80,6 +80,10 @@ stack-artifact-fragment = artifact {$amount ->
     [1] fragment
     *[other] fragments
 }
+stack-conveyor = {$amount ->
+    [1] conveyor
+    *[other] conveyors
+}
 
 # best materials
 stack-ground-tobacco = ground tobacco

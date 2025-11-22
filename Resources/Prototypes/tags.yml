@@ -355,9 +355,6 @@
   id: ConstructionMaterial # Storage whitelist: BorgModuleConstruction
 
 - type: Tag
-  id: ConveyorAssembly # ConstructionGraph: ConveyorGraph
-
-- type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
 
 - type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
