@@ -31,6 +31,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
     private NetEntity? _trackedEntity;
     private bool _tryToScrollToListFocus;
     private Texture? _blipTexture;
+    public event Action<EntityCoordinates>? MapClicked;
 
     public CrewMonitoringWindow()
     {
@@ -41,6 +42,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         _spriteSystem = _entManager.System<SpriteSystem>();
 
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
+        NavMap.MapClicked += OnNavMapClicked;
     }
 
     public void Set(string stationName, EntityUid? mapUid)
@@ -351,6 +353,22 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         _tryToScrollToListFocus = true;
 
         UpdateSensorsTable(_trackedEntity, prevTrackedEntity);
+    }
+
+    private void OnNavMapClicked(EntityCoordinates coordinates)
+    {
+        MapClicked?.Invoke(coordinates);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            NavMap.TrackedEntitySelectedAction -= SetTrackedEntityFromNavMap;
+            NavMap.MapClicked -= OnNavMapClicked;
+        }
+
+        base.Dispose(disposing);
     }
 
     private void UpdateSensorsTable(NetEntity? currTrackedEntity, NetEntity? prevTrackedEntity)
