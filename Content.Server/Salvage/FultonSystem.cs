@@ -3,6 +3,8 @@ using Content.Shared.Salvage.Fulton;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Salvage;
 
@@ -12,6 +14,7 @@ namespace Content.Server.Salvage;
 public sealed class FultonSystem : SharedFultonSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedJointSystem _jointSystem = default!;
 
     public override void Initialize()
     {
@@ -65,6 +68,9 @@ public sealed class FultonSystem : SharedFultonSystem
             var localPos = Vector2.Transform(
                     TransformSystem.GetWorldPosition(beaconXform),
                     TransformSystem.GetInvWorldMatrix(beaconXform.ParentUid)) + offset;
+
+            if (TryComp<JointComponent>(uid, out var joint))
+                _jointSystem.ClearJoints(uid, joint);
 
             TransformSystem.SetCoordinates(uid, new EntityCoordinates(beaconXform.ParentUid, localPos));
 
