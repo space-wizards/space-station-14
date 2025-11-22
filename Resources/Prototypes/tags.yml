@@ -42,6 +42,9 @@
 - type: Tag
   id: ArtifactFragment # Storage whitelist: OreBag. CargoBounty: BountyArtifactFragment. ConstructionGraph: Artifact
 
+- type: Tag
+  id: AssaultRifle # Storage whitelist: ClothingBeltSyndieHolster
+
 ## B ##
 
 - type: Tag
@@ -534,6 +537,9 @@
   id: EncryptionService # ItemMapper: TelecomServer
 
 - type: Tag
+  id: EnergyWeapon # Storage whitelist: ClothingBeltSyndieHolster
+
+- type: Tag
   id: Enzyme # Storage whitelist: ClothingBeltChef. ItemMapper: ClothingBeltChef
 
 - type: Tag
@@ -909,6 +915,9 @@
   id: Maints # RoomFill spawner whitelist for MaintsRoomMarker.
 
 - type: Tag
+  id: MagazineBox # Storage whitelist: ClothingBeltSyndieHolster
+
+- type: Tag
   id: Matchstick # Storage whitelist: Ashtray. ConstructionGraph: ImprovisedShotgunShellGraph
 
 - type: Tag
@@ -1260,6 +1269,9 @@
   id: Shiv # CargoBounty: BountyShiv
 
 - type: Tag
+  id: Shotgun # Storage whitelist: ClothingBeltSyndieHolster
+
+- type: Tag
   id: Sidearm # Storage whitelist: ClothingBeltSecurity, ClothingShoesMilitaryBase, ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
@@ -1355,6 +1367,9 @@
 
 - type: Tag
   id: SubMachineGun # Storage whitelist: ClothingBeltSyndieHolster
+
+- type: Tag
+  id: SubMachineGunOneHand # Storage whitelist: ClothingBeltSyndieHolster
 
 - type: Tag
   id: SuitEVA # ConstructionGraph: ClownHardsuit, MimeHardsuit

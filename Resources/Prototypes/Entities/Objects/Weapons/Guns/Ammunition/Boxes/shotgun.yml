@@ -29,6 +29,9 @@
       steps: 5
       zeroVisible: false
     - type: Appearance
+    - type: Tag
+      tags:
+      - MagazineBox
 
 # Shotgun Shells
 - type: entity

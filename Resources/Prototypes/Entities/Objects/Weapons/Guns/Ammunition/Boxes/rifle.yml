@@ -22,6 +22,9 @@
     steps: 4
     zeroVisible: false
   - type: Appearance
+  - type: Tag
+    tags:
+    - MagazineBox
 
 # Boxes
 - type: entity

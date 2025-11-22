@@ -6,6 +6,9 @@
   abstract: true
   components:
   - type: Sprite
+  - type: Tag
+    tags:
+    - AssaultRifle
   - type: Item
     size: Huge
     shape:
@@ -199,7 +202,7 @@
   name: XL8
   description: |-
     The Experimental Lecter 8
-    An unreasonably expensive military grade assault rifle with integrated optic. 
+    An unreasonably expensive military grade assault rifle with integrated optic.
     Uses .20 rifle ammo.
   components:
   - type: Sprite
@@ -219,7 +222,7 @@
     - Burst
     - SemiAuto
     - FullAuto
-  
+
 - type: entity
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]

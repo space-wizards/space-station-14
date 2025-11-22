@@ -193,9 +193,9 @@
   - type: ContainerFill
     containers:
         item1:
-        - WeaponRevolverInspector
-        item2:
         - SpeedLoaderMagnum
+        item2:
+        - WeaponRevolverInspector
 
 - type: entity
   id: ClothingBeltChefFilled

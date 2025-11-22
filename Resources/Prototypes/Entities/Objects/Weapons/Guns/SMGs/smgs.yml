@@ -76,6 +76,7 @@
   - type: Tag
     tags:
     - SubMachineGun
+    - SubMachineGunOneHand
   - type: Gun
     fireRate: 10
     soundGunshot:
@@ -253,6 +254,7 @@
   - type: Tag
     tags:
     - SubMachineGun
+    - SubMachineGunOneHand
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: ChamberMagazineAmmoProvider

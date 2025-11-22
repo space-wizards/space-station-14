@@ -117,27 +117,29 @@
          item2: !type:ContainerSlot
        storagebase: !type:Container
          ents: []
+  - type: Item
+    size: Ginormous
   - type: ItemSlots
     slots:
       item1:
-        name: clothing-holster-handgun
-        priority: 2
+        name: clothing-holster-slot-one
+        priority: 1
         whitelist:
           tags:
           - Sidearm
-          - CombatKnife
+          - Knife
           - MagazinePistol
           - MagazinePistolHighCapacity
           - MagazinePistolCaselessRifle
           - MagazineMagnum
           - SpeedLoaderMagnum
       item2:
-        name: clothing-holster-handgun
-        priority: 1
+        name: clothing-holster-slot-two
+        priority: 2
         whitelist:
           tags:
           - Sidearm
-          - CombatKnife
+          - Knife
           - MagazinePistol
           - MagazinePistolHighCapacity
           - MagazinePistolCaselessRifle
@@ -160,34 +162,18 @@
         item2: !type:ContainerSlot
       storagebase: !type:Container
         ents: []
+  - type: Item
+    size: Ginormous
   - type: ItemSlots
     slots:
       item1:
-        name: clothing-holster-gun
-        priority: 2
-        whitelist:
-          tags:
-          - Sidearm
-          - CombatKnife
-          - SubMachineGun
-          - MagazinePistol
-          - MagazinePistolHighCapacity
-          - MagazinePistolCaselessRifle
-          - MagazinePistolSubMachineGun
-          - MagazinePistolSubMachineGunTopMounted
-          - MagazineMagnum
-          - SpeedLoaderMagnum
-          - MagazineRifle
-          - MagazineLightRifle
-          - MagazineShotgun
-      item2:
-        name: clothing-holster-gun
+        name: clothing-holster-upgraded-slot
         priority: 1
         whitelist:
           tags:
           - Sidearm
-          - CombatKnife
-          - SubMachineGun
+          - Knife
+          - SubMachineGunOneHand
           - MagazinePistol
           - MagazinePistolHighCapacity
           - MagazinePistolCaselessRifle
@@ -197,7 +183,18 @@
           - SpeedLoaderMagnum
           - MagazineRifle
           - MagazineLightRifle
+          - MagazineLightRifleBox
           - MagazineShotgun
+          - MagazineBox
+      item2:
+        name: clothing-holster-large-slot
+        priority: 2
+        whitelist:
+          tags:
+          - Shotgun
+          - SubMachineGun
+          - AssaultRifle
+          - EnergyWeapon
   - type: StaticPrice
     price: 500
 
