@@ -26,7 +26,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
-    capacity: 10
+    capacity: 5
     proto: CartridgeLightRifle
     whitelist:
       tags:

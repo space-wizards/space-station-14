@@ -874,7 +874,7 @@
   id: MagazineLightRifle # WeaponRifleAk
 
 - type: Tag
-  id: MagazineLightRifleBox # WeaponLightMachineGunL6
+  id: MagazineRifleBox # WeaponLightMachineGunL6
 
 - type: Tag
   id: MagazineMagnum # WeaponPistolN1984
