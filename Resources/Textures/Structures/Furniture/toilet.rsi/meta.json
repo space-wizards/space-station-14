@@ -186,42 +186,6 @@
             ]
         },
         {
-            "name": "dispover-full",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
-            "name": "dispover-handle",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
-        },
-        {
             "name": "dispover-ready",
             "directions": 4,
             "delays": [
