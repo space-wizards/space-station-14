@@ -99,6 +99,7 @@ public sealed class PAISystem : EntitySystem
         var val = Loc.GetString("pai-system-pai-name-raw", ("name", name.ToString()));
         _metaData.SetEntityName(uid, val);
     }
+    
     public void PAITurningOff(EntityUid uid)
     {
         //  Close the instrument interface if it was open
