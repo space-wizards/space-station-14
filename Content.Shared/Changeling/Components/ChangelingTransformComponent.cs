@@ -10,7 +10,7 @@ namespace Content.Shared.Changeling.Components;
 /// The component containing information about Changelings Transformation action
 /// Like how long their windup is, the sounds as well as the Target Cloning settings for changing between identities
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent(restriction: StateRestriction.OwnerOnly), AutoGenerateComponentState]
 [Access(typeof(ChangelingTransformSystem))]
 public sealed partial class ChangelingTransformComponent : Component
 {
@@ -49,7 +49,5 @@ public sealed partial class ChangelingTransformComponent : Component
     /// respective systems.
     /// </summary>
     public ProtoId<CloningSettingsPrototype> TransformCloningSettings = "ChangelingCloningSettings";
-
-    public override bool SendOnlyToOwner => true;
 }
 

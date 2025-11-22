@@ -13,7 +13,7 @@ namespace Content.Shared.CombatMode.Pacification;
 ///
 /// If you want full-pacifism (no combat mode at all), you can simply set <see cref="DisallowAllCombat"/> before adding.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent(restriction: StateRestriction.OwnerOnly), AutoGenerateComponentPause]
 [Access(typeof(PacificationSystem))]
 public sealed partial class PacifiedComponent : Component
 {
@@ -28,7 +28,6 @@ public sealed partial class PacifiedComponent : Component
     /// </summary>
     [DataField]
     public bool DisallowAllCombat = false;
-
 
     /// <summary>
     /// When attempting attack against the same entity multiple times,
@@ -55,8 +54,4 @@ public sealed partial class PacifiedComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> PacifiedAlert = "Pacified";
-
-    // Prevent cheat clients from using this to identify thieves and players that cannot fight back.
-    // This should not matter for prediction reasons since it only blocks user input.
-    public override bool SendOnlyToOwner => true;
 }
