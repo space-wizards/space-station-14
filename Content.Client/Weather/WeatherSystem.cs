@@ -107,8 +107,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 var entPos = _transform.GetMapCoordinates(entXform);
                 var nodePosition = _transform.ToMapCoordinates(nearestNode.Value).Position;
                 var delta = nodePosition - entPos.Position;
-                var distance = delta.Length();
-                occlusion = _audio.GetOcclusion(entPos, delta, distance);
+                occlusion = _audio.GetOcclusion(entPos, delta);
             }
             else
             {
