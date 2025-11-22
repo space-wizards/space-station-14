@@ -66,5 +66,11 @@ public sealed partial class InstrumentComponent : SharedInstrumentComponent
     [ViewVariables]
     public int PlayerTick => Renderer?.PlayerTick ?? 0;
 
+    /// <summary>
+    ///     The name of the currently loaded MIDI song (from track metadata).
+    /// </summary>
+    [ViewVariables]
+    public string? MidiSongName { get; set; }
+
     public void PlaybackEndedInvoke() => OnMidiPlaybackEnded?.Invoke();
 }

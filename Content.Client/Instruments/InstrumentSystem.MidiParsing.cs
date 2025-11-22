@@ -8,6 +8,7 @@ public sealed partial class InstrumentSystem
 {
     /// <summary>
     /// Tries to parse the input data as a midi and set the channel names respectively.
+    /// Also extracts the song title from the first track with a name.
     /// </summary>
     /// <remarks>
     /// Thank you to http://www.somascape.org/midi/tech/mfile.html for providing an awesome resource for midi files.
@@ -15,8 +16,11 @@ public sealed partial class InstrumentSystem
     /// <remarks>
     /// This method has exception tolerance and does not throw, even if the midi file is invalid.
     /// </remarks>
-    private bool TrySetChannels(EntityUid uid, byte[] data)
+    private bool TrySetChannels(EntityUid uid, byte[] data, InstrumentComponent? instrument = null)
     {
+        if (!Resolve(uid, ref instrument))
+            return false;
+
         if (!MidiParser.MidiParser.TryGetMidiTracks(data, out var tracks, out var error))
         {
             Log.Error(error);
@@ -24,9 +28,18 @@ public sealed partial class InstrumentSystem
         }
 
         var resolvedTracks = new List<MidiTrack?>();
+        string? songName = null;
+
         for (var index = 0; index < tracks.Length; index++)
         {
             var midiTrack = tracks[index];
+
+            // Extract song name from the first track that has one
+            if (songName == null && !string.IsNullOrWhiteSpace(midiTrack.TrackName))
+            {
+                songName = midiTrack.TrackName.Trim();
+            }
+
             if (midiTrack is { TrackName: null, ProgramName: null, InstrumentName: null})
                 continue;
 
@@ -45,6 +58,10 @@ public sealed partial class InstrumentSystem
 
             Log.Debug($"Channel name: {resolvedTracks.Last()}");
         }
+
+        // Store the song name in the component
+        instrument.MidiSongName = songName;
+        Log.Debug($"Song name: {songName ?? "Unknown"}");
 
         RaiseNetworkEvent(new InstrumentSetChannelsEvent(GetNetEntity(uid), resolvedTracks.Take(RobustMidiEvent.MaxChannels).ToArray()));
         Log.Debug($"Resolved {resolvedTracks.Count} channels.");
