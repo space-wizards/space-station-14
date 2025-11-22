@@ -15,7 +15,7 @@ public sealed partial class TriggerOnRadialMenuComponent : Component
     public List<TriggerRadialMenuEntry> RadialMenuEntries = [];
 }
 
-[DataDefinition]
+[DataDefinition, Serializable]
 public sealed partial class TriggerRadialMenuEntry
 {
     /// <summary>
