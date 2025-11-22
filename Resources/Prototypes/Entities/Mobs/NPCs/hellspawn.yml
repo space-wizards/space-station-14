@@ -81,10 +81,10 @@
     thresholds:
       0: Alive
       450: Dead
-  - type: Butcherable
-    spawned:
-      - id: ArtifactFragment
-        amount: 4
+  - type: Sliceable
+    slices:
+    - id: ArtifactFragment
+      amount: 4
   - type: MeleeWeapon
     attackRate: 0.6
     hidden: true

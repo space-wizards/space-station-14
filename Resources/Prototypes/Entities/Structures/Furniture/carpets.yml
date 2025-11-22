@@ -38,13 +38,10 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-  - type: Butcherable
-    butcheringType: Knife
-    butcherDelay: 2
-    spawned:
-    - id: MaterialCloth1
-      amount: 1
   - type: TrayScanReveal
+  - type: Sliceable
+    slices:
+    - id: MaterialCloth1
 
 - type: entity
   id: Carpet
@@ -425,10 +422,8 @@
               MaterialCardboard:
                 min: 1
                 max: 1
-  - type: Butcherable
-    butcheringType: Knife
-    butcherDelay: 1
-    spawned:
+  - type: Sliceable
+    slices:
     - id: MaterialCardboard1
       amount: 1
   - type: TrayScanReveal

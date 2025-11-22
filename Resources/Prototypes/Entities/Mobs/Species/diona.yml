@@ -28,7 +28,6 @@
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Butcherable
-    butcheringType: Spike
     spawned:
       - id: FoodMeatPlant
         amount: 5
