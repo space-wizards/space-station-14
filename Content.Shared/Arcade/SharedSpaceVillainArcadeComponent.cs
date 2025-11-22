@@ -8,9 +8,13 @@ namespace Content.Shared.Arcade
         public enum Indicators
         {
             /// <summary>
-            /// Blinks when any invincible flag is set
+            /// Blinks when the player invincible flag is set
             /// </summary>
-            HealthManager,
+            PlayerInvinc,
+            /// <summary>
+            /// Blinks when the villain invincible flag is set
+            /// </summary>
+            VillainInvinc,
             /// <summary>
             /// Blinks when Overflow flag is set
             /// </summary>
