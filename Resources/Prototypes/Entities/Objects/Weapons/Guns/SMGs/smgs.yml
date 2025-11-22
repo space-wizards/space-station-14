@@ -327,7 +327,7 @@
   name: Kingcobra submachine gun
   parent: [BaseWeaponSubMachineGun, BaseSyndicateContraband]
   id: WeaponSubMachineGunKingcobra
-  description: An elite, robust, and integrally suppressed submachine gun, firing caseless subsonic rounds. Infamous for its low magazine count. Feeds from .25 caseless pistol magazines.
+  description: An elite, robust, and integrally suppressed submachine gun, firing caseless subsonic rounds. Infamous for its low magazine count and deadly bayonet which can be laced with toxins. Feeds from .25 caseless pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/kingcobra.rsi
@@ -336,6 +336,9 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
+    - state: base1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/kingcobra.rsi
   - type: ChamberMagazineAmmoProvider
@@ -348,7 +351,7 @@
   - type: Gun
     minAngle: 23
     maxAngle: 34
-    shotsPerBurst: 2
+    shotsPerBurst: 5
     availableModes:
     - Burst
     - FullAuto
@@ -380,6 +383,39 @@
     magState: mag
     steps: 1
     zeroVisible: true
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: base
+    inHandsFillBaseName: -fill-
+    inHandsMaxFillLevels: 1
+    equippedFillBaseName: -fill-
+    equippedMaxFillLevels: 1
+  - type: MeleeWeapon
+    wideAnimationRotation: 270
+    attackRate: 1
+    damage:
+      types:
+        Slash: 19
+    angle: 0
+    animation: WeaponArcThrust
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 2
+  - type: MeleeChemicalInjector
+    solution: melee
+  - type: RefillableSolution
+    solution: melee
+  - type: InjectableSolution
+    solution: melee
+  - type: SolutionTransfer
+    maxTransferAmount: 2
+  - type: Sharp
+    butcherDelayModifier: 2 #It's a bayonet
   - type: Appearance
   - type: StaticPrice
     price: 4000
