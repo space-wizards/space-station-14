@@ -77,8 +77,8 @@ public sealed class BorgSystem : SharedBorgSystem
 
         if (!_appearance.TryGetData(uid, MMIVisuals.BrainPresent, out bool brain))
             brain = false;
-        if (!_appearance.TryGetData(uid, MMIVisuals.HasMind, out bool hasMind))
-            hasMind = false;
+        if (!_appearance.TryGetData(uid, MMIVisuals.MindState, out MMIVisualsMindstate hasMind))
+            hasMind = MMIVisualsMindstate.NoMind;
 
         _sprite.LayerSetVisible((uid, sprite), MMIVisualLayers.Brain, brain);
         if (!brain)
@@ -87,9 +87,19 @@ public sealed class BorgSystem : SharedBorgSystem
         }
         else
         {
-            var state = hasMind
-                ? component.HasMindState
-                : component.NoMindState;
+            var state = component.NoMindState;
+            switch(hasMind)
+            {
+                case MMIVisualsMindstate.NoMind:
+                    state = component.NoMindState;
+                    break;
+                case MMIVisualsMindstate.Searching:
+                    state = component.SearchingMindState;
+                    break;
+                case MMIVisualsMindstate.HasMind:
+                    state = component.HasMindState;
+                    break;
+            }
             _sprite.LayerSetRsiState((uid, sprite), MMIVisualLayers.Base, state);
         }
     }

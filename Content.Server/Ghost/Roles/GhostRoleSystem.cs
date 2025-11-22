@@ -916,6 +916,26 @@ public sealed class GhostRoleSystem : EntitySystem
 
         SetMode(entity.Owner, ghostRoleProto, ghostRoleProto.Name, entity.Comp);
     }
+
+    /// <summary>
+    /// Apply a <see cref="GhostRoleSettings"/> to the chosen <see cref="GhostRoleComponent"/>.
+    /// </summary>
+    /// <param name="entity">The target entity.</param>
+    /// <param name="settings">The settings to be applied.</param>
+    public void ApplyGhostRoleSettings(Entity<GhostRoleComponent> entity, GhostRoleSettings settings)
+    {
+        entity.Comp.MakeSentient = settings.MakeSentient;
+        entity.Comp.Probability = settings.Probability;
+        entity.Comp.RoleName = settings.RoleName;
+        entity.Comp.RoleDescription = settings.RoleDescription;
+        entity.Comp.RoleRules = settings.RoleRules;
+        entity.Comp.MindRoles = settings.MindRoles;
+        entity.Comp.AllowSpeech = settings.AllowSpeech;
+        entity.Comp.AllowMovement = settings.AllowMovement;
+        entity.Comp.ReregisterOnGhost = settings.ReregisterOnGhost;
+        entity.Comp.RaffleConfig = settings.RaffleConfig;
+        entity.Comp.JobProto = settings.JobProto;
+    }
 }
 
 [AnyCommand]
