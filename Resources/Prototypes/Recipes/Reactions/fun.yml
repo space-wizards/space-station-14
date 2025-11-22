@@ -233,28 +233,28 @@
   reactants:
     Haloperidol:
       amount: 3
-    Cognizine:
+    Psicodine:
       amount: 2
     CarpoToxin:
       amount: 2
     Enzyme:
       amount: 1
   products:
-    Felinase: 2
+    Felinase: 4
 
 - type: reaction
   id: Caninase
   reactants:
     Haloperidol:
       amount: 3
-    Cognizine:
+    Psicodine:
       amount: 2
     Happiness:
       amount: 2
     Enzyme:
       amount: 1
   products:
-    Caninase: 2
+    Caninase: 4
 
 - type: reaction
   id: CaninaseFelinaseReaction
