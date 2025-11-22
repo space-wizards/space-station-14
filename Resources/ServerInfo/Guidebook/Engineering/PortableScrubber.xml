@@ -5,16 +5,16 @@
     <GuideEntityEmbed Entity="PortableScrubber"/>
   </Box>
 
-  It is invaluable for quickly scrubbing unwanted gasses from a room when regular [textlink="scrubbers" link="AirScrubber"] are working too slow, or when a [textlink="scrubber" link="AirScrubber"] is not present.
+  It is invaluable for quickly removing unwanted gasses from a room when regular [textlink="scrubbers" link="AirScrubber"] are working too slow, or when a [textlink="scrubber" link="AirScrubber"] is not present.
 
   The portable scrubber requires [textlink="power" link="Power"] through a nearby [textlink="LV cable" link="VoltageNetworks"] to function.
 
-  The portable scrubber automatically starts scrubbing all non-breathable gasses from the room when it is bolted (wrenched) to the floor.
+  The portable scrubber automatically starts removing all non-breathable gasses from the room when it is bolted (wrenched) to the floor.
 
-  It will stop scrubbing when unbolted (unwrenched) from the floor, or when its internal volume is full. The scrubber has an internal capacity of [color=orange][protodata="PortableScrubber" comp="PortableScrubber" member="Volume"/] liters[/color].
+  It will stop scrubbing when unbolted (unwrenched) from the floor or when its internal volume is full. The scrubber has an internal capacity of [color=orange][protodata="PortableScrubber" comp="PortableScrubber" member="Volume"/] liters[/color].
 
   ## Dumping Waste and Storage
-  The scrubber's internal volume can be emptied by bolting (wrenching it) onto a [textlink="connector" link="GasCanisters"].
+  The scrubber's internal volume can be emptied by anchoring (wrenching) onto a [textlink="connector" link="GasCanisters"].
 
   Stations commonly have a dedicated emptying point to quickly transfer the waste from the scrubber to the station's wastenet.
 

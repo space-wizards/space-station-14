@@ -11,7 +11,8 @@
       - state: icon
         map: ["base"]
     - type: Item
-      sprite: Objects/Weapons/Bombs/hot_potato.rsi
+      sprite: Objects/Specific/Hydroponics/potato.rsi
+      heldPrefix: produce
       size: Small
     - type: AmbientSound
       enabled: false
@@ -22,13 +23,16 @@
       damage:
         types:
           Blunt: 5
-    - type: OnUseTimerTrigger
+    - type: TriggerOnUse
+    - type: TimerTrigger
       delay: 120
       beepSound:
         path: /Audio/Machines/Nuke/general_beep.ogg
         params:
           volume: -2
     - type: ExplodeOnTrigger
+      keysIn:
+      - timer
     - type: Explosive
       explosionType: Default
       maxIntensity: 50
@@ -36,6 +40,8 @@
       totalIntensity: 100
       canCreateVacuum: false
     - type: DeleteOnTrigger
+      keysIn:
+      - timer
     - type: HotPotato
     - type: DamageOnHolding
       enabled: false
@@ -48,7 +54,7 @@
         enum.Trigger.TriggerVisuals.VisualState:
           base:
             Primed: { state: activated }
-            Unprimed: { state: complete }
+            Unprimed: { state: icon }
 
 - type: entity
   id: HotPotatoEffect
@@ -101,6 +107,11 @@
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Tag
+    tags:
+    - Recyclable
+    - Trash
+    - BananaPeel
 
 - type: entity
   parent: BaseItem

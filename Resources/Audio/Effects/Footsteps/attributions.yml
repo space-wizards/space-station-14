@@ -22,9 +22,32 @@
 
 - files:
   - slime1.ogg
-  license: "CC-BY-SA-3.0"
-  copyright: "Taken from https://github.com/tgstation/tgstation"
-  source: "https://github.com/nero1024/tgstation/blob/83ccc939a20489de8ab81cb47e6f8e84c490adc2/sound/effects/footstep/slime1.ogg"
+  - slime2.ogg
+  - slime3.ogg
+  - slime4.ogg
+  license: "CC0-1.0"
+  copyright: "Created by SoundDesignForYou on freesound.org, modified by EmoGarbage404 (github)"
+  source: "https://freesound.org/people/SoundDesignForYou/packs/36178/"
+
+- files:
+  - puddle1.ogg
+  - puddle2.ogg
+  - puddle3.ogg
+  - puddle4.ogg
+  - puddle5.ogg
+  license: "CC-BY-NC-4.0"
+  copyright: "Created by Robinhood76 on freesound.org, modified by EmoGarbage404 (github)"
+  source: "https://freesound.org/people/Robinhood76/sounds/158481/"
+
+- files:
+  - blood1.ogg
+  - blood2.ogg
+  - blood3.ogg
+  - blood4.ogg
+  - blood5.ogg
+  license: "CC-BY-NC-4.0"
+  copyright: "Created by Robinhood76 on freesound.org, modified by EmoGarbage404 (github)"
+  source: "https://freesound.org/people/Robinhood76/sounds/98731/"
 
 - files:
   - clownstepspider1.ogg
@@ -78,6 +101,13 @@
   license: "CC-BY-SA-4.0"
   copyright: "Taken from IENBA freesound.org and modified by https://github.com/MilenVolf. borgwalk2 clipped my metalgearsloth."
   source: "https://freesound.org/people/IENBA/sounds/697379/"
+
+- files:
+  - borgwalk3.ogg
+  - borgwalk4.ogg
+  license: "CC-BY-SA-4.0"
+  copyright: "Modified version from borgwalk1 and borgwalk2 by https://github.com/Samuka-C."
+  source: "https://github.com/space-wizards/space-station-14/pull/36867"
 
 - files:
   - heelsclack1.ogg

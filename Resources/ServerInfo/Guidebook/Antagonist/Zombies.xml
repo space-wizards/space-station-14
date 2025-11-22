@@ -1,6 +1,6 @@
 <Document>
   # Zombies
-  
+
   <Box>
     [color=#999999][italic]"They're coming to get you, Barbara!"[/italic][/color]
   </Box>
@@ -11,10 +11,10 @@
   Zombies are conversion antagonists that infect all beings that they bite with [color=#7e916e]Romerol[/color], a deadly, contagious virus that can easily spread if not contained.
 
   <Box>
-    <GuideReagentEmbed Reagent="Romerol"></GuideReagentEmbed>
+    <GuideReagentEmbed Reagent="Romerol"/>
   </Box>
 
-  ## Inital Infected
+  ## Initial Infected
   You are patient zero. You have [color=#7e916e]Romerol[/color] coursing through your veins and you have a grand desire to share it with every single flesh being you see.
 
   Upon learning of your infection, [italic]all bets are off[/italic]. You have only so much time before you turn, and you want to [bold]maximize your chances of taking over the station.[/bold]
@@ -43,10 +43,10 @@
   If you're infected but not zombified yet, using [color=#86caf7]Ambuzol[/color] will cure you but won't prevent re-infection. [color=#1274b5]Ambuzol Plus[/color] will cure and prevent re-infection only while alive.
 
   <Box>
-    <GuideReagentEmbed Reagent="Ambuzol"></GuideReagentEmbed>
+    <GuideReagentEmbed Reagent="Ambuzol"/>
   </Box>
   <Box>
-    <GuideReagentEmbed Reagent="AmbuzolPlus"></GuideReagentEmbed>
+    <GuideReagentEmbed Reagent="AmbuzolPlus"/>
   </Box>
 
 </Document>

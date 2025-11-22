@@ -1,0 +1,19 @@
+- type: constructionGraph
+  id: ClothingBagPet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bagPet
+      steps:
+      - tag: Backpack
+        name: construction-graph-tag-backpack
+        icon:
+          sprite: Clothing/Back/Backpacks/backpack.rsi
+          state: icon
+        doAfter: 1
+      - material: Cable
+        amount: 10
+        doAfter: 1
+  - node: bagPet
+    entity: ClothingBagPet

@@ -512,37 +512,13 @@ public sealed partial class AtmosAlertsComputerWindow : FancyWindow
         if (scroll == null)
             return;
 
-        if (!TryGetVerticalScrollbar(scroll, out var vScrollbar))
-            return;
-
         if (!TryGetNextScrollPosition(out float? nextScrollPosition))
             return;
 
-        vScrollbar.ValueTarget = nextScrollPosition.Value;
+        scroll.VScrollTarget = nextScrollPosition.Value;
 
-        if (MathHelper.CloseToPercent(vScrollbar.Value, vScrollbar.ValueTarget))
+        if (MathHelper.CloseToPercent(scroll.VScroll, scroll.VScrollTarget))
             _autoScrollActive = false;
-    }
-
-    private bool TryGetVerticalScrollbar(ScrollContainer scroll, [NotNullWhen(true)] out VScrollBar? vScrollBar)
-    {
-        vScrollBar = null;
-
-        foreach (var child in scroll.Children)
-        {
-            if (child is not VScrollBar)
-                continue;
-
-            var castChild = child as VScrollBar;
-
-            if (castChild != null)
-            {
-                vScrollBar = castChild;
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private bool TryGetNextScrollPosition([NotNullWhen(true)] out float? nextScrollPosition)

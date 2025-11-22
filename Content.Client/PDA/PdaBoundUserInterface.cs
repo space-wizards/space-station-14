@@ -30,8 +30,7 @@ namespace Content.Client.PDA
 
         private void CreateMenu()
         {
-            _menu = this.CreateWindow<PdaMenu>();
-            _menu.OpenCenteredLeft();
+            _menu = this.CreateWindowCenteredLeft<PdaMenu>();
 
             _menu.FlashLightToggleButton.OnToggled += _ =>
             {

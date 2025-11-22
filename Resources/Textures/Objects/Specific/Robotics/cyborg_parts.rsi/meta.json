@@ -1,218 +1,250 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/cf45322c7ee16f9d7e43d5260daf24ceb77c1b25",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "borg_l_arm"
-    },
-    {
-      "name": "borg_r_arm"
-    },
-    {
-      "name": "borg_l_leg"
-    },
-    {
-      "name": "borg_r_leg"
-    },
-    {
-      "name": "borg_chest"
-    },
-    {
-      "name": "borg_head"
-    },
-    {
-      "name": "robo_suit"
-    },
-    {
-      "name": "borg_head+o"
-    },
-    {
-      "name": "borg_chest+o"
-    },
-    {
-      "name": "borg_l_arm+o"
-    },
-    {
-      "name": "borg_r_arm+o"
-    },
-    {
-      "name": "borg_l_leg+o"
-    },
-    {
-      "name": "borg_r_leg+o"
-    },
-    {
-      "name": "janitor_l_leg"
-    },
-    {
-      "name": "janitor_r_leg"
-    },
-    {
-      "name": "janitor_chest"
-    },
-    {
-      "name": "janitor_head"
-    },
-    {
-      "name": "janitor_head+o"
-    },
-    {
-      "name": "janitor_chest+o"
-    },
-    {
-      "name": "janitor_l_leg+o"
-    },
-    {
-      "name": "janitor_r_leg+o"
-    },
-    {
-      "name": "engineer_l_arm"
-    },
-    {
-      "name": "engineer_r_arm"
-    },
-    {
-      "name": "engineer_l_leg"
-    },
-    {
-      "name": "engineer_r_leg"
-    },
-    {
-      "name": "engineer_chest"
-    },
-    {
-      "name": "engineer_head"
-    },
-    {
-      "name": "engineer_head+o"
-    },
-    {
-      "name": "engineer_chest+o"
-    },
-    {
-      "name": "engineer_l_arm+o"
-    },
-    {
-      "name": "engineer_r_arm+o"
-    },
-    {
-      "name": "engineer_l_leg+o"
-    },
-    {
-      "name": "engineer_r_leg+o"
-    },
-    {
-      "name": "medical_l_arm"
-    },
-    {
-      "name": "medical_r_arm"
-    },
-    {
-      "name": "medical_l_leg"
-    },
-    {
-      "name": "medical_r_leg"
-    },
-    {
-      "name": "medical_chest"
-    },
-    {
-      "name": "medical_head"
-    },
-    {
-      "name": "medical_head+o"
-    },
-    {
-      "name": "medical_chest+o"
-    },
-    {
-      "name": "medical_l_arm+o"
-    },
-    {
-      "name": "medical_r_arm+o"
-    },
-    {
-      "name": "medical_l_leg+o"
-    },
-    {
-      "name": "medical_r_leg+o"
-    },
-    {
-      "name": "mining_l_arm"
-    },
-    {
-      "name": "mining_r_arm"
-    },
-    {
-      "name": "mining_l_leg"
-    },
-    {
-      "name": "mining_r_leg"
-    },
-    {
-      "name": "mining_chest"
-    },
-    {
-      "name": "mining_head"
-    },
-    {
-      "name": "mining_head+o"
-    },
-    {
-      "name": "mining_chest+o"
-    },
-    {
-      "name": "mining_l_arm+o"
-    },
-    {
-      "name": "mining_r_arm+o"
-    },
-    {
-      "name": "mining_l_leg+o"
-    },
-    {
-      "name": "mining_r_leg+o"
-    },
-    {
-      "name": "service_l_arm"
-    },
-    {
-      "name": "service_r_arm"
-    },
-    {
-      "name": "service_l_leg"
-    },
-    {
-      "name": "service_r_leg"
-    },
-    {
-      "name": "service_chest"
-    },
-    {
-      "name": "service_head"
-    },
-    {
-      "name": "service_head+o"
-    },
-    {
-      "name": "service_chest+o"
-    },
-    {
-      "name": "service_l_arm+o"
-    },
-    {
-      "name": "service_r_arm+o"
-    },
-    {
-      "name": "service_l_leg+o"
-    },
-    {
-      "name": "service_r_leg+o"
-    }
-  ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/cf45322c7ee16f9d7e43d5260daf24ceb77c1b25, limb sprites edited into inhands by mubururu_ (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "borg_l_arm"
+        },
+        {
+            "name": "borg_r_arm"
+        },
+        {
+            "name": "borg-arm-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "borg-arm-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "borg_l_leg"
+        },
+        {
+            "name": "borg_r_leg"
+        },
+        {
+            "name": "borg-leg-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "borg-leg-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "borg_chest"
+        },
+        {
+            "name": "borg-chest-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "borg-chest-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "borg_head"
+        },
+        {
+            "name": "borg-head-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "borg-head-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "robo_suit"
+        },
+        {
+            "name": "borg_head+o"
+        },
+        {
+            "name": "borg_chest+o"
+        },
+        {
+            "name": "borg_l_arm+o"
+        },
+        {
+            "name": "borg_r_arm+o"
+        },
+        {
+            "name": "borg_l_leg+o"
+        },
+        {
+            "name": "borg_r_leg+o"
+        },
+        {
+            "name": "janitor_l_leg"
+        },
+        {
+            "name": "janitor_r_leg"
+        },
+        {
+            "name": "janitor_chest"
+        },
+        {
+            "name": "janitor_head"
+        },
+        {
+            "name": "janitor_head+o"
+        },
+        {
+            "name": "janitor_chest+o"
+        },
+        {
+            "name": "janitor_l_leg+o"
+        },
+        {
+            "name": "janitor_r_leg+o"
+        },
+        {
+            "name": "engineer_l_arm"
+        },
+        {
+            "name": "engineer_r_arm"
+        },
+        {
+            "name": "engineer_l_leg"
+        },
+        {
+            "name": "engineer_r_leg"
+        },
+        {
+            "name": "engineer_chest"
+        },
+        {
+            "name": "engineer_head"
+        },
+        {
+            "name": "engineer_head+o"
+        },
+        {
+            "name": "engineer_chest+o"
+        },
+        {
+            "name": "engineer_l_arm+o"
+        },
+        {
+            "name": "engineer_r_arm+o"
+        },
+        {
+            "name": "engineer_l_leg+o"
+        },
+        {
+            "name": "engineer_r_leg+o"
+        },
+        {
+            "name": "medical_l_arm"
+        },
+        {
+            "name": "medical_r_arm"
+        },
+        {
+            "name": "medical_l_leg"
+        },
+        {
+            "name": "medical_r_leg"
+        },
+        {
+            "name": "medical_chest"
+        },
+        {
+            "name": "medical_head"
+        },
+        {
+            "name": "medical_head+o"
+        },
+        {
+            "name": "medical_chest+o"
+        },
+        {
+            "name": "medical_l_arm+o"
+        },
+        {
+            "name": "medical_r_arm+o"
+        },
+        {
+            "name": "medical_l_leg+o"
+        },
+        {
+            "name": "medical_r_leg+o"
+        },
+        {
+            "name": "mining_l_arm"
+        },
+        {
+            "name": "mining_r_arm"
+        },
+        {
+            "name": "mining_l_leg"
+        },
+        {
+            "name": "mining_r_leg"
+        },
+        {
+            "name": "mining_chest"
+        },
+        {
+            "name": "mining_head"
+        },
+        {
+            "name": "mining_head+o"
+        },
+        {
+            "name": "mining_chest+o"
+        },
+        {
+            "name": "mining_l_arm+o"
+        },
+        {
+            "name": "mining_r_arm+o"
+        },
+        {
+            "name": "mining_l_leg+o"
+        },
+        {
+            "name": "mining_r_leg+o"
+        },
+        {
+            "name": "service_l_arm"
+        },
+        {
+            "name": "service_r_arm"
+        },
+        {
+            "name": "service_l_leg"
+        },
+        {
+            "name": "service_r_leg"
+        },
+        {
+            "name": "service_chest"
+        },
+        {
+            "name": "service_head"
+        },
+        {
+            "name": "service_head+o"
+        },
+        {
+            "name": "service_chest+o"
+        },
+        {
+            "name": "service_l_arm+o"
+        },
+        {
+            "name": "service_r_arm+o"
+        },
+        {
+            "name": "service_l_leg+o"
+        },
+        {
+            "name": "service_r_leg+o"
+        }
+    ]
 }

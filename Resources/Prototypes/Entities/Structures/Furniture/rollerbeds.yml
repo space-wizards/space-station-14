@@ -8,6 +8,7 @@
       noRot: true
     - type: Item
       size: Normal
+      heldPrefix: rollerbed
     - type: Sprite
       sprite: Structures/Furniture/rollerbeds.rsi
       noRot: true
@@ -32,12 +33,18 @@
           shape:
             !type:PhysShapeCircle
             radius: 0.35
-          density: 80
+          density: 20
           mask:
           - MobMask
     - type: Damageable
     - type: Destructible
       thresholds:
+        - trigger: # Excess damage, don't spawn entities
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
         - trigger:
             !type:DamageTrigger
             damage: 50
@@ -62,13 +69,15 @@
           buckledLayer:
             True: {visible: true}
             False: {visible: false}
+          unfoldedLayer:
+            True: { visible: false }
+            False: { visible: true }
         enum.FoldedVisuals.State: # Copypasta from BaseFoldable b/c collections don't merge when overriding component prototypes.
           foldedLayer:
             True: {visible: true}
             False: {visible: false}
           unfoldedLayer:
             True: {visible: false}
-            False: {visible: true}
     - type: StaticPrice
       price: 120
 
@@ -88,6 +97,8 @@
   parent: RollerBed
   description: A run-down rollerbed. Used to carry patients around.
   components:
+  - type: Item
+    heldPrefix: cheap_rollerbed
   - type: Sprite
     layers:
     - state: cheap_rollerbed
@@ -98,7 +109,6 @@
     - state: cheap_rollerbed_buckled
       map: ["buckledLayer"]
       visible: false
-  - type: Appearance
 
 - type: entity
   parent: CheapRollerBed
@@ -116,6 +126,8 @@
   parent: RollerBed
   description: A robust looking rollerbed used for emergencies.
   components:
+  - type: Item
+    heldPrefix: emergency_rollerbed
   - type: Sprite
     layers:
     - state: emergency_rollerbed
@@ -126,7 +138,6 @@
     - state: emergency_rollerbed_buckled
       map: ["buckledLayer"]
       visible: false
-  - type: Appearance
 
 - type: entity
   parent: EmergencyRollerBed

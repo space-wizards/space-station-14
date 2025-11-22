@@ -5,6 +5,6 @@ namespace Content.Server.Storage.Components;
 [RegisterComponent]
 public sealed partial class CursedEntityStorageComponent : Component
 {
-    [DataField("cursedSound")]
-    public SoundSpecifier CursedSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
+    [DataField]
+    public SoundSpecifier CursedSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg", AudioParams.Default.WithVariation(0.125f));
 }

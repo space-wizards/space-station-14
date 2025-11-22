@@ -12,11 +12,12 @@ public sealed partial class AllSelector : EntityTableSelector
 
     protected override IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
-        IPrototypeManager proto)
+        IPrototypeManager proto,
+        EntityTableContext ctx)
     {
         foreach (var child in Children)
         {
-            foreach (var spawn in child.GetSpawns(rand, entMan, proto))
+            foreach (var spawn in child.GetSpawns(rand, entMan, proto, ctx))
             {
                 yield return spawn;
             }

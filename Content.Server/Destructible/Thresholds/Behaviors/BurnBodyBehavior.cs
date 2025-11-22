@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Body.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
@@ -25,7 +26,8 @@ public sealed partial class BurnBodyBehavior : IThresholdBehavior
             }
         }
 
-        sharedPopupSystem.PopupCoordinates(Loc.GetString("bodyburn-text-others", ("name", bodyId)), transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
+        var bodyIdentity = Identity.Entity(bodyId, system.EntityManager);
+        sharedPopupSystem.PopupCoordinates(Loc.GetString("bodyburn-text-others", ("name", bodyIdentity)), transformSystem.GetMoverCoordinates(bodyId), PopupType.LargeCaution);
 
         system.EntityManager.QueueDeleteEntity(bodyId);
     }
