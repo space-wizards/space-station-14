@@ -1,5 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Movement.Components;
+using Content.Shared.DoAfter;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -11,6 +12,7 @@ public abstract partial class SharedMoverController
         SubscribeLocalEvent<MovementRelayTargetComponent, ComponentShutdown>(OnTargetRelayShutdown);
         SubscribeLocalEvent<MovementRelayTargetComponent, AfterAutoHandleStateEvent>(OnAfterRelayTargetState);
         SubscribeLocalEvent<RelayInputMoverComponent, AfterAutoHandleStateEvent>(OnAfterRelayState);
+        SubscribeLocalEvent<RelayInputMoverComponent, GetDoAfterUserEvent>(OnGetDoAfterUser);
     }
 
     private void OnAfterRelayTargetState(Entity<MovementRelayTargetComponent> entity, ref AfterAutoHandleStateEvent args)
@@ -21,6 +23,12 @@ public abstract partial class SharedMoverController
     private void OnAfterRelayState(Entity<RelayInputMoverComponent> entity, ref AfterAutoHandleStateEvent args)
     {
         PhysicsSystem.UpdateIsPredicted(entity.Owner);
+    }
+
+    private void OnGetDoAfterUser(Entity<RelayInputMoverComponent> entity, ref GetDoAfterUserEvent args)
+    {
+        if (entity.Comp.RelayEntity.IsValid())
+            args.User = entity.Comp.RelayEntity;
     }
 
     /// <summary>
