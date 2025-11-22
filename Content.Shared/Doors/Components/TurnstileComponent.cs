@@ -37,7 +37,7 @@ public sealed partial class TurnstileComponent : Component
     /// default state of the turnstile sprite.
     /// </summary>
     [DataField]
-    public string DefaultState = "turnstile";
+    public string DefaultState = "turnstile_idle";
 
     /// <summary>
     /// animation state of the turnstile spinning.
@@ -50,6 +50,12 @@ public sealed partial class TurnstileComponent : Component
     /// </summary>
     [DataField]
     public string DenyState = "deny";
+
+    /// <summary>
+    /// animation state of the turnstile granting entry.
+    /// </summary>
+    [DataField]
+    public string GrantedState = "granted";
 
     /// <summary>
     /// Sound to play when the turnstile admits a mob through.
@@ -73,5 +79,7 @@ public sealed partial class TurnstileComponent : Component
 [Serializable, NetSerializable]
 public enum TurnstileVisualLayers : byte
 {
-    Base
+    Base,
+    Spinner,
+    Indicators,
 }
