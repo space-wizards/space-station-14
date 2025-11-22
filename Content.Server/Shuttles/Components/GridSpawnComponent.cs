@@ -1,8 +1,7 @@
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Dataset;
-using Content.Shared.Procedural;
+using Content.Shared.Shuttles.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Components;
 
@@ -65,9 +64,9 @@ public interface IGridSpawnGroup
 public sealed partial class DungeonSpawnGroup : IGridSpawnGroup
 {
     /// <summary>
-    /// Prototypes we can choose from to spawn.
+    /// Dungeon Packs to use when spawning.
     /// </summary>
-    public List<ProtoId<DungeonConfigPrototype>> Protos = new();
+    public List<ProtoId<DungeonPackPrototype>> DungeonPacks = new();
 
     /// <inheritdoc />
     public float MinimumDistance { get; }
@@ -99,7 +98,7 @@ public sealed partial class DungeonSpawnGroup : IGridSpawnGroup
 [DataRecord]
 public sealed partial class GridSpawnGroup : IGridSpawnGroup
 {
-    public List<ResPath> Paths = new();
+    public List<ProtoId<GridPackPrototype>> GridPacks = new();
 
     /// <inheritdoc />
     public float MinimumDistance { get; }
@@ -114,5 +113,4 @@ public sealed partial class GridSpawnGroup : IGridSpawnGroup
     public bool NameGrid { get; set; } = true;
     public bool StationGrid { get; set; } = true;
 }
-
 
