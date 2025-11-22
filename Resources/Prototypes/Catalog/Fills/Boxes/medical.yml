@@ -115,11 +115,17 @@
   components:
   - type: Storage
     grid:
-    - 0,0,2,1
+    - 0,0,3,1
   - type: StorageFill
     contents:
-      - id: BaseChemistryEmptyVial
-        amount: 6
+      - id: ChemistryEmptyVial
+        amount: 3
+      - id: ChemistryEmptyVialSmall
+        amount: 1
+      - id: ChemistryEmptyVial
+        amount: 3
+      - id: ChemistryEmptyVialSmall
+        amount: 1
   - type: Sprite
     layers:
       - state: box
