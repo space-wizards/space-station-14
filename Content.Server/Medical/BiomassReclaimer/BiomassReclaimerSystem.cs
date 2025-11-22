@@ -8,10 +8,10 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Climbing.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
+using Content.Shared.DragDrop;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -20,6 +20,7 @@ using Content.Shared.Jittering;
 using Content.Shared.Materials;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
+using Content.Shared.Medical.BiomassReclaimer;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -27,6 +28,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
@@ -35,7 +37,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
-    public sealed class BiomassReclaimerSystem : EntitySystem
+    public sealed class BiomassReclaimerSystem : SharedBiomassReclaimerSystem
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -89,7 +91,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 }
 
                 var actualYield = (int) (reclaimer.CurrentExpectedYield); // can only have integer biomass
-                reclaimer.CurrentExpectedYield = reclaimer.CurrentExpectedYield - actualYield; // store non-integer leftovers
+                reclaimer.CurrentExpectedYield -= actualYield; // store non-integer leftovers
                 _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(uid).Coordinates);
 
                 reclaimer.BloodReagent = null;
@@ -104,7 +106,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             SubscribeLocalEvent<ActiveBiomassReclaimerComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<ActiveBiomassReclaimerComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
             SubscribeLocalEvent<BiomassReclaimerComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-            SubscribeLocalEvent<BiomassReclaimerComponent, ClimbedOnEvent>(OnClimbedOn);
+            SubscribeLocalEvent<BiomassReclaimerComponent, DragDropTargetEvent>(OnDragDrop);
             SubscribeLocalEvent<BiomassReclaimerComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<BiomassReclaimerComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
             SubscribeLocalEvent<BiomassReclaimerComponent, ReclaimerDoAfterEvent>(OnDoAfter);
@@ -129,7 +131,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         private void OnInit(EntityUid uid, ActiveBiomassReclaimerComponent component, ComponentInit args)
         {
             _jitteringSystem.AddJitter(uid, -10, 100);
-            _sharedAudioSystem.PlayPvs("/Audio/Machines/reclaimer_startup.ogg", uid);
+            _sharedAudioSystem.PlayPvs(new SoundPathSpecifier("/Audio/Machines/reclaimer_startup.ogg"), uid);
             _ambientSoundSystem.SetAmbience(uid, true);
         }
 
@@ -156,34 +158,37 @@ namespace Content.Server.Medical.BiomassReclaimer
         }
         private void OnAfterInteractUsing(Entity<BiomassReclaimerComponent> reclaimer, ref AfterInteractUsingEvent args)
         {
-            if (!args.CanReach || args.Target == null)
+            if (!args.CanReach
+                || args.Target == null
+                || !CanGib(reclaimer, args.Used))
                 return;
 
-            if (!CanGib(reclaimer, args.Used))
+            StartDoAfter(reclaimer, args.User, args.Target.Value, args.Used);
+        }
+
+        private void OnDragDrop(Entity<BiomassReclaimerComponent> reclaimer, ref DragDropTargetEvent args)
+        {
+            if (args.Handled)
                 return;
 
-            if (!TryComp<PhysicsComponent>(args.Used, out var physics))
+            args.Handled = true;
+
+            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Dragged):target} in {ToPrettyString(reclaimer):reclaimer}");
+
+            StartDoAfter(reclaimer, args.User, reclaimer.Owner, args.Dragged);
+        }
+
+        private void StartDoAfter(Entity<BiomassReclaimerComponent> reclaimer, EntityUid user, EntityUid target, EntityUid used)
+        {
+            if (!TryComp<PhysicsComponent>(used, out var physics))
                 return;
 
             var delay = reclaimer.Comp.BaseInsertionDelay * physics.FixturesMass;
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, new ReclaimerDoAfterEvent(), reclaimer, target: args.Target, used: args.Used)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new ReclaimerDoAfterEvent(), reclaimer.Owner, target: target, used: used)
             {
                 NeedHand = true,
                 BreakOnMove = true,
             });
-        }
-
-        private void OnClimbedOn(Entity<BiomassReclaimerComponent> reclaimer, ref ClimbedOnEvent args)
-        {
-            if (!CanGib(reclaimer, args.Climber))
-            {
-                var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
-                _throwing.TryThrow(args.Climber, direction, 0.5f);
-                return;
-            }
-            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Instigator):player} used a biomass reclaimer to gib {ToPrettyString(args.Climber):target} in {ToPrettyString(reclaimer):reclaimer}");
-
-            StartProcessing(args.Climber, reclaimer);
         }
 
         private void OnDoAfter(Entity<BiomassReclaimerComponent> reclaimer, ref ReclaimerDoAfterEvent args)
@@ -193,6 +198,13 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             if (args.Args.Used == null || args.Args.Target == null || !HasComp<BiomassReclaimerComponent>(args.Args.Target.Value))
                 return;
+
+            if (!CanGib(reclaimer, args.Args.Used.Value))
+            {
+                var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
+                _throwing.TryThrow(args.Args.Used.Value, direction, 0.5f);
+                return;
+            }
 
             _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Args.Target.Value):target} in {ToPrettyString(reclaimer):reclaimer}");
             StartProcessing(args.Args.Used.Value, reclaimer);
@@ -236,9 +248,12 @@ namespace Content.Server.Medical.BiomassReclaimer
         private bool CanGib(Entity<BiomassReclaimerComponent> reclaimer, EntityUid dragged)
         {
             if (HasComp<ActiveBiomassReclaimerComponent>(reclaimer))
+            {
+                _popup.PopupEntity(Loc.GetString("biomass-reclaimer-busy", ("reclaimer", reclaimer.Owner)), reclaimer.Owner);
                 return false;
+            }
 
-            bool isPlant = HasComp<ProduceComponent>(dragged);
+            var isPlant = HasComp<ProduceComponent>(dragged);
             if (!isPlant && !HasComp<MobStateComponent>(dragged))
                 return false;
 
@@ -252,15 +267,16 @@ namespace Content.Server.Medical.BiomassReclaimer
                 return false;
 
             // Reject souled bodies in easy mode.
-            if (_configManager.GetCVar(CCVars.BiomassEasyMode) &&
-                HasComp<HumanoidAppearanceComponent>(dragged) &&
-                _minds.TryGetMind(dragged, out _, out var mind))
-            {
-                if (mind.UserId != null && _playerManager.TryGetSessionById(mind.UserId.Value, out _))
-                    return false;
-            }
+            if (!_configManager.GetCVar(CCVars.BiomassEasyMode) ||
+                !HasComp<HumanoidAppearanceComponent>(dragged) ||
+                !_minds.TryGetMind(dragged, out _, out var mind))
+                return true;
 
-            return true;
+            if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out _))
+                return true;
+
+            _popup.PopupEntity(Loc.GetString("biomass-reclaimer-failed", ("reclaimer", reclaimer.Owner), ("body", dragged)), reclaimer.Owner, PopupType.MediumCaution);
+            return false;
         }
     }
 }
