@@ -147,7 +147,7 @@ public record struct UserLockToggleAttemptEvent(EntityUid Target, bool Silent = 
 /// Event raised on a lock after it has been toggled.
 /// </summary>
 [ByRefEvent]
-public readonly record struct LockToggledEvent(bool Locked);
+public readonly record struct LockToggledEvent(bool Locked, EntityUid? User = null);
 
 /// <summary>
 /// Used to lock a lockable entity that has a lock time configured.
