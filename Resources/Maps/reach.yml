@@ -13547,8 +13547,6 @@ entities:
     - type: Transform
       pos: 10.483304,-6.5229325
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: SalvageMagnet
   entities:

@@ -93,7 +93,7 @@ public abstract partial class SharedStackSystem
         var map = xform.MapID;
         var bounds = _physics.GetWorldAABB(uid);
         var intersecting = new HashSet<Entity<StackComponent>>(); // Should we reuse a HashSet instead of making a new one?
-        _entityLookup.GetEntitiesIntersecting(map, bounds, intersecting, LookupFlags.Dynamic | LookupFlags.Sundries);
+        _entityLookup.GetEntitiesIntersecting(map, bounds, intersecting, LookupFlags.Dynamic);
 
         var merged = false;
         foreach (var recipientStack in intersecting)

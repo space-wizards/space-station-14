@@ -26,8 +26,6 @@
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
     size: Tiny
-  - type: CollisionWake
-    enabled: false
   - type: Fixtures
     fixtures:
       slips:

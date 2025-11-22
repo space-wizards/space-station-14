@@ -20,8 +20,6 @@
         reagent: Water
         solution: cube
   - type: Rehydratable
-  - type: CollisionWake
-    enabled: false
   - type: Fixtures
     fixtures:
       fix1:

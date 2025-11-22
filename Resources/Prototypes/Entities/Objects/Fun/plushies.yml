@@ -638,8 +638,6 @@
         hard: false
         layer:
         - LowImpassable
-  - type: CollisionWake
-    enabled: false
   - type: Clothing
     quickEquip: false
     sprite: Objects/Fun/Plushies/diona.rsi
