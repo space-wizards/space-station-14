@@ -54,7 +54,7 @@ namespace Content.Shared.Chemistry
                 _components.RemoveAt(i);
                 RemComp<MovespeedModifierMetabolismComponent>(metabolism);
 
-                _movespeed.RefreshMovementSpeedModifiers(metabolism);
+                _movespeed.RefreshMovementSpeedModifiers(metabolism.Owner);
             }
         }
     }
