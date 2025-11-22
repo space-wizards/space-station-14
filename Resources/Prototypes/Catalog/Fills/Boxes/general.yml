@@ -24,14 +24,15 @@
   id: BoxMousetrap
   description: This box is filled with mousetraps. Try not to get your hand stuck in one.
   components:
-    - type: StorageFill
-      contents:
-        - id: Mousetrap
-          amount: 4
-    - type: Sprite
-      layers:
-        - state: box
-        - state: mousetraps
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Mousetrap
+        amount: 4
+  - type: Sprite
+    layers:
+      - state: box
+      - state: mousetraps
 
 - type: entity
   name: lightbulb box
@@ -49,9 +50,10 @@
     whitelist:
       components:
       - LightBulb
-  - type: StorageFill
-    contents:
-      - id: LightBulb
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: LightBulb
         amount: 12
 
 - type: entity
@@ -59,9 +61,10 @@
   parent: BoxLightbulb
   id: BoxWarmLightbulb
   components:
-  - type: StorageFill
-    contents:
-      - id: WarmLightBulb
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: WarmLightBulb
         amount: 12
 
 - type: entity
@@ -73,9 +76,10 @@
     layers:
       - state: box
       - state: lighttube
-  - type: StorageFill
-    contents:
-      - id: LightTube
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: LightTube
         amount: 12
 
 - type: entity
@@ -87,32 +91,27 @@
     layers:
       - state: box
       - state: lightmixed
-  - type: StorageFill
-    contents:
-      - id: LightTube
-        amount: 6
-      - id: LightBulb
-        amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: LightTube
+          amount: 6
+        - id: LightBulb
+          amount: 6
 
 - type: entity
   name: holiday lighttube box
   parent: BoxLightbulb
   id: BoxLighttubeHoliday
   components:
-  - type: StorageFill
-    contents:
-      - id: LightTubeCrystalRed # Its alternating on purpose for the light replacer.
-      - id: LightTubeCrystalGreen
-      - id: LightTubeCrystalRed
-      - id: LightTubeCrystalGreen
-      - id: LightTubeCrystalRed
-      - id: LightTubeCrystalGreen
-      - id: LightTubeCrystalRed
-      - id: LightTubeCrystalGreen
-      - id: LightTubeCrystalRed
-      - id: LightTubeCrystalGreen
-      - id: LightTubeCrystalRed
-      - id: LightTubeCrystalGreen
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: LightTubeCrystalRed
+        - id: LightTubeCrystalGreen
+        rolls: 6 # Rolls instead of amounts to alternate.
 
 - type: entity
   name: PDA box
@@ -120,9 +119,10 @@
   id: BoxPDA
   description: A box of spare PDA microcomputers.
   components:
-  - type: StorageFill
-    contents:
-      - id: PassengerPDA
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: PassengerPDA
         amount: 4
   - type: Sprite
     layers:
@@ -135,9 +135,10 @@
   id: BoxID
   description: A box of spare blank ID cards.
   components:
-  - type: StorageFill
-    contents:
-      - id: PassengerIDCard
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: PassengerIDCard
         amount: 4
   - type: Sprite
     layers:
@@ -150,9 +151,10 @@
   id: BoxHeadset
   description: A box of spare passenger headsets.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadsetGrey
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: ClothingHeadsetGrey
         amount: 4
   - type: Sprite
     layers:
@@ -165,9 +167,10 @@
   id: BoxMesonScanners
   description: A box of spare meson goggles.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingEyesGlassesMeson
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: ClothingEyesGlassesMeson
         amount: 4
   - type: Sprite
     layers:
@@ -180,12 +183,14 @@
   id: BoxMRE
   description: A box of decades old military surplus rations. It is surprisingly not rotten.
   components:
-  - type: StorageFill
-    contents:
-      - id: DrinkMREFlask
-      - id: FoodSnackNutribrick
-      - id: FoodSnackMREBrownie
-      - id: FoodCondimentPacketKetchup
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: DrinkMREFlask
+        - id: FoodSnackNutribrick
+        - id: FoodSnackMREBrownie
+        - id: FoodCondimentPacketKetchup
   - type: Sprite
     layers:
       - state: box
@@ -196,9 +201,10 @@
   id: BoxHugHealing
   suffix: Medical
   components:
-  - type: StorageFill
-    contents:
-      - id: Brutepack
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Brutepack
         amount: 3
 
 - type: entity
@@ -207,17 +213,18 @@
   id: BoxInflatable
   description: Inflatable walls are not to be used as floatation devices.
   components:
-  - type: StorageFill
-    contents:
-        - id: InflatableWallStack
-          amount: 2
-        - id: InflatableDoorStack
-          amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+          - id: InflatableWallStack
+            amount: 2
+          - id: InflatableDoorStack
+            amount: 2
   - type: Sprite
     layers:
       - state: box
       - state: inflatable
-
 
 - type: entity
   name: hatsune miku day bag
@@ -225,13 +232,15 @@
   id: BoxPerformer
   description: Happy Hatsune Miku Day!
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingShoesBootsPerformer
-      - id: ClothingUniformJumpskirtPerformer
-      - id: ClothingHeadPerformerWig
-      - id: FoodMealMemoryleek
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingShoesBootsPerformer
+        - id: ClothingUniformJumpskirtPerformer
+        - id: ClothingHeadPerformerWig
+        - id: FoodMealMemoryleek
+          amount: 2
 
 - type: entity
   name: flare box
@@ -239,9 +248,10 @@
   id: BoxFlare
   description: A box of flares. Party time.
   components:
-  - type: StorageFill
-    contents:
-      - id: Flare
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Flare
         amount: 6
   - type: Sprite
     layers:
@@ -254,9 +264,10 @@
   id: BoxTrashbag
   description: A box of trashbags. Happy janitor noises.
   components:
-  - type: StorageFill
-    contents:
-      - id: TrashBag
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: TrashBag
         amount: 6
   - type: Storage
     grid:
@@ -276,9 +287,10 @@
   id: BoxEncryptionKeyPassenger
   description: A box of spare encryption keys.
   components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyCommon
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeyCommon
         amount: 4
   - type: Sprite
     layers:
@@ -294,9 +306,10 @@
   parent: BoxEncryptionKeyPassenger
   id: BoxEncryptionKeyCargo
   components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyCargo
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeyCargo
         amount: 4
 
 - type: entity
@@ -304,9 +317,10 @@
   parent: BoxEncryptionKeyPassenger
   id: BoxEncryptionKeyEngineering
   components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyEngineering
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeyEngineering
         amount: 4
 
 - type: entity
@@ -314,9 +328,10 @@
   parent: BoxEncryptionKeyPassenger
   id: BoxEncryptionKeyMedicalScience
   components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyMedicalScience
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeyMedicalScience
         amount: 4
 
 - type: entity
@@ -324,9 +339,10 @@
   parent: BoxEncryptionKeyPassenger
   id: BoxEncryptionKeyMedical
   components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyMedical
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeyMedical
         amount: 4
 
 - type: entity
@@ -334,9 +350,10 @@
   parent: BoxEncryptionKeyPassenger
   id: BoxEncryptionKeyRobo
   components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyRobo
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeyRobo
         amount: 4
 
 - type: entity
@@ -344,9 +361,10 @@
   parent: BoxEncryptionKeyPassenger
   id: BoxEncryptionKeyScience
   components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyScience
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeyScience
         amount: 4
 
 - type: entity
@@ -354,9 +372,10 @@
   parent: BoxEncryptionKeyPassenger
   id: BoxEncryptionKeySecurity
   components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeySecurity
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeySecurity
         amount: 4
 
 - type: entity
@@ -364,9 +383,10 @@
   parent: BoxEncryptionKeyPassenger
   id: BoxEncryptionKeyService
   components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyService
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeyService
         amount: 4
 
 - type: entity
@@ -377,9 +397,10 @@
   components:
   - type: Item
     size: Normal
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeySyndie
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: EncryptionKeySyndie
         amount: 2
   - type: Storage
 
@@ -411,36 +432,40 @@
     whitelist: # TODO cardboard boxes shouldn't have whitelisting
       tags:
       - Candle
-  - type: StorageFill
-    contents:
-      - id: Candle
-        amount: 4
-      - id: CandleBlue
-        amount: 2
-      - id: CandleRed
-        amount: 2
-      - id: CandleGreen
-        amount: 2
-      - id: CandlePurple
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Candle
+          amount: 4
+        - id: CandleBlue
+          amount: 2
+        - id: CandleRed
+          amount: 2
+        - id: CandleGreen
+          amount: 2
+        - id: CandlePurple
+          amount: 2
 
 - type: entity
   name: small candle box
   parent: BoxCandle
   id: BoxCandleSmall
   components:
-  - type: StorageFill
-    contents:
-      - id: CandleSmall
-        amount: 8
-      - id: CandleBlueSmall
-        amount: 4
-      - id: CandleRedSmall
-        amount: 4
-      - id: CandleGreenSmall
-        amount: 4
-      - id: CandlePurpleSmall
-        amount: 4
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CandleSmall
+          amount: 8
+        - id: CandleBlueSmall
+          amount: 4
+        - id: CandleRedSmall
+          amount: 4
+        - id: CandleGreenSmall
+          amount: 4
+        - id: CandlePurpleSmall
+          amount: 4
 
 - type: entity
   name: darts box
@@ -452,16 +477,18 @@
     layers:
       - state: box
       - state: darts
-  - type: StorageFill
-    contents:
-      - id: Dart
-        amount: 2
-      - id: DartBlue
-        amount: 2
-      - id: DartPurple
-        amount: 2
-      - id: DartYellow
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Dart
+          amount: 2
+        - id: DartBlue
+          amount: 2
+        - id: DartPurple
+          amount: 2
+        - id: DartYellow
+          amount: 2
 
 - type: entity
   name: envelope box
@@ -473,9 +500,10 @@
     layers:
       - state: box
       - state: envelope
-  - type: StorageFill
-    contents:
-      - id: Envelope
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Envelope
         amount: 9
 
 - type: entity
@@ -488,9 +516,11 @@
     layers:
       - state: box
       - state: utensils
-  - type: StorageFill
-    contents:
-      - id: Fork
-        amount: 2
-      - id: Spoon
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Fork
+          amount: 2
+        - id: Spoon
+          amount: 2
