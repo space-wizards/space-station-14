@@ -40,4 +40,16 @@ public sealed partial class DeliverySpawnerComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? OpenSound = new SoundCollectionSpecifier("storageRustle");
+
+    /// <summary>
+    /// The sound to play when a mail has been successfully revoked.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? InsertAppoveSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+
+    /// <summary>
+    /// The sound to play when a mail has not been revoked.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? InsertDenySound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_two.ogg");
 }
