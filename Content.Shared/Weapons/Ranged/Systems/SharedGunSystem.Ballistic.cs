@@ -2,12 +2,15 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using YamlDotNet.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -15,7 +18,7 @@ public abstract partial class SharedGunSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-
+    [Dependency] private readonly SharedStackSystem _stack = default!;
 
     protected virtual void InitializeBallistic()
     {
@@ -52,14 +55,21 @@ public abstract partial class SharedGunSystem
         if (GetBallisticShots(component) >= component.Capacity)
             return;
 
-        component.Entities.Add(args.Used);
-        Containers.Insert(args.Used, component.Container);
-        // Not predicted so
-        Audio.PlayPredicted(component.SoundInsert, uid, args.User);
+        if (TryComp<StackComponent>(args.Used, out var stackComp))
+        {
+            _stack.ReduceCount((args.Used, stackComp), 1);
+
+            // TODO: call a spawn method from StackSystem when it gets predicted
+            if (!ProtoManager.Resolve(stackComp.StackTypeId, out var stackType))
+                return;
+
+            var ammo = PredictedSpawnInContainerOrDrop(stackType.Spawn, uid, component.Container.ID);
+            FillAmmo((uid, component), ammo, args.User);
+        }
+        else
+            FillAmmo((uid, component), args.Used, args.User);
+
         args.Handled = true;
-        UpdateBallisticAppearance(uid, component);
-        UpdateAmmoCount(args.Target);
-        DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
     }
 
     private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
@@ -269,6 +279,23 @@ public abstract partial class SharedGunSystem
     {
         args.Count = GetBallisticShots(component);
         args.Capacity = component.Capacity;
+    }
+
+    /// <summary>
+    /// Adds one ammo to the ammo provider entity.
+    /// This assumes the ammo already passed the whitelist check from <see cref="BallisticAmmoProviderComponent.Whitelist">
+    /// </summary>
+    private void FillAmmo(Entity<BallisticAmmoProviderComponent> ammoProvider, EntityUid ammo, EntityUid? user)
+    {
+        ammoProvider.Comp.Entities.Add(ammo);
+        Containers.Insert(ammo, ammoProvider.Comp.Container);
+
+        // Not predicted so
+        Audio.PlayPredicted(ammoProvider.Comp.SoundInsert, ammoProvider, user);
+
+        UpdateBallisticAppearance(ammoProvider, ammoProvider.Comp);
+        UpdateAmmoCount(ammoProvider);
+        DirtyField(ammoProvider, ammoProvider.Comp, nameof(BallisticAmmoProviderComponent.Entities));
     }
 
     public void UpdateBallisticAppearance(EntityUid uid, BallisticAmmoProviderComponent component)
