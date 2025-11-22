@@ -489,7 +489,7 @@ namespace Content.Server.Atmos.EntitySystems
             var timeCheck1 = 0;
             while (atmosphere.DeltaPressureCursor < count)
             {
-                var job = new DeltaPressureParallelJob(this,
+                var job = new DeltaPressureParallelBulkJob(this,
                     atmosphere,
                     atmosphere.DeltaPressureCursor,
                     DeltaPressureParallelBatchSize);
