@@ -61,7 +61,7 @@
         layer:
           - LowImpassable
   - type: Sprite
-    sprite: Objects/Devices/voicesensor.rsi
+    sprite: Objects/Devices/pressureplate.rsi
     state: icon
   - type: StepTrigger
     requiredTriggeredSpeed: 0
