@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.Components;
@@ -35,6 +36,24 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+        SubscribeLocalEvent<DoAfterComponent, FellAsleepEvent>(OnFellAsleep);
+    }
+
+    private void OnFellAsleep(Entity<DoAfterComponent> ent, ref FellAsleepEvent args)
+    {
+        var dirty = false;
+
+        foreach (var doAfter in ent.Comp.DoAfters.Values)
+        {
+            if (doAfter.Args.BreakOnLostConsciousness)
+            {
+                InternalCancel(doAfter, ent);
+                dirty = true;
+            }
+        }
+
+        if (dirty)
+            Dirty(ent);
     }
 
     private void OnUnpaused(EntityUid uid, DoAfterComponent component, ref EntityUnpausedEvent args)
