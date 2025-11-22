@@ -47,7 +47,6 @@ namespace Content.Server.Entry
         [Dependency] private readonly DiscordLink _discordLink = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
-        [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly IAdminLogManager _adminLog = default!;
         [Dependency] private readonly IAfkManager _afk = default!;
         [Dependency] private readonly IBanManager _ban = default!;
@@ -153,7 +152,6 @@ namespace Content.Server.Entry
             }
 
             _recipe.Initialize();
-            _admin.Initialize();
             _afk.Initialize();
             _rules.Initialize();
             _discordLink.Initialize();
