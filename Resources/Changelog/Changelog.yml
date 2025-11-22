@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed smart equip not retrieving items.
-    type: Fix
-  id: 8718
-  time: '2025-06-26T16:17:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38605
 - author: Hitlinemoss
   changes:
   - message: The Quartermaster's PDA now comes with AstroNav preinstalled.
@@ -3927,3 +3920,11 @@
   id: 9218
   time: '2025-11-21T22:09:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40689
+- author: ciaran
+  changes:
+  - message: other people still touching a body when a defib is used will be shocked
+      too
+    type: Add
+  id: 9219
+  time: '2025-11-22T23:56:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35998
