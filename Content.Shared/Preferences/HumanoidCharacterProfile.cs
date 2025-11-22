@@ -81,6 +81,9 @@ namespace Content.Shared.Preferences
         public Sex Sex { get; private set; } = Sex.Male;
 
         [DataField]
+        public Sex? PreferredVoice { get; set; }
+
+        [DataField]
         public Gender Gender { get; private set; } = Gender.Male;
 
         /// <summary>
@@ -128,6 +131,7 @@ namespace Content.Shared.Preferences
             string species,
             int age,
             Sex sex,
+            Sex? preferredVoice,
             Gender gender,
             HumanoidCharacterAppearance appearance,
             SpawnPriorityPreference spawnPriority,
@@ -142,6 +146,7 @@ namespace Content.Shared.Preferences
             Species = species;
             Age = age;
             Sex = sex;
+            PreferredVoice = preferredVoice;
             Gender = gender;
             Appearance = appearance;
             SpawnPriority = spawnPriority;
@@ -173,6 +178,7 @@ namespace Content.Shared.Preferences
                 other.Species,
                 other.Age,
                 other.Sex,
+                other.PreferredVoice,
                 other.Gender,
                 other.Appearance.Clone(),
                 other.SpawnPriority,
@@ -257,6 +263,7 @@ namespace Content.Shared.Preferences
             {
                 Name = name,
                 Sex = sex,
+                PreferredVoice = sex,
                 Age = age,
                 Gender = gender,
                 Species = species,
@@ -282,6 +289,11 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithSex(Sex sex)
         {
             return new(this) { Sex = sex };
+        }
+
+        public HumanoidCharacterProfile WithVoice(Sex voice)
+        {
+            return new (this) { PreferredVoice = voice };
         }
 
         public HumanoidCharacterProfile WithGender(Gender gender)
@@ -493,6 +505,14 @@ namespace Content.Shared.Preferences
                 _ => Sex.Male // Invalid enum values.
             };
 
+            var voice = PreferredVoice switch
+            {
+                Sex.Male => Sex.Male,
+                Sex.Female => Sex.Female,
+                Sex.Unsexed => Sex.Unsexed,
+                _ => sex // Invalid enum values.
+            };
+
             // ensure the species can be that sex and their age fits the founds
             if (!speciesPrototype.Sexes.Contains(sex))
                 sex = speciesPrototype.Sexes[0];
@@ -602,6 +622,7 @@ namespace Content.Shared.Preferences
             FlavorText = flavortext;
             Age = age;
             Sex = sex;
+            PreferredVoice = voice;
             Gender = gender;
             Appearance = appearance;
             SpawnPriority = spawnPriority;
@@ -722,6 +743,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(Species);
             hashCode.Add(Age);
             hashCode.Add((int)Sex);
+            hashCode.Add(PreferredVoice);
             hashCode.Add((int)Gender);
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
