@@ -1,6 +1,7 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.Holiday;
+namespace Content.Shared.Holiday;
 
 /// <summary>
 /// This is used for an entity that enables unique visuals on specified holidays.
@@ -14,4 +15,10 @@ public sealed partial class HolidayVisualsComponent : Component
     /// </summary>
     [DataField]
     public Dictionary<string, List<ProtoId<HolidayPrototype>>> Holidays = new();
+}
+
+[Serializable, NetSerializable]
+public enum HolidayVisuals : byte
+{
+    Holiday,
 }
