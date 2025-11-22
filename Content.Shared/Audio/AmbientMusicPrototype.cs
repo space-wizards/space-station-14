@@ -33,6 +33,7 @@ public sealed partial class AmbientMusicPrototype : IPrototype
     public bool FadeIn;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound", required: true)]
+    [AllowStereo]
     public SoundSpecifier Sound = default!;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("rules", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<RulesPrototype>))]
