@@ -40,11 +40,14 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  parent: BaseMagazineBoxHristovHollowPoint
+  parent: BaseMagazineBoxAntiMateriel
   id: MagazineBoxHristovHollowPoint
   name: ammunition box (.60 hollow point)
   components:
   - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeAntiMateriel
     proto: CartridgeHristovHollowPoint
     capacity: 5
   - type: Sprite
