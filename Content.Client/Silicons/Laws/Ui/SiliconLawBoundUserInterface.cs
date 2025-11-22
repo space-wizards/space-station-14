@@ -50,6 +50,6 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
 
         _laws = msg.Laws.ToList();
 
-        _menu?.Update(_owner, msg);
+        _menu?.UpdateState(_owner, msg);
     }
 }
