@@ -64,6 +64,7 @@ public sealed partial class GameTicker
             foreach (var preset in fallbackPresets)
             {
                 _sawmill.Info($"Fallback - Clearing up gamerules");
+                //TODO would be more proper to outright delete these rules, in this case. For when gameticker is being refactored
                 ClearGameRules();
                 _allPreviousGameRules.Clear();
 
