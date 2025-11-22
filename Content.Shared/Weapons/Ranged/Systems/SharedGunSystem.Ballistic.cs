@@ -285,7 +285,7 @@ public abstract partial class SharedGunSystem
     /// Adds one ammo to the ammo provider entity.
     /// This assumes the ammo already passed the whitelist check from <see cref="BallisticAmmoProviderComponent.Whitelist">
     /// </summary>
-    private void FillAmmo(Entity<BallisticAmmoProviderComponent> ammoProvider, EntityUid ammo, InteractUsingEvent args)
+    private void FillAmmo(Entity<BallisticAmmoProviderComponent> ammoProvider, EntityUid ammo, EntityUid? user)
     {
         ammoProvider.Comp.Entities.Add(ammo);
         Containers.Insert(ammo, ammoProvider.Comp.Container);
