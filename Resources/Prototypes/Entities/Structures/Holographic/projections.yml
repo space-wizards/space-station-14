@@ -5,6 +5,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: Transform
     anchored: true
   - type: Physics

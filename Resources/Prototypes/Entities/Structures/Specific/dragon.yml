@@ -6,6 +6,8 @@
     mode: SnapgridCenter
   components:
   - type: DragonRift
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: Transform
     anchored: true
   - type: Physics

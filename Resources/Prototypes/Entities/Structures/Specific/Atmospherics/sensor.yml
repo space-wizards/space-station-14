@@ -12,6 +12,8 @@
   - type: WiredNetworkConnection
   - type: DeviceNetworkRequiresPower
   - type: AtmosDevice
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: AtmosMonitor
     temperatureThresholdId: stationTemperature
     pressureThresholdId: stationPressure

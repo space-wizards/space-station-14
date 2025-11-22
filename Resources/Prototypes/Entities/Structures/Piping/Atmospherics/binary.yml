@@ -9,6 +9,8 @@
   - type: Tag
     tags:
       - Unstackable
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: SubFloorHide
     blockInteractions: false
     blockAmbience: false

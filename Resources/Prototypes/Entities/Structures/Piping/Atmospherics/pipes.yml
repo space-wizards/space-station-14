@@ -71,6 +71,8 @@
   parent: GasPipeSansLayers
   id: GasPipeBase
   components:
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: AtmosPipeLayers
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:

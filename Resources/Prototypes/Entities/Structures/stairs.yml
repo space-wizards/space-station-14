@@ -11,6 +11,8 @@
     - Anchorable
   - type: Rotatable
   - type: Clickable
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: Sprite
     sprite: Structures/stairs.rsi
     state: stairs_steel

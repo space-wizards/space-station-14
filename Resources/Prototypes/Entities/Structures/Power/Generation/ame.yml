@@ -5,6 +5,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -133,6 +135,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

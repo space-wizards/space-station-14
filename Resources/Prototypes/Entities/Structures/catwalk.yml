@@ -10,6 +10,8 @@
     flags:
     - Anchorable
   - type: Rotatable
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: Clickable
   - type: Sprite
     sprite: Structures/catwalk.rsi

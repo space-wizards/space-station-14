@@ -3,3 +3,9 @@
   values:
     prefix: comp-window-damaged-
     count: 6
+
+- type: localizedDataset
+  id: StructureMessages
+  values:
+    prefix: damaged-
+    count: 5

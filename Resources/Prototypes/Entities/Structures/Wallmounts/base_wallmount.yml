@@ -13,6 +13,8 @@
   - type: Physics
     canCollide: false
   - type: Clickable
+  - type: ExaminableDamage
+    messages: StructureMessages
   - type: WallMount
   - type: InteractionOutline
   - type: Transform
@@ -35,6 +37,8 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
 
 - type: entity
   parent: BaseWallmount
