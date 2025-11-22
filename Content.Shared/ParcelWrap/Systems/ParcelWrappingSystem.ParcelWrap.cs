@@ -63,8 +63,20 @@ public sealed partial class ParcelWrappingSystem
     {
         var duration = wrapper.Comp.WrapDelay;
 
-        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp) && overrideComp.WrapDelay != null)
-            duration = overrideComp.WrapDelay.Value;
+        if (TryComp<ParcelWrapOverrideComponent>(wrapper, out var overrideComp))
+        {
+            // Get first matching override entry, since this will be the override used.
+            foreach (var entry in overrideComp.Overrides)
+            {
+                if (_whitelist.IsWhitelistPass(entry.Whitelist, target))
+                {
+                    // If the first override doesn't specify a wrap delay, break and continue with default wrap time.
+                    if (entry.WrapDelay != null)
+                        duration = (TimeSpan)entry.WrapDelay;
+                    break;
+                }
+            }
+        }
 
         // In case the target is a player inform them with a popup.
         if (target == user)
@@ -112,13 +124,25 @@ public sealed partial class ParcelWrappingSystem
             return; // Predicted spawns can't be interacted with yet.
 
         EntityUid spawned;
+        bool replaced = false;
         var targetTransform = Transform(target);
-        // Check if the target has a pre-defined parcel type to be used.
-        if (TryComp<ParcelWrapOverrideComponent>(target, out var overrideComp))
+        // Check if the target matches any override entries on the parcel wrap.
+        if (TryComp<ParcelWrapOverrideComponent>(wrapper, out var overrideComp))
         {
-            spawned = Spawn(overrideComp.ParcelPrototype, targetTransform.Coordinates);
+            foreach (var entry in overrideComp.Overrides)
+            {
+                if (_whitelist.IsWhitelistPass(entry.Whitelist, target))
+                {
+                    spawned = Spawn(entry.ProtoToUse, targetTransform.Coordinates);
+                    replaced = true;
+                    RotateAndInsertWrappedParcel(spawned, wrapper, target);
+                    // Stop checking after the first match.
+                    // If multiple overrides match for one entity, the first override listed takes priority
+                    break;
+                }
+            }
         }
-        else // Create a parcel with the same size and generic sprites instead.
+        if (replaced == false) // Create a parcel with the same size and generic sprites instead.
         {
             spawned = Spawn(wrapper.Comp.ParcelPrototype, targetTransform.Coordinates);
 
@@ -139,8 +163,14 @@ public sealed partial class ParcelWrappingSystem
             // the parcel.
             if (wrapper.Comp.WrappedItemsMaintainShape && targetItemComp is { Shape: { } shape })
                 _item.SetShape(spawned, shape, item);
-        }
 
+            RotateAndInsertWrappedParcel(spawned, wrapper, target);
+        }
+    }
+
+    private void RotateAndInsertWrappedParcel(EntityUid spawned, Entity<ParcelWrapComponent> wrapper, EntityUid target)
+    {
+        var targetTransform = Transform(target);
         _transform.SetLocalRotation(spawned, targetTransform.LocalRotation);
 
         // If the target is in a container, try to put the parcel in its place in the container.

@@ -6,7 +6,9 @@ using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.ParcelWrap.Systems;
 
@@ -51,6 +53,30 @@ public sealed partial class ParcelWrappingSystem : EntitySystem
             wrapper.Owner != target &&
             // Wrapper should never be empty, but may as well make sure.
             !_charges.IsEmpty(wrapper.Owner) &&
-            _whitelist.CheckBoth(target, wrapper.Comp.Blacklist, wrapper.Comp.Whitelist);
+            _whitelist.CheckBoth(target, wrapper.Comp.Blacklist, wrapper.Comp.Whitelist) &&
+            CanFit(wrapper, target);
+    }
+
+    private bool CanFit(Entity<ParcelWrapComponent> wrapper, EntityUid target)
+    {
+        // Skip size checks if the item matches an override
+        if (TryComp<ParcelWrapOverrideComponent>(wrapper, out var overrideComp))
+        {
+            foreach (var entry in overrideComp.Overrides)
+            {
+                if (_whitelist.IsWhitelistPass(entry.Whitelist, target))
+                    return true;
+            }
+        }
+
+        // Can't check size if it isn't an item. If a non-item gets here then it's because it's on the whitelist anyways
+        if (!TryComp<ItemComponent>(target, out var itemComp))
+            return true;
+
+        if (wrapper.Comp.MaximumItemSize != null &&
+            _item.GetSizePrototype(itemComp.Size) > _item.GetSizePrototype((ProtoId<ItemSizePrototype>)wrapper.Comp.MaximumItemSize))
+            return false;
+
+        return true;
     }
 }

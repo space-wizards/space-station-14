@@ -35,6 +35,14 @@ public sealed partial class ParcelWrapComponent : Component
     public ProtoId<ItemSizePrototype> FallbackItemSize = "Ginormous";
 
     /// <summary>
+    /// The maximum <see cref="ItemSizePrototype">size</see> an item can be to be wrapped.
+    /// If the target item is bigger than this, wrapping will fail unless the wrapping paper has a <see cref="ParcelWrapOverrideComponent"/>
+    /// which allows this item.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<ItemSizePrototype>? MaximumItemSize = null;
+
+    /// <summary>
     /// If true, parcels created by this will have the same shape as the item they contain. If false, parcels created by
     /// this will have the default shape for their size.
     /// </summary>
