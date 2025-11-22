@@ -54,9 +54,10 @@ public sealed partial class GameTicker
 
         if (_cfg.GetCVar(CCVars.GameLobbyFallbackEnabled))
         {
-            var hideFallback = true; //TODO:ERRANT
+            var fallbackDecoy = _cfg.GetCVar(CCVars.GameLobbyFallbackUseDecoy);
             var fallbackPresets = _cfg.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",");
-            var defaultPreset = !hideFallback ? null : _cfg.GetCVar(CCVars.GameLobbyDefaultPreset);
+            var firstDefault = _cfg.GetCVar(CCVars.GameLobbyDefaultPreset).Split(",").First();
+            var decoyPreset = !fallbackDecoy ? null : firstDefault;
             var startFailed = true;
 
             _sawmill.Info($"Fallback - Failed to start round, attempting to start fallback presets.");
@@ -64,11 +65,11 @@ public sealed partial class GameTicker
             {
                 _sawmill.Info($"Fallback - Clearing up gamerules");
                 ClearGameRules();
-                if (hideFallback && defaultPreset is not null)
-                    _sawmill.Info($"Fallback - Attempting to start '{preset}', but showing '{defaultPreset}' decoy to the Lobby. ");
+                if (fallbackDecoy && decoyPreset is not null)
+                    _sawmill.Info($"Fallback - Attempting to start '{preset}', but showing '{decoyPreset}' decoy to the Lobby. ");
                 else
                     _sawmill.Info($"Fallback - Attempting to start '{preset}'");
-                SetGamePreset(preset, resetDelay: 1, decoy: defaultPreset);
+                SetGamePreset(preset, resetDelay: 1, decoy: decoyPreset);
                 AddGamePresetRules();
                 StartGamePresetRules();
 
