@@ -1,5 +1,5 @@
 ﻿cmd-adminnotes-desc = Opens the admin notes panel of target player.
-cmd-adminnotes-help = Usage: adminnotes <UserId OR Username>
+cmd-adminnotes-help = Usage: {$command} <UserId OR Username>
 
 cmd-adminnotes-wrong-target = Unable to find user '{$user}'.
 cmd-adminnotes-args-error = Invalid arguments.

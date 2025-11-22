@@ -18,7 +18,7 @@ public sealed class GhostToggleSelfVisibility : LocalizedEntityCommands
 
         if (!EntityManager.HasComponent<GhostComponent>(attachedEntity))
         {
-            shell.WriteError(Loc.GetString($"cmd-toggleselfghost-must-be-ghost"));
+            shell.WriteError(Loc.GetString("cmd-toggleselfghost-must-be-ghost"));
             return;
         }
 

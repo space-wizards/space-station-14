@@ -6,15 +6,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
-public sealed class LinkBluespaceLocker : IConsoleCommand
+public sealed class LinkBluespaceLocker : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    public string Command => "linkbluespacelocker";
-    public string Description => "Links an entity, the target, to another as a bluespace locker target.";
-    public string Help => "Usage: linkbluespacelocker <two-way link> <origin storage uid> <target storage uid>";
+    public override string Command => "linkbluespacelocker";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 3)
         {

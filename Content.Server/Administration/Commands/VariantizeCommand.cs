@@ -7,17 +7,15 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Mapping)]
-public sealed class VariantizeCommand : IConsoleCommand
+public sealed class VariantizeCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
-    public string Command => "variantize";
+    public override string Command => "variantize";
 
-    public string Description => Loc.GetString("variantize-command-description");
-
-    public string Help => Loc.GetString("variantize-command-help-text");
-
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {
@@ -25,27 +23,23 @@ public sealed class VariantizeCommand : IConsoleCommand
             return;
         }
 
-        if (!NetEntity.TryParse(args[0], out var euidNet) || !_entManager.TryGetEntity(euidNet, out var euid))
+        if (!NetEntity.TryParse(args[0], out var euidNet) || !EntityManager.TryGetEntity(euidNet, out var euid))
         {
-            shell.WriteError($"Failed to parse euid '{args[0]}'.");
+            shell.WriteError(Loc.GetString("cmd-variantize-parse-failed", ("arg", args[0])));
             return;
         }
 
-        if (!_entManager.TryGetComponent(euid, out MapGridComponent? gridComp))
+        if (!EntityManager.TryGetComponent(euid, out MapGridComponent? gridComp))
         {
-            shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
+            shell.WriteError(Loc.GetString("cmd-variantize-not-grid", ("euid", euid)));
             return;
         }
 
-        var mapsSystem = _entManager.System<SharedMapSystem>();
-        var tileSystem = _entManager.System<TileSystem>();
-        var turfSystem = _entManager.System<TurfSystem>();
-
-        foreach (var tile in mapsSystem.GetAllTiles(euid.Value, gridComp))
+        foreach (var tile in _map.GetAllTiles(euid.Value, gridComp))
         {
-            var def = turfSystem.GetContentTileDefinition(tile);
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, tileSystem.PickVariant(def), tile.Tile.RotationMirroring);
-            mapsSystem.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
+            var def = _turf.GetContentTileDefinition(tile);
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, _tile.PickVariant(def), tile.Tile.RotationMirroring);
+            _map.SetTile(euid.Value, gridComp, tile.GridIndices, newTile);
         }
     }
 }

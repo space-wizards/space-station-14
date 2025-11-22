@@ -6,15 +6,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class AddEntityStorageCommand : IConsoleCommand
+    public sealed class AddEntityStorageCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public string Command => "addstorage";
-        public string Description => "Adds a given entity to a containing storage.";
-        public string Help => "Usage: addstorage <entity uid> <storage uid>";
+        public override string Command => "addstorage";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 2)
             {
@@ -41,7 +39,7 @@ namespace Content.Server.Administration.Commands
             }
             else
             {
-                shell.WriteError("Could not insert into non-storage.");
+                shell.WriteError(Loc.GetString("cmd-addstorage-could-not-insert"));
             }
         }
     }
