@@ -152,6 +152,15 @@
   parent: Soap
   description: A tiny piece of syndicate soap.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 1.5 # 50 / 30 = 1.666
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 1.5
+  - type: SolutionContainerVisuals
+    maxFillLevels: 0
   - type: Sprite
     layers:
     - state: syndie-soaplet
@@ -185,6 +194,9 @@
       path: "/Audio/Effects/Fluids/splat.ogg"
       params:
         volume: -8
+  - type: Residue
+    residueAdjective: residue-slippery
+    residueColor: residue-red
 
 - type: entity
   name: soap
