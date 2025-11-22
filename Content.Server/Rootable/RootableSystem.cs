@@ -1,6 +1,7 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -22,7 +23,7 @@ public sealed class RootableSystem : SharedRootableSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
-    [Dependency] private readonly BloodstreamSystem _blood = default!;
+    [Dependency] private readonly SharedBloodstreamSystem _blood = default!;
 
     public override void Update(float frameTime)
     {
