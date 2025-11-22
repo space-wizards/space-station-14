@@ -19,6 +19,7 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+  temperature: 800
 
 - type: explosion
   id: DemolitionCharge
