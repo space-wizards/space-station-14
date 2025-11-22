@@ -306,7 +306,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/hushpup.rsi
   - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/hushpup_inhands_64x.rsi
+    sprite: Objects/Weapons/Guns/Shotguns/hushpup.rsi
     shape:
     - 0,0,3,0 # smaller than BaseShotgun by 1 tile
   - type: BallisticAmmoProvider
