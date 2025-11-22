@@ -341,14 +341,14 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return false;
 
         // Allow other systems to prevent inserting the item: e.g. the item is actually a ghost.
-        var attemptEvent = new InsertIntoEntityStorageAttemptEvent(toInsert);
+        var attemptEvent = new InsertIntoEntityStorageAttemptEvent(component.Contents, toInsert);
         RaiseLocalEvent(toInsert, ref attemptEvent);
 
         if (attemptEvent.Cancelled)
             return false;
 
         // Allow other components on the container to prevent inserting the item: e.g. the container is folded
-        var containerAttemptEvent = new EntityStorageInsertedIntoAttemptEvent(toInsert);
+        var containerAttemptEvent = new EntityStorageInsertedIntoAttemptEvent(component.Contents, toInsert);
         RaiseLocalEvent(container, ref containerAttemptEvent);
 
         if (containerAttemptEvent.Cancelled)
