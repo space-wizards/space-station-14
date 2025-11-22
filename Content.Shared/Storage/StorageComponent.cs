@@ -290,7 +290,7 @@ namespace Content.Shared.Storage
     public record struct StorageInteractAttemptEvent(bool Silent, bool Cancelled = false);
 
     [ByRefEvent]
-    public record struct StorageInteractUsingAttemptEvent(bool Cancelled = false);
+    public record struct StorageInteractUsingAttemptEvent(EntityUid User, bool Cancelled = false);
 
     [NetSerializable]
     [Serializable]

@@ -99,6 +99,14 @@
     Wood: 20
 
 - type: latheRecipe
+  id: SmartVial
+  result: SmartVial
+  completetime: 2
+  materials:
+    Glass: 50
+    Steel: 20
+
+- type: latheRecipe
   id: ClothingEyesGlassesChemical
   result: ClothingEyesGlassesChemical
   completetime: 2
