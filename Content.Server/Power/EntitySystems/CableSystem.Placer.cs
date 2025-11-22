@@ -42,7 +42,7 @@ public sealed partial class CableSystem
 
         foreach (var anchored in _map.GetAnchoredEntities((gridUid, grid), snapPos))
         {
-            if (_whitelistSystem.IsBlacklistPass(component.Blacklist, anchored))
+            if (_whitelistSystem.IsWhitelistPass(component.Blacklist, anchored))
                 return;
 
             if (TryComp<CableComponent>(anchored, out var wire) && wire.CableType == component.BlockingCableType)
