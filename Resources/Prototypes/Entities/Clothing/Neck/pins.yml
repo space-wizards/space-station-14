@@ -264,14 +264,21 @@
 
 - type: entity
   name: flower pin
-  parent: ClothingNeckPinBase
+  parent: BaseItem
   id: SprayFlowerPin
   description: A cute flower pin. Something seems off with it...
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
     state: flower
   - type: Clothing
     equippedPrefix: flower
+    sprite: Clothing/Neck/Misc/pins.rsi
+    quickEquip: true
+    slots:
+    - neck
   - type: EquipSpray
     verbLocId: equip-spray-verb-press
   - type: SolutionContainerManager
