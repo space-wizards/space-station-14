@@ -1,5 +1,4 @@
-﻿using Content.Shared.Arcade;
-using Robust.Client.GameObjects;
+﻿using Content.Shared.Arcade.BlockGame;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Arcade.UI;
@@ -24,37 +23,37 @@ public sealed class BlockGameBoundUserInterface : BoundUserInterface
     {
         switch (message)
         {
-            case BlockGameMessages.BlockGameVisualUpdateMessage updateMessage:
+            case BlockGameVisualUpdateMessage updateMessage:
                 switch (updateMessage.GameVisualType)
                 {
-                    case BlockGameMessages.BlockGameVisualType.GameField:
+                    case BlockGameVisualType.GameField:
                         _menu?.UpdateBlocks(updateMessage.Blocks);
                         break;
-                    case BlockGameMessages.BlockGameVisualType.HoldBlock:
+                    case BlockGameVisualType.HoldBlock:
                         _menu?.UpdateHeldBlock(updateMessage.Blocks);
                         break;
-                    case BlockGameMessages.BlockGameVisualType.NextBlock:
+                    case BlockGameVisualType.NextBlock:
                         _menu?.UpdateNextBlock(updateMessage.Blocks);
                         break;
                 }
                 break;
-            case BlockGameMessages.BlockGameScoreUpdateMessage scoreUpdate:
+            case BlockGameScoreUpdateMessage scoreUpdate:
                 _menu?.UpdatePoints(scoreUpdate.Points);
                 break;
-            case BlockGameMessages.BlockGameUserStatusMessage userMessage:
+            case BlockGameUserStatusMessage userMessage:
                 _menu?.SetUsability(userMessage.IsPlayer);
                 break;
-            case BlockGameMessages.BlockGameSetScreenMessage statusMessage:
+            case BlockGameSetScreenMessage statusMessage:
                 if (statusMessage.IsStarted) _menu?.SetStarted();
                 _menu?.SetScreen(statusMessage.Screen);
-                if (statusMessage is BlockGameMessages.BlockGameGameOverScreenMessage gameOverScreenMessage)
+                if (statusMessage is BlockGameGameOverScreenMessage gameOverScreenMessage)
                     _menu?.SetGameoverInfo(gameOverScreenMessage.FinalScore, gameOverScreenMessage.LocalPlacement, gameOverScreenMessage.GlobalPlacement);
                 break;
-            case BlockGameMessages.BlockGameHighScoreUpdateMessage highScoreUpdateMessage:
+            case BlockGameHighScoreUpdateMessage highScoreUpdateMessage:
                 _menu?.UpdateHighscores(highScoreUpdateMessage.LocalHighscores,
                     highScoreUpdateMessage.GlobalHighscores);
                 break;
-            case BlockGameMessages.BlockGameLevelUpdateMessage levelUpdateMessage:
+            case BlockGameLevelUpdateMessage levelUpdateMessage:
                 _menu?.UpdateLevel(levelUpdateMessage.Level);
                 break;
         }
@@ -62,7 +61,7 @@ public sealed class BlockGameBoundUserInterface : BoundUserInterface
 
     public void SendAction(BlockGamePlayerAction action)
     {
-        SendMessage(new BlockGameMessages.BlockGamePlayerActionMessage(action));
+        SendMessage(new BlockGamePlayerActionMessage(action));
     }
 
     protected override void Dispose(bool disposing)

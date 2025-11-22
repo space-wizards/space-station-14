@@ -1,4 +1,4 @@
-using Content.Shared.Arcade;
+using Content.Shared.Arcade.BlockGame;
 using System.Linq;
 
 namespace Content.Server.Arcade.BlockGame;
