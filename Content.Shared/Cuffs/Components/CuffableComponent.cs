@@ -28,7 +28,7 @@ public sealed partial class CuffableComponent : Component
     ///     Container of various handcuffs currently applied to the entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public Container Container = default!;
+    public Container Container = new();
 
     /// <summary>
     /// Whether or not the entity can still interact (is not cuffed)
