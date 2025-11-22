@@ -104,13 +104,8 @@
   - type: Fixtures
     fixtures:
       fix1:
-        shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.375,-0.15
-          - 0.35,-0.15
-          - 0.35,0.12
-          - -0.375,0.12
+        shape: !type:PhysShapeAabb
+          bounds: "-0.375,-0.15,0.35,0.12"
         density: 20 # derived from base_item
         mask:
         - ItemMask

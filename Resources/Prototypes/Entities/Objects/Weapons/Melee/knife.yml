@@ -51,7 +51,6 @@
     fixtures:
       fix1:
         shape: !type:PolygonShape
-          radius: 0.01
           vertices:
           - -0.475,-0.225
           - -0.225,-0.475
@@ -93,7 +92,6 @@
     fixtures:
       fix1:
         shape: !type:PolygonShape
-          radius: 0.01
           vertices:
           - -0.58,-0.12
           - -0.34,-0.55
@@ -145,7 +143,6 @@
     fixtures:
       fix1:
         shape: !type:PolygonShape
-          radius: 0.01
           vertices:
           - -0.4,-0.2
           - -0.2,-0.4
@@ -259,7 +256,6 @@
     fixtures:
       fix1:
         shape: !type:PolygonShape
-          radius: 0.01
           vertices:
           - -0.365,-0.265
           - 0.077,-0.45
@@ -289,21 +285,6 @@
     sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.365,-0.265
-          - 0.077,-0.45
-          - 0.364,0.323
-          - -0.0735,0.49
-        density: 20 # derived from base_item
-        mask:
-        - ItemMask
-        restitution: 0.3
-        friction: 0.2
 
 - type: entity
   name: plasma shiv
@@ -323,21 +304,6 @@
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.365,-0.265
-          - 0.077,-0.45
-          - 0.364,0.323
-          - -0.0735,0.49
-        density: 20 # derived from base_item
-        mask:
-        - ItemMask
-        restitution: 0.3
-        friction: 0.2
 
 - type: entity
   name: uranium shiv
@@ -358,21 +324,6 @@
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PolygonShape
-          radius: 0.01
-          vertices:
-          - -0.365,-0.265
-          - 0.077,-0.45
-          - 0.364,0.323
-          - -0.0735,0.49
-        density: 20 # derived from base_item
-        mask:
-        - ItemMask
-        restitution: 0.3
-        friction: 0.2
 
 - type: entity
   name: throwing knife
