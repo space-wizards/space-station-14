@@ -69,9 +69,6 @@ namespace Content.Server.Chemistry.EntitySystems
             // Set Move
             if (TryComp(vapor, out PhysicsComponent? physics))
             {
-                _physics.SetLinearDamping(vapor, physics, 0f);
-                _physics.SetAngularDamping(vapor, physics, 0f);
-
                 _throwing.TryThrow(vapor, dir, speed, user: user);
 
                 var distance = (target.Position - _transformSystem.GetWorldPosition(vaporXform)).Length();
