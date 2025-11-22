@@ -9,13 +9,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Xenoarchaeology.Artifact;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class SpawnArtifactWithNodeCommand : LocalizedEntityCommands
+public sealed class SpawnArtifactWithNodeCommand : XenoArtifactCommandBase
 {
-    private static readonly EntProtoId ArtifactDummyItem = "DummyArtifactItem";
-    private static readonly EntProtoId ArtifactDummyStructure = "DummyArtifactStructure";
     public static readonly EntProtoId ArtifactEffectBaseProtoId = "BaseXenoArtifactEffect";
 
-    [Dependency] private readonly XenoArtifactSystem _artifact = default!;
+    private static readonly EntProtoId ArtifactDummyItem = "DummyArtifactItem";
+    private static readonly EntProtoId ArtifactDummyStructure = "DummyArtifactStructure";
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <inheritdoc />
@@ -56,51 +56,30 @@ public sealed class SpawnArtifactWithNodeCommand : LocalizedEntityCommands
             return;
         }
 
-        _artifact.CreateNode((entity, artifactComp), effect, trigger);
-        _artifact.RebuildXenoArtifactMetaData((entity, artifactComp));
+        Artifact.CreateNode((entity, artifactComp), effect, trigger);
+        Artifact.RebuildXenoArtifactMetaData((entity, artifactComp));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        switch (args.Length)
+        return args.Length switch
         {
-            case 1:
-            {
-                CompletionOption[] completionOptions =
-                [
-                    new CompletionOption(ArtifactDummyItem, Loc.GetString("cmd-spawnartifactwithnode-spawn-artifact-item-hint")),
-                    new CompletionOption(ArtifactDummyStructure, Loc.GetString("cmd-spawnartifactwithnode-spawn-artifact-structure-hint")),
-                ];
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-spawnartifactwithnode-spawn-artifact-type-hint"));
-            }
-            case 2:
-            {
-                var query = _prototypeManager.EnumeratePrototypes<EntityPrototype>(); // needs cache?
-                var completionOptions = new List<CompletionOption>();
-                foreach (var entityPrototype in query)
-                {
-                    if (!entityPrototype.Abstract
-                        && entityPrototype.Parents?.Contains(ArtifactEffectBaseProtoId.Id) == true)
-                    {
-                        completionOptions.Add(new CompletionOption(entityPrototype.ID, entityPrototype.Description));
-                    }
-                }
-
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-effect-type-hint"));
-            }
-            case 3:
-            {
-                var query = _prototypeManager.EnumeratePrototypes<XenoArchTriggerPrototype>();
-                var completionOptions = new List<CompletionOption>();
-                foreach (var prototype in query)
-                {
-                    completionOptions.Add(new CompletionOption(prototype.ID, Loc.GetString(prototype.Tip)));
-                }
-
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-trigger-type-hint"));
-            }
-            default:
-                return CompletionResult.Empty;
-        }
+            1 => CompletionResult.FromHintOptions(
+                    [
+                        new CompletionOption(ArtifactDummyItem, Loc.GetString("cmd-spawnartifactwithnode-spawn-artifact-item-hint")),
+                        new CompletionOption(ArtifactDummyStructure, Loc.GetString("cmd-spawnartifactwithnode-spawn-artifact-structure-hint")),
+                    ],
+                    Loc.GetString("cmd-spawnartifactwithnode-spawn-artifact-type-hint")
+                ),
+            2 => CompletionResult.FromHintOptions(
+                GetEffects(_prototypeManager, args[1]),
+                Loc.GetString("cmd-xenoartifact-common-effect-type-hint")
+            ),
+            3 => CompletionResult.FromHintOptions(
+                CompletionHelper.PrototypeIDs<XenoArchTriggerPrototype>(proto: _prototypeManager),
+                Loc.GetString("cmd-xenoartifact-common-trigger-type-hint")
+            ),
+            _ => CompletionResult.Empty
+        };
     }
 }

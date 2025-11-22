@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Commands;
 using Content.Shared.Administration;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Console;
@@ -6,10 +7,8 @@ using Robust.Shared.Console;
 namespace Content.Server.Xenoarchaeology.Artifact;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class RemoveNodeFromArtifactCommand : LocalizedEntityCommands
+public sealed class RemoveNodeFromArtifactCommand : XenoArtifactCommandBase
 {
-    [Dependency] private readonly XenoArtifactSystem _artifact = default!;
-
     /// <inheritdoc />
     public override string Command => "removenodefromartifact";
 
@@ -22,64 +21,38 @@ public sealed class RemoveNodeFromArtifactCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!NetEntity.TryParse(args[0], out var artifactId)
-            || !EntityManager.TryGetEntity(artifactId, out var target)
-            || !EntityManager.TryGetComponent(target.Value, out XenoArtifactComponent? artifactComp))
+        if (!EntityUid.TryParse(args[0], out var target)
+            || !EntityManager.TryGetComponent(target, out XenoArtifactComponent? artifactComp))
         {
             shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-artifact", ("uid", args[0])));
             return;
         }
 
-        if (!NetEntity.TryParse(args[1], out var toDeleteNetEnt)
-            || !EntityManager.TryGetEntity(toDeleteNetEnt, out var toDelete)
+        if (!EntityUid.TryParse(args[1], out var toDelete)
             || !EntityManager.TryGetComponent(toDelete, out XenoArtifactNodeComponent? nodeComponent))
         {
             shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-node", ("uid", args[0])));
             return;
         }
 
-        _artifact.RemoveNode((target.Value, artifactComp), (toDelete.Value, nodeComponent));
-
-        _artifact.RebuildXenoArtifactMetaData((target.Value, artifactComp));
+        Artifact.RemoveNode((target, artifactComp), (toDelete, nodeComponent));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        switch (args.Length)
+        return args.Length switch
         {
-            case 1:
-            {
-                var query = EntityManager.EntityQueryEnumerator<XenoArtifactComponent>();
-                var completionOptions = new List<CompletionOption>();
-                while (query.MoveNext(out var uid, out _))
-                {
-                    var netEntity = EntityManager.GetNetEntity(uid);
-                    completionOptions.Add(new CompletionOption(netEntity.Id.ToString()));
-                }
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-artifact-hint"));
-            }
-            case 2:
-            {
-                var query = EntityManager.EntityQueryEnumerator<XenoArtifactNodeComponent>();
-                if (!int.TryParse(args[0], out var artifactEntId))
-                {
-                    return CompletionResult.Empty;
-                }
-
-                var completionOptions = new List<CompletionOption>();
-                while (query.MoveNext(out var uid, out var nodeComp))
-                {
-                    if (nodeComp.Attached?.Id == artifactEntId)
-                    {
-                        var netEntity = EntityManager.GetNetEntity(uid);
-                        completionOptions.Add(new CompletionOption(netEntity.Id.ToString(), nodeComp.TriggerTip));
-                    }
-                }
-
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-node-hint"));
-            }
-            default:
-                return CompletionResult.Empty;
-        }
+            1 =>
+                CompletionResult.FromHintOptions(
+                    ContentCompletionHelper.ByComponentAndEntityUid<XenoArtifactComponent>(args[0], EntityManager),
+                    Loc.GetString("cmd-xenoartifact-common-artifact-hint")
+                ),
+            2 when EntityUid.TryParse(args[0], out var artifactUid) =>
+                CompletionResult.FromHintOptions(
+                    GetNodes(args[1], artifactUid),
+                    Loc.GetString("cmd-xenoartifact-common-node-hint")
+                ),
+            _ => CompletionResult.Empty
+        };
     }
 }

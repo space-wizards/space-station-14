@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Commands;
 using Content.Shared.Administration;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Console;
@@ -7,10 +8,8 @@ namespace Content.Server.Xenoarchaeology.Artifact;
 
 /// <summary> Command for unlocking a specific node of a xeno artifact. </summary>
 [AdminCommand(AdminFlags.Debug)]
-public sealed class UnlockNodeCommand : LocalizedEntityCommands
+public sealed class UnlockNodeCommand : XenoArtifactCommandBase
 {
-    [Dependency] private readonly XenoArtifactSystem _artiSystem = default!;
-
     public override string Command => "unlocknode";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -21,48 +20,30 @@ public sealed class UnlockNodeCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!NetEntity.TryParse(args[1], out var netNode) || !EntityManager.TryGetEntity(netNode, out var entityUid))
+        if (!EntityUid.TryParse(args[1], out var entityUid))
         {
             shell.WriteError(Loc.GetString("shell-could-not-find-entity-with-uid", ("uid", args[1])));
             return;
         }
 
-        _artiSystem.SetNodeUnlocked(entityUid.Value);
+        Artifact.SetNodeUnlocked(entityUid);
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        switch (args.Length)
+        return args.Length switch
         {
-            case 1:
-            {
-                var query = EntityManager.EntityQueryEnumerator<XenoArtifactComponent>();
-                var completionOptions = new List<CompletionOption>();
-                while (query.MoveNext(out var uid, out _))
-                {
-                    completionOptions.Add(new CompletionOption(uid.ToString()));
-                }
-
-                return CompletionResult.FromHintOptions(completionOptions, Loc.GetString("cmd-xenoartifact-common-artifact-hint"));
-            }
-            case 2 when
-                NetEntity.TryParse(args[0], out var netEnt) &&
-                EntityManager.TryGetEntity(netEnt, out var artifactUid) &&
-                EntityManager.TryGetComponent<XenoArtifactComponent>(artifactUid, out var comp):
-            {
-                var result = new List<CompletionOption>();
-                foreach (var node in _artiSystem.GetAllNodes((artifactUid.Value, comp)))
-                {
-                    var metaData = EntityManager.MetaQuery.Comp(artifactUid.Value);
-                    var entityUidStr = EntityManager.GetNetEntity(node).ToString();
-                    var completionOption = new CompletionOption(entityUidStr, metaData.EntityName);
-                    result.Add(completionOption);
-                }
-
-                return CompletionResult.FromHintOptions(result, Loc.GetString("cmd-xenoartifact-common-node-hint"));
-            }
-            default:
-                return CompletionResult.Empty;
-        }
+            1 =>
+                CompletionResult.FromHintOptions(
+                    ContentCompletionHelper.ByComponentAndEntityUid<XenoArtifactComponent>(args[0], EntityManager),
+                    Loc.GetString("cmd-xenoartifact-common-artifact-hint")
+                ),
+            2 when EntityUid.TryParse(args[0], out var artifactUid) =>
+                CompletionResult.FromHintOptions(
+                    GetNodes(args[1], artifactUid),
+                    Loc.GetString("cmd-xenoartifact-common-node-hint")
+                ),
+            _ => CompletionResult.Empty
+        };
     }
 }
