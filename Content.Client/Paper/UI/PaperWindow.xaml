@@ -15,12 +15,14 @@
                         <Control Name="TextAlignmentPadding" VerticalAlignment="Top"/>
                         <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelWeak" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                         <RichTextLabel StyleClasses="PaperWrittenText" Name="WrittenTextLabel" VerticalAlignment="Top"/>
+                        <BoxContainer Name="WrittenTextContainer" Orientation="Horizontal" VerticalAlignment="Top" StyleClasses="PaperWrittenText">
+                        </BoxContainer>
                         <BoxContainer Name="InputContainer" StyleIdentifier="PaperContainer" Orientation="Vertical" VerticalExpand="True" VerticalAlignment="Stretch">
                             <PanelContainer StyleIdentifier="PaperEditBackground" MinHeight="100"
                                 VerticalAlignment="Stretch" VerticalExpand="True" HorizontalExpand="True">
                                 <TextEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
                             </PanelContainer>
-                            <Label Name="FillStatus" StyleClasses="LabelSecondaryColor"/>
+                            <Label Name="FillStatus" StyleClasses="LabelWeak"/>
                         </BoxContainer>
                         <TextureButton Name="FooterImage" HorizontalAlignment="Center" VerticalAlignment="Top" MouseFilter="Ignore"/>
                     </BoxContainer>
