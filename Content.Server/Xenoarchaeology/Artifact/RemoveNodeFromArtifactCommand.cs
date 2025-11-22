@@ -6,12 +6,13 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
-/// <summary> Command for unlocking a specific node of a xeno artifact. </summary>
 [AdminCommand(AdminFlags.Debug)]
-public sealed class UnlockNodeCommand : XenoArtifactCommandBase
+public sealed class RemoveNodeFromArtifactCommand : XenoArtifactCommandBase
 {
-    public override string Command => "unlocknode";
+    /// <inheritdoc />
+    public override string Command => "removenodefromartifact";
 
+    /// <inheritdoc />
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 2)
@@ -20,13 +21,21 @@ public sealed class UnlockNodeCommand : XenoArtifactCommandBase
             return;
         }
 
-        if (!EntityUid.TryParse(args[1], out var entityUid))
+        if (!EntityUid.TryParse(args[0], out var target)
+            || !EntityManager.TryGetComponent(target, out XenoArtifactComponent? artifactComp))
         {
-            shell.WriteError(Loc.GetString("shell-could-not-find-entity-with-uid", ("uid", args[1])));
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-artifact", ("uid", args[0])));
             return;
         }
 
-        Artifact.SetNodeUnlocked(entityUid);
+        if (!EntityUid.TryParse(args[1], out var toDelete)
+            || !EntityManager.TryGetComponent(toDelete, out XenoArtifactNodeComponent? nodeComponent))
+        {
+            shell.WriteLine(Loc.GetString("cmd-xenoartifact-common-failed-to-find-node", ("uid", args[0])));
+            return;
+        }
+
+        Artifact.RemoveNode((target, artifactComp), (toDelete, nodeComponent));
     }
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
