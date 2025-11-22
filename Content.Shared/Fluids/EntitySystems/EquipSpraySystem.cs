@@ -1,15 +1,12 @@
 using Content.Shared.Actions;
-using Content.Shared.Clothing;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Map;
 
 namespace Content.Shared.Fluids.EntitySystems;
 
 public sealed class EquipSpraySystem : EntitySystem
 {
     [Dependency] private readonly SharedSpaySystem _spray = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -26,7 +23,7 @@ public sealed class EquipSpraySystem : EntitySystem
         if (!TryComp<SprayComponent>(equipSprayEnt, out var sprayComponent) || !TryComp<EquipSprayComponent>(equipSprayEnt, out var equipSpray))
             return;
 
-        _spray.Spray((equipSprayEnt.Value, sprayComponent), ev.Performer, GetSprayDirection((equipSprayEnt.Value, equipSpray)));
+        _spray.Spray((equipSprayEnt.Value, sprayComponent), ev.Performer);
     }
 
     private void OnGetVerb(Entity<EquipSprayComponent> entity, ref GetVerbsEvent<Verb> args)
@@ -41,21 +38,11 @@ public sealed class EquipSpraySystem : EntitySystem
         {
             Act = () =>
             {
-                // TODO: Make a spray override that comes from the entity not the user
-                _spray.Spray((entity, sprayComponent), entity, GetSprayDirection(entity));
+                _spray.Spray((entity, sprayComponent));
             },
             Text = Loc.GetString(entity.Comp.VerbLocId),
         };
         args.Verbs.Add(verb);
-    }
-
-    private MapCoordinates GetSprayDirection(Entity<EquipSprayComponent> entity)
-    {
-        var xform = Transform(entity);
-        var throwing = xform.LocalRotation.ToWorldVec();
-        var direction = xform.Coordinates.Offset(throwing);
-
-        return _transform.ToMapCoordinates(direction);
     }
 }
 

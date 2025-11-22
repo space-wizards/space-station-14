@@ -55,7 +55,7 @@ public sealed class SpraySystem : SharedSpaySystem
 
         var targetMapPos = _transform.GetMapCoordinates(GetEntityQuery<TransformComponent>().GetComponent(args.Target));
 
-        Spray(entity, args.User, targetMapPos);
+        Spray(entity, targetMapPos, args.User);
     }
 
     private void UpdateGridMassMultiplier(float value)
@@ -72,11 +72,19 @@ public sealed class SpraySystem : SharedSpaySystem
 
         var clickPos = _transform.ToMapCoordinates(args.ClickLocation);
 
-        Spray(entity, args.User, clickPos);
+        Spray(entity, clickPos, args.User);
     }
 
-    // This doesn't make sense, user and map cord need to be changed to make sense (user is the source somehow??)
-    public override void Spray(Entity<SprayComponent> entity, EntityUid user, MapCoordinates mapcoord)
+    public override void Spray(Entity<SprayComponent> entity, EntityUid? user = null)
+    {
+        var xform = Transform(entity);
+        var throwing = xform.LocalRotation.ToWorldVec() * entity.Comp.SprayDistance;
+        var direction = xform.Coordinates.Offset(throwing);
+
+        Spray(entity, _transform.ToMapCoordinates(direction), user);
+    }
+
+    public override void Spray(Entity<SprayComponent> entity, MapCoordinates mapcoord, EntityUid? user = null)
     {
         if (!_solutionContainer.TryGetSolution(entity.Owner, SprayComponent.SolutionName, out var soln, out var solution))
             return;
@@ -84,25 +92,29 @@ public sealed class SpraySystem : SharedSpaySystem
         var ev = new SprayAttemptEvent(user);
         RaiseLocalEvent(entity, ref ev);
         if (ev.Cancelled)
+        {
+            if (ev.CancelPopupMessage != null && user != null)
+                _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), entity.Owner, user.Value);
             return;
+        }
 
-        if (TryComp<UseDelayComponent>(entity, out var useDelay)
-            && _useDelay.IsDelayed((entity, useDelay)))
+        if (_useDelay.IsDelayed((entity, null)))
             return;
 
         if (solution.Volume <= 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), entity.Owner, user);
+            if (user != null)
+                _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), entity.Owner, user.Value);
             return;
         }
 
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var userXform = xformQuery.GetComponent(user);
+        var sprayerXform = xformQuery.GetComponent(entity);
 
-        var userMapPos = _transform.GetMapCoordinates(userXform);
+        var sprayerMapPos = _transform.GetMapCoordinates(sprayerXform);
         var clickMapPos = mapcoord;
 
-        var diffPos = clickMapPos.Position - userMapPos.Position;
+        var diffPos = clickMapPos.Position - sprayerMapPos.Position;
         if (diffPos == Vector2.Zero || diffPos == Vector2Helpers.NaN)
             return;
 
@@ -129,12 +141,12 @@ public sealed class SpraySystem : SharedSpaySystem
                                      Angle.FromDegrees(spread * (amount - 1) / 2));
 
             // Calculate the destination for the vapor cloud. Limit to the maximum spray distance.
-            var target = userMapPos
+            var target = sprayerMapPos
                 .Offset((diffNorm + rotation.ToVec()).Normalized() * diffLength + quarter);
 
-            var distance = (target.Position - userMapPos.Position).Length();
+            var distance = (target.Position - sprayerMapPos.Position).Length();
             if (distance > entity.Comp.SprayDistance)
-                target = userMapPos.Offset(diffNorm * entity.Comp.SprayDistance);
+                target = sprayerMapPos.Offset(diffNorm * entity.Comp.SprayDistance);
 
             var adjustedSolutionAmount = entity.Comp.TransferAmount / entity.Comp.VaporAmount;
             var newSolution = _solutionContainer.SplitSolution(soln.Value, adjustedSolutionAmount);
@@ -143,7 +155,7 @@ public sealed class SpraySystem : SharedSpaySystem
                 break;
 
             // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
-            var vaporPos = userMapPos.Offset(distance < 1 ? quarter : threeQuarters);
+            var vaporPos = sprayerMapPos.Offset(distance < 1 ? quarter : threeQuarters);
             var vapor = Spawn(entity.Comp.SprayedPrototype, vaporPos);
             var vaporXform = xformQuery.GetComponent(vapor);
 
@@ -168,15 +180,15 @@ public sealed class SpraySystem : SharedSpaySystem
 
             if (TryComp<PhysicsComponent>(user, out var body))
             {
-                if (_gravity.IsWeightless(user))
+                if (_gravity.IsWeightless(user.Value))
                 {
                     // push back the player
-                    _physics.ApplyLinearImpulse(user, -impulseDirection * entity.Comp.PushbackAmount, body: body);
+                    _physics.ApplyLinearImpulse(user.Value, -impulseDirection * entity.Comp.PushbackAmount, body: body);
                 }
                 else
                 {
                     // push back the grid the player is standing on
-                    var userTransform = Transform(user);
+                    var userTransform = Transform(user.Value);
                     if (userTransform.GridUid == userTransform.ParentUid)
                     {
                         // apply both linear and angular momentum depending on the player position
@@ -189,7 +201,6 @@ public sealed class SpraySystem : SharedSpaySystem
 
         _audio.PlayPvs(entity.Comp.SpraySound, entity, entity.Comp.SpraySound.Params.WithVariation(0.125f));
 
-        if (useDelay != null)
-            _useDelay.TryResetDelay((entity, useDelay));
+        _useDelay.TryResetDelay(entity);
     }
 }
