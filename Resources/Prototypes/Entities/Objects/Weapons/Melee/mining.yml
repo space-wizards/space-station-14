@@ -137,7 +137,6 @@
   - type: Gun
     soundGunshot: /Audio/Weapons/plasma_cutter.ogg
     fireRate: 1
-    useKey: false
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.5
     rechargeSound:
@@ -155,6 +154,8 @@
         Slash: 4
     soundHit:
       collection: MetalThud
+  - type: AltFireMelee
+    attackType: Heavy
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
@@ -230,8 +231,6 @@
     slots:
     - Back
     - suitStorage
-  - type: UseDelay
-    delay: 1.9
   - type: BasicEntityAmmoProvider
     proto: BulletChargeGlaive
     capacity: 1
