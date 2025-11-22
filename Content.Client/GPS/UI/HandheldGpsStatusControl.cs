@@ -1,7 +1,7 @@
-using Content.Shared.GPS.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Robust.Client.GameObjects;
+using Content.Shared.GPS.Components;
+using Content.Shared.GPS.Systems;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
@@ -13,14 +13,13 @@ public sealed class HandheldGpsStatusControl : Control
     private readonly Entity<HandheldGPSComponent> _parent;
     private readonly RichTextLabel _label;
     private float _updateDif;
-    private readonly IEntityManager _entMan;
-    private readonly SharedTransformSystem _transform;
+
+    private readonly HandheldGpsSystem _handheldGps;
 
     public HandheldGpsStatusControl(Entity<HandheldGPSComponent> parent)
     {
         _parent = parent;
-        _entMan = IoCManager.Resolve<IEntityManager>();
-        _transform = _entMan.System<TransformSystem>();
+        _handheldGps = IoCManager.Resolve<IEntityManager>().System<HandheldGpsSystem>();
         _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
         UpdateGpsDetails();
@@ -48,14 +47,6 @@ public sealed class HandheldGpsStatusControl : Control
 
     private void UpdateGpsDetails()
     {
-        var posText = "Error";
-        if (_entMan.TryGetComponent(_parent, out TransformComponent? transComp))
-        {
-            var pos = _transform.GetMapCoordinates(_parent.Owner, xform: transComp);
-            var x = (int)pos.X;
-            var y = (int)pos.Y;
-            posText = $"({x}, {y})";
-        }
-        _label.SetMarkup(Loc.GetString("handheld-gps-coordinates-title", ("coordinates", posText)));
+        _label.SetMarkup(_handheldGps.GetGpsDisplayMarkup(_parent, abbreviated: true));
     }
 }
