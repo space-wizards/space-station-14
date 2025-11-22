@@ -631,11 +631,11 @@
 #Chemicals
 
 - type: listing
-  id: UplinkHypopen
-  name: uplink-hypopen-name
-  description: uplink-hypopen-desc
-  icon: { sprite: /Textures/Objects/Misc/pens.rsi, state: pen }
-  productEntity: HypopenBox
+  id: UplinkHypospray
+  name: uplink-hypospray-name
+  description: uplink-hypospray-desc
+  icon: { sprite: /Textures/Objects/Specific/Medical/syndihypo.rsi, state: hypo }
+  productEntity: SyndiHypoTraitor
   discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 4
