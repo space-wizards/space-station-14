@@ -80,7 +80,6 @@ namespace Content.Shared.Interaction
         private EntityQuery<ItemComponent> _itemQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
         private EntityQuery<HandsComponent> _handsQuery;
-        private EntityQuery<InteractionRelayComponent> _relayQuery;
         private EntityQuery<CombatModeComponent> _combatQuery;
         private EntityQuery<WallMountComponent> _wallMountQuery;
         private EntityQuery<UseDelayComponent> _delayQuery;
@@ -108,7 +107,6 @@ namespace Content.Shared.Interaction
             _itemQuery = GetEntityQuery<ItemComponent>();
             _physicsQuery = GetEntityQuery<PhysicsComponent>();
             _handsQuery = GetEntityQuery<HandsComponent>();
-            _relayQuery = GetEntityQuery<InteractionRelayComponent>();
             _combatQuery = GetEntityQuery<CombatModeComponent>();
             _wallMountQuery = GetEntityQuery<WallMountComponent>();
             _delayQuery = GetEntityQuery<UseDelayComponent>();
@@ -387,22 +385,6 @@ namespace Content.Shared.Interaction
             bool checkAccess = true,
             bool checkCanUse = true)
         {
-            if (_relayQuery.TryComp(user, out var relay) && relay.RelayEntity is not null)
-            {
-                // TODO this needs to be handled better. This probably bypasses many complex can-interact checks in weird roundabout ways.
-                if (_actionBlockerSystem.CanInteract(user, target))
-                {
-                    UserInteraction(relay.RelayEntity.Value,
-                        coordinates,
-                        target,
-                        altInteract,
-                        checkCanInteract,
-                        checkAccess,
-                        checkCanUse);
-                    return;
-                }
-            }
-
             if (target != null && Deleted(target.Value))
                 return;
 

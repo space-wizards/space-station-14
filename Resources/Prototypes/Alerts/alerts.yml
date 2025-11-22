@@ -254,6 +254,32 @@
   description: alerts-dead-desc
 
 - type: alert
+  id: MechaHealth
+  icons:
+  - sprite: /Textures/Interface/Alerts/mecha_alive.rsi
+    state: health0
+  - sprite: /Textures/Interface/Alerts/mecha_alive.rsi
+    state: health1
+  - sprite: /Textures/Interface/Alerts/mecha_alive.rsi
+    state: health2
+  - sprite: /Textures/Interface/Alerts/mecha_alive.rsi
+    state: health3
+  - sprite: /Textures/Interface/Alerts/mecha_alive.rsi
+    state: health4
+  name: alerts-health-name
+  description: alerts-health-desc
+  minSeverity: 0
+  maxSeverity: 4
+
+- type: alert
+  id: MechaBroken
+  icons:
+  - sprite: /Textures/Interface/Alerts/borg_critical.rsi
+    state: critical
+  name: alerts-crit-name
+  description: alerts-crit-desc
+
+- type: alert
   id: BorgBattery
   category: Battery
   icons:
