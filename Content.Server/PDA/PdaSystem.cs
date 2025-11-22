@@ -1,5 +1,4 @@
 using Content.Server.Access.Systems;
-using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
 using Content.Server.Chat.Managers;
 using Content.Server.Instruments;
@@ -8,6 +7,7 @@ using Content.Server.Station.Systems;
 using Content.Server.Store.Systems;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.Access.Components;
+using Content.Shared.AlertLevel;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Chat;
 using Content.Shared.DeviceNetwork.Components;
@@ -21,6 +21,7 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.PDA
@@ -37,6 +38,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
         [Dependency] private readonly IdCardSystem _idCard = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
 
         public override void Initialize()
         {
@@ -138,7 +140,7 @@ namespace Content.Server.PDA
             UpdateAllPdaUisOnStation();
         }
 
-        private void OnAlertLevelChanged(AlertLevelChangedEvent args)
+        private void OnAlertLevelChanged(ref AlertLevelChangedEvent args)
         {
             UpdateAllPdaUisOnStation();
         }
@@ -302,12 +304,11 @@ namespace Content.Server.PDA
         private void UpdateAlertLevel(EntityUid uid, PdaComponent pda)
         {
             var station = _station.GetOwningStation(uid);
-            if (!TryComp(station, out AlertLevelComponent? alertComp) ||
-                alertComp.AlertLevels == null)
+            if (!TryComp(station, out AlertLevelComponent? alertComp))
                 return;
-            pda.StationAlertLevel = alertComp.CurrentLevel;
-            if (alertComp.AlertLevels.Levels.TryGetValue(alertComp.CurrentLevel, out var details))
-                pda.StationAlertColor = details.Color;
+            pda.StationAlertLevel = alertComp.CurrentAlertLevel;
+            if (_prototype.Resolve(alertComp.CurrentAlertLevel, out var level))
+                pda.StationAlertColor = level.Color;
         }
 
         private string? GetDeviceNetAddress(EntityUid uid)
