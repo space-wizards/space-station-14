@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "based on /tg/station at commit https://github.com/tgstation/tgstation/commit/20ae083f140ac5b4da7e8bc40f95349001b6c086, modified by sowelipililimute (GitHub)",
+    "size": {
+        "x": 8,
+        "y": 8
+    },
+    "states": [
+        {
+            "name": "critical_1"
+        },
+        {
+            "name": "critical_2"
+        },
+        {
+            "name": "critical_3"
+        },
+        {
+            "name": "critical_4"
+        },
+        {
+            "name": "critical_5"
+        },
+        {
+            "name": "critical_6"
+        },
+        {
+            "name": "critical_7"
+        },
+        {
+            "name": "normal_1"
+        },
+        {
+            "name": "normal_2"
+        },
+        {
+            "name": "normal_3"
+        },
+        {
+            "name": "normal_4"
+        },
+        {
+            "name": "normal_5"
+        },
+        {
+            "name": "normal_6"
+        },
+        {
+            "name": "normal_7"
+        }
+    ]
+}

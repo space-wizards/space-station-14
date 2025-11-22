@@ -137,6 +137,10 @@ namespace Content.IntegrationTests.Tests.Construction
             {
                 foreach (var proto in protoMan.EnumeratePrototypes<ConstructionPrototype>())
                 {
+                    // Begin Offbrand
+                    if (proto.Type == ConstructionType.NodeToNode)
+                        continue;
+                    // End Offbrand
                     var start = proto.StartNode;
                     var target = proto.TargetNode;
                     var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);

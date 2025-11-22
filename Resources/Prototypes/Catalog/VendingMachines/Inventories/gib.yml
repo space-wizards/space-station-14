@@ -12,7 +12,7 @@
   contrabandInventory:
     ClothingNeckStethoscope: 2
     Saw: 2
-    Tourniquet: 3
+    TourniquetOffbrand: 3 # Offbrand
     DrinkChangelingStingCan: 2
   emaggedInventory:
     DrinkNukieCan: 2

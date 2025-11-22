@@ -1,0 +1,35 @@
+- type: Tag
+  id: WoundBrute
+
+- type: Tag
+  id: WoundBruise
+
+- type: Tag
+  id: WoundCut
+
+- type: Tag
+  id: WoundPuncture
+
+- type: Tag
+  id: WoundBurn
+
+- type: Tag
+  id: WoundHeat
+
+- type: Tag
+  id: WoundShock
+
+- type: Tag
+  id: WoundCaustic
+
+- type: Tag
+  id: WoundCold
+
+- type: Tag
+  id: OperatableClothing
+
+- type: Tag
+  id: IVBag
+
+- type: Tag
+  id: IVStand

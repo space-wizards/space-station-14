@@ -1,0 +1,67 @@
+- type: entity
+  abstract: true
+  id: BasePersistentTender
+  components:
+  - type: TriggerOnDoAfter
+    beginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    endSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
+    whitelist:
+      components:
+      - Woundable
+    conditionFailed: persistent-tender-already-applied
+    selfUserCompleted: persistent-tender-reflexive-user-completed
+    selfOtherCompleted: persistent-tender-reflexive-other-completed
+    userCompleted: persistent-tender-user-completed
+    otherCompleted: persistent-tender-other-completed
+    selfUserStarted: persistent-tender-reflexive-user-started
+    selfOtherStarted: persistent-tender-reflexive-other-started
+    userStarted: persistent-tender-user-started
+    otherStarted: persistent-tender-other-started
+
+- type: entity
+  parent: [BasePersistentTender, BaseItem]
+  id: TourniquetOffbrand
+  name: tourniquet
+  description: Can be clamped on a patient to prevent bleeding, but causes bruises after sustained use.
+  components:
+  - type: Tag
+    tags:
+    - SecBeltEquip
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: tourniquet
+  - type: Item
+    heldPrefix: tourniquet
+  - type: UpdateStatusEffectOnTrigger
+    effectProto: StatusEffectTourniquet
+    targetUser: true
+  - type: StatusEffectTriggerCondition
+    effectProto: StatusEffectTourniquet
+    targetUser: true
+    invert: true
+
+- type: entity
+  parent: [BasePersistentTender, BaseItem]
+  id: Splints
+  name: splints
+  description: Splints capable of supporting and immobilizing bones.
+  components:
+  - type: Sprite
+    sprite: _Offbrand/splints.rsi
+    state: splint
+  - type: Item
+  - type: UpdateStatusEffectOnTrigger
+    effectProto: StatusEffectSplints
+    targetUser: true
+  - type: StatusEffectTriggerCondition
+    effectProto: StatusEffectSplints
+    targetUser: true
+    invert: true

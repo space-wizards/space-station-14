@@ -1,0 +1,58 @@
+- type: latheRecipe
+  parent: [ BaseGoldCircuitboardRecipe, BaseMedicalMachineRecipeCategory ]
+  id: OperatingTableCircuitboard
+  result: OperatingTableCircuitboard
+
+- type: latheRecipePack
+  id: OffbrandCircuitboardsStatic
+  recipes:
+  - OperatingTableCircuitboard
+
+- type: latheRecipe
+  id: IVBag
+  result: IVBag
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
+  id: Suture1
+  result: Suture1
+  completetime: 1
+  materials:
+    Steel: 25
+    Plastic: 25
+
+- type: latheRecipePack
+  id: OffbrandMedicalStatic
+  recipes:
+  - IVBag
+  - Suture1
+
+- type: latheRecipePack
+  id: OffbrandSurgeryStatic
+  recipes:
+  - BoneGel
+  - BoneSetter
+  - VascularRecoupler
+
+- type: latheRecipe
+  parent: BaseSurgicalRecipe
+  id: BoneGel
+  result: BoneGel
+  materials:
+    Steel: 200
+    Plasma: 100
+
+- type: latheRecipe
+  parent: BaseSurgicalRecipe
+  id: BoneSetter
+  result: BoneSetter
+
+- type: latheRecipe
+  parent: BaseSurgicalRecipe
+  id: VascularRecoupler
+  result: VascularRecoupler
+  materials:
+    Steel: 200
+    Glass: 100
+    Plastic: 100

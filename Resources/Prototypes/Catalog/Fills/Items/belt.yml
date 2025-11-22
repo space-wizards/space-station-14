@@ -97,8 +97,12 @@
         amount: 2
       - id: Ointment
         amount: 1
-      - id: Bloodpack
-        amount: 1
+      # Begin Offbrand Additions
+      - id: ChemistryBottleParacetamol
+      - id: ChemistryBottleInaprovaline
+      - id: ChemistryBottleDexalin
+      - id: ChemistryBottleDylovene
+      # End Offbrand Additions
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
 
@@ -111,7 +115,12 @@
     contents:
       - id: Brutepack
       - id: Ointment
-      - id: Bloodpack
+      # Begin Offbrand Additions
+      - id: ChemistryBottleParacetamol
+      - id: ChemistryBottleInaprovaline
+      - id: ChemistryBottleDexalin
+      - id: ChemistryBottleDylovene
+      # End Offbrand Additions
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
         amount: 3
