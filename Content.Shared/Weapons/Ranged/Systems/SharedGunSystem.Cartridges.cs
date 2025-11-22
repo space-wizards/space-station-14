@@ -1,7 +1,9 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
@@ -43,6 +45,10 @@ public abstract partial class SharedGunSystem
 
         if (!entityProto.TryGetComponent<ProjectileComponent>(out var projectile, Factory))
             return null;
+
+        var damage = new DamageSpecifier(projectile.Damage);
+        if (entityProto.TryGetComponent<StaminaDamageOnCollideComponent>(out var staminaComp, Factory))
+            damage.DamageDict.Add(staminaComp.StaminaName, FixedPoint2.New(staminaComp.Damage));
 
         if (!projectile.Damage.Empty)
             return projectile.Damage * Damageable.UniversalProjectileDamageModifier;

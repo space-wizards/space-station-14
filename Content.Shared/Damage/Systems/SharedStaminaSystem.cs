@@ -7,7 +7,9 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Projectiles;
@@ -16,6 +18,7 @@ using Content.Shared.Rounding;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -44,6 +47,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly StatusEffectsSystem _status = default!;
     [Dependency] protected readonly SharedStunSystem StunSystem = default!;
+    [Dependency] private readonly ItemToggleSystem _itemToggle = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
@@ -65,12 +69,13 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
 
-        SubscribeLocalEvent<StaminaDamageOnEmbedComponent, EmbedEvent>(OnProjectileEmbed);
-
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
+
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, SharedMeleeWeaponSystem.HitDamageExamineEvent>(OnGetHitExamine);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, SharedDamageOtherOnHitSystem.CollideDamageExamineEvent>(OnGetCollideExamine);
 
         Subs.CVar(_config, CCVars.PlaytestStaminaDamageModifier, value => UniversalStaminaDamageModifier = value, true);
     }
@@ -110,7 +115,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         var curTime = Timing.CurTime;
         var pauseTime = _metadata.GetPauseTime(uid);
-        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float) (curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
+        return MathF.Max(0f, component.StaminaDamage - MathF.Max(0f, (float)(curTime - (component.NextUpdate + pauseTime)).TotalSeconds * component.Decay));
     }
 
     private void OnRejuvenate(Entity<StaminaComponent> entity, ref RejuvenateEvent args)
@@ -194,14 +199,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         OnCollide(uid, component, args.Target);
     }
 
-    private void OnProjectileEmbed(EntityUid uid, StaminaDamageOnEmbedComponent component, ref EmbedEvent args)
-    {
-        if (!TryComp<StaminaComponent>(args.Embedded, out var stamina))
-            return;
-
-        TakeStaminaDamage(args.Embedded, component.Damage, stamina, source: uid);
-    }
-
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
         OnCollide(uid, component, args.Target);
@@ -229,7 +226,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     }
 
     // Here so server can properly tell all clients in PVS range to start the animation
-    protected virtual void SetStaminaAnimation(Entity<StaminaComponent> entity){}
+    protected virtual void SetStaminaAnimation(Entity<StaminaComponent> entity) { }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
     {
@@ -237,7 +234,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
             return;
 
         var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.CritThreshold - component.StaminaDamage), component.CritThreshold, 7);
-        _alerts.ShowAlert(uid, component.StaminaAlert, (short) severity);
+        _alerts.ShowAlert(uid, component.StaminaAlert, (short)severity);
     }
 
     /// <summary>
@@ -454,4 +451,20 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     {
         public NetEntity Entity = entity;
     }
+
+    #region Examine
+
+    private void OnGetHitExamine(Entity<StaminaDamageOnHitComponent> ent, ref SharedMeleeWeaponSystem.HitDamageExamineEvent args)
+    {
+        if (_itemToggle.IsActivated(ent.Owner) && ent.Comp.Damage != 0)
+            args.Damage.DamageDict.Add(ent.Comp.StaminaName, FixedPoint2.New(ent.Comp.Damage));
+    }
+
+    private void OnGetCollideExamine(Entity<StaminaDamageOnCollideComponent> ent, ref SharedDamageOtherOnHitSystem.CollideDamageExamineEvent args)
+    {
+        if (_itemToggle.IsActivated(ent.Owner) && ent.Comp.Damage != 0)
+            args.Damage.DamageDict.Add(ent.Comp.StaminaName, FixedPoint2.New(ent.Comp.Damage));
+    }
+
+    #endregion
 }

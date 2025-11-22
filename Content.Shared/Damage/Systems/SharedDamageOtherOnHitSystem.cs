@@ -1,6 +1,7 @@
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
 
@@ -19,7 +20,9 @@ public abstract class SharedDamageOtherOnHitSystem : EntitySystem
 
     private void OnDamageExamine(Entity<DamageOtherOnHitComponent> ent, ref DamageExamineEvent args)
     {
-        _damageExamine.AddDamageExamine(args.Message, _damageable.ApplyUniversalAllModifiers(ent.Comp.Damage * _damageable.UniversalThrownDamageModifier), Loc.GetString("damage-throw"));
+        var ev = new CollideDamageExamineEvent(ent.Comp.Damage);
+        RaiseLocalEvent(ent, ref ev);
+        _damageExamine.AddDamageExamine(args.Message, _damageable.ApplyUniversalAllModifiers(ev.Damage * _damageable.UniversalThrownDamageModifier), Loc.GetString("damage-throw"));
     }
 
     /// <summary>
@@ -29,4 +32,7 @@ public abstract class SharedDamageOtherOnHitSystem : EntitySystem
     {
         args.Cancel("pacified-cannot-throw");
     }
+
+    [ByRefEvent]
+    public readonly record struct CollideDamageExamineEvent(DamageSpecifier Damage);
 }

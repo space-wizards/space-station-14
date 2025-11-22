@@ -10,4 +10,7 @@ public sealed partial class StaminaDamageOnHitComponent : Component
 
     [DataField("sound")]
     public SoundSpecifier? Sound;
+
+    [DataField]
+    public string StaminaName = "Stamina";
 }
