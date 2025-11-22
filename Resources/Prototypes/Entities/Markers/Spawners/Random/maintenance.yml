@@ -119,6 +119,8 @@
       - id: BalloonCorgi
       - id: MysteryFigureBox
       - id: RubberChicken
+      - id: DogBowlBlue
+      - id: DogBowlRed
       # Cult
       - !type:AllSelector
         children:
@@ -175,6 +177,7 @@
       - id: RubberStampGreytide
       - id: MysteryLighterBox
       - id: GoldenPersonalAI
+      - id: DogBowlMog
 
 - type: entity
   name: Maint Loot Spawner
