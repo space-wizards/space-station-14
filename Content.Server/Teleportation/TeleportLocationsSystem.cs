@@ -37,7 +37,7 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
     protected override void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (Delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (IsDelayed(ent))
             return;
 
         if (!string.IsNullOrWhiteSpace(ent.Comp.Speech))
