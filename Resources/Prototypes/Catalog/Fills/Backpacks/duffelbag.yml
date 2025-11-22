@@ -371,3 +371,15 @@
       - id: EmpImplanter
       - id: ClothingShoesBootsMagSyndie
       - id: AgentIDCard
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFilledHushpup
+  name: Hushpup bundle
+  description: Contains the Hushpup, bundled with a box of buckshot. Quarter included.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunHushpup
+      - id: BoxLethalshot
+      - id: TreasureCoinIron
