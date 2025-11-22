@@ -149,7 +149,7 @@
   - type: XATDamageThresholdReached
     typesNeeded:
       Radiation: 20
-  # TODO: legendary microwave trigger
+  - type: XATMicrowave
 
 - type: xenoArchTrigger
   id: TriggerPressureHigh
