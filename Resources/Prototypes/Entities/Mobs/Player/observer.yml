@@ -68,6 +68,7 @@
     radius: 6
     castShadows: false
     enabled: false
+  - type: CombatMode
 
 # proto for player ghosts specifically
 - type: entity
