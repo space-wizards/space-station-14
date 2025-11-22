@@ -30,6 +30,18 @@ public sealed partial class InventoryComponent : Component
     [DataField, AutoNetworkedField]
     public string? SpeciesId;
 
+    /// <summary>
+    /// For determining whether worn clothing will be displaced, if the clothing has a species-specific state that is related to this component's SpeciesID.
+    /// </summary>
+    /// <remarks>
+    /// This datafield is here to fix a mothroach bug:
+    /// Currently, mothroaches have an InventoryComponent with the SpeciesID and TemplateID set to hamster. This allows them to use the same slots as, and wear the same clothing as, hamsters.
+    /// Most of the hats which hamsters can wear have hamster-specific sprite-states. These sprites need to be affected by the mothroaches' displacement map in order to appear in the correct position on the mothroach.
+    /// However, because the mothroaches' SpeciesID is hamster, and because the sprite being displayed has a hamster-state, the game will not displace the clothing, under the assumption that a hamster-specific sprite should be placed correctly on our "hamster" (mothroach).
+    /// Setting this datafield to `true` will ignore the check that looks for a matching SpeciesID and sprite-state, allowing hamster clothing to be displaced properly on mothroaches.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public bool DisplaceSpeciesAppropriateClothing = false;
 
     [ViewVariables]
     public SlotDefinition[] Slots = Array.Empty<SlotDefinition>();
