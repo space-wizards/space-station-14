@@ -22,6 +22,7 @@ using Robust.Server.GameObjects;
 using System.Linq;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Emag.Systems;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
@@ -43,6 +44,7 @@ public sealed class AirAlarmSystem : EntitySystem
     [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly DeviceListSystem _deviceList = default!;
+    [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -178,6 +180,7 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AirAlarmComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<AirAlarmComponent, GotEmaggedEvent>(OnEmagged);
 
         Subs.BuiEvents<AirAlarmComponent>(SharedAirAlarmInterfaceKey.Key, subs =>
         {
@@ -454,6 +457,25 @@ public sealed class AirAlarmSystem : EntitySystem
         return comp.NormalPort;
     }
 
+    private void OnEmagged(EntityUid uid, AirAlarmComponent airAlarm, ref GotEmaggedEvent args)
+    {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var devNet))
+        {
+            SetMode(uid, devNet.Address, AirAlarmMode.None, false);
+            RemCompDeferred<DeviceNetworkComponent>(uid);
+        }
+
+        args.Repeatable = true;
+        airAlarm.IsEmagged = true;
+        args.Handled = true;
+    }
+
     #endregion
 
     #region Air Alarm Settings
@@ -471,7 +493,7 @@ public sealed class AirAlarmSystem : EntitySystem
             return;
         }
 
-        if (controller.PanicWireCut)
+        if (controller.PanicWireCut || controller.IsEmagged)
         {
             mode = AirAlarmMode.Panic;
         }
@@ -658,6 +680,7 @@ public sealed class AirAlarmSystem : EntitySystem
         }
         foreach (var (addr, data) in alarm.ScrubberData)
         {
+            data.AirAlarmEmagged = alarm.IsEmagged;
             data.AirAlarmPanicWireCut = alarm.PanicWireCut;
             dataToSend.Add((addr, data));
         }
@@ -676,7 +699,7 @@ public sealed class AirAlarmSystem : EntitySystem
         _ui.SetUiState(
             uid,
             SharedAirAlarmInterfaceKey.Key,
-            new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut));
+            new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, highestAlarm.Value, alarm.AutoMode, alarm.PanicWireCut, alarm.IsEmagged));
     }
 
     private const float Delay = 8f;
