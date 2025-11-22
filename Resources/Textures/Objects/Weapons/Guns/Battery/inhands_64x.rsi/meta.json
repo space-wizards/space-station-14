@@ -16,11 +16,27 @@
             "directions": 4
         },
         {
+            "name": "energy-inhand-left-color",
+            "directions": 4
+        },
+        {
+            "name": "energy-inhand-right-color",
+            "directions": 4
+        },
+        {
             "name": "wielded-inhand-left",
             "directions": 4
         },
         {
             "name": "wielded-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wielded-energy-inhand-left-color",
+            "directions": 4
+        },
+        {
+            "name": "wielded-energy-inhand-right-color",
             "directions": 4
         }
     ]
