@@ -118,7 +118,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         }
 
         /// <summary>
-        /// Spawns two pairs of mobs with a targeted DoAfter to check that the GetEntitiesInteractingWithTarget result
+        /// Spawns two sets of mobs with a targeted DoAfter to check that the GetEntitiesInteractingWithTarget result
         /// includes the correct interacting entities.
         /// </summary>
         [Test]
@@ -134,23 +134,30 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             EntityUid mob = default;
             EntityUid target = default;
+
             EntityUid mob2 = default;
+            EntityUid mob3 = default;
             EntityUid target2 = default;
 
             await server.WaitPost(() =>
             {
-                mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
+                // Spawn two targets to interact with
                 target = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                var args = new DoAfterArgs(entityManager, mob, timing.TickPeriod * 5, ev, null, target) { Broadcast = true };
+                target2 = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
 
+                // Spawn a mob which is interacting with the first target
+                mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
+                var args = new DoAfterArgs(entityManager, mob, timing.TickPeriod * 5, ev, null, target) { Broadcast = true };
                 Assert.That(doAfterSystem.TryStartDoAfter(args));
 
-                // Start a second do after with a different target
+                // Spawn two more mobs which are interacting with the second target
                 mob2 = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                target2 = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
                 var args2 = new DoAfterArgs(entityManager, mob2, timing.TickPeriod * 5, ev, null, target2) { Broadcast = true };
-
                 Assert.That(doAfterSystem.TryStartDoAfter(args2));
+
+                mob3 = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
+                var args3 = new DoAfterArgs(entityManager, mob3, timing.TickPeriod * 5, ev, null, target2) { Broadcast = true };
+                Assert.That(doAfterSystem.TryStartDoAfter(args3));
             });
 
             var list = new HashSet<EntityUid>();
@@ -158,12 +165,13 @@ namespace Content.IntegrationTests.Tests.DoAfter
             Assert.That(list, Is.EquivalentTo([mob]), $"{mob} was not considered to be interacting with {target}");
 
             interactionSystem.GetEntitiesInteractingWithTarget(target2, list);
-            Assert.That(list, Is.EquivalentTo([mob2]), $"{mob2} was not considered to be interacting with {target2}");
+            Assert.That(list, Is.EquivalentTo([mob2, mob3]), $"{mob2} and {mob3} were not considered to be interacting with {target2}");
 
             await server.WaitPost(() =>
             {
                 entityManager.DeleteEntity(mob);
                 entityManager.DeleteEntity(mob2);
+                entityManager.DeleteEntity(mob3);
                 entityManager.DeleteEntity(target);
                 entityManager.DeleteEntity(target2);
             });
