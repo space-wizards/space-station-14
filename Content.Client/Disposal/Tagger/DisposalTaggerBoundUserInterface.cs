@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
+using Content.Shared.Disposal.Components;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
-namespace Content.Client.Disposal.Tube
+namespace Content.Client.Disposal.Tagger
 {
     /// <summary>
     /// Initializes a <see cref="DisposalTaggerWindow"/> and updates it when new server messages are received.
@@ -10,8 +10,9 @@ namespace Content.Client.Disposal.Tube
     [UsedImplicitly]
     public sealed class DisposalTaggerBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
         private DisposalTaggerWindow? _window;
+
+        private const int TagLimit = 30;
 
         public DisposalTaggerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -23,14 +24,19 @@ namespace Content.Client.Disposal.Tube
 
             _window = this.CreateWindow<DisposalTaggerWindow>();
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
+            _window.Confirm.OnPressed += _ => AcceptButtonPressed(_window.TagInput.Text);
+            _window.TagInput.OnTextEntered += args => AcceptButtonPressed(args.Text);
+
+            if (EntMan.TryGetComponent<DisposalTaggerComponent>(Owner, out var tagger) &&
+                tagger.Tag != string.Empty)
+            {
+                _window.TagInput.Text = tagger.Tag;
+            }
         }
 
-        private void ButtonPressed(UiAction action, string tag)
+        private void AcceptButtonPressed(string tag)
         {
-            // TODO: This looks copy-pasted with the other mailing stuff...
-            SendMessage(new UiActionMessage(action, tag));
+            SendMessage(new DisposalTaggerUiActionMessage(tag, TagLimit));
             Close();
         }
 

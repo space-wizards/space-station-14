@@ -1,8 +1,9 @@
-﻿using JetBrains.Annotations;
+using Content.Shared.Disposal.Components;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
+using System.Collections.Generic;
 
-namespace Content.Client.Disposal.Tube
+namespace Content.Client.Disposal.Router
 {
     /// <summary>
     /// Initializes a <see cref="DisposalRouterWindow"/> and updates it when new server messages are received.
@@ -10,8 +11,9 @@ namespace Content.Client.Disposal.Tube
     [UsedImplicitly]
     public sealed class DisposalRouterBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables]
         private DisposalRouterWindow? _window;
+
+        private const int TagLimit = 150;
 
         public DisposalRouterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -23,13 +25,19 @@ namespace Content.Client.Disposal.Tube
 
             _window = this.CreateWindow<DisposalRouterWindow>();
 
-            _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
-            _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
+            _window.Confirm.OnPressed += _ => AcceptButtonPressed(_window.TagInput.Text);
+            _window.TagInput.OnTextEntered += args => AcceptButtonPressed(args.Text);
+
+            if (EntMan.TryGetComponent<DisposalRouterComponent>(Owner, out var router) &&
+                router.Tags.Count > 0)
+            {
+                _window.TagInput.Text = string.Join(",", router.Tags);
+            }
         }
 
-        private void ButtonPressed(UiAction action, string tag)
+        private void AcceptButtonPressed(string tag)
         {
-            SendMessage(new UiActionMessage(action, tag));
+            SendMessage(new DisposalRouterUiActionMessage(tag, TagLimit));
             Close();
         }
 
