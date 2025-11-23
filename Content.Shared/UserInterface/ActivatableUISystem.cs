@@ -6,7 +6,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -28,7 +27,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ActivatableUIComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand, before: [typeof(IngestionSystem)]);
+        SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<ActivatableUIComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>(OnHandDeselected);
