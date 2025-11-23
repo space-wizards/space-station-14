@@ -1,10 +1,8 @@
 - type: entity
   parent: ToteBase
   id: BoxCaptainCircuitboards
-  suffix: Captain
+  name: bridge circuit tote
   components:
-  - type: Label
-    currentLabel: captain
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -15,7 +13,7 @@
 - type: entity
   parent: ToteBase
   id: BoxCECircuitboards
-  suffix: CE
+  name: engineering circuit tote
   components:
   - type: Label
     currentLabel: chief engineer
@@ -32,10 +30,8 @@
 - type: entity
   parent: ToteBase
   id: BoxCMOCircuitboards
-  suffix: CMO
+  name: medical circuit tote
   components:
-  - type: Label
-    currentLabel: chief medical officer
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -46,10 +42,8 @@
 - type: entity
   parent: ToteBase
   id: BoxHoPCircuitboards
-  suffix: HoP
+  name: head of personnel circuit tote
   components:
-  - type: Label
-    currentLabel: head of personnel
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -61,10 +55,8 @@
 - type: entity
   parent: BoxStamps
   id: BoxHoPStamps
-  suffix: HoP
+  name: head of personnel's stamp box
   components:
-  - type: Label
-    currentLabel: head of personnel
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -76,10 +68,8 @@
 - type: entity
   parent: ToteBase
   id: BoxHoSCircuitboards
-  suffix: HoS
+  name: security circuit tote
   components:
-  - type: Label
-    currentLabel: head of security
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -90,10 +80,8 @@
 - type: entity
   parent: ToteBase
   id: BoxQMCircuitboards
-  suffix: QM
+  name: cargo circuit tote
   components:
-  - type: Label
-    currentLabel: quartermaster
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -109,7 +97,7 @@
 - type: entity
   parent: BoxStamps
   id: BoxQMStamps
-  suffix: QM
+  name: quartermaster's stamp box
   components:
   - type: Label
     currentLabel: quartermaster
@@ -124,10 +112,8 @@
 - type: entity
   parent: ToteBase
   id: BoxRDCircuitboards
-  suffix: RD
+  name: science circuit tote
   components:
-  - type: Label
-    currentLabel: research director
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
