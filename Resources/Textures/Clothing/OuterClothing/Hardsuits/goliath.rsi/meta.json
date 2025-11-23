@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Normal and vox sprites created by https://github.com/Pronana / princesscheeseballs (Discord). equipped-OUTERCLOTHING-dog modified from equipped-OUTERCLOTHING by Sparlight (GitHub). Tail sprites by Tiniest Shark (github).",
+    "copyright": "Created by Princess-Cheeseballs (github) | equipped-OUTERCLOTHING-dog by Sparlight (gitHub) | equipped-OUTERCLOTHING-reptilian by TiniestShark (github) | equipped-OUTERCLOTHING-unshaded and equipped-OUTERCLOTHING-unshaded-vox by K-Dynamic (github)",
 
     "size": {
         "x": 32,
@@ -16,7 +16,15 @@
             "directions": 4
         },
         {
+            "name": "equipped-OUTERCLOTHING-unshaded",
+            "directions": 4
+        },
+        {
             "name": "equipped-OUTERCLOTHING-vox",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-unshaded-vox",
             "directions": 4
         },
         {
