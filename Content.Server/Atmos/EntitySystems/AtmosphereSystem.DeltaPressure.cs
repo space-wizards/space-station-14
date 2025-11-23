@@ -1,5 +1,5 @@
 using System.Buffers;
-using System.Diagnostics;
+using System.Collections.Concurrent;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
@@ -12,6 +12,18 @@ namespace Content.Server.Atmos.EntitySystems;
 public sealed partial class AtmosphereSystem
 {
     /// <summary>
+    /// <para>A queue that handles scheduling of invalid entities to be removed from the entity processing list.</para>
+    ///
+    /// <para>We cannot change the contents of the list while processing it in parallel as this may create
+    /// a race condition for other thread pool workers working on different parts of the same list (as removing
+    /// items from the list will do a substitution of items to fill the gap, which can touch ents
+    /// other threads may be working on).</para>
+    ///
+    /// <para>As such, we just delay removal of these entities until after parallel processing.</para>
+    /// </summary>
+    private readonly ConcurrentQueue<Entity<DeltaPressureComponent>> _deltaPressureInvalidEntityQueue = new();
+
+    /// <summary>
     /// The number of pairs of opposing directions we can have.
     /// This is Atmospherics.Directions / 2, since we always compare opposing directions
     /// (e.g. North vs South, East vs West, etc.).
@@ -23,89 +35,6 @@ public sealed partial class AtmosphereSystem
     /// The length to pre-allocate list/dicts of delta pressure entities on a <see cref="GridAtmosphereComponent"/>.
     /// </summary>
     public const int DeltaPressurePreAllocateLength = 1000;
-
-    /// <summary>
-    /// Processes a singular entity, determining the pressures it's experiencing and applying damage based on that.
-    /// </summary>
-    /// <param name="ent">The entity to process.</param>
-    /// <param name="gridAtmosComp">The <see cref="GridAtmosphereComponent"/> that belongs to the entity's GridUid.</param>
-    private void ProcessDeltaPressureEntity(Entity<DeltaPressureComponent> ent, GridAtmosphereComponent gridAtmosComp)
-    {
-        if (!_random.Prob(ent.Comp.RandomDamageChance))
-            return;
-
-        /*
-         To make our comparisons a little bit faster, we take advantage of SIMD-accelerated methods
-         in the NumericsHelpers class.
-
-         This involves loading our values into a span in the form of opposing pairs,
-         so simple vector operations like min/max/abs can be performed on them.
-         */
-
-        var airtightComp = _airtightQuery.Comp(ent);
-        var currentPos = airtightComp.LastPosition.Tile;
-        var tiles = new TileAtmosphere?[Atmospherics.Directions];
-        for (var i = 0; i < Atmospherics.Directions; i++)
-        {
-            var direction = (AtmosDirection)(1 << i);
-            var offset = currentPos.Offset(direction);
-            tiles[i] = gridAtmosComp.Tiles.GetValueOrDefault(offset);
-        }
-
-        Span<float> pressures = stackalloc float[Atmospherics.Directions];
-
-        GetBulkTileAtmospherePressures(tiles, pressures);
-
-        // This entity could be airtight but still be able to contain air on the tile it's on (ex. directional windows).
-        // As such, substitute the pressure of the pressure on top of the entity for the directions that it can accept air from.
-        // (Or rather, don't do so for directions that it blocks air from.)
-        if (!airtightComp.NoAirWhenFullyAirBlocked)
-        {
-            for (var i = 0; i < Atmospherics.Directions; i++)
-            {
-                var direction = (AtmosDirection)(1 << i);
-                if (!airtightComp.AirBlockedDirection.HasFlag(direction))
-                {
-                    pressures[i] = gridAtmosComp.Tiles.GetValueOrDefault(currentPos)?.Air?.Pressure ?? 0f;
-                }
-            }
-        }
-
-        Span<float> opposingGroupA = stackalloc float[DeltaPressurePairCount];
-        Span<float> opposingGroupB = stackalloc float[DeltaPressurePairCount];
-        Span<float> opposingGroupMax = stackalloc float[DeltaPressurePairCount];
-
-        // Directions are always in pairs: the number of directions is always even
-        // (we must consider the future where Multi-Z is real)
-        // Load values into opposing pairs.
-        for (var i = 0; i < DeltaPressurePairCount; i++)
-        {
-            opposingGroupA[i] = pressures[i];
-            opposingGroupB[i] = pressures[i + DeltaPressurePairCount];
-        }
-
-        // TODO ATMOS: Needs to be changed to batch operations so that more operations can actually be done in parallel.
-
-        // Need to determine max pressure in opposing directions for absolute pressure calcs.
-        NumericsHelpers.Max(opposingGroupA, opposingGroupB, opposingGroupMax);
-
-        // Calculate pressure differences between opposing directions.
-        NumericsHelpers.Sub(opposingGroupA, opposingGroupB);
-        NumericsHelpers.Abs(opposingGroupA);
-
-        var maxPressure = 0f;
-        var maxDelta = 0f;
-        for (var i = 0; i < DeltaPressurePairCount; i++)
-        {
-            maxPressure = MathF.Max(maxPressure, opposingGroupMax[i]);
-            maxDelta = MathF.Max(maxDelta, opposingGroupA[i]);
-        }
-
-        EnqueueDeltaPressureDamage(ent,
-            gridAtmosComp,
-            maxPressure,
-            maxDelta);
-    }
 
     /// <summary>
     /// Bulk processes a range of <see cref="DeltaPressureComponent"/> entities on a <see cref="GridAtmosphereComponent"/>
@@ -163,9 +92,18 @@ public sealed partial class AtmosphereSystem
             for (var i = 0; i < len; i++)
             {
                 var ent = entList[start + i];
-                var airtight = _airtightQuery.Comp(ent);
-                airtightCompsArr[i] = airtight;
-                var currentPos = airtight.LastPosition.Tile;
+
+                // Ensure that the list still only contains valid airtight entities.
+                // We cannot remove them here, so we enqueue them for later removal.
+                if (!_airtightQuery.TryComp(ent, out var airtightComp))
+                {
+                    _deltaPressureInvalidEntityQueue.Enqueue(ent);
+                    Log.Error($"DeltaPressure entity without an AirtightComponent found in processing list! Ent: {ent}");
+                    return;
+                }
+
+                airtightCompsArr[i] = airtightComp;
+                var currentPos = airtightComp.LastPosition.Tile;
                 var tileBase = i * dirs;
 
                 for (var j = 0; j < dirs; j++)
@@ -200,7 +138,7 @@ public sealed partial class AtmosphereSystem
                 for (var j = 0; j < dirs; j++)
                 {
                     var direction = (AtmosDirection)(1 << j);
-                    if (!airtight.AirBlockedDirection.HasFlag(direction))
+                    if (!airtight.AirBlockedDirection.IsFlagSet(direction))
                         pressures[presBase + j] = localPressure;
                 }
             }
@@ -245,6 +183,9 @@ public sealed partial class AtmosphereSystem
                 var maxDelta = 0f;
                 for (var j = 0; j < DeltaPressurePairCount; j++)
                 {
+                    // I actually did write a HorizontalMax SIMD method but benchmarking showed that
+                    // it was only superior when n > 4. Since we can only compute the max on 4 elements
+                    // we can't take advantage of our array being big right here.
                     maxPressure = MathF.Max(maxPressure, groupMax[pairBase + j]);
                     maxDelta = MathF.Max(maxDelta, groupA[pairBase + j]);
                 }
@@ -354,38 +295,6 @@ public sealed partial class AtmosphereSystem
         gridAtmosComp.DeltaPressureDamageResults.Enqueue(new DeltaPressureDamageResult(ent,
             pressure,
             delta));
-    }
-
-    /// <summary>
-    /// Job for solving DeltaPressure entities in parallel.
-    /// Batches are given some index to start from, so each thread can simply just start at that index
-    /// and process the next n entities in the list.
-    /// </summary>
-    /// <param name="system">The AtmosphereSystem instance.</param>
-    /// <param name="atmosphere">The GridAtmosphereComponent to work with.</param>
-    /// <param name="startIndex">The index in the DeltaPressureEntities list to start from.</param>
-    /// <param name="cvarBatchSize">The batch size to use for this job.</param>
-    private sealed class DeltaPressureParallelJob(
-        AtmosphereSystem system,
-        GridAtmosphereComponent atmosphere,
-        int startIndex,
-        int cvarBatchSize)
-        : IParallelRobustJob
-    {
-        public int BatchSize => cvarBatchSize;
-
-        public void Execute(int index)
-        {
-            // The index is relative to the startIndex (because we can pause and resume computation),
-            // so we need to add it to the startIndex.
-            var actualIndex = startIndex + index;
-
-            if (actualIndex >= atmosphere.DeltaPressureEntities.Count)
-                return;
-
-            var ent = atmosphere.DeltaPressureEntities[actualIndex];
-            system.ProcessDeltaPressureEntity(ent, atmosphere);
-        }
     }
 
     /// <summary>
