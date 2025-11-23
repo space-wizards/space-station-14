@@ -483,13 +483,12 @@ namespace Content.Server.Atmos.EntitySystems
                 _deltaPressureInvalidEntityQueue.Clear();
             }
 
-            var remaining = count - atmosphere.DeltaPressureCursor;
-            var batchSize = Math.Max(50, DeltaPressureParallelProcessPerIteration);
-            var toProcess = Math.Min(batchSize, remaining);
-
             var timeCheck1 = 0;
             while (atmosphere.DeltaPressureCursor < count)
             {
+                var remaining = count - atmosphere.DeltaPressureCursor;
+                var toProcess = Math.Min(DeltaPressureParallelProcessPerIteration, remaining);
+
                 var job = new DeltaPressureParallelBulkJob(this,
                     atmosphere,
                     atmosphere.DeltaPressureCursor,
