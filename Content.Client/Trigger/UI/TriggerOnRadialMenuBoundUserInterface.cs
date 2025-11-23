@@ -25,7 +25,7 @@ public sealed class TriggerOnRadialMenuBoundUserInterface(EntityUid owner, Enum 
         _triggerRadialMenu.SetButtons(buttons);
     }
 
-    private IEnumerable<RadialMenuOptionBase> ConvertToButtons(List<TriggerRadialMenuEntry> entries)
+    private List<RadialMenuOptionBase> ConvertToButtons(List<TriggerRadialMenuEntry> entries)
     {
         var buttons = new List<RadialMenuOptionBase>();
         for (var i = 0; i < entries.Count; i++)

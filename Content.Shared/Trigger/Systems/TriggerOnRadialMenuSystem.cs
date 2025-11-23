@@ -21,7 +21,7 @@ public sealed class TriggerOnRadialMenuSystem : EntitySystem
             return;
         }
 
-        var selected =  entity.Comp.RadialMenuEntries[args.Index];
+        var selected = entity.Comp.RadialMenuEntries[args.Index];
         _trigger.Trigger(entity, args.Actor, selected.Key);
     }
 }

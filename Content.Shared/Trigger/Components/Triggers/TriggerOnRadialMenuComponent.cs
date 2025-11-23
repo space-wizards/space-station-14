@@ -15,7 +15,11 @@ public sealed partial class TriggerOnRadialMenuComponent : Component
     public List<TriggerRadialMenuEntry> RadialMenuEntries = [];
 }
 
-[DataDefinition, Serializable]
+/// <summary>
+/// Information about one specific radial menu button for the <see cref="TriggerOnRadialMenuComponent"/>
+/// Contains all information about one specific button!
+/// </summary>
+[DataDefinition, Serializable, NetSerializable]
 public sealed partial class TriggerRadialMenuEntry
 {
     /// <summary>
@@ -40,7 +44,7 @@ public sealed partial class TriggerRadialMenuEntry
     /// The key that will be triggered when the radial menu option is selected.
     /// </summary>
     [DataField(required: true)]
-    public string Key;
+    public string Key = "";
 }
 
 /// <summary>
