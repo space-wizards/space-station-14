@@ -24,11 +24,11 @@ public sealed partial class GraphicsTab : Control
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
 
         Control.AddOptionSlider(
-            CCVars.DisplaySharpening,
-            SharpeningSlider,
+            CCVars.DisplaySharpness,
+            SharpnessSlider,
             0,
             20,
-            (_, value) => Loc.GetString("ui-options-sharpening-value", ("value", value))
+            (_, value) => Loc.GetString("ui-options-sharpness-value", ("value", value))
         );
 
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));

@@ -105,8 +105,8 @@ ui-options-ambient-occlusion = Show Ambient Occlusion
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:
 ui-options-hud-layout = HUD layout:
-ui-options-sharpening = Sharpening:
-ui-options-sharpening-value = {$value}
+ui-options-sharpness = Sharpness:
+ui-options-sharpness-value = {$value}
 
 ## Controls menu
 

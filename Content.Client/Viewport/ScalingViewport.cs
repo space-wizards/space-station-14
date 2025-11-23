@@ -44,13 +44,13 @@ namespace Content.Client.Viewport
 
         public int CurrentRenderScale => _curRenderScale;
 
-        private ShaderInstance? _sharpeningShader;
-        private float _sharpeningValue;
+        private ShaderInstance? _sharpnessShader;
+        private float _sharpnessValue;
 
-        private void SharpeningChanged(int value)
+        private void SharpnessChanged(int value)
         {
             value = Math.Clamp(value, 0, 20);
-            _sharpeningValue = value / 10f;
+            _sharpnessValue = value / 10f;
         }
 
         /// <summary>
@@ -137,10 +137,10 @@ namespace Content.Client.Viewport
             IoCManager.InjectDependencies(this);
             RectClipContent = true;
 
-            _cfg.OnValueChanged(CCVars.DisplaySharpening, SharpeningChanged, true);
+            _cfg.OnValueChanged(CCVars.DisplaySharpness, SharpnessChanged, true);
 
-            _sharpeningShader = _protoManager.Index<ShaderPrototype>("Sharpening").InstanceUnique();
-            _sharpeningValue = Math.Clamp(_cfg.GetCVar(CCVars.DisplaySharpening), 0, 20) / 10f;
+            _sharpnessShader = _protoManager.Index<ShaderPrototype>("Sharpness").InstanceUnique();
+            _sharpnessValue = Math.Clamp(_cfg.GetCVar(CCVars.DisplaySharpness), 0, 20) / 10f;
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -190,10 +190,10 @@ namespace Content.Client.Viewport
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
 
-            if (_sharpeningShader is not null)
+            if (_sharpnessShader is not null)
             {
                 var texture = _viewport.RenderTarget.Texture;
-                ApplySharpening(handle, texture, drawBox);
+                ApplySharpness(handle, texture, drawBox);
             }
             else
             {
@@ -373,13 +373,13 @@ namespace Content.Client.Viewport
             DebugTools.AssertNotNull(_viewport);
         }
 
-        private void ApplySharpening(IRenderHandle handle, Texture texture, UIBox2i drawBox)
+        private void ApplySharpness(IRenderHandle handle, Texture texture, UIBox2i drawBox)
         {
-            _sharpeningShader!.SetParameter("SCREEN_TEXTURE", texture);
-            _sharpeningShader.SetParameter("Sharpness", _sharpeningValue);
-            _sharpeningShader.SetParameter("viewportSize", texture.Size);
+            _sharpnessShader!.SetParameter("SCREEN_TEXTURE", texture);
+            _sharpnessShader.SetParameter("Sharpness", _sharpnessValue);
+            _sharpnessShader.SetParameter("viewportSize", texture.Size);
 
-            handle.DrawingHandleScreen.UseShader(_sharpeningShader);
+            handle.DrawingHandleScreen.UseShader(_sharpnessShader);
             handle.DrawingHandleScreen.DrawTextureRect(texture, drawBox);
             handle.DrawingHandleScreen.UseShader(null);
         }

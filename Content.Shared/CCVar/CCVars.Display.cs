@@ -5,8 +5,8 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     /// <summary>
-    /// Controls the strength of the sharpening effect.
+    /// Controls the strength of the sharpness effect.
     /// </summary>
-    public static readonly CVarDef<int> DisplaySharpening =
-        CVarDef.Create("display.sharpening", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
+    public static readonly CVarDef<int> DisplaySharpness =
+        CVarDef.Create("display.sharpness", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
 }
