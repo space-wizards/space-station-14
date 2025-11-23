@@ -1505,5 +1505,32 @@ Entries:
   id: 183
   time: '2025-11-03T13:16:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41261
+- author: slarticodefast
+  changes:
+  - message: Added the "quickinspect" command to quickly inspect the selected component
+      for an entity via a keybind.
+    type: Add
+  id: 184
+  time: '2025-11-12T23:22:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41348
+- author: ScarKy0
+  changes:
+  - message: Admin ghosts can no longer be selected for "Warp To Most Followed". Remove
+      the NotGhostnadoWarpable tag from your aghost entity if you wish to still be
+      able to be selected.
+    type: Fix
+  id: 185
+  time: '2025-11-15T23:31:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41448
+- author: Errant
+  changes:
+  - message: Looc and Deadchat logs now show mob information, similar to the logs
+      of the IC chat channels.
+    type: Tweak
+  - message: Mobs who have been "Freeze and Muted" can no longer send on LOOC or Deadchat.
+    type: Fix
+  id: 186
+  time: '2025-11-21T21:53:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41273
 Name: Admin
 Order: 3

@@ -5,11 +5,12 @@
   components:
   - type: Label
     currentLabel: captain
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - CommsComputerCircuitboard
-      - StationRecordsComputerCircuitboard
+      storagebase: !type:AllSelector
+        children:
+        - CommsComputerCircuitboard
+        - StationRecordsComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -18,14 +19,15 @@
   components:
   - type: Label
     currentLabel: chief engineer
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - CargoRequestEngineeringComputerCircuitboard
-      - AlertsComputerCircuitboard
-      - AtmosMonitoringComputerCircuitboard
-      - PowerComputerCircuitboard
-      - SolarControlComputerCircuitboard
+      storagebase: !type:AllSelector
+        children:
+        - CargoRequestEngineeringComputerCircuitboard
+        - AlertsComputerCircuitboard
+        - AtmosMonitoringComputerCircuitboard
+        - PowerComputerCircuitboard
+        - SolarControlComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -47,12 +49,13 @@
   components:
   - type: Label
     currentLabel: head of personnel
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - IDComputerCircuitboard
-      - FundingAllocationComputerCircuitboard
-      - CargoRequestServiceComputerCircuitboard
+      storagebase: !type:AllSelector
+        children:
+        - IDComputerCircuitboard
+        - FundingAllocationComputerCircuitboard
+        - CargoRequestServiceComputerCircuitboard
 
 - type: entity
   parent: BoxStamps
@@ -61,12 +64,13 @@
   components:
   - type: Label
     currentLabel: head of personnel
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - RubberStampApproved
-      - RubberStampDenied
-      - RubberStampHop
+      storagebase: !type:AllSelector
+        children:
+        - RubberStampApproved
+        - RubberStampDenied
+        - RubberStampHop
 
 - type: entity
   parent: ToteBase
@@ -75,11 +79,12 @@
   components:
   - type: Label
     currentLabel: head of security
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - SecurityTechFabCircuitboard
-      - CargoRequestSecurityComputerCircuitboard
+      storagebase: !type:AllSelector
+        children:
+        - SecurityTechFabCircuitboard
+        - CargoRequestSecurityComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -88,16 +93,17 @@
   components:
   - type: Label
     currentLabel: quartermaster
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - CargoBountyComputerCircuitboard
-      - CargoRequestComputerCircuitboard
-      - CargoSaleComputerCircuitboard
-      - CargoShuttleConsoleCircuitboard
-      - SalvageMagnetMachineCircuitboard
-      - SalvageJobBoardComputerCircuitboard
-      - MailTeleporterMachineCircuitboard
+      storagebase: !type:AllSelector
+        children:
+        - CargoBountyComputerCircuitboard
+        - CargoRequestComputerCircuitboard
+        - CargoSaleComputerCircuitboard
+        - CargoShuttleConsoleCircuitboard
+        - SalvageMagnetMachineCircuitboard
+        - SalvageJobBoardComputerCircuitboard
+        - MailTeleporterMachineCircuitboard
 
 - type: entity
   parent: BoxStamps
@@ -106,12 +112,13 @@
   components:
   - type: Label
     currentLabel: quartermaster
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - RubberStampApproved
-      - RubberStampDenied
-      - RubberStampQm
+      storagebase: !type:AllSelector
+        children:
+        - RubberStampApproved
+        - RubberStampDenied
+        - RubberStampQm
 
 - type: entity
   parent: ToteBase
@@ -120,14 +127,15 @@
   components:
   - type: Label
     currentLabel: research director
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - CircuitImprinterMachineCircuitboard
-      - ProtolatheMachineCircuitboard
-      - ResearchComputerCircuitboard
-      - CargoRequestScienceComputerCircuitboard
-      - RoboticsConsoleCircuitboard
-      - AnalysisComputerCircuitboard #Because sometimes round start artis just fucking explode on the pad.
-      - ArtifactAnalyzerMachineCircuitboard
-      - StationAiFixerCircuitboard
+      storagebase: !type:AllSelector
+        children:
+        - CircuitImprinterMachineCircuitboard
+        - ProtolatheMachineCircuitboard
+        - ResearchComputerCircuitboard
+        - CargoRequestScienceComputerCircuitboard
+        - RoboticsConsoleCircuitboard
+        - AnalysisComputerCircuitboard #Because sometimes round start artis just fucking explode on the pad.
+        - ArtifactAnalyzerMachineCircuitboard
+        - StationAiFixerCircuitboard
