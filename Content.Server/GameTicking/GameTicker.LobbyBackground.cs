@@ -19,16 +19,17 @@ public sealed partial class GameTicker
     private void InitializeLobbyBackground()
     {
         var allprotos = _prototypeManager.EnumeratePrototypes<LobbyBackgroundPrototype>().ToList();
+        _lobbyBackgrounds ??= new List<ProtoId<LobbyBackgroundPrototype>>();
+
         //create protoids from them
         foreach (var proto in allprotos)
         {
             var ext = proto.Background.Extension;
-            if (WhitelistedBackgroundExtensions.Contains(ext))
-            {
-                //create a protoid and add it to the list
-                _lobbyBackgrounds ??= new List<ProtoId<LobbyBackgroundPrototype>>();
-                _lobbyBackgrounds.Add(new ProtoId<LobbyBackgroundPrototype>(proto.ID));
-            }
+            if (!WhitelistedBackgroundExtensions.Contains(ext))
+                continue;
+
+            //create a protoid and add it to the list
+            _lobbyBackgrounds.Add(new ProtoId<LobbyBackgroundPrototype>(proto.ID));
         }
 
         RandomizeLobbyBackground();
@@ -37,12 +38,8 @@ public sealed partial class GameTicker
     private void RandomizeLobbyBackground()
     {
         if (_lobbyBackgrounds != null && _lobbyBackgrounds.Count != 0)
-        {
             LobbyBackground = _robustRandom.Pick(_lobbyBackgrounds);
-        }
         else
-        {
             LobbyBackground = null;
-        }
     }
 }
