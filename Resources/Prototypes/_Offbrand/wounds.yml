@@ -1,0 +1,463 @@
+- type: entity
+  abstract: true
+  id: WoundBase
+  components:
+  - type: StatusEffect
+  - type: Sprite
+    drawdepth: Effects
+  # - type: Tag
+  #   tags:
+  #   - HideContextMenu
+  - type: RejuvenateRemovedStatusEffect
+  - type: Wound
+  - type: HealableWound
+  - type: PainfulWound
+    painCoefficients:
+      Blunt: 0.8
+      Slash: 0.8
+      Piercing: 0.8
+      Heat: 0.8
+      Shock: 0.8
+      Cold: 0.8
+      Caustic: 0.8
+    freshPainCoefficients:
+      Blunt: 0.2
+      Slash: 0.2
+      Piercing: 0.2
+      Heat: 0.2
+      Shock: 0.2
+      Cold: 0.2
+      Caustic: 0.2
+  - type: TendableWound
+  - type: ClampableWound
+  - type: BleedingWound
+    bleedingCoefficients:
+      Blunt: 0.015
+      Piercing: 0.02
+      Slash: 0.02
+    bleedingDurationCoefficients:
+      Blunt: 1.0
+      Piercing: 2.0
+      Slash: 2.0
+    startsBleedingAbove: 10
+    requiresTendingAbove: 25
+
+- type: entity
+  parent: WoundBase
+  id: WoundBruise
+  name: bruise
+  components:
+  - type: Wound
+    maximumDamage: 100
+  - type: WoundDescription
+    descriptions:
+      80: wound-bruise-80
+      50: wound-bruise-50
+      30: wound-bruise-30
+      20: wound-bruise-20
+      10: wound-bruise-10
+      5: wound-bruise-5
+    tendedModifier: wound-bandaged-modifier
+  - type: Tag
+    tags: [WoundBrute, WoundBruise]
+
+- type: entity
+  abstract: true
+  parent: WoundBase
+  id: WoundCutBase
+  components:
+  - type: Tag
+    tags: [WoundBrute, WoundCut]
+  - type: WoundDescription
+    tendedModifier: wound-bandaged-modifier
+
+- type: entity
+  parent: WoundCutBase
+  id: WoundCutMassive
+  name: massive cut
+  components:
+  - type: Wound
+    maximumDamage: 60
+  - type: WoundDescription
+    descriptions:
+      45: wound-cut-massive-45
+      35: wound-cut-massive-35
+      25: wound-cut-massive-25
+      10: wound-cut-massive-10
+      0: wound-cut-massive-0
+
+- type: entity
+  parent: WoundCutBase
+  id: WoundCutSevere
+  name: severe cut
+  components:
+  - type: Wound
+    maximumDamage: 40
+  - type: WoundDescription
+    descriptions:
+      25: wound-cut-severe-25
+      15: wound-cut-severe-15
+      10: wound-cut-severe-10
+      5: wound-cut-severe-5
+      0: wound-cut-severe-0
+
+- type: entity
+  parent: WoundCutBase
+  id: WoundCutModerate
+  name: moderate cut
+  components:
+  - type: Wound
+    maximumDamage: 20
+  - type: WoundDescription
+    descriptions:
+      15: wound-cut-moderate-15
+      10: wound-cut-moderate-10
+      5: wound-cut-moderate-5
+      0: wound-cut-moderate-0
+
+- type: entity
+  parent: WoundCutBase
+  id: WoundCutSmall
+  name: small cut
+  components:
+  - type: Wound
+    maximumDamage: 10
+  - type: WoundDescription
+    descriptions:
+      7: wound-cut-small-7
+      3: wound-cut-small-3
+      0: wound-cut-small-0
+
+- type: entity
+  abstract: true
+  parent: WoundBase
+  id: WoundPunctureBase
+  components:
+  - type: Tag
+    tags: [WoundBrute, WoundPuncture]
+  - type: WoundDescription
+    tendedModifier: wound-bandaged-modifier
+
+- type: entity
+  parent: WoundPunctureBase
+  id: WoundPunctureMassive
+  name: massive puncture
+  components:
+  - type: Wound
+    maximumDamage: 60
+  - type: WoundDescription
+    descriptions:
+      45: wound-puncture-massive-45
+      35: wound-puncture-massive-35
+      25: wound-puncture-massive-25
+      10: wound-puncture-massive-10
+      0: wound-puncture-massive-0
+
+- type: entity
+  parent: WoundPunctureBase
+  id: WoundPunctureSevere
+  name: severe puncture
+  components:
+  - type: Wound
+    maximumDamage: 40
+  - type: WoundDescription
+    descriptions:
+      25: wound-puncture-severe-25
+      15: wound-puncture-severe-15
+      10: wound-puncture-severe-10
+      5: wound-puncture-severe-5
+      0: wound-puncture-severe-0
+
+- type: entity
+  parent: WoundPunctureBase
+  id: WoundPunctureModerate
+  name: moderate puncture
+  components:
+  - type: Wound
+    maximumDamage: 20
+  - type: WoundDescription
+    descriptions:
+      15: wound-puncture-moderate-15
+      10: wound-puncture-moderate-10
+      5: wound-puncture-moderate-5
+      0: wound-puncture-moderate-0
+
+- type: entity
+  parent: WoundPunctureBase
+  id: WoundPunctureSmall
+  name: small puncture
+  components:
+  - type: Wound
+    maximumDamage: 10
+  - type: WoundDescription
+    descriptions:
+      7: wound-puncture-small-7
+      3: wound-puncture-small-3
+      0: wound-puncture-small-0
+
+- type: entity
+  abstract: true
+  parent: WoundBase
+  id: WoundHeatBase
+  components:
+  - type: Tag
+    tags: [WoundBurn, WoundHeat]
+  - type: WoundDescription
+    tendedModifier: wound-salved-modifier
+
+- type: entity
+  parent: WoundHeatBase
+  id: WoundHeatCarbonized
+  name: carbonized burn
+  components:
+  - type: Wound
+    maximumDamage: 60
+  - type: WoundDescription
+    descriptions:
+      40: wound-heat-carbonized-40
+      25: wound-heat-carbonized-25
+      10: wound-heat-carbonized-10
+      0: wound-heat-carbonized-0
+
+- type: entity
+  parent: WoundHeatBase
+  id: WoundHeatSevere
+  name: severe burn
+  components:
+  - type: Wound
+    maximumDamage: 40
+  - type: WoundDescription
+    descriptions:
+      25: wound-heat-severe-25
+      15: wound-heat-severe-15
+      10: wound-heat-severe-10
+      5: wound-heat-severe-5
+      0: wound-heat-severe-0
+
+- type: entity
+  parent: WoundHeatBase
+  id: WoundHeatModerate
+  name: moderate burn
+  components:
+  - type: Wound
+    maximumDamage: 20
+  - type: WoundDescription
+    descriptions:
+      15: wound-heat-moderate-15
+      10: wound-heat-moderate-10
+      5: wound-heat-moderate-5
+      0: wound-heat-moderate-0
+
+- type: entity
+  parent: WoundHeatBase
+  id: WoundHeatSmall
+  name: small burn
+  components:
+  - type: Wound
+    maximumDamage: 10
+  - type: WoundDescription
+    descriptions:
+      7: wound-heat-small-7
+      3: wound-heat-small-3
+      0: wound-heat-small-0
+
+- type: entity
+  abstract: true
+  parent: WoundBase
+  id: WoundColdBase
+  components:
+  - type: Tag
+    tags: [WoundBurn, WoundCold]
+  - type: WoundDescription
+    tendedModifier: wound-salved-modifier
+
+- type: entity
+  parent: WoundColdBase
+  id: WoundColdPetrified
+  name: petrified frostbite
+  components:
+  - type: Wound
+    maximumDamage: 60
+  - type: WoundDescription
+    descriptions:
+      45: wound-cold-petrified-45
+      35: wound-cold-petrified-35
+      25: wound-cold-petrified-25
+      10: wound-cold-petrified-10
+      0: wound-cold-petrified-0
+
+- type: entity
+  parent: WoundColdBase
+  id: WoundColdSevere
+  name: severe frostbite
+  components:
+  - type: Wound
+    maximumDamage: 40
+  - type: WoundDescription
+    descriptions:
+      25: wound-cold-severe-25
+      15: wound-cold-severe-15
+      10: wound-cold-severe-10
+      5: wound-cold-severe-5
+      0: wound-cold-severe-0
+
+- type: entity
+  parent: WoundColdBase
+  id: WoundColdModerate
+  name: moderate frostbite
+  components:
+  - type: Wound
+    maximumDamage: 20
+  - type: WoundDescription
+    descriptions:
+      15: wound-cold-moderate-15
+      10: wound-cold-moderate-10
+      5: wound-cold-moderate-5
+      0: wound-cold-moderate-0
+
+- type: entity
+  parent: WoundColdBase
+  id: WoundColdSmall
+  name: frostnip
+  components:
+  - type: Wound
+    maximumDamage: 10
+  - type: WoundDescription
+    descriptions:
+      7: wound-cold-small-7
+      3: wound-cold-small-3
+      0: wound-cold-small-0
+
+- type: entity
+  abstract: true
+  parent: WoundBase
+  id: WoundCausticBase
+  components:
+  - type: Tag
+    tags: [WoundBurn, WoundCaustic]
+  - type: WoundDescription
+    tendedModifier: wound-salved-modifier
+
+- type: entity
+  parent: WoundCausticBase
+  id: WoundCausticSloughing
+  name: sloughing caustic burn
+  components:
+  - type: Wound
+    maximumDamage: 60
+  - type: WoundDescription
+    descriptions:
+      45: wound-caustic-sloughing-45
+      35: wound-caustic-sloughing-35
+      25: wound-caustic-sloughing-25
+      10: wound-caustic-sloughing-10
+      0: wound-caustic-sloughing-0
+
+- type: entity
+  parent: WoundCausticBase
+  id: WoundCausticSevere
+  name: severe caustic burn
+  components:
+  - type: Wound
+    maximumDamage: 40
+  - type: WoundDescription
+    descriptions:
+      25: wound-caustic-severe-25
+      15: wound-caustic-severe-15
+      10: wound-caustic-severe-10
+      5: wound-caustic-severe-5
+      0: wound-caustic-severe-0
+
+- type: entity
+  parent: WoundCausticBase
+  id: WoundCausticModerate
+  name: moderate caustic burn
+  components:
+  - type: Wound
+    maximumDamage: 20
+  - type: WoundDescription
+    descriptions:
+      15: wound-caustic-moderate-15
+      10: wound-caustic-moderate-10
+      5: wound-caustic-moderate-5
+      0: wound-caustic-moderate-0
+
+- type: entity
+  parent: WoundCausticBase
+  id: WoundCausticSmall
+  name: small caustic burn
+  components:
+  - type: Wound
+    maximumDamage: 10
+  - type: WoundDescription
+    descriptions:
+      7: wound-caustic-small-7
+      3: wound-caustic-small-3
+      0: wound-caustic-small-0
+
+- type: entity
+  abstract: true
+  parent: WoundBase
+  id: WoundShockBase
+  components:
+  - type: Tag
+    tags: [WoundBurn, WoundShock]
+  - type: WoundDescription
+    tendedModifier: wound-salved-modifier
+
+- type: entity
+  parent: WoundShockBase
+  id: WoundShockExploded
+  name: exploded shock burn
+  components:
+  - type: Wound
+    maximumDamage: 60
+  - type: WoundDescription
+    descriptions:
+      45: wound-shock-exploded-45
+      35: wound-shock-exploded-35
+      25: wound-shock-exploded-25
+      10: wound-shock-exploded-10
+      0: wound-shock-exploded-0
+
+- type: entity
+  parent: WoundShockBase
+  id: WoundShockSevere
+  name: severe shock burn
+  components:
+  - type: Wound
+    maximumDamage: 40
+  - type: WoundDescription
+    descriptions:
+      25: wound-shock-severe-25
+      15: wound-shock-severe-15
+      10: wound-shock-severe-10
+      5: wound-shock-severe-5
+      0: wound-shock-severe-0
+
+- type: entity
+  parent: WoundShockBase
+  id: WoundShockModerate
+  name: moderate shock burn
+  components:
+  - type: Wound
+    maximumDamage: 20
+  - type: WoundDescription
+    descriptions:
+      15: wound-shock-moderate-15
+      10: wound-shock-moderate-10
+      5: wound-shock-moderate-5
+      0: wound-shock-moderate-0
+
+- type: entity
+  parent: WoundShockBase
+  id: WoundShockSmall
+  name: small shock burn
+  components:
+  - type: Wound
+    maximumDamage: 10
+  - type: WoundDescription
+    descriptions:
+      7: wound-shock-small-7
+      3: wound-shock-small-3
+      0: wound-shock-small-0

@@ -1,0 +1,34 @@
+- type: entity
+  id: SupplyOffbrandItemsVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: SupplyNearLatheVariationPass
+    lathePrototype: MedicalTechFab
+    entityToSpawn: CrateOffbrandMedicalSupplies
+
+- type: entity
+  parent: BaseFlatpack
+  id: OperatingTableFlatpack
+  name: operating table flatpack
+  description: A flatpack used for constructing an operating table.
+  components:
+  - type: Flatpack
+    entity: OperatingTable
+
+- type: entity
+  id: CrateOffbrandMedicalSupplies
+  parent: CrateGenericSteel
+  name: offbrand medical supplies crate
+  description: Due to limited funding to medical research programs, Nanotrasen could only afford to ship you new(?) medical supplies in an awkwardly-placed crate.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: CrateFreezerIVBag
+        - id: IVStand
+        - id: IVStand
+        - id: IVStand
+        - id: IVStand
+        - id: ClothingBackpackDuffelSurgeryFilled
+        - id: OperatingTableFlatpack

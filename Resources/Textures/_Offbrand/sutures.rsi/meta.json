@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from /tg/station from https://github.com/tgstation/tgstation/blob/f77c5e1f2983993b03827f007a1067fda2c28c29/icons/obj/medical/stack_medical.dmi, state suture_3",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "suture"
+        },
+        {
+            "name": "suture-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "suture-inhand-right",
+            "directions": 4
+        }
+    ]
+}
