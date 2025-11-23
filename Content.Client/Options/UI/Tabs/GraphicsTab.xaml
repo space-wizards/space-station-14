@@ -8,8 +8,6 @@
                 <Label Text="{Loc 'ui-options-display-label'}" StyleClasses="LabelKeyText"/>
                 <CheckBox Name="VSyncCheckBox" Text="{Loc 'ui-options-vsync'}" />
                 <CheckBox Name="FullscreenCheckBox" Text="{Loc 'ui-options-fullscreen'}" />
-                <ui:OptionSlider Name="SharpeningSlider" 
-                          Title="{Loc 'ui-options-sharpening'}"/>
 
                 <!-- Quality -->
                 <Label Text="{Loc 'ui-options-quality-label'}" StyleClasses="LabelKeyText"/>
@@ -35,6 +33,8 @@
                 <!-- Misc -->
                 <Label Text="{Loc 'ui-options-misc-label'}" StyleClasses="LabelKeyText"/>
                 <CheckBox Name="FpsCounterCheckBox" Text="{Loc 'ui-options-fps-counter'}" />
+                <ui:OptionSlider Name="SharpeningSlider"
+                                 Title="{Loc 'ui-options-sharpening'}"/>
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

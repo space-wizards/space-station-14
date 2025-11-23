@@ -61,8 +61,6 @@ ui-options-fancy-speech = Show names in speech bubbles
 ui-options-fancy-name-background = Add background to speech bubble names
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
-ui-options-sharpening = Sharpening:
-ui-options-sharpening-value = {$value}
 ui-options-lighting-label = Lighting Quality:
 ui-options-lighting-very-low = Very Low
 ui-options-lighting-low = Low
@@ -107,6 +105,8 @@ ui-options-ambient-occlusion = Show Ambient Occlusion
 ui-options-fps-counter = Show FPS counter
 ui-options-vp-width = Viewport width:
 ui-options-hud-layout = HUD layout:
+ui-options-sharpening = Sharpening:
+ui-options-sharpening-value = {$value}
 
 ## Controls menu
 

@@ -49,6 +49,7 @@ namespace Content.Client.Viewport
 
         private void SharpeningChanged(int value)
         {
+            value = Math.Clamp(value, 0, 20);
             _sharpeningValue = value / 10f;
         }
 
@@ -136,9 +137,10 @@ namespace Content.Client.Viewport
             IoCManager.InjectDependencies(this);
             RectClipContent = true;
 
-            _sharpeningShader = _protoManager.Index<ShaderPrototype>("Sharpening").InstanceUnique();
-            _sharpeningValue = _cfg.GetCVar(CCVars.DisplaySharpening) / 10f;
             _cfg.OnValueChanged(CCVars.DisplaySharpening, SharpeningChanged, true);
+
+            _sharpeningShader = _protoManager.Index<ShaderPrototype>("Sharpening").InstanceUnique();
+            _sharpeningValue = Math.Clamp(_cfg.GetCVar(CCVars.DisplaySharpening), 0, 20) / 10f;
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -188,7 +190,7 @@ namespace Content.Client.Viewport
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
 
-            if (_sharpeningValue > 0 && _sharpeningShader != null)
+            if (_sharpeningShader is not null)
             {
                 var texture = _viewport.RenderTarget.Texture;
                 ApplySharpening(handle, texture, drawBox);
