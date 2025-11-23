@@ -80,7 +80,7 @@
   - MobBloodstream
   - MobFlammable
   - MobCombat
-  name: killer tomato
+  name: tomato killer
   description: Looks like it's not you eating tomatoes today, it's the tomatoes eating you.
   components:
   - type: GhostRole
@@ -131,7 +131,7 @@
   - type: Item
     size: Large
     shape:
-    - 0,0,3,3
+    - 0,0,2,2
   - type: NpcFactionMember
     factions:
       - SimpleHostile
