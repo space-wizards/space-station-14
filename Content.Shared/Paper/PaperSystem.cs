@@ -4,7 +4,6 @@ using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
@@ -41,7 +40,6 @@ public sealed class PaperSystem : EntitySystem
         SubscribeLocalEvent<PaperComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PaperComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
-        SubscribeLocalEvent<PaperComponent, UseInHandEvent>(OnPaperUse);
         SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PaperComponent, PaperInputTextMessage>(OnInputTextMessage);
@@ -80,22 +78,6 @@ public sealed class PaperSystem : EntitySystem
     {
         entity.Comp.Mode = PaperAction.Read;
         UpdateUserInterface(entity);
-    }
-
-    private void OnPaperUse(EntityUid uid, PaperComponent component, UseInHandEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!_uiSystem.HasUi(uid, PaperUiKey.Key))
-            return;
-
-        component.Mode = PaperAction.Read;
-        UpdateUserInterface((uid, component));
-
-        _uiSystem.TryToggleUi(uid, PaperUiKey.Key, args.User);
-
-        args.Handled = true;
     }
 
     private void OnExamined(Entity<PaperComponent> entity, ref ExaminedEvent args)
