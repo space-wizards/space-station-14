@@ -128,8 +128,7 @@ public partial class ListingData : IEquatable<ListingData>
     /// <summary>
     /// Specific customizable conditions that determine whether or not the listing can be purchased.
     /// </summary>
-    [NonSerialized]
-    [DataField(serverOnly: true)]
+    [DataField]
     public List<ListingCondition>? Conditions;
 
     /// <summary>
@@ -201,7 +200,7 @@ public partial class ListingData : IEquatable<ListingData>
     /// Whether or not to disable refunding for the store when the listing is purchased from it.
     /// </summary>
     [DataField]
-    public bool DisableRefund = false;
+    public bool DisableRefund;
 
     public bool Equals(ListingData? listing)
     {
@@ -242,7 +241,6 @@ public partial class ListingData : IEquatable<ListingData>
 ///     Defines a set item listing that is available in a store
 /// </summary>
 [Prototype]
-[DataDefinition]
 public sealed partial class ListingPrototype : ListingData, IPrototype
 {
     /// <summary> Setter/getter for item cost from prototype. </summary>
@@ -422,7 +420,6 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
 ///     how <see cref="StoreDiscountComponent"/> will be filled by respective system.
 /// </summary>
 [Prototype]
-[DataDefinition]
 public sealed partial class DiscountCategoryPrototype : IPrototype
 {
     [ViewVariables]

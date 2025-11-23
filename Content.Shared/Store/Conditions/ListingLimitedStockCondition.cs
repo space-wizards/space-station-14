@@ -1,10 +1,11 @@
-using Content.Shared.Store;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.Store.Conditions;
+namespace Content.Shared.Store.Conditions;
 
 /// <summary>
 /// Only allows a listing to be purchased a certain amount of times.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class ListingLimitedStockCondition : ListingCondition
 {
     /// <summary>

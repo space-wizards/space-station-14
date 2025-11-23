@@ -1,8 +1,11 @@
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
+using Content.Client.Store.Systems;
+using Content.Shared.PDA.Ringer;
 using Content.Shared.Store.Components;
 using Robust.Client.UserInterface;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Store.Ui;
@@ -10,7 +13,8 @@ namespace Content.Client.Store.Ui;
 [UsedImplicitly]
 public sealed class StoreBoundUserInterface : BoundUserInterface
 {
-    private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerMan = default!;
 
     [ViewVariables]
     private StoreMenu? _menu;
@@ -30,12 +34,10 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<StoreMenu>();
-        if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))
-            _menu.Title = Loc.GetString(store.Name);
 
         _menu.OnListingButtonPressed += (_, listing) =>
         {
-            SendMessage(new StoreBuyListingMessage(listing.ID));
+            SendPredictedMessage(new StoreBuyListingMessage(listing.ID));
         };
 
         _menu.OnCategoryButtonPressed += (_, category) =>
@@ -46,7 +48,7 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
 
         _menu.OnWithdrawAttempt += (_, type, amount) =>
         {
-            SendMessage(new StoreRequestWithdrawMessage(type, amount));
+            SendPredictedMessage(new StoreRequestWithdrawMessage(type, amount));
         };
 
         _menu.SearchTextUpdated += (_, search) =>
@@ -55,27 +57,36 @@ public sealed class StoreBoundUserInterface : BoundUserInterface
             UpdateListingsWithSearchFilter();
         };
 
-        _menu.OnRefundAttempt += (_) =>
+        _menu.OnRefundAttempt += _ =>
         {
-            SendMessage(new StoreRequestRefundMessage());
+            SendPredictedMessage(new StoreRequestRefundMessage());
         };
+
+        Update();
     }
-    protected override void UpdateState(BoundUserInterfaceState state)
+
+    public override void Update()
     {
-        base.UpdateState(state);
+        if (_menu == null)
+            return;
 
-        switch (state)
-        {
-            case StoreUpdateState msg:
-                _listings = msg.Listings;
+        if (!EntMan.TryGetComponent(Owner, out StoreComponent? store))
+            return;
 
-                _menu?.UpdateBalance(msg.Balance);
+        var player = _playerMan.LocalEntity;
+        if (player == null)
+            return;
 
-                UpdateListingsWithSearchFilter();
-                _menu?.SetFooterVisibility(msg.ShowFooter);
-                _menu?.UpdateRefund(msg.AllowRefund);
-                break;
-        }
+        var showFooter = EntMan.HasComponent<RingerUplinkComponent>(Owner);
+        var storeSystem = EntMan.System<StoreSystem>();
+
+        _menu.Title = Loc.GetString(store.Name);
+        _menu.SetFooterVisibility(showFooter);
+        _menu.UpdateRefund(store.RefundAllowed);
+        _menu.UpdateBalance(store.Balance);
+        _listings = storeSystem.GetAvailableListings(player.Value, (Owner, store));
+
+        UpdateListingsWithSearchFilter();
     }
 
     private void UpdateListingsWithSearchFilter()

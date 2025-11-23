@@ -1,16 +1,13 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Content.Server.Store.Systems;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Content.Shared.Store.Systems;
 using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.IntegrationTests.Tests;
@@ -51,12 +48,12 @@ public sealed class StoreTests
 
         Assert.That(mapSystem.IsInitialized(testMap.MapId));
 
-
         EntityUid human = default;
         EntityUid uniform = default;
         EntityUid pda = default;
 
         var uplinkSystem = entManager.System<UplinkSystem>();
+        var storeSystem = entManager.System<SharedStoreSystem>();
 
         var listingPrototypes = prototypeManager.EnumeratePrototypes<ListingPrototype>()
                                                 .ToArray();
@@ -90,14 +87,14 @@ public sealed class StoreTests
                 + $"categories settings (maxItems, weight) not being realistically set, or default "
                 + $"discounted count being changed from '6' in StoreDiscountSystem.InitializeDiscounts."
             );
-            var discountedListingItems = storeComponent.FullListingsCatalog
+            var discountedListingItems = storeSystem.GetAvailableListings(human, (pda, storeComponent))
                                                        .Where(x => x.IsCostModified)
                                                        .OrderBy(x => x.ID)
                                                        .ToArray();
             Assert.That(discountComponent.Discounts
                                          .Select(x => x.ListingId.Id),
                 Is.EquivalentTo(discountedListingItems.Select(x => x.ID)),
-                $"{nameof(StoreComponent)}.{nameof(StoreComponent.FullListingsCatalog)} does not contain all "
+                $"{nameof(StoreComponent)}.{nameof(StoreComponent.ListingsModifiers)} does not contain all "
                 + $"items that are marked as discounted, or they don't have flag '{nameof(ListingDataWithCostModifiers.IsCostModified)}'"
                 + $"flag as 'true'. This marks the fact that cost modifier of discount is not applied properly!"
             );
@@ -116,7 +113,7 @@ public sealed class StoreTests
                 {
                     storeComponent.RefundAllowed = true;
 
-                    var discountedListingItem = storeComponent.FullListingsCatalog.First(x => x.ID == itemId);
+                    var discountedListingItem = storeSystem.GetAvailableListings(human, (pda, storeComponent)).First(x => x.ID == itemId);
                     var plainDiscountedCost = discountedListingItem.Cost[UplinkSystem.TelecrystalCurrencyPrototype];
 
                     var prototype = listingPrototypes.First(x => x.ID == discountedListingItem.ID);
@@ -144,7 +141,7 @@ public sealed class StoreTests
                     server.EntMan.EventBus.RaiseLocalEvent(pda, refundMsg);
 
                     // get refreshed item after refund re-generated items
-                    discountedListingItem = storeComponent.FullListingsCatalog.First(x => x.ID == itemId);
+                    discountedListingItem = storeSystem.GetAvailableListings(human, (pda, storeComponent)).First(x => x.ID == itemId);
 
                     // The storeComponent can give a discounted item a condition at random, so we remove it to sanitize the data.
                     discountedListingItem.Conditions = null;

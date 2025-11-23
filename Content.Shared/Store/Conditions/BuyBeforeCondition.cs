@@ -1,9 +1,12 @@
-using Content.Shared.Store;
+using System.Linq;
 using Content.Shared.Store.Components;
+using Content.Shared.Store.Systems;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.Store.Conditions;
+namespace Content.Shared.Store.Conditions;
 
+[Serializable, NetSerializable]
 public sealed partial class BuyBeforeCondition : ListingCondition
 {
     /// <summary>
@@ -15,14 +18,18 @@ public sealed partial class BuyBeforeCondition : ListingCondition
     /// <summary>
     ///     Listing(s) that if bought, block this purchase, if any.
     /// </summary>
+    [DataField]
     public HashSet<ProtoId<ListingPrototype>>? Blacklist;
 
     public override bool Condition(ListingConditionArgs args)
     {
-        if (!args.EntityManager.TryGetComponent<StoreComponent>(args.StoreEntity, out var storeComp))
+        var entMan = args.EntityManager;
+
+        if (!entMan.TryGetComponent<StoreComponent>(args.StoreEntity, out var storeComp))
             return false;
 
-        var allListings = storeComp.FullListingsCatalog;
+        var storeSystem = entMan.System<SharedStoreSystem>();
+        var allListings = storeSystem.GetAvailableListings(args.Buyer, (args.StoreEntity.Value, storeComp), false).ToList();
 
         var purchasesFound = false;
 

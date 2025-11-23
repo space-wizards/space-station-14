@@ -1,4 +1,3 @@
-using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -11,30 +10,7 @@ public enum StoreUiKey : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class StoreUpdateState : BoundUserInterfaceState
-{
-    public readonly HashSet<ListingDataWithCostModifiers> Listings;
-
-    public readonly Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance;
-
-    public readonly bool ShowFooter;
-
-    public readonly bool AllowRefund;
-
-    public StoreUpdateState(HashSet<ListingDataWithCostModifiers> listings, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance, bool showFooter, bool allowRefund)
-    {
-        Listings = listings;
-        Balance = balance;
-        ShowFooter = showFooter;
-        AllowRefund = allowRefund;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class StoreRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
-{
-
-}
+public sealed class StoreRequestUpdateInterfaceMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
 public sealed class StoreBuyListingMessage(ProtoId<ListingPrototype> listing) : BoundUserInterfaceMessage
@@ -60,7 +36,4 @@ public sealed class StoreRequestWithdrawMessage : BoundUserInterfaceMessage
 ///     Used when the refund button is pressed
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class StoreRequestRefundMessage : BoundUserInterfaceMessage
-{
-
-}
+public sealed class StoreRequestRefundMessage : BoundUserInterfaceMessage;

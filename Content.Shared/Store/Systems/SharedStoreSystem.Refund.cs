@@ -1,13 +1,12 @@
-using Content.Server.Store.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Store.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Store.Systems;
+namespace Content.Shared.Store.Systems;
 
-public sealed partial class StoreSystem
+public abstract partial class SharedStoreSystem
 {
     private void InitializeRefund()
     {
@@ -18,6 +17,7 @@ public sealed partial class StoreSystem
         SubscribeLocalEvent<StoreRefundComponent, ActionPerformedEvent>(OnActionPerformed);
         SubscribeLocalEvent<StoreRefundComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<StoreRefundComponent, AttemptShootEvent>(OnShootAttempt);
+        SubscribeLocalEvent<StoreComponent, RefundEntityDeletedEvent>(OnRefundEntityDeleted);
         // TODO: Handle guardian refund disabling when guardians support refunds.
     }
 
@@ -60,6 +60,7 @@ public sealed partial class StoreSystem
                 continue;
 
             refundComp.StoreEntity = null;
+            DirtyField(boughtEnt, refundComp, nameof(StoreRefundComponent.StoreEntity));
         }
     }
 
@@ -81,9 +82,15 @@ public sealed partial class StoreSystem
 
         var endTime = component.BoughtTime + component.DisableTime;
 
-        if (IsOnStartingMap(component.StoreEntity.Value, storeComp) && _timing.CurTime < endTime)
+        if (IsOnStartingMap((component.StoreEntity.Value, storeComp)) && _timing.CurTime < endTime)
             return;
 
-        DisableRefund(component.StoreEntity.Value, storeComp);
+        DisableRefund((component.StoreEntity.Value, storeComp));
+    }
+
+    private void OnRefundEntityDeleted(Entity<StoreComponent> ent, ref RefundEntityDeletedEvent args)
+    {
+        ent.Comp.BoughtEntities.Remove(args.Uid);
+        DirtyField(ent.Owner, ent.Comp, nameof(StoreComponent.BoughtEntities));
     }
 }
