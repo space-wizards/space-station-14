@@ -5,7 +5,7 @@ namespace Content.Shared.Random;
 /// <summary>
 ///     Random weighting dataset for solutions, able to specify reagents quantity.
 /// </summary>
-[Prototype("weightedRandomFillSolution")]
+[Prototype]
 public sealed partial class WeightedRandomFillSolutionPrototype : IPrototype
 {
     [IdDataField] public string ID { get; private set; } = default!;

@@ -2,13 +2,11 @@ using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Construction;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -17,6 +15,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -40,8 +39,8 @@ using Robust.Shared.Timing;
 using Content.Shared.Stacks;
 using Content.Server.Construction.Components;
 using Content.Shared.Chat;
-using Content.Shared.Damage;
-using Robust.Shared.Utility;
+using Content.Shared.Damage.Components;
+using Content.Shared.Temperature.Components;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -70,8 +69,10 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedSuicideSystem _suicide = default!;
 
-        [ValidatePrototypeId<EntityPrototype>]
-        private const string MalfunctionSpark = "Spark";
+        private static readonly EntProtoId MalfunctionSpark = "Spark";
+
+        private static readonly ProtoId<TagPrototype> MetalTag = "Metal";
+        private static readonly ProtoId<TagPrototype> PlasticTag = "Plastic";
 
         public override void Initialize()
         {
@@ -134,7 +135,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnActiveMicrowaveRemove(Entity<ActiveMicrowaveComponent> ent, ref EntRemovedFromContainerMessage args)
         {
-            EntityManager.RemoveComponentDeferred<ActivelyMicrowavedComponent>(args.Entity);
+            RemCompDeferred<ActivelyMicrowavedComponent>(args.Entity);
         }
 
         // Stop items from transforming through constructiongraphs while being microwaved.
@@ -239,7 +240,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         // If an entity has a stack component, use the stacktype instead of prototype id
                         if (TryComp<StackComponent>(item, out var stackComp))
                         {
-                            itemID = _prototype.Index<StackPrototype>(stackComp.StackTypeId).Spawn;
+                            itemID = _prototype.Index(stackComp.StackTypeId).Spawn;
                         }
                         else
                         {
@@ -262,7 +263,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             {
                                 _container.Remove(item, component.Storage);
                             }
-                            _stack.Use(item, 1, stackComp);
+                            _stack.ReduceCount((item, stackComp), 1);
                             break;
                         }
                         else
@@ -544,18 +545,22 @@ namespace Content.Server.Kitchen.EntitySystems
                 var ev = new BeingMicrowavedEvent(uid, user);
                 RaiseLocalEvent(item, ev);
 
+                // TODO MICROWAVE SPARKS & EFFECTS
+                // Various microwaveable entities should probably spawn a spark, play a sound, and generate a pop=up.
+                // This should probably be handled by the microwave system, with fields in BeingMicrowavedEvent.
+
                 if (ev.Handled)
                 {
                     UpdateUserInterfaceState(uid, component);
                     return;
                 }
 
-                if (_tag.HasTag(item, "Metal"))
+                if (_tag.HasTag(item, MetalTag))
                 {
                     malfunctioning = true;
                 }
 
-                if (_tag.HasTag(item, "Plastic"))
+                if (_tag.HasTag(item, PlasticTag))
                 {
                     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
                     _container.Insert(junk, component.Storage);
@@ -719,7 +724,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             foreach (ProtoId<FoodRecipePrototype> recipeId in ent.Comp.ProvidedRecipes)
             {
-                if (_prototype.TryIndex(recipeId, out var recipeProto))
+                if (_prototype.Resolve(recipeId, out var recipeProto))
                 {
                     args.Recipes.Add(recipeProto);
                 }
@@ -742,7 +747,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasContents(ent.Comp) || HasComp<ActiveMicrowaveComponent>(ent))
                 return;
 
-            _container.Remove(EntityManager.GetEntity(args.EntityID), ent.Comp.Storage);
+            _container.Remove(GetEntity(args.EntityID), ent.Comp.Storage);
             UpdateUserInterfaceState(ent, ent.Comp);
         }
 

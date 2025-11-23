@@ -2,6 +2,7 @@
   id: HandheldHealthAnalyzerUnpowered
   parent: BaseItem
   name: health analyzer
+  suffix: Always Powered
   description: A hand-held body scanner capable of distinguishing vital signs of the subject.
   components:
   - type: Sprite
@@ -14,6 +15,7 @@
         visible: true
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: Item
+    heldPrefix: analyzer
     storedRotation: -90
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
@@ -38,12 +40,12 @@
           False: { visible: false }
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
   id: HandheldHealthAnalyzer
   parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
-  suffix: Powered
+  suffix: ""
   components:
   - type: PowerCellDraw
     drawRate: 1.2 #Calculated for 5 minutes on a small cell

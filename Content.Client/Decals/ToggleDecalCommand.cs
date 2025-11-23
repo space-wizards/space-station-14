@@ -1,17 +1,15 @@
 ﻿using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Decals;
 
-public sealed class ToggleDecalCommand : IConsoleCommand
+public sealed class ToggleDecalCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _e = default!;
+    [Dependency] private readonly DecalSystem _decal = default!;
 
-    public string Command => "toggledecals";
-    public string Description => "Toggles decaloverlay";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "toggledecals";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        _e.System<DecalSystem>().ToggleOverlay();
+        _decal.ToggleOverlay();
     }
 }

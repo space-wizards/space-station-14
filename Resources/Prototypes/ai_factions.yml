@@ -9,6 +9,7 @@
   - Revolutionary
   - AllHostile
   - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: NanoTrasen
@@ -21,6 +22,7 @@
   - Dragon
   - AllHostile
   - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: Mouse
@@ -34,13 +36,15 @@
 
 - type: npcFaction
   id: PetsNT
+  friendly:
+  - NanoTrasen
   hostile:
   - Mouse
   - SimpleHostile
   - Zombie
   - Xeno
   - AllHostile
-  - Wizard
+  - Dragon
 
 - type: npcFaction
   id: SimpleHostile
@@ -51,8 +55,11 @@
   - PetsNT
   - Zombie
   - Revolutionary
+  - Dragon
+  - Xeno
   - AllHostile
   - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: SimpleNeutral
@@ -68,6 +75,7 @@
   - Dragon
   - AllHostile
   - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: Xeno
@@ -80,6 +88,8 @@
   - Revolutionary
   - AllHostile
   - Wizard
+  - Dragon
+  - Xenoborg
 
 - type: npcFaction
   id: Zombie
@@ -93,6 +103,8 @@
   - Revolutionary
   - AllHostile
   - Wizard
+  - Dragon
+  - Xenoborg
 
 - type: npcFaction
   id: Revolutionary
@@ -103,6 +115,7 @@
   - Dragon
   - AllHostile
   - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: AllHostile
@@ -119,6 +132,7 @@
   - Zombie
   - Revolutionary
   - Wizard
+  - Xenoborg
 
 - type: npcFaction
   id: Wizard
@@ -134,4 +148,21 @@
   - Xeno
   - Zombie
   - Revolutionary
+  - AllHostile
+  - Xenoborg
+
+- type: npcFaction
+  id: Xenoborg
+  hostile:
+  # they have brains
+  - NanoTrasen
+  - Syndicate
+  - Zombie
+  - Revolutionary
+  - Wizard
+
+  - Xeno # rivalry
+
+  # cause they are hostile to them
+  - SimpleHostile
   - AllHostile

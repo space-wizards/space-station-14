@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: NamesXenoborg
+  values:
+    prefix: names-xenoborg-dataset-
+    count: 60

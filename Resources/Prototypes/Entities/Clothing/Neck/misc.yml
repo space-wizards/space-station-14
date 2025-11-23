@@ -1,47 +1,36 @@
 - type: entity
-  parent: ClothingNeckBase
-  id: ClothingNeckHeadphones
-  name: headphones
-  description: Quality headphones from Drunk Masters, with good sound insulation.
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Misc/headphones.rsi
-    layers:
-    - state: icon
-      map: [ "enum.ToggleVisuals.Layer" ]
-  - type: Clothing
-    equippedPrefix: off
-    sprite: Clothing/Neck/Misc/headphones.rsi
-  - type: ToggleableLightVisuals
-    spriteLayer: enum.ToggleVisuals.Layer
-    clothingVisuals:
-      neck:
-      - state: on-equipped-NECK
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
-          True: {state: icon-on}
-          False: {state: icon}
-  - type: ItemToggle
-    predictable: false
-    soundActivate:
-      path: /Audio/Items/flashlight_on.ogg
-    soundDeactivate:
-      path: /Audio/Items/flashlight_off.ogg
-
-- type: entity
-  parent: ClothingNeckBase
+  parent: Clothing
   id: ClothingNeckStethoscope
   name: stethoscope
   description: An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing.
   components:
+  - type: Item
+    size: Small
   - type: Sprite
     sprite: Clothing/Neck/Misc/stethoscope.rsi
+    state: icon
   - type: Clothing
     sprite: Clothing/Neck/Misc/stethoscope.rsi
+    quickEquip: true
+    slots:
+    - neck
   - type: Stethoscope
+
+- type: entity
+  parent: BaseAction
+  id: ActionStethoscope
+  name: Listen with stethoscope
+  components:
+  - type: Action
+    icon:
+      sprite: Clothing/Neck/Misc/stethoscope.rsi
+      state: icon
+    priority: -1
+    itemIconStyle: BigAction
+    checkCanInteract: false
+  - type: TargetAction
+  - type: EntityTargetAction
+    event: !type:StethoscopeActionEvent
 
 - type: entity
   parent: ClothingNeckBase
@@ -52,6 +41,8 @@
   - type: Sprite
     sprite: Clothing/Neck/Misc/bling.rsi
   - type: Clothing
+    sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Item
     sprite: Clothing/Neck/Misc/bling.rsi
 
 - type: entity
@@ -66,18 +57,6 @@
     sprite: Clothing/Neck/Misc/lawyerbadge.rsi
   - type: TypingIndicatorClothing
     proto: lawyer
-
-- type: entity
-  id: ActionStethoscope
-  name: Listen with stethoscope
-  components:
-  - type: EntityTargetAction
-    icon:
-      sprite: Clothing/Neck/Misc/stethoscope.rsi
-      state: icon
-    event: !type:StethoscopeActionEvent
-    checkCanInteract: false
-    priority: -1
 
 - type: entity
   parent: ClothingNeckBase

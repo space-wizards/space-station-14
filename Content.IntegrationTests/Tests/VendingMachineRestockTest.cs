@@ -5,6 +5,7 @@ using Content.Server.Wires;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage.Components;
 using Content.Shared.VendingMachines;
@@ -20,6 +21,8 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(VendingMachineSystem))]
     public sealed class VendingMachineRestockTest : EntitySystem
     {
+        private static readonly ProtoId<DamageTypePrototype> TestDamageType = "Blunt";
+
         [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
@@ -182,9 +185,9 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
             await server.WaitIdleAsync();
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            var mapSystem = server.System<SharedMapSystem>();
 
             EntityUid packageRight;
             EntityUid packageWrong;
@@ -255,7 +258,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(systemMachine.GetAvailableInventory(machine, machineComponent), Has.Count.GreaterThan(0),
                     "Machine available inventory count is not greater than zero after restock.");
 
-                mapManager.DeleteMap(testMap.MapId);
+                mapSystem.DeleteMap(testMap.MapId);
             });
 
             await pair.CleanReturnAsync();
@@ -269,9 +272,9 @@ namespace Content.IntegrationTests.Tests
             await server.WaitIdleAsync();
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            var mapSystem = server.System<SharedMapSystem>();
 
             var damageableSystem = entitySystemManager.GetEntitySystem<DamageableSystem>();
 
@@ -293,15 +296,13 @@ namespace Content.IntegrationTests.Tests
                     "Did not start with zero ramen.");
 
                 restock = entityManager.SpawnEntity("TestRestockExplode", coordinates);
-                var damageSpec = new DamageSpecifier(prototypeManager.Index<DamageTypePrototype>("Blunt"), 100);
-                var damageResult = damageableSystem.TryChangeDamage(restock, damageSpec);
+                var damageSpec = new DamageSpecifier(prototypeManager.Index(TestDamageType), 100);
+                var damageResult = damageableSystem.ChangeDamage(restock, damageSpec);
 
 #pragma warning disable NUnit2045
-                Assert.That(damageResult, Is.Not.Null,
-                    "Received null damageResult when attempting to damage restock box.");
+                Assert.That(!damageResult.Empty, "Received empty damageResult when attempting to damage restock box.");
 
-                Assert.That((int) damageResult!.GetTotal(), Is.GreaterThan(0),
-                    "Box damage result was not greater than 0.");
+                Assert.That((int) damageResult.GetTotal(), Is.GreaterThan(0), "Box damage result was not greater than 0.");
 #pragma warning restore NUnit2045
             });
             await server.WaitRunTicks(15);
@@ -319,7 +320,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(totalRamen, Is.EqualTo(2),
                     "Did not find enough ramen after destroying restock box.");
 
-                mapManager.DeleteMap(testMap.MapId);
+                mapSystem.DeleteMap(testMap.MapId);
             });
 
             await pair.CleanReturnAsync();

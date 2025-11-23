@@ -15,7 +15,6 @@
     CornSeeds: 5
     CottonSeeds: 5
     EggplantSeeds: 5
-    EggySeeds: 5
     GalaxythistleSeeds: 3
     GarlicSeeds: 3
     GrapeSeeds: 5
@@ -42,5 +41,4 @@
   contrabandInventory:
     TobaccoSeeds: 2
     FoodSnackSemki: 2
-  emaggedInventory:
     FlyAmanitaSeeds: 1

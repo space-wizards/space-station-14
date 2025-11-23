@@ -2,22 +2,27 @@
   id: AllPlushiesTable
   table: !type:GroupSelector
     children:
-    - id: PlushieBee
-    - id: PlushieNar
-      weight: 0.5
-    - id: PlushieRatvar
-      weight: 0.5
+    - !type:NestedSelector
+      tableId: AllLizardPlushieTable
     - id: PlushieNuke
     - id: PlushieSlime
     - id: PlushieSnake
+    - id: PlushieExperiment
+    - id: PlushieVox
+    - id: PlushieRouny
+    - id: PlushieAtmosian
+    - id: PlushieDiona
+    - id: PlushieXeno
+    - id: PlushieHampter
+    - id: PlushieMoth
+    - id: PlushieArachind
+    - id: PlushiePenguin
+    - id: PlushieVulp
     - !type:GroupSelector
       children:
-      - id: PlushieLizard
-        weight: 9
-      - id: PlushieSpaceLizard
-        weight: 1
-      - id: PlushieLizardInversed
-        weight: 0.5
+      - id: PlushieBee
+      - id: PlushieRGBee
+        weight: 0.1
     - !type:GroupSelector
       children:
       - id: PlushieCarp
@@ -27,20 +32,127 @@
         weight: 0.25
       - id: PlushieRainbowCarp
         weight: 0.15
-    - id: PlushieVox
-    - id: PlushieRouny
     - !type:GroupSelector
       children:
       - id: PlushieSharkBlue
       - id: PlushieSharkGrey
       - id: PlushieSharkPink
-    - id: PlushieAtmosian
-    - id: PlushieDiona
-    - id: PlushieXeno
-    - id: PlushieHampter
-    - id: PlushieMoth
-    - id: PlushieArachind
-    - id: PlushiePenguin
+    - !type:GroupSelector # Toy plushies
+      children:
+      - id: ToyIan
+      - id: ToyAmongPequeno
+      - id: ToyMouse
+    - !type:GroupSelector # Giant plushies
+      children:
+      - id: PlushieNar
+      - id: PlushieRatvar
+    - !type:GroupSelector # Rare plushies
+      weight: 0.1 # 1 in >210
+      children:
+      - id: PlushieHuman
+      - id: PlushieGhost
+      - id: PlushieLamp
+    - !type:GroupSelector # Legendary plushies
+      weight: 0.002 # 1 in >10,500
+      children:
+      - id: PlushieThrongler
+      - id: PlushieGhostRevenant # You got the god roll, and failed
+
+- type: entityTable
+  id: AllLizardPlushieTable
+  table: !type:GroupSelector
+    children:
+    - id: PlushieLizard
+      weight: 8
+    - id: PlushieSpaceLizard
+      weight: 1
+    - id: PlushieLizardInversed
+      weight: 0.1 # 1 in >100
+    - !type:GroupSelector # Lizard gets a job table
+      children:
+      - id: PlushieLizardJobAtmospherictechnician
+      - id: PlushieLizardJobBartender
+      - id: PlushieLizardJobBotanist
+      - id: PlushieLizardJobBoxer
+      - id: PlushieLizardJobCaptain
+      - id: PlushieLizardJobCargotechnician
+      - id: PlushieLizardJobChaplain
+      - id: PlushieLizardJobChef
+      - id: PlushieLizardJobChemist
+      - id: PlushieLizardJobChiefengineer
+      - id: PlushieLizardJobChiefmedicalofficer
+      - id: PlushieLizardJobClown # :o)
+      - id: PlushieLizardJobDetective
+      - id: PlushieLizardJobHeadofpersonnel
+      - id: PlushieLizardJobHeadofsecurity
+      - id: PlushieLizardJobJanitor
+      - id: PlushieLizardJobLawyer
+      - id: PlushieLizardJobLibrarian
+      - id: PlushieLizardJobMedicaldoctor
+      - id: PlushieLizardJobMedicalintern
+      - id: PlushieLizardJobMime #
+      - id: PlushieLizardJobMusician
+      - id: PlushieLizardJobParamedic
+      - id: PlushieLizardJobPassenger
+      - id: PlushieLizardJobPsychologist
+      - id: PlushieLizardJobQuartermaster
+      - id: PlushieLizardJobReporter
+      - id: PlushieLizardJobResearchassistant
+      - id: PlushieLizardJobResearchdirector
+      - id: PlushieLizardJobSalvagespecialist
+      - id: PlushieLizardJobScientist
+      - id: PlushieLizardJobSecuritycadet
+      - id: PlushieLizardJobSecurityofficer
+      - id: PlushieLizardJobServiceworker
+      - id: PlushieLizardJobStationengineer
+      - id: PlushieLizardJobTechnicalassistant
+      - id: PlushieLizardJobZookeeper
+      - id: PlushieLizardJobMultiweh
+        weight: 0.5 # 1 in >800
+
+
+- type: entityTable
+  id: AllPottedPlantsTable
+  table: !type:GroupSelector
+    children:
+    - id: PottedPlant0
+    - id: PottedPlant1
+    - id: PottedPlant2
+    - id: PottedPlant3
+    - id: PottedPlant4
+    - id: PottedPlant5
+    - id: PottedPlant6
+    - id: PottedPlant7
+    - id: PottedPlant8
+    - id: PottedPlant10
+    - id: PottedPlant11
+    - id: PottedPlant12
+    - id: PottedPlant13
+    - id: PottedPlant14
+    - id: PottedPlant15
+    - id: PottedPlant16
+    - id: PottedPlant17
+    - id: PottedPlant18
+    - id: PottedPlant19
+    - id: PottedPlant20
+    - id: PottedPlant21
+    - id: PottedPlant22
+    - id: PottedPlant23
+    - id: PottedPlant24
+    - id: PottedPlant26
+
+- type: entity
+  id: CratePlants
+  parent: CrateGenericSteel
+  name: plant crate
+  description: A variety pack of potted plants to spruce up your station!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: AllPottedPlantsTable
+        rolls: !type:ConstantNumberSelector
+          value: 5
 
 - type: entity
   id: CrateFunPlushie
@@ -63,14 +175,30 @@
   components:
   - type: EntityTableContainerFill
     containers:
+      entity_storage: !type:NestedSelector
+        tableId: AllLizardPlushieTable
+        rolls: !type:ConstantNumberSelector
+          value: 6
+
+- type: entity
+  id: CrateFunSharkPlushieBulk
+  parent: CrateGenericSteel
+  name: bulk soft toy shark crate
+  description: A crate filled with a variety of everyone's favorite finned friend. Rawr!
+  components:
+  - type: EntityTableContainerFill
+    containers:
       entity_storage: !type:AllSelector
         children:
-        - id: PlushieLizard
+        - id: PlushieSharkBlue
           amount: !type:ConstantNumberSelector
-            value: 3
-        - id: PlushieSpaceLizard
+            value: 2
+        - id: PlushieSharkPink
           amount: !type:ConstantNumberSelector
-            value: 3
+            value: 2
+        - id: PlushieSharkGrey
+          amount: !type:ConstantNumberSelector
+            value: 2
 
 - type: entity
   id: CrateFunInstrumentsVariety
@@ -182,6 +310,30 @@
       - id: ReverseCymbalsInstrument
 
 - type: entity
+  id: CrateFunInstrumentsRandom
+  parent: CrateGenericSteel
+  name: random instrument collection
+  description: A box containing several randomly curated instruments, hand picked by Centcomm's top musicians!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: VarietyInstrumentTable # 200 speso max
+        - !type:NestedSelector
+          tableId: BrassInstrumentTable # 300 speso max
+        - !type:NestedSelector
+          tableId: StringInstrumentTable # 300 speso max
+        - !type:NestedSelector
+          tableId: WoodwindInstrumentTable # 200 speso max
+        - !type:NestedSelector
+          tableId: KeyedPercussionInstrumentTable # 300 speso max
+        - !type:NestedSelector
+          tableId: SpecialInstrumentTable # x2 200 speso max
+          rolls: 2
+
+- type: entity
   id: CrateFunArtSupplies
   parent: CrateGenericSteel
   name: art supplies
@@ -280,6 +432,21 @@
         amount: 4
 
 - type: entity
+  id: CrateFunFoamGuns
+  parent: CratePlastic
+  name: Foam Force crate
+  description: Contains four Foam Force rifles, some grenades, and extra ammo. It's [REDACTED] or nothing!
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponRifleFoam
+      amount: 4
+    - id: BoxDonkSoftBox
+      amount: 2
+    - id: GrenadeFoamDart
+      amount: 4
+
+- type: entity
   id: CrateFunBoxing
   parent: CrateGenericSteel
   name: boxing crate
@@ -322,7 +489,7 @@
     contents:
       - id: SnapPopBox
       - id: CrazyGlue
-        amount: 2
+      - id: CrazyLube
       - id: PlasticBanana
       - id: WhoopieCushion
       - id: ToyHammer
@@ -335,6 +502,8 @@
       - id: ClothingShoesClownLarge
       - id: ClothingHeadHatMagician
       - id: BeachBall
+      - id: TennisBall
+        amount: 2
       - id: ClothingShoesSkates
       - id: RubberChicken
 
@@ -378,4 +547,23 @@
       - id: BoxDarts
         amount: 1
         prob: 0.05
+
+- type: entity
+  name: hydrated scurret
+  description: Wait, what?
+  id: CrateFunScurret
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+    - id: MobEmotionalSupportScurret # How? Why?
+    - id: DrinkVodkaBottleFull
+    - id: DrinkWhiskeyBottleFull
+    - id: DrinkTequilaBottleFull # ...that explains it.
+    - id: DrinkShotGlass
+      amount: 2
+    - id: Spear # self defence
+    - id: ClothingHeadHatHardhatYellow
+    - id: ClothingNeckMantleQM
+    - id: ClothingHeadsetCargo
 

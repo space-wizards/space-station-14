@@ -1,0 +1,25 @@
+# tiles typically found in maintenance
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileTechmaint
+  name: stack-techmaint-floor
+  spawn: FloorTileItemTechmaint
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileSteelMaint
+  name: stack-steel-maint-floor
+  spawn: FloorTileItemSteelMaint
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileGratingMaint
+  name: stack-grating-maint-floor
+  spawn: FloorTileItemGratingMaint
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileTechmaintDark
+  name: stack-techmaint-floor-dark
+  spawn: FloorTileItemTechmaintDark

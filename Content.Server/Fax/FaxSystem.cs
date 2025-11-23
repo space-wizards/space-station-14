@@ -1,35 +1,35 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Labels;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
-using Content.Shared.UserInterface;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
-using Content.Shared.Emag.Components;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
-using Content.Shared.Fax.Systems;
 using Content.Shared.Fax.Components;
+using Content.Shared.Fax.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
+using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Mobs.Components;
+using Content.Shared.NameModifier.Components;
 using Content.Shared.Paper;
+using Content.Shared.Power;
+using Content.Shared.Tools;
+using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Shared.NameModifier.Components;
-using Content.Shared.Power;
 
 namespace Content.Server.Fax;
 
@@ -51,6 +51,8 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly FaxecuteSystem _faxecute = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+
+    private static readonly ProtoId<ToolQualityPrototype> ScrewingQuality = "Screwing";
 
     private const string PaperSlotId = "Paper";
 
@@ -211,7 +213,7 @@ public sealed class FaxSystem : EntitySystem
     {
         if (args.Handled ||
             !TryComp<ActorComponent>(args.User, out var actor) ||
-            !_toolSystem.HasQuality(args.Used, "Screwing")) // Screwing because Pulsing already used by device linking
+            !_toolSystem.HasQuality(args.Used, ScrewingQuality)) // Screwing because Pulsing already used by device linking
             return;
 
         _quickDialog.OpenDialog(actor.PlayerSession,
@@ -589,7 +591,7 @@ public sealed class FaxSystem : EntitySystem
         var printout = component.PrintingQueue.Dequeue();
 
         var entityToSpawn = printout.PrototypeId.Length == 0 ? component.PrintPaperId.ToString() : printout.PrototypeId;
-        var printed = EntityManager.SpawnEntity(entityToSpawn, Transform(uid).Coordinates);
+        var printed = Spawn(entityToSpawn, Transform(uid).Coordinates);
 
         if (TryComp<PaperComponent>(printed, out var paper))
         {

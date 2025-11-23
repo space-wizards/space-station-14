@@ -24,6 +24,7 @@ public sealed partial class HTNComponent : NPCComponent
     /// </summary>
     [ViewVariables]
     public HTNPlan? Plan;
+    // TODO FULL GAME SAVE serialize this?
 
     /// <summary>
     /// How long to wait after having planned to try planning again.
@@ -36,6 +37,9 @@ public sealed partial class HTNComponent : NPCComponent
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float PlanAccumulator = 0f;
+
+    [DataField]
+    public bool ConstantlyReplan = true;
 
     [ViewVariables]
     public HTNPlanJob? PlanningJob = null;

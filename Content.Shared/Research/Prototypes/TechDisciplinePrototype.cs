@@ -7,7 +7,7 @@ namespace Content.Shared.Research.Prototypes;
 /// This is a prototype for a research discipline, a category
 /// that governs how <see cref="TechnologyPrototype"/>s are unlocked.
 /// </summary>
-[Prototype("techDiscipline")]
+[Prototype]
 public sealed partial class TechDisciplinePrototype : IPrototype
 {
     /// <inheritdoc/>

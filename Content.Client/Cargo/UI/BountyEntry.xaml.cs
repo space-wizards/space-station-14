@@ -29,7 +29,7 @@ public sealed partial class BountyEntry : BoxContainer
 
         UntilNextSkip = untilNextSkip;
 
-        if (!_prototype.TryIndex<CargoBountyPrototype>(bounty.Bounty, out var bountyPrototype))
+        if (!_prototype.Resolve<CargoBountyPrototype>(bounty.Bounty, out var bountyPrototype))
             return;
 
         var items = new List<string>();

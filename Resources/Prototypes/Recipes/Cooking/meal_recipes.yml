@@ -7,6 +7,15 @@
   solids:
     FoodDoughSlice: 1 # one third of a standard bread dough recipe
 
+- type: microwaveMealRecipe
+  id: RecipeCottonBun
+  name: cotton bun recipe
+  result: FoodCottonBun
+  time: 5
+  group: Moth
+  solids:
+    FoodDoughCottonSlice: 1
+
 #Bagels
 - type: microwaveMealRecipe
   id: RecipeBagel
@@ -317,7 +326,7 @@
   group: Savory
   solids:
     FoodBreadBun: 1
-    CapacitorStockPart: 2
+    MicroManipulatorStockPart: 2
     # i would add steel to this recipe but the microwave explodes
 
 - type: microwaveMealRecipe
@@ -392,7 +401,7 @@
   name: banana bread recipe
   result: FoodBreadBanana
   time: 15
-  group: LoafCakes
+  group: Breads
   solids:
     FoodDough: 1
     FoodBanana: 1
@@ -718,6 +727,15 @@
     FoodDoughCottonFlat: 1
     CottonBol: 4
 
+- type: microwaveMealRecipe
+  id: RecipeWorldpeasPizza
+  name: world peazza recipe
+  result: FoodPizzaWorldpeas
+  time: 30
+  solids:
+    FoodDoughFlat: 1
+    FoodWorldPeas: 3
+
 #Italian
 - type: microwaveMealRecipe
   id: RecipeBoiledSpaghetti
@@ -852,6 +870,7 @@
   group: Pasta
   solids:
     FoodNoodles: 2
+    FoodPlateSmall: 2
 
 #Soups & Stew
 - type: microwaveMealRecipe
@@ -1682,6 +1701,18 @@
     OrganAnimalHeart: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBerryDelight
+  name: berry delight recipe
+  result: FoodCakeBerryDelight
+  time: 5
+  group: Cake
+  solids:
+    FoodCakeBlueberry: 1
+    FoodBerries: 2
+  reagents:
+    Milk: 10
+
+- type: microwaveMealRecipe
   id: RecipeBreadDog
   name: bread dog recipe
   result: MobBreadDog
@@ -1802,6 +1833,13 @@
   solids:
     FoodDonkpocketCarp: 1
 
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketMoth
+  name: warm moth-pocket recipe
+  result: FoodDonkpocketMothWarm
+  time: 5
+  solids:
+    FoodDonkpocketMoth: 1
 
 - type: microwaveMealRecipe
   id: RecipeHotChili
@@ -2281,6 +2319,17 @@
     FoodOnionSlice: 2
 
 - type: microwaveMealRecipe
+  id: RecipeTacoDragon
+  name: draco recipe
+  result: FoodTacoDragon
+  time: 10
+  group: Savory
+  solids:
+    FoodTacoShell: 1
+    FoodMeatDragonCutlet: 2
+    FoodChiliPepper: 1
+
+- type: microwaveMealRecipe
   id: RecipeCroissant
   name: croissant recipe
   result: FoodBakedCroissant
@@ -2344,8 +2393,70 @@
   name: grilled cheese sandwich recipe
   result: FoodBakedGrilledCheeseSandwich
   time: 10
+  group: Savory
   solids:
     FoodBreadPlainSlice: 2
     FoodCheeseSlice: 1
     FoodButterSlice: 1
 
+- type: microwaveMealRecipe
+  id: RecipeGrilledCheeseSandwichCotton
+  name: cotton grilled cheese sandwich recipe
+  result: FoodBakedGrilledCheeseSandwichCotton
+  time: 10
+  group: Moth
+  solids:
+    FoodBreadCottonSlice: 2
+    FoodCheeseSlice: 1
+    FoodButterSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBreakfastAmerican
+  name: full american breakfast recipe
+  result: FoodBreakfastAmerican
+  time: 30
+  group: Savory
+  reagents:
+    Egg: 12
+  solids:
+    FoodMeatBacon: 2
+    FoodPotato: 1
+    FoodBakedPancake: 2
+
+- type: microwaveMealRecipe
+  id: RecipeBreakfastEnglish
+  name: full english breakfast recipe
+  result: FoodBreakfastEnglish
+  time: 30
+  group: Savory
+  reagents:
+    Egg: 12
+  solids:
+    FoodMeatBacon: 1
+    FoodMeat: 1
+    FoodTomato: 1
+    FoodSoybeans: 2 # replace these with green beans once those become a thing
+
+- type: microwaveMealRecipe
+  id: RecipeMoproach # TODO: Move this to be an actual surgery instead, once surgery gets implemented.
+  name: moproach recipe
+  result: MobMoproach
+  time: 30
+  group: Other
+  reagents:
+    SpaceCleaner: 15
+  solids:
+    MobMothroach: 1
+    OrganAnimalHeart: 1
+    MoproachShoes: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCottonCake
+  name: cotton cake recipe
+  result: FoodCakeCotton
+  time: 5
+  group: Moth
+  reagents:
+    Fiber: 10
+  solids:
+    FoodCakePlain: 1

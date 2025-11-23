@@ -6,6 +6,7 @@
   components:
   - type: Item
     size: Small
+    heldPrefix: bag
   - type: Sprite
     drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
@@ -38,7 +39,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.25,-0.4,0.25,0.1"
-        density: 20
+        density: 80
         mask:
         - ItemMask
   - type: EntityStorage
@@ -122,6 +123,7 @@
     state: ash
   - type: Tag
     tags:
+    - Burnt
     - Trash
   - type: SolutionContainerManager
     solutions:
