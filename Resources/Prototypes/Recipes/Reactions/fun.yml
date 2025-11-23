@@ -240,7 +240,7 @@
     Enzyme:
       amount: 1
   products:
-    Felinase: 1
+    Felinase: 2
 
 - type: reaction
   id: Caninase
@@ -254,7 +254,7 @@
     Enzyme:
       amount: 1
   products:
-    Caninase: 1
+    Caninase: 2
 
 - type: reaction
   id: CaninaseFelinaseReaction
