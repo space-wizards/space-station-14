@@ -155,9 +155,11 @@ namespace Content.Server.RoundEnd
 
             _countdownTokenSource = new();
 
-            var who = requester != null ? $" by {ToPrettyString(requester.Value):player} " : "";
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
-            _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called{who}{what}");
+            if (requester != null)
+                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):player}{what}");
+            else
+                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called{what}");
 
             // I originally had these set up here but somehow time gets passed as 0 to Loc so IDEK.
             int time;
@@ -218,9 +220,11 @@ namespace Content.Server.RoundEnd
             _countdownTokenSource.Cancel();
             _countdownTokenSource = null;
 
-            var who = requester != null ? $" by {ToPrettyString(requester.Value):player} " : "";
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
-            _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled{who}{what}");
+            if (requester != null)
+                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):player}{what}");
+            else
+                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled{what}");
 
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("round-end-system-shuttle-sender-announcement"), false, colorOverride: Color.Gold);
