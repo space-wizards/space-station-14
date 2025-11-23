@@ -272,7 +272,7 @@ public sealed partial class AtmosphereSystem
     /// <param name="pressures">The span to store the pressures to - this should be the same length
     /// as the tile array.</param>
     /// <exception cref="ArgumentException">Thrown when the length of the provided spans do not match.</exception>
-    internal static void GetBulkTileAtmospherePressures(Span<TileAtmosphere?> tiles, Span<float> pressures)
+    private static void GetBulkTileAtmospherePressures(Span<TileAtmosphere?> tiles, Span<float> pressures)
     {
         // this shit is internal because I don't even trust myself
         if (tiles.Length != pressures.Length)
