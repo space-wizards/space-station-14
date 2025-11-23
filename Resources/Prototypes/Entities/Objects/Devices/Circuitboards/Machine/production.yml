@@ -556,6 +556,25 @@
           defaultPrototype: Beaker
 
 - type: entity
+  id: MedicinalRefillerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: medicinal refiller machine board
+  description: A machine printed circuit board for a medicinal refiller.
+  components:
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: MedicinalRefiller
+    stackRequirements:
+      Manipulator: 1
+      Glass: 1
+      Steel: 3
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+
+- type: entity
   id: BiomassReclaimerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: biomass reclaimer machine board

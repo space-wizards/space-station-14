@@ -20,3 +20,15 @@ public sealed partial class AreaPickupDoAfterEvent : DoAfterEvent
 
     public override DoAfterEvent Clone() => this;
 }
+
+/// <summary>
+/// This is raised on the storage entity on an attempt to open it.
+/// </summary>
+public sealed class StorageOpenUIAttemptEvent : CancellableEntityEventArgs
+{
+    public EntityUid User { get; }
+    public StorageOpenUIAttemptEvent(EntityUid who)
+    {
+        User = who;
+    }
+}
