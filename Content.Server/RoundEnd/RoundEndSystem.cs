@@ -157,7 +157,7 @@ namespace Content.Server.RoundEnd
 
             var who = requester != null ? $" by {ToPrettyString(requester.Value):player} " : "";
             var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
-            _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle recalled{who}{what}");
+            _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called{who}{what}");
 
             // I originally had these set up here but somehow time gets passed as 0 to Loc so IDEK.
             int time;
