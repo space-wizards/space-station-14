@@ -249,6 +249,7 @@
   - type: SubdermalImplant
     implantAction: ActionChangeVoiceMaskImplant
   - type: VoiceMask
+    overrideIdentity: true
   - type: UserInterface
     interfaces:
       enum.VoiceMaskUIKey.Key:
