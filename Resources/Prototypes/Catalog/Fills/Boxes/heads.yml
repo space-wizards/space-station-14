@@ -9,8 +9,8 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - CommsComputerCircuitboard
-        - StationRecordsComputerCircuitboard
+        - id: CommsComputerCircuitboard
+        - id: StationRecordsComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -23,11 +23,11 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - CargoRequestEngineeringComputerCircuitboard
-        - AlertsComputerCircuitboard
-        - AtmosMonitoringComputerCircuitboard
-        - PowerComputerCircuitboard
-        - SolarControlComputerCircuitboard
+        - id: CargoRequestEngineeringComputerCircuitboard
+        - id: AlertsComputerCircuitboard
+        - id: AtmosMonitoringComputerCircuitboard
+        - id: PowerComputerCircuitboard
+        - id: SolarControlComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -40,8 +40,8 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - MedicalTechFabCircuitboard
-        - CargoRequestMedicalComputerCircuitboard
+        - id: MedicalTechFabCircuitboard
+        - id: CargoRequestMedicalComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -54,9 +54,9 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - IDComputerCircuitboard
-        - FundingAllocationComputerCircuitboard
-        - CargoRequestServiceComputerCircuitboard
+        - id: IDComputerCircuitboard
+        - id: FundingAllocationComputerCircuitboard
+        - id: CargoRequestServiceComputerCircuitboard
 
 - type: entity
   parent: BoxStamps
@@ -69,9 +69,9 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - RubberStampApproved
-        - RubberStampDenied
-        - RubberStampHop
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampHop
 
 - type: entity
   parent: ToteBase
@@ -84,8 +84,8 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - SecurityTechFabCircuitboard
-        - CargoRequestSecurityComputerCircuitboard
+        - id: SecurityTechFabCircuitboard
+        - id: CargoRequestSecurityComputerCircuitboard
 
 - type: entity
   parent: ToteBase
@@ -98,13 +98,13 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - CargoBountyComputerCircuitboard
-        - CargoRequestComputerCircuitboard
-        - CargoSaleComputerCircuitboard
-        - CargoShuttleConsoleCircuitboard
-        - SalvageMagnetMachineCircuitboard
-        - SalvageJobBoardComputerCircuitboard
-        - MailTeleporterMachineCircuitboard
+        - id: CargoBountyComputerCircuitboard
+        - id: CargoRequestComputerCircuitboard
+        - id: CargoSaleComputerCircuitboard
+        - id: CargoShuttleConsoleCircuitboard
+        - id: SalvageMagnetMachineCircuitboard
+        - id: SalvageJobBoardComputerCircuitboard
+        - id: MailTeleporterMachineCircuitboard
 
 - type: entity
   parent: BoxStamps
@@ -117,9 +117,9 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - RubberStampApproved
-        - RubberStampDenied
-        - RubberStampQm
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: RubberStampQm
 
 - type: entity
   parent: ToteBase
@@ -132,11 +132,11 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - CircuitImprinterMachineCircuitboard
-        - ProtolatheMachineCircuitboard
-        - ResearchComputerCircuitboard
-        - CargoRequestScienceComputerCircuitboard
-        - RoboticsConsoleCircuitboard
-        - AnalysisComputerCircuitboard #Because sometimes round start artis just fucking explode on the pad.
-        - ArtifactAnalyzerMachineCircuitboard
-        - StationAiFixerCircuitboard
+        - id: CircuitImprinterMachineCircuitboard
+        - id: ProtolatheMachineCircuitboard
+        - id: ResearchComputerCircuitboard
+        - id: CargoRequestScienceComputerCircuitboard
+        - id: RoboticsConsoleCircuitboard
+        - id: AnalysisComputerCircuitboard #Because sometimes round start artis just fucking explode on the pad.
+        - id: ArtifactAnalyzerMachineCircuitboard
+        - id: StationAiFixerCircuitboard
