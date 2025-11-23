@@ -21,4 +21,9 @@ public sealed partial class LastBodyDamageComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public DamageSpecifier? Damage;
+
+    [DataField, AutoNetworkedField]
+    public string SpecialCauseOfDeath;
+
+    // special case protoid's
 }

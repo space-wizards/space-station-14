@@ -1,4 +1,5 @@
 using Content.Shared.Damage.Components;
+using Content.Shared.Explosion;
 using Content.Shared.Gibbing.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -14,6 +15,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     {
         SubscribeLocalEvent<StoreDamageTakenOnMindComponent, AttemptEntityGibEvent>(SaveBodyOnGib);
         SubscribeLocalEvent<StoreDamageTakenOnMindComponent, MobStateChangedEvent>(SaveBodyOnThreshold);
+        SubscribeLocalEvent<StoreDamageTakenOnMindComponent, BeforeExplodeEvent>(DeathByExplosion);
     }
 
     /// <summary>
@@ -32,7 +34,15 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     /// </summary>
     private void SaveBodyOnThreshold(Entity<StoreDamageTakenOnMindComponent> ent, ref MobStateChangedEvent args)
     {
+        if (args.NewMobState != MobState.Dead)
+            ClearSpecialCause(ent);
+
         SaveBody(ent.Owner);
+    }
+
+    private void DeathByExplosion(Entity<StoreDamageTakenOnMindComponent> ent, ref BeforeExplodeEvent args)
+    {
+        SaveSpecialCauseOfDeath(ent, "Explosion");  //shouldnt be a string yeah make it a proto id
     }
 
     /// <summary>
@@ -46,8 +56,38 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
             return;
 
         EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
-        Dirty(mindContainer.Mind.Value, storedDamage);
         storedDamage.DamagePerGroup = damageable.DamagePerGroup;
         storedDamage.Damage = damageable.Damage;
+        Dirty(mindContainer.Mind.Value, storedDamage);
+    }
+
+    /// <summary>
+    /// epic explanation
+    /// </summary>
+    private void SaveSpecialCauseOfDeath(EntityUid ent, string cause)  // shouldnt be a stringg thats bad u.u
+    {
+        if (!TryComp<MindContainerComponent>(ent, out var mindContainer)
+            || !TryComp<MindComponent>(mindContainer.Mind, out _))
+            return;
+
+        EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
+
+        storedDamage.SpecialCauseOfDeath = cause;
+        Dirty(mindContainer.Mind.Value, storedDamage);
+    }
+
+    /// <summary>
+    /// also an explanation
+    /// </summary>
+    private void ClearSpecialCause(EntityUid ent)
+    {
+        if (!TryComp<MindContainerComponent>(ent, out var mindContainer)  // this should prolly be a method sincee im doing the same thingi 3 times tis system
+            || !TryComp<MindComponent>(mindContainer.Mind, out _))
+            return;
+
+        EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
+
+        storedDamage.SpecialCauseOfDeath = "none"; // temporary, again it should be a proto id not a string
+        Dirty(mindContainer.Mind.Value, storedDamage);
     }
 }
