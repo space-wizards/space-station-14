@@ -256,15 +256,11 @@ namespace Content.Client.Lobby
             {
                 Lobby!.Background.Texture = _resourceCache.GetResource<TextureResource>(proto.Background);
 
-                var title = Loc.GetString(proto.Title);
-                var artist = Loc.GetString(proto.Artist);
                 var markup = Loc.GetString("lobby-state-background-text",
-                    ("backgroundTitle", title),
-                    ("backgroundArtist", artist));
+                    ("backgroundTitle", Loc.GetString(proto.Title)),
+                    ("backgroundArtist", Loc.GetString(proto.Artist)));
 
                 Lobby!.LobbyBackground.SetMarkup(markup);
-
-                return;
             }
             else
             {
