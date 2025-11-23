@@ -42,7 +42,7 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
                 whitelisted = true;
         }
 
-        if (whitelisted || Whitelist == null)
+        if (whitelisted)
         {
             return true;
         }
