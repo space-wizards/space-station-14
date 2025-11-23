@@ -100,6 +100,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         {
             SkinColorationStrategyInput.Unary => skinColoration.FromUnary(speciesPrototype.DefaultHumanSkinTone),
             SkinColorationStrategyInput.Color => skinColoration.ClosestSkinColor(speciesPrototype.DefaultSkinTone),
+            _ => skinColoration.ClosestSkinColor(speciesPrototype.DefaultSkinTone),
         };
 
         return new(
@@ -109,11 +110,11 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             Color.Black,
             Color.Black,
             skinColor,
-            new ()
+            new()
         );
     }
 
-    private static IReadOnlyList<Color> RealisticEyeColors = new List<Color>
+    private static IReadOnlyList<Color> _realisticEyeColors = new List<Color>
     {
         Color.Brown,
         Color.Gray,
@@ -145,7 +146,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
 
         // TODO: Add random markings
 
-        var newEyeColor = random.Pick(RealisticEyeColors);
+        var newEyeColor = random.Pick(_realisticEyeColors);
 
         var protoMan = IoCManager.Resolve<IPrototypeManager>();
         var skinType = protoMan.Index<SpeciesPrototype>(species).SkinColoration;
@@ -155,9 +156,10 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         {
             SkinColorationStrategyInput.Unary => strategy.FromUnary(random.NextFloat(0f, 100f)),
             SkinColorationStrategyInput.Color => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
+            _ => strategy.ClosestSkinColor(new Color(random.NextFloat(1), random.NextFloat(1), random.NextFloat(1), 1)),
         };
 
-        return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new ());
+        return new HumanoidCharacterAppearance(newHairStyle, newHairColor, newFacialHairStyle, newHairColor, newEyeColor, newSkinColor, new());
 
         float RandomizeColor(float channel)
         {
