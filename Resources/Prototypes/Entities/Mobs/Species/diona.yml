@@ -34,8 +34,9 @@
         amount: 5
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Sap
-      Quantity: 1
+      reagents:
+      - ReagentId: Sap
+        Quantity: 1
   - type: Reactive
     groups:
       Flammable: [ Touch ]

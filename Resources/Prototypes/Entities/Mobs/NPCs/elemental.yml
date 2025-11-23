@@ -350,8 +350,9 @@
       50: 0.4
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Water
-      Quantity: 1
+      reagents:
+      - ReagentId: Water
+        Quantity: 1
     chemicalMaxVolume: 100
   - type: StatusEffects
     allowed:
@@ -421,8 +422,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Beer
-      Quantity: 1
+      reagents:
+      - ReagentId: Beer
+        Quantity: 1
   - type: PointLight
     color: "#cfa85f"
   - type: Sprite
@@ -440,8 +442,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Pax
-      Quantity: 1
+      reagents:
+      - ReagentId: Pax
+        Quantity: 1
   - type: PointLight
     color: "#AAAAAA"
   - type: Sprite
@@ -462,8 +465,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Nocturine
-      Quantity: 1
+      reagents:
+      - ReagentId: Nocturine
+        Quantity: 1
   - type: PointLight
     color: "#128e80"
   - type: Sprite
@@ -484,8 +488,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: THC
-      Quantity: 1
+      reagents:
+      - ReagentId: THC
+        Quantity: 1
   - type: PointLight
     color: "#808080"
   - type: Sprite
@@ -503,8 +508,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Bicaridine
-      Quantity: 1
+      reagents:
+      - ReagentId: Bicaridine
+        Quantity: 1
   - type: PointLight
     color: "#ffaa00"
   - type: Sprite
@@ -522,8 +528,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Toxin
-      Quantity: 1
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 1
   - type: PointLight
     color: "#cf3600"
   - type: Sprite
@@ -541,8 +548,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Napalm
-      Quantity: 1
+      reagents:
+      - ReagentId: Napalm
+        Quantity: 1
   - type: PointLight
     color: "#FA00AF"
   - type: Sprite
@@ -560,8 +568,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Omnizine
-      Quantity: 1
+      reagents:
+      - ReagentId: Omnizine
+        Quantity: 1
   - type: PointLight
     color: "#fcf7f9"
   - type: Sprite
@@ -579,8 +588,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: MuteToxin
-      Quantity: 1
+      reagents:
+      - ReagentId: MuteToxin
+        Quantity: 1
   - type: PointLight
     color: "#0f0f0f"
   - type: Sprite
@@ -598,8 +608,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: NorepinephricAcid
-      Quantity: 1
+      reagents:
+      - ReagentId: NorepinephricAcid
+        Quantity: 1
   - type: PointLight
     color: "#96a8b5"
   - type: Sprite
@@ -617,8 +628,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Ephedrine
-      Quantity: 1
+      reagents:
+      - ReagentId: Ephedrine
+        Quantity: 1
   - type: PointLight
     color: "#D2FFFA"
   - type: Sprite
@@ -636,8 +648,9 @@
   components:
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: RobustHarvest
-      Quantity: 1
+      reagents:
+      - ReagentId: RobustHarvest
+        Quantity: 1
   - type: PointLight
     color: "#3e901c"
   - type: Sprite

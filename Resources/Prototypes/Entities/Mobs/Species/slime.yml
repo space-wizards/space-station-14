@@ -69,8 +69,9 @@
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Bloodstream
     bloodReagents: # TODO Color slime blood based on their slime color or smth
-    - ReagentId: Slime
-      Quantity: 1
+      reagents:
+      - ReagentId: Slime
+        Quantity: 1
   - type: Barotrauma
     damage:
       types:

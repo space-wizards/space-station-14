@@ -1,7 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -158,7 +157,7 @@ public sealed partial class BloodstreamComponent : Component
     /// Slime-people might use slime as their blood or something like that.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public List<ReagentQuantity> BloodReagents = new() { new("Blood", 1) };
+    public Solution BloodReagents = new([new("Blood", 1)]);
 
     /// <summary>
     /// Name/Key that <see cref="BloodSolution"/> is indexed by.

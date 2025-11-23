@@ -68,8 +68,9 @@
     critThreshold: 200
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: FluorosulfuricAcid
-      Quantity: 1
+      reagents:
+      - ReagentId: FluorosulfuricAcid
+        Quantity: 1
     bloodMaxVolume: 650
   - type: MeleeWeapon
     altDisarm: false
@@ -495,8 +496,9 @@
     critThreshold: 200
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: FluorosulfuricAcid
-      Quantity: 1
+      reagents:
+      - ReagentId: FluorosulfuricAcid
+        Quantity: 1
     bloodMaxVolume: 300
   - type: MeleeWeapon
     altDisarm: false

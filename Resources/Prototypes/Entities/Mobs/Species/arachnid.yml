@@ -43,8 +43,9 @@
   # Damage (Self)
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: CopperBlood
-      Quantity: 1
+      reagents:
+      - ReagentId: CopperBlood
+        Quantity: 1
   # Damage (Others)
   - type: MeleeWeapon
     animation: WeaponArcBite

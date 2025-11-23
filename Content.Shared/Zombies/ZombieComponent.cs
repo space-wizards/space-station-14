@@ -1,4 +1,5 @@
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Humanoid;
@@ -167,11 +168,11 @@ public sealed partial class ZombieComponent : Component
     /// The blood reagents of the humanoid to restore in case of cloning
     /// </summary>
     [DataField("beforeZombifiedBloodReagents")]
-    public List<ReagentQuantity> BeforeZombifiedBloodReagents = new();
+    public Solution BeforeZombifiedBloodReagents = new();
 
     /// <summary>
     /// The blood reagents to give the zombie. In case you want zombies that bleed milk, or something.
     /// </summary>
     [DataField("newBloodReagents")]
-    public List<ReagentQuantity> NewBloodReagents = new() { new("ZombieBlood", 1) };
+    public Solution NewBloodReagents = new([new("ZombieBlood", 1)]);
 }

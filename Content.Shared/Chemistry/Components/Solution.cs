@@ -475,6 +475,15 @@ namespace Content.Shared.Chemistry.Components
         }
 
         /// <summary>
+        ///     Scales the amount of solution.
+        /// </summary>
+        /// <param name="scale">The scalar to modify the solution by.</param>
+        public void ScaleSolution(FixedPoint2 scale)
+        {
+            ScaleSolution(scale.Float());
+        }
+
+        /// <summary>
         ///     Attempts to remove an amount of reagent from the solution.
         /// </summary>
         /// <param name="toRemove">The reagent to be removed.</param>
@@ -964,6 +973,16 @@ namespace Content.Shared.Chemistry.Components
                 dict[proto] = quantity + dict.GetValueOrDefault(proto);
             }
             return dict;
+        }
+
+        public void SetReagentData(List<ReagentData>? data)
+        {
+            for (var i = 0; i < Contents.Count; i++)
+            {
+                var old = Contents[i];
+                Contents[i] = new ReagentQuantity(new ReagentId(old.Reagent.Prototype, data), old.Quantity);
+            }
+            ValidateSolution();
         }
     }
 }

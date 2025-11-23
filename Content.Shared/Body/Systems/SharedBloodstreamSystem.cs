@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Alert;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
@@ -373,7 +372,15 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         if (amount >= 0)
         {
             var min = FixedPoint2.Min(ent.Comp.BloodSolution.Value.Comp.Solution.AvailableVolume, amount);
-            var solution = GenerateBloodSolution(ent.Comp.BloodReagents, min, GetEntityBloodData(ent));
+            var solution = ent.Comp.BloodReagents.Clone();
+            var scale = min / solution.Volume;
+
+            // 0.01 / 3 = 0
+            if (min > FixedPoint2.Zero && scale == FixedPoint2.Zero)
+                scale = FixedPoint2.Epsilon;
+
+            solution.ScaleSolution(scale);
+            solution.SetReagentData(GetEntityBloodData(ent));
             SolutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
             return min == amount;
         }
@@ -472,23 +479,22 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     [Obsolete("ChangeBloodReagent is obsolete, please use ChangeBloodReagents.")]
     public void ChangeBloodReagent(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype> reagent)
     {
-        ChangeBloodReagents(ent, [new(reagent, 1)]);
+        ChangeBloodReagents(ent, new([new(reagent, 1)]));
     }
 
     /// <summary>
     /// Change what someone's blood is made of, on the fly.
     /// </summary>
-    public void ChangeBloodReagents(Entity<BloodstreamComponent?> ent, IEnumerable<ReagentQuantity> reagents)
+    public void ChangeBloodReagents(Entity<BloodstreamComponent?> ent, Solution reagents)
     {
-        if (!Resolve(ent, ref ent.Comp, logMissing: false)
-            || reagents.SequenceEqual(ent.Comp.BloodReagents))
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
         {
             return;
         }
 
         if (!SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
         {
-            ent.Comp.BloodReagents = reagents.ToList();
+            ent.Comp.BloodReagents = reagents.Clone();
             DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReagents));
             return;
         }
@@ -497,12 +503,14 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         foreach (var reagent in ent.Comp.BloodReagents)
             currentVolume += bloodSolution.RemoveReagent(reagent.Reagent, quantity: bloodSolution.Volume, ignoreReagentData: true);
 
-        ent.Comp.BloodReagents = reagents.ToList();
+        ent.Comp.BloodReagents = reagents.Clone();
         DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReagents));
 
         if (currentVolume > 0)
         {
-            var solution = GenerateBloodSolution(ent.Comp.BloodReagents, currentVolume, GetEntityBloodData(ent));
+            var solution = ent.Comp.BloodReagents.Clone();
+            solution.ScaleSolution(currentVolume / solution.Volume);
+            solution.SetReagentData(GetEntityBloodData(ent));
             SolutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
         }
     }
@@ -523,27 +531,5 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         bloodData.Add(dnaData);
 
         return bloodData;
-    }
-
-    /// <summary>
-    /// Generates a Solution according to the given blood profile and amount.
-    /// </summary>
-    /// <param name="data">If specified overwrites the data on all the reagents.</param>
-    public Solution GenerateBloodSolution(IEnumerable<ReagentQuantity> blood, FixedPoint2 amount, List<ReagentData>? data)
-    {
-        var solution = new Solution(blood.Count());
-
-        var bloodCount = blood.Select(x => x.Quantity).Aggregate(FixedPoint2.Zero, (x, y) => x + y);
-        var fraction = amount / bloodCount;
-        foreach (var reagent in blood)
-        {
-            var toAdd = fraction * reagent.Quantity;
-            if (data is { } reagentData)
-                solution.AddReagent(new ReagentId(reagent.Reagent.Prototype, reagentData), toAdd);
-            else
-                solution.AddReagent(reagent.Reagent, toAdd);
-        }
-
-        return solution;
     }
 }

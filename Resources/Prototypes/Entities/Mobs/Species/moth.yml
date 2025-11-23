@@ -34,8 +34,9 @@
       amount: 5
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: InsectBlood
-      Quantity: 1
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 1
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:

@@ -141,8 +141,9 @@
     - Trash
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: InsectBlood
-      Quantity: 1
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 1
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
@@ -391,8 +392,9 @@
         Base: cockroach_dead
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: InsectBlood
-      Quantity: 1
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 1
     bloodMaxVolume: 20
   - type: Edible
   - type: FlavorProfile
@@ -557,8 +559,9 @@
     damageModifierSet: Moth
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: InsectBlood
-      Quantity: 1
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 1
   - type: Respirator
     damage:
       types:
@@ -839,8 +842,9 @@
     - Trash
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: InsectBlood
-      Quantity: 1
+      reagents:
+      - ReagentId: InsectBlood
+        Quantity: 1
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
@@ -999,8 +1003,9 @@
   - type: Bloodstream
     bloodMaxVolume: 50
     bloodReagents:
-    - ReagentId: CopperBlood
-      Quantity: 1
+      reagents:
+      - ReagentId: CopperBlood
+        Quantity: 1
   - type: Tag
     tags:
     - VimPilot
@@ -2006,8 +2011,9 @@
     intensity: 0.3
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: UnstableMutagen
-      Quantity: 1
+      reagents:
+      - ReagentId: UnstableMutagen
+        Quantity: 1
   - type: SolutionContainerManager
     solutions:
       food:
@@ -2527,8 +2533,9 @@
   - type: Bloodstream
     bloodMaxVolume: 150
     bloodReagents:
-    - ReagentId: CopperBlood
-      Quantity: 1
+      reagents:
+      - ReagentId: CopperBlood
+        Quantity: 1
   - type: Speech
     speechVerb: Arachnid
     speechSounds: Arachnid
@@ -2675,8 +2682,9 @@
     - type: Bloodstream
       bloodMaxVolume: 150
       bloodReagents:
-      - ReagentId: Laughter
-        Quantity: 1
+        reagents:
+        - ReagentId: Laughter
+          Quantity: 1
 - type: entity
   name: wizard spider
   parent: MobGiantSpider
@@ -3006,8 +3014,9 @@
       gender: epicene
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: DemonsBlood
-      Quantity: 1
+      reagents:
+      - ReagentId: DemonsBlood
+        Quantity: 1
   - type: Damageable
     damageContainer: BiologicalMetaphysical
     damageModifierSet: Infernal
@@ -3648,8 +3657,9 @@
     templateId: pet
   - type: Bloodstream
     bloodReagents:
-    - ReagentId: Sap
-      Quantity: 1
+      reagents:
+      - ReagentId: Sap
+        Quantity: 1
     bloodMaxVolume: 60
   - type: DamageStateVisuals
     states:
