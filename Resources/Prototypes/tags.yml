@@ -889,6 +889,9 @@
   id: MagazinePistol # WeaponPistolMk58, WeaponPistolViper, ClothingBeltSecurity
 
 - type: Tag
+  id: MagazinePistolAll # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
+
+- type: Tag
   id: MagazinePistolCaselessRifle # WeaponPistolCobra
 
 - type: Tag
@@ -902,6 +905,9 @@
 
 - type: Tag
   id: MagazineRifle # WeaponRifleLecter, WeaponRifleEstoc, WeaponRifleM90GrenadeLauncher
+
+- type: Tag
+  id: MagazineRifleAll # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: MagazineShotgun # WeaponShotgunBulldog
@@ -1315,6 +1321,9 @@
 
 - type: Tag
   id: Spear # CargoBounty: BountySpear
+
+- type: Tag
+  id: SpeedLoaderAll # # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: SpeedLoaderCap # Ammo: RevolverCapGun, RevolverCapGunFake

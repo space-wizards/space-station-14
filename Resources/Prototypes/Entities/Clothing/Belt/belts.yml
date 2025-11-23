@@ -109,42 +109,53 @@
   components:
   - type: Sprite
     sprite: Clothing/Belt/holster.rsi
+    layers:
+      - state: icon
   - type: Clothing
     sprite: Clothing/Belt/holster.rsi
   - type: ContainerContainer
     containers:
-       item1: !type:ContainerSlot
-         item2: !type:ContainerSlot
-       storagebase: !type:Container
-         ents: []
+      storagebase: !type:Container
+        ents: []
+      utility_slot: !type:ContainerSlot
+         sidearm_slot: !type:ContainerSlot
   - type: Item
     size: Ginormous
   - type: ItemSlots
     slots:
-      item1:
-        name: clothing-holster-slot-one
+      utility_slot:
+        name: clothing-holster-utility-slot
         priority: 1
         whitelist:
           tags:
-          - Sidearm
           - Knife
-          - MagazinePistol
-          - MagazinePistolHighCapacity
-          - MagazinePistolCaselessRifle
-          - MagazineMagnum
-          - SpeedLoaderMagnum
-      item2:
-        name: clothing-holster-slot-two
+          - MagazinePistolAll
+          - SpeedLoaderAll
+      sidearm_slot:
+        name: clothing-holster-sidearm-slot
         priority: 2
         whitelist:
           tags:
           - Sidearm
+  - type: ItemMapper
+    mapLayers:
+      icon_knife:
+        whitelist:
+          tags:
           - Knife
-          - MagazinePistol
-          - MagazinePistolHighCapacity
-          - MagazinePistolCaselessRifle
-          - MagazineMagnum
-          - SpeedLoaderMagnum
+      icon_magazine_pistol:
+        whitelist:
+          tags:
+          - MagazinePistolAll
+      icon_speedloader_revolver:
+        whitelist:
+          tags:
+          - SpeedLoaderAll
+      icon_sidearm:
+        whitelist:
+          tags:
+          - Sidearm
+  - type: Appearance
 
 - type: entity
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
@@ -158,37 +169,39 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: ContainerContainer
     containers:
-      item1: !type:ContainerSlot
-        item2: !type:ContainerSlot
       storagebase: !type:Container
         ents: []
+      upgraded_utility_slot: !type:ContainerSlot
+        upgraded_sidearm_slot: !type:ContainerSlot
+          gun_slot: !type:ContainerSlot
   - type: Item
     size: Ginormous
   - type: ItemSlots
     slots:
-      item1:
-        name: clothing-holster-upgraded-slot
+      upgraded_utility_slot:
+        name: clothing-holster-upgraded-utility-slot
         priority: 1
         whitelist:
           tags:
-          - Sidearm
           - Knife
-          - SubMachineGunOneHand
-          - MagazinePistol
-          - MagazinePistolHighCapacity
-          - MagazinePistolCaselessRifle
+          - MagazinePistolAll
           - MagazinePistolSubMachineGun
           - MagazinePistolSubMachineGunTopMounted
-          - MagazineMagnum
-          - SpeedLoaderMagnum
-          - MagazineRifle
-          - MagazineLightRifle
+          - SpeedLoaderAll
+          - MagazineRifleAll
           - MagazineLightRifleBox
           - MagazineShotgun
           - MagazineBox
-      item2:
-        name: clothing-holster-large-slot
+      upgraded_sidearm_slot:
+        name: clothing-holster-upgraded-sidearm-slot
         priority: 2
+        whitelist:
+          tags:
+          - Sidearm
+          - SubMachineGunOneHand
+      gun_slot:
+        name: clothing-holster-gun-slot
+        priority: 3
         whitelist:
           tags:
           - Shotgun
@@ -197,6 +210,69 @@
           - EnergyWeapon
   - type: StaticPrice
     price: 500
+  - type: ItemMapper
+    mapLayers:
+      icon_knife:
+        whitelist:
+          tags:
+          - Knife
+      icon_magazine_pistol:
+        whitelist:
+          tags:
+          - MagazinePistolAll
+      icon_magazine_pistol_submachine:
+        whitelist:
+          tags:
+          - MagazinePistolSubMachineGun
+      icon_magazine_pistol_top_submachine:
+        whitelist:
+          tags:
+          - MagazinePistolSubMachineGunTopMounted
+      icon_speedloader_revolver:
+        whitelist:
+          tags:
+          - SpeedLoaderAll
+      icon_magazine_rifle:
+        whitelist:
+          tags:
+          - MagazineRifleAll
+      icon_magazine_rifle_box:
+        whitelist:
+          tags:
+          - MagazineLightRifleBox
+      icon_magazine_shotgun:
+        whitelist:
+          tags:
+          - MagazineShotgun
+      icon_magazine_box:
+        whitelist:
+          tags:
+          - MagazineBox
+      icon_sidearm:
+        whitelist:
+          tags:
+          - Sidearm
+      icon_submachine_gun_onehand:
+        whitelist:
+          tags:
+          - SubMachineGunOneHand
+      icon_shotgun:
+        whitelist:
+          tags:
+          - Shotgun
+      icon_submachine_gun:
+        whitelist:
+          tags:
+          - SubMachineGun
+      icon_assault_rifle:
+        whitelist:
+          tags:
+          - AssaultRifle
+      icon_energy_weapon:
+        whitelist:
+          tags:
+          - EnergyWeapon
+  - type: Appearance
 
 ## Webbing
 

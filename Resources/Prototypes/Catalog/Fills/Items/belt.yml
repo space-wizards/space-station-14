@@ -192,9 +192,9 @@
   components:
   - type: ContainerFill
     containers:
-        item1:
+        utility_holster_slot:
         - SpeedLoaderMagnum
-        item2:
+        sidearm_holster_slot:
         - WeaponRevolverInspector
 
 - type: entity

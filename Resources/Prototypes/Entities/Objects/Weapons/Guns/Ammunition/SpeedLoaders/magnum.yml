@@ -7,6 +7,7 @@
   - type: Tag
     tags:
       - SpeedLoaderMagnum
+      - SpeedLoaderAll
   - type: SpeedLoader
   - type: BallisticAmmoProvider
     whitelist:

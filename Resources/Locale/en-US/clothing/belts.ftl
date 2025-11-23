@@ -1,6 +1,7 @@
 sheath-insert-verb = Sheathe
 sheath-eject-verb = Unsheathe
-clothing-holster-slot-one = Holster 1
-clothing-holster-slot-two = Holster 2
-clothing-holster-upgraded-slot = Modified Holster
-clothing-holster-large-slot = Large Holster
+clothing-holster-utility-slot = Utility Holster
+clothing-holster-sidearm-slot = Sidearm Holster
+clothing-holster-upgraded-utility-slot = Modified Utility Holster
+clothing-holster-upgraded-sidearm-slot = Modified Sidearm Holster
+clothing-holster-gun-slot = Gun Holster
