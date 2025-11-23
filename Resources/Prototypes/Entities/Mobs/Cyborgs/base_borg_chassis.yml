@@ -46,7 +46,7 @@
     thresholds:
       0: Alive
       100: Critical
-      200: Dead
+      300: Dead # Same as destruction threshold. Borgs act exactly like crit when dead, except for ghosting on move
     stateAlertDict:
       Alive: BorgHealth
       Critical: BorgCrit
@@ -444,7 +444,7 @@
     thresholds: # slightly tankier than a normal borg
       0: Alive
       125: Critical
-      250: Dead
+      375: Dead # Same as destruction threshold. Borgs act exactly like crit when dead, except for ghosting on move
   - type: EmagSiliconLaw # should xenoborgs be emagable?
     stunTime: 5
   - type: SiliconLawProvider
