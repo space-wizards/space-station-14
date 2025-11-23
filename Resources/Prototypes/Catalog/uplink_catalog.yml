@@ -509,11 +509,8 @@
   name: uplink-deadman-switch-name
   description: uplink-deadman-switch-desc
   productEntity: RemoteSignallerDeadman
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 1
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
     - UplinkExplosives
   conditions:

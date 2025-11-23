@@ -80,7 +80,7 @@
     ports:
       - Dropped
   - type: DeadmanSwitch
-    instantTriggerRange: 1
+    instantTriggerRange: 1.5
     armDelay: 1
     switchSound:
       path: /Audio/Weapons/click.ogg
