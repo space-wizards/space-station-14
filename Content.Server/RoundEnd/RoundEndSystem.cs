@@ -124,7 +124,7 @@ namespace Content.Server.RoundEnd
             return _countdownTokenSource != null;
         }
 
-        public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "round-end-system-shuttle-sender-announcement")
+        public void RequestRoundEnd(EntityUid? requester = null, EntityUid? machine = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "round-end-system-shuttle-sender-announcement")
         {
             var duration = DefaultCountdownDuration;
 
@@ -139,10 +139,10 @@ namespace Content.Server.RoundEnd
                 }
             }
 
-            RequestRoundEnd(duration, requester, checkCooldown, text, name);
+            RequestRoundEnd(duration, requester, machine, checkCooldown, text, name);
         }
 
-        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "round-end-system-shuttle-sender-announcement")
+        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, EntityUid? machine = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement", string name = "round-end-system-shuttle-sender-announcement")
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound)
                 return;
@@ -155,14 +155,9 @@ namespace Content.Server.RoundEnd
 
             _countdownTokenSource = new();
 
-            if (requester != null)
-            {
-                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called by {ToPrettyString(requester.Value):user}");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle called");
-            }
+            var who = requester != null ? $" by {ToPrettyString(requester.Value):player} " : "";
+            var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
+            _adminLogger.Add(LogType.ShuttleCalled, LogImpact.High, $"Shuttle recalled{who}{what}");
 
             // I originally had these set up here but somehow time gets passed as 0 to Loc so IDEK.
             int time;
@@ -214,7 +209,7 @@ namespace Content.Server.RoundEnd
             }
         }
 
-        public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true)
+        public void CancelRoundEndCountdown(EntityUid? requester = null, EntityUid? machine = null, bool checkCooldown = true)
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
             if (checkCooldown && _cooldownTokenSource != null) return;
@@ -223,14 +218,9 @@ namespace Content.Server.RoundEnd
             _countdownTokenSource.Cancel();
             _countdownTokenSource = null;
 
-            if (requester != null)
-            {
-                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled by {ToPrettyString(requester.Value):user}");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled");
-            }
+            var who = requester != null ? $" by {ToPrettyString(requester.Value):player} " : "";
+            var what = machine != null ? $" with {ToPrettyString(machine.Value):entity} " : "";
+            _adminLogger.Add(LogType.ShuttleRecalled, LogImpact.High, $"Shuttle recalled{who}{what}");
 
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("round-end-system-shuttle-sender-announcement"), false, colorOverride: Color.Gold);
@@ -320,7 +310,7 @@ namespace Content.Server.RoundEnd
                     }
                     else
                     {
-                        RequestRoundEnd(time, null, false, textCall,
+                        RequestRoundEnd(time, null, null, false, textCall,
                             Loc.GetString(sender));
                     }
                     break;
@@ -357,7 +347,7 @@ namespace Content.Server.RoundEnd
             {
                 if (!_shuttle.EmergencyShuttleArrived && ExpectedCountdownEnd is null)
                 {
-                    RequestRoundEnd(null, false, "round-end-system-shuttle-auto-called-announcement");
+                    RequestRoundEnd(null, null, false, "round-end-system-shuttle-auto-called-announcement");
                     _autoCalledBefore = true;
                 }
 
