@@ -185,13 +185,13 @@
         Dead:
           Base: green_adult_slime_dead
     - type: MeleeWeapon
+      autoAttack: true
       damage:
         types:
           Blunt: 6
           Structural: 8
           Caustic: 1
           Poison: 4
-
 - type: entity
   name: green slime
   parent: MobAdultSlimesGreen
