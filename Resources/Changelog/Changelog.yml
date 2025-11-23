@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BigfootBravo
-  changes:
-  - message: Bladed flatcaps are now minor contraband.
-    type: Tweak
-  id: 8720
-  time: '2025-06-26T22:57:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38597
 - author: TiniestShark
   changes:
   - message: Added inhand sprites to all plushies/toys and the ability to wear (most)
@@ -3928,3 +3921,12 @@
   id: 9220
   time: '2025-11-23T00:10:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41543
+- author: Jrpl
+  changes:
+  - message: Using entities in hand that have a Toggle UI option will now default
+      to it over other context menu options. The other options can still be used through
+      the context menu.
+    type: Tweak
+  id: 9221
+  time: '2025-11-23T13:11:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41547
