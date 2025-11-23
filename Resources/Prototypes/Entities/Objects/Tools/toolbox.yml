@@ -147,3 +147,15 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+
+- type: entity
+  name: foolbox
+  parent: ToolboxBase
+  id: Foolbox
+  description: A toolbox for fools, stocked with clowning equipment.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/foolbox.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/Toolboxes/foolbox.rsi
