@@ -54,7 +54,7 @@ namespace Content.Server.GameTicking
             Subs.CVar(_cfg, CCVars.GameLobbyDuration, value => LobbyDuration = TimeSpan.FromSeconds(value), true);
             Subs.CVar(_cfg, CCVars.GameDisallowLateJoins,
                 value => { DisallowLateJoin = value; UpdateLateJoinStatus(); }, true);
-            Subs.CVar(_cfg, CCVars.GameDelayStart,
+            Subs.CVar(_cfg, CCVars.GameAutoPauseRoundStart,
                 value => { AutoPauseRoundStart = value; PauseStart(value); }, true);
             Subs.CVar(_cfg, CCVars.AdminLogsServerName, value =>
             {
