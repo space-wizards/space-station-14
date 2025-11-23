@@ -97,7 +97,6 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Reach",
             "Oasis",
-            "Amber",
             "Plasma",
             "Elkridge",
             "Relic",
