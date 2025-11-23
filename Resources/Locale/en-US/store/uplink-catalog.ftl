@@ -226,6 +226,9 @@ uplink-micro-bomb-implanter-desc = Explode on death or manual activation with th
 uplink-radio-implanter-name = Radio Implanter
 uplink-radio-implanter-desc = Implants a Syndicate radio, allowing covert communication without a headset.
 
+uplink-voice-mask-implanter-name = Voice Mask Implanter
+uplink-voice-mask-implanter-desc = Modifies your vocal cords to be able to sound like anyone you could imagine.
+
 # Bundles
 uplink-observation-kit-name = Observation Kit
 uplink-observation-kit-desc = Includes surveillance camera monitor board and security hud disguised as sunglasses.
