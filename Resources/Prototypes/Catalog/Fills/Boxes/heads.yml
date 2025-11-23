@@ -36,11 +36,12 @@
   components:
   - type: Label
     currentLabel: chief medical officer
-  - type: ContainerFill
+  - type: EntityTableContainerFill
     containers:
-      storagebase:
-      - MedicalTechFabCircuitboard
-      - CargoRequestMedicalComputerCircuitboard
+      storagebase: !type:AllSelector
+        children:
+        - MedicalTechFabCircuitboard
+        - CargoRequestMedicalComputerCircuitboard
 
 - type: entity
   parent: ToteBase
