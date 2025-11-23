@@ -182,7 +182,7 @@
       - state: headset
 
 - type: entity
-  abstract: true # Abstract because this prototype doesn't have a ContainerFill set; create a child prototype with the appropriate stamps! (Baking "default" stamps into this parent seems bad for futureproofing.)
+  abstract: true # Abstract because this prototype doesn't have an EntityTableContainerFill set; create a child prototype with the appropriate stamps! (Baking "default" stamps into this parent seems bad for futureproofing.)
   parent: BoxCardboardSmall
   id: BoxStamps
   name: stamp box
