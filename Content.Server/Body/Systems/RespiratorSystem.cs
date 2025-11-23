@@ -2,16 +2,17 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
-using Content.Shared.Body.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Prototypes;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Cpr;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.EntityConditions;
@@ -83,7 +84,23 @@ public sealed class RespiratorSystem : EntitySystem
 
             UpdateSaturation(uid, -(float)respirator.UpdateInterval.TotalSeconds, respirator);
 
-            if (!_mobState.IsIncapacitated(uid)) // cannot breathe in crit.
+            var breathe = false;
+            if (TryComp<AssistedRespirationComponent>(uid, out var assist))
+            {
+                // can breathe if not dead and breathing is assisted
+                if (!_mobState.IsDead(uid) && assist.AssistedUntil >= _gameTiming.CurTime)
+                    breathe = true;
+
+                // We leave the component lingering after it stopped having an effect, to be able to detect CPR being performed too slowly
+                if (assist.AssistedUntil + TimeSpan.FromSeconds(10) < _gameTiming.CurTime)
+                    RemCompDeferred<AssistedRespirationComponent>(uid);
+            }
+
+            // can breathe if not in crit.
+            if (!_mobState.IsIncapacitated(uid))
+                breathe = true;
+
+            if (breathe)
             {
                 switch (respirator.Status)
                 {
