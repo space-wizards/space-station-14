@@ -34,10 +34,14 @@ public sealed partial class BlockingSystem : EntitySystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
+    private EntityQuery<BlockingComponent> _blockQuery;
+
     public override void Initialize()
     {
         base.Initialize();
         InitializeUser();
+
+        _blockQuery = GetEntityQuery<BlockingComponent>();
 
         SubscribeLocalEvent<BlockingComponent, GotEquippedHandEvent>(OnEquip);
         SubscribeLocalEvent<BlockingComponent, GotUnequippedHandEvent>(OnUnequip);
@@ -96,18 +100,16 @@ public sealed partial class BlockingSystem : EntitySystem
         if (!handQuery.TryGetComponent(args.Performer, out var hands))
             return;
 
-        var blockQuery = GetEntityQuery<BlockingComponent>();
-
         var shields = _handsSystem.EnumerateHeld((args.Performer, hands)).ToArray();
 
         foreach (var heldShield in shields)
         {
             if (heldShield == shield.Owner
-                || !blockQuery.TryGetComponent(heldShield, out var otherBlockComp)
+                || !_blockQuery.TryGetComponent(heldShield, out var otherBlockComp)
                 || !otherBlockComp.IsBlocking)
                 continue;
 
-            CantBlockError(args.Performer, Loc.GetString("action-popup-blocking-user-already-blocking"));
+            _popupSystem.PopupClient(Loc.GetString("action-popup-blocking-user-already-blocking"), args.Performer, args.Performer);
             return;
         }
 
@@ -153,14 +155,14 @@ public sealed partial class BlockingSystem : EntitySystem
         //Don't allow someone to block if they're not parented to a grid
         if (xform.GridUid != xform.ParentUid)
         {
-            CantBlockError(user, Loc.GetString("action-popup-blocking-user-cant-block"));
+            _popupSystem.PopupClient(Loc.GetString("action-popup-blocking-user-cant-block"), user, user);
             return false;
         }
 
         // Don't allow someone to block if they're not holding the shield
         if (!_handsSystem.IsHolding(user, shield, out _))
         {
-            CantBlockError(user, Loc.GetString("action-popup-blocking-user-not-holding"));
+            _popupSystem.PopupClient(Loc.GetString("action-popup-blocking-user-not-holding"), user, user);
             return false;
         }
 
@@ -174,7 +176,7 @@ public sealed partial class BlockingSystem : EntitySystem
             {
                 if (uid != user && mobQuery.HasComponent(uid))
                 {
-                    CantBlockError(user, Loc.GetString("action-popup-blocking-user-too-close"));
+                    _popupSystem.PopupClient(Loc.GetString("action-popup-blocking-user-too-close"), user, user);
                     return false;
                 }
             }
@@ -184,7 +186,7 @@ public sealed partial class BlockingSystem : EntitySystem
         _transformSystem.AnchorEntity(user, xform);
         if (!xform.Anchored)
         {
-            CantBlockError(user, Loc.GetString("action-popup-blocking-user-cant-block"));
+            _popupSystem.PopupClient(Loc.GetString("action-popup-blocking-user-cant-block"), user, user);
             return false;
         }
         _actionsSystem.SetToggled(shield.Comp.BlockingToggleActionEntity, true);
@@ -205,11 +207,6 @@ public sealed partial class BlockingSystem : EntitySystem
         Dirty(shield);
 
         return true;
-    }
-
-    private void CantBlockError(EntityUid user, string errorMessage)
-    {
-        _popupSystem.PopupClient(errorMessage, user, user);
     }
 
     /// <summary>
