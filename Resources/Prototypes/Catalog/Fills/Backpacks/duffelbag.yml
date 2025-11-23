@@ -228,6 +228,25 @@
         - id: ChameleonControllerImplanter
 
 - type: entity
+  parent: ClothingBackpackChameleonFill
+  id: ClothingBackpackChameleonFillVoiceMaskAgentId
+  suffix: Fill, Chameleon, Voice Mask, Agent ID
+  components:
+  - type: StorageFill
+    contents:
+    - id: ChameleonPDAWithAgentID
+    - id: ClothingUniformJumpsuitChameleon
+    - id: ClothingOuterChameleon
+    - id: ClothingNeckChameleon
+    - id: ClothingMaskGasVoiceChameleon
+    - id: ClothingHeadHatChameleon
+    - id: ClothingHandsChameleon
+    - id: ClothingEyesChameleon
+    - id: ClothingHeadsetChameleon
+    - id: ClothingShoesChameleon
+    - id: ChameleonControllerImplanter
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateEVABundle
   name: syndicate EVA bundle
