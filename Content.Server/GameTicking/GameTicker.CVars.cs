@@ -19,7 +19,7 @@ namespace Content.Server.GameTicking
         public bool DisallowLateJoin { get; private set; } = false;
 
         [ViewVariables]
-        public bool DelayRoundStart { get; private set; } = false;
+        public bool AutoPauseRoundStart { get; private set; } = false;
 
         [ViewVariables]
         public string? ServerName { get; private set; }
@@ -55,7 +55,7 @@ namespace Content.Server.GameTicking
             Subs.CVar(_cfg, CCVars.GameDisallowLateJoins,
                 value => { DisallowLateJoin = value; UpdateLateJoinStatus(); }, true);
             Subs.CVar(_cfg, CCVars.GameDelayStart,
-                value => { DelayRoundStart = value; PauseStart(value); }, true);
+                value => { AutoPauseRoundStart = value; PauseStart(value); }, true);
             Subs.CVar(_cfg, CCVars.AdminLogsServerName, value =>
             {
                 // TODO why tf is the server name on admin logs
