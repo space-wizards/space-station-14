@@ -22,6 +22,7 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
+using Content.Shared.Paper;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Rejuvenate;
@@ -95,7 +96,12 @@ namespace Content.Shared.Cuffs
         private void CheckInteract(Entity<CuffableComponent> ent, ref InteractionAttemptEvent args)
         {
             if (!ent.Comp.CanStillInteract)
-                args.Cancelled = true;
+            {
+                if (!HasComp<PaperComponent>(args.Target))
+                {
+                    args.Cancelled = true;
+                }
+            }
         }
 
         private void OnUncuffAttempt(ref UncuffAttemptEvent args)
