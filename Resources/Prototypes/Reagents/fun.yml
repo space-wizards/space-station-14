@@ -444,22 +444,30 @@
         conditions:
         - !type:ReagentCondition
           reagent: Felinase
-          min: 25
+          min: 15
         damage:
           types:
             Radiation: 0.5
       - !type:AdjustReagent
         reagent: Felinase
-        amount: -25
+        amount: -20
         conditions:
         - !type:ReagentCondition
           reagent: Felinase
-          min: 45
+          min: 30
       - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 10
         effectProto: StatusEffectOwO
-        time: 10.0
+        time: 12.5
         type: Add
       - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Felinase
+          min: 10
         emote: Cough
         showInChat: true
         showInGuidebook: true
@@ -487,22 +495,30 @@
         conditions:
         - !type:ReagentCondition
           reagent: Caninase
-          min: 25
+          min: 15
         damage:
           types:
             Radiation: 0.5
       - !type:AdjustReagent
         reagent: Caninase
-        amount: -25
+        amount: -20
         conditions:
         - !type:ReagentCondition
           reagent: Caninase
-          min: 45
+          min: 30
       - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 10
         effectProto: StatusEffectBark
-        time: 10.0
+        time: 12.5
         type: Add
       - !type:Emote
+        conditions:
+        - !type:ReagentCondition
+          reagent: Caninase
+          min: 10
         emote: Cough
         showInChat: true
         showInGuidebook: true
