@@ -22,7 +22,7 @@ namespace Content.Server.Administration.Commands
                 shell.WriteLine(Loc.GetString("shell-timespan-minutes-must-be-correct"));
 
             else
-                _roundEndSystem.RequestRoundEnd(shell.Player?.AttachedEntity, null, false);
+                _roundEndSystem.RequestRoundEnd(shell.Player?.AttachedEntity, checkCooldown: false);
         }
     }
 

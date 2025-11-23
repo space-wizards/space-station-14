@@ -310,8 +310,8 @@ namespace Content.Server.RoundEnd
                     }
                     else
                     {
-                        RequestRoundEnd(time, null, null, false, textCall,
-                            Loc.GetString(sender));
+                        RequestRoundEnd(time, checkCooldown: false, text: textCall,
+                            name: Loc.GetString(sender));
                     }
                     break;
             }
@@ -347,7 +347,7 @@ namespace Content.Server.RoundEnd
             {
                 if (!_shuttle.EmergencyShuttleArrived && ExpectedCountdownEnd is null)
                 {
-                    RequestRoundEnd(null, null, false, "round-end-system-shuttle-auto-called-announcement");
+                    RequestRoundEnd(checkCooldown: false, text: "round-end-system-shuttle-auto-called-announcement");
                     _autoCalledBefore = true;
                 }
 
