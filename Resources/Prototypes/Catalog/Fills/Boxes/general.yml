@@ -182,12 +182,11 @@
       - state: headset
 
 - type: entity
-  abstract: true # Abstract because this prototype doesn't have an EntityTableContainerFill set; create a child prototype with the appropriate stamps! (Baking "default" stamps into this parent seems bad for futureproofing.)
   parent: BoxCardboardSmall
   id: BoxStamps
   name: stamp box
   description: A small box containing stamps.
-  components:
+  components: # Baking a "default" EntityTableContainerFill into this prototype seems like bad practice, so this is currently an empty box. If you need a new type of prefilled stamp box, create a new child prototype with the appropriate stamps!
   - type: Sprite
     layers:
       - state: box

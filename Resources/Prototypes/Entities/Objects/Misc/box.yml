@@ -39,7 +39,6 @@
   parent: BoxBase
   id: ToteBase
   name: circuit tote
-  suffix: Empty
   description: A large tote for carrying circuit boards.
   components:
   - type: Sprite
