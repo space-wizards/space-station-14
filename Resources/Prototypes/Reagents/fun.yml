@@ -450,7 +450,7 @@
             Radiation: 0.5
       - !type:AdjustReagent
         reagent: Felinase
-        amount: -20
+        amount: -5
         conditions:
         - !type:ReagentCondition
           reagent: Felinase
@@ -501,7 +501,7 @@
             Radiation: 0.5
       - !type:AdjustReagent
         reagent: Caninase
-        amount: -20
+        amount: -5
         conditions:
         - !type:ReagentCondition
           reagent: Caninase
