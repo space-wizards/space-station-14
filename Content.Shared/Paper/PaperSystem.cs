@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
-using Content.Shared.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -40,7 +39,6 @@ public sealed class PaperSystem : EntitySystem
 
         SubscribeLocalEvent<PaperComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PaperComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
         SubscribeLocalEvent<PaperComponent, UseInHandEvent>(OnPaperUse);
         SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
@@ -74,12 +72,6 @@ public sealed class PaperSystem : EntitySystem
             if (entity.Comp.StampState != null)
                 _appearance.SetData(entity, PaperVisuals.Stamp, entity.Comp.StampState, appearance);
         }
-    }
-
-    private void BeforeUIOpen(Entity<PaperComponent> entity, ref BeforeActivatableUIOpenEvent args)
-    {
-        entity.Comp.Mode = PaperAction.Read;
-        UpdateUserInterface(entity);
     }
 
     private void OnPaperUse(EntityUid uid, PaperComponent component, UseInHandEvent args)
