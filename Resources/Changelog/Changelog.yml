@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Hitlinemoss
-  changes:
-  - message: The Quartermaster's PDA now comes with AstroNav preinstalled.
-    type: Tweak
-  id: 8719
-  time: '2025-06-26T22:09:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38445
 - author: BigfootBravo
   changes:
   - message: Bladed flatcaps are now minor contraband.
@@ -3928,3 +3921,10 @@
   id: 9219
   time: '2025-11-22T23:56:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35998
+- author: slarticodefast
+  changes:
+  - message: Artifact analyzers are no longer extremely power hungry.
+    type: Tweak
+  id: 9220
+  time: '2025-11-23T00:10:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41543
