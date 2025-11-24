@@ -132,13 +132,16 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (component.Hidden)
             return;
 
-        var damageSpec = GetDamage(uid, args.User, component);
+        var ev = new HitDamageExamineEvent(new(component.Damage));
+        RaiseLocalEvent(uid, ref ev);
 
-        if (damageSpec.Empty)
-            return;
-
-        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(damageSpec), Loc.GetString("damage-melee"));
+        _damageExamine.AddDamageExamine(args.Message, Damageable.ApplyUniversalAllModifiers(ev.Damage), Loc.GetString("damage-melee"));
     }
+
+
+    [ByRefEvent]
+    public readonly record struct HitDamageExamineEvent(DamageSpecifier Damage);
+
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
     {
         var attackRate = GetAttackRate(uid, args.User, component);

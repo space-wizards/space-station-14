@@ -1,6 +1,8 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Ranged.Components;
@@ -84,11 +86,14 @@ public abstract partial class SharedGunSystem
             if (ProtoManager.Index<EntityPrototype>(battery.Prototype).Components
                 .TryGetValue(Factory.GetComponentName<ProjectileComponent>(), out var projectile))
             {
-                var p = (ProjectileComponent) projectile.Component;
+                var p = (ProjectileComponent)projectile.Component;
 
                 if (!p.Damage.Empty)
                 {
-                    return p.Damage * Damageable.UniversalProjectileDamageModifier;
+                    var damage = new DamageSpecifier(p.Damage);
+                    if (ProtoManager.Index<EntityPrototype>(battery.Prototype).TryGetComponent<StaminaDamageOnCollideComponent>(out var staminaComp, Factory))
+                        damage.DamageDict.Add(staminaComp.StaminaName, FixedPoint2.New(staminaComp.Damage));
+                    return damage * Damageable.UniversalProjectileDamageModifier;
                 }
             }
 
@@ -101,7 +106,11 @@ public abstract partial class SharedGunSystem
             if (!dmg.TryGetComponent<HitscanBasicDamageComponent>(out var basicDamageComp, Factory))
                 return null;
 
-            return basicDamageComp.Damage * Damageable.UniversalHitscanDamageModifier;
+            var damage = new DamageSpecifier(basicDamageComp.Damage);
+            if (dmg.TryGetComponent<StaminaDamageOnCollideComponent>(out var staminaComp, Factory))
+                damage.DamageDict.Add(staminaComp.StaminaName, FixedPoint2.New(staminaComp.Damage));
+
+            return damage * Damageable.UniversalHitscanDamageModifier;
         }
 
         return null;
