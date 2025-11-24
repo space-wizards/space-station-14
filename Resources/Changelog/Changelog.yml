@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Headphone sprites have been changed a bit, and they are now wearable
-      on the head, ears and neck.
-    type: Tweak
-  id: 8725
-  time: '2025-06-28T14:01:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38479
 - author: slarticodefast
   changes:
   - message: Fixed smart equip not being able to insert items into item slots (for
@@ -3926,3 +3918,11 @@
   id: 9225
   time: '2025-11-24T16:14:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41567
+- author: slarticodefast
+  changes:
+  - message: Power cells are now predicted. Please keep an eye out for bugs with any
+      battery powered device.
+    type: Tweak
+  id: 9226
+  time: '2025-11-24T17:04:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41379
