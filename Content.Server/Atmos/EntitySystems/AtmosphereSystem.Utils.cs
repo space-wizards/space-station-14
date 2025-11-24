@@ -11,9 +11,15 @@ namespace Content.Server.Atmos.EntitySystems;
 
 public partial class AtmosphereSystem
 {
+    /*
+    Partial class that stores miscellaneous utility methods for Atmospherics.
+    */
+
     /// <summary>
-    /// Gets the particular price of an air mixture.
+    /// Gets the particular price of a <see cref="GasMixture"/>.
     /// </summary>
+    /// <param name="mixture">The <see cref="GasMixture"/> to get the price of.</param>
+    /// <returns>The price of the gas mixture.</returns>
     public double GetPrice(GasMixture mixture)
     {
         float basePrice = 0; // moles of gas * price/mole
@@ -26,7 +32,7 @@ public partial class AtmosphereSystem
             maxComponent = Math.Max(maxComponent, mixture.Moles[i]);
         }
 
-        // Pay more for gas canisters that are more pure
+        // Pay more for gas canisters that are purer
         float purity = 1;
         if (totalMoles > 0)
         {
@@ -36,12 +42,32 @@ public partial class AtmosphereSystem
         return basePrice * purity;
     }
 
+    /// <summary>
+    /// <para>Marks a tile's visual overlay as needing to be redetermined.</para>
+    ///
+    /// <para>A tile's overlay (how it looks like, ex. water vapor's texture)
+    /// is determined via determining how much gas there is on the tile.
+    /// This is expensive to do for every tile/gas that may have a custom overlay,
+    /// so its done once and only updated when it needs to be updated.</para>
+    /// </summary>
+    /// <param name="grid">The grid the tile is on.</param>
+    /// <param name="tile">The tile to invalidate.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void InvalidateVisuals(Entity<GasTileOverlayComponent?> grid, Vector2i tile)
     {
         _gasTileOverlaySystem.Invalidate(grid, tile);
     }
 
+    /// <summary>
+    /// <para>Marks a tile's visual overlay as needing to be redetermined.</para>
+    ///
+    /// <para>A tile's overlay (how it looks like, ex. water vapor's texture)
+    /// is determined via determining how much gas there is on the tile.
+    /// This is expensive to do for every tile/gas that may have a custom overlay,
+    /// so its done once and only updated when it needs to be updated.</para>
+    /// </summary>
+    /// <param name="ent">The grid the tile is on.</param>
+    /// <param name="tile">The tile to invalidate.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void InvalidateVisuals(
         Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
@@ -51,7 +77,7 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    ///     Gets the volume in liters for a number of tiles, on a specific grid.
+    /// Gets the volume in liters for a number of tiles, on a specific grid.
     /// </summary>
     /// <param name="mapGrid">The grid in question.</param>
     /// <param name="tiles">The amount of tiles.</param>
@@ -79,6 +105,18 @@ public partial class AtmosphereSystem
         bool NoAirWhenBlocked,
         bool FixVacuum);
 
+    /// <summary>
+    /// Updates the <see cref="AirtightData"/> for a <see cref="TileAtmosphere"/>
+    /// immediately.
+    /// </summary>
+    /// <remarks>This method is extremely important if you are doing something in Atmospherics
+    /// that is time-sensitive! <see cref="AirtightData"/> is cached and invalidated on
+    /// a cycle, so airtight changes performed during or after an invalidation will
+    /// not take effect until the next Atmospherics tick!</remarks>
+    /// <param name="uid">The entity the grid is on.</param>
+    /// <param name="atmos">The <see cref="GridAtmosphereComponent"/> the tile is on.</param>
+    /// <param name="grid">The <see cref="MapGridComponent"/> the tile is on.</param>
+    /// <param name="tile">The <see cref="TileAtmosphere"/> to update.</param>
     private void UpdateAirtightData(EntityUid uid, GridAtmosphereComponent atmos, MapGridComponent grid, TileAtmosphere tile)
     {
         var oldBlocked = tile.AirtightData.BlockedDirections;
@@ -91,6 +129,15 @@ public partial class AtmosphereSystem
             ExcitedGroupDispose(atmos, tile.ExcitedGroup);
     }
 
+    /// <summary>
+    /// Retrieves current <see cref="AirtightData"/> for a tile on a grid.
+    /// This is determined on-the-fly, not from cached data, so it will reflect
+    /// changes done in the current Atmospherics tick.
+    /// </summary>
+    /// <param name="uid">The entity the grid is on.</param>
+    /// <param name="grid">The <see cref="MapGridComponent"/> the tile is on.</param>
+    /// <param name="tile">The indices of the tile.</param>
+    /// <returns>The current <see cref="AirtightData"/> for the tile.</returns>
     private AirtightData GetAirtightData(EntityUid uid, MapGridComponent grid, Vector2i tile)
     {
         var blockedDirs = AtmosDirection.Invalid;
@@ -118,7 +165,7 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    ///     Pries a tile in a grid.
+    /// Pries a tile in a grid.
     /// </summary>
     /// <param name="mapGrid">The grid in question.</param>
     /// <param name="tile">The indices of the tile.</param>
