@@ -36,7 +36,7 @@
     tags:
     - FootstepSound
     - DoorBumpOpener
-  - type: Prying # Open door from xeno.yml.
+  - type: Prying # Open door from xeno.yml. # Replace with vent crawling
     pryPowered: true
     force: true
     speedModifier: 1.5
