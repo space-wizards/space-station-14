@@ -196,8 +196,8 @@
         - Opaque
 
 - type: entity
-  id: FlowerVapor
   parent: Vapor
+  id: FlowerVapor
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

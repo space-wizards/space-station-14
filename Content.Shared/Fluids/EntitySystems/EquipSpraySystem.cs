@@ -1,6 +1,8 @@
+using System.Diagnostics;
 using Content.Shared.Actions;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Verbs;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Fluids.EntitySystems;
 
@@ -12,15 +14,21 @@ public sealed class EquipSpraySystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<EquipSprayComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<EquipSprayComponent, GetVerbsEvent<Verb>>(OnGetVerb);
         SubscribeLocalEvent<SprayLiquidEvent>(SprayLiquid);
+    }
+
+    private void OnComponentInit(Entity<EquipSprayComponent> ent, ref ComponentInit args)
+    {
+        DebugTools.Assert(HasComp<SprayComponent>(ent), $"{ent} did not have a SprayComponent (EquipSprayComponent entities must have a SprayComponent)");
     }
 
     private void SprayLiquid(SprayLiquidEvent ev)
     {
         var equipSprayEnt = ev.Action.Comp.Container;
 
-        if (!TryComp<SprayComponent>(equipSprayEnt, out var sprayComponent) || !TryComp<EquipSprayComponent>(equipSprayEnt, out var equipSpray))
+        if (!TryComp<SprayComponent>(equipSprayEnt, out var sprayComponent) || !HasComp<EquipSprayComponent>(equipSprayEnt))
             return;
 
         _spray.Spray((equipSprayEnt.Value, sprayComponent), ev.Performer);

@@ -94,7 +94,7 @@ public sealed class SpraySystem : SharedSpaySystem
         if (ev.Cancelled)
         {
             if (ev.CancelPopupMessage != null && user != null)
-                _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), entity.Owner, user.Value);
+                _popupSystem.PopupEntity(Loc.GetString(ev.CancelPopupMessage), entity.Owner, user.Value);
             return;
         }
 
@@ -104,7 +104,7 @@ public sealed class SpraySystem : SharedSpaySystem
         if (solution.Volume <= 0)
         {
             if (user != null)
-                _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), entity.Owner, user.Value);
+                _popupSystem.PopupEntity(Loc.GetString(entity.Comp.SprayEmptyPopupMessage, ("entity", entity)), entity.Owner, user.Value);
             return;
         }
 

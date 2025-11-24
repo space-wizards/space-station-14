@@ -263,9 +263,9 @@
     equippedPrefix: goldautism
 
 - type: entity
-  name: flower pin
   parent: BaseItem
   id: SprayFlowerPin
+  name: flower pin
   description: A cute flower pin. Something seems off with it...
   components:
   - type: Item
@@ -305,6 +305,7 @@
     vaporAmount: 1
     vaporSpread: 90
     sprayVelocity: 1.0
+    sprayEmptyPopupMessage: pin-spray-popup-empty
   - type: ActionGrant
     actions:
     - ActionShootWater
