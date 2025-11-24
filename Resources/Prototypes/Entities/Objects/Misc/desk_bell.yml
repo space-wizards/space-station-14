@@ -8,7 +8,7 @@
     sprite: Objects/Misc/desk_bell.rsi
     state: icon-empty
   - type: Construction
-    graph: BellGraph
+    graph: &BellGraph BellGraph
     node: start
   - type: Damageable
     damageContainer: Inorganic
@@ -62,10 +62,10 @@
   - type: Sprite
     state: icon-bell
   - type: Tag
-    tags:
+    tags: &PayloadTag
       - Payload
   - type: Construction
-    graph: BellGraph
+    graph: *BellGraph
     node: deskBellNode
   - type: Destructible
     thresholds:
@@ -106,10 +106,9 @@
   - type: Sprite
     state: icon-buzzer
   - type: Tag
-    tags:
-      - Payload
+    tags: *PayloadTag
   - type: Construction
-    graph: BellGraph
+    graph: *BellGraph
     node: deskBuzzerNode
   - type: Destructible
     thresholds:
@@ -162,10 +161,9 @@
   - type: Sprite
     state: icon-buzzer
   - type: Tag
-    tags:
-      - Payload
+    tags: *PayloadTag
   - type: Construction
-    graph: BellGraph
+    graph: *BellGraph
     node: deskHornNode
   - type: Destructible
     thresholds:
