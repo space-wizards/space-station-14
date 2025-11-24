@@ -366,20 +366,14 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     public bool TryModifyBloodLevel(Entity<BloodstreamComponent?> ent, FixedPoint2 amount)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
-            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
+            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
             return false;
 
         if (amount >= 0)
         {
-            var min = FixedPoint2.Min(ent.Comp.BloodSolution.Value.Comp.Solution.AvailableVolume, amount);
+            var min = FixedPoint2.Min(bloodSolution.AvailableVolume, amount);
             var solution = ent.Comp.BloodReagents.Clone();
-            var scale = min / solution.Volume;
-
-            // 0.01 / 3 = 0
-            if (min > FixedPoint2.Zero && scale == FixedPoint2.Zero)
-                scale = FixedPoint2.Epsilon;
-
-            solution.ScaleSolution(scale);
+            solution.ScaleTo(min);
             solution.SetReagentData(GetEntityBloodData(ent));
             SolutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
             return min == amount;
@@ -501,18 +495,20 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         var currentVolume = FixedPoint2.Zero;
         foreach (var reagent in ent.Comp.BloodReagents)
+        {
             currentVolume += bloodSolution.RemoveReagent(reagent.Reagent, quantity: bloodSolution.Volume, ignoreReagentData: true);
+        }
 
         ent.Comp.BloodReagents = reagents.Clone();
         DirtyField(ent, ent.Comp, nameof(BloodstreamComponent.BloodReagents));
 
-        if (currentVolume > 0)
-        {
-            var solution = ent.Comp.BloodReagents.Clone();
-            solution.ScaleSolution(currentVolume / solution.Volume);
-            solution.SetReagentData(GetEntityBloodData(ent));
-            SolutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
-        }
+        if (currentVolume == FixedPoint2.Zero)
+            return;
+
+        var solution = ent.Comp.BloodReagents.Clone();
+        solution.ScaleSolution(currentVolume / solution.Volume);
+        solution.SetReagentData(GetEntityBloodData(ent));
+        SolutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
     }
 
     /// <summary>

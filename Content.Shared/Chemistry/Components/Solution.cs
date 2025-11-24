@@ -484,6 +484,28 @@ namespace Content.Shared.Chemistry.Components
         }
 
         /// <summary>
+        ///     Scales the amount of solution to a given target.
+        /// </summary>
+        /// <param name="target">The volume the solutions should have after scaling.</param>
+        public void ScaleTo(FixedPoint2 target)
+        {
+            if (Volume == FixedPoint2.Zero || Volume == target)
+                return;
+
+            if (target == FixedPoint2.Zero)
+            {
+                RemoveAllSolution();
+                return;
+            }
+
+            var nearestIntScale = (int)Math.Ceiling(target.Float() / Volume.Float());
+            ScaleSolution(nearestIntScale);
+
+            var overflow = Volume - target;
+            RemoveSolution(overflow);
+        }
+
+        /// <summary>
         ///     Attempts to remove an amount of reagent from the solution.
         /// </summary>
         /// <param name="toRemove">The reagent to be removed.</param>

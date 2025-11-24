@@ -38,7 +38,7 @@ public sealed class BloodstreamSystem : SharedBloodstreamSystem
         // Fill blood solution with BLOOD
         // The DNA string might not be initialized yet, but the reagent data gets updated in the GenerateDnaEvent subscription
         var solution = entity.Comp.BloodReagents.Clone();
-        solution.ScaleSolution((entity.Comp.BloodMaxVolume - bloodSolution.Volume) / solution.Volume);
+        solution.ScaleTo(entity.Comp.BloodMaxVolume - bloodSolution.Volume);
         solution.SetReagentData(GetEntityBloodData(entity.Owner));
         bloodSolution.AddSolution(solution, PrototypeManager);
     }
