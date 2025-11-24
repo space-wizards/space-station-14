@@ -165,7 +165,20 @@ public partial class SharedBodySystem
 
             if (!bodyEnt.Comp.LegEntities.Any())
             {
+                StandingStateComponent? standingState = null;
+
+                if (!Resolve(bodyEnt, ref standingState, logMissing: false))
+                {
+                    return;
+                }
+
+                if (!standingState.Standing)
+                {
+                    return;
+                }
+
                 Standing.Down(bodyEnt);
+
                 var ev = new DropHandItemsEvent();
                 RaiseLocalEvent(bodyEnt, ref ev, false);
             }

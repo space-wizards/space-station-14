@@ -121,7 +121,6 @@ public sealed class SlipperySystem : EntitySystem
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
 
-
         var evDropHands = new DropHandItemsEvent();
         RaiseLocalEvent(uid, ref evDropHands, false);
 
