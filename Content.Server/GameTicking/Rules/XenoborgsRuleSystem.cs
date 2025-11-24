@@ -85,6 +85,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         {
             args.AddLine(Loc.GetString("xenoborgs-list", ("name", name), ("user", sessionData.UserName)));
         }
+        args.AddLine("");
     }
 
     private void CheckRoundEnd(XenoborgsRuleComponent xenoborgsRuleComponent)
@@ -92,7 +93,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var numXenoborgs = GetNumberXenoborgs();
         var numHumans = _mindSystem.GetAliveHumans().Count;
 
-        if ((float)numXenoborgs / numHumans > xenoborgsRuleComponent.XenoborgShuttleCallPercentage)
+        if ((float)numXenoborgs / (numHumans + numXenoborgs) > xenoborgsRuleComponent.XenoborgShuttleCallPercentage)
         {
             foreach (var station in _station.GetStations())
             {

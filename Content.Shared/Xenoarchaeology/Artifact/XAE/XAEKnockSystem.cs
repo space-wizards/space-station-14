@@ -1,6 +1,5 @@
-using Content.Shared.Magic.Events;
+using Content.Shared.Magic;
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
@@ -9,19 +8,10 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 /// </summary>
 public sealed class XAEKnockSystem : BaseXAESystem<XAEKnockComponent>
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-
+    [Dependency] private readonly SharedMagicSystem _magic = default!;
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEKnockComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
-        var ev = new KnockSpellEvent
-        {
-            Performer = ent.Owner,
-            Range = ent.Comp.KnockRange
-        };
-        RaiseLocalEvent(ev);
+        _magic.Knock(args.Artifact, ent.Comp.KnockRange);
     }
 }
