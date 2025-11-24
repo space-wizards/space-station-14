@@ -299,16 +299,18 @@
     sprite: Objects/Fun/crayons.rsi
     size: Small
     heldPrefix: box
-  - type: StorageFill
-    contents:
-    - id: CrayonRed
-    - id: CrayonOrange
-    - id: CrayonYellow
-    - id: CrayonGreen
-    - id: CrayonBlue
-    - id: CrayonPurple
-    - id: CrayonBlack
-    - id: CrayonWhite
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CrayonRed
+        - id: CrayonOrange
+        - id: CrayonYellow
+        - id: CrayonGreen
+        - id: CrayonBlue
+        - id: CrayonPurple
+        - id: CrayonBlack
+        - id: CrayonWhite
   - type: ItemMapper
     mapLayers:
       black_box:
