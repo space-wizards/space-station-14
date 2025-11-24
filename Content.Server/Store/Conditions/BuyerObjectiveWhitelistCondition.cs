@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Whitelist;
@@ -42,12 +41,7 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
                 whitelisted = true;
         }
 
-        if (whitelisted)
-        {
-            return true;
-        }
-
-        return false;
+        return whitelisted;
 
     }
 }
