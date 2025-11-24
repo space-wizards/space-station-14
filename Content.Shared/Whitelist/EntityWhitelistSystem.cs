@@ -137,42 +137,6 @@ public sealed partial class EntityWhitelistSystem : EntitySystem
         return !IsValid(whitelist, uid);
     }
 
-    /// <summary>
-    /// Helper function to determine if a blacklist is not null and the entity is on list.
-    /// Duplicate of equivalent whitelist function.
-    /// </summary>
-    public bool IsBlacklistPass(EntityWhitelist? blacklist, EntityUid uid)
-    {
-        return IsWhitelistPass(blacklist, uid);
-    }
-
-    /// <summary>
-    /// Helper function to determine if a blacklist is not null and the entity is not on the list.
-    /// Duplicate of equivalent whitelist function.
-    /// </summary>
-    public bool IsBlacklistFail(EntityWhitelist? blacklist, EntityUid uid)
-    {
-        return IsWhitelistFail(blacklist, uid);
-    }
-
-    /// <summary>
-    /// Helper function to determine if a blacklist is either null or the entity is on the list.
-    /// Duplicate of equivalent whitelist function.
-    /// </summary>
-    public bool IsBlacklistPassOrNull(EntityWhitelist? blacklist, EntityUid uid)
-    {
-        return IsWhitelistPassOrNull(blacklist, uid);
-    }
-
-    /// <summary>
-    /// Helper function to determine if a blacklist is either null or the entity is not on the list.
-    /// Duplicate of equivalent whitelist function.
-    /// </summary>
-    public bool IsBlacklistFailOrNull(EntityWhitelist? blacklist, EntityUid uid)
-    {
-        return IsWhitelistFailOrNull(blacklist, uid);
-    }
-
     private List<ComponentRegistration>? StringsToRegs(string[]? input)
     {
         if (input == null || input.Length == 0)
