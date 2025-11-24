@@ -4,6 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Standing;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Stunnable;
@@ -119,6 +120,10 @@ public sealed class SlipperySystem : EntitySystem
 
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
+
+
+        var evDropHands = new DropHandItemsEvent();
+        RaiseLocalEvent(uid, ref evDropHands, false);
 
         if (_physicsQuery.TryComp(other, out var physics) && !_slidingQuery.HasComp(other))
         {
