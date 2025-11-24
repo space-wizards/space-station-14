@@ -318,6 +318,5 @@
       params:
         volume: -3
     fireRate: 2
-    selectedMode: SemiAuto
   - type: GunSpreadModifier
     spread: 1.2
