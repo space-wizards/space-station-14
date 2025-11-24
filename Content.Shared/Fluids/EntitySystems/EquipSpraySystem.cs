@@ -21,7 +21,8 @@ public sealed class EquipSpraySystem : EntitySystem
 
     private void OnComponentInit(Entity<EquipSprayComponent> ent, ref ComponentInit args)
     {
-        DebugTools.Assert(HasComp<SprayComponent>(ent), $"{ent} did not have a SprayComponent (EquipSprayComponent entities must have a SprayComponent)");
+        if (!HasComp<SprayComponent>(ent))
+            Log.Warning($"{ent} did not have a SprayComponent (EquipSprayComponent entities should have a SprayComponent to work properly)");
     }
 
     private void SprayLiquid(SprayLiquidEvent ev)
