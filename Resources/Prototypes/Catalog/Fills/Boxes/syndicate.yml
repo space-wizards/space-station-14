@@ -4,12 +4,13 @@
   name: electrical disruption kit
   suffix: Filled
   components:
-    - type: StorageFill
-      contents:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
         - id: EmpGrenade
           amount: 3
         - id: EmpImplanter
-          amount: 1
 
 - type: entity
   parent: [BoxVial, BaseSyndicateContraband]
@@ -20,17 +21,19 @@
   - type: Storage
     grid:
     - 0,0,3,2
-  - type: StorageFill
-    contents:
-      - id: Beaker
-        amount: 2
-      - id: Dropper
-      # It would be cool to have special "syndicate" chemical analysis goggles
-      - id: ClothingEyesGlassesChemical
-      - id: VestineChemistryVial
-        amount: 2
-      - id: BaseChemistryEmptyVial
-      - id: SyringeStimulants
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: Beaker
+          amount: 2
+        - id: Dropper
+        # It would be cool to have special "syndicate" chemical analysis goggles
+        - id: ClothingEyesGlassesChemical
+        - id: VestineChemistryVial
+          amount: 2
+        - id: BaseChemistryEmptyVial
+        - id: SyringeStimulants
 
 - type: entity
   parent: [BoxCardboard, BaseSyndicateContraband]
@@ -41,9 +44,10 @@
   - type: Storage
     grid:
     - 0,0,3,1
-  - type: StorageFill
-    contents:
-      - id: ThrowingKnife
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: ThrowingKnife
         amount: 4
   - type: Sprite
     layers:
@@ -63,9 +67,10 @@
   - type: Storage
     grid:
     - 0,0,5,3
-  - type: StorageFill
-    contents:
-      - id: DeathRattleImplanter
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: DeathRattleImplanter
         amount: 6
 
 - type: entity
@@ -86,10 +91,12 @@
     layers:
       - state: box_of_doom
       - state: france
-  - type: StorageFill
-    contents:
-      - id: WeaponCroissant
-        amount: 2
-      - id: WeaponBaguette
-      - id: SyndicateMicrowaveMachineCircuitboard
-      - id: PaperWrittenCombatBakeryKit
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: WeaponCroissant
+          amount: 2
+        - id: WeaponBaguette
+        - id: SyndicateMicrowaveMachineCircuitboard
+        - id: PaperWrittenCombatBakeryKit

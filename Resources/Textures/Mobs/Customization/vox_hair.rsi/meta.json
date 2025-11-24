@@ -1,123 +1,127 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/dcd1f5d88a8c5ba9634fc3fce67a76ada45f71dc/icons/mob/sprite_accessories/vox/vox_hair.dmi and greyscaled. wise_braid_s modified from braid_s by Flareguy. mad_scientist_s modified from keelquills_s by Flareguy. spotty_s, bushy_s, hedgehog_s, and slick_s by Flareguy",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "bushy_s",
-      "directions": 4
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Paradise Station at https://github.com/ParadiseSS13/Paradise/blob/dcd1f5d88a8c5ba9634fc3fce67a76ada45f71dc/icons/mob/sprite_accessories/vox/vox_hair.dmi and greyscaled | wise_braid_s modified from braid_s by Flareguy (github) | mad_scientist_s modified from keelquills_s by Flareguy | spotty_s, bushy_s, hedgehog_s, and slick_s by Flareguy | catfish_s by Cadunkus (github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "crestedquills_s",
-      "directions": 4
-    },
-    {
-      "name": "emperorquills_s",
-      "directions": 4
-    },
-    {
-      "name": "keelquills_s",
-      "directions": 4
-    },
-    {
-      "name": "keetquills_s",
-      "directions": 4
-    },
-    {
-      "name": "shortquills_s",
-      "directions": 4
-    },
-    {
-      "name": "tielquills_s",
-      "directions": 4
-    },
-    {
-      "name": "kingly_s",
-      "directions": 4
-    },
-    {
-      "name": "afro_s",
-      "directions": 4
-    },
-    {
-      "name": "yasu_s",
-      "directions": 4
-    },
-    {
-      "name": "razor_s",
-      "directions": 4
-    },
-    {
-      "name": "razor_clipped_s",
-      "directions": 4
-    },
-    {
-      "name": "mad_scientist_s",
-      "directions": 4
-    },
-    {
-      "name": "mohawk_s",
-      "directions": 4
-    },
-    {
-      "name": "hedgehog_s",
-      "directions": 4
-    },
-    {
-      "name": "horns_s",
-      "directions": 4
-    },
-    {
-      "name": "nights_s",
-      "directions": 4
-    },
-    {
-      "name": "hawk_s",
-      "directions": 4
-    },
-    {
-      "name": "long_braid_s",
-      "directions": 4
-    },
-    {
-      "name": "short_braid_s",
-      "directions": 4
-    },
-    {
-      "name": "wise_braid_s",
-      "directions": 4
-    },
-    {
-      "name": "mange_s",
-      "directions": 4
-    },
-    {
-      "name": "ponytail_s",
-      "directions": 4
-    },
-    {
-      "name": "braid_s",
-      "directions": 4
-    },
-    {
-      "name": "surf_s",
-      "directions": 4
-    },
-    {
-      "name": "spotty_s",
-      "directions": 4
-    },
-    {
-      "name": "flowing_s",
-      "directions": 4
-    },
-    {
-      "name": "slick_s",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "catfish_s",
+            "directions": 4
+        },
+        {
+            "name": "bushy_s",
+            "directions": 4
+        },
+        {
+            "name": "crestedquills_s",
+            "directions": 4
+        },
+        {
+            "name": "emperorquills_s",
+            "directions": 4
+        },
+        {
+            "name": "keelquills_s",
+            "directions": 4
+        },
+        {
+            "name": "keetquills_s",
+            "directions": 4
+        },
+        {
+            "name": "shortquills_s",
+            "directions": 4
+        },
+        {
+            "name": "tielquills_s",
+            "directions": 4
+        },
+        {
+            "name": "kingly_s",
+            "directions": 4
+        },
+        {
+            "name": "afro_s",
+            "directions": 4
+        },
+        {
+            "name": "yasu_s",
+            "directions": 4
+        },
+        {
+            "name": "razor_s",
+            "directions": 4
+        },
+        {
+            "name": "razor_clipped_s",
+            "directions": 4
+        },
+        {
+            "name": "mad_scientist_s",
+            "directions": 4
+        },
+        {
+            "name": "mohawk_s",
+            "directions": 4
+        },
+        {
+            "name": "hedgehog_s",
+            "directions": 4
+        },
+        {
+            "name": "horns_s",
+            "directions": 4
+        },
+        {
+            "name": "nights_s",
+            "directions": 4
+        },
+        {
+            "name": "hawk_s",
+            "directions": 4
+        },
+        {
+            "name": "long_braid_s",
+            "directions": 4
+        },
+        {
+            "name": "short_braid_s",
+            "directions": 4
+        },
+        {
+            "name": "wise_braid_s",
+            "directions": 4
+        },
+        {
+            "name": "mange_s",
+            "directions": 4
+        },
+        {
+            "name": "ponytail_s",
+            "directions": 4
+        },
+        {
+            "name": "braid_s",
+            "directions": 4
+        },
+        {
+            "name": "surf_s",
+            "directions": 4
+        },
+        {
+            "name": "spotty_s",
+            "directions": 4
+        },
+        {
+            "name": "flowing_s",
+            "directions": 4
+        },
+        {
+            "name": "slick_s",
+            "directions": 4
+        }
+    ]
 }
