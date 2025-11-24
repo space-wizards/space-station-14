@@ -1,8 +1,11 @@
-using Content.Shared.Power.Components;
+using Content.Client.Power.Components;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
+using Content.Shared.PowerCell;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Components;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.PowerCell.Components;
 using Robust.Client.UserInterface.Controls;
@@ -15,16 +18,22 @@ namespace Content.Client.Power.UI;
 /// <seealso cref="BatteryItemStatusSystem"/>
 public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatusControl.Data>
 {
-    private readonly Entity<BatteryItemStatusComponent> _parent;
+    private readonly EntityUid _parent;
     private readonly IEntityManager _entityManager;
+    private readonly PredictedBatterySystem _battery;
+    private readonly PowerCellSystem _powerCell;
     private readonly RichTextLabel _label;
 
     public BatteryStatusControl(
-        Entity<BatteryItemStatusComponent> parent,
-        IEntityManager entityManager)
+        EntityUid parent,
+        IEntityManager entityManager,
+        PredictedBatterySystem battery,
+        PowerCellSystem powerCell)
     {
         _parent = parent;
         _entityManager = entityManager;
+        _battery = battery;
+        _powerCell = powerCell;
         _label = new RichTextLabel { StyleClasses = { StyleClass.ItemStatus } };
         AddChild(_label);
     }
@@ -32,22 +41,35 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
     protected override Data PollData()
     {
         // Do not add battery status to guns that already show an ammo counter.
-        if (_entityManager.TryGetComponent(_parent.Owner, out AmmoCounterComponent? _))
+        if (_entityManager.TryGetComponent(_parent, out AmmoCounterComponent? _))
             return default;
 
-        if (!_entityManager.TryGetComponent(_parent.Owner, out BatteryItemStatusComponent? _))
-            return default;
+        var charge = 0f;
+        var max = 0f;
 
-        var chargePercent = _parent.Comp.ChargePercent;
-
-        bool? toggleState = null;
-        if (_parent.Comp.ShowToggleState)
+        // Attempt to charge the battery.
+        if (_entityManager.TryGetComponent(_parent, out PredictedBatteryComponent? batteryComp))
         {
-            if (_entityManager.TryGetComponent(_parent.Owner, out ItemToggleComponent? toggle))
-                toggleState = toggle.Activated;
-            else if (_entityManager.TryGetComponent(_parent.Owner, out PowerCellDrawComponent? powerDraw))
-                toggleState = powerDraw.Enabled;
+            charge = _battery.GetCharge(_parent);
+            max = batteryComp.MaxCharge;
         }
+
+        // Attempt to charge battery in slot.
+        if (_entityManager.TryGetComponent(_parent, out PowerCellSlotComponent? slot)
+            && _powerCell.TryGetBatteryFromSlot((_parent, slot), out var cell))
+        {
+            charge = _battery.GetCharge(cell.Value.AsNullable());
+            max = cell.Value.Comp.MaxCharge;
+        }
+
+        var chargePercent = max > 0f ? (int)(charge / max * 100) : 0;
+
+        // Definition on/off status.
+        bool? toggleState = null;
+        if (_entityManager.TryGetComponent(_parent, out ItemToggleComponent? toggle))
+            toggleState = toggle.Activated;
+        else if (_entityManager.TryGetComponent(_parent, out PowerCellDrawComponent? powerDraw))
+            toggleState = powerDraw.Enabled;
 
         return new Data(chargePercent, toggleState);
     }
