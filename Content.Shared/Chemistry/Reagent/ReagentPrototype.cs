@@ -221,7 +221,7 @@ namespace Content.Shared.Chemistry.Reagent
             if (effect.EntityEffectGuidebookText(prototype, entSys) is not { } description)
                 return null;
 
-            var quantity = metabolism == null ? 0f : (double) (effect.MinScale * metabolism);
+            var quantity = metabolism == null ? 0f : (double)(effect.MinScale * metabolism);
 
             return Loc.GetString(
                 "guidebook-reagent-effect-description",
