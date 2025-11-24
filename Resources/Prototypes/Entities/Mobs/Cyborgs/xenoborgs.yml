@@ -43,6 +43,7 @@
       - BorgModuleCable
       - XenoborgModuleAccessBreaker
       - XenoborgModuleFireExtinguisher
+  - type: ShowElectrocutionHUD
   - type: ShowHealthBars
     damageContainers:
     - Inorganic
