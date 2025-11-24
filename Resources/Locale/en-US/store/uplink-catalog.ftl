@@ -501,3 +501,6 @@ uplink-acolyte-armor-desc = The must have of any self respecting cult leader. An
 
 uplink-briefcase-gun-name = Briefcase Gun
 uplink-briefcase-gun-desc = An indistinct briefcase with a highly compact C-20K mounted inside it. Careful not the grip the handle too tight!
+
+uplink-energycrossbow-name = Mini Energy Crossbow
+uplink-energycrossbow-desc = The go-to sidearm of any operative who prefers their victims not to be moving. Fires regenerating toxic arrows that floors victims in an instant.
