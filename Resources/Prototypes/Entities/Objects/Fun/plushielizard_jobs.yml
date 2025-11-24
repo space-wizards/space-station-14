@@ -212,6 +212,10 @@
     sound: null
   - type: EmitSoundOnTrigger
     sound: null
+  - type: EmitSoundOnCollide
+    sound: null
+  - type: Edible
+    useSound: null
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit: null
