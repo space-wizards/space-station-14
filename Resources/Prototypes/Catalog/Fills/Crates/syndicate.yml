@@ -14,13 +14,13 @@
   name: Cybersun juggernaut bundle
   description: Contains everything except a big gun to go postal.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterHardsuitJuggernaut
-      - id: ClothingMaskGasSyndicate
-      - id: ClothingHandsGlovesCombat
-      - id: DoubleEmergencyOxygenTankFilled
-      - id: DoubleEmergencyNitrogenTankFilled
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingOuterHardsuitJuggernaut
+        - !type:NestedSelector
+          tableId: SyndicateHardsuitExtrasEntityTable
 
 - type: entity
   id: CrateSyndicateSuperSurplusBundle

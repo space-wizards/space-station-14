@@ -10,7 +10,7 @@
     - Wall
   components:
   - type: Anchorable
-    flags: 
+    flags:
     - Anchorable
   - type: Rotatable
   - type: RangedDamageSound
@@ -268,7 +268,6 @@
   - type: Tag
     tags:
       - Wall
-      - Debug
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
