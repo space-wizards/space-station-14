@@ -55,10 +55,9 @@ public sealed class IdentityRepresentation
     /// <returns></returns>
     public string ToStringKnown(bool trueName, string? nameOverride)
     {
-        if (!trueName)
-            return PresumedName ?? ToStringUnknown();
-
-        return nameOverride ?? TrueName;
+        return trueName
+            ? nameOverride ?? TrueName
+            : PresumedName ?? ToStringUnknown();
     }
 
     /// <summary>
