@@ -7,6 +7,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Movement.Components;
+using Content.Shared.Standing;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -165,6 +166,8 @@ public partial class SharedBodySystem
             if (!bodyEnt.Comp.LegEntities.Any())
             {
                 Standing.Down(bodyEnt);
+                var ev = new DropHandItemsEvent();
+                RaiseLocalEvent(bodyEnt, ref ev, false);
             }
         }
     }
