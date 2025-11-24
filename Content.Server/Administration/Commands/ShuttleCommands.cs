@@ -16,7 +16,7 @@ namespace Content.Server.Administration.Commands
         {
             // ReSharper disable once ConvertIfStatementToSwitchStatement
             if (args.Length == 1 && TimeSpan.TryParseExact(args[0], ContentLocalizationManager.TimeSpanMinutesFormats, LocalizationManager.DefaultCulture, out var timeSpan))
-                _roundEndSystem.RequestRoundEnd(timeSpan, shell.Player?.AttachedEntity, null, false);
+                _roundEndSystem.RequestRoundEnd(timeSpan, shell.Player?.AttachedEntity, checkCooldown: false);
 
             else if (args.Length == 1)
                 shell.WriteLine(Loc.GetString("shell-timespan-minutes-must-be-correct"));
@@ -35,7 +35,7 @@ namespace Content.Server.Administration.Commands
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            _roundEndSystem.CancelRoundEndCountdown(shell.Player?.AttachedEntity, null, false);
+            _roundEndSystem.CancelRoundEndCountdown(shell.Player?.AttachedEntity, checkCooldown: false);
         }
     }
 }
