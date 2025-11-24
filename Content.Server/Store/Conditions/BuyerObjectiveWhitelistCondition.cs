@@ -33,12 +33,6 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
 
         var whitelisted = false;
 
-        if (Whitelist == null)
-        {
-            return false;
-        }
-
-
         foreach (var objective in mindComp.Objectives)
         {
             if (whitelistSystem.IsWhitelistPass(Blacklist, objective))
@@ -47,7 +41,11 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
                 whitelisted = true;
         }
 
-        return whitelisted;
+        if (Whitelist == null)
+        {
+            return true;
+        }
 
+        return whitelisted;
     }
 }
