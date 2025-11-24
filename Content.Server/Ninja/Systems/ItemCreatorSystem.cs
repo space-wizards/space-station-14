@@ -1,15 +1,15 @@
 using Content.Server.Ninja.Events;
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Ninja.Systems;
 
 public sealed class ItemCreatorSystem : SharedItemCreatorSystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly PredictedBatterySystem _battery = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
