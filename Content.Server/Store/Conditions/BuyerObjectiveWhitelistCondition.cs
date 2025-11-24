@@ -36,7 +36,7 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
 
         foreach (var objective in mindComp.Objectives)
         {
-            if (whitelistSystem.IsBlacklistPass(Blacklist, objective))
+            if (whitelistSystem.IsWhitelistPass(Blacklist, objective))
                 return false;
             if (whitelistSystem.IsWhitelistPassOrNull(Whitelist, objective))
                 whitelisted = true;
