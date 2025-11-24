@@ -8,7 +8,7 @@ using Robust.Client.UserInterface.Controls;
 namespace Content.Client.Anomaly.UI;
 
 /// <summary>
-/// Displays anomaly core charge information based on predicted <see cref="AnomalyCoreComponent"/> in the slot of
+/// Displays anomaly core charge information based on <see cref="AnomalyCoreComponent"/> in the slot of.
 /// <see cref="CorePoweredThrowerComponent"/>.
 /// </summary>
 public sealed class AnomalyStatusControl : PollingItemStatusControl<AnomalyStatusControl.Data>

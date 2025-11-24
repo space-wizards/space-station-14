@@ -4,7 +4,7 @@ using Content.Client.Items.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.PowerCell;
+using Content.Shared.PowerCell.Components;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Power.UI;
@@ -35,6 +35,9 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
         if (_entityManager.TryGetComponent(_parent.Owner, out AmmoCounterComponent? _))
             return default;
 
+        if (!_entityManager.TryGetComponent(_parent.Owner, out BatteryItemStatusComponent? _))
+            return default;
+
         var chargePercent = _parent.Comp.ChargePercent;
 
         bool? toggleState = null;
@@ -51,7 +54,9 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
 
     protected override void Update(in Data data)
     {
-        var markup = Loc.GetString("battery-status-charge", ("percent", data.ChargePercent));
+        var markup = "";
+        if (data.ChargePercent.HasValue)
+            markup = Loc.GetString("battery-status-charge", ("percent", data.ChargePercent));
 
         if (data.ToggleState.HasValue)
         {
@@ -64,5 +69,5 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
         _label.SetMarkup(markup);
     }
 
-    public readonly record struct Data(int ChargePercent, bool? ToggleState);
+    public readonly record struct Data(int? ChargePercent, bool? ToggleState);
 }

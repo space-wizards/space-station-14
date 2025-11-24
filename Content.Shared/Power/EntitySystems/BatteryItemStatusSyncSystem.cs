@@ -1,6 +1,6 @@
-using Content.Shared.Power.Components;
+using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
-using Content.Shared.Item;
+using Content.Shared.Power.Components;
 
 namespace Content.Shared.Power.EntitySystems;
 
@@ -9,36 +9,31 @@ namespace Content.Shared.Power.EntitySystems;
 /// </summary>
 public sealed class BatteryItemStatusSyncSystem : EntitySystem
 {
+    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ItemComponent, MapInitEvent>(OnItemMapInit);
-        SubscribeLocalEvent<BatteryComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
+        SubscribeLocalEvent<PredictedBatteryComponent, PredictedBatteryChargeChangedEvent>(OnBatteryChargeChanged);
+        SubscribeLocalEvent<PowerCellSlotComponent, PredictedBatteryChargeChangedEvent>(OnBatteryChargeChanged);
         SubscribeLocalEvent<PowerCellSlotComponent, PowerCellChangedEvent>(OnPowerCellChanged);
     }
 
-    private void OnItemMapInit(EntityUid uid, ItemComponent _, MapInitEvent __)
+    private void OnBatteryChargeChanged(Entity<PredictedBatteryComponent> ent, ref PredictedBatteryChargeChangedEvent args)
     {
-        UpdateStatus(uid);
+        UpdateStatus(ent.Owner);
     }
 
-    private void OnBatteryChargeChanged(EntityUid uid, BatteryComponent component, ref ChargeChangedEvent args)
+    private void OnBatteryChargeChanged(Entity<PowerCellSlotComponent> ent, ref PredictedBatteryChargeChangedEvent args)
     {
-        // Only surface battery status for items.
-        if (!HasComp<ItemComponent>(uid))
-            return;
-
-        UpdateStatus(uid);
+        UpdateStatus(ent.Owner);
     }
 
-    private void OnPowerCellChanged(EntityUid uid, PowerCellSlotComponent component, PowerCellChangedEvent args)
+    private void OnPowerCellChanged(Entity<PowerCellSlotComponent> ent, ref PowerCellChangedEvent args)
     {
-        // Only surface battery status for items.
-        if (!HasComp<ItemComponent>(uid))
-            return;
-
-        UpdateStatus(uid);
+        UpdateStatus(ent.Owner);
     }
 
     /// <summary>
@@ -47,7 +42,8 @@ public sealed class BatteryItemStatusSyncSystem : EntitySystem
     /// </summary>
     private void UpdateStatus(EntityUid uid)
     {
-        var hasBattery = TryGetDirectBatteryCharge(uid, out var current, out var max);
+        var hasBattery = TryGetBatteryCharge(uid, out var current, out var max) ||
+            TryGetSlotBatteryCharge(uid, out current, out max);
 
         // If there is no battery at all, remove the status component.
         if (!hasBattery)
@@ -59,26 +55,36 @@ public sealed class BatteryItemStatusSyncSystem : EntitySystem
 
         var comp = EnsureComp<BatteryItemStatusComponent>(uid);
         var percent = max > 0f ? (int)(current / max * 100) : 0;
-
-        if (percent == comp.ChargePercent)
-            return;
-
         comp.ChargePercent = percent;
         Dirty(uid, comp);
     }
 
-    private bool TryGetDirectBatteryCharge(EntityUid uid, out float current, out float max)
+    private bool TryGetBatteryCharge(EntityUid uid, out float current, out float max)
     {
         current = 0f;
         max = 0f;
 
-        if (!TryComp<BatteryComponent>(uid, out _))
+        if (!TryComp<PredictedBatteryComponent>(uid, out var comp))
             return false;
 
-        var get = new GetChargeEvent();
-        RaiseLocalEvent(uid, ref get);
-        current = get.CurrentCharge;
-        max = get.MaxCharge;
+        current = _battery.GetCharge(uid);
+        max = comp.MaxCharge;
+        return true;
+    }
+
+    private bool TryGetSlotBatteryCharge(EntityUid uid, out float current, out float max)
+    {
+        current = 0f;
+        max = 0f;
+
+        if (!TryComp<PowerCellSlotComponent>(uid, out var slot))
+            return false;
+
+        if (!_powerCell.TryGetBatteryFromSlot((uid, slot), out var battery))
+            return false;
+
+        current = _battery.GetCharge(battery.Value.AsNullable());
+        max = battery.Value.Comp.MaxCharge;
         return true;
     }
 }
