@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -31,7 +32,7 @@ public sealed partial class DamageTypeCondition : EntityConditionBase<DamageType
     public ProtoId<DamageTypePrototype> DamageType;
 
     public override string EntityConditionGuidebookText(IPrototypeManager prototype) =>
-        Loc.GetString("reagent-effect-condition-guidebook-type-damage",
+        Loc.GetString("entity-condition-guidebook-type-damage",
             ("max", Max == FixedPoint2.MaxValue ? int.MaxValue : Max.Float()),
             ("min", Min.Float()),
             ("type", prototype.Index(DamageType).LocalizedName));

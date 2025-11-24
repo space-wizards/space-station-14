@@ -359,7 +359,8 @@
     sprite: Structures/Furniture/Carpets/chapel_carpet.rsi
     state: chapel
   - type: Tag
-    tags: [ Carpet ]
+    tags:
+    - Carpet
   - type: Physics
     canCollide: false
   - type: Fixtures
