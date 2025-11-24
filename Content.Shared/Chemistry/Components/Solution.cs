@@ -167,7 +167,12 @@ namespace Content.Shared.Chemistry.Components
 
         public Solution(Solution solution)
         {
-            Contents = solution.Contents.ShallowClone();
+            Contents = new(solution.Contents.Count);
+            foreach (var item in solution.Contents)
+            {
+                Contents.Add(item.Clone());
+            }
+
             Volume = solution.Volume;
             MaxVolume = solution.MaxVolume;
             Temperature = solution.Temperature;
