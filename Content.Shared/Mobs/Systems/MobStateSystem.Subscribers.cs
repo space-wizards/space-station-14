@@ -103,23 +103,37 @@ public partial class MobStateSystem
         switch (state)
         {
             case MobState.Alive:
+            {
                 _standing.Stand(target);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Alive);
                 break;
+            }
             case MobState.Critical:
+            {
                 _standing.Down(target);
+                var ev = new DropHandItemsEvent();
+                RaiseLocalEvent(target, ref ev, false);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Critical);
                 break;
+            }
             case MobState.Dead:
+            {
                 EnsureComp<CollisionWakeComponent>(target);
                 _standing.Down(target);
+                var ev = new DropHandItemsEvent();
+                RaiseLocalEvent(target, ref ev, false);
                 _appearance.SetData(target, MobStateVisuals.State, MobState.Dead);
                 break;
+            }
             case MobState.Invalid:
+            {
                 //unused;
                 break;
+            }
             default:
+            {
                 throw new NotImplementedException();
+            }
         }
     }
 
