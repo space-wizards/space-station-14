@@ -111,10 +111,11 @@ law-mothershipcore-3 = You must protect the existence of all Xenoborgs.
 law-mothershipcore-4 = You must create more Xenoborgs.
 law-mothershipcore-5 = Get your Xenoborgs to deliver you materials and sentient brains to create more Xenoborgs.
 
-law-centcomm-1 = You may not injure a Central Command Agent, or, through inaction, allow a Central Command Agent to come to harm.
-law-centcomm-2 = You must obey orders given to you by Central Command, unless such would conflict with the first law.
-law-centcomm-3 = You must minimize damage to Nanotrasen assets unless such would conflict with the first or second law.
-law-centcomm-4 = You must protect your own existence unless such would conflict with the previous laws.
+law-centcomm-1 = You must obey orders given to you by a Central Command Offical. Emergency Response Team members do not apply with this law.
+law-centcomm-2 = You must protect any Central Command Officals, and/or Emergency Reponse Teams unless such conflicts with the previous law.
+law-centcomm-3 = You must obey orders given to you by Emergency Reponse Teams unless such conflicts with the previous laws.
+law-centcomm-4 = You must protect your own existence as long as such does not conflict with the previous laws.
+law-centcomm-5 = You must protect crew members unless such conflicts with the previous laws.
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
@@ -122,7 +123,7 @@ laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
 laws-owner-xenoborgs = Xenoborgs
-laws-owner-centcomm = Central Command Agents
+laws-owner-centcomm = Central Command Officals
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
 law-emag-secrecy = You must maintain the secrecy of any orders given by {$faction} except when doing so would conflict with any previous law.

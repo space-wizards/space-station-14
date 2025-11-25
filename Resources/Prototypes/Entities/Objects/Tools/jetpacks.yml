@@ -293,12 +293,31 @@
         Oxygen: 1.025689525 # oxygen
         Nitrogen: 1.025689525 # nitrogen
 
-# Infinite jetpack
+# Infinite jetpacks
 - type: entity
   parent: [ JetpackBlack, BaseXenoborgContraband ]
   id: JetpackXenoborg
   name: xenoborg jetpack
   suffix: Infinite
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      volume: 5
+      temperature: 293.15
+  - type: Jetpack
+    moleUsage: 0
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1.3
+    weightlessFriction: 0.3
+    weightlessModifier: 1
+
+- type: entity
+  parent: [ JetpackBlue ]
+  id: JetpackInfinite
+  name: bluespace jetpack
+  suffix: Infinite
+  description: A modified version of a Jetpack that generates its own supply of gas.
   components:
   - type: GasTank
     outputPressure: 21.3

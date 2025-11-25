@@ -120,6 +120,9 @@
   id: BorgModuleCargo # Cyborg module category for salvage and cargo
 
 - type: Tag
+  id: BorgModuleCentComm # Cyborg module category for NOT evil robots (centcomm)
+
+- type: Tag
   id: BorgModuleEngineering # Cyborg module category for engineers and saboteurs
 
 - type: Tag
@@ -143,8 +146,6 @@
 - type: Tag
   id: BorgModuleSyndicateAssault # Cyborg module category for extra evil red robots (nukies)
 
-- type: Tag
-  id: BorgModuleCentComm # Cyborg module category for Central Command cyborgs
 
 - type: Tag
   id: Bot # Targeting whitelist: ChameleonProjector

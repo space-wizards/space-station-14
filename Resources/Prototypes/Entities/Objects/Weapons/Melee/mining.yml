@@ -258,16 +258,11 @@
         Structural: 20
 
 - type: entity
-  name: sonic jackhammer
-  parent: BaseItem
+  parent: MiningDrill
   id: SonicJackhammer
+  name: sonic jackhammer
   description: A specialized tool used to quickly breach structures with extremely focused vibrations.
   components:
-  - type: Item
-    storedRotation: -90
-  - type: Tag
-    tags:
-    - Pickaxe
   - type: Sprite
     sprite: Objects/Tools/sonicjackhammer.rsi
     state: icon
@@ -283,5 +278,3 @@
         Brute: 3
       types:
         Structural: 30
-  - type: ThrowingAngle
-    angle: 270

@@ -412,9 +412,9 @@
         color: "#FF00CC"
 
 - type: entity
-  id: BaseBorgModuleCentComm
-  parent: BaseBorgModule
   abstract: true
+  parent: BaseBorgModule
+  id: BaseBorgModuleCentComm
   components:
   - type: Tag
     tags:
@@ -1618,11 +1618,9 @@
   - type: ItemBorgModule
     hands:
     - item: WeaponEnergyMagnum # I would have made a new weapon but honestly this works just as well as what I would have made.
-    - item: Flash
-    - item: StunBatonBorg
-    - item: JawsOfLife
+    - item: StunBatonCyborg
     - item: SonicJackhammer
-    - item: JetpackXenoborg
+    - item: JetpackInfinite
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: ert-module }
 
@@ -1640,9 +1638,7 @@
     hands:
     - item: WeaponPulseRifleCyborg
     - item: EnergySword
-    - item: Flash
-    - item: JawsOfLife
     - item: SonicJackhammer
-    - item: JetpackXenoborg
+    - item: JetpackInfinite
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: ds-module }

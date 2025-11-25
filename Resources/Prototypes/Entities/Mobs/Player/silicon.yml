@@ -835,8 +835,8 @@
   - type: GhostTakeoverAvailable
 
 - type: entity
-  id: PlayerBorgCombatGhostRole
   parent: BorgChassisCombat
+  id: PlayerBorgCombatGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole
@@ -850,8 +850,8 @@
   - type: GhostTakeoverAvailable
 
 - type: entity
-  id: PlayerBorgCommandoGhostRole
   parent: BorgChassisCommando
+  id: PlayerBorgCommandoGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole

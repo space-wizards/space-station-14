@@ -1,7 +1,7 @@
 ﻿- type: entity
+  parent: MarkerBase
   id: BorgComabtGhostroleSpawner
   name: Combat Borg Spawner
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
@@ -13,9 +13,9 @@
     - PlayerBorgCombatGhostRole
 
 - type: entity
-  name: Commando Borg Spawner
-  id: BorgCommandoGhostroleSpawner
   parent: MarkerBase
+  id: BorgCommandoGhostroleSpawner
+  name: Commando Borg Spawner
   components:
   - type: Sprite
     layers:

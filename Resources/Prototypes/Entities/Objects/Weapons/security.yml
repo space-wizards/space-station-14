@@ -233,15 +233,15 @@
       - Antagonists
 
 - type: entity
-  id: StunBatonBorg
+  id: StunBatonCyborg
   parent: Stunbaton
   name: recharging cyborg baton
   description: A version of the Stun Baton that draws power from the cyborg's internal cell.
   suffix: Cyborg
   components:
-  - type: BatterySelfRecharger
+  - type: PredictedBatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 20
-  - type: Battery # 3/4 the charge capacity but slowly recharges
+  - type: PredictedBattery # 3/4 the charge capacity but slowly recharges
     maxCharge: 750
     startingCharge: 750
