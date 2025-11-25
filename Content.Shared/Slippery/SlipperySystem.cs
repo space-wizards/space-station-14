@@ -121,9 +121,6 @@ public sealed class SlipperySystem : EntitySystem
         var ev = new SlipEvent(other);
         RaiseLocalEvent(uid, ref ev);
 
-        var evDropHands = new DropHandItemsEvent();
-        RaiseLocalEvent(uid, ref evDropHands, false);
-
         if (_physicsQuery.TryComp(other, out var physics) && !_slidingQuery.HasComp(other))
         {
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.SlipData.LaunchForwardsMultiplier, body: physics);
@@ -135,6 +132,9 @@ public sealed class SlipperySystem : EntitySystem
         // Preventing from playing the slip sound and stunning when you are already knocked down.
         if (!knockedDown)
         {
+            var evDropHands = new DropHandItemsEvent();
+            RaiseLocalEvent(uid, ref evDropHands);
+
             // Status effects should handle a TimeSpan of 0 properly...
             _stun.TryUpdateStunDuration(other, component.SlipData.StunTime);
 
