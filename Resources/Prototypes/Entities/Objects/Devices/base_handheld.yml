@@ -3,7 +3,7 @@
   parent: [BaseItem, PowerCellSlotSmallItem]
   id: BaseHandheldComputer
   components:
-  - type: ActivatableUIRequiresPowerCell
+  - type: InteractionRequirementPowerCell
   - type: ItemToggle
     onUse: false # above component does the toggling
   - type: PowerCellDraw

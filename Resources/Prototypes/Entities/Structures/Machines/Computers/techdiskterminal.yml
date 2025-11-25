@@ -16,7 +16,7 @@
   - type: ResearchClient
   - type: ActivatableUI
     key: enum.DiskConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.DiskConsoleUiKey.Key:

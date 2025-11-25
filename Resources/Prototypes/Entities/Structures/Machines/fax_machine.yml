@@ -29,7 +29,7 @@
         - TabletopMachineLayer
   - type: ActivatableUI
     key: enum.FaxUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.FaxUiKey.Key:

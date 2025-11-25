@@ -12,8 +12,8 @@
   - type: BarSign
   - type: AccessReader
     access: [["Bar"]]
-  - type: ActivatableUIRequiresPower
-  - type: ActivatableUIRequiresAccess
+  - type: InteractionRequirementPower
+  - type: InteractionRequirementAccess
   - type: ActivatableUI
     key: enum.BarSignUiKey.Key
   - type: UserInterface

@@ -162,7 +162,7 @@
     boardName: wires-board-name-arcade
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
@@ -209,7 +209,7 @@
   - type: BlockGameArcade
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: StationAiWhitelist
   - type: UserInterface
     interfaces:

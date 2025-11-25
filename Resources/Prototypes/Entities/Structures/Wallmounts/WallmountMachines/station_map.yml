@@ -53,7 +53,7 @@
     - type: Construction
       graph: StationMap
       node: station_map
-    - type: ActivatableUIRequiresPower
+    - type: InteractionRequirementPower
     - type: ActivatableUI
       key: enum.StationMapUiKey.Key
     - type: Destructible

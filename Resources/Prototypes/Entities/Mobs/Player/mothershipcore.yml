@@ -104,7 +104,7 @@
   - type: WiresPanel
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.SiliconLawsUiKey.Key:

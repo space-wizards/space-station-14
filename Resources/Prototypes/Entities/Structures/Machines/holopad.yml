@@ -79,7 +79,7 @@
     examinationText: access-reader-examination-functionality-restricted
   - type: ActivatableUI
     key: enum.HolopadUiKey.InteractionWindow
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
         enum.HolopadUiKey.InteractionWindow:

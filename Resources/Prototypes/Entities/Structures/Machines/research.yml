@@ -99,7 +99,7 @@
     color: "#3db83b"
   - type: ActivatableUI
     key: enum.ResearchClientUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.ResearchClientUiKey.Key:

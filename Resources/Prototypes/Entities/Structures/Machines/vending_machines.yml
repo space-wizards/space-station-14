@@ -58,7 +58,7 @@
     doAfterDelay: 8
   - type: ActivatableUI
     key: enum.VendingMachineUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.VendingMachineUiKey.Key:
@@ -148,7 +148,7 @@
     doAfterDelay: 8
   - type: ActivatableUI
     key: enum.VendingMachineUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.VendingMachineUiKey.Key:

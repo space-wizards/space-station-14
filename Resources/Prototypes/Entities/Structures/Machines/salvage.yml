@@ -25,7 +25,7 @@
       shader: unshaded
   - type: ActivatableUI
     key: enum.SalvageMagnetUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.SalvageMagnetUiKey.Key:

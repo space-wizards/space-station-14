@@ -59,7 +59,7 @@
       - ChemDispensable
   - type: ActivatableUI
     key: enum.SmartFridgeUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.SmartFridgeUiKey.Key:

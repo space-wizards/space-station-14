@@ -138,7 +138,7 @@
   - type: WiredNetworkConnection
   - type: ActivatableUI
     key: enum.DeployableTurretControllerUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.DeployableTurretControllerUiKey.Key:

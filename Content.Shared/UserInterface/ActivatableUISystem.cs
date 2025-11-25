@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.UserInterface;
 
@@ -21,6 +22,9 @@ public sealed partial class ActivatableUISystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly InteractionRequirementSystem _interaction = default!;
+
+    private readonly ProtoId<InteractionTypePrototype> _interactionUi = "ui";
 
     public override void Initialize()
     {
@@ -37,8 +41,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         SubscribeLocalEvent<ActivatableUIComponent, GetVerbsEvent<Verb>>(GetVerb);
 
         SubscribeLocalEvent<UserInterfaceComponent, OpenUiActionEvent>(OnActionPerform);
-
-        InitializePower();
+        SubscribeLocalEvent<ActivatableUIComponent, InteractionConditionChangedEvent>(OnInteractionConditionChanged);
     }
 
     private void OnStartup(Entity<ActivatableUIComponent> ent, ref ComponentStartup args)
@@ -64,6 +67,18 @@ public sealed partial class ActivatableUISystem : EntitySystem
         args.Handled = _uiSystem.TryToggleUi(uid, args.Key, args.Performer);
     }
 
+    private void OnInteractionConditionChanged(Entity<ActivatableUIComponent> ent, ref InteractionConditionChangedEvent args)
+    {
+        args.Cancelled = true;
+
+        if (ent.Comp.Key == null)
+            return;
+
+        if (!_uiSystem.IsUiOpen(ent.Owner, ent.Comp.Key, args.Source))
+            return;
+
+        _uiSystem.CloseUi(ent.Owner, ent.Comp.Key, args.Source);
+    }
 
     private void GetActivationVerb(EntityUid uid, ActivatableUIComponent component, GetVerbsEvent<ActivationVerb> args)
     {
@@ -116,7 +131,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
             }
         }
 
-        return (args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators) && !RaiseCanOpenEventChecks(args.User, uid);
+        return (args.CanInteract || HasComp<GhostComponent>(args.User) && !component.BlockSpectators) && !_interaction.CanInteract(args.User, uid, _interactionUi, out var _);
     }
 
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
@@ -225,8 +240,11 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
         // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
         // This is so that stuff can require further conditions (like power).
-        if (RaiseCanOpenEventChecks(user, uiEntity))
+        if (!_interaction.CanInteract(user, uiEntity, _interactionUi, out var kind))
+        {
+            _popupSystem.PopupClient(Loc.GetString("machine-interaction-ui-failure", ("kind", kind)), uiEntity, user, PopupType.MediumCaution);
             return false;
+        }
 
         // Give the UI an opportunity to prepare itself if it needs to do anything
         // before opening
@@ -281,16 +299,5 @@ public sealed partial class ActivatableUISystem : EntitySystem
     {
         if (ent.Comp.InHandsOnly)
             CloseAll(ent, ent);
-    }
-
-    private bool RaiseCanOpenEventChecks(EntityUid user, EntityUid uiEntity)
-    {
-        // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
-        // This is so that stuff can require further conditions (like power).
-        var oae = new ActivatableUIOpenAttemptEvent(user);
-        var uae = new UserOpenActivatableUIAttemptEvent(user, uiEntity);
-        RaiseLocalEvent(user, uae);
-        RaiseLocalEvent(uiEntity, oae);
-        return oae.Cancelled || uae.Cancelled;
     }
 }

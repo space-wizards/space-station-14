@@ -65,7 +65,7 @@
       chargeRate: 0.5
     - type: ActivatableUI
       key: enum.PowerChargeUiKey.Key
-    - type: ActivatableUIRequiresPower
+    - type: InteractionRequirementPower
     - type: Anchorable
     - type: ApcPowerReceiver
       powerLoad: 2500

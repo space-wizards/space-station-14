@@ -24,7 +24,7 @@
   - type: ExtensionCableReceiver
   - type: ActivatableUI
     key: enum.JukeboxUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
         enum.JukeboxUiKey.Key:

@@ -60,7 +60,7 @@
   - type: Wires
     boardName: wires-board-name-intercom
     layoutId: Intercom
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: ActivatableUI
     key: enum.IntercomUiKey.Key
     singleUser: true

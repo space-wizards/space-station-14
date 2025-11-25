@@ -65,7 +65,7 @@
       on: "on"
   - type: ActivatableUI
     key: enum.PowerChargeUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.PowerChargeUiKey.Key:

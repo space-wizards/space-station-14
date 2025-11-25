@@ -1,13 +1,10 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.UserInterface;
+namespace Content.Shared.Interaction.Requirements;
 
 /// <summary>
 /// Specifies the entity as requiring anchoring to keep the ActivatableUI open.
 /// </summary>
+[AutoGenerateComponentState]
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ActivatableUIRequiresAnchorComponent : Component
-{
-    [DataField]
-    public LocId? Popup = "ui-needs-anchor";
-}
+public sealed partial class InteractionRequirementAnchorComponent : InteractionRequirementComponent;

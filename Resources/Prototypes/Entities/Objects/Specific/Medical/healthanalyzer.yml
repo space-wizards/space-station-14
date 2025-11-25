@@ -50,7 +50,7 @@
   - type: PowerCellDraw
     drawRate: 1.2 #Calculated for 5 minutes on a small cell
   - type: ToggleCellDraw
-  - type: ActivatableUIRequiresPowerCell
+  - type: InteractionRequirementPowerCell
 
 - type: entity
   id: HandheldHealthAnalyzerEmpty

@@ -14,7 +14,7 @@
     graph: ParticleAcceleratorControlBox
   - type: ActivatableUI
     key: enum.ParticleAcceleratorControlBoxUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.ParticleAcceleratorControlBoxUiKey.Key:

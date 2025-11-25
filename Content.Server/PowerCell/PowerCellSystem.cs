@@ -114,7 +114,6 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         if (TryUseCharge(uid, battery.UseRate, cell, user))
         {
             _sharedAppearanceSystem.SetData(uid, PowerCellSlotVisuals.Enabled, HasActivatableCharge(uid, battery, cell, user));
-            _activatable.CheckUsage(uid);
             return true;
         }
 

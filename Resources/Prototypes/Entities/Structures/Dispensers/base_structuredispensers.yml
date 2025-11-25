@@ -27,7 +27,7 @@
   - type: ExtensionCableReceiver
   - type: ActivatableUI
     key: enum.ReagentDispenserUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.ReagentDispenserUiKey.Key:

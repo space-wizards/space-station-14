@@ -42,7 +42,7 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: Construction
     graph: Timer
     node: signal

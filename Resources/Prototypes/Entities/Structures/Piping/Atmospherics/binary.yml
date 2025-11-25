@@ -72,7 +72,7 @@
     enabled: false
   - type: ActivatableUI
     key: enum.GasPressurePumpUiKey.Key
-  - type: ActivatableUIRequiresAnchor
+  - type: InteractionRequirementAnchor
   - type: UserInterface
     interfaces:
       enum.GasPressurePumpUiKey.Key:
@@ -137,7 +137,7 @@
       enabled: false
     - type: ActivatableUI
       key: enum.GasVolumePumpUiKey.Key
-    - type: ActivatableUIRequiresAnchor
+    - type: InteractionRequirementAnchor
     - type: UserInterface
       interfaces:
         enum.GasVolumePumpUiKey.Key:
@@ -209,7 +209,7 @@
   - type: ActivatableUI
     key: enum.GasPressureRegulatorUiKey.Key
     blockSpectators: true
-  - type: ActivatableUIRequiresAnchor
+  - type: InteractionRequirementAnchor
   - type: UserInterface
     interfaces:
       enum.GasPressureRegulatorUiKey.Key:

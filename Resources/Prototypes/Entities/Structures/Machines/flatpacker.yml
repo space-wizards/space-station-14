@@ -56,7 +56,7 @@
   - type: Appearance
   - type: ActivatableUI
     key: enum.FlatpackCreatorUIKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.FlatpackCreatorUIKey.Key:

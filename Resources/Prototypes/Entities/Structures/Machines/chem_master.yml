@@ -54,7 +54,7 @@
         acts: [ "Destruction" ]
   - type: ActivatableUI
     key: enum.ChemMasterUiKey.Key
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: UserInterface
     interfaces:
       enum.ChemMasterUiKey.Key:

@@ -19,7 +19,7 @@
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: ExtensionCableReceiver
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:

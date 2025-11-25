@@ -1133,7 +1133,7 @@
   - type: FundingAllocationConsole
   - type: ActivatableUI
     key: enum.FundingAllocationConsoleUiKey.Key
-  - type: ActivatableUIRequiresAccess
+  - type: InteractionRequirementAccess
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
   - type: UserInterface
@@ -1273,7 +1273,7 @@
     - type: SalvageExpeditionConsole
     - type: ActivatableUI
       key: enum.SalvageConsoleUiKey.Expedition
-    - type: ActivatableUIRequiresPower
+    - type: InteractionRequirementPower
     - type: UserInterface
       interfaces:
         enum.SalvageConsoleUiKey.Expedition:
@@ -1320,7 +1320,7 @@
   - type: SurveillanceCameraMonitor
   - type: ActivatableUI
     key: enum.SurveillanceCameraMonitorUiKey.Key
-  - type: ActivatableUIRequiresVision
+  - type: InteractionRequirementVision
   - type: Transform
     anchored: true
   - type: UserInterface
@@ -1363,7 +1363,7 @@
   - type: SurveillanceCameraMonitor
   - type: ActivatableUI
     key: enum.SurveillanceCameraMonitorUiKey.Key
-  - type: ActivatableUIRequiresVision
+  - type: InteractionRequirementVision
   - type: UserInterface
     interfaces:
         enum.SurveillanceCameraMonitorUiKey.Key:
@@ -1452,7 +1452,7 @@
     access: [[ "Service" ]]
   - type: ActivatableUI
     key: enum.NewsWriterUiKey.Key
-  - type: ActivatableUIRequiresVision
+  - type: InteractionRequirementVision
   - type: Transform
     anchored: true
   - type: UserInterface

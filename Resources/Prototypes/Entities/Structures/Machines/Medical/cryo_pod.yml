@@ -98,7 +98,7 @@
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
     requiresComplex: false
-  - type: ActivatableUIRequiresPower
+  - type: InteractionRequirementPower
   - type: PointLight
     color: "#3a807f"
     radius: 2
