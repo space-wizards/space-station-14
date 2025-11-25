@@ -157,32 +157,23 @@ public partial class SharedBodySystem
         if (!Resolve(bodyEnt, ref bodyEnt.Comp, logMissing: false))
             return;
 
-        if (legEnt.Comp.PartType == BodyPartType.Leg)
-        {
-            bodyEnt.Comp.LegEntities.Remove(legEnt);
-            UpdateMovementSpeed(bodyEnt);
-            Dirty(bodyEnt, bodyEnt.Comp);
+        if (legEnt.Comp.PartType != BodyPartType.Leg)
+            return;
 
-            if (!bodyEnt.Comp.LegEntities.Any())
-            {
-                StandingStateComponent? standingState = null;
+        bodyEnt.Comp.LegEntities.Remove(legEnt);
+        UpdateMovementSpeed(bodyEnt);
+        Dirty(bodyEnt, bodyEnt.Comp);
 
-                if (!Resolve(bodyEnt, ref standingState, logMissing: false))
-                {
-                    return;
-                }
+        if (bodyEnt.Comp.LegEntities.Any())
+            return;
 
-                if (!standingState.Standing)
-                {
-                    return;
-                }
+        if (!TryComp<StandingStateComponent>(bodyEnt, out var standingState)
+            || !standingState.Standing
+            || !Standing.Down(bodyEnt, standingState: standingState))
+            return;
 
-                Standing.Down(bodyEnt);
-
-                var ev = new DropHandItemsEvent();
-                RaiseLocalEvent(bodyEnt, ref ev, false);
-            }
-        }
+        var ev = new DropHandItemsEvent();
+        RaiseLocalEvent(bodyEnt, ref ev, false);
     }
 
     private void PartRemoveDamage(Entity<BodyComponent?> bodyEnt, Entity<BodyPartComponent> partEnt)
