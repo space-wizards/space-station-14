@@ -192,10 +192,10 @@
   components:
   - type: ContainerFill
     containers:
-        utility_holster_slot:
-        - SpeedLoaderMagnum
-        sidearm_holster_slot:
-        - WeaponRevolverInspector
+      utility_slot:
+      - SpeedLoaderMagnum
+      sidearm_slot:
+      - WeaponRevolverInspector
 
 - type: entity
   id: ClothingBeltChefFilled
