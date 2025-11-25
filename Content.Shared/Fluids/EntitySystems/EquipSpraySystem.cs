@@ -14,36 +14,43 @@ public sealed class EquipSpraySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EquipSprayComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<EquipSprayComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<EquipSprayComponent, GetVerbsEvent<EquipmentVerb>>(OnGetVerb);
         SubscribeLocalEvent<SprayLiquidEvent>(SprayLiquid);
-    }
-
-    private void OnComponentInit(Entity<EquipSprayComponent> ent, ref ComponentInit args)
-    {
-        if (!HasComp<SprayComponent>(ent))
-            Log.Warning($"{ent} did not have a SprayComponent (EquipSprayComponent entities should have a SprayComponent to work properly)");
     }
 
     private void SprayLiquid(SprayLiquidEvent ev)
     {
         var equipSprayEnt = ev.Action.Comp.Container;
 
-        if (!TryComp<SprayComponent>(equipSprayEnt, out var sprayComponent) || !HasComp<EquipSprayComponent>(equipSprayEnt))
+        if (equipSprayEnt == null)
+        {
+            Log.Warning($"{ev.Action.Comp.AttachedEntity} tried to use the SprayLiquidEvent but the entity was null.");
             return;
+        }
+
+        if (!HasComp<EquipSprayComponent>(equipSprayEnt))
+        {
+            Log.Warning($"{ev.Action.Comp.AttachedEntity} tried to  use the SprayLiquidEvent on {equipSprayEnt} but the EquipSprayComponent did not exist.");
+            return;
+        }
+
+        if (!TryComp<SprayComponent>(equipSprayEnt, out var sprayComponent))
+        {
+            Log.Warning($"{ev.Action.Comp.AttachedEntity} tried to  use the SprayLiquidEvent on {equipSprayEnt} but the SprayComponent did not exist.");
+            return;
+        }
 
         _spray.Spray((equipSprayEnt.Value, sprayComponent), ev.Performer);
     }
 
-    private void OnGetVerb(Entity<EquipSprayComponent> entity, ref GetVerbsEvent<Verb> args)
+    private void OnGetVerb(Entity<EquipSprayComponent> entity, ref GetVerbsEvent<EquipmentVerb> args)
     {
         if (entity.Comp.VerbLocId == null)
             return;
 
-        if (!TryComp<SprayComponent>(entity, out var sprayComponent))
-            return;
+        var sprayComponent = Comp<SprayComponent>(entity);
 
-        var verb = new Verb
+        var verb = new EquipmentVerb
         {
             Act = () =>
             {
