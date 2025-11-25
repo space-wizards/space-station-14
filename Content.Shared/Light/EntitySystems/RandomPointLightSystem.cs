@@ -3,6 +3,9 @@ using Content.Shared.Light.Components;
 
 namespace Content.Shared.Light.EntitySystems;
 
+/// <summary>
+/// System for assigning random values to point light variables when given RandomPointLightComponent
+/// </summary>
 public sealed class RandomPointLightSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -12,10 +15,10 @@ public sealed class RandomPointLightSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RandomPointLightComponent, ComponentStartup>(RandomLight);
+        SubscribeLocalEvent<RandomPointLightComponent, MapInitEvent>(RandomLight);
     }
 
-    private void RandomLight(Entity<RandomPointLightComponent> ent, ref ComponentStartup args)
+    private void RandomLight(Entity<RandomPointLightComponent> ent, ref MapInitEvent args)
     {
         var rpl = ent.Comp;
         var color = new Color(
