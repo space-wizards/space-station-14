@@ -10,7 +10,7 @@ namespace Content.Shared.Chemistry.Reagent;
 [DataDefinition]
 public partial struct ReagentQuantity : IEquatable<ReagentQuantity>, IRobustCloneable<ReagentQuantity>
 {
-    [DataField("Quantity", required: true)]
+    [DataField(required: true)]
     public FixedPoint2 Quantity { get; private set; }
 
     [IncludeDataField]
