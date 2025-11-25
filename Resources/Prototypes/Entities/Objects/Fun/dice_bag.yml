@@ -4,15 +4,17 @@
   name: bag of dice
   description: Contains all the luck you'll ever need.
   components:
-  - type: StorageFill
-    contents:
-      - id: d4Dice
-      - id: d6Dice
-      - id: d8Dice
-      - id: d10Dice
-      - id: d12Dice
-      - id: d20Dice
-      - id: PercentileDie
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: d4Dice
+        - id: d6Dice
+        - id: d8Dice
+        - id: d10Dice
+        - id: d12Dice
+        - id: d20Dice
+        - id: PercentileDie
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
     state: dicebag
