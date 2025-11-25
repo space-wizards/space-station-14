@@ -5,6 +5,8 @@ using Content.Shared.Mech.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Vehicle.Components;
+using Content.Shared.PowerCell;
+using Content.Shared.Power.EntitySystems;
 using System.Numerics;
 using System.Linq;
 
@@ -17,7 +19,8 @@ public sealed class MechMovementEnergySystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly MechSystem _mechSystem = default!;
-    [Dependency] private readonly PowerCell.PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
     private readonly HashSet<EntityUid> _activeMechs = new();
 
@@ -56,12 +59,12 @@ public sealed class MechMovementEnergySystem : EntitySystem
             if (!mover.CanMove || mover.WishDir == Vector2.Zero)
                 continue;
 
-            if (!_powerCell.TryGetBatteryFromSlot(mechUid, out var battEnt, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlot(mechUid, out var mechBattery))
                 continue;
 
+            var charge = _battery.GetCharge(mechBattery.Value.AsNullable());
             var toDrain = mech.MovementEnergyPerSecond * frameTime;
-
-            if (battery.CurrentCharge < toDrain)
+            if (charge < toDrain)
             {
                 _actionBlocker.UpdateCanMove(mechUid);
                 _activeMechs.Remove(mechUid);

@@ -1,6 +1,6 @@
 using Content.Server.Mech.Components;
 using Content.Shared.Power.Components;
-using Content.Server.PowerCell;
+using Content.Shared.PowerCell;
 using Content.Shared.Mech.Components;
 
 namespace Content.Server.Mech.Systems;
@@ -18,7 +18,7 @@ public sealed partial class MechBatteryRechargeApplySystem : EntitySystem
         var query = EntityQueryEnumerator<MechComponent, MechEnergyAccumulatorComponent>();
         while (query.MoveNext(out var mechUid, out var mech, out var acc))
         {
-            if (!_powerCell.TryGetBatteryFromSlot(mechUid, out var mechBatteryEnt, out var mechBattery, null))
+            if (!_powerCell.TryGetBatteryFromSlot(mechUid, out var mechBattery))
             {
                 acc.PendingRechargeRate = 0f;
                 continue;
@@ -27,7 +27,7 @@ public sealed partial class MechBatteryRechargeApplySystem : EntitySystem
             var total = acc.PendingRechargeRate;
             acc.PendingRechargeRate = 0f;
 
-            var self = EnsureComp<BatterySelfRechargerComponent>(mechBatteryEnt.Value);
+            var self = EnsureComp<BatterySelfRechargerComponent>(mechBattery.Value);
             var newAuto = total > 0f;
             var newRate = newAuto ? total : 0f;
             if (self.AutoRecharge != newAuto || !MathHelper.CloseTo(self.AutoRechargeRate, newRate))

@@ -3,9 +3,10 @@ using Content.Server.Mech.Components;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
-using Content.Server.PowerCell;
+using Content.Shared.PowerCell;
 using Robust.Server.GameObjects;
 using Robust.Server.Containers;
+using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Containers;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
@@ -30,6 +31,7 @@ namespace Content.Server.Mech.Systems;
 public sealed class MechInterfaceSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = null!;
+    [Dependency] private readonly PredictedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = null!;
     [Dependency] private readonly MechLockSystem _mechLockSystem = null!;
     [Dependency] private readonly ContainerSystem _container = null!;
@@ -333,8 +335,8 @@ public sealed class MechInterfaceSystem : EntitySystem
         float maxEnergy = 0f;
         if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
         {
-            energy = battery.CurrentCharge;
-            maxEnergy = battery.MaxCharge;
+            energy = _battery.GetCharge(battery.Value.AsNullable());
+            maxEnergy = battery.Value.Comp.MaxCharge;
         }
 
         var state = new MechBoundUiState

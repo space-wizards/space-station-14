@@ -1,6 +1,7 @@
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Power.Components;
-using Content.Server.PowerCell;
+using Content.Shared.PowerCell;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Mech.Components;
 using Robust.Shared.Containers;
 using Content.Shared.Whitelist;
@@ -9,11 +10,12 @@ namespace Content.Server.Mech.Equipment.EntitySystems;
 
 public sealed class MechChargerSystem : EntitySystem
 {
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly PredictedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-    private readonly Dictionary<EntityUid, float> _weaponEnergyBuffer = new();
+
+    private readonly Dictionary<EntityUid, float> _equipmentEnergyBuffer = new();
 
     /// TODO: need a ChargerSystem refractor so it can charge batteries from another battery in the slot.
     public override void Update(float frameTime)
@@ -23,10 +25,11 @@ public sealed class MechChargerSystem : EntitySystem
         var query = EntityQueryEnumerator<MechComponent, ChargerComponent>();
         while (query.MoveNext(out var mechUid, out var mech, out var charger))
         {
-            if (!_powerCell.TryGetBatteryFromSlot(mechUid, out var mechBatteryEnt, out var mechBattery, null))
+            if (!_powerCell.TryGetBatteryFromSlot(mechUid, out var mechBattery))
                 continue;
 
-            if (mechBattery.CurrentCharge <= 0)
+            var mechCharge = _battery.GetCharge(mechBattery.Value.AsNullable());
+            if (mechCharge <= 0)
                 continue;
 
             if (charger.ChargeRate <= 0f)
@@ -38,44 +41,45 @@ public sealed class MechChargerSystem : EntitySystem
                 : mech.EquipmentContainer;
 
             // Charge all weapons in the container.
-            foreach (var weapon in container.ContainedEntities)
+            foreach (var equipment in container.ContainedEntities)
             {
-                if (_whitelist.IsWhitelistFail(charger.Whitelist, weapon))
+                if (_whitelist.IsWhitelistFail(charger.Whitelist, equipment))
                     continue;
 
-                if (!TryComp<BatteryComponent>(weapon, out var battery))
+                if (!TryComp<PredictedBatteryComponent>(equipment, out var equipmentBattery))
                     continue;
 
-                if (battery.CurrentCharge >= battery.MaxCharge)
+                var equipmentCharge = _battery.GetCharge((equipment, equipmentBattery));
+                if (equipmentCharge >= equipmentBattery.MaxCharge)
                     continue;
 
-                var chargeNeeded = battery.MaxCharge - battery.CurrentCharge;
+                var chargeNeeded = equipmentBattery.MaxCharge - equipmentCharge;
 
-                // Reserve additional energy from mech battery into a per-weapon buffer.
-                _weaponEnergyBuffer.TryGetValue(weapon, out var buffered);
+                // Reserve additional energy from mech battery into a per-equipment buffer.
+                _equipmentEnergyBuffer.TryGetValue(equipment, out var buffered);
                 var additionalNeeded = chargeNeeded - buffered;
                 if (additionalNeeded > 0f)
                 {
-                    var toReserve = MathF.Min(additionalNeeded, mechBattery.CurrentCharge);
-                    if (toReserve > 0f && _battery.TryUseCharge((mechBatteryEnt.Value, mechBattery), toReserve))
+                    var toReserve = MathF.Min(additionalNeeded, mechCharge);
+                    if (toReserve > 0f && _battery.TryUseCharge(mechBattery.Value.AsNullable(), toReserve))
                     {
                         buffered += toReserve;
-                        _weaponEnergyBuffer[weapon] = buffered;
+                        _equipmentEnergyBuffer[equipment] = buffered;
                     }
                 }
 
-                // Transfer from buffer to weapon at the normal charge rate (scaled by frame time).
+                // Transfer from buffer to equipment at the normal charge rate (scaled by frame time).
                 var transfer = MathF.Min(charger.ChargeRate, MathF.Min(buffered, chargeNeeded));
                 if (transfer > 0f)
                 {
-                    var newCharge = battery.CurrentCharge + transfer;
-                    _battery.SetCharge((weapon, battery), newCharge);
+                    var newCharge = equipmentCharge + transfer;
+                    _battery.SetCharge((equipment, equipmentBattery), newCharge);
                     buffered -= transfer;
 
-                    if (buffered <= 0f || newCharge >= battery.MaxCharge)
-                        _weaponEnergyBuffer.Remove(weapon);
+                    if (buffered <= 0f || newCharge >= equipmentBattery.MaxCharge)
+                        _equipmentEnergyBuffer.Remove(equipment);
                     else
-                        _weaponEnergyBuffer[weapon] = buffered;
+                        _equipmentEnergyBuffer[equipment] = buffered;
                 }
             }
         }

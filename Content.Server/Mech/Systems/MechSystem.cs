@@ -1,11 +1,6 @@
 using Content.Server.Construction.Components;
 using Content.Server.Construction;
 using Content.Server.Mech.Components;
-using Content.Server.Mech.Events;
-using Content.Server.Mech.Equipment.Components;
-using Content.Shared.Power.Components;
-using Content.Server.Power.EntitySystems;
-using Content.Shared.Emp;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
@@ -18,6 +13,7 @@ using Content.Shared.Popups;
 using System.Linq;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Components;
+using Content.Server.Mech.Events;
 using Content.Shared.Tools;
 using Content.Shared.Actions.Components;
 using Content.Shared.Tools.Components;
@@ -36,7 +32,6 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Vehicle;
 using Content.Shared.Alert;
 using Content.Shared.PowerCell;
-using Content.Server.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Materials;
 using Content.Server.Materials;
@@ -44,6 +39,8 @@ using Content.Shared.Containers.ItemSlots;
 using System.Numerics;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
+using Content.Shared.Emp;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Server.Mech.Systems;
 
@@ -58,6 +55,7 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] private readonly MechLockSystem _lockSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly PredictedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
     [Dependency] private readonly ConstructionSystem _construction = default!;
@@ -296,7 +294,7 @@ public sealed partial class MechSystem : SharedMechSystem
     private void OnMechCanMoveEvent(EntityUid uid, MechComponent component, UpdateCanMoveEvent args)
     {
         // Block movement if mech is in broken state or has no energy/integrity
-        var hasCharge = _powerCell.TryGetBatteryFromSlot(uid, out var battery) && battery.CurrentCharge > 0;
+        var hasCharge = _powerCell.TryGetBatteryFromSlot(uid, out var battery) && _battery.GetCharge(battery.Value.AsNullable()) > 0;
         if (component.Broken || component.Integrity <= 0 || !hasCharge)
         {
             args.Cancel();
@@ -486,19 +484,20 @@ public sealed partial class MechSystem : SharedMechSystem
 
     private void UpdateBatteryAlert(Entity<MechComponent> ent)
     {
-        if (!_powerCell.TryGetBatteryFromSlot(ent, out var batt))
+        if (!_powerCell.TryGetBatteryFromSlot(ent.Owner, out var cell))
         {
             _alerts.ClearAlert(ent.Owner, ent.Comp.BatteryAlert);
             _alerts.ShowAlert(ent.Owner, ent.Comp.NoBatteryAlert);
             return;
         }
 
-        var max = MathF.Max(batt.MaxCharge, 0.0001f);
-        var chargePercent = (short)MathF.Round(batt.CurrentCharge / max * 10f);
+        var charge = _battery.GetCharge(cell.Value.AsNullable());
+        var maxCharge = cell.Value.Comp.MaxCharge;
+        var chargePercent = maxCharge > 0f ? (short?)(charge / maxCharge * 100) : 0;
 
         // we make sure 0 only shows if they have absolutely no battery.
         // also account for floating point imprecision
-        if (chargePercent == 0 && batt.CurrentCharge > 0)
+        if (chargePercent == 0 && charge > 0)
             chargePercent = 1;
 
         _alerts.ClearAlert(ent.Owner, ent.Comp.NoBatteryAlert);
