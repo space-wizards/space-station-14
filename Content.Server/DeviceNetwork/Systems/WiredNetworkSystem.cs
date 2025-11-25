@@ -14,10 +14,17 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         /// <summary>
-        /// Checks if both devices are on the same grid
+        /// Handles station cameras and spy cameras, IE Pondering Orb
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
+            /// if it's universal, let it steal the camera data from anywhere
+            if (TryComp<UniversalNetworkComponent>(args.Sender, out var sendingComponent))
+            {
+                return;
+            }
+
+            /// if it's not on the same grid, don't share its data
             if (Transform(uid).GridUid != args.SenderTransform.GridUid)
             {
                 args.Cancel();
