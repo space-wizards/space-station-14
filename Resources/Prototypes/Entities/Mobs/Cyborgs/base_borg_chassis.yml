@@ -526,7 +526,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PointLight
-    color: "#0033ff"
+    color: "#5010ff"
+    energy: 7
   - type: GuideHelp
     guides:
     - Cyborgs
