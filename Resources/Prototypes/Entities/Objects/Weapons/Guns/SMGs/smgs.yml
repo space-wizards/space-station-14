@@ -75,7 +75,6 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Tag
     tags:
-    - SubMachineGun
     - SubMachineGunOneHand
   - type: Gun
     fireRate: 10
@@ -253,7 +252,6 @@
         shader: unshaded
   - type: Tag
     tags:
-    - SubMachineGun
     - SubMachineGunOneHand
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
