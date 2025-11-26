@@ -156,6 +156,9 @@ public sealed partial class AtmosphereSystem
             UpdateAdjacentTiles(ent, tile, activate: true);
             UpdateTileAir(ent, tile, volume);
         }
+
+        // We also need to update all AtmosDeviceComponent devices that could have been referencing old tiles.
+        LeaveRejoinAllDevices(ent);
     }
 
     private CompletionResult FixGridAtmosCommandCompletions(IConsoleShell shell, string[] args)

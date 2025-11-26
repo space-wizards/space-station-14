@@ -1,8 +1,10 @@
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.Piping.Components;
 using Content.Server.Maps;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -175,5 +177,24 @@ public partial class AtmosphereSystem
             return;
 
         _tile.PryTile(tileRef);
+    }
+
+    /// <summary>
+    /// Forces all <see cref="AtmosDeviceComponent"/> devices to leave and rejoin the attached grid atmosphere.
+    /// This is used to properly resync devices after a significant atmos change,
+    /// for example an entire grid's atmosphere being rebuilt, as they could be storing references to old tiles.
+    /// </summary>
+    /// <param name="ent">The grid atmosphere entity.</param>
+    private void LeaveRejoinAllDevices(Entity<GridAtmosphereComponent> ent)
+    {
+        var query = EntityQueryEnumerator<AtmosDeviceComponent, TransformComponent>();
+
+        while (query.MoveNext(out var uid, out var deviceComp, out var xform))
+        {
+            if (xform.GridUid != ent.Owner)
+                continue;
+
+            _atmosDeviceSys.RejoinAtmosphere((uid, deviceComp));
+        }
     }
 }
