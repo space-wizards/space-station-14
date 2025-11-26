@@ -23,7 +23,6 @@
   - type: WirelessNetworkConnection
     range: 15
 
-
  # Actual Objects
 - type: entity
   parent: BaseLinkingUtility
@@ -36,17 +35,12 @@
     sprite: Objects/Devices/voicesensor.rsi
     state: icon
 
-
 - type: entity
   parent: BaseLinkingUtility
   id: pressureplate
   name: pressure plate
   description: A super omnious looking square... Plate Co. is not responsible for any deaths or traps involving Plate TM technologies!
   components:
-  - type: DeviceLinkSource
-    ports:
-      - StepOn
-      - StepOff
   - type: LandMine
     instantTrigger: true
     sound:
@@ -55,8 +49,6 @@
     bodyType: Dynamic
   - type: CollisionWake
     enabled: false
-  - type: SignalOnTrigger
-    port: StepOn
   - type: EmitSoundOnTrigger
     sound:
       collection: TriggerActivate
