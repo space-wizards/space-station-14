@@ -20,7 +20,7 @@ namespace Content.Client.Instruments.UI
         public readonly SharedInteractionSystem Interactions;
 
         [ViewVariables] private InstrumentMenu? _instrumentMenu;
-        [ViewVariables] private BandMenu? _bandMenu;
+        [ViewVariables] private BandMidiSource? _bandMenu;
         [ViewVariables] private ChannelsMenu? _channelsMenu;
 
         public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -80,7 +80,7 @@ namespace Content.Client.Instruments.UI
 
         public void OpenBandMenu()
         {
-            _bandMenu ??= new BandMenu(this);
+            _bandMenu ??= new BandMidiSource(this);
 
             if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
             {

@@ -7,13 +7,13 @@ using Robust.Shared.Timing;
 namespace Content.Client.Instruments.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class BandMenu : DefaultWindow
+public sealed partial class BandMidiSource : DefaultWindow
 {
     private readonly InstrumentBoundUserInterface _owner;
 
     public EntityUid? Master;
 
-    public BandMenu(InstrumentBoundUserInterface owner)
+    public BandMidiSource(InstrumentBoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
 
