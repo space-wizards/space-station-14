@@ -257,6 +257,7 @@
     - type: Tag
       tags:
         - SecBeltEquip
+        - Tourniquet
     - type: Sprite
       state: tourniquet
     - type: Item
