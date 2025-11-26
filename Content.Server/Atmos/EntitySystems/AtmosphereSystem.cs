@@ -67,7 +67,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 
         _atmosQuery = GetEntityQuery<GridAtmosphereComponent>();
         _mapAtmosQuery = GetEntityQuery<MapAtmosphereComponent>();
-        _atmosDeviceQuery = GetEntityQuery<AtmosDeviceComponent>();
         _airtightQuery = GetEntityQuery<AirtightComponent>();
         _firelockQuery = GetEntityQuery<FirelockComponent>();
 
