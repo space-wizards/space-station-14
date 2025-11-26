@@ -105,12 +105,12 @@
 
 - type: entity
   parent: BaseGameRule
-  id: SoloSpawning
+  id: TutorialSpawn
   components:
   - type: RerouteSpawningRule
-    map: Opening
-    gear: TutorialGear
-    job: Tutorial
+    prototypes:
+    - RerouteTutorialTest
+    - RerouteDeath
 
 - type: entity
   abstract: true

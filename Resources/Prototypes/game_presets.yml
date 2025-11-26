@@ -209,7 +209,7 @@
   description: tutorial-description
   showInVote: false
   rules:
-  - SoloSpawning
+  - TutorialSpawn
   - RespawnDeadRule
 
 - type: gamePreset
