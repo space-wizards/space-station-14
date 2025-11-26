@@ -231,7 +231,6 @@
     - id: GeigerCounter
       amount: 2
     - id: PillCanisterPotassiumIodide
-      amount: 1
       prob: 0.75
 
 - type: entity
