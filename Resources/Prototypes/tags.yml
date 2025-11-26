@@ -921,9 +921,6 @@
   id: Maints # RoomFill spawner whitelist for MaintsRoomMarker.
 
 - type: Tag
-  id: MagazineBox # Storage whitelist: ClothingBeltSyndieHolster
-
-- type: Tag
   id: Matchstick # Storage whitelist: Ashtray. ConstructionGraph: ImprovisedShotgunShellGraph
 
 - type: Tag

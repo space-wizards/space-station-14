@@ -189,9 +189,7 @@
           - MagazinePistolSubMachineGunTopMounted
           - SpeedLoaderAll
           - MagazineRifleAll
-          - MagazineLightRifleBox
           - MagazineShotgun
-          - MagazineBox
       upgraded_sidearm_slot:
         name: clothing-holster-upgraded-sidearm-slot
         priority: 2
@@ -236,18 +234,10 @@
         whitelist:
           tags:
           - MagazineRifleAll
-      icon_magazine_rifle_box:
-        whitelist:
-          tags:
-          - MagazineLightRifleBox
       icon_magazine_shotgun:
         whitelist:
           tags:
           - MagazineShotgun
-      icon_magazine_box:
-        whitelist:
-          tags:
-          - MagazineBox
       icon_sidearm:
         whitelist:
           tags:
