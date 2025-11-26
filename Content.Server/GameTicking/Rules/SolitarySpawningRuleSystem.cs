@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
-using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Prototypes;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
@@ -12,14 +12,18 @@ using Linguini.Shared.Util;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Spawning;
+namespace Content.Server.GameTicking.Rules;
 
 // TODO Integration test
 
 /// <summary>
-/// This system circumvents the normal spawn system, and puts each player on their own personal map as the pre-specified job.
+/// This system overrides the normal spawn process, and puts each player on their own personal map.
 /// </summary>
-public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleComponent>
+/// <remarks>
+/// The main station will still spawn, but no one will ever be on it. As such, when this game rule is in use,
+/// the server should be forced to use the 'Empty' map, to avoid spawning a bunch of unnecessary entities
+/// </remarks>>
+public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRuleComponent>
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
@@ -44,32 +48,33 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     {
         var session = args.Player;
 
-        // Check if any Reroute Spawning rules are running
-        var rules = EntityQueryEnumerator<RerouteSpawningRuleComponent,GameRuleComponent>();
-        while (rules.MoveNext(out var uid, out var reroute, out var rule))
+        // Check if any Solitary Spawning rules are running
+        var rules = EntityQueryEnumerator<SolitarySpawningRuleComponent,GameRuleComponent>();
+        while (rules.MoveNext(out var uid, out var comp, out var rule))
         {
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            //TODO Lobby selection UI. Problem: the gamerule DOES NOT EXIST YET in the lobby.
-            //Even if we give the lobby UI the options, can we actually be sure those will be the choices once the rule starts?
+            //TODO Lobby selection UI.
+            // Problem: the gamerule DOES NOT EXIST YET in the lobby.
+            // Even if we give the lobby UI the options, can we actually be sure those will be the choices once the rule starts?
             var playerChoice = 0;
 
-            if (!playerChoice.InRange(0, reroute.Prototypes.Count - 1))
+            if (!playerChoice.InRange(0, comp.Prototypes.Count - 1))
             {
-                Log.Warning($"Invalid player choice from {session} - Selected option '{playerChoice}', but only 0 to {reroute.Prototypes.Count - 1} exist");
+                Log.Warning($"Invalid player choice from {session} - Selected option '{playerChoice}', but only 0 to {comp.Prototypes.Count - 1} exist");
                 playerChoice = 0;
             }
 
-            var choice = reroute.Prototypes[playerChoice];
+            var choice = comp.Prototypes[playerChoice];
 
-            if (!_proto.TryIndex<RerouteSpawningPrototype>(choice, out var reroutePrototype))
+            if (!_proto.TryIndex(choice, out var proto))
             {
-                Log.Warning($"Spawn reroute failed for {session} - Reroute prototype '{choice}' does not exist");
+                Log.Warning($"Solitary spawning failed for {session} - prototype '{choice}' does not exist");
                 continue;
             }
 
-            var job = reroutePrototype.Job;
+            var job = proto.Job;
 
             // This allows the player to respawn on their existing map, rather than start a new one
             if (RequestExistingStation(session, out var stationExist))
@@ -79,7 +84,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
                 break;
             }
 
-            if (!CreateSoloStation(args, reroutePrototype, session, out var stationTarget))
+            if (!CreateSolitaryStation(args, proto, session, out var stationTarget))
                 continue;
 
             SpawnPlayer(args, job, stationTarget.Value);
@@ -88,34 +93,34 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
         }
 
         if (args.Handled == false)
-            Log.Warning($"Solo spawn failed for {session.Name}, spawning on the normal map.");
+            Log.Warning($"Solitary spawning failed for {session.Name}, spawning on the normal map.");
     }
 
     /// <summary>
     /// Create a personal map for one player
     /// </summary>
     /// <param name="args">The spawn event for the player trying to spawn</param>
-    /// <param name="reroute">The reroute prototype that specifies the map and job for the spawn</param>
+    /// <param name="prototype">The prototype that specifies the map and job for the spawn</param>
     /// <param name="session">The player session</param>
     /// <param name="stationTarget">The station entity (nullspace) that is being created for this player</param>
-    private bool CreateSoloStation(
+    private bool CreateSolitaryStation(
         PlayerBeforeSpawnEvent args,
-        RerouteSpawningPrototype reroute,
+        SolitarySpawningPrototype prototype,
         ICommonSession session,
         [NotNullWhen(true)]out EntityUid? stationTarget)
     {
         stationTarget = null;
-        var proto = reroute.Map;
+        var proto = prototype.Map;
 
         if (!_proto.TryIndex(proto, out var map))
         {
-            Log.Error($"Spawn reroute failed for {session} - Invalid map prototype: {proto}");
+            Log.Error($"Solitary spawning failed for {session} - Invalid map prototype: {proto}");
             return false;
         }
 
         // Create the new map and station, and assign them identifiable names
-        var stationName = Loc.GetString("training-station-name", ("character", args.Profile.Name));
-        var mapName = Loc.GetString("training-map-name", ("character", args.Profile.Name));
+        var stationName = Loc.GetString("solitary-station-name", ("character", args.Profile.Name));
+        var mapName = Loc.GetString("solitary-map-name", ("character", args.Profile.Name));
         var query = GameTicker.LoadGameMap(map, out var mapId, stationName: stationName);
         var newMap = query.First();
         _meta.SetEntityName(Transform(newMap).ParentUid, mapName);
@@ -124,7 +129,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
 
         if (!TryComp<StationMemberComponent>(newMap, out var member))
         {
-            Log.Error($"Spawn reroute failed for {session} - Target station not found");
+            Log.Error($"Solitary spawning failed for {session} - Target station not found");
             return false;
         }
 
@@ -148,7 +153,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
 
         GameTicker.DoSpawn(session, humanoid, station, jobId, true, out var mob, out _, out var jobName);
 
-        // Latejoin is not a relevant concept for rerouted spawns, when the station did not even exist beforehand
+        // Latejoin is not a relevant concept for solitary spawns - the station did not even exist beforehand
         // Also, round flow does not exist in the regular sense on a tutorial server
         // So all spawns are recorded as just "Joined"
         _adminLogger.Add(LogType.RoundStartJoin,

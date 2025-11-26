@@ -107,10 +107,10 @@
   parent: BaseGameRule
   id: TutorialSpawn
   components:
-  - type: RerouteSpawningRule
+  - type: SolitarySpawningRule
     prototypes:
-    - RerouteTutorialTest
-    - RerouteDeath
+    - TutorialTest
+    - Death
 
 - type: entity
   abstract: true

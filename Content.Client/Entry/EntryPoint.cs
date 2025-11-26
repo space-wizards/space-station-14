@@ -129,7 +129,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
             _prototypeManager.RegisterIgnore("codewordGenerator");
             _prototypeManager.RegisterIgnore("codewordFaction");
-            _prototypeManager.RegisterIgnore("rerouteSpawning");
+            _prototypeManager.RegisterIgnore("solitarySpawning");
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();

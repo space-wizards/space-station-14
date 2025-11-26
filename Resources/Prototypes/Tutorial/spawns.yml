@@ -1,8 +1,7 @@
-- type: rerouteSpawning
-  id: RerouteTutorialTest
+- type: solitarySpawning
+  id: TutorialTest
   map: Opening
-  job: Tutorial
 
-- type: rerouteSpawning
-  id: RerouteDeath
+- type: solitarySpawning
+  id: Death
   map: Empty
