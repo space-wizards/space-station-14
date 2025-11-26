@@ -1,18 +1,18 @@
-using Content.Server.Mech.Components;
 using Content.Shared.Power.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.Mech.Components;
 
-namespace Content.Server.Mech.Systems;
+namespace Content.Shared.Mech.Systems;
 
 /// <summary>
 /// Applies the sum of recharge rates accumulated on a mech during the current tick to the mech's battery
-/// by enabling BatterySelfRecharger at the computed rate, then clears the accumulator.
+/// by enabling <see cref="BatterySelfRecharger"/> at the computed rate, then clears the accumulator.
 /// </summary>
 public sealed partial class MechBatteryRechargeApplySystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
+    /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<MechComponent, MechEnergyAccumulatorComponent>();

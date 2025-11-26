@@ -1,13 +1,15 @@
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Power.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Mech.Components;
-using Robust.Shared.Containers;
 using Content.Shared.Whitelist;
+using Robust.Shared.Containers;
 
-namespace Content.Server.Mech.Equipment.EntitySystems;
+namespace Content.Shared.Mech.Equipment.Systems;
 
+/// <summary>
+/// Charges equipment batteries inside mechs using the mech's own power cell.
+/// </summary>
 public sealed class MechChargerSystem : EntitySystem
 {
     [Dependency] private readonly PredictedBatterySystem _battery = default!;
@@ -15,8 +17,9 @@ public sealed class MechChargerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
-    private readonly Dictionary<EntityUid, float> _equipmentEnergyBuffer = new();
+    private readonly Dictionary<EntityUid, float> _equipmentEnergyBuffer = [];
 
+    /// <inheritdoc/>
     /// TODO: need a ChargerSystem refractor so it can charge batteries from another battery in the slot.
     public override void Update(float frameTime)
     {

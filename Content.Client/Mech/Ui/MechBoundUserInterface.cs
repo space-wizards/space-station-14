@@ -1,8 +1,7 @@
 using Content.Client.UserInterface;
-using Content.Client.UserInterface.Fragments;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
-using Content.Shared.Mech.EntitySystems;
+using Content.Shared.Mech.Systems;
 using JetBrains.Annotations;
 using Robust.Client.Timing;
 using Robust.Client.UserInterface;
@@ -10,9 +9,10 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Mech.Ui;
 
 [UsedImplicitly]
-public sealed class MechBoundUserInterface : BoundUserInterface, IBuiPreTickUpdate
+public sealed class MechBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey), IBuiPreTickUpdate
 {
     [Dependency] private readonly IClientGameTiming _gameTiming = null!;
+    [Dependency] private readonly IEntityManager _entMan = default!;
 
     [ViewVariables]
     private MechMenu? _menu;
@@ -22,11 +22,6 @@ public sealed class MechBoundUserInterface : BoundUserInterface, IBuiPreTickUpda
     private InputCoalescer<bool> _airtightCoalescer;
     private InputCoalescer<bool> _fanCoalescer;
     private InputCoalescer<bool> _filterCoalescer;
-
-    public MechBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        IoCManager.InjectDependencies(this);
-    }
 
     protected override void Open()
     {
@@ -40,7 +35,7 @@ public sealed class MechBoundUserInterface : BoundUserInterface, IBuiPreTickUpda
 
         // Predict access banner based on lock component if available
         var predictedHasAccess = true;
-        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MechLockComponent>(Owner, out var lockComp))
+        if (_entMan.TryGetComponent<MechLockComponent>(Owner, out var lockComp))
             predictedHasAccess = !lockComp.IsLocked;
         _menu.OverrideAccessAndRefresh(predictedHasAccess);
 

@@ -1,9 +1,7 @@
 using Content.Shared.Interaction;
 using Content.Shared.Mech.Components;
-using Content.Shared.Mech.EntitySystems;
-using Content.Shared.Whitelist;
 
-namespace Content.Server.Mech.Systems;
+namespace Content.Shared.Mech.Systems;
 
 /// <summary>
 /// Handles the insertion of mech module into mechs.
@@ -13,17 +11,18 @@ public sealed class MechModuleSystem : MechInstallSystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<MechModuleComponent, AfterInteractEvent>(OnUsed);
         SubscribeLocalEvent<MechModuleComponent, InsertModuleEvent>(OnInsert);
     }
 
-    private void OnUsed(EntityUid uid, MechModuleComponent component, AfterInteractEvent args)
+    private void OnUsed(Entity<MechModuleComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
 
         var mech = args.Target.Value;
-        if (!TryPrepareInstall(uid, args.User, mech, out var mechComp))
+        if (!TryPrepareInstall(args.User, mech, out var mechComp))
             return;
 
         if (mechComp == null)
@@ -31,33 +30,33 @@ public sealed class MechModuleSystem : MechInstallSystem
 
         if (mechComp.ModuleContainer.ContainedEntities.Count >= mechComp.MaxModuleAmount)
         {
-            Popup.PopupEntity(Loc.GetString("mech-module-slot-full-popup"), args.User);
+            Popup.PopupPredicted(Loc.GetString("mech-module-slot-full-popup"), args.User, args.User);
             return;
         }
 
-        if (Whitelist.IsWhitelistFail(mechComp.ModuleWhitelist, uid))
+        if (Whitelist.IsWhitelistFail(mechComp.ModuleWhitelist, ent.Owner))
         {
-            Popup.PopupEntity(Loc.GetString("mech-module-whitelist-fail-popup"), args.User);
+            Popup.PopupPredicted(Loc.GetString("mech-module-whitelist-fail-popup"), args.User, args.User);
             return;
         }
 
-        if (HasDuplicateInstalled(uid, mechComp.ModuleContainer.ContainedEntities, args.User))
+        if (HasDuplicateInstalled(ent.Owner, mechComp.ModuleContainer.ContainedEntities, args.User))
             return;
 
-        StartInstallDoAfter(args.User, uid, mech, component.InstallDuration, new InsertModuleEvent());
+        StartInstallDoAfter(args.User, ent.Owner, mech, ent.Comp.InstallDuration, new InsertModuleEvent());
     }
 
-    private void OnInsert(EntityUid uid, MechModuleComponent component, InsertModuleEvent args)
+    private void OnInsert(Entity<MechModuleComponent> ent, ref InsertModuleEvent args)
     {
         if (args.Handled || args.Cancelled || args.Args.Target == null)
             return;
 
         var mech = args.Args.Target.Value;
-        if (!TryFinalizeInsert(mech, args.Args.User, out var mechComp))
+        if (!TryFinalizeInsert(mech, out var mechComp))
             return;
 
-        PopupFinish(mech, uid);
-        MechSystem.InsertEquipment(mech, uid, mechComp, moduleComponent: component);
+        PopupFinish(mech, ent.Owner);
+        MechSystem.InsertEquipment((mech, mechComp!), ent.Owner, moduleComponent: ent.Comp);
         args.Handled = true;
     }
 }

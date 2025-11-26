@@ -15,9 +15,9 @@ public sealed class MechEquipmentRadialSystem : EntitySystem
         SubscribeLocalEvent<MechComponent, MechOpenEquipmentRadialEvent>(OnOpenEquipmentRadial);
     }
 
-    private void OnOpenEquipmentRadial(EntityUid uid, MechComponent component, MechOpenEquipmentRadialEvent args)
+    private void OnOpenEquipmentRadial(Entity<MechComponent> ent, ref MechOpenEquipmentRadialEvent args)
     {
         var controller = _uiManager.GetUIController<MechEquipmentRadialUIController>();
-        controller.OpenRadialMenu(uid);
+        controller.OpenRadialMenu(ent.Owner);
     }
 }

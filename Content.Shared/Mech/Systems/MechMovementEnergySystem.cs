@@ -1,32 +1,31 @@
-using Content.Server.Mech.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mech.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.Vehicle;
-using Content.Shared.Vehicle.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.Power.EntitySystems;
 using System.Numerics;
 using System.Linq;
 
-namespace Content.Server.Mech.Systems;
+namespace Content.Shared.Mech.Systems;
 
 /// <summary>
-/// Handles per-frame movement energy drain for mechs to avoid an Update override in MechSystem.
+/// Handles per-frame movement energy drain for mechs to avoid.
 /// </summary>
 public sealed class MechMovementEnergySystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly MechSystem _mechSystem = default!;
+    [Dependency] private readonly SharedMechSystem _mech = default!;
     [Dependency] private readonly PredictedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
-    private readonly HashSet<EntityUid> _activeMechs = new();
+    private readonly HashSet<EntityUid> _activeMechs = [];
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<MechComponent, MechMovementDrainToggleEvent>(OnDrainToggle);
     }
 
@@ -47,13 +46,13 @@ public sealed class MechMovementEnergySystem : EntitySystem
 
         foreach (var mechUid in _activeMechs.ToArray())
         {
-            if (!TryComp<MechComponent>(mechUid, out var mech) || !TryComp<InputMoverComponent>(mechUid, out var mover))
+            if (!TryComp<MechComponent>(mechUid, out var mechComp) || !TryComp<InputMoverComponent>(mechUid, out var mover))
             {
                 _activeMechs.Remove(mechUid);
                 continue;
             }
 
-            if (mech.MovementEnergyPerSecond <= 0f)
+            if (mechComp.MovementEnergyPerSecond <= 0f)
                 continue;
 
             if (!mover.CanMove || mover.WishDir == Vector2.Zero)
@@ -63,7 +62,7 @@ public sealed class MechMovementEnergySystem : EntitySystem
                 continue;
 
             var charge = _battery.GetCharge(mechBattery.Value.AsNullable());
-            var toDrain = mech.MovementEnergyPerSecond * frameTime;
+            var toDrain = mechComp.MovementEnergyPerSecond * frameTime;
             if (charge < toDrain)
             {
                 _actionBlocker.UpdateCanMove(mechUid);
@@ -71,7 +70,7 @@ public sealed class MechMovementEnergySystem : EntitySystem
                 continue;
             }
 
-            _mechSystem.TryChangeEnergy(mechUid, -FixedPoint2.New(toDrain), mech);
+            _mech.TryChangeEnergy((mechUid, mechComp!), -FixedPoint2.New(toDrain));
             _actionBlocker.UpdateCanMove(mechUid);
         }
     }

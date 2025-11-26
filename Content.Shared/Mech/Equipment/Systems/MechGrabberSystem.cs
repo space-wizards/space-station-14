@@ -1,23 +1,19 @@
 using System.Linq;
-using Content.Server.Interaction;
-using Content.Server.Mech.Equipment.Components;
-using Content.Server.Mech.Systems;
-using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
-using Content.Shared.Mech;
+using Content.Shared.Mech.Equipment.Components;
+using Content.Shared.Mech.Systems;
+using Content.Shared.DoAfter;
 using Content.Shared.Mech.Components;
-using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Wall;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 
-namespace Content.Server.Mech.Equipment.EntitySystems;
+namespace Content.Shared.Mech.Equipment.Systems;
 
 /// <summary>
 /// Handles <see cref="MechGrabberComponent"/> and all related UI logic
@@ -25,11 +21,11 @@ namespace Content.Server.Mech.Equipment.EntitySystems;
 public sealed class MechGrabberSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly MechSystem _mech = default!;
+    [Dependency] private readonly SharedMechSystem _mech = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly VehicleSystem _vehicle = default!;
 
     /// <inheritdoc/>
@@ -164,7 +160,7 @@ public sealed class MechGrabberSystem : EntitySystem
             return;
 
         args.Handled = true;
-        component.AudioStream = _audio.PlayPvs(component.GrabSound, uid)?.Entity;
+        component.AudioStream = _audio.PlayPredicted(component.GrabSound, uid, uid)?.Entity;
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnMove = true
@@ -188,12 +184,16 @@ public sealed class MechGrabberSystem : EntitySystem
 
         if (!TryComp<MechEquipmentComponent>(uid, out var equipmentComponent) || equipmentComponent.EquipmentOwner == null)
             return;
-        var mech = equipmentComponent.EquipmentOwner.Value;
-        if (!_mech.TryChangeEnergy(mech, component.GrabEnergyDelta))
-            return;
+
+        var mechUid = equipmentComponent.EquipmentOwner.Value;
+        if (TryComp<MechComponent>(mechUid, out var mechComp))
+        {
+            if (!_mech.TryChangeEnergy((mechUid, mechComp!), component.GrabEnergyDelta))
+                return;
+        }
 
         _container.Insert(args.Args.Target.Value, component.ItemContainer);
-        _mech.UpdateUserInterface(mech);
+        _mech.UpdateUserInterface(mechUid);
 
         args.Handled = true;
     }

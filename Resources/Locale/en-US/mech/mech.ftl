@@ -35,43 +35,40 @@ mech-energy-display-label = Energy
 mech-energy-display = {$amount} %
 mech-energy-missing = MISSING
 
-mech-equipment-slot-display = Equipment: {$used}/{$max} used
-mech-module-slot-display = Modules: {$used}/{$max} used
+mech-equipment-slot-display-label = Equipment: {$used}/{$max} used
+mech-module-slot-display-label = Modules: {$used}/{$max} used
 mech-grabber-capacity = {$current}/{$max}
 mech-no-data-status = No airtight
 
-mech-generator-output = Output: {$rate} W
-mech-generator-fuel = Fuel: {$amount} ({$name})
+mech-generator-output-label = Output: {$rate} W
+mech-generator-fuel-label = Fuel: {$amount} ({$name})
 
 # Atmospheric system
 mech-cabin-pressure-label = Cabin Air:
-mech-cabin-pressure-level = {$level} kPa
+mech-cabin-pressure-level-label = {$level} kPa
 mech-cabin-temperature-label = Temperature:
-mech-cabin-temperature-level = {$tempC} °C
-mech-air-toggle = Toggle
-mech-cabin-purge = Purge
-mech-airtight-unavailable = Not airtight cabin
+mech-cabin-temperature-level-label = {$tempC} °C
+mech-air-toggle-button = Toggle
+mech-cabin-purge-button = Purge
+mech-airtight-unavailable-label = Not airtight cabin
 
 mech-tank-pressure-label = Tank Air:
-mech-tank-pressure-level = { $state ->
+mech-tank-pressure-level-label = { $state ->
     [ok] {$pressure} kPa
     *[na] N/A
 }
 
 # Fan system
 mech-fan-label = Fan:
-mech-fan-on = On
-mech-fan-off = Off
-mech-fan-toggle = Toggle Fan
 mech-fan-status-label = Fan Status:
-mech-fan-status = { $state ->
+mech-fan-status-level-label = { $state ->
     [on] On
     [idle] Idle
     [off] Off
     *[na] N/A
 }
-mech-fan-missing = No fan module
-mech-filter-enabled = Filter
+mech-fan-missing-label = No fan module
+mech-filter-enabled-checkbox = Filter
 
 # Access restriction
 mech-no-enter-popup = You cannot pilot this.
@@ -83,10 +80,11 @@ mech-eject-pilot-alert-popup = {$user} is pulling the pilot out of the {$item}!
 mech-lock-dna-label = DNA Lock:
 mech-lock-card-label = ID Lock:
 
-mech-lock-register = Register Lock
-mech-lock-activate = Activate
-mech-lock-deactivate = Deactivate
-mech-lock-reset = Reset
+mech-lock-register-button = Register Lock
+mech-lock-activate-button = Activate
+mech-lock-deactivate-button = Deactivate
+mech-lock-reset-tooltip = Reset
+mech-lock-not-set-label = Not set
 
 mech-lock-no-dna-popup = You don't have DNA to lock with!
 mech-lock-no-card-popup = You don't have an ID card to lock with!
@@ -97,10 +95,9 @@ mech-lock-card-registered-popup = ID lock registered!
 mech-lock-activated-popup = Lock activated!
 mech-lock-deactivated-popup = Lock deactivated!
 mech-lock-reset-success-popup = Lock reset!
-mech-lock-not-set = Not set
 
 # Settings access banner
-mech-settings-no-access = Access denied
+mech-settings-no-access-label = Access denied
 mech-remove-disabled-tooltip = Cannot remove while a pilot is inside.
 
 # Other

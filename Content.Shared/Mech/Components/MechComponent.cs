@@ -30,29 +30,29 @@ public sealed partial class MechComponent : Component
     /// <summary>
     /// The maximum amount of damage the mech can take.
     /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 MaxIntegrity = 250;
 
     /// <summary>
     /// The health threshold below which the mech enters broken state.
     /// Broken state is between 0 HP and this value.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 BrokenThreshold = 25;
 
     /// <summary>
     /// Whether this mech can ever be airtight (pressurized cabin capability).
     /// If false, the mech cannot be made airtight.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public bool CanAirtight = true;
 
     /// <summary>
     /// Whether or not the mech is airtight.
     /// When true, the mech uses internal air storage. When false, it uses external air.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool Airtight;
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool Airtight = false;
 
     /// <summary>
     /// Sound played when entering broken state.
@@ -125,7 +125,7 @@ public sealed partial class MechComponent : Component
     /// <summary>
     /// The maximum amount of equipment items that can be installed in the mech.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public int MaxEquipmentAmount = 3;
 
     /// <summary>
@@ -148,14 +148,14 @@ public sealed partial class MechComponent : Component
     /// Good for things like nukie mechs that start with guns.
     /// </summary>
     [DataField]
-    public List<EntProtoId> StartingEquipment = new();
+    public List<EntProtoId> StartingEquipment = [];
     #endregion
 
     #region Modules
     /// <summary>
     /// Max passive module capacity in space units.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public int MaxModuleAmount = 4;
 
     /// <summary>
@@ -176,33 +176,33 @@ public sealed partial class MechComponent : Component
     /// <summary>
     /// The passive modules that the mech initially has when it spawns.
     /// </summary>
-    [DataField]
-    public List<EntProtoId> StartingModules = new();
+    [DataField, AutoNetworkedField]
+    public List<EntProtoId> StartingModules = [];
     #endregion
 
     /// <summary>
     /// How long it takes to enter the mech.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public float EntryDelay = 3;
 
     /// <summary>
     /// How long it takes to pull *another person*
     /// outside of the mech.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public float ExitDelay = 6;
 
     /// <summary>
     /// How long it takes to pull out the battery.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public float BatteryRemovalDelay = 2;
 
     /// <summary>
     /// Energy consumed from the mech's internal battery while actively moving, in charge units per second.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public float MovementEnergyPerSecond = 5f;
 
     /// <summary>
@@ -212,11 +212,11 @@ public sealed partial class MechComponent : Component
     public string? AssemblyGraphId;
 
     #region Visualizer States
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? BaseState;
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? OpenState;
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? BrokenState;
     #endregion
 

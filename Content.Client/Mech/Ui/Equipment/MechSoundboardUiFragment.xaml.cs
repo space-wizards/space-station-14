@@ -13,7 +13,6 @@ public sealed partial class MechSoundboardUiFragment : BoxContainer
     public MechSoundboardUiFragment()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
     }
 
     public void UpdateContents(MechSoundboardUiState state)
@@ -22,7 +21,8 @@ public sealed partial class MechSoundboardUiFragment : BoxContainer
         Sounds.ClearSelected();
         foreach (var sound in state.Sounds)
         {
-            Sounds.AddItem(Loc.GetString($"mech-soundboard-{sound}")).OnSelected += item => {
+            Sounds.AddItem(Loc.GetString($"mech-soundboard-{sound}")).OnSelected += item =>
+            {
                 OnPlayAction?.Invoke(Sounds.IndexOf(item));
             };
         }

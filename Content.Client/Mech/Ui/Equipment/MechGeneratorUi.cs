@@ -1,12 +1,13 @@
 using Content.Client.UserInterface.Fragments;
 using Content.Shared.Mech;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Mech.Ui.Equipment;
 
 public sealed partial class MechGeneratorUi : UIFragment
 {
+    [Dependency] private readonly IEntityManager _entMan = default!;
+
     private MechGeneratorUiFragment? _fragment;
 
     public override Control GetUIFragmentRoot()
@@ -22,8 +23,7 @@ public sealed partial class MechGeneratorUi : UIFragment
         _fragment = new MechGeneratorUiFragment();
         _fragment.OnEject += () =>
         {
-            var entManager = IoCManager.Resolve<IEntityManager>();
-            userInterface.SendMessage(new MechGeneratorEjectFuelMessage(entManager.GetNetEntity(fragmentOwner.Value)));
+            userInterface.SendMessage(new MechGeneratorEjectFuelMessage(_entMan.GetNetEntity(fragmentOwner.Value)));
         };
     }
 

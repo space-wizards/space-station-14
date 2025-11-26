@@ -15,7 +15,6 @@ public sealed partial class MechGrabberUiFragment : BoxContainer
     public MechGrabberUiFragment()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
     }
 
     public void UpdateContents(MechGrabberUiState state)

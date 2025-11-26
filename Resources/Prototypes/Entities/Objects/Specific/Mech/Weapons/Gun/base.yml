@@ -3,7 +3,7 @@
   parent: BaseMechEquipment
   abstract: true
   components:
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 1000 # Battery is charged by mech
     startingCharge: 1000
   - type: Appearance

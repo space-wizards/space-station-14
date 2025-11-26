@@ -8,7 +8,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
 using Robust.Client.UserInterface;
-using Content.Shared.Mech.EntitySystems;
+using Content.Shared.Mech.Systems;
 using Content.Client.Mech.Ui.Equipment;
 using Robust.Shared.IoC;
 
@@ -49,7 +49,6 @@ public sealed partial class MechMenu : FancyWindow
     public MechMenu()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
 
         InitializeEventHandlers();
     }
@@ -97,14 +96,14 @@ public sealed partial class MechMenu : FancyWindow
         {
             if (_lastState.MaxIntegrity > 0f)
             {
-                            var integrityPercent = _lastState.Integrity / _lastState.MaxIntegrity;
-            IntegrityDisplayBar.Value = integrityPercent;
+                var integrityPercent = _lastState.Integrity / _lastState.MaxIntegrity;
+                IntegrityDisplayBar.Value = integrityPercent;
 
-            var integrityText = _lastState.IsBroken
-                ? _loc.GetString("mech-integrity-display-broken", ("amount", (int)(integrityPercent * 100)))
-                : _loc.GetString("mech-integrity-display", ("amount", (int)(integrityPercent * 100)));
+                var integrityText = _lastState.IsBroken
+                    ? _loc.GetString("mech-integrity-display-broken", ("amount", (int)(integrityPercent * 100)))
+                    : _loc.GetString("mech-integrity-display", ("amount", (int)(integrityPercent * 100)));
 
-            IntegrityDisplay.Text = integrityText;
+                IntegrityDisplay.Text = integrityText;
             }
             else
             {
@@ -124,10 +123,10 @@ public sealed partial class MechMenu : FancyWindow
                 EnergyDisplay.Text = _loc.GetString("mech-energy-missing");
             }
 
-            SlotDisplay.Text = _loc.GetString("mech-equipment-slot-display",
+            SlotDisplay.Text = _loc.GetString("mech-equipment-slot-display-label",
                 ("used", _lastState.EquipmentUsed), ("max", _lastState.MaxEquipmentAmount));
 
-            ModuleSlotDisplay.Text = _loc.GetString("mech-module-slot-display",
+            ModuleSlotDisplay.Text = _loc.GetString("mech-module-slot-display-label",
                 ("used", _lastState.ModuleSpaceUsed), ("max", _lastState.ModuleSpaceMax));
         }
     }
@@ -145,7 +144,7 @@ public sealed partial class MechMenu : FancyWindow
         FilterEnabledCheck.Visible = state.HasFanModule;
         FanMissingLabel.Visible = !state.HasFanModule;
 
-        CabinPurgeButton.Text = _loc.GetString("mech-cabin-purge");
+        CabinPurgeButton.Text = _loc.GetString("mech-cabin-purge-button");
         CabinPurgeButton.Disabled = !state.CabinPurgeAvailable || !state.CanAirtight;
 
         AirtightButton.Visible = state.CanAirtight;
@@ -169,27 +168,27 @@ public sealed partial class MechMenu : FancyWindow
 
         if (state.CanAirtight)
         {
-            CabinPressureLabel.Text = _loc.GetString("mech-cabin-pressure-level", ("level", $"{state.CabinPressureLevel:F1}"));
-            CabinTemperatureLabel.Text = _loc.GetString("mech-cabin-temperature-level", ("tempC", $"{tempC:F1}"));
+            CabinPressureLabel.Text = _loc.GetString("mech-cabin-pressure-level-label", ("level", $"{state.CabinPressureLevel:F1}"));
+            CabinTemperatureLabel.Text = _loc.GetString("mech-cabin-temperature-level-label", ("tempC", $"{tempC:F1}"));
             CabinPressureLabel.FontColorOverride = Color.White;
             CabinTemperatureLabel.FontColorOverride = Color.Orange;
         }
         else
         {
-            CabinPressureLabel.Text = _loc.GetString("mech-no-airtight-status");
-            CabinTemperatureLabel.Text = _loc.GetString("mech-no-airtight-status");
+            CabinPressureLabel.Text = _loc.GetString("mech-no-airtight-status-label");
+            CabinTemperatureLabel.Text = _loc.GetString("mech-no-airtight-status-label");
             CabinPressureLabel.FontColorOverride = Color.Gray;
             CabinTemperatureLabel.FontColorOverride = Color.Gray;
         }
 
         if (state.HasGasModule)
         {
-            TankPressureLabel.Text = _loc.GetString("mech-tank-pressure-level", ("state", "ok"), ("pressure", $"{state.TankPressure:F1}"));
+            TankPressureLabel.Text = _loc.GetString("mech-tank-pressure-level-label", ("state", "ok"), ("pressure", $"{state.TankPressure:F1}"));
             TankPressureLabel.FontColorOverride = Color.White;
         }
         else
         {
-            TankPressureLabel.Text = _loc.GetString("mech-tank-pressure-level", ("state", "na"));
+            TankPressureLabel.Text = _loc.GetString("mech-tank-pressure-level-label", ("state", "na"));
             TankPressureLabel.FontColorOverride = Color.Gray;
         }
 
@@ -235,7 +234,7 @@ public sealed partial class MechMenu : FancyWindow
             _ => Color.Gray
         };
 
-        FanStatusLabel.Text = _loc.GetString("mech-fan-status", ("state", stateKey));
+        FanStatusLabel.Text = _loc.GetString("mech-fan-status-level-label", ("state", stateKey));
         FanStatusLabel.FontColorOverride = stateColorKey;
     }
 
@@ -247,7 +246,7 @@ public sealed partial class MechMenu : FancyWindow
         }
         else
         {
-            DnaLockInfoLabel.Text = _loc.GetString("mech-lock-not-set");
+            DnaLockInfoLabel.Text = _loc.GetString("mech-lock-not-set-label");
         }
 
         if (state.CardLockRegistered && !string.IsNullOrEmpty(state.OwnerJobTitle))
@@ -256,7 +255,7 @@ public sealed partial class MechMenu : FancyWindow
         }
         else
         {
-            CardLockInfoLabel.Text = _loc.GetString("mech-lock-not-set");
+            CardLockInfoLabel.Text = _loc.GetString("mech-lock-not-set-label");
         }
     }
 
@@ -274,7 +273,7 @@ public sealed partial class MechMenu : FancyWindow
         registerButton.Visible = !isRegistered;
         blockButton.Visible = isRegistered;
         resetButton.Visible = isRegistered;
-        blockButton.Text = _loc.GetString(isActive ? "mech-lock-deactivate" : "mech-lock-activate");
+        blockButton.Text = _loc.GetString(isActive ? "mech-lock-deactivate-button" : "mech-lock-activate-button");
         blockButton.Pressed = isActive;
     }
 
@@ -345,7 +344,7 @@ public sealed partial class MechMenu : FancyWindow
         {
             if (!_entityManager.TryGetComponent<MechComponent>(_mech, out var mechComp))
                 return;
-            equipment = new List<NetEntity>();
+            equipment = [];
             foreach (var ent in mechComp.EquipmentContainer.ContainedEntities)
                 equipment.Add(_entityManager.GetNetEntity(ent));
         }
@@ -386,7 +385,8 @@ public sealed partial class MechMenu : FancyWindow
         {
             if (!_entityManager.TryGetComponent<MechComponent>(_mech, out var mechComp))
                 return;
-            modules = new List<NetEntity>();
+
+            modules = [];
             foreach (var ent in mechComp.ModuleContainer.ContainedEntities)
                 modules.Add(_entityManager.GetNetEntity(ent));
         }

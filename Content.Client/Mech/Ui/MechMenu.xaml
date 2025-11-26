@@ -17,12 +17,8 @@
                       Margin="0 0 8 0"
                       MinWidth="380">
 
-            <!-- Mech sprite and statistics -->
-            <PanelContainer Margin="0 0 0 8">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
-                </PanelContainer.PanelOverride>
-
+            <!-- Mech sprite and stats -->
+            <PanelContainer Margin="0 0 0 8" StyleClasses="PanelDark">
                 <GridContainer Columns="2"
                                Margin="8">
                     <!-- Name and Sprite -->
@@ -124,7 +120,7 @@
                                           HorizontalExpand="True"
                                           Orientation="Vertical">
                                 <Control VerticalExpand="True"/>
-                                <Label Text="{Loc 'mech-settings-no-access'}"
+                                <Label Text="{Loc 'mech-settings-no-access-label'}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
                                        Margin="5"/>
@@ -148,19 +144,19 @@
                                    Margin="0 0 0 3"/>
                             <BoxContainer>
                                 <Button Name="AirtightButton"
-                                        Text="{Loc 'mech-air-toggle'}"
+                                        Text="{Loc 'mech-air-toggle-button'}"
                                         StyleClasses="OpenRight"
                                         ToggleMode="True"
                                         HorizontalExpand="False"/>
                                 <Button Name="CabinPurgeButton"
-                                        Text="{Loc 'mech-cabin-purge'}"
+                                        Text="{Loc 'mech-cabin-purge-button'}"
                                         StyleClasses="OpenLeft"
                                         ToggleMode="False"
                                         HorizontalExpand="False"/>
                                 <Label Name="AirtightUnavailableLabel"
                                        Visible="False"
                                        HorizontalAlignment="Right"
-                                       Text="{Loc 'mech-airtight-unavailable'}"
+                                       Text="{Loc 'mech-airtight-unavailable-label'}"
                                        SetHeight="18"/>
                             </BoxContainer>
                         </BoxContainer>
@@ -178,12 +174,12 @@
                                 <controls:OnOffButton Name="FanToggle"/>
                                 <CheckBox Name="FilterEnabledCheck"
                                           Margin="6 0"
-                                          Text="{Loc 'mech-filter-enabled'}"
+                                          Text="{Loc 'mech-filter-enabled-checkbox'}"
                                           VerticalAlignment="Bottom"/>
                                 <Label Name="FanMissingLabel"
                                        Visible="False"
                                        HorizontalAlignment="Right"
-                                       Text="{Loc 'mech-fan-missing'}"
+                                       Text="{Loc 'mech-fan-missing-label'}"
                                        SetHeight="18"/>
                             </BoxContainer>
                         </BoxContainer>
@@ -205,7 +201,7 @@
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Margin="0 0 0 3">
                                 <Button Name="DnaLockRegisterButton"
-                                        Text="{Loc 'mech-lock-register'}"
+                                        Text="{Loc 'mech-lock-register-button'}"
                                         ToggleMode="False"
                                         HorizontalExpand="False"/>
                                 <Button Name="DnaLockBlockButton"
@@ -216,7 +212,7 @@
                                         Visible="False"/>
                                 <Button StyleClasses="OpenLeft"
                                         Name="DnaLockResetButton"
-                                        ToolTip="{Loc 'mech-lock-reset'}">
+                                        ToolTip="{Loc 'mech-lock-reset-tooltip'}">
                                     <TextureButton
                                         HorizontalExpand="False"
                                         ToggleMode="False"
@@ -224,7 +220,7 @@
                                         VerticalAlignment="Center"
                                         MouseFilter="Ignore"
                                         Scale="0.9 0.9"
-                                        StyleClasses="Refresh"/>
+                                        StyleClasses="RefreshButton"/>
                                 </Button>
                             </BoxContainer>
                             <BoxContainer>
@@ -245,7 +241,7 @@
                         <BoxContainer Orientation="Vertical">
                             <BoxContainer Margin="0 0 0 3">
                                 <Button Name="CardLockRegisterButton"
-                                        Text="{Loc 'mech-lock-register'}"
+                                        Text="{Loc 'mech-lock-register-button'}"
                                         ToggleMode="False"
                                         HorizontalExpand="False"/>
                                 <Button Name="CardLockBlockButton"
@@ -256,7 +252,7 @@
                                         Visible="False"/>
                                 <Button StyleClasses="OpenLeft"
                                         Name="CardLockResetButton"
-                                        ToolTip="{Loc 'mech-lock-reset'}">
+                                        ToolTip="{Loc 'mech-lock-reset-tooltip'}">
                                     <TextureButton
                                         HorizontalExpand="False"
                                         ToggleMode="False"
@@ -264,7 +260,7 @@
                                         VerticalAlignment="Center"
                                         MouseFilter="Ignore"
                                         Scale="0.9 0.9"
-                                        StyleClasses="Refresh"/>
+                                        StyleClasses="RefreshButton"/>
                                 </Button>
                             </BoxContainer>
                             <BoxContainer>
@@ -283,11 +279,7 @@
                       VerticalExpand="True"
                       HorizontalExpand="True">
 
-            <PanelContainer VerticalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BackgroundColor="#1B1B1E"/>
-                </PanelContainer.PanelOverride>
-
+            <PanelContainer VerticalExpand="True" StyleClasses="PanelDark">
                 <BoxContainer>
                     <!-- No access overlay -->
                     <PanelContainer Name="NoAccessEquipment"

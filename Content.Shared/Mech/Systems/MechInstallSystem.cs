@@ -1,21 +1,19 @@
-using Content.Server.Popups;
+using Content.Shared.Popups;
 using Content.Shared.DoAfter;
-using Content.Shared.Interaction;
 using Content.Shared.Mech.Components;
-using Content.Shared.Mech.EntitySystems;
 using Content.Shared.Whitelist;
 using Content.Shared.Vehicle;
 
-namespace Content.Server.Mech.Systems;
+namespace Content.Shared.Mech.Systems;
 
 /// <summary>
-/// Base system helpers to handle installing items (equipment/modules) into mechs without generics.
-/// Derived systems subscribe to events and use these helpers.
+/// Provides shared helper logic for installing mech equipment and modules.
+/// Intended to be inherited by specific mech install systems.
 /// </summary>
 public abstract class MechInstallSystem : EntitySystem
 {
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
-    [Dependency] protected readonly PopupSystem Popup = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly EntityWhitelistSystem Whitelist = default!;
     [Dependency] protected readonly VehicleSystem Vehicle = default!;
     [Dependency] protected readonly SharedMechSystem MechSystem = default!;
@@ -23,11 +21,9 @@ public abstract class MechInstallSystem : EntitySystem
     /// <summary>
     /// Common precondition checks before starting install. Validates mech, broken/closed states and actor relation.
     /// </summary>
-    protected bool TryPrepareInstall(EntityUid item, EntityUid user, EntityUid target, out MechComponent? mechComp)
+    protected bool TryPrepareInstall(EntityUid user, EntityUid target, out MechComponent? mechComp)
     {
-        mechComp = default!;
-
-        if (!TryComp<MechComponent>(target, out mechComp))
+        if (!TryComp(target, out mechComp))
             return false;
 
         // Check lock access before starting install
@@ -41,14 +37,14 @@ public abstract class MechInstallSystem : EntitySystem
         // Block install if mech is in broken state
         if (mechComp.Broken && !Vehicle.HasOperator(target))
         {
-            Popup.PopupEntity(Loc.GetString("mech-cannot-insert-broken-popup"), user);
+            Popup.PopupPredicted(Loc.GetString("mech-cannot-insert-broken-popup"), user, user);
             return false;
         }
 
         // Block install if cabin is closed
         if (Vehicle.HasOperator(target))
         {
-            Popup.PopupEntity(Loc.GetString("mech-cannot-modify-closed-popup"), user);
+            Popup.PopupPredicted(Loc.GetString("mech-cannot-modify-closed-popup"), user, user);
             return false;
         }
 
@@ -73,7 +69,7 @@ public abstract class MechInstallSystem : EntitySystem
             var md2 = EntityManager.GetComponentOrNull<MetaDataComponent>(ent);
             if (md2?.EntityPrototype != null && md2.EntityPrototype.ID == id)
             {
-                Popup.PopupEntity(Loc.GetString("mech-duplicate-installed-popup"), user);
+                Popup.PopupPredicted(Loc.GetString("mech-duplicate-installed-popup"), user, user);
                 return true;
             }
         }
@@ -86,7 +82,7 @@ public abstract class MechInstallSystem : EntitySystem
     /// </summary>
     protected void StartInstallDoAfter(EntityUid user, EntityUid item, EntityUid mech, float duration, SimpleDoAfterEvent insertEvent)
     {
-        Popup.PopupEntity(Loc.GetString("mech-install-begin-popup", ("item", item)), mech);
+        Popup.PopupPredicted(Loc.GetString("mech-install-begin-popup", ("item", item)), mech, mech);
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, user, duration, insertEvent, item, target: mech, used: item)
         {
@@ -99,11 +95,9 @@ public abstract class MechInstallSystem : EntitySystem
     /// <summary>
     /// Shared finalization checks before performing insert.
     /// </summary>
-    protected bool TryFinalizeInsert(EntityUid mech, EntityUid user, out MechComponent? mechComp)
+    protected bool TryFinalizeInsert(EntityUid mech, out MechComponent? mechComp)
     {
-        mechComp = default!;
-
-        if (!TryComp<MechComponent>(mech, out mechComp))
+        if (!TryComp(mech, out mechComp))
             return false;
 
         return true;
@@ -114,6 +108,6 @@ public abstract class MechInstallSystem : EntitySystem
     /// </summary>
     protected void PopupFinish(EntityUid mech, EntityUid item)
     {
-        Popup.PopupEntity(Loc.GetString("mech-install-finish-popup", ("item", item)), mech);
+        Popup.PopupPredicted(Loc.GetString("mech-install-finish-popup", ("item", item)), mech, mech);
     }
 }

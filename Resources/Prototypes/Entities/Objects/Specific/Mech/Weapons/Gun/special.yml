@@ -7,7 +7,7 @@
   components:
   - type: Sprite
     state: mecha_mousetrapmrtr
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 300
     startingCharge: 300
   - type: Gun
@@ -24,7 +24,7 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: AmmoCounter
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: MousetrapArmed
     fireCost: 100
   - type: Appearance
@@ -38,7 +38,7 @@
   components:
   - type: Sprite
     state: mecha_bananamrtr
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 300
     startingCharge: 300
   - type: Gun
@@ -55,7 +55,7 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: AmmoCounter
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: TrashBananaPeel
     fireCost: 100
   - type: Appearance

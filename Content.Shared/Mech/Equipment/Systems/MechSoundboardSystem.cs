@@ -45,6 +45,6 @@ public sealed class MechSoundboardSystem : EntitySystem
             return;
 
         // honk!!!!!
-        _audio.PlayPvs(comp.Sounds[msg.Sound], uid);
+        _audio.PlayPredicted(comp.Sounds[msg.Sound], uid, uid);
     }
 }

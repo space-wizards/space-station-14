@@ -2,7 +2,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Mech.Components;
 
-namespace Content.Shared.Mech.EntitySystems;
+namespace Content.Shared.Mech.Systems;
 
 public abstract partial class SharedMechSystem
 {
@@ -22,7 +22,7 @@ public abstract partial class SharedMechSystem
         RaiseLocalEvent(operatorEnt.Value, ref ev);
     }
 
-    private void RelayRefToPilot<T>(Entity<MechComponent> uid, ref T args) where T :struct
+    private void RelayRefToPilot<T>(Entity<MechComponent> uid, ref T args) where T : struct
     {
         if (!Vehicle.TryGetOperator(uid.Owner, out var operatorEnt))
             return;

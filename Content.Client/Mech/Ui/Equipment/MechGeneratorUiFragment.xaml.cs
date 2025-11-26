@@ -14,17 +14,16 @@ public sealed partial class MechGeneratorUiFragment : BoxContainer
     public MechGeneratorUiFragment()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
         EjectButton.OnPressed += _ => OnEject?.Invoke();
     }
 
     public void UpdateContents(MechGeneratorUiState state)
     {
-        OutputLabel.Text = Loc.GetString("mech-generator-output", ("rate", $"{state.ChargeCurrent:F0}/{state.ChargeMax:F0}"));
+        OutputLabel.Text = Loc.GetString("mech-generator-output-label", ("rate", $"{state.ChargeCurrent:F0}/{state.ChargeMax:F0}"));
         if (state.HasFuel)
         {
             FuelLabel.Visible = true;
-            FuelLabel.Text = Loc.GetString("mech-generator-fuel", ("name", state.FuelName ?? ""), ("amount", $"{state.FuelAmount:F0}/{state.FuelCapacity:F0}"));
+            FuelLabel.Text = Loc.GetString("mech-generator-fuel-label", ("name", state.FuelName ?? ""), ("amount", $"{state.FuelAmount:F0}/{state.FuelCapacity:F0}"));
             EjectButton.Visible = true;
         }
         else
