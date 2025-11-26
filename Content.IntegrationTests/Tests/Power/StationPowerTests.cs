@@ -29,7 +29,6 @@ public sealed class StationPowerTests
         "Oasis",
         "Packed",
         "Plasma",
-        "Elkridge",
         "Relic",
         "Snowball",
         "Reach",
