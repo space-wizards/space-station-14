@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: Added the custom door remote, it does not have any built-in access, instead
-      inheriting the ID access that the user has.
-    type: Add
-  - message: The captain's locker now comes with a custom door remote instead of a
-      command door remote.
-    type: Tweak
-  id: 8727
-  time: '2025-06-29T16:21:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35536
 - author: slarticodefast
   changes:
   - message: Fixed water cups not being able to be picked up from water coolers.
@@ -3925,3 +3914,11 @@
   id: 9227
   time: '2025-11-26T17:29:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41584
+- author: CDWimmer
+  changes:
+  - message: The Syndicate now commits one less war crime; the Syndicate medical bundle
+      cross is now blue.
+    type: Fix
+  id: 9228
+  time: '2025-11-26T21:13:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41541
