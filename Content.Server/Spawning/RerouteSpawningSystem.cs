@@ -1,9 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
-using Content.Server.Station.Systems;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Roles;
@@ -21,12 +21,10 @@ namespace Content.Server.Spawning;
 /// </summary>
 public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleComponent>
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly SharedRoleSystem _roles = default!;
-    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
     private readonly Dictionary<ICommonSession, EntityUid> _stations = [];
 
@@ -143,19 +141,19 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     /// <param name="args">The spawn event</param>
     /// <param name="jobId">The prototype ID of the job that will be assigned to the player</param>
     /// <param name="station">The station entity (nullspace)</param>
-    private void SpawnPlayer(PlayerBeforeSpawnEvent args, ProtoId<JobPrototype>? jobId, EntityUid station)
+    private void SpawnPlayer(PlayerBeforeSpawnEvent args, ProtoId<JobPrototype> jobId, EntityUid station)
     {
-        // TODO:ERRANT Ideally it should call an existing spawningsystem?
+        var session = args.Player;
+        var humanoid = args.Profile;
 
-        // You must create a vessel.
-        var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, args.Profile);
-        var mob = mobMaybe!.Value;
-        // Are you there?
-        var newMind = _mind.CreateMind(args.Player.UserId, args.Profile.Name);
-        _mind.SetUserId(newMind, args.Player.UserId);
-        // Are we connected?
-        _mind.TransferTo(newMind, mob);
-        _roles.MindAddJobRole(newMind, jobPrototype: jobId );
+        GameTicker.DoSpawn(session, humanoid, station, jobId, true, out var mob, out _, out var jobName);
+
+        // Latejoin is not a relevant concept for rerouted spawns, when the station did not even exist beforehand
+        // Also, round flow does not exist in the regular sense on a tutorial server
+        // So all spawns are recorded as just "Joined"
+        _adminLogger.Add(LogType.RoundStartJoin,
+            LogImpact.Medium,
+            $"Player {session.Name} has spawned on a solitary map. Joined as {humanoid.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {jobName:jobName}.");
     }
 
     /// <summary>

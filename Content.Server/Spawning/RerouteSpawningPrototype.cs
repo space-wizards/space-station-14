@@ -33,7 +33,7 @@ public sealed class RerouteSpawningPrototype : IPrototype
     /// Suggested use is to apply Null, Passenger or a Tutorial job
     /// </remarks>
     [DataField]
-    public ProtoId<JobPrototype>? Job;
+    public ProtoId<JobPrototype> Job;
 
     // TODO requirements/whitelist/blacklist for this option to show up in the Lobby UI?
 }
