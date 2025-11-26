@@ -3,8 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
-/// When this gamerule is active, each spawning player will be rerouted to their own personal map.
-/// Roundstart spawns will have a prototype picked for them, late joiners can choose from the available options.
+/// When this game rule is active, each spawning player will be rerouted to their own personal map.
 /// </summary>
 [RegisterComponent]
 public sealed partial class RerouteSpawningRuleComponent : Component
@@ -14,4 +13,7 @@ public sealed partial class RerouteSpawningRuleComponent : Component
     /// </summary>
     [DataField, Required]
     public List<string> Prototypes;
+
+    //TODO It's not yet possible for the player to choose from the available options.
+    //RerouteSpawningSystem always uses the first one
 }

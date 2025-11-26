@@ -14,8 +14,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Spawning;
 
+// TODO Integration test
+
 /// <summary>
-/// This system can hijack a player before spawning, and put them on their own personal map instead.
+/// This system circumvents the normal spawn system, and puts each player on their own personal map as the pre-specified job.
 /// </summary>
 public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleComponent>
 {
@@ -38,7 +40,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     }
 
     /// <summary>
-    /// A player is trying to spawn into the round
+    /// A player is trying to enter the round, or is respawning
     /// </summary>
     private void OnBeforeSpawn(PlayerBeforeSpawnEvent args)
     {
@@ -52,7 +54,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
                 continue;
 
             //TODO Lobby selection UI. Problem: the gamerule DOES NOT EXIST YET in the lobby.
-            // Even if we give the lobby UI the options, can we actually be sure those will be the choices once the rule starts?
+            //Even if we give the lobby UI the options, can we actually be sure those will be the choices once the rule starts?
             var playerChoice = 0;
 
             if (!playerChoice.InRange(0, reroute.Prototypes.Count - 1))
@@ -86,14 +88,16 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
             args.Handled = true;
             break;
         }
-        Log.Warning($"Solo spawn failed for {session.Name}, spawning on the normal map.");
+
+        if (args.Handled == false)
+            Log.Warning($"Solo spawn failed for {session.Name}, spawning on the normal map.");
     }
 
     /// <summary>
-    /// Create a personal map for every single player that logs in (whatever grid they try to spawn on)
+    /// Create a personal map for one player
     /// </summary>
-    /// <param name="args">The spawn event</param>
-    /// <param name="reroute">The reroute component for the event</param>
+    /// <param name="args">The spawn event for the player trying to spawn</param>
+    /// <param name="reroute">The reroute prototype that specifies the map and job for the spawn</param>
     /// <param name="session">The player session</param>
     /// <param name="stationTarget">The station entity (nullspace) that is being created for this player</param>
     private bool CreateSoloStation(
@@ -112,8 +116,8 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
         }
 
         // Create the new map and station, and assign them identifiable names
-        var stationName = Loc.GetString("solo-station-name", ("character", args.Profile.Name));
-        var mapName = Loc.GetString("solo-map-name", ("character", args.Profile.Name));
+        var stationName = Loc.GetString("training-station-name", ("character", args.Profile.Name));
+        var mapName = Loc.GetString("training-map-name", ("character", args.Profile.Name));
         var query = GameTicker.LoadGameMap(map, out var mapId, stationName: stationName);
         var newMap = query.First();
         _meta.SetEntityName(Transform(newMap).ParentUid, mapName);
@@ -141,7 +145,7 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
     /// <param name="station">The station entity (nullspace)</param>
     private void SpawnPlayer(PlayerBeforeSpawnEvent args, ProtoId<JobPrototype>? jobId, EntityUid station)
     {
-        //TODO:ERRANT Ideally it should call an existing spawningsystem?
+        // TODO:ERRANT Ideally it should call an existing spawningsystem?
 
         // You must create a vessel.
         var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, args.Profile);
@@ -179,6 +183,6 @@ public sealed class RerouteSpawningSystem : GameRuleSystem<RerouteSpawningRuleCo
 
     private void MapCleanup()
     {
-        //TODO map cleanup x minutes after the player left the server, or if they go back to the lobby
+        // TODO map cleanup x minutes after the player left the server, or if they go back to the lobby
     }
 }

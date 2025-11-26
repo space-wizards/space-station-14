@@ -1,2 +1,2 @@
-solo-station-name = Training Site ({$character})
-solo-map-name = Training Map ({$character})
+training-station-name = Training Site ({$character})
+training-map-name = Training Map ({$character})

@@ -1,13 +1,8 @@
 - type: rerouteSpawning
   id: RerouteTutorialTest
-  name: Tutorial
-  description: A tutorial
   map: Opening
   job: Tutorial
 
 - type: rerouteSpawning
   id: RerouteDeath
-  name: Certain Death
-  description: Nanotrasen is legally required to warn you that this location will result in your rapid demise.
   map: Empty
-  job: Tutorial

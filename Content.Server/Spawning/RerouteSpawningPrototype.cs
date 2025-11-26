@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Spawning;
 
 /// <summary>
-/// This prototype defines where/how a player will spawn under RerouteSpawningRule.
+/// This prototype defines a map and job where the player will spawn under RerouteSpawningRule.
 /// </summary>
 [Prototype]
 public sealed class RerouteSpawningPrototype : IPrototype
@@ -18,7 +18,7 @@ public sealed class RerouteSpawningPrototype : IPrototype
     // TODO name and description for the lobby?
 
     /// <summary>
-    /// The ProtoID of the GameMapPrototype that will be created for the player.
+    /// The map that will be created for the player.
     /// </summary>
     [DataField, Required]
     public ProtoId<GameMapPrototype> Map;
@@ -26,8 +26,8 @@ public sealed class RerouteSpawningPrototype : IPrototype
     // TODO gear override?
 
     /// <summary>
-    /// The protoID of the JobPrototype that will be assigned to the player.
-    /// The gear assigned to this job will also be equipped
+    /// The job that will be assigned to the player.
+    /// The starting gear and loadout assigned to this job prototype will also be equipped
     /// </summary>
     /// <remarks> Do not use this to give "real" jobs, this system ignores job bans!
     /// Suggested use is to apply Null, Passenger or a Tutorial job

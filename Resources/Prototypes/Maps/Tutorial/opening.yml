@@ -1,0 +1,18 @@
+- type: gameMap
+  id: Opening
+  mapName: 'Opening'
+  mapPath: /Maps/Tutorial/opening.yml
+  minPlayers: 0
+  stations:
+    Opening:
+      stationProto: StandardStationArena
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Tutorial'
+          #nameGenerator:
+          #  !type:NanotrasenNameGenerator
+          #  prefixCreator: 'SC'
+        - type: StationJobs
+          availableJobs:
+            Passenger: [ -1, -1 ] #infinite, not counted
+
