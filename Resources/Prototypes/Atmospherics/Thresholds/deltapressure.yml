@@ -28,8 +28,8 @@
   id: BaseDeltaPressurePlasma
   components:
   - type: DeltaPressure
-    minPressure: 999999999999999
-    minPressureDelta: 999999999999999
+    minPressure: 9999999999999999
+    minPressureDelta: 9999999999999999
     scalingType: Linear
     scalingPower: 0.0005
 
