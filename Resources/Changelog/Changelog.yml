@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed smart equip not being able to insert items into item slots (for
-      example for the sabre sheath).
-    type: Fix
-  id: 8726
-  time: '2025-06-29T14:33:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38655
 - author: BramvanZijp
   changes:
   - message: Added the custom door remote, it does not have any built-in access, instead
@@ -3926,3 +3918,10 @@
   id: 9226
   time: '2025-11-24T17:04:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41379
+- author: YoungThugSS14
+  changes:
+  - message: Tourniquets can now fit in medical belts
+    type: Tweak
+  id: 9227
+  time: '2025-11-26T17:29:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41584
