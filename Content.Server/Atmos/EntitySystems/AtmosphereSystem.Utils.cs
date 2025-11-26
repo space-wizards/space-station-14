@@ -180,21 +180,19 @@ public partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Forces all <see cref="AtmosDeviceComponent"/> devices to leave and rejoin the attached grid atmosphere.
-    /// This is used to properly resync devices after a significant atmos change,
-    /// for example an entire grid's atmosphere being rebuilt, as they could be storing references to old tiles.
+    /// Notifies all subscribing entities on a particular tile that the tile has changed.
+    /// Atmos devices may store references to tiles, so this is used to properly resync devices
+    /// after a significant atmos change on that tile, for example a tile getting a new <see cref="GasMixture"/>.
     /// </summary>
     /// <param name="ent">The grid atmosphere entity.</param>
-    private void LeaveRejoinAllDevices(Entity<GridAtmosphereComponent> ent)
+    /// <param name="tile">The tile to check for devices on.</param>
+    private void NotifyDeviceTileChanged(Entity<GridAtmosphereComponent, MapGridComponent> ent, Vector2i tile)
     {
-        var query = EntityQueryEnumerator<AtmosDeviceComponent, TransformComponent>();
-
-        while (query.MoveNext(out var uid, out var deviceComp, out var xform))
+        var inTile = _mapSystem.GetAnchoredEntities(ent.Owner, ent.Comp2, tile);
+        foreach (var uid in inTile)
         {
-            if (xform.GridUid != ent.Owner)
-                continue;
-
-            _atmosDeviceSys.RejoinAtmosphere((uid, deviceComp));
+            var ev = new AtmosDeviceTileChangedEvent();
+            RaiseLocalEvent(uid, ref ev);
         }
     }
 }
