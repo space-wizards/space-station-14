@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
@@ -29,12 +30,12 @@ namespace Content.Shared.Whitelist;
 /// </code>
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class EntityWhitelist
+public sealed partial class EntityWhitelist : IEquatable<EntityWhitelist>
 {
     /// <summary>
     ///     Component names that are allowed in the whitelist.
     /// </summary>
-    [DataField(customTypeSerializer:typeof(CustomArraySerializer<string, ComponentNameSerializer>))]
+    [DataField(customTypeSerializer: typeof(CustomArraySerializer<string, ComponentNameSerializer>))]
     public string[]? Components;
 
     /// <summary>
@@ -59,4 +60,52 @@ public sealed partial class EntityWhitelist
     /// </summary>
     [DataField]
     public bool RequireAll;
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is EntityWhitelist whitelist)
+            return Equals(whitelist);
+        return false;
+    }
+
+    public bool Equals(EntityWhitelist? other)
+    {
+        if (ReferenceEquals(this, other)) return true;
+        if (other is null) return false;
+
+        if (RequireAll != other.RequireAll) return false;
+        if (!NullableSequenceEqual(Components, other.Components)) return false;
+        if (!NullableSequenceEqual(Sizes, other.Sizes)) return false;
+        if (!NullableSequenceEqual(Tags, other.Tags)) return false;
+
+        return true;
+    }
+
+    public override int GetHashCode()
+    {
+        var hash = new HashCode();
+
+        hash.Add(RequireAll);
+        AddNullableSequence(ref hash, Components);
+        AddNullableSequence(ref hash, Sizes);
+        AddNullableSequence(ref hash, Tags);
+
+        return hash.ToHashCode();
+    }
+
+    private static bool NullableSequenceEqual<T>(IEnumerable<T>? a, IEnumerable<T>? b)
+    {
+        if (ReferenceEquals(a, b)) return true;
+        if (a is null || b is null) return false;
+        return a.SequenceEqual(b);
+    }
+
+    private static void AddNullableSequence<T>(ref HashCode hash, IEnumerable<T>? seq)
+    {
+        if (seq == null)
+            hash.Add(0);
+        else
+            foreach (var item in seq)
+                hash.Add(item);
+    }
 }
