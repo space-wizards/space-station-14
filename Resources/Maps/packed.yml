@@ -10553,8 +10553,6 @@ entities:
       pos: 21.5,-17.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 9
   - uid: 8008
@@ -64688,8 +64686,6 @@ entities:
     - type: AtmosPipeColor
       color: '#0055CCFF'
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 9
   - uid: 5964
@@ -65584,8 +65580,6 @@ entities:
     - type: AtmosPipeColor
       color: '#990000FF'
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 9
   - uid: 5968
