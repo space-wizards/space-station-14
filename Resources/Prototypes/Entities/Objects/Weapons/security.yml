@@ -240,7 +240,6 @@
   suffix: Cyborg
   components:
   - type: PredictedBatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 20
   - type: PredictedBattery # 3/4 the charge capacity but slowly recharges
     maxCharge: 750

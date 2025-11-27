@@ -1710,7 +1710,7 @@
     - state: icon-ert
   - type: ItemBorgModule
     hands:
-    - item: WeaponEnergyMagnum # I would have made a new weapon but honestly this works just as well as what I would have made.
+    - item: WeaponCyborgImmolatorCannon
     - item: StunBatonCyborg
     - item: SonicJackhammer
     - item: JetpackInfinite

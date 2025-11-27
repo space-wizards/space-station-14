@@ -999,13 +999,49 @@
     autoRechargeRate: 10
 
 - type: entity
-  parent: WeaponPulseRifle
+  parent: BaseWeaponBattery
   id: WeaponCyborgImmolatorCannon
   name: cyborg immolator cannon
-  description: temp placeholder ignore this maints beause if this description is still here it's not really "Finished" yet and the commit is here purely to see if that fixed the merge conflict. On another note, did you know that this originally came from devilstation? I made this in my freetime because I was bored, crazy that I'm making this upstream content now. It's also on Omu too, so I'll have to remove/replace it with the upstream version later as well. You know, I should really try my hand on CS code soon, then I can make so many horrors! On another note, can I just mention I don't really like hitscan that much? I mean, the gimmick of instant damage doesn't feel fun to me honestly. Like, on goob; the hell of ballancing, there's a sniper the HOS has that deals 60 HITSCAN DAMAGE!! Wow... uh... wait, uh, what were we talking about?
+  description: A modified version of the Pulse Carbine, made for cyborgs, by cyborgs. Comes with enough modes for nearly any situation.
   components:
-  - type: Gun
-    minAngle: -4
-    maxAngle: 4
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi # works well for the sprite, and what I had in mind.
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Appearance
   - type: PredictedBatterySelfRecharger
-    autoRechargeRate: 10
+    autoRechargeRate: 25
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: BatteryAmmoProvider
+    proto: Pulse
+    fireCost: 100
+  - type: PredictedBattery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletLaser # I'm not doing hitscan. The borgs are powerful anyway.
+      fireCost: 40
+    - proto: BulletLaserSpread
+      fireCost: 120
+    - proto: BulletLaserSpreadNarrow
+      fireCost: 120
+    - proto: BulletDisabler
+      fireCost: 30
+      pacifismAllowedMode: true
+    - proto: BulletDisablerSmgSpread
+      fireCost: 70
+      pacifismAllowedMode: true
+  - type: Item
+    size: Large

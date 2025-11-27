@@ -584,7 +584,6 @@
       - BorgModuleService
       - BorgModuleJanitor
       - BorgModuleCentComm
-  - type: FlashImmunity
   - type: IntrinsicRadioTransmitter
     channels:
     - Common
