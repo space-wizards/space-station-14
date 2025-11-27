@@ -183,6 +183,9 @@ public sealed partial class PredictedBatterySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return 0f;
 
+        if (ent.Comp.MaxCharge <= 0f)
+            return 0f;
+
         return GetCharge(ent) / ent.Comp.MaxCharge;
     }
 

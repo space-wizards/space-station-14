@@ -43,8 +43,8 @@ public sealed class JammerSystem : SharedJammerSystem
                 }
                 else
                 {
-                    var chargePercent = _battery.GetChargeLevel(battery.Value.AsNullable());
-                    var chargeLevel = chargePercent switch
+                    var chargeFraction = _battery.GetChargeLevel(battery.Value.AsNullable());
+                    var chargeLevel = chargeFraction switch
                     {
                         > 0.50f => RadioJammerChargeLevel.High,
                         < 0.15f => RadioJammerChargeLevel.Low,

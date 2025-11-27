@@ -238,12 +238,12 @@ namespace Content.Server.Light.EntitySystems
 
             var appearanceComponent = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
 
-            var chargePercent = _battery.GetChargeLevel(battery.Value.AsNullable());
-            if (chargePercent >= 0.30)
+            var chargeFraction = _battery.GetChargeLevel(battery.Value.AsNullable());
+            if (chargeFraction >= 0.30)
             {
                 _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower, appearanceComponent);
             }
-            else if (chargePercent >= 0.10)
+            else if (chargeFraction >= 0.10)
             {
                 _appearance.SetData(uid, HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower, appearanceComponent);
             }
