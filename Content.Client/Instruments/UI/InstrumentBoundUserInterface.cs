@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Robust.Client.Audio.Midi;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Instruments.UI
 {
@@ -20,8 +21,6 @@ namespace Content.Client.Instruments.UI
         public readonly SharedInteractionSystem Interactions;
 
         [ViewVariables] private InstrumentMenu? _instrumentMenu;
-        [ViewVariables] private BandMidiSource? _bandMenu;
-        [ViewVariables] private ChannelsMenu? _channelsMenu;
 
         public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -35,7 +34,7 @@ namespace Content.Client.Instruments.UI
         protected override void ReceiveMessage(BoundUserInterfaceMessage message)
         {
             if (message is InstrumentBandResponseBuiMessage bandRx)
-                _bandMenu?.Populate(bandRx.Nearby, EntMan);
+                _instrumentMenu?.PopulateBands(bandRx.Nearby, EntMan);
         }
 
         protected override void Open()
@@ -45,16 +44,15 @@ namespace Content.Client.Instruments.UI
             _instrumentMenu = this.CreateWindow<InstrumentMenu>();
             _instrumentMenu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
-            _instrumentMenu.OnOpenBand += OpenBandMenu;
-            _instrumentMenu.OnOpenChannels += OpenChannelsMenu;
-            _instrumentMenu.OnCloseChannels += CloseChannelsMenu;
-            _instrumentMenu.OnCloseBands += CloseBandMenu;
+            _instrumentMenu.RefreshBandsRequest += InstrumentMenu_RefreshBandsRequest;
+            _instrumentMenu.SetBandMasterRequest += InstrumentMenu_SetBandMasterRequest;
 
-            _instrumentMenu.SetMIDI(MidiManager.IsAvailable);
+            _instrumentMenu.SetMIDIAvailability(MidiManager.IsAvailable);
 
             if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
             {
                 _instrumentMenu.SetInstrument((Owner, instrument));
+                instrument.OnMidiPlaybackEnded += Instrument_OnMidiPlaybackEnded;
             }
         }
 
@@ -66,50 +64,24 @@ namespace Content.Client.Instruments.UI
 
             if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
             {
-                _instrumentMenu?.RemoveInstrument(instrument);
+                instrument.OnMidiPlaybackEnded -= Instrument_OnMidiPlaybackEnded;
             }
-
-            _bandMenu?.Dispose();
-            _channelsMenu?.Dispose();
         }
 
-        public void RefreshBands()
+        private void Instrument_OnMidiPlaybackEnded()
+        {
+            // Give the InstrumentSystem time to clear the renderer, preventing it from reusing the renderer it's about to dispose.
+            Timer.Spawn(1000, () => { _instrumentMenu?.NotifyTrackEnded(); });
+        }
+
+        private void InstrumentMenu_SetBandMasterRequest(EntityUid ent)
+        {
+            Instruments.SetMaster(Owner, ent);
+        }
+
+        private void InstrumentMenu_RefreshBandsRequest()
         {
             SendMessage(new InstrumentBandRequestBuiMessage());
-        }
-
-        public void OpenBandMenu()
-        {
-            _bandMenu ??= new BandMidiSource(this);
-
-            if (EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
-            {
-                _bandMenu.Master = instrument.Master;
-            }
-
-            // Refresh cache...
-            RefreshBands();
-
-            _bandMenu.OpenCenteredLeft();
-        }
-
-        public void CloseBandMenu()
-        {
-            if(_bandMenu?.IsOpen ?? false)
-                _bandMenu.Close();
-        }
-
-        public void OpenChannelsMenu()
-        {
-            _channelsMenu ??= new ChannelsMenu(this);
-            _channelsMenu.Populate();
-            _channelsMenu.OpenCenteredRight();
-        }
-
-        public void CloseChannelsMenu()
-        {
-            if(_channelsMenu?.IsOpen ?? false)
-                _channelsMenu.Close();
         }
     }
 }
