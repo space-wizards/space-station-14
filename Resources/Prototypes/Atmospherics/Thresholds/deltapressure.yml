@@ -18,8 +18,8 @@
   id: BaseDeltaPressureReinforcedPlasmaQuarter
   components:
   - type: DeltaPressure
-    minPressure: 37500
-    minPressureDelta: 25000
+    minPressure: 9999999999999999
+    minPressureDelta: 9999999999999999
     scalingType: Threshold
 
 ## For plasma windows
