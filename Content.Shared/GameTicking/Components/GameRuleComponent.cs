@@ -21,7 +21,7 @@ public sealed partial class GameRuleComponent : Component
     /// The minimum amount of players needed for this game rule.
     /// </summary>
     [DataField]
-    public int MinPlayers = -1;
+    public int? MinPlayers;
 
     /// <summary>
     /// If true, this rule not having enough players will cancel the preset selection.
@@ -34,7 +34,7 @@ public sealed partial class GameRuleComponent : Component
     /// The maximum amount of players needed for this game rule.
     /// </summary>
     [DataField]
-    public int MaxPlayers = int.MaxValue;
+    public int? MaxPlayers;
 
     /// <summary>
     /// If true, this rule not having enough players will cancel the preset selection.

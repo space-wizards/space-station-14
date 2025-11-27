@@ -75,14 +75,11 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
         var options = _prototypeManager.Index(weights).Weights;
         var players = GameTicker.ReadyPlayerCount();
 
-        var validOptions = new Dictionary<string, float>(options.Count);
+        var validOptions = new Dictionary<ProtoId<GamePresetPrototype>, float>(options.Count);
         foreach (var (presetId, weight) in options)
         {
-            if (!_prototypeManager.TryIndex<GamePresetPrototype>(presetId, out var presetProto))
-            {
-                Log.Error($"Invalid preset {presetId} in secret rule weights: {weight}");
+            if (!_prototypeManager.Resolve<GamePresetPrototype>(presetId, out var presetProto))
                 continue;
-            }
 
             if (CanPick(presetProto, players))
                 validOptions.Add(presetId, weight);
@@ -156,7 +153,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
             if (ruleComp.MinPlayers > players && ruleComp.CancelPresetOnTooFewPlayers)
                 return false;
 
-            if (ruleComp.MaxPlayers < players)
+            if (ruleComp.MaxPlayers < players && ruleComp.CancelPresetOnTooManyPlayers)
                 return false;
         }
 
