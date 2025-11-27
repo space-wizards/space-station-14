@@ -7,8 +7,8 @@
   id: BaseDeltaPressureReinforcedPlasma
   components:
   - type: DeltaPressure
-    minPressure: 150000
-    minPressureDelta: 100000
+    minPressure: 9999999999999999
+    minPressureDelta: 9999999999999999
     scalingType: Linear
     scalingPower: 0.0001
 
