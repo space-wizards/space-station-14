@@ -124,7 +124,7 @@ public sealed partial class TriggerSystem
                     continue;
 
                 if (_whitelist.IsWhitelistFail(whitelistComp.Whitelist, ent.Value)
-                    && _whitelist.IsBlacklistPass(whitelistComp.Blacklist, ent.Value))
+                    && _whitelist.IsWhitelistPass(whitelistComp.Blacklist, ent.Value))
                     return false;
             }
         }

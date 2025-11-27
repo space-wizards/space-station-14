@@ -60,7 +60,7 @@ public sealed class TriggerOnStepTriggerAttemptSystem : EntitySystem
             return;
 
         if (_whitelist.IsWhitelistPassOrNull(ent.Comp.Whitelist, args.Tripper)
-            && _whitelist.IsBlacklistFailOrNull(ent.Comp.Whitelist, args.Tripper))
+            && _whitelist.IsWhitelistFailOrNull(ent.Comp.Whitelist, args.Tripper))
             args.Continue = true;
 
         args.Cancelled = CheckIsCancellable(ent.Comp, args.Continue);
