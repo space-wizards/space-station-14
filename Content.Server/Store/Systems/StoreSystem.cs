@@ -1,17 +1,16 @@
+using System.Linq;
 using Content.Server.Store.Components;
-using Content.Shared.UserInterface;
 using Content.Shared.FixedPoint;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Store.Components;
-using JetBrains.Annotations;
+using Content.Shared.Store.Events;
+using Content.Shared.UserInterface;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using System.Linq;
 using Robust.Shared.Timing;
-using Content.Shared.Mind;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Store.Systems;
 
@@ -37,6 +36,7 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
+        SubscribeLocalEvent<StoreComponent, IntrinsicStoreActionEvent>(OnIntrinsicStoreAction);
 
         InitializeUi();
         InitializeCommand();
@@ -153,7 +153,7 @@ public sealed partial class StoreSystem : EntitySystem
         // same tick
         currency.Comp.Price.Clear();
         if (stack != null)
-            _stack.SetCount(currency.Owner, 0, stack);
+            _stack.SetCount((currency.Owner, stack), 0);
 
         QueueDel(currency);
         return true;
@@ -187,6 +187,12 @@ public sealed partial class StoreSystem : EntitySystem
         UpdateUserInterface(null, uid, store);
         return true;
     }
+
+    private void OnIntrinsicStoreAction(Entity<StoreComponent> ent, ref IntrinsicStoreActionEvent args)
+    {
+        ToggleUi(args.Performer, ent.Owner, ent.Comp);
+    }
+
 }
 
 public sealed class CurrencyInsertAttemptEvent : CancellableEntityEventArgs

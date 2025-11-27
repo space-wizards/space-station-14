@@ -17,8 +17,21 @@ public sealed partial class TriggerSystem
 
     private void OnCollide(Entity<TriggerOnCollideComponent> ent, ref StartCollideEvent args)
     {
-        if (args.OurFixtureId == ent.Comp.FixtureID && (!ent.Comp.IgnoreOtherNonHard || args.OtherFixture.Hard))
+        if (
+            args.OurFixtureId == ent.Comp.FixtureID
+            && (!ent.Comp.IgnoreOtherNonHard || args.OtherFixture.Hard)
+            && (ent.Comp.MaxTriggers == null || ent.Comp.MaxTriggers > 0)
+        )
+        {
+            if (ent.Comp.MaxTriggers != null)
+            {
+                ent.Comp.MaxTriggers--;
+                Dirty(ent);
+                if (ent.Comp.MaxTriggers <= 0)
+                    RemCompDeferred<TriggerOnCollideComponent>(ent);
+            }
             Trigger(ent.Owner, args.OtherEntity, ent.Comp.KeyOut);
+        }
     }
 
     private void OnTimedCollide(Entity<TriggerOnTimedCollideComponent> ent, ref StartCollideEvent args)

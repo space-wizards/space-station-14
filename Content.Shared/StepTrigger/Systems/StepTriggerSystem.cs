@@ -74,7 +74,7 @@ public sealed class StepTriggerSystem : EntitySystem
                 if (ent == uid)
                     continue;
 
-                if (_whitelistSystem.IsBlacklistPass(component.Blacklist, ent.Value))
+                if (_whitelistSystem.IsWhitelistPass(component.Blacklist, ent.Value))
                 {
                     return false;
                 }

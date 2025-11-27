@@ -25,7 +25,7 @@ namespace Content.Client.Access.UI
         public void SetAccessLevels(IPrototypeManager protoManager, List<ProtoId<AccessLevelPrototype>> accessLevels)
         {
             _accessButtons.Clear();
-            AccessLevelGrid.DisposeAllChildren();
+            AccessLevelGrid.RemoveAllChildren();
 
             foreach (var access in accessLevels)
             {
