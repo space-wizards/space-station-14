@@ -31,7 +31,7 @@
 
     <PanelContainer Name="UnavailableOverlay" Visible="False" MouseFilter="Stop">
         <PanelContainer.PanelOverride>
-            <gfx:StyleBoxFlat BackgroundColor="#000000E5" />
+            <gfx:StyleBoxFlat BackgroundColor="#000000F5" />
         </PanelContainer.PanelOverride>
         <Label VerticalAlignment="Center" HorizontalAlignment="Center" Align="Center"
                StyleClasses="LabelBig"
