@@ -32,6 +32,8 @@ public sealed class ThrowingSystem : EntitySystem
     private float _airDamping;
 
     private const float ThrowManyRandomDefaultMaxForce = 0.6f;
+    private readonly (float, float) _throwSpeedRange = (0.2f, 1.0f);
+    private readonly (float, float) _throwVariationRange = (1.0f, 2.0f);
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -312,8 +314,8 @@ public sealed class ThrowingSystem : EntitySystem
                 currentDir = _random.NextAngle().ToVec();
             }
 
-            var throwSpeed = _random.NextFloat(0.2f, 1.0f) * maxThrowImpulse;
-            var airTimeVariance = _random.NextFloat(1.0f, 2.0f);
+            var throwSpeed = _random.NextFloat(_throwSpeedRange.Item1, _throwSpeedRange.Item2) * maxThrowImpulse;
+            var airTimeVariance = _random.NextFloat(_throwVariationRange.Item1, _throwVariationRange.Item2);
             TryThrow(item, currentDir * throwSpeed, throwSpeed * airTimeVariance);
         }
     }
