@@ -23,7 +23,6 @@
   - type: WirelessNetworkConnection
     range: 15
 
- # Actual Objects
 - type: entity
   parent: BaseLinkingUtility
   id: voicesensor
