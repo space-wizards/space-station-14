@@ -1423,6 +1423,9 @@
   id: Torch # CargoBounty: BountyTorch. ConstructionGraph: PumpkinAddLight
 
 - type: Tag
+  id: Tourniquet # Storage whitelist: ClothingBeltMedical
+
+- type: Tag
   id: ToyRubberDuck # ConstructionGraph: ClothingShoeSlippersDuck
 
 - type: Tag
