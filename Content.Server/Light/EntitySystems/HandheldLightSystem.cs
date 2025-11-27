@@ -108,7 +108,7 @@ namespace Content.Server.Light.EntitySystems
             // Curently every single flashlight has the same number of levels for status and that's all it uses the charge for
             // Thus we'll just check if the level changes.
 
-            if (!_powerCell.TryGetBatteryFromSlot(ent.Owner, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlotOrEntity(ent.Owner, out var battery))
                 return null;
 
             var currentCharge = _battery.GetCharge(battery.Value.AsNullable());
@@ -203,7 +203,7 @@ namespace Content.Server.Light.EntitySystems
                 return false;
             }
 
-            if (!_powerCell.TryGetBatteryFromSlot(uid.Owner, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlotOrEntity(uid.Owner, out var battery))
             {
                 _audio.PlayPvs(_audio.ResolveSound(component.TurnOnFailSound), uid);
                 _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), uid, user);
@@ -230,7 +230,7 @@ namespace Content.Server.Light.EntitySystems
         public void TryUpdate(Entity<HandheldLightComponent> uid, float frameTime)
         {
             var component = uid.Comp;
-            if (!_powerCell.TryGetBatteryFromSlot(uid.Owner, out var battery))
+            if (!_powerCell.TryGetBatteryFromSlotOrEntity(uid.Owner, out var battery))
             {
                 TurnOff(uid, false);
                 return;
