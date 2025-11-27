@@ -62,9 +62,9 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// epic explanation
+    /// Saves an specific cause of death inside of an entity LastBodyDamageComponent
     /// </summary>
-    private void SaveSpecialCauseOfDeath(EntityUid ent, string cause)  // shouldnt be a stringg thats bad u.u
+    private void SaveSpecialCauseOfDeath(EntityUid ent, string cause)
     {
         if (!TryComp<MindContainerComponent>(ent, out var mindContainer)
             || !TryComp<MindComponent>(mindContainer.Mind, out _))
@@ -77,7 +77,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     }
 
     /// <summary>
-    /// also an explanation
+    /// Clears the specific cause of death of an entity LastBodyDamageComponent
     /// </summary>
     private void ClearSpecialCause(EntityUid ent)
     {
@@ -87,7 +87,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
 
         EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
 
-        storedDamage.SpecialCauseOfDeath = "none"; // temporary, again it should be a proto id not a string
+        storedDamage.SpecialCauseOfDeath = "";
         Dirty(mindContainer.Mind.Value, storedDamage);
     }
 }

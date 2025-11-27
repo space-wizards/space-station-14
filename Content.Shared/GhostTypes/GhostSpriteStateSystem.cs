@@ -28,6 +28,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
+
         if (!TryComp<AppearanceComponent>(ent, out var appearance) || !TryComp<MindComponent>(mind, out var mindComp))
             return;
 
@@ -83,6 +84,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         }
 
         if (spriteState != null)
-            _appearance.SetData(ent, GhostComponent.GhostVisuals.Damage, ent.Comp.Prefix + spriteState, appearance);
+            _appearance.SetData(ent, GhostVisuals.Damage, ent.Comp.Prefix + spriteState, appearance);
     }
 }

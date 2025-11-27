@@ -22,8 +22,10 @@ public sealed partial class LastBodyDamageComponent : Component
     [DataField, AutoNetworkedField]
     public DamageSpecifier? Damage;
 
+    /// <summary>
+    /// Special death cause that's saved after an event related to it is triggered
+    /// For example, a BeforeExplodeEvent will save "Explosion" as the special cause of death
+    /// </summary>
     [DataField, AutoNetworkedField]
     public string SpecialCauseOfDeath;
-
-    // special case protoid's
 }
