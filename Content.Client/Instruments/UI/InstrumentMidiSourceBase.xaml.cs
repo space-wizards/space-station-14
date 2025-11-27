@@ -11,12 +11,12 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public abstract partial class InstrumentMidiSourceBase : BoxContainer
 {
-    public virtual string ButtonName { get; } = "Unknown"; // CLEANUP, LOCALIZE
-
     [Dependency] protected readonly IEntityManager EntManager = default!;
     [Dependency] protected readonly IPlayerManager PlayerManager = default!;
 
-    protected EntityUid Entity;
+    public EntityUid Entity;
+
+    public virtual string ButtonName { get; } = "Unknown"; // CLEANUP, LOCALIZE
 
     public InstrumentMidiSourceBase()
     {
@@ -24,21 +24,8 @@ public abstract partial class InstrumentMidiSourceBase : BoxContainer
         IoCManager.InjectDependencies(this);
     }
 
-    public virtual void SetInstrument(EntityUid entity)
-    {
-        Entity = entity;
-    }
-
-    public virtual void ClearInstrument()
-    {
-        Entity = EntityUid.Invalid;
-    }
-
     protected bool PlayCheck()
     {
-        if (!Entity.IsValid())
-            return false;
-
         // TODO: Move this function into the shared instrument system as a seperate PR.
         if (!EntManager.TryGetComponent(Entity, out InstrumentComponent? instrument))
             return false;
