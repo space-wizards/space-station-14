@@ -4,8 +4,8 @@ meta:
   engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/26/2025 23:54:54
-  entityCount: 15974
+  time: 11/27/2025 00:11:50
+  entityCount: 15967
 maps:
 - 126
 grids:
@@ -13758,12 +13758,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 49.5,39.5
-      parent: 2
-  - uid: 8986
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 45.5,-43.5
       parent: 2
   - uid: 13470
     components:
@@ -43380,7 +43374,7 @@ entities:
       pos: 59.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -17715.348
+      secondsUntilStateChange: -17814.623
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -49236,7 +49230,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -65009.137
+      secondsUntilStateChange: -65108.41
       state: Closing
   - uid: 9362
     components:
@@ -64324,8 +64318,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 21.5,-15.5
       parent: 2
-    - type: GasPressurePump
-      enabled: True
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasPressurePumpAlt1
@@ -72211,7 +72203,7 @@ entities:
       pos: 12.5,12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -3181.0825
+      secondsUntilStateChange: -3280.357
       state: Closing
   - uid: 5750
     components:
@@ -72875,22 +72867,6 @@ entities:
       parent: 2
 - proto: LockableButtonAtmospherics
   entities:
-  - uid: 7828
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 44.5,-49.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        12890:
-        - - Pressed
-          - Toggle
-        12891:
-        - - Pressed
-          - Toggle
-    - type: Fixtures
-      fixtures: {}
   - uid: 8692
     components:
     - type: Transform
@@ -72913,21 +72889,6 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         4257:
-        - - Pressed
-          - Toggle
-    - type: Fixtures
-      fixtures: {}
-  - uid: 15242
-    components:
-    - type: Transform
-      pos: 49.5,-49.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        12891:
-        - - Pressed
-          - Toggle
-        12890:
         - - Pressed
           - Toggle
     - type: Fixtures
@@ -72991,6 +72952,49 @@ entities:
       fixtures: {}
 - proto: LockableButtonEngineering
   entities:
+  - uid: 6937
+    components:
+    - type: MetaData
+      name: lockable button (Burn Chamber Blast Doors)
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 44.5,-49.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        12890:
+        - - Pressed
+          - Toggle
+        12891:
+        - - Pressed
+          - Toggle
+    - type: Fixtures
+      fixtures: {}
+    - type: Label
+      currentLabel: Burn Chamber Blast Doors
+    - type: NameModifier
+      baseName: lockable button
+  - uid: 7828
+    components:
+    - type: MetaData
+      name: lockable button (Burn Chamber Blast Doors)
+    - type: Transform
+      pos: 49.5,-49.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        12891:
+        - - Pressed
+          - Toggle
+        12890:
+        - - Pressed
+          - Toggle
+    - type: Fixtures
+      fixtures: {}
+    - type: Label
+      currentLabel: Burn Chamber Blast Doors
+    - type: NameModifier
+      baseName: lockable button
   - uid: 15398
     components:
     - type: Transform
@@ -82559,12 +82563,6 @@ entities:
       parent: 2
 - proto: ShuttersWindowOpen
   entities:
-  - uid: 6937
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 45.5,-44.5
-      parent: 2
   - uid: 15088
     components:
     - type: Transform
@@ -82643,30 +82641,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 18.5,44.5
-      parent: 2
-  - uid: 15119
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 45.5,-45.5
-      parent: 2
-  - uid: 15120
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 45.5,-46.5
-      parent: 2
-  - uid: 15121
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 45.5,-48.5
-      parent: 2
-  - uid: 15122
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 45.5,-47.5
       parent: 2
 - proto: SignAi
   entities:
@@ -82747,31 +82721,6 @@ entities:
       currentLabel: Front Doors
     - type: NameModifier
       baseName: signal button
-    - type: Fixtures
-      fixtures: {}
-  - uid: 15124
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 45.5,-43.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        6937:
-        - - Pressed
-          - Toggle
-        15119:
-        - - Pressed
-          - Toggle
-        15120:
-        - - Pressed
-          - Toggle
-        15122:
-        - - Pressed
-          - Toggle
-        15121:
-        - - Pressed
-          - Toggle
     - type: Fixtures
       fixtures: {}
 - proto: SignalSwitch
