@@ -72,5 +72,5 @@ book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
       Cook Time: 5 seconds
 
 book-text-kingcobra-manual = Thank you for choosing Donk Co.'s cutting edge weapon!
-In the duffel bag, we have provided you a complimentary reagent to apply to your special bayonet, simply apply the vial to the gun, and then swing your gun at your target!
-hide the evidence and burn this note after reading. Good luck, agent.
+      In the duffel bag, we have provided you a complimentary reagent to apply to your special bayonet, simply apply the vial to the gun, and then swing your gun at your target!
+      hide the evidence and burn this note after reading. Good luck, agent.

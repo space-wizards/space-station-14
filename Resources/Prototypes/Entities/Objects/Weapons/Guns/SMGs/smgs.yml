@@ -346,12 +346,12 @@
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
-    minAngle: -19
-    maxAngle: -16
+    minAngle: -17
+    maxAngle: -14
   - type: Gun
-    minAngle: 24
-    maxAngle: 35
-    shotsPerBurst: 5
+    minAngle: 25
+    maxAngle: 36
+    shotsPerBurst: 2
     availableModes:
     - Burst
     - FullAuto
@@ -395,7 +395,7 @@
     attackRate: 1
     damage:
       types:
-        Slash: 17
+        Slash: 15
     angle: 0
     animation: WeaponArcThrust
     soundHit:
@@ -405,7 +405,7 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 3
+        maxVol: 2
   - type: MeleeChemicalInjector
     solution: melee
   - type: RefillableSolution
@@ -413,7 +413,7 @@
   - type: InjectableSolution
     solution: melee
   - type: SolutionTransfer
-    maxTransferAmount: 3
+    TransferAmount: 2
   - type: Sharp
     butcherDelayModifier: 2 #It's a bayonet
   - type: Appearance
