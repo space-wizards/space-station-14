@@ -5,6 +5,7 @@ namespace Content.Shared.Power.Components;
 /// <summary>
 /// Self-recharging battery.
 /// To be used in combination with <see cref="BatteryComponent"/>.
+/// For <see cref="PredictedBatteryComponent"/> use <see cref="PredictedBatterySelfRechargerComponent"/> instead.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class BatterySelfRechargerComponent : Component
@@ -16,7 +17,7 @@ public sealed partial class BatterySelfRechargerComponent : Component
     public bool AutoRecharge = true;
 
     /// <summary>
-    /// At what rate does the entity automatically recharge?
+    /// At what rate does the entity automatically recharge? In watts.
     /// </summary>
     [DataField]
     public float AutoRechargeRate;

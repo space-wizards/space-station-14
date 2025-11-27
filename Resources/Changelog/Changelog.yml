@@ -1,87 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: Fixed smart equip not retrieving items.
-    type: Fix
-  id: 8718
-  time: '2025-06-26T16:17:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38605
-- author: Hitlinemoss
-  changes:
-  - message: The Quartermaster's PDA now comes with AstroNav preinstalled.
-    type: Tweak
-  id: 8719
-  time: '2025-06-26T22:09:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38445
-- author: BigfootBravo
-  changes:
-  - message: Bladed flatcaps are now minor contraband.
-    type: Tweak
-  id: 8720
-  time: '2025-06-26T22:57:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38597
-- author: TiniestShark
-  changes:
-  - message: Added inhand sprites to all plushies/toys and the ability to wear (most)
-      of them in either your head or neck slot.
-    type: Add
-  - message: Nar'sie, Ratvar and Revenant plushies now require two hands to hold.
-    type: Tweak
-  id: 8721
-  time: '2025-06-27T01:07:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38514
-- author: maland1
-  changes:
-  - message: Updating Thief guidebook page including making guidebook and thieving
-      satchel images more consistent
-    type: Tweak
-  id: 8722
-  time: '2025-06-27T02:03:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38586
-- author: slarticodefast
-  changes:
-  - message: Fixed RCD ghosts not disappearing when dropping the RCD.
-    type: Fix
-  id: 8723
-  time: '2025-06-27T16:39:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38622
-- author: Tayrtahn
-  changes:
-  - message: Solution containers (beakers, glasses, etc) no longer rapidly flicker
-      through different fill level visuals when transferring their contents.
-    type: Fix
-  id: 8724
-  time: '2025-06-28T00:13:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34838
-- author: Boaz1111
-  changes:
-  - message: Headphone sprites have been changed a bit, and they are now wearable
-      on the head, ears and neck.
-    type: Tweak
-  id: 8725
-  time: '2025-06-28T14:01:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38479
-- author: slarticodefast
-  changes:
-  - message: Fixed smart equip not being able to insert items into item slots (for
-      example for the sabre sheath).
-    type: Fix
-  id: 8726
-  time: '2025-06-29T14:33:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38655
-- author: BramvanZijp
-  changes:
-  - message: Added the custom door remote, it does not have any built-in access, instead
-      inheriting the ID access that the user has.
-    type: Add
-  - message: The captain's locker now comes with a custom door remote instead of a
-      command door remote.
-    type: Tweak
-  id: 8727
-  time: '2025-06-29T16:21:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35536
-- author: slarticodefast
-  changes:
   - message: Fixed water cups not being able to be picked up from water coolers.
     type: Fix
   id: 8728
@@ -3927,3 +3846,79 @@
   id: 9218
   time: '2025-11-21T22:09:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40689
+- author: ciaran
+  changes:
+  - message: other people still touching a body when a defib is used will be shocked
+      too
+    type: Add
+  id: 9219
+  time: '2025-11-22T23:56:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35998
+- author: slarticodefast
+  changes:
+  - message: Artifact analyzers are no longer extremely power hungry.
+    type: Tweak
+  id: 9220
+  time: '2025-11-23T00:10:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41543
+- author: Jrpl
+  changes:
+  - message: Using entities in hand that have a Toggle UI option will now default
+      to it over other context menu options. The other options can still be used through
+      the context menu.
+    type: Tweak
+  id: 9221
+  time: '2025-11-23T13:11:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41547
+- author: Happyrobot33
+  changes:
+  - message: Added lobby credits for the background art
+    type: Add
+  id: 9222
+  time: '2025-11-23T13:24:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41328
+- author: Samuka
+  changes:
+  - message: There is a now a chance for ion storm to set borgs to xenoborg or mothership
+      core lawset
+    type: Add
+  id: 9223
+  time: '2025-11-23T19:11:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41532
+- author: ReWAFFlution
+  changes:
+  - message: Balloons now float and slide smoothly.
+    type: Tweak
+  id: 9224
+  time: '2025-11-23T20:41:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41102
+- author: slarticodefast
+  changes:
+  - message: Fixed the gas filter gas selection.
+    type: Fix
+  id: 9225
+  time: '2025-11-24T16:14:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41567
+- author: slarticodefast
+  changes:
+  - message: Power cells are now predicted. Please keep an eye out for bugs with any
+      battery powered device.
+    type: Tweak
+  id: 9226
+  time: '2025-11-24T17:04:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41379
+- author: YoungThugSS14
+  changes:
+  - message: Tourniquets can now fit in medical belts
+    type: Tweak
+  id: 9227
+  time: '2025-11-26T17:29:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41584
+- author: CDWimmer
+  changes:
+  - message: The Syndicate now commits one less war crime; the Syndicate medical bundle
+      cross is now blue.
+    type: Fix
+  id: 9228
+  time: '2025-11-26T21:13:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41541

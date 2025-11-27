@@ -839,6 +839,9 @@
 
 ## L ##
 
+- type: Tag
+  id: LaserWeapon # Used for a cargo bounty. Added to all hitscan weapons that shoot lasers.
+
 - type: Tag # Used on DungeonRoom prototypes.
   id: LavaBrig # PrefabDunGen whitelist on LavaBrig DungeonConfig.
 
@@ -1414,6 +1417,9 @@
 
 - type: Tag
   id: Torch # CargoBounty: BountyTorch. ConstructionGraph: PumpkinAddLight
+
+- type: Tag
+  id: Tourniquet # Storage whitelist: ClothingBeltMedical
 
 - type: Tag
   id: ToyRubberDuck # ConstructionGraph: ClothingShoeSlippersDuck

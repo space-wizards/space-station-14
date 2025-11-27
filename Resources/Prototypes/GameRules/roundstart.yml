@@ -51,6 +51,15 @@
 
 - type: entity
   parent: BaseGameRule
+  id: SubGamemodesRuleNoWizardNoXenoborg
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: Thief
+      prob: 0.5
+
+- type: entity
+  parent: BaseGameRule
   id: DummyNonAntagChance
   components:
   - type: SubGamemodes
