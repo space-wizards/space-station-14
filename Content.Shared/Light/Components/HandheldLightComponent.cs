@@ -10,6 +10,7 @@ namespace Content.Shared.Light.Components;
 public sealed partial class HandheldLightComponent : Component
 {
     public byte? Level;
+    [DataField]
     public bool Activated;
 
     [ViewVariables(VVAccess.ReadWrite)]

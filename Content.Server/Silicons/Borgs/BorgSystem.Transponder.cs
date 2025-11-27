@@ -1,9 +1,7 @@
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Damage.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Robotics;
@@ -18,10 +16,6 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem
 {
-    [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-
     private void InitializeTransponder()
     {
         SubscribeLocalEvent<BorgTransponderComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
@@ -83,7 +77,7 @@ public sealed partial class BorgSystem
             return;
 
         var message = Loc.GetString(ent.Comp1.DisabledPopup, ("name", Name(ent, ent.Comp3)));
-        Popup.PopupEntity(message, ent);
+        _popup.PopupEntity(message, ent);
         _container.Remove(brain, ent.Comp2.BrainContainer);
     }
 
@@ -111,7 +105,7 @@ public sealed partial class BorgSystem
         if (CheckEmagged(ent, "disabled"))
             ent.Comp1.FakeDisabling = true;
         else
-            Popup.PopupEntity(Loc.GetString(ent.Comp1.DisablingPopup), ent);
+            _popup.PopupEntity(Loc.GetString(ent.Comp1.DisablingPopup), ent);
 
         ent.Comp1.NextDisable = _timing.CurTime + ent.Comp1.DisableDelay;
     }
@@ -134,7 +128,7 @@ public sealed partial class BorgSystem
         }
 
         var message = Loc.GetString(ent.Comp.DestroyingPopup, ("name", Name(ent)));
-        Popup.PopupEntity(message, ent);
+        _popup.PopupEntity(message, ent);
         _trigger.ActivateTimerTrigger(ent.Owner);
 
         // prevent a shitter borg running into people
@@ -145,7 +139,7 @@ public sealed partial class BorgSystem
     {
         if (_emag.CheckFlag(uid, EmagType.Interaction))
         {
-            Popup.PopupEntity(Loc.GetString($"borg-transponder-emagged-{name}-popup"), uid, uid, PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString($"borg-transponder-emagged-{name}-popup"), uid, uid, PopupType.LargeCaution);
             return true;
         }
 
