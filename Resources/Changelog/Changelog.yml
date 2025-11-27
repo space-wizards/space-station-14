@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed water cups not being able to be picked up from water coolers.
-    type: Fix
-  id: 8728
-  time: '2025-07-01T10:25:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38681
 - author: maland1
   changes:
   - message: Fixed Wizard recalling nuke disk from inside an armed nuke making it
@@ -3922,3 +3915,10 @@
   id: 9228
   time: '2025-11-26T21:13:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41541
+- author: Compilatron144
+  changes:
+  - message: Plasma got a Christmas makeover.
+    type: Add
+  id: 9229
+  time: '2025-11-27T10:42:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41573
