@@ -580,7 +580,6 @@
       - BorgModuleEngineering
       - BorgModuleMedical
       - BorgModuleCargo
-      - BorgModuleMining
       - BorgModuleScience
       - BorgModuleService
       - BorgModuleJanitor
@@ -681,7 +680,6 @@
       - BorgModuleEngineering
       - BorgModuleMedical
       - BorgModuleCargo
-      - BorgModuleMining
       - BorgModuleScience
       - BorgModuleService
       - BorgModuleJanitor

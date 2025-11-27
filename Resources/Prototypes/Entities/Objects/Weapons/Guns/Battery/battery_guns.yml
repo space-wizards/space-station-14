@@ -996,7 +996,6 @@
     minAngle: -4
     maxAngle: 4
   - type: PredictedBatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 10
 
 - type: entity
@@ -1009,5 +1008,4 @@
     minAngle: -4
     maxAngle: 4
   - type: PredictedBatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 10
