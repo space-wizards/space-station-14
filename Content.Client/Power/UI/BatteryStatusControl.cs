@@ -44,27 +44,12 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
         if (_entityManager.TryGetComponent(_parent, out AmmoCounterComponent? _))
             return default;
 
-        var charge = 0f;
-        var max = 0f;
+        // Battery charge level.
+        int? chargePercent = null;
+        if (_powerCell.TryGetBatteryFromEntityOrSlot(_parent, out var battery))
+            chargePercent = (int)(_battery.GetChargeLevel(battery.Value.AsNullable()) * 100);
 
-        // Attempt to charge the battery.
-        if (_entityManager.TryGetComponent(_parent, out PredictedBatteryComponent? batteryComp))
-        {
-            charge = _battery.GetCharge(_parent);
-            max = batteryComp.MaxCharge;
-        }
-
-        // Attempt to charge battery in slot.
-        if (_entityManager.TryGetComponent(_parent, out PowerCellSlotComponent? slot)
-            && _powerCell.TryGetBatteryFromSlot((_parent, slot), out var cell))
-        {
-            charge = _battery.GetCharge(cell.Value.AsNullable());
-            max = cell.Value.Comp.MaxCharge;
-        }
-
-        var chargePercent = max > 0f ? (int)(charge / max * 100) : 0;
-
-        // Definition on/off status.
+        // On/off state.
         bool? toggleState = null;
         if (_entityManager.TryGetComponent(_parent, out ItemToggleComponent? toggle))
             toggleState = toggle.Activated;
