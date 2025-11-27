@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Prototypes;
 
 /// <summary>
-/// This prototype defines spawn details for SolitarySpawningRule.
+/// This prototype defines details for a spawn option for SolitarySpawningRule.
 /// </summary>
 [Prototype]
 public sealed class SolitarySpawningPrototype : IPrototype
@@ -16,19 +16,19 @@ public sealed class SolitarySpawningPrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    /// This will be the label of the button on the Join GUI
+    /// The label of the button on the Join GUI
     /// </summary>
     [DataField]
     public LocId Name = string.Empty;
 
     /// <summary>
-    /// A description that will be shown as the tooltip of the button on the Join GUI
+    /// The tooltip of the button on the Join GUI
     /// </summary>
     [DataField]
     public LocId Description = string.Empty;
 
     /// <summary>
-    /// If a message is provided, it will be announced to each player when they spawn
+    /// This message is sent to each player when they spawn
     /// </summary>
     [DataField]
     public LocId? WelcomeLoc;
@@ -43,12 +43,12 @@ public sealed class SolitarySpawningPrototype : IPrototype
 
     /// <summary>
     /// The job that will be assigned to the player.
-    /// The starting gear and loadout assigned to this job prototype will also be equipped
+    /// The starting gear and loadout specified on this job prototype will also be equipped
     /// </summary>
     /// <remarks>
     /// SolitarySpawning ignores job bans, but real jobs should in general not be used with the system.
     /// We don't want players trying to pad their role times using the tutorial.
-    /// Recommended that all tutorials use the base 'Tutorial' job, and place any necessary equipment on the map itself.
+    /// Recommended that all tutorials use the 'Tutorial' job, and place any necessary equipment on the map itself.
     /// </remarks>
     [DataField]
     public ProtoId<JobPrototype> Job = "Tutorial";
