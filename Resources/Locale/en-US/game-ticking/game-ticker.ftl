@@ -41,6 +41,7 @@ latejoin-arrivals-direction-time = A shuttle transferring you to your station wi
 latejoin-arrivals-dumped-from-shuttle = A mysterious force prevents you from leaving with the arrivals shuttle.
 latejoin-arrivals-teleport-to-spawn = A mysterious force teleports you off the arrivals shuttle. Have a safe shift!
 
+preset-too-many-ready-players = Can't start {$presetName}. Requires less than {$maxPlayers} players but we have {$readyPlayersCount}.
 preset-not-enough-ready-players = Can't start {$presetName}. Requires {$minimumPlayers} players but we have {$readyPlayersCount}.
 preset-no-one-ready = Can't start {$presetName}. No players are ready.
 
