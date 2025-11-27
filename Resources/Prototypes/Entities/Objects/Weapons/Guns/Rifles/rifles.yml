@@ -28,6 +28,7 @@
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+  - type: SmartEquipPickupStorage
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -199,7 +200,7 @@
   name: XL8
   description: |-
     The Experimental Lecter 8
-    An unreasonably expensive military grade assault rifle with integrated optic. 
+    An unreasonably expensive military grade assault rifle with integrated optic.
     Uses .20 rifle ammo.
   components:
   - type: Sprite
@@ -219,7 +220,7 @@
     - Burst
     - SemiAuto
     - FullAuto
-  
+
 - type: entity
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]

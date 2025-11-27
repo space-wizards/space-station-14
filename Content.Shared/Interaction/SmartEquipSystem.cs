@@ -1,16 +1,15 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
-using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
@@ -22,7 +21,6 @@ namespace Content.Shared.Interaction;
 /// </summary>
 public sealed class SmartEquipSystem : EntitySystem
 {
-    [Dependency] private readonly INetConfigurationManager _netConfigurationManager = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -32,23 +30,9 @@ public sealed class SmartEquipSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
-    private HashSet<ICommonSession> _getItemBeforeStorage = new();
-
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _netConfigurationManager.OnClientCVarChanges(CCVars.TakeBeforeStorage,
-        (x, session) =>
-        {
-            if (x)
-                _getItemBeforeStorage.Add(session);
-            else
-                _getItemBeforeStorage.Remove(session);
-        },
-        (session) =>
-        {
-            _getItemBeforeStorage.Remove(session);
-        });
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack, handle: false, outsidePrediction: false))
@@ -88,10 +72,10 @@ public sealed class SmartEquipSystem : EntitySystem
 
     private void HandleSmartEquipSuitStorage(ICommonSession? session)
     {
-        HandleSmartEquip(session, "suitstorage", session is null ? false : _getItemBeforeStorage.Contains(session));
+        HandleSmartEquip(session, "suitstorage");
     }
 
-    private void HandleSmartEquip(ICommonSession? session, string equipmentSlot, bool takeBeforeStorage = false)
+    private void HandleSmartEquip(ICommonSession? session, string equipmentSlot)
     {
         if (session is not { } playerSession)
             return;
@@ -131,7 +115,9 @@ public sealed class SmartEquipSystem : EntitySystem
         //    - without hand item: fail
         // 2) has an item, and that item is a storage item
         //    - with hand item: try to put it in storage
-        //    - without hand item: try to take the last stored item and put it in our hands
+        //    - without hand item:
+        //      - if item has SmartEquipPickupStorageComponent - try to pick up it
+        //      - try to take the last stored item and put it in our hands
         // 3) has an item, and that item is an item slots holder
         //    - with hand item: get the highest priority item slot with a valid whitelist and try to insert it
         //    - without hand item: get the highest priority item slot with an item and try to eject it
@@ -162,7 +148,8 @@ public sealed class SmartEquipSystem : EntitySystem
             return;
         }
 
-        if (takeBeforeStorage && handItem == null
+        // case 2 (storage item):
+        if (HasComp<SmartEquipPickupStorageComponent>(slotItem) && handItem == null
             && _inventory.CanUnequip(uid, equipmentSlot, out var _))
         {
             if (_inventory.TryUnequip(uid, equipmentSlot, inventory: inventory, predicted: true, checkDoafter: true)
@@ -170,7 +157,6 @@ public sealed class SmartEquipSystem : EntitySystem
                 return;
         }
 
-        // case 2 (storage item):
         if (TryComp<StorageComponent>(slotItem, out var storage))
         {
             switch (handItem)

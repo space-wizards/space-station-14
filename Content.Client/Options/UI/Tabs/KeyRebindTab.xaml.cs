@@ -42,12 +42,6 @@ namespace Content.Client.Options.UI.Tabs
             _cfg.SaveToFile();
         }
 
-        private void HandleToggleTakeBeforeStorageCheckbox(BaseButton.ButtonToggledEventArgs args)
-        {
-            _cfg.SetCVar(CCVars.TakeBeforeStorage, args.Pressed);
-            _cfg.SaveToFile();
-        }
-
         private void InitToggleWalk()
         {
             if (_cfg.GetCVar(CCVars.ToggleWalk))
@@ -198,7 +192,6 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.SmartEquipPocket1);
             AddButton(ContentKeyFunctions.SmartEquipPocket2);
             AddButton(ContentKeyFunctions.SmartEquipSuitStorage);
-            AddCheckBox("ui-options-toggle-smart-equip-pickup-before-storage-suitstorge", _cfg.GetCVar(CCVars.TakeBeforeStorage), HandleToggleTakeBeforeStorageCheckbox);
             AddButton(ContentKeyFunctions.OpenBackpack);
             AddButton(ContentKeyFunctions.OpenBelt);
             AddButton(ContentKeyFunctions.ThrowItemInHand);
