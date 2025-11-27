@@ -17,10 +17,6 @@ public sealed class GhostSpriteStateSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private readonly ProtoId<DamageTypePrototype> BluntProtoId = "Blunt";
-    private readonly ProtoId<DamageTypePrototype> HeatProtoId = "Heat";
-    private readonly ProtoId<DamageTypePrototype> PiercingProtoId = "Piercing";
-
     /// <summary>
     /// It goes through an entity damage and assigns them a sprite according to the highest damage type/s
     /// </summary>
@@ -33,15 +29,13 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             return;
 
         var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
+        var specialCase = "";
 
-        if (TryComp<DamageableComponent>(mindComp.CurrentEntity, out var damageComp))
-        {
-            damageTypes = _damageable.GetDamages(damageComp.DamagePerGroup, damageComp.Damage);
-        }
-        else if (TryComp<LastBodyDamageComponent>(mind, out var storedDamage) && storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
+        if (TryComp<LastBodyDamageComponent>(mind, out var storedDamage) && storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
         {
             Dirty(mind, storedDamage);
             damageTypes = _damageable.GetDamages(storedDamage.DamagePerGroup, storedDamage.Damage);
+            specialCase = storedDamage.SpecialCauseOfDeath;
         }
         else
             return;
@@ -68,14 +62,9 @@ public sealed class GhostSpriteStateSystem : EntitySystem
 
         ProtoId<DamageTypePrototype>? spriteState = null;
 
-        // Specific case for explosions (temporary solution, going to be changed soon)
-        if (highestTypes.Count == 3 &&
-            damageTypes.TryGetValue(BluntProtoId, out var bluntDmg) &&
-            damageTypes.TryGetValue(HeatProtoId, out var heatDmg) &&
-            damageTypes.TryGetValue(PiercingProtoId, out var piercingDmg) &&
-            bluntDmg == heatDmg && bluntDmg == piercingDmg)
+        if (specialCase != "")  // Possible special cases like death by an explosion 
         {
-            spriteState = "Explosion" + rand.Next(0, 3);
+            spriteState = specialCase + rand.Next(0, 3);
         }
         else
         {
