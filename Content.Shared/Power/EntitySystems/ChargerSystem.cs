@@ -68,11 +68,11 @@ public sealed class ChargerSystem : EntitySystem
                 // add how much each item is charged it
                 foreach (var contained in container.ContainedEntities)
                 {
-                    if (!SearchForBattery(contained, out var battery))
+                    if (!_powerCell.TryGetBatteryFromEntityOrSlot(contained, out var battery))
                         continue;
 
-                    var chargePercentage = _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge * 100;
-                    args.PushMarkup(Loc.GetString("charger-content", ("chargePercentage", (int)chargePercentage)));
+                    var chargePercent = _battery.GetChargeLevel(battery.Value.AsNullable()) * 100;
+                    args.PushMarkup(Loc.GetString("charger-content", ("chargePercent", (int)chargePercent)));
                 }
             }
         }
@@ -93,7 +93,7 @@ public sealed class ChargerSystem : EntitySystem
             return;
 
         AddComp<InsideChargerComponent>(args.Entity);
-        if (SearchForBattery(args.Entity, out var battery))
+        if (_powerCell.TryGetBatteryFromEntityOrSlot(args.Entity, out var battery))
             _battery.RefreshChargeRate(battery.Value.AsNullable());
         UpdateStatus(ent);
     }
@@ -107,7 +107,7 @@ public sealed class ChargerSystem : EntitySystem
             return;
 
         RemComp<InsideChargerComponent>(args.Entity);
-        if (SearchForBattery(args.Entity, out var battery))
+        if (_powerCell.TryGetBatteryFromEntityOrSlot(args.Entity, out var battery))
             _battery.RefreshChargeRate(battery.Value.AsNullable());
         UpdateStatus(ent);
     }
@@ -187,22 +187,6 @@ public sealed class ChargerSystem : EntitySystem
         UpdateStatus((chargerUid, chargerComp));
     }
 
-    private bool SearchForBattery(EntityUid uid, [NotNullWhen(true)] out Entity<PredictedBatteryComponent>? battery)
-    {
-        // try get a battery directly on the inserted entity
-        if (TryComp<PredictedBatteryComponent>(uid, out var batteryComp))
-        {
-            battery = (uid, batteryComp);
-            return true;
-        }
-        // or by checking for a power cell slot on the inserted entity
-        if (_powerCell.TryGetBatteryFromSlot(uid, out battery))
-            return true;
-
-        battery = null;
-        return false;
-    }
-
     private void RefreshAllBatteries(Entity<ChargerComponent> ent)
     {
         // try to get contents of the charger
@@ -211,7 +195,7 @@ public sealed class ChargerSystem : EntitySystem
 
         foreach (var item in container.ContainedEntities)
         {
-            if (SearchForBattery(item, out var battery))
+            if (_powerCell.TryGetBatteryFromEntityOrSlot(item, out var battery))
                 _battery.RefreshChargeRate(battery.Value.AsNullable());
         }
     }
@@ -259,7 +243,7 @@ public sealed class ChargerSystem : EntitySystem
             return CellChargerStatus.Empty;
 
         // Use the first stored battery for visuals. If someone ever makes a multi-slot charger then this will need to be changed.
-        if (!SearchForBattery(container.ContainedEntities[0], out var battery))
+        if (!_powerCell.TryGetBatteryFromEntityOrSlot(container.ContainedEntities[0], out var battery))
             return CellChargerStatus.Off;
 
         if (_battery.IsFull(battery.Value.AsNullable()))
