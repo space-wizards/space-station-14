@@ -39,9 +39,9 @@ public sealed partial class BorgSystem
             if (now < comp.NextBroadcast)
                 continue;
 
-            var charge = 0f;
+            var chargeFraction = 0f;
             if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
-                charge = _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge;
+                chargeFraction = _battery.GetChargeLevel(battery.Value.AsNullable());
 
             var hpPercent = CalcHP(uid);
 
@@ -52,7 +52,7 @@ public sealed partial class BorgSystem
                 comp.Sprite,
                 comp.Name,
                 meta.EntityName,
-                charge,
+                chargeFraction,
                 hpPercent,
                 chassis.ModuleCount,
                 hasBrain,

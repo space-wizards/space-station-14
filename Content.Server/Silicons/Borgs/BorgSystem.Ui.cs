@@ -114,7 +114,7 @@ public sealed partial class BorgSystem
             return;
         }
 
-        var chargePercent = (short)MathF.Round(_battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge * 10f);
+        var chargePercent = (short)MathF.Round(_battery.GetChargeLevel(battery.Value.AsNullable()) * 10f);
 
         // we make sure 0 only shows if they have absolutely no battery.
         // also account for floating point imprecision
