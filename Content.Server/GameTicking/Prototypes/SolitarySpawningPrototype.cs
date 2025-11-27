@@ -15,7 +15,23 @@ public sealed class SolitarySpawningPrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
-    // TODO name and description for the lobby?
+    /// <summary>
+    /// This will be the label of the button on the Join GUI
+    /// </summary>
+    [DataField]
+    public LocId Name = string.Empty;
+
+    /// <summary>
+    /// A description that will be shown as the tooltip of the button on the Join GUI
+    /// </summary>
+    [DataField]
+    public LocId Description = string.Empty;
+
+    /// <summary>
+    /// If a message is provided, it will be announced to each player when they spawn
+    /// </summary>
+    [DataField]
+    public LocId? WelcomeLoc;
 
     /// <summary>
     /// The station that will be created for the player.

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Prototypes;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Database;
@@ -20,12 +21,14 @@ namespace Content.Server.GameTicking.Rules;
 /// This system overrides the normal spawn process, and puts each player on their own personal map.
 /// </summary>
 /// <remarks>
+/// Currently, this always targets every player.
 /// The main station will still spawn, but no one will ever be on it. As such, when this game rule is in use,
-/// the server should be forced to use the 'Empty' map, to avoid spawning a bunch of unnecessary entities
+/// the server should be forced to use the 'Empty' map, to avoid spawning a bunch of unnecessary entities and active mobs
 /// </remarks>>
 public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRuleComponent>
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -47,6 +50,7 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
     private void OnBeforeSpawn(PlayerBeforeSpawnEvent args)
     {
         var session = args.Player;
+        var active = false;
 
         // Check if any Solitary Spawning rules are running
         var rules = EntityQueryEnumerator<SolitarySpawningRuleComponent,GameRuleComponent>();
@@ -55,31 +59,46 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            //TODO Lobby selection UI.
-            // Problem: the gamerule DOES NOT EXIST YET in the lobby.
-            // Even if we give the lobby UI the options, can we actually be sure those will be the choices once the rule starts?
-            var playerChoice = 0;
+            // TODO check blacklists/whitelists from the gamerule
 
-            if (!playerChoice.InRange(0, comp.Prototypes.Count - 1))
+            // Only need to report failure if the player was covered under any active rules
+            active = true;
+
+            var count = comp.Prototypes.Count;
+            if (count <= 0)
             {
-                Log.Warning($"Invalid player choice from {session} - Selected option '{playerChoice}', but only 0 to {comp.Prototypes.Count - 1} exist");
-                playerChoice = 0;
-            }
-
-            var choice = comp.Prototypes[playerChoice];
-
-            if (!_proto.TryIndex(choice, out var proto))
-            {
-                Log.Warning($"Solitary spawning failed for {session} - prototype '{choice}' does not exist");
+                Log.Warning($"No solitary spawning prototypes were included in '{ToPrettyString(uid)}'.");
                 continue;
             }
 
+            int? playerChoice = null;
+
+            //TODO query SolitarySpawningManager which option the player picked when joining
+
+            if (playerChoice is null || !playerChoice.Value.InRange(0, count - 1))
+            {
+                Log.Warning($"Received invalid player choice for '{session}'. Received option: '{playerChoice}'. " +
+                            $"The gamerule '{ToPrettyString(uid)}' has {count} prototypes. " +
+                            $"Defaulting to first option: '{comp.Prototypes[0].Id}'");
+
+                playerChoice = 0;
+            }
+
+            var chosenProtoId = comp.Prototypes[playerChoice.Value];
+
+            if (!_proto.TryIndex(chosenProtoId, out var proto))
+            {
+                Log.Warning($"Solitary spawning failed for {session} - chosen prototype '{chosenProtoId}' does not exist");
+                continue;
+            }
+            Log.Debug($"Solitary spawning prototype '{chosenProtoId}' selected for {session}");
+
             var job = proto.Job;
 
-            // This allows the player to respawn on their existing map, rather than start a new one
             if (RequestExistingStation(session, out var stationExist))
             {
-                SpawnPlayer(args, job, stationExist.Value);
+                Log.Debug($"Existing solitary station found for {session}. Not creating a new map.");
+                SpawnPlayer(args, job, stationExist.Value, null);
                 args.Handled = true;
                 break;
             }
@@ -87,12 +106,13 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
             if (!CreateSolitaryStation(args, proto, session, out var stationTarget))
                 continue;
 
-            SpawnPlayer(args, job, stationTarget.Value);
+            SpawnPlayer(args, job, stationTarget.Value, proto.WelcomeLoc);
             args.Handled = true;
             break;
         }
 
-        if (args.Handled == false)
+        // If any SolitarySpawningRules are active, it is likely a notable malfunction if a player spawns normally
+        if (active && args.Handled == false)
             Log.Warning($"Solitary spawning failed for {session.Name}, spawning on the normal map.");
     }
 
@@ -146,7 +166,8 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
     /// <param name="args">The spawn event</param>
     /// <param name="jobId">The prototype ID of the job that will be assigned to the player</param>
     /// <param name="station">The station entity (nullspace)</param>
-    private void SpawnPlayer(PlayerBeforeSpawnEvent args, ProtoId<JobPrototype> jobId, EntityUid station)
+    /// <param name="message">A message that will be announced to the player upon spawning on the map for the first time</param>
+    private void SpawnPlayer(PlayerBeforeSpawnEvent args, ProtoId<JobPrototype> jobId, EntityUid station, LocId? message)
     {
         var session = args.Player;
         var humanoid = args.Profile;
@@ -159,6 +180,9 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
         _adminLogger.Add(LogType.RoundStartJoin,
             LogImpact.Medium,
             $"Player {session.Name} has spawned on a solitary map. Joined as {humanoid.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {jobName:jobName}.");
+
+        if (message is not null)
+            _chatManager.DispatchServerMessage(session, Loc.GetString(message));
     }
 
     /// <summary>
