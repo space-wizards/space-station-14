@@ -129,6 +129,7 @@
     enabled: false # needs a player so that scientists can't drag around an empty borg for free AA
   - type: PowerCellDraw
     drawRate: 0.6
+    enabled: false # the borg is only activated when a player takes over, otherwise the battery is likely empty
   - type: ItemSlots
     slots:
       cell_slot:
