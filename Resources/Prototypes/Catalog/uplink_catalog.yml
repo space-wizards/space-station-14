@@ -196,9 +196,9 @@
   productEntity: ClothingBackpackDuffelSyndicateFilledKingcobraSMG
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 8
+    Telecrystal: 6
   cost:
-    Telecrystal: 10
+    Telecrystal: 12
   categories:
   - UplinkWeaponry
 

@@ -349,8 +349,8 @@
     minAngle: -19
     maxAngle: -16
   - type: Gun
-    minAngle: 23
-    maxAngle: 34
+    minAngle: 24
+    maxAngle: 35
     shotsPerBurst: 5
     availableModes:
     - Burst
@@ -391,11 +391,11 @@
     equippedFillBaseName: -fill-
     equippedMaxFillLevels: 1
   - type: MeleeWeapon
-    wideAnimationRotation: 270
+    wideAnimationRotation: -90
     attackRate: 1
     damage:
       types:
-        Slash: 19
+        Slash: 17
     angle: 0
     animation: WeaponArcThrust
     soundHit:
@@ -405,7 +405,7 @@
   - type: SolutionContainerManager
     solutions:
       melee:
-        maxVol: 2
+        maxVol: 3
   - type: MeleeChemicalInjector
     solution: melee
   - type: RefillableSolution
@@ -413,7 +413,7 @@
   - type: InjectableSolution
     solution: melee
   - type: SolutionTransfer
-    maxTransferAmount: 2
+    maxTransferAmount: 3
   - type: Sharp
     butcherDelayModifier: 2 #It's a bayonet
   - type: Appearance

@@ -61,13 +61,15 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledKingcobraSMG
   name: Kingcobra bundle
-  description: "Silent Death: The elite Kingcobra Submachine Gun, bundled with three magazines."
+  description: "Silent Death: The elite Kingcobra Submachine Gun, bundled with three magazines, and a bayonet."
   components:
   - type: StorageFill
     contents:
     - id: WeaponSubMachineGunKingcobra
     - id: MagazinePistolCaselessRifle
       amount: 2
+    - id: PaperWrittenKingcobraKit
+    - id: JuiceThatMakesYouWehChemistryVial
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
