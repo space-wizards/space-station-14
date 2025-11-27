@@ -6,7 +6,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-        - !type:FlammableReaction
+        - !type:Flammable
   plantMetabolism:
     - !type:PlantAdjustWeeds
       amount: -2
@@ -19,6 +19,7 @@
   parent: BasePyrotechnic
   desc: reagent-desc-thermite
   physicalDesc: reagent-physical-desc-grainy
+  contrabandSeverity: Minor
   flavor: bitter
   color: "#757245"
   boilingPoint: 2977.0 # Aluminum oxide
@@ -41,6 +42,7 @@
   parent: BasePyrotechnic
   desc: reagent-desc-napalm
   physicalDesc: reagent-physical-desc-soapy
+  contrabandSeverity: Major
   flavor: bitter
   color: "#FA00AF"
   tileReactions:
@@ -50,7 +52,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.4
   metabolisms:
     Poison:
@@ -61,7 +63,7 @@
             Heat: 2
             Poison: 1
             Caustic: 0.5 # based off napalm being an irritant
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.4
 
 - type: reagent
@@ -70,6 +72,7 @@
   parent: BasePyrotechnic
   desc: reagent-desc-phlogiston
   physicalDesc: reagent-physical-desc-burning
+  contrabandSeverity: Major
   flavor: bitter
   color: "#D4872A"
   metabolisms:
@@ -80,7 +83,7 @@
           types:
             Heat: 3
             Poison: 1
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.1
       - !type:AdjustTemperature
         amount: 6000
@@ -89,7 +92,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.2
       - !type:Ignite
 
@@ -99,6 +102,7 @@
   parent: BasePyrotechnic
   desc: reagent-desc-chlorine-trifluoride
   physicalDesc: reagent-physical-desc-blazing
+  contrabandSeverity: Major
   flavor: bitter
   color: "#FFC8C8"
   tileReactions:
@@ -112,7 +116,7 @@
             Heat: 2
             Poison: 1
             Caustic: 0.5 # CLF3 is corrosive
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.2
       - !type:AdjustTemperature
         amount: 6000
@@ -120,7 +124,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.3
       - !type:Ignite
       - !type:Emote
@@ -166,19 +170,19 @@
       - !type:SatiateThirst
         factor: 1
         conditions:
-        - !type:OrganType
-          type: Vox
+        - !type:MetabolizerTypeCondition
+          type: [Vox]
     Poison:
       effects:
       - !type:HealthChange
         conditions:
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
+        - !type:MetabolizerTypeCondition
+          type: [Vox]
+          inverted: true
         damage:
           types:
             Poison: 1
-      - !type:FlammableReaction
+      - !type:Flammable
         multiplier: 0.4
 
 - type: reagent

@@ -35,3 +35,6 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
+  - type: Tag
+    tags:
+    - GeigerCounter

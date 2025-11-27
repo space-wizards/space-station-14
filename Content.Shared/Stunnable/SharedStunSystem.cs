@@ -119,7 +119,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         if (args.OurFixtureId != ent.Comp.FixtureId)
             return;
 
-        if (_entityWhitelist.IsBlacklistPass(ent.Comp.Blacklist, args.OtherEntity))
+        if (_entityWhitelist.IsWhitelistPass(ent.Comp.Blacklist, args.OtherEntity))
             return;
 
         TryUpdateStunDuration(args.OtherEntity, ent.Comp.Duration);
@@ -288,9 +288,12 @@ public abstract partial class SharedStunSystem : EntitySystem
         }
     }
 
-    public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan duration)
+    public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan? duration)
     {
-        if (!_status.TryAddStatusEffectDuration(uid, StunId, duration))
+        if (duration == null)
+            return TryUpdateParalyzeDuration(uid, duration);
+
+        if (!_status.TryAddStatusEffectDuration(uid, StunId, duration.Value))
             return false;
 
         // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
