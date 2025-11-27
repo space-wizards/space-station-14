@@ -157,7 +157,7 @@ public abstract partial class GameRuleSystem<T> : EntitySystem where T : ICompon
             if (!silent)
                 ChatManager.SendAdminAnnouncement(Loc.GetString("preset-too-many-ready-players",
                     ("readyPlayersCount", readyPlayersCount),
-                    ("maxPlayers", minPlayers),
+                    ("maxPlayers", maxPlayers),
                     ("presetName", ToPrettyString(gameRule))));
 
             return false;

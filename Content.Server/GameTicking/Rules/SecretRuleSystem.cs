@@ -85,7 +85,7 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
                 validOptions.Add(presetId, weight);
         }
 
-        _adminLogger.Add(LogType.EventRan, LogImpact.High, $"After all checks {nameof(SecretRuleSystem)} will pick from: {validOptions.Select(x => $"{x.Key}: {x.Value} |")}");
+        _adminLogger.Add(LogType.EventRan, LogImpact.High, $"After all checks {nameof(SecretRuleSystem)} will pick from: {string.Join('|', validOptions.Select(x => $"{x.Key}: {x.Value}"))}");
 
         if (validOptions.Count == 0)
         {
