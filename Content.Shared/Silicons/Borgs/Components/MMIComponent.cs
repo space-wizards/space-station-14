@@ -22,8 +22,8 @@ public sealed partial class MMIComponent : Component
     /// <summary>
     /// The <see cref="ItemSlot"/> for this MMI. Holds the brain.
     /// </summary>
-    [ViewVariables]
-    public ItemSlot BrainSlot = default!;
+    [DataField(required: true)]
+    public ItemSlot BrainSlot = new();
 
     /// <summary>
     /// The sprite state when the brain inserted has a mind.
