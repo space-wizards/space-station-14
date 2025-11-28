@@ -49,7 +49,6 @@ public sealed class VentriloquistPuppetSystem : EntitySystem
             var ghostRole = EnsureComp<GhostRoleComponent>(ent.Owner);
             ghostRole.RoleName = Loc.GetString("ventriloquist-puppet-role-name");
             ghostRole.RoleDescription = Loc.GetString("ventriloquist-puppet-role-description");
-            ghostRole.RoleRules = Loc.GetString(ghostRole.RoleRules);
         }
 
         args.Handled = true;
