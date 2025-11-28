@@ -5,12 +5,12 @@
     
     <!-- Track list -->
     <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="0 0 0 20">
-        <Label Text="Tracks" />
+        <Label Text="{Loc 'instruments-component-menu-files-list-label'}" />
         <ItemList Name="TrackList" SelectMode="Single" VerticalExpand="True" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Button Name="AddButton" Text="Add" HorizontalExpand="True" />
-            <Button Name="RenameButton" Text="Rename" HorizontalExpand="True" />
-            <Button Name="RemoveButton" Text="Remove" HorizontalExpand="True" />
+            <Button Name="AddButton" Text="{Loc 'instruments-component-menu-files-add-button'}" HorizontalExpand="True" />
+            <Button Name="RenameButton" Text="{Loc 'instruments-component-menu-files-rename-button'}" HorizontalExpand="True" />
+            <Button Name="RemoveButton" Text="{Loc 'instruments-component-menu-files-remove-button'}" HorizontalExpand="True" />
         </BoxContainer>
     </BoxContainer>
 
@@ -22,9 +22,9 @@
     
     <!-- Track controls -->
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-        <Button Name="PlayButton" Text="Play/Stop" ToggleMode="True" />
-        <Button Name="LoopButton" Text="Loop" ToggleMode="True" />
-        <Button Name="ShuffleButton" Text="Shuffle" ToggleMode="True" />
+        <Button Name="PlayButton" Text="{Loc 'instruments-component-menu-play-stop-button'}" ToggleMode="True" />
+        <Button Name="LoopButton" Text="{Loc 'instruments-component-menu-loop-button'}" ToggleMode="True" />
+        <Button Name="ShuffleButton" Text="{Loc 'instruments-component-menu-shuffle-button'}" ToggleMode="True" />
         <BoxContainer HorizontalExpand="True" />
         <Label Name="TimeLabel" Text="--:--/--:--" Align="Right"/>
     </BoxContainer>

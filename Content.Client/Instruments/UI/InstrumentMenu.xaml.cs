@@ -19,8 +19,7 @@ namespace Content.Client.Instruments.UI
             RobustXamlLoader.Load(this);
 
             ConfigurationCollapsibleHeading.AddStyleClass(ContainerButton.StyleClassButton);
-            ConfigurationCollapsibleHeading.Label.Text = "Configuration";
-
+            ConfigurationCollapsibleHeading.Label.Text = Loc.GetString("instruments-component-menu-configuration-collapsible-header");
             BandControl.JoinBandRequest += OnBandControlJoinBandRequest;
             BandControl.RefreshBandRequest += OnBandControlRefreshBandRequest;
 

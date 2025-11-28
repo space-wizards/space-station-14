@@ -9,7 +9,7 @@
             <CollapsibleBody Name="Body">
                 <ScrollContainer VerticalExpand="True" HScrollEnabled="False" MinSize="0 150">
                     <BoxContainer Name="ItemsContainer" Orientation="Vertical" HorizontalExpand="True">
-                        <!-- TODO: Re-Implement the improved channels dialog after merge -->
+                        <!-- TODO: Re-Implement the improved channels dialog as a panel after they have been merged -->
                     </BoxContainer>
                 </ScrollContainer>
             </CollapsibleBody>
@@ -17,7 +17,7 @@
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="10">
             <BoxContainer Orientation="Vertical" VerticalExpand="True">
                 <BoxContainer Name="MidiSourceButtonsBoxContainer" Orientation="Vertical">
-                    <Label Text="MIDI Source" />
+                    <Label Text="{Loc 'instruments-component-menu-midi-source-button'}" />
                 </BoxContainer>
                 <BoxContainer Orientation="Vertical" VerticalExpand="True">
                     <SpriteView Name="InstrumentSpriteView" Stretch="Fill" VerticalExpand="True" />

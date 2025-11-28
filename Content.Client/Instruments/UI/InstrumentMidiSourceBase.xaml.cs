@@ -16,7 +16,7 @@ public abstract partial class InstrumentMidiSourceBase : BoxContainer
 
     public EntityUid Entity;
 
-    public virtual string ButtonName { get; } = "Unknown"; // CLEANUP, LOCALIZE
+    public virtual string ButtonName { get; } = Loc.GetString("instruments-component-menu-unknown-midi-source-button");
 
     public InstrumentMidiSourceBase()
     {

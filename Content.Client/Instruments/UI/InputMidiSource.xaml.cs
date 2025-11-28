@@ -6,7 +6,7 @@ namespace Content.Client.Instruments.UI;
 [GenerateTypedNameReferences]
 public sealed partial class InputMidiSource : InstrumentMidiSourceBase
 {
-    public override string ButtonName => "Input"; // CLEANUP, LOCALIZE
+    public override string ButtonName => Loc.GetString("instruments-component-menu-input-midi-source-button");
 
     public InputMidiSource()
     {

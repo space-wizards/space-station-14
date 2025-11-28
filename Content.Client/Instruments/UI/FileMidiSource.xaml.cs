@@ -29,12 +29,14 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
 
     private bool IsShuffle => ShuffleButton.Pressed;
     private bool IsPlaying => PlayButton.Pressed;
-    public override string ButtonName => "Files"; // CLEANUP, LOCALIZE
+    public override string ButtonName => Loc.GetString("instruments-component-menu-file-midi-source-button");
+
+    private readonly string _noTrackSelectedText = Loc.GetString("instruments-component-menu-files-no-track-selected");
 
     public FileMidiSource() : base()
     {
         RobustXamlLoader.Load(this);
-        CurrentTrackLabel.Text = "No track selected...";
+        CurrentTrackLabel.Text = _noTrackSelectedText;
         AddButton.OnPressed += OnAddButtonPressed;
         TrackList.OnItemSelected += OnTrackListItemSelected;
         PlayButton.OnToggled += OnPlayButtonToggled;
@@ -56,7 +58,7 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
         {
             PlayButton.Pressed = false;
             StopPlaying();
-            CurrentTrackLabel.Text = "No track selected...";
+            CurrentTrackLabel.Text = _noTrackSelectedText;
         }
     }
 
@@ -142,9 +144,9 @@ public sealed partial class FileMidiSource : InstrumentMidiSourceBase
             return;
 
         var field = "name";
-        var title = "Rename track";
+        var title = Loc.GetString("instruments-component-menu-files-rename-dialog-title");
         var placeholder = "";
-        var prompt = "New name";
+        var prompt = Loc.GetString("instruments-component-menu-files-rename-dialog-prompt");
         var entry = new QuickDialogEntry(field, QuickDialogEntryType.ShortText, prompt, placeholder);
         var entries = new List<QuickDialogEntry>() { entry };
         _reasonDialog = new DialogWindow(title, entries);
