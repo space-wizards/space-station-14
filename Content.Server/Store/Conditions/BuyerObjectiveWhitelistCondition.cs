@@ -37,15 +37,10 @@ public sealed partial class BuyerObjectiveWhitelistCondition : ListingCondition
         {
             if (whitelistSystem.IsWhitelistPass(Blacklist, objective))
                 return false;
-            if (whitelistSystem.IsWhitelistPassOrNull(Whitelist, objective))
+            if (whitelistSystem.IsWhitelistPass(Whitelist, objective))
                 whitelisted = true;
         }
 
-        if (Whitelist == null)
-        {
-            return true;
-        }
-
-        return whitelisted;
+        return Whitelist == null || whitelisted;
     }
 }
