@@ -36,7 +36,7 @@ entities:
       pos: 4.2505865,1.098512
       parent: 1
     - type: BecomesStation
-      id: Opening
+      id: TutorialTest
     - type: MapGrid
       chunks:
         0,0:

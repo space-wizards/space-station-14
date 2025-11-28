@@ -1,10 +1,10 @@
 - type: gameMap
-  id: Opening
-  mapName: 'Opening'
-  mapPath: /Maps/Tutorial/opening.yml
+  id: TutorialTest
+  mapName: 'TutorialTest'
+  mapPath: /Maps/Tutorial/tutorialtest.yml
   minPlayers: 0
   stations:
-    Opening:
+    TutorialTest:
       stationProto: StandardStationArena
       components:
         - type: StationNameSetup

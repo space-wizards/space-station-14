@@ -3,11 +3,11 @@
   name: solitary-spawn-name-tutorial
   description: solitary-spawn-description-tutorial
   welcomeLoc: solitary-spawn-welcome-tutorial
-  map: Opening
+  map: TutorialTest
 
 - type: solitarySpawning
   id: Death
-  name: solitary-spawn-name-death
-  description: solitary-spawn-description-death
-  welcomeLoc: solitary-spawn-welcome-death
+  name: solitary-spawn-name-tutorial
+  description: solitary-spawn-description-tutorial
+  welcomeLoc: solitary-spawn-welcome-tutorial
   map: Empty
