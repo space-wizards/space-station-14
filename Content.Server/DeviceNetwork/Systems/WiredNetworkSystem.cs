@@ -1,4 +1,5 @@
 using Content.Server.DeviceNetwork.Components;
+using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
 
@@ -14,17 +15,19 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         /// <summary>
-        /// Handles station cameras and spy cameras, IE Pondering Orb
+        /// Checks if it can send off station or not
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
-            /// if it's universal, let it steal the camera data from anywhere
-            if (TryComp<UniversalNetworkComponent>(args.Sender, out var sendingComponent))
+            //if connectsOffGrid is true, just let it send the packets
+
+            if (component.ConnectsOffGrid == true)
             {
                 return;
             }
 
-            /// if it's not on the same grid, don't share its data
+            // if they're not on the same grid, cancel 
+
             if (Transform(uid).GridUid != args.SenderTransform.GridUid)
             {
                 args.Cancel();

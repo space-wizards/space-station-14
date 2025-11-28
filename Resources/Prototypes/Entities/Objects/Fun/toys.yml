@@ -724,7 +724,8 @@
     deviceNetId: Wired
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
-  - type: UniversalNetworkConnection
+  - type: WiredNetworkConnection
+    connectsOffGrid: true
   - type: SurveillanceCameraMonitor
 
 - type: entity

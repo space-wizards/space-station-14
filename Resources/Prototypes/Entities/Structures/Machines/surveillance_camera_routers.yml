@@ -10,6 +10,7 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+      connectsOffGrid: true
     - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
