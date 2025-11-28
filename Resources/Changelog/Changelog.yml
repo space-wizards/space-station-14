@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Most salvage enemies have had their HP reduced
-    type: Tweak
-  - message: Most salvage weapons have had their damage reduced
-    type: Tweak
-  id: 8730
-  time: '2025-07-03T00:54:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38131
 - author: TrixxedHeart
   changes:
   - message: Made HSV the default color selector for character customization.
@@ -3921,3 +3912,11 @@
   id: 9230
   time: '2025-11-27T16:13:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41599
+- author: slarticodefast
+  changes:
+  - message: Fixed sounds playing and popups showing when opening the verb menu on
+      borgs or other entities with lockable UIs.
+    type: Fix
+  id: 9231
+  time: '2025-11-28T21:53:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41609
