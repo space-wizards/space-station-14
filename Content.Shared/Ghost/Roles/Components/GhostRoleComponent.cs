@@ -11,11 +11,11 @@ public sealed partial class GhostRoleComponent : Component
 {
     [DataField("name"), AutoNetworkedField]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public string RoleName = "Unknown";
+    public string RoleName = "generic-unknown-title";
 
     [DataField("description"), AutoNetworkedField]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public string RoleDescription = "Unknown";
+    public string RoleDescription = "generic-unknown-title";
 
     [DataField("rules"), AutoNetworkedField]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]

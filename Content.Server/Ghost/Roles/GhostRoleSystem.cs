@@ -670,9 +670,9 @@ public sealed class GhostRoleSystem : SharedGhostRoleSystem
             roles.Add(new GhostRoleInfo
             {
                 Identifier = id,
-                Name = role.RoleName,
-                Description = role.RoleDescription,
-                Rules = role.RoleRules,
+                Name = Loc.GetString(role.RoleName),
+                Description = Loc.GetString(role.RoleDescription),
+                Rules = Loc.GetString(role.RoleRules),
                 RolePrototypes = (jobs, antags),
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,
