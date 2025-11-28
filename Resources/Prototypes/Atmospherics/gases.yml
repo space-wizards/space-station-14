@@ -102,7 +102,7 @@
   pricePerMole: 1
 
 - type: gas
-  id: 9
+  id: Electrovae
   name: gases-electrovae
   specificHeat: 250
   heatCapacityRatio: 1.28
@@ -116,7 +116,7 @@
   pricePerMole: 0.05
 
 - type: gas
-  id: 10
+  id: ChargedElectrovae
   name: gases-charged-electrovae
   specificHeat: 150
   heatCapacityRatio: 1.30

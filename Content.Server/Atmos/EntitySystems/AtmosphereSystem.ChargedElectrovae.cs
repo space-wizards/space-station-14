@@ -2,9 +2,11 @@ using Content.Server.Atmos.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Database;
+using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
-using Content.Shared.Power.Components;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -16,10 +18,68 @@ public sealed partial class AtmosphereSystem
     // Track original battery capacities for restoration
     private readonly Dictionary<EntityUid, float> _originalBatteryCapacities = [];
 
-    public void ChargedElectrovaeExpose(TileAtmosphere tile, float intensity)
+    private void InitializeChargedElectrovae()
     {
-        if (tile == null)
+        SubscribeLocalEvent<BatteryComponent, ComponentShutdown>(OnBatteryShutdown);
+        SubscribeLocalEvent<PredictedBatteryComponent, ComponentShutdown>(OnPredictedBatteryShutdown);
+        SubscribeLocalEvent<ChargedElectrovaeAffectedComponent, ComponentShutdown>(OnChargedElectrovaeAffectedShutdown);
+        SubscribeLocalEvent<ChargedElectrovaeAffectedComponent, RefreshChargeRateEvent>(OnRefreshChargeRate);
+    }
+
+    private void OnBatteryShutdown(EntityUid uid, BatteryComponent component, ComponentShutdown args)
+    {
+        _originalBatteryCapacities.Remove(uid);
+    }
+
+    private void OnPredictedBatteryShutdown(EntityUid uid, PredictedBatteryComponent component, ComponentShutdown args)
+    {
+        _originalBatteryCapacities.Remove(uid);
+    }
+
+    private void OnRefreshChargeRate(Entity<ChargedElectrovaeAffectedComponent> ent, ref RefreshChargeRateEvent args)
+    {
+        // Check if entity is in charged electrovae gas
+        var mixture = GetTileMixture((ent.Owner, null));
+        if (mixture == null)
             return;
+
+        var chargedMoles = mixture.GetMoles(Gas.ChargedElectrovae);
+        if (chargedMoles < Atmospherics.ChargedElectrovaeMinimumMoles)
+            return;
+
+        // Calculate intensity and charge rate
+        var intensity = Math.Min(chargedMoles / Atmospherics.ChargedElectrovaeIntensityDivisor, 1f);
+        const float minimumIntensityToCharge = 0.1f;
+        const float chargeRatePerIntensity = 400f; // Watts
+
+        if (intensity >= minimumIntensityToCharge)
+        {
+            // Add charge rate based on intensity
+            args.NewChargeRate += intensity * chargeRatePerIntensity;
+        }
+    }
+
+    private void OnChargedElectrovaeAffectedShutdown(EntityUid uid, ChargedElectrovaeAffectedComponent component, ComponentShutdown args)
+    {
+        // Restore battery capacity if this entity had it expanded
+        if (_batteryQuery.TryGetComponent(uid, out var battery))
+            RestoreBatteryCapacity(uid, battery);
+
+        // Restore power requirements if this entity had them bypassed
+        if (_powerReceiverQuery.TryGetComponent(uid, out var receiver))
+        {
+            if (!receiver.NeedsPower)
+                receiver.NeedsPower = true;
+        }
+    }
+
+    public void ChargedElectrovaeExpose(TileAtmosphere tile, EntityUid gridUid, float intensity)
+    {
+        if (!_atmosQuery.TryGetComponent(gridUid, out var atmosphere))
+            return;
+
+        if (!tile.ChargedEffect.Active)
+            atmosphere.ChargedElectrovaeTiles.Add(tile);
 
         tile.ChargedEffect.Active = true;
         tile.ChargedEffect.Intensity = Math.Clamp(intensity, 0f, 1f);
@@ -33,8 +93,7 @@ public sealed partial class AtmosphereSystem
         Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
         TileAtmosphere tile)
     {
-        const float minimumChargedMoles = 0.01f;
-        const float intensityDivisor = 2f;
+        var atmosphere = ent.Comp1;
 
         if (!tile.ChargedEffect.Active)
             return;
@@ -43,57 +102,55 @@ public sealed partial class AtmosphereSystem
         if (mixture == null)
         {
             tile.ChargedEffect = default;
+            atmosphere.ChargedElectrovaeTiles.Remove(tile);
             return;
         }
 
         var chargedMoles = mixture.GetMoles(Gas.ChargedElectrovae);
-        if (chargedMoles < minimumChargedMoles)
+        if (chargedMoles < Atmospherics.ChargedElectrovaeMinimumMoles)
         {
             RestorePowerRequirements(tile);
             tile.ChargedEffect = default;
+            atmosphere.ChargedElectrovaeTiles.Remove(tile);
             return;
         }
 
-        tile.ChargedEffect.Intensity = Math.Min(chargedMoles / intensityDivisor, 1f);
+        tile.ChargedEffect.Intensity = Math.Min(chargedMoles / Atmospherics.ChargedElectrovaeIntensityDivisor, 1f);
 
         // Update visual state based on intensity
-        const float highIntensityThreshold = 0.75f;  // 1.5+ moles
-        const float mediumIntensityThreshold = 0.5f;  // 1.0+ moles
-        const float lowIntensityThreshold = 0.25f;    // 0.5+ moles
-
         tile.ChargedEffect.State = tile.ChargedEffect.Intensity switch
         {
-            >= highIntensityThreshold => 3,
-            >= mediumIntensityThreshold => 2,
-            >= lowIntensityThreshold => 1,
+            >= Atmospherics.ChargedElectrovaeHighIntensityThreshold => 3,
+            >= Atmospherics.ChargedElectrovaeMediumIntensityThreshold => 2,
+            >= Atmospherics.ChargedElectrovaeLowIntensityThreshold => 1,
             _ => 0
         };
 
-        const float lookupFlags = 0f;
-
         _entSet.Clear();
         _lookup.GetLocalEntitiesIntersecting(
-            tile.GridIndex, tile.GridIndices, _entSet, lookupFlags);
+            tile.GridIndex, tile.GridIndices, _entSet, 0f);
 
         foreach (var entity in _entSet)
         {
-            // Charge batteries (SMES, APCs, etc.) and expand their capacity (up to 2x)
-            if (TryComp<BatteryComponent>(entity, out var battery))
+            // Mark entity as affected by charged electrovae
+            EnsureComp<ChargedElectrovaeAffectedComponent>(entity);
+
+            // Handle batteries - expand capacity and trigger charge rate refresh
+            if (_batteryQuery.HasComponent(entity) || HasComp<PredictedBatteryComponent>(entity))
             {
-                ChargeBattery(entity, battery, tile.ChargedEffect.Intensity, chargedMoles);
+                ProcessBattery(entity, tile.ChargedEffect.Intensity, chargedMoles);
             }
 
             // Power machines directly (bypass normal power requirement)
             if (_powerReceiverQuery.TryGetComponent(entity, out var receiver))
             {
-                ApplyChargedElectrovalePower(receiver, tile.ChargedEffect.Intensity);
+                ApplyChargedElectrovaePower(receiver, tile.ChargedEffect.Intensity);
             }
 
             // Lightning strikes on mobs
             if (_mobQuery.HasComponent(entity))
             {
-                const float lightningChanceMultiplier = 0.01f;
-                var strikeChance = tile.ChargedEffect.Intensity * lightningChanceMultiplier;
+                var strikeChance = tile.ChargedEffect.Intensity * Atmospherics.ChargedElectrovaeLightningChanceMultiplier;
                 if (_random.Prob(strikeChance))
                 {
                     ApplyLightningStrike(entity, tile.ChargedEffect.Intensity);
@@ -104,46 +161,71 @@ public sealed partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Restores normal power requirements for all machines on a tile
+    /// Removes charged electrovae effects from all entities on a tile
     /// </summary>
     private void RestorePowerRequirements(TileAtmosphere tile)
     {
-        const float lookupFlags = 0f;
-
         _entSet.Clear();
         _lookup.GetLocalEntitiesIntersecting(
-            tile.GridIndex, tile.GridIndices, _entSet, lookupFlags);
+            tile.GridIndex, tile.GridIndices, _entSet, 0f);
 
         foreach (var entity in _entSet)
         {
-            if (_powerReceiverQuery.TryGetComponent(entity, out var receiver))
+            // Remove the affected component, which will trigger cleanup via the event handler
+            RemComp<ChargedElectrovaeAffectedComponent>(entity);
+        }
+    }
+
+    /// <summary>
+    /// Cleans up entities that are no longer in charged electrovae gas.
+    /// Should be called after processing all charged electrovae tiles.
+    /// </summary>
+    public void CleanupChargedElectrovaeEntities(Entity<GridAtmosphereComponent> grid)
+    {
+        var query = EntityQueryEnumerator<ChargedElectrovaeAffectedComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var transform))
+        {
+            if (transform.GridUid != grid.Owner)
+                continue;
+
+            var mixture = GetTileMixture((uid, transform));
+            if (mixture == null)
             {
-                if (!receiver.NeedsPower)
-                    receiver.NeedsPower = true;
+                RemComp<ChargedElectrovaeAffectedComponent>(uid);
+                continue;
+            }
+
+            var chargedMoles = mixture.GetMoles(Gas.ChargedElectrovae);
+            if (chargedMoles < Atmospherics.ChargedElectrovaeMinimumMoles)
+            {
+                RemComp<ChargedElectrovaeAffectedComponent>(uid);
             }
         }
     }
 
     /// <summary>
-    /// Charges a battery from charged electrovae gas and expands its capacity (up to 2x)
+    /// Processes a battery in charged electrovae gas - expands capacity and refreshes charge rate
     /// </summary>
-    private void ChargeBattery(EntityUid uid, BatteryComponent battery, float intensity, float chargedMoles)
+    private void ProcessBattery(EntityUid uid, float intensity, float chargedMoles)
     {
         const float minimumIntensityToCharge = 0.1f;
-        const float chargeRatePerIntensity = 400f; // Watts
 
         if (intensity < minimumIntensityToCharge)
         {
             // Restore original max charge if we had expanded it
-            RestoreBatteryCapacity(uid, battery);
+            if (_batteryQuery.TryGetComponent(uid, out var battery))
+                RestoreBatteryCapacity(uid, battery);
             return;
         }
 
-        // Charge rate scales with intensity (0 to 0.4kW)
-        var chargeRate = intensity * chargeRatePerIntensity;
-        _battery.ChangeCharge(uid, chargeRate, battery);
+        // Expand battery capacity based on charged moles
+        if (_batteryQuery.TryGetComponent(uid, out var batteryComp))
+            ExpandBatteryCapacity(uid, batteryComp, chargedMoles);
 
-        ExpandBatteryCapacity(uid, battery, chargedMoles);
+        // Trigger charge rate refresh for PredictedBatteryComponent
+        // The RefreshChargeRateEvent handler will add the appropriate charge rate
+        if (HasComp<PredictedBatteryComponent>(uid))
+            _predictedBattery.RefreshChargeRate(uid);
     }
 
     /// <summary>
@@ -158,6 +240,9 @@ public sealed partial class AtmosphereSystem
         {
             originalMaxCharge = battery.MaxCharge;
             _originalBatteryCapacities[uid] = originalMaxCharge;
+
+            _adminLog.Add(LogType.AtmosPowerChanged, LogImpact.Low,
+                $"Battery {ToPrettyString(uid)} capacity expanded by charged electrovae from {originalMaxCharge:F0}W to potentially 2x");
         }
 
         // Calculate expansion multiplier using asymptotic curve
@@ -165,7 +250,7 @@ public sealed partial class AtmosphereSystem
         var expansionMultiplier = 1f + (1f - MathF.Exp(-chargedMoles / expansionDecayConstant));
 
         var newMaxCharge = originalMaxCharge * expansionMultiplier;
-        _battery.SetMaxCharge(uid, newMaxCharge, battery);
+        _battery.SetMaxCharge((uid, battery), newMaxCharge);
     }
 
     /// <summary>
@@ -173,9 +258,9 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private void RestoreBatteryCapacity(EntityUid uid, BatteryComponent battery)
     {
-        if (_originalBatteryCapacities.TryGetValue(uid, out var originalMaxCharge))
+        if (_originalBatteryCapacities.Remove(uid, out var originalMaxCharge))
         {
-            _battery.SetMaxCharge(uid, originalMaxCharge, battery);
+            _battery.SetMaxCharge((uid, battery), originalMaxCharge);
         }
     }
 
@@ -183,7 +268,7 @@ public sealed partial class AtmosphereSystem
     /// Applies power to a machine from charged electrovae gas.
     /// This bypasses normal APC power requirements.
     /// </summary>
-    private static void ApplyChargedElectrovalePower(
+    private static void ApplyChargedElectrovaePower(
         ApcPowerReceiverComponent receiver,
         float intensity)
     {
@@ -214,6 +299,9 @@ public sealed partial class AtmosphereSystem
 
         var damage = (int)(baseDamage + intensity * damagePerIntensity);
         var stunTime = TimeSpan.FromSeconds(baseStunSeconds + intensity * stunSecondsPerIntensity);
+
+        _adminLog.Add(LogType.Electrocution, LogImpact.Medium,
+            $"{ToPrettyString(target):target} struck by charged electrovae lightning ({damage} damage, {stunTime.TotalSeconds:F1}s stun, intensity {intensity:F2})");
 
         _electrocution.TryDoElectrocution(
             target,

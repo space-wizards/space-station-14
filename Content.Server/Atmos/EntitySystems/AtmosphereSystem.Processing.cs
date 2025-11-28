@@ -446,18 +446,27 @@ namespace Content.Server.Atmos.EntitySystems
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
         {
             var atmosphere = ent.Comp1;
+            if (!atmosphere.ProcessingPaused)
+                QueueRunTiles(atmosphere.CurrentRunTiles, atmosphere.ChargedElectrovaeTiles);
 
-            var tilesToProcess = new List<TileAtmosphere>();
-            foreach (var tile in atmosphere.ActiveTiles)
-            {
-                if (tile.ChargedEffect.Active)
-                    tilesToProcess.Add(tile);
-            }
-
-            foreach (var tile in tilesToProcess)
+            var number = 0;
+            while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
                 ProcessChargedElectrovae(ent, tile);
+
+                if (number++ < LagCheckIterations)
+                    continue;
+
+                number = 0;
+                // Process the rest next time.
+                if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
+                {
+                    return false;
+                }
             }
+
+            // Clean up entities that left the gas after processing all tiles
+            CleanupChargedElectrovaeEntities((ent.Owner, atmosphere));
 
             return true;
         }
@@ -790,8 +799,16 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     atmosphere.ProcessingPaused = false;
+                    atmosphere.State = AtmosphereProcessingState.ChargedElectrovae;
+                    return AtmosphereProcessingCompletionState.Continue;
+                case AtmosphereProcessingState.ChargedElectrovae:
+                    if (!ProcessChargedElectrovaeTiles(ent))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return;
+                    }
 
-                    ProcessChargedElectrovaeTiles(ent);
+                    atmosphere.ProcessingPaused = false;
 
                     // Next state depends on whether superconduction is enabled or not.
                     // Note: We do this here instead of on the tile equalization step to prevent ending it early.
@@ -872,6 +889,7 @@ namespace Content.Server.Atmos.EntitySystems
         HighPressureDelta,
         DeltaPressure,
         Hotspots,
+        ChargedElectrovae,
         Superconductivity,
         PipeNet,
         AtmosDevices,

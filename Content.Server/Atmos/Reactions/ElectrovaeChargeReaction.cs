@@ -35,14 +35,17 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
         // Expose the tile to charged electrovae - AtmosphereSystem will handle the rest
         const float intensityDivisor = 2f;
         var intensity = Math.Min(mixture.GetMoles(Gas.ChargedElectrovae) / intensityDivisor, 1f);
-        atmosphereSystem.ChargedElectrovaeExpose(tileAtmos, intensity);
+        atmosphereSystem.ChargedElectrovaeExpose(tileAtmos, tileAtmos.GridIndex, intensity);
 
         // Consume some heat energy during the charging process
         const float energyPerMole = 5000f; // 5kJ per mole
-        var energyConsumed = chargeAmount * energyPerMole;
         var oldHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture, true);
         if (oldHeatCapacity > Atmospherics.MinimumHeatCapacity)
-            mixture.Temperature = Math.Max(mixture.Temperature - energyConsumed / oldHeatCapacity, Atmospherics.TCMB);
+        {
+            var maxEnergyRemovable = oldHeatCapacity * (mixture.Temperature - Atmospherics.TCMB);
+            var energyToConsume = Math.Min(chargeAmount * energyPerMole, maxEnergyRemovable);
+            mixture.Temperature -= energyToConsume / oldHeatCapacity;
+        }
 
         return ReactionResult.Reacting;
     }

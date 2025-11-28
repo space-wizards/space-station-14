@@ -616,17 +616,7 @@
     gasMixture:
       volume: 1500
       moles:
-      - 0 # oxygen
-      - 0 # nitrogen
-      - 0 # CO2
-      - 0 # Plasma
-      - 0 # Tritium
-      - 0 # Water vapor
-      - 0 # Ammonia
-      - 0 # N2O
-      - 0 # Frezon
-      - 2769.36 # Electrovae
-      - 0 # Charged electrovae
+        Electrovae: 2769.36
       temperature: 293.15
   - type: Destructible
     thresholds:
@@ -667,17 +657,7 @@
     gasMixture:
       volume: 1500
       moles:
-      - 0 # oxygen
-      - 0 # nitrogen
-      - 0 # CO2
-      - 0 # Plasma
-      - 0 # Tritium
-      - 0 # Water vapor
-      - 0 # Ammonia
-      - 0 # N2O
-      - 0 # Frezon
-      - 0 # Electrovae
-      - 2769.36 # Charged electrovae
+        ChargedElectrovae: 2769.36
       temperature: 293.15
   - type: Destructible
     thresholds:

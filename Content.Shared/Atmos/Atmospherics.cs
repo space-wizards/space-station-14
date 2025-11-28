@@ -247,10 +247,25 @@ namespace Content.Shared.Atmos
         public const float ElectrovaeProductionMinTemperature = 373.15f;
         public const float ElectrovaeProductionMaxTemperature = 1370f;
         public const float ElectrovaeProductionTemperatureExponent = 1.5f;
-        public const float ElectrovaeChargePowerDrainPerMole = 50000f;
-        public const float ElectrovaeChargeMinimumPowerDrain = 5000f;
-        public const float ElectrovaeChargeMaximumPowerDrain = 100000f;
-        public const float ElectrovaeChargeConversionEfficiency = 0.8f;
+        public const float ChargedElectrovaeMinimumMoles = 0.01f;
+
+        /// <summary>
+        ///     Divisor used to convert charged electrovae moles into a 0-1 intensity value.
+        ///     2 moles or more will clamp intensity to 1.0.
+        /// </summary>
+        public const float ChargedElectrovaeIntensityDivisor = 2f;
+
+        /// <summary>
+        ///     Intensity thresholds for charged electrovae tile overlay states.
+        /// </summary>
+        public const float ChargedElectrovaeHighIntensityThreshold = 0.75f; // 1.5+ moles
+        public const float ChargedElectrovaeMediumIntensityThreshold = 0.5f; // 1.0+ moles
+        public const float ChargedElectrovaeLowIntensityThreshold = 0.25f;   // 0.5+ moles
+
+        /// <summary>
+        ///     Multiplier used to convert intensity to the probability of a lightning strike per tick.
+        /// </summary>
+        public const float ChargedElectrovaeLightningChanceMultiplier = 0.01f;
 
         public const float ChargedElectrovaeMinimumAmount = 2.0f;
         public const float ChargedElectrovaeEmpChance = 0.02f;
