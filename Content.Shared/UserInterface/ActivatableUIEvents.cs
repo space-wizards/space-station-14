@@ -1,7 +1,7 @@
 namespace Content.Shared.UserInterface;
 
 /// <summary>
-/// Raised on the entity with an actiatable UI when attempting to open it.
+/// Raised on the entity with an activatable UI when attempting to open it.
 /// This is raised BEFORE opening a UI! Do not listen and then open / do something use
 /// <see cref="AfterActivatableUIOpenEvent"/> for that.
 /// </summary>
@@ -44,7 +44,7 @@ public sealed class UserOpenActivatableUIAttemptEvent(EntityUid user, EntityUid 
 }
 
 /// <summary>
-/// Raised on the entity with an actiatable UI after the UI has been opened.
+/// Raised on the entity with an activatable UI after the UI has been opened.
 /// </summary>
 public sealed class AfterActivatableUIOpenEvent(EntityUid user) : EntityEventArgs
 {
@@ -55,7 +55,7 @@ public sealed class AfterActivatableUIOpenEvent(EntityUid user) : EntityEventArg
 }
 
 /// <summary>
-/// Raised on the entity with an actiatable UI after it's decided the user can open the UI,
+/// Raised on the entity with an activatable UI after it's decided the user can open the UI,
 /// but before the UI actually opens.
 /// Use this if you need to prepare the UI itself.
 /// </summary>
