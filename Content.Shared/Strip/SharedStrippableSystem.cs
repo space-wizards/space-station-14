@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Cuffs;
-using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -16,6 +15,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
+using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
@@ -53,7 +53,9 @@ public abstract class SharedStrippableSystem : EntitySystem
         SubscribeLocalEvent<StrippingComponent, CanDropTargetEvent>(OnCanDropOn);
         SubscribeLocalEvent<StrippableComponent, CanDropDraggedEvent>(OnCanDrop);
         SubscribeLocalEvent<StrippableComponent, DragDropDraggedEvent>(OnDragDrop);
-        SubscribeLocalEvent<StrippableComponent, ActivateInWorldEvent>(OnActivateInWorld);
+        // Prioritize other UIs unless they are verb only.
+        // The stripping UI can always be opened via drag drop.
+        SubscribeLocalEvent<StrippableComponent, ActivateInWorldEvent>(OnActivateInWorld, after: new[] { typeof(ActivatableUISystem) });
     }
 
     private void AddStripVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<Verb> args)
