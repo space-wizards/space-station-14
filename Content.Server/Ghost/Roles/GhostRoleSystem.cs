@@ -3,7 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.GameTicking.Events;
-using Content.Server.Ghost.Roles.Components;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Shared.Ghost.Roles.Raffles;
 using Content.Server.Ghost.Roles.UI;
@@ -39,7 +39,7 @@ using Content.Shared.Roles.Components;
 namespace Content.Server.Ghost.Roles;
 
 [UsedImplicitly]
-public sealed class GhostRoleSystem : EntitySystem
+public sealed class GhostRoleSystem : SharedGhostRoleSystem
 {
     [Dependency] private readonly IBanManager _ban = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;

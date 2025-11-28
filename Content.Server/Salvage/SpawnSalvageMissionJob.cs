@@ -7,7 +7,7 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Robust.Shared.CPUJob.JobQueues;
-using Content.Server.Ghost.Roles.Components;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;

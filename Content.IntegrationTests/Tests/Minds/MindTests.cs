@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System.Linq;
 using Content.Server.Ghost.Roles;
-using Content.Server.Ghost.Roles.Components;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;

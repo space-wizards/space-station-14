@@ -2,8 +2,9 @@
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Network;
 
-namespace Content.Server.Ghost.Roles.Raffles;
+namespace Content.Shared.Ghost.Roles.Raffles;
 
 /// <summary>
 /// Chooses the winner of a ghost role raffle entirely randomly, without any weighting.
@@ -14,6 +15,11 @@ public sealed partial class RngGhostRoleRaffleDecider : IGhostRoleRaffleDecider
     public void PickWinner(IEnumerable<ICommonSession> candidates, Func<ICommonSession, bool> tryTakeover)
     {
         var random = IoCManager.Resolve<IRobustRandom>();
+        var net = IoCManager.Resolve<INetManager>();
+
+        // No prediction random.
+        if (net.IsClient)
+            return;
 
         var choices = candidates.ToList();
         random.Shuffle(choices); // shuffle the list so we can pick a lucky winner!

@@ -1,4 +1,5 @@
 using Content.Server.Ghost.Roles.Components;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;

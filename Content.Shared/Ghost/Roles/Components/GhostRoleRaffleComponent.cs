@@ -1,40 +1,39 @@
-﻿using Content.Server.Ghost.Roles.Raffles;
+﻿using Content.Shared.Ghost.Roles.Raffles;
 using Robust.Shared.Player;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Ghost.Roles.Components;
+namespace Content.Shared.Ghost.Roles.Components;
 
 /// <summary>
 /// Indicates that a ghost role is currently being raffled, and stores data about the raffle in progress.
 /// Raffles start when the first player joins a raffle.
 /// </summary>
-[RegisterComponent]
-[Access(typeof(GhostRoleSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(SharedGhostRoleSystem))]
 public sealed partial class GhostRoleRaffleComponent : Component
 {
     /// <summary>
     /// Identifier of the <see cref="GhostRoleComponent">Ghost Role</see> this raffle is for.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public uint Identifier { get; set; }
 
     /// <summary>
     /// List of sessions that are currently in the raffle.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public HashSet<ICommonSession> CurrentMembers = [];
 
     /// <summary>
     /// List of sessions that are currently or were previously in the raffle.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public HashSet<ICommonSession> AllMembers = [];
 
     /// <summary>
     /// Time left in the raffle in seconds. This must be initialized to a positive value.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoPausedField]
     public TimeSpan Countdown = TimeSpan.MaxValue;
 
     /// <summary>
@@ -42,17 +41,14 @@ public sealed partial class GhostRoleRaffleComponent : Component
     /// by someone joining the raffle.
     /// Must be set to the same value as <see cref="Countdown"/> on initialization.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("cumulativeTime")]
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoPausedField]
     public TimeSpan CumulativeTime = TimeSpan.MaxValue;
 
     /// <inheritdoc cref="GhostRoleRaffleSettings.JoinExtendsDurationBy"/>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("joinExtendsDurationBy")]
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoPausedField]
     public TimeSpan JoinExtendsDurationBy { get; set; }
 
     /// <inheritdoc cref="GhostRoleRaffleSettings.MaxDuration"/>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("maxDuration")]
+    [DataField, ViewVariables(VVAccess.ReadOnly), AutoPausedField]
     public TimeSpan MaxDuration { get; set; }
 }
