@@ -208,6 +208,7 @@
   name: tutorial-title
   description: tutorial-description
   showInVote: false
+  supportedMaps: TutorialMapPool
   rules:
   - TutorialSpawn
   - RespawnDeadRule

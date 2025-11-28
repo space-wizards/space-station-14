@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 267.3.0
+  engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/06/2025 22:22:38
-  entityCount: 91
+  time: 11/28/2025 14:05:18
+  entityCount: 92
 maps:
 - 1
 grids:
@@ -328,6 +328,13 @@ entities:
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
+      pos: 2.5,-1.5
+      parent: 2
+- proto: SpawnPointPassenger
+  entities:
+  - uid: 84
+    components:
+    - type: Transform
       pos: 2.5,-1.5
       parent: 2
 - proto: SurveillanceCameraAssembly
