@@ -39,7 +39,7 @@ public sealed partial class BorgSystem
 
     private void UpdateBatteryAlert(Entity<BorgChassisComponent, PowerCellSlotComponent?> ent)
     {
-        if (Resolve(ent, ref ent.Comp2, false))
+        if (!Resolve(ent, ref ent.Comp2, false))
             return;
 
         if (!_powerCell.TryGetBatteryFromSlot((ent.Owner, ent.Comp2), out var battery))
