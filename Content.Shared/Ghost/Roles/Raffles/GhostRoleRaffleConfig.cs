@@ -1,4 +1,4 @@
-﻿using Content.Shared.Ghost.Roles.Raffles;
+﻿using Robust.Shared.Serialization;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Ghost.Roles.Raffles;
@@ -6,6 +6,7 @@ namespace Content.Shared.Ghost.Roles.Raffles;
 /// <summary>
 /// Raffle configuration.
 /// </summary>
+[Serializable, NetSerializable]
 [DataDefinition]
 public sealed partial class GhostRoleRaffleConfig
 {
