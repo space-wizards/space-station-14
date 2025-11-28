@@ -267,6 +267,10 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (!TryComp<MovementSpeedModifierComponent>(chassis, out var movement))
             return;
 
+        if (movement.BaseSprintSpeed == 0f)
+            return; // We already cannot move.
+
+        // Slow down to walk speed.
         var sprintDif = movement.BaseWalkSpeed / movement.BaseSprintSpeed;
         args.ModifySpeed(1f, sprintDif);
     }
