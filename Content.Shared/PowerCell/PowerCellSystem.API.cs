@@ -114,7 +114,7 @@ public sealed partial class PowerCellSystem
             return false;
         }
 
-        if (!_itemSlots.TryEject(ent.Owner, ent.Comp.CellSlotId, user, out battery))
+        if (!_itemSlots.TryEject(ent.Owner, ent.Comp.CellSlotId, user, out battery, excludeUserAudio: true))
         {
             battery = null;
             return false;

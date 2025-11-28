@@ -55,6 +55,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         base.OnInserted(chassis, ref args);
         UpdateUI(chassis.AsNullable());
         UpdateBorgAppearance((chassis, chassis.Comp));
+        UpdateBatteryAlert((chassis.Owner, chassis.Comp, null));
     }
 
     protected override void OnRemoved(Entity<BorgChassisComponent> chassis, ref EntRemovedFromContainerMessage args)
@@ -65,6 +66,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         base.OnRemoved(chassis, ref args);
         UpdateUI(chassis.AsNullable());
         UpdateBorgAppearance((chassis, chassis.Comp));
+        UpdateBatteryAlert((chassis.Owner, chassis.Comp, null));
     }
 
     private void UpdateBorgAppearance(Entity<BorgChassisComponent?, AppearanceComponent?, SpriteComponent?> ent)

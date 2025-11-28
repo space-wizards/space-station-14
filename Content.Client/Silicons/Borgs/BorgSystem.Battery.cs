@@ -6,6 +6,12 @@ namespace Content.Client.Silicons.Borgs;
 
 public sealed partial class BorgSystem
 {
+    // How often to update the battery alert.
+    // Also gets updated instantly when switching bodies or a battery is inserted or removed.
+    private static readonly TimeSpan AlertUpdateDelay = TimeSpan.FromSeconds(0.5f);
+
+    // Don't put this on the component because we only need to track the time for a single entity
+    // and we don't want to TryComp it every single tick.
     private TimeSpan _nextAlertUpdate = TimeSpan.Zero;
     private EntityQuery<BorgChassisComponent> _chassisQuery;
     private EntityQuery<PowerCellSlotComponent> _slotQuery;
@@ -21,10 +27,7 @@ public sealed partial class BorgSystem
 
     private void OnPlayerAttached(Entity<BorgChassisComponent> ent, ref LocalPlayerAttachedEvent args)
     {
-        if (!_slotQuery.TryComp(ent, out var slot))
-            return;
-
-        UpdateBatteryAlert((ent.Owner, ent.Comp, slot));
+        UpdateBatteryAlert((ent.Owner, ent.Comp, null));
     }
 
     private void OnPlayerDetached(Entity<BorgChassisComponent> ent, ref LocalPlayerDetachedEvent args)
@@ -34,8 +37,11 @@ public sealed partial class BorgSystem
         _alerts.ClearAlert(ent.Owner, ent.Comp.NoBatteryAlert);
     }
 
-    private void UpdateBatteryAlert(Entity<BorgChassisComponent, PowerCellSlotComponent> ent)
+    private void UpdateBatteryAlert(Entity<BorgChassisComponent, PowerCellSlotComponent?> ent)
     {
+        if (Resolve(ent, ref ent.Comp2, false))
+            return;
+
         if (!_powerCell.TryGetBatteryFromSlot((ent.Owner, ent.Comp2), out var battery))
         {
             _alerts.ShowAlert(ent.Owner, ent.Comp1.NoBatteryAlert);
@@ -67,7 +73,7 @@ public sealed partial class BorgSystem
         if (curTime < _nextAlertUpdate)
             return;
 
-        _nextAlertUpdate = curTime + TimeSpan.FromSeconds(0.5f);
+        _nextAlertUpdate = curTime + AlertUpdateDelay;
 
         if (!_chassisQuery.TryComp(localPlayer, out var chassis) || !_slotQuery.TryComp(localPlayer, out var slot))
             return;
