@@ -15,18 +15,18 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         /// <summary>
-        /// Checks if it can send off station or not
+        /// Handles wired network logic, allowing or denying connectivity
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
-            //if connectsOffGrid is true, just let it send the packets
+            // If the entity can connect off grid, let it send the packets
 
             if (component.ConnectsOffGrid == true)
             {
                 return;
             }
 
-            // if they're not on the same grid, cancel 
+            // If they're not on the same grid, cancel 
 
             if (Transform(uid).GridUid != args.SenderTransform.GridUid)
             {
