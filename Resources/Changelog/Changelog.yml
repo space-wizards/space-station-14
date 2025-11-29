@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TrixxedHeart
-  changes:
-  - message: Made HSV the default color selector for character customization.
-    type: Tweak
-  id: 8731
-  time: '2025-07-03T01:08:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38434
 - author: ArtisticRoomba
   changes:
   - message: A new atmospherics valve has been added, the Inlet Pressure Regulator!
@@ -3920,3 +3913,11 @@
   id: 9231
   time: '2025-11-28T21:53:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41609
+- author: NoreUhh
+  changes:
+  - message: Caninase/Felinase now require Psicodine instead of Cognizine in their
+      recipes and now provide their respective accents at a lower chem threshold.
+    type: Tweak
+  id: 9232
+  time: '2025-11-29T07:32:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41527
