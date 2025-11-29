@@ -1,6 +1,6 @@
 - type: entity
   parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
-  id: ClothingHeadHelmetMedium
+  id: SCPClothingHeadHelmetMedium
   name: medium helmet
   description: Standard security gear. Protects the head from impacts.
   components:
@@ -21,7 +21,7 @@
 
 - type: entity
   parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
-  id: ClothingHeadHelmetHard
+  id: SCPClothingHeadHelmetHard
   name: hard helmet
   description: Standard security gear. Protects the head from impacts.
   components:
