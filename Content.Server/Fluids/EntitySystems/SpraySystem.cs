@@ -17,6 +17,7 @@ using Robust.Shared.Prototypes;
 using System.Numerics;
 using Content.Shared.Fluids.EntitySystems;
 using Content.Shared.Fluids.Components;
+using Robust.Server.Containers;
 using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -34,6 +35,7 @@ public sealed class SpraySystem : SharedSpaySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
 
     private float _gridImpulseMultiplier;
 
@@ -178,17 +180,21 @@ public sealed class SpraySystem : SharedSpaySystem
 
             _vapor.Start(ent, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, user);
 
-            if (TryComp<PhysicsComponent>(user, out var body))
+            var thingGettingPushed = entity.Owner;
+            if (_container.TryGetOuterContainer(entity, sprayerXform, out var container))
+                thingGettingPushed = container.Owner;
+
+            if (TryComp<PhysicsComponent>(thingGettingPushed, out var body))
             {
-                if (_gravity.IsWeightless(user.Value))
+                if (_gravity.IsWeightless(thingGettingPushed))
                 {
                     // push back the player
-                    _physics.ApplyLinearImpulse(user.Value, -impulseDirection * entity.Comp.PushbackAmount, body: body);
+                    _physics.ApplyLinearImpulse(thingGettingPushed, -impulseDirection * entity.Comp.PushbackAmount, body: body);
                 }
                 else
                 {
                     // push back the grid the player is standing on
-                    var userTransform = Transform(user.Value);
+                    var userTransform = Transform(thingGettingPushed);
                     if (userTransform.GridUid == userTransform.ParentUid)
                     {
                         // apply both linear and angular momentum depending on the player position
