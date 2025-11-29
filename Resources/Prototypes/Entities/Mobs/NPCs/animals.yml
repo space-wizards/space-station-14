@@ -1441,6 +1441,7 @@
       effects:
       - !type:WashCreamPie
   - type: Crawler
+  - type: StatusIcon
 
 
 
