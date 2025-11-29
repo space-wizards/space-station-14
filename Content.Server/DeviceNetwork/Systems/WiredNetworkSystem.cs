@@ -1,5 +1,4 @@
 using Content.Server.DeviceNetwork.Components;
-using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
 
