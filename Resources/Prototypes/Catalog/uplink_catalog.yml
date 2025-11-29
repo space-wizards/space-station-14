@@ -212,7 +212,7 @@
   discountDownTo:
     Telecrystal: 5
   cost:
-    Telecrystal: 9
+    Telecrystal: 10
   categories:
   - UplinkWeaponry
 
@@ -226,7 +226,7 @@
   discountDownTo:
     Telecrystal: 6
   cost:
-    Telecrystal: 10
+    Telecrystal: 11
   categories:
   - UplinkWeaponry
 
@@ -626,7 +626,7 @@
   description: uplink-ammo-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateAmmoFilled
   cost:
-    Telecrystal: 15
+    Telecrystal: 17
   categories:
   - UplinkAmmo
   conditions:
