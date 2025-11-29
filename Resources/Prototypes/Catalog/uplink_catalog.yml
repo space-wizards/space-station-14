@@ -611,7 +611,7 @@
 
 # for the L6
 - type: listing
-  id: UplinkHristovAmmo
+  id: UplinkL6SawAmmo
   name: uplink-magazine-lmg-name
   description: uplink-magazine-lmg-desc
   productEntity: MagazineLightRifleBox
