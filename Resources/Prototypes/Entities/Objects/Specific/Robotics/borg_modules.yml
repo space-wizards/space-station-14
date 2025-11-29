@@ -1577,7 +1577,7 @@
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleSword
-  name: sword xenoborg module
+  name: knife xenoborg module
   description: Module with a kukri knife.
   components:
   - type: Sprite
@@ -1594,7 +1594,7 @@
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleEnergySword
-  name: energy sword xenoborg module
+  name: energy dagger xenoborg module
   description: Module with an energy dagger.
   components:
   - type: Sprite
