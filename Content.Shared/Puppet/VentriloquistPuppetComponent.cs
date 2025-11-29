@@ -7,6 +7,7 @@ namespace Content.Shared.Puppet;
 /// When used in hand, the entity will speak and the user will be able to hear the entity's voice.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(VentriloquistPuppetSystem))]
 public sealed partial class VentriloquistPuppetComponent : Component
 {
     /// <summary>
