@@ -1,14 +1,9 @@
-using System.Linq;
-using System.Numerics;
-using System.Threading.Tasks;
-using Content.Server.Atmos;
-using Content.Server.Atmos.Components;
+using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Decals;
 using Content.Server.Shuttles.Events;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Atmos;
-using Content.Shared.Decals;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Gravity;
@@ -32,7 +27,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Utility;
-using ChunkIndicesEnumerator = Robust.Shared.Map.Enumerators.ChunkIndicesEnumerator;
+using System.Numerics;
+using System.Threading.Tasks;
 
 namespace Content.Server.Parallax;
 

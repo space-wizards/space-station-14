@@ -1,12 +1,12 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.NPC.Systems;
-using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.EntityTable;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonLayers;
 using Robust.Shared.Collections;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Content.Server.Procedural.DungeonJob;
 

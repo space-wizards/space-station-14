@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Network;
+using System.Linq;
 
 namespace Content.Shared.Ghost.Roles.Raffles;
 

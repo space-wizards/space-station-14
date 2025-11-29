@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;
 using Content.Shared.Ghost.Roles.Components;
@@ -8,6 +7,7 @@ using Content.Shared.Procedural.DungeonLayers;
 using Content.Shared.Storage;
 using Robust.Shared.Collections;
 using Robust.Shared.Random;
+using System.Threading.Tasks;
 
 namespace Content.Server.Procedural.DungeonJob;
 

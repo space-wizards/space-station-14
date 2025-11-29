@@ -1,13 +1,12 @@
 ﻿#nullable enable
-using System.Linq;
 using Content.Server.Ghost.Roles;
-using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Ghost;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.IntegrationTests.Tests.Minds;
 

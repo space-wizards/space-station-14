@@ -1,25 +1,24 @@
 using Content.Shared.Ghost.Roles.Raffles;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ghost.Roles.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent]
 [Access(typeof(SharedGhostRoleSystem))]
 public sealed partial class GhostRoleComponent : Component
 {
-    [DataField("name"), AutoNetworkedField]
+    [DataField("name")]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public string RoleName = "generic-unknown-title";
+    public LocId RoleName = "generic-unknown-title";
 
-    [DataField("description"), AutoNetworkedField]
+    [DataField("description")]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public string RoleDescription = "generic-unknown-title";
+    public LocId RoleDescription = "generic-unknown-title";
 
-    [DataField("rules"), AutoNetworkedField]
+    [DataField("rules")]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public string RoleRules = "ghost-role-component-default-rules";
+    public LocId RoleRules = "ghost-role-component-default-rules";
 
     /// <summary>
     /// Whether the <see cref="MakeSentientCommand"/> should run on the mob.
@@ -28,16 +27,16 @@ public sealed partial class GhostRoleComponent : Component
     public bool MakeSentient = true;
 
     /// <summary>
-    ///     The probability that this ghost role will be available after init.
-    ///     Used mostly for takeover roles that want some probability of being takeover, but not 100%.
+    /// The probability that this ghost role will be available after init.
+    /// Used mostly for takeover roles that want some probability of being takeover, but not 100%.
     /// </summary>
-    [DataField("prob"), AutoNetworkedField]
+    [DataField("prob")]
     public float Probability = 1f;
 
     /// <summary>
     /// The mind roles that will be added to the mob's mind entity
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // Don't make eye contact
     public List<EntProtoId> MindRoles = new() { "MindRoleGhostRoleNeutral" };
 
@@ -56,20 +55,20 @@ public sealed partial class GhostRoleComponent : Component
     /// <summary>
     /// Reregisters the ghost role when the current player ghosts.
     /// </summary>
-    [DataField("reregister"), AutoNetworkedField]
+    [DataField("reregister")]
     public bool ReregisterOnGhost { get; set; } = true;
 
     /// <summary>
     /// If set, ghost role is raffled, otherwise it is first-come-first-serve.
     /// </summary>
-    [DataField("raffle"), AutoNetworkedField]
+    [DataField("raffle")]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
     public GhostRoleRaffleConfig? RaffleConfig { get; set; }
 
     /// <summary>
     /// Job the entity will receive after adding the mind.
     /// </summary>
-    [DataField("job"), AutoNetworkedField]
+    [DataField("job")]
     [Access(typeof(SharedGhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // also FIXME Friends
     public ProtoId<JobPrototype>? JobProto = null;
 }

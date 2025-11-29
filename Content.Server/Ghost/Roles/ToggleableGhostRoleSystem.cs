@@ -1,11 +1,11 @@
 using Content.Server.Ghost.Roles.Components;
-using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Ghost.Roles.Components;
 
 namespace Content.Server.Ghost.Roles;
 
