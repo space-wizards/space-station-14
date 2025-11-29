@@ -985,3 +985,10 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 30
+  # "remove" wield bonus and penalty so borgs can use it 
+  - type: GunWieldBonus
+    minAngle: 0
+    maxAngle: 0
+  - type: Gun
+    minAngle: 1
+    maxAngle: 2  
