@@ -20,7 +20,7 @@ xenoborgs-cond-xenoborgs-alive = {$count ->
     *[other] There were {$count} xenoborgs in the end.
 }
 
-xenoborg-number-crew-alive-end = The number of crew alive in the end was: {$count}
+xenoborg-number-crew-alive-end = The number of crew alive in the end was: {$count}.
 
 xenoborg-max-number = The highest number of xenoborgs was: {$count}.
 
