@@ -990,5 +990,6 @@
     minAngle: 0
     maxAngle: 0
   - type: Gun
+    fireRate: 2
     minAngle: 1
     maxAngle: 2  
