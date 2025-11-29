@@ -26,10 +26,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
 
         foreach (var condition in conditions)
         {
-            if (!condition.TryRaiseEvent(target, this, parameters, out var result))
+            if (!TryCondition(target, condition, out var result, parameters))
                 continue;
 
-            if (condition.Inverted == result)
+            if (!result.Value)
                 return false;
         }
 
@@ -41,6 +41,8 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="conditions">Conditions we're checking</param>
+    /// <param name="parameters">Used to get check only subset of <paramref name="conditions"/> and pass to them
+    /// arguments</param>
     /// <returns>Returns true if any conditions return true</returns>
     public bool TryAnyCondition(EntityUid target, EntityCondition[]? conditions, EntityConditionParameters parameters)
     {
@@ -50,10 +52,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
 
         foreach (var condition in conditions)
         {
-            if (!condition.TryRaiseEvent(target, this, parameters, out var result))
+            if (!TryCondition(target, condition, out var result, parameters))
                 continue;
 
-            if (condition.Inverted != result)
+            if (result.Value)
                 return true;
         }
 
@@ -65,13 +67,36 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="condition">Condition we're checking</param>
+    /// <param name="parameters">Used to get check only subset of <paramref name="conditions"/> and pass to them
     /// <returns>Returns true if we meet the condition and false otherwise</returns>
     public bool TryCondition(EntityUid target, EntityCondition condition, EntityConditionParameters parameters = new())
     {
-        if (!condition.TryRaiseEvent(target, this, parameters, out var result))
+        // If condition can't be applied, condition was not failed
+        if (!TryCondition(target, condition, out var result, parameters))
+            return true;
+
+        return result.Value;
+    }
+
+    /// <summary>
+    /// Checks a single <see cref="EntityCondition"/> on an entity, while providing information if check
+    /// could even be properly performed.
+    /// </summary>
+    /// <param name="target">Target entity we're checking conditions on</param>
+    /// <param name="condition">Condition we're checking</param>
+    /// <param name="result">The result of condition check</param>
+    /// <param name="parameters">Used to get check only subset of <paramref name="conditions"/> and pass to them
+    /// arguments</param>
+    /// <returns>Returns true if we meet the condition was valid for provided <paramref name="parameters"/></returns>
+    public bool TryCondition(EntityUid target, EntityCondition condition, [NotNullWhen(true)] out bool? result, EntityConditionParameters parameters = new())
+    {
+        result = false;
+
+        if (!condition.TryRaiseEvent(target, this, parameters, out var conditionResult))
             return false;
 
-        return condition.Inverted != result;
+        result = condition.Inverted != conditionResult;
+        return true;
     }
 
     /// <summary>
