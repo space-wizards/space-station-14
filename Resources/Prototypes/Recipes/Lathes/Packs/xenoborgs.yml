@@ -11,6 +11,9 @@
 - type: latheRecipePack
   id: XenoborgUpgradeModules
   recipes:
+  # heavy xenoborg
   - XenoborgModuleHeavyLaserRecipe
+  # scout xenoborg
   - XenoborgModuleEnergySwordRecipe
+  # stealth xenoborg
   - XenoborgModuleSuperCloakDeviceRecipe

@@ -49,6 +49,8 @@
 
 # modules
 
+## heavy xenoborg modules
+
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleHeavyLaserRecipe
@@ -57,6 +59,8 @@
     Steel: 1500
     Glass: 1500
 
+## scout xenoborg modules
+
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleEnergySwordRecipe
@@ -64,6 +68,8 @@
   materials:
     Steel: 1500
     Glass: 1500
+
+## stealth xenoborg modules
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
