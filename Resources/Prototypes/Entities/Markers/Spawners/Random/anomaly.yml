@@ -22,7 +22,8 @@
     - AnomalyFlora
     - AnomalyShadow
     - AnomalyTech
-    #- AnomalySanta
+    Holiday: FestiveSeason
+    HolidayPrototypes: AnomalySanta
     rareChance: 0.3
     rarePrototypes:
     - RandomAnomalyInjectorSpawner
@@ -72,5 +73,7 @@
     - AnomalyTrapGravity
     - AnomalyTrapTech
     - AnomalyTrapRock
-    #- AnomalyTrapSanta
+    Holiday: FestiveSeason
+    HolidayPrototypes:
+    - AnomalyTrapSanta
     chance: 1
