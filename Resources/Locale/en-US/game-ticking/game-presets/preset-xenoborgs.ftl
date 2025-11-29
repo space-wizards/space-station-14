@@ -7,8 +7,8 @@ mothership-welcome = You're the mothership core. Guide the xenoborgs so they can
 
 xenoborg-shuttle-call = We have detected that Xenoborgs have overtaken the station. Dispatching an emergency shuttle to collect remaining personnel.
 
-xenoborgs-borgsmajor = [color=blue]Xenoborg major victory![/color]
-xenoborgs-borgsminor = [color=blue]Xenoborg minor victory![/color]
+xenoborgs-borgsmajor = [color=deepskyblue]Xenoborg major victory![/color]
+xenoborgs-borgsminor = [color=deepskyblue]Xenoborg minor victory![/color]
 xenoborgs-neutral = [color=white]Neutral outcome![/color]
 xenoborgs-crewminor = [color=yellow]Crew minor victory![/color]
 xenoborgs-crewmajor = [color=yellow]Crew major victory![/color]
