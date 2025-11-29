@@ -1,6 +1,3 @@
-using System.Linq;
-using System.Numerics;
-using System.Text;
 using Content.Shared.NPC;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -11,6 +8,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Numerics;
+using System.Text;
 
 namespace Content.Client.NPC
 {

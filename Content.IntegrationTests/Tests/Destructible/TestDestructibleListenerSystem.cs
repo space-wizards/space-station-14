@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using Content.Shared.Destructible;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
+using System.Collections.Generic;
 
 namespace Content.IntegrationTests.Tests.Destructible
 {

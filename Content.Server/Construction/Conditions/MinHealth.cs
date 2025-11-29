@@ -1,7 +1,7 @@
 using Content.Server.Destructible;
-using Content.Shared.Destructible;
 using Content.Shared.Construction;
 using Content.Shared.Damage.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 

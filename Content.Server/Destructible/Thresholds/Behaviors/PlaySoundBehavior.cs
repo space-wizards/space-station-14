@@ -1,9 +1,7 @@
-using Content.Shared.Audio;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
-using Robust.Shared.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {

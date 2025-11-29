@@ -1,5 +1,4 @@
-﻿using Content.Shared.Body.Components;
-using Content.Shared.Destructible;
+﻿using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;

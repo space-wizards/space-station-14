@@ -1,15 +1,14 @@
 #nullable enable
-using System.Collections.Generic;
 using Content.Server.Cargo.Systems;
 using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
-using Content.Shared.Destructible;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Lathe;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
+using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
@@ -18,6 +17,7 @@ using Content.Shared.Stacks;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using System.Collections.Generic;
 
 namespace Content.IntegrationTests.Tests;
 
