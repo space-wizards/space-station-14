@@ -2650,6 +2650,12 @@
     damage:
       types:
         Piercing: 6
+  - type: Puller
+    needsHands: false
+  - type: Cocooner
+    wrapAction: ActionWrap
+    wrapDuration: 10
+    hungerCost: 30
 
 - type: entity
   parent:
