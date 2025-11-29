@@ -189,44 +189,44 @@
   - UplinkWeaponry
 
 - type: listing
-  id: UplinkC20RBundle
-  name: uplink-c20r-bundle-name
-  description: uplink-c20r-bundle-desc
+  id: UplinkC20R
+  name: uplink-c20r-name
+  description: uplink-c20r-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
-  productEntity: ClothingBackpackDuffelSyndicateFilledSMG
+  productEntity: WeaponSubMachineGunC20r
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 10
+    Telecrystal: 5
   cost:
-    Telecrystal: 17
+    Telecrystal: 9
   categories:
   - UplinkWeaponry
 
 - type: listing
-  id: UplinkEstocBundle
-  name: uplink-estoc-bundle-name
-  description: uplink-estoc-bundle-desc
+  id: UplinkEstoc
+  name: uplink-estoc-name
+  description: uplink-estoc-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Rifles/estoc.rsi, state: icon }
-  productEntity: ClothingBackpackDuffelSyndicateFilledRifle
+  productEntity: WeaponRifleEstoc
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 11
+    Telecrystal: 5
   cost:
-    Telecrystal: 18
+    Telecrystal: 9
   categories:
   - UplinkWeaponry
 
 - type: listing
-  id: UplinkBulldogBundle
-  name: uplink-buldog-bundle-name
-  description: uplink-buldog-bundle-desc
+  id: UplinkBulldog
+  name: uplink-bulldog-name
+  description: uplink-bulldog-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi, state: icon }
-  productEntity: ClothingBackpackDuffelSyndicateFilledShotgun
+  productEntity: WeaponShotgunBulldog
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 12
+    Telecrystal: 6
   cost:
-    Telecrystal: 20
+    Telecrystal: 10
   categories:
   - UplinkWeaponry
 
@@ -245,16 +245,16 @@
   - UplinkWeaponry
 
 - type: listing
-  id: UplinkL6SawBundle
-  name: uplink-l6-saw-bundle-name
-  description: uplink-l6-saw-bundle-desc
+  id: UplinkL6Saw
+  name: uplink-l6-saw-name
+  description: uplink-l6-saw-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi, state: icon }
-  productEntity: ClothingBackpackDuffelSyndicateFilledLMG
+  productEntity: WeaponLightMachineGunL6
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 24
+    Telecrystal: 12
   cost:
-    Telecrystal: 30
+    Telecrystal: 21
   categories:
   - UplinkWeaponry
 
@@ -606,6 +606,17 @@
   productEntity: MagazineBoxAntiMateriel
   cost:
     Telecrystal: 2
+  categories:
+  - UplinkAmmo
+
+# for the L6
+- type: listing
+  id: UplinkHristovAmmo
+  name: uplink-magazine-lmg-name
+  description: uplink-magazine-lmg-desc
+  productEntity: MagazineLightRifleBox
+  cost:
+    Telecrystal: 4
   categories:
   - UplinkAmmo
 

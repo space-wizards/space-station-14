@@ -146,7 +146,7 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoFilled
   name: ammo bundle
-  description: "Reloading! Contains 4 magazines for the C-20r, 5 drums for the Bulldog, 3 magazines for the Estoc DMR, and 2 ammo boxes for the L6 SAW."
+  description: "Reloading! Contains 4 magazines for the C-20r, 5 drums for the Bulldog, 3 magazines for the Estoc DMR, and 3 ammo boxes for the L6 SAW."
   components:
   - type: EntityTableContainerFill
     containers:
@@ -160,7 +160,7 @@
           amount: 3
         - id: MagazineShotgunSlug
         - id: MagazineLightRifleBox
-          amount: 2
+          amount: 3 # L6 comes with one magazine now, so to balance for nukies, its now 3 instead of 2.
 
 - type: entity
   parent: ClothingBackpackDuffelClown
