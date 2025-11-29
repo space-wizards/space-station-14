@@ -93,17 +93,6 @@
 
 - type: entity
   parent: SCPClothingUniformBase
-  id: SCPClothingUniformAdministrativeSkirt
-  name: administrative skirt
-  description: The so called "Boss" (Not the big one).
-  components:
-  - type: Sprite
-    sprite: _SCP/Clothing/Uniforms/administrative-skirt.rsi
-  - type: Clothing
-    sprite: _SCP/Clothing/Uniforms/administrative-skirt.rsi
-
-- type: entity
-  parent: SCPClothingUniformBase
   id: SCPClothingUniformITS
   name: ITS uniform
   description: The Engineer.
