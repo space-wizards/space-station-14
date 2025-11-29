@@ -1,4 +1,6 @@
-﻿using Content.Shared.Trigger.Systems;
+﻿using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Behaviors;
+using Content.Shared.Trigger.Systems;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
@@ -11,7 +13,7 @@ public sealed partial class TriggerBehavior : IThresholdBehavior
     [DataField]
     public string? KeyOut { get; set; } = TriggerSystem.DefaultTriggerKey;
 
-    public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, DestructibleBehaviorSystem system, EntityUid? cause = null)
     {
         system.TriggerSystem.Trigger(owner, cause, KeyOut);
     }

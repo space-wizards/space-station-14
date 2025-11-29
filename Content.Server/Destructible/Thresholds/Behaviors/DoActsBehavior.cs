@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
@@ -17,16 +18,16 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             return (Acts & act) != 0;
         }
 
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        public void Execute(EntityUid owner, DestructibleBehaviorSystem system, EntityUid? cause = null)
         {
             if (HasAct(ThresholdActs.Breakage))
             {
-                system.BreakEntity(owner);
+                system.DestructibleSystem.BreakEntity(owner);
             }
 
             if (HasAct(ThresholdActs.Destruction))
             {
-                system.DestroyEntity(owner);
+                system.DestructibleSystem.DestroyEntity(owner);
             }
         }
     }

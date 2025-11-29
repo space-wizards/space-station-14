@@ -1,7 +1,11 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Atmos.Piping.Components;
+using Content.Shared.Atmos.Piping.EntitySystems;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -31,12 +35,16 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     [Dependency] protected readonly SharedChargesSystem Charges = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly AtmosPipeColorSystem _pipeColor = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<SprayPainterComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SprayPainterComponent, SprayPainterPipeDoAfterEvent>(OnPipeDoAfter);
+        SubscribeLocalEvent<AtmosPipeColorComponent, InteractUsingEvent>(OnPipeInteract);
+        SubscribeLocalEvent<GasCanisterComponent, EntityPaintedEvent>(OnCanisterPainted);
 
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterDoAfterEvent>(OnPainterDoAfter);
         SubscribeLocalEvent<SprayPainterComponent, GetVerbsEvent<AlternativeVerb>>(OnPainterGetAltVerbs);
@@ -58,7 +66,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     private void OnMapInit(Entity<SprayPainterComponent> ent, ref MapInitEvent args)
     {
-        bool stylesByGroupPopulated = false;
+        var stylesByGroupPopulated = false;
         foreach (var groupProto in Proto.EnumeratePrototypes<PaintableGroupPrototype>())
         {
             ent.Comp.StylesByGroup[groupProto.ID] = groupProto.DefaultStyle;
@@ -69,6 +77,79 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         if (ent.Comp.ColorPalette.Count > 0)
             SetPipeColor(ent, ent.Comp.ColorPalette.First().Key);
+    }
+
+    /// <summary>
+    /// Event handler when gas canisters are painted.
+    /// The canister's color should not change when it's destroyed.
+    /// </summary>
+    private void OnCanisterPainted(Entity<GasCanisterComponent> ent, ref EntityPaintedEvent args)
+    {
+        var dummy = EntityManager.PredictedSpawn(args.Prototype);
+
+        var destructibleComp = EnsureComp<DestructibleComponent>(dummy);
+        CopyComp(dummy, ent, destructibleComp);
+
+        PredictedDel(dummy);
+    }
+
+    private void OnPipeDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterPipeDoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled)
+            return;
+
+        if (args.Args.Target is not { } target)
+            return;
+
+        if (!TryComp<AtmosPipeColorComponent>(target, out var color))
+            return;
+
+        if (TryComp<LimitedChargesComponent>(ent, out var charges) &&
+            !Charges.TryUseCharges((ent, charges), ent.Comp.PipeChargeCost))
+            return;
+
+        Audio.PlayPredicted(ent.Comp.SpraySound, ent, ent);
+        _pipeColor.SetColor(target, color, args.Color);
+
+        args.Handled = true;
+    }
+
+    private void OnPipeInteract(Entity<AtmosPipeColorComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryComp<SprayPainterComponent>(args.Used, out var painter) ||
+            painter.PickedColor is not { } colorName)
+            return;
+
+        if (!painter.ColorPalette.TryGetValue(colorName, out var color))
+            return;
+
+        if (TryComp<LimitedChargesComponent>(args.Used, out var charges)
+            && Charges.GetCurrentCharges((args.Used, charges)) < painter.PipeChargeCost)
+        {
+            var msg = Loc.GetString("spray-painter-interact-no-charges");
+            _popup.PopupClient(msg, args.User, args.User);
+            return;
+        }
+
+        var doAfterEventArgs = new DoAfterArgs(EntityManager,
+            args.User,
+            painter.PipeSprayTime,
+            new SprayPainterPipeDoAfterEvent(color),
+            args.Used,
+            target: ent,
+            used: args.Used)
+        {
+            BreakOnMove = true,
+            BreakOnDamage = true,
+            // multiple pipes can be sprayed at once just not the same one
+            DuplicateCondition = DuplicateConditions.SameTarget,
+            NeedHand = true,
+        };
+
+        args.Handled = DoAfter.TryStartDoAfter(doAfterEventArgs);
     }
 
     private void SetPipeColor(Entity<SprayPainterComponent> ent, string? paletteKey)
@@ -83,7 +164,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(ent);
         UpdateUi(ent);
     }
-
     #region Interaction
 
     private void OnPainterDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterDoAfterEvent args)
@@ -144,7 +224,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        var pitch = 1.0f;
+        float pitch;
         switch (ent.Comp.DecalMode)
         {
             case DecalPaintMode.Off:
@@ -181,7 +261,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         if (ent.Comp.Group is not { } group
             || !painter.StylesByGroup.TryGetValue(group, out var selectedStyle)
-            || !Proto.Resolve(group, out PaintableGroupPrototype? targetGroup))
+            || !Proto.Resolve(group, out var targetGroup))
             return;
 
         // Valid paint target.

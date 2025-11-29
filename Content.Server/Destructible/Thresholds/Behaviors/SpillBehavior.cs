@@ -1,3 +1,5 @@
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Fluids.Components;
@@ -20,7 +22,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// <param name="owner">Entity on which behavior is executed</param>
         /// <param name="system">system calling the behavior</param>
         /// <param name="cause"></param>
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        public void Execute(EntityUid owner, DestructibleBehaviorSystem system, EntityUid? cause = null)
         {
             var solutionContainerSystem = system.EntityManager.System<SharedSolutionContainerSystem>();
             var spillableSystem = system.EntityManager.System<PuddleSystem>();

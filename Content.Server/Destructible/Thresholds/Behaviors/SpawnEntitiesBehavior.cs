@@ -1,7 +1,9 @@
 using System.Numerics;
 using Content.Server.Forensics;
 using Content.Server.Stack;
+using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
@@ -29,7 +31,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField]
         public bool SpawnInContainer;
 
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        public void Execute(EntityUid owner, DestructibleBehaviorSystem system, EntityUid? cause = null)
         {
             var tSys = system.EntityManager.System<TransformSystem>();
             var position = tSys.GetMapCoordinates(owner);
@@ -77,7 +79,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
             }
         }
 
-        public void TransferForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
+        public void TransferForensics(EntityUid spawned, DestructibleBehaviorSystem system, EntityUid owner)
         {
             if (!DoTransferForensics ||
                 !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))

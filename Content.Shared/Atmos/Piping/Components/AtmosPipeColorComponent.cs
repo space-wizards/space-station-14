@@ -1,7 +1,7 @@
-using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Shared.Atmos.Piping.EntitySystems;
 using JetBrains.Annotations;
 
-namespace Content.Server.Atmos.Piping.Components;
+namespace Content.Shared.Atmos.Piping.Components;
 
 [RegisterComponent]
 public sealed partial class AtmosPipeColorComponent : Component
@@ -18,7 +18,7 @@ public sealed partial class AtmosPipeColorComponent : Component
 }
 
 [ByRefEvent]
-public record struct AtmosPipeColorChangedEvent(Color color)
+public record struct AtmosPipeColorChangedEvent(Color Color)
 {
-    public Color Color = color;
+    public Color Color = Color;
 }

@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Body.Components;
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
@@ -12,7 +14,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public sealed partial class BurnBodyBehavior : IThresholdBehavior
 {
 
-    public void Execute(EntityUid bodyId, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid bodyId, DestructibleBehaviorSystem system, EntityUid? cause = null)
     {
         var transformSystem = system.EntityManager.System<TransformSystem>();
         var inventorySystem = system.EntityManager.System<InventorySystem>();

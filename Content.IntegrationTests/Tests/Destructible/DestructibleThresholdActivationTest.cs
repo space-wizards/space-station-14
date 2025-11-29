@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Server.Destructible;
-using Content.Server.Destructible.Thresholds;
+using Content.Shared.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;

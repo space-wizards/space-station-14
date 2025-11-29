@@ -1,38 +1,39 @@
-using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Fluids.Components;
+namespace Content.Shared.Fluids.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SpraySystem))]
 public sealed partial class SprayComponent : Component
 {
     public const string SolutionName = "spray";
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 TransferAmount = 10;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField, AutoNetworkedField]
     public float SprayDistance = 3.5f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public float SprayVelocity = 3.5f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public EntProtoId SprayedPrototype = "Vapor";
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField, AutoNetworkedField]
     public int VaporAmount = 1;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField, AutoNetworkedField]
     public float VaporSpread = 90f;
 
     /// <summary>
     /// How much the player is pushed back for each spray.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float PushbackAmount = 5f;
 
     [DataField(required: true)]
