@@ -32,7 +32,7 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     /// </summary>
     [DataField]
     public int MinLimit = 1;
-    
+
     /// <summary>
     /// Number of loadouts that are selected by default.
     /// </summary>
@@ -51,7 +51,31 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     [DataField]
     public bool Hidden;
 
+    /// <summary>
+    /// Individual loadout items part of this group
+    /// </summary>
     [AlwaysPushInheritance]
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();
+
+    /// <summary>
+    /// Child loadout groups to be displayed in the form of collapsible menu items
+    /// </summary>
+    [DataField]
+    public List<ProtoId<LoadoutGroupPrototype>> LoadoutGroups = new();
+
+    /// <summary>
+    /// When this loadout group is used as child group of another group, this item will be used to represent it
+    /// </summary>
+    [DataField]
+    public ProtoId<LoadoutPrototype>? DisplayLoadout;
+
+    [DataField]
+    public LocId? Description;
+
+    /// <summary>
+    /// When this loadout group is used as child group of another group, this entity's sprite will be used to represent it. If null, will fall back to the first item in the group
+    /// </summary>
+    [DataField]
+    public EntProtoId? DummyEntity;
 }

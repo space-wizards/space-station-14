@@ -1,6 +1,22 @@
 # Errors
 loadout-group-species-restriction = This item is not available for your current species.
 
+# Groups
+loadout-group-pridepins = Pride pins
+loadout-group-description-pridepins = Pride pins
+loadout-group-smokeables = Tobacco products
+loadout-group-description-smokeables = Tobacco products
+loadout-group-towels = Towels
+loadout-group-description-towels = Towels
+loadout-group-canes = Canes
+loadout-group-description-canes = Canes
+loadout-group-folders = Paperwork
+loadout-group-description-folders = Folders
+loadout-group-dresses = Dresses
+loadout-group-description-dresses = Dresses
+loadout-group-pridecloak = Pride cloaks
+loadout-group-description-pridecloak = Pride cloaks
+
 # Miscellaneous
 loadout-group-trinkets = Trinkets
 loadout-group-jobtrinkets = Job trinkets

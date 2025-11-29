@@ -13,9 +13,6 @@ namespace Content.Client.Lobby.UI.Loadouts;
 [GenerateTypedNameReferences]
 public sealed partial class LoadoutGroupContainer : BoxContainer
 {
-    private const string ClosedGroupMark = "▶";
-    private const string OpenedGroupMark = "▼";
-
     /// <summary>
     /// A dictionary that stores open groups
     /// </summary>
@@ -42,6 +39,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     {
         var protoMan = collection.Resolve<IPrototypeManager>();
         var loadoutSystem = collection.Resolve<IEntityManager>().System<LoadoutSystem>();
+        var localizationMan = collection.Resolve<ILocalizationManager>();
         RestrictionsContainer.RemoveAllChildren();
 
         if (_groupProto.MinLimit > 0)
@@ -76,107 +74,64 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         // Get all loadout prototypes for this group.
         var validProtos = _groupProto.Loadouts.Select(id => protoMan.Index(id));
 
-        /*
-         * Group the prototypes based on their GroupBy field.
-         * - If GroupBy is null or empty, fallback to grouping by the prototype ID itself.
-         * - The result is a dictionary where:
-         *   - The key is either GroupBy or ID (if GroupBy is not set).
-         *   - The value is the list of prototypes that belong to that group.
-         *
-         * This allows grouping loadouts into sub-categories within the group.
-         */
-        var groups = validProtos
-        .GroupBy(p => string.IsNullOrEmpty(p.GroupBy)
-                         ? p.ID
-                         : p.GroupBy)
-        .ToDictionary(g => g.Key, g => g.ToList());
-
-        foreach (var kvp in groups)
+        foreach (var group in _groupProto.LoadoutGroups)
         {
-            var protos = kvp.Value;
+            if (!protoMan.TryIndex(group, out var loadoutGroupProto))
+                continue;
 
-            if (protos.Count > 1)
-            {
-                /*
-                 * Build the list of UI elements for each loadout prototype:
-                 * - For each prototype, create its corresponding LoadoutContainer UI element.
-                 * - Set HorizontalExpand to true so elements properly stretch in layout.
-                 * - Collect all UI elements into a list for further processing.
-                 */
-                var uiElements = protos
-                    .Select(proto =>
-                    {
-                        var elem = CreateLoadoutUI(proto, profile, loadout, session, collection, loadoutSystem);
-                        elem.HorizontalExpand = true;
-                        return elem;
-                    })
-                    .ToList();
+            var groupProtos = loadoutGroupProto.Loadouts.Select(id => protoMan.Index(id));
 
-                /*
-                * Determine which element should be displayed first:
-                * - If any element is currently selected (its button is pressed), use it.
-                * - Otherwise, fallback to the first element in the list.
-                *
-                * This moves the selected item outside of the sublist for better usability,
-                * making it easier for players to quickly toggle loadout options (e.g. clothing, accessories)
-                * without having to search inside expanded subgroups.
-                */
-                var firstElement = uiElements.FirstOrDefault(e => e.Select.Pressed) ?? uiElements[0];
-
-                /*
-                 * Get all remaining elements except the first one:
-                 * - Use ReferenceEquals to ensure we exclude the exact instance used as firstElement.
-                 */
-                var otherElements = uiElements.Where(e => !ReferenceEquals(e, firstElement)).ToList();
-
-                firstElement.HorizontalExpand = true;
-                var subContainer = new SubLoadoutContainer()
+            var uiElements = groupProtos
+                .Select(proto =>
                 {
-                    Visible = _openedGroups.GetValueOrDefault(kvp.Key, false)
-                };
-                var toggle = CreateToggleButton(kvp, firstElement, subContainer);
+                    var elem = CreateLoadoutUI(proto, profile, loadout, session, collection, loadoutSystem);
+                    elem.HorizontalExpand = true;
+                    return elem;
+                })
+                .ToList();
 
-                LoadoutsContainer.AddChild(firstElement);
-                LoadoutsContainer.AddChild(subContainer);
+            var fallbackProto = groupProtos.First();
+            var displayDummy = loadoutGroupProto.DummyEntity ?? fallbackProto.DummyEntity ?? loadoutSystem.GetFirstOrNull(fallbackProto);
 
-                var subList = subContainer.Grid;
-                foreach (var proto in otherElements)
-                {
-                    subList.AddChild(proto);
-                }
-                var itemName = firstElement.Text ?? "";
-                UpdateSubGroupSelectedInfo(firstElement, itemName, subList);
-            }
-            else
+            var subContainer = new SubLoadoutContainer()
             {
-                LoadoutsContainer.AddChild(
-                    CreateLoadoutUI(protos[0], profile, loadout, session, collection, loadoutSystem)
-                );
+                Visible = false
+            };
+            var toggle = CreateToggleButton(localizationMan.GetString(loadoutGroupProto.Name),"", displayDummy, subContainer);
+            toggle.HorizontalExpand = true;
+
+            LoadoutsContainer.AddChild(toggle);
+            LoadoutsContainer.AddChild(subContainer);
+
+            var subList = subContainer.Grid;
+            foreach (var proto in uiElements)
+            {
+                subList.AddChild(proto);
             }
+        }
+
+        foreach (var loadoutProto in validProtos)
+        {
+            LoadoutsContainer.AddChild(
+                CreateLoadoutUI(loadoutProto, profile, loadout, session, collection, loadoutSystem)
+            );
         }
     }
 
-    private ToggleLoadoutButton CreateToggleButton(KeyValuePair<string, List<LoadoutPrototype>> kvp, LoadoutContainer firstElement, SubLoadoutContainer subContainer)
+    private ToggleLoadoutButton CreateToggleButton(string displayName, string displayDescription, EntProtoId? displayDummy, SubLoadoutContainer subContainer)
     {
-        var toggle = new ToggleLoadoutButton
-        {
-            Text = ClosedGroupMark
-        };
+        var toggle = new ToggleLoadoutButton(displayName, displayDescription, displayDummy);
 
-        toggle.Text = subContainer.Visible ? OpenedGroupMark : ClosedGroupMark;
-        toggle.Pressed = subContainer.Visible;
+        toggle.SetExpanded(subContainer.Visible);
 
-        toggle.OnPressed += _ =>
+        toggle.Button.OnPressed += _ =>
         {
             var willOpen = !subContainer.Visible;
             subContainer.Visible = willOpen;
-            toggle.Text = willOpen ? OpenedGroupMark : ClosedGroupMark;
-            toggle.Pressed = willOpen;
-            _openedGroups[kvp.Key] = willOpen;
+            toggle.SetExpanded(willOpen);
         };
 
-        firstElement.AddChild(toggle);
-        toggle.SetPositionFirst();
+        //toggle.SetPositionFirst();
         return toggle;
     }
 

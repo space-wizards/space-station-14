@@ -3,6 +3,7 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <BoxContainer Name="SubGridContainer"
                   Orientation="Vertical"
-                  HorizontalExpand="true"/>
-  
+                  HorizontalExpand="true"
+                  Margin="10 0 0 0"/>
+
 </PanelContainer>

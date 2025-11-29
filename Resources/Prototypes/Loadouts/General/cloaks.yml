@@ -1,0 +1,54 @@
+- type: loadout
+  id: ClothingNeckCloakTrans
+  equipment:
+    neck: ClothingNeckCloakTrans
+
+- type: loadout
+  id: ClothingNeckCloakAro
+  equipment:
+    neck: ClothingNeckCloakAro
+
+- type: loadout
+  id: ClothingNeckCloakAce
+  equipment:
+    neck: ClothingNeckCloakAce
+
+- type: loadout
+  id: ClothingNeckCloakAroace
+  equipment:
+    neck: ClothingNeckCloakAroace
+
+- type: loadout
+  id: ClothingNeckCloakBi
+  equipment:
+    neck: ClothingNeckCloakBi
+
+- type: loadout
+  id: ClothingNeckCloakIntersex
+  equipment:
+    neck: ClothingNeckCloakIntersex
+
+- type: loadout
+  id: ClothingNeckCloakEnby
+  equipment:
+    neck: ClothingNeckCloakEnby
+
+- type: loadout
+  id: ClothingNeckCloakPan
+  equipment:
+    neck: ClothingNeckCloakPan
+
+- type: loadout
+  id: ClothingNeckCloakGay
+  equipment:
+    neck: ClothingNeckCloakGay
+
+- type: loadout
+  id: ClothingNeckCloakLesbian
+  equipment:
+    neck: ClothingNeckCloakLesbian
+
+- type: loadout
+  id: BedsheetRainbow
+  equipment:
+    neck: BedsheetRainbow

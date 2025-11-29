@@ -1,9 +1,21 @@
-<Button Name="ToggleButton"
-        xmlns="https://spacestation14.io"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        VerticalExpand="False"
-        HorizontalExpand="False"
-        SetSize="64 64"
-        HorizontalAlignment="Right"
-        VerticalAlignment="Center"
-        Margin="0 0 5 0"/>
+<BoxContainer Name="Container" xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         Orientation="Horizontal"
+         HorizontalExpand="True"
+         MouseFilter="Ignore"
+         Margin="0 0 0 5">
+    <ContainerButton Name="ToggleButton" ToggleMode="True" Margin="0 0 5 0" VerticalExpand="False" HorizontalExpand="True">
+        <BoxContainer Orientation="Horizontal">
+            <Control Name="Padding"/>
+            <TextureRect Name="DropdownArrow" SetSize="16 16" Stretch="KeepCentered" Visible="False"/>
+            <Label Margin="2 0 2 0" Name="Label"/>
+        </BoxContainer>
+    </ContainerButton>
+    <PanelContainer SetSize="64 64" HorizontalAlignment="Right">
+        <PanelContainer.PanelOverride>
+            <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
+        </PanelContainer.PanelOverride>
+        <SpriteView Name="Sprite" Scale="4 4" MouseFilter="Stop"/>
+    </PanelContainer>
+</BoxContainer>

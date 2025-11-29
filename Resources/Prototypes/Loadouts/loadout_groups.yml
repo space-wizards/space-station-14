@@ -1,5 +1,6 @@
 # Miscellaneous
 - type: loadoutGroup
+  parent: [Dresses]
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
@@ -11,16 +12,19 @@
   - PlushieLizard
   - PlushieSpaceLizard
   - ThreeCandles
-  - Lighter
-  - CigPackGreen
-  - CigPackRed
-  - CigPackBlue
-  - CigPackBlack
-  - CigarCase
-  - CigarGold
-  - BoxFolderBaseThreePapers
-  - BoxFolderPlasticClipboardThreePapers
-  - BoxFolderClipboardThreePapers
+  loadoutGroups:
+  - PridePins
+  - Smokeables
+  - Towels
+  - Canes
+  - Folders
+
+- type: loadoutGroup
+  id: PridePins
+  name: loadout-group-pridepins
+  dummyEntity: ClothingNeckLGBTPin
+  minLimit: 0
+  loadouts:
   - ClothingNeckLGBTPin
   - ClothingNeckAllyPin
   - ClothingNeckAromanticPin
@@ -39,12 +43,26 @@
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
   - ClothingNeckGoldAutismPin
-  - OffsetCane
-  - OffsetCaneWood
-  - OffsetCaneClown
-  - OffsetCaneMime
-  - OffsetCaneNT
-  - Cane
+
+- type: loadoutGroup
+  id: Smokeables
+  name: loadout-group-smokeables
+  dummyEntity: CigPackRed
+  minLimit: 0
+  loadouts:
+  - CigPackGreen
+  - CigPackRed
+  - CigPackBlue
+  - CigPackBlack
+  - CigarCase
+  - CigarGold
+  - Lighter
+
+- type: loadoutGroup
+  id: Towels
+  name: loadout-group-towels
+  minLimit: 0
+  loadouts:
   - TowelColorWhite
   - TowelColorGray
   - TowelColorBlack
@@ -61,6 +79,67 @@
   - TowelColorMime
   - TowelColorSilver
   - TowelColorGold
+
+- type: loadoutGroup
+  id: Canes
+  name: loadout-group-canes
+  dummyEntity: Cane
+  minLimit: 0
+  loadouts:
+  - OffsetCane
+  - OffsetCaneWood
+  - OffsetCaneClown
+  - OffsetCaneMime
+  - OffsetCaneNT
+  - Cane
+
+- type: loadoutGroup
+  id: Folders
+  name: loadout-group-folders
+  minLimit: 0
+  loadouts:
+  - BoxFolderBaseThreePapers
+  - BoxFolderPlasticClipboardThreePapers
+  - BoxFolderClipboardThreePapers
+
+- type: loadoutGroup
+  id: Dresses
+  name: loadout-group-dresses
+  minLimit: 0
+  loadouts:
+  - ClothingUniformJumpskirtBlackElegantDress
+  - ClothingUniformJumpskirtRedElegantDress
+  - ClothingUniformJumpskirtGreenElegantDress
+  - ClothingUniformJumpskirtBlueElegantDress
+  - ClothingUniformJumpskirtPurpleElegantDress
+  - ClothingUniformJumpskirtCyanStripedDress
+  - ClothingUniformJumpskirtRedStripedDress
+  - ClothingUniformJumpskirtGreenStripedDress
+  - ClothingUniformJumpskirtPinkStripedDress
+  - ClothingUniformJumpskirtOrangeStripedDress
+  - ClothingUniformJumpskirtPurpleTurtleneckDress
+  - ClothingUniformJumpskirtRedTurtleneckDress
+  - ClothingUniformJumpskirtGreenTurtleneckDress
+  - ClothingUniformJumpskirtBlueTurtleneckDress
+  - ClothingUniformJumpskirtYellowTurtleneckDress
+  - ClothingUniformJumpskirtYellowOldDress
+
+- type: loadoutGroup
+  id: PrideCloaks
+  name: loadout-group-pridecloak
+  minLimit: 0
+  loadouts:
+  - ClothingNeckCloakTrans
+  - ClothingNeckCloakAro
+  - ClothingNeckCloakAce
+  - ClothingNeckCloakAroace
+  - ClothingNeckCloakBi
+  - ClothingNeckCloakIntersex
+  - ClothingNeckCloakEnby
+  - ClothingNeckCloakPan
+  - ClothingNeckCloakGay
+  - ClothingNeckCloakLesbian
+  - BedsheetRainbow
 
 - type: loadoutGroup
   id: Glasses
