@@ -28,6 +28,7 @@ public sealed partial class XenoborgsRuleComponent : Component
     /// <summary>
     /// The most xenoborgs that existed at one point.
     /// </summary>
+    [DataField]
     public int MaxNumberXenoborgs = 0;
 
     /// <summary>
