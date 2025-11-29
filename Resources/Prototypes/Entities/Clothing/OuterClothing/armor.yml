@@ -170,7 +170,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: StaticPrice
-    price: 1500
+    price: 2500
 
 #Elite web vest
 - type: entity
