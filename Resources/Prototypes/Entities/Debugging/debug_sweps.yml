@@ -50,6 +50,7 @@
   - type: Tag
     tags:
       - MagazineDebug
+      - MagazinePistolAll
   - type: BallisticAmmoProvider
     proto: CartridgeDebug
     capacity: 1000
