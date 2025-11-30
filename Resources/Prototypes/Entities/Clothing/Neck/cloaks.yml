@@ -138,7 +138,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakTrans
-  name: vampire cloak
+  name: PIDOR CAPE
   description: Worn by high ranking vampires of the transylvanian society of vampires.
   components:
   - type: Sprite
@@ -238,7 +238,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakBi
-  name: poison cloak
+  name: PIDOR CLOAK
   description: The purple color is a clear indicator you are poisonous.
   components:
   - type: Sprite
@@ -247,7 +247,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakIntersex
-  name: cyclops cloak
+  name: PIDOR CAPE
   description: The circle on this cloak represents a cyclops' eye.
   components:
   - type: Sprite
@@ -256,7 +256,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakLesbian
-  name: poet cloak
+  name: PIDORASI
   description: This cloak belonged to an ancient poet, you forgot which one.
   components:
   - type: Sprite
@@ -265,7 +265,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakGay
-  name: multi-level marketing cloak
+  name: GONDONYU PIDORI
   description: This cloak is highly sought after in the Nanotrasen Marketing Offices.
   components:
   - type: Sprite

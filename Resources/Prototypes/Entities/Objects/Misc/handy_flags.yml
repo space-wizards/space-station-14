@@ -37,8 +37,8 @@
 - type: entity
   parent: BaseItem
   id: LGBTQHandyFlag
-  name: LGBTQ handheld flag
-  description: "The be gay do crime handy flag."
+  name: pidor flag dlya gays
+  description: dlya EBANYUCH PIDOROV
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/lgbtq_handy_flag.rsi

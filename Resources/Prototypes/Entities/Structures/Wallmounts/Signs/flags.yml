@@ -36,8 +36,8 @@
 - type: entity
   parent: BaseFlag
   id: LGBTQFlag
-  name: LGBTQ flag
-  description: "\"Be gay do crime\" flag."
+  name: UKRAINE FLAG
+  description: dlya HOHLOV
   components:
   - type: Sprite
     state: lgbtq_flag
