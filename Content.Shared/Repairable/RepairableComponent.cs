@@ -46,6 +46,13 @@ public sealed partial class RepairableComponent : Component
     public bool AutoDoAfter = false;
 
     /// <summary>
+    /// How much to multiply the delay after a consecutive repair.
+    /// Only if <see cref="AutoDoAfter"/> is true. 
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float ConsecutiveRepairDelayMultiplier = 1f;
+
+    /// <summary>
     /// A multiplier that will be applied to the above if an entity is repairing themselves.
     /// </summary>
     [DataField, AutoNetworkedField]

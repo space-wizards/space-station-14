@@ -106,12 +106,13 @@
     # 20 seconds to repair from 299 damage
     damage:
       groups:
-        Brute: -45
+        Brute: -30
       types:
-        Heat: -15
-        Shock: -15
+        Heat: -10
+        Shock: -10
     doAfterDelay: 1
     autoDoAfter: true
+    consecutiveRepairDelayMultiplier: 0.9
     fuelCost: 0.5
     allowSelfRepair: false
   - type: BorgChassis

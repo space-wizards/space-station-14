@@ -44,8 +44,8 @@ public sealed partial class RepairableSystem : EntitySystem
 
         if (args.Repeat)
         {
-            var delay = ent.Comp.DoAfterDelay;
-            _toolSystem.UseTool(args.Used!.Value, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairDoAfterEvent(), ent.Comp.FuelCost);
+            var delay = args.Delay * ent.Comp.ConsecutiveRepairDelayMultiplier;
+            _toolSystem.UseTool(args.Used!.Value, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairDoAfterEvent(delay), ent.Comp.FuelCost);
         }
         else
         {
@@ -102,7 +102,7 @@ public sealed partial class RepairableSystem : EntitySystem
         }
 
         // Run the repairing doafter
-        args.Handled = _toolSystem.UseTool(args.Used, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairDoAfterEvent(), ent.Comp.FuelCost);
+        args.Handled = _toolSystem.UseTool(args.Used, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairDoAfterEvent(delay), ent.Comp.FuelCost);
     }
 }
 
@@ -119,4 +119,11 @@ public readonly record struct RepairedEvent(Entity<RepairableComponent> Ent, Ent
 /// This doafter is started again if the entity has <see cref="AutoDoAfter"> set to true and not all damage was fixed yet.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class RepairDoAfterEvent : SimpleDoAfterEvent;
+public sealed partial class RepairDoAfterEvent : SimpleDoAfterEvent
+{
+    public float Delay;
+    public RepairDoAfterEvent(float delay)
+    {
+        Delay = delay;
+    }
+}
