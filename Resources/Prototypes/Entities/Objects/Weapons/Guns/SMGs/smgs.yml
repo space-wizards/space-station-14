@@ -18,12 +18,8 @@
     - suitStorage
   - type: AmmoCounter
   - type: Gun
-    minAngle: 2
-    maxAngle: 16
     fireRate: 8
     burstFireRate: 8
-    angleIncrease: 3
-    angleDecay: 16
     selectedMode: FullAuto
     availableModes:
     - SemiAuto
@@ -100,12 +96,7 @@
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
   - type: Wieldable
     unwieldOnUse: false
-  - type: GunWieldBonus
-    minAngle: -19
-    maxAngle: -16
   - type: Gun
-    minAngle: 21
-    maxAngle: 32
     shotsPerBurst: 5
     availableModes:
     - Burst
@@ -180,12 +171,7 @@
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
     - type: Wieldable
       unwieldOnUse: false
-    - type: GunWieldBonus
-      minAngle: -19
-      maxAngle: -16
     - type: Gun
-      minAngle: 21
-      maxAngle: 32
       fireRate: 6
       burstFireRate: 18
       soundGunshot:
@@ -247,10 +233,6 @@
     boltClosed: null
   - type: Gun
     fireRate: 5.5
-    minAngle: 1
-    maxAngle: 6
-    angleIncrease: 1.5
-    angleDecay: 6
     selectedMode: FullAuto
     shotsPerBurst: 5
     burstCooldown: 0.2
@@ -311,8 +293,6 @@
       map: ["enum.GunVisualLayers.Base"]
   - type: Gun
     fireRate: 9
-    minAngle: 25
-    maxAngle: 32
     availableModes:
     - FullAuto
     soundGunshot:
