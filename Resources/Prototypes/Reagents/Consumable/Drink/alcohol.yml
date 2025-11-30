@@ -165,6 +165,7 @@
   meltingPoint: -114.1
   metabolisms:
     Alcohol:
+      metabolismRate: 0.05
       effects:
       - !type:HealthChange
         conditions:
@@ -176,7 +177,7 @@
           inverted: true
         damage:
           types:
-            Poison: 1
+            Poison: 0.1
       # dwarves take less toxin damage and heal a marginal amount of brute
       - !type:HealthChange
         conditions:
@@ -187,7 +188,7 @@
           type: [ Dwarf ]
         damage:
           types:
-            Poison: 0.2
+            Poison: 0.02
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -197,7 +198,7 @@
           type: [ Dwarf ]
         damage:
           groups:
-            Brute: -1
+            Brute: -0.1
       - !type:Vomit
         probability: 0.04
         conditions:
@@ -209,7 +210,7 @@
           type: [ Dwarf ]
           inverted: true
       - !type:Drunk
-        boozePower: 20
+        boozePower: 2
 
 - type: reagent
   id: Gin
@@ -2589,6 +2590,7 @@
         reagent: Ethanol
         amount: 0.45 # TODO: Figure out why setting this to 0 means this does more damage... WHAT BUG IS THIS?!!
     Alcohol:
+      metabolismRate : 0.05
       effects:
       - !type:Drunk
         boozePower: 10
@@ -2602,7 +2604,7 @@
           inverted: true
         damage:
           types:
-            Poison: 2 # TODO: Figure out poison amount. Ethanol does 1, this does 2 but also metabolises almost 3 to 4 times as fast as ethanol. This would be more Liver damage when that time arrives.
+            Poison: 0.2 # TODO: Figure out poison amount. Ethanol does 0.1, this does 0.2 but also metabolises almost 3 to 4 times as fast as ethanol. This would be more Liver damage when that time arrives.
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -2612,7 +2614,7 @@
           type: [Dwarf]
         damage:
           types:
-            Poison: 0.4 # TODO: Might increase this, even though it's just double of ethanol from 0.2 to 0.4
+            Poison: 0.04 # TODO: Might increase this, even though it's just double of ethanol from 0.02 to 0.04
       - !type:Vomit
         probability: 0.1 #TODO: Tweak vomit probability, maybe make this more violent and poisonous but the body aggressively purges it...
         conditions:

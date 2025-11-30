@@ -50,12 +50,14 @@
     shape:
     - 0,0,2,1
     heldPrefix: box
-  - type: StorageFill
-    contents:
-    - id: FoodDonutPink
-      amount: 3
-    - id: FoodDonutPlain
-      amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: FoodDonutPink
+          amount: 3
+        - id: FoodDonutPlain
+          amount: 3
   - type: ItemCounter
     count:
       tags: [Donut]
@@ -134,10 +136,11 @@
     shape:
     - 0,0,2,1
     storedOffset: 0,-6
-  - type: StorageFill
-    contents:
-    - id: FoodEgg
-      amount: 12
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodEgg
+        amount: 12
   - type: ItemCounter
     count:
       tags: [Egg]
@@ -184,10 +187,11 @@
   id: EggBoxBroken
   suffix: Broken
   components:
-  - type: StorageFill
-    contents:
-    - id: Eggshells
-      amount: 12
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Eggshells
+        amount: 12
   - type: Destructible
     thresholds:
     - trigger:
@@ -242,52 +246,44 @@
   id: FoodBoxPizzaFilled
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-    - id: FoodPizzaArnold
-      prob: 0.15
-      orGroup: Pizza
-    - id: FoodPizzaDank
-      prob: 0.10
-      orGroup: Pizza
-    - id: FoodPizzaSassysage
-      prob: 0.15
-      orGroup: Pizza
-    - id: FoodPizzaMargherita
-      prob: 0.15
-      orGroup: Pizza
-    - id: FoodPizzaMeat
-      prob: 0.15
-      orGroup: Pizza
-    - id: FoodPizzaMushroom
-      prob: 0.15
-      orGroup: Pizza
-    - id: FoodPizzaPineapple
-      prob: 0.15
-      orGroup: Pizza
-    - id: FoodPizzaVegetable
-      prob: 0.15
-      orGroup: Pizza
-    - id: FoodPizzaDonkpocket
-      prob: 0.10
-      orGroup: Pizza
-    - id: FoodPizzaCotton
-      prob: 0.10
-      orGroup: Pizza
-    - id: FoodPizzaWorldpeas
-      prob: 0.05
-      orGroup: Pizza
-    - id: KnifePlastic
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: KnifePlastic
+        - !type:GroupSelector
+          children:
+          - id: FoodPizzaArnold
+            weight: 1.5
+          - id: FoodPizzaSassysage
+            weight: 1.5
+          - id: FoodPizzaMargherita
+            weight: 1.5
+          - id: FoodPizzaMeat
+            weight: 1.5
+          - id: FoodPizzaMushroom
+            weight: 1.5
+          - id: FoodPizzaPineapple
+            weight: 1.5
+          - id: FoodPizzaVegetable
+            weight: 1.5
+          - id: FoodPizzaDank
+          - id: FoodPizzaDonkpocket
+          - id: FoodPizzaCotton
+          - id: FoodPizzaWorldpeas
+            weight: 0.5
 
 - type: entity
   parent: FoodBoxPizza
   id: FoodBoxPizzaCotton
   suffix: Cotton Pizza
   components:
-  - type: StorageFill
-    contents:
-    - id: FoodPizzaCotton
-    - id: KnifePlastic
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: FoodPizzaCotton
+        - id: KnifePlastic
 
 # Nugget
 
@@ -331,10 +327,11 @@
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     size: Small
     heldPrefix: box
-  - type: StorageFill
-    contents:
-    - id: FoodBakedNugget
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodBakedNugget
+        amount: 6
   - type: ItemCounter
     count:
       tags: [Nugget]
@@ -371,13 +368,14 @@
     shape:
     - 0,0,2,1
     storedOffset: -1,1
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocket
-      amount: 6
-    - id: DonkcoLighter
-      amount: 1
-      prob: 0.10
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: FoodDonkpocket
+          amount: 6
+        - id: DonkcoLighter
+          prob: 0.10
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -386,10 +384,11 @@
   components:
   - type: Sprite
     state: spicy-box
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketSpicy
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodDonkpocketSpicy
+        amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -398,10 +397,11 @@
   components:
   - type: Sprite
     state: teriyaki-box
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketTeriyaki
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodDonkpocketTeriyaki
+        amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -410,10 +410,11 @@
   components:
   - type: Sprite
     state: pizza-box
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketPizza
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodDonkpocketPizza
+        amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -422,10 +423,11 @@
   components:
   - type: Sprite
     state: stonk-box
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketStonk
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodDonkpocketStonk
+        amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -434,10 +436,11 @@
   components:
   - type: Sprite
     state: carp-box
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketCarp
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodDonkpocketCarp
+        amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -446,10 +449,11 @@
   components:
   - type: Sprite
     state: berry-box
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketBerry
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodDonkpocketBerry
+        amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -458,10 +462,11 @@
   components:
   - type: Sprite
     state: banana-box
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketHonk
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodDonkpocketHonk
+        amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -471,10 +476,11 @@
   components:
   - type: Sprite
     state: dink-box
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketDink
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodDonkpocketDink
+        amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -483,10 +489,11 @@
   components:
   - type: Sprite
     state: moth-box
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketMoth
-      amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodDonkpocketMoth
+        amount: 6
 
 - type: entity
   id: HappyHonk
@@ -510,68 +517,10 @@
     - Trash
     - HappyHonk
     - BoxCardboard
-  - type: StorageFill
-    contents:
-      - id: ToyMouse
-        orGroup: GiftPool
-      - id: ToyAi
-        orGroup: GiftPool
-      - id: ToyNuke
-        orGroup: GiftPool
-      - id: ToyFigurinePassenger
-        orGroup: GiftPool
-      - id: ToyFigurineGriffin
-        orGroup: GiftPool
-      - id: ToyHonk
-        orGroup: GiftPool
-      - id: ToyIan
-        orGroup: GiftPool
-      - id: ToyMarauder
-        orGroup: GiftPool
-      - id: ToyMauler
-        orGroup: GiftPool
-      - id: ToyGygax
-        orGroup: GiftPool
-      - id: ToyOdysseus
-        orGroup: GiftPool
-      - id: ToyFigurineOwlman
-        orGroup: GiftPool
-      - id: ToyDeathRipley
-        orGroup: GiftPool
-      - id: ToyPhazon
-        orGroup: GiftPool
-      - id: ToyFireRipley
-        orGroup: GiftPool
-      - id: ToyReticence
-        orGroup: GiftPool
-      - id: ToyRipley
-        orGroup: GiftPool
-      - id: ToySeraph
-        orGroup: GiftPool
-      - id: ToyDurand
-        orGroup: GiftPool
-      - id: ToyFigurineSkeleton
-        orGroup: GiftPool
-      - id: FoamBlade
-        orGroup: GiftPool
-      - id: ClothingHeadHatBunny
-        orGroup: GiftPool
-      - id: PersonalAI
-        orGroup: GiftPool
-      - id: CrayonBox
-        orGroup: GiftPool
-      - id: ToySword
-        orGroup: GiftPool
-      - id: RevolverCapGun
-        orGroup: GiftPool
-      - id: ToyRubberDuck
-        orGroup: GiftPool
-      - id: BikeHorn
-        prob: 0.5
-        orGroup: GiftPool
-      - id: GoldenBikeHorn
-        prob: 0.1
-        orGroup: GiftPool
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: HappyHonkToySafeEntityTable
 
 - type: entity
   id: HappyHonkMime
@@ -599,24 +548,10 @@
     sprite: Objects/Storage/Happyhonk/nukie.rsi
   - type: Item
     sprite: Objects/Storage/Happyhonk/nukie.rsi
-  - type: StorageFill
-    contents:
-      - id: C4
-        prob: 0.02
-        orGroup: GiftPool
-      - id: ToyMarauder
-        orGroup: GiftPool
-      - id: ToyMauler
-        orGroup: GiftPool
-      - id: ToyNuke
-        orGroup: GiftPool
-      - id: ToySword
-        orGroup: GiftPool
-      - id: BalloonSyn
-        prob: 0.6
-        orGroup: GiftPool
-      - id: PlushieNuke
-        orGroup: GiftPool
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: HappyHonkToyUnsafeEntityTable
 
 - type: entity
   parent: HappyHonkNukie
@@ -627,46 +562,30 @@
   - type: Storage
     grid:
     - 0,0,5,2
-  - type: StorageFill
-    contents:
-    # toy
-    - id: C4
-      prob: 0.02
-      orGroup: GiftPool
-    - id: ToyMarauder
-      orGroup: GiftPool
-    - id: ToyMauler
-      orGroup: GiftPool
-    - id: ToyNuke
-      orGroup: GiftPool
-    - id: ToySword
-      orGroup: GiftPool
-    - id: BalloonSyn
-      prob: 0.6
-      orGroup: GiftPool
-    - id: PlushieNuke
-      orGroup: GiftPool
-    # drinks - 4 cans, up to 2 blood-red brews
-    - id: DrinkNukieCan
-      prob: 0.2
-      orGroup: Drink1Pool
-    - id: DrinkColaCan
-      orGroup: Drink1Pool
-    - id: DrinkNukieCan
-      prob: 0.2
-      orGroup: Drink2Pool
-    - id: DrinkColaCan
-      orGroup: Drink2Pool
-    - id: DrinkColaCan
-      amount: 2
-    # food
-    - id: FoodSaladValid
-      prob: 0.05
-      amount: 4
-      orGroup: FoodPool
-    - id: FoodSnackSyndi
-      amount: 4
-      orGroup: FoodPool
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        # toy
+        - !type:NestedSelector
+          tableId: HappyHonkToyUnsafeEntityTable
+        # drinks - 4 cans, up to 2 blood-red brews
+        - !type:GroupSelector
+          rolls: 2
+          children:
+          - id: DrinkNukieCan
+            weight: 0.2
+          - id: DrinkColaCan
+        - id: DrinkColaCan
+          amount: 2
+        # food
+        - !type:GroupSelector
+          children:
+          - id: FoodSaladValid
+            weight: 0.05
+            amount: 4
+          - id: FoodSnackSyndi
+            amount: 4
 
 - type: entity
   id: HappyHonkCluwne
@@ -683,9 +602,10 @@
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
   - type: Item
     sprite: Objects/Storage/Happyhonk/cluwne.rsi
-  - type: StorageFill
-    contents:
-      - id: CluwneHorn
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: CluwneHorn
 
 - type: entity
   id: FoodMealHappyHonkClown
@@ -693,78 +613,19 @@
   suffix: random food spawner meal
   categories: [ HideSpawnMenu ]
   components:
-  - type: StorageFill
-    contents:
-      - id: FoodBurgerCheese
-        orGroup: Burgers
-      - id: DrinkColaCan
-        orGroup: DrinkPool
-      - id: DrinkLemonLimeCan
-        orGroup: DrinkPool
-      - id: DrinkLemonLimeCranberryCan
-        orGroup: DrinkPool
-      - id: DrinkIcedTeaCan
-        orGroup: DrinkPool
-      - id: ToyMouse
-        orGroup: GiftPool
-      - id: ToyAi
-        orGroup: GiftPool
-      - id: ToyNuke
-        orGroup: GiftPool
-      - id: ToyFigurinePassenger
-        orGroup: GiftPool
-      - id: ToyFigurineGriffin
-        orGroup: GiftPool
-      - id: ToyHonk
-        orGroup: GiftPool
-      - id: ToyIan
-        orGroup: GiftPool
-      - id: ToyMarauder
-        orGroup: GiftPool
-      - id: ToyMauler
-        orGroup: GiftPool
-      - id: ToyGygax
-        orGroup: GiftPool
-      - id: ToyOdysseus
-        orGroup: GiftPool
-      - id: ToyFigurineOwlman
-        orGroup: GiftPool
-      - id: ToyDeathRipley
-        orGroup: GiftPool
-      - id: ToyPhazon
-        orGroup: GiftPool
-      - id: ToyFireRipley
-        orGroup: GiftPool
-      - id: ToyReticence
-        orGroup: GiftPool
-      - id: ToyRipley
-        orGroup: GiftPool
-      - id: ToySeraph
-        orGroup: GiftPool
-      - id: ToyDurand
-        orGroup: GiftPool
-      - id: ToyFigurineSkeleton
-        orGroup: GiftPool
-      - id: FoamBlade
-        orGroup: GiftPool
-      - id: ClothingHeadHatBunny
-        orGroup: GiftPool
-      - id: PersonalAI
-        orGroup: GiftPool
-      - id: CrayonBox
-        orGroup: GiftPool
-      - id: ToySword
-        orGroup: GiftPool
-      - id: RevolverCapGun
-        orGroup: GiftPool
-      - id: ToyRubberDuck
-        orGroup: GiftPool
-      - id: BikeHorn
-        prob: 0.5
-        orGroup: GiftPool
-      - id: GoldenBikeHorn
-        prob: 0.1
-        orGroup: GiftPool
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - !type:NestedSelector # First since it can spawn a 3x3
+          tableId: HappyHonkToySafeEntityTable
+        - id: FoodBurgerCheese
+        - !type:GroupSelector
+          children:
+          - id: DrinkColaCan
+          - id: DrinkLemonLimeCan
+          - id: DrinkLemonLimeCranberryCan
+          - id: DrinkIcedTeaCan
 
 - type: entity
   id: FoodMealHappyHonkBigBite
@@ -772,74 +633,47 @@
   name: Happy Honk Big Bite Meal
   description: Someone paid good money to get this fast food meal shipped out this way. It smells fresh, somehow.
   components:
-  - type: StorageFill
-    contents:
-      - id: FoodBurgerBig
-        amount: 1
-      - id: FoodMealFriesCheesy
-        amount: 1
-      - id: DrinkColaBottleFull
-        amount: 1
-      - id: FoodPieAppleSlice
-        amount: 1
-      - id: ToyMouse
-        orGroup: GiftPool
-      - id: ToyAi
-        orGroup: GiftPool
-      - id: ToyNuke
-        orGroup: GiftPool
-      - id: ToyFigurinePassenger
-        orGroup: GiftPool
-      - id: ToyFigurineGriffin
-        orGroup: GiftPool
-      - id: ToyHonk
-        orGroup: GiftPool
-      - id: ToyIan
-        orGroup: GiftPool
-      - id: ToyMarauder
-        orGroup: GiftPool
-      - id: ToyMauler
-        orGroup: GiftPool
-      - id: ToyGygax
-        orGroup: GiftPool
-      - id: ToyOdysseus
-        orGroup: GiftPool
-      - id: ToyFigurineOwlman
-        orGroup: GiftPool
-      - id: ToyDeathRipley
-        orGroup: GiftPool
-      - id: ToyPhazon
-        orGroup: GiftPool
-      - id: ToyFireRipley
-        orGroup: GiftPool
-      - id: ToyReticence
-        orGroup: GiftPool
-      - id: ToyRipley
-        orGroup: GiftPool
-      - id: ToySeraph
-        orGroup: GiftPool
-      - id: ToyDurand
-        orGroup: GiftPool
-      - id: ToyFigurineSkeleton
-        orGroup: GiftPool
-      - id: FoamBlade
-        orGroup: GiftPool
-      - id: ClothingHeadHatBunny
-        orGroup: GiftPool
-      - id: PersonalAI
-        orGroup: GiftPool
-      - id: ToySword
-        orGroup: GiftPool
-      - id: RevolverCapGun
-        orGroup: GiftPool
-      - id: ToyRubberDuck
-        orGroup: GiftPool
-      - id: BikeHorn
-        prob: 0.5
-        orGroup: GiftPool
-      - id: GoldenBikeHorn
-        prob: 0.1
-        orGroup: GiftPool
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: FoodBurgerBig
+        - id: FoodMealFriesCheesy
+        - id: DrinkColaBottleFull
+        - id: FoodPieAppleSlice
+        - !type:GroupSelector # One item is too big, so the HappyHonkToySafeEntityTable can't  be used like the others.
+          children:
+          - id: ToyMouse
+          - id: ToyAi
+          - id: ToyNuke
+          - id: ToyFigurinePassenger
+          - id: ToyFigurineGriffin
+          - id: ToyHonk
+          - id: ToyIan
+          - id: ToyMarauder
+          - id: ToyMauler
+          - id: ToyGygax
+          - id: ToyOdysseus
+          - id: ToyFigurineOwlman
+          - id: ToyDeathRipley
+          - id: ToyPhazon
+          - id: ToyFireRipley
+          - id: ToyReticence
+          - id: ToyRipley
+          - id: ToySeraph
+          - id: ToyDurand
+          - id: ToyFigurineSkeleton
+          - id: FoamBlade
+          - id: ClothingHeadHatBunny
+          - id: PersonalAI
+          #- id: CrayonBox
+          - id: ToySword
+          - id: RevolverCapGun
+          - id: ToyRubberDuck
+          - id: BikeHorn
+            weight: 0.5
+          - id: GoldenBikeHorn
+            weight: 0.1
 
 - type: entity
   parent: BoxCardboard
@@ -861,6 +695,57 @@
     size: Normal
     shape:
     - 0,0,1,1
-  - type: StorageFill
-    contents:
-    - id: MaterialCloth10
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: MaterialCloth10
+
+- type: entityTable
+  id: HappyHonkToySafeEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: ToyMouse
+    - id: ToyAi
+    - id: ToyNuke
+    - id: ToyFigurinePassenger
+    - id: ToyFigurineGriffin
+    - id: ToyHonk
+    - id: ToyIan
+    - id: ToyMarauder
+    - id: ToyMauler
+    - id: ToyGygax
+    - id: ToyOdysseus
+    - id: ToyFigurineOwlman
+    - id: ToyDeathRipley
+    - id: ToyPhazon
+    - id: ToyFireRipley
+    - id: ToyReticence
+    - id: ToyRipley
+    - id: ToySeraph
+    - id: ToyDurand
+    - id: ToyFigurineSkeleton
+    - id: FoamBlade
+    - id: ClothingHeadHatBunny
+    - id: PersonalAI
+    - id: CrayonBox
+    - id: ToySword
+    - id: RevolverCapGun
+    - id: ToyRubberDuck
+    - id: BikeHorn
+      weight: 0.5
+    - id: GoldenBikeHorn
+      weight: 0.1
+
+- type: entityTable
+  id: HappyHonkToyUnsafeEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: C4
+      weight: 0.02
+    - id: ToyMarauder
+    - id: ToyMauler
+    - id: ToyNuke
+    - id: ToySword
+    - id: BalloonSyn
+      weight: 0.6
+    - id: PlushieNuke
