@@ -20,7 +20,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
 
-        if (_appearance.TryGetData(ent.Owner, SichEyeBlinkingVisuals.Blinking, out var stateObj) && stateObj is bool state)
+        if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.Blinking, out var stateObj) && stateObj is bool state)
         {
             ChangeEyeState(ent, spriteComponent, state);
         }
@@ -31,7 +31,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
 
-        if (args.AppearanceData.TryGetValue(SichEyeBlinkingVisuals.Blinking, out var stateObj) && stateObj is bool state)
+        if (args.AppearanceData.TryGetValue(EyeBlinkingVisuals.Blinking, out var stateObj) && stateObj is bool state)
         {
             ChangeEyeState(ent, spriteComponent, state);
         }

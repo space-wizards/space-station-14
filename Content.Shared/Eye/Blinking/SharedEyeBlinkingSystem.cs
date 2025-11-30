@@ -105,12 +105,12 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     protected virtual void UpdateAppearance(EntityUid uid, AppearanceComponent appearance, bool isBlinking)
     {
-        _appearance.SetData(uid, SichEyeBlinkingVisuals.Blinking, isBlinking, appearance);
+        _appearance.SetData(uid, EyeBlinkingVisuals.Blinking, isBlinking, appearance);
     }
 }
 
 [Serializable, NetSerializable]
-public enum SichEyeBlinkingVisuals : byte
+public enum EyeBlinkingVisuals : byte
 {
     Blinking
 }
