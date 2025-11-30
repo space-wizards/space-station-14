@@ -45,7 +45,7 @@
   - type: Vocal
     sounds:
       Male: UnisexMoth
-      Female: UnisexMoth
+      Female: FemaleMoth
       Unsexed: UnisexMoth
   - type: MovementSpeedModifier
     baseWeightlessAcceleration: 1.5 # Move around more easily in space.
