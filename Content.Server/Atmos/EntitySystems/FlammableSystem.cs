@@ -230,7 +230,7 @@ namespace Content.Server.Atmos.EntitySystems
             // An entity with a higher mass will lose some fire and transfer it to the one with lower mass.
             var avg = (flammable.FireStacks * mass1  + otherFlammable.FireStacks * mass2) / 2f;
 
-            // bring each entity to the same firestack mass, firestacks being scaled by the other's mass
+            // bring each entity to the same firestack mass, firestack amount is scaled by the inverse of the entity's mass
             SetFireStacks(uid, avg / mass1, flammable, ignite: true);
             SetFireStacks(otherUid, avg / mass2, otherFlammable, ignite: true);
         }
