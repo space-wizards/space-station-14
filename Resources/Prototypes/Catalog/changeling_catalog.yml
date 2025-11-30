@@ -1,0 +1,12 @@
+- type: listing
+  id: ChangelingArmBlade
+  name: changeling-arm-blade-name
+  description: changeling-arm-blade-desc
+  productAction: ActionRetractableItemArmBlade
+  cost:
+    ChangelingDNA: 25
+  categories:
+  - ChangelingAbilities
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

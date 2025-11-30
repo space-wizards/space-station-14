@@ -1,5 +1,5 @@
 - type: entity
-  parent: MobHuman
+  parent: [ MobHuman, StorePresetChangeling ]
   id: MobLing
   name: Urist McLing
   suffix: Non-Antag
@@ -9,13 +9,8 @@
   - type: ChangelingTransform
   - type: ActionGrant
     actions:
-    - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
     - ActionChangelingStore
   - type: Store
-    categories:
-    - ChangelingAbilities
-    currencyWhitelist:
-    - ChangelingDNA
     balance:
       ChangelingDNA: 50
   - type: UserInterface

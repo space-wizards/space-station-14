@@ -267,9 +267,10 @@
       - type: ChangelingTransform
       - type: ActionGrant
         actions:
-        - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
         - ActionChangelingStore
+      # TODO: Make it so the changeling gamerule changeling can inherit from the changeling store preset somehow
       - type: Store
+        name: store-preset-name-changeling
         categories:
         - ChangelingAbilities
         currencyWhitelist:
