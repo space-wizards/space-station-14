@@ -4,4 +4,4 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Fluids;
 
-public sealed class SpraySystem : SharedSpaySystem;
+public sealed class SpraySystem : SharedSpraySystem;

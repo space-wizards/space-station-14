@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Fluids.Components;
 
 [RegisterComponent]
-[Access(typeof(SharedSpaySystem))]
+[Access(typeof(SharedSpraySystem))]
 public sealed partial class SprayComponent : Component
 {
     public const string SolutionName = "spray";
@@ -36,7 +36,7 @@ public sealed partial class SprayComponent : Component
     public float PushbackAmount = 5f;
 
     [DataField(required: true)]
-    [Access(typeof(SharedSpaySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
+    [Access(typeof(SharedSpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SoundSpecifier SpraySound { get; private set; } = default!;
 
     [DataField]

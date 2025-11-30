@@ -5,7 +5,7 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Fluids.EntitySystems;
 
-public abstract class SharedSpaySystem : EntitySystem
+public abstract class SharedSpraySystem : EntitySystem
 {
     public override void Initialize()
     {

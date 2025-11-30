@@ -22,7 +22,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.EntitySystems;
 
-public sealed class SpraySystem : SharedSpaySystem
+public sealed class SpraySystem : SharedSpraySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly GravitySystem _gravity = default!;
