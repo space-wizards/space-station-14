@@ -110,13 +110,13 @@
       types:
         Heat: -10
         Shock: -10
-    # 5 seconds to get out of crit/death at 299 damage
+    # 10 seconds to get out of crit/death at 299 damage
     damageCrit:
       groups:
-        Brute: -120
+        Brute: -60
       types:
-        Heat: -40
-        Shock: -40
+        Heat: -20
+        Shock: -20
     doAfterDelay: 1
     autoDoAfter: true
     fuelCost: 0.5
