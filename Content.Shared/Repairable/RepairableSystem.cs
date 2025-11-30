@@ -40,6 +40,7 @@ public sealed partial class RepairableSystem : EntitySystem
         {
             // the mob is crit or dead
 
+            // if the mob is critial, the DamageCrit shouldn't heal past the critial threshold
             var limit = _mobThreshold.GetThresholdForState(ent, Mobs.MobState.Critical) - 1;
 
             if (ent.Comp.DamageCrit != null) RepairSomeDamage(ent, damageable, ent.Comp.DamageCrit, args.User, limit);
@@ -81,6 +82,8 @@ public sealed partial class RepairableSystem : EntitySystem
     /// <param name="limit">If not null, the repairing operation clamps the entity’s damage to no less than this value.</param>
     private void RepairSomeDamage(Entity<RepairableComponent> ent, DamageableComponent damageable, Damage.DamageSpecifier damageAmount, EntityUid user, FixedPoint2? limit = null)
     {
+        // horrible 2 lines of code that make sure the "damageAmount.GetTotal()" is less than "damageable.TotalDamage - limit.Value"
+        // so after the repairing is done the entity will have at least "limit" amount of damage
         if (limit != null && damageAmount.GetTotal() > damageable.TotalDamage - limit.Value)
             damageAmount *= FixedPoint2.Abs((damageable.TotalDamage - limit.Value) / damageAmount.GetTotal());
 
