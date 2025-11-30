@@ -7,6 +7,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.Components;
 
+/// <summary>
+/// Gives a mob hands allowing them to pick up items, drop or throw them, (un)equip clothing with them and to interact with various devices like computers.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 [Access(typeof(SharedHandsSystem))]
 public sealed partial class HandsComponent : Component
@@ -103,6 +106,13 @@ public sealed partial class HandsComponent : Component
     public bool CanBeStripped = true;
 }
 
+/// <summary>
+/// Defines a single hand.
+/// </summary>
+/// <remarks>
+/// If you add more fields to this make sure it remains equatable.
+/// Implement IEquatable if necessary.
+/// </remarks>
 [DataDefinition]
 [Serializable, NetSerializable]
 public partial record struct Hand
