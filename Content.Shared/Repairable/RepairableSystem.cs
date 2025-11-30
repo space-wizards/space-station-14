@@ -4,6 +4,8 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Serialization;
@@ -14,6 +16,7 @@ public sealed partial class RepairableSystem : EntitySystem
 {
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
@@ -31,17 +34,20 @@ public sealed partial class RepairableSystem : EntitySystem
         if (!TryComp(ent.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
             return;
 
-        if (ent.Comp.Damage != null)
+        if (HasComp<MobStateComponent>(ent) && !_mobState.IsAlive(ent))
         {
-            var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, ent.Comp.Damage, true, false, origin: args.User);
-            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
-        }
+            // the mob is crit or dead
 
+            if (ent.Comp.DamageCrit != null) RepairSomeDamage(ent, ent.Comp.DamageCrit, args.User);
+            else if (ent.Comp.Damage != null) RepairSomeDamage(ent, ent.Comp.Damage, args.User);
+            else RepairAllDamage(ent, damageable, args.User);
+        }
         else
         {
-            // Repair all damage
-            _damageableSystem.SetAllDamage((ent.Owner, damageable), 0);
-            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
+            // entity is alive or doesn't even have MobStateComponent
+
+            if (ent.Comp.Damage != null) RepairSomeDamage(ent, ent.Comp.Damage, args.User);
+            else RepairAllDamage(ent, damageable, args.User);
         }
 
         args.Repeat = ent.Comp.AutoDoAfter && damageable.TotalDamage > 0;
@@ -60,6 +66,18 @@ public sealed partial class RepairableSystem : EntitySystem
             var ev = new RepairedEvent(ent, args.User);
             RaiseLocalEvent(ent.Owner, ref ev);
         }
+    }
+
+    private void RepairSomeDamage(Entity<RepairableComponent> ent, Damage.DamageSpecifier damageAmount, EntityUid user)
+    {
+        var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, damageAmount, true, false, origin: user);
+        _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
+    }
+
+    private void RepairAllDamage(Entity<RepairableComponent> ent, DamageableComponent? damageable, EntityUid user)
+    {
+        _damageableSystem.SetAllDamage((ent.Owner, damageable), 0);
+        _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
     }
 
     private void Repair(Entity<RepairableComponent> ent, ref InteractUsingEvent args)
