@@ -134,6 +134,10 @@
   - type: Body
     prototype: Human
     requiredLegs: 2
+  - type: AutoEmote
+    emotes:
+    - NaturalSneeze
+    - NaturalCough
   - type: Identity
   - type: IdExaminable
   - type: Hands
