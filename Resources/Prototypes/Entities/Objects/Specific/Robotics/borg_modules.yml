@@ -1660,7 +1660,7 @@
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleSuperCloakDevice
   name: invisibility device xenoborg module
-  description: Module with a device that allows xenoborgs to become truly invisible for a short ammount of time.
+  description: Module with a device that allows xenoborgs to become truly invisible for a short amount of time.
   components:
   - type: Sprite
     layers:
