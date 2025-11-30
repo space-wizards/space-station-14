@@ -17,23 +17,30 @@ public sealed partial class ModifyStatusEffectEntityEffectSystem : EntityEffectS
         var time = args.Effect.Time * args.Scale;
         var delay = args.Effect.Delay;
 
+        EntityUid? statusEffect = null;
+
         switch (args.Effect.Type)
         {
             case StatusEffectMetabolismType.Update:
-                _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto, time, delay);
+                _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto, out statusEffect, time, delay);
                 break;
             case StatusEffectMetabolismType.Add:
                 if (time != null)
-                    _status.TryAddStatusEffectDuration(entity, args.Effect.EffectProto, time.Value, delay);
+                    _status.TryAddStatusEffectDuration(entity, args.Effect.EffectProto, out statusEffect, time.Value, delay);
                 else
-                    _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto, time, delay);
+                    _status.TryUpdateStatusEffectDuration(entity, args.Effect.EffectProto, out statusEffect, time, delay);
                 break;
             case StatusEffectMetabolismType.Remove:
                 _status.TryRemoveTime(entity, args.Effect.EffectProto, time);
                 break;
             case StatusEffectMetabolismType.Set:
-                _status.TrySetStatusEffectDuration(entity, args.Effect.EffectProto, time, delay);
+                _status.TrySetStatusEffectDuration(entity, args.Effect.EffectProto, out statusEffect, time, delay);
                 break;
+        }
+        
+        if (statusEffect != null)
+        {
+            EntityManager.AddComponents(statusEffect.Value, args.Effect.Components);
         }
     }
 }
@@ -46,6 +53,13 @@ public sealed partial class ModifyStatusEffect : BaseStatusEntityEffect<ModifySt
     /// </summary>
     [DataField(required: true)]
     public EntProtoId EffectProto;
+
+    /// <summary>
+    /// Components that this specific ModifyStatusEffect should add to the status effect prototype.
+    /// Will not add components when the <see cref="BaseStatusEntityEffect.Type"/> is set to <see cref="StatusEffectMetabolismType.Remove"/>.
+    /// </summary>
+    [DataField]
+    public ComponentRegistry Components = new();
 
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
         Time == null
