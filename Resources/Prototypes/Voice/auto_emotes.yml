@@ -25,11 +25,11 @@
 - type: autoEmote
   id: NaturalSneeze
   emote: Sneeze
-  interval: 5.0
-  chance: 0.0001
+  interval: 50.0
+  chance: 0.001
 
 - type: autoEmote
   id: NaturalCough
   emote: Cough
-  interval: 5.0
-  chance: 0.0001
+  interval: 50.0
+  chance: 0.001
