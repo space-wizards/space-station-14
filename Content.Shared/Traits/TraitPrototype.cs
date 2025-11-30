@@ -39,9 +39,16 @@ public sealed partial class TraitPrototype : IPrototype
 
     /// <summary>
     /// The components that get added to the player, when they pick this trait.
+    /// NOTE: When implementing a new trait, it's preferable to add it as a status effect instead if possible.
     /// </summary>
     [DataField]
-    public ComponentRegistry Components { get; private set; } = default!;
+    public ComponentRegistry Components { get; private set; } = new();
+
+    /// <summary>
+    /// Permanent status effects that get added by this trait.
+    /// </summary>
+    [DataField]
+    public List<EntProtoId> StatusEffects { get; private set; } = new();
 
     /// <summary>
     /// Gear that is given to the player, when they pick this trait.

@@ -12,5 +12,5 @@ public sealed partial class PainNumbnessComponent : Component
     ///     This is only active for those who have the pain numbness component
     /// </summary>
     [DataField]
-    public ProtoId<LocalizedDatasetPrototype> ForceSayNumbDataset = "ForceSayNumbDataset";
+    public ProtoId<LocalizedDatasetPrototype>? ForceSayNumbDataset = "ForceSayNumbDataset";
 }

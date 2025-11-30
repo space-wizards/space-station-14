@@ -16,3 +16,9 @@
     - type: StutteringAccent
     - type: DrunkStatusEffect
     - type: RejuvenateRemovedStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: PainNumbnessTraitStatusEffect
+  components:
+  - type: PainNumbness
