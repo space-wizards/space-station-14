@@ -574,7 +574,6 @@
   - type: Tag
     tags:
       - Taser
-      - EnergyWeapon
       - SubMachineGunOneHand
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
