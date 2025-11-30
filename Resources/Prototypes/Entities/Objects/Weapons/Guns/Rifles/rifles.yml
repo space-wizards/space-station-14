@@ -67,7 +67,14 @@
         map: ["enum.GunVisualLayers.Base"]
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
+  - type: GunWieldBonus
+    minAngle: -19
+    maxAngle: -20
   - type: Gun
+    minAngle: 21
+    maxAngle: 37
+    angleIncrease: 2
+    angleDecay: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: ChamberMagazineAmmoProvider
@@ -161,7 +168,14 @@
         map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -20
   - type: Gun
+    minAngle: 21
+    maxAngle: 30
+    angleIncrease: 2
+    angleDecay: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
   - type: ItemSlots
@@ -199,7 +213,7 @@
   name: XL8
   description: |-
     The Experimental Lecter 8
-    An unreasonably expensive military grade assault rifle with integrated optic. 
+    An unreasonably expensive military grade assault rifle with integrated optic.
     Uses .20 rifle ammo.
   components:
   - type: Sprite
@@ -219,7 +233,7 @@
     - Burst
     - SemiAuto
     - FullAuto
-  
+
 - type: entity
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
@@ -241,8 +255,10 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
-    minAngle: 30
-    maxAngle: 43
+    minAngle: 21
+    maxAngle: 30
+    angleIncrease: 1
+    angleDecay: 1.5
     shotsPerBurst: 3
     selectedMode: Burst
     availableModes:
@@ -250,8 +266,8 @@
     - SemiAuto
     burstFireRate: 14
   - type: GunWieldBonus
-    minAngle: -28
-    maxAngle: -25
+    minAngle: -20
+    maxAngle: -20
   - type: ItemSlots
     slots:
       gun_magazine:
