@@ -103,12 +103,20 @@
     - Science
   - type: ZombieImmune
   - type: Repairable
+    # 10 seconds to repair from 100 damage
     damage:
       groups:
         Brute: -30
       types:
         Heat: -10
         Shock: -10
+    # 5 seconds to get out of crit/death at 299 damage
+    damageCrit:
+      groups:
+        Brute: -120
+      types:
+        Heat: -40
+        Shock: -40
     doAfterDelay: 1
     autoDoAfter: true
     fuelCost: 0.5
