@@ -110,7 +110,6 @@
   id: LockerFillHeadOfPersonnel
   table: !type:AllSelector
     children:
-    - id: AccessConfigurator
     - id: BoxEncryptionKeyPassenger
     - id: BoxEncryptionKeyService
     - id: BoxHeadset
@@ -146,6 +145,7 @@
   id: LockerFillChiefEngineerNoHardsuit
   table: !type:AllSelector
     children:
+    - id: AccessConfigurator
     - id: AccessConfigurator
     - id: BoxEncryptionKeyEngineering
     - id: CigarCase
