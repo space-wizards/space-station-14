@@ -52,8 +52,7 @@ public sealed partial class RepairableSystem : EntitySystem
             var delay = ent.Comp.DoAfterDelay;
             _toolSystem.UseTool(args.Used!.Value, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairDoAfterEvent(), ent.Comp.FuelCost);
         }
-
-        if (!args.Repeat)
+        else
         {
             var str = Loc.GetString("comp-repairable-repair", ("target", ent.Owner), ("tool", args.Used!));
             _popup.PopupClient(str, ent.Owner, args.User);
