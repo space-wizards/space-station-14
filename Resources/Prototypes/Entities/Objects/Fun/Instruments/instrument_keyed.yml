@@ -26,6 +26,7 @@
 - type: entity
   parent: BaseKeyedInstrument
   id: SuperSynthesizerInstrument
+  suffix: Admin
   name: super synthesizer
   description: Blasting the ghetto with Touhou MIDIs since 2020.
   components:
@@ -41,7 +42,7 @@
 - type: entity
   parent: SuperSynthesizerInstrument
   id: SuperSynthesizerNoLimitInstrument
-  suffix: NoLimits
+  suffix: NoLimits Admin
   components:
   - type: Instrument
     respectMidiLimits: false

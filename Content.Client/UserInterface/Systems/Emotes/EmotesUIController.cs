@@ -147,7 +147,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             if (emote.Category == EmoteCategory.Invalid
                 || emote.ChatTriggers.Count == 0
                 || !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value))
-                || whitelistSystem.IsBlacklistPass(emote.Blacklist, player.Value))
+                || whitelistSystem.IsWhitelistPass(emote.Blacklist, player.Value))
                 continue;
 
             if (!emote.Available
