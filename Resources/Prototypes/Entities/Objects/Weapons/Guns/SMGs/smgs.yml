@@ -1,6 +1,6 @@
 - type: entity
   name: BaseSMG
-  parent: BaseItem
+  parent: [ BaseItem, BaseGunWieldable ]
   id: BaseWeaponSubMachineGun
   description: A rooty tooty point and shooty.
   abstract: true
