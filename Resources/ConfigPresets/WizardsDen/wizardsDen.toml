@@ -15,7 +15,7 @@ panic_bunker.custom_reason = "You have not played on a Wizard's Den server long 
 
 # IPIntel stuff
 ipintel_enabled = true
-ipintel_contact_email = "telecommunications@spacestation14.com"
+ipintel_contact_email = "support@spacestation14.com"
 ipintel_bad_rating = 0.99
 ipintel_alert_admin_warn_rating = 0.95
 
