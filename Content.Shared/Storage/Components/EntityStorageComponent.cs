@@ -114,6 +114,9 @@ public sealed partial class EntityStorageComponent : Component, IGasMixtureHolde
     [DataField]
     public EntityWhitelist? Whitelist;
 
+    [DataField]
+    public EntityWhitelist? Blacklist;
+
     /// <summary>
     /// The contents of the storage
     /// </summary>

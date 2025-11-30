@@ -358,6 +358,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (component.Whitelist != null)
             return _whitelistSystem.IsValid(component.Whitelist, toInsert);
 
+        if (component.Blacklist != null && _whitelistSystem.IsValid(component.Blacklist, toInsert))
+            return false;
+
         // The inserted entity must be a mob or an item.
         return HasComp<MobStateComponent>(toInsert) || HasComp<ItemComponent>(toInsert);
     }
