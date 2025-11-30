@@ -103,7 +103,7 @@
     - Science
   - type: ZombieImmune
   - type: Repairable
-    # 10 seconds to repair from 100 damage
+    # 10 seconds to repair from 99 damage
     damage:
       groups:
         Brute: -30
