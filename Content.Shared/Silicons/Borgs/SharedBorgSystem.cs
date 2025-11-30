@@ -40,6 +40,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgModuleComponent, ExaminedEvent>(OnModuleExamine);
 
         InitializeRelay();
+        InitializeMMI();
     }
 
     private void OnModuleExamine(Entity<BorgModuleComponent> ent, ref ExaminedEvent args)
