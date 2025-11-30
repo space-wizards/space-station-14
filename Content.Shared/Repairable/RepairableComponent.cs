@@ -25,7 +25,7 @@ public sealed partial class RepairableComponent : Component
     /// Cost of fuel used to repair this device.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float FuelCost = 5;
+    public float FuelCost = 5f;
 
     /// <summary>
     /// Tool quality necessary to repair this device.
