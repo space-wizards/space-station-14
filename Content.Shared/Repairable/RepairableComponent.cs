@@ -22,13 +22,6 @@ public sealed partial class RepairableComponent : Component
     public DamageSpecifier? Damage;
 
     /// <summary>
-    /// The damage change when the entity is not alive (if they can be critted or die)
-    /// If null then it will use the <see cref="Damage"> for every situation
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DamageSpecifier? DamageCrit;
-
-    /// <summary>
     /// Cost of fuel used to repair this device.
     /// </summary>
     [DataField, AutoNetworkedField]
