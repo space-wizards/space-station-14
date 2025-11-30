@@ -76,7 +76,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
             args.AddLine(Loc.GetString("xenoborgs-cond-all-xenoborgs-dead-core-alive"));
         else
         {
-            args.AddLine(Loc.GetString("xenoborgs-cond-xenoborgs-alive", ("count", numXenoborgs)));
+            args.AddLine(Loc.GetString("xenoborg-number-xenoborg-alive-end", ("count", numXenoborgs)));
             args.AddLine(Loc.GetString("xenoborg-number-crew-alive-end", ("count", numHumans)));
         }
 
