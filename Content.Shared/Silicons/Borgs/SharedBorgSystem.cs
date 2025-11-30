@@ -277,7 +277,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnUIOpenAttempt(Entity<BorgChassisComponent> chassis, ref ActivatableUIOpenAttemptEvent args)
     {
-        // borgs generaly can't view their own ui
+        // Borgs generally can't view their own UI.
         if (args.User == chassis.Owner && !chassis.Comp.CanOpenSelfUi)
             args.Cancel();
     }
@@ -318,13 +318,12 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnBrainMindAdded(Entity<BorgBrainComponent> brain, ref MindAddedMessage args)
     {
-        // TODO: This does not work if the borg is in a container like a charger or closed.
-        if (!_container.TryGetOuterContainer(brain, Transform(brain), out var container))
+        if (!_container.TryGetContainingContainer(brain.Owner, out var container))
             return;
 
-        var containerEnt = container.Owner;
+        var borg = container.Owner;
 
-        if (!TryComp<BorgChassisComponent>(containerEnt, out var chassisComponent) ||
+        if (!TryComp<BorgChassisComponent>(borg, out var chassisComponent) ||
             container.ID != chassisComponent.BrainContainerId)
             return;
 
@@ -336,12 +335,12 @@ public abstract partial class SharedBorgSystem : EntitySystem
         {
             // Don't use PopupClient because MindAddedMessage and CanPlayerBeBorged are not predicted.
             _popup.PopupEntity(Loc.GetString("borg-player-not-allowed-eject"), brain);
-            _container.RemoveEntity(containerEnt, brain);
+            _container.RemoveEntity(borg, brain);
             _throwing.TryThrow(brain, _random.NextVector2() * 5, 5f);
             return;
         }
 
-        _mind.TransferTo(mindId, containerEnt, mind: mind);
+        _mind.TransferTo(mindId, borg, mind: mind);
     }
 
     private void OnBrainPointAttempt(Entity<BorgBrainComponent> brain, ref PointAttemptEvent args)

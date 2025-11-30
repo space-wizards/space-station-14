@@ -180,8 +180,6 @@ public abstract partial class SharedBorgSystem
     /// <summary>
     /// Deactivates all modules currently inside the borg's module container.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
     public void DisableAllModules(Entity<BorgChassisComponent?> borg)
     {
         if (!Resolve(borg, ref borg.Comp))
