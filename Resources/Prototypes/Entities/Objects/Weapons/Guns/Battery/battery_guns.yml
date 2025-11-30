@@ -664,7 +664,6 @@
     proto: RedMediumLaser
     fireCost: 100
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 40
   - type: MagazineVisuals
     magState: mag
@@ -712,7 +711,6 @@
     proto: RedMediumLaser
     fireCost: 100
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 30
   - type: MagazineVisuals
     magState: mag
@@ -808,7 +806,6 @@
     proto: RedMediumLaser
     fireCost: 100
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 40
   - type: StaticPrice
     price: 750
@@ -901,9 +898,7 @@
       fireCost: 62.5
       pacifismAllowedMode: true
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 48
-    autoRechargePause: true
     autoRechargePauseTime: 10
 
 - type: entity
