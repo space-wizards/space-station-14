@@ -84,7 +84,6 @@ namespace Content.Server.GameTicking
             base.Initialize();
 
             SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
-            Log.Debug("Subscribed");
 
             DebugTools.Assert(!_initialized);
             DebugTools.Assert(!_postInitialized);
@@ -144,7 +143,7 @@ namespace Content.Server.GameTicking
         // TODO: make this instead check for if the preset overrides nuke explosion ending the round behavior somehow
         private void OnNukeExploded(NukeExplodedEvent ev)
         {
-            if (!ev.EndRound || IsGameRuleActive("Nukeops")) // nukeops rule system handles nuke ops round end logic
+            if (!ev.EndRound || IsGameRuleActive("Nukeops")) // nukeops rule system handles nuke ops specific nuke round end logic
             {
                 return;
             }
