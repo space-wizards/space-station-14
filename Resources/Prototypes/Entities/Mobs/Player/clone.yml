@@ -20,6 +20,7 @@
   - ImpairedMobility
   # - LegsParalyzed (you get healed)
   - LightweightDrunk
+  - MindUntransferableToBrain
   - Muted
   - Narcolepsy
   - Pacified

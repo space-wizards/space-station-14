@@ -158,6 +158,14 @@ public abstract partial class SharedMindSystem : EntitySystem
         return mind.Value;
     }
 
+    /// <summary>
+    /// Public method to update the <see cref="MindContainerComponent.LatestMind"/> property.
+    /// </summary>
+    public void UpdateLatestMind(Entity<MindContainerComponent> entity, EntityUid? latestMind)
+    {
+        entity.Comp.LatestMind = latestMind;
+    }
+
     private void OnVisitingTerminating(EntityUid uid, VisitingMindComponent component, ref EntityTerminatingEvent args)
     {
         if (component.MindId != null)
