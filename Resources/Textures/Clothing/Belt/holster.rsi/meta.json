@@ -23,6 +23,9 @@
       "name": "icon_speedloader_revolver"
     },
     {
+      "name": "icon_powercell"
+    },
+    {
       "name": "equipped-BELT",
       "directions": 4
     },
