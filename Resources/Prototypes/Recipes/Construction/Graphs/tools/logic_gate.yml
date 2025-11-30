@@ -124,3 +124,4 @@
       - !type:SpawnPrototype
         prototype: PartRodMetal1
         amount: 1
+        
