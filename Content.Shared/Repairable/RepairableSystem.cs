@@ -95,5 +95,9 @@ public sealed partial class RepairableSystem : EntitySystem
 [ByRefEvent]
 public readonly record struct RepairedEvent(Entity<RepairableComponent> Ent, EntityUid User);
 
+/// <summary>
+/// Do after event started when you try to fix a entity with RepairableComponent.
+/// This doafter is started again if the entity has <see cref="AutoDoAfter"> set to true and not all damage was fixed yet.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class RepairDoAfterEvent : SimpleDoAfterEvent;
