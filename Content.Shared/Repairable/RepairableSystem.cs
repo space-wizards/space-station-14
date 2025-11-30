@@ -82,7 +82,7 @@ public sealed partial class RepairableSystem : EntitySystem
     private void RepairSomeDamage(Entity<RepairableComponent> ent, DamageableComponent damageable, Damage.DamageSpecifier damageAmount, EntityUid user, FixedPoint2? limit = null)
     {
         if (limit != null)
-            damageAmount.ClampMax(damageable.TotalDamage - limit.Value);
+            damageAmount *= (damageable.TotalDamage - limit.Value) / damageAmount.GetTotal();
 
         var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, damageAmount, true, false, origin: user);
         _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
