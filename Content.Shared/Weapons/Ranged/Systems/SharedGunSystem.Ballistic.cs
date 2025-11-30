@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Emp;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -30,6 +31,8 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
+
+        SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, EmpPulseEvent>(OnRefillerEmpPulsed);
     }
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)
@@ -348,6 +351,70 @@ public abstract partial class SharedGunSystem
         entity.Comp.UnspawnedCount = count;
         UpdateBallisticAppearance(entity.Owner, entity.Comp);
         UpdateAmmoCount(entity.Owner);
+        Dirty(entity);
+    }
+
+    private void OnRefillerEmpPulsed(Entity<BallisticAmmoSelfRefillerComponent> entity, ref EmpPulseEvent args)
+    {
+        if (!entity.Comp.AffectedByEmp)
+            return;
+
+        PauseSelfRefill(entity, args.Duration);
+    }
+
+    private void UpdateBallistic(float frameTime)
+    {
+        var query = EntityQueryEnumerator<BallisticAmmoSelfRefillerComponent, BallisticAmmoProviderComponent>();
+        while (query.MoveNext(out var uid, out var refiller, out var ammo))
+        {
+            BallisticSelfRefillerUpdate((uid, ammo, refiller));
+        }
+    }
+
+    private void BallisticSelfRefillerUpdate(
+        Entity<BallisticAmmoProviderComponent, BallisticAmmoSelfRefillerComponent> entity
+    )
+    {
+        var ammo = entity.Comp1;
+        var refiller = entity.Comp2;
+        if (!refiller.AutoRefill ||
+            IsFull(entity) ||
+            Timing.CurTime < refiller.NextAutoRefill)
+            return;
+
+        if (refiller.AmmoProto is not { } refillerAmmoProto)
+        {
+            // No ammo proto on the refiller, so just increment the unspawned count on the provider
+            // if it has an ammo proto.
+            if (ammo.Proto is null)
+            {
+                Log.Error(
+                    $"Neither of {entity}'s {nameof(BallisticAmmoSelfRefillerComponent)}'s or {nameof(BallisticAmmoProviderComponent)}'s ammunition protos is specified. This is a configuration error as it means {nameof(BallisticAmmoSelfRefillerComponent)} cannot do anything.");
+                return;
+            }
+
+            SetBallisticUnspawned(entity, ammo.UnspawnedCount + 1);
+        }
+        else if (ammo.Proto == refillerAmmoProto)
+        {
+            // The ammo proto on the refiller and the provider match. Add an unspawned ammo.
+            SetBallisticUnspawned(entity, ammo.UnspawnedCount + 1);
+        }
+        else
+        {
+            // Can't use unspawned ammo, so spawn an entity and try to insert it.
+            var ammoEntity = PredictedSpawnAttachedTo(refiller.AmmoProto, Transform(entity).Coordinates);
+            var insertSucceeded = TryBallisticInsert(entity, ammoEntity, null, suppressInsertionSound: true);
+            if (!insertSucceeded)
+            {
+                PredictedQueueDel(ammoEntity);
+                Log.Error(
+                    $"Failed to insert ammo {ammoEntity} into non-full {entity}. This is a configuration error. Is the {nameof(BallisticAmmoSelfRefillerComponent)}'s {nameof(BallisticAmmoSelfRefillerComponent.AmmoProto)} incorrect for the {nameof(BallisticAmmoProviderComponent)}'s {nameof(BallisticAmmoProviderComponent.Whitelist)}?");
+                return;
+            }
+        }
+
+        refiller.NextAutoRefill = Timing.CurTime + refiller.AutoRefillRate;
         Dirty(entity);
     }
 }
