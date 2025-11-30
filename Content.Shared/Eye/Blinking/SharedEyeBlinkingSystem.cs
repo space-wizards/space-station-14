@@ -13,10 +13,26 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     override public void Initialize()
     {
         base.Initialize();
-        EntityManager.ComponentAdded += OnComponentAdded;
-        EntityManager.ComponentRemoved += OnComponentRemoved;
+        SubscribeLocalEvent<EyeBlinkingComponent, SleepStateChangedEvent>(SleepStateChangedEventHanlder);
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentRemove>(OnBlinkingRemoved);
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentShutdown>(OnBlinkingShutdown);
+    }
+
+    private void SleepStateChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref SleepStateChangedEvent args)
+    {
+        var comp = ent.Comp;
+        var entUID = ent.Owner;
+        if (args.FellAsleep)
+        {
+            comp.IsSleeping = true;
+            Blink(entUID, comp, _timing.CurTime);
+        }
+        else
+        {
+            comp.IsSleeping = false;
+            OpenEyes(entUID, comp);
+        }
+        Dirty(entUID, comp);
     }
 
     private void OnBlinkingRemoved(Entity<EyeBlinkingComponent> ent, ref ComponentRemove args)
@@ -27,33 +43,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     private void OnBlinkingShutdown(Entity<EyeBlinkingComponent> ent, ref ComponentShutdown args)
     {
         OpenEyes(ent.Owner, ent.Comp);
-    }
-
-    private void OnComponentRemoved(RemovedComponentEventArgs args)
-    {
-        var comp = args.BaseArgs.Component;
-        var entUID = args.BaseArgs.Owner;
-        if (!(comp is SleepingComponent)) return;
-        if (TryComp<EyeBlinkingComponent>(entUID, out var eyeComp))
-        {
-            eyeComp.IsSleeping = false;
-
-            OpenEyes(entUID, eyeComp);
-            Dirty(entUID, eyeComp);
-        }
-    }
-
-    private void OnComponentAdded(AddedComponentEventArgs args)
-    {
-        var comp = args.BaseArgs.Component;
-        var entUID = args.BaseArgs.Owner;
-        if (!(comp is SleepingComponent)) return;
-        if (TryComp<EyeBlinkingComponent>(entUID, out var eyeComp))
-        {
-            eyeComp.IsSleeping = true;
-            Blink(entUID, eyeComp, _timing.CurTime);
-            Dirty(entUID, eyeComp);
-        }
     }
 
     public override void Update(float frameTime)
