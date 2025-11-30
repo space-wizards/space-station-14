@@ -1,0 +1,13 @@
+- type: entity
+  id: Ipod
+  name: Ipod
+  description: an ipod
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Other/ipod.rsi
+    state: base
+  - type: Item
+    sprite: Objects/counterstrike/Other/ipod.rsi
+    heldPrefix: base
+  - type: MusicRadio

@@ -1,0 +1,34 @@
+- type: musicCategory
+  id: BABATAPA
+  name: BABATAPA
+  order: 0
+
+- type: musicCategory
+  id: LinkinPark
+  name: LinkinPark
+  order: 1
+
+- type: musicCategory
+  id: NCS
+  name: NCS
+  order: 2
+
+- type: musicCategory
+  id: Fex
+  name: Fex
+  order: 3
+
+- type: musicCategory
+  id: MagicMan
+  name: Magic Man
+  order: 4
+
+- type: musicCategory
+  id: Nabeg
+  name: Nabeg
+  order: 5
+
+- type: musicCategory
+  id: Griby
+  name: Griby
+  order: 6

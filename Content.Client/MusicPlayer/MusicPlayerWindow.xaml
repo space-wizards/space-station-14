@@ -1,0 +1,26 @@
+<ui:FancyWindow xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                SetSize="700 480" Title="Music Player">
+  <BoxContainer Orientation="Vertical" Margin="4 0">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+      <Button Name="PlayPause" Text="Play"/>
+      <Button Name="Stop" Text="Stop"/>
+      <Button Name="Next" Text="Next"/>
+      <Label Name="NowPlaying" Text="---" HorizontalExpand="True" HorizontalAlignment="Right"/>
+    </BoxContainer>
+
+    <BoxContainer Orientation="Horizontal" Margin="0 4 0 4" HorizontalExpand="True" VerticalExpand="True">
+      <ItemList Name="CategoryList" SizeFlagsStretchRatio="3" SelectMode="Button" HorizontalExpand="True"/>
+      <ItemList Name="TrackList" SizeFlagsStretchRatio="7" SelectMode="Button" HorizontalExpand="True"/>
+    </BoxContainer>
+
+    <BoxContainer Orientation="Horizontal">
+      <Slider Name="Position" HorizontalExpand="True"/>
+      <Label Name="Duration" Text="00:00 / 00:00"/>
+    </BoxContainer>
+
+    <BoxContainer Orientation="Horizontal" Margin="0 4 0 0">
+      <Label Text="Volume"/>
+      <Slider Name="VolumeSlider" MinValue="0" MaxValue="1" Value="1" HorizontalExpand="True"/>
+    </BoxContainer>
+  </BoxContainer>
+</ui:FancyWindow>

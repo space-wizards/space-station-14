@@ -1,0 +1,56 @@
+# BABATAPA
+- type: musicTrack
+  id: BabaTapaMamaDoma
+  name: BABA TAPA - Mama Doma
+  path:
+    path: /Audio/Ipod/BABATAPA/mamaDoma.ogg
+  category: BABATAPA
+# LinkinPark
+- type: musicTrack
+  id: LinkinParkInTheEnd
+  name: Linkin Park - In The End
+  path:
+    path: /Audio/Ipod/LinkinPark/InTheEnd.ogg
+  category: LinkinPark
+# NCS
+- type: musicTrack
+  id: ElektronomiaSkyHigh
+  name: Elektronomia - Sky High
+  path:
+    path: /Audio/Ipod/NCS/SkyHigh.ogg
+  category: NCS
+# Fex
+- type: musicTrack
+  id: FexSubwaysOfYourMind
+  name: Fex - Subways Of Your Mind
+  path:
+    path: /Audio/Ipod/Fex/SubwaysOfYourMind.ogg
+  category: Fex
+# Magic Man
+- type: musicTrack
+  id: MagicManTHTEA
+  name: Magic Man - Tutorial How To Enter Ancientwoods
+  path:
+    path: /Audio/Ipod/MagicMan/thtea.ogg
+  category: MagicMan
+# Nabeg
+- type: musicTrack
+  id: NabegCosdeath
+  name: Unknown - cosdeath
+  path:
+    path: /Audio/Ipod/Nabeg/cosdeath.ogg
+  category: Nabeg
+
+- type: musicTrack
+  id: NabegNabegTypeRap
+  name: Unknown - Nabeg type rap
+  path:
+    path: /Audio/Ipod/Nabeg/nabeg.ogg
+  category: Nabeg
+#Griby
+- type: musicTrack
+  id: GribyTaetLed
+  name: Griby - Taet Led
+  path:
+    path: /Audio/Ipod/Griby/taetLed.ogg
+  category: Griby
