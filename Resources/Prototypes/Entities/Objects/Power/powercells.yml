@@ -30,6 +30,7 @@
   - type: Tag
     tags:
       - PowerCell
+      - PowerCellAll
   - type: Appearance
   - type: PowerCellVisuals
   - type: Riggable
@@ -73,6 +74,7 @@
   - type: Tag
     tags:
       - PowerCellSmall
+      - PowerCellAll
 
 - type: entity
   id: PowerCellSmallPrinted

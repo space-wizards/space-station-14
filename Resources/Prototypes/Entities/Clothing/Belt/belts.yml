@@ -131,6 +131,7 @@
           - Knife
           - MagazinePistolAll
           - SpeedLoaderAll
+          - PowerCellAll
       sidearm_slot:
         name: clothing-holster-sidearm-slot
         priority: 2
@@ -151,6 +152,10 @@
         whitelist:
           tags:
           - SpeedLoaderAll
+      icon_powercell:
+        whitelist:
+          tags:
+          - PowerCellAll
       icon_sidearm:
         whitelist:
           tags:
@@ -190,6 +195,7 @@
           - SpeedLoaderAll
           - MagazineRifleAll
           - MagazineShotgun
+          - PowerCellAll
       upgraded_sidearm_slot:
         name: clothing-holster-upgraded-sidearm-slot
         priority: 2
@@ -230,6 +236,10 @@
         whitelist:
           tags:
           - SpeedLoaderAll
+      icon_powercell:
+        whitelist:
+          tags:
+          - PowerCellAll
       icon_magazine_rifle:
         whitelist:
           tags:
