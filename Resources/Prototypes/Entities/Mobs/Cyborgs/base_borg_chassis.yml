@@ -103,7 +103,15 @@
     - Science
   - type: ZombieImmune
   - type: Repairable
-    doAfterDelay: 10
+    damage:
+      groups:
+        Brute: -30
+      types:
+        Heat: -10
+        Shock: -10
+    doAfterDelay: 1
+    autoDoAfter: true
+    fuelCost: 0.5
     allowSelfRepair: false
   - type: BorgChassis
   - type: LockingWhitelist
@@ -453,8 +461,7 @@
     - Mothership
     - Xenoborg
     - Binary
-  - type: Repairable
-    doAfterDelay: 13 # 25% more HP, so 30% more time to heal
+
   - type: BorgChassis
     maxModules: 0
     hasMindState: robot_e

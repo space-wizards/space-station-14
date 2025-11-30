@@ -25,7 +25,7 @@ public sealed partial class RepairableComponent : Component
     /// Cost of fuel used to repair this device.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int FuelCost = 5;
+    public float FuelCost = 5;
 
     /// <summary>
     /// Tool quality necessary to repair this device.
@@ -38,6 +38,12 @@ public sealed partial class RepairableComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public int DoAfterDelay = 1;
+
+    /// <summary>
+    /// If after the doafter ends it should start a new one
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool AutoDoAfter = false;
 
     /// <summary>
     /// A multiplier that will be applied to the above if an entity is repairing themselves.

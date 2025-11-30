@@ -20,10 +20,10 @@ public sealed partial class RepairableSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<RepairableComponent, InteractUsingEvent>(Repair);
-        SubscribeLocalEvent<RepairableComponent, RepairFinishedEvent>(OnRepairFinished);
+        SubscribeLocalEvent<RepairableComponent, RepairDoAfterEvent>(OnRepairDoAfter);
     }
 
-    private void OnRepairFinished(Entity<RepairableComponent> ent,  ref RepairFinishedEvent args)
+    private void OnRepairDoAfter(Entity<RepairableComponent> ent, ref RepairDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
@@ -44,11 +44,23 @@ public sealed partial class RepairableSystem : EntitySystem
             _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
         }
 
-        var str = Loc.GetString("comp-repairable-repair", ("target", ent.Owner), ("tool", args.Used!));
-        _popup.PopupClient(str, ent.Owner, args.User);
+        args.Repeat = ent.Comp.AutoDoAfter && damageable.TotalDamage > 0;
+        args.Handled = true;
 
-        var ev = new RepairedEvent(ent, args.User);
-        RaiseLocalEvent(ent.Owner, ref ev);
+        if (args.Repeat)
+        {
+            var delay = ent.Comp.DoAfterDelay;
+            _toolSystem.UseTool(args.Used!.Value, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairDoAfterEvent(), ent.Comp.FuelCost);
+        }
+
+        if (!args.Repeat)
+        {
+            var str = Loc.GetString("comp-repairable-repair", ("target", ent.Owner), ("tool", args.Used!));
+            _popup.PopupClient(str, ent.Owner, args.User);
+
+            var ev = new RepairedEvent(ent, args.User);
+            RaiseLocalEvent(ent.Owner, ref ev);
+        }
     }
 
     private void Repair(Entity<RepairableComponent> ent, ref InteractUsingEvent args)
@@ -72,7 +84,7 @@ public sealed partial class RepairableSystem : EntitySystem
         }
 
         // Run the repairing doafter
-        args.Handled = _toolSystem.UseTool(args.Used, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairFinishedEvent(), ent.Comp.FuelCost);
+        args.Handled = _toolSystem.UseTool(args.Used, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairDoAfterEvent(), ent.Comp.FuelCost);
     }
 }
 
@@ -85,4 +97,4 @@ public sealed partial class RepairableSystem : EntitySystem
 public readonly record struct RepairedEvent(Entity<RepairableComponent> Ent, EntityUid User);
 
 [Serializable, NetSerializable]
-public sealed partial class RepairFinishedEvent : SimpleDoAfterEvent;
+public sealed partial class RepairDoAfterEvent : SimpleDoAfterEvent;
