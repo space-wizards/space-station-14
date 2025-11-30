@@ -10,3 +10,16 @@
   - type: ActionGrant
     actions:
     - ActionRetractableItemArmBlade # Temporary addition, will inevitably be a purchasable in the bio-store
+    - ActionChangelingStore
+  - type: Store
+    categories:
+    - ChangelingAbilities
+    currencyWhitelist:
+    - ChangelingDNA
+    balance:
+      ChangelingDNA: 50
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+        requireInputValidation: false
