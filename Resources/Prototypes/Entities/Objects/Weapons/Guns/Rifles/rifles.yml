@@ -68,13 +68,11 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: GunWieldBonus
-    minAngle: -19
+    minAngle: -26
     maxAngle: -20
   - type: Gun
-    minAngle: 21
+    minAngle: 28
     maxAngle: 37
-    angleIncrease: 2
-    angleDecay: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: ChamberMagazineAmmoProvider
@@ -169,11 +167,11 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -20
+    minAngle: -23
+    maxAngle: -23
   - type: Gun
-    minAngle: 21
-    maxAngle: 30
+    minAngle: 25
+    maxAngle: 33
     angleIncrease: 2
     angleDecay: 1.5
     soundGunshot:
@@ -255,10 +253,8 @@
   - type: Gun
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/estocshot.ogg
-    minAngle: 21
-    maxAngle: 30
-    angleIncrease: 1
-    angleDecay: 1.5
+    minAngle: 30
+    maxAngle: 40
     shotsPerBurst: 3
     selectedMode: Burst
     availableModes:
@@ -266,8 +262,8 @@
     - SemiAuto
     burstFireRate: 14
   - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -20
+    minAngle: -28
+    maxAngle: -23
   - type: ItemSlots
     slots:
       gun_magazine:

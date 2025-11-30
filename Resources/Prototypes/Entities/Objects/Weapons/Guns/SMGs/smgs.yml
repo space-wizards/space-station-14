@@ -101,13 +101,11 @@
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
-    minAngle: -19
+    minAngle: -20
     maxAngle: -18
   - type: Gun
-    minAngle: 20
-    maxAngle: 25
-    angleIncrease: 2
-    angleDecay: 2
+    minAngle: 22
+    maxAngle: 28
     shotsPerBurst: 5
     availableModes:
     - Burst
@@ -184,12 +182,10 @@
       unwieldOnUse: false
     - type: GunWieldBonus
       minAngle: -19
-      maxAngle: -20
+      maxAngle: -22
     - type: Gun
       minAngle: 20
-      maxAngle: 25
-      angleIncrease: 2
-      angleDecay: 2
+      maxAngle: 30
       fireRate: 6
       burstFireRate: 18
       soundGunshot:
@@ -252,14 +248,12 @@
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
-    minAngle: -14
-    maxAngle: -15
+    minAngle: -15
+    maxAngle: -18
   - type: Gun
     fireRate: 5.5
     minAngle: 16
-    maxAngle: 22
-    angleIncrease: 2
-    angleDecay: 2
+    maxAngle: 25
     selectedMode: FullAuto
     shotsPerBurst: 5
     burstCooldown: 0.2
@@ -318,10 +312,15 @@
       state: icon
     - state: icon-muzzle
       map: ["enum.GunVisualLayers.Base"]
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -15
+    maxAngle: -18
   - type: Gun
     fireRate: 9
-    minAngle: 25
-    maxAngle: 32
+    minAngle: 22
+    maxAngle: 30
     availableModes:
     - FullAuto
     soundGunshot:

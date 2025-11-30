@@ -65,11 +65,14 @@
     - state: mag-unshaded-3
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -8
+    maxAngle: -8
   - type: Gun
-    minAngle: 1
-    maxAngle: 8
-    angleIncrease: 2
-    angleDecay: 1
+    minAngle: 10
+    maxAngle: 30
     fireRate: 2
   - type: RevolverAmmoProvider
     capacity: 5
@@ -89,11 +92,14 @@
   id: WeaponRevolverInspector
   description: A double-action revolver manufactured by various companies. It is readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Loads 6 rounds of .45 magnum.
   components:
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -8
+    maxAngle: -8
   - type: Gun
-    minAngle: 1
-    maxAngle: 10
-    angleIncrease: 2
-    angleDecay: 1
+    minAngle: 10
+    maxAngle: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Clothing
@@ -144,12 +150,15 @@
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Item
     storedOffset: 0,-2
+  - type: Wieldable
+    unwieldOnUse: false
+  - type: GunWieldBonus
+    minAngle: -8
+    maxAngle: -8
   - type: Gun
     selectedMode: SemiAuto
-    minAngle: 1
-    maxAngle: 8
-    angleIncrease: 2
-    angleDecay: 1
+    minAngle: 10
+    maxAngle: 30
     fireRate: 2
     availableModes:
     - SemiAuto

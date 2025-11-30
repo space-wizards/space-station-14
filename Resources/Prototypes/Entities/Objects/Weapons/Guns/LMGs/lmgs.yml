@@ -19,13 +19,11 @@
   - type: Wieldable
     unwieldOnUse: false
   - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -20
+    minAngle: -19
+    maxAngle: -17
   - type: Gun
     minAngle: 24
     maxAngle: 45
-    angleIncrease: 2
-    angleDecay: 3
     fireRate: 8
     selectedMode: FullAuto
     availableModes:
