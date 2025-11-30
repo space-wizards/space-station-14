@@ -32,7 +32,7 @@ public sealed partial class AtmosphereSystem
     /// </summary>
     private static readonly ProtoId<SoundCollectionPrototype> DefaultHotspotSounds = "AtmosHotspot";
 
-    [Dependency] private readonly DecalSystem _decalSystem = default!;
+    [Dependency] private readonly SharedDecalSystem _decalSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <summary>
@@ -126,10 +126,9 @@ public sealed partial class AtmosphereSystem
             // Add a random burned decal to the tile only if there are less than 4 of them
             if (tileBurntDecals < 4)
             {
-                _decalSystem.TryAddDecal(_burntDecals[_random.Next(_burntDecals.Length)],
+                _decalSystem.TryAddDecal(new Decal(_burntDecals[_random.Next(_burntDecals.Length)]).WithCleanable(true),
                     new EntityCoordinates(gridUid, tilePos),
-                    out _,
-                    cleanable: true);
+                    out _);
             }
 
             if (tile.Air.Temperature > Atmospherics.FireMinimumTemperatureToSpread)
