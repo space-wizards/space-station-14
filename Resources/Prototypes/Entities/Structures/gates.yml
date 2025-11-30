@@ -301,12 +301,13 @@
   - type: Sprite
     layers:
       - state: base
-      - state: randomgate
+      - state: random_gate
   - type: RandomGate
-    gate: Random
   - type: DeviceLinkSink
-    ports: [Input]
+    ports: 
+    - RandomGateInput
   - type: DeviceLinkSource
-    ports: [Output]
+    ports: 
+    - Output
   - type: Construction
     node: random_gate

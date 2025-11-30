@@ -120,4 +120,7 @@
       completed:
       - !type:SpawnPrototype
         prototype: CableApcStack1
-        amount: 2
+        amount: 1
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 1

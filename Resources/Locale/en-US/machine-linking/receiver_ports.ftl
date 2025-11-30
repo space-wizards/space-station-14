@@ -87,5 +87,5 @@ signal-port-description-logic-memory-input = Signal to load into the memory cell
 signal-port-name-logic-enable = Enable
 signal-port-description-logic-enable = Only loads the input signal into the memory cell when HIGH.
 
-signal-port-name-logic-random-output = Random Output
-signal-port-description-logic-random-output = Outputs a random signal.
+signal-port-name-logic-random-input = Input Signal
+signal-port-description-logic-random-input = Receives any signal to trigger a random output.

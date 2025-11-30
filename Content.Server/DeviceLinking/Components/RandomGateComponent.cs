@@ -14,7 +14,7 @@ public sealed partial class RandomGateComponent : Component
     /// The input port for receiving signals.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<SinkPortPrototype> InputPort = "Input";
+    public ProtoId<SinkPortPrototype> InputPort = "RandomGateInput";
 
     /// <summary>
     /// The output port for sending signals.
