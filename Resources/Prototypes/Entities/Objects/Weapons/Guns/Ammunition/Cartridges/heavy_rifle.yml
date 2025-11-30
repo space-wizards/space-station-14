@@ -1,13 +1,12 @@
 - type: entity
   id: BaseCartridgeHeavyRifle
-  name: cartridge (.20 rifle)
+  name: cartridge (.10 rifle)
   parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
     tags:
-      - Cartridge
-      - CartridgeHeavyRifle
+    - CartridgeHeavyRifle
   - type: CartridgeAmmo
     proto: BulletHeavyRifle
   - type: Sprite

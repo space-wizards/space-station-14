@@ -104,7 +104,7 @@ public sealed partial class OpenableSystem : EntitySystem
                 Text = Loc.GetString(comp.CloseVerbText),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png")),
                 Act = () => TryClose(args.Target, comp, args.User),
-                // this verb is lower priority than drink verb (2) so it doesn't conflict
+                Priority = 3
             };
         }
         else
@@ -113,7 +113,8 @@ public sealed partial class OpenableSystem : EntitySystem
             {
                 Text = Loc.GetString(comp.OpenVerbText),
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png")),
-                Act = () => TryOpen(args.Target, comp, args.User)
+                Act = () => TryOpen(args.Target, comp, args.User),
+                Priority = 3
             };
         }
         args.Verbs.Add(verb);
@@ -144,18 +145,6 @@ public sealed partial class OpenableSystem : EntitySystem
         // can't lock something while it's open
         if (ent.Comp.Opened)
             args.Cancelled = true;
-    }
-
-    /// <summary>
-    /// Returns true if the entity either does not have OpenableComponent or it is opened.
-    /// Drinks that don't have OpenableComponent are automatically open, so it returns true.
-    /// </summary>
-    public bool IsOpen(EntityUid uid, OpenableComponent? comp = null)
-    {
-        if (!Resolve(uid, ref comp, false))
-            return true;
-
-        return comp.Opened;
     }
 
     /// <summary>

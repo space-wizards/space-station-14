@@ -31,7 +31,7 @@ public sealed class BarSignSystem : EntitySystem
 
     private void OnSetBarSignMessage(Entity<BarSignComponent> ent, ref SetBarSignMessage args)
     {
-        if (!_prototypeManager.TryIndex(args.Sign, out var signPrototype))
+        if (!_prototypeManager.Resolve(args.Sign, out var signPrototype))
             return;
 
         SetBarSign(ent, signPrototype);
