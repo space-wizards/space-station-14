@@ -267,8 +267,8 @@
           tags:
           - CartridgeRifle
   - type: SpeedModifiedOnWield
-    walkModifier: 0.85
-    sprintModifier: 0.85
+    walkModifier: 0.75
+    sprintModifier: 0.75
   - type: GunRequiresWield
   - type: EyeCursorOffset
     maxOffset: 2
