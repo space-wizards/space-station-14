@@ -112,7 +112,7 @@
         Shock: -10
     doAfterDelay: 1
     autoDoAfter: true
-    consecutiveRepairDelayMultiplier: 0.9
+    consecutiveRepairDelayMultiplier: 0.95
     fuelCost: 0.5
     allowSelfRepair: false
   - type: BorgChassis
