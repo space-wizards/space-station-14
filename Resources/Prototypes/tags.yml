@@ -1143,13 +1143,13 @@
 - type: Tag
   id: PowerCage # Storage whitelist: PowerCageRecharger, ShuttleGunPerforator
 
-- type: Tag
-  id: PowerCellAll # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: PowerCell # Storage whitelist: BountyLaserGun, ClothingOuterSuitSpaceNinja, BaseWeaponPowerCell, PowerCellRecharger, WeaponCapacitorRecharger,
                 # TurboItemRecharger, ShuttleGunSvalinnMachineGun. ConstructionGraph: WallmountSubstation
                 # Could potentially be replaced by whitelisting PowerCellComponent.
+- type: Tag
+  id: PowerCellAll # Storage Whitelist: ClothingBeltHolster, ClothingBeltSyndieHolster. ItemMapper: ClothingBeltHolster, ClothingBeltSyndieHolster
 
 - type: Tag
   id: PowerCellSmall # Storage whitelist: BaseWeaponPowerCell, PowerCellRecharger, ShuttleGunSvalinnMachineGun.
