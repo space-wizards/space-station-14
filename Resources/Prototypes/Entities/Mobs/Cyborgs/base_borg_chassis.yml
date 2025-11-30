@@ -461,7 +461,6 @@
     - Mothership
     - Xenoborg
     - Binary
-
   - type: BorgChassis
     maxModules: 0
     hasMindState: robot_e
