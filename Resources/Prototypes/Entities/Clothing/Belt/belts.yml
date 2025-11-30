@@ -113,8 +113,6 @@
       - state: icon
   - type: Clothing
     sprite: Clothing/Belt/holster.rsi
-    equipDelay: 1
-    unequipDelay: 1
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
@@ -169,8 +167,6 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
-    equipDelay: 2
-    unequipDelay: 2
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
