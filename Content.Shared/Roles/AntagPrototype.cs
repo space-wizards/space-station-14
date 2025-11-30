@@ -23,7 +23,7 @@ public sealed partial class AntagPrototype : IPrototype
     /// <summary>
     ///     The name of this antag as displayed to players.
     /// </summary>
-    [DataField(required: true)]
+    [DataField]
     public LocId Name { get; private set; } = "";
 
     /// <summary>
