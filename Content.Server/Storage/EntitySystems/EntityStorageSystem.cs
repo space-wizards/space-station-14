@@ -33,7 +33,6 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         base.Initialize();
 
         /* CompRef things */
-        SubscribeLocalEvent<EntityStorageComponent, EntityUnpausedEvent>(OnEntityUnpausedEvent);
         SubscribeLocalEvent<EntityStorageComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<EntityStorageComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<EntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[] { typeof(LockSystem) });
@@ -42,9 +41,6 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
         SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
         SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
         SubscribeLocalEvent<EntityStorageComponent, FoldAttemptEvent>(OnFoldAttempt);
-
-        SubscribeLocalEvent<EntityStorageComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<EntityStorageComponent, ComponentHandleState>(OnHandleState);
         /* CompRef things */
 
         SubscribeLocalEvent<EntityStorageComponent, MapInitEvent>(OnMapInit);

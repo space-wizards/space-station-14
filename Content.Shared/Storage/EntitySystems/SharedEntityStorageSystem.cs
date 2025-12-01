@@ -48,33 +48,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public const string ContainerName = "entity_storage";
 
-    protected void OnEntityUnpausedEvent(EntityUid uid, EntityStorageComponent component, EntityUnpausedEvent args)
-    {
-        component.NextInternalOpenAttempt += args.PausedTime;
-    }
-
-    protected void OnGetState(EntityUid uid, EntityStorageComponent component, ref ComponentGetState args)
-    {
-        args.State = new EntityStorageComponentState(component.Open,
-            component.Capacity,
-            component.IsCollidableWhenOpen,
-            component.OpenOnMove,
-            component.EnteringRange,
-            component.NextInternalOpenAttempt);
-    }
-
-    protected void OnHandleState(EntityUid uid, EntityStorageComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not EntityStorageComponentState state)
-            return;
-        component.Open = state.Open;
-        component.Capacity = state.Capacity;
-        component.IsCollidableWhenOpen = state.IsCollidableWhenOpen;
-        component.OpenOnMove = state.OpenOnMove;
-        component.EnteringRange = state.EnteringRange;
-        component.NextInternalOpenAttempt = state.NextInternalOpenAttempt;
-    }
-
     protected virtual void OnComponentInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
     {
         component.Contents = _container.EnsureContainer<Container>(uid, ContainerName);
@@ -354,15 +327,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (containerAttemptEvent.Cancelled)
             return false;
 
-        // Consult the whitelist. The whitelist ignores the default assumption about how entity storage works.
-        if (component.Whitelist != null)
-            return _whitelistSystem.IsValid(component.Whitelist, toInsert);
-
-        if (component.Blacklist != null && _whitelistSystem.IsValid(component.Blacklist, toInsert))
-            return false;
-
-        // The inserted entity must be a mob or an item.
-        return HasComp<MobStateComponent>(toInsert) || HasComp<ItemComponent>(toInsert);
+        // Check the whitelist/blacklist.
+        return _whitelistSystem.CheckBoth(toInsert, component.Blacklist, component.Whitelist);
     }
 
     public bool TryOpenStorage(EntityUid user, EntityUid target, bool silent = false)
