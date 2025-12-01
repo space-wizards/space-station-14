@@ -1,8 +1,6 @@
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Chat;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -11,7 +9,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
