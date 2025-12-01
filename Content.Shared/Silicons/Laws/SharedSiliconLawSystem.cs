@@ -126,6 +126,8 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             if(_mind.TryGetMind(uid, out var mindId, out _))
                 EnsureSubvertedSiliconRole(mindId);
         }
+
+        Dirty(uid, component);
     }
 
     private void OnEmagLawsAdded(EntityUid uid, SiliconLawProviderComponent component, ref SiliconEmaggedEvent args)

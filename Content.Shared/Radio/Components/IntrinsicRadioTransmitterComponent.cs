@@ -8,9 +8,9 @@ namespace Content.Shared.Radio.Components;
 ///     This component allows an entity to directly translate spoken text into radio messages (effectively an intrinsic
 ///     radio headset).
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class IntrinsicRadioTransmitterComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public HashSet<ProtoId<RadioChannelPrototype>> Channels = new() { SharedChatSystem.CommonChannel };
 }
