@@ -103,45 +103,6 @@
   - BoxFolderClipboardThreePapers
 
 - type: loadoutGroup
-  id: Dresses
-  name: loadout-group-dresses
-  minLimit: 0
-  loadouts:
-  - ClothingUniformJumpskirtBlackElegantDress
-  - ClothingUniformJumpskirtRedElegantDress
-  - ClothingUniformJumpskirtGreenElegantDress
-  - ClothingUniformJumpskirtBlueElegantDress
-  - ClothingUniformJumpskirtPurpleElegantDress
-  - ClothingUniformJumpskirtCyanStripedDress
-  - ClothingUniformJumpskirtRedStripedDress
-  - ClothingUniformJumpskirtGreenStripedDress
-  - ClothingUniformJumpskirtPinkStripedDress
-  - ClothingUniformJumpskirtOrangeStripedDress
-  - ClothingUniformJumpskirtPurpleTurtleneckDress
-  - ClothingUniformJumpskirtRedTurtleneckDress
-  - ClothingUniformJumpskirtGreenTurtleneckDress
-  - ClothingUniformJumpskirtBlueTurtleneckDress
-  - ClothingUniformJumpskirtYellowTurtleneckDress
-  - ClothingUniformJumpskirtYellowOldDress
-
-- type: loadoutGroup
-  id: PrideCloaks
-  name: loadout-group-pridecloak
-  minLimit: 0
-  loadouts:
-  - ClothingNeckCloakTrans
-  - ClothingNeckCloakAro
-  - ClothingNeckCloakAce
-  - ClothingNeckCloakAroace
-  - ClothingNeckCloakBi
-  - ClothingNeckCloakIntersex
-  - ClothingNeckCloakEnby
-  - ClothingNeckCloakPan
-  - ClothingNeckCloakGay
-  - ClothingNeckCloakLesbian
-  - BedsheetRainbow
-
-- type: loadoutGroup
   id: Glasses
   name: loadout-group-glasses
   minLimit: 0
