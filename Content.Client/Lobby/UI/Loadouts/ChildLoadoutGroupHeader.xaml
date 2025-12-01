@@ -11,8 +11,7 @@
             <Label Name="Label" Margin="10 0 2 0"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" Align="End" Margin="10 0">
-            <Label Text="Selected: "/>
-            <Label Name="SelectedCountLabel" Text="0"/>
+            <Label Name="SelectedCountLabel" Access="Public"/>
         </BoxContainer>
     </ContainerButton>
     <PanelContainer SetSize="64 64" HorizontalAlignment="Right">

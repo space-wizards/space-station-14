@@ -80,7 +80,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             });
         }
 
-        SelectedCountLabel.Text = loadout.SelectedLoadouts[_groupProto.ID].Count().ToString();
+        SelectedCountLabel.Text = Loc.GetString("loadouts-selected-count", ("count", loadout.SelectedLoadouts[_groupProto.ID].Count().ToString()));
 
         LoadoutsContainer.RemoveAllChildren();
 
@@ -113,7 +113,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             var header = CreateChildLoadoutGroupHeader(localizationMan.GetString(loadoutGroupProto.Name),"", displayDummy, subContainer, group);
             header.HorizontalExpand = true;
 
-            header.SelectedCount = uiElements.Count(e => e.Select.Pressed).ToString();
+            header.SelectedCountLabel.Text = Loc.GetString("loadouts-selected-count", ("count", uiElements.Count(e => e.Select.Pressed).ToString()));
 
             LoadoutsContainer.AddChild(header);
             LoadoutsContainer.AddChild(subContainer);
@@ -148,18 +148,6 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         };
 
         return header;
-    }
-
-    private void UpdateSubGroupSelectedInfo(LoadoutContainer loadout, string itemName, BoxContainer subList)
-    {
-        var countSubSelected = subList.Children
-            .OfType<LoadoutContainer>()
-            .Count(c => c.Select.Pressed);
-
-        if (countSubSelected > 0)
-        {
-            loadout.Text = Loc.GetString("loadouts-count-items-in-group", ("item", itemName), ("count", countSubSelected));
-        }
     }
 
     /// <summary>

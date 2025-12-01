@@ -7,8 +7,7 @@
             <BoxContainer Name="RestrictionsContainer" Orientation="Vertical" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" Align="End" Margin="10 0">
-            <Label Text="Selected: "/>
-            <Label Name="SelectedCountLabel" Text="0"/>
+            <Label Name="SelectedCountLabel"/>
         </BoxContainer>
     </PanelContainer>
     <!-- Buffer space so we have 10 margin between controls but also 10 to the borders -->
