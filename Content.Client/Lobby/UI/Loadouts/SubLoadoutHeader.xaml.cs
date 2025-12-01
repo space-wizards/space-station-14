@@ -38,7 +38,7 @@ public sealed partial class ToggleLoadoutButton : BoxContainer
     public void SetExpanded(bool expanded)
     {
         Button.Pressed = expanded;
-        DropdownArrow.Texture = Button.Pressed ? IconExpanded : IconCollapsed;
+        //DropdownArrow.Texture = Button.Pressed ? IconExpanded : IconCollapsed;
     }
 
     public ToggleLoadoutButton(string displayName, string displayDescription, EntProtoId? displayDummy)
