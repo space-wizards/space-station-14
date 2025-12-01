@@ -9,13 +9,14 @@ namespace Content.Shared.Silicons.Laws.Components;
 /// <summary>
 /// This is used for entities which are bound to silicon laws and can view them.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedSiliconLawSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedSiliconLawSystem))]
 public sealed partial class SiliconLawBoundComponent : Component
 {
     /// <summary>
     /// The last entity that provided laws to this entity.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? LastLawProvider;
 }
 
@@ -46,17 +47,4 @@ public sealed partial class ToggleLawsScreenEvent : InstantActionEvent
 public enum SiliconLawsUiKey : byte
 {
     Key
-}
-
-[Serializable, NetSerializable]
-public sealed class SiliconLawBuiState : BoundUserInterfaceState
-{
-    public List<SiliconLaw> Laws;
-    public HashSet<ProtoId<RadioChannelPrototype>>? RadioChannels;
-
-    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<ProtoId<RadioChannelPrototype>>? radioChannels)
-    {
-        Laws = laws;
-        RadioChannels = radioChannels;
-    }
 }
