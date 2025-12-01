@@ -8,8 +8,7 @@ namespace Content.Server.DeviceNetwork.Components
         /// Indicates if the device can connect to the WiredNetwork off grid.
         /// Multiple devices need this component to connect off grid to one another.
         /// </summary>
-        [ViewVariables]
-        [DataField("connectsOffGrid")]
+        [DataField]
         public bool ConnectsOffGrid;
     }
 }

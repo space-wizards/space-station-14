@@ -19,14 +19,12 @@ namespace Content.Server.DeviceNetwork.Systems
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
             // If the entity can connect off grid, let it send the packets
-
-            if (component.ConnectsOffGrid == true)
+            if (component.ConnectsOffGrid)
             {
                 return;
             }
 
             // If they're not on the same grid, cancel 
-
             if (Transform(uid).GridUid != args.SenderTransform.GridUid)
             {
                 args.Cancel();
