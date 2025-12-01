@@ -715,7 +715,7 @@
     Kalimotxo: 2
 
 - type: reaction
-  id: KiraSpecial
+  id: OrangeLimeSoda
   requiredMixerCategories:
   - Stir
   reactants:
@@ -726,7 +726,7 @@
     SodaWater:
       amount: 1
   products:
-    KiraSpecial: 3
+    OrangeLimeSoda: 3
 
 - type: reaction
   id: Lemonade

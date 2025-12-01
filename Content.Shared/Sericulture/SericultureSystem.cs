@@ -68,8 +68,8 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
-        if (TryComp<HungerComponent>(uid, out var hungerComp)
-            && _hungerSystem.IsHungerBelowState(uid,
+        if (!TryComp<HungerComponent>(uid, out var hungerComp)
+            || _hungerSystem.IsHungerBelowState(uid,
                 comp.MinHungerThreshold,
                 _hungerSystem.GetHunger(hungerComp) - comp.HungerCost,
                 hungerComp))
@@ -95,9 +95,9 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (args.Cancelled || args.Handled || comp.Deleted)
             return;
 
-        if (TryComp<HungerComponent>(uid,
+        if (!TryComp<HungerComponent>(uid,
                 out var hungerComp) // A check, just incase the doafter is somehow performed when the entity is not in the right hunger state.
-            && _hungerSystem.IsHungerBelowState(uid,
+            || _hungerSystem.IsHungerBelowState(uid,
                 comp.MinHungerThreshold,
                 _hungerSystem.GetHunger(hungerComp) - comp.HungerCost,
                 hungerComp))
@@ -106,7 +106,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
             return;
         }
 
-        _hungerSystem.ModifyHunger(uid, -comp.HungerCost);
+        _hungerSystem.ModifyHunger(uid, -comp.HungerCost, hungerComp);
 
         if (!_netManager.IsClient) // Have to do this because spawning stuff in shared is CBT.
         {
