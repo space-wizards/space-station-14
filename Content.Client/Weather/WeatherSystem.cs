@@ -42,12 +42,15 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (ent == null)
             return;
 
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
         var entXform = Transform(ent.Value);
 
         var query = EntityQueryEnumerator<WeatherStatusEffectComponent, StatusEffectComponent>();
         while (query.MoveNext(out var uid, out var weather, out var status))
         {
-            if (!Timing.IsFirstTimePredicted || weather.Sound == null)
+            if (weather.Sound == null)
                 return;
 
             weather.Stream ??= _audio.PlayGlobal(weather.Sound, Filter.Local(), true)?.Entity;

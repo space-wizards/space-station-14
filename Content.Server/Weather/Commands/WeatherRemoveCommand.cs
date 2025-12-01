@@ -1,6 +1,5 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared.StatusEffectNew;
 using Content.Shared.Weather;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -8,15 +7,18 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Weather.Commands;
 
+/// <summary>
+/// Remove specific weather from map.
+/// </summary>
 [AdminCommand(AdminFlags.Fun)]
 public sealed class WeatherRemoveCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly WeatherSystem _weather = default!;
+    [Dependency] private readonly IComponentFactory _compFactory = default!;
 
-    public override string Command => "weather_remove";
-
-    public override string Description => "Remove specific weather from map";
+    public override string Command => "weatherremove";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -32,6 +34,12 @@ public sealed class WeatherRemoveCommand : LocalizedEntityCommands
 
         var mapId = new MapId(mapInt);
 
+        if (!_map.MapExists(mapId))
+        {
+            shell.WriteError(Loc.GetString("cmd-weather-error-wrong-map", ("id", mapId.ToString())));
+            return;
+        }
+
         //Weather proto parse
         EntProtoId weatherProto = args[1];
         if (!_proto.TryIndex(weatherProto, out _))
@@ -40,7 +48,7 @@ public sealed class WeatherRemoveCommand : LocalizedEntityCommands
             return;
         }
 
-        _entMan.System<WeatherSystem>().RemoveWeather(mapId, weatherProto);
+        _weather.RemoveWeather(mapId, weatherProto);
     }
 
 
@@ -54,7 +62,7 @@ public sealed class WeatherRemoveCommand : LocalizedEntityCommands
             var opts = new List<CompletionOption>();
             foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!proto.Components.ContainsKey("WeatherStatusEffect")) //Uhh, iirc we have something like nameof(), but i cant found it.
+                if (!proto.Components.TryGetComponent(_compFactory.GetComponentName<WeatherStatusEffectComponent>(), out _))
                     continue;
 
                 opts.Add(new CompletionOption(proto.ID, proto.Name));

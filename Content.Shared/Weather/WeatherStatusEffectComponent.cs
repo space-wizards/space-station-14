@@ -7,20 +7,26 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Weather;
 
 /// <summary>
-/// Uses only in conjure with <see cref="StatusEffectComponent"/> on map entities.
-/// contains basic information about all types of weather effects
+/// Used only in conjure with <see cref="StatusEffectComponent"/> for status effects applied to map entities.
+/// Contains basic information about all types of weather effects.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedWeatherSystem))]
 public sealed partial class WeatherStatusEffectComponent : Component
 {
+    /// <summary>
+    /// A texture that will tile and render as a weather effect across the entire map.
+    /// </summary>
     [DataField(required: true)]
     public SpriteSpecifier Sprite = default!;
 
+    /// <summary>
+    /// Tint that will be applied to the weather texture.
+    /// </summary>
     [DataField]
     public Color? Color;
 
     /// <summary>
-    /// Weather scrolling speed
+    /// Weather scrolling speed.
     /// </summary>
     [DataField]
     public Vector2? Scrolling;
@@ -31,7 +37,9 @@ public sealed partial class WeatherStatusEffectComponent : Component
     [DataField]
     public SoundSpecifier? Sound;
 
-    // Client audio stream.
-    [NonSerialized]
+    /// <summary>
+    /// Client audio stream.
+    /// </summary>
+    [ViewVariables]
     public EntityUid? Stream;
 }

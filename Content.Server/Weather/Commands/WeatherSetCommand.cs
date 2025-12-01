@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Weather;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -7,16 +8,18 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Weather.Commands;
 
+/// <summary>
+/// Removes all weather except the specified one. If the specified weather does not exist on the map, it adds it.
+/// </summary>
 [AdminCommand(AdminFlags.Fun)]
 public sealed class WeatherSetCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly WeatherSystem _weather = default!;
+    [Dependency] private readonly IComponentFactory _compFactory = default!;
 
-    public override string Command => "weather_set";
-
-    public override string Description => "Removes all weather conditions except the specified one. If the specified weather does not exist on the map, it adds it.";
+    public override string Command => "weatherset";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -32,6 +35,12 @@ public sealed class WeatherSetCommand : LocalizedEntityCommands
 
         var mapId = new MapId(mapInt);
 
+        if (!_map.MapExists(mapId))
+        {
+            shell.WriteError(Loc.GetString("cmd-weather-error-wrong-map", ("id", mapId.ToString())));
+            return;
+        }
+
         //Weather proto parse
         EntProtoId? weatherProto = args[1];
         if (args[1] == "null")
@@ -46,18 +55,13 @@ public sealed class WeatherSetCommand : LocalizedEntityCommands
         TimeSpan? duration = null;
         if (args.Length == 3)
         {
-            var curTime = _timing.CurTime;
             if (int.TryParse(args[2], out var durationInt))
-            {
-                duration = curTime + TimeSpan.FromSeconds(durationInt);
-            }
+                duration = TimeSpan.FromSeconds(durationInt);
             else
-            {
                 shell.WriteError(Loc.GetString("cmd-weather-error-wrong-time"));
-            }
         }
 
-        _entMan.System<WeatherSystem>().SetWeather(mapId, weatherProto, duration);
+        _weather.SetWeather(mapId, weatherProto, duration);
     }
 
 
@@ -71,7 +75,7 @@ public sealed class WeatherSetCommand : LocalizedEntityCommands
             var opts = new List<CompletionOption>();
             foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!proto.Components.ContainsKey("WeatherStatusEffect")) //Uhh, iirc we have something like nameof(), but i cant found it.
+                if (!proto.Components.TryGetComponent(_compFactory.GetComponentName<WeatherStatusEffectComponent>(), out _))
                     continue;
 
                 opts.Add(new CompletionOption(proto.ID, proto.Name));
@@ -82,7 +86,7 @@ public sealed class WeatherSetCommand : LocalizedEntityCommands
         }
 
         if (args.Length == 3)
-            return CompletionResult.FromHint("Duration in seconds (leave empty for infinity duration)");
+            return CompletionResult.FromHint(Loc.GetString("cmd-weather-hint-time"));
 
         return CompletionResult.Empty;
     }

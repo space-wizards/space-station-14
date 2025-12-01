@@ -1,21 +1,24 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
+using Content.Shared.Weather;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Weather.Commands;
 
+/// <summary>
+/// Add specific weather to map.
+/// </summary>
 [AdminCommand(AdminFlags.Fun)]
 public sealed class WeatherAddCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly WeatherSystem _weather = default!;
+    [Dependency] private readonly IComponentFactory _compFactory = default!;
 
-    public override string Command => "weather_add";
-    public override string Description => "Add specific weather from map";
+    public override string Command => "weatheradd";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -31,6 +34,12 @@ public sealed class WeatherAddCommand : LocalizedEntityCommands
 
         var mapId = new MapId(mapInt);
 
+        if (!_map.MapExists(mapId))
+        {
+            shell.WriteError(Loc.GetString("cmd-weather-error-wrong-map", ("id", mapId.ToString())));
+            return;
+        }
+
         //Weather proto parse
         EntProtoId weatherProto = args[1];
         if (!_proto.TryIndex(weatherProto, out _))
@@ -43,18 +52,13 @@ public sealed class WeatherAddCommand : LocalizedEntityCommands
         TimeSpan? duration = null;
         if (args.Length == 3)
         {
-            var curTime = _timing.CurTime;
             if (int.TryParse(args[2], out var durationInt))
-            {
-                duration = curTime + TimeSpan.FromSeconds(durationInt);
-            }
+                duration = TimeSpan.FromSeconds(durationInt);
             else
-            {
                 shell.WriteError(Loc.GetString("cmd-weather-error-wrong-time"));
-            }
         }
 
-        _entMan.System<WeatherSystem>().AddWeather(mapId, weatherProto, duration);
+        _weather.AddWeather(mapId, weatherProto, duration);
     }
 
 
@@ -68,7 +72,7 @@ public sealed class WeatherAddCommand : LocalizedEntityCommands
             var opts = new List<CompletionOption>();
             foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
             {
-                if (!proto.Components.ContainsKey("WeatherStatusEffect")) //Uhh, iirc we have something like nameof(), but i cant found it.
+                if (!proto.Components.TryGetComponent(_compFactory.GetComponentName<WeatherStatusEffectComponent>(), out _))
                     continue;
 
                 opts.Add(new CompletionOption(proto.ID, proto.Name));
@@ -79,7 +83,7 @@ public sealed class WeatherAddCommand : LocalizedEntityCommands
         }
 
         if (args.Length == 3)
-            return CompletionResult.FromHint("Duration in seconds (leave empty for infinity duration)");
+            return CompletionResult.FromHint(Loc.GetString("cmd-weather-hint-time"));
 
         return CompletionResult.Empty;
     }

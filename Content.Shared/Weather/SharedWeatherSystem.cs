@@ -36,12 +36,15 @@ public abstract class SharedWeatherSystem : EntitySystem
         _weatherQuery = GetEntityQuery<WeatherStatusEffectComponent>();
     }
 
-    public bool CanWeatherAffect(Entity<MapGridComponent> ent, TileRef tileRef, RoofComponent? roofComp = null)
+    public bool CanWeatherAffect(Entity<MapGridComponent?, RoofComponent?> ent, TileRef tileRef)
     {
         if (tileRef.Tile.IsEmpty)
             return true;
 
-        if (Resolve(ent, ref roofComp, false) && _roof.IsRooved((ent, ent.Comp, roofComp), tileRef.GridIndices))
+        if (!Resolve(ent, ref ent.Comp1))
+            return false;
+
+        if (Resolve(ent, ref ent.Comp2, false) && _roof.IsRooved((ent, ent.Comp1, ent.Comp2), tileRef.GridIndices))
             return false;
 
         var tileDef = (ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId];
@@ -49,8 +52,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (!tileDef.Weather)
             return false;
 
-
-        var anchoredEntities = _mapSystem.GetAnchoredEntitiesEnumerator(ent, ent.Comp, tileRef.GridIndices);
+        var anchoredEntities = _mapSystem.GetAnchoredEntitiesEnumerator(ent, ent.Comp1, tileRef.GridIndices);
 
         while (anchoredEntities.MoveNext(out var anchored))
         {
@@ -63,11 +65,11 @@ public abstract class SharedWeatherSystem : EntitySystem
 
     /// <summary>
     /// Calculates the current “strength” of the specified weather based on the duration of the status effect.
+    /// Between 0 and 1.
     /// </summary>
     public float GetWeatherPercent(Entity<StatusEffectComponent> ent)
     {
-        var pauseTime = _metadata.GetPauseTime(ent);
-        var elapsed = Timing.CurTime - (ent.Comp.StartEffectTime + pauseTime);
+        var elapsed = Timing.CurTime - ent.Comp.StartEffectTime;
         var duration = ent.Comp.Duration;
         var remaining = duration - elapsed;
 
@@ -80,9 +82,9 @@ public abstract class SharedWeatherSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds new weather to map. Dont remove other existed weathers.
+    /// Adds new weather to a map. Does not remove other existing weathers.
     /// </summary>
-    /// <param name="mapId">Target mapId</param>
+    /// <param name="mapId">Target MapId</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
     /// <param name="duration">How long this weather should exist on map? If null - infinity duration</param>
     public void AddWeather(MapId mapId, EntProtoId weatherProto, TimeSpan? duration = null)
@@ -94,18 +96,18 @@ public abstract class SharedWeatherSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adds new weather to map. Dont remove other existed weathers. If this type of weather already exists, it simply override its duration.
+    /// Adds a new weather to a map. Does not remove other existing weathers. If this type of weather already exists, it simply overrides its duration.
     /// </summary>
-    /// <param name="mapUid">Target entity map</param>
+    /// <param name="mapUid">Target map entity</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
-    /// <param name="duration">How long this weather should exist on map? If null - infinity duration</param>
+    /// <param name="duration">How long this weather should exist on the map? If null - infinite duration</param>
     public void AddWeather(EntityUid mapUid, EntProtoId weatherProto, TimeSpan? duration = null)
     {
-        _statusEffects.TrySetStatusEffectDuration(mapUid, weatherProto, out _ , duration);
+        _statusEffects.TrySetStatusEffectDuration(mapUid, weatherProto, out _, duration);
     }
 
     /// <summary>
-    /// Start slowly removing weather from map. Its should be gone after <see cref="ShutdownTime"/> seconds.
+    /// Slowly remove weather from a map. It should be gone after <see cref="ShutdownTime"/> seconds.
     /// </summary>
     /// <param name="mapId">Target mapId</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
@@ -118,7 +120,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     }
 
     /// <summary>
-    /// Start slowly removing weather from map. Its should be gone after <see cref="ShutdownTime"/> seconds.
+    /// Slowly remove weather from map. It should be gone after <see cref="ShutdownTime"/> seconds.
     /// </summary>
     /// <param name="mapUid">Target entity map</param>
     /// <param name="weatherProto">EntProtoId of weather status effect</param>
@@ -127,7 +129,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (!_statusEffects.TryGetStatusEffect(mapUid, weatherProto, out var weatherEnt))
             return;
 
-        if (!_weatherQuery.TryComp(weatherEnt, out _))
+        if (!_weatherQuery.HasComp(weatherEnt))
             return;
 
         _statusEffects.TrySetStatusEffectDuration(mapUid, weatherProto, ShutdownTime);
@@ -148,7 +150,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         {
             foreach (var effect in effects)
             {
-                var effectProto = MetaData(effect).EntityPrototype;
+                var effectProto = Prototype(effect);
                 if (effectProto is null)
                     continue;
 

@@ -14,7 +14,7 @@ public sealed partial class StencilOverlay
     private void DrawWeather(
         in OverlayDrawArgs args,
         CachedResources res,
-        HashSet<Entity<WeatherStatusEffectComponent,StatusEffectComponent>> weathers,
+        HashSet<Entity<WeatherStatusEffectComponent, StatusEffectComponent>> weathers,
         Matrix3x2 invMatrix)
     {
         var worldHandle = args.WorldHandle;
