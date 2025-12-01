@@ -148,7 +148,7 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxSurvival
+  parent: BoxHugHealing
   id: BoxHug
   name: box of hugs
   suffix: Emergency O2
@@ -161,16 +161,6 @@
         - id: ClothingMaskBreath
         - id: EmergencyFunnyOxygenTankFilled
         - id: EmergencyMedipen
-  - type: Sprite
-    layers:
-    - state: box_hug
-    - state: heart
-  - type: Item
-    heldPrefix: hug
-  - type: Tag
-    tags:
-    - BoxCardboard
-    - BoxHug
   - type: Label
     currentLabel: reagent-name-oxygen
 
