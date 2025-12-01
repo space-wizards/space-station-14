@@ -294,7 +294,7 @@ public sealed partial class CloningSystem : SharedCloningSystem
             if (effectComp.EndEffectTime is not null)
                 continue;
 
-            var effectProto = MetaData(effect).EntityPrototype?.ID;
+            var effectProto = Prototype(effect);
 
             if (effectProto is null)
                 continue;
