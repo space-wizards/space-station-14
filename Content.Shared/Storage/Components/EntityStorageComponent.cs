@@ -114,6 +114,10 @@ public sealed partial class EntityStorageComponent : Component, IGasMixtureHolde
     [DataField]
     public EntityWhitelist? Whitelist;
 
+    /// <summary>
+    ///     Blacklist for what entities are not allowed to be inserted into this container. Whitelisted entities
+    ///     take priority over blacklisted entities.
+    /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
 
