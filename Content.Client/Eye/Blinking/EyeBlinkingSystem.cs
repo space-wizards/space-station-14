@@ -1,17 +1,23 @@
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Shared.Animations;
+using System.Numerics;
 
 namespace Content.Client.Eye.Blinking;
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
-
+    [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
+    private const string AnimationKey = "anim-blink";
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnAppearance);
+        SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(AppearanceChangeEventHandler);
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentStartup>(OnStartup);
     }
 
@@ -19,32 +25,73 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     {
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
+        var layerIndex = _sprite.LayerMapReserve((ent.Owner, spriteComponent), HumanoidVisualLayers.Eyes);
+        _sprite.LayerMapAdd((ent.Owner, spriteComponent), EyelidsVisuals.Eyelids, layerIndex);
+        _sprite.LayerSetRsiState((ent.Owner, spriteComponent), layerIndex, "eyes");
 
-        if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.Blinking, out var stateObj) && stateObj is bool state)
+
+        if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var stateObj) && stateObj is bool state)
         {
-            ChangeEyeState(ent, spriteComponent, state);
+            ChangeEyeState(ent, state);
         }
     }
 
-    private void OnAppearance(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
+    private void AppearanceChangeEventHandler(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
+        if (!_appearance.TryGetData<bool>(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var closed))
             return;
 
-        if (args.AppearanceData.TryGetValue(EyeBlinkingVisuals.Blinking, out var stateObj) && stateObj is bool state)
-        {
-            ChangeEyeState(ent, spriteComponent, state);
-        }
+        if (!_sprite.LayerMapTryGet(ent.Owner, EyelidsVisuals.Eyelids, out var layer, false))
+            return;
+
+        ChangeEyeState(ent, closed);
     }
 
-    private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, SpriteComponent sprite, bool isBlinking)
+    private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
     {
         if (!TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid)) return;
+        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite)) return;
         var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
         var blinkColor = new Color(
             humanoid.SkinColor.R * blinkFade,
             humanoid.SkinColor.G * blinkFade,
             humanoid.SkinColor.B * blinkFade);
-        sprite[_sprite.LayerMapReserve((ent.Owner, sprite), HumanoidVisualLayers.Eyes)].Color = isBlinking ? blinkColor : humanoid.EyeColor;
+        sprite[_sprite.LayerMapReserve((ent.Owner, sprite), EyelidsVisuals.Eyelids)].Visible = eyeClsoed;
     }
+
+    public override void Blink(Entity<EyeBlinkingComponent> ent)
+    {
+        base.Blink(ent);
+        if (_animationPlayer.HasRunningAnimation(ent.Owner, AnimationKey))
+            return;
+
+        if (!_sprite.TryGetLayer(ent.Owner, EyelidsVisuals.Eyelids, out var layer, false))
+            return;
+
+        var sprite = layer.Color;
+
+        var animation = new Animation
+        {
+            Length = ent.Comp.BlinkDuration,
+            AnimationTracks =
+            {
+                new AnimationTrackSpriteFlick
+                {
+                    LayerKey = EyelidsVisuals.Eyelids,
+                    KeyFrames =
+                    {
+                        new AnimationTrackSpriteFlick.KeyFrame(new RSI.StateId("no_eyes"), 0f),
+                        new AnimationTrackSpriteFlick.KeyFrame(layer.State, (float)ent.Comp.BlinkDuration.TotalSeconds),
+                    }
+                }
+            }
+        };
+
+        _animationPlayer.Play(ent.Owner, animation, AnimationKey);
+    }
+}
+
+public enum EyelidsVisuals : byte
+{
+    Eyelids,
 }

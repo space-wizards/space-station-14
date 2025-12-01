@@ -1,4 +1,6 @@
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -13,36 +15,31 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     override public void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<EyeBlinkingComponent, SleepStateChangedEvent>(SleepStateChangedEventHanlder);
-        SubscribeLocalEvent<EyeBlinkingComponent, ComponentRemove>(OnBlinkingRemoved);
-        SubscribeLocalEvent<EyeBlinkingComponent, ComponentShutdown>(OnBlinkingShutdown);
+        //SubscribeLocalEvent<EyeBlinkingComponent, SleepStateChangedEvent>(SleepStateChangedEventHanlder);
+        SubscribeLocalEvent<EyeBlinkingComponent, BlindnessChangedEvent>(BlindnessChangedEventHanlder);
+        SubscribeLocalEvent<EyeBlinkingComponent, MobStateChangedEvent>(MobStateChangedEventHandler);
     }
 
-    private void SleepStateChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref SleepStateChangedEvent args)
+    private void MobStateChangedEventHandler(Entity<EyeBlinkingComponent> ent, ref MobStateChangedEvent args)
     {
-        var comp = ent.Comp;
-        var entUID = ent.Owner;
-        if (args.FellAsleep)
-        {
-            comp.IsSleeping = true;
-            Blink(entUID, comp, _timing.CurTime);
-        }
-        else
-        {
-            comp.IsSleeping = false;
-            OpenEyes(entUID, comp);
-        }
-        Dirty(entUID, comp);
+        SetEnabled(ent, args.NewMobState != MobState.Dead);
     }
 
-    private void OnBlinkingRemoved(Entity<EyeBlinkingComponent> ent, ref ComponentRemove args)
+    private void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
     {
-        OpenEyes(ent.Owner, ent.Comp);
+        _appearance.SetData(ent, EyeBlinkingVisuals.EyesClosed, args.Blind);
     }
 
-    private void OnBlinkingShutdown(Entity<EyeBlinkingComponent> ent, ref ComponentShutdown args)
+    private void SetEnabled(Entity<EyeBlinkingComponent> ent, bool enabled)
     {
-        OpenEyes(ent.Owner, ent.Comp);
+        if (ent.Comp.Enabled == enabled)
+            return;
+
+        ent.Comp.Enabled = enabled;
+        Dirty(ent);
+
+        if (enabled)
+            ResetBlink(ent);
     }
 
     public override void Update(float frameTime)
@@ -55,51 +52,29 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (_mobState.IsDead(uid))
+            if (!comp.Enabled)
                 continue;
-            if (comp.IsSleeping)
+
+            if (comp.NextBlinkingTime > curTime)
                 continue;
-            if (!comp.IsBlinking)
-            {
-                if (comp.NextBlinkingTime <= curTime)
-                    Blink(uid, comp, curTime);
-            }
-            else
-            {
-                if (comp.NextOpenEyesTime <= curTime)
-                    OpenEyes(uid, comp);
-            }
+            Blink((uid, comp));
         }
     }
 
-    private void Blink(EntityUid uid, EyeBlinkingComponent comp, TimeSpan curTime)
+    public virtual void Blink(Entity<EyeBlinkingComponent> ent)
     {
-        comp.IsBlinking = true;
-        comp.NextOpenEyesTime = curTime + comp.BlinkDuration;
-        comp.NextBlinkingTime = curTime + comp.BlinkInterval + comp.BlinkDuration;
-        Dirty(uid, comp);
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-        UpdateAppearance(uid, appearance, true);
+        ResetBlink(ent);
     }
 
-    private void OpenEyes(EntityUid uid, EyeBlinkingComponent comp)
+    protected virtual void ResetBlink(Entity<EyeBlinkingComponent> ent)
     {
-        comp.IsBlinking = false;
-        Dirty(uid, comp);
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-        UpdateAppearance(uid, appearance, false);
-    }
-
-    protected virtual void UpdateAppearance(EntityUid uid, AppearanceComponent appearance, bool isBlinking)
-    {
-        _appearance.SetData(uid, EyeBlinkingVisuals.Blinking, isBlinking, appearance);
+        ent.Comp.NextBlinkingTime = _timing.CurTime + ent.Comp.BlinkInterval + ent.Comp.BlinkDuration;
+        Dirty(ent);
     }
 }
 
 [Serializable, NetSerializable]
 public enum EyeBlinkingVisuals : byte
 {
-    Blinking
+    EyesClosed
 }
