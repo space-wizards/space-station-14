@@ -164,6 +164,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(ent);
         UpdateUi(ent);
     }
+
     #region Interaction
 
     private void OnPainterDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterDoAfterEvent args)
