@@ -45,7 +45,7 @@ public sealed partial class StencilOverlay
                     foreach (var tile in _map.GetTilesIntersecting(grid.Owner, grid, worldAABB))
                     {
                         // Ignored tiles for stencil
-                        if (_weather.CanWeatherAffect((grid.Owner, grid), tile, roofComp))
+                        if (_weather.CanWeatherAffect((grid.Owner, grid, roofComp), tile))
                         {
                             continue;
                         }
