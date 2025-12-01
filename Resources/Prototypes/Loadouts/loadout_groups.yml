@@ -1,6 +1,5 @@
 # Miscellaneous
 - type: loadoutGroup
-  parent: [Dresses]
   id: Trinkets
   name: loadout-group-trinkets
   minLimit: 0
