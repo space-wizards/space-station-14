@@ -24,7 +24,7 @@ namespace Content.Server.GameTicking.Rules;
 /// Currently, this always targets every player.
 /// The main station will still spawn, but no one will ever be on it. As such, when this game rule is in use,
 /// the server should be forced to use the 'Empty' map, to avoid spawning a bunch of unnecessary entities and active mobs
-/// </remarks>>
+/// </remarks>
 public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRuleComponent>
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
