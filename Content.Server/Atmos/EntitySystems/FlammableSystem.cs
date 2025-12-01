@@ -228,9 +228,7 @@ namespace Content.Server.Atmos.EntitySystems
             // Get the average of both entity's firestacks * mass
             // Then for each entity, we divide the average by their mass and set their firestacks to that value
             // An entity with a higher mass will lose some fire and transfer it to the one with lower mass.
-            var burn1 = flammable.FireStacks * mass1;
-            var burn2 = otherFlammable.FireStacks * mass2;
-            var sum = burn1 + burn2;
+            var sum = flammable.FireStacks * mass1 + otherFlammable.FireStacks * mass2;
 
             // Ensure that no entity loses more firestacks than the other one can contain.
             /*
@@ -243,8 +241,8 @@ namespace Content.Server.Atmos.EntitySystems
              * Algebraically this resolves to the equation: sum - massOther * other.MaximumFireStacks, then get the max.
              * y = (uid1.mass * uid1.FireStacks - (uid2.mass (uid2.MaximumFireStacks - uid2.FireStacks)))
              * y = (uid1.mass * uid1.FireStacks - (uid2.mass * uid2.MaximumFireStacks - uid2.mass * uid2.FireStacks))
-             * y = (burn1 - (uid2.mass * uid2.MaximumFireStacks - burn2))
-             * y = (burn1 - uid2.mass * uid2.MaximumFireStacks + burn2)
+             * y = (uid1.mass * uid1.FireStacks - uid2.mass * uid2.MaximumFireStacks + uid2.mass * uid2.FireStacks)
+             * y = (uid1.mass * uid1.FireStacks + uid2.mass * uid2.FireStacks - uid2.mass * uid2.MaximumFireStacks)
              * y = (sum - uis2.mass * uid2.MaximumFireStacks)
              */
             // Get the weighted average as explained above with all that math.
