@@ -20,6 +20,8 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
     private readonly LoadoutGroupPrototype _groupProto;
 
+    private Dictionary<ProtoId<LoadoutGroupPrototype>, bool> LoadoutGroups = new Dictionary<ProtoId<LoadoutGroupPrototype>, bool>();
+
     public event Action<ProtoId<LoadoutPrototype>>? OnLoadoutPressed;
     public event Action<ProtoId<LoadoutPrototype>>? OnLoadoutUnpressed;
 
@@ -29,7 +31,16 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         IoCManager.InjectDependencies(this);
         _groupProto = groupProto;
 
+        SetupGroups(_groupProto.LoadoutGroups);
         RefreshLoadouts(profile, loadout, session, collection);
+    }
+
+    public void SetupGroups(List<ProtoId<LoadoutGroupPrototype>> groups)
+    {
+        foreach (var group in groups)
+        {
+            LoadoutGroups.Add(group, false);
+        }
     }
 
     /// <summary>
@@ -74,7 +85,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         // Get all loadout prototypes for this group.
         var validProtos = _groupProto.Loadouts.Select(id => protoMan.Index(id));
 
-        foreach (var group in _groupProto.LoadoutGroups)
+        foreach (var group in LoadoutGroups.Keys)
         {
             if (!protoMan.TryIndex(group, out var loadoutGroupProto))
                 continue;
@@ -95,12 +106,12 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
             var subContainer = new SubLoadoutContainer()
             {
-                Visible = false
+                Visible = LoadoutGroups[group]
             };
-            var toggle = CreateToggleButton(localizationMan.GetString(loadoutGroupProto.Name),"", displayDummy, subContainer);
-            toggle.HorizontalExpand = true;
+            var header = CreateSubLoadoutHeader(localizationMan.GetString(loadoutGroupProto.Name),"", displayDummy, subContainer, group);
+            header.HorizontalExpand = true;
 
-            LoadoutsContainer.AddChild(toggle);
+            LoadoutsContainer.AddChild(header);
             LoadoutsContainer.AddChild(subContainer);
 
             var subList = subContainer.Grid;
@@ -118,21 +129,21 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         }
     }
 
-    private ToggleLoadoutButton CreateToggleButton(string displayName, string displayDescription, EntProtoId? displayDummy, SubLoadoutContainer subContainer)
+    private SubLoadoutHeader CreateSubLoadoutHeader(string displayName, string displayDescription, EntProtoId? displayDummy, SubLoadoutContainer subContainer, ProtoId<LoadoutGroupPrototype> groupKey)
     {
-        var toggle = new ToggleLoadoutButton(displayName, displayDescription, displayDummy);
+        var header = new SubLoadoutHeader(displayName, displayDescription, displayDummy);
 
-        toggle.SetExpanded(subContainer.Visible);
+        header.SetExpanded(subContainer.Visible);
 
-        toggle.Button.OnPressed += _ =>
+        header.Button.OnPressed += _ =>
         {
             var willOpen = !subContainer.Visible;
             subContainer.Visible = willOpen;
-            toggle.SetExpanded(willOpen);
+            LoadoutGroups[groupKey] = willOpen;
+            header.SetExpanded(willOpen);
         };
 
-        //toggle.SetPositionFirst();
-        return toggle;
+        return header;
     }
 
     private void UpdateSubGroupSelectedInfo(LoadoutContainer loadout, string itemName, BoxContainer subList)

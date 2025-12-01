@@ -7,9 +7,8 @@
          Margin="0 0 0 5">
     <ContainerButton Name="ToggleButton" ToggleMode="True" Margin="0 0 5 0" VerticalExpand="False" HorizontalExpand="True">
         <BoxContainer Orientation="Horizontal">
-            <Control Name="Padding"/>
-            <TextureRect Name="DropdownArrow" SetSize="16 16" Visible="False" TexturePath="/Textures/Interface/Nano/triangle_right.png"/>
-            <Label Margin="2 0 2 0" Name="Label"/>
+            <TextureRect Name="DropdownArrow" SetSize="12 12" Stretch="Scale" />
+            <Label Margin="10 0 2 0" Name="Label"/>
         </BoxContainer>
     </ContainerButton>
     <PanelContainer SetSize="64 64" HorizontalAlignment="Right">
