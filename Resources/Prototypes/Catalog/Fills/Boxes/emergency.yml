@@ -1,9 +1,9 @@
 - type: entity
-  parent: BoxCardboard
+  parent: BoxCardboardSmall
   id: BoxSurvival
   name: survival box
-  description: It's a box with basic internals inside.
-  suffix: Standard
+  suffix: O2
+  description: A small box containing emergency internals for oxygen-breathing crew, as well as an emergency medipen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -12,18 +12,18 @@
         - id: ClothingMaskBreath
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
     - state: emergencytank
+  - type: Label
+    currentLabel: reagent-name-oxygen
 
 - type: entity
   parent: BoxSurvival
   id: BoxSurvivalNitrogen
-  suffix: Standard N2
+  suffix: N2
+  description: A small box containing emergency internals for nitrogen-breathing crew, as well as an emergency medipen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -32,9 +32,6 @@
         - id: ClothingMaskBreath
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -43,11 +40,10 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxSurvivalEngineering
   name: extended-capacity survival box
-  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
-  suffix: Extended
+  description: A small box containing extended-capacity emergency internals for oxygen-breathing crew, as well as an emergency medipen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -56,9 +52,6 @@
         - id: ClothingMaskBreath
         - id: ExtendedEmergencyOxygenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -67,7 +60,8 @@
 - type: entity
   parent: BoxSurvivalEngineering
   id: BoxSurvivalEngineeringNitrogen
-  suffix: Extended N2
+  suffix: N2
+  description: A small box containing extended-capacity emergency internals for nitrogen-breathing crew, as well as an emergency medipen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -76,9 +70,6 @@
         - id: ClothingMaskBreath
         - id: ExtendedEmergencyNitrogenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -87,12 +78,10 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxSurvivalSecurity
-  name: survival box
-  description: It's a box with basic internals inside.
-  suffix: Security
+  name: security survival box
+  description: A small box containing emergency internals for oxygen-breathing security staff, as well as an emergency medipen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -101,18 +90,12 @@
         - id: ClothingMaskGasSecurity
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
-  - type: Sprite
-    layers:
-    - state: internals
-    - state: emergencytank
 
 - type: entity
   parent: BoxSurvivalSecurity
   id: BoxSurvivalSecurityNitrogen
-  suffix: Security N2
+  suffix: N2
+  description: A small box containing emergency internals for nitrogen-breathing security staff, as well as an emergency medipen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -121,9 +104,6 @@
         - id: ClothingMaskGasSecurity
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -132,12 +112,11 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxSurvivalMedical
-  name: survival box
-  description: It's a box with basic internals inside.
-  suffix: Medical
+  name: medical survival box
+  suffix: O2
+  description: A small box containing emergency internals for oxygen-breathing medical staff, as well as an emergency medipen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -146,18 +125,13 @@
         - id: ClothingMaskBreathMedical
         - id: EmergencyOxygenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
-  - type: Sprite
-    layers:
-    - state: internals
-    - state: emergencytank
 
 - type: entity
-  parent: BoxSurvivalMedical
+  parent: BoxSurvivalNitrogen
   id: BoxSurvivalMedicalNitrogen
-  suffix: Medical N2
+  name: medical survival box
+  suffix: N2
+  description: A small box containing emergency internals for nitrogen-breathing medical staff, as well as an emergency medipen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -166,9 +140,6 @@
         - id: ClothingMaskBreathMedical
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -177,18 +148,12 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxHug
   name: box of hugs
-  description: A special box for sensitive people.
-  suffix: Emergency
+  suffix: Emergency O2
+  description: A small box containing somewhat unusual emergency internals for oxygen-breathing clowns, as well as an emergency medipen.
   components:
-  - type: Sprite
-    layers:
-    - state: box_hug
-    - state: heart
-  - type: Item
-    heldPrefix: hug
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -196,18 +161,24 @@
         - id: ClothingMaskBreath
         - id: EmergencyFunnyOxygenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: box_hug
+    - state: heart
+  - type: Item
+    heldPrefix: hug
   - type: Tag
     tags:
     - BoxCardboard
     - BoxHug
+  - type: Label
+    currentLabel: reagent-name-oxygen
 
 - type: entity
   parent: BoxHug
   id: BoxHugNitrogen
   suffix: Emergency N2
+  description: A small box containing somewhat unusual emergency internals for nitrogen-breathing clowns, as well as an emergency medipen.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -216,72 +187,15 @@
         - id: ClothingMaskBreath
         - id: EmergencyNitrogenTankFilled
         - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodSnackNutribrick
-        - id: DrinkWaterBottleFull
   - type: Label
     currentLabel: reagent-name-nitrogen
-
-- type: entity
-  parent: BoxSurvival
-  id: BoxMime
-  suffix: Mime, Emergency
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodBreadNutriBatard
-        - id: DrinkWaterBottleFull
-
-- type: entity
-  parent: BoxSurvivalNitrogen
-  id: BoxMimeNitrogen
-  suffix: Mime, Emergency N2
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyNitrogenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodBreadNutriBatard
-        - id: DrinkWaterBottleFull
-  - type: Sprite
-    layers:
-    - state: internals
-    - state: nitrogentank
-  - type: Label
-    currentLabel: reagent-name-nitrogen
-
-- type: entity
-  parent: BoxSurvival
-  id: BoxMimeMoth
-  suffix: Mime, Emergency moth
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: EmergencyOxygenTankFilled
-        - id: EmergencyMedipen
-        - id: Flare
-        - id: FoodBreadCottonNutriBatard
-        - id: DrinkWaterBottleFull
 
 - type: entity
   parent: BoxCardboard
   id: BoxSurvivalSyndicate
-  name: extended-capacity survival box
-  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
-  suffix: Syndicate
+  name: syndicate survival box
+  suffix: O2
+  description: A deluxe survival box containing extended-capacity emergency internals for oxygen-breathing operatives, an emergency medipen, an emergency flare, and a bit of food.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -296,11 +210,14 @@
     layers:
     - state: internals
     - state: extendedtank
+  - type: Label
+    currentLabel: reagent-name-oxygen
 
 - type: entity
   parent: BoxSurvivalSyndicate
   id: BoxSurvivalSyndicateNitrogen
-  suffix: Syndicate N2
+  suffix: N2
+  description: A deluxe survival box containing extended-capacity emergency internals for nitrogen-breathing operatives, an emergency medipen, an emergency flare, and a bit of food.
   components:
   - type: EntityTableContainerFill
     containers:

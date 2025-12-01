@@ -231,12 +231,15 @@
   parent: BoxHug
   id: BoxHugHealing
   suffix: Medical
+  description: A special box for sensitive people.
   components:
   - type: EntityTableContainerFill
     containers:
       storagebase:
         id: Brutepack
-        amount: 3
+        amount: 2
+  - type: Label
+    currentLabel: []
 
 - type: entity
   name: inflatable wall box
