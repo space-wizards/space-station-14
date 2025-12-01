@@ -80,6 +80,8 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             });
         }
 
+        SelectedCountLabel.Text = loadout.SelectedLoadouts[_groupProto.ID].Count().ToString();
+
         LoadoutsContainer.RemoveAllChildren();
 
         // Get all loadout prototypes for this group.

@@ -6,6 +6,10 @@
             <Label Text="{Loc 'loadout-restrictions'}"/>
             <BoxContainer Name="RestrictionsContainer" Orientation="Vertical" HorizontalExpand="True" />
         </BoxContainer>
+        <BoxContainer Orientation="Horizontal" Align="End" Margin="10 0">
+            <Label Text="Selected: "/>
+            <Label Name="SelectedCountLabel" Text="0"/>
+        </BoxContainer>
     </PanelContainer>
     <!-- Buffer space so we have 10 margin between controls but also 10 to the borders -->
     <PanelContainer StyleClasses="BackgroundPanel" HorizontalExpand="True" Margin="5">
