@@ -506,7 +506,7 @@
       table: !type:AllSelector
         children:
         - id: FoodBanana
-          rolls: !type:BinomialNumberSelector
+          amount: !type:BinomialNumberSelector
             trials: 6
   - type: XAECreatePuddle
     chemAmount:
@@ -739,15 +739,15 @@
       table: !type:AllSelector
         children:
         - id: SilverOre1
-          rolls: &Binomial6at0.3 !type:BinomialNumberSelector
+          amount: &Binomial6at0.3 !type:BinomialNumberSelector
             trials: 6
             chance: 0.3
         - id: PlasmaOre1
-          rolls: *Binomial6at0.3
+          amount: *Binomial6at0.3
         - id: GoldOre1
-          rolls: *Binomial6at0.3
+          amount: *Binomial6at0.3
         - id: UraniumOre1
-          rolls: *Binomial6at0.3
+          amount: *Binomial6at0.3
 
 - type: entity
   id: XenoArtifactRareMaterialSpawnSilver
@@ -767,7 +767,7 @@
       deleteSpawnerAfterSpawn: false
       table:
         id: SilverOre1
-        rolls: *Binomial6at0.3
+        amount: *Binomial6at0.3
 
 - type: entity
   id: XenoArtifactRareMaterialSpawnPlasma
@@ -787,7 +787,7 @@
       deleteSpawnerAfterSpawn: false
       table:
         id: PlasmaOre1
-        rolls: *Binomial6at0.3
+        amount: *Binomial6at0.3
 
 - type: entity
   id: XenoArtifactRareMaterialSpawnGold
@@ -807,7 +807,7 @@
       deleteSpawnerAfterSpawn: false
       table:
         id: GoldOre1
-        rolls: *Binomial6at0.3
+        amount: *Binomial6at0.3
 
 - type: entity
   id: XenoArtifactRareMaterialSpawnUranium
@@ -827,7 +827,7 @@
       deleteSpawnerAfterSpawn: false
       table:
         id: UraniumOre1
-        rolls: !type:BinomialNumberSelector
+        amount: !type:BinomialNumberSelector
           trials: 3
           chance: 0.3
 
