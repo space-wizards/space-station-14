@@ -36,7 +36,7 @@ public sealed class SolitarySpawningPrototype : IPrototype
     /// <summary>
     /// The station that will be created for the player.
     /// </summary>
-    [DataField, Required]
+    [DataField(required: true)]
     public ProtoId<GameMapPrototype> Map;
 
     // TODO gear override?
