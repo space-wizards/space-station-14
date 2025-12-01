@@ -243,7 +243,7 @@ namespace Content.Server.Atmos.EntitySystems
              * y = (uid1.mass * uid1.FireStacks - (uid2.mass * uid2.MaximumFireStacks - uid2.mass * uid2.FireStacks))
              * y = (uid1.mass * uid1.FireStacks - uid2.mass * uid2.MaximumFireStacks + uid2.mass * uid2.FireStacks)
              * y = (uid1.mass * uid1.FireStacks + uid2.mass * uid2.FireStacks - uid2.mass * uid2.MaximumFireStacks)
-             * y = (sum - uis2.mass * uid2.MaximumFireStacks)
+             * y = (sum - uid2.mass * uid2.MaximumFireStacks)
              */
             // Get the weighted average as explained above with all that math.
             var weightedAvg = Math.Max(sum / 2f, Math.Max(sum - mass2 * otherFlammable.MaximumFireStacks, sum - mass1 * flammable.MaximumFireStacks));
