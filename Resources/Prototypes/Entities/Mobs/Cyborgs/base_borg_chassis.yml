@@ -103,7 +103,7 @@
     - Science
   - type: ZombieImmune
   - type: Repairable
-    # 20 seconds to repair from 299 damage (without the bonus from consecutiveRepairDelayMultiplier)
+    # 19.96 seconds to repair from 299 damage (with the bonus from consecutiveRepairDelayMultiplier)
     damage:
       groups:
         Brute: -30
@@ -112,7 +112,7 @@
         Shock: -10
     doAfterDelay: 1
     autoDoAfter: true
-    consecutiveRepairDelayMultiplier: 0.95
+    consecutiveRepairDelayMultiplier: 0.97 # max consecutive repair time: 33.33 seconds
     fuelCost: 0.5
     allowSelfRepair: false
   - type: BorgChassis
