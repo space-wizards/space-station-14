@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TrixxedHeart
-  changes:
-  - message: Vox now have scar markings.
-    type: Add
-  id: 8739
-  time: '2025-07-04T23:06:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38592
 - author: perryprog
   changes:
   - message: Spellbooks with infinite charges work again.
@@ -3914,3 +3907,12 @@
   id: 9239
   time: '2025-12-01T01:48:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41469
+- author: Ian321
+  changes:
+  - message: The blood spewed from a biomass reclaimed now contains DNA.
+    type: Add
+  - message: Gingerbread man now bleed sugar and butter.
+    type: Tweak
+  id: 9240
+  time: '2025-12-01T05:47:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41489
