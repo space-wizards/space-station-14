@@ -705,7 +705,7 @@
   physicalDesc: reagent-physical-desc-nondescript
   metabolisms:
     Poison:
-      metabolismRate: 0.2 # Slower metabolism so it can build up over time for slowdown
+      metabolismRate: 0.2 # Slower metabolism so venomous bites can temporarily slowdown
       effects:
       - !type:HealthChange
         conditions:
@@ -714,12 +714,12 @@
           inverted: true
         damage:
           types:
-            Poison: 1.6
+            Poison: 0.6 # A 10u spider bite will deal 30 poison damage
       - !type:MovementSpeedModifier
         conditions:
         - !type:ReagentCondition
           reagent: Mechanotoxin
-          min: 2
+          min: 9 # 5 seconds of 20% slow
         - !type:MetabolizerTypeCondition
           type: [Arachnid]
           inverted: true
@@ -729,12 +729,14 @@
         conditions:
         - !type:ReagentCondition
           reagent: Mechanotoxin
-          min: 4
+          min: 9.5 # A spider bite that injects 10u will cause ~3 seconds of 80% slowdown then another 2 seconds of 20% slowdown (additive 20% slow plus 60% slow)
         - !type:MetabolizerTypeCondition
           type: [Arachnid]
           inverted: true
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
+      - !type:ModifyBleed # thickens the blood, preventing venom from being excreted into blood puddles by bleeding from pierce damage injection.  
+        amount: -0.25
 
 - type: reagent
   id: ToxinTrash

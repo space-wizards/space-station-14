@@ -67,7 +67,7 @@ They have no special abilities, but are identical in appearance, DNA, fingerprin
 
   <Box>
     <GuideEntityEmbed Entity="MobAdultSlimesBlueAngry" Caption=""/>
-    <GuideEntityEmbed Entity="MobGiantSpiderAngry" Caption=""/>
+    <GuideEntityEmbed Entity="MobGiantSpiderTarantula" Caption=""/>
   </Box>
 
   Slimes and spiders have no remarkable features, but will [color=cyan]infest the station[/color] from time to time regardless. Both will give chase and attack anything they see.
