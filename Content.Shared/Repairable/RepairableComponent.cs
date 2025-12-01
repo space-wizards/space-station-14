@@ -40,10 +40,10 @@ public sealed partial class RepairableComponent : Component
     public int DoAfterDelay = 1;
 
     /// <summary>
-    /// If after the doafter ends it should start a new one
+    /// If true and after the repair there still damage, a new doafter starts automatically
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool AutoDoAfter = false;
+    public bool AutoDoAfter = true;
 
     /// <summary>
     /// How much to multiply the delay after a consecutive repair.
