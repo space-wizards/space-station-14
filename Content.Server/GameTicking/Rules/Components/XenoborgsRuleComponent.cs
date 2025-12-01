@@ -26,6 +26,12 @@ public sealed partial class XenoborgsRuleComponent : Component
     public float XenoborgShuttleCallPercentage = 0.7f;
 
     /// <summary>
+    /// The most xenoborgs that existed at one point.
+    /// </summary>
+    [DataField]
+    public int MaxNumberXenoborgs = 0;
+
+    /// <summary>
     /// If the announcment of the death of the mothership core was sent
     /// </summary>
     [DataField]

@@ -39,4 +39,7 @@ public sealed partial class SprayComponent : Component
     [DataField(required: true)]
     [Access(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SoundSpecifier SpraySound { get; private set; } = default!;
+
+    [DataField]
+    public LocId SprayEmptyPopupMessage = "spray-component-is-empty-message";
 }
