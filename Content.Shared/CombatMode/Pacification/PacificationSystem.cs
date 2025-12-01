@@ -6,6 +6,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -158,12 +159,16 @@ public sealed class PacificationSystem : EntitySystem
 
     private void OnShootAttempt(Entity<PacifiedStatusEffectComponent> ent, ref StatusEffectRelayedEvent<ShotAttemptedEvent> args)
     {
-        if (HasComp<PacifismAllowedGunComponent>(args.Args.Used))
+        if (HasComp<PacifismAllowedGunComponent>(args.Used))
             return;
 
+        if (TryComp<BatteryWeaponFireModesComponent>(args.Used, out var component))
+            if (component.FireModes[component.CurrentFireMode].PacifismAllowedMode)
+                return;
+
         // Disallow firing guns in all cases.
-        ShowPopup(args.Args.Used, "pacified-cannot-fire-gun");
-        args.Args.Cancel();
+        ShowPopup(ent, args.Used, "pacified-cannot-fire-gun");
+        args.Cancel();
     }
 
     private bool PacifiedCanAttack(EntityUid user, EntityUid target, [NotNullWhen(false)] out string? reason)

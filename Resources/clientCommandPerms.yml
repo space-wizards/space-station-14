@@ -74,10 +74,14 @@
     - fullstatereset
     - dumpentities
     - showaccessreaders
+    - quickinspect
 
 - Flags: MAPPING
   Commands:
     - mapping
+    - mappingclientsidesetup
+    - showsubfloor
+    - showsubfloorforever
     - toggleautosave
     - toggledecals
     - showaccessreaders
