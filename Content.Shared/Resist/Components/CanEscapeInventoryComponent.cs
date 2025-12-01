@@ -1,18 +1,21 @@
 using Content.Shared.DoAfter;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Resist;
+namespace Content.Shared.Resist.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(EscapeInventorySystem))]
 public sealed partial class CanEscapeInventoryComponent : Component
 {
+    public bool IsEscaping => DoAfter != null;
+
     /// <summary>
     /// Base doafter length for uncontested breakouts.
     /// </summary>
-    [DataField("baseResistTime")]
+    [DataField]
     public float BaseResistTime = 5f;
 
-    public bool IsEscaping => DoAfter != null;
 
-    [DataField("doAfter")]
+    [DataField]
     public DoAfterId? DoAfter;
 }
