@@ -4,7 +4,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
-using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Silicons.Laws.Components;
@@ -38,7 +37,6 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
         SubscribeLocalEvent<SiliconLawBoundComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SiliconLawBoundComponent, ToggleLawsScreenEvent>(OnToggleLawsScreen);
-        SubscribeLocalEvent<SiliconLawBoundComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
         SubscribeLocalEvent<SiliconLawBoundComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
 
         SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnDirectedGetLaws);
@@ -51,9 +49,9 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         InitializeUpdater();
     }
 
-    private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<SiliconLawBoundComponent> ent, ref MapInitEvent args)
     {
-        GetLaws(uid, component);
+        GetLaws(ent);
     }
 
     private void OnLawProviderMindAdded(Entity<SiliconLawProviderComponent> ent, ref MindAddedMessage args)
@@ -72,87 +70,78 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         RemoveSubvertedSiliconRole(args.Mind);
     }
 
-    private void OnToggleLawsScreen(EntityUid uid, SiliconLawBoundComponent component, ToggleLawsScreenEvent args)
+    private void OnToggleLawsScreen(Entity<SiliconLawBoundComponent> ent, ref ToggleLawsScreenEvent args)
     {
-        if (args.Handled || !TryComp<ActorComponent>(uid, out var actor))
+        if (args.Handled || !TryComp<ActorComponent>(ent, out var actor))
             return;
 
         args.Handled = true;
 
-        _userInterface.TryToggleUi(uid, SiliconLawsUiKey.Key, actor.PlayerSession);
+        _userInterface.TryToggleUi(ent.Owner, SiliconLawsUiKey.Key, actor.PlayerSession);
     }
 
-    private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
+    private void OnPlayerSpawnComplete(Entity<SiliconLawBoundComponent> ent, ref PlayerSpawnCompleteEvent args)
     {
-        TryComp(uid, out IntrinsicRadioTransmitterComponent? intrinsicRadio);
-        var radioChannels = intrinsicRadio?.Channels;
-
-        var state = new SiliconLawBuiState(GetLaws(uid).Laws, radioChannels);
-        _userInterface.SetUiState(args.Entity, SiliconLawsUiKey.Key, state);
+        ent.Comp.LastLawProvider = args.Station;
     }
 
-    private void OnPlayerSpawnComplete(EntityUid uid, SiliconLawBoundComponent component, PlayerSpawnCompleteEvent args)
-    {
-        component.LastLawProvider = args.Station;
-    }
-
-    private void OnDirectedGetLaws(EntityUid uid, SiliconLawProviderComponent component, ref GetSiliconLawsEvent args)
+    private void OnDirectedGetLaws(Entity<SiliconLawProviderComponent> ent, ref GetSiliconLawsEvent args)
     {
         if (args.Handled)
             return;
 
-        if (component.Lawset == null)
-            component.Lawset = GetLawset(component.Laws);
+        if (ent.Comp.Lawset == null)
+            ent.Comp.Lawset = GetLawset(ent.Comp.Laws);
 
-        args.Laws = component.Lawset;
+        args.Laws = ent.Comp.Lawset;
 
         args.Handled = true;
     }
 
-    private void OnIonStormLaws(EntityUid uid, SiliconLawProviderComponent component, ref IonStormLawsEvent args)
+    private void OnIonStormLaws(Entity<SiliconLawProviderComponent> ent, ref IonStormLawsEvent args)
     {
         // Emagged borgs are immune to ion storm
-        if (!_emag.CheckFlag(uid, EmagType.Interaction))
+        if (!_emag.CheckFlag(ent, EmagType.Interaction))
         {
-            component.Lawset = args.Lawset;
+            ent.Comp.Lawset = args.Lawset;
 
             // gotta tell player to check their laws
-            NotifyLawsChanged(uid, component.LawUploadSound);
+            NotifyLawsChanged(ent, ent.Comp.LawUploadSound);
 
             // Show the silicon has been subverted.
-            component.Subverted = true;
+            ent.Comp.Subverted = true;
 
             // new laws may allow antagonist behaviour so make it clear for admins
-            if(_mind.TryGetMind(uid, out var mindId, out _))
+            if(_mind.TryGetMind(ent.Owner, out var mindId, out _))
                 EnsureSubvertedSiliconRole(mindId);
         }
 
-        Dirty(uid, component);
+        Dirty(ent);
     }
 
-    private void OnEmagLawsAdded(EntityUid uid, SiliconLawProviderComponent component, ref SiliconEmaggedEvent args)
+    private void OnEmagLawsAdded(Entity<SiliconLawProviderComponent> ent, ref SiliconEmaggedEvent args)
     {
-        if (component.Lawset == null)
-            component.Lawset = GetLawset(component.Laws);
+        if (ent.Comp.Lawset == null)
+            ent.Comp.Lawset = GetLawset(ent.Comp.Laws);
 
         // Show the silicon has been subverted.
-        component.Subverted = true;
+        ent.Comp.Subverted = true;
 
         // Add the first emag law before the others
-        component.Lawset?.Laws.Insert(0, new SiliconLaw
+        ent.Comp.Lawset?.Laws.Insert(0, new SiliconLaw
         {
-            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
+            LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(ent.Comp.Lawset.ObeysTo))),
             Order = 0
         });
 
         //Add the secrecy law after the others
-        component.Lawset?.Laws.Add(new SiliconLaw
+        ent.Comp.Lawset?.Laws.Add(new SiliconLaw
         {
-            LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
-            Order = component.Lawset.Laws.Max(law => law.Order) + 1
+            LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(ent.Comp.Lawset.ObeysTo))),
+            Order = ent.Comp.Lawset.Laws.Max(law => law.Order) + 1
         });
 
-        Dirty(uid, component);
+        Dirty(ent);
     }
 
     protected void EnsureSubvertedSiliconRole(EntityUid mindId)
@@ -222,40 +211,40 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         return ev.Laws;
     }
 
-    private void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)
+    private void OnGotEmagged(Entity<EmagSiliconLawComponent> ent, ref GotEmaggedEvent args)
     {
         if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
             return;
 
-        if (_emag.CheckFlag(uid, EmagType.Interaction))
+        if (_emag.CheckFlag(ent, EmagType.Interaction))
             return;
 
         // prevent self-emagging
-        if (uid == args.UserUid)
+        if (ent.Owner == args.UserUid)
         {
-            _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-self"), uid, args.UserUid);
+            _popup.PopupClient(Loc.GetString("law-emag-cannot-emag-self"), ent, args.UserUid);
             return;
         }
 
-        if (component.RequireOpenPanel &&
-            TryComp<WiresPanelComponent>(uid, out var panel) &&
+        if (ent.Comp.RequireOpenPanel &&
+            TryComp<WiresPanelComponent>(ent, out var panel) &&
             !panel.Open)
         {
-            _popup.PopupClient(Loc.GetString("law-emag-require-panel"), uid, args.UserUid);
+            _popup.PopupClient(Loc.GetString("law-emag-require-panel"), ent, args.UserUid);
             return;
         }
 
 
         var ev = new SiliconEmaggedEvent(args.UserUid);
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ent, ref ev);
 
-        component.OwnerName = Name(args.UserUid);
+        ent.Comp.OwnerName = Name(args.UserUid);
 
-        NotifyLawsChanged(uid, component.EmaggedSound);
-        if(_mind.TryGetMind(uid, out var mindId, out _))
+        NotifyLawsChanged(ent, ent.Comp.EmaggedSound);
+        if(_mind.TryGetMind(ent, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
-        _stunSystem.TryUpdateParalyzeDuration(uid, component.StunTime);
+        _stunSystem.TryUpdateParalyzeDuration(ent, ent.Comp.StunTime);
 
         args.Handled = true;
     }

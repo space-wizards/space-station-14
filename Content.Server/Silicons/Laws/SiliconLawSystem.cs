@@ -59,16 +59,16 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         GetLaws(uid, component);
     }
 
-    private void OnMindAdded(EntityUid uid, SiliconLawBoundComponent component, MindAddedMessage args)
+    private void OnMindAdded(Entity<SiliconLawBoundComponent> ent, ref MindAddedMessage args)
     {
-        if (!TryComp<ActorComponent>(uid, out var actor))
+        if (!TryComp<ActorComponent>(ent, out var actor))
             return;
 
         var msg = Loc.GetString("laws-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.FromHex("#5ed7aa"));
 
-        if (!TryComp<SiliconLawProviderComponent>(uid, out var lawcomp))
+        if (!TryComp<SiliconLawProviderComponent>(ent, out var lawcomp))
             return;
 
         if (!lawcomp.Subverted)

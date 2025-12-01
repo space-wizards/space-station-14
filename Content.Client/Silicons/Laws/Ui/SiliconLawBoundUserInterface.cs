@@ -20,6 +20,7 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<SiliconLawMenu>();
+        _menu?.Update(_owner);
     }
 
     public override void Update()
