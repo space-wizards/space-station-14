@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Content.Shared.Resist.EntitySystems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Resist.Components;
