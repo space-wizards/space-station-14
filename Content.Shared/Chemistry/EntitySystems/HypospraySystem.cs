@@ -29,7 +29,7 @@ public sealed class HypospraySystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainers = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly ForensicsSystem _forensics = default!;
+    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
 
 
 

@@ -15,7 +15,7 @@ namespace Content.Shared.Forensics.Systems
     {
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly ForensicsSystem _forensics = default!;
+        [Dependency] private readonly SharedForensicsSystem _forensics = default!;
         [Dependency] private readonly LabelSystem _label = default!;
 
         public override void Initialize()

@@ -27,7 +27,7 @@ namespace Content.Shared.Forensics.Systems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
+        [Dependency] private readonly SharedForensicsSystem _forensicsSystem = default!;
         [Dependency] private readonly TagSystem _tag = default!;
 
         private static readonly ProtoId<TagPrototype> DNASolutionScannableTag = "DNASolutionScannable";

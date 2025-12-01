@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Forensics.Systems;
 
-public sealed class ForensicsSystem : EntitySystem
+public sealed class SharedForensicsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
