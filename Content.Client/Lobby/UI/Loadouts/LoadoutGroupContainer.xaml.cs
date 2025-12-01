@@ -106,11 +106,11 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             var fallbackProto = groupProtos.First();
             var displayDummy = loadoutGroupProto.DummyEntity ?? fallbackProto.DummyEntity ?? loadoutSystem.GetFirstOrNull(fallbackProto);
 
-            var subContainer = new SubLoadoutContainer()
+            var subContainer = new ChildLoadoutGroupContainer()
             {
                 Visible = LoadoutGroups[group]
             };
-            var header = CreateSubLoadoutHeader(localizationMan.GetString(loadoutGroupProto.Name),"", displayDummy, subContainer, group);
+            var header = CreateChildLoadoutGroupHeader(localizationMan.GetString(loadoutGroupProto.Name),"", displayDummy, subContainer, group);
             header.HorizontalExpand = true;
 
             header.SelectedCount = uiElements.Count(e => e.Select.Pressed).ToString();
@@ -133,9 +133,9 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
         }
     }
 
-    private SubLoadoutHeader CreateSubLoadoutHeader(string displayName, string displayDescription, EntProtoId? displayDummy, SubLoadoutContainer subContainer, ProtoId<LoadoutGroupPrototype> groupKey)
+    private ChildLoadoutGroupHeader CreateChildLoadoutGroupHeader(string displayName, string displayDescription, EntProtoId? displayDummy, ChildLoadoutGroupContainer subContainer, ProtoId<LoadoutGroupPrototype> groupKey)
     {
-        var header = new SubLoadoutHeader(displayName, displayDescription, displayDummy);
+        var header = new ChildLoadoutGroupHeader(displayName, displayDescription, displayDummy);
 
         header.SetExpanded(subContainer.Visible);
 

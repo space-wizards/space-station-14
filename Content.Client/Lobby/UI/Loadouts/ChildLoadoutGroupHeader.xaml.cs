@@ -16,7 +16,7 @@ namespace Content.Client.Lobby.UI.Loadouts;
 /// A button that toggles the loadout groups. Needs for override default styles.
 /// </summary>
 [GenerateTypedNameReferences]
-public sealed partial class SubLoadoutHeader : BoxContainer
+public sealed partial class ChildLoadoutGroupHeader : BoxContainer
 {
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -47,7 +47,7 @@ public sealed partial class SubLoadoutHeader : BoxContainer
         DropdownArrow.Texture = Button.Pressed ? IconExpanded : IconCollapsed;
     }
 
-    public SubLoadoutHeader(string displayName, string displayDescription, EntProtoId? displayDummy)
+    public ChildLoadoutGroupHeader(string displayName, string displayDescription, EntProtoId? displayDummy)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
