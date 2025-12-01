@@ -15,10 +15,10 @@
     availableModes:
     - SemiAuto
     - FullAuto
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: DebugLaser
     fireCost: 1
-  - type: BatterySelfRecharger
+  - type: PredictedBatterySelfRecharger
     autoRechargeRate: 1000
 
 - type: entity
@@ -26,7 +26,7 @@
   parent: WeaponHitscanDebug
   id: WeaponHitscanDebugGib
   components:
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: DebugLaserGib
 
 - type: entity
