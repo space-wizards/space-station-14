@@ -3,15 +3,15 @@ loadout-group-species-restriction = This item is not available for your current 
 
 # Groups
 loadout-group-pridepins = Pride pins
-loadout-group-description-pridepins = Pride pins
+loadout-group-description-pridepins = Pride pins of various types
 loadout-group-smokeables = Tobacco products
-loadout-group-description-smokeables = Tobacco products
+loadout-group-description-smokeables = Smokes and paraphernalia
 loadout-group-towels = Towels
-loadout-group-description-towels = Towels
+loadout-group-description-towels = Always know where it is
 loadout-group-canes = Canes
-loadout-group-description-canes = Canes
+loadout-group-description-canes = Canes for walking or just for style
 loadout-group-folders = Paperwork
-loadout-group-description-folders = Folders
+loadout-group-description-folders = Folders, binders, papers, and the like.
 
 # Miscellaneous
 loadout-group-trinkets = Trinkets

@@ -64,12 +64,6 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     [DataField]
     public List<ProtoId<LoadoutGroupPrototype>> LoadoutGroups = new();
 
-    /// <summary>
-    /// When this loadout group is used as child group of another group, this item will be used to represent it
-    /// </summary>
-    [DataField]
-    public ProtoId<LoadoutPrototype>? DisplayLoadout;
-
     [DataField]
     public LocId? Description;
 
