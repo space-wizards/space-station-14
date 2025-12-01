@@ -821,7 +821,12 @@ public sealed partial class ChatUIController : UIController
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
         // color the name unless it's something like "the old man"
-        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
+        if (msg.Channel is ChatChannel.Local
+                or ChatChannel.Whisper
+                or ChatChannel.OOC
+                or ChatChannel.Dead
+                or ChatChannel.Emotes
+            && _chatNameColorsEnabled)
         {
             var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
             if (grammar != null && grammar.ProperNoun == true)
