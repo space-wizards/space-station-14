@@ -21,6 +21,21 @@ namespace Content.Server.Spawners.Components
         public float RareChance { get; set; } = 0.05f;
 
         /// <summary>
+        /// A list of holiday exclusive entities
+        /// Merry Turkey Day!
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public List<EntProtoId> HolidayPrototypes { get; set; } = new();
+
+        /// <summary>
+        /// The holiday the prototype will spawn during
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public string Holiday { get; set; } = "";
+
+        /// <summary>
         /// Scatter of entity spawn coordinates
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
