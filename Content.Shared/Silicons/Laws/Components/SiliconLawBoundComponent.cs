@@ -48,3 +48,16 @@ public enum SiliconLawsUiKey : byte
 {
     Key
 }
+
+[Serializable, NetSerializable]
+public sealed class SiliconLawBuiState : BoundUserInterfaceState
+{
+    public List<SiliconLaw> Laws;
+    public HashSet<ProtoId<RadioChannelPrototype>>? RadioChannels;
+
+    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<ProtoId<RadioChannelPrototype>>? radioChannels)
+    {
+        Laws = laws;
+        RadioChannels = radioChannels;
+    }
+}
