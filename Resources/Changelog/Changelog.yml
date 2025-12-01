@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: You can now mop space lube, letting it evaporate faster than it would
-      on its own.
-    type: Tweak
-  id: 8738
-  time: '2025-07-04T21:50:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38743
 - author: TrixxedHeart
   changes:
   - message: Vox now have scar markings.
@@ -3915,3 +3907,10 @@
   id: 9238
   time: '2025-12-01T01:35:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41648
+- author: Beck, Toast
+  changes:
+  - message: Clowns can now get flowers that spray water at 4 hours of playtime
+    type: Add
+  id: 9239
+  time: '2025-12-01T01:48:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41469
