@@ -105,7 +105,7 @@
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSecurityContraband]
   id: ClothingBeltHolster
   name: shoulder holster
-  description: 'Two holsters to carry handguns, ammo, and knives. WARNING: Badasses only.'
+  description: 'A holster to carry a sidearm and a slot for ammo or knives. WARNING: Badasses only.'
   components:
   - type: Sprite
     sprite: Clothing/Belt/holster.rsi
@@ -166,12 +166,14 @@
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
-  description: A deep shoulder holster capable of holding many types of ballistics.
+  description: A deep shoulder holster capable of holding many types of ballistics. Seems cumbersome to put on.
   components:
   - type: Sprite
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
+    equipDelay: 1
+    unequipDelay: 1
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
