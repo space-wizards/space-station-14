@@ -826,4 +826,19 @@
   id: 100
   time: '2025-11-07T08:36:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41329
+- author: Blackern5000
+  changes:
+  - message: Entirely remade the meatball magnet wreck to better work as a wreck for
+      salvage.
+    type: Tweak
+  id: 101
+  time: '2025-11-27T10:28:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41589
+- author: korczoczek
+  changes:
+  - message: Added an extra pair of lateral thrusters to Elkridge Depot's cargo shuttle
+    type: Tweak
+  id: 102
+  time: '2025-11-27T10:55:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41570
 Order: 2
