@@ -130,3 +130,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"
+
+- files: ["blink.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Original sprite 'laugh' created by Sarahon, modified by qrwas"
+  source: "https://github.com/qrwas"

@@ -1,4 +1,5 @@
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Chat;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
@@ -12,11 +13,24 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
-    override public void Initialize()
+    public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<EyeBlinkingComponent, BlindnessChangedEvent>(BlindnessChangedEventHanlder);
         SubscribeLocalEvent<EyeBlinkingComponent, MobStateChangedEvent>(MobStateChangedEventHandler);
+        SubscribeLocalEvent<EyeBlinkingComponent, EmoteEvent>(EmoteEventHandler);
+    }
+
+    public void EmoteEventHandler(Entity<EyeBlinkingComponent> ent, ref EmoteEvent args)
+    {
+        if (args.Emote.ID != ent.Comp.BlinkEmoteId)
+            return;
+
+        if (!ent.Comp.Enabled)
+            return;
+
+        ent.Comp.NextBlinkingTime = _timing.CurTime;
+        Dirty(ent);
     }
 
     private void MobStateChangedEventHandler(Entity<EyeBlinkingComponent> ent, ref MobStateChangedEvent args)

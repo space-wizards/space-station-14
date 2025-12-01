@@ -1,0 +1,13 @@
+- type: emote
+  id: Blink
+  name: chat-emote-name-blink
+  icon: Interface/Emotes/blink.png
+  category: Hands
+  whitelist:
+    components:
+    - EyeBlinking
+  chatMessages: ["chat-emote-msg-blink"]
+  chatTriggers:
+    - blink
+    - blink!
+    - blink.

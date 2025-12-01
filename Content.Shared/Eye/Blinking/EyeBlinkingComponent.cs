@@ -1,5 +1,7 @@
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Eye.Blinking;
 
@@ -37,4 +39,8 @@ public sealed partial class EyeBlinkingComponent : Component
 
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
+
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EmotePrototype>))]
+    [AutoNetworkedField]
+    public string BlinkEmoteId = "Blink";
 }

@@ -23,11 +23,27 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void OnStartup(Entity<EyeBlinkingComponent> ent, ref ComponentStartup args)
     {
+        if (!TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
+            return;
+
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
+
+        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
+            return;
+
         var layerIndex = _sprite.LayerMapReserve((ent.Owner, spriteComponent), HumanoidVisualLayers.Eyes);
         _sprite.LayerMapAdd((ent.Owner, spriteComponent), EyelidsVisuals.Eyelids, layerIndex);
-        _sprite.LayerSetRsiState((ent.Owner, spriteComponent), layerIndex, "eyes");
+
+        var eyelidLayerIndex = _sprite.LayerMapReserve((ent.Owner, spriteComponent), EyelidsVisuals.Eyelids);
+        _sprite.LayerSetRsiState((ent.Owner, spriteComponent), eyelidLayerIndex, layer.State);
+
+        var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
+        var blinkColor = new Color(
+            humanoid.SkinColor.R * blinkFade,
+            humanoid.SkinColor.G * blinkFade,
+            humanoid.SkinColor.B * blinkFade);
+        _sprite.LayerSetColor((ent.Owner, spriteComponent), layerIndex, layer.Color);
 
 
         if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var stateObj) && stateObj is bool state)
@@ -49,13 +65,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid)) return;
         if (!TryComp<SpriteComponent>(ent.Owner, out var sprite)) return;
-        var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
-        var blinkColor = new Color(
-            humanoid.SkinColor.R * blinkFade,
-            humanoid.SkinColor.G * blinkFade,
-            humanoid.SkinColor.B * blinkFade);
+
         sprite[_sprite.LayerMapReserve((ent.Owner, sprite), EyelidsVisuals.Eyelids)].Visible = eyeClsoed;
     }
 
@@ -67,8 +78,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         if (!_sprite.TryGetLayer(ent.Owner, EyelidsVisuals.Eyelids, out var layer, false))
             return;
-
-        var sprite = layer.Color;
 
         var animation = new Animation
         {
