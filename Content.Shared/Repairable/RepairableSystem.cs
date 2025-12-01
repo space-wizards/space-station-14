@@ -77,7 +77,7 @@ public sealed partial class RepairableSystem : EntitySystem
     /// <param name="user">who is doing the repair</param>
     private void RepairAllDamage(Entity<RepairableComponent> ent, DamageableComponent damageable, EntityUid user)
     {
-        _damageableSystem.SetAllDamage((ent.Owner, damageable), 0);
+        _damageableSystem.ClearAllDamage((ent.Owner, damageable));
         _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
     }
 
