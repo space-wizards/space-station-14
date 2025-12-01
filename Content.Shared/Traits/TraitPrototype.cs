@@ -1,3 +1,4 @@
+using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
@@ -42,13 +43,14 @@ public sealed partial class TraitPrototype : IPrototype
     /// NOTE: When implementing a new trait, it's preferable to add it as a status effect instead if possible.
     /// </summary>
     [DataField]
+    [Obsolete("Use JobSpecial instead.")]
     public ComponentRegistry Components { get; private set; } = new();
 
     /// <summary>
-    /// Permanent status effects that get added by this trait.
+    /// Special effects applied to the player who takes this Trait.
     /// </summary>
-    [DataField]
-    public List<EntProtoId> StatusEffects { get; private set; } = new();
+    [DataField(serverOnly: true)]
+    public List<JobSpecial> Specials { get; private set; } = new();
 
     /// <summary>
     /// Gear that is given to the player, when they pick this trait.

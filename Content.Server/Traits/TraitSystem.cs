@@ -50,10 +50,10 @@ public sealed class TraitSystem : EntitySystem
             if (traitPrototype.Components.Count > 0)
                 EntityManager.AddComponents(args.Mob, traitPrototype.Components, false);
 
-            // Add all status effects required by the prototype
-            foreach (var statusEffect in traitPrototype.StatusEffects)
+            // Add all JobSpecials required by the prototype
+            foreach (var special in traitPrototype.Specials)
             {
-                _statusEffects.TrySetStatusEffectDuration(args.Mob, statusEffect);
+                special.AfterEquip(args.Mob);
             }
 
             // Add item required by the trait
