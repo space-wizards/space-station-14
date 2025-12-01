@@ -4,6 +4,5 @@
     <BoxContainer Name="SubGridContainer"
                   Orientation="Vertical"
                   HorizontalExpand="true"
-                  Margin="10 0 0 0"/>
-
+                  Margin="20 0 0 0"/>
 </PanelContainer>
