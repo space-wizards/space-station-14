@@ -52,13 +52,15 @@
     - id: XenoArtifactMagnetNegative
       weight: 2
     - id: XenoArtifactStealth
+      weight: 1
     - id: XenoArtifactRareMaterialSpawnSilver
       weight: 1.8 # amount is laughable
     - id: XenoArtifactRareMaterialSpawnPlasma
       weight: 2 # amount is laughable
     - id: XenoArtifactRareMaterialSpawnGold
       weight: 1.8 # amount is laughable
-    - id: XenoArtifactRareMaterialSpawnUranium # amount is laughable
+    - id: XenoArtifactRareMaterialSpawnUranium
+      weight: 1 # amount is laughable
     - id: XenoArtifactAngryCarpSpawn
       weight: 4
     - id: XenoArtifactFaunaSpawn
@@ -109,6 +111,7 @@
     #- id: XenoArtifactSingularity
     #  weight: 10
     - id: XenoArtifactExplosionScary
+      weight: 1
     - id: XenoArtifactBoom
       weight: 5
     - id: XenoArtifactEffectCreationGasPlasma
@@ -118,6 +121,7 @@
     - id: XenoArtifactEffectCreationGasAmmonia
       weight: 3
     - id: XenoArtifactEffectCreationGasFrezon
+      weight: 1
     - id: XenoArtifactEffectCreationGasNitrousOxide
       weight: 4
     - id: XenoArtifactEffectCreationGasCarbonDioxide
@@ -137,7 +141,6 @@
   id: BaseXenoArtifactEffect
   name: effect
   description: Unknown
-  categories: [ XenoArchEffects ]
   abstract: true
   components:
   - type: XenoArtifactNode
