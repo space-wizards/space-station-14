@@ -209,26 +209,6 @@
         - id: ClothingEyesGlassesOutlawGlasses
         - id: ClothingHeadHatOutlawHat
         - id: HappyHonkNukieSnacks
-      # - id: BaseUplinkRadio # too spicy I think.
-        # prob: 0.50
-      # - id: Telecrystal
-        # prob: 0.80
-      # - id: Telecrystal
-        # prob: 0.80
-      # - id: Telecrystal
-        # prob: 0.70
-      # - id: Telecrystal
-        # prob: 0.50
-      # - id: Telecrystal
-        # prob: 0.20
-      # - id: Telecrystal
-        # prob: 0.10
-      # - id: Telecrystal
-        # prob: 0.05
-      # - id: Telecrystal
-        # prob: 0.01
-      # - id: Telecrystal5
-        # prob: 0.01
         - id: CyberPen
           prob: 0.10
         - !type:GroupSelector
@@ -258,7 +238,6 @@
           prob: 0.15
         - id: DnaScramblerImplanter
           prob: 0.005
-
 
 - type: entity
   id: CratePermaEscapeMerc
