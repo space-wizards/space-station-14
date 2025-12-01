@@ -74,7 +74,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var user = Transform(uid).ParentUid;
 
         // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
-        if (GetCellScore(inserting.Owner, inserting) <= GetCellScore(battery.Owner, battery))
+        if (GetCellScore(args.EntityUid, inserting) <= GetCellScore(batteryUid.Value, battery))
         {
             args.Cancel();
             Popup.PopupEntity(Loc.GetString("ninja-cell-downgrade"), user, user);

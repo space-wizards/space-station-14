@@ -5,20 +5,24 @@
   description: A folded membrane which rapidly expands into a large cubical shape on activation.
   suffix: Full
   components:
-    - type: Stack
-      stackType: InflatableWall
-      count: 10
-    - type: Sprite
-      sprite: Objects/Misc/inflatable_wall.rsi
-      state: item_wall
-    - type: Item
-      sprite: Objects/Misc/inflatable_wall.rsi
-      size: Small
-    - type: SpawnAfterInteract
-      prototype: InflatableWall
-      doAfter: 1
-      removeOnInteract: true
-    - type: Clickable
+  - type: Stack
+    stackType: InflatableWall
+    count: 10
+  - type: Sprite
+    sprite: Objects/Misc/inflatable_wall.rsi
+    state: item_wall
+  - type: Item
+    sprite: Objects/Misc/inflatable_wall.rsi
+    size: Small
+  - type: SpawnAfterInteract
+    prototype: InflatableWall
+    doAfter: 1
+    removeOnInteract: true
+  - type: Clickable
+  - type: PhysicalComposition
+  - type: Tag
+    tags:
+    - Inflatable
 # TODO: Add stack sprites + visuals.
 
 - type: entity
@@ -28,20 +32,24 @@
   description: A folded membrane which rapidly expands into a large cubical shape on activation.
   suffix: Full
   components:
-    - type: Stack
-      stackType: InflatableDoor
-      count: 4
-    - type: Sprite
-      sprite: Objects/Misc/inflatable_door.rsi
-      state: item_door
-    - type: Item
-      sprite: Objects/Misc/inflatable_door.rsi
-      size: Small
-    - type: SpawnAfterInteract
-      prototype: InflatableDoor
-      doAfter: 1
-      removeOnInteract: true
-    - type: Clickable
+  - type: Stack
+    stackType: InflatableDoor
+    count: 4
+  - type: Sprite
+    sprite: Objects/Misc/inflatable_door.rsi
+    state: item_door
+  - type: Item
+    sprite: Objects/Misc/inflatable_door.rsi
+    size: Small
+  - type: SpawnAfterInteract
+    prototype: InflatableDoor
+    doAfter: 1
+    removeOnInteract: true
+  - type: Clickable
+  - type: PhysicalComposition
+  - type: Tag
+    tags:
+    - Inflatable
 # TODO: Add stack sprites + visuals.
 
 - type: entity
@@ -49,27 +57,27 @@
   id: InflatableWallStack5
   suffix: 5
   components:
-    - type: Sprite
-      state: item_wall
-    - type: Stack
-      count: 5
+  - type: Sprite
+    state: item_wall
+  - type: Stack
+    count: 5
 
 - type: entity
   parent: InflatableWallStack
   id: InflatableWallStack1
   suffix: 1
   components:
-    - type: Sprite
-      state: item_wall
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: item_wall
+  - type: Stack
+    count: 1
 
 - type: entity
   parent: InflatableDoorStack
   id: InflatableDoorStack1
   suffix: 1
   components:
-    - type: Sprite
-      state: item_door
-    - type: Stack
-      count: 1
+  - type: Sprite
+    state: item_door
+  - type: Stack
+    count: 1

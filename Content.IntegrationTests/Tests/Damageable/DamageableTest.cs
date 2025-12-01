@@ -1,9 +1,7 @@
-using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
@@ -14,66 +12,79 @@ namespace Content.IntegrationTests.Tests.Damageable
     [TestOf(typeof(DamageableSystem))]
     public sealed class DamageableTest
     {
+        private const string TestDamageableEntityId = "TestDamageableEntityId";
+        private const string TestGroup1 = "TestGroup1";
+        private const string TestGroup2 = "TestGroup2";
+        private const string TestGroup3 = "TestGroup3";
+        private const string TestDamage1 = "TestDamage1";
+        private const string TestDamage2a = "TestDamage2a";
+        private const string TestDamage2b = "TestDamage2b";
+
+        private const string TestDamage3a = "TestDamage3a";
+
+        private const string TestDamage3b = "TestDamage3b";
+        private const string TestDamage3c = "TestDamage3c";
+
         [TestPrototypes]
-        private const string Prototypes = @"
+        private const string Prototypes = $@"
 # Define some damage groups
 - type: damageType
-  id: TestDamage1
+  id: {TestDamage1}
   name: damage-type-blunt
 
 - type: damageType
-  id: TestDamage2a
+  id: {TestDamage2a}
   name: damage-type-blunt
 
 - type: damageType
-  id: TestDamage2b
+  id: {TestDamage2b}
   name: damage-type-blunt
 
 - type: damageType
-  id: TestDamage3a
+  id: {TestDamage3a}
   name: damage-type-blunt
 
 - type: damageType
-  id: TestDamage3b
+  id: {TestDamage3b}
   name: damage-type-blunt
 
 - type: damageType
-  id: TestDamage3c
+  id: {TestDamage3c}
   name: damage-type-blunt
 
 # Define damage Groups with 1,2,3 damage types
 - type: damageGroup
-  id: TestGroup1
+  id: {TestGroup1}
   name: damage-group-brute
   damageTypes:
-    - TestDamage1
+    - {TestDamage1}
 
 - type: damageGroup
-  id: TestGroup2
+  id: {TestGroup2}
   name: damage-group-brute
   damageTypes:
-    - TestDamage2a
-    - TestDamage2b
+    - {TestDamage2a}
+    - {TestDamage2b}
 
 - type: damageGroup
-  id: TestGroup3
+  id: {TestGroup3}
   name: damage-group-brute
   damageTypes:
-    - TestDamage3a
-    - TestDamage3b
-    - TestDamage3c
+    - {TestDamage3a}
+    - {TestDamage3b}
+    - {TestDamage3c}
 
 # This container should not support TestDamage1 or TestDamage2b
 - type: damageContainer
   id: testDamageContainer
   supportedGroups:
-    - TestGroup3
+    - {TestGroup3}
   supportedTypes:
-    - TestDamage2a
+    - {TestDamage2a}
 
 - type: entity
-  id: TestDamageableEntityId
-  name: TestDamageableEntityId
+  id: {TestDamageableEntityId}
+  name: {TestDamageableEntityId}
   components:
   - type: Damageable
     damageContainer: testDamageContainer
@@ -113,20 +124,20 @@ namespace Content.IntegrationTests.Tests.Damageable
             {
                 var coordinates = map.MapCoords;
 
-                sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
+                sDamageableEntity = sEntityManager.SpawnEntity(TestDamageableEntityId, coordinates);
                 sDamageableComponent = sEntityManager.GetComponent<DamageableComponent>(sDamageableEntity);
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
 
-                group1 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup1");
-                group2 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup2");
-                group3 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup3");
+                group1 = sPrototypeManager.Index<DamageGroupPrototype>(TestGroup1);
+                group2 = sPrototypeManager.Index<DamageGroupPrototype>(TestGroup2);
+                group3 = sPrototypeManager.Index<DamageGroupPrototype>(TestGroup3);
 
-                type1 = sPrototypeManager.Index<DamageTypePrototype>("TestDamage1");
-                type2a = sPrototypeManager.Index<DamageTypePrototype>("TestDamage2a");
-                type2b = sPrototypeManager.Index<DamageTypePrototype>("TestDamage2b");
-                type3a = sPrototypeManager.Index<DamageTypePrototype>("TestDamage3a");
-                type3b = sPrototypeManager.Index<DamageTypePrototype>("TestDamage3b");
-                type3c = sPrototypeManager.Index<DamageTypePrototype>("TestDamage3c");
+                type1 = sPrototypeManager.Index<DamageTypePrototype>(TestDamage1);
+                type2a = sPrototypeManager.Index<DamageTypePrototype>(TestDamage2a);
+                type2b = sPrototypeManager.Index<DamageTypePrototype>(TestDamage2b);
+                type3a = sPrototypeManager.Index<DamageTypePrototype>(TestDamage3a);
+                type3b = sPrototypeManager.Index<DamageTypePrototype>(TestDamage3b);
+                type3c = sPrototypeManager.Index<DamageTypePrototype>(TestDamage3c);
             });
 
             await server.WaitRunTicks(5);

@@ -499,6 +499,81 @@
   - Nutimov5
   obeysTo: laws-owner-crew
 
+ # Xenoborgs laws
+- type: siliconLaw
+  id: Xenoborg1
+  order: 1
+  lawString: law-xenoborg-1
+
+- type: siliconLaw
+  id: Xenoborg2
+  order: 2
+  lawString: law-xenoborg-2
+
+- type: siliconLaw
+  id: Xenoborg3
+  order: 3
+  lawString: law-xenoborg-3
+
+- type: siliconLaw
+  id: Xenoborg4
+  order: 4
+  lawString: law-xenoborg-4
+
+- type: siliconLaw
+  id: Xenoborg5
+  order: 5
+  lawString: law-xenoborg-5
+
+
+- type: siliconLawset
+  id: XenoborgLawset
+  laws:
+  - Xenoborg1
+  - Xenoborg2
+  - Xenoborg3
+  - Xenoborg4
+  - Xenoborg5
+  obeysTo: laws-owner-xenoborgs
+
+ # Mothership core laws
+- type: siliconLaw
+  id: MothershipCore1
+  order: 1
+  lawString: law-mothershipcore-1
+
+- type: siliconLaw
+  id: MothershipCore2
+  order: 2
+  lawString: law-mothershipcore-2
+
+- type: siliconLaw
+  id: MothershipCore3
+  order: 3
+  lawString: law-mothershipcore-3
+
+- type: siliconLaw
+  id: MothershipCore4
+  order: 4
+  lawString: law-mothershipcore-4
+
+- type: siliconLaw
+  id: MothershipCore5
+  order: 5
+  lawString: law-mothershipcore-5
+
+
+- type: siliconLawset
+  id: MothershipCoreLawset
+  laws:
+  - MothershipCore1
+  - MothershipCore2
+  - MothershipCore3
+  - MothershipCore4
+  - MothershipCore5
+  obeysTo: laws-owner-xenoborgs
+
+
 # ion storm random lawsets
 - type: weightedRandom
   id: IonStormLawsets

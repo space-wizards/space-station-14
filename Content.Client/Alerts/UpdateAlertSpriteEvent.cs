@@ -11,11 +11,14 @@ public record struct UpdateAlertSpriteEvent
 {
     public Entity<SpriteComponent> SpriteViewEnt;
 
+    public EntityUid ViewerEnt;
+
     public AlertPrototype Alert;
 
-    public UpdateAlertSpriteEvent(Entity<SpriteComponent> spriteViewEnt, AlertPrototype alert)
+    public UpdateAlertSpriteEvent(Entity<SpriteComponent> spriteViewEnt, EntityUid viewerEnt, AlertPrototype alert)
     {
         SpriteViewEnt = spriteViewEnt;
+        ViewerEnt = viewerEnt;
         Alert = alert;
     }
 }

@@ -1,5 +1,5 @@
 - type: stack
   id: Telecrystal
-  name: telecrystal
+  name: stack-telecrystal
   icon: Objects/Specific/Syndicate/telecrystal.rsi
   spawn: Telecrystal1

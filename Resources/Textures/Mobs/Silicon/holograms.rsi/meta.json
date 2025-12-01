@@ -1,0 +1,38 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/blob/e2923df112df8aa025846d0764697bad6506586a/icons/mob/AI.dmi - modified by chromiumboy.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "ai_female"
+        },
+        {
+            "name": "ai_male"
+        },
+        {
+            "name": "ai_face",
+            "delays": [
+                [
+                    2.3,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "ai_cat",
+            "delays": [
+                [
+                    0.75,
+                    0.75
+                ]
+            ]
+        },
+        {
+            "name": "ai_dog"
+        }
+    ]
+}

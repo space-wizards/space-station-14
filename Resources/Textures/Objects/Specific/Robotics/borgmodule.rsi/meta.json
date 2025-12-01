@@ -1,131 +1,233 @@
 {
-  "version": 1,
-  "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github).",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "cargo"
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-chem.png & icon-mining-adv.png created by mubururu_ (github) icon-inflatable.png made by FungiFellow (GitHub), Xenoborg modules sprites by Samuka-C (github)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "engineering"
-    },
-    {
-      "name": "generic"
-    },
-    {
-      "name": "icon-anomalies"
-    },
-    {
-      "name": "icon-appraisal"
-    },
-    {
-      "name": "icon-artifacts"
-    },
-    {
-      "name": "icon-cables"
-    },
-    {
-      "name": "icon-chemist"
-    },
-    {
-      "name": "icon-clown"
-    },
-    {
-      "name": "icon-construction"
-    },
-    {
-      "name": "icon-defib"
-    },
-    {
-      "name": "icon-diagnosis"
-    },
-    {
-      "name": "icon-fire-extinguisher"
-    },
-    {
-      "name": "icon-gardening"
-    },
-    {
-      "name": "icon-gas-analyzer"
-    },
-    {
-      "name": "icon-gps"
-    },
-    {
-      "name": "icon-grappling-gun"
-    },
-    {
-      "name": "icon-harvesting"
-    },
-    {
-      "name": "icon-light-replacer"
-    },
-    {
-      "name": "icon-mining"
-    },
-    {
-      "name": "icon-mop"
-    },
-    {
-      "name": "icon-mop-adv"
-    },
-    {
-      "name": "icon-musique"
-    },
-    {
-      "name": "icon-pen"
-    },
-    {
-      "name": "icon-radiation"
-    },
-    {
-      "name": "icon-rcd"
-    },
-    {
-      "name": "icon-template"
-    },
-    {
-      "name": "icon-tools-adv"
-    },
-    {
-      "name": "icon-tools"
-    },
-    {
-      "name": "icon-trash-bag"
-    },
-    {
-      "name": "icon-treatment"
-    },
-    {
-      "name": "icon-syndicate"
-    },
-    {
-      "name": "janitor"
-    },
-    {
-      "name": "icon-bomb"
-    },
-    {
-      "name": "medical"
-    },
-    {
-      "name": "science"
-    },
-    {
-      "name": "security"
-    },
-    {
-      "name": "service"
-    },
-    {
-      "name": "syndicateborgbomb"
-    },
-    {
-      "name": "syndicate"
-    }
-  ]
+    "states": [
+        {
+            "name": "cargo"
+        },
+        {
+            "name": "engineering"
+        },
+        {
+            "name": "generic"
+        },
+        {
+            "name": "icon-anomalies"
+        },
+        {
+            "name": "icon-appraisal"
+        },
+        {
+            "name": "icon-artifacts"
+        },
+        {
+            "name": "icon-cables"
+        },
+        {
+            "name": "icon-inflatable"
+        },
+        {
+            "name": "icon-chemist"
+        },
+        {
+            "name": "icon-chem"
+        },
+        {
+            "name": "icon-clown"
+        },
+        {
+            "name": "icon-clown-adv"
+        },
+        {
+            "name": "icon-construction"
+        },
+        {
+            "name": "icon-defib"
+        },
+        {
+            "name": "icon-diagnosis"
+        },
+        {
+            "name": "icon-fire-extinguisher"
+        },
+        {
+            "name": "icon-gardening"
+        },
+        {
+            "name": "icon-gas-analyzer"
+        },
+        {
+            "name": "icon-gps"
+        },
+        {
+            "name": "icon-grappling-gun"
+        },
+        {
+            "name": "icon-harvesting"
+        },
+        {
+            "name": "icon-light-replacer"
+        },
+        {
+            "name": "icon-mining"
+        },
+        {
+            "name": "icon-mining-adv"
+        },
+        {
+            "name": "icon-mop"
+        },
+        {
+            "name": "icon-mop-adv"
+        },
+        {
+            "name": "icon-musique"
+        },
+        {
+            "name": "icon-pen"
+        },
+        {
+            "name": "icon-radiation"
+        },
+        {
+            "name": "icon-rcd"
+        },
+        {
+            "name": "icon-template"
+        },
+        {
+            "name": "icon-tools-adv"
+        },
+        {
+            "name": "icon-tools"
+        },
+        {
+            "name": "icon-trash-bag"
+        },
+        {
+            "name": "icon-treatment"
+        },
+        {
+            "name": "icon-xenoborg-access-breaker"
+        },
+        {
+            "name": "icon-xenoborg-basic"
+        },
+        {
+            "name": "icon-xenoborg-cloak"
+        },
+        {
+            "name": "icon-xenoborg-cloak2"
+        },
+        {
+            "name": "icon-xenoborg-fire-extinguisher"
+        },
+        {
+            "name": "icon-xenoborg-hypo"
+        },
+        {
+            "name": "icon-xenoborg-jammer"
+        },
+        {
+            "name": "icon-xenoborg-laser"
+        },
+        {
+            "name": "icon-xenoborg-laser2"
+        },
+        {
+            "name": "icon-xenoborg-projector"
+        },
+        {
+            "name": "icon-xenoborg-space-movement"
+        },
+        {
+            "name": "icon-xenoborg-sword"
+        },
+        {
+            "name": "icon-xenoborg-sword2"
+        },
+        {
+            "name": "icon-xenoborg-tools"
+        },
+        {
+            "name": "icon-syndicate"
+        },
+        {
+            "name": "janitor"
+        },
+        {
+            "name": "icon-bomb"
+        },
+        {
+            "name": "medical"
+        },
+        {
+            "name": "science"
+        },
+        {
+            "name": "security"
+        },
+        {
+            "name": "service"
+        },
+        {
+            "name": "syndicateborgbomb"
+        },
+        {
+            "name": "syndicate"
+        },
+        {
+            "name": "xenoborg_engi"
+        },
+        {
+            "name": "xenoborg_generic"
+        },
+        {
+            "name": "xenoborg_heavy"
+        },
+        {
+            "name": "xenoborg_scout"
+        },
+        {
+            "name": "xenoborg_stealth"
+        },
+        {
+            "name": "base-icon-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "base-icon-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "base-module-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "base-module-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "base-part-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "base-part-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "base-stripes-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "base-stripes-inhand-right",
+            "directions": 4
+        }
+    ]
+
 }

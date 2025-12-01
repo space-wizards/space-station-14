@@ -1,5 +1,6 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Nutrition.Components
@@ -32,5 +33,17 @@ namespace Content.Shared.Nutrition.Components
         public string LitPrefix = "lit";
         [DataField("unlitPrefix")]
         public string UnlitPrefix = "unlit";
+
+        /// <summary>
+        /// Sound played when lighting this smokable.
+        /// </summary>
+        [DataField]
+        public SoundSpecifier? LightSound = new SoundPathSpecifier("/Audio/Effects/cig_light.ogg");
+
+        /// <summary>
+        /// Sound played when this smokable is extinguished or runs out.
+        /// </summary>
+        [DataField]
+        public SoundSpecifier? SnuffSound = new SoundPathSpecifier("/Audio/Effects/cig_snuff.ogg");
     }
 }

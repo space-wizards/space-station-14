@@ -20,7 +20,7 @@
       projectile:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.1,-0.1,0.1,0.1"
+          bounds: "-0.1,-0.3,0.1,-0.1"
         hard: false
         mask:
         - Impassable
@@ -159,3 +159,54 @@
   - type: Construction
     graph: ImprovisedArrowUranium
     node: ImprovisedArrowUranium
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowImprovisedCarp
+  name: carp tooth arrow
+  description: The salvager's preferred arrow. Kill your enemies with the teeth of their families.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: purple
+    - state: rod
+      color: darkgray
+    - state: tip
+      color: white
+    - state: solution1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 30
+  - type: Construction
+    graph: ImprovisedArrowCarp
+    node: ImprovisedArrowCarp
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowCard
+  name: cardboard arrow
+  description: Careful, you'll poke an eye out!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: brown
+    - state: tip
+      color: brown
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1
+  - type: StaminaDamageOnCollide
+    damage: 10
+  - type: Construction
+    graph: CardArrow
+    node: CardArrow

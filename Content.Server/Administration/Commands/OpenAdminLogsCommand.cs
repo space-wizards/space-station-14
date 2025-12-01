@@ -6,13 +6,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Logs)]
-public sealed class OpenAdminLogsCommand : IConsoleCommand
+public sealed class OpenAdminLogsCommand : LocalizedEntityCommands
 {
-    public string Command => "adminlogs";
-    public string Description => "Opens the admin logs panel.";
-    public string Help => $"Usage: {Command}";
+    [Dependency] private readonly EuiManager _euiManager = default!;
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "adminlogs";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (shell.Player is not { } player)
         {
@@ -20,8 +20,7 @@ public sealed class OpenAdminLogsCommand : IConsoleCommand
             return;
         }
 
-        var eui = IoCManager.Resolve<EuiManager>();
         var ui = new AdminLogsEui();
-        eui.OpenEui(ui, player);
+        _euiManager.OpenEui(ui, player);
     }
 }

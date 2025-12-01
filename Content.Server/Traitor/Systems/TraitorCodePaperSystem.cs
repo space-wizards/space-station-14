@@ -7,16 +7,16 @@ using Content.Server.Traitor.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Codewords;
 using Content.Shared.Paper;
 
 namespace Content.Server.Traitor.Systems;
 
 public sealed class TraitorCodePaperSystem : EntitySystem
 {
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly TraitorRuleSystem _traitorRuleSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
+    [Dependency] private readonly CodewordSystem _codewordSystem = default!;
 
     public override void Initialize()
     {
@@ -48,23 +48,12 @@ public sealed class TraitorCodePaperSystem : EntitySystem
         traitorCode = null;
 
         var codesMessage = new FormattedMessage();
-        List<string> codeList = new();
-        // Find the first nuke that matches the passed location.
-        if (_gameTicker.IsGameRuleAdded<TraitorRuleComponent>())
-        {
-            var ruleEnts = _gameTicker.GetAddedGameRules();
-            foreach (var ruleEnt in ruleEnts)
-            {
-                if (TryComp(ruleEnt, out TraitorRuleComponent? traitorComp))
-                {
-                    codeList.AddRange(traitorComp.Codewords.ToList());
-                }
-            }
-        }
+        var codeList = _codewordSystem.GetCodewords(component.CodewordFaction).ToList();
+
         if (codeList.Count == 0)
         {
             if (component.FakeCodewords)
-                codeList = _traitorRuleSystem.GenerateTraitorCodewords(new TraitorRuleComponent()).ToList();
+                codeList = _codewordSystem.GenerateCodewords(component.CodewordGenerator).ToList();
             else
                 codeList = [Loc.GetString("traitor-codes-none")];
         }

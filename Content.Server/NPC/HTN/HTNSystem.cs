@@ -180,11 +180,24 @@ public sealed class HTNSystem : EntitySystem
         _planQueue.Process();
         var query = EntityQueryEnumerator<ActiveNPCComponent, HTNComponent>();
 
+        // Move ahead "count" entries in the query.
+        // This is to ensure that if we didn't process all the npcs the first time,
+        // we get to the remaining ones instead of iterating over the beginning again.
+        for (var i = 0; i < count; i++)
+        {
+            query.MoveNext(out _, out _);
+        }
+
+        // the amount of updates we've processed during this iteration.
+        var updates = 0;
         while (query.MoveNext(out var uid, out _, out var comp))
         {
             // If we're over our max count or it's not MapInit then ignore the NPC.
-            if (count >= maxUpdates)
-                break;
+            if (updates >= maxUpdates)
+            {
+                // Intentional return. We don't want to go to the end logic and reset count.
+                return;
+            }
 
             if (!comp.Enabled)
                 continue;
@@ -274,7 +287,12 @@ public sealed class HTNSystem : EntitySystem
 
             Update(comp, frameTime);
             count++;
+            updates++;
         }
+
+        // only reset our counter back to 0 if we finish iterating.
+        // otherwise it lets us know where we left off.
+        count = 0;
     }
 
     private void AppendDebugText(HTNTask task, StringBuilder text, List<int> planBtr, List<int> btr, ref int level)
@@ -328,7 +346,7 @@ public sealed class HTNSystem : EntitySystem
             component.PlanAccumulator -= frameTime;
 
         // We'll still try re-planning occasionally even when we're updating in case new data comes in.
-        if (component.PlanAccumulator <= 0f)
+        if ((component.ConstantlyReplan || component.Plan is null) && component.PlanAccumulator <= 0f)
         {
             RequestPlan(component);
         }
@@ -462,7 +480,7 @@ public sealed class HTNSystem : EntitySystem
         if (component.PlanningJob != null)
             return;
 
-        component.PlanAccumulator += component.PlanCooldown;
+        component.PlanAccumulator = component.PlanCooldown;
         var cancelToken = new CancellationTokenSource();
         var branchTraversal = component.Plan?.BranchTraversalRecord;
 

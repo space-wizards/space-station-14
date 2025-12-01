@@ -11,6 +11,7 @@
     size: Normal
     sprite: Objects/Weapons/Melee/cane.rsi
   - type: Appearance
+  - type: MobilityAid
   - type: MeleeWeapon
     wideAnimationRotation: 45
     damage:
@@ -41,7 +42,7 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 14
+        Slash: 17
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -53,7 +54,7 @@
   - type: DisarmMalus
 
 - type: entity
-  parent: Cane
+  parent: [Cane, SelectableLock]
   id: CaneSheath
   suffix: Empty
   components:
@@ -69,6 +70,9 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: ItemSlotsLock
+    slots:
+    - item
   - type: ItemSlots
     slots:
       item:
@@ -80,6 +84,7 @@
           - CaneBlade
         insertSound: /Audio/Items/sheath.ogg
         ejectSound: /Audio/Items/unsheath.ogg
+        priority: 3
   - type: ItemMapper
     mapLayers:
       cane:

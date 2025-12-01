@@ -13,6 +13,8 @@ public sealed class TippyEvent : EntityEventArgs
 
     public string Msg;
     public string? Proto;
+
+    // TODO: Why are these defaults even here, have the caller specify. This get overriden only most of the time.
     public float SpeakTime = 5;
     public float SlideTime = 3;
     public float WaddleInterval = 0.5f;

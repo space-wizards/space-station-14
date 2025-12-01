@@ -21,6 +21,7 @@ markings-category-Head = Head
 markings-category-HeadTop = Head (Top)
 markings-category-HeadSide = Head (Side)
 markings-category-Snout = Snout
+markings-category-SnoutCover = Snout (Cover)
 markings-category-UndergarmentTop = Undergarment (Top)
 markings-category-UndergarmentBottom = Undergarment (Bottom)
 markings-category-Chest = Chest

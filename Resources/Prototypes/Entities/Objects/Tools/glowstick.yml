@@ -6,8 +6,6 @@
   components:
     - type: SpaceGarbage
     - type: ExpendableLight
-      spentName: expendable-light-spent-green-glowstick-name
-      spentDesc: expendable-light-spent-glowstick-desc
       glowDuration: 900 # time in seconds
       glowColorLit: "#00FF00"
       fadeOutDuration: 300
@@ -136,8 +134,8 @@
         - !type:PulseBehaviour
           interpolate: Cubic
           maxDuration: 10.0
-          minValue: 1.0
-          maxValue: 7.0
+          startValue: 1.0
+          endValue: 7.0
           isLooped: true
           property: Energy
           enabled: true
@@ -200,7 +198,7 @@
           interpolate: Nearest
           minDuration: 0.2
           maxDuration: 1.0
-          maxValue: 0.2
+          endValue: 0.2
           property: AnimatedEnable
           isLooped: true
           enabled: true
@@ -239,8 +237,8 @@
         - !type:FadeBehaviour
           interpolate: Cubic
           maxDuration: 5.0
-          minValue: 0.0
-          maxValue: 10.0
+          startValue: 0.0
+          endValue: 10.0
           isLooped: true
           property: Energy
           enabled: true
@@ -271,8 +269,8 @@
           interpolate: Cubic
           minDuration: 1.0
           maxDuration: 5.0
-          minValue: 2.0
-          maxValue: 10.0
+          startValue: 2.0
+          endValue: 10.0
           isLooped: true
           enabled: true
 
@@ -302,7 +300,7 @@
         - !type:RandomizeBehaviour
           interpolate: Nearest
           maxDuration: 0.5
-          minValue: 10.0
-          maxValue: 25.0
+          startValue: 10.0
+          endValue: 25.0
           isLooped: true
           enabled: true

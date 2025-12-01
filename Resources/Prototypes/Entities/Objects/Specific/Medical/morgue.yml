@@ -6,6 +6,7 @@
   components:
   - type: Item
     size: Small
+    heldPrefix: bag
   - type: Sprite
     drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi

@@ -1,0 +1,676 @@
+#Table
+- type: entityTable
+  id: RandomSatchelTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingBackpackSatchelSmugglerFilled
+      weight: 85
+    - id: BriefcaseSmugglerCash
+      weight: 10
+    - id: ClothingBackpackDuffelClownSmuggler
+      weight: 5
+
+#Table
+- type: entityTable
+  id: FillSmugglerBackpack
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomSatchelTable1
+    - !type:NestedSelector
+      tableId: RandomSatchelTable2
+    - !type:NestedSelector
+      tableId: RandomSatchelTable3
+    - !type:NestedSelector
+      tableId: RandomSatchelTable4
+    - !type:NestedSelector
+      tableId: RandomSatchelTable5
+    - !type:NestedSelector
+      tableId: RandomSatchelTable6
+
+  #number after each group indicates potential max inventory fill. If all combined fills are too high, it could result in an over-filled bag/error.
+- type: entityTable
+  id: RandomSatchelTable1
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomSatchelGenericTableSmallx2 #2x small
+    - !type:NestedSelector
+      tableId: RandomSatchelFunnyTable #5x tiny
+    - !type:NestedSelector
+      tableId: RandomSatchelClothingTable #1x small
+    - !type:NestedSelector
+      tableId: RandomSatchelCannabisTable #5x tiny
+    - !type:NestedSelector
+      tableId: RandomSatchelGizmosTable #2x small
+    - !type:NestedSelector
+      tableId: RandomSatchelChemsTable #5x tiny
+
+- type: entityTable
+  id: RandomSatchelFunnyTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 20
+    - id: WhoopieCushion
+    - id: RubberChicken
+    - id: PlasticBanana
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: PillSpaceDrugs
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: StrangePill
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+
+- type: entityTable #5x tiny
+  id: RandomSatchelCannabisTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 4
+    - id: Joint
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: Blunt
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: SmokingPipeFilledCannabis
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: GroundCannabis
+      amount: !type:RangeNumberSelector
+        range: 1, 15
+
+- type: entityTable #2x small
+  id: RandomSatchelGizmosTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 40
+    - id: TimerTrigger
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: SignalTrigger
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: VoiceTrigger
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: ProximitySensor
+
+- type: entityTable #5x tiny
+  id: RandomSatchelChemsTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 20
+    - id: ChemistryBottleUnstableMutagen
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: ChemistryBottleLeft4Zed
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: ChemistryBottleEZNutrient
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: ChemistryBottleRobustHarvest
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: ChemistryBottleEpinephrine
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: ChemistryBottleEphedrine
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: ChemistryBottleOmnizine
+    - id: ChemistryBottleCognizine
+    - id: ChemistryBottleToxin
+    - id: ChemistryBottleNocturine
+    - id: VestineChemistryVial
+
+- type: entityTable
+  id: RandomSatchelTable2
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomSatchelTobaccoTable #2x 2x3(12 slots)
+    - !type:NestedSelector
+      tableId: RandomSatchelPartyTable #5x small
+    - !type:NestedSelector
+      tableId: RandomSatchelClothingTable #1x small
+    - !type:NestedSelector
+      tableId: RandomSatchelPayloadTable #2x small
+    - !type:NestedSelector
+      tableId: RandomSatchelCircuitboardsTable #1x small
+
+- type: entityTable #2x 2x3(12 slots)
+  id: RandomSatchelTobaccoTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 8
+    - id: CigPackSyndicate
+      weight: 0.5
+    - id: CigCartonGreen
+    - id: CigCartonRed
+    - id: CigCartonGreen
+    - id: CigCartonBlack
+    - id: CigarCase
+    - id: CigarGoldCase
+      weight: 0.25
+
+- type: entityTable #5x small
+  id: RandomSatchelPartyTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 2
+    - id: GlowstickBase
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: GlowstickRed
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: GlowstickPurple
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: GlowstickYellow
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: GlowstickBlue
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+
+- type: entityTable #1x small
+  id: RandomSatchelClothingTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 3
+    - id: ClothingEyesGlassesOutlawGlasses
+    - id: ClothingEyesEyepatch
+    - id: ClothingHandsGlovesNitrile
+    - id: ClothingHeadHatOutlawHat
+    - id: ClothingMaskItalianMoustache
+    - id: ClothingHandsGlovesCombat
+    - id: ClothingNeckScarfStripedSyndieRed
+
+- type: entityTable #2x small
+  id: RandomSatchelPayloadTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 45
+    - id: FlashPayload
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: ChemicalPayload
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: ExplosivePayload
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+
+- type: entityTable #1x small
+  id: RandomSatchelCircuitboardsTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 15
+    - id: ChemDispenserMachineCircuitboard
+    - id: SyndicateMicrowaveMachineCircuitboard
+    - id: HydroponicsTrayMachineCircuitboard
+    - id: DawInstrumentMachineCircuitboard
+    - id: PortableGeneratorPacmanMachineCircuitboard
+    - id: PortableGeneratorSuperPacmanMachineCircuitboard
+    - id: HellfireFreezerMachineCircuitBoard
+    - id: HellfireHeaterMachineCircuitBoard
+    - id: ReagentGrinderMachineCircuitboard
+    - id: ReagentGrinderIndustrialMachineCircuitboard
+    - id: BoozeDispenserMachineCircuitboard
+    - id: MiniGravityGeneratorCircuitboard
+    - id: AmmoTechFabCircuitboard
+    - id: CryoPodMachineCircuitboard
+    - id: PowerCageRechargerCircuitboard
+    - id: ShuttleConsoleCircuitboard
+    - id: TurboItemRechargerCircuitboard
+
+- type: entityTable
+  id: RandomSatchelTable3
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomSatchelPresentsOrToysTable #3x small
+    - !type:NestedSelector
+      tableId: RandomSatchelCashTable #1x small
+    - !type:NestedSelector
+      tableId: RandomSatchelWeaponTable #5x small
+    - !type:NestedSelector
+      tableId: RandomSatchelBurgerTable #5x small
+    - !type:NestedSelector
+      tableId: RandomSatchelGenericTableSmall #1x small
+    - !type:NestedSelector
+      tableId: RandomSatchelKeysTable #1x small
+
+- type: entityTable #3x small
+  id: RandomSatchelPresentsOrToysTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 5
+    - id: PresentRandom
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: ToyFigurineHamlet
+    - id: ToyFigurineSpaceDragon
+    - id: ToyFigurineQueen
+    - id: ToyFigurineRatKing
+
+- type: entityTable #1x small
+  id: RandomSatchelCashTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 2
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: SpaceCash1000
+      weight: 2
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: SpaceCash2500
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: SpaceCash5000
+      weight: 0.25
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: SpaceCash10000
+      weight: 0.005
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: SpaceCash1000000
+      prob: 0.0001
+    - id: SpaceCash
+      weight: 0.01
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+
+- type: entityTable #5x small
+  id: RandomSatchelWeaponTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 100
+    - id: Katana
+    - id: ThrowingStar
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+
+- type: entityTable #5x small
+  id: RandomSatchelBurgerTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 10
+    - id: FoodBurgerAppendix
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: FoodBurgerEmpowered
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: FoodBurgerClown
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: FoodBurgerGhost
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+
+- type: entityTable #1x small
+  id: RandomSatchelGenericTableSmall
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 15
+    - id: RemoteSignaller
+    - id: PersonalAI
+    - id: WeaponFlareGun
+    - id: ModularReceiver
+    - id: RifleStock
+
+- type: entityTable #2x small
+  id: RandomSatchelGenericTableSmallx2
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 15
+    - id: DrinkSpaceGlue
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: DrinkSpaceLube
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: CrazyGlue
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+
+- type: entityTable #1x small
+  id: RandomSatchelKeysTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 50
+    - id: EncryptionKeyCommon
+    - id: EncryptionKeyCargo
+    - id: EncryptionKeyService
+    - id: EncryptionKeyRobo
+    - id: EncryptionKeyScience
+    - id: EncryptionKeyMedical
+    - id: EncryptionKeyEngineering
+    - id: EncryptionKeySecurity
+      weight: 0.5
+    - id: EncryptionKeyCommand
+      weight: 0.25
+    - id: EncryptionKeyStationMaster
+      weight: 0.01
+
+- type: entityTable
+  id: RandomSatchelTable4
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomSatchelMaterialsTable #1x medium
+    - !type:NestedSelector
+      tableId: RandomSatchelImplantersTable #1x small
+    - !type:NestedSelector
+      tableId: RandomSatchelCellsTable #1x small
+    - !type:NestedSelector
+      tableId: RandomSatchelSyndicateTable #1x medium
+    - !type:NestedSelector
+      tableId: RandomSatchelToolsTable #1x small
+
+- type: entityTable #1x medium
+  id: RandomSatchelMaterialsTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 6
+    - !type:GroupSelector
+      children:
+      - id: MaterialDiamond1
+    - !type:GroupSelector
+      children:
+      - id: MaterialBananium1
+        weight: 2
+      - id: MaterialBananium
+    - !type:GroupSelector
+      children:
+      - id: IngotGold1
+        weight: 2
+      - id: IngotGold
+    - !type:GroupSelector
+      children:
+      - id: IngotSilver1
+        weight: 2
+      - id: IngotSilver
+    - !type:GroupSelector
+      children:
+      - id: SheetPlasma1
+        weight: 2
+      - id: SheetPlasma10
+      - id: SheetPlasma
+        weight: 0.50
+    - !type:GroupSelector
+      children:
+      - id: SheetUranium1
+        weight: 2
+      - id: SheetUranium
+
+- type: entityTable #1x small
+  id: RandomSatchelImplantersTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 3
+    - id: LightImplanter
+    - id: BikeHornImplanter
+    - id: SadTromboneImplanter
+
+- type: entityTable #1x small
+  id: RandomSatchelCellsTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 15
+    - id: PowerCellHyper
+    - id: PowerCellMicroreactor
+    - id: PowerCellHigh
+
+- type: entityTable #1x medium
+  id: RandomSatchelSyndicateTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 50
+    - id: Telecrystal1
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: GatfruitSeeds
+    - id: ToySword
+    - id: NukeDiskFake
+    - id: RadioJammer
+    - id: SoapSyndie
+    - id: SingularityToy
+    - id: DehydratedSpaceCarp
+
+- type: entityTable #1x small
+  id: RandomSatchelToolsTable
+  table: !type:GroupSelector
+    children:
+    - id: Crowbar
+    - id: Multitool
+    - id: ClothingHandsGlovesColorYellow
+    - id: Screwdriver
+    - id: ClothingHeadHatWeldingMaskFlame
+    - id: WelderExperimental
+      weight: 0.50
+
+- type: entityTable
+  id: RandomSatchelTable5
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomSatchelAlcoholTable #2x medium
+    - !type:NestedSelector
+      tableId: RandomSatchelInstrumentTable #1x Medium
+    - !type:NestedSelector
+      tableId: RandomSatchelMedsTable #5x tiny
+    - !type:NestedSelector
+      tableId: RandomSatchelMysteriesTable #1x Medium
+
+- type: entityTable #2x medium
+  id: RandomSatchelAlcoholTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 5
+    - id: DrinkCognacBottleFull
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: DrinkGildlagerBottleFull
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: DrinkPatronBottleFull
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: DrinkRumBottleFull
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+
+- type: entityTable #1x Medium
+  id: RandomSatchelInstrumentTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 15
+    - id: SeashellInstrument
+    - id: MusicalLungInstrument
+    - id: HelicopterInstrument
+    - id: GunpetInstrument
+    - id: RockGuitarInstrument
+    - id: BassGuitarInstrument
+
+- type: entityTable #5x tiny
+  id: RandomSatchelMedsTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 10
+    - id: SyringeAmbuzol
+    - id: SyringeHyronalin
+    - id: SyringeDermaline
+    - id: SyringeBicaridine
+    - id: SyringeTranexamicAcid
+    - id: SyringeInaprovaline
+    - id: SyringeEphedrine
+    - id: Gauze
+    - id: Bloodpack
+    - id: RegenerativeMesh
+    - id: MedicatedSuture
+    - id: EmergencyMedipen
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: AntiPoisonMedipen
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: BruteAutoInjector
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: BurnAutoInjector
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: SpaceMedipen
+      amount: !type:RangeNumberSelector
+        range: 1, 5
+    - id: Stimpack
+    - id: CombatMedipen
+
+- type: entityTable #1x Medium
+  id: RandomSatchelMysteriesTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 15
+    - id: EggSpider
+      weight: 5
+    - id: ArtifactFragment1
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+      weight: 10
+    - id: AnomalyCorePyroclastic
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: AnomalyCoreGravity
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: AnomalyCoreIce
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: AnomalyCoreFlesh
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: AnomalyCoreLiquid
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: AnomalyCoreBluespace
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: AnomalyCoreElectricity
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: AnomalyCoreFlora
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - id: AnomalyCoreShadow
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+
+- type: entityTable
+  id: RandomSatchelTable6
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomSatchelGearTable #1x Huge
+    - !type:NestedSelector
+      tableId: RandomSatchelGadgetsTable #2x small
+    - !type:NestedSelector
+      tableId: CubeTable #10x tiny
+
+- type: entityTable #1x Huge
+  id: RandomSatchelGearTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 8
+    - id: JetpackMiniFilled
+    - id: HandheldGPSBasic
+    - id: WelderIndustrialAdvanced
+    - id: HandheldStationMap
+    - id: PinpointerStation
+
+- type: entityTable #2x small
+  id: RandomSatchelGadgetsTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 30
+    - id: HolofanProjector
+    - id: HoloprojectorField
+    - id: HoloprojectorSecurity
+    - id: DeviceQuantumSpinInverter
+      amount: !type:ConstantNumberSelector
+        value: 2
+    - id: SpectralLocator
+    - id: ArabianLamp
+      weight: 0.50
+    - id: ChameleonProjector
+      weight: 0.25
+
+- type: entityTable #10x tiny
+  id: CubeTable
+  table: !type:GroupSelector
+    children:
+    - id: SpaceCash100
+      weight: 8
+    - id: MonkeyCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+    - id: KoboldCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+    - id: CowCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+    - id: GoatCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+    - id: MothroachCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+    - id: MouseCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+    - id: CockroachCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+    - id: SpaceCarpCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+    - id: SpaceTickCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10
+    - id: AbominationCube
+      amount: !type:RangeNumberSelector
+        range: 1, 10

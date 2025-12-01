@@ -34,7 +34,7 @@
         !type:GeneratedParallaxTextureSource
         id: ""
         configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-        slowness: 0.875
+      slowness: 0.875
   layersLQUseHQ: false
 
 # Because hyperspace and the menu need their own.
@@ -71,6 +71,6 @@
         !type:GeneratedParallaxTextureSource
         id: ""
         configPath: "/Prototypes/Parallaxes/parallax_config.toml"
-        slowness: 0.5
+      slowness: 0.5
   layersLQUseHQ: false
 
