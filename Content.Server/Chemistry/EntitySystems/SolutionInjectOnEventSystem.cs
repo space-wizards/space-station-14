@@ -20,7 +20,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 /// </summary>
 public sealed class SolutionInjectOnCollideSystem : EntitySystem
 {
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;

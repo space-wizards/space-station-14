@@ -23,7 +23,7 @@ public sealed class RootableSystem : SharedRootableSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
-    [Dependency] private readonly SharedBloodstreamSystem _blood = default!;
+    [Dependency] private readonly BloodstreamSystem _blood = default!;
 
     public override void Update(float frameTime)
     {
