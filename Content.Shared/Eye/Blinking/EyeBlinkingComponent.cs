@@ -11,25 +11,29 @@ namespace Content.Shared.Eye.Blinking;
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class EyeBlinkingComponent : Component
 {
-    // The duration the eyes stay closed when blinking.
+    /// <summary>
+    /// Duration of a single blink.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan BlinkDuration = TimeSpan.FromSeconds(0.5f);
 
-    // The interval between blinks.
+    /// <summary>
+    /// The interval between blinks.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan BlinkInterval = TimeSpan.FromSeconds(5);
 
-    // The multiplier applied to the skin color to create the eyelid shading.
+    /// <summary>
+    /// The multiplier applied to the skin color to create the eyelid shading.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float BlinkSkinColorMultiplier = 0.9f;
 
-    // The next time the entity should blink.
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    /// <summary>
+    /// The next time the entity should blink.
+    /// </summary>
+    [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextBlinkingTime;
-
-    // Whether the entity is currently sleeping.
-    [DataField, AutoNetworkedField]
-    public bool IsSleeping;
 
     [DataField, AutoNetworkedField]
     public bool Enabled = true;

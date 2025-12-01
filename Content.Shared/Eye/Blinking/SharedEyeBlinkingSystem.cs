@@ -15,7 +15,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     override public void Initialize()
     {
         base.Initialize();
-        //SubscribeLocalEvent<EyeBlinkingComponent, SleepStateChangedEvent>(SleepStateChangedEventHanlder);
         SubscribeLocalEvent<EyeBlinkingComponent, BlindnessChangedEvent>(BlindnessChangedEventHanlder);
         SubscribeLocalEvent<EyeBlinkingComponent, MobStateChangedEvent>(MobStateChangedEventHandler);
     }
