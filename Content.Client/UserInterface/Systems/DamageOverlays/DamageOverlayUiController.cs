@@ -100,7 +100,7 @@ public sealed class DamageOverlayUiController : UIController
                 FixedPoint2 painLevel = 0;
                 _overlay.PainLevel = 0;
 
-                if (!_statusEffects.TryEffectsWithComp<PainNumbnessComponent>(entity, out _))
+                if (!_statusEffects.TryEffectsWithComp<PainNumbnessStatusEffectComponent>(entity, out _))
                 {
                     foreach (var painDamageType in damageable.PainDamageGroups)
                     {

@@ -12,13 +12,13 @@ public sealed class PainNumbnessSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<PainNumbnessComponent, StatusEffectAppliedEvent>(OnEffectApplied);
-        SubscribeLocalEvent<PainNumbnessComponent, StatusEffectRemovedEvent>(OnEffectRemoved);
-        SubscribeLocalEvent<PainNumbnessComponent, StatusEffectRelayedEvent<BeforeForceSayEvent>>(OnChangeForceSay);
-        SubscribeLocalEvent<PainNumbnessComponent, StatusEffectRelayedEvent<BeforeAlertSeverityCheckEvent>>(OnAlertSeverityCheck);
+        SubscribeLocalEvent<PainNumbnessStatusEffectComponent, StatusEffectAppliedEvent>(OnEffectApplied);
+        SubscribeLocalEvent<PainNumbnessStatusEffectComponent, StatusEffectRemovedEvent>(OnEffectRemoved);
+        SubscribeLocalEvent<PainNumbnessStatusEffectComponent, StatusEffectRelayedEvent<BeforeForceSayEvent>>(OnChangeForceSay);
+        SubscribeLocalEvent<PainNumbnessStatusEffectComponent, StatusEffectRelayedEvent<BeforeAlertSeverityCheckEvent>>(OnAlertSeverityCheck);
     }
 
-    private void OnEffectApplied(EntityUid uid, PainNumbnessComponent component, StatusEffectAppliedEvent args)
+    private void OnEffectApplied(Entity<PainNumbnessStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
         if (!HasComp<MobThresholdsComponent>(args.Target))
             return;
@@ -26,7 +26,7 @@ public sealed class PainNumbnessSystem : EntitySystem
         _mobThresholdSystem.VerifyThresholds(args.Target);
     }
 
-    private void OnEffectRemoved(EntityUid uid, PainNumbnessComponent component, StatusEffectRemovedEvent args)
+    private void OnEffectRemoved(Entity<PainNumbnessStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
         if (!HasComp<MobThresholdsComponent>(args.Target))
             return;
@@ -34,13 +34,13 @@ public sealed class PainNumbnessSystem : EntitySystem
         _mobThresholdSystem.VerifyThresholds(args.Target);
     }
 
-    private void OnChangeForceSay(Entity<PainNumbnessComponent> ent, ref StatusEffectRelayedEvent<BeforeForceSayEvent> args)
+    private void OnChangeForceSay(Entity<PainNumbnessStatusEffectComponent> ent, ref StatusEffectRelayedEvent<BeforeForceSayEvent> args)
     {
         if (ent.Comp.ForceSayNumbDataset != null)
             args.Args.Prefix = ent.Comp.ForceSayNumbDataset.Value;
     }
 
-    private void OnAlertSeverityCheck(Entity<PainNumbnessComponent> ent, ref StatusEffectRelayedEvent<BeforeAlertSeverityCheckEvent> args)
+    private void OnAlertSeverityCheck(Entity<PainNumbnessStatusEffectComponent> ent, ref StatusEffectRelayedEvent<BeforeAlertSeverityCheckEvent> args)
     {
         if (args.Args.CurrentAlert == "HumanHealth")
             args.Args.CancelUpdate = true;
