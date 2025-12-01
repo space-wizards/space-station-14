@@ -111,6 +111,8 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             var header = CreateSubLoadoutHeader(localizationMan.GetString(loadoutGroupProto.Name),"", displayDummy, subContainer, group);
             header.HorizontalExpand = true;
 
+            header.SelectedCount = uiElements.Count(e => e.Select.Pressed).ToString();
+
             LoadoutsContainer.AddChild(header);
             LoadoutsContainer.AddChild(subContainer);
 

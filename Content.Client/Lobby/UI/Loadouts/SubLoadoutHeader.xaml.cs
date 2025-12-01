@@ -35,6 +35,12 @@ public sealed partial class SubLoadoutHeader : BoxContainer
 
     public ContainerButton Button => ToggleButton;
 
+    public string? SelectedCount
+    {
+        get => SelectedCountLabel.Text;
+        set => SelectedCountLabel.Text = value;
+    }
+
     public void SetExpanded(bool expanded)
     {
         Button.Pressed = expanded;

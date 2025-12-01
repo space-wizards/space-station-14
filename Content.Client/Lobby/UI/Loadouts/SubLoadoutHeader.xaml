@@ -8,7 +8,11 @@
     <ContainerButton Name="ToggleButton" ToggleMode="True" Margin="0 0 5 0" VerticalExpand="False" HorizontalExpand="True">
         <BoxContainer Orientation="Horizontal">
             <TextureRect Name="DropdownArrow" SetSize="12 12" Stretch="Scale" />
-            <Label Margin="10 0 2 0" Name="Label"/>
+            <Label Name="Label" Margin="10 0 2 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" Align="End" Margin="10 0">
+            <Label Text="Selected: "/>
+            <Label Name="SelectedCountLabel" Text="0"/>
         </BoxContainer>
     </ContainerButton>
     <PanelContainer SetSize="64 64" HorizontalAlignment="Right">
