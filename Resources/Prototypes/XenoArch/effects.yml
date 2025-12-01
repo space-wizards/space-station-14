@@ -4,95 +4,93 @@
     children:
     # hijacks use key, prevents from using artifact, sadly
     #- id: XenoArtifactEffectUniversalIntercom
-    #  weight: 10.0
+    #  weight: 10
     - id: XenoArtifactSolutionStorage
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactPhasing
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactWandering
-      weight: 4.0
+      weight: 4
     - id: XenoArtifactSpeedUp
-      weight: 4.0
+      weight: 4
     - id: XenoArtifactGhost
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactEffectBadFeeling
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactEffectGoodFeeling
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactEffectJunkSpawn
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactEffectLightFlicker
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactPotassiumWave
-      weight: 7.0
+      weight: 7
     - id: XenoArtifactFloraSpawn
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactChemicalPuddle
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactThrowThingsAround
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactColdWave
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactHeatWave
-      weight: 4.0
+      weight: 4
     - id: XenoArtifactFoamMild
-      weight: 8.0
+      weight: 8
     - id: XenoArtifactRandomInstrumentSpawn
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactMonkeySpawn
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactRadioactive
-      weight: 8.0
+      weight: 8
     - id: XenoArtifactChargeBattery
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactKnock
-      weight: 4.0
+      weight: 4
     - id: XenoArtifactMagnet
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactMagnetNegative
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactStealth
-      weight: 1.0
     - id: XenoArtifactRareMaterialSpawnSilver
       weight: 1.8 # amount is laughable
     - id: XenoArtifactRareMaterialSpawnPlasma
-      weight: 2.0 # amount is laughable
+      weight: 2 # amount is laughable
     - id: XenoArtifactRareMaterialSpawnGold
       weight: 1.8 # amount is laughable
-    - id: XenoArtifactRareMaterialSpawnUranium
-      weight: 1.0 # amount is laughable
+    - id: XenoArtifactRareMaterialSpawnUranium # amount is laughable
     - id: XenoArtifactAngryCarpSpawn
-      weight: 4.0
+      weight: 4
     - id: XenoArtifactFaunaSpawn
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactHostileFaunaSpawn
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactCashSpawn
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactShatterWindows
-      weight: 8.0
+      weight: 8
     - id: XenoArtifactFoamGood
-      weight: 4.0
+      weight: 4
     - id: XenoArtifactFoamDangerous
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactPuddleRare
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactAnomalySpawn
-      weight: 10.0
+      weight: 10
     - id: XenoArtifactIgnite
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactTeleport
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactEmp
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactPolyMonkey
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactPolyLuminous
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactPolyLizard
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactRadioactiveStrong
-      weight: 3.0
+      weight: 3
     - id: XenoArtifactMaterialSpawnGlass
       weight: 3.3
     - id: XenoArtifactMaterialSpawnSteel
@@ -100,52 +98,46 @@
     - id: XenoArtifactMaterialSpawnPlastic
       weight: 3.3
     - id: XenoArtifactPortal
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactArtifactSpawn
       weight: 0.5
     - id: XenoArtifactShuffle
-      weight: 3.0
+      weight: 3
     - id: XenoArtifactHealAll
-      weight: 1.0
     #- id: XenoArtifactTesla
-    #  weight: 10.0
+    #  weight: 10
     #- id: XenoArtifactSingularity
-    #  weight: 10.0
+    #  weight: 10
     - id: XenoArtifactExplosionScary
-      weight: 1.0
     - id: XenoArtifactBoom
-      weight: 5.0
+      weight: 5
     - id: XenoArtifactEffectCreationGasPlasma
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactEffectCreationGasTritium
-      weight: 2.0
+      weight: 2
     - id: XenoArtifactEffectCreationGasAmmonia
-      weight: 3.0
+      weight: 3
     - id: XenoArtifactEffectCreationGasFrezon
-      weight: 1.0
     - id: XenoArtifactEffectCreationGasNitrousOxide
-      weight: 4.0
+      weight: 4
     - id: XenoArtifactEffectCreationGasCarbonDioxide
-      weight: 4.0
+      weight: 4
 
 - type: entityTable
   id: XenoArtifactEffectsHandheldOnlyTable
   table: !type:GroupSelector
     children:
-    #- id: XenoArtifactBecomeRandomInstrument
-    #  weight 10.0 # removed until we have value-based system
+    #- id: XenoArtifactBecomeRandomInstrument # removed until we have value-based system
     #- id: XenoArtifactGun
-    #  weight 4.0 #it conflicts with default interaction - it should activate artifact nodes
+    #  weight 0.4 #it conflicts with default interaction - it should activate artifact nodes
     - id: XenoArtifactOmnitool
-      weight: 10.0
     - id: XenoArtifactDrill
-      weight: 10.0
 
 - type: entity
   id: BaseXenoArtifactEffect
   name: effect
   description: Unknown
-  categories: [ HideSpawnMenu ]
+  categories: [ XenoArchEffects ]
   abstract: true
   components:
   - type: XenoArtifactNode
@@ -157,7 +149,6 @@
   parent: BaseXenoArtifactEffect
   name: one-time-effect
   description: Unknown
-  categories: [ HideSpawnMenu ]
   abstract: true
   components:
   - type: XenoArtifactNode
@@ -487,16 +478,12 @@
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
       table: !type:GroupSelector
-        rolls: !type:RangeNumberSelector
-          range: 1, 4
+        rolls: 1, 4
         children:
         - !type:NestedSelector
           tableId: GenericTrashItems
           weight: 35
-        - !type:AllSelector
-          weight: 1
-          children:
-          - id: ToySpawner
+        - id: ToySpawner
 
 - type: entity
   id: XenoArtifactEffectLightFlicker
@@ -519,9 +506,8 @@
       table: !type:AllSelector
         children:
         - id: FoodBanana
-          rolls: !type:ConstantNumberSelector
-            value: 6
-          prob: 0.5
+          rolls: !type:BinomialNumberSelector
+            trials: 6
   - type: XAECreatePuddle
     chemAmount:
       min: 1
@@ -543,9 +529,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: RandomFloraTree
+      table:
+        id: RandomFloraTree
 
 - type: entity
   id: XenoArtifactChemicalPuddle
@@ -642,9 +627,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: RandomInstruments
+      table: !type:NestedSelector
+        tableId: RandomInstrumentTable
 
 - type: entity
   id: XenoArtifactMonkeySpawn
@@ -665,9 +649,9 @@
       table: !type:GroupSelector
         children:
         - id: MobMonkey
-          weight: 95.0
+          weight: 95
         - id: MobGorilla
-          weight: 5.0
+          weight: 5
 
 - type: entity
   id: XenoArtifactRadioactive
@@ -755,21 +739,15 @@
       table: !type:AllSelector
         children:
         - id: SilverOre1
-          rolls: !type:ConstantNumberSelector
-            value: 6
-          prob: 0.3
+          rolls: &Binomial6at0.3 !type:BinomialNumberSelector
+            trials: 6
+            chance: 0.3
         - id: PlasmaOre1
-          rolls: !type:ConstantNumberSelector
-            value: 6
-          prob: 0.3
+          rolls: *Binomial6at0.3
         - id: GoldOre1
-          rolls: !type:ConstantNumberSelector
-            value: 6
-          prob: 0.3
+          rolls: *Binomial6at0.3
         - id: UraniumOre1
-          rolls: !type:ConstantNumberSelector
-            value: 6
-          prob: 0.3
+          rolls: *Binomial6at0.3
 
 - type: entity
   id: XenoArtifactRareMaterialSpawnSilver
@@ -787,12 +765,9 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: SilverOre1
-          rolls: !type:ConstantNumberSelector
-            value: 6
-          prob: 0.3
+      table:
+        id: SilverOre1
+        rolls: *Binomial6at0.3
 
 - type: entity
   id: XenoArtifactRareMaterialSpawnPlasma
@@ -810,12 +785,9 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: PlasmaOre1
-          rolls: !type:ConstantNumberSelector
-            value: 6
-          prob: 0.3
+      table:
+        id: PlasmaOre1
+        rolls: *Binomial6at0.3
 
 - type: entity
   id: XenoArtifactRareMaterialSpawnGold
@@ -833,12 +805,9 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: GoldOre1
-          rolls: !type:ConstantNumberSelector
-            value: 6
-          prob: 0.3
+      table:
+        id: GoldOre1
+        rolls: *Binomial6at0.3
 
 - type: entity
   id: XenoArtifactRareMaterialSpawnUranium
@@ -856,12 +825,11 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: UraniumOre1
-          rolls: !type:ConstantNumberSelector
-            value: 3
-          prob: 0.3
+      table:
+        id: UraniumOre1
+        rolls: !type:BinomialNumberSelector
+          trials: 3
+          chance: 0.3
 
 - type: entity
   id: XenoArtifactAngryCarpSpawn
@@ -882,9 +850,7 @@
       table: !type:GroupSelector
         children:
         - id: MobCarpMagic
-          weight: 1.0
         - id: MobCarpHolo
-          weight: 1.0
 
 - type: entity
   id: XenoArtifactFaunaSpawn
@@ -910,28 +876,21 @@
         - id: MobKangaroo
         - id: MobFox
         - id: MobPenguin
-          amount: !type:RangeNumberSelector
-            range: 1, 2
+          amount: 1, 2
         - id: MobMothroach
-          amount: !type:RangeNumberSelector
-            range: 1, 2
+          amount: 1, 2
         - id: MobCorgiPuppy
-          amount: !type:RangeNumberSelector
-            range: 1, 2
+          amount: 1, 2
         - id: MobCatKitten
-          amount: !type:RangeNumberSelector
-            range: 1, 2
+          amount: 1, 2
         - id: MobCat
-          amount: !type:RangeNumberSelector
-            range: 1, 2
+          amount: 1, 2
         - id: MobBee
-          amount: !type:RangeNumberSelector
-            range: 2, 5
+          amount: 2, 5
         - id: MobGoat
-          amount: !type:RangeNumberSelector
-            range: 1, 3
+          amount: 1, 3
         - id: MobMonkeySyndicateAgent #so lucky
-          prob: 0.03
+          weight: 0.03
 
 - type: entity
   id: XenoArtifactHostileFaunaSpawn
@@ -977,8 +936,7 @@
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
       table: !type:GroupSelector
-        rolls: !type:RangeNumberSelector
-          range: 2, 4
+        rolls: 2, 4
         children:
         - id: SpaceCash10
           weight: 0.75
@@ -1173,9 +1131,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:GroupSelector
-        children:
-        - id: SheetGlass
+      table:
+        id: SheetGlass
 
 - type: entity
   id: XenoArtifactMaterialSpawnSteel
@@ -1188,9 +1145,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:GroupSelector
-        children:
-        - id: SheetSteel
+      table:
+        id: SheetSteel
 
 - type: entity
   id: XenoArtifactMaterialSpawnPlastic
@@ -1203,9 +1159,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:GroupSelector
-        children:
-        - id: SheetPlastic
+      table:
+        id: SheetPlastic
 
 - type: entity
   id: XenoArtifactPortal
@@ -1230,9 +1185,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: RandomArtifactSpawner
+      table:
+        id: RandomArtifactSpawner
 
 - type: entity
   id: XenoArtifactShuffle
@@ -1272,9 +1226,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: Singularity
+      table:
+        id: TeslaEnergyBall
 
 - type: entity
   id: XenoArtifactSingularity
@@ -1287,9 +1240,8 @@
     components:
     - type: EntityTableSpawner
       deleteSpawnerAfterSpawn: false
-      table: !type:AllSelector
-        children:
-        - id: TeslaEnergyBall
+      table:
+        id: Singularity
 
 - type: entity
   id: XenoArtifactExplosionScary
