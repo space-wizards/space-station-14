@@ -1,33 +1,75 @@
+using Content.Shared.Power.Components;
+using Content.Shared.PowerCell.Components;
+
 namespace Content.Shared.Power;
 
 /// <summary>
 /// Raised when a battery's charge or capacity changes (capacity affects relative charge percentage).
+/// Only raised for entities with <see cref="BatteryComponent"/>.
 /// </summary>
 [ByRefEvent]
 public readonly record struct ChargeChangedEvent(float Charge, float MaxCharge);
 
 /// <summary>
-/// Raised when it is necessary to get information about battery charges.
+/// Raised when a predicted battery's charge or capacity changes (capacity affects relative charge percentage).
+/// Unlike <see cref="ChargeChangedEvent"/> this is not raised repeatedly each time the charge changes, but only when the charge rate is changed
+/// or a charge amount was added or removed instantaneously. The current charge can be inferred from the time of the last update and the charge and
+/// charge rate at that time.
+/// Only raised for entities with <see cref="PredictedBatteryComponent"/>.
 /// </summary>
 [ByRefEvent]
-public sealed class GetChargeEvent : EntityEventArgs
+public readonly record struct PredictedBatteryChargeChangedEvent(float CurrentCharge, float CurrentChargeRate, TimeSpan CurrentTime, float MaxCharge);
+
+/// <summary>
+/// Raised when a battery changes its state between full, empty, or neither.
+/// Used only for <see cref="PredictedBatteryComponent"/>.
+/// </summary>
+[ByRefEvent]
+public record struct PredictedBatteryStateChangedEvent(BatteryState OldState, BatteryState NewState);
+
+/// <summary>
+/// Raised to calculate a predicted battery's recharge rate.
+/// Subscribe to this to offset its current charge rate.
+/// Used only for <see cref="PredictedBatteryComponent"/>.
+/// </summary>
+[ByRefEvent]
+public record struct RefreshChargeRateEvent(float MaxCharge)
+{
+    public readonly float MaxCharge = MaxCharge;
+    public float NewChargeRate;
+}
+
+/// <summary>
+/// Event that supports multiple battery types.
+/// Raised when it is necessary to get information about battery charges.
+/// Works with either <see cref="BatteryComponent"/>, <see cref="PredictedBatteryComponent"/>, or <see cref="PowerCellSlotComponent"/>.
+/// If there are multiple batteries then the results will be summed up.
+/// </summary>
+[ByRefEvent]
+public record struct GetChargeEvent
 {
     public float CurrentCharge;
     public float MaxCharge;
 }
 
 /// <summary>
-/// Raised when it is necessary to change the current battery charge to a some value.
+/// Method event that supports multiple battery types.
+/// Raised when it is necessary to change the current battery charge by some value.
+/// Works with either <see cref="BatteryComponent"/>, <see cref="PredictedBatteryComponent"/>, or <see cref="PowerCellSlotComponent"/>.
+/// If there are multiple batteries then they will be changed in order of subscription until the total value was reached.
 /// </summary>
 [ByRefEvent]
-public sealed class ChangeChargeEvent : EntityEventArgs
+public record struct ChangeChargeEvent(float Amount)
 {
-    public float OriginalValue;
-    public float ResidualValue;
+    /// <summary>
+    /// The total amount of charge to change the battery's storage by (in joule).
+    /// A positive value adds charge, a negative value removes charge.
+    /// </summary>
+    public readonly float Amount = Amount;
 
-    public ChangeChargeEvent(float value)
-    {
-        OriginalValue = value;
-        ResidualValue = value;
-    }
+    /// <summary>
+    /// The amount of charge that still has to be removed.
+    /// For cases where there are multiple batteries.
+    /// </summary>
+    public float ResidualValue = Amount;
 }
