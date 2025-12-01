@@ -12,10 +12,6 @@ loadout-group-canes = Canes
 loadout-group-description-canes = Canes
 loadout-group-folders = Paperwork
 loadout-group-description-folders = Folders
-loadout-group-dresses = Dresses
-loadout-group-description-dresses = Dresses
-loadout-group-pridecloak = Pride cloaks
-loadout-group-description-pridecloak = Pride cloaks
 
 # Miscellaneous
 loadout-group-trinkets = Trinkets
