@@ -86,6 +86,7 @@
   - ChiefEngineer
   - StationEngineer
   - TechnicalAssistant
+  weight: 5
 
 - type: department
   id: Medical
