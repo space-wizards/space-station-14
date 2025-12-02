@@ -37,7 +37,7 @@ public sealed class VentriloquistPuppetSystem : EntitySystem
 
         ent.Comp.HasHandInserted = true;
         _popup.PopupClient(Loc.GetString("ventriloquist-puppet-insert-hand"), ent.Owner, args.User);
-        _popup.PopupClient(Loc.GetString("ventriloquist-puppet-inserted-hand"), ent.Owner, ent.Owner);
+        _popup.PopupEntity(Loc.GetString("ventriloquist-puppet-inserted-hand"), ent.Owner, ent.Owner);
 
         // To avoid a client failure when a prediction is incomplete.
         if (_timing.IsFirstTimePredicted)
@@ -82,7 +82,7 @@ public sealed class VentriloquistPuppetSystem : EntitySystem
     {
         ent.Comp.HasHandInserted = false;
         _popup.PopupClient(Loc.GetString("ventriloquist-puppet-remove-hand"), ent.Owner, user);
-        _popup.PopupClient(Loc.GetString("ventriloquist-puppet-removed-hand"), ent.Owner, ent.Owner);
+        _popup.PopupEntity(Loc.GetString("ventriloquist-puppet-removed-hand"), ent.Owner, ent.Owner);
         EnsureComp<MutedComponent>(ent.Owner);
     }
 }
