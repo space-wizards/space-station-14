@@ -199,6 +199,13 @@ public sealed partial class DamageableSystem
         if (amount <= 0)
             return damageChange;
 
+        damageChange.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
+
+        foreach (var type in ent.Comp.Damage.DamageDict.Keys)
+        {
+            damageChange.DamageDict.Add(type, 0);
+        }
+
         // If trying to heal more than the total damage of the entity. just clear all damage and return how much damage the entity had
         if (ent.Comp.Damage.GetTotal() < amount)
         {
