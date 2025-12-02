@@ -832,7 +832,11 @@ public sealed partial class ChatUIController : UIController
             && _chatNameColorsEnabled)
         {
             var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
-            if (grammar != null && grammar.ProperNoun == true || msg.Channel is not ChatChannel.Local)
+            if (grammar != null && grammar.ProperNoun == true || msg.Channel is not (ChatChannel.Local
+                    or ChatChannel.Whisper
+                    or ChatChannel.Radio
+                    or ChatChannel.Emotes
+                    or ChatChannel.LOOC))
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
 
