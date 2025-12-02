@@ -37,14 +37,10 @@ public sealed partial class RepairableSystem : EntitySystem
             RepairAllDamage((ent, damageable), args.User);
 
         args.Repeat = ent.Comp.AutoDoAfter && damageable.TotalDamage > 0;
+        args.Args.Event.Repeat = args.Repeat;
         args.Handled = true;
 
-        if (args.Repeat)
-        {
-            args.Args.Delay *= ent.Comp.ConsecutiveRepairDelayMultiplier;
-            args.Args.Event.Repeat = true;
-        }
-        else
+        if (!args.Repeat)
         {
             var str = Loc.GetString("comp-repairable-repair", ("target", ent.Owner), ("tool", args.Used!));
             _popup.PopupClient(str, ent.Owner, args.User);
