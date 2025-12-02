@@ -100,13 +100,16 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
 
         xenoborgsRuleComponent.MaxNumberXenoborgs = Math.Max(xenoborgsRuleComponent.MaxNumberXenoborgs, numXenoborgs);
 
-        if ((float)numXenoborgs / (numHumans + numXenoborgs) > xenoborgsRuleComponent.XenoborgShuttleCallPercentage && !_roundEnd.IsRoundEndRequested())
+        if ((float)numXenoborgs / (numHumans + numXenoborgs) > xenoborgsRuleComponent.XenoborgShuttleCallPercentage &&
+            !_roundEnd.IsRoundEndRequested() &&
+            !xenoborgsRuleComponent.XenoborgShuttleCalled)
         {
             foreach (var station in _station.GetStations())
             {
                 _chatSystem.DispatchStationAnnouncement(station, Loc.GetString("xenoborg-shuttle-call"), colorOverride: Color.BlueViolet);
             }
             _roundEnd.RequestRoundEnd(null, false, cantRecall: true);
+            xenoborgsRuleComponent.XenoborgShuttleCalled = true;
         }
     }
 
