@@ -59,6 +59,7 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
         var allEnts = AllEntityQuery<WarpPointComponent>();
 
+        // Selecting suitable entities with the warpPoint component using whitelist
         while (allEnts.MoveNext(out var warpEnt, out var warpPointComp))
         {
 

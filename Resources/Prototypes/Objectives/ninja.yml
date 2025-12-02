@@ -54,9 +54,6 @@
     whitelist:
       tags:
       - NinjaBombingTarget
-    blacklist:
-      tags:
-      - NinjaBombingTargetBlacklist
 
 - type: entity
   parent: [BaseNinjaObjective, BaseSurviveObjective]
