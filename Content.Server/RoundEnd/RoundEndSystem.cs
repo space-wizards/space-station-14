@@ -239,11 +239,11 @@ namespace Content.Server.RoundEnd
             }
         }
 
-        public void CancelRoundEndCountdown(EntityUid? requester = null, bool checkCooldown = true, bool overrideCantRecall = false)
+        public void CancelRoundEndCountdown(EntityUid? requester = null, bool forceRecall = false)
         {
-            if (CantRecall && !overrideCantRecall) return;
+            if (CantRecall && !forceRecall) return;
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
-            if (checkCooldown && _cooldownTokenSource != null) return;
+            if (!forceRecall && _cooldownTokenSource != null) return;
 
             if (_countdownTokenSource == null) return;
             _countdownTokenSource.Cancel();
