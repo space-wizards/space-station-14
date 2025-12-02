@@ -178,7 +178,7 @@
       name: job-name-salvagespec
     - type: Loadout
       prototypes: [ VisitorSalvageSpecialist, VisitorSalvageSpecialistAlt ]
-      roleLoadout: [ RoleSurvivalStandard ]
+      roleLoadout: [ RoleSurvivalExtended ]
 
 # Engineering
 

@@ -44,7 +44,7 @@
 
 - type: entity
   parent: BoxCardboard
-  id: BoxSurvivalEngineering
+  id: BoxSurvivalEngineering # This is no longer exclusively used by engineering so this prototype should probably be renamed at some point
   name: extended-capacity survival box
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
   suffix: Extended
@@ -66,7 +66,7 @@
 
 - type: entity
   parent: BoxSurvivalEngineering
-  id: BoxSurvivalEngineeringNitrogen
+  id: BoxSurvivalEngineeringNitrogen # This is no longer exclusively used by engineering so this prototype should probably be renamed at some point
   suffix: Extended N2
   components:
   - type: EntityTableContainerFill
