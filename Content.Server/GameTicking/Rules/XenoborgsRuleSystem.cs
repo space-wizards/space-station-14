@@ -100,7 +100,7 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
 
         xenoborgsRuleComponent.MaxNumberXenoborgs = Math.Max(xenoborgsRuleComponent.MaxNumberXenoborgs, numXenoborgs);
 
-        if ((float)numXenoborgs / (numHumans + numXenoborgs) > xenoborgsRuleComponent.XenoborgShuttleCallPercentage)
+        if ((float)numXenoborgs / (numHumans + numXenoborgs) > xenoborgsRuleComponent.XenoborgShuttleCallPercentage && !_roundEnd.IsRoundEndRequested())
         {
             foreach (var station in _station.GetStations())
             {
