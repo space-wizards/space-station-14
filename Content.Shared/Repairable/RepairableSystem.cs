@@ -32,8 +32,10 @@ public sealed partial class RepairableSystem : EntitySystem
         if (!TryComp(ent.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
             return;
 
-        if (ent.Comp.Damage != null) RepairSomeDamage(ent, damageable, ent.Comp.Damage, args.User);
-        else RepairAllDamage(ent, damageable, args.User);
+        if (ent.Comp.Damage != null)
+            RepairSomeDamage(ent, damageable, ent.Comp.Damage, args.User);
+        else
+            RepairAllDamage(ent, damageable, args.User);
 
         args.Repeat = ent.Comp.AutoDoAfter && damageable.TotalDamage > 0;
         args.Handled = true;
