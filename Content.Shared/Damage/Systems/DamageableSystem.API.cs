@@ -204,7 +204,7 @@ public sealed partial class DamageableSystem
         {
             foreach (var (type, value) in ent.Comp.Damage.DamageDict)
             {
-                damageChange.DamageDict[type] = value;
+                damageChange.DamageDict[type] = -value;
             }
             ClearAllDamage(ent);
             return damageChange;
@@ -215,24 +215,27 @@ public sealed partial class DamageableSystem
         while (healToShare > 0)
         {
             var numberDamageTypesNotHealed = 0;
-            var minDamageNeedHeal = ent.Comp.Damage.DamageDict.First().Value - damageChange.DamageDict.First().Value;
+            FixedPoint2? minDamageNeedHealNullable = null;
             foreach (var (type, value) in ent.Comp.Damage.DamageDict)
             {
-                if (damageChange.DamageDict[type] - value > 0)
+                if (value + damageChange.DamageDict[type] > 0)
                 {
                     numberDamageTypesNotHealed += 1;
-                    minDamageNeedHeal = FixedPoint2.Min(minDamageNeedHeal, damageChange.DamageDict[type] - value);
+                    minDamageNeedHealNullable = minDamageNeedHealNullable != null ?
+                        FixedPoint2.Min(minDamageNeedHealNullable.Value, value + damageChange.DamageDict[type]) :
+                        value + damageChange.DamageDict[type];
                 }
             }
 
+            var minDamageNeedHeal = minDamageNeedHealNullable!.Value;
             var valueToTryToHeal = healToShare / numberDamageTypesNotHealed;
             valueToTryToHeal = FixedPoint2.Min(valueToTryToHeal, minDamageNeedHeal);
 
             foreach (var (type, value) in ent.Comp.Damage.DamageDict)
             {
-                if (value - damageChange.DamageDict[type] != 0)
+                if (value + damageChange.DamageDict[type] != 0)
                 {
-                    damageChange.DamageDict[type] += valueToTryToHeal;
+                    damageChange.DamageDict[type] -= valueToTryToHeal;
                     healToShare -= valueToTryToHeal;
                 }
             }
