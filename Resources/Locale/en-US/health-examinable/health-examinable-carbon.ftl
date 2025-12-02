@@ -42,7 +42,7 @@ health-examinable-carbon-Shock-75 = [color=lightgoldenrodyellow]{ CAPITALIZE(SUB
 health-examinable-carbon-Shock-100 = [color=lightgoldenrodyellow]{ CAPITALIZE(POSS-ADJ($target)) } body has extreme electrical burns across it![/color]
 health-examinable-carbon-Shock-200 = [color=lightgoldenrodyellow]{ CAPITALIZE(POSS-ADJ($target)) } body is completely fried![/color]
 
-health-examinable-carbon-Cold-8 = [color=lightblue]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } mild frostbite at the tips of { POSS-ADJ($target) } fingers.[/color]
+health-examinable-carbon-Cold-8 = [color=lightblue]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } mild frostbite at the tips of { POSS-ADJ($target) } extremities.[/color]
 health-examinable-carbon-Cold-15 = [color=lightblue]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } first-degree frostbite at the ends of { POSS-ADJ($target) } extremities.[/color]
 health-examinable-carbon-Cold-30 = [color=lightblue]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } second-degree frostbite on { POSS-ADJ($target) } extremities.[/color]
 health-examinable-carbon-Cold-50 = [color=lightblue]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-HAVE($target) } major third-degree frostbite on { POSS-ADJ($target) } extremities.[/color]
