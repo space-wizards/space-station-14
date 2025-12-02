@@ -6,16 +6,16 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Fluids.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(SpraySystem))]
 public sealed partial class SprayComponent : Component
 {
     public const string SolutionName = "spray";
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public FixedPoint2 TransferAmount = 10;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float SprayDistance = 3.5f;
 
     [DataField]
@@ -24,16 +24,16 @@ public sealed partial class SprayComponent : Component
     [DataField]
     public EntProtoId SprayedPrototype = "Vapor";
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public int VaporAmount = 1;
 
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float VaporSpread = 90f;
 
     /// <summary>
     /// How much the player is pushed back for each spray.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float PushbackAmount = 5f;
 
     [DataField(required: true)]

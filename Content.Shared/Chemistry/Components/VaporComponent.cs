@@ -1,5 +1,5 @@
 ﻿using Robust.Shared.GameStates;
-﻿using Robust.Shared.Map;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Chemistry.Components;
 
@@ -29,10 +29,9 @@ public sealed partial class VaporComponent : Component
     /// transfer 0.01~ forever and never get deleted.
     /// <remarks>Defaults to 0.05 if not defined, a good general value.</remarks>
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public float MinimumTransferAmount = 0.05f;
 
     [DataField, AutoNetworkedField]
     public bool Active;
 }
-
