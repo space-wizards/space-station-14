@@ -105,7 +105,7 @@
           mask:
             - TableMask
           layer:
-            - CounterLayer
+            - TableLayer
     - type: TimedDespawn
       lifetime: 180
     - type: PointLight
