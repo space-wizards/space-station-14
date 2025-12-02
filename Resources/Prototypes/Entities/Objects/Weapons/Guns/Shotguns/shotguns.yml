@@ -317,6 +317,7 @@
       path: /Audio/Weapons/Guns/Gunshots/hushpup.ogg
       params:
         volume: -3
+        rolloffFactor: 1.3
     fireRate: 2
   - type: GunSpreadModifier
     spread: 1.2
