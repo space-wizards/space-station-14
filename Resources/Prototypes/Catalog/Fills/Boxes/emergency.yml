@@ -126,7 +126,7 @@
         - id: EmergencyMedipen
 
 - type: entity
-  parent: BoxSurvivalNitrogen
+  parent: BoxSurvivalMedical
   id: BoxSurvivalMedicalNitrogen
   name: medical survival box
   suffix: N2
