@@ -393,12 +393,7 @@ namespace Content.Server.GameTicking
                 }
                 else
                 {
-                    var blacklistedSpecies = new HashSet<string>();
-                    if (_cfg.GetCVar(CCVars.ICBlacklistSpeciesNewAccount))
-                    {
-                        blacklistedSpecies = ["SlimePerson", "Vox", "Vulpkanin", "Diona"];
-                    }
-                    profile = HumanoidCharacterProfile.Random(ignoredSpecies: blacklistedSpecies);
+                    profile = HumanoidCharacterProfile.Random(new HashSet<string>(_cfg.GetCVar(CCVars.ICNewAccountSpeciesBlacklist).Split(",")));
                 }
                 readyPlayerProfiles.Add(userId, profile);
             }
