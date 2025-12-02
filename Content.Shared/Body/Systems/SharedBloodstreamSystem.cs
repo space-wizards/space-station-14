@@ -306,7 +306,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     private void OnMetabolismExclusion(Entity<BloodstreamComponent> ent, ref MetabolismExclusionEvent args)
     {
         // Any blood reagent that shares the name will skip metabolism to enable blood transfusion
-        args.ReagentList.RemoveAll(reagent => reagent.Reagent.Prototype == ent.Comp.BloodReagent);
+        args.ReagentList.RemoveAll(reagent => ent.Comp.BloodReagents.ContainsPrototype(reagent.Reagent.Prototype));
     }
 
     /// <summary>
@@ -321,18 +321,14 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             return 0.0f;
         }
 
-        var totalBloodLevel = 0.0f;
+        FixedPoint2 totalBloodLevel = FixedPoint2.Zero;
 
-        for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
+        foreach (var (reagentId, _) in entity.Comp.BloodReagents.Contents)
         {
-            var (reagentId, quantity) = bloodSolution.Contents[i];
-            if (reagentId.Prototype == entity.Comp.BloodReagent)
-            {
-                totalBloodLevel += quantity.Float();
-            }
+            totalBloodLevel += bloodSolution.GetTotalPrototypeQuantity(reagentId.Prototype);
         }
 
-        return totalBloodLevel / entity.Comp.BloodReferenceVolume.Float();
+        return (float)(totalBloodLevel / entity.Comp.BloodReferenceVolume);
     }
 
     /// <summary>
@@ -379,7 +375,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagentId, _) = bloodSolution.Contents[i];
-            if (reagentId.Prototype != ent.Comp.BloodReagent && reagentId.Prototype != excludedReagentID)
+            if (!ent.Comp.BloodReagents.ContainsPrototype(reagentId.Prototype) && reagentId.Prototype != excludedReagentID)
             {
                 var reagentFlushAmount = SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
                 flushedSolution.AddReagent(reagentId, reagentFlushAmount);
