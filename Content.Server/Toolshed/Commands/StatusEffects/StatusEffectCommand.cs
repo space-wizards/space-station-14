@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Toolshed.TypeParsers.StatusEffects;
 using Content.Shared.Administration;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Prototypes;
@@ -12,7 +13,7 @@ public sealed class StatusEffectCommand : ToolshedCommand
     private StatusEffectsSystem? _statusEffectsSystem;
 
     [CommandImplementation("add")]
-    public EntityUid? Add([PipedArgument] EntityUid input, EntProtoId status, float time, float? delay = null)
+    public EntityUid? Add([PipedArgument] EntityUid input, [CommandArgument(typeof(StatusEffectCompletionParser))] EntProtoId status, float time, float delay = 0)
     {
         _statusEffectsSystem ??= GetSys<StatusEffectsSystem>();
 
@@ -20,13 +21,13 @@ public sealed class StatusEffectCommand : ToolshedCommand
             input,
             status,
             TimeSpan.FromSeconds(time),
-            delay == null ? null : TimeSpan.FromSeconds(delay.Value));
+            delay == 0 ? null : TimeSpan.FromSeconds(delay));
 
         return input;
     }
 
     [CommandImplementation("add")]
-    public IEnumerable<EntityUid> Add([PipedArgument] IEnumerable<EntityUid> input, EntProtoId status, float time, float? delay = null)
+    public IEnumerable<EntityUid> Add([PipedArgument] IEnumerable<EntityUid> input, [CommandArgument(typeof(StatusEffectCompletionParser))] EntProtoId status, float time, float delay = 0)
     {
         _statusEffectsSystem ??= GetSys<StatusEffectsSystem>();
 
@@ -36,28 +37,28 @@ public sealed class StatusEffectCommand : ToolshedCommand
                 ent,
                 status,
                 TimeSpan.FromSeconds(time),
-                delay == null ? null : TimeSpan.FromSeconds(delay.Value));
+                delay == 0 ? null : TimeSpan.FromSeconds(delay));
 
             yield return ent;
         }
     }
 
     [CommandImplementation("update")]
-    public EntityUid? Update([PipedArgument] EntityUid input, EntProtoId status, float? time, float? delay = null)
+    public EntityUid? Update([PipedArgument] EntityUid input, [CommandArgument(typeof(StatusEffectCompletionParser))] EntProtoId status, float time, float delay = 0)
     {
         _statusEffectsSystem ??= GetSys<StatusEffectsSystem>();
 
         _statusEffectsSystem.TryUpdateStatusEffectDuration(
             input,
             status,
-            time == null ? null : TimeSpan.FromSeconds(time.Value),
-            delay == null ? null : TimeSpan.FromSeconds(delay.Value));
+            time == 0 ? null : TimeSpan.FromSeconds(time),
+            delay == 0 ? null : TimeSpan.FromSeconds(delay));
 
         return input;
     }
 
     [CommandImplementation("update")]
-    public IEnumerable<EntityUid> Update([PipedArgument] IEnumerable<EntityUid> input, EntProtoId status, float? time = null, float? delay = null)
+    public IEnumerable<EntityUid> Update([PipedArgument] IEnumerable<EntityUid> input, [CommandArgument(typeof(StatusEffectCompletionParser))] EntProtoId status, float time, float delay = 0)
     {
         _statusEffectsSystem ??= GetSys<StatusEffectsSystem>();
 
@@ -66,29 +67,29 @@ public sealed class StatusEffectCommand : ToolshedCommand
             _statusEffectsSystem.TryUpdateStatusEffectDuration(
                 ent,
                 status,
-                time == null ? null : TimeSpan.FromSeconds(time.Value),
-                delay == null ? null : TimeSpan.FromSeconds(delay.Value));
+                time == 0 ? null : TimeSpan.FromSeconds(time),
+                delay == 0 ? null : TimeSpan.FromSeconds(delay));
 
             yield return ent;
         }
     }
 
     [CommandImplementation("set")]
-    public EntityUid? Set([PipedArgument] EntityUid input, EntProtoId status, float? time, float? delay = null)
+    public EntityUid? Set([PipedArgument] EntityUid input, [CommandArgument(typeof(StatusEffectCompletionParser))] EntProtoId status, float time = 0, float delay = 0)
     {
         _statusEffectsSystem ??= GetSys<StatusEffectsSystem>();
 
         _statusEffectsSystem.TrySetStatusEffectDuration(
             input,
             status,
-            time == null ? null : TimeSpan.FromSeconds(time.Value),
-            delay == null ? null : TimeSpan.FromSeconds(delay.Value));
+            time == 0 ? null : TimeSpan.FromSeconds(time),
+            delay == 0 ? null : TimeSpan.FromSeconds(delay));
 
         return input;
     }
 
     [CommandImplementation("set")]
-    public IEnumerable<EntityUid> Set([PipedArgument] IEnumerable<EntityUid> input, EntProtoId status, float? time = null, float? delay = null)
+    public IEnumerable<EntityUid> Set([PipedArgument] IEnumerable<EntityUid> input, [CommandArgument(typeof(StatusEffectCompletionParser))] EntProtoId status, float time = 0, float delay = 0)
     {
         _statusEffectsSystem ??= GetSys<StatusEffectsSystem>();
 
@@ -97,28 +98,28 @@ public sealed class StatusEffectCommand : ToolshedCommand
             _statusEffectsSystem.TrySetStatusEffectDuration(
                 ent,
                 status,
-                time == null ? null : TimeSpan.FromSeconds(time.Value),
-                delay == null ? null : TimeSpan.FromSeconds(delay.Value));
+                time == 0 ? null : TimeSpan.FromSeconds(time),
+                delay == 0 ? null : TimeSpan.FromSeconds(delay));
 
             yield return ent;
         }
     }
 
     [CommandImplementation("remove")]
-    public EntityUid? Remove([PipedArgument] EntityUid input, EntProtoId status, float? time, float? delay = null)
+    public EntityUid? Remove([PipedArgument] EntityUid input, [CommandArgument(typeof(StatusEffectCompletionParser))] EntProtoId status, float time = 0)
     {
         _statusEffectsSystem ??= GetSys<StatusEffectsSystem>();
 
         _statusEffectsSystem.TryRemoveTime(
             input,
             status,
-            time == null ? null : TimeSpan.FromSeconds(time.Value));
+            time == 0 ? null : TimeSpan.FromSeconds(time));
 
         return input;
     }
 
     [CommandImplementation("remove")]
-    public IEnumerable<EntityUid> Remove([PipedArgument] IEnumerable<EntityUid> input, EntProtoId status, float? time = null)
+    public IEnumerable<EntityUid> Remove([PipedArgument] IEnumerable<EntityUid> input, [CommandArgument(typeof(StatusEffectCompletionParser))] EntProtoId status, float time = 0)
     {
         _statusEffectsSystem ??= GetSys<StatusEffectsSystem>();
 
@@ -127,7 +128,7 @@ public sealed class StatusEffectCommand : ToolshedCommand
             _statusEffectsSystem.TryRemoveTime(
                 ent,
                 status,
-                time == null ? null : TimeSpan.FromSeconds(time.Value));
+                time == 0 ? null : TimeSpan.FromSeconds(time));
 
             yield return ent;
         }
