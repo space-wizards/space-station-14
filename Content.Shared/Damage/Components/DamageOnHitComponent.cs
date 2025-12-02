@@ -14,4 +14,3 @@ public sealed partial class DamageOnHitComponent : Component
     [DataField(required: true), AutoNetworkedField]
     public DamageSpecifier Damage = new();
 }
-

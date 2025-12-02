@@ -22,4 +22,3 @@ public sealed class DamageOnLandSystem : EntitySystem
         _damageableSystem.TryChangeDamage(ent.Owner, ent.Comp.Damage, ent.Comp.IgnoreResistances);
     }
 }
-
