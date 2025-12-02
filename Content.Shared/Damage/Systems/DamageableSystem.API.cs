@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -182,6 +183,62 @@ public sealed partial class DamageableSystem
             OnEntityDamageChanged((ent, ent.Comp), damageDone, interruptsDoAfters, origin);
 
         return damageDone;
+    }
+
+    public DamageSpecifier HealEvenly(
+        Entity<DamageableComponent?> ent,
+        FixedPoint2 amount,
+        EntityUid? origin = null
+    )
+    {
+        var damageChange = new DamageSpecifier();
+
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+            return damageChange;
+
+        if (amount == 0)
+            return damageChange;
+
+        // If trying to heal more than the total damage of the entity. just clear all damage and return how much damage the entity had
+        if (ent.Comp.Damage.GetTotal() < amount)
+        {
+            foreach (var (type, value) in ent.Comp.Damage.DamageDict)
+            {
+                damageChange.DamageDict[type] = value;
+            }
+            ClearAllDamage(ent);
+            return damageChange;
+        }
+
+        // complicated math
+        var healToShare = amount;
+        while (healToShare > 0)
+        {
+            var numberDamageTypesNotHealed = 0;
+            var minDamageNeedHeal = ent.Comp.Damage.DamageDict.First().Value - damageChange.DamageDict.First().Value;
+            foreach (var (type, value) in ent.Comp.Damage.DamageDict)
+            {
+                if (value - damageChange.DamageDict[type] != 0)
+                {
+                    numberDamageTypesNotHealed += 1;
+                    minDamageNeedHeal = FixedPoint2.Min(minDamageNeedHeal, value - damageChange.DamageDict[type]);
+                }
+            }
+
+            var valueToTryToHeal = healToShare / numberDamageTypesNotHealed;
+            valueToTryToHeal = FixedPoint2.Min(valueToTryToHeal, minDamageNeedHeal);
+
+            foreach (var (type, value) in ent.Comp.Damage.DamageDict)
+            {
+                if (value - damageChange.DamageDict[type] != 0)
+                {
+                    damageChange.DamageDict[type] += valueToTryToHeal;
+                    healToShare -= valueToTryToHeal;
+                }
+            }
+        }
+
+        return ChangeDamage(ent, damageChange, true, false, origin);
     }
 
     /// <summary>

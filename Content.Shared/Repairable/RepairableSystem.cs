@@ -31,7 +31,9 @@ public sealed partial class RepairableSystem : EntitySystem
         if (!TryComp(ent.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
             return;
 
-        if (ent.Comp.Damage != null)
+        if (ent.Comp.DamageValue != null)
+            RepairSomeDamage((ent, damageable), ent.Comp.DamageValue.Value, args.User);
+        else if (ent.Comp.Damage != null)
             RepairSomeDamage((ent, damageable), ent.Comp.Damage, args.User);
         else
             RepairAllDamage((ent, damageable), args.User);
@@ -48,6 +50,18 @@ public sealed partial class RepairableSystem : EntitySystem
             var ev = new RepairedEvent(ent, args.User);
             RaiseLocalEvent(ent.Owner, ref ev);
         }
+    }
+
+    /// <summary>
+    /// Repairs some damage of a entity
+    /// </summary>
+    /// <param name="ent">entity to be repaired</param>
+    /// <param name="damageAmount">how much damage to repair</param>
+    /// <param name="user">who is doing the repair</param>
+    private void RepairSomeDamage(Entity<DamageableComponent?> ent, float damageAmount, EntityUid user)
+    {
+        var damageChanged = _damageableSystem.HealEvenly(ent.Owner, damageAmount, origin: user);
+        _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
     }
 
     /// <summary>

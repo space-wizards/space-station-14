@@ -103,12 +103,7 @@
     - Science
   - type: ZombieImmune
   - type: Repairable
-    damage:
-      groups:
-        Brute: -30
-      types:
-        Heat: -10
-        Shock: -10
+    damageValue: 10
     doAfterDelay: 1
     fuelCost: 0.5
     allowSelfRepair: false

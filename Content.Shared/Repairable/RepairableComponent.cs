@@ -17,9 +17,20 @@ public sealed partial class RepairableComponent : Component
     /// <remarks>
     ///     If this data-field is specified, it will change damage by this amount instead of setting all damage to 0.
     ///     in order to heal/repair the damage values have to be negative.
+    ///     This will only be used if <see cref="DamageValue"/> is not null.
+    ///     If this is null and so is <see cref="DamageValue"/> then all damage will be repaired at once.
     /// </remarks>
     [DataField, AutoNetworkedField]
     public DamageSpecifier? Damage;
+
+    /// <summary>
+    /// Amount of damage to repair of the entity equaly distribuited among the damage types the entity has
+    /// </summary>
+    /// <remarks>
+    /// Unlike <see cref="Damage"/> this value has to be positive.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public float? DamageValue;
 
     /// <summary>
     /// Cost of fuel used to repair this device.
