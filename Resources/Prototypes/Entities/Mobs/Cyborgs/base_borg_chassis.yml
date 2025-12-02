@@ -105,10 +105,10 @@
   - type: Repairable
     damage:
       groups:
-        Brute: -30
+        Brute: -45
       types:
-        Heat: -10
-        Shock: -10
+        Heat: -15
+        Shock: -15
     doAfterDelay: 1
     fuelCost: 0.5
     allowSelfRepair: false
