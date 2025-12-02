@@ -230,6 +230,7 @@
 - type: entity
   parent: BoxCardboardSmall
   id: BoxHugHealing
+  name: box of hugs
   suffix: Medical
   description: A special box for sensitive people.
   components:
