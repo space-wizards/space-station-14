@@ -194,3 +194,17 @@
         mask:
         - FullTileMask
         - Opaque
+
+- type: entity
+  parent: Vapor
+  id: FlowerVapor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/extinguisherSpray.rsi
+    layers:
+    - state: extinguish
+      map: [ "enum.VaporVisualLayers.Base" ]
+  - type: VaporVisuals
+    animationTime: 0.8
+    animationState: extinguish
