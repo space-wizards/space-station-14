@@ -40,12 +40,10 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     /// <summary>
     /// Output matrix of artifact nodes and how they are connected.
     /// </summary>
-    [CommandImplementation("print_matrix")]
-    public string PrintMatrix([PipedArgument] EntityUid artifactEntitUid)
+    [CommandImplementation("printMatrix")]
+    public string PrintMatrix([CommandArgument] Entity<XenoArtifactComponent> artifactEnt)
     {
-        var comp = EntityManager.GetComponent<XenoArtifactComponent>(artifactEntitUid);
-
-        var nodeCount = comp.NodeVertices.Length;
+        var nodeCount = artifactEnt.Comp.NodeVertices.Length;
 
         var sb = new StringBuilder("\n  |");
         for (var i = 0; i < nodeCount; i++)
@@ -60,7 +58,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
             sb.Append($"\n{i:D2}|");
             for (var j = 0; j < nodeCount; j++)
             {
-                var value = comp.NodeAdjacencyMatrix[i][j]
+                var value = artifactEnt.Comp.NodeAdjacencyMatrix[i][j]
                     ? "X"
                     : " ";
                 sb.Append($" {value} |");
@@ -76,13 +74,13 @@ public sealed class XenoArtifactCommand : ToolshedCommand
             builder.Append("--+");
             for (var i = 0; i < nodeCount; i++)
             {
-                builder.Append($"---+");
+                builder.Append("---+");
             }
         }
     }
 
     /// <summary> Output total research points artifact contains. </summary>
-    [CommandImplementation("total_research")]
+    [CommandImplementation("totalResearch")]
     public int TotalResearch([PipedArgument] EntityUid artifactEntityUid)
     {
         var artiSys = EntityManager.System<XenoArtifactSystem>();
@@ -102,7 +100,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     /// <summary>
     /// Spawns a bunch of artifacts and gets average total research points they can yield.
     /// </summary>
-    [CommandImplementation("average_research")]
+    [CommandImplementation("averageResearch")]
     public float AverageResearch()
     {
         const int n = 100;
@@ -119,7 +117,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     }
 
     /// <summary> Unlocks all nodes of artifact. </summary>
-    [CommandImplementation("unlock_all_nodes")]
+    [CommandImplementation("unlockAllNodes")]
     public void UnlockAllNodes([PipedArgument] EntityUid artifactEntityUid)
     {
         var artiSys = EntityManager.System<XenoArtifactSystem>();
@@ -135,10 +133,6 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     /// <summary>
     /// Create node in artifact (new on depth 0 or attach next to existing one).
     /// </summary>
-    /// <param name="artifact">A</param>
-    /// <param name="effect">B</param>
-    /// <param name="trigger">C</param>
-    [CommandImplementation("create_node")]
     public void CreateNodeNew(
         [CommandArgument] Entity<XenoArtifactComponent> artifact,
         [CommandArgument(typeof(XenoEffectParser))] ProtoId<EntityPrototype> effect,
@@ -148,7 +142,8 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         CreateNode(artifact, effect, trigger);
     }
 
-    [CommandImplementation("create_node_at_depth")]
+    /// <summary> Create node in artifact. </summary>
+    [CommandImplementation("createNodeAtDepth")]
     public void CreateNodeAtDepth(
         [CommandArgument] Entity<XenoArtifactComponent> artifact,
         [CommandArgument(typeof(XenoEffectParser))] ProtoId<EntityPrototype> effect,
@@ -159,7 +154,8 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         CreateNode(artifact, effect, trigger, node);
     }
 
-    [CommandImplementation("spawn_art_with_node")]
+    /// <summary> Spawns artifact with specified node. </summary>
+    [CommandImplementation("spawnArtWithNode")]
     public void SpawnArtifactWithNode(
         [CommandArgument] ICommonSession target,
         [CommandArgument(typeof(XenoArtifactTypeParser))] ProtoId<EntityPrototype> artifactType,
@@ -179,7 +175,8 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         CreateNode((entity, artifactComp), effect, trigger);
     }
 
-    [CommandImplementation("unlock_node")]
+    /// <summary> Marks node as unlocked. </summary>
+    [CommandImplementation("unlockNode")]
     public void UnlockNode(
         [CommandArgument] Entity<XenoArtifactComponent> artifact,
         [CommandArgument(typeof(XenoArtifactNodeParser))] Entity<XenoArtifactNodeComponent> node
@@ -189,7 +186,8 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         artifactSystem.SetNodeUnlocked((node,node));
     }
 
-    [CommandImplementation("remove_node")]
+    /// <summary> Removes node from xeno artifact. </summary>
+    [CommandImplementation("removeNode")]
     public void RemoveNode(
         [CommandArgument] Entity<XenoArtifactComponent> artifact,
         [CommandArgument(typeof(XenoArtifactNodeParser))] Entity<XenoArtifactNodeComponent> node
@@ -199,7 +197,8 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         artifactSystem.RemoveNode((artifact, artifact), (node, node));
     }
 
-    [CommandImplementation("add_edge")]
+    /// <summary> Adds edge between nodes of xeno artifact. </summary>
+    [CommandImplementation("addEdge")]
     public void AddEdge(
         [CommandArgument] Entity<XenoArtifactComponent> artifact,
         [CommandArgument(typeof(XenoArtifactNodeParser))] Entity<XenoArtifactNodeComponent> nodeFrom,
@@ -328,9 +327,15 @@ public sealed class XenoArtifactNodeParser : CustomTypeParser<Entity<XenoArtifac
                 node =>
                 {
                     var metadata = _entityManager.GetComponent<MetaDataComponent>(node);
+                    var entDescription = Loc.GetString(metadata.EntityDescription);
                     return new CompletionOption(
                         node.Owner.ToString(),
-                        $"depth {node.Comp.Depth} node {xenoArtifactSystem.GetNodeId(node.Owner)} trigger {Loc.GetString(metadata.EntityDescription)}"
+                        Loc.GetString(
+                            "command-xenoartifact-common-node-hint",
+                            ("depth", node.Comp.Depth),
+                            ("nodeId", xenoArtifactSystem.GetNodeId(node.Owner)),
+                            ("nodeDetail", entDescription)
+                        )
                     );
                 });
 
@@ -338,6 +343,9 @@ public sealed class XenoArtifactNodeParser : CustomTypeParser<Entity<XenoArtifac
     }
 }
 
+/// <summary>
+/// Custom type parser for toolshed commands that will enable choosing between hand-held and 
+/// </summary>
 public sealed class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityPrototype>>
 {
     private static readonly EntProtoId ArtifactDummyItem = "DummyArtifactItem";
@@ -370,10 +378,10 @@ public sealed class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityProt
     {
         return CompletionResult.FromHintOptions(
             [
-                new CompletionOption(ArtifactDummyItem, Loc.GetString("cmd-spawnartifactwithnode-spawn-artifact-item-hint")),
-                new CompletionOption(ArtifactDummyStructure, Loc.GetString("cmd-spawnartifactwithnode-spawn-artifact-structure-hint")),
+                new CompletionOption(ArtifactDummyItem, Loc.GetString("command-spawnartifactwithnode-spawn-artifact-item-hint")),
+                new CompletionOption(ArtifactDummyStructure, Loc.GetString("command-spawnartifactwithnode-spawn-artifact-structure-hint")),
             ],
-            Loc.GetString("cmd-spawnartifactwithnode-spawn-artifact-type-hint")
+            Loc.GetString("command-spawnartifactwithnode-spawn-artifact-type-hint")
         );
     }
 }
