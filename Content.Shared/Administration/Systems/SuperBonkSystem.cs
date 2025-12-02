@@ -1,4 +1,4 @@
-using Content.Server.Administration.Components;
+using Content.Shared.Administration.Components;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Clumsy;
 using Content.Shared.Mobs;
@@ -6,7 +6,7 @@ using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Administration.Systems;
+namespace Content.Shared.Administration.Systems;
 
 public sealed class SuperBonkSystem : EntitySystem
 {
@@ -69,7 +69,7 @@ public sealed class SuperBonkSystem : EntitySystem
 
     public void StartSuperBonk(EntityUid target, bool stopWhenDead = false)
     {
-        //The other check in the code to stop when the target dies does not work if the target is already dead.
+        // The other check in the code to stop when the target dies does not work if the target is already dead.
         if (stopWhenDead && TryComp<MobStateComponent>(target, out var mobState) && mobState.CurrentState == MobState.Dead)
             return;
 
@@ -79,11 +79,10 @@ public sealed class SuperBonkSystem : EntitySystem
 
         var tables = EntityQueryEnumerator<BonkableComponent>();
         var bonks = new List<EntityUid>();
+
         // This is done so we don't crash if something like a new table is spawned.
-        while (tables.MoveNext(out var uid, out var comp))
-        {
+        while (tables.MoveNext(out var uid, out _))
             bonks.Add(uid);
-        }
 
         component.Tables = bonks.GetEnumerator();
         component.RemoveClumsy = !EnsureComp<ClumsyComponent>(target, out _);
@@ -103,7 +102,7 @@ public sealed class SuperBonkSystem : EntitySystem
 
             _clumsySystem.HitHeadClumsy((uid, clumsyComp), tableUid);
 
-            _audioSystem.PlayPvs(clumsyComp.TableBonkSound, tableUid);
+            _audioSystem.PlayPredicted(clumsyComp.TableBonkSound, tableUid, tableUid);
         }
 
         return true;

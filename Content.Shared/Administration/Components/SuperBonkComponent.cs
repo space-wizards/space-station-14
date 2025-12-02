@@ -1,12 +1,14 @@
-using Content.Server.Administration.Systems;
+using Content.Shared.Administration.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Administration.Components;
+namespace Content.Shared.Administration.Components;
 
 /// <summary>
 /// Component to track the timer for the SuperBonk smite.
 /// </summary>
-[RegisterComponent, AutoGenerateComponentPause, Access(typeof(SuperBonkSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(SuperBonkSystem))]
 public sealed partial class SuperBonkComponent : Component
 {
     /// <summary>
@@ -24,19 +26,19 @@ public sealed partial class SuperBonkComponent : Component
     /// <summary>
     /// Next time when we will bonk.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextBonk = TimeSpan.Zero;
 
     /// <summary>
     /// Whether to remove the clumsy component from the target after SuperBonk is done.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool RemoveClumsy = true;
 
     /// <summary>
     /// Whether to stop Super Bonk on the target once he dies. Otherwise it will continue until no other tables are left
     /// or the target is gibbed.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool StopWhenDead = true;
 }
