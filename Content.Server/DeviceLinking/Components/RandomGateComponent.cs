@@ -13,13 +13,13 @@ public sealed partial class RandomGateComponent : Component
     /// <summary>
     /// The input port for receiving signals.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SinkPortPrototype> InputPort = "RandomGateInput";
 
     /// <summary>
     /// The output port for sending signals.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public ProtoId<SourcePortPrototype> OutputPort = "Output";
 
     /// <summary>
