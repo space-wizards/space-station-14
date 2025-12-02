@@ -208,19 +208,15 @@ public sealed partial class DamageableSystem
             return damageChange;
 
         damageChange.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
-
         foreach (var type in ent.Comp.Damage.DamageDict.Keys)
-        {
             damageChange.DamageDict.Add(type, 0);
-        }
 
         // If trying to heal more than the total damage of the entity just clear all damage and return how much damage the entity had.
         if (ent.Comp.TotalDamage < amount)
         {
             foreach (var (type, value) in ent.Comp.Damage.DamageDict)
-            {
                 damageChange.DamageDict[type] = -value;
-            }
+
             ClearAllDamage(ent);
             return damageChange;
         }
