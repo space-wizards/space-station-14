@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: maland1
-  changes:
-  - message: Updating a number of guidebook pages to be more easily readable and accurate
-    type: Tweak
-  id: 8735
-  time: '2025-07-04T00:04:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38699
-- author: TiniestShark
-  changes:
-  - message: Added a Wire Brush to the Janitor's tool kit for scrubbing unsightly
-      rust off of the station's walls!
-    type: Add
-  id: 8736
-  time: '2025-07-04T02:02:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38667
-- author: Velken
-  changes:
-  - message: Revenants' malfunction ability now properly works on MediBots and Stasis
-      Beds again.
-    type: Fix
-  id: 8737
-  time: '2025-07-04T05:08:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38664
-- author: perryprog
-  changes:
-  - message: You can now mop space lube, letting it evaporate faster than it would
-      on its own.
-    type: Tweak
-  id: 8738
-  time: '2025-07-04T21:50:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38743
 - author: TrixxedHeart
   changes:
   - message: Vox now have scar markings.
@@ -3916,3 +3885,32 @@
   id: 9235
   time: '2025-11-30T05:20:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41631
+- author: slarticodefast
+  changes:
+  - message: Borgs are now predicted. Interacting with them or using borg modules
+      or the borg UI should feel much more responsive.
+    type: Fix
+  id: 9236
+  time: '2025-11-30T10:37:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41600
+- author: Princess-Cheeseballs
+  changes:
+  - message: Contacting another entity while on fire will transfer less firestacks.
+    type: Fix
+  id: 9237
+  time: '2025-11-30T14:10:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41636
+- author: slarticodefast
+  changes:
+  - message: Fixed the RCD placement ghost getting stuck for engi borgs.
+    type: Fix
+  id: 9238
+  time: '2025-12-01T01:35:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41648
+- author: Beck, Toast
+  changes:
+  - message: Clowns can now get flowers that spray water at 4 hours of playtime
+    type: Add
+  id: 9239
+  time: '2025-12-01T01:48:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41469
