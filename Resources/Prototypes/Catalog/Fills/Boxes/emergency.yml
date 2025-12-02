@@ -115,7 +115,6 @@
   parent: BoxSurvival
   id: BoxSurvivalMedical
   name: medical survival box
-  suffix: O2
   description: A small box containing a medical mask, an emergency oxygen tank, and an emergency medipen. Issued to oxygen-breathing members of the medical staff.
   components:
   - type: EntityTableContainerFill
@@ -150,7 +149,7 @@
 - type: entity
   parent: BoxHugHealing
   id: BoxHug
-  suffix: Emergency O2
+  suffix: Survival; O2
   description: A small box containing a breath mask, a funny emergency oxygen tank, and an emergency medipen. Issued to sensitive, oxygen-breathing crew.
   components:
   - type: EntityTableContainerFill
@@ -166,7 +165,7 @@
 - type: entity
   parent: BoxHug
   id: BoxHugNitrogen
-  suffix: Emergency N2
+  suffix: Survival; N2
   description: A small box containing a breath mask, an emergency nitrogen tank, and an emergency medipen. Issued to sensitive, nitrogen-breathing crew.
   components:
   - type: EntityTableContainerFill
