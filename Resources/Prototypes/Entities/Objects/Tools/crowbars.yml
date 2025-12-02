@@ -3,7 +3,7 @@
   parent: BaseItem
   id: BaseCrowbar
   name: crowbar
-  description: A multipurpose tool used for many tasks, such as prying doors and bludgeoning interdimensional invaders.
+  description: A multipurpose tool used for many tasks, such as prying doors or bludgeoning interdimensional invaders.
   components:
   - type: EmitSoundOnLand
     sound:
