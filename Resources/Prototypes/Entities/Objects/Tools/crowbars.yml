@@ -63,7 +63,7 @@
   - type: Tag
     tags:
     - Crowbar
-    - CrowbarRed # This might be a legacy tag since iirc the red crowbar is currently identical to all other crowbars
+    - CrowbarRed
   - type: Sprite
     layers:
     - state: icon
