@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
@@ -18,7 +19,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
-using System.Numerics;
 
 namespace Content.Shared.Fluids.EntitySystems;
 

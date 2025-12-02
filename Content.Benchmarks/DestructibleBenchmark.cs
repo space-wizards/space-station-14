@@ -1,4 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.Server.Destructible;
@@ -16,8 +18,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Content.Benchmarks;
 

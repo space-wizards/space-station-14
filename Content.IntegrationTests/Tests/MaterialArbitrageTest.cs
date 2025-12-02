@@ -1,4 +1,5 @@
 #nullable enable
+using System.Collections.Generic;
 using Content.Server.Cargo.Systems;
 using Content.Server.Construction.Completions;
 using Content.Server.Construction.Components;
@@ -17,7 +18,6 @@ using Content.Shared.Stacks;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
-using System.Collections.Generic;
 
 namespace Content.IntegrationTests.Tests;
 

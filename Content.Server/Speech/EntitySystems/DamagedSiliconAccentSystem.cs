@@ -1,4 +1,5 @@
-﻿using Content.Server.Destructible;
+﻿using System.Text;
+using Content.Server.Destructible;
 using Content.Shared.Damage.Components;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
@@ -7,7 +8,6 @@ using Content.Shared.Power.EntitySystems;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Random;
-using System.Text;
 
 namespace Content.Server.Speech.EntitySystems;
 

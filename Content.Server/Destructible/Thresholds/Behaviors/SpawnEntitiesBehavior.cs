@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Forensics;
 using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds;
@@ -7,7 +8,6 @@ using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Numerics;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
