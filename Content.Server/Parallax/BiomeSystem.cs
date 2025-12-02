@@ -1,6 +1,6 @@
-
 using System.Numerics;
 using System.Threading.Tasks;
+using Microsoft.Extensions.ObjectPool;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Decals;
 using Content.Server.Shuttles.Events;
@@ -14,7 +14,6 @@ using Content.Shared.Parallax.Biomes;
 using Content.Shared.Parallax.Biomes.Layers;
 using Content.Shared.Parallax.Biomes.Markers;
 using Content.Shared.Tag;
-using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Collections;
