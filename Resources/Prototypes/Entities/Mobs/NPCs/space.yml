@@ -40,7 +40,10 @@
   - type: MovementAlwaysTouching
   - type: Bloodstream
     bloodReferenceVolume: 300
-    bloodReagent: Cryoxadone
+    bloodReagents:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 1
   - type: CombatMode
   - type: Temperature
     heatDamageThreshold: 500
@@ -217,7 +220,10 @@
       prob: 0.5
   - type: Bloodstream
     bloodReferenceVolume: 250
-    bloodReagent: Cryoxadone
+    bloodReagents:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 1
   - type: Fixtures
     fixtures:
       fix1:
@@ -320,7 +326,10 @@
           prob: 0.3
     - type: Bloodstream
       bloodReferenceVolume: 200
-      bloodReagent: Cryoxadone
+      bloodReagents:
+        reagents:
+        - ReagentId: Cryoxadone
+          Quantity: 1
     - type: Fixtures
       fixtures:
         fix1:
@@ -359,7 +368,7 @@
       interactFailureString: petting-failure-generic
     - type: PointLight
       radius: 1.1
-      energy: 1.5
+      energy: 2.7
       color: "#4faffb"
     - type: Stealth
       enabledOnDeath: false
@@ -494,7 +503,10 @@
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
     bloodReferenceVolume: 30
-    bloodReagent: Cryoxadone
+    bloodReagents:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 1
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
@@ -512,7 +524,6 @@
       methods: [Touch, Ingestion, Injection]
       effects:
       - !type:HealthChange
-        scaling: true
         damage:
           types:
             Caustic: 1

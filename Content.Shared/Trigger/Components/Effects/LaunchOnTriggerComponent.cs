@@ -9,6 +9,9 @@ namespace Content.Shared.Trigger.Components.Effects;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class LaunchOnTriggerComponent : BaseXOnTriggerComponent
 {
+    /// <summary>
+    /// A linear impulse applied to the target, measured in kg * m / s
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public float Speed = 10.0f;
+    public float Impulse = 10.0f;
 }
