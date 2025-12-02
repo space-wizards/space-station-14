@@ -185,6 +185,14 @@ public sealed partial class DamageableSystem
         return damageDone;
     }
 
+    /// <summary>
+    /// Will reduce the damage on the entity exactly by <see cref="amount"/> equaly distributed among all damage types the entity has.
+    /// If one of the damage types of the entity is too low. it will heal that completly and distribute the excess healing among the other damage types.
+    /// </summary>
+    /// <param name="ent">entity to be healed</param>
+    /// <param name="amount">how much to heal</param>
+    /// <param name="origin">who did the healing</param>
+    /// <returns></returns>
     public DamageSpecifier HealEvenly(
         Entity<DamageableComponent?> ent,
         FixedPoint2 amount,
@@ -206,8 +214,8 @@ public sealed partial class DamageableSystem
             damageChange.DamageDict.Add(type, 0);
         }
 
-        // If trying to heal more than the total damage of the entity. just clear all damage and return how much damage the entity had
-        if (ent.Comp.Damage.GetTotal() < amount)
+        // If trying to heal more than the total damage of the entity just clear all damage and return how much damage the entity had.
+        if (ent.Comp.TotalDamage < amount)
         {
             foreach (var (type, value) in ent.Comp.Damage.DamageDict)
             {

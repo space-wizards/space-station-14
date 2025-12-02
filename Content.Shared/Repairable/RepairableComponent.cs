@@ -24,7 +24,7 @@ public sealed partial class RepairableComponent : Component
     public DamageSpecifier? Damage;
 
     /// <summary>
-    /// Amount of damage to repair of the entity equaly distribuited among the damage types the entity has
+    /// Amount of damage to repair of the entity equaly distributed among the damage types the entity has.
     /// </summary>
     /// <remarks>
     /// Unlike <see cref="Damage"/> this value has to be positive.
