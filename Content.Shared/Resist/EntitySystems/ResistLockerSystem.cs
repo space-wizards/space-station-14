@@ -4,7 +4,7 @@ using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Resist.Components;
-using Content.Shared.Resist.Events;
+using Content.Shared.Resist;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tools.Components;
@@ -38,7 +38,7 @@ public sealed class ResistLockerSystem : EntitySystem
         if (ent.Comp.IsResisting)
             return;
 
-        if (!TryComp<EntityStorageComponent>(ent.Owner, out _))
+        if (!HasComp<EntityStorageComponent>(ent.Owner))
             return;
 
         if (!_actionBlocker.CanMove(args.Entity))
@@ -60,6 +60,7 @@ public sealed class ResistLockerSystem : EntitySystem
         ent.Comp.IsResisting = true;
         _popup.PopupClient(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
         _doAfter.TryStartDoAfter(doAfterEventArgs);
+        Dirty(ent);
     }
 
     private void OnDoAfter(Entity<ResistLockerComponent> ent, ref ResistLockerDoAfterEvent args)
@@ -68,6 +69,7 @@ public sealed class ResistLockerSystem : EntitySystem
         {
             ent.Comp.IsResisting = false;
             _popup.PopupClient(Loc.GetString("resist-locker-component-resist-interrupted"), args.Args.User, args.Args.User, PopupType.Medium);
+            Dirty(ent);
             return;
         }
 
@@ -75,6 +77,8 @@ public sealed class ResistLockerSystem : EntitySystem
             return;
 
         ent.Comp.IsResisting = false;
+
+        Dirty(ent);
 
         if (HasComp<EntityStorageComponent>(ent.Owner))
         {

@@ -7,7 +7,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Events;
 using Content.Shared.Resist.Components;
-using Content.Shared.Resist.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
 
@@ -50,16 +49,13 @@ public sealed class EscapeInventorySystem : EntitySystem
             return;
         }
 
-        // Contested.
-        if (_hands.IsHolding(container.Owner, ent.Owner, out _))
+        if (_hands.IsHolding(container.Owner, ent.Owner, out _)
+            || HasComp<StorageComponent>(container.Owner)
+            || HasComp<InventoryComponent>(container.Owner)
+            || HasComp<SecretStashComponent>(container.Owner))
         {
             AttemptEscape(ent, container.Owner);
-            return;
         }
-
-        // Uncontested.
-        if (HasComp<StorageComponent>(container.Owner) || HasComp<InventoryComponent>(container.Owner) || HasComp<SecretStashComponent>(container.Owner))
-            AttemptEscape(ent, container.Owner);
     }
 
     private void AttemptEscape(Entity<CanEscapeInventoryComponent> ent, EntityUid container, float multiplier = 1f)
@@ -78,7 +74,9 @@ public sealed class EscapeInventorySystem : EntitySystem
             return;
 
         _popup.PopupClient(Loc.GetString("escape-inventory-component-start-resisting"), ent.Owner, ent.Owner);
-        _popup.PopupClient(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
+        _popup.PopupEntity(Loc.GetString("escape-inventory-component-start-resisting-target"), container, container);
+
+        Dirty(ent);
     }
 
     private void OnEscape(Entity<CanEscapeInventoryComponent> ent, ref EscapeInventoryEvent args)
@@ -94,7 +92,11 @@ public sealed class EscapeInventorySystem : EntitySystem
 
     private void OnDropped(Entity<CanEscapeInventoryComponent> ent, ref DroppedEvent args)
     {
-        if (ent.Comp.DoAfter != null)
-            _doAfter.Cancel(ent.Comp.DoAfter);
+        if (ent.Comp.DoAfter == null)
+            return;
+
+        _doAfter.Cancel(ent.Comp.DoAfter);
+        ent.Comp.DoAfter = null;
+        Dirty(ent);
     }
 }
