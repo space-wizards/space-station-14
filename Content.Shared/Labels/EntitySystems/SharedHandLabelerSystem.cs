@@ -57,44 +57,34 @@ public abstract class SharedHandLabelerSystem : EntitySystem
     {
     }
 
-    private void AddLabelTo(EntityUid uid, EntityUid User, HandLabelerComponent? handLabeler, EntityUid target)
+    private void AddLabelTo(Entity<HandLabelerComponent> ent, EntityUid user, EntityUid target)
     {
-        if (!Resolve(uid, ref handLabeler))
+        if (ent.Comp.AssignedLabel == string.Empty)
         {
-            return;
-        }
-
-        if (handLabeler.AssignedLabel == string.Empty)
-        {
-            RemoveLabelFrom(uid, User, handLabeler, target);
+            RemoveLabelFrom(ent, user, target);
             return;
         }
 
         if (_netManager.IsServer)
-            _labelSystem.Label(target, handLabeler.AssignedLabel);
+            _labelSystem.Label(target, ent.Comp.AssignedLabel);
 
-        _popupSystem.PopupClient(Loc.GetString("hand-labeler-successfully-applied"), User, User);
+        _popupSystem.PopupClient(Loc.GetString("hand-labeler-successfully-applied"), user, user);
 
         // Log labeling
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(User):user} labeled {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
+            $"{ToPrettyString(user):user} labeled {ToPrettyString(target):target} with {ToPrettyString(ent):labeler}");
     }
 
-    private void RemoveLabelFrom(EntityUid uid, EntityUid User, HandLabelerComponent? handLabeler, EntityUid target)
+    private void RemoveLabelFrom(EntityUid uid, EntityUid user, EntityUid target)
     {
-        if (!Resolve(uid, ref handLabeler))
-        {
-            return;
-        }
-
         if (_netManager.IsServer)
             _labelSystem.Label(target, null);
 
-        _popupSystem.PopupClient(Loc.GetString("hand-labeler-successfully-removed"), User, User);
+        _popupSystem.PopupClient(Loc.GetString("hand-labeler-successfully-removed"), user, user);
 
         // Log labeling
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(User):user} removed label from {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
+            $"{ToPrettyString(user):user} removed label from {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
     }
 
     private void OnUtilityVerb(EntityUid uid, HandLabelerComponent handLabeler, GetVerbsEvent<UtilityVerb> args)
@@ -110,7 +100,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
             {
                 Act = () =>
                 {
-                    AddLabelTo(uid, args.User, handLabeler, target);
+                    AddLabelTo(new Entity<HandLabelerComponent>(uid, handLabeler), args.User, target);
                 },
                 Text = Loc.GetString("hand-labeler-add-label-text")
             };
@@ -123,7 +113,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         {
             Act = () =>
             {
-                RemoveLabelFrom(uid, args.User, handLabeler, target);
+                RemoveLabelFrom(uid, args.User, target);
             },
             Text = Loc.GetString("hand-labeler-remove-label-text"),
             Priority = -1,
@@ -142,7 +132,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(handLabeler.Whitelist, target) || !args.CanReach)
             return;
 
-        AddLabelTo(uid, args.User, handLabeler, target);
+        AddLabelTo(new Entity<HandLabelerComponent>(uid, handLabeler), args.User, target);
     }
 
     private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
