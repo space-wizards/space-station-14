@@ -65,6 +65,9 @@ public sealed partial class CCVars
     public static readonly CVarDef<string> ICRandomSpeciesWeights =
         CVarDef.Create("ic.random_species_weights", "SpeciesWeights", CVar.SERVER);
 
+    public static readonly CVarDef<bool> ICBlacklistSpeciesNewAccount =
+        CVarDef.Create("ic.blacklist_species_new_account", true, CVar.SERVER);
+
     /// <summary>
     ///     Control displaying SSD indicators near players
     /// </summary>
