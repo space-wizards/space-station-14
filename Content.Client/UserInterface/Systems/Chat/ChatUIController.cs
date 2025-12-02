@@ -823,13 +823,16 @@ public sealed partial class ChatUIController : UIController
         // color the name unless it's something like "the old man"
         if (msg.Channel is ChatChannel.Local
                 or ChatChannel.Whisper
+                or ChatChannel.Radio
                 or ChatChannel.OOC
+                or ChatChannel.LOOC
                 or ChatChannel.Dead
                 or ChatChannel.Emotes
+                or ChatChannel.AdminChat
             && _chatNameColorsEnabled)
         {
             var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
-            if (grammar != null && grammar.ProperNoun == true)
+            if (grammar != null && grammar.ProperNoun == true || msg.Channel is not ChatChannel.Local)
                 msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
         }
 
