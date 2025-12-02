@@ -90,6 +90,11 @@ namespace Content.Shared.Chat
         /// </summary>
         IC = Local | Whisper | Radio | Dead | Emotes | Damage | Visual | Notifications,
 
+        /// <summary>
+        /// Anything related to a physical being delivering information. Excludes things like dead chat, OOC, and damage, but includes LOOC.
+        /// </summary>
+        CorporealSpeech = Local | Whisper | Radio | Emotes | LOOC,
+
         AdminRelated = Admin | AdminAlert | AdminChat,
     }
 
