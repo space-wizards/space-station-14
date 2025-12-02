@@ -1,3 +1,5 @@
+using System.Linq;
+using JetBrains.Annotations;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
@@ -21,7 +23,6 @@ using Content.Shared.Players;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Components;
 using Content.Shared.Verbs;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
@@ -33,7 +34,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Server.Ghost.Roles;
 

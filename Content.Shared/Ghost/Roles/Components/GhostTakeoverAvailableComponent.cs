@@ -1,5 +1,3 @@
-using Robust.Shared.GameStates;
-
 namespace Content.Shared.Ghost.Roles.Components;
 
 /// <summary>
@@ -7,6 +5,4 @@ namespace Content.Shared.Ghost.Roles.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(SharedGhostRoleSystem))]
-public sealed partial class GhostTakeoverAvailableComponent : Component
-{
-}
+public sealed partial class GhostTakeoverAvailableComponent : Component;

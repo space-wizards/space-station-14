@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking.Components;
@@ -5,7 +6,6 @@ using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Linq;
 
 namespace Content.Server.StationEvents.Events;
 
