@@ -33,9 +33,9 @@ public sealed partial class RepairableSystem : EntitySystem
             return;
 
         if (ent.Comp.Damage != null)
-            RepairSomeDamage(ent, damageable, ent.Comp.Damage, args.User);
+            RepairSomeDamage((ent, damageable), ent.Comp.Damage, args.User);
         else
-            RepairAllDamage(ent, damageable, args.User);
+            RepairAllDamage((ent, damageable), args.User);
 
         args.Repeat = ent.Comp.AutoDoAfter && damageable.TotalDamage > 0;
         args.Handled = true;
@@ -61,7 +61,7 @@ public sealed partial class RepairableSystem : EntitySystem
     /// <param name="ent">entity to be repaired</param>
     /// <param name="damageAmount">how much damage to repair (values have to be negative to repair)</param>
     /// <param name="user">who is doing the repair</param>
-    private void RepairSomeDamage(Entity<RepairableComponent> ent, DamageableComponent damageable, Damage.DamageSpecifier damageAmount, EntityUid user)
+    private void RepairSomeDamage(Entity<DamageableComponent?> ent, Damage.DamageSpecifier damageAmount, EntityUid user)
     {
         var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, damageAmount, true, false, origin: user);
         _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
@@ -71,11 +71,10 @@ public sealed partial class RepairableSystem : EntitySystem
     /// Repairs all damage of a entity
     /// </summary>
     /// <param name="ent">entity to be repaired</param>
-    /// <param name="damageable">damageable component of the entity</param>
     /// <param name="user">who is doing the repair</param>
-    private void RepairAllDamage(Entity<RepairableComponent> ent, DamageableComponent damageable, EntityUid user)
+    private void RepairAllDamage(Entity<DamageableComponent?> ent, EntityUid user)
     {
-        _damageableSystem.ClearAllDamage((ent.Owner, damageable));
+        _damageableSystem.ClearAllDamage(ent);
         _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
     }
 
