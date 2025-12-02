@@ -97,13 +97,13 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Reach",
             "Oasis",
-            "Amber",
             "Plasma",
             "Elkridge",
             "Relic",
             "dm01-entryway",
             "Exo",
-	    "Serpentcrest",
+	          "Snowball",
+            "Serpentcrest",
         };
 
         private static readonly ProtoId<EntityCategoryPrototype> DoNotMapCategory = "DoNotMap";

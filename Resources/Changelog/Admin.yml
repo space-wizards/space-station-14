@@ -1522,5 +1522,15 @@ Entries:
   id: 185
   time: '2025-11-15T23:31:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41448
+- author: Errant
+  changes:
+  - message: Looc and Deadchat logs now show mob information, similar to the logs
+      of the IC chat channels.
+    type: Tweak
+  - message: Mobs who have been "Freeze and Muted" can no longer send on LOOC or Deadchat.
+    type: Fix
+  id: 186
+  time: '2025-11-21T21:53:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41273
 Name: Admin
 Order: 3
