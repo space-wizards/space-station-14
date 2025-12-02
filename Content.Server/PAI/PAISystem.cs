@@ -1,3 +1,4 @@
+using System.Text;
 using Content.Server.Instruments;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Ghost.Roles.Components;
@@ -8,7 +9,6 @@ using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
-using System.Text;
 
 namespace Content.Server.PAI;
 
