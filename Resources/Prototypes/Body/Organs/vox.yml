@@ -32,6 +32,30 @@
     sprite: Mobs/Species/Vox/organs.rsi
 
 - type: entity
+  parent: OrganHumanBrain
+  id: OrganVoxBrain
+  name: cortical stack
+  description: A stack containing all the memories and experiences of a vox with some mushy brains still sticking to it. Skreeeee!
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Vox/organs.rsi
+    state: brain
+  - type: Edible
+    destroyOnEmpty: false
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 5
+  - type: BorgBrain
+
+- type: entity
   parent: OrganHumanLiver
   id: OrganVoxLiver
   name: liver
@@ -52,6 +76,7 @@
     metabolizerTypes: [Vox]
   - type: Sprite
     sprite: Mobs/Species/Vox/organs.rsi
+    state: heart-on
 
 - type: entity
   parent: OrganHumanKidneys
