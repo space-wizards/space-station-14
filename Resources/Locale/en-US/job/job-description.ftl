@@ -1,4 +1,4 @@
-ojob-description-technical-assistant = Learn the basics of managing the station's power, as well as repairing the station's hull.
+job-description-technical-assistant = Learn the basics of managing the station's power, as well as repairing the station's hull.
 job-description-atmostech = Optimize the station's atmospherics setup, and synthesize rare gases to use or sell.
 job-description-bartender = Manage the bar and keep it lively, give out drinks, and listen to the crew's stories.
 job-description-botanist = Grow food for the chef, drugs for medbay, and other plants to keep yourself entertained.
