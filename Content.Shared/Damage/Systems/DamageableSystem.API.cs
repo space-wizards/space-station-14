@@ -196,7 +196,7 @@ public sealed partial class DamageableSystem
         if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
             return damageChange;
 
-        if (amount == 0)
+        if (amount <= 0)
             return damageChange;
 
         // If trying to heal more than the total damage of the entity. just clear all damage and return how much damage the entity had
