@@ -3,7 +3,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Administration.Systems;
+namespace Content.Server.Administration.Systems;
 
 /// <summary>
 /// This handles the administrative test arena maps, and loading them.
@@ -16,8 +16,8 @@ public sealed class AdminTestArenaSystem : EntitySystem
 
     public const string ArenaMapPath = "/Maps/Test/admin_test_arena.yml";
 
-    public Dictionary<NetUserId, EntityUid> ArenaMap { get; private set; } = [];
-    public Dictionary<NetUserId, EntityUid?> ArenaGrid { get; private set; } = [];
+    public Dictionary<NetUserId, EntityUid> ArenaMap { get; private set; } = new();
+    public Dictionary<NetUserId, EntityUid?> ArenaGrid { get; private set; } = new();
 
     public (EntityUid Map, EntityUid? Grid) AssertArenaLoaded(ICommonSession admin)
     {

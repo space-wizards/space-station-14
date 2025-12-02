@@ -1,9 +1,8 @@
 ﻿using Content.Shared.Administration.Systems;
-using Robust.Shared.GameStates;
 
 namespace Content.Shared.Administration.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 [Access(typeof(SharedBufferingSystem))]
 public sealed partial class BufferingComponent : Component
 {
