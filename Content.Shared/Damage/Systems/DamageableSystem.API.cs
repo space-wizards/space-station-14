@@ -218,10 +218,10 @@ public sealed partial class DamageableSystem
             var minDamageNeedHeal = ent.Comp.Damage.DamageDict.First().Value - damageChange.DamageDict.First().Value;
             foreach (var (type, value) in ent.Comp.Damage.DamageDict)
             {
-                if (value - damageChange.DamageDict[type] != 0)
+                if (damageChange.DamageDict[type] - value > 0)
                 {
                     numberDamageTypesNotHealed += 1;
-                    minDamageNeedHeal = FixedPoint2.Min(minDamageNeedHeal, value - damageChange.DamageDict[type]);
+                    minDamageNeedHeal = FixedPoint2.Min(minDamageNeedHeal, damageChange.DamageDict[type] - value);
                 }
             }
 
