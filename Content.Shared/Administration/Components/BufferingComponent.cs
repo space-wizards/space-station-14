@@ -1,22 +1,29 @@
-﻿using Content.Server.Administration.Systems;
+﻿using Content.Shared.Administration.Systems;
 
-namespace Content.Server.Administration.Components;
+namespace Content.Shared.Administration.Components;
 
-[RegisterComponent, Access(typeof(BufferingSystem))]
+[RegisterComponent]
+[Access(typeof(SharedBufferingSystem))]
 public sealed partial class BufferingComponent : Component
 {
     [DataField("minBufferTime")]
     public float MinimumBufferTime = 0.5f;
+
     [DataField("maxBufferTime")]
     public float MaximumBufferTime = 1.5f;
+
     [DataField("minTimeTilNextBuffer")]
     public float MinimumTimeTilNextBuffer = 10.0f;
+
     [DataField("maxTimeTilNextBuffer")]
     public float MaximumTimeTilNextBuffer = 120.0f;
-    [DataField("timeTilNextBuffer")]
+
+    [DataField]
     public float TimeTilNextBuffer = 15.0f;
-    [DataField("bufferingIcon")]
+
+    [DataField]
     public EntityUid? BufferingIcon = null;
-    [DataField("bufferingTimer")]
+
+    [DataField]
     public float BufferingTimer = 0.0f;
 }

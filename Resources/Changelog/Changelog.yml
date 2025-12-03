@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: The escape menu ui has been updated slightly.
-    type: Tweak
-  id: 8741
-  time: '2025-07-05T09:28:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38650
-- author: EmoGarbage404
-  changes:
-  - message: Fixed people asphyxiating if left on a stasis bed.
-    type: Fix
-  id: 8742
-  time: '2025-07-06T00:59:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38762
-- author: slarticodefast
-  changes:
-  - message: You can now catch basketballs, footballs and beach balls that are thrown
-      at you!
-    type: Add
-  id: 8743
-  time: '2025-07-06T16:54:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37702
-- author: ArtisticRoomba
-  changes:
-  - message: The Go Go Hat now correctly retrieves and deposits items again.
-    type: Fix
-  id: 8744
-  time: '2025-07-06T23:42:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38810
 - author: maland1
   changes:
   - message: Reduced the size of the go go hat inventory
@@ -3916,3 +3887,35 @@
   id: 9241
   time: '2025-12-01T11:01:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41654
+- author: Spessmann
+  changes:
+  - message: Added a new station, Snowball, a round and icy lowpop station.
+    type: Add
+  - message: Removed Amber station.
+    type: Remove
+  id: 9242
+  time: '2025-12-02T07:25:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40300
+- author: Samuka
+  changes:
+  - message: Game no longer sends the xenoborg shuttle call announcement over and
+      over
+    type: Fix
+  id: 9243
+  time: '2025-12-02T14:41:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41437
+- author: imatsoup
+  changes:
+  - message: When a Rat King is spawned, the default orders for their army is now
+      set to Follow instead of Loose.
+    type: Tweak
+  id: 9244
+  time: '2025-12-03T03:37:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41680
+- author: Hitlinemoss
+  changes:
+  - message: Medipens now have slightly clearer descriptions.
+    type: Tweak
+  id: 9245
+  time: '2025-12-03T17:52:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41682
