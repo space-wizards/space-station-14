@@ -43,8 +43,6 @@ public sealed partial class EyeBlinkingComponent : Component
     [AutoNetworkedField]
     public string BlinkEmoteId = "Blink";
 
-    public bool BlinkInProgress = false;
-
     [DataField, AutoNetworkedField]
-    public string EyelidState = string.Empty;
+    public bool BlinkInProgress = false;
 }

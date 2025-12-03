@@ -78,6 +78,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     protected virtual void ResetBlink(Entity<EyeBlinkingComponent> ent)
     {
+        ent.Comp.BlinkInProgress = false;
         ent.Comp.NextBlinkingTime = _timing.CurTime + ent.Comp.BlinkInterval + ent.Comp.BlinkDuration;
         Dirty(ent);
     }

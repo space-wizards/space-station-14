@@ -42,7 +42,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         if (!_sprite.LayerMapTryGet(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
             return;
-
+        ent.Comp.BlinkInProgress = false;
         ChangeEyeState(ent, closed);
     }
 
@@ -64,7 +64,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     public override void Blink(Entity<EyeBlinkingComponent> ent)
     {
+        if (!ent.Owner.IsValid())
+            return;
+
         base.Blink(ent);
+
+
         if (ent.Comp.BlinkInProgress)
             return;
 
@@ -95,9 +100,4 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             ChangeEyeState(ent, false);
         }
     }
-}
-
-public enum EyelidsVisuals : byte
-{
-    Eyelids,
 }
