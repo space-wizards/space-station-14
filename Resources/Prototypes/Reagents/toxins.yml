@@ -765,12 +765,8 @@
     Poison:
       effects:
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectAnticoagulant
-        time: 3
-        type: Add
-      - !type:ModifyStatusEffect
         effectProto: StatusEffectHemorrhage
-        time: 3
-        type: Add
+        time: 20
+        type: Update
       - !type:ModifyBleed
         amount: 0.5
