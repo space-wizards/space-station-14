@@ -7,7 +7,6 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Eye.Blinking;
 public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
@@ -35,10 +34,11 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         SetEnabled(ent, args.NewMobState != MobState.Dead);
     }
 
-    private void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
+    public virtual void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
     {
-        _appearance.SetData(ent, EyeBlinkingVisuals.EyesClosed, args.Blind);
-        Logger.Info($"Setting blinking enabled to {!args.Blind} for entity {ent.Owner}");
+        ent.Comp.EyesClosed = args.Blind;
+        var ev = new ChangeEyeStateEvent(GetNetEntity(ent.Owner), args.Blind);
+        RaiseNetworkEvent(ev);
         SetEnabled(ent, !args.Blind);
     }
 
@@ -89,4 +89,15 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 public enum EyeBlinkingVisuals : byte
 {
     EyesClosed
+}
+[Serializable, NetSerializable]
+public sealed class ChangeEyeStateEvent : EntityEventArgs
+{
+    public readonly NetEntity NetEntity;
+    public readonly bool EyesClosed;
+    public ChangeEyeStateEvent(NetEntity netEntity, bool eyesClosed)
+    {
+        NetEntity = netEntity;
+        EyesClosed = eyesClosed;
+    }
 }
