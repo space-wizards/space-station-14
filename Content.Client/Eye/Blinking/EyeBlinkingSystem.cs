@@ -29,13 +29,10 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
             return;
 
-        
-
-
-        //if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var stateObj) && stateObj is bool state)
-        //{
-        //    ChangeEyeState(ent, state);
-        //}
+        if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var stateObj) && stateObj is bool state)
+        {
+            ChangeEyeState(ent, state);
+        }
     }
 
     private void AppearanceChangeEventHandler(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
@@ -46,7 +43,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_sprite.LayerMapTryGet(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
             return;
 
-        //ChangeEyeState(ent, closed);
+        ChangeEyeState(ent, closed);
     }
 
     private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
