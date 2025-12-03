@@ -215,7 +215,7 @@ namespace Content.Client.Cargo.UI
                     continue;
 
                 var product = _protoManager.Index<EntityPrototype>(productProto.Product);
-                var productName = product.Name;
+                var productName = productProto.Name;
                 var account = _protoManager.Index(order.Account);
 
                 var row = new CargoOrderRow
