@@ -322,14 +322,16 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             return 0.0f;
         }
 
-        FixedPoint2 totalBloodLevel = FixedPoint2.Zero;
+        float totalBloodLevel = 1.0f;
 
         foreach (var (reagentId, _) in entity.Comp.BloodReagents.Contents)
         {
-            totalBloodLevel += bloodSolution.GetTotalPrototypeQuantity(reagentId.Prototype);
+            float refFraction = (float)entity.Comp.BloodReagents.GetTotalPrototypeQuantity(reagentId.Prototype) / (float)entity.Comp.BloodReagents.Volume;
+            var refReagentVolume = (float)entity.Comp.BloodReferenceVolume * refFraction;
+            totalBloodLevel *= (float)bloodSolution.GetTotalPrototypeQuantity(reagentId.Prototype) / refReagentVolume;
         }
 
-        return (float)(totalBloodLevel / entity.Comp.BloodReferenceVolume);
+        return totalBloodLevel;
     }
 
     /// <summary>
