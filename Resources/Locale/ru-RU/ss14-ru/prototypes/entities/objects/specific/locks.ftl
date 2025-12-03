@@ -1,0 +1,2 @@
+ent-SelectableLock = { "" }
+    .desc = { "" }

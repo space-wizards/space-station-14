@@ -1,0 +1,59 @@
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseSecurityContraband]
+  id: SCPClothingOuterArmorLight
+  name: light vest
+  description: A standard Type I armored vest that provides decent protection against most types of damage.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/OuterClothing/Armor/light_armor.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/OuterClothing/Armor/light_armor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.70
+        Slash: 0.70
+        Piercing: 0.70
+        Heat: 0.80
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseSecurityContraband]
+  id: SCPClothingOuterArmorMedium
+  name: medium vest
+  description: A standard Type I armored vest that provides decent protection against most types of damage.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/OuterClothing/Armor/medium_armor.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/OuterClothing/Armor/medium_armor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.60
+        Slash: 0.60
+        Piercing: 0.60
+        Heat: 0.70
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+
+- type: entity
+  parent: [ClothingOuterBaseMedium, AllowSuitStorageClothing, BaseSecurityContraband]
+  id: SCPClothingOuterArmorHard
+  name: hard vest
+  description: A standard Type I armored vest that provides decent protection against most types of damage.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/OuterClothing/Armor/hard_armor.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/OuterClothing/Armor/hard_armor.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.50
+        Slash: 050
+        Piercing: 0.50
+        Heat: 0.60
+  - type: ExplosionResistance
+    damageCoefficient: 0.50

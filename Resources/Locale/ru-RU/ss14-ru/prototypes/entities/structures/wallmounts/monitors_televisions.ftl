@@ -1,0 +1,10 @@
+ent-WallmountTelescreenFrame = каркас телеэкрана
+    .desc = { ent-WallmountTelescreen.desc }
+ent-WallmountTelescreen = телеэкран
+    .desc = Наконец-то тут появился нормальный сигнал...
+    .suffix = Монитор камер
+ent-WallmountTelevisionFrame = каркас телевизора
+    .desc = { ent-WallmountTelevision.desc }
+ent-WallmountTelevision = телевизор
+    .desc = Наконец-то тут появился нормальный сигнал...
+    .suffix = Развлечения

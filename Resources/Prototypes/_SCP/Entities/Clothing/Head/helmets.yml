@@ -1,0 +1,41 @@
+- type: entity
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  id: SCPClothingHeadHelmetMedium
+  name: medium helmet
+  description: Standard security gear. Protects the head from impacts.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Head/Helmets/medium_helmet.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Head/Helmets/medium_helmet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  parent: [ClothingHeadHelmetArmoredBase, BaseSecurityContraband]
+  id: SCPClothingHeadHelmetHard
+  name: hard helmet
+  description: Standard security gear. Protects the head from impacts.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Head/Helmets/hard_helmet.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Head/Helmets/hard_helmet.rsi
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+  - type: Armor #Values seem to let the user survive one extra hit if attacked consistently.
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.8
+        Piercing: 0.85
+        Heat: 0.85

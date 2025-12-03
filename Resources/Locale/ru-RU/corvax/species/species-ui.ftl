@@ -1,0 +1,1 @@
+sponsor-only-text = [СПОНСОР]
