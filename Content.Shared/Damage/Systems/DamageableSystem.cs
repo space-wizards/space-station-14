@@ -97,7 +97,8 @@ public sealed partial class DamageableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns a dictionary containing the ProtoId of the damage types and FixedPoint2 of the damage values present in the body
+    /// Goes through an entity damage's and saves them inside a dictionary if the value is higher than 0
+    /// The dictionary is structured with a string for the name of the damage type, and a FixedPoint2 for the numeric damage value
     /// </summary>
     public Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2> GetDamages(Dictionary<string, FixedPoint2> damagePerGroup, DamageSpecifier damage)
     {

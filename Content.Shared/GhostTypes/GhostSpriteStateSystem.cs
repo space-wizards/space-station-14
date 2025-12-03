@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
@@ -31,16 +30,17 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
         var specialCase = "";
 
-        if (TryComp<LastBodyDamageComponent>(mind, out var storedDamage) && storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
+        if (TryComp<LastBodyDamageComponent>(mind, out var storedDamage))
         {
-            Dirty(mind, storedDamage);
-            damageTypes = _damageable.GetDamages(storedDamage.DamagePerGroup, storedDamage.Damage);
+            if (storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
+            {
+                damageTypes = _damageable.GetDamages(storedDamage.DamagePerGroup, storedDamage.Damage);
+            }
             specialCase = storedDamage.SpecialCauseOfDeath;
+
+            Dirty(mind, storedDamage);
         }
         else
-            return;
-
-        if (damageTypes.Count == 0)
             return;
 
         var sortedDict = damageTypes.OrderBy(x => x.Value).ToDictionary();
@@ -62,7 +62,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
 
         ProtoId<DamageTypePrototype>? spriteState = null;
 
-        if (specialCase != "")  // Possible special cases like death by an explosion 
+        if (specialCase != "")  // Possible special cases like death by an explosion
         {
             spriteState = specialCase + rand.Next(0, 3);
         }
