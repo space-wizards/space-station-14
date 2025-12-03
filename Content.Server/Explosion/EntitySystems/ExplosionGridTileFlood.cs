@@ -199,7 +199,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 
             // At what explosion iteration would this blocker be destroyed?
             var required = _explosionSystem.GetToleranceValues(tileData.ToleranceCacheIndex).Values[_typeIndex];
-            if (required > _maxIntensity || required == ToleranceValues.Invulnerable)
+            if (required > _maxIntensity)
                 return; // blocker is never destroyed.
 
             var clearIteration = iteration + (int) MathF.Ceiling((float)required / _intensityStepSize);
