@@ -23,7 +23,6 @@
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
   - type: WiredNetworkConnection
-    connectsOffGrid: true
   - type: SurveillanceCameraMonitor
   - type: StaticPrice
     price: 2000
