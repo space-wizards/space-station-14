@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
 using Content.Server.Explosion.Components;
 using Content.Shared.Atmos;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Collections;
