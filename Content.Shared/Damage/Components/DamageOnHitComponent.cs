@@ -8,9 +8,15 @@ namespace Content.Shared.Damage.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DamageOnHitComponent : Component
 {
+    /// <summary>
+    /// Whether to ignore damage modifiers.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool IgnoreResistances = true;
 
+    /// <summary>
+    /// The damage amount to deal on hit.
+    /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public DamageSpecifier Damage = new();
 }
