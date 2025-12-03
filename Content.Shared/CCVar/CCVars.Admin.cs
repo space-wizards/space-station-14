@@ -204,5 +204,5 @@ public sealed partial class CCVars
     /// user id.
     /// </summary>
     public static readonly CVarDef<TimeSpan> BanningAdminDataLookupTimeout =
-        CVarDef.Create("admin.banning_admin_data_lookup_timeout", TimeSpan.FromSeconds(3), CVar.SERVERONLY);
+        CVarDef.Create("admin.banning_admin_data_lookup_timeout", TimeSpan.FromSeconds(5), CVar.SERVERONLY);
 }
