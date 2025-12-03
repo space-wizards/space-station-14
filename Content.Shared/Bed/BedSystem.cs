@@ -16,15 +16,15 @@ namespace Content.Shared.Bed;
 
 public sealed class BedSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ActionContainerSystem _actConts = default!;
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedMetabolizerSystem _metabolizer = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     private EntityQuery<SleepingComponent> _sleepingQuery;
 
