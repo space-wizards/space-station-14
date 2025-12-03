@@ -69,3 +69,62 @@
         startingItem: PowerCellMicroreactor
         disableEject: true
         swap: false
+
+- type: entity
+  id: SignalJammerArray
+  parent: [BaseMachine, BaseSyndicateContraband]
+  name: Signal Jammer Array
+  description: A high-powered stationary jamming device that disrupts all radio communications within a massive radius when anchored and powered.
+  components:
+    - type: Item
+      size: Huge
+    - type: MultiHandedItem
+    - type: HeldSpeedModifier
+      walkModifier: 0.6
+      sprintModifier: 0.6
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        input:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.40,-0.40,0.40,0.40"
+          density: 90
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 80
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: SignalJammer
+    - type: ApcPowerReceiver
+      powerLoad: 5000
+      priority: Low
+    - type: ExtensionCableReceiver
+    - type: Sprite
+      sprite: Objects/Power/powersink.rsi
+      state: powersink
+    - type: Tag
+      tags:
+      - GhostOnlyWarp
+    - type: WarpPoint
+      location: signal-jammer-array
+      blacklist:
+        tags:
+        - GhostOnlyWarp
+    - type: StaticPrice
+      price: 5000
