@@ -1503,7 +1503,7 @@
       effects: # One day this could be useful for treating blood clots, if we get those
       - !type:ModifyStatusEffect
         effectProto: StatusEffectAnticoagulant
-        time: 30
+        time: 30 # 10 bleed ticks, you bleed every 3 seconds by default.
         type: Update
       - !type:ModifyBleed
         conditions:

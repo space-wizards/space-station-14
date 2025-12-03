@@ -766,7 +766,7 @@
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectHemorrhage
-        time: 20
+        time: 21 # 7 bleed ticks, you bleed every 3 seconds by default.
         type: Update
       - !type:ModifyBleed
         amount: 0.5
