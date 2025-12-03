@@ -1,12 +1,7 @@
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
-using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Shared.Animations;
 using Robust.Shared.Timing;
-using System.Numerics;
 
 namespace Content.Client.Eye.Blinking;
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem

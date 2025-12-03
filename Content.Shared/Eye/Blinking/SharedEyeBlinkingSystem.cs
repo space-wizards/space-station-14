@@ -3,7 +3,6 @@ using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using System;
 
 namespace Content.Shared.Eye.Blinking;
 public abstract partial class SharedEyeBlinkingSystem : EntitySystem
