@@ -652,7 +652,3 @@
   - type: AccessReader
     access: [["Xenoborg"]]
   - type: ShowJobIcons # probably needed more than the usual xenoborg
-  - type: InteractionPopup
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
-  - type: Xenoborg
