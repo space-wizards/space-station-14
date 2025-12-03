@@ -7,7 +7,7 @@ namespace Content.Shared.Ghost.Roles.Components;
 /// <summary>
 /// This is used for a ghost role which can be toggled on and off at will, like a PAI.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(ToggleableGhostRoleSystem))]
 public sealed partial class ToggleableGhostRoleComponent : Component
 {
@@ -56,7 +56,7 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     /// <summary>
     /// A list of mind roles that will be added to the entity's mind
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public List<EntProtoId> MindRoles;
 
     /// <summary>
