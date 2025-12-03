@@ -292,43 +292,6 @@ public sealed partial class ExplosionSystem
         }
     }
 
-    private void ValidateIntegrity()
-    {
-        var freeEntries = new HashSet<int>();
-        for (var i = _freeListHead; i >= 0; i = _toleranceData[i].RefCount)
-        {
-            freeEntries.Add(i);
-        }
-
-        var usedEntries = new Dictionary<int, int>();
-
-        foreach (var airtightGrid in EntityQuery<ExplosionAirtightGridComponent>())
-        {
-            foreach (var tile in airtightGrid.Tiles.Values)
-            {
-                if (tile.BlockedDirections == AtmosDirection.Invalid)
-                    throw new Exception("Tile directions are invalid!");
-
-                ref var e = ref CollectionsMarshal.GetValueRefOrAddDefault(usedEntries, tile.ToleranceCacheIndex, out _);
-                e += 1;
-            }
-        }
-
-        if (freeEntries.Intersect(usedEntries.Keys).Any())
-        {
-            throw new Exception("Overlapping free/used entries!");
-        }
-
-        foreach (var (key, refCount) in usedEntries)
-        {
-            ref var entry = ref _toleranceData[key];
-            if (refCount != entry.RefCount)
-            {
-                throw new Exception("Refcount mismatch!");
-            }
-        }
-    }
-
     private struct CacheEntry
     {
         public ToleranceValues Values;
