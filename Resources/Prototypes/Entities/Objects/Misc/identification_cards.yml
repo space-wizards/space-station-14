@@ -935,13 +935,13 @@
     iconGroups:
     - CommandIconGroup
     - SecurityIconGroup
+    - ResearchIconGroup
     - CargoIconGroup
     - EngineeringIconGroup
     - MedicalIconGroup
-    - ResearchIconGroup
     - ServiceIconGroup
-    - EntertainerIconGroup
     - CivilianIconGroup
+    - EntertainerIconGroup
     - SiliconIconGroup
     - BlankIconGroup
     - ThreatIconGroup
@@ -1299,13 +1299,13 @@
     iconGroups:
     - CommandIconGroup
     - SecurityIconGroup
+    - ResearchIconGroup
     - CargoIconGroup
     - EngineeringIconGroup
     - MedicalIconGroup
-    - ResearchIconGroup
     - ServiceIconGroup
-    - EntertainerIconGroup
     - CivilianIconGroup
+    - EntertainerIconGroup
     - SiliconIconGroup
     - BlankIconGroup
     - ThreatIconGroup

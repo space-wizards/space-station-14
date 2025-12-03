@@ -1,35 +1,27 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:s="clr-namespace:Content.Client.Stylesheets"
-                    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                     Title="{Loc agent-id-ui-menu-title}"
-                    MinSize="737 383" Resizable="False">
+                    MinSize="765 398" Resizable="False">
     <BoxContainer Orientation="Vertical" Margin="12 0" VerticalExpand="False" >
 
         <!-- Upper area: ID status -->
         <BoxContainer Margin="0 12 0 4" MinHeight="80" >
-            <PanelContainer> <!-- Inset aesthetics -->
-                <PanelContainer.PanelOverride>
-                    <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
-                </PanelContainer.PanelOverride>
+            <PanelContainer StyleClasses="PanelInsetDark" >
                 <TextureRect Name="CurrentJobIcon" Margin="8 0" Stretch="KeepAspectCentered"
                              VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="64 64" />
             </PanelContainer>
-            <BoxContainer Margin="8 4 0 0" Orientation="Vertical">
-                <Label Name="CurrentName" SetHeight="24" StyleClasses="LabelBig" FontColorOverride="{x:Static s:StyleNano.NanoGold}" />
-                <Label Name="CurrentJob" Margin="8 4 0 0" />
+            <BoxContainer Margin="12 0" Orientation="Vertical" Align="Center">
+                <Label Name="CurrentName" StyleClasses="LabelHeadingBigger" SetHeight="32" />
+                <Label Name="CurrentJob" StyleClasses="LabelSubHeading" Margin="16 4 0 0" />
             </BoxContainer>
         </BoxContainer>
-        <PanelContainer Margin="0 4" StyleClasses="LowDivider" />
+        <PanelContainer StyleClasses="LowDivider" Margin="0 4" />
 
         <!-- Center area: Tabs -->
-        <PanelContainer MinHeight="220" VerticalExpand="True"> <!-- Inset aesthetics -->
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
-            </PanelContainer.PanelOverride>
+        <PanelContainer StyleClasses="PanelInsetDark" MinHeight="230" VerticalExpand="True" >
             <BoxContainer Orientation="Vertical" >
-                <TabContainer Name="CTabContainer" Margin="8 8 8 0" VerticalExpand="True" MinHeight="180" >
+                <TabContainer Name="AgentTabs" Margin="8 8 8 0" VerticalExpand="True" MinHeight="180" >
 
                     <!-- Settings tab -->
                     <ScrollContainer Name="TabSettings" >
@@ -42,40 +34,41 @@
                     </ScrollContainer>
 
                     <!-- Job icon tab -->
-                    <BoxContainer Name="TabJobIcons" Margin="8 8 4 4" VerticalExpand="True" >
-                        <BoxContainer>
+                    <BoxContainer Name="TabJobIcons" Margin="4 8 4 4" Align="Center" >
+                        <BoxContainer Align="Center">
                             <GridContainer Name="JobGroupGrid" Columns="6" />
-                                <!-- Group buttons are generated in code -->
+                                    <!-- Group buttons are generated in code -->
                         </BoxContainer>
-                        <PanelContainer Margin="4 0" VerticalExpand="True" StyleClasses="LowDivider" />
-                        <PanelContainer >
-                            <PanelContainer.PanelOverride>
-                                <gfx:StyleBoxFlat BorderThickness="2" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
-                            </PanelContainer.PanelOverride>
-                            <BoxContainer Margin="4" SetWidth="98" VerticalExpand="True" >
-                                <GridContainer Name="IconGrid" Columns="3" />
+                        <PanelContainer StyleClasses="LowDivider" Margin="4 0" VerticalExpand="True" />
+                        <PanelContainer StyleClasses="PanelInsetDark">
+                            <BoxContainer Margin="4 8 4 4" Align="Center" SetWidth="112">
+                                <GridContainer Name="IconGrid" Columns="3" HorizontalAlignment="Center" />
                                     <!-- Job icon buttons are generated in code -->
                             </BoxContainer>
                         </PanelContainer>
                     </BoxContainer>
 
+                    <!-- TODO chameleon clothing tab -->
+
                 </TabContainer>
-                <controls:StripeBack Margin="8 -6 8 4" HasBottomEdge="False"> <!-- The negative margin allows the control to be flush with the TabContainer -->
-                    <Label Margin="6 2" Text="{Loc 'agent-id-ui-os'}" VerticalAlignment="Center" StyleClasses="PdaContentFooterText"/>
-                    <Label Margin="6 2" Text="{Loc 'agent-id-ui-os-flavor'}" VerticalAlignment="Center" HorizontalAlignment="Right" StyleClasses="PdaContentFooterText"/>
+                <controls:StripeBack Margin="8 -6 8 4" HasBottomEdge="False" > <!-- The negative margin allows the control to be flush with the TabContainer -->
+                    <Label StyleClasses="LabelSubText" Margin="6 2" Text="{Loc 'agent-id-ui-os'}"
+                           VerticalAlignment="Center" />
+                    <Label StyleClasses="LabelSubText" Margin="6 2" Text="{Loc 'agent-id-ui-os-flavor'}"
+                           VerticalAlignment="Center" HorizontalAlignment="Right" />
                 </controls:StripeBack>
             </BoxContainer>
         </PanelContainer>
 
         <!-- Footer -->
-        <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" >
             <PanelContainer StyleClasses="LowDivider" />
-            <BoxContainer Margin="10 2 5 0" VerticalAlignment="Bottom">
+            <BoxContainer Margin="10 2 5 0" VerticalAlignment="Bottom" >
                 <Label Text="{Loc 'agent-id-ui-footer-flavor-left'}" StyleClasses="WindowFooterText" />
                 <Label Text="{Loc 'agent-id-ui-footer-flavor-right'}" StyleClasses="WindowFooterText"
                         HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
-                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

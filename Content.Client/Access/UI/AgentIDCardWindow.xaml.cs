@@ -41,8 +41,8 @@ public sealed partial class AgentIDCardWindow : FancyWindow
         NameLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxNameLength);
         JobLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdJobLength);
 
-        CTabContainer.SetTabTitle(0, Loc.GetString("agent-id-ui-tab-settings"));
-        CTabContainer.SetTabTitle(1, Loc.GetString("agent-id-ui-tab-job-icons"));
+        AgentTabs.SetTabTitle(0, Loc.GetString("agent-id-ui-tab-settings"));
+        AgentTabs.SetTabTitle(1, Loc.GetString("agent-id-ui-tab-job-icons"));
     }
 
     /// <summary>
@@ -77,7 +77,6 @@ public sealed partial class AgentIDCardWindow : FancyWindow
                 Access = AccessLevel.Public,
                 ToolTip = Loc.GetString(groupProto.GroupName),
                 TextureNormal = _spriteSystem.Frame0(groupProto.Sprite),
-                Scale = new Vector2(4f, 4f),
                 SetSize = new Vector2(32, 32),
             };
 
@@ -85,7 +84,7 @@ public sealed partial class AgentIDCardWindow : FancyWindow
             groupButton.OnPressed += _ => SetJobIcons(groupProto.Icons);
             groupTextureButton.OnPressed += _ =>
             {
-                groupButton.Pressed = true;
+                groupButton.Pressed = true; // The texture button acts as though you selected the main button
                 SetJobIcons(groupProto.Icons);
             };
 
@@ -115,7 +114,6 @@ public sealed partial class AgentIDCardWindow : FancyWindow
                 Access = AccessLevel.Public,
                 ToolTip = Loc.GetString(iconProto.JobName),
                 TextureNormal = texture,
-                Scale = new Vector2(4f, 4f),
                 SetSize = new Vector2(32, 32),
             };
 
