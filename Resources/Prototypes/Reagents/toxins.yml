@@ -751,3 +751,26 @@
         conditions:
         - !type:MetabolizerTypeCondition
           type: [Vox]
+
+- type: reagent
+  id: Hemorrhinol
+  name: reagent-name-hemorrhinol
+  group: Toxins
+  desc: reagent-desc-hemorrhinol
+  physicalDesc: reagent-physical-desc-thin
+  contrabandSeverity: Major
+  flavor: sharp
+  color: "#96424f"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectAnticoagulant
+        time: 3
+        type: Add
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectHemorrhage
+        time: 3
+        type: Add
+      - !type:ModifyBleed
+        amount: 0.5
