@@ -54,6 +54,43 @@
         startingItem: PowerCellHigh
 
 - type: entity
+  parent: BaseXenoborgChassisDerelict
+  id: XenoborgEngiDerelict
+  name: derelict engi xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that once aimed to replicate itself. It's brain-extracting days are probably over. This one seems to have picked up some replacement parts (and other things) along the way...
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi_derelict
+    - state: xenoborg_engi_derelict_crystal #This layer and the layer below are duplicated in order to create a more mellow unshaded layer. See https://github.com/space-wizards/space-station-14/pull/37869 for more info on the method.
+      shader: unshaded
+    - state: xenoborg_engi_derelict_crystal
+      shader: shaded
+    - state: xenoborg_engi_derelict_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: xenoborg_engi_derelict_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 7 # Xenoborgs are a bit tougher than the other derelicts, and have not lost a module
+    hasMindState: xenoborg_engi_derelict_e
+    noMindState: xenoborg_engi_e_r # We can reuse the graphics from the regular engi xenoborg
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleEngi
+      - BorgModuleEngineering
+      - BorgModuleGeneric
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
+
+- type: entity
   parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
   id: XenoborgHeavy
   name: heavy xenoborg
@@ -147,6 +184,80 @@
         startingItem: PowerCellHigh
 
 - type: entity
+  parent: BaseXenoborgChassisDerelict
+  id: XenoborgHeavyDerelict
+  name: derelict heavy xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that once aimed to replicate itself. It's brain-extracting days are probably over. This one looks like it's about to tip over.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_heavy_derelict
+    - state: xenoborg_heavy_derelict_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: xenoborg_heavy_derelict_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 5 # Gotta add in space movement somehow
+    hasMindState: xenoborg_heavy_derelict_e
+    noMindState: xenoborg_heavy_derelict_e_r # Can't reuse the graphics from the regular heavy xenoborg due to the skewed eye
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleHeavy
+  - type: MovementSpeedModifier # slower
+    baseWalkSpeed : 1.2
+    baseSprintSpeed : 2.2
+  # Flash immunity: gone
+  - type: MobThresholds # tankier
+    thresholds:
+      0: Alive
+      250: Critical
+      750: Dead # Same as destruction threshold. Borgs act exactly like crit when dead, except for ghosting on move
+    stateAlertDict:
+      Alive: BorgHealth
+      Critical: BorgCrit
+      Dead: BorgDead
+    showOverlays: false
+    allowRevives: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 190
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer_xenoborg.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 750
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PinpointerStation: # drop the station pinpointer from the derelict xenoborg module. The useless cousin of normal xenoborg drops.
+            min: 1
+            max: 1
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Repairable
+    doAfterDelay: 25 # more HP, more time to heal
+
+- type: entity
   parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
   id: XenoborgScout
   name: scout xenoborg
@@ -199,6 +310,41 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
+
+- type: entity
+  parent: BaseXenoborgChassisDerelict
+  id: XenoborgScoutDerelict
+  name: derelict scout xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that once aimed to replicate itself. It's brain-extracting days are probably over. This one should probably see a chiropractor.
+  components:
+  - type: Sprite
+    layers:
+      - state: xenoborg_scout_derelict
+      - state: xenoborg_scout_derelict_e
+        map: ["enum.BorgVisualLayers.Light"]
+        shader: unshaded
+        visible: false
+      - state: xenoborg_scout_derelict_l
+        shader: unshaded
+        map: ["light"]
+        visible: false
+  - type: FootstepModifier # it flies instead of walking
+    footstepSoundCollection:
+      collection: FootstepHoverXenoborg
+  - type: MovementAlwaysTouching # it flies in space with tiny thrusters
+  # Flash immunity: gone
+  - type: BorgChassis
+    maxModules: 4 # Xenoborgs are a bit tougher than the other derelicts, and have not lost a module (not that this guy could spare one...)
+    hasMindState: xenoborg_scout_derelict_e
+    noMindState: xenoborg_scout_derelict_e_r # Can't reuse the graphics from the regular scout xenoborg due to the bent neck
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleScout
+  - type: MovementSpeedModifier # faster
+    baseWalkSpeed : 3
+    baseSprintSpeed : 6
 
 - type: entity
   parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
@@ -254,6 +400,39 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
 
+- type: entity
+  parent: BaseXenoborgChassisDerelict
+  id: XenoborgStealthDerelict
+  name: derelict stealth xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that once aimed to replicate itself. It's brain-extracting days are probably over. Judging by the damage, this one once met the wrong end of a crowbar.
+  components:
+  - type: Sprite
+    layers:
+      - state: xenoborg_stealth_derelict
+      - state: xenoborg_stealth_derelict_e
+        map: ["enum.BorgVisualLayers.Light"]
+        shader: unshaded
+        visible: false
+      - state: xenoborg_stealth_derelict_l
+        shader: unshaded
+        map: ["light"]
+        visible: false
+  - type: FootstepModifier # it flies instead of walking
+    footstepSoundCollection:
+      collection: FootstepHoverXenoborg
+  - type: BorgChassis
+    maxModules: 5 # Xenoborgs are a bit tougher than the other derelicts, and have not lost a module
+    hasMindState: xenoborg_stealth_derelict_e
+    noMindState: xenoborg_stealth_e_r # We can reuse the graphics from the regular stealth xenoborg
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleStealth
+  - type: MovementAlwaysTouching # it flies in space with tiny thrusters
+  # - type: SpamEmitSound # longer interval to make the creppy sound
+  #   minInterval: 50
+  #   maxInterval: 150
 
 # xenoborgs empty
 - type: entity

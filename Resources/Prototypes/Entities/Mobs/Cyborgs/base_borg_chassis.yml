@@ -537,3 +537,122 @@
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: Xenoborg
+
+- type: entity
+  id: BaseXenoborgChassisDerelict
+  parent: BaseBorgChassis # Suffers from Ion Storms, and is cut off from the Xenoborg team as a whole
+  name: derelict xenoborg
+  description: A man-machine hybrid that once aimed to replicate itself. It's brain-extracting days are probably over.
+  save: false
+  abstract: true
+  components:
+  - type: RandomMetadata
+    nameSegments:
+    - NamesXenoborg
+  - type: NameIdentifier
+    group: Xenoborg
+  - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
+  - type: MobThresholds
+    thresholds: # still slightly tankier than a normal borg
+      0: Alive
+      125: Critical
+      375: Dead # Same as destruction threshold. Borgs act exactly like crit when dead, except for ghosting on move
+  - type: EmagSiliconLaw # should xenoborgs be emagable?
+    stunTime: 5
+  - type: SiliconLawProvider
+    laws: XenoborgLawset
+  - type: StartIonStormed
+    ionStormAmount: 4 # Changing this back to 3 makes the derelict xenoborgs more evil
+  - type: IonStormTarget
+    chance: 1
+  - type: IntrinsicRadioTransmitter # can only use binary ... how sad
+    channels:
+    - Binary
+  - type: ActiveRadio # can't hear the call of the mothership anymore
+    channels:
+    - Binary
+  - type: Repairable
+    doAfterDelay: 13 # 25% more HP, so 30% more time to heal
+  - type: BorgChassis
+    maxModules: 0
+    hasMindState: robot_e
+    noMindState: robot_e_r
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+  - type: TypingIndicator
+    proto: xenoborg
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Xenoborg
+    allowedEmotes:
+    - Laugh
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconXenoborg
+    wilhelmProbability: 0
+  - type: DamagedSiliconAccent
+  - type: UnblockableSpeech
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepXenoborg
+  # - type: SpamEmitSound # makes a creppy noise randomly
+  #   minInterval: 30
+  #   maxInterval: 45
+  #   sound:
+  #     path: /Audio/Machines/genetics.ogg
+  #     params:
+  #       volume: -8
+  #       maxDistance: 5
+  #       variation: 0.05
+  - type: NpcFactionMember
+    factions:
+    - Xenoborg
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 90
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer_xenoborg.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 375
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PinpointerStation: # drop the station pinpointer from the derelict xenoborg module. The useless cousin of normal xenoborg drops.
+            min: 1
+            max: 1
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PointLight
+    color: "#0033ff"
+  - type: GuideHelp
+    guides:
+    - Cyborgs
+    - Robotics
+    - Xenoborgs
+  - type: Access
+    tags:
+    - Xenoborg
+  - type: AccessReader
+    access: [["Xenoborg"]]
+  - type: ShowJobIcons # probably needed more than the usual xenoborg
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Xenoborg

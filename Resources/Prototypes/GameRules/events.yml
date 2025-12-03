@@ -61,6 +61,13 @@
         - id: DerelictJanitorCyborgSpawn
         - id: DerelictMedicalCyborgSpawn
         - id: DerelictMiningCyborgSpawn
+    - !type:GroupSelector # Xenoborgs
+      weight: 25
+      children:
+        - id: DerelictEngineerXenoborgSpawn
+        - id: DerelictHeavyXenoborgSpawn
+        - id: DerelictScoutXenoborgSpawn
+        - id: DerelictStealthXenoborgSpawn
     - !type:GroupSelector # Other Borgs
       weight: 15
       children:
@@ -817,6 +824,90 @@
   - type: AntagSelection
     definitions:
     - spawnerPrototype: SpawnPointGhostDerelictSyndicateAssaultCyborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictEngineeringXenoborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2.5
+    earliestStart: 20
+    reoccurrenceDelay: 20
+    minimumPlayers: 15
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerXenoborgEngiDerelictGhostRole
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictEngineeringXenoborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictHeavyXenoborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2.5
+    earliestStart: 20
+    reoccurrenceDelay: 20
+    minimumPlayers: 15
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerXenoborgHeavyDerelictGhostRole
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictHeavyXenoborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictScoutXenoborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2.5
+    earliestStart: 20
+    reoccurrenceDelay: 20
+    minimumPlayers: 15
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerXenoborgScoutDerelictGhostRole
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictScoutXenoborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictStealthXenoborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2.5
+    earliestStart: 20
+    reoccurrenceDelay: 20
+    minimumPlayers: 15
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerXenoborgStealthDerelictGhostRole
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictStealthXenoborg
       min: 1
       max: 1
       pickPlayer: false
