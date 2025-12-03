@@ -305,8 +305,9 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     private void OnMetabolismExclusion(Entity<BloodstreamComponent> ent, ref MetabolismExclusionEvent args)
     {
-        // Any blood reagent that shares the name will skip metabolism to enable blood transfusion
-        args.ReagentList.RemoveAll(reagent => ent.Comp.BloodReagents.ContainsPrototype(reagent.Reagent.Prototype));
+        // Adding all blood reagents for filtering blood in metabolizer
+        foreach (var (reagentId, _) in ent.Comp.BloodReagents)
+            args.ReagentList.Add(reagentId.Prototype);
     }
 
     /// <summary>

@@ -134,27 +134,29 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
             return;
         }
 
-            // Copy the solution do not edit the original solution list
-            var list = solution.Contents.ToList();
+        // Copy the solution do not edit the original solution list
+        var list = solution.Contents.ToList();
 
-            // excluding chemicals which bloodstream declares as blood
-            var ev = new MetabolismExclusionEvent(list);
-            RaiseLocalEvent(solutionEntityUid.Value, ref ev);
+        // Collecting blood reagent for filtering
+        var bloodList = new List<string>();
+        var ev = new MetabolismExclusionEvent(bloodList);
+        RaiseLocalEvent(solutionEntityUid.Value, ref ev);
 
-            if (ev.ReagentList.Count == 0)
-                return;
+        // randomize the reagent list so we don't have any weird quirks
+        // like alphabetical order or insertion order mattering for processing
+        _random.Shuffle(list);
 
-            // randomize the reagent list so we don't have any weird quirks
-            // like alphabetical order or insertion order mattering for processing
-            _random.Shuffle(ev.ReagentList);
+        bool isDead = _mobStateSystem.IsDead(solutionEntityUid.Value);
 
-            bool isDead = _mobStateSystem.IsDead(solutionEntityUid.Value);
+        int reagents = 0;
+        foreach (var (reagent, quantity) in list)
+        {
+            if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
+                continue;
 
-            int reagents = 0;
-            foreach (var (reagent, quantity) in ev.ReagentList)
-            {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
-                    continue;
+            // Skip blood reagents
+            if (bloodList.Contains(reagent.Prototype))
+                continue;
 
             var mostToRemove = FixedPoint2.Zero;
             if (proto.Metabolisms is null)
