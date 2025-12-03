@@ -192,11 +192,13 @@ public sealed partial class DamageableSystem
     /// </summary>
     /// <param name="ent">entity to be healed</param>
     /// <param name="amount">how much to heal</param>
+    /// <param name="group">from which group to heal. if null, heal from all groups</param>
     /// <param name="origin">who did the healing</param>
     /// <returns></returns>
     public DamageSpecifier HealEvenly(
         Entity<DamageableComponent?> ent,
         FixedPoint2 amount,
+        ProtoId<DamageGroupPrototype>? group = null,
         EntityUid? origin = null
     )
     {
@@ -208,40 +210,54 @@ public sealed partial class DamageableSystem
         if (amount <= 0)
             return damageChange;
 
-        // make sure damageChange has the same damage types as the damaged entity
-        damageChange.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
-        foreach (var type in ent.Comp.Damage.DamageDict.Keys)
-            damageChange.DamageDict.Add(type, FixedPoint2.Zero);
-
-        // If trying to heal more than the total damage of the entity just clear all damage and return how much damage the entity had.
-        if (ent.Comp.TotalDamage < amount)
+        // get the damage should be healed (either all or only from one group)    
+        var damageEntity = new DamageSpecifier();
+        if (group != null)
         {
+            var groupProto = _prototypeManager.Index(group);
+            damageEntity.DamageDict.EnsureCapacity(groupProto.DamageTypes.Count);
+            foreach (var damageId in groupProto.DamageTypes)
+                damageEntity.DamageDict.Add(damageId, ent.Comp.Damage.DamageDict[damageId]);
+        }
+        else
+        {
+            damageEntity.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
             foreach (var (type, value) in ent.Comp.Damage.DamageDict)
-                damageChange.DamageDict[type] = -value;
-
-            ClearAllDamage(ent);
-            return damageChange;
+                damageEntity.DamageDict.Add(type, value);
         }
 
-        // This complicated math tries to share the remainingHeal equaly among all damage types
+        // make sure damageChange has the same damage types as damageEntity
+        damageChange.DamageDict.EnsureCapacity(damageEntity.DamageDict.Count);
+        foreach (var type in damageEntity.DamageDict.Keys)
+            damageChange.DamageDict.Add(type, FixedPoint2.Zero);
+
+        // If trying to heal more than the total damage of damageEntity just heal everything
+        if (damageEntity.GetTotal() < amount)
+        {
+            foreach (var (type, value) in damageEntity.DamageDict)
+                damageChange.DamageDict[type] = damageChange.DamageDict[type] > 0 ? -value : FixedPoint2.Zero;
+
+            return ChangeDamage(ent, damageChange, true, false, origin);
+        }
+
+        // This complicated math tries to share the remainingHeal equaly among all damage types in damageEntity
         // Any overheals will be then equaly shared with all other damage types
         var remainingHeal = amount;
         while (remainingHeal > 0)
         {
-            var damageLeftToHeal = ent.Comp.Damage + damageChange;
+            var damageLeftToHeal = damageEntity + damageChange;
             var numberDamageTypesNotHealed = damageLeftToHeal.DamageDict.Values.Where(value => value != FixedPoint2.Zero).Count();
             var minDamageNeedHeal = damageLeftToHeal.DamageDict.Values.Where(value => value != FixedPoint2.Zero).Min();
 
             var valueToTryToHeal = remainingHeal / numberDamageTypesNotHealed;
             valueToTryToHeal = FixedPoint2.Min(valueToTryToHeal, minDamageNeedHeal);
 
-            foreach (var (type, value) in ent.Comp.Damage.DamageDict)
+            foreach (var (type, value) in damageEntity.DamageDict)
             {
-                if (value + damageChange.DamageDict[type] != 0)
-                {
-                    damageChange.DamageDict[type] -= valueToTryToHeal;
-                    remainingHeal -= valueToTryToHeal;
-                }
+                if (value + damageChange.DamageDict[type] == 0) continue;
+
+                damageChange.DamageDict[type] -= valueToTryToHeal;
+                remainingHeal -= valueToTryToHeal;
             }
         }
 
