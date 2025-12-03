@@ -20,7 +20,6 @@
     wideAnimationRotation: 0
     soundHit:
       path: /Audio/_Tinystation/Items/rp_worm/worm_hit.ogg
-    hitspark: Slime
     damage:
       types:
         Blunt: 1

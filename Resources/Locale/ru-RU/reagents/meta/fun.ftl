@@ -22,3 +22,7 @@ reagent-name-hew = сок, заставляющий говорить Хев
 reagent-desc-hew = Чистая сущность инвертированного плюшевого унатха. Заставляет вас говорить Хев!
 reagent-name-corgiessence = коргиум
 reagent-desc-corgiessence = На вкус как еда для собак. Очевидно, это дело вкуса.
+reagent-name-catessence = кошачья сущность
+reagent-desc-catessence = Канцерогенный фермент, разрушающий белки голосовых связок большинства существ. Смешивать крайне не рекомендуется.
+reagent-name-canidessence = псоэссенция
+reagent-desc-canidessence = Набор редких белков, возвращающих чувство верности и дружелюбия.

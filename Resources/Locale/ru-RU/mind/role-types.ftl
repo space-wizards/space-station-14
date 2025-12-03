@@ -31,3 +31,5 @@ role-subtype-subverted = Дефектный
 role-subtype-paradox-clone = Парадокс
 role-subtype-wizard = Волшебник
 role-subtype-changeling = Генокрад
+role-subtype-xenoborg-core = Ядро ксеноборгов
+role-subtype-xenoborg = Ксеноборг
