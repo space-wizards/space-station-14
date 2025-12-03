@@ -21,34 +21,11 @@ public sealed partial class EvenHealthChangeEntityEffectSystem : EntityEffectSys
 
     protected override void Effect(Entity<DamageableComponent> entity, ref EntityEffectEvent<EvenHealthChange> args)
     {
-        var damageSpec = new DamageSpecifier();
-
         foreach (var (group, amount) in args.Effect.Damage)
-        {
-            var groupProto = _proto.Index(group);
-            var groupDamage = new Dictionary<string, FixedPoint2>();
-            foreach (var damageId in groupProto.DamageTypes)
-            {
-                var damageAmount = entity.Comp.Damage.DamageDict.GetValueOrDefault(damageId);
-                if (damageAmount != FixedPoint2.Zero)
-                    groupDamage.Add(damageId, damageAmount);
-            }
+            _damageable.HealDistributed(entity.AsNullable(), amount * args.Scale, group);
 
-            var sum = groupDamage.Values.Sum();
-            foreach (var (damageId, damageAmount) in groupDamage)
-            {
-                var existing = damageSpec.DamageDict.GetOrNew(damageId);
-                damageSpec.DamageDict[damageId] = existing + damageAmount / sum * amount;
-            }
-        }
-
-        damageSpec *= args.Scale;
-
-        _damageable.TryChangeDamage(
-            entity.AsNullable(),
-            damageSpec,
-            args.Effect.IgnoreResistances,
-            interruptsDoAfters: false);
+        // foreach (var (group, amount) in args.Effect.Damage)
+        //     _damageable.HealEvenly(entity.AsNullable(), amount * args.Scale, group);
     }
 }
 
