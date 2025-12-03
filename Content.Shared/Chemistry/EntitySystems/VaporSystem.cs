@@ -63,6 +63,8 @@ internal sealed class VaporSystem : EntitySystem
         var despawn = EnsureComp<TimedDespawnComponent>(vapor);
         despawn.Lifetime = aliveTime;
 
+        Dirty(vapor);
+
         // Set Move
         if (TryComp(vapor, out PhysicsComponent? physics))
         {
