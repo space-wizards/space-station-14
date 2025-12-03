@@ -186,8 +186,9 @@ public sealed partial class DamageableSystem
     }
 
     /// <summary>
-    /// Will reduce the damage on the entity exactly by <see cref="amount"/> equaly distributed among all damage types the entity has.
+    /// Will reduce the damage on the entity exactly by <see cref="amount"/> as close as equaly distributed among all damage types the entity has.
     /// If one of the damage types of the entity is too low. it will heal that completly and distribute the excess healing among the other damage types.
+    /// If the <see cref="amount"/> is larger than the total damage of the entity then it just clears all damage.
     /// </summary>
     /// <param name="ent">entity to be healed</param>
     /// <param name="amount">how much to heal</param>
@@ -207,6 +208,7 @@ public sealed partial class DamageableSystem
         if (amount <= 0)
             return damageChange;
 
+        // make sure damageChange has the same damage types as the damaged entity
         damageChange.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
         foreach (var type in ent.Comp.Damage.DamageDict.Keys)
             damageChange.DamageDict.Add(type, 0);
@@ -221,9 +223,10 @@ public sealed partial class DamageableSystem
             return damageChange;
         }
 
-        // complicated math
-        var healToShare = amount;
-        while (healToShare > 0)
+        // This complicated math tries to share the remainingHeal equaly among all damage types
+        // Any overheals will be then equaly shared with all other damage types
+        var remainingHeal = amount;
+        while (remainingHeal > 0)
         {
             var numberDamageTypesNotHealed = 0;
             FixedPoint2? minDamageNeedHealNullable = null;
@@ -239,7 +242,7 @@ public sealed partial class DamageableSystem
             }
 
             var minDamageNeedHeal = minDamageNeedHealNullable!.Value;
-            var valueToTryToHeal = healToShare / numberDamageTypesNotHealed;
+            var valueToTryToHeal = remainingHeal / numberDamageTypesNotHealed;
             valueToTryToHeal = FixedPoint2.Min(valueToTryToHeal, minDamageNeedHeal);
 
             foreach (var (type, value) in ent.Comp.Damage.DamageDict)
@@ -247,7 +250,7 @@ public sealed partial class DamageableSystem
                 if (value + damageChange.DamageDict[type] != 0)
                 {
                     damageChange.DamageDict[type] -= valueToTryToHeal;
-                    healToShare -= valueToTryToHeal;
+                    remainingHeal -= valueToTryToHeal;
                 }
             }
         }
