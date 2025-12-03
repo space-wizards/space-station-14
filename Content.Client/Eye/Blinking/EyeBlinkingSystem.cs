@@ -5,6 +5,7 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Animations;
+using Robust.Shared.Timing;
 using System.Numerics;
 
 namespace Content.Client.Eye.Blinking;
@@ -12,8 +13,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
-    private const string AnimationKey = "anim-blink";
+    [Dependency] private readonly ITimerManager _timer = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -23,33 +23,19 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void OnStartup(Entity<EyeBlinkingComponent> ent, ref ComponentStartup args)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
-            return;
-
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
 
         if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
             return;
 
-        var layerIndex = _sprite.LayerMapReserve((ent.Owner, spriteComponent), HumanoidVisualLayers.Eyes);
-        _sprite.LayerMapAdd((ent.Owner, spriteComponent), EyelidsVisuals.Eyelids, layerIndex);
-
-        var eyelidLayerIndex = _sprite.LayerMapReserve((ent.Owner, spriteComponent), EyelidsVisuals.Eyelids);
-        _sprite.LayerSetRsiState((ent.Owner, spriteComponent), eyelidLayerIndex, layer.State);
-
-        var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
-        var blinkColor = new Color(
-            humanoid.SkinColor.R * blinkFade,
-            humanoid.SkinColor.G * blinkFade,
-            humanoid.SkinColor.B * blinkFade);
-        _sprite.LayerSetColor((ent.Owner, spriteComponent), layerIndex, layer.Color);
+        
 
 
-        if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var stateObj) && stateObj is bool state)
-        {
-            ChangeEyeState(ent, state);
-        }
+        //if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var stateObj) && stateObj is bool state)
+        //{
+        //    ChangeEyeState(ent, state);
+        //}
     }
 
     private void AppearanceChangeEventHandler(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
@@ -57,46 +43,60 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_appearance.TryGetData<bool>(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var closed))
             return;
 
-        if (!_sprite.LayerMapTryGet(ent.Owner, EyelidsVisuals.Eyelids, out var layer, false))
+        if (!_sprite.LayerMapTryGet(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
             return;
 
-        ChangeEyeState(ent, closed);
+        //ChangeEyeState(ent, closed);
     }
 
     private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
     {
-        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite)) return;
+        if (!TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
+            return;
+        if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
+            return;
 
-        sprite[_sprite.LayerMapReserve((ent.Owner, sprite), EyelidsVisuals.Eyelids)].Visible = eyeClsoed;
+        var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
+        var blinkColor = new Color(
+            humanoid.SkinColor.R * blinkFade,
+            humanoid.SkinColor.G * blinkFade,
+            humanoid.SkinColor.B * blinkFade);
+        var eyeColor = humanoid.EyeColor;
+        _sprite.LayerSetColor((ent.Owner, sprite), HumanoidVisualLayers.Eyes, eyeClsoed ? blinkColor : eyeColor);
     }
 
     public override void Blink(Entity<EyeBlinkingComponent> ent)
     {
         base.Blink(ent);
-        if (_animationPlayer.HasRunningAnimation(ent.Owner, AnimationKey))
+        if (ent.Comp.BlinkInProgress)
             return;
 
-        if (!_sprite.TryGetLayer(ent.Owner, EyelidsVisuals.Eyelids, out var layer, false))
+        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var eyes, false))
             return;
 
-        var animation = new Animation
+        ent.Comp.BlinkInProgress = true;
+
+        ChangeEyeState(ent, true);
+
+        Timer timer = new Timer((int)ent.Comp.BlinkDuration.TotalMilliseconds, false, () => OpenEye(ent));
+
+        _timer.AddTimer(timer);
+    }
+
+    private void OpenEye(Entity<EyeBlinkingComponent> ent)
+    {
+        if (!ent.Owner.IsValid())
+            return;
+        ent.Comp.BlinkInProgress = false;
+        if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var stateObj) && stateObj is bool state)
         {
-            Length = ent.Comp.BlinkDuration,
-            AnimationTracks =
-            {
-                new AnimationTrackSpriteFlick
-                {
-                    LayerKey = EyelidsVisuals.Eyelids,
-                    KeyFrames =
-                    {
-                        new AnimationTrackSpriteFlick.KeyFrame(new RSI.StateId("no_eyes"), 0f),
-                        new AnimationTrackSpriteFlick.KeyFrame(layer.State, (float)ent.Comp.BlinkDuration.TotalSeconds),
-                    }
-                }
-            }
-        };
-
-        _animationPlayer.Play(ent.Owner, animation, AnimationKey);
+            if(state == false)
+                ChangeEyeState(ent, state);
+        }
+        else
+        {
+            ChangeEyeState(ent, false);
+        }
     }
 }
 
