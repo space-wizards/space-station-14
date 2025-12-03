@@ -228,20 +228,10 @@ public sealed partial class DamageableSystem
         var remainingHeal = amount;
         while (remainingHeal > 0)
         {
-            var numberDamageTypesNotHealed = 0;
-            FixedPoint2? minDamageNeedHealNullable = null;
-            foreach (var (type, value) in ent.Comp.Damage.DamageDict)
-            {
-                if (value + damageChange.DamageDict[type] > 0)
-                {
-                    numberDamageTypesNotHealed += 1;
-                    minDamageNeedHealNullable = minDamageNeedHealNullable != null ?
-                        FixedPoint2.Min(minDamageNeedHealNullable.Value, value + damageChange.DamageDict[type]) :
-                        value + damageChange.DamageDict[type];
-                }
-            }
+            var damageLeftToHeal = ent.Comp.Damage + damageChange;
+            var numberDamageTypesNotHealed = damageLeftToHeal.DamageDict.Values.Where(value => value != FixedPoint2.Zero).Count();
+            var minDamageNeedHeal = damageLeftToHeal.DamageDict.Values.Where(value => value != FixedPoint2.Zero).Min();
 
-            var minDamageNeedHeal = minDamageNeedHealNullable!.Value;
             var valueToTryToHeal = remainingHeal / numberDamageTypesNotHealed;
             valueToTryToHeal = FixedPoint2.Min(valueToTryToHeal, minDamageNeedHeal);
 
