@@ -640,7 +640,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PointLight
-    color: "#0033ff"
+    color: "#3010ff"
+    energy: 7
   - type: GuideHelp
     guides:
     - Cyborgs
@@ -652,3 +653,6 @@
   - type: AccessReader
     access: [["Xenoborg"]]
   - type: ShowJobIcons # probably needed more than the usual xenoborg
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
