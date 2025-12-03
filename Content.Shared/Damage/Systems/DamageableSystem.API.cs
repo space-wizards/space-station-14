@@ -235,7 +235,7 @@ public sealed partial class DamageableSystem
         if (damageEntity.GetTotal() < amount)
         {
             foreach (var (type, value) in damageEntity.DamageDict)
-                damageChange.DamageDict[type] = damageChange.DamageDict[type] > 0 ? -value : FixedPoint2.Zero;
+                damageChange.DamageDict[type] = value > 0 ? -value : FixedPoint2.Zero;
 
             return ChangeDamage(ent, damageChange, true, false, origin);
         }
