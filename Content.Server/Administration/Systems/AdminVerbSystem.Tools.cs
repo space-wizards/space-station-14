@@ -1,11 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Content.Server.Administration.Components;
 using Content.Server.Cargo.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Systems;
@@ -14,10 +12,11 @@ using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Components;
+using Content.Shared.Administration.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Construction.Components;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
@@ -25,6 +24,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Stacks;
 using Content.Shared.Station.Components;
 using Content.Shared.Verbs;
@@ -52,6 +52,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
     [Dependency] private readonly JointSystem _jointSystem = default!;
     [Dependency] private readonly BatterySystem _batterySystem = default!;
+    [Dependency] private readonly PredictedBatterySystem _predictedBatterySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly GunSystem _gun = default!;
 
@@ -158,6 +159,57 @@ public sealed partial class AdminVerbSystem
                 Priority = (int)TricksVerbPriorities.MakeVulnerable,
             };
             args.Verbs.Add(makeVulnerable);
+        }
+
+        if (TryComp<PredictedBatteryComponent>(args.Target, out var pBattery))
+        {
+            Verb refillBattery = new()
+            {
+                Text = Loc.GetString("admin-verbs-refill-battery"),
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/fill_battery.png")),
+                Act = () =>
+                {
+                    _predictedBatterySystem.SetCharge((args.Target, pBattery), pBattery.MaxCharge);
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString("admin-trick-refill-battery-description"),
+                Priority = (int)TricksVerbPriorities.RefillBattery,
+            };
+            args.Verbs.Add(refillBattery);
+
+            Verb drainBattery = new()
+            {
+                Text = Loc.GetString("admin-verbs-drain-battery"),
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/drain_battery.png")),
+                Act = () =>
+                {
+                    _predictedBatterySystem.SetCharge((args.Target, pBattery), 0);
+                },
+                Impact = LogImpact.Medium,
+                Priority = (int)TricksVerbPriorities.DrainBattery,
+            };
+            args.Verbs.Add(drainBattery);
+
+            Verb infiniteBattery = new()
+            {
+                Text = Loc.GetString("admin-verbs-infinite-battery"),
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/infinite_battery.png")),
+                Act = () =>
+                {
+                    var recharger = EnsureComp<PredictedBatterySelfRechargerComponent>(args.Target);
+                    recharger.AutoRechargeRate = pBattery.MaxCharge; // Instant refill.
+                    recharger.AutoRechargePauseTime = TimeSpan.Zero; // No delay.
+                    Dirty(args.Target, recharger);
+                    _predictedBatterySystem.RefreshChargeRate((args.Target, pBattery));
+                },
+                Impact = LogImpact.Medium,
+                Message = Loc.GetString("admin-trick-infinite-battery-object-description"),
+                Priority = (int)TricksVerbPriorities.InfiniteBattery,
+            };
+            args.Verbs.Add(infiniteBattery);
         }
 
         if (TryComp<BatteryComponent>(args.Target, out var battery))

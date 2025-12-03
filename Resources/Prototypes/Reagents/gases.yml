@@ -1,3 +1,6 @@
+# TODO: Reagent Args which allow more selective scaling.
+# Currently all Gas metabolisms scale by reagent quantity metabolized, where other Metabolisms are modified by metabolism rate!
+
 - type: reagent
   id: Oxygen
   name: reagent-name-oxygen
@@ -64,7 +67,7 @@
             Poison: 0.7
       - !type:AdjustAlert
         alertType: Toxins
-        minScale: 1
+        minScale: 0.5
         conditions:
           - !type:MetabolizerTypeCondition
             type: [ Vox ]
@@ -105,7 +108,7 @@
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
-        minScale: 3
+        minScale: 1.5
         clear: True
         time: 5
   reactiveEffects:
@@ -150,7 +153,7 @@
       # We need a metabolism effect on reagent removal
       - !type:AdjustAlert
         alertType: Toxins
-        minScale: 3
+        minScale: 1.5
         clear: True
         time: 5
 
@@ -191,7 +194,7 @@
         - !type:MetabolizerTypeCondition
           type: [ Plant ]
       - !type:HealthChange
-        minScale: 1
+        minScale: 0.5
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Plant, Vox ]
@@ -270,7 +273,7 @@
     Gas:
       effects:
       - !type:Emote
-        minScale: 1
+        minScale: 0.2
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Slime ]
@@ -279,7 +282,7 @@
         showInChat: true
         probability: 0.1
       - !type:Emote
-        minScale: 0.4
+        minScale: 0.2
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Slime ]
@@ -288,7 +291,7 @@
         showInChat: true
         probability: 0.01
       - !type:PopupMessage
-        minScale: 1
+        minScale: 0.5
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Slime ]
@@ -298,7 +301,7 @@
         messages: [ "effect-sleepy" ]
         probability: 0.1
       - !type:MovementSpeedModifier
-        minScale: 2
+        minScale: 1
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Slime ]
@@ -306,7 +309,7 @@
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:ModifyStatusEffect
-        minScale: 3.6
+        minScale: 1.8
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Slime ]
@@ -315,7 +318,7 @@
         time: 3
         type: Update
       - !type:HealthChange
-        minScale: 7
+        minScale: 3.5
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Slime ]
@@ -367,27 +370,27 @@
     Gas:
       effects:
       - !type:HealthChange
-        minScale: 1
+        minScale: 0.5
         ignoreResistances: true
         damage:
           types:
             Cellular: 0.05
       - !type:ModifyStatusEffect
-        minScale: 2
+        minScale: 1
         effectProto: StatusEffectSeeingRainbow
         type: Add
         time: 500
       - !type:Drunk
         boozePower: 500
-        minScale: 2
+        minScale: 1
       - !type:PopupMessage
         type: Local
         messages: [ "frezon-lungs-cold" ]
         probability: 0.1
-        minScale: 2
+        minScale: 1
       - !type:PopupMessage
         type: Local
         visualType: Medium
         messages: [ "frezon-euphoric" ]
         probability: 0.1
-        minScale: 2
+        minScale: 1

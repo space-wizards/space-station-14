@@ -103,6 +103,13 @@
       offset: 0, 1
 
 - type: entity
+  parent: Thruster
+  id: ThrusterXenoborg
+  components:
+  - type: Sprite
+    sprite: Structures/Shuttles/xenoborg_thruster.rsi
+
+- type: entity
   id: ThrusterLarge
   name: large thruster
   parent: [ BaseThruster]

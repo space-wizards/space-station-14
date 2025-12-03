@@ -3,7 +3,7 @@
 namespace Content.Shared.Silicons.Borgs.Components;
 
 /// <summary>
-/// This is used for an entity that is linked to an MMI.
+/// This is used for an entity that is linked to an MMI, usually a brain.
 /// Mostly for receiving events.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
@@ -13,6 +13,6 @@ public sealed partial class MMILinkedComponent : Component
     /// <summary>
     /// The MMI this entity is linked to.
     /// </summary>
-    [DataField("linkedMMI"), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid? LinkedMMI;
 }

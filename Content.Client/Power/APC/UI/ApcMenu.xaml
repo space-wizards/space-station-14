@@ -19,7 +19,7 @@
                         <!-- Power On/Off -->
                         <Label Text="{Loc 'apc-menu-breaker-label'}" HorizontalExpand="True"
                                 StyleClasses="highlight" MinWidth="120"/>
-                        <BoxContainer Orientation="Horizontal" MinWidth="90">
+                        <BoxContainer Orientation="Horizontal" MinWidth="150">
                             <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button'}" HorizontalExpand="True" ToggleMode="True"/>
                         </BoxContainer>
                         <!--Charging Status-->

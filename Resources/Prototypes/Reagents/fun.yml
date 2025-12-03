@@ -444,40 +444,36 @@
         conditions:
         - !type:ReagentCondition
           reagent: Felinase
-          min: 25
+          min: 15
         damage:
           types:
             Radiation: 0.5
       - !type:AdjustReagent
         reagent: Felinase
-        amount: -15
+        amount: -5
         conditions:
         - !type:ReagentCondition
           reagent: Felinase
-          min: 40
+          min: 30
       - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentCondition
           reagent: Felinase
-          min: 25
+          min: 10
         effectProto: StatusEffectOwO
-        time: 25.0
+        time: 12.5
         type: Add
       - !type:Emote
         conditions:
         - !type:ReagentCondition
           reagent: Felinase
-          min: 25
+          min: 10
         emote: Cough
         showInChat: true
         showInGuidebook: true
         force: true
         probability: 0.05
       - !type:PopupMessage
-        conditions:
-        - !type:ReagentCondition
-          reagent: Felinase
-          min: 25
         type: Local
         visualType: Small
         messages: [ "capsaicin-effect-light-burn" ]
@@ -499,40 +495,36 @@
         conditions:
         - !type:ReagentCondition
           reagent: Caninase
-          min: 25
+          min: 15
         damage:
           types:
             Radiation: 0.5
       - !type:AdjustReagent
         reagent: Caninase
-        amount: -15
+        amount: -5
         conditions:
         - !type:ReagentCondition
           reagent: Caninase
-          min: 40
+          min: 30
       - !type:ModifyStatusEffect
         conditions:
         - !type:ReagentCondition
           reagent: Caninase
-          min: 25
+          min: 10
         effectProto: StatusEffectBark
-        time: 25.0
+        time: 12.5
         type: Add
       - !type:Emote
         conditions:
         - !type:ReagentCondition
           reagent: Caninase
-          min: 25
+          min: 10
         emote: Cough
         showInChat: true
         showInGuidebook: true
         force: true
         probability: 0.05
       - !type:PopupMessage
-        conditions:
-        - !type:ReagentCondition
-          reagent: Caninase
-          min: 25
         type: Local
         visualType: Small
         messages: [ "capsaicin-effect-light-burn" ]

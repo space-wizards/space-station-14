@@ -197,7 +197,8 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMicroreactor
-  # - type: Puller # use the conveyor
+  - type: Puller
+    needsHands: false
   - type: Eye
     drawFov: false
   # - type: StationAiOverlay # removed until is no longer buggy

@@ -1,26 +1,11 @@
+using Content.Shared.Power.Components;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
-namespace Content.Shared.PowerCell;
+namespace Content.Shared.PowerCell.Components;
 
 /// <summary>
-///     This component enables power-cell related interactions (e.g., entity white-lists, cell sizes, examine, rigging).
-///     The actual power functionality is provided by the server-side BatteryComponent.
+/// This component enables power-cell related interactions (e.g. EntityWhitelists, cell sizes, examine, rigging).
+/// The actual power functionality is provided by the <see cref="PredictedBatteryComponent"/>.
 /// </summary>
-[NetworkedComponent]
-[RegisterComponent]
-public sealed partial class PowerCellComponent : Component
-{
-    public const int PowerCellVisualsLevels = 2;
-}
-
-[Serializable, NetSerializable]
-public enum PowerCellVisuals : byte
-{
-    ChargeLevel
-}
-[Serializable, NetSerializable]
-public enum PowerCellSlotVisuals : byte
-{
-    Enabled
-}
+[RegisterComponent, NetworkedComponent]
+public sealed partial class PowerCellComponent : Component;
