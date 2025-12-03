@@ -1,5 +1,3 @@
-using Content.Shared.Chemistry.Reagent;
-
 namespace Content.Shared.Body.Events;
 
 /// <summary>
