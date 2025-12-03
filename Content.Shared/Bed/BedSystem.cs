@@ -143,6 +143,8 @@ public sealed class BedSystem : EntitySystem
 
             bedComponent.NextHealTime += TimeSpan.FromSeconds(bedComponent.HealTime);
 
+            Dirty(uid, bedComponent);
+
             if (strapComponent.BuckledEntities.Count == 0)
                 continue;
 
