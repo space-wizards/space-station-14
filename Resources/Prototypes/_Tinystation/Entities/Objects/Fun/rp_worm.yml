@@ -1,8 +1,8 @@
 - type: entity
   parent: BasePlushie
   id: PlushieRpWorm
-  name: ent-PlushieRpWorm
-  description: ent-PlushieRpWorm-desc
+  name: plushie worm
+  description: A squishy roleplay worm plush.
   components:
   - type: Sprite
     sprite: _Tinystation/Objects/Misc/rp_worm.rsi

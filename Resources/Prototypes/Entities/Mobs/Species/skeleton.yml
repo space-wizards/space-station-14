@@ -102,6 +102,14 @@
     alternateState: Standing
   - type: FlashImmunity
     showInExamine: false
+  # Needed so internals / metabolism logic works even for skeletons.
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1.0
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
   - type: Inventory
     femaleDisplacements:
       jumpsuit:
