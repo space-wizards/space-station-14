@@ -93,7 +93,7 @@
   - type: ContainerAmmoProvider
     container: storagebase
   - type: Item
-    size: Normal
+    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
     quickEquip: false
@@ -125,19 +125,18 @@
     soundEmpty:
       path: /Audio/Items/hiss.ogg
     clumsyProof: true
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: FoodPieBananaCream
     fireCost: 30
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 90
     startingCharge: 90
-  - type: BatterySelfRecharger
-    autoRecharge: true
+  - type: PredictedBatterySelfRecharger
     autoRechargeRate: 1
   - type: AmmoCounter
   - type: Item
     size: Normal
-        
+
 - type: entity
   name: syringe gun
   parent: BaseStorageItem
@@ -169,7 +168,9 @@
   - type: ContainerAmmoProvider
     container: storagebase
   - type: Item
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,2,1
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
