@@ -246,8 +246,12 @@ public sealed partial class DamageableSystem
         while (remainingHeal > 0)
         {
             var damageLeftToHeal = damageEntity + damageChange;
-            var numberDamageTypesNotHealed = damageLeftToHeal.DamageDict.Values.Where(value => value != FixedPoint2.Zero).Count();
-            var minDamageNeedHeal = damageLeftToHeal.DamageDict.Values.Where(value => value != FixedPoint2.Zero).Min();
+
+            var numberDamageTypesNotHealed = damageLeftToHeal.DamageDict.Values
+                .Where(value => value != FixedPoint2.Zero).Count();
+
+            var minDamageNeedHeal = damageLeftToHeal.DamageDict.Values
+                .Where(value => value != FixedPoint2.Zero).Min();
 
             var valueToTryToHeal = remainingHeal / numberDamageTypesNotHealed;
             valueToTryToHeal = FixedPoint2.Min(valueToTryToHeal, minDamageNeedHeal);
