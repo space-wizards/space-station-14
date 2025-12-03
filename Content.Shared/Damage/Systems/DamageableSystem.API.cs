@@ -186,7 +186,7 @@ public sealed partial class DamageableSystem
     }
 
     /// <summary>
-    /// Will reduce the damage on the entity exactly by <see cref="amount"/> as close as equaly distributed among all damage types the entity has.
+    /// Will reduce the damage on the entity exactly by <see cref="amount"/> as close as equally distributed among all damage types the entity has.
     /// If one of the damage types of the entity is too low. it will heal that completly and distribute the excess healing among the other damage types.
     /// If the <see cref="amount"/> is larger than the total damage of the entity then it just clears all damage.
     /// </summary>
@@ -240,8 +240,8 @@ public sealed partial class DamageableSystem
             return ChangeDamage(ent, damageChange, true, false, origin);
         }
 
-        // This complicated math tries to share the remainingHeal equaly among all damage types in damageEntity
-        // Any overheals will be then equaly shared with all other damage types
+        // This complicated math tries to share the remainingHeal equally among all damage types in damageEntity
+        // Any overheals will be then equally shared with all other damage types
         var remainingHeal = amount;
         while (remainingHeal > 0)
         {
