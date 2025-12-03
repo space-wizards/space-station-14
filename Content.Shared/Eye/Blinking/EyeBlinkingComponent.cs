@@ -45,4 +45,7 @@ public sealed partial class EyeBlinkingComponent : Component
 
     [DataField, AutoNetworkedField]
     public bool BlinkInProgress = false;
+
+    [DataField, AutoNetworkedField]
+    public bool EyesClosed = false;
 }

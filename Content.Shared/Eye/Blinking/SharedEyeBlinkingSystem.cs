@@ -38,6 +38,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     private void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
     {
         _appearance.SetData(ent, EyeBlinkingVisuals.EyesClosed, args.Blind);
+        Logger.Info($"Setting blinking enabled to {!args.Blind} for entity {ent.Owner}");
+        SetEnabled(ent, !args.Blind);
     }
 
     private void SetEnabled(Entity<EyeBlinkingComponent> ent, bool enabled)

@@ -2,6 +2,7 @@ using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
+using System.ComponentModel.Design;
 
 namespace Content.Client.Eye.Blinking;
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
@@ -25,20 +26,26 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
 
         if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var stateObj) && stateObj is bool state)
-        {
             ChangeEyeState(ent, state);
-        }
     }
 
     private void AppearanceChangeEventHandler(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
     {
-        if (!_appearance.TryGetData<bool>(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var closed))
+        if (!args.AppearanceData.TryGetValue(EyeBlinkingVisuals.EyesClosed, out var closed))
             return;
 
-        if (!_sprite.LayerMapTryGet(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
+        if (!(closed is bool state))
             return;
-        ent.Comp.BlinkInProgress = false;
-        ChangeEyeState(ent, closed);
+
+        if (ent.Comp.EyesClosed == state)
+            return;
+
+        Logger.Info($"Eye closed cganged to {state} for entity {ent.Owner}");
+
+        ent.Comp.EyesClosed = state;
+        Dirty(ent);
+
+        ChangeEyeState(ent, state);
     }
 
     private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
@@ -46,6 +53,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
             return;
         if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
+            return;
+        if (!_sprite.LayerMapTryGet(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
             return;
 
         var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
@@ -64,11 +73,10 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         base.Blink(ent);
 
-
-        if (ent.Comp.BlinkInProgress)
+        if (ent.Comp.EyesClosed)
             return;
 
-        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var eyes, false))
+        if (ent.Comp.BlinkInProgress)
             return;
 
         ent.Comp.BlinkInProgress = true;
@@ -82,17 +90,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void OpenEye(Entity<EyeBlinkingComponent> ent)
     {
-        if (!ent.Owner.IsValid())
-            return;
         ent.Comp.BlinkInProgress = false;
-        if (_appearance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var stateObj) && stateObj is bool state)
-        {
-            if(state == false)
-                ChangeEyeState(ent, state);
-        }
-        else
-        {
-            ChangeEyeState(ent, false);
-        }
+
+        if (ent.Comp.EyesClosed)
+            return;
+
+
+        ChangeEyeState(ent, false);
     }
 }
