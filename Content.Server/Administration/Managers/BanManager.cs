@@ -39,6 +39,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly IEntitySystemManager _systems = default!;
     [Dependency] private readonly ITaskManager _taskManager = default!;
     [Dependency] private readonly UserDbDataManager _userDbData = default!;
+    [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -169,16 +170,21 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         _sawmill.Info(logMessage);
         _chat.SendAdminAlert(logMessage);
 
-        KickMatchingConnectedPlayers(banDef, "newly placed ban");
+        // try to get banning admin data: we can wait a maximum of whatever BanningAdminDataLookupTimeout is before just giving null
+        LocatedPlayerData? banningAdminData = null;
+        if (banningAdmin is { } banningAdminId)
+            banningAdminData = await _playerLocator.LookupIdAsync(banningAdminId, new CancellationTokenSource(_cfg.GetCVar(CCVars.BanningAdminDataLookupTimeout)).Token);
+
+        KickMatchingConnectedPlayers(banDef, "newly placed ban", banningAdminUsername: banningAdminData?.Username);
     }
 
-    private void KickMatchingConnectedPlayers(ServerBanDef def, string source)
+    private void KickMatchingConnectedPlayers(ServerBanDef def, string source, string? banningAdminUsername = null)
     {
         foreach (var player in _playerManager.Sessions)
         {
             if (BanMatchesPlayer(player, def))
             {
-                KickForBanDef(player, def);
+                KickForBanDef(player, def, banningAdminUsername: banningAdminUsername);
                 _sawmill.Info($"Kicked player {player.Name} ({player.UserId}) through {source}");
             }
         }
@@ -201,9 +207,9 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         return BanMatcher.BanMatches(ban, playerInfo);
     }
 
-    private void KickForBanDef(ICommonSession player, ServerBanDef def)
+    private void KickForBanDef(ICommonSession player, ServerBanDef def, string? banningAdminUsername = null)
     {
-        var message = def.FormatBanMessage(_cfg, _localizationManager);
+        var message = def.FormatBanMessage(_cfg, _localizationManager, banningAdminUsername: banningAdminUsername);
         player.Channel.Disconnect(message);
     }
 

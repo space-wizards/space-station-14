@@ -18,6 +18,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Content.Server.Administration;
+using System.Threading;
 
 /*
  * TODO: Remove baby jail code once a more mature gateway process is established. This code is only being issued as a stopgap to help with potential tiding in the immediate future.
@@ -63,6 +65,7 @@ namespace Content.Server.Connection
         [Dependency] private readonly IHttpClientHolder _http = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerLocator _playerLocator = default!;
 
         private GameTicker? _ticker;
 
@@ -232,7 +235,13 @@ namespace Content.Server.Connection
             if (bans.Count > 0)
             {
                 var firstBan = bans[0];
-                var message = firstBan.FormatBanMessage(_cfg, _loc);
+
+                // try to get banning admin data: we can wait a maximum of whatever BanningAdminDataLookupTimeout is before just giving null
+                LocatedPlayerData? banningAdminData = null;
+                if (firstBan.BanningAdmin is { } banningAdminId)
+                    banningAdminData = await _playerLocator.LookupIdAsync(banningAdminId, new CancellationTokenSource(_cfg.GetCVar(CCVars.BanningAdminDataLookupTimeout)).Token);
+
+                var message = firstBan.FormatBanMessage(_cfg, _loc, banningAdminUsername: banningAdminData?.Username);
                 return (ConnectionDenyReason.Ban, message, bans);
             }
 
@@ -269,7 +278,7 @@ namespace Content.Server.Connection
                 }
 
                 var minOverallMinutes = _cfg.GetCVar(CCVars.PanicBunkerMinOverallMinutes);
-                var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
+                var overallTime = (await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
                 var haveMinOverallTime = overallTime != null && overallTime.TimeSpent.TotalMinutes > minOverallMinutes;
 
                 // Use the custom reason if it exists & they don't have the minimum time

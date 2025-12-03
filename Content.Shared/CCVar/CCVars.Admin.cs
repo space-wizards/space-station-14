@@ -195,4 +195,14 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AdminAllowMultiServerPlay =
         CVarDef.Create("admin.allow_multi_server_play", true, CVar.SERVERONLY);
+
+
+    /// <summary>
+    /// When a player gets banned or tries to connect while banned, the game tries to display the username of
+    /// the banning admin (if any). This lookup can take a bit. This value is the maximum
+    /// time that lookup can take before the game just falls back to displaying the banning admin's
+    /// user id.
+    /// </summary>
+    public static readonly CVarDef<TimeSpan> BanningAdminDataLookupTimeout =
+        CVarDef.Create("admin.banning_admin_data_lookup_timeout", TimeSpan.FromSeconds(3), CVar.SERVERONLY);
 }

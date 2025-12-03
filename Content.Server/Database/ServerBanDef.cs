@@ -38,12 +38,12 @@ namespace Content.Server.Database
             ServerUnbanDef? unban,
             ServerBanExemptFlags exemptFlags = default)
         {
-            if (userId == null && address == null && hwId ==  null)
+            if (userId == null && address == null && hwId == null)
             {
                 throw new ArgumentException("Must have at least one of banned user, banned address or hardware ID");
             }
 
-            if (address is {} addr && addr.Item1.IsIPv4MappedToIPv6)
+            if (address is { } addr && addr.Item1.IsIPv4MappedToIPv6)
             {
                 // Fix IPv6-mapped IPv4 addresses
                 // So that IPv4 addresses are consistent between separate-socket and dual-stack socket modes.
@@ -65,7 +65,8 @@ namespace Content.Server.Database
             ExemptFlags = exemptFlags;
         }
 
-        public string FormatBanMessage(IConfigurationManager cfg, ILocalizationManager loc)
+        /// <param name="banningAdminIdentifier">Username (fallbacks to userId) of the banning admin to be shown to the banned player.</param>
+        public string FormatBanMessage(IConfigurationManager cfg, ILocalizationManager loc, string? banningAdminUsername = null)
         {
             string expires;
             if (ExpirationTime is { } expireTime)
@@ -82,11 +83,19 @@ namespace Content.Server.Database
                     : loc.GetString("ban-banned-permanent");
             }
 
+            // first, try display username
+            // if username is unavailable, display admin's user-id prefixed by `[user id]` so players actually know what the value is
+            // if neither are available, display `[unknown]` (with brackets, incase the admin's name actually is 'unknown')
+            banningAdminUsername ??= BanningAdmin == null ?
+                "[unknown]" :
+                $"[user id] {BanningAdmin}";
+
             return $"""
                    {loc.GetString("ban-banned-1")}
                    {loc.GetString("ban-banned-2", ("reason", Reason))}
                    {expires}
-                   {loc.GetString("ban-banned-3")}
+                   {loc.GetString("ban-banned-3", ("ckey", banningAdminUsername))}
+                   {loc.GetString("ban-banned-4")}
                    """;
         }
     }
