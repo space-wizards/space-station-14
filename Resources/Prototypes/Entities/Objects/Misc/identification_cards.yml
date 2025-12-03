@@ -920,22 +920,9 @@
     tags:
     - DoorBumpOpener
   - type: AgentIDCard
-    iconGroups:
-    - CommandIconGroup
-    - SecurityIconGroup
-    - CargoIconGroup
-    - EngineeringIconGroup
-    - MedicalIconGroup
-    - ResearchIconGroup
-    - ServiceIconGroup
-    - EntertainerIconGroup
-    - CivilianIconGroup
-    - SiliconIconGroup
-    - BlankIconGroup
-    - ThreatIconGroup
-    - AdminIconGroup
   - type: ActivatableUI
-    key: enum.AgentIDCardUiKey.Key # Don't require inhand because admin
+    key: enum.AgentIDCardUiKey.Key
+    inHandsOnly: true
   - type: UserInterface
     interfaces:
       enum.AgentIDCardUiKey.Key:

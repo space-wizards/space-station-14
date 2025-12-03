@@ -67,7 +67,7 @@ public sealed partial class AgentIDCardWindow : FancyWindow
                 Group = jobGroupButtonGroup,
                 Text = Loc.GetString(groupProto.GroupName),
                 ToolTip = Loc.GetString(groupProto.GroupName),
-                StyleClasses = { StyleBase.ButtonOpenLeft },
+                StyleClasses = { StyleClass.ButtonOpenLeft },
                 SetSize = new Vector2(150, 32),
             };
 

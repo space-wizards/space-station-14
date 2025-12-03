@@ -731,7 +731,7 @@
   name: crostini
   parent: FoodBreadSliceBase
   id: FoodBreadBaguetteSlice
-  description: Bon ap-petite!
+  description: Bon ap-pétite!
   components:
   - type: Sprite
     state: crostini
@@ -753,7 +753,7 @@
   parent: FoodBreadBaguetteSlice
   id: FoodBreadBaguetteCottonSlice
   name: cotton crostini
-  description: Bon az-zetite!
+  description: Bon az-zétite!
   components:
   - type: Sprite
     state: crostini-cotton
@@ -1001,3 +1001,57 @@
     damage:
       groups:
         Brute: 1
+
+- type: entity
+  parent: FoodBreadBase
+  id: FoodBreadNutriBatard
+  name: nutri-bâtard
+  description: bon 'pétite!
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    state: batard
+  - type: Item
+    size: Small
+    storedOffset: -1,0
+    heldPrefix: batard
+  - type: Tag
+    tags:
+    - ReptilianFood
+  - type: FlavorProfile
+    flavors:
+    - nutribrick
+    - peppery
+    - salty
+    - bread
+
+- type: entity
+  parent: FoodBreadNutriBatard
+  id: FoodBreadCottonNutriBatard
+  name: cotton nutri-bâtard
+  description: bon 'pétite!
+  components:
+  - type: Edible
+    requiresSpecialDigestion: true
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/bread.rsi
+    state: batard-cotton
+  - type: FlavorProfile
+    flavors:
+    - peppery
+    - salty
+    - bread
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: Item
+    size: Small
+    storedOffset: -1,0
+    heldPrefix: batard-cotton
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 20
