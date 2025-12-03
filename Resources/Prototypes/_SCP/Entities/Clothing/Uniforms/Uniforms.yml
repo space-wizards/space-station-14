@@ -1,0 +1,158 @@
+- type: entity
+  abstract: true
+  parent: UnsensoredClothingUniformBase
+  id: SCPClothingUniformBase
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformClassD
+  name: class D personnel uniform
+  description: Basic prisoner's uniform, the only difference - he's part of the Foundation.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/classD.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/classD.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformDoctor
+  name: doctor's uniform
+  description: Uniform of those who patch you up.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/doctor.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/doctor.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformSurgeon
+  name: surgeon's uniform
+  description: Uniform of those who extract bullets from you.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/surgeon.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/surgeon.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformJanitor
+  name: surgeon's uniform
+  description: The clean place is the one that doesn't get dirty.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/janitor.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/janitor.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformScientist
+  name: scientist's uniform
+  description: This man is a man of science.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/researcher.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/researcher.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformScientistSkirt
+  name: scientist's skirt
+  description: This woman is a woman of science.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/researcher-skirt.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/researcher-skirt.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformAdministrative
+  name: administrative uniform
+  description: The so called "Boss" (Not the big one).
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/administrative.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/administrative.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformAdministrativeSkirt
+  name: administrative skirt
+  description: The so called "Boss" (Not the big one).
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/administrative-skirt.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/administrative-skirt.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformITS
+  name: ITS uniform
+  description: The Engineer.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/ITS.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/ITS.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformITSTechnician
+  name: ITS technician's uniform
+  description: The true Engineer.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/technician.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/technician.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformITSSupervisor
+  name: ITS supervisor's uniform
+  description: The leader of Engineers.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/ITS-supervisor.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/ITS-supervisor.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformSecurity
+  name: security uniform
+  description: The one who protects.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/security.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/security.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformRRT
+  name: RRT's uniform
+  description: The one who protects but faster.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/RRT.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/RRT.rsi
+
+- type: entity
+  parent: SCPClothingUniformBase
+  id: SCPClothingUniformMTF
+  name: MTF's uniform
+  description: The one who protects but superior.
+  components:
+  - type: Sprite
+    sprite: _SCP/Clothing/Uniforms/MTF.rsi
+  - type: Clothing
+    sprite: _SCP/Clothing/Uniforms/MTF.rsi
