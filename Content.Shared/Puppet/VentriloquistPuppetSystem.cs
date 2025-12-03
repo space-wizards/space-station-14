@@ -36,6 +36,7 @@ public sealed class VentriloquistPuppetSystem : EntitySystem
             return;
 
         ent.Comp.HasHandInserted = true;
+        Dirty(ent);
         _popup.PopupClient(Loc.GetString("ventriloquist-puppet-insert-hand"), ent.Owner, args.User);
         _popup.PopupEntity(Loc.GetString("ventriloquist-puppet-inserted-hand"), ent.Owner, ent.Owner);
 
@@ -81,6 +82,7 @@ public sealed class VentriloquistPuppetSystem : EntitySystem
     private void ResetDummy(Entity<VentriloquistPuppetComponent> ent, EntityUid user)
     {
         ent.Comp.HasHandInserted = false;
+        Dirty(ent);
         _popup.PopupClient(Loc.GetString("ventriloquist-puppet-remove-hand"), ent.Owner, user);
         _popup.PopupEntity(Loc.GetString("ventriloquist-puppet-removed-hand"), ent.Owner, ent.Owner);
         EnsureComp<MutedComponent>(ent.Owner);
