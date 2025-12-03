@@ -291,7 +291,7 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 
             // This tile has one or more airtight entities anchored to it blocking the explosion from traveling in
             // some directions. First, check whether this blocker can even be destroyed by this explosion?
-            if (sealIntegrity > _maxIntensity || sealIntegrity == ToleranceValues.Invulnerable)
+            if (sealIntegrity > _maxIntensity)
                 continue;
 
             // At what explosion iteration would this blocker be destroyed?
