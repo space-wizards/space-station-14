@@ -35,11 +35,11 @@
         walkSpeedModifier: 1.20
         sprintSpeedModifier: 1.20
       - !type:GenericStatusEffect
-        key: StaminaModifier
+        key: StaminaModifier # You are on meth. You keep going. 
         component: StaminaModifier
         time: 3
       - !type:GenericStatusEffect
-        key: Adrenaline # Guess what epinephrine is...
+        key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 3
       # Side effects
@@ -47,6 +47,9 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectPainNumbness
+        time: 2
       # Interactions
       - !type:ModifyStatusEffect
         conditions:
@@ -186,23 +189,22 @@
         amount: -10
     Medicine:
       effects:
-        # Main effects
-        - !type:ModifyBleed
-          amount: -1.5
-        - !type:EvenHealthChange
-          conditions:
-          - !type:TotalDamageCondition
-            min: 70 # only heals when you're more dead than alive
-          damage: # Doesn't heal poison because if you OD'd I'm not giving you a safety net
-            groups:
-              Burn: -0.5
-              Brute: -0.5
-        # Side effects
-        - !type:ResetNarcolepsy
-        - !type:SatiateHunger
-          factor: 1
-        - !type:SatiateThirst
-          factor: 1
+      # Main effects
+      - !type:ModifyBleed
+        amount: -1.5
+      - !type:EvenHealthChange
+        conditions:
+        - !type:TotalDamageCondition
+          min: 70 # only heals when you're more dead than alive
+        damage: # Doesn't heal poison because if you OD'd I'm not giving you a safety net
+          Burn: -0.5
+          Brute: -0.5
+      # Side effects
+      - !type:ResetNarcolepsy
+      - !type:SatiateHunger
+        factor: 1
+      - !type:SatiateThirst
+        factor: 1
 
 - type: reagent
   id: THC
