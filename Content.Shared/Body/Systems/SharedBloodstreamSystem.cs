@@ -324,9 +324,9 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         float totalBloodLevel = 1.0f;
 
-        foreach (var (reagentId, _) in entity.Comp.BloodReagents.Contents)
+        foreach (var (reagentId, quantity) in entity.Comp.BloodReagents.Contents)
         {
-            float refFraction = (float)entity.Comp.BloodReagents.GetTotalPrototypeQuantity(reagentId.Prototype) / (float)entity.Comp.BloodReagents.Volume;
+            float refFraction = (float)quantity / (float)entity.Comp.BloodReagents.Volume;
             var refReagentVolume = (float)entity.Comp.BloodReferenceVolume * refFraction;
             totalBloodLevel *= (float)bloodSolution.GetTotalPrototypeQuantity(reagentId.Prototype) / refReagentVolume;
         }
