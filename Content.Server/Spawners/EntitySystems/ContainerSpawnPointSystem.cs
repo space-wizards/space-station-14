@@ -73,6 +73,7 @@ public sealed class ContainerSpawnPointSystem : EntitySystem
 
         args.SpawnResult = _stationSpawning.SpawnPlayerMob(
             baseCoords,
+            args.Name,
             args.Job,
             args.HumanoidCharacterProfile,
             args.Station);
