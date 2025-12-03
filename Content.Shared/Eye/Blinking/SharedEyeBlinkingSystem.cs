@@ -3,6 +3,7 @@ using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using System;
 
 namespace Content.Shared.Eye.Blinking;
 public abstract partial class SharedEyeBlinkingSystem : EntitySystem
@@ -78,7 +79,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     protected virtual void ResetBlink(Entity<EyeBlinkingComponent> ent)
     {
-        ent.Comp.BlinkInProgress = false;
         ent.Comp.NextBlinkingTime = _timing.CurTime + ent.Comp.BlinkInterval + ent.Comp.BlinkDuration;
         Dirty(ent);
     }
