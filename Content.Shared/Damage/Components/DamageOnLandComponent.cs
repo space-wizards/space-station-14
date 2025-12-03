@@ -15,7 +15,7 @@ public sealed partial class DamageOnLandComponent : Component
     public bool IgnoreResistances = false;
 
     /// <summary>
-    /// The damage amount to deal on lands.
+    /// The amount of damage to deal when this entity lands.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public DamageSpecifier Damage = new();
