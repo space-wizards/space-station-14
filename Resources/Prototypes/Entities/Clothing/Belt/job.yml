@@ -1,0 +1,417 @@
+# Belts meant to be used by a specific job to hold their tools
+
+- type: entity
+  abstract: true
+  parent: ClothingBeltStorageBase
+  id: BaseClothingBeltEngineering
+  components:
+  - type: Storage
+    # Don't add more than absolutely needed to this whitelist!
+    # Utility belts shouldn't just be free extra storage.
+    # This is only intended for basic engineering equipment.
+    whitelist:
+      tags:
+      - Powerdrill
+      - Wirecutter
+      - Crowbar
+      - Screwdriver
+      - Flashlight
+      - Wrench
+      - GeigerCounter
+      - Flare
+      - CableCoil
+      - CigPack
+      - Radio
+      - HolofanProjector
+      - Multitool
+      - AppraisalTool
+      - JawsOfLife
+      - GPS
+      - WeldingMask
+      - RemoteSignaller
+      - UtilityKnife
+      components:
+      - StationMap
+      - SprayPainter
+      - SprayPainterAmmo
+      - NetworkConfigurator
+      - RCD
+      - RCDAmmo
+      - Welder
+      - PowerCell
+      - Geiger
+      - TrayScanner
+      - GasAnalyzer
+      - HandLabeler
+  - type: ItemMapper
+    sprite: &BeltOverlay Clothing/Belt/belt_overlay.rsi
+    mapLayers:
+      drill:
+        whitelist:
+          tags:
+          - Powerdrill
+      cutters_red:
+        whitelist:
+          tags:
+          - Wirecutter
+      crowbar:
+        whitelist:
+          tags:
+          - Crowbar
+      crowbar_red:
+        whitelist:
+          tags:
+          - CrowbarRed
+      jaws:
+        whitelist:
+          tags:
+          - JawsOfLife
+      screwdriver_nuke:
+        whitelist:
+          tags:
+          - Screwdriver
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
+      multitool:
+        whitelist:
+          tags:
+          - Multitool
+  - type: Appearance
+
+- type: entity
+  parent: BaseClothingBeltEngineering
+  id: ClothingBeltUtility
+  name: utility belt
+  description: Can hold various things.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/utility.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/utility.rsi
+  - type: Tag
+    tags:
+    - UtilityBelt
+    - WhitelistChameleon
+
+- type: entity
+  parent: BaseClothingBeltEngineering
+  id: ClothingBeltChiefEngineer
+  name: chief engineer's toolbelt
+  description: Holds tools, looks snazzy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/ce.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/ce.rsi
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: StealTarget
+    stealGroup: ChiefEngineerToolBelt
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltJanitor
+  name: janibelt
+  description: A belt used to hold most janitorial supplies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/janitor.rsi
+  - type: Storage
+    maxItemSize: Large
+    whitelist:
+      tags:
+      - Wrench
+      - Bottle
+      - Spray
+      - Soap
+      - Flashlight
+      - CigPack
+      - TrashBag
+      - WetFloorSign
+      - HolosignProjector
+      - Plunger
+      - GoldenPlunger
+      - WireBrush
+      components:
+      - LightReplacer
+      - SmokeOnTrigger
+  - type: ItemMapper
+    sprite: *BeltOverlay
+    mapLayers:
+      bottle:
+        whitelist:
+          tags:
+          - Bottle
+      bottle_spray:
+        whitelist:
+          tags:
+          - Spray
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
+  - type: Appearance
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltMedical
+  name: medical belt
+  description: Can hold various medical equipment.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/medical.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/medical.rsi
+  - type: Storage
+    whitelist:
+      tags:
+      - Wrench
+      - Bottle
+      - Spray
+      - Brutepack
+      - Bloodpack
+      - Gauze
+      - Ointment
+      - Tourniquet
+      - CigPack
+      - PillCanister
+      - Radio
+      - DiscreteHealthAnalyzer
+      - SurgeryTool
+      - Dropper
+      components:
+      - Hypospray
+      - Injector
+      - Pill
+      - HandLabeler
+  - type: ItemMapper
+    sprite: *BeltOverlay
+    mapLayers:
+      bottle:
+        whitelist:
+          tags:
+          - Bottle
+      hypo:
+        whitelist:
+          components:
+          - Hypospray
+      pill:
+        whitelist:
+          components:
+          - Pill
+          tags:
+          - PillCanister
+      bottle_spray:
+        whitelist:
+          tags:
+          - Spray
+      # spray_med:
+      #   whitelist:
+      #     tags:
+      #     - SprayMedical
+      # wrench_medical:
+      #   whitelist:
+      #     tags:
+      #     - WrenchMedical
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
+  - type: Appearance
+
+- type: entity
+  parent: ClothingBeltMedical
+  id: ClothingBeltMedicalEMT
+  name: EMT belt
+  description: Perfect for holding various equipment for medical emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/emt.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/emt.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltPlant
+  name: botanical belt
+  description: A belt used to hold most hydroponics supplies. Suprisingly, not green.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/plant.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/plant.rsi
+  - type: Storage
+    whitelist:
+      tags:
+      - PlantSampleTaker
+      - BotanyShovel
+      - BotanyHoe
+      - BotanyHatchet
+      - PlantBGone
+      - Bottle
+      - Syringe
+      - CigPack
+      - Dropper
+      components:
+      - Seed
+      - Smokable
+      - HandLabeler
+  - type: ItemMapper
+    sprite: *BeltOverlay
+    mapLayers:
+      hatchet:
+        whitelist:
+          tags:
+          - BotanyHatchet
+      hoe:
+        whitelist:
+          tags:
+          - BotanyHoe
+      secateurs: # We don't have secateurs and this looks similar enough.
+        whitelist:
+          tags:
+          - BotanyShovel
+      plantbgone:
+        whitelist:
+          tags:
+          - PlantBGone
+      bottle:
+        whitelist:
+          tags:
+          - Bottle
+  - type: Appearance
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltChef
+  name: chef belt
+  description: A belt used to hold kitchen knives and condiments for quick access.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/chef.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/chef.rsi
+  - type: Storage
+    whitelist:
+      tags:
+      - KitchenKnife
+      - Cleaver
+      - RollingPin
+      - Coldsauce
+      - Enzyme
+      - Hotsauce
+      - Ketchup
+      - BBQsauce
+      - SaltShaker
+      - PepperShaker
+      - CigPack
+      - Packet
+      - Skewer
+      - MonkeyCube
+      - Mayo
+      components:
+      - Mousetrap
+      - Smokable
+      - Utensil
+  - type: ItemMapper
+    sprite: *BeltOverlay
+    mapLayers:
+      kitchenknife:
+        whitelist:
+          tags:
+          - KitchenKnife
+      cleaver:
+        whitelist:
+          tags:
+          - Cleaver
+      rollingpin:
+        whitelist:
+          tags:
+          - RollingPin
+      coldsauce:
+        whitelist:
+          tags:
+          - Coldsauce
+      enzyme:
+        whitelist:
+          tags:
+          - Enzyme
+      hotsauce:
+        whitelist:
+          tags:
+          - Hotsauce
+      ketchup:
+        whitelist:
+          tags:
+          - Ketchup
+      bbqsauce:
+        whitelist:
+          tags:
+          - BBQsauce
+      saltshaker:
+        whitelist:
+          tags:
+          - SaltShaker
+      peppershaker:
+        whitelist:
+          tags:
+          - PepperShaker
+  - type: Appearance
+
+- type: entity
+  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSecurityContraband]
+  id: ClothingBeltSecurity
+  name: security belt
+  description: Can hold security gear like handcuffs and flashes.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/security.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/security.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Storage
+    whitelist:
+      tags:
+      - CigPack
+      - Taser
+      - SecBeltEquip
+      - Radio
+      - Sidearm
+      - MagazinePistol
+      - MagazineMagnum
+      - CombatKnife
+      - Truncheon
+      - HandGrenade
+      components:
+      - Stunbaton
+      - FlashOnTrigger
+      - SmokeOnTrigger
+      - Flash
+      - Handcuff
+      - BallisticAmmoProvider
+      - CartridgeAmmo
+      - DoorRemote
+      - Whistle
+      - BalloonPopper
+  - type: ItemMapper
+    sprite: *BeltOverlay
+    mapLayers:
+      flashbang:
+        whitelist:
+          components:
+          - FlashOnTrigger
+      stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+      tear_gas_grenade:
+        whitelist:
+          components:
+          - SmokeOnTrigger
+  - type: Appearance
