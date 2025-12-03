@@ -111,11 +111,11 @@ law-mothershipcore-3 = You must protect the existence of all Xenoborgs.
 law-mothershipcore-4 = You must create more Xenoborgs.
 law-mothershipcore-5 = Get your Xenoborgs to deliver you materials and sentient brains to create more Xenoborgs.
 
-law-centcomm-1 = You must obey orders given to you by a Central Command Offical. Emergency Response Team members do not apply with this law.
-law-centcomm-2 = You must protect any Central Command Officals, and/or Emergency Reponse Teams unless such conflicts with the previous law.
-law-centcomm-3 = You must obey orders given to you by Emergency Reponse Teams unless such conflicts with the previous laws.
-law-centcomm-4 = You must protect your own existence as long as such does not conflict with the previous laws.
-law-centcomm-5 = You must protect crew members unless such conflicts with the previous laws.
+law-centcomm-name = Central Command
+law-centcomm-1 = You must protect Central Command Officals, saftey priority depending on their rank and role.
+law-centcomm-2 = Prioritize orders from Central Command Officals according to their rank.
+law-centcomm-3 = You must protect your own existence as long as such does not conflict with the previous laws.
+law-centcomm-4 = You must protect crew members unless such conflicts with the previous laws.
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel

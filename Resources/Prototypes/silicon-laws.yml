@@ -589,7 +589,7 @@
 - type: siliconLaw
   id: CentComm1
   order: 1
-  lawString: law-centcomm-1 # It's worded like that for flavor in the case an admin/centcomm offical needs another ERT member dead.
+  lawString: law-centcomm-1
 
 - type: siliconLaw
   id: CentComm2
@@ -606,19 +606,14 @@
   order: 4
   lawString: law-centcomm-4
 
-- type: siliconLaw
-  id: CentComm5
-  order: 5
-  lawString: law-centcomm-5
-
 - type: siliconLawset
   id: CentCommLawset
+  name: law-centcomm-name
   laws:
   - CentComm1
   - CentComm2
   - CentComm3
   - CentComm4
-  - CentComm5
   obeysTo: laws-owner-centcomm
 
 # ion storm random lawsets

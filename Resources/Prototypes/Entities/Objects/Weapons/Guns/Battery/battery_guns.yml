@@ -1031,17 +1031,14 @@
     startingCharge: 1000
   - type: BatteryWeaponFireModes
     fireModes:
-    - proto: BulletLaser # I'm not doing hitscan. The borgs are powerful anyway.
-      fireCost: 40
-    - proto: BulletLaserSpread
+    - proto: BulletPulse # I'm not doing hitscan. The borgs are powerful anyway.
+      fireCost: 60
+    - proto: BulletPulseSpread
       fireCost: 120
-    - proto: BulletLaserSpreadNarrow
+    - proto: BulletPulseSpreadNarrow
       fireCost: 120
     - proto: BulletDisabler
       fireCost: 30
-      pacifismAllowedMode: true
-    - proto: BulletDisablerSmgSpread
-      fireCost: 70
       pacifismAllowedMode: true
   - type: Item
     size: Large

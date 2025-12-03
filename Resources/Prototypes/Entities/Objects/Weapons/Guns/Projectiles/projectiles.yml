@@ -1435,3 +1435,45 @@
   - type: SolutionInjectOnProjectileHit
     transferAmount: 1.5
     solution: bolt
+
+- type: entity
+  parent: BulletLaser
+  id: BulletPulse
+  name: pulse bolt
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser
+      shader: unshaded
+  - type: PointLight
+    enabled: true
+    color: "#00FFFF"
+  - type: Projectile
+    impactEffect: BulletImpactEffectDisabler
+    damage:
+      types:
+        Heat: 20
+
+- type: entity
+  name: wide pulse barrage
+  id: BulletPulseSpread
+  categories: [ HideSpawnMenu ]
+  parent: BulletPulse
+  components:
+  - type: ProjectileSpread
+    proto: BulletPulse
+    count: 5 # 100 heat damage if you hit all your shots, but wide spread. Ouch.
+    spread: 30
+
+- type: entity
+  name: narrow pulse barrage
+  id: BulletPulseSpreadNarrow
+  categories: [ HideSpawnMenu ]
+  parent: BulletPulse
+  components:
+  - type: ProjectileSpread
+    proto: BulletPulse
+    count: 3 #60 heat damage if you hit all your shots, but narrower spread. Also ouch.
+    spread: 10
