@@ -229,6 +229,18 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostDerelictCyborg
+  id: SpawnPointGhostDerelictGenericCyborg
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-generic-cyborg-name
+    description: ghost-role-information-derelict-engineering-generic-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointGhostDerelictCyborg
   components:

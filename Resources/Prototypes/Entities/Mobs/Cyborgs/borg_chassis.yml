@@ -189,7 +189,7 @@
         path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  id: BorgChassisDerelict
+  id: GenericBorgChassisDerelict
   parent: BaseBorgChassisDerelict
   name: derelict cyborg
   description: A man-machine hybrid that assists in station activity. This one is in a state of great disrepair.
