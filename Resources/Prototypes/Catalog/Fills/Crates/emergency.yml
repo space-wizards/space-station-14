@@ -42,7 +42,7 @@
   parent: CrateInternals
   id: CrateEmergencyInternals
   name: internals crate
-  description: Master your life energy and control your breathing with 3 breath masks, emergency suits and large air tanks.
+  description: Master your life energy and control your breathing with three breath masks, three gas masks, three emergency EVA suits, three oxygen tanks, and three nitrogen tanks.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -63,7 +63,7 @@
   parent: CrateInternals
   id: CrateEmergencyInternalsLarge
   name: internals crate (large)
-  description: Master your life energy and control your breathing with 6 breath masks, emergency suits and large air tanks.
+  description: Master your life energy and control your breathing with six breath masks, six gas masks, six emergency EVA suits, six oxygen tanks, and six nitrogen tanks.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -84,7 +84,7 @@
   parent: CrateInternals
   id: CrateNitrogenInternals
   name: internals crate (nitrogen)
-  description: Contains four breath masks and four large nitrogen tanks. Intended for Slimepeople and Vox.
+  description: Contains two breath masks, two gas masks, and four nitrogen tanks. Intended for nitrogen-breathing species.
   components:
   - type: EntityTableContainerFill
     containers:
