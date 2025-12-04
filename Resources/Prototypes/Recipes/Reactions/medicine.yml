@@ -581,7 +581,7 @@
     Cryoxadone:
       amount: 1
   products:
-    Arcryox: 1
+    Arcryox: 3
 
 - type: reaction
   id: Necrosol
