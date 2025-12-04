@@ -198,8 +198,15 @@ public sealed partial class CCVars
 
 
     /// <summary>
+    /// If true, the game will try to show username/userid of the banning admin (if any)
+    /// in ban messages.
+    /// </summary>
+    public static readonly CVarDef<bool> BanningAdminDataShown =
+        CVarDef.Create("admin.banning_admin_data_shown", false, CVar.SERVERONLY);
+
+    /// <summary>
     /// When a player gets banned or tries to connect while banned, the game tries to display the username of
-    /// the banning admin (if any). This lookup can take a bit. This value is the maximum
+    /// the banning admin (if any, and if <see cref="BanningAdminDataShown"/> is true). This lookup can take a bit. This value is the maximum
     /// time that lookup can take before the game just falls back to displaying the banning admin's
     /// user id.
     /// </summary>

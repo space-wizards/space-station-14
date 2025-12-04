@@ -238,8 +238,11 @@ namespace Content.Server.Connection
 
                 // try to get banning admin data: we can wait a maximum of whatever BanningAdminDataLookupTimeout is before just giving null
                 LocatedPlayerData? banningAdminData = null;
-                if (firstBan.BanningAdmin is { } banningAdminId)
+                if (firstBan.BanningAdmin is { } banningAdminId &&
+                    _cfg.GetCVar(CCVars.BanningAdminDataShown))
+                {
                     banningAdminData = await _playerLocator.LookupIdAsync(banningAdminId, new CancellationTokenSource(_cfg.GetCVar(CCVars.BanningAdminDataLookupTimeout)).Token);
+                }
 
                 var message = firstBan.FormatBanMessage(_cfg, _loc, banningAdminUsername: banningAdminData?.Username);
                 return (ConnectionDenyReason.Ban, message, bans);

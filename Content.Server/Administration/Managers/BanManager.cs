@@ -172,8 +172,11 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         // try to get banning admin data: we can wait a maximum of whatever BanningAdminDataLookupTimeout is before just giving null
         LocatedPlayerData? banningAdminData = null;
-        if (banningAdmin is { } banningAdminId)
+        if (banningAdmin is { } banningAdminId &&
+            _cfg.GetCVar(CCVars.BanningAdminDataShown))
+        {
             banningAdminData = await _playerLocator.LookupIdAsync(banningAdminId, new CancellationTokenSource(_cfg.GetCVar(CCVars.BanningAdminDataLookupTimeout)).Token);
+        }
 
         KickMatchingConnectedPlayers(banDef, "newly placed ban", banningAdminUsername: banningAdminData?.Username);
     }
