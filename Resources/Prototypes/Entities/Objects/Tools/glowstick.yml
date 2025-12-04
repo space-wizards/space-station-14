@@ -1,5 +1,5 @@
 - type: entity
-  name: green glowstick
+  name: base glowstick
   parent: BaseItem
   id: GlowstickBase
   description: Useful for raves and emergencies.
@@ -7,7 +7,7 @@
     - type: SpaceGarbage
     - type: ExpendableLight
       glowDuration: 900 # time in seconds
-      glowColorLit: "#00FF00"
+      glowColorLit: "#F6F7E9"
       fadeOutDuration: 300
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
@@ -33,7 +33,7 @@
     - type: Appearance
     - type: PointLight
       enabled: false
-      color: "#00FF00"
+      color: "#F6F7E9"
       radius: 5
       energy: 0
       netsync: false
@@ -106,6 +106,17 @@
       glowColorLit: "#0000FF"
     - type: PointLight
       color: "#0000FF"
+
+- type: entity
+  name: green glowstick
+  parent: GlowstickBase
+  id: GlowstickGreen
+  components:
+    - type: ExpendableLight
+      spentName: expendable-light-spent-green-glowstick-name
+      glowColorLit: "#00FF00"
+    - type: PointLight
+      color: "#00FF00"
 
 # ----------------------------------------------------------------------------
 # THE FOLLOWING ARE ALL DUMMY ENTITIES USED TO TEST THE LIGHT BEHAVIOUR SYSTEM
