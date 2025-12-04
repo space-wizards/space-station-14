@@ -16,7 +16,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 0.5
+            Poison: 0.55
             Blunt: 0.5
       # OD
       - !type:HealthChange
