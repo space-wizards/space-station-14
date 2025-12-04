@@ -59,5 +59,6 @@
     bleedAmountMultiplier: 1.33
 
 - type: entity
-  parent: PainNumbnessTraitStatusEffect
+  parent: [ PainNumbnessTraitStatusEffect, MobStatusEffectDebuff ]
   id: StatusEffectPainNumbness
+  name: pain numbness
