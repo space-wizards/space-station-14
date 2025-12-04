@@ -228,12 +228,7 @@ public sealed partial class DamageableSystem
 
         // If trying to heal more than the total damage of damageEntity just heal everything
         if (damageEntity.GetTotal() < amount)
-        {
-            foreach (var (type, value) in damageEntity.DamageDict)
-                damageChange.DamageDict[type] = value > 0 ? -value : FixedPoint2.Zero;
-
-            return ChangeDamage(ent, damageChange, true, false, origin);
-        }
+            return ChangeDamage(ent, -damageEntity, true, false, origin);
 
         // This complicated math tries to share the remainingHeal equally among all damage types in damageEntity
         // Any overheals will be then equally shared with all other damage types
@@ -300,12 +295,7 @@ public sealed partial class DamageableSystem
 
         // If trying to heal more than the total damage of damageEntity just heal everything
         if (damageEntity.GetTotal() < amount)
-        {
-            foreach (var (type, value) in damageEntity.DamageDict)
-                damageChange.DamageDict[type] = value > 0 ? -value : FixedPoint2.Zero;
-
-            return ChangeDamage(ent, damageChange, true, false, origin);
-        }
+            return ChangeDamage(ent, -damageEntity, true, false, origin);
 
         foreach (var (type, value) in damageEntity.DamageDict)
         {
