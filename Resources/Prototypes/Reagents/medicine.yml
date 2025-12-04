@@ -1348,8 +1348,8 @@
           - !type:TemperatureCondition
             max: 213.0
           damage:
-              Brute: -2
-              Burn: -2.5
+            Brute: -2
+            Burn: -3
         - !type:HealthChange
           conditions:
           - !type:TemperatureCondition
