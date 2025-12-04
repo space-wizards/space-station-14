@@ -281,7 +281,6 @@ public sealed partial class DamageableSystem
         if (amount <= 0)
             return damageChange;
 
-
         // get the damage should be healed (either all or only from one group)    
         DamageSpecifier damageEntity;
         if (group != null)
