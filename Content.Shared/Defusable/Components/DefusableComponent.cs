@@ -57,7 +57,7 @@ public sealed partial class DefusableComponent : Component
     /// How much time is added when the Activate wire is pulsed?
     /// </summary>
     [DataField]
-    public int DelayTime = 30;
+    public TimeSpan DelayTime = TimeSpan.FromSeconds(30);
 
     #region Wires
     // wires, this is so that they're one use
