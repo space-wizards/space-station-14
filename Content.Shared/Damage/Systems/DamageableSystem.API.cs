@@ -257,7 +257,7 @@ public sealed partial class DamageableSystem
             foreach (var type in damageLeftToHeal.Keys)
                 damageChange.DamageDict[type] -= valueToHeal;
 
-            remainingHeal -= valueToHeal * damageLeftToHeal.Count();
+            remainingHeal -= valueToHeal * damageLeftToHeal.Count;
         }
 
         return ChangeDamage(ent, damageChange, true, false, origin);
