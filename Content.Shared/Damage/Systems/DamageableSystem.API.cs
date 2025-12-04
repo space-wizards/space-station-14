@@ -297,12 +297,9 @@ public sealed partial class DamageableSystem
         if (damageEntity.GetTotal() < amount)
             return ChangeDamage(ent, -damageEntity, true, false, origin);
 
+        // heal weighted by the damage of that type
         foreach (var (type, value) in damageEntity.DamageDict)
-        {
-            if (value == 0) continue;
-
             damageChange.DamageDict[type] = -value / damageEntity.GetTotal() * amount;
-        }
 
         return ChangeDamage(ent, damageChange, true, false, origin);
     }
