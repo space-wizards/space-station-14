@@ -201,6 +201,9 @@
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
 
+# Each player is spawned on a separate map, created just for them.
+# Players can individually choose their map from the provided prototypes. (UI not yet implemented!)
+# Dead players are respawned on their personal map after a short delay.
 - type: gamePreset
   id: Tutorial
   alias:
