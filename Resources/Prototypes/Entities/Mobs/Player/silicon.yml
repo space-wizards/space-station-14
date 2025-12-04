@@ -672,7 +672,7 @@
     nameSegments: [NamesBorg]
 
 - type: entity
-  parent: PlayerBorgDerelict
+  parent: PlayerGenericBorgDerelict
   id: PlayerGenericBorgDerelictGhostRole
   suffix: Ghost role
   components:
