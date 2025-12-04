@@ -89,12 +89,14 @@ public abstract class SharedHandLabelerSystem : EntitySystem
             $"{ToPrettyString(user):user} removed label from {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
     }
 
-    private void OnUtilityVerb(EntityUid uid, HandLabelerComponent handLabeler, GetVerbsEvent<UtilityVerb> args)
+    private void OnUtilityVerb(Entity<HandLabelerComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
     {
-        if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(handLabeler.Whitelist, target) || !args.CanAccess)
+        if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, target) || !args.CanAccess)
             return;
 
-        bool labelerBlank = (handLabeler.AssignedLabel == string.Empty);
+        bool labelerBlank = (ent.Comp.AssignedLabel == string.Empty);
+
+        var user = args.User;   // can't use ref parameter in lambdas
 
         if (!labelerBlank)
         {
@@ -102,7 +104,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
             {
                 Act = () =>
                 {
-                    AddLabelTo(new Entity<HandLabelerComponent>(uid, handLabeler), args.User, target);
+                    AddLabelTo(ent, user, target);
                 },
                 Text = Loc.GetString("hand-labeler-add-label-text")
             };
@@ -115,7 +117,7 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         {
             Act = () =>
             {
-                RemoveLabelFrom(uid, args.User, target);
+                RemoveLabelFrom(ent, user, target);
             },
             Text = Loc.GetString("hand-labeler-remove-label-text"),
             Priority = -1,
@@ -129,12 +131,12 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         args.Verbs.Add(unLabelVerb);
     }
 
-    private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
+    private void AfterInteractOn(Entity<HandLabelerComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(handLabeler.Whitelist, target) || !args.CanReach)
+        if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, target) || !args.CanReach)
             return;
 
-        AddLabelTo(new Entity<HandLabelerComponent>(uid, handLabeler), args.User, target);
+        AddLabelTo(ent, args.User, target);
     }
 
     private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
