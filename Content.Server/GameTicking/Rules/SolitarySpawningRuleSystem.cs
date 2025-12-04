@@ -127,7 +127,7 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
         PlayerBeforeSpawnEvent args,
         SolitarySpawningPrototype prototype,
         ICommonSession session,
-        [NotNullWhen(true)]out EntityUid? stationTarget)
+        [NotNullWhen(true)] out EntityUid? stationTarget)
     {
         stationTarget = null;
         var proto = prototype.Map;
