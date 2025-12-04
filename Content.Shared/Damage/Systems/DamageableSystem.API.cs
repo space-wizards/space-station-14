@@ -246,24 +246,18 @@ public sealed partial class DamageableSystem
         var remainingHeal = amount;
         while (remainingHeal > 0)
         {
-            var damageLeftToHeal = damageEntity + damageChange;
+            var damageLeftToHeal = (damageEntity + damageChange).DamageDict
+            .Where(pair => pair.Value != FixedPoint2.Zero)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
 
-            var numberDamageTypesNotHealed = damageLeftToHeal.DamageDict.Values
-                .Where(value => value != FixedPoint2.Zero).Count();
+            var valueToHeal = FixedPoint2.Min(
+                remainingHeal / damageLeftToHeal.Count,
+                damageLeftToHeal.Values.Min());
 
-            var minDamageNeedHeal = damageLeftToHeal.DamageDict.Values
-                .Where(value => value != FixedPoint2.Zero).Min();
+            foreach (var type in damageLeftToHeal.Keys)
+                damageChange.DamageDict[type] -= valueToHeal;
 
-            var valueToTryToHeal = remainingHeal / numberDamageTypesNotHealed;
-            valueToTryToHeal = FixedPoint2.Min(valueToTryToHeal, minDamageNeedHeal);
-
-            foreach (var (type, value) in damageEntity.DamageDict)
-            {
-                if (value + damageChange.DamageDict[type] == 0) continue;
-
-                damageChange.DamageDict[type] -= valueToTryToHeal;
-                remainingHeal -= valueToTryToHeal;
-            }
+            remainingHeal -= valueToHeal * damageLeftToHeal.Count();
         }
 
         return ChangeDamage(ent, damageChange, true, false, origin);
