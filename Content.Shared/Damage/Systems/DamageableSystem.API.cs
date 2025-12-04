@@ -213,7 +213,9 @@ public sealed partial class DamageableSystem
         var damageEntity = new DamageSpecifier();
         if (group != null)
         {
-            var groupProto = _prototypeManager.Index(group);
+            if (!_prototypeManager.TryIndex(group, out var groupProto))
+                return damageChange;
+
             damageEntity.DamageDict.EnsureCapacity(groupProto.DamageTypes.Count);
             foreach (var damageId in groupProto.DamageTypes)
                 damageEntity.DamageDict.Add(damageId, ent.Comp.Damage.DamageDict[damageId]);
@@ -295,7 +297,9 @@ public sealed partial class DamageableSystem
         var damageEntity = new DamageSpecifier();
         if (group != null)
         {
-            var groupProto = _prototypeManager.Index(group);
+            if (!_prototypeManager.TryIndex(group, out var groupProto))
+                return damageChange;
+
             damageEntity.DamageDict.EnsureCapacity(groupProto.DamageTypes.Count);
             foreach (var damageId in groupProto.DamageTypes)
                 damageEntity.DamageDict.Add(damageId, ent.Comp.Damage.DamageDict[damageId]);
