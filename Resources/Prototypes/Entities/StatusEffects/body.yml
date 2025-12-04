@@ -3,16 +3,27 @@
   id: BloodstreamStatusEffectBase
   abstract: true
   components:
-    - type: StatusEffect
-      whitelist:
-        components:
-          - Bloodstream
+  - type: StatusEffect
+    whitelist:
+      components:
+      - Bloodstream
 
 - type: entity
   parent: [ BloodstreamStatusEffectBase ]
   id: StatusEffectBloodloss
   name: bloodloss
   components:
-    - type: StutteringAccent
-    - type: DrunkStatusEffect
-    - type: RejuvenateRemovedStatusEffect
+  - type: StutteringAccent
+  - type: DrunkStatusEffect
+  - type: RejuvenateRemovedStatusEffect
+
+- type: entity
+  parent: MobStatusEffectBase
+  id: PainNumbnessTraitStatusEffect
+  components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - MobThresholds
+  - type: PainNumbnessStatusEffect
