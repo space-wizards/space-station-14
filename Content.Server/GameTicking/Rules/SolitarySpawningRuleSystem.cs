@@ -6,7 +6,6 @@ using Content.Server.GameTicking.Prototypes;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
-using Content.Shared.GameTicking.Components;
 using Content.Shared.Roles;
 using Content.Shared.Station.Components;
 using Robust.Shared.Player;
@@ -52,21 +51,17 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
         var active = false;
 
         // Check if any Solitary Spawning rules are running
-        var rules = EntityQueryEnumerator<SolitarySpawningRuleComponent, GameRuleComponent>();
-        while (rules.MoveNext(out var uid, out var comp, out var rule))
+        var query = QueryActiveRules();
+        while (query.MoveNext(out _, out var comp, out _))
         {
-            if (!GameTicker.IsGameRuleActive(uid, rule))
-                continue;
-
             // TODO check blacklists/whitelists from the gamerule
 
             // Only need to report failure if the player was covered under any active rules
             active = true;
 
-            var count = comp.Prototypes.Count;
-            if (count <= 0)
+            if (comp.Prototypes.Count <= 0)
             {
-                Log.Warning($"No solitary spawning prototypes were included in '{ToPrettyString(uid)}'.");
+                Log.Warning("No prototypes were included in SolitarySpawningRuleComponent");
                 continue;
             }
 
@@ -76,8 +71,7 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
 
             if (playerChoice is null || !comp.Prototypes.Contains(playerChoice.Value))
             {
-                Log.Warning($"Received invalid player choice from '{session}'. Player chose '{playerChoice}', but " +
-                            $"the gamerule '{ToPrettyString(uid)}' does not include this prototype. " +
+                Log.Warning($"Received invalid player choice from '{session}'. Player chose '{playerChoice}'. " +
                             $"Defaulting to first option: '{comp.Prototypes.First().Id}'");
 
                 playerChoice = comp.Prototypes.First();
@@ -85,7 +79,7 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
 
             if (!_proto.TryIndex(playerChoice, out var proto))
             {
-                Log.Warning($"Solitary spawning failed for {session} - chosen prototype '{playerChoice}' does not exist");
+                Log.Warning($"Solitary spawning failed for {session} - prototype '{playerChoice}' does not exist");
                 continue;
             }
             Log.Debug($"Solitary spawning prototype '{playerChoice}' selected for {session}");
