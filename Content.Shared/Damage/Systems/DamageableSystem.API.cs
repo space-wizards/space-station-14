@@ -210,22 +210,16 @@ public sealed partial class DamageableSystem
             return damageChange;
 
         // get the damage should be healed (either all or only from one group)    
-        var damageEntity = new DamageSpecifier();
+        DamageSpecifier damageEntity;
         if (group != null)
         {
             if (!_prototypeManager.TryIndex(group, out var groupProto))
                 return damageChange;
 
-            damageEntity.DamageDict.EnsureCapacity(groupProto.DamageTypes.Count);
-            foreach (var damageId in groupProto.DamageTypes)
-                damageEntity.DamageDict.Add(damageId, ent.Comp.Damage.DamageDict[damageId]);
+            damageEntity = GetDamageToHeal((ent, ent.Comp), groupProto);
         }
         else
-        {
-            damageEntity.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
-            foreach (var (type, value) in ent.Comp.Damage.DamageDict)
-                damageEntity.DamageDict.Add(type, value);
-        }
+            damageEntity = GetDamageToHeal((ent, ent.Comp));
 
         // make sure damageChange has the same damage types as damageEntity
         damageChange.DamageDict.EnsureCapacity(damageEntity.DamageDict.Count);
@@ -287,23 +281,18 @@ public sealed partial class DamageableSystem
         if (amount <= 0)
             return damageChange;
 
+
         // get the damage should be healed (either all or only from one group)    
-        var damageEntity = new DamageSpecifier();
+        DamageSpecifier damageEntity;
         if (group != null)
         {
             if (!_prototypeManager.TryIndex(group, out var groupProto))
                 return damageChange;
 
-            damageEntity.DamageDict.EnsureCapacity(groupProto.DamageTypes.Count);
-            foreach (var damageId in groupProto.DamageTypes)
-                damageEntity.DamageDict.Add(damageId, ent.Comp.Damage.DamageDict[damageId]);
+            damageEntity = GetDamageToHeal((ent, ent.Comp), groupProto);
         }
         else
-        {
-            damageEntity.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
-            foreach (var (type, value) in ent.Comp.Damage.DamageDict)
-                damageEntity.DamageDict.Add(type, value);
-        }
+            damageEntity = GetDamageToHeal((ent, ent.Comp));
 
         // make sure damageChange has the same damage types as damageEntity
         damageChange.DamageDict.EnsureCapacity(damageEntity.DamageDict.Count);
@@ -327,6 +316,52 @@ public sealed partial class DamageableSystem
         }
 
         return ChangeDamage(ent, damageChange, true, false, origin);
+    }
+
+    /// <summary>
+    /// Returns a <see cref="DamageSpecifier"/> with all positive damage of the entity from the group specified
+    /// </summary>
+    /// <param name="ent">entity with damage</param>
+    /// <param name="group">group of damage to get values from</param>
+    /// <returns></returns>
+    private DamageSpecifier GetDamageToHeal(
+        Entity<DamageableComponent> ent,
+        DamageGroupPrototype group
+    )
+    {
+        var damageEntity = new DamageSpecifier();
+        damageEntity.DamageDict.EnsureCapacity(group.DamageTypes.Count);
+
+        foreach (var damageId in group.DamageTypes)
+        {
+            if (!ent.Comp.Damage.DamageDict.TryGetValue(damageId, out var value))
+                continue;
+            if (value != FixedPoint2.Zero)
+                damageEntity.DamageDict.Add(damageId, value);
+        }
+
+        return damageEntity;
+    }
+
+    /// <summary>
+    /// Returns a <see cref="DamageSpecifier"/> with all positive damage of the entity
+    /// </summary>
+    /// <param name="ent">entity with damage</param>
+    /// <returns></returns>
+    private DamageSpecifier GetDamageToHeal(
+        Entity<DamageableComponent> ent
+    )
+    {
+        var damageEntity = new DamageSpecifier();
+        damageEntity.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
+
+        foreach (var (damageId, value) in ent.Comp.Damage.DamageDict)
+        {
+            if (value != FixedPoint2.Zero)
+                damageEntity.DamageDict.Add(damageId, value);
+        }
+
+        return damageEntity;
     }
 
     /// <summary>
