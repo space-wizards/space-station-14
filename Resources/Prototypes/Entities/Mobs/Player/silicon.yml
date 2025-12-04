@@ -821,7 +821,7 @@
 
 - type: entity
   parent: PlayerSyndicateAssaultBorgDerelict
-  id: PlayerBorgSyndicateDerelictGhostRole
+  id: PlayerSyndicateAssaultBorgDerelictGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole

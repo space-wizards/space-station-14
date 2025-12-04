@@ -703,7 +703,7 @@
     prototypeWeights:
       SubvertedSilicon: DerelictCyborgWeights
     antagRoleToPrototypes:
-      SubvertedSilicon: [ PlayerGenericBorgDerelictGhostRole, PlayerJanitorBorgDerelictGhostRole, PlayerMedicalBorgDerelictGhostRole, PlayerMiningBorgDerelictGhostRole, PlayerBorgSyndicateDerelictGhostRole, PlayerEngineeringBorgDerelictGhostRole ]
+      SubvertedSilicon: [ PlayerGenericBorgDerelictGhostRole, PlayerJanitorBorgDerelictGhostRole, PlayerMedicalBorgDerelictGhostRole, PlayerMiningBorgDerelictGhostRole, PlayerSyndicateAssaultBorgDerelict, PlayerEngineeringBorgDerelictGhostRole ]
   - type: AntagSelection
     definitions:
     - prefRoles: [ SubvertedSilicon ]
@@ -719,7 +719,7 @@
     PlayerJanitorBorgDerelictGhostRole: 5
     PlayerMedicalBorgDerelictGhostRole: 5
     PlayerMiningBorgDerelictGhostRole: 5
-    PlayerBorgSyndicateDerelictGhostRole: 5
+    PlayerSyndicateAssaultBorgDerelict: 5
     PlayerEngineeringBorgDerelictGhostRole: 5
 
 - type: entity
@@ -840,7 +840,7 @@
   - type: SpaceSpawnRule
     spawnDistance: 0
   - type: AntagSpawner
-    prototype: PlayerBorgSyndicateDerelictGhostRole
+    prototype: PlayerSyndicateAssaultBorgDerelict
   - type: AntagSelection
     definitions:
     - spawnerPrototype: SpawnPointGhostDerelictSyndicateAssaultCyborg
