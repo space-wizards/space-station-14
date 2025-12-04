@@ -5,11 +5,14 @@
     weight: 0.5
     reagents:
     - Omnizine
-    - Nocturine
-    - Lexorin
+    - Impedrezene
+    - Fresium
+    - Heartbreaker
     - Honk
     - BuzzochloricBees
-    - Stimulants
+    - Caninase
+    - Felinase
+    - Benzene
   - quantity: 5
     weight: 1
     reagents:
@@ -31,6 +34,8 @@
     - ChangelingSting
     - CogChamp
     - JuiceThatMakesYouWeh
+    - BacchusBlessing
+    - TearGas
   - quantity: 5
     weight: 2
     reagents:
@@ -57,6 +62,7 @@
     - Cola
     - Diphenhydramine
     - Iron
+    - Bleach
   - quantity: 10
     weight: 3
     reagents:
@@ -78,7 +84,7 @@
     - Ash
     - SodiumCarbonate
     - SpaceDrugs
-    - MuteToxin
+    - SpaceGlue
     - JuiceBerryPoison
     - Pilk
     - Posca
