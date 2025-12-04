@@ -21,7 +21,7 @@
 - type: cargoProduct
   id: EmergencyEVA
   icon:
-    sprite: Clothing/Mask/breath.rsi
+    sprite: Clothing/Head/Helmets/eva_large.rsi/icon.png
     state: icon
   product: CrateEmergencyEVA
   cost: 1000

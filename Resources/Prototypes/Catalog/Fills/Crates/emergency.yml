@@ -42,7 +42,7 @@
   parent: CrateInternals
   id: CrateEmergencyEVA
   name: emergency EVA crate
-  description: For when the station needs atmospheric protection on a budget. Contains six breath masks, six emergency EVA suits, six oxygen tanks, and six nitrogen tanks.
+  description: For when the crew needs mass atmospheric protection on a budget. Contains six breath masks, six emergency EVA suits, six oxygen tanks, and six nitrogen tanks.
   components:
   - type: EntityTableContainerFill
     containers:
