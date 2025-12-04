@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Content.Shared.Station.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -31,7 +32,9 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
-    private readonly Dictionary<ICommonSession, EntityUid> _stations = [];
+    // A list of the station entities generated for each player (and the map they are on).
+    // Used for respawning players on their own station, and for deleting unused maps.
+    private readonly Dictionary<ICommonSession, (EntityUid, MapId)> _stations = [];
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -146,8 +149,8 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
 
         stationTarget = member.Station;
 
-        //store the newly created station entity for this session so we can put the player back on respawn
-        _stations.Add(session, stationTarget.Value);
+        //store the newly created station entity and map for this session, for respawn and cleanup purposes
+        _stations.Add(session, (stationTarget.Value, mapId));
         return true;
     }
 
@@ -189,7 +192,7 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
         if (!_stations.TryGetValue(session, out var stored))
             return false;
 
-        station = stored;
+        station = stored.Item1;
         return true;
     }
 
