@@ -625,3 +625,33 @@
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+
+- type: reagent
+  id: Lean
+  name: reagent-name-lean
+  parent: BaseDrink
+  desc: reagent-desc-lean
+  physicalDesc: reagent-physical-desc-syrupy
+  flavor: lean
+  color: "#cd20b0"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+    Narcotic:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 5
+    Poison:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentCondition
+          reagent: Lean
+          min: 20
+        damage:
+          types:
+            Asphyxiation: 1.5

@@ -96,3 +96,6 @@ reagent-desc-mopwata = Dirty, stagnant mop water.
 
 reagent-name-orange-lime-soda = citrus bikeshed
 reagent-desc-orange-lime-soda = The soda should be orange! No, it should be lemon-lime!
+
+reagent-name-lean = lean
+reagent-desc-lean = A potent mixture of cough syrup and soda. Not recommended to be consumed by anyone with a liver.

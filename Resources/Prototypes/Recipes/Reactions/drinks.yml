@@ -1555,3 +1555,13 @@
       amount: 1
   products:
     BacchusBlessing: 4
+
+- type: reaction
+  id: Lean
+  reactants:
+    Diphenhydramine:
+      amount: 1
+    SpaceUp:
+      amount: 1
+  products:
+    Lean: 2

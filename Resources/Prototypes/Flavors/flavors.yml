@@ -1498,3 +1498,8 @@
   id: motivating
   flavorType: Base
   description: flavor-base-motivating
+
+- type: flavor
+  id: lean
+  flavorType: Complex
+  description: flavor-complex-lean
