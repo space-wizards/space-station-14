@@ -40,14 +40,12 @@ public sealed class AntagMultipleRoleSpawnerSystem : EntitySystem
         if (entProtos.Count == 0)
             return; // You will just get a normal job
 
-         if (!ent.Comp.PrototypeWeights.TryGetValue(role, out var weightedRandomPrototype) || !_protoMan.TryIndex(weightedRandomPrototype, out WeightedRandomPrototype? weightedRandom))
-         {
-             args.Entity = Spawn(ent.Comp.PickAndTake ? _random.PickAndTake(entProtos) : _random.Pick(entProtos));
-             return;
-         }
+        if (!ent.Comp.PrototypeWeights.TryGetValue(role, out var weightedRandomPrototype) || !_protoMan.TryIndex(weightedRandomPrototype, out WeightedRandomPrototype? weightedRandom))
+        {
+            args.Entity = Spawn(ent.Comp.PickAndTake ? _random.PickAndTake(entProtos) : _random.Pick(entProtos));
+            return;
+        }
 
         args.Entity = Spawn(weightedRandom.Pick(_random));
-
-        //args.Entity = Spawn(ent.Comp.PickAndTake ? _random.PickAndTake(entProtos) : _random.Pick(entProtos));
     }
 }
