@@ -27,3 +27,7 @@
       - MobState
       - MobThresholds
   - type: PainNumbnessStatusEffect
+
+- type: entity
+  parent: PainNumbnessTraitStatusEffect
+  id: StatusEffectPainNumbness
