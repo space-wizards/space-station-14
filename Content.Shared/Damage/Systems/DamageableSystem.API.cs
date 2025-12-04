@@ -336,7 +336,7 @@ public sealed partial class DamageableSystem
         {
             if (!ent.Comp.Damage.DamageDict.TryGetValue(damageId, out var value))
                 continue;
-            if (value != FixedPoint2.Zero)
+            if (value > FixedPoint2.Zero)
                 damageEntity.DamageDict.Add(damageId, value);
         }
 
@@ -357,7 +357,7 @@ public sealed partial class DamageableSystem
 
         foreach (var (damageId, value) in ent.Comp.Damage.DamageDict)
         {
-            if (value != FixedPoint2.Zero)
+            if (value > FixedPoint2.Zero)
                 damageEntity.DamageDict.Add(damageId, value);
         }
 
