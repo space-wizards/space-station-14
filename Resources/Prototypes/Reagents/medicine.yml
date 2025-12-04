@@ -1506,5 +1506,8 @@
         time: 30 # 10 bleed ticks, you bleed every 3 seconds by default.
         type: Update
       - !type:ModifyBleed
-        minScale: 30
+        conditions:
+        - !type:ReagentCondition
+          reagent: Warfarin
+          min: 15
         amount: 0.25
