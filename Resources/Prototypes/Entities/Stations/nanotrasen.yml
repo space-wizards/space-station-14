@@ -51,3 +51,15 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform
+
+- type: entity
+  id: StandardTutorialStation
+  parent:
+  - BaseStation
+  - BaseStationAlertLevels
+  - BaseStationJobsSpawning
+  - BaseStationNanotrasen
+  - BaseStationRecords
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Transform

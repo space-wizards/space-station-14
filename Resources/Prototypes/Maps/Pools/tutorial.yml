@@ -3,6 +3,7 @@
   maps:
   - TutorialTest # TODO replace with a "fallback room", with instructions in place to ahelp/mhelp ?
 
-## Do not add any real tutorial maps here!
-## In tutorial mode, the only purpose of the "main" map is to be lean, and to not spawn any superfluous grids
-## The tutorial maps are to be specified on individual SolitarySpawningPrototypes in Resources/Prototypes/Tutorials/spawns.yml
+# Do not add any real tutorial maps here!
+# In tutorial mode, the only purpose of the "main" map is to be lean, and to not spawn any superfluous grids
+# The tutorial maps are to be specified on individual SolitarySpawningPrototypes in Resources/Prototypes/Tutorials/spawns.yml
+# SolitarySpawningRuleSystem will create a separate map for each player

@@ -5,7 +5,7 @@
   minPlayers: 0
   stations:
     TutorialTest:
-      stationProto: StandardStationArena
+      stationProto: StandardTutorialStation
       components:
         - type: StationNameSetup
           mapNameTemplate: 'Tutorial'
