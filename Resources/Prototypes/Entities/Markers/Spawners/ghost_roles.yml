@@ -234,7 +234,7 @@
   components:
   - type: GhostRole
     name: ghost-role-information-derelict-generic-cyborg-name
-    description: ghost-role-information-derelict-engineering-generic-description
+    description: ghost-role-information-derelict-generic-cyborg-description
     rules: ghost-role-information-silicon-rules
     raffle:
       settings: default
