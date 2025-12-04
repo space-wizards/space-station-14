@@ -185,6 +185,13 @@ figurines-clown-5 = Do I annoy you?
 figurines-clown-6 = Can I have AA? Please?
 figurines-clown-7 = I'm a clown, but you're the whole circus!
 
+figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
+figurines-greytider-2 = Uh-oh, who's lost their stunbaton?
+figurines-greytider-3 = Robust.
+figurines-greytider-4 = I'm not me without a toolbox.
+figurines-greytider-5 = Grey tide station wide!
+figurines-greytider-6 = Viva la revolution.
+
 figurines-janitor-1 = Clown stole my soap. Again.
 figurines-janitor-2 = Look at the signs, you idiot.
 figurines-janitor-3 = I've never seen this much lube in my life.
@@ -237,13 +244,6 @@ figurines-passenger-2 = Call evac.
 figurines-passenger-3 = HELP MAINTS!!
 figurines-passenger-4 = I'm no tider.
 figurines-passenger-5 = How much for a toolbelt?
-
-figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
-figurines-greytider-2 = Uh-oh, who's lost their stunbaton?
-figurines-greytider-3 = Robust.
-figurines-greytider-4 = I'm not me without a toolbox.
-figurines-greytider-5 = Grey tide station wide!
-figurines-greytider-6 = Viva la revolution.
 
 # Silicon
 
