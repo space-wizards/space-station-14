@@ -53,7 +53,7 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
         var active = false;
 
         // Check if any Solitary Spawning rules are running
-        var rules = EntityQueryEnumerator<SolitarySpawningRuleComponent,GameRuleComponent>();
+        var rules = EntityQueryEnumerator<SolitarySpawningRuleComponent, GameRuleComponent>();
         while (rules.MoveNext(out var uid, out var comp, out var rule))
         {
             if (!GameTicker.IsGameRuleActive(uid, rule))
