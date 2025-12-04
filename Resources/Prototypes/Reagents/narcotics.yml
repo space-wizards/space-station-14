@@ -16,14 +16,14 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 1
-            Blunt: 1
+            Poison: 0.5
+            Blunt: 0.5
       # OD
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
           reagent: Desoxyephedrine
-          min: 30
+          min: 16
         damage:
           types:
             Poison: 3 # this is added to the base damage of the meth.
@@ -35,7 +35,7 @@
         walkSpeedModifier: 1.20
         sprintSpeedModifier: 1.20
       - !type:GenericStatusEffect
-        key: StaminaModifier # You are on meth. You keep going. 
+        key: StaminaModifier # You are on meth. You keep going.
         component: StaminaModifier
         time: 3
       - !type:GenericStatusEffect
@@ -66,7 +66,7 @@
         conditions:
         - !type:ReagentCondition
           reagent: Desoxyephedrine
-          min: 20
+          min: 5
 
 - type: reagent
   id: Ephedrine
@@ -125,7 +125,7 @@
         conditions:
         - !type:ReagentCondition
           reagent: Ephedrine
-          min: 30
+          min: 15
 
 - type: reagent
   id: Stimulants
@@ -199,6 +199,13 @@
         damage: # Doesn't heal poison because if you OD'd I'm not giving you a safety net
           Burn: -0.5
           Brute: -0.5
+      - !type:HealthChange
+        conditions:
+        - !type:TotalDamageCondition
+          min: 95 # Just to bring you back from the brink of death
+        damage:
+          types:
+            Asphyxiation: -2
       # Side effects
       - !type:ResetNarcolepsy
       - !type:SatiateHunger
