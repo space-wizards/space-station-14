@@ -199,7 +199,6 @@
     children:
     - id: ClothingHandsGlovesColorYellow
     - id: ClothingMaskGas
-    - id: trayScanner
     - id: RCD
     - id: RCDAmmo
     - id: MetalFoamGrenade
