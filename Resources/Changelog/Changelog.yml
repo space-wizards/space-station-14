@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Smugman
-  changes:
-  - message: Many new lighters can now be found in both Maints loot and the Syndicate
-      Uplink.
-    type: Add
-  id: 8747
-  time: '2025-07-07T18:53:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35514
 - author: Jopaglazik, Golub
   changes:
   - message: Added Jump Boots In T1 "Salvage Equipment" technology.
@@ -3919,3 +3911,10 @@
   id: 9247
   time: '2025-12-04T08:07:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41697
+- author: Minerva
+  changes:
+  - message: Spesos now fit in envelopes.
+    type: Tweak
+  id: 9248
+  time: '2025-12-04T17:07:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41700
