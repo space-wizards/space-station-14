@@ -12,5 +12,5 @@ public sealed partial class SignalJammerComponent : Component
     /// Much greater than the handheld radio jammer.
     /// </summary>
     [DataField]
-    public float Range = 22f;
+    public float Range = 25f;
 }

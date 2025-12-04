@@ -1,4 +1,3 @@
-
 signal-jammer-examine = The jammer is [color={$state ->
     [active] green]active
     *[inactive] red]inactive
