@@ -41,7 +41,7 @@
   parent: CrateGenericSteel
   id: CrateServiceReplacementLights
   name: replacement lights crate
-  description: May the light of Aether shine upon this station! Or at least, the light of twelve light tubes and twelve light bulbs.
+  description: May the light of Aether shine upon this station! Or at least, the light of twelve fluorescent light tubes and twelve incandescent light bulbs.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -52,9 +52,22 @@
 
 - type: entity
   parent: CrateGenericSteel
+  id: CrateServiceColorfulLights
+  name: colorful lights crate
+  description: It's not a party until it's hard to see, a little disorienting, and your ears hurt. Contains twelve light tubes and twelve light bulbs in a variety of colors.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: BoxLightbulbColorfulMixed
+        - id: BoxLighttubeColorfulMixed
+
+- type: entity
+  parent: CrateGenericSteel
   id: CrateServiceHolidayLights
   name: holiday lights crate
-  description: Deck the halls with these festive holiday lights!
+  description: Deck the halls with these festive holiday lights! Contains twelve red light tubes and twelve green light tubes.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -408,16 +421,3 @@
           amount: 2
         - id: BoxCandleSmall
           amount: 2
-
-- type: entity
-  parent: CrateGenericSteel
-  id: CrateServiceColorfulLights
-  name: colorful lights crate
-  description: It's not a party until it's hard to see, a little disorienting, and your ears hurt.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: BoxLightbulbColorfulMixed
-        - id: BoxLighttubeColorfulMixed
