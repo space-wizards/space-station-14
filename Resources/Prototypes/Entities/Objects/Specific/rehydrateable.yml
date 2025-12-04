@@ -238,6 +238,7 @@
   - type: Tag # overwriting PlushieCarp tags to remove ClothMade and Payload
     tags:
     - PlushieCarp
+    - FishParcelShape
 
 - type: entity
   parent: MonkeyCube

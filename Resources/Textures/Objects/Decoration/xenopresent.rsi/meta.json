@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by TheSecondLord (Github) / @livelaughlord (Discord) based off of the praetorian from https://gitlab.com/cmdevs/colonial-warfare/-/blob/dev/icons/mob/xenonids/praetorian.dmi",
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "xeno"
+    }
+  ]
+}
