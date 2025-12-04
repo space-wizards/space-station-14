@@ -1,3 +1,4 @@
+using Content.Shared.Random;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
@@ -20,4 +21,10 @@ public sealed partial class AntagMultipleRoleSpawnerComponent : Component
     /// </summary>
     [DataField]
     public bool PickAndTake;
+
+    /// <summary>
+    ///     antag prototype -> WeightedRandomPrototype to weight different entities to spawn at different rates.
+    /// </summary>
+    [DataField]
+    public Dictionary<ProtoId<AntagPrototype>, ProtoId<WeightedRandomPrototype>> PrototypeWeights = new();
 }
