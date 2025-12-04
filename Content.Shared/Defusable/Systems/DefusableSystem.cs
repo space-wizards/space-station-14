@@ -38,7 +38,7 @@ public sealed class DefusableSystem : EntitySystem
 
     #region Subscribed Events
     /// <summary>
-    ///     Adds a verb allowing for the bomb to be started easily.
+    /// Adds a verb allowing for the bomb to be started easily.
     /// </summary>
     private void OnGetAltVerbs(Entity<DefusableComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
@@ -199,7 +199,6 @@ public sealed class DefusableSystem : EntitySystem
         _appearance.SetData(ent.Owner, DefusableVisuals.Active, ent.Comp.Activated);
     }
 
-    // jesus christ
     public void SetUsable(DefusableComponent component, bool value)
     {
         component.Usable = value;
@@ -271,7 +270,7 @@ public sealed class DefusableSystem : EntitySystem
 
     public bool ActivateWireCut(Entity<DefusableComponent> ent, Wire wire)
     {
-        // if you cut the wire it just defuses the bomb
+        // If you cut the wire it just defuses the bomb.
         if (ent.Comp.Activated)
         {
             TryDefuseBomb((wire.Owner, ent.Comp));
@@ -285,8 +284,8 @@ public sealed class DefusableSystem : EntitySystem
 
     public void ActivateWirePulse(Entity<DefusableComponent> ent, Wire wire)
     {
-        // if the component isnt active, just start the countdown
-        // if it is and it isn't already used then delay it
+        // If the component isn't active, just start the countdown.
+        // If it is and it isn't already used then delay it.
         if (ent.Comp.Activated)
         {
             if (!ent.Comp.ActivatedWireUsed)
@@ -318,7 +317,6 @@ public sealed class DefusableSystem : EntitySystem
         if (ent.Comp is { Activated: false, Usable: false })
             SetUsable(ent.Comp, true);
 
-        // you're already dead lol
         return true;
     }
 
