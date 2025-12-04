@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: maland1
-  changes:
-  - message: Reduced the size of the go go hat inventory
-    type: Tweak
-  id: 8745
-  time: '2025-07-06T23:50:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38808
-- author: AsnDen
-  changes:
-  - message: Golden PAI was added. It is extremely rare and expensive. This PAI can
-      be found in maint lockers
-    type: Add
-  id: 8746
-  time: '2025-07-07T05:07:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38549
 - author: Smugman
   changes:
   - message: Many new lighters can now be found in both Maints loot and the Syndicate
@@ -3919,3 +3904,18 @@
   id: 9245
   time: '2025-12-03T17:52:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41682
+- author: jckspjf
+  changes:
+  - message: Changed the wording on Pun Pun's jacket to make more sense in English.
+    type: Tweak
+  id: 9246
+  time: '2025-12-04T01:19:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41695
+- author: Hitlinemoss
+  changes:
+  - message: Light crates' descriptions now accurately reflect the number of lights
+      they contain.
+    type: Fix
+  id: 9247
+  time: '2025-12-04T08:07:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41697
