@@ -259,9 +259,9 @@ public sealed class DrainSystem : EntitySystem
         if (args.Target == null)
             return;
 
-        if (!_random.Prob(ent.Comp.UnclogProbability))
+        if (!_random.Prob(ent.Comp.UnclogProbability) && !_net.IsClient) // No predict random.
         {
-            _popup.PopupPredicted(Loc.GetString("drain-component-unclog-fail", ("object", args.Target.Value)), args.Target.Value, args.User);
+            _popup.PopupEntity(Loc.GetString("drain-component-unclog-fail", ("object", args.Target.Value)), args.Target.Value);
             return;
         }
 
