@@ -689,23 +689,126 @@
 
 - type: entity
   parent: BaseGameRule
-  id: DerelictCyborgSpawn
+  id: DerelictEngineerCyborgSpawn
   components:
   - type: StationEvent
-    weight: 9
+    weight: 2.5
     earliestStart: 15
     reoccurrenceDelay: 20
     minimumPlayers: 4
     duration: null
   - type: SpaceSpawnRule
     spawnDistance: 0
-  - type: AntagMultipleRoleSpawner
-    antagRoleToPrototypes:
-      SubvertedSilicon: [ PlayerBorgDerelictGhostRole, PlayerJanitorBorgDerelictGhostRole, PlayerMedicalBorgDerelictGhostRole, PlayerMiningBorgDerelictGhostRole, PlayerBorgSyndicateDerelictGhostRole, PlayerEngineeringBorgDerelictGhostRole ]
+  - type: AntagSpawner
+    prototype: PlayerEngineeringBorgDerelictGhostRole
   - type: AntagSelection
     definitions:
-    - prefRoles: [ SubvertedSilicon ]
-      spawnerPrototype: SpawnPointGhostDerelictCyborg
+    - spawnerPrototype: SpawnPointGhostDerelictEngineeringCyborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictGenericCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2.5
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerBorgDerelictGhostRole
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictCyborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictJanitorCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2.5
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerJanitorBorgDerelictGhostRole
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictJanitorCyborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictMedicalCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2.5
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerMedicalBorgDerelictGhostRole
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictMedicalCyborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictMiningCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2.5
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerMiningBorgDerelictGhostRole
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictMiningCyborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictSyndicateAssaultCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 2.5
+    earliestStart: 25
+    reoccurrenceDelay: 20
+    minimumPlayers: 15
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerBorgSyndicateDerelictGhostRole
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictSyndicateAssaultCyborg
       min: 1
       max: 1
       pickPlayer: false

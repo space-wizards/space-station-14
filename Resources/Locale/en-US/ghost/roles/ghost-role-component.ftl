@@ -247,14 +247,11 @@ ghost-role-information-syndicate-cyborg-assault-name = Syndicate Assault Cyborg
 ghost-role-information-syndicate-cyborg-saboteur-name = Syndicate Saboteur Cyborg
 ghost-role-information-syndicate-cyborg-description = The Syndicate needs reinforcements. You, a cold silicon killing machine, will help them.
 
-ghost-role-information-derelict-cyborg-name = Derelict Cyborg
-ghost-role-information-derelict-cyborg-description = You are a regular cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
-
 ghost-role-information-derelict-engineering-cyborg-name = Derelict Engineer Cyborg
 ghost-role-information-derelict-engineering-cyborg-description = You are an engineer cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
 
-ghost-role-information-derelict-generic-cyborg-name = Derelict Generic Cyborg
-ghost-role-information-derelict-generic-cyborg-description = You are a generic cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
+ghost-role-information-derelict-cyborg-name = Derelict Generic Cyborg
+ghost-role-information-derelict-cyborg-description = You are a regular cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
 
 ghost-role-information-derelict-janitor-cyborg-name = Derelict Janitor Cyborg
 ghost-role-information-derelict-janitor-cyborg-description = You are a janitor cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
