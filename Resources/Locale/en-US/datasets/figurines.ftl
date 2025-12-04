@@ -13,7 +13,7 @@ figurines-captain-8 = It's hard being at the top.
 
 figurines-qm-1 = Who stole the shuttle?
 figurines-qm-2 = Wait, where did my digi-board go?
-figurines-qm-3 = I didn't approve those guns!
+figurines-qm-3 = I didn't approve that shipment of guns!
 figurines-qm-4 = One toy box for my fellow clown!
 figurines-qm-5 = Time to gamble!
 figurines-qm-6 = Viva la Cargonia!
