@@ -1,6 +1,8 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Fluids.EntitySystems;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Fluids.Components;
@@ -13,17 +15,24 @@ namespace Content.Shared.Fluids.Components;
 /// When the drain is full, it can be unclogged using a plunger (i.e. an entity with a Plunger tag attached).
 /// Later this can be refactored into a proper Plunger component if needed.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedDrainSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(DrainSystem))]
 public sealed partial class DrainComponent : Component
 {
     public const string SolutionName = "drainBuffer";
 
     public static readonly ProtoId<TagPrototype> PlungerTag = "Plunger";
 
+    /// <summary>
+    /// The solution that the drain is using.
+    /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? Solution = null;
 
-    [DataField]
+    /// <summary>
+    /// The accumulator for the drain.
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float Accumulator = 0f;
 
     /// <summary>
