@@ -216,10 +216,10 @@ public sealed partial class DamageableSystem
             if (!_prototypeManager.TryIndex(group, out var groupProto))
                 return damageChange;
 
-            damageEntity = GetDamageToHeal((ent, ent.Comp), groupProto);
+            damageEntity = GetDamage((ent, ent.Comp), groupProto);
         }
         else
-            damageEntity = GetDamageToHeal((ent, ent.Comp));
+            damageEntity = GetDamage((ent, ent.Comp));
 
         // make sure damageChange has the same damage types as damageEntity
         damageChange.DamageDict.EnsureCapacity(damageEntity.DamageDict.Count);
@@ -258,7 +258,7 @@ public sealed partial class DamageableSystem
     /// <param name="ent">entity with damage</param>
     /// <param name="group">group of damage to get values from</param>
     /// <returns></returns>
-    private DamageSpecifier GetDamageToHeal(
+    private DamageSpecifier GetDamage(
         Entity<DamageableComponent> ent,
         DamageGroupPrototype group
     )
@@ -282,7 +282,7 @@ public sealed partial class DamageableSystem
     /// </summary>
     /// <param name="ent">entity with damage</param>
     /// <returns></returns>
-    private DamageSpecifier GetDamageToHeal(
+    private DamageSpecifier GetDamage(
         Entity<DamageableComponent> ent
     )
     {
