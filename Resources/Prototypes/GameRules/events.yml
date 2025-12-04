@@ -689,6 +689,29 @@
 
 - type: entity
   parent: BaseGameRule
+  id: DerelictCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 15
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagMultipleRoleSpawner
+    antagRoleToPrototypes:
+      SubvertedSilicon: [ PlayerGenericBorgDerelictGhostRole, PlayerJanitorBorgDerelictGhostRole, PlayerMedicalBorgDerelictGhostRole, PlayerMiningBorgDerelictGhostRole, PlayerBorgSyndicateDerelictGhostRole, PlayerEngineeringBorgDerelictGhostRole ]
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ SubvertedSilicon ]
+      spawnerPrototype: SpawnPointGhostDerelictCyborg
+      min: 1
+      max: 1
+      pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
   id: DerelictEngineerCyborgSpawn
   components:
   - type: StationEvent
