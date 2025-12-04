@@ -37,3 +37,19 @@
     icon: _Funkystation/Interface/Actions/cocoon.png
     iconOn: _Funkystation/Interface/Actions/cocoon.png
     event: !type:WrapActionEvent {}
+
+- type: entity
+  id: ActionBite
+  name: Bite
+  description: Bite a target and inject them with a solution.
+  components:
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    interactOnMiss: false
+    itemIconStyle: NoItem
+    icon: _Funkystation/Interface/Actions/bite.png
+    iconOn: _Funkystation/Interface/Actions/bite.png
+    event: !type:BiteActionEvent {}

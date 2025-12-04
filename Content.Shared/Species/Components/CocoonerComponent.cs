@@ -1,3 +1,4 @@
+// SPDX-FileCopyrightText: 2025 Drywink <43855731+Drywink@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Drywink <hugogrethen@gmail.com>
 //
 // SPDX-License-Identifier: MIT
@@ -20,6 +21,9 @@ public sealed partial class CocoonerComponent : Component
 
     [DataField("wrapDuration"), AutoNetworkedField]
     public float WrapDuration = 10f;
+
+    [DataField("wrapDuration_Short"), AutoNetworkedField]
+    public float WrapDuration_Short = 3f;
 
     [DataField("hungerCost"), AutoNetworkedField]
     public float HungerCost = 10f;

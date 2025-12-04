@@ -1,8 +1,14 @@
+# SPDX-FileCopyrightText: 2025 Drywink <43855731+Drywink@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Drywink <hugogrethen@gmail.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later AND MIT
 
 - files: ["cocoon.png"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Created by Drywink"
+  source: "https://github.com/Drywink"
+
+- files: ["bite.png"]
   license: "CC-BY-SA-4.0"
   copyright: "Created by Drywink"
   source: "https://github.com/Drywink"
