@@ -9,7 +9,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Roles;
 using Content.Shared.Station.Components;
-using Linguini.Shared.Util;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -71,27 +70,25 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
                 continue;
             }
 
-            int? playerChoice = null;
+            ProtoId<SolitarySpawningPrototype>? playerChoice = null;
 
             //TODO query SolitarySpawningManager which option the player picked when joining
 
-            if (playerChoice is null || !playerChoice.Value.InRange(0, count - 1))
+            if (playerChoice is null || !comp.Prototypes.Contains(playerChoice.Value))
             {
-                Log.Warning($"Received invalid player choice for '{session}'. Received option: '{playerChoice}'. " +
-                            $"The gamerule '{ToPrettyString(uid)}' has {count} prototypes. " +
-                            $"Defaulting to first option: '{comp.Prototypes[0].Id}'");
+                Log.Warning($"Received invalid player choice from '{session}'. Player chose '{playerChoice}', but " +
+                            $"the gamerule '{ToPrettyString(uid)}' does not include this prototype. " +
+                            $"Defaulting to first option: '{comp.Prototypes.First().Id}'");
 
-                playerChoice = 0;
+                playerChoice = comp.Prototypes.First();
             }
 
-            var chosenProtoId = comp.Prototypes[playerChoice.Value];
-
-            if (!_proto.TryIndex(chosenProtoId, out var proto))
+            if (!_proto.TryIndex(playerChoice, out var proto))
             {
-                Log.Warning($"Solitary spawning failed for {session} - chosen prototype '{chosenProtoId}' does not exist");
+                Log.Warning($"Solitary spawning failed for {session} - chosen prototype '{playerChoice}' does not exist");
                 continue;
             }
-            Log.Debug($"Solitary spawning prototype '{chosenProtoId}' selected for {session}");
+            Log.Debug($"Solitary spawning prototype '{playerChoice}' selected for {session}");
 
             var job = proto.Job;
 
