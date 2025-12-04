@@ -271,18 +271,18 @@ figurines-nukie-3 = The nuke makes boom.
 figurines-nukie-4 = What's the code?
 figurines-nukie-5 = Commander...? ...That's a balloon...
 
+figurines-nukie-commander-1 = GET DAT FUKKEN DISK!
+figurines-nukie-commander-2 = Fuckin' flukies.
+figurines-nukie-commander-3 = The Syndicate sends its regards.
+figurines-nukie-commander-4 = Failure is not an option.
+figurines-nukie-commander-5 = Whoops.
+
 figurines-nukie-elite-1 = Not a word in Nanotrasen.
 figurines-nukie-elite-2 = THAT'S A KEG!
 figurines-nukie-elite-3 = Guys, are you alive?
 figurines-nukie-elite-4 = Breach and clear!
 figurines-nukie-elite-5 = Leave no survivors.
 figurines-nukie-elite-6 = Good work, team.
-
-figurines-nukie-commander-1 = GET DAT FUKKEN DISK!
-figurines-nukie-commander-2 = Fuckin' flukies.
-figurines-nukie-commander-3 = The Syndicate sends its regards.
-figurines-nukie-commander-4 = Failure is not an option.
-figurines-nukie-commander-5 = Whoops.
 
 figurines-queen-1 = Our domain must grow.
 figurines-queen-2 = The hive hungers.
