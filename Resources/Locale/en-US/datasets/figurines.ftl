@@ -12,12 +12,12 @@ figurines-captain-8 = It's hard being at the top.
 # Cargo
 
 figurines-qm-1 = Who stole the shuttle?
-figurines-qm-2 = I won't approve the guns.
-figurines-qm-3 = I didn't buy those guns!
-figurines-qm-4 = One toys crate for ma fellow clown!
-figurines-qm-5 = Time to spent all money on gambling.
-figurines-qm-6 = Viva La Cargonia!
-figurines-qm-7 = Fill the form.
+figurines-qm-2 = Wait, where did my digi-board go?
+figurines-qm-3 = I didn't approve those guns!
+figurines-qm-4 = One toy box for my fellow clown!
+figurines-qm-5 = Time to gamble!
+figurines-qm-6 = Viva la Cargonia!
+figurines-qm-7 = Fill out the form.
 figurines-qm-8 = Where'd all our money go?
 figurines-qm-9 = 99% of gamblers quit right before they hit it big!
 
@@ -54,7 +54,7 @@ figurines-atmostech-7 = TEG: Thermal Energy? Gone!
 
 figurines-engineer-1 = SINGULOOSE!
 figurines-engineer-2 = TESLOOSE!
-figurines-engineer-3 = What is AME?
+figurines-engineer-3 = Did anyone remember to turn the AME on?
 figurines-engineer-4 = Free insuls at Engineering!
 figurines-engineer-5 = Where'd the power go?
 figurines-engineer-6 = Someone bombed the medbay... again...
@@ -164,7 +164,7 @@ figurines-boxer-4 = Don't look at me; he was shot, not punched.
 figurines-boxer-5 = 1v1 me, captain.
 
 figurines-chaplain-1 = Would you like to join my cul- I mean religion.
-figurines-chaplain-2 = Gods make me a killing machine please!
+figurines-chaplain-2 = Gods, please make me a killing machine!
 figurines-chaplain-3 = God exists!
 figurines-chaplain-4 = Those aren't blood runes, I drew them in crayon.
 figurines-chaplain-5 = Anyone want to be sacrificed?
@@ -173,7 +173,7 @@ figurines-chaplain-6 = Vampires aren't real.
 figurines-chef-1 = I swear it's not human meat.
 figurines-chef-2 = More banana cream pies?
 figurines-chef-3 = How does rotary sushi sound?
-figurines-chef-4 = That'll be 1000 spesos
+figurines-chef-4 = That'll be 1,000 spesos.
 figurines-chef-5 = For here or to go?
 figurines-chef-6 = Where'd Pun Pun go? No idea...
 
