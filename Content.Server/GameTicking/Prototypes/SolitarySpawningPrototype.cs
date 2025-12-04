@@ -51,7 +51,7 @@ public sealed class SolitarySpawningPrototype : IPrototype
     /// Recommended that all tutorials use the 'Tutorial' job, and place any necessary equipment on the map itself.
     /// </remarks>
     [DataField]
-    public ProtoId<JobPrototype> Job = "Tutorial";
+    public ProtoId<JobPrototype> Job = "Trainee";
 
     // TODO requirements/whitelist/blacklist for this option to show up in the Lobby UI?
 }
