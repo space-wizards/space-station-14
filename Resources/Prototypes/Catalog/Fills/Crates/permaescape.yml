@@ -187,7 +187,7 @@
 - type: entity
   parent: CrateGenericSteel
   id: CratePermaEscapeMats
-  suffix: Mats
+  suffix: Materials
   components:
   - type: EntityTableContainerFill
     containers:
