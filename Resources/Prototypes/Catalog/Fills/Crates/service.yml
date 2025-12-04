@@ -41,7 +41,7 @@
   parent: CrateGenericSteel
   id: CrateServiceReplacementLights
   name: replacement lights crate
-  description: May the light of Aether shine upon this station! Or at least, the light of forty two light tubes and twenty one light bulbs.
+  description: May the light of Aether shine upon this station! Or at least, the light of twelve light tubes and twelve light bulbs.
   components:
   - type: EntityTableContainerFill
     containers:
