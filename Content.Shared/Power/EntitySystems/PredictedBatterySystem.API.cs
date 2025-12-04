@@ -175,6 +175,21 @@ public sealed partial class PredictedBatterySystem
     }
 
     /// <summary>
+    /// Gets the fraction of charge remaining (0–1).
+    /// </summary>
+    [PublicAPI]
+    public float GetChargeLevel(Entity<PredictedBatteryComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return 0f;
+
+        if (ent.Comp.MaxCharge <= 0f)
+            return 0f;
+
+        return GetCharge(ent) / ent.Comp.MaxCharge;
+    }
+
+    /// <summary>
     /// Gets number of remaining uses for the given charge cost.
     /// </summary>
     [PublicAPI]
