@@ -1,37 +1,38 @@
-using Content.Server.Defusable.Systems;
-using Content.Server.Explosion.Components;
+using Content.Shared.Defusable.Systems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Defusable.Components;
+namespace Content.Shared.Defusable.Components;
 
 /// <summary>
 /// This is used for bombs that should be defused. The explosion configuration should be handled by <see cref="ExplosiveComponent"/>.
 /// </summary>
-[RegisterComponent, Access(typeof(DefusableSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(DefusableSystem))]
 public sealed partial class DefusableComponent : Component
 {
     /// <summary>
-    ///     The bomb will play this sound on defusal.
+    /// The bomb will play this sound on defusal.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField("defusalSound")]
+    [DataField]
     public SoundSpecifier DefusalSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
 
     /// <summary>
-    ///     The bomb will play this sound on bolt.
+    /// The bomb will play this sound on bolt.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly), DataField("boltSound")]
+    [DataField]
     public SoundSpecifier BoltSound = new SoundPathSpecifier("/Audio/Machines/boltsdown.ogg");
 
     /// <summary>
-    ///     Is this bomb one use?
+    /// Is this bomb one use?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("disposable")]
+    [DataField]
     public bool Disposable = true;
 
     /// <summary>
     /// Is the bomb live? This is different from BombUsable because this tracks whether the bomb is ticking down or not.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("activated")]
+    [DataField, AutoNetworkedField]
     public bool Activated;
 
     /// <summary>
@@ -49,27 +50,31 @@ public sealed partial class DefusableComponent : Component
     /// <summary>
     /// Is this bomb supposed to be stuck to the ground?
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool Bolted;
 
     /// <summary>
     /// How much time is added when the Activate wire is pulsed?
     /// </summary>
-    [DataField("delayTime")]
+    [DataField]
     public int DelayTime = 30;
 
     #region Wires
     // wires, this is so that they're one use
-    [ViewVariables(VVAccess.ReadWrite), Access(Other=AccessPermissions.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [Access(Other = AccessPermissions.ReadWrite)]
     public bool DelayWireUsed;
 
-    [ViewVariables(VVAccess.ReadWrite), Access(Other=AccessPermissions.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [Access(Other = AccessPermissions.ReadWrite)]
     public bool ProceedWireCut;
 
-    [ViewVariables(VVAccess.ReadWrite), Access(Other=AccessPermissions.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [Access(Other = AccessPermissions.ReadWrite)]
     public bool ProceedWireUsed;
 
-    [ViewVariables(VVAccess.ReadWrite), Access(Other=AccessPermissions.ReadWrite)]
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [Access(Other = AccessPermissions.ReadWrite)]
     public bool ActivatedWireUsed;
 
     #endregion
