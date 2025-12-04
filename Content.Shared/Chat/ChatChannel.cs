@@ -95,6 +95,11 @@ namespace Content.Shared.Chat
         /// </summary>
         CorporealSpeech = Local | Whisper | Radio | Emotes | LOOC,
 
+        /// <summary>
+        /// Channels where sender name coloring in text is applied.
+        /// </summary>
+        ChatNameColoringWhitelist = Local | Whisper | Radio | OOC | LOOC | Dead | Emotes | AdminChat,
+
         AdminRelated = Admin | AdminAlert | AdminChat,
     }
 
