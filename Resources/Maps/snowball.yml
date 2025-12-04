@@ -4,7 +4,7 @@ meta:
   engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/03/2025 06:42:48
+  time: 12/04/2025 03:05:10
   entityCount: 18194
 maps:
 - 1793
@@ -6601,6 +6601,7 @@ entities:
     - type: ImplicitRoof
     - type: RadiationGridResistance
     - type: NavMap
+    - type: ExplosionAirtightGrid
   - uid: 1793
     components:
     - type: MetaData
@@ -84729,7 +84730,7 @@ entities:
     - type: Transform
       pos: 36.5,60.5
       parent: 1
-- proto: LockerHeadOfSecurityFilled
+- proto: LockerHeadOfSecurityFilledHardsuit
   entities:
   - uid: 14603
     components:
