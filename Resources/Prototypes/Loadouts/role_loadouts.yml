@@ -566,7 +566,7 @@
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 
 - type: roleLoadout
-  id: JobTutorial
+  id: JobTrainee
   groups:
   - GroupTankHarness
   - Survival

@@ -1,10 +1,10 @@
 - type: job
-  id: Tutorial
-  name: job-name-tutorial
-  description: job-description-tutorial
-  playTimeTracker: JobTutorial
+  id: Trainee
+  name: job-name-trainee
+  description: job-description-trainee
+  playTimeTracker: JobTrainee
   setPreference: false
-  startingGear: TutorialGear
+  startingGear: TraineeGear
   icon: "JobIconUnknown"
   supervisors: job-supervisors-nobody
   canBeAntag: false
@@ -12,7 +12,7 @@
   - Maintenance
 
 - type: startingGear
-  id: TutorialGear
+  id: TraineeGear
   equipment:
     id: PassengerPDA
     jumpsuit: ClothingUniformJumpsuitColorOrange
