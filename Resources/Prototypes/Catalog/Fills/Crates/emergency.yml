@@ -40,37 +40,14 @@
 
 - type: entity
   parent: CrateInternals
-  id: CrateEmergencyInternals
-  name: internals crate
-  description: Master your life energy and control your breathing with three breath masks, three gas masks, three emergency EVA suits, three oxygen tanks, and three nitrogen tanks.
+  id: CrateEmergencyEVA
+  name: emergency EVA crate
+  description: For when the station needs atmospheric protection on a budget. Contains six breath masks, six emergency EVA suits, six oxygen tanks, and six nitrogen tanks.
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: ClothingMaskGas
-          amount: 3
-        - id: ClothingMaskBreath
-          amount: 3
-        - id: OxygenTankFilled
-          amount: 3
-        - id: NitrogenTankFilled
-          amount: 3
-        - id: ClothingOuterSuitEmergency
-          amount: 3
-
-- type: entity
-  parent: CrateInternals
-  id: CrateEmergencyInternalsLarge
-  name: internals crate (large)
-  description: Master your life energy and control your breathing with six breath masks, six gas masks, six emergency EVA suits, six oxygen tanks, and six nitrogen tanks.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ClothingMaskGas
-          amount: 6
         - id: ClothingMaskBreath
           amount: 6
         - id: OxygenTankFilled
@@ -79,23 +56,6 @@
           amount: 6
         - id: ClothingOuterSuitEmergency
           amount: 6
-
-- type: entity
-  parent: CrateInternals
-  id: CrateNitrogenInternals
-  name: internals crate (nitrogen)
-  description: Contains two breath masks, two gas masks, and four nitrogen tanks. Intended for nitrogen-breathing species.
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ClothingMaskGas
-          amount: 2
-        - id: ClothingMaskBreath
-          amount: 2
-        - id: NitrogenTankFilled
-          amount: 4
 
 - type: entity
   parent: CrateRadiation
