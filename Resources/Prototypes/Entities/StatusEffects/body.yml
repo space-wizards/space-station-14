@@ -57,3 +57,7 @@
   - type: HemophiliaStatusEffect
     bleedReductionMultiplier: 1 # We don't want it to also reduce coagulation, it would stack with Anticoagulant.
     bleedAmountMultiplier: 1.33
+
+- type: entity
+  parent: PainNumbnessTraitStatusEffect
+  id: StatusEffectPainNumbness
