@@ -1,4 +1,4 @@
-namespace Content.Server.Holiday
+namespace Content.Shared.Holiday
 {
     public enum Month : byte
     {
@@ -14,6 +14,6 @@ namespace Content.Server.Holiday
         September = 9,
         October   = 10,
         November  = 11,
-        December  = 12
+        December  = 12,
     }
 }
