@@ -219,27 +219,28 @@ public sealed partial class DamageableSystem
         while (remaining > 0)
         {
             var count = keys.Count;
-            var max = (float)remaining / count;
-            var removed = FixedPoint2.Zero;
+            var max = FixedPoint2.Max(remaining / count, FixedPoint2.Epsilon);
             for (var i = count - 1; i >= 0; i--)
             {
                 var type = keys[i];
                 var value = damage.DamageDict[type];
+                if (!damageChange.DamageDict.TryGetValue(type, out var heal))
+                    damageChange.DamageDict.Add(type, FixedPoint2.Zero);
 
                 // Don't go above max, if we don't go above max
-                if (value > max)
-                    value = FixedPoint2.Max(max, FixedPoint2.Epsilon);
+                if (value > max + heal)
+                    value = max;
                 // If we're not above max, we will heal it fully and don't need to enumerate anymore!
                 else
                     keys.RemoveAt(i);
 
-                removed += value;
+                remaining -= value;
+                damageChange.DamageDict[type] -= value;
 
-                if (!damageChange.DamageDict.TryAdd(type, -value))
-                    damageChange.DamageDict[type] -= value;
+                // Because FixedPoint2 doesn't round up when dividing, there's a chance we heal it all while still enumerating.
+                if (remaining <= FixedPoint2.Zero)
+                    break;
             }
-
-            remaining -= removed;
         }
 
         return ChangeDamage(ent, damageChange, true, false, origin);
