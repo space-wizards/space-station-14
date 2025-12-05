@@ -24,7 +24,6 @@ public sealed partial class PlantMutateChemicals : EntityEffectBase<PlantMutateC
         if (!prototype.Resolve(RandomPickBotanyReagent, out var table))
             return string.Empty;
 
-
         foreach (var fill in table.Fills)
         {
             foreach (var reagent in fill.Reagents)
