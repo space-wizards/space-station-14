@@ -37,5 +37,6 @@ public sealed partial class SiliconLawProviderComponent : Component
     [DataField, AutoNetworkedField]
     public bool Subverted = false;
 
+    // Prevent cheat clients from seeing the laws of other players.
     public override bool SendOnlyToOwner => true;
 }
