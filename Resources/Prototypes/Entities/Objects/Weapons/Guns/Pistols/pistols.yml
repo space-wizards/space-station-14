@@ -260,8 +260,6 @@
   - type: Gun
     minAngle: 9
     maxAngle: 30
-    angleIncrease: 4
-    angleDecay: 1
     fireRate: 4
     availableModes:
     - SemiAuto

@@ -172,8 +172,6 @@
   - type: Gun
     minAngle: 25
     maxAngle: 33
-    angleIncrease: 2
-    angleDecay: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
   - type: ItemSlots

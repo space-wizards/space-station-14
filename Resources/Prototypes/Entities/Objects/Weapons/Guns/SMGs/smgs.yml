@@ -22,8 +22,6 @@
     maxAngle: 16
     fireRate: 8
     burstFireRate: 8
-    angleIncrease: 3
-    angleDecay: 16
     selectedMode: FullAuto
     availableModes:
     - SemiAuto
