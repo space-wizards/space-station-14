@@ -421,6 +421,8 @@
         insertSound: /Audio/Effects/packetrip.ogg
         ejectSound: /Audio/Effects/packetrip.ogg
         whitelist:
+          components:
+            - Cash
           tags:
             - Paper
   - type: ActivatableUI

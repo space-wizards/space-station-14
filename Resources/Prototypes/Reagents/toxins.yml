@@ -751,3 +751,22 @@
         conditions:
         - !type:MetabolizerTypeCondition
           type: [Vox]
+
+- type: reagent
+  id: Hemorrhinol
+  name: reagent-name-hemorrhinol
+  group: Toxins
+  desc: reagent-desc-hemorrhinol
+  physicalDesc: reagent-physical-desc-thin
+  contrabandSeverity: Major
+  flavor: sharp
+  color: "#96424f"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectHemorrhage
+        time: 21 # 7 bleed ticks, you bleed every 3 seconds by default.
+        type: Update
+      - !type:ModifyBleed
+        amount: 0.5

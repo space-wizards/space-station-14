@@ -93,8 +93,10 @@
   name: trait-hemophilia-name
   description: trait-hemophilia-desc
   category: Disabilities
-  components:
-  - type: Hemophilia
+  specials:
+  - !type:ApplyStatusEffectSpecial
+    statusEffects:
+    - StatusEffectHemophiliaTrait
 
 - type: trait
   id: ImpairedMobility
