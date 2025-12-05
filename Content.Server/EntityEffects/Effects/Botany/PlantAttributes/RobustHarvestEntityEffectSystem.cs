@@ -21,21 +21,19 @@ public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        if (entity.Comp.Seed.Potency < args.Effect.PotencyLimit)
+        if (TryComp<PlantTraitsComponent>(entity, out var traits) && traits.Potency < args.Effect.PotencyLimit)
         {
-            _plantHolder.EnsureUniqueSeed(entity, entity.Comp);
-            entity.Comp.Seed.Potency = Math.Min(entity.Comp.Seed.Potency + args.Effect.PotencyIncrease, args.Effect.PotencyLimit);
+            traits.Potency = Math.Min(traits.Potency + args.Effect.PotencyIncrease, args.Effect.PotencyLimit);
 
-            if (entity.Comp.Seed.Potency > args.Effect.PotencySeedlessThreshold)
+            if (traits.Potency > args.Effect.PotencySeedlessThreshold)
             {
-                entity.Comp.Seed.Seedless = true;
+                traits.Seedless = true;
             }
         }
-        else if (entity.Comp.Seed.Yield > 1 && _random.Prob(0.1f))
+        else if (TryComp<PlantTraitsComponent>(entity, out traits) && traits.Yield > 1 && _random.Prob(0.1f))
         {
             // Too much of a good thing reduces yield
-            _plantHolder.EnsureUniqueSeed(entity, entity.Comp);
-            entity.Comp.Seed.Yield--;
+            traits.Yield--;
         }
     }
 }

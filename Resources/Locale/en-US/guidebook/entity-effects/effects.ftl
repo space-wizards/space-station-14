@@ -512,3 +512,15 @@ entity-effect-guidebook-plant-seeds-remove =
         [1] Removes the
         *[other] remove the
     } seeds of the plant
+
+entity-effect-guidebook-plant-mutate-exude-gasses =
+    { $chance ->
+        [1] Mutates
+        *[other] mutate
+    } the plant to exude gases between {$minValue} and {$maxValue} moles
+
+entity-effect-guidebook-plant-mutate-consume-gasses =
+    { $chance ->
+        [1] Mutates
+        *[other] mutate
+    } the plant to consume gases between {$minValue} and {$maxValue} moles
