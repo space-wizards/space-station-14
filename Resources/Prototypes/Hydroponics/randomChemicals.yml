@@ -113,3 +113,23 @@
     - TableSalt
     - Chlorine
     - Mercury
+
+- type: weightedRandomFillSolution
+  id: EvilRandomFillSolution
+  fills:
+  - quantity: 0.1 # Common but low quantity
+    weight: 20
+    reagents:
+    - Vestine
+  - quantity: 0.5 # High quantity but uncommon
+    weight: 10
+    reagents:
+    - Stimulants
+    - MuteToxin
+  - quantity: 0.5 # High quantity but very rare
+    weight: 1
+    reagents:
+    - Tazinide
+    - Lead
+    - Nocturine
+    - Lexorin
