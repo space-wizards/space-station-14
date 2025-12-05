@@ -4,7 +4,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Triggers when a user closes a UI.
-/// The user is the entity that tries to open a UI.
+/// The user is the actor that tries to open a UI.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnUiCloseComponent : BaseTriggerOnXComponent
