@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: Crude Oil
-  changes:
-  - message: Parrots now parrot nearby speech, sometimes even using the radio if they
-      have one equipped
-    type: Add
-  - message: Polly the Parrot, CE's pet parrot, may be found on some maps parroting
-      things into an engineering headset.
-    type: Add
-  id: 8755
-  time: '2025-07-09T19:04:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38243
-- author: slarticodefast
-  changes:
-  - message: Added VV buttons to the solution editor.
-    type: Add
-  id: 8756
-  time: '2025-07-10T06:31:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38889
 - author: Toby222
   changes:
   - message: pAIs can emote like borgs now
@@ -3919,3 +3901,27 @@
   id: 9255
   time: '2025-12-05T15:05:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40933
+- author: SlamBamActionman
+  changes:
+  - message: Added Impedrezene, Fresium, Heartbreaker, Benzene, Tear Gas, Bleach,
+      Mannitol, Lipolicide, Wine, Beer, Coffee and Space Glue to random plant reagent
+      mutations.
+    type: Add
+  - message: Removed Nocturine, Lexorin and Hyperzine from random plant reagent mutations.
+    type: Remove
+  - message: Lowered Chemical Synthesis Kit uplink cost from 4 TC to 3 TC.
+    type: Tweak
+  - message: Lowered Nocturine Bottle's uplink cost from 6 TC to 4 TC.
+    type: Tweak
+  - message: Lowered the hypopen refill delay from 1.25s to 0.75s.
+    type: Tweak
+  id: 9256
+  time: '2025-12-05T17:14:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41716
+- author: Princess-Cheeseballs
+  changes:
+  - message: Vestine can now be used to mutate plants into producing syndicate chems.
+    type: Add
+  id: 9257
+  time: '2025-12-05T17:33:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41731
