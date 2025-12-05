@@ -1,6 +1,26 @@
 # To be implemented: see #9072
 
 - type: entity
+  abstract: true
+  parent: [ BaseItem, BaseMagicalContraband ]
+  id: WeaponStaffBase
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/staves.rsi
+  - type: Item
+    heldPrefix: staff
+    size: Normal
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+  - type: AmmoCounter
+  # Staves recharge. Wands do not.
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 30
+
+- type: entity
   parent: WeaponStaffBase
   id: WeaponStaffHealing
   name: staff of healing
