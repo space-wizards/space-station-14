@@ -1557,11 +1557,11 @@
     BacchusBlessing: 4
 
 - type: reaction
-  id: Spean
+  id: Spleen
   reactants:
     Diphenhydramine:
       amount: 1
     SpaceUp:
       amount: 1
   products:
-    Splean: 2
+    Spleen: 2

@@ -1500,6 +1500,6 @@
   description: flavor-base-motivating
 
 - type: flavor
-  id: splean
+  id: spleen
   flavorType: Complex
-  description: flavor-complex-splean
+  description: flavor-complex-spleen
