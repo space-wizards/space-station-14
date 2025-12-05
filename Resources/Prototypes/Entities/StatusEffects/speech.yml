@@ -33,3 +33,19 @@
   name: scrambled
   components:
   - type: ScrambledAccent
+
+# Causes wu to tawk wike a cat. ^w^
+- type: entity
+  parent: SpeechStatusEffectBase
+  id: StatusEffectOwO
+  name: owoaccent
+  components:
+  - type: OwOAccent
+
+# Causes you to tark rike a dog. Woof!
+- type: entity
+  parent: SpeechStatusEffectBase
+  id: StatusEffectBark
+  name: barkaccent
+  components:
+  - type: BarkAccent
