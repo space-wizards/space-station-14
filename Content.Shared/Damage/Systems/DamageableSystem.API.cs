@@ -192,7 +192,7 @@ public sealed partial class DamageableSystem
     /// If the <see cref="amount"/> is larger than the total damage of the entity then it just clears all damage.
     /// </summary>
     /// <param name="ent">entity to be healed</param>
-    /// <param name="amount">how much to heal</param>
+    /// <param name="amount">how much to heal. value has to be negative to heal</param>
     /// <param name="group">from which group to heal. if null, heal from all groups</param>
     /// <param name="origin">who did the healing</param>
     public DamageSpecifier HealEvenly(
@@ -252,7 +252,7 @@ public sealed partial class DamageableSystem
     /// If the <see cref="amount"/> is larger than the total damage of the entity then it just clears all damage.
     /// </summary>
     /// <param name="ent">entity to be healed</param>
-    /// <param name="amount">how much to heal</param>
+    /// <param name="amount">how much to heal. value has to be negative to heal</param>
     /// <param name="group">from which group to heal. if null, heal from all groups</param>
     /// <param name="origin">who did the healing</param>
     public DamageSpecifier HealDistributed(
