@@ -46,10 +46,12 @@ public sealed partial class ReactionMixerSystem : EntitySystem
             return;
 
         _popup.PopupClient(
-            Loc.GetString(ent.Comp.MixMessage,
+            Loc.GetString(
+                ent.Comp.MixMessage,
                 ("mixed", Identity.Entity(args.Target.Value, EntityManager)),
                 ("mixer", Identity.Entity(ent.Owner, EntityManager))),
-            args.User, args.User);
+            args.User,
+            args.User);
     }
 
     private void OnShake(Entity<ReactionMixerComponent> ent, ref ShakeEvent args)
@@ -58,7 +60,7 @@ public sealed partial class ReactionMixerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns if the given reaction mixer is able to able to mix the solution inside the target entity.
+    /// Returns true if given reaction mixer is able to mix the solution inside the target entity, false otherwise.
     /// </summary>
     /// <param name="ent">The reaction mixer used to cause the reaction.</param>
     /// <param name="target">The target solution container with a <see cref="MixableSolutionComponent"/>.</param>
@@ -86,7 +88,7 @@ public sealed partial class ReactionMixerSystem : EntitySystem
     /// <returns>If the reaction mixer was able to mix the solution. This does not necessarily mean a reaction took place.</returns>
     public bool TryMix(Entity<ReactionMixerComponent?> ent, EntityUid target)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
         var mixAttemptEvent = new MixingAttemptEvent(ent);
