@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: kosticia
-  changes:
-  - message: Added new reagent for artifact researching - artifact glue! Use it on
-      the artefact with active node for repair its durability.
-    type: Add
-  id: 8750
-  time: '2025-07-08T01:45:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38670
 - author: maland1
   changes:
   - message: Updated contraband tags on pulse weapons, temp gun, portable particle
@@ -3920,3 +3912,11 @@
   id: 9250
   time: '2025-12-04T19:44:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41598
+- author: ScarKy0
+  changes:
+  - message: Added Warfarin and Hemorrhinol, reagents that interact with blood clotting
+      and bleeding speed. Read about them in the guidebook!
+    type: Add
+  id: 9251
+  time: '2025-12-05T00:54:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41685
