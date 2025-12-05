@@ -346,7 +346,7 @@ ghost-role-information-xenoborg-name = Xenoborg
 ghost-role-information-xenoborg-desc = A strange cyborg made to replicate itself and take over the station by turning any sentient being into xenoborgs.
 
 ghost-role-information-wizard-name = Wizard
-ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your magic is made of.
+ghost-role-information-wizard-desc = You're a member of the Space Wizards Federation, sent to make the station tremble before your arcane might.
 
 ghost-role-information-emotional-support-scurret-name = Emotional Support Scurret
 ghost-role-information-emotional-support-scurret-description = Support the crew, be adorable, say "wa" a lot.
