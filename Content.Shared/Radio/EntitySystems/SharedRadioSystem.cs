@@ -8,30 +8,36 @@ namespace Content.Shared.Radio.EntitySystems;
 /// </summary>
 public abstract class SharedRadioSystem : EntitySystem
 {
-    public void AddIntrinsicTransmitterChannel(Entity<IntrinsicRadioTransmitterComponent?> ent, ProtoId<RadioChannelPrototype> channel)
+    public bool AddIntrinsicTransmitterChannel(Entity<IntrinsicRadioTransmitterComponent?> ent, ProtoId<RadioChannelPrototype> channel)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
-            return;
+            return false;
 
-        ent.Comp.Channels.Add(channel);
+        var success = ent.Comp.Channels.Add(channel);
         Dirty(ent);
+
+        return success;
     }
 
-    public void RemoveIntrinsicTransmitterChannel(Entity<IntrinsicRadioTransmitterComponent?> ent, ProtoId<RadioChannelPrototype> channel)
+    public bool RemoveIntrinsicTransmitterChannel(Entity<IntrinsicRadioTransmitterComponent?> ent, ProtoId<RadioChannelPrototype> channel)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
-            return;
+            return false;
 
-        ent.Comp.Channels.Remove(channel);
+        var success = ent.Comp.Channels.Remove(channel);
         Dirty(ent);
+
+        return success;
     }
 
-    public void SetIntrinsicTransmitterChannels(Entity<IntrinsicRadioTransmitterComponent?> ent, HashSet<ProtoId<RadioChannelPrototype>> channels)
+    public bool SetIntrinsicTransmitterChannels(Entity<IntrinsicRadioTransmitterComponent?> ent, HashSet<ProtoId<RadioChannelPrototype>> channels)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
-            return;
+            return false;
 
         ent.Comp.Channels = channels;
         Dirty(ent);
+
+        return true;
     }
 }
