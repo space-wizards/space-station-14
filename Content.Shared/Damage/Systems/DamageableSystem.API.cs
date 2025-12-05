@@ -226,7 +226,7 @@ public sealed partial class DamageableSystem
             for (var i = count - 1; i >= 0; i--)
             {
                 var type = keys[i];
-                var value = damage.DamageDict[type];
+                var value = damage.DamageDict[type] + damageChange.DamageDict[type];
 
                 // Don't go above max, if we don't go above max
                 if (value > max)
