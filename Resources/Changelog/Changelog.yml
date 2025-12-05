@@ -1,42 +1,4 @@
 ﻿Entries:
-- author: kosticia
-  changes:
-  - message: Added new reagent for artifact researching - artifact glue! Use it on
-      the artefact with active node for repair its durability.
-    type: Add
-  id: 8750
-  time: '2025-07-08T01:45:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38670
-- author: maland1
-  changes:
-  - message: Updated contraband tags on pulse weapons, temp gun, portable particle
-      decelerator, tesla gun and makeshift laser pistol to be more consistent with
-      their intended owners and legality
-    type: Tweak
-  id: 8751
-  time: '2025-07-08T11:55:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38698
-- author: TrixxedHeart
-  changes:
-  - message: Vox can now have heterochromia in the overlays category under markings.
-    type: Add
-  id: 8752
-  time: '2025-07-08T23:22:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38595
-- author: Quantum-cross
-  changes:
-  - message: Fix lingering ghost entities after taking ghost roles.
-    type: Fix
-  id: 8753
-  time: '2025-07-09T11:07:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38788
-- author: Sparlight
-  changes:
-  - message: Dragons no longer destroy non-humanoid mobs upon eating them.
-    type: Tweak
-  id: 8754
-  time: '2025-07-09T12:43:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38087
 - author: Crude Oil
   changes:
   - message: Parrots now parrot nearby speech, sometimes even using the radio if they
@@ -3920,3 +3882,40 @@
   id: 9250
   time: '2025-12-04T19:44:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41598
+- author: ScarKy0
+  changes:
+  - message: Added Warfarin and Hemorrhinol, reagents that interact with blood clotting
+      and bleeding speed. Read about them in the guidebook!
+    type: Add
+  id: 9251
+  time: '2025-12-05T00:54:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41685
+- author: MissKay1994
+  changes:
+  - message: The explorer mask is now correctly worn by vox
+    type: Fix
+  id: 9252
+  time: '2025-12-05T10:46:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41405
+- author: alexalexmax
+  changes:
+  - message: Recharging spray painters no longer lose the ability to paint airlocks
+      after running out of charges once
+    type: Fix
+  id: 9253
+  time: '2025-12-05T11:00:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41725
+- author: Hitlinemoss
+  changes:
+  - message: Several figurines have received new voice lines.
+    type: Add
+  id: 9254
+  time: '2025-12-05T12:36:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41723
+- author: PJB3005
+  changes:
+  - message: Fixed shuttle FTL screen for people with UI scale above 100%
+    type: Fix
+  id: 9255
+  time: '2025-12-05T15:05:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40933
