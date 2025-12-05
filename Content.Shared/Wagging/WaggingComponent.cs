@@ -9,10 +9,10 @@ namespace Content.Shared.Wagging;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class WaggingComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId Action = "ActionToggleWagging";
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
     /// <summary>

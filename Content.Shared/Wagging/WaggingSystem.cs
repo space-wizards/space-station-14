@@ -4,7 +4,6 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
 using Content.Shared.Toggleable;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wagging;
@@ -14,7 +13,6 @@ namespace Content.Shared.Wagging;
 /// </summary>
 public sealed class WaggingSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
@@ -41,11 +39,13 @@ public sealed class WaggingSystem : EntitySystem
     private void OnWaggingMapInit(Entity<WaggingComponent> ent, ref MapInitEvent args)
     {
         _actions.AddAction(ent.Owner, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
+        Dirty(ent);
     }
 
     private void OnWaggingShutdown(Entity<WaggingComponent> ent, ref ComponentShutdown args)
     {
         _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
+        Dirty(ent);
     }
 
     private void OnWaggingToggle(Entity<WaggingComponent> ent, ref ToggleActionEvent args)
@@ -62,13 +62,15 @@ public sealed class WaggingSystem : EntitySystem
             TryToggleWagging(ent.AsNullable());
     }
 
+    /// <summary>
+    /// Toggles the wagging animation state for all tail markings on a humanoid entity.
+    /// </summary>
+    /// <param name="ent">The entity owning the <see cref="WaggingComponent"/>.</param>
+    /// <param name="humanoid">The humanoid's appearance component.</param>
+    /// <returns>
     public bool TryToggleWagging(Entity<WaggingComponent?> ent, HumanoidAppearanceComponent? humanoid = null)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, ref humanoid))
-            return false;
-
-        // Animation only on the client.
-        if (!_net.IsServer)
             return false;
 
         if (!humanoid.MarkingSet.Markings.TryGetValue(MarkingCategories.Tail, out var markings))
