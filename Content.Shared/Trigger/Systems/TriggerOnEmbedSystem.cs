@@ -12,8 +12,10 @@ public sealed class TriggerOnEmbedSystem : TriggerOnXSystem
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<TriggerOnEmbedComponent, EmbedEvent>(OnEmbed);
-        SubscribeLocalEvent<TriggerOnUnembedComponent, StopEmbedEvent>(OnStopEmbed);
+        SubscribeLocalEvent<TriggerOnUnembedComponent, EmbedDetachEvent>(OnStopEmbed);
     }
 
     private void OnEmbed(Entity<TriggerOnEmbedComponent> ent, ref EmbedEvent args)
@@ -22,7 +24,7 @@ public sealed class TriggerOnEmbedSystem : TriggerOnXSystem
         Trigger.Trigger(ent, user, ent.Comp.KeyOut);
     }
 
-    private void OnStopEmbed(Entity<TriggerOnUnembedComponent> ent, ref StopEmbedEvent args)
+    private void OnStopEmbed(Entity<TriggerOnUnembedComponent> ent, ref EmbedDetachEvent args)
     {
         var user = ent.Comp.UserIsEmbed ? args.Embedded : args.Detacher;
         Trigger.Trigger(ent, user, ent.Comp.KeyOut);
