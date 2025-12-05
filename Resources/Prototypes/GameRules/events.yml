@@ -32,8 +32,7 @@
     - id: ClosetSkeleton
     - id: KingRatMigration
     - id: RevenantSpawn
-    - !type:NestedSelector
-      tableId: DerelictBorgEventTable
+    - id: DerelictCyborgSpawn
 
 - type: entityTable
   id: ModerateAntagEventsTable
@@ -46,17 +45,7 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: WizardSpawn
-    - !type:NestedSelector
-      tableId: DerelictBorgEventTable
-
-- type: entityTable
-  id: DerelictBorgEventTable #For Derelict Borg spawns
-  table: !type:GroupSelector
-    children:
-    - !type:GroupSelector # Standard NT Borgs
-      weight: 85
-      children:
-        - id: DerelictCyborgSpawn
+    - id: DerelictCyborgSpawn
 
 - type: entity
   id: BaseStationEvent
