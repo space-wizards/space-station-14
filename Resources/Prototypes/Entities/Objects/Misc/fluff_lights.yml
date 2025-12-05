@@ -80,8 +80,10 @@
       enum.HolidayVisuals.Holiday:
         base:
           festive: { state: christmaslamp }
+          base: { state: lamp }
         light:
           festive: { state: christmaslamp-on }
+          base: { state: lamp-on }
 
 - type: entity
   name: banana lamp
@@ -125,10 +127,16 @@
           festive:
             sprite: Objects/Misc/Lights/lamp.rsi
             state: christmaslamp
+          base:
+            sprite: Objects/Misc/Lights/lampgreen.rsi
+            state: lampgreen
         light:
           festive:
             sprite: Objects/Misc/Lights/lamp.rsi
             state: christmaslamp-on
+          base:
+            sprite: Objects/Misc/Lights/lampgreen.rsi
+            state: lampgreen-on
 
 - type: entity
   name: interrogator lamp

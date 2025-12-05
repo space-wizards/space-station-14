@@ -1,5 +1,8 @@
-namespace Content.Server.Holiday.Interfaces
+namespace Content.Shared.Holiday.Interfaces
 {
+    /// <summary>
+    ///     Used to decide if this holiday should be celebrated.
+    /// </summary>
     [ImplicitDataDefinitionForInheritors]
     public partial interface IHolidayShouldCelebrate
     {

@@ -34,8 +34,10 @@
       enum.HolidayVisuals.Holiday:
         christmas:
           festive: { visible: true }
+          base: { visible: false }
         pride:
           pride: { visible: true }
+          base: { visible: false }
       enum.NukeVisuals.Deployed:
         enum.NukeVisualLayers.Base:
           False: { state: nuclearbomb_base }
@@ -160,8 +162,10 @@
       enum.HolidayVisuals.Holiday:
         christmas:
           festive: { visible: true }
+          base: { visible: false }
         pride:
           pride: { visible: true }
+          base: { visible: false }
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures

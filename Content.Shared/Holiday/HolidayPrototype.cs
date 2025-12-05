@@ -1,45 +1,66 @@
-using Content.Server.Holiday.Greet;
-using Content.Server.Holiday.Interfaces;
-using Content.Server.Holiday.ShouldCelebrate;
+using Content.Shared.Holiday.Greet;
+using Content.Shared.Holiday.Interfaces;
+using Content.Shared.Holiday.ShouldCelebrate;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Holiday
+namespace Content.Shared.Holiday
 {
+    /// <summary>
+    ///     Prototype for holidays. Includes when it occurs, how to greet the server when it occurs,
+    ///     and any arbitrary code to run when it occurs.
+    /// </summary>
     [Prototype]
-    public sealed partial class HolidayPrototype : IPrototype
+    public sealed class HolidayPrototype : IPrototype
     {
-        [DataField("name")] public string Name { get; private set; } = string.Empty;
+        [DataField]
+        public LocId Name { get; private set; } = string.Empty;
 
+        /// <inheritdoc />
         [ViewVariables]
         [IdDataField]
         public string ID { get; private set; } = default!;
 
-        [DataField("beginDay")]
+        /// <summary>
+        ///     The day of the month this holiday begins.
+        /// </summary>
+        [DataField]
         public byte BeginDay { get; set; } = 1;
 
-        [DataField("beginMonth")]
+        /// <summary>
+        ///     The month this holiday begins.
+        /// </summary>
+        [DataField]
         public Month BeginMonth { get; set; } = Month.Invalid;
 
         /// <summary>
-        ///     Day this holiday will end. Zero means it lasts a single day.
+        ///     Day of the month this holiday will end. Zero means it lasts a single day.
         /// </summary>
-        [DataField("endDay")]
+        [DataField]
         public byte EndDay { get; set; }
 
         /// <summary>
         ///     Month this holiday will end in. Invalid means it lasts a single month.
         /// </summary>
-        [DataField("endMonth")]
+        [DataField]
         public Month EndMonth { get; set; } = Month.Invalid;
 
+        /// <summary>
+        ///     Logic for how this holiday is celebrated.
+        /// </summary>
         [DataField("shouldCelebrate")]
         private IHolidayShouldCelebrate _shouldCelebrate = new DefaultHolidayShouldCelebrate();
 
+        /// <summary>
+        ///     What to announce to the server when the round starts.
+        /// </summary>
         [DataField("greet")]
         private IHolidayGreet _greet = new DefaultHolidayGreet();
 
+        /// <summary>
+        ///     Arbitrary code to run when the round starts.
+        /// </summary>
         [DataField("celebrate")]
-        private IHolidayCelebrate? _celebrate = null;
+        private IHolidayCelebrate? _celebrate;
 
         public bool ShouldCelebrate(DateTime date)
         {
