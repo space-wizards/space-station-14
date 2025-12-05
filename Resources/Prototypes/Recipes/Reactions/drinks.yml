@@ -1557,11 +1557,11 @@
     BacchusBlessing: 4
 
 - type: reaction
-  id: Lean
+  id: Spean
   reactants:
     Diphenhydramine:
       amount: 1
     SpaceUp:
       amount: 1
   products:
-    Lean: 2
+    Splean: 2

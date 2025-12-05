@@ -627,12 +627,12 @@
   metamorphicChangeColor: false
 
 - type: reagent
-  id: Lean
-  name: reagent-name-lean
+  id: Splean
+  name: reagent-name-splean
   parent: BaseDrink
-  desc: reagent-desc-lean
+  desc: reagent-desc-splean
   physicalDesc: reagent-physical-desc-syrupy
-  flavor: lean
+  flavor: splean
   color: "#cd20b0"
   metabolisms:
     Drink:
@@ -650,7 +650,7 @@
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
-          reagent: Lean
+          reagent: Splean
           min: 20
         damage:
           types:
