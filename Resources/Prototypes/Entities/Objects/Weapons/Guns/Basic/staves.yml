@@ -1,9 +1,9 @@
 # To be implemented: see #9072
 
 - type: entity
-  name: staff of healing
   parent: WeaponStaffBase
   id: WeaponStaffHealing
+  name: staff of healing
   description: You don't foresee having to use this in your quest for carnage too often.
   components:
   - type: Sprite
@@ -21,9 +21,9 @@
   - type: PacifismAllowedGun
 
 - type: entity
-  name: staff of entrance
   parent: WeaponStaffBase
   id: WeaponStaffPolymorphDoor
+  name: staff of entrance
   description: For when you need a get-away route.
   components:
   - type: Sprite
