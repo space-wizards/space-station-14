@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Antag.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
