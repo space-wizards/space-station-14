@@ -83,7 +83,6 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     private void OnPlayerSpawnComplete(Entity<SiliconLawBoundComponent> ent, ref PlayerSpawnCompleteEvent args)
     {
         ent.Comp.LastLawProvider = args.Station;
-        Dirty(ent);
     }
 
     private void OnDirectedGetLaws(Entity<SiliconLawProviderComponent> ent, ref GetSiliconLawsEvent args)
@@ -168,7 +167,6 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         if (ev.Handled)
         {
             component.LastLawProvider = uid;
-            Dirty(uid, component);
             return ev.Laws;
         }
 
@@ -180,7 +178,6 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             if (ev.Handled)
             {
                 component.LastLawProvider = station;
-                Dirty(uid, component);
                 return ev.Laws;
             }
         }
@@ -191,7 +188,6 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             if (ev.Handled)
             {
                 component.LastLawProvider = grid;
-                Dirty(uid, component);
                 return ev.Laws;
             }
         }
@@ -201,7 +197,6 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             Terminating(component.LastLawProvider.Value))
         {
             component.LastLawProvider = null;
-            Dirty(uid, component);
         }
         else
         {
