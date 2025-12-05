@@ -27,9 +27,9 @@
     count: 5
 
 - type: entity
-  name: wand of monkey polymorph
   parent: WeaponWandPolymorphBase
   id: WeaponWandPolymorphMonkey
+  name: wand of monkey polymorph
   description: For when you need a monkey friend.
   components:
   - type: BasicEntityAmmoProvider
@@ -38,9 +38,9 @@
     count: 5
 
 - type: entity
-  name: wand of fireball
   parent: WeaponWandBase
   id: WeaponWandFireball
+  name: wand of fireball
   description: Great big balls of fire!
   components:
   - type: Sprite
@@ -58,10 +58,10 @@
     count: 5
 
 - type: entity
-  name: wand of the locker
-  description: Stuff nerds at a distance!
   parent: WeaponWandBase
   id: WeaponWandLocker
+  name: wand of the locker
+  description: Stuff nerds at a distance!
   components:
   - type: Sprite
     layers:
@@ -94,10 +94,10 @@
           False: { visible: False }
 
 - type: entity
-  name: magical wand of instant death
   parent: WeaponWandBase
   id: WeaponWandDeath
-  description: Only the best and brightest of the Space Wizards R&D team worked together to create this beauty.
+  name: magical wand of instant death
+  description: The best and brightest of the Space Wizards Federation R&D team worked together to create this beauty.
   components:
   - type: Sprite
     layers:
@@ -113,9 +113,9 @@
     count: 3
 
 - type: entity
-  name: wand of entrance
   parent: WeaponWandBase
   id: WeaponWandPolymorphDoor
+  name: wand of entrance
   description: For when you need a get-away route.
   components:
   - type: Sprite
@@ -132,9 +132,9 @@
     count: 10
 
 - type: entity
-  name: wand of cluwning
   parent: WeaponWandPolymorphBase
   id: WeaponWandCluwne
+  name: wand of cluwning
   description: Make their situation worse by turning them into a cluwne.
   components:
   - type: BasicEntityAmmoProvider
