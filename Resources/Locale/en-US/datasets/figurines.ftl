@@ -17,9 +17,8 @@ figurines-qm-3 = I didn't approve that shipment of guns!
 figurines-qm-4 = One toy box for my fellow clown!
 figurines-qm-5 = Time to gamble!
 figurines-qm-6 = Viva la Cargonia!
-figurines-qm-7 = Fill out the form.
-figurines-qm-8 = Where'd all our money go?
-figurines-qm-9 = 99% of gamblers quit right before they hit it big!
+figurines-qm-7 = Where'd all our money go?
+figurines-qm-8 = 99% of gamblers quit right before they hit it big!
 
 figurines-cargotech-1 = DRAGON ON ATS!
 figurines-cargotech-2 = I sold the station!
@@ -27,6 +26,11 @@ figurines-cargotech-3 = Brain bounty? I don't have a brain.
 figurines-cargotech-4 = You're worth 3000 spesos. Congrats.
 figurines-cargotech-5 = Vegetable bounty? Nobody eats those anyways.
 figurines-cargotech-6 = WE ARE SECEDING!! ALL HAIL CARGONIA!!
+figurines-cargotech-7 = Pizza party at cargo!
+figurines-cargotech-8 = The mail never stops...
+figurines-cargotech-9 = Nothing stops the mail!
+figurines-cargotech-10 = Clown mask bounty? Alright, let me just find a weapon...
+figurines-cargotech-11 = Laser bounty? Nobody will notice if we ship practice lasers instead, right?
 
 figurines-salvage-1 = Megafauna? It was mega easy.
 figurines-salvage-2 = We're lost. Anyone bring a GPS?
@@ -34,6 +38,9 @@ figurines-salvage-3 = Anyone have oxygen?
 figurines-salvage-4 = I found a blood-red and e-sword!
 figurines-salvage-5 = There's bears in space?
 figurines-salvage-6 = Crusher? I barely know her!
+figurines-salvage-7 = Can someone come pick me up?
+figurines-salvage-8 = I found that contraband on a wreck! It's not mine!
+figurines-salvage-9 = Can we borrow the cargo shuttle? Please?
 
 # Engineering
 
@@ -51,6 +58,8 @@ figurines-atmostech-4 = Tritium...
 figurines-atmostech-5 = Glory to Atmosia!
 figurines-atmostech-6 = Distro? That's short for disposal.
 figurines-atmostech-7 = TEG: Thermal Energy? Gone!
+figurines-atmostech-8 = Does anyone else hear glass cracking?
+figurines-atmostech-9 = I promise this burn chamber is totally safe and will NOT explode.
 
 figurines-engineer-1 = SINGULOOSE!
 figurines-engineer-2 = TESLOOSE!
@@ -74,12 +83,15 @@ figurines-chemist-3 = I am the one who knocks!
 figurines-chemist-4 = Say my name.
 figurines-chemist-5 = 99.8% purity.
 figurines-chemist-6 = Epinephrine? Didn't you say methamphetamine?
+figurines-chemist-7 = Pills here!
+figurines-chemist-8 = Legally speaking, it's not actually a bomb until you mix both beakers together.
 
 figurines-doctor-1 = The patient is already dead!
 figurines-doctor-2 = CLEAR!
 figurines-doctor-3 = Saw makes BRRR.
 figurines-doctor-4 = Just a week away...
 figurines-doctor-5 = I knew it...
+figurines-doctor-6 = Well, at least we have body bags.
 
 figurines-paramedic-1 = Insuls and tools!
 figurines-paramedic-2 = I need AA for saving people!
@@ -140,8 +152,10 @@ figurines-warden-6 = You're going away for a long time, buddy.
 figurines-hop-1 = Papers, please.
 figurines-hop-2 = You are fired.
 figurines-hop-3 = BRB.
-figurines-hop-4 = You can get AA if you fill out the form.
+figurines-hop-4 = Fill out the form.
 figurines-hop-5 = I was gone for two seconds...
+figurines-hop-6 = Go get this form stamped.
+figurines-hop-7 = Has anyone seen Ian?
 
 figurines-bartender-1 = Where's my monkey?
 figurines-bartender-2 = Sec won't drink.
@@ -179,11 +193,12 @@ figurines-chef-6 = Where'd Pun Pun go? No idea...
 
 figurines-clown-1 = Honk!
 figurines-clown-2 = Banana!
-figurines-clown-3 = Soap!
-figurines-clown-4 = HoP has one clown, HoS has the whole department.
-figurines-clown-5 = Do I annoy you?
-figurines-clown-6 = Can I have AA? Please?
-figurines-clown-7 = I'm a clown, but you're the whole circus!
+figurines-clown-3 = Pie!
+figurines-clown-4 = Soap!
+figurines-clown-5 = Service has one clown, but Security has a whole department of them.
+figurines-clown-6 = Do I annoy you?
+figurines-clown-7 = Can I have AA? Please?
+figurines-clown-8 = I'm a clown, but you're the whole circus!
 
 figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
 figurines-greytider-2 = Uh-oh, who's lost their stunbaton?
@@ -207,6 +222,13 @@ figurines-lawyer-2 = Objection!
 figurines-lawyer-3 = Did you know that you have rights?
 figurines-lawyer-4 = Space law says!
 figurines-lawyer-5 = Sign the contract first.
+figurines-lawyer-6 = My client is innocent!
+figurines-lawyer-7 = I'm suing.
+figurines-lawyer-8 = You may be entitled to financial compensation!
+figurines-lawyer-9 = Come back with a warrant!
+figurines-lawyer-10 = See you in court!
+figurines-lawyer-11 = Guilty!
+figurines-lawyer-12 = Not guilty!
 
 figurines-librarian-1 = Silence!
 figurines-librarian-2 = One day while...
@@ -322,10 +344,14 @@ figurines-thief-3 = Theres nothing suspicious about this satchel at all, officer
 figurines-thief-4 = I have NO idea where your pet is...
 figurines-thief-5 = Huh, I didn't know that wall could open up...
 
-figurines-wizard-1 = Ei Nath!!
-figurines-wizard-2 = Real wizards support trans rights.
+figurines-wizard-1 = EI NATH!!
+figurines-wizard-2 = ONI'SOMA!!
 figurines-wizard-3 = Skidaddle skadoodle!
-figurines-wizard-4 = FIREBALL!
+figurines-wizard-4 = Real wizards support trans rights.
+figurines-wizard-5 = Which one of you NERDS is ready to be shoved in a locker?
+figurines-wizard-6 = I'm not the wizard! I'm the captain! I got mind-swapped!
+figurines-wizard-7 = Now you see me, now you don't!
+figurines-wizard-8 = Guns are for losers who can't explode people with their mind.
 
 # Animals
 
