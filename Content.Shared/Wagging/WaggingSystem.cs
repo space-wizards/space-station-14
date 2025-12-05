@@ -1,23 +1,23 @@
-﻿using Content.Server.Actions;
-using Content.Server.Humanoid;
+﻿using Content.Shared.Actions;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
 using Content.Shared.Toggleable;
-using Content.Shared.Wagging;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Wagging;
+namespace Content.Shared.Wagging;
 
 /// <summary>
-/// Adds an action to toggle wagging animation for tails markings that supporting this
+/// Adds an action to toggle wagging animation for tails markings that supporting this.
 /// </summary>
 public sealed class WaggingSystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
 
     public override void Initialize()
     {
@@ -38,33 +38,37 @@ public sealed class WaggingSystem : EntitySystem
         EnsureComp<WaggingComponent>(args.CloneUid);
     }
 
-    private void OnWaggingMapInit(EntityUid uid, WaggingComponent component, MapInitEvent args)
+    private void OnWaggingMapInit(Entity<WaggingComponent> ent, ref MapInitEvent args)
     {
-        _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
+        _actions.AddAction(ent.Owner, ref ent.Comp.ActionEntity, ent.Comp.Action, ent.Owner);
     }
 
-    private void OnWaggingShutdown(EntityUid uid, WaggingComponent component, ComponentShutdown args)
+    private void OnWaggingShutdown(Entity<WaggingComponent> ent, ref ComponentShutdown args)
     {
-        _actions.RemoveAction(uid, component.ActionEntity);
+        _actions.RemoveAction(ent.Owner, ent.Comp.ActionEntity);
     }
 
-    private void OnWaggingToggle(EntityUid uid, WaggingComponent component, ref ToggleActionEvent args)
+    private void OnWaggingToggle(Entity<WaggingComponent> ent, ref ToggleActionEvent args)
     {
         if (args.Handled)
             return;
 
-        TryToggleWagging(uid, wagging: component);
+        TryToggleWagging(ent.AsNullable());
     }
 
-    private void OnMobStateChanged(EntityUid uid, WaggingComponent component, MobStateChangedEvent args)
+    private void OnMobStateChanged(Entity<WaggingComponent> ent, ref MobStateChangedEvent args)
     {
-        if (component.Wagging)
-            TryToggleWagging(uid, wagging: component);
+        if (ent.Comp.Wagging)
+            TryToggleWagging(ent.AsNullable());
     }
 
-    public bool TryToggleWagging(EntityUid uid, WaggingComponent? wagging = null, HumanoidAppearanceComponent? humanoid = null)
+    public bool TryToggleWagging(Entity<WaggingComponent?> ent, HumanoidAppearanceComponent? humanoid = null)
     {
-        if (!Resolve(uid, ref wagging, ref humanoid))
+        if (!Resolve(ent.Owner, ref ent.Comp, ref humanoid))
+            return false;
+
+        // Animation only on the client.
+        if (!_net.IsServer)
             return false;
 
         if (!humanoid.MarkingSet.Markings.TryGetValue(MarkingCategories.Tail, out var markings))
@@ -73,22 +77,23 @@ public sealed class WaggingSystem : EntitySystem
         if (markings.Count == 0)
             return false;
 
-        wagging.Wagging = !wagging.Wagging;
+        ent.Comp.Wagging = !ent.Comp.Wagging;
+        Dirty(ent);
 
-        for (var idx = 0; idx < markings.Count; idx++) // Animate all possible tails
+        for (var idx = 0; idx < markings.Count; idx++) // Animate all possible tails.
         {
             var currentMarkingId = markings[idx].MarkingId;
             string newMarkingId;
 
-            if (wagging.Wagging)
+            if (ent.Comp.Wagging)
             {
-                newMarkingId = $"{currentMarkingId}{wagging.Suffix}";
+                newMarkingId = $"{currentMarkingId}{ent.Comp.Suffix}";
             }
             else
             {
-                if (currentMarkingId.EndsWith(wagging.Suffix))
+                if (currentMarkingId.EndsWith(ent.Comp.Suffix))
                 {
-                    newMarkingId = currentMarkingId[..^wagging.Suffix.Length];
+                    newMarkingId = currentMarkingId[..^ent.Comp.Suffix.Length];
                 }
                 else
                 {
@@ -99,12 +104,11 @@ public sealed class WaggingSystem : EntitySystem
 
             if (!_prototype.HasIndex<MarkingPrototype>(newMarkingId))
             {
-                Log.Warning($"{ToPrettyString(uid)} tried toggling wagging but {newMarkingId} marking doesn't exist");
+                Log.Warning($"{ToPrettyString(ent.Owner)} tried toggling wagging but {newMarkingId} marking doesn't exist");
                 continue;
             }
 
-            _humanoidAppearance.SetMarkingId(uid, MarkingCategories.Tail, idx, newMarkingId,
-                humanoid: humanoid);
+            _humanoidAppearance.SetMarkingId((ent.Owner, humanoid), MarkingCategories.Tail, idx, newMarkingId);
         }
 
         return true;

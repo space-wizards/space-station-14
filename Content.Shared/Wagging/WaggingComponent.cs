@@ -1,14 +1,12 @@
-﻿using Content.Shared.Chat.Prototypes;
-using Robust.Shared.GameStates;
+﻿using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Wagging;
 
 /// <summary>
 /// An emoting wag for markings.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class WaggingComponent : Component
 {
     [DataField]
@@ -25,6 +23,6 @@ public sealed partial class WaggingComponent : Component
     /// <summary>
     /// Is the entity currently wagging.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Wagging = false;
 }

@@ -116,6 +116,40 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     }
 
     /// <summary>
+    ///     Sets the marking ID of the humanoid in a category at an index in the category's list.
+    /// </summary>
+    /// <param name="uid">Humanoid mob's UID</param>
+    /// <param name="category">Category of the marking</param>
+    /// <param name="index">Index of the marking</param>
+    /// <param name="markingId">The marking ID to use</param>
+    /// <param name="humanoid">Humanoid component of the entity</param>
+    public void SetMarkingId(Entity<HumanoidAppearanceComponent?> ent,
+        MarkingCategories category,
+        int index,
+        string markingId)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        if (index < 0
+            || !_markingManager.MarkingsByCategory(category).TryGetValue(markingId, out var markingPrototype)
+            || !ent.Comp.MarkingSet.TryGetCategory(category, out var markings)
+            || index >= markings.Count)
+        {
+            return;
+        }
+
+        var marking = markingPrototype.AsMarking();
+        for (var i = 0; i < marking.MarkingColors.Count && i < markings[index].MarkingColors.Count; i++)
+        {
+            marking.SetColor(i, markings[index].MarkingColors[i]);
+        }
+
+        ent.Comp.MarkingSet.Replace(category, index, marking);
+        Dirty(ent);
+    }
+
+    /// <summary>
     ///     Toggles a humanoid's sprite layer visibility.
     /// </summary>
     /// <param name="ent">Humanoid entity</param>
