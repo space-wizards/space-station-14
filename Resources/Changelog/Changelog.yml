@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sparlight
-  changes:
-  - message: Dragons no longer destroy non-humanoid mobs upon eating them.
-    type: Tweak
-  id: 8754
-  time: '2025-07-09T12:43:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38087
 - author: Crude Oil
   changes:
   - message: Parrots now parrot nearby speech, sometimes even using the radio if they
@@ -3919,3 +3912,10 @@
   id: 9254
   time: '2025-12-05T12:36:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41723
+- author: PJB3005
+  changes:
+  - message: Fixed shuttle FTL screen for people with UI scale above 100%
+    type: Fix
+  id: 9255
+  time: '2025-12-05T15:05:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40933
