@@ -170,7 +170,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             Dirty(uid, projectile);
         }
 
-        var ev = new StopEmbedEvent(user, embeddedInto.Value);
+        var ev = new EmbedDetachEvent(user, embeddedInto.Value);
         RaiseLocalEvent(uid, ref ev);
 
         if (user != null)

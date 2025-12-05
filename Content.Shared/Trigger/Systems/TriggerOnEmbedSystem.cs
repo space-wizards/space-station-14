@@ -1,6 +1,5 @@
 using Content.Shared.Projectiles;
 using Content.Shared.Trigger.Components.Triggers;
-using Content.Shared.Whitelist;
 
 namespace Content.Shared.Trigger.Systems;
 
