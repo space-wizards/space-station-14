@@ -84,14 +84,9 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ChemMasterOutputDrawSourceMessage : BoundUserInterfaceMessage
+    public sealed class ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource drawSource) : BoundUserInterfaceMessage
     {
-        public readonly ChemMasterDrawSource DrawSource;
-
-        public ChemMasterOutputDrawSourceMessage(ChemMasterDrawSource drawSource)
-        {
-            DrawSource = drawSource;
-        }
+        public readonly ChemMasterDrawSource DrawSource = drawSource;
     }
 
     public enum ChemMasterMode

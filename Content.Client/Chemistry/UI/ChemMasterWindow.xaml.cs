@@ -150,12 +150,19 @@ namespace Content.Client.Chemistry.UI
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
 
-            BufferCurrentVolume.Text = castState.DrawSource switch
+            BufferCurrentVolume.Text = $" {(castState.DrawSource switch
             {
-                ChemMasterDrawSource.Internal => $" {castState.BufferCurrentVolume?.Int() ?? 0}u",
-                ChemMasterDrawSource.External => $" {castState.InputContainerInfo?.CurrentVolume.Int() ?? 0}u",
-                _ => string.Empty,
-            };
+                ChemMasterDrawSource.Internal => castState.BufferCurrentVolume,
+                ChemMasterDrawSource.External => castState.InputContainerInfo?.CurrentVolume,
+                _ => throw new("Unreachable"),
+            })?.Int() ?? 0}u";
+
+            DrawSource.Text = Loc.GetString(castState.DrawSource switch
+            {
+                ChemMasterDrawSource.External => "chem-master-output-beaker-draw",
+                ChemMasterDrawSource.Internal => "chem-master-output-buffer-draw",
+                _ => throw new("Unreachable"),
+            });
 
             DrawSource.Text = castState.DrawSource switch
             {
@@ -219,18 +226,19 @@ namespace Content.Client.Chemistry.UI
         private string GenerateLabel(ChemMasterBoundUserInterfaceState state)
         {
             if (
-                    state.BufferCurrentVolume == 0 && state.DrawSource == ChemMasterDrawSource.Internal ||
-                    (state.InputContainerInfo?.CurrentVolume == 0 || state.InputContainerInfo?.Reagents == null) && state.DrawSource == ChemMasterDrawSource.External ||
-                    state.InputContainerInfo?.Reagents == null
-                )
+                state.BufferCurrentVolume == 0 && state.DrawSource == ChemMasterDrawSource.Internal ||
+                state.InputContainerInfo?.CurrentVolume == 0 && state.DrawSource == ChemMasterDrawSource.External ||
+                state.InputContainerInfo?.Reagents == null
+            )
                 return "";
 
-            var reagent = state.DrawSource switch
+            var reagent = (state.DrawSource switch
                 {
-                    ChemMasterDrawSource.Internal => state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent,
-                    ChemMasterDrawSource.External  => state.InputContainerInfo.Reagents.OrderBy(r => r.Quantity).First().Reagent,
-                    _ => state.BufferReagents.OrderBy(r => r.Quantity).First().Reagent,
-                };
+                    ChemMasterDrawSource.Internal => state.BufferReagents,
+                    ChemMasterDrawSource.External => state.InputContainerInfo.Reagents ?? [],
+                    _ => throw new("Unreachable"),
+                }).MinBy(r => r.Quantity)
+                .Reagent;
             _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
             return proto?.LocalizedName ?? "";
         }
@@ -324,7 +332,6 @@ namespace Content.Client.Chemistry.UI
             {
                 BufferInfo.Children.Add(BuildReagentRow(reagent.color, rowCount++, reagent.name, reagent.reagentId, reagent.quantity, true, true));
             }
-
         }
 
         private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)

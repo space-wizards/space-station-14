@@ -139,12 +139,12 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnSetDrawSourceMessage(Entity<ChemMasterComponent> chemMaster, ref ChemMasterOutputDrawSourceMessage message)
         {
             //Ensure draw source is valid, either from the internal buffer or the inserted beaker
-            if (!ChemMasterDrawSource.IsDefined(typeof(ChemMasterDrawSource), message.DrawSource))
+            if (!Enum.IsDefined(message.DrawSource))
                 return;
 
             chemMaster.Comp.DrawSource = message.DrawSource;
-               UpdateUiState(chemMaster);
-               ClickSound(chemMaster);
+            UpdateUiState(chemMaster);
+            ClickSound(chemMaster);
         }
 
         private void TransferReagents(Entity<ChemMasterComponent> chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
@@ -307,14 +307,13 @@ namespace Content.Server.Chemistry.EntitySystems
                     break;
 
                 case ChemMasterDrawSource.External:
-                    var container = _itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName);
-                    if (container == null)
+                    if (_itemSlotsSystem.GetItemOrNull(chemMaster, SharedChemMaster.InputSlotName) is not {} container)
                     {
                         if (user.HasValue)
                             _popupSystem.PopupCursor(Loc.GetString("chem-master-window-no-beaker-text"), user.Value);
                         return false;
                     }
-                    if (!_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out soln, out solution))
+                    if (!_solutionContainerSystem.TryGetFitsInDispenser(container, out soln, out solution))
                     {
                         return false;
                     }
@@ -329,36 +328,38 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 if (user.HasValue)
                 {
-                    switch (chemMaster.Comp.DrawSource)
-                    {
-                        case ChemMasterDrawSource.Internal:
-                            _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), user.Value);
-                            return false;
-                        case ChemMasterDrawSource.External:
-                            _popupSystem.PopupCursor(Loc.GetString("chem-master-window-beaker-empty-text"), user.Value);
-                            return false;
-                        default:
-                            return false;
-                    }
+                    _popupSystem.PopupCursor(
+                        Loc.GetString(
+                            chemMaster.Comp.DrawSource switch
+                            {
+                                ChemMasterDrawSource.Internal => "chem-master-window-buffer-empty-text",
+                                ChemMasterDrawSource.External => "chem-master-window-beaker-empty-text",
+                                _ => throw new("Unreachable")
+                            }
+                        ),
+                        user.Value
+                    );
                 }
+                return false;
             }
 
             if (neededVolume > solution.Volume)
             {
                 if (user.HasValue)
                 {
-                    switch (chemMaster.Comp.DrawSource)
-                    {
-                        case ChemMasterDrawSource.Internal:
-                            _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), user.Value);
-                            return false;
-                        case ChemMasterDrawSource.External:
-                            _popupSystem.PopupCursor(Loc.GetString("chem-master-window-beaker-low-text"), user.Value);
-                            return false;
-                        default:
-                            return false;
-                    }
+                    _popupSystem.PopupCursor(
+                        Loc.GetString(
+                            chemMaster.Comp.DrawSource switch
+                            {
+                                ChemMasterDrawSource.Internal => "chem-master-window-buffer-low-text",
+                                ChemMasterDrawSource.External => "chem-master-window-beaker-low-text",
+                                _ => throw new("Unreachable")
+                            }
+                        ),
+                        user.Value
+                    );
                 }
+                return false;
             }
 
             outputSolution = solution.SplitSolution(neededVolume);
