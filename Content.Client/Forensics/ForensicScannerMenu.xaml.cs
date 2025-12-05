@@ -65,6 +65,12 @@ namespace Content.Client.Forensics
                 text.AppendLine(dna);
             }
             text.AppendLine();
+            text.AppendLine(Loc.GetString("forensic-scanner-interface-damage-traces"));
+            foreach (var damageTraces in msg.DamageTraces)
+            {
+                text.AppendLine(damageTraces);
+            }
+            text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
             foreach (var residue in msg.Residues)
             {

@@ -54,6 +54,7 @@
   - type: MobMover
   - type: MovementSpeedModifier
   - type: LagCompensation
+  - type: IgnoresDamageTraces #I think the damage tracking system shouldn't work for mobs in current implementation. It's more relevant for objects.
 
 - type: entity
   save: false
