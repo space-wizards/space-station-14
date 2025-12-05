@@ -1,7 +1,5 @@
-using System.Reflection.Metadata.Ecma335;
 using Content.Shared.Localizations;
 using Content.Shared.Random;
-using Content.Shared.Weapons.Reflect;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.EntityEffects.Effects.Botany;
