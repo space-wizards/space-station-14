@@ -1,7 +1,7 @@
 ﻿- type: entity
+  abstract: true
   parent: WeaponWandBase
   id: WeaponWandPolymorphBase
-  abstract: true
   components:
   - type: Sprite
     layers:
@@ -16,9 +16,9 @@
     capacity: 5
 
 - type: entity
-  name: wand of carp polymorph
   parent: WeaponWandPolymorphBase
   id: WeaponWandPolymorphCarp
+  name: wand of carp polymorph
   description: For when you need a carp filet quick and the clown is looking juicy.
   components:
   - type: BasicEntityAmmoProvider
