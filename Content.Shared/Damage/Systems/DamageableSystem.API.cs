@@ -221,6 +221,8 @@ public sealed partial class DamageableSystem
             var count = keys.Count;
             var max = (float)remaining / count;
             var removed = FixedPoint2.Zero;
+
+            // iterate backwards so it doesn't go wrong when items are removed from keys
             for (var i = count - 1; i >= 0; i--)
             {
                 var type = keys[i];
