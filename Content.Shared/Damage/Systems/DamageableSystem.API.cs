@@ -220,6 +220,8 @@ public sealed partial class DamageableSystem
         {
             var count = keys.Count;
             var max = FixedPoint2.Max(remaining / count, FixedPoint2.Epsilon);
+
+            // Iterate backwards since we're removing items.
             for (var i = count - 1; i >= 0; i--)
             {
                 var type = keys[i];
@@ -234,12 +236,16 @@ public sealed partial class DamageableSystem
                 else
                     keys.RemoveAt(i);
 
+                if (value >= remaining)
+                {
+                    // Don't remove more than we can remove. Prevents us from healing more than we'd expect...
+                    remaining = FixedPoint2.Zero;
+                    damageChange.DamageDict[type] -= remaining;
+                    break;
+                }
+
                 remaining -= value;
                 damageChange.DamageDict[type] -= value;
-
-                // Because FixedPoint2 doesn't round up when dividing, there's a chance we heal it all while still enumerating.
-                if (remaining <= FixedPoint2.Zero)
-                    break;
             }
         }
 
