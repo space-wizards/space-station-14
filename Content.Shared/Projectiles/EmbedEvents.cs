@@ -18,7 +18,7 @@ public readonly record struct EmbedEvent(EntityUid? Shooter, EntityUid Embedded)
 /// Raised directed on an entity when it stops embedding in another entity.
 /// </summary>
 [ByRefEvent]
-public readonly record struct StopEmbedEvent(EntityUid? Detacher, EntityUid Embedded)
+public readonly record struct EmbedDetachEvent(EntityUid? Detacher, EntityUid Embedded)
 {
     public readonly EntityUid? Detacher = Detacher;
 
