@@ -4,6 +4,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Fluids.Components;
 
@@ -15,7 +16,7 @@ namespace Content.Shared.Fluids.Components;
 /// When the drain is full, it can be unclogged using a plunger (i.e. an entity with a Plunger tag attached).
 /// Later this can be refactored into a proper Plunger component if needed.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(DrainSystem))]
 public sealed partial class DrainComponent : Component
 {
@@ -30,10 +31,10 @@ public sealed partial class DrainComponent : Component
     public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
-    /// The accumulator for the drain.
+    /// Next time the drain should perform its draining.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public float Accumulator = 0f;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
     /// If true, automatically transfers solutions from nearby puddles and drains them. True for floor drains;
