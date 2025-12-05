@@ -30,10 +30,10 @@
         - id: Dropper
         # It would be cool to have special "syndicate" chemical analysis goggles
         - id: ClothingEyesGlassesChemical
+        - id: SyringeStimulants
         - id: VestineChemistryVial
           amount: 2
         - id: BaseChemistryEmptyVial
-        - id: SyringeStimulants
 
 - type: entity
   parent: [BoxCardboard, BaseSyndicateContraband]

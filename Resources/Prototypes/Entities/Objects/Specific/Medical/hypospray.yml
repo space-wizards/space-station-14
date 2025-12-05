@@ -659,7 +659,7 @@
         maxVol: 10
   - type: RefillableSolution
     solution: hypospray
-    refillTime: 1.25
+    refillTime: 0.75
     maxRefill: 5
   - type: ExaminableSolution
     solution: hypospray
@@ -667,7 +667,7 @@
     exactVolume: true
   - type: Hypospray
     onlyAffectsMobs: false
-    drawTime: 1.25
+    drawTime: 0.75
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
