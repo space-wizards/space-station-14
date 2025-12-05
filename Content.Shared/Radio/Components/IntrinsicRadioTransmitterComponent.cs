@@ -1,4 +1,5 @@
 using Content.Shared.Chat;
+using Content.Shared.Radio.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -9,6 +10,7 @@ namespace Content.Shared.Radio.Components;
 ///     radio headset).
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedRadioDeviceSystem))]
 public sealed partial class IntrinsicRadioTransmitterComponent : Component
 {
     [DataField, AutoNetworkedField]
