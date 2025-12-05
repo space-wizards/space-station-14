@@ -10,8 +10,6 @@
     - HeartbreakerToxin
     - Honk
     - BuzzochloricBees
-    - Benzene
-    - Happiness
   - quantity: 5
     weight: 1
     reagents:
@@ -35,6 +33,7 @@
     - JuiceThatMakesYouWeh
     - TearGas
     - Lipolicide
+    - Benzene
   - quantity: 5
     weight: 2
     reagents:
