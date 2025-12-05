@@ -10,7 +10,7 @@ namespace Content.Shared.Radio.Components;
 ///     radio headset).
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-[Access(typeof(SharedRadioDeviceSystem))]
+[Access(typeof(SharedRadioSystem))]
 public sealed partial class IntrinsicRadioTransmitterComponent : Component
 {
     [DataField, AutoNetworkedField]

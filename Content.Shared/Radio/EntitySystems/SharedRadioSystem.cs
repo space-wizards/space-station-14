@@ -8,7 +8,7 @@ namespace Content.Shared.Radio.EntitySystems;
 /// </summary>
 public abstract class SharedRadioSystem : EntitySystem
 {
-    public void AddIntrinsicChannel(Entity<IntrinsicRadioTransmitterComponent?> ent, ProtoId<RadioChannelPrototype> channel)
+    public void AddIntrinsicTransmitterChannel(Entity<IntrinsicRadioTransmitterComponent?> ent, ProtoId<RadioChannelPrototype> channel)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
@@ -17,7 +17,7 @@ public abstract class SharedRadioSystem : EntitySystem
         Dirty(ent);
     }
 
-    public void RemoveIntrinsicChannel(Entity<IntrinsicRadioTransmitterComponent?> ent, ProtoId<RadioChannelPrototype> channel)
+    public void RemoveIntrinsicTransmitterChannel(Entity<IntrinsicRadioTransmitterComponent?> ent, ProtoId<RadioChannelPrototype> channel)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
@@ -26,7 +26,7 @@ public abstract class SharedRadioSystem : EntitySystem
         Dirty(ent);
     }
 
-    public void SetIntrinsicChannels(Entity<IntrinsicRadioTransmitterComponent?> ent, HashSet<ProtoId<RadioChannelPrototype>> channels)
+    public void SetIntrinsicTransmitterChannels(Entity<IntrinsicRadioTransmitterComponent?> ent, HashSet<ProtoId<RadioChannelPrototype>> channels)
     {
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
