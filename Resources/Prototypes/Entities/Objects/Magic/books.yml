@@ -64,6 +64,7 @@
   parent: WizardsGrimoire
   id: WizardsGrimoireDebug
   suffix: DEBUG
+  description: A heavy tome containing complicated arcane formulae for preparing magic spells and conjuring supernatural equipment. Someone wrote "FOR EXPERIMENTAL USE ONLY" on the inside cover.
   components:
     - type: Store
       ownerOnly: false # For ease of debugging.
