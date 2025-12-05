@@ -46,6 +46,6 @@ public sealed class AntagMultipleRoleSpawnerSystem : EntitySystem
             return;
         }
 
-        args.Entity = Spawn(weightedRandom.Pick(_random));
+        args.Entity = Spawn(ent.Comp.PickAndTake ? weightedRandom.PickAndTake(_random) : weightedRandom.Pick(_random));
     }
 }
