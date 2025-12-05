@@ -17,8 +17,8 @@ using Content.Shared.Database;
 using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.Effects;
 using Content.Shared.EntityEffects.Effects.Body;
+using Content.Shared.EntityEffects.Effects.Damage;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -335,7 +335,7 @@ public sealed class RespiratorSystem : EntitySystem
 
             foreach (var effect in entry.Effects)
             {
-                if (effect is Shared.EntityEffects.Effects.Damage.HealthChange health)
+                if (effect is HealthChange health)
                     toxic |= CanMetabolize(health) && health.Damage.AnyPositive();
                 else if (effect is Oxygenate oxy && CanMetabolize(oxy))
                     saturation += oxy.Factor * quantity.Float();
