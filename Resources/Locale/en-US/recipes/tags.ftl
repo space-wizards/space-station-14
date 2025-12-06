@@ -52,6 +52,7 @@ construction-graph-tag-power-cell-small = power cell small
 construction-graph-tag-power-cell = power cell
 construction-graph-tag-potato-battery = a potato battery
 construction-graph-tag-super-compact-ai-chip = a super-compact AI chip
+construction-graph-tag-log = log
 
 # other
 construction-graph-tag-light-bulb = light bulb
