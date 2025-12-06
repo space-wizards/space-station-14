@@ -625,6 +625,7 @@
           - id: DrinkColaCan
           - id: DrinkLemonLimeCan
           - id: DrinkLemonLimeCranberryCan
+          - id: DrinkLemonLimeClownJuiceCup
           - id: DrinkIcedTeaCan
 
 - type: entity
