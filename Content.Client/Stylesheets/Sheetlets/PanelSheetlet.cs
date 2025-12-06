@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -25,10 +26,18 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
         var boxNegative = new StyleBoxFlat { BackgroundColor = sheet.NegativePalette.Background };
         var boxHighlight = new StyleBoxFlat { BackgroundColor = sheet.HighlightPalette.Background };
 
+        var outsetBack = new StyleBoxTexture
+        {
+            Texture = sheet.GetTextureOr(buttonCfg.BaseButtonPath, NanotrasenStylesheet.TextureRoot),
+            Modulate = sheet.SecondaryPalette.BackgroundLight,
+        };
+        outsetBack.SetPatchMargin(StyleBox.Margin.All, 10);
+
         return
         [
             E<PanelContainer>().Class(StyleClass.PanelLight).Panel(boxLight),
             E<PanelContainer>().Class(StyleClass.PanelDark).Panel(boxDark),
+            E<PanelContainer>().Class(StyleClass.Outset).Prop(PanelContainer.StylePropertyPanel, outsetBack),
 
             E<PanelContainer>().Class(StyleClass.Positive).Panel(boxPositive),
             E<PanelContainer>().Class(StyleClass.Negative).Panel(boxNegative),
