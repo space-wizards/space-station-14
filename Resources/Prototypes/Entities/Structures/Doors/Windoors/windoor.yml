@@ -366,7 +366,6 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsEVA ]
-  - type: Wires
 
 - type: entity
   parent: WindoorSecure
