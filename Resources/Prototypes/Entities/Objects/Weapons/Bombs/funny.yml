@@ -142,7 +142,7 @@
     maxIntensity: 0.8
     intensitySlope: 1
     totalIntensity: 3.5
-    canCauseVacuum: false
+    canCreateVacuum: false
   - type: Construction
     graph: SnapPopExplosiveGraph
     node: snapPopExplosive

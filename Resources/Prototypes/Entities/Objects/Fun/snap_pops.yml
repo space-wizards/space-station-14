@@ -34,7 +34,7 @@
     intensitySlope: 1
     totalIntensity: 0.01
   - type: Construction
-    graph: SnapPopFakeGraph
+    graph: SnapPopExplosiveGraph
     node: snapPop
 
 - type: entity
