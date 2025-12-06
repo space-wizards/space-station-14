@@ -2334,3 +2334,20 @@
   - !type:BuyerJobCondition
     whitelist:
     - Lawyer
+
+#Objective Specific
+
+- type: listing
+  id: UplinkNukeCodes
+  name: uplink-nuke-codes-name
+  description: uplink-nuke-codes-desc
+  productEntity: NukeCodePaperStation
+  categories:
+  - UplinkObjective
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerObjectiveWhitelistCondition
+    whitelist:
+      components:
+      - DieCondition

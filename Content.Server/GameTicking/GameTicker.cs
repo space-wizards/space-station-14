@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -5,8 +6,10 @@ using Content.Server.Chat.Systems;
 using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Maps;
+using Content.Server.Nuke;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
+using Content.Server.RoundEnd;
 using Content.Server.ServerUpdates;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
@@ -65,6 +68,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly SharedRoleSystem _roles = default!;
         [Dependency] private readonly ServerDbEntryManager _dbEntryManager = default!;
+        [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;
@@ -78,6 +82,8 @@ namespace Content.Server.GameTicking
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
 
             DebugTools.Assert(!_initialized);
             DebugTools.Assert(!_postInitialized);
@@ -132,6 +138,17 @@ namespace Content.Server.GameTicking
             base.Update(frameTime);
             UpdateRoundFlow(frameTime);
             UpdateGameRules();
+        }
+
+        // TODO: make this instead check for if the preset overrides nuke explosion ending the round behavior somehow
+        private void OnNukeExploded(NukeExplodedEvent ev)
+        {
+            if (!ev.EndRound || IsGameRuleActive("Nukeops")) // nukeops rule system handles nuke ops specific nuke round end logic
+            {
+                return;
+            }
+
+            _roundEndSystem.EndRound();
         }
     }
 }
