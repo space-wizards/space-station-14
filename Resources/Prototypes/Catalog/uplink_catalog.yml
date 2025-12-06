@@ -989,6 +989,16 @@
   - UplinkDisruption
 
 - type: listing
+  id: UplinkSignalJammerArray
+  name: uplink-signal-jammer-array-name
+  description: uplink-signal-jammer-array-desc
+  productEntity: SignalJammerArray
+  cost:
+    Telecrystal: 10
+  categories:
+  - UplinkDisruption
+
+- type: listing
   id: UplinkSyndicateWeaponModule
   name: uplink-syndicate-weapon-module-name
   description: uplink-syndicate-weapon-module-desc

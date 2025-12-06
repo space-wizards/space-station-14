@@ -180,6 +180,9 @@ uplink-clothing-eyes-hud-syndicate-desc = The syndicate's professional head-up d
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication as well as suit sensors when activated.
 
+uplink-signal-jammer-array-name = Signal Jammer Array
+uplink-signal-jammer-array-desc = A high-powered stationary jamming device that disrupts all radio communications within a massive radius when anchored and powered.
+
 uplink-syndicate-weapon-module-name = Weapon Cyborg Module
 uplink-syndicate-weapon-module-desc = Upgrades a cyborg with both an energy dagger and an echis pistol.
 
