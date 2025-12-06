@@ -1,4 +1,5 @@
 using Content.Shared.Materials;
+using Content.Shared.Stacks;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Materials;
@@ -46,11 +47,20 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         EntityUid receiver,
         MaterialStorageComponent? storage = null,
         MaterialComponent? material = null,
-        PhysicalCompositionComponent? composition = null)
+        PhysicalCompositionComponent? composition = null,
+        bool trySplitStacks = false)
     {
-        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition))
+        TryComp<StackComponent>(toInsert, out var stack);
+        var count = stack?.Count ?? 1; // get the original stack size
+
+        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition, trySplitStacks))
             return false;
-        _transform.DetachEntity(toInsert, Transform(toInsert));
+
+        var amountUsed = count - stack?.Count ?? 1;
+
+        if (amountUsed == 0) // count was not changed, so stack.use was not called, so full entity
+            _transform.DetachEntity(toInsert, Transform(toInsert));
+
         return true;
     }
 }
