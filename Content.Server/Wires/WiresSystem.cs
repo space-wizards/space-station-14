@@ -861,58 +861,6 @@ public sealed class WiresSystem : SharedWiresSystem
     #endregion
 }
 
-public sealed class Wire
-{
-    /// <summary>
-    /// The entity that registered the wire.
-    /// </summary>
-    public EntityUid Owner { get; }
-
-    /// <summary>
-    /// Whether the wire is cut.
-    /// </summary>
-    public bool IsCut { get; set; }
-
-    /// <summary>
-    /// Used in client-server communication to identify a wire without telling the client what the wire does.
-    /// </summary>
-    [ViewVariables]
-    public int Id { get; set; }
-
-    /// <summary>
-    /// The original position of this wire in the prototype.
-    /// </summary>
-    [ViewVariables]
-    public int OriginalPosition { get; set; }
-
-    /// <summary>
-    /// The color of the wire.
-    /// </summary>
-    [ViewVariables]
-    public WireColor Color { get; }
-
-    /// <summary>
-    /// The greek letter shown below the wire.
-    /// </summary>
-    [ViewVariables]
-    public WireLetter Letter { get; }
-
-    /// <summary>
-    ///     The action that this wire performs when mended, cut or puled. This also determines the status lights that this wire adds.
-    /// </summary>
-    public IWireAction? Action { get; set; }
-
-    public Wire(EntityUid owner, bool isCut, WireColor color, WireLetter letter, int position, IWireAction? action)
-    {
-        Owner = owner;
-        IsCut = isCut;
-        Color = color;
-        OriginalPosition = position;
-        Letter = letter;
-        Action = action;
-    }
-}
-
 // this is here so that when a DoAfter event is called,
 // WiresSystem can call the action in question after the
 // doafter is finished (either through cancellation
