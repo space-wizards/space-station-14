@@ -116,6 +116,11 @@ public abstract class SharedPoweredLightSystem : EntitySystem
 
     private void OnSignalReceived(Entity<PoweredLightComponent> ent, ref SignalReceivedEvent args)
     {
+        var state = SignalState.Momentary;
+        args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out state);
+        if (state == SignalState.Low)
+            return;
+
         if (args.Port == ent.Comp.OffPort)
             SetState(ent, false, ent.Comp);
         else if (args.Port == ent.Comp.OnPort)
