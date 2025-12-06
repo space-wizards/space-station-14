@@ -3,6 +3,7 @@
   parent: [ BaseWallmountGlass, BaseWallmountMachine ]
   name: bar sign
   abstract: true
+  suffix: SignBar
   components:
   - type: WallMount
     arc: 360
