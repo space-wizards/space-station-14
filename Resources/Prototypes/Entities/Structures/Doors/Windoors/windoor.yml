@@ -139,12 +139,12 @@
 
 - type: entity
   parent: WindoorServiceLocked
-  id: WindoorNewsLocked
-  suffix: News, Locked
+  id: WindoorNewsroomLocked
+  suffix: Newsroom, Locked
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsNews ]
+      board: [ DoorElectronicsNewsroom ]
 
 - type: entity
   parent: Windoor
@@ -416,12 +416,12 @@
 
 - type: entity
   parent: WindoorSecureServiceLocked
-  id: WindoorSecureNewsLocked
-  suffix: News, Locked
+  id: WindoorSecureNewsroomLocked
+  suffix: Newsroom, Locked
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsNews ]
+      board: [ DoorElectronicsNewsroom ]
 
 - type: entity
   parent: WindoorSecureSecurityLocked

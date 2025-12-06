@@ -37,7 +37,7 @@ id-card-access-level-theatre = Theatre
 id-card-access-level-chapel = Chapel
 id-card-access-level-lawyer = Lawyer
 id-card-access-level-library = Library
-id-card-access-level-news = News
+id-card-access-level-newsroom = Newsroom
 
 id-card-access-level-maintenance = Maintenance
 

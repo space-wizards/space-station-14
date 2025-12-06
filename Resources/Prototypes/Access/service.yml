@@ -35,8 +35,8 @@
   name: id-card-access-level-library
 
 - type: accessLevel
-  id: News
-  name: id-card-access-level-news
+  id: Newsroom
+  name: id-card-access-level-newsroom
 
 - type: accessGroup
   id: Service
@@ -51,4 +51,4 @@
   - Chapel
   - Lawyer
   - Library
-  - News
+  - Newsroom

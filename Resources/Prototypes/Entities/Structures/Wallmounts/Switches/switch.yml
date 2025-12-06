@@ -301,11 +301,11 @@
 
 - type: entity
   parent: LockableButton
-  id: LockableButtonNews
-  suffix: News
+  id: LockableButtonNewsroom
+  suffix: Newsroom
   components:
   - type: AccessReader
-    access: [["News"]]
+    access: [["Newsroom"]]
 
 - type: entity
   parent: LockableButton

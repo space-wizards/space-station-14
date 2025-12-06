@@ -8,7 +8,7 @@
   supervisors: job-supervisors-hop
   access:
   - Maintenance
-  - News
+  - Newsroom
   - Service
 
 - type: startingGear

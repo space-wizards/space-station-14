@@ -66,7 +66,7 @@ public sealed partial class IdCardConsoleComponent : Component
         "Library",
         "Maintenance",
         "Medical",
-        "News",
+        "Newsroom",
         "Quartermaster",
         "Research",
         "ResearchDirector",

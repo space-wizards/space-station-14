@@ -30,12 +30,12 @@
 
 - type: entity
   parent: AirlockServiceLocked
-  id: AirlockNewsLocked
-  suffix: News, Locked
+  id: AirlockNewsroomLocked
+  suffix: Newsroom, Locked
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsNews ]
+      board: [ DoorElectronicsNewsroom ]
 
 - type: entity
   parent: AirlockServiceLocked
@@ -499,12 +499,12 @@
 
 - type: entity
   parent: AirlockServiceGlassLocked
-  id: AirlockNewsGlassLocked
-  suffix: News, Locked
+  id: AirlockNewsroomGlassLocked
+  suffix: Newsroom, Locked
   components:
   - type: ContainerFill
     containers:
-      board: [ DoorElectronicsNews ]
+      board: [ DoorElectronicsNewsroom ]
 
 - type: entity
   parent: AirlockServiceGlassLocked
@@ -1019,8 +1019,8 @@
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 - type: entity
-  parent: AirlockNewsLocked
-  id: AirlockMaintNewsLocked
+  parent: AirlockNewsroomLocked
+  id: AirlockMaintNewsroomLocked
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi

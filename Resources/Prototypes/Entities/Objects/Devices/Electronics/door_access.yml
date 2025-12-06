@@ -106,11 +106,11 @@
 
 - type: entity
   parent: DoorElectronics
-  id: DoorElectronicsNews
-  suffix: News, Locked
+  id: DoorElectronicsNewsroom
+  suffix: Newsroom, Locked
   components:
   - type: AccessReader
-    access: [["News"]]
+    access: [["Newsroom"]]
 
 - type: entity
   parent: DoorElectronics
