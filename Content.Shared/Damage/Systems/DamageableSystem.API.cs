@@ -241,8 +241,8 @@ public sealed partial class DamageableSystem
                 if (valueHeal >= remaining)
                 {
                     // Don't remove more than we can remove. Prevents us from healing more than we'd expect...
-                    remaining = FixedPoint2.Zero;
                     damageChange.DamageDict[type] -= remaining;
+                    remaining = FixedPoint2.Zero;
                     break;
                 }
 
