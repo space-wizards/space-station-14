@@ -103,6 +103,33 @@
   - type: Appearance
 
 - type: entity
+  parent: [ BaseWeaponShotgun, BaseGunWieldable ]
+  name: Caballero
+  id: WeaponRifleLever #Do not parent to BaseWeaponRifle, differs significantly
+  description: "A lever-action carbine, designed to keep the west wild. Features a widened cocking handle for use with bulky gloves. Uses .45 Magnum cartridges."
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Rifles/caballero.rsi
+    layers:
+    - state: icon
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Rifles/caballero.rsi
+  - type: AmmoCounter
+  - type: GunRequiresWield
+  - type: Gun
+    fireRate: 2.5
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/heavygunshot.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeMagnum
+    capacity: 8
+    proto: CartridgeMagnum
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+
+- type: entity
   name: M90 GL
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleM90GrenadeLauncher
@@ -199,7 +226,7 @@
   name: XL8
   description: |-
     The Experimental Lecter 8
-    An unreasonably expensive military grade assault rifle with integrated optic. 
+    An unreasonably expensive military grade assault rifle with integrated optic.
     Uses .20 rifle ammo.
   components:
   - type: Sprite
@@ -219,7 +246,7 @@
     - Burst
     - SemiAuto
     - FullAuto
-  
+
 - type: entity
   name: Estoc DMR
   parent: [BaseWeaponRifle, BaseSyndicateContraband]

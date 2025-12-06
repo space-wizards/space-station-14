@@ -37,3 +37,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "machinegun-one-shot.wav by DeltaCode. Converted to .OGG and MONO by august-sun"
   source: "https://freesound.org/people/DeltaCode/sounds/668347/"
+
+- files: ["heavygunshot.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Single Gunshot 4.2 by morganpurkis. Converted to .OGG and MONO by august-sun"
+  source: "https://freesound.org/people/morganpurkis/sounds/384687/"
