@@ -2,7 +2,6 @@ using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Components.Triggers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-
 namespace Content.Shared.Payload.Components;
 
 /// <summary>
@@ -19,7 +18,7 @@ namespace Content.Shared.Payload.Components;
 ///     Secondly, if the entity that this component is attached to is ever triggered directly (e.g., via a device
 ///     network message), the trigger will be forwarded to the device that this entity is installed in (if any).
 /// </remarks>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PayloadTriggerComponent : Component
 {
     /// <summary>
@@ -30,7 +29,7 @@ public sealed partial class PayloadTriggerComponent : Component
     /// <summary>
     ///     List of components to add or remove from an entity when this trigger is (un)installed.
     /// </summary>
-    [DataField(serverOnly: true, readOnly: true)]
+    [DataField(readOnly: true)]
     public ComponentRegistry? Components = null;
 
     /// <summary>
@@ -42,6 +41,6 @@ public sealed partial class PayloadTriggerComponent : Component
     ///     when removing the component, to ensure that removal of this trigger only removes the components that it was
     ///     responsible for adding.
     /// </remarks>
-    [DataField(serverOnly: true)]
-    public HashSet<Type> GrantedComponents = new();
+    [DataField, AutoNetworkedField]
+    public HashSet<Type> GrantedComponents = [];
 }
