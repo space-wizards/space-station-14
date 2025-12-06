@@ -8,7 +8,10 @@
   },
   "states": [
     {
-      "name": "jug"
+      "name": "icon"
+    },
+    {
+      "name": "icon_open"
     },
     {
       "name": "inhand-left",
