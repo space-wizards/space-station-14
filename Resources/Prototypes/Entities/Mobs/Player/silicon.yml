@@ -246,7 +246,7 @@
   - type: ApcPowerReceiverBattery
     idleLoad: 500
     batteryRechargeRate: 1000
-    batteryRechargeEfficiency: 0 # Setting to zero until the light flickering issue associated with dynamic power loads is fixed 
+    batteryRechargeEfficiency: 0 # Setting to zero until the light flickering issue associated with dynamic power loads is fixed
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline
@@ -315,7 +315,7 @@
       - StationAiCoreElectronics
   - type: StaticPrice
     price: 5000
-      
+
 # The job-ready version of an AI spawn.
 - type: entity
   id: PlayerStationAi
@@ -334,7 +334,7 @@
   description: An unfinished computer core for housing an artifical intelligence.
   components:
   - type: Anchorable
-    flags: 
+    flags:
     - Anchorable
   - type: Rotatable
   - type: Sprite
@@ -652,8 +652,8 @@
   - type: GhostTakeoverAvailable
 
 - type: entity
-  parent: BorgChassisDerelict
-  id: PlayerBorgDerelict
+  parent: GenericBorgChassisDerelict
+  id: PlayerGenericBorgDerelict
   suffix: Battery, Module
   components:
   - type: ContainerFill
@@ -672,13 +672,13 @@
     nameSegments: [NamesBorg]
 
 - type: entity
-  parent: PlayerBorgDerelict
-  id: PlayerBorgDerelictGhostRole
+  parent: PlayerGenericBorgDerelict
+  id: PlayerGenericBorgDerelictGhostRole
   suffix: Ghost role
   components:
     - type: GhostRole
-      name: ghost-role-information-derelict-cyborg-name
-      description: ghost-role-information-derelict-cyborg-description
+      name: ghost-role-information-derelict-generic-cyborg-name
+      description: ghost-role-information-derelict-generic-cyborg-description
       rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
@@ -821,7 +821,7 @@
 
 - type: entity
   parent: PlayerSyndicateAssaultBorgDerelict
-  id: PlayerBorgSyndicateDerelictGhostRole
+  id: PlayerSyndicateAssaultBorgDerelictGhostRole
   suffix: Ghost role
   components:
   - type: GhostRole
