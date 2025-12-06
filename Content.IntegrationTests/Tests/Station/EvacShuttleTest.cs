@@ -117,6 +117,7 @@ public sealed class EvacShuttleTest
         Assert.That(shuttleXform.MapUid, Is.EqualTo(centcommMap));
 
         // Round should be ending now
+        await pair.RunSeconds((int)evacSys.RoundEndBufferTime);
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PostRound));
 
         server.CfgMan.SetCVar(CCVars.EmergencyShuttleDockTime, dockTime);
