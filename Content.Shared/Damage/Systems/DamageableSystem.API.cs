@@ -231,20 +231,12 @@ public sealed partial class DamageableSystem
                     damageChange.DamageDict.Add(type, FixedPoint2.Zero);
 
                 var damageTypeHeal = damageChange.DamageDict[type];
-                var valueHeal = FixedPoint2.Min(damageType + damageTypeHeal, maxHeal);
+                var valueHeal = FixedPoint2.Min(damageType + damageTypeHeal, maxHeal, remaining);
 
                 // If the value to heal is equal to the damage left to heal (damageType + damageTypeHeal)
                 // then we don't care about that key anymore.
                 if (valueHeal >= damageType + damageTypeHeal)
                     keys.RemoveAt(i);
-
-                if (valueHeal >= remaining)
-                {
-                    // Don't remove more than we can remove. Prevents us from healing more than we'd expect...
-                    damageChange.DamageDict[type] -= remaining;
-                    remaining = FixedPoint2.Zero;
-                    break;
-                }
 
                 remaining -= valueHeal;
                 damageChange.DamageDict[type] -= valueHeal;
