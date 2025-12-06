@@ -16,5 +16,5 @@ public sealed partial class TriggerOnUnembedComponent : BaseTriggerOnXComponent
     /// If true, the trigger user will be the entity the projectile was embedded into.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool UserIsEmbed;
+    public bool UserIsEmbeddedInto;
 }

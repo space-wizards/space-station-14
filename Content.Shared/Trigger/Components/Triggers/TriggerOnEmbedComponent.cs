@@ -14,5 +14,5 @@ public sealed partial class TriggerOnEmbedComponent : BaseTriggerOnXComponent
     /// If true, the trigger user will be the actual embed.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool UserIsEmbed;
+    public bool UserIsEmbeddedInto;
 }

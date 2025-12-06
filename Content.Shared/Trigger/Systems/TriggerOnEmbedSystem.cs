@@ -19,13 +19,13 @@ public sealed class TriggerOnEmbedSystem : TriggerOnXSystem
 
     private void OnEmbed(Entity<TriggerOnEmbedComponent> ent, ref EmbedEvent args)
     {
-        var user = ent.Comp.UserIsEmbed ? args.Embedded : args.Shooter;
+        var user = ent.Comp.UserIsEmbeddedInto ? args.Embedded : args.Shooter;
         Trigger.Trigger(ent, user, ent.Comp.KeyOut);
     }
 
     private void OnStopEmbed(Entity<TriggerOnUnembedComponent> ent, ref EmbedDetachEvent args)
     {
-        var user = ent.Comp.UserIsEmbed ? args.Embedded : args.Detacher;
+        var user = ent.Comp.UserIsEmbeddedInto ? args.Embedded : args.Detacher;
         Trigger.Trigger(ent, user, ent.Comp.KeyOut);
     }
 }
