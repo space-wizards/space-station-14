@@ -184,3 +184,9 @@
     entitiesPerReplacementStdDev: 5
     replacements:
     - id: SolarAssembly
+
+- type: entity
+  id: EntityMisplacementVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: EntityMisplacementVariationPass
