@@ -32,6 +32,13 @@ public sealed partial class FaxMachineComponent : Component
     public string? DestinationFaxAddress { get; set; }
 
     /// <summary>
+    /// Name of fax in network to which data will be send
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("destinationName")]
+    public string? DestinationFaxName { get; set; }
+
+    /// <summary>
     /// Contains the item to be sent, assumes it's paper...
     /// </summary>
     [DataField(required: true)]
@@ -135,6 +142,18 @@ public sealed partial class FaxMachineComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId PrintOfficePaperId = "PaperOffice";
+
+    /// <summary>
+    ///     If the fax machine should add a bit of text in the end of the fax that specifies from where and to where the fax is for
+    /// </summary>
+    [DataField]
+    public bool AddSenderInfo = true;
+
+    /// <summary>
+    ///     The text that is sent along with the paper's content if <see cref="AddSenderInfo"/> is true
+    /// </summary>
+    [DataField]
+    public LocId SenderInfo = "fax-machine-sender-info";
 }
 
 [DataDefinition]
@@ -161,11 +180,14 @@ public sealed partial class FaxPrintout
     [DataField]
     public bool Locked { get; private set; }
 
+    [DataField]
+    public string? SenderFaxName { get; private set; } = default!;
+
     private FaxPrintout()
     {
     }
 
-    public FaxPrintout(string content, string name, string? label = null, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false)
+    public FaxPrintout(string content, string name, string? label = null, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null, bool locked = false, string? senderFaxName = null)
     {
         Content = content;
         Name = name;
@@ -174,5 +196,6 @@ public sealed partial class FaxPrintout
         StampState = stampState;
         StampedBy = stampedBy ?? new List<StampDisplayInfo>();
         Locked = locked;
+        SenderFaxName = senderFaxName;
     }
 }
