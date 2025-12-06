@@ -75,7 +75,6 @@
         type: BorgSelectTypeUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
-  - type: SiliconLawBound
   - type: ActionGrant
     actions:
     - ActionViewLaws

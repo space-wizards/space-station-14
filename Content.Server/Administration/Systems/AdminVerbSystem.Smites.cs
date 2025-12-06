@@ -1015,14 +1015,9 @@ public sealed partial class AdminVerbSystem
                 var userInterfaceComp = EnsureComp<UserInterfaceComponent>(args.Target);
                 _uiSystem.SetUi((args.Target, userInterfaceComp), SiliconLawsUiKey.Key, new InterfaceData(SiliconLawBoundUserInterface));
 
-                if (!HasComp<SiliconLawBoundComponent>(args.Target))
-                {
-                    EnsureComp<SiliconLawBoundComponent>(args.Target);
-                    _actions.AddAction(args.Target, _actionViewLawsProtoId);
-                }
-
                 EnsureComp<SiliconLawProviderComponent>(args.Target);
                 _siliconLawSystem.SetLaws(_siliconLawSystem.GetLawset(_crewsimovLawset).Laws, args.Target);
+                _actions.AddAction(args.Target, _actionViewLawsProtoId);
 
                 if (_mindSystem.TryGetMind(args.Target, out var mindId, out _))
                     _role.MindAddRole(mindId, _siliconMindRole);

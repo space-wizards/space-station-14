@@ -30,7 +30,7 @@ public sealed class SiliconLawEui : BaseEui
         return new SiliconLawsEuiState(_laws, _entityManager.GetNetEntity(_target));
     }
 
-    public void UpdateLaws(SiliconLawBoundComponent? lawBoundComponent, EntityUid player)
+    public void UpdateLaws(SiliconLawProviderComponent? lawBoundComponent, EntityUid player)
     {
         if (!IsAllowed())
             return;

@@ -42,7 +42,7 @@ public sealed class IonStormSystem : EntitySystem
     /// <summary>
     /// Randomly alters the laws of an individual silicon.
     /// </summary>
-    public void IonStormTarget(Entity<SiliconLawBoundComponent, IonStormTargetComponent> ent, bool adminlog = true)
+    public void IonStormTarget(Entity<SiliconLawProviderComponent, IonStormTargetComponent> ent, bool adminlog = true)
     {
         var lawBound = ent.Comp1;
         var target = ent.Comp2;

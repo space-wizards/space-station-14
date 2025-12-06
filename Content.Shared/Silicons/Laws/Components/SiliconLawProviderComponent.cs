@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Silicons.Laws.Components;
 
 /// <summary>
-/// This is used for an entity which grants laws to a <see cref="SiliconLawBoundComponent"/>
+/// Means this entity is bound to silicon laws and can view them.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 [Access(typeof(SharedSiliconLawSystem))]
@@ -14,15 +14,22 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// <summary>
     /// The id of the lawset that is being provided.
     /// </summary>
-    [DataField(required: true), AutoNetworkedField]
-    public ProtoId<SiliconLawsetPrototype> Laws = string.Empty;
+    [DataField, AutoNetworkedField]
+    public ProtoId<SiliconLawsetPrototype>? Laws = string.Empty;
+
+    /// <summary>
+    /// Whether the laws for this provider should be fetched using an event on map init.
+    /// Takes priority over <see cref="Laws"/>.
+    /// </summary>
+    [DataField]
+    public bool FetchOnInit = false;
 
     /// <summary>
     /// Lawset created from the prototype id.
     /// Cached when getting laws and modified during an ion storm event and when emagged.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SiliconLawset? Lawset;
+    public SiliconLawset Lawset = new ();
 
     /// <summary>
     /// The sound that plays for the Silicon player

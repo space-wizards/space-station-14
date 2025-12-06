@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Actions;
 using Content.Shared.Emag.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
@@ -13,6 +14,7 @@ using Content.Shared.Wires;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Silicons.Laws;
 
@@ -35,42 +37,37 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SiliconLawBoundComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<SiliconLawBoundComponent, ToggleLawsScreenEvent>(OnToggleLawsScreen);
-        SubscribeLocalEvent<SiliconLawBoundComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
+        SubscribeLocalEvent<SiliconLawProviderComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<SiliconLawProviderComponent, ToggleLawsScreenEvent>(OnToggleLawsScreen);
 
-        SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnDirectedGetLaws);
         SubscribeLocalEvent<SiliconLawProviderComponent, IonStormLawsEvent>(OnIonStormLaws);
-        SubscribeLocalEvent<SiliconLawProviderComponent, MindAddedMessage>(OnLawProviderMindAdded);
-        SubscribeLocalEvent<SiliconLawProviderComponent, MindRemovedMessage>(OnLawProviderMindRemoved);
         SubscribeLocalEvent<SiliconLawProviderComponent, SiliconEmaggedEvent>(OnEmagLawsAdded);
         SubscribeLocalEvent<EmagSiliconLawComponent, GotEmaggedEvent>(OnGotEmagged);
 
         InitializeUpdater();
     }
 
-    private void OnMapInit(Entity<SiliconLawBoundComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<SiliconLawProviderComponent> ent, ref MapInitEvent args)
     {
-        GetLaws(ent);
-    }
-
-    private void OnLawProviderMindAdded(Entity<SiliconLawProviderComponent> ent, ref MindAddedMessage args)
-    {
-        if (!ent.Comp.Subverted)
+        // Are we supposed to fetch laws on init?
+        if (ent.Comp.FetchOnInit)
+        {
+            FetchLawset(ent); // If so, we raise the necessary event and get whatever it returns to be our lawset.
             return;
+        }
 
-        EnsureSubvertedSiliconRole(args.Mind);
-    }
-
-    private void OnLawProviderMindRemoved(Entity<SiliconLawProviderComponent> ent, ref MindRemovedMessage args)
-    {
-        if (!ent.Comp.Subverted)
+        // If we aren't supposed to fetch the lawset, we use the one provided in the component.
+        if (_prototype.TryIndex(ent.Comp.Laws, out var lawset))
+        {
+            ent.Comp.Lawset = GetLawset(lawset); // If the lawset is valid, we save it as the currently used one.
             return;
+        }
 
-        RemoveSubvertedSiliconRole(args.Mind);
+        // We don't try to get a lawset at all? Guess it'll be empty.
+        ent.Comp.Lawset = new SiliconLawset();
     }
 
-    private void OnToggleLawsScreen(Entity<SiliconLawBoundComponent> ent, ref ToggleLawsScreenEvent args)
+    private void OnToggleLawsScreen(Entity<SiliconLawProviderComponent> ent, ref ToggleLawsScreenEvent args)
     {
         if (args.Handled || !TryComp<ActorComponent>(ent, out var actor))
             return;
@@ -78,24 +75,6 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         args.Handled = true;
 
         _userInterface.TryToggleUi(ent.Owner, SiliconLawsUiKey.Key, actor.PlayerSession);
-    }
-
-    private void OnPlayerSpawnComplete(Entity<SiliconLawBoundComponent> ent, ref PlayerSpawnCompleteEvent args)
-    {
-        ent.Comp.LastLawProvider = args.Station;
-    }
-
-    private void OnDirectedGetLaws(Entity<SiliconLawProviderComponent> ent, ref GetSiliconLawsEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (ent.Comp.Lawset == null)
-            ent.Comp.Lawset = GetLawset(ent.Comp.Laws);
-
-        args.Laws = ent.Comp.Lawset;
-
-        args.Handled = true;
     }
 
     private void OnIonStormLaws(Entity<SiliconLawProviderComponent> ent, ref IonStormLawsEvent args)
@@ -121,21 +100,18 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
     private void OnEmagLawsAdded(Entity<SiliconLawProviderComponent> ent, ref SiliconEmaggedEvent args)
     {
-        if (ent.Comp.Lawset == null)
-            ent.Comp.Lawset = GetLawset(ent.Comp.Laws);
-
         // Show the silicon has been subverted.
         ent.Comp.Subverted = true;
 
         // Add the first emag law before the others
-        ent.Comp.Lawset?.Laws.Insert(0, new SiliconLaw
+        ent.Comp.Lawset.Laws.Insert(0, new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-custom", ("name", Name(args.user)), ("title", Loc.GetString(ent.Comp.Lawset.ObeysTo))),
             Order = 0
         });
 
         //Add the secrecy law after the others
-        ent.Comp.Lawset?.Laws.Add(new SiliconLaw
+        ent.Comp.Lawset.Laws.Add(new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(ent.Comp.Lawset.ObeysTo))),
             Order = ent.Comp.Lawset.Laws.Max(law => law.Order) + 1
@@ -156,18 +132,23 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             _roles.MindRemoveRole<SubvertedSiliconRoleComponent>(mindId);
     }
 
-    public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
+    /// <summary>
+    /// Refreshes the laws of target entity using an event and stores them on the <see cref="SiliconLawProviderComponent"/>
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    public void FetchLawset(EntityUid uid, SiliconLawProviderComponent? component = null)
     {
         if (!Resolve(uid, ref component))
-            return new SiliconLawset();
+            return;
 
         var ev = new GetSiliconLawsEvent(uid);
 
         RaiseLocalEvent(uid, ref ev);
         if (ev.Handled)
         {
-            component.LastLawProvider = uid;
-            return ev.Laws;
+            component.Lawset = ev.Laws;
+            return;
         }
 
         var xform = Transform(uid);
@@ -177,8 +158,8 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             RaiseLocalEvent(station, ref ev);
             if (ev.Handled)
             {
-                component.LastLawProvider = station;
-                return ev.Laws;
+                component.Lawset = ev.Laws;
+                return;
             }
         }
 
@@ -187,28 +168,24 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
             RaiseLocalEvent(grid, ref ev);
             if (ev.Handled)
             {
-                component.LastLawProvider = grid;
-                return ev.Laws;
-            }
-        }
-
-        if (component.LastLawProvider == null ||
-            Deleted(component.LastLawProvider) ||
-            Terminating(component.LastLawProvider.Value))
-        {
-            component.LastLawProvider = null;
-        }
-        else
-        {
-            RaiseLocalEvent(component.LastLawProvider.Value, ref ev);
-            if (ev.Handled)
-            {
-                return ev.Laws;
+                component.Lawset = ev.Laws;
+                return;
             }
         }
 
         RaiseLocalEvent(ref ev);
-        return ev.Laws;
+        component.Lawset = ev.Laws;
+    }
+
+    public SiliconLawset GetLaws(EntityUid uid, SiliconLawProviderComponent? component = null, bool refresh = false)
+    {
+        if (!Resolve(uid, ref component))
+            return new SiliconLawset();
+
+        if (refresh)
+            FetchLawset(uid, component);
+
+        return component.Lawset;
     }
 
     private void OnGotEmagged(Entity<EmagSiliconLawComponent> ent, ref GotEmaggedEvent args)
@@ -252,9 +229,11 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     /// <summary>
     /// Extract all the laws from a lawset's prototype ids.
     /// </summary>
-    public SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype> lawset)
+    public SiliconLawset GetLawset(ProtoId<SiliconLawsetPrototype>? lawset)
     {
-        var proto = _prototype.Index(lawset);
+        if (!_prototype.TryIndex(lawset, out var proto))
+            return new SiliconLawset();
+
         var laws = new SiliconLawset()
         {
             Laws = new List<SiliconLaw>(proto.Laws.Count)
@@ -297,3 +276,22 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
 [ByRefEvent]
 public record struct SiliconEmaggedEvent(EntityUid user);
+
+[ByRefEvent]
+public record struct GetSiliconLawsEvent(EntityUid Entity)
+{
+    public SiliconLawset Laws = new();
+
+    public bool Handled = false;
+}
+
+public sealed partial class ToggleLawsScreenEvent : InstantActionEvent
+{
+
+}
+
+[NetSerializable, Serializable]
+public enum SiliconLawsUiKey : byte
+{
+    Key
+}

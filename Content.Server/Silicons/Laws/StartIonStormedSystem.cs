@@ -21,8 +21,9 @@ public sealed class StartIonStormedSystem : EntitySystem
 
     private void OnMapInit(Entity<StartIonStormedComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<SiliconLawBoundComponent>(ent.Owner, out var lawBound))
+        if (!TryComp<SiliconLawProviderComponent>(ent.Owner, out var lawBound))
             return;
+
         if (!TryComp<IonStormTargetComponent>(ent.Owner, out var target))
             return;
 
