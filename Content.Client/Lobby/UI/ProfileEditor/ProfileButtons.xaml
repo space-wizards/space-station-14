@@ -1,0 +1,18 @@
+<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
+    Orientation="Vertical"
+    HorizontalExpand="True"
+    HorizontalAlignment="Right">
+    <ui:HighlightedContainer Name="ProfileHighlight">
+        <BoxContainer Orientation="Vertical">
+            <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}"/>
+            <Button Name="ResetButton" Disabled="True" Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
+            <Button Name="ImportButton" Text="{Loc 'humanoid-profile-editor-import-button'}"/>
+            <Button Name="ExportButton" Text="{Loc 'humanoid-profile-editor-export-button'}"/>
+            <Button Name="ExportImageButton" Text="{Loc 'humanoid-profile-editor-export-image-button'}"/>
+            <Button Name="OpenImagesButton" Text="{Loc 'humanoid-profile-editor-open-image-button'}"/>
+        </BoxContainer>
+    </ui:HighlightedContainer>
+</BoxContainer>
