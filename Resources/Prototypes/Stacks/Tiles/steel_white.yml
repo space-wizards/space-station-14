@@ -53,3 +53,21 @@
   id: FloorTileWhitePavementVertical
   name: stack-white-steel-vertical-pavement
   spawn: FloorTileItemWhitePavementVertical
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteVerticalSlatsBordered
+  name: stack-white-steel-vertical-slats-tile-bordered
+  spawn: FloorTileItemWhiteVerticalSlatsBordered
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteSlatsContinuous
+  name: stack-white-steel-slats-tile-continuous
+  spawn: FloorTileItemWhiteSlatsContinuous
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileWhiteHorizontalSlatsBordered
+  name: stack-white-steel-horizontal-slats-tile-bordered
+  spawn: FloorTileItemWhiteHorizontalSlatsBordered
