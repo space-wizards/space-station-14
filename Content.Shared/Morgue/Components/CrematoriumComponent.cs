@@ -39,4 +39,10 @@ public sealed partial class CrematoriumComponent : Component
 
     [DataField]
     public SoundSpecifier CremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");
+
+    /// <summary>
+    /// The sound entity of <see cref="CrematingSound"/>.
+    /// </summary>
+    [DataField]
+    public EntityUid? CrematingSoundUid;
 }
