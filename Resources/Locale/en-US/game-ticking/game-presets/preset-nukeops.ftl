@@ -1,4 +1,4 @@
-﻿nukeops-title = Nuclear Operatives
+nukeops-title = Nuclear Operatives
 nukeops-description = Nuclear operatives have targeted the station. Try to keep them from arming and detonating the nuke by protecting the nuke disk!
 
 nukeops-welcome =
@@ -23,6 +23,17 @@ nukeops-cond-nukiesabandoned = The nuclear operatives were abandoned.
 nukeops-cond-allnukiesdead = All nuclear operatives have died.
 nukeops-cond-somenukiesalive = Some nuclear operatives died.
 nukeops-cond-allnukiesalive = No nuclear operatives died.
+
+nukeops-disk-location-title = Final location of Disk:
+nukeops-disk-carried-by = {" "}carried by [color=White]{$name}[/color], [color=orange]{$job}[/color], {$location} { $user ->
+    [unknown] { "" }
+    *[other] ([color=gray]{$user}[/color])
+}
+
+storage-hierarchy-list = { $items-left ->
+  [0] { $existing-text } { $item },
+  *[other] { $existing-text } { $item }, in
+}
 
 nukeops-list-start = The nuclear operatives were:
 nukeops-list-name = - [color=White]{$name}[/color]
