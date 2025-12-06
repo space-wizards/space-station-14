@@ -1,14 +1,14 @@
-using Content.Server.Ghost.Roles;
-using Content.Server.Ghost.Roles.Components;
+using System.Text;
 using Content.Server.Instruments;
+using Content.Shared.Ghost.Roles;
+using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Instruments;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Mind.Components;
 using Content.Shared.Kitchen;
+using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
 using Content.Shared.Popups;
-using Content.Shared.Instruments;
 using Robust.Shared.Random;
-using System.Text;
 
 namespace Content.Server.PAI;
 
