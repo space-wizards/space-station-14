@@ -92,7 +92,7 @@
     thresholds:
       0: Alive
       250: Critical
-      500: Dead
+      750: Dead # Same as destruction threshold. Borgs act exactly like crit when dead, except for ghosting on move
     stateAlertDict:
       Alive: BorgHealth
       Critical: BorgCrit
