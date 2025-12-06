@@ -138,7 +138,7 @@ public sealed class StationRecordsSystem : SharedStationRecordsSystem
         string jobId,
         string? mobFingerprint,
         string? dna,
-        HumanoidCharacterProfile profile,
+        HumanoidCharacterProfile? profile,
         StationRecordsComponent records)
     {
         if (!_prototypeManager.TryIndex<JobPrototype>(jobId, out var jobPrototype))
@@ -400,15 +400,16 @@ public abstract class StationRecordEvent : EntityEventArgs
 public sealed class AfterGeneralRecordCreatedEvent : StationRecordEvent
 {
     public readonly GeneralStationRecord Record;
+
     /// <summary>
     /// Profile for the related player. This is so that other systems can get further information
     ///     about the player character.
     ///     Optional - other systems should anticipate this.
     /// </summary>
-    public readonly HumanoidCharacterProfile Profile;
+    public readonly HumanoidCharacterProfile? Profile;
 
     public AfterGeneralRecordCreatedEvent(StationRecordKey key, GeneralStationRecord record,
-        HumanoidCharacterProfile profile) : base(key)
+        HumanoidCharacterProfile? profile) : base(key)
     {
         Record = record;
         Profile = profile;
