@@ -67,7 +67,7 @@
   parent: [ClothingBeltAmmoProviderBase, BaseSecurityBartenderContraband]
   id: ClothingBeltBandolier
   name: bandolier
-  description: A bandolier for holding shotgun ammunition.
+  description: A bandolier for holding shotgun ammunition, allowing for faster reloading when used.
   components:
   - type: Sprite
     sprite: Clothing/Belt/bandolier.rsi
@@ -79,7 +79,9 @@
     whitelist:
       tags:
         - ShellShotgun
-    capacity: 14
+    capacity: 32 # Two full shell boxes.
+    reloadFromClothing: true
+    fillDelay: 0.375 # 25% less than 0.5 = 33% faster reload speed.
 
 - type: entity
   parent: [ ClothingBeltStorageBase, BaseMagicalContraband ]
