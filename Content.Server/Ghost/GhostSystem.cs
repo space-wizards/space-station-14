@@ -330,11 +330,17 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (_followerSystem.GetMostGhostFollowed() is not {} target)
-                return;
+            var target = _followerSystem.GetMostGhostFollowed();
 
-            // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
-            _followerSystem.StartFollowingEntity(uid, target);
+            var response = new GhostnadoResponseEvent(target is not null);
+
+            if (msg.Warp && target is not null)
+            {
+                // If there is a ghostnado happening you almost definitely wanna join it, so we automatically follow instead of just warping.
+                _followerSystem.StartFollowingEntity(uid, target.Value);
+            }
+
+            RaiseNetworkEvent(response, args.SenderSession.Channel);
         }
 
         private void WarpTo(EntityUid uid, EntityUid target)
