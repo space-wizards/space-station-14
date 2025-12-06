@@ -10,7 +10,7 @@
       layers:
       - state: mousetrap
         map: ["enum.ToggleableVisuals.Layer"]
-    - type: StepTrigger
+    - type: TriggerStepLogic
       intersectRatio: 0.2
       requiredTriggeredSpeed: 2
     - type: Mousetrap
@@ -23,8 +23,9 @@
     - type: ItemToggleOnTrigger
       canActivate: false
       showPopup: false # only show the popup when arming/disarming the trap in your hand
-    - type: TriggerOnStepTrigger
-    - type: PreventableStepTrigger
+    - type: TriggerOnStepEnd
+    - type: TriggerOnStepAlwaysAttempt
+    - type: TriggerPreventableStepTrigger
     - type: DamageOnTrigger
       targetUser: true
       damage:
