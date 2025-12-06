@@ -259,6 +259,9 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: Tag
+    tags:
+    - MonkeyWearable
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
