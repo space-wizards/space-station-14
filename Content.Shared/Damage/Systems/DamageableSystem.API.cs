@@ -238,6 +238,8 @@ public sealed partial class DamageableSystem
 
                 remaining -= valueHeal;
                 damageChange.DamageDict[type] -= valueHeal;
+
+                if (remaining == 0) break;
             }
         }
 
