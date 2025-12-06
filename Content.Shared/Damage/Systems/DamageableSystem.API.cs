@@ -212,7 +212,7 @@ public sealed partial class DamageableSystem
 
         // make sure damageChange has the same damage types as damage
         damageChange.DamageDict.EnsureCapacity(damage.DamageDict.Count);
-        foreach (var type in  damage.DamageDict.Keys)
+        foreach (var type in damage.DamageDict.Keys)
         {
             damageChange.DamageDict.Add(type, FixedPoint2.Zero);
         }
@@ -225,7 +225,7 @@ public sealed partial class DamageableSystem
             var count = keys.Count;
             // We do this to ensure that we always round up when dividing to avoid excess loops.
             // We already have logic to prevent healing more than we have.
-            var maxHeal = count == 1 ? remaining : ( remaining + FixedPoint2.Epsilon * (count - 1) ) / count;
+            var maxHeal = count == 1 ? remaining : (remaining + FixedPoint2.Epsilon * (count - 1)) / count;
 
             // Iterate backwards since we're removing items.
             for (var i = count - 1; i >= 0; i--)
