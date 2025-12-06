@@ -20,6 +20,11 @@
   path: "/Textures/Shaders/world_gradient_circle.swsl"
 
 - type: shader
+  id: ImageMask
+  kind: source
+  path: "/Textures/Shaders/image_mask.swsl"
+  
+- type: shader
   id: ColoredScreenBorder
   kind: source
   path: "/Textures/Shaders/colored_screen_border.swsl"
