@@ -306,6 +306,8 @@ public partial class AtmosphereSystem
     /// <param name="directions">The directions to check for air-blockage.</param>
     /// <param name="mapGridComp">Optional map grid component associated with the grid.</param>
     /// <returns>True if the tile is air-blocked in the specified directions, false otherwise.</returns>
+    /// <remarks>This rebuilds airtight data on-the-fly. You should only use this if you've just
+    /// invalidated airtight data, and you cannot wait one atmostick to revalidate it.</remarks>
     [PublicAPI]
     public bool IsTileAirBlocked(EntityUid gridUid,
         Vector2i tile,
@@ -315,9 +317,33 @@ public partial class AtmosphereSystem
         if (!Resolve(gridUid, ref mapGridComp, false))
             return false;
 
-        // TODO ATMOS: This reconstructs the data instead of getting the cached version. Might want to include a method to get the cached version later.
         var data = GetAirtightData(gridUid, mapGridComp, tile);
         return data.BlockedDirections.IsFlagSet(directions);
+    }
+
+    /// <summary>
+    /// Checks if a tile on a grid is air-blocked in the specified directions, using cached data.
+    /// </summary>
+    /// <param name="grid">The grid to check.</param>
+    /// <param name="tile">The tile on the grid to check.</param>
+    /// <param name="directions">The directions to check for air-blockage.</param>
+    /// <returns>True if the tile is air-blocked in the specified directions, false otherwise.</returns>
+    /// <remarks>Returns data that is currently cached by Atmospherics.
+    /// You should always use this method over <see cref="IsTileAirBlocked"/> as it's more performant.
+    /// If you need to get up-to-date data because you've just invalidated airtight data,
+    /// use <see cref="IsTileAirBlocked"/>.</remarks>
+    [PublicAPI]
+    public bool IsTileAirBlockedCached(Entity<GridAtmosphereComponent?> grid,
+        Vector2i tile,
+        AtmosDirection directions = AtmosDirection.All)
+    {
+        if (!_atmosQuery.Resolve(grid, ref grid.Comp, false))
+            return false;
+
+        if (!grid.Comp.Tiles.TryGetValue(tile, out var atmosTile))
+            return false;
+
+        return atmosTile.AirtightData.BlockedDirections.IsFlagSet(directions);
     }
 
     /// <summary>
