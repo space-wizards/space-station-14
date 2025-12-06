@@ -203,7 +203,7 @@ public sealed partial class DungeonSystem
         {
             EnsureComp<DecalGridComponent>(gridUid);
 
-            foreach (var (_, decal) in _decals.GetDecalsIntersecting(templateMapUid, bounds, loadedDecals))
+            foreach (var (_, decal) in _decals.GetDecalsIntersecting((templateMapUid, loadedDecals), bounds))
             {
                 // Offset by 0.5 because decals are offset from bot-left corner
                 // So we convert it to center of tile then convert it back again after transform.
@@ -253,14 +253,9 @@ public sealed partial class DungeonSystem
                     _maps.SetTile(gridUid, grid, tilePos, _tile.GetVariantTile((ContentTileDefinition)_tileDefManager[FallbackTileId], _random.GetRandom()));
                 }
 
-                var result = _decals.TryAddDecal(
-                    decal.Id,
+                var result = _decals.TryAddDecal(decal,
                     new EntityCoordinates(gridUid, position),
-                    out _,
-                    decal.Color,
-                    angle,
-                    decal.ZIndex,
-                    decal.Cleanable);
+                    out _);
 
                 DebugTools.Assert(result);
             }
