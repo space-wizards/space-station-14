@@ -29,12 +29,22 @@ public sealed partial class CharacterPickerButton : ContainerButton
     /// </summary>
     public event Action? OnDeletePressed;
 
+    /// <summary>
+    /// Create a new character picker button
+    /// </summary>
+    /// <param name="entityManager">Passed in dependency</param>
+    /// <param name="prototypeMan">Passed in dependency</param>
+    /// <param name="group">Button group to join</param>
+    /// <param name="profile">Profile this button is attached to</param>
+    /// <param name="isSelected">If true, start in pressed state</param>
+    /// <param name="readOnly">If true, don't show delete button (used for late join gui)</param>
     public CharacterPickerButton(
         IEntityManager entityManager,
         IPrototypeManager prototypeManager,
         ButtonGroup group,
         ICharacterProfile profile,
-        bool isSelected)
+        bool isSelected,
+        bool readOnly = false)
     {
         RobustXamlLoader.Load(this);
         _entManager = entityManager;
@@ -66,18 +76,25 @@ public sealed partial class CharacterPickerButton : ContainerButton
         View.SetEntity(_previewDummy);
         DescriptionLabel.Text = description;
 
-        ConfirmDeleteButton.OnPressed += _ =>
-        {
-            Parent?.RemoveChild(this);
-            Parent?.RemoveChild(ConfirmDeleteButton);
-            OnDeletePressed?.Invoke();
-        };
-
-        DeleteButton.OnPressed += _ =>
+        if (readOnly)
         {
             DeleteButton.Visible = false;
-            ConfirmDeleteButton.Visible = true;
-        };
+        }
+        else
+        {
+            ConfirmDeleteButton.OnPressed += _ =>
+            {
+                Parent?.RemoveChild(this);
+                Parent?.RemoveChild(ConfirmDeleteButton);
+                OnDeletePressed?.Invoke();
+            };
+
+            DeleteButton.OnPressed += _ =>
+            {
+                DeleteButton.Visible = false;
+                ConfirmDeleteButton.Visible = true;
+            };
+        }
     }
 
     protected override void Dispose(bool disposing)
