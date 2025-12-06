@@ -173,7 +173,7 @@ public sealed class AdminLogsEui : BaseEui
         });
 
         LogsControl.Orphan();
-        LogsWindow.Dispose();
+        LogsWindow.Orphan();
         LogsWindow = null;
 
         ClydeWindow.RequestClosed += OnRequestClosed;
@@ -255,9 +255,9 @@ public sealed class AdminLogsEui : BaseEui
             ClydeWindow.RequestClosed -= OnRequestClosed;
         }
 
-        LogsControl.Dispose();
-        LogsWindow?.Dispose();
-        Root?.Dispose();
+        LogsControl.Orphan();
+        LogsWindow?.Close();
+        Root?.Orphan();
         ClydeWindow?.Dispose();
     }
 }

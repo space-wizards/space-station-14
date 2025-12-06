@@ -32,7 +32,7 @@ public sealed partial class GunSystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        component.Control?.Dispose();
+        component.Control?.Orphan();
         component.Control = null;
 
         var ev = new AmmoCounterControlEvent();
