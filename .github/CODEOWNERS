@@ -37,3 +37,9 @@
 /Content.Server/Power/Pow3r/ @PJB3005
 
 /Content.Server/Discord/ @Simyon264
+
+# Bwoink (kill me please)
+/Content.Client/Administration/Managers/ClientBwoinkManager*.cs @Simyon264
+/Content.Client/Administration/UI/Bwoink/ @Simyon264
+/Content.Client/UserInterface/Systems/Bwoink/AHelpUIController.cs @Simyon264
+/Content.*/Administration/Managers/Bwoink/ @Simyon264

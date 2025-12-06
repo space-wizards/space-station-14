@@ -3,8 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Orientation="Vertical"
     HorizontalExpand="True">
-    <OutputPanel Name="TextOutput" VerticalExpand="true" />
+    <OutputPanel Name="TextOutput" VerticalExpand="true" Margin="5"/>
     <RichTextLabel Name="TypingIndicator" Access="Public" />
-    <HistoryLineEdit Name="SenderLineEdit" />
-    <RichTextLabel Name="RelayedToDiscordLabel" Access="Public" Visible="False" />
+    <BoxContainer Name="MessagePropsContainer">
+        <CheckBox Name="ManagerOnly"></CheckBox>
+        <CheckBox Pressed="True" Name="Silent" Text="{Loc 'admin-bwoink-play-sound'}"></CheckBox>
+    </BoxContainer>
+    <BoxContainer Margin="5 5 5 5" Orientation="Vertical">
+        <HistoryLineEdit Name="SenderLineEdit" Access="Public"/>
+        <RichTextLabel Text="{Loc 'bwoink-read-only'}" Visible="False" Name="ReadOnlyLabel"></RichTextLabel>
+        <RichTextLabel Text="{Loc 'bwoink-system-messages-being-handled'}" Name="HandledLabel" Access="Public" Visible="False"></RichTextLabel>
+    </BoxContainer>
 </BoxContainer>
