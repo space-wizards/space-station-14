@@ -37,3 +37,11 @@
   targetNode: memory_cell
   category: construction-category-tools
   objectType: Item
+
+- type: construction
+  id: RandomGate
+  graph: LogicGate
+  startNode: start
+  targetNode: random_gate
+  category: construction-category-tools
+  objectType: Item
