@@ -69,7 +69,7 @@
   table: !type:GroupSelector
     children:
     - id: CrateEmergencyFire
-    - id: CrateEmergencyInternals
+    - id: CrateEmergencyEVA
     - id: CrateEmergencyInflatablewall
       weight: 0.5
 
