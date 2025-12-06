@@ -7,8 +7,9 @@
   icon: "JobIconReporter"
   supervisors: job-supervisors-hop
   access:
-  - Service
   - Maintenance
+  - News
+  - Service
 
 - type: startingGear
   id: ReporterGear
