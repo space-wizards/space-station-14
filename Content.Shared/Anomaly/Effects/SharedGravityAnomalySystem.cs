@@ -29,7 +29,7 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
         var xform = Transform(uid);
         var range = component.MaxThrowRange * args.Severity * args.PowerModifier;
         var strength = component.MaxThrowStrength * args.Severity * args.PowerModifier;
-        var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic | LookupFlags.Sundries);
+        var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic);
         var xformQuery = GetEntityQuery<TransformComponent>();
         var worldPos = _xform.GetWorldPosition(xform, xformQuery);
         var physQuery = GetEntityQuery<PhysicsComponent>();
@@ -63,7 +63,7 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
 
         var range = component.MaxThrowRange * 2 * args.PowerModifier;
         var strength = component.MaxThrowStrength * 2 * args.PowerModifier;
-        var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic | LookupFlags.Sundries);
+        var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic);
         var xformQuery = GetEntityQuery<TransformComponent>();
         var physQuery = GetEntityQuery<PhysicsComponent>();
 

@@ -158,8 +158,6 @@
        path: /Audio/Items/bikehorn.ogg
   - type: Slippery
   - type: StepTrigger
-  - type: CollisionWake
-    enabled: false
   - type: Fixtures
     fixtures:
       slips:

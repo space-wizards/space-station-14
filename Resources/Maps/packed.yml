@@ -51395,8 +51395,6 @@ entities:
     - type: Transform
       pos: -0.0010213852,-26.399889
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: FoodMeat
   entities:
@@ -51464,8 +51462,6 @@ entities:
     - type: Transform
       pos: -0.9697714,-25.884264
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: FoodPoppy
   entities:
@@ -51488,8 +51484,6 @@ entities:
     - type: Transform
       pos: -1.0166464,-26.540514
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
   - uid: 5887
     components:

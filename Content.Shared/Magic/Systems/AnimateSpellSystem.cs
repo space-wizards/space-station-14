@@ -30,12 +30,12 @@ public sealed class AnimateSpellSystem : EntitySystem
         var fixture = fixtures.Fixtures.First();
 
         _transform.Unanchor(ent); // If left anchored they are effectively stuck/immobile and not a threat
-        _physics.SetCanCollide(ent, true, true, false, fixtures, physics);
-        _physics.SetCollisionMask(ent, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobMask, fixtures, physics);
-        _physics.SetCollisionLayer(ent, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobLayer, fixtures, physics);
+        _physics.SetCanCollide(ent, value: true, manager: fixtures, body: physics);
+        _physics.SetCollisionMask(ent, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobMask, manager: fixtures, body: physics);
+        _physics.SetCollisionLayer(ent, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobLayer, manager: fixtures, body: physics);
         _physics.SetBodyType(ent, BodyType.KinematicController, fixtures, physics, xform);
-        _physics.SetBodyStatus(ent, physics, BodyStatus.InAir, true);
-        _physics.SetFixedRotation(ent, false, true, fixtures, physics);
+        _physics.SetBodyStatus(ent, physics, BodyStatus.InAir);
+        _physics.SetFixedRotation(ent, false, manager: fixtures, body: physics);
         _physics.SetHard(ent, fixture.Value, true, fixtures);
         _container.AttachParentToContainerOrGrid((ent, xform)); // Items animated inside inventory now exit, they can't be picked up and so can't escape otherwise
 

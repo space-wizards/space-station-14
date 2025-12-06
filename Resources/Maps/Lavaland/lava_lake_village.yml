@@ -6505,8 +6505,6 @@ entities:
       rot: -25.132741228718352 rad
       pos: 26.530731,15.715266
       parent: 1
-    - type: CollisionWake
-      enabled: False
 - proto: FoodSoupChiliHot
   entities:
   - uid: 1216

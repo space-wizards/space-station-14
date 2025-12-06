@@ -13,7 +13,6 @@ namespace Content.Shared.EntityEffects.Effects;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<FixturesComponent, Slipify>
 {
-    [Dependency] private readonly CollisionWakeSystem _collisionWake = default!;
     [Dependency] private readonly FixtureSystem _fixture = default!;
 
     protected override void Effect(Entity<FixturesComponent> entity, ref EntityEffectEvent<Slipify> args)
@@ -29,10 +28,6 @@ public sealed partial class SlipifyEntityEffectSystem : EntityEffectSystem<Fixtu
             return;
 
         _fixture.TryCreateFixture(entity, shape, "slips", 1, false, (int)CollisionGroup.SlipLayer, manager: entity.Comp);
-
-        // Need to disable collision wake so that mobs can collide with and slip on it
-        EnsureComp<CollisionWakeComponent>(entity, out var collisionWake);
-        _collisionWake.SetEnabled(entity, false, collisionWake);
     }
 }
 

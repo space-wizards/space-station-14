@@ -129,7 +129,7 @@ public sealed class ConveyorController : SharedConveyorController
         if (beltTileRef != null)
         {
             Intersecting.Clear();
-            Lookup.GetLocalEntitiesIntersecting(beltTileRef.Value.GridUid, beltTileRef.Value.GridIndices, Intersecting, 0f, flags: LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate);
+            Lookup.GetLocalEntitiesIntersecting(beltTileRef.Value.GridUid, beltTileRef.Value.GridIndices, Intersecting, 0f, flags: LookupFlags.Dynamic | LookupFlags.Approximate);
 
             foreach (var entity in Intersecting)
             {
