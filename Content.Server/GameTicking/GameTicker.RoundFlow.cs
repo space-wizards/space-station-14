@@ -394,7 +394,7 @@ namespace Content.Server.GameTicking
                 }
                 else
                 {
-                    profile = HumanoidCharacterProfile.Random();
+                    profile = HumanoidCharacterProfile.Random(new HashSet<string>(_cfg.GetCVar(CCVars.ICNewAccountSpeciesBlacklist).Split(",")));
                 }
                 readyPlayerProfiles.Add(userId, profile);
             }
