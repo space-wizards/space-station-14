@@ -9,6 +9,7 @@ using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.StatusEffect;
+using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
@@ -24,7 +25,7 @@ namespace Content.Server.Cloning;
 ///     System responsible for making a copy of a humanoid's body.
 ///     For the cloning machines themselves look at CloningPodSystem, CloningConsoleSystem and MedicalScannerSystem instead.
 /// </summary>
-public sealed partial class CloningSystem : EntitySystem
+public sealed partial class CloningSystem : SharedCloningSystem
 {
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -36,6 +37,7 @@ public sealed partial class CloningSystem : EntitySystem
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
+    [Dependency] private readonly Shared.StatusEffectNew.StatusEffectsSystem _statusEffects = default!; //TODO: This system has to support both the old and new status effect systems, until the old is able to be fully removed.
 
     /// <summary>
     ///     Spawns a clone of the given humanoid mob at the specified location or in nullspace.
@@ -43,13 +45,13 @@ public sealed partial class CloningSystem : EntitySystem
     public bool TryCloning(EntityUid original, MapCoordinates? coords, ProtoId<CloningSettingsPrototype> settingsId, [NotNullWhen(true)] out EntityUid? clone)
     {
         clone = null;
-        if (!_prototype.TryIndex(settingsId, out var settings))
+        if (!_prototype.Resolve(settingsId, out var settings))
             return false; // invalid settings
 
         if (!TryComp<HumanoidAppearanceComponent>(original, out var humanoid))
             return false; // whatever body was to be cloned, was not a humanoid
 
-        if (!_prototype.TryIndex(humanoid.Species, out var speciesPrototype))
+        if (!_prototype.Resolve(humanoid.Species, out var speciesPrototype))
             return false; // invalid species
 
         var attemptEv = new CloningAttemptEvent(settings);
@@ -75,6 +77,10 @@ public sealed partial class CloningSystem : EntitySystem
         if (settings.CopyImplants)
             CopyImplants(original, clone.Value, settings.CopyInternalStorage, settings.Whitelist, settings.Blacklist);
 
+        // Copy permanent status effects
+        if (settings.CopyStatusEffects)
+            CopyStatusEffects(original, clone.Value);
+
         var originalName = _nameMod.GetBaseName(original);
 
         // Set the clone's name. The raised events will also adjust their PDA and ID card names.
@@ -84,13 +90,15 @@ public sealed partial class CloningSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    ///     Copy components from one entity to another based on a CloningSettingsPrototype.
-    /// </summary>
-    /// <param name="original">The orignal Entity to clone components from.</param>
-    /// <param name="clone">The target Entity to clone components to.</param>
-    /// <param name="settings">The clone settings prototype containing the list of components to clone.</param>
-    public void CloneComponents(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
+    public override void CloneComponents(EntityUid original, EntityUid clone, ProtoId<CloningSettingsPrototype> settings)
+    {
+        if (!_prototype.Resolve(settings, out var proto))
+            return;
+
+        CloneComponents(original, clone, proto);
+    }
+
+    public override void CloneComponents(EntityUid original, EntityUid clone, CloningSettingsPrototype settings)
     {
         var componentsToCopy = settings.Components;
         var componentsToEvent = settings.EventComponents;
@@ -128,7 +136,8 @@ public sealed partial class CloningSystem : EntitySystem
             }
 
             // If the original does not have the component, then the clone shouldn't have it either.
-            RemComp(clone, componentRegistration.Type);
+            if (!HasComp(original, componentRegistration.Type))
+                RemComp(clone, componentRegistration.Type);
         }
 
         var cloningEv = new CloningEvent(settings, clone);
@@ -263,5 +272,34 @@ public sealed partial class CloningSystem : EntitySystem
                 CopyStorage(originalImplant, targetImplant.Value, whitelist, blacklist); // only needed for storage implants
         }
 
+    }
+
+    /// <summary>
+    ///    Scans all permanent status effects applied to the original entity and transfers them to the clone.
+    /// </summary>
+    public void CopyStatusEffects(Entity<StatusEffectContainerComponent?> original, Entity<StatusEffectContainerComponent?> target)
+    {
+        if (!Resolve(original, ref original.Comp, false))
+            return;
+
+        if (original.Comp.ActiveStatusEffects is null)
+            return;
+
+        foreach (var effect in original.Comp.ActiveStatusEffects.ContainedEntities)
+        {
+            if (!TryComp<StatusEffectComponent>(effect, out var effectComp))
+                continue;
+
+            //We are not interested in temporary effects, only permanent ones.
+            if (effectComp.EndEffectTime is not null)
+                continue;
+
+            var effectProto = Prototype(effect);
+
+            if (effectProto is null)
+                continue;
+
+            _statusEffects.TrySetStatusEffectDuration(target, effectProto);
+        }
     }
 }

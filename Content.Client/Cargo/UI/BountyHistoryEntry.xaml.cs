@@ -19,7 +19,7 @@ public sealed partial class BountyHistoryEntry : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        if (!_prototype.TryIndex(bounty.Bounty, out var bountyPrototype))
+        if (!_prototype.Resolve(bounty.Bounty, out var bountyPrototype))
             return;
 
         var items = new List<string>();

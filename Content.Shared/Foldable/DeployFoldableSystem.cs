@@ -59,6 +59,10 @@ public sealed class DeployFoldableSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
+        // Don't do anything unless you clicked on the floor.
+        if (args.Target.HasValue)
+            return;
+
         if (!TryComp<FoldableComponent>(ent, out var foldable))
             return;
 
