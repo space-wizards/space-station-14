@@ -168,3 +168,18 @@
         reagents:
           - ReagentId: Plasma
             Quantity: 10
+
+- type: entity
+  id: JuiceThatMakesYouWehChemistryVial
+  parent: BaseChemistryEmptyVial
+  suffix: "juice that makes you weh"
+  components:
+  - type: Label
+    currentLabel: reagent-name-weh
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 10
+        reagents:
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 10
