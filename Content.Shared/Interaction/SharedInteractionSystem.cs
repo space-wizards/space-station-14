@@ -506,7 +506,6 @@ namespace Content.Shared.Interaction
                 InteractionActivate(user,
                     target,
                     checkCanInteract: false,
-                    checkUseDelay: true,
                     checkAccess: false,
                     complexInteractions: complexInteractions,
                     checkDeletion: false);
@@ -536,7 +535,6 @@ namespace Content.Shared.Interaction
             InteractionActivate(user,
                 target,
                 checkCanInteract: false,
-                checkUseDelay: true,
                 checkAccess: false,
                 complexInteractions: complexInteractions,
                 checkDeletion: false);
@@ -1148,17 +1146,17 @@ namespace Content.Shared.Interaction
             EntityUid user,
             EntityUid used,
             bool checkCanInteract = true,
-            bool checkUseDelay = true,
             bool checkAccess = true,
             bool? complexInteractions = null,
-            bool checkDeletion = true)
+            bool checkDeletion = true,
+            bool skipDelayCheck = false)
         {
             if (checkDeletion && (IsDeleted(user) || IsDeleted(used)))
                 return false;
 
             DebugTools.Assert(!IsDeleted(user) && !IsDeleted(used));
             _delayQuery.TryComp(used, out var delayComponent);
-            if (checkUseDelay && delayComponent != null && _useDelay.IsDelayed((used, delayComponent)))
+            if (!skipDelayCheck && delayComponent != null && delayComponent.PreventUseInHand && _useDelay.IsDelayed((used, delayComponent)))
                 return false;
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
@@ -1193,7 +1191,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             DoContactInteraction(user, used);
-            // Still need to call this even without checkUseDelay in case this gets relayed from Activate.
+            // Still need to call this even with the delay component's PreventUseInHand in case this gets relayed from Activate.
             if (delayComponent != null)
                 _useDelay.TryResetDelay(used, component: delayComponent);
 
@@ -1213,14 +1211,13 @@ namespace Content.Shared.Interaction
             EntityUid user,
             EntityUid used,
             bool checkCanUse = true,
-            bool checkCanInteract = true,
-            bool checkUseDelay = true)
+            bool checkCanInteract = true)
         {
             if (IsDeleted(user) || IsDeleted(used))
                 return false;
 
             _delayQuery.TryComp(used, out var delayComponent);
-            if (checkUseDelay && delayComponent != null && _useDelay.IsDelayed((used, delayComponent)))
+            if (delayComponent != null && delayComponent.PreventUseInHand && _useDelay.IsDelayed((used, delayComponent)))
                 return true; // if the item is on cooldown, we consider this handled.
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
@@ -1241,7 +1238,7 @@ namespace Content.Shared.Interaction
 
             DebugTools.Assert(!IsDeleted(user) && !IsDeleted(used));
             // else, default to activating the item
-            return InteractionActivate(user, used, false, false, false, checkDeletion: false);
+            return InteractionActivate(user, used, false, false, checkDeletion: false, skipDelayCheck: true);
         }
 
         /// <summary>
