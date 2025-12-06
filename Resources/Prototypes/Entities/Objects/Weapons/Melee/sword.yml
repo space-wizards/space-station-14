@@ -145,7 +145,7 @@
     wideAnimationRotation: -60
     damage:
       types:
-        Slash: 30
+        Slash: 25
   - type: Item
     storedSprite:
       state: storage
