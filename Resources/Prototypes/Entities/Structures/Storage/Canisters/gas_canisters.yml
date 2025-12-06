@@ -15,6 +15,7 @@
       layers:
         - state: grey
         - state: paper
+          visible: false
           map: [ "enum.PaperLabelVisuals.Layer" ]
     - type: Appearance
     - type: GenericVisualizer
