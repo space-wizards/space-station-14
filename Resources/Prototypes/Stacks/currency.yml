@@ -1,0 +1,11 @@
+- type: stack
+  id: Telecrystal
+  name: stack-telecrystal
+  icon: { sprite: /Textures/Objects/Specific/Syndicate/telecrystal.rsi, state: telecrystal }
+  spawn: Telecrystal1
+
+- type: stack
+  id: Credit
+  name: stack-credit
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
+  spawn: SpaceCash

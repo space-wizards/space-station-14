@@ -1,0 +1,25 @@
+# Tiles that don't fit cleanly in another category
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileMono
+  name: stack-mono-tile
+  spawn: FloorTileItemMono
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileMetalDiamond
+  name: stack-steel-tile
+  spawn: FloorTileItemMetalDiamond
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackBoxing
+  name: stack-boxing-ring-tile
+  spawn: FloorTileItemBoxing
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileStackGym
+  name: stack-gym-floor-tile
+  spawn: FloorTileItemGym

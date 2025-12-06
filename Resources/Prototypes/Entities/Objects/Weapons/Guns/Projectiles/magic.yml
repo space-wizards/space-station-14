@@ -93,7 +93,7 @@
     disableWhenFirstOpened: true
     whitelist:
       components:
-        - Body
+        - MobState
   - type: LockVisuals
     stateLocked: cursed_door
     stateUnlocked: decursed_door
@@ -176,6 +176,9 @@
         Poison: 5
   - type: TriggerOnCollide
     fixtureID: projectile
+    # Projectile.DeleteOnCollide is true, but allow this to hit multiple entities if they're
+    # stacked up (they will all trigger a collide), so this isn't frustrating to use
+    maxTriggers: null
   - type: PolymorphOnTrigger
     targetUser: true
 
@@ -191,7 +194,7 @@
   - type: WhitelistTriggerCondition
     userWhitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectilePolyboltMonkey
@@ -205,7 +208,7 @@
   - type: WhitelistTriggerCondition
     userWhitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectilePolyboltDoor
@@ -275,7 +278,7 @@
   - type: WhitelistTriggerCondition
     userWhitelist:
       components:
-      - Body
+      - MobState
 
 - type: entity
   id: ProjectileIcicle
@@ -305,4 +308,4 @@
   - type: WhitelistTriggerCondition
     userWhitelist:
       components:
-      - Body
+      - MobState
