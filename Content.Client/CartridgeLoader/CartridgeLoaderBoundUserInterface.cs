@@ -2,6 +2,7 @@
 using Content.Shared.CartridgeLoader;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Shared.Timing;
 
 namespace Content.Client.CartridgeLoader;
 
@@ -18,10 +19,12 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
     private Control? _activeUiFragment;
 
     private IEntityManager _entManager;
+    private readonly IGameTiming _timing;
 
     protected CartridgeLoaderBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         _entManager = IoCManager.Resolve<IEntityManager>();
+        _timing = IoCManager.Resolve<IGameTiming>();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -36,7 +39,10 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
 
         // TODO move this to a component state and ensure the net ids.
         var programs = GetCartridgeComponents(_entManager.GetEntityList(loaderUiState.Programs));
-        UpdateAvailablePrograms(programs);
+        if (_timing.IsFirstTimePredicted)
+        {
+            UpdateAvailablePrograms(programs);
+        }
 
         var activeUI = _entManager.GetEntity(loaderUiState.ActiveUI);
 
@@ -67,7 +73,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
     protected void ActivateCartridge(EntityUid cartridgeUid)
     {
         var message = new CartridgeLoaderUiMessage(_entManager.GetNetEntity(cartridgeUid), CartridgeUiMessageAction.Activate);
-        SendMessage(message);
+        SendPredictedMessage(message);
     }
 
     protected void DeactivateActiveCartridge()
@@ -76,19 +82,19 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
             return;
 
         var message = new CartridgeLoaderUiMessage(_entManager.GetNetEntity(_activeProgram.Value), CartridgeUiMessageAction.Deactivate);
-        SendMessage(message);
+        SendPredictedMessage(message);
     }
 
     protected void InstallCartridge(EntityUid cartridgeUid)
     {
         var message = new CartridgeLoaderUiMessage(_entManager.GetNetEntity(cartridgeUid), CartridgeUiMessageAction.Install);
-        SendMessage(message);
+        SendPredictedMessage(message);
     }
 
     protected void UninstallCartridge(EntityUid cartridgeUid)
     {
         var message = new CartridgeLoaderUiMessage(_entManager.GetNetEntity(cartridgeUid), CartridgeUiMessageAction.Uninstall);
-        SendMessage(message);
+        SendPredictedMessage(message);
     }
 
     private List<(EntityUid, CartridgeComponent)> GetCartridgeComponents(List<EntityUid> programs)
