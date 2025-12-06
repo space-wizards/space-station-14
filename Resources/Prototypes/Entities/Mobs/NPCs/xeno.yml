@@ -71,7 +71,7 @@
       reagents:
       - ReagentId: FluorosulfuricAcid
         Quantity: 1
-    bloodMaxVolume: 650
+    bloodReferenceVolume: 650
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -499,7 +499,7 @@
       reagents:
       - ReagentId: FluorosulfuricAcid
         Quantity: 1
-    bloodMaxVolume: 300
+    bloodReferenceVolume: 300
   - type: MeleeWeapon
     altDisarm: false
     angle: 0

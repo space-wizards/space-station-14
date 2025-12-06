@@ -39,7 +39,7 @@
     critThreshold: 150
   - type: MovementAlwaysTouching
   - type: Bloodstream
-    bloodMaxVolume: 300
+    bloodReferenceVolume: 300
     bloodReagents:
       reagents:
       - ReagentId: Cryoxadone
@@ -219,7 +219,7 @@
       amount: 1
       prob: 0.5
   - type: Bloodstream
-    bloodMaxVolume: 250
+    bloodReferenceVolume: 250
     bloodReagents:
       reagents:
       - ReagentId: Cryoxadone
@@ -325,7 +325,7 @@
           amount: 1
           prob: 0.3
     - type: Bloodstream
-      bloodMaxVolume: 200
+      bloodReferenceVolume: 200
       bloodReagents:
         reagents:
         - ReagentId: Cryoxadone
@@ -502,7 +502,7 @@
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
-    bloodMaxVolume: 30
+    bloodReferenceVolume: 30
     bloodReagents:
       reagents:
       - ReagentId: Cryoxadone
