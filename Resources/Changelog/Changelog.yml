@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Quantum-cross, slarticodefast
-  changes:
-  - message: The flash effect is now replaced with a reduced motion variant if the
-      accessibility setting is enabled in the game options.
-    type: Add
-  id: 8758
-  time: '2025-07-10T09:30:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37824
 - author: K-Dynamic
   changes:
   - message: Minigun now has inhand sprites.
@@ -3925,3 +3917,10 @@
   id: 9258
   time: '2025-12-06T18:26:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41743
+- author: august-sun
+  changes:
+  - message: Added the sticky grappling hand, a clown version of the grappling gun.
+    type: Add
+  id: 9259
+  time: '2025-12-06T20:52:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/37551
