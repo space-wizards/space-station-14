@@ -11,6 +11,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Content.Shared.CCVar;
+using Content.Shared.Actions;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -25,6 +26,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
+        [Dependency] private readonly SharedActionsSystem _actions = default!;
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
         private const float MinimumSoundValvePressure = 10.0f;
@@ -84,7 +86,17 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (comp.CheckUser)
                 {
-                    comp.CheckUser = false;
+                    var action = _actions.GetAction(comp.ToggleActionEntity);
+
+                    if (action != null)
+                    {
+                        if (_actions.IsCooldownActive(action))
+                        {
+                            continue;
+                        }
+                        else comp.CheckUser = false;
+                    }
+
                     if (Transform(uid).ParentUid != comp.User)
                     {
                         DisconnectFromInternals(gasTank);
