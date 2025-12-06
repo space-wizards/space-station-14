@@ -1,13 +1,12 @@
-using Content.Server.StationEvents.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Dataset;
 using Content.Shared.FixedPoint;
-using Content.Shared.GameTicking.Components;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Silicons.Laws.LawFormats;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
@@ -42,9 +41,14 @@ public sealed class IonStormSystem : EntitySystem
     private static readonly ProtoId<DatasetPrototype> Foods = "IonStormFoods";
 
     /// <summary>
+    /// Fallback format to use if caller prototype doesn't specify any or its ProtoId is invalid.
+    /// </summary>
+    private static readonly ProtoId<LawFormatPrototype> FallbackFormatCorruption = "AllCapsLawFormat";
+
+    /// <summary>
     /// Randomly alters the laws of an individual silicon.
     /// </summary>
-    public void IonStormTarget(Entity<SiliconLawBoundComponent, IonStormTargetComponent> ent, bool adminlog = true)
+    public void IonStormTarget(Entity<SiliconLawBoundComponent, IonStormTargetComponent> ent, ProtoId<WeightedRandomPrototype>? possibleFormatCorruptions, bool adminlog = true)
     {
         var lawBound = ent.Comp1;
         var target = ent.Comp2;
@@ -93,7 +97,8 @@ public sealed class IonStormSystem : EntitySystem
         }
 
         // generate a new law...
-        var newLaw = GenerateLaw();
+        var corruptedLawString = GenerateLaw();
+        var corruptedLawFormat = PickFormatCorruption(possibleFormatCorruptions);
 
         // see if the law we add will replace a random existing law or be a new glitched order one
         if (laws.Laws.Count > 0 && _robustRandom.Prob(target.ReplaceChance))
@@ -101,7 +106,8 @@ public sealed class IonStormSystem : EntitySystem
             var i = _robustRandom.Next(laws.Laws.Count);
             laws.Laws[i] = new SiliconLaw()
             {
-                LawString = newLaw,
+                LawString = corruptedLawString,
+                LawFormat = corruptedLawFormat,
                 Order = laws.Laws[i].Order
             };
         }
@@ -109,7 +115,8 @@ public sealed class IonStormSystem : EntitySystem
         {
             laws.Laws.Insert(0, new SiliconLaw
             {
-                LawString = newLaw,
+                LawString = corruptedLawString,
+                LawFormat = corruptedLawFormat,
                 Order = -1,
                 LawIdentifierOverride = Loc.GetString("ion-storm-law-scrambled-number", ("length", _robustRandom.Next(5, 10)))
             });
@@ -147,24 +154,24 @@ public sealed class IonStormSystem : EntitySystem
     private string GenerateLaw()
     {
         // pick all values ahead of time to make the logic cleaner
-        var threats = Pick(Threats);
-        var objects = Pick(Objects);
-        var crew1 = Pick(Crew);
-        var crew2 = Pick(Crew);
-        var adjective = Pick(Adjectives);
-        var verb = Pick(Verbs);
-        var number = Pick(NumberBase) + " " + Pick(NumberMod);
-        var area = Pick(Areas);
-        var feeling = Pick(Feelings);
-        var feelingPlural = Pick(FeelingsPlural);
-        var must = Pick(Musts);
-        var require = Pick(Requires);
-        var action = Pick(Actions);
-        var allergy = Pick(Allergies);
-        var allergySeverity = Pick(AllergySeverities);
-        var concept = Pick(Concepts);
-        var drink = Pick(Drinks);
-        var food = Pick(Foods);
+        var threats = PickRandomFromDataset(Threats);
+        var objects = PickRandomFromDataset(Objects);
+        var crew1 = PickRandomFromDataset(Crew);
+        var crew2 = PickRandomFromDataset(Crew);
+        var adjective = PickRandomFromDataset(Adjectives);
+        var verb = PickRandomFromDataset(Verbs);
+        var number = PickRandomFromDataset(NumberBase) + " " + PickRandomFromDataset(NumberMod);
+        var area = PickRandomFromDataset(Areas);
+        var feeling = PickRandomFromDataset(Feelings);
+        var feelingPlural = PickRandomFromDataset(FeelingsPlural);
+        var must = PickRandomFromDataset(Musts);
+        var require = PickRandomFromDataset(Requires);
+        var action = PickRandomFromDataset(Actions);
+        var allergy = PickRandomFromDataset(Allergies);
+        var allergySeverity = PickRandomFromDataset(AllergySeverities);
+        var concept = PickRandomFromDataset(Concepts);
+        var drink = PickRandomFromDataset(Drinks);
+        var food = PickRandomFromDataset(Foods);
 
         var joined = $"{number} {adjective}";
         // a lot of things have subjects of a threat/crew/object
@@ -251,12 +258,22 @@ public sealed class IonStormSystem : EntitySystem
     }
 
     /// <summary>
-    /// Picks a random value from an ion storm dataset.
-    /// All ion storm datasets start with IonStorm.
+    /// Picks a random value from an ion storm dataset. All ion storm datasets start with IonStorm.
     /// </summary>
-    private string Pick(string name)
+    private string PickRandomFromDataset(string datasetName)
     {
-        var dataset = _proto.Index<DatasetPrototype>(name);
+        var dataset = _proto.Index<DatasetPrototype>(datasetName);
         return _robustRandom.Pick(dataset.Values);
+    }
+
+    /// <summary>
+    /// Picks a weighted random from the possible formats. Use fallback if undefined or left blank.
+    /// </summary>
+    private ProtoId<LawFormatPrototype> PickFormatCorruption(ProtoId<WeightedRandomPrototype>? possibleFormatCorruptions)
+    {
+        if (!_proto.Resolve(possibleFormatCorruptions, out var formatCorruptions) || formatCorruptions.Weights.Count == 0)
+            return FallbackFormatCorruption;
+
+        return new ProtoId<LawFormatPrototype>(formatCorruptions.Pick(_robustRandom));
     }
 }
