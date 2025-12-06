@@ -95,7 +95,7 @@ namespace Content.Server.GameTicking
 
             AddGamePresetRules();
 
-            var maps = new List<Shared.Maps.GameMapPrototype>();
+            var maps = new List<GameMapPrototype>();
 
             // the map might have been force-set by something
             // (i.e. votemap or forcemap)
