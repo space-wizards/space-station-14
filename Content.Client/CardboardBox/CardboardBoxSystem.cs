@@ -63,7 +63,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         foreach (var mob in mobMoverEntities)
         {
             var mapPos = _transform.GetMapCoordinates(mob);
-            if (!_examine.InRangeUnOccluded(sourcePos, mapPos, box.Distance, null))
+            if (!_examine.InRangeUnoccluded(sourcePos, mapPos, box.Distance, ignoreTouching: true))
                 continue;
 
             // no effect for non-mobs that have MobMover, such as mechs and vehicles.
