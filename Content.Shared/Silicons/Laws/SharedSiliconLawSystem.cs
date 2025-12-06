@@ -174,7 +174,8 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         }
 
         RaiseLocalEvent(ref ev);
-        component.Lawset = ev.Laws;
+        if (ev.Handled)
+            component.Lawset = ev.Laws;
     }
 
     /// <summary>
