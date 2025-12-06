@@ -123,6 +123,15 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
                 continue;
             }
 
+            var childGroups = new List<LoadoutGroupPrototype>();
+            foreach (var childGroup in groupProto.LoadoutGroups)
+            {
+                if (protoManager.TryIndex(childGroup, out var childGroupProto))
+                {
+                    childGroups.Add(childGroupProto);
+                }
+            }
+
             var loadouts = groupLoadouts[..Math.Min(groupLoadouts.Count, groupProto.MaxLimit)];
 
             // Validate first
@@ -138,8 +147,9 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
                 }
 
                 // Malicious client maybe, check the group even has it.
-                if (!groupProto.Loadouts.Contains(loadout.Prototype))
+                if (!groupProto.Loadouts.Contains(loadout.Prototype) && !childGroups.Any(g => g.Loadouts.Contains(loadout.Prototype)))
                 {
+
                     loadouts.RemoveAt(i);
                     continue;
                 }
