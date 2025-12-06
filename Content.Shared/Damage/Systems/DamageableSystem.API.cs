@@ -212,6 +212,8 @@ public sealed partial class DamageableSystem
 
         // make sure damageChange has the same damage types as damageEntity
         damageChange.DamageDict.EnsureCapacity(damage.DamageDict.Count);
+        foreach (var type in damage.DamageDict.Keys)
+            damageChange.DamageDict.Add(type, FixedPoint2.Zero);
 
         var remaining = -amount;
         var keys = damage.DamageDict.Keys.ToList();
@@ -226,10 +228,6 @@ public sealed partial class DamageableSystem
             {
                 var type = keys[i];
                 var damageType = damage.DamageDict[type];
-
-                if (!damageChange.DamageDict.ContainsKey(type))
-                    damageChange.DamageDict.Add(type, FixedPoint2.Zero);
-
                 var damageTypeHeal = damageChange.DamageDict[type];
                 var valueHeal = FixedPoint2.Min(damageType + damageTypeHeal, maxHeal, remaining);
 
