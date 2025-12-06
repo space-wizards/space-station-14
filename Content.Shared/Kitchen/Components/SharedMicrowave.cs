@@ -74,7 +74,8 @@ namespace Content.Shared.Kitchen.Components
         Idle,
         Cooking,
         Broken,
-        Bloody
+        Bloody,
+        Off
     }
 
     [NetSerializable, Serializable]
