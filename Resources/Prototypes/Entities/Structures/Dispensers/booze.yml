@@ -35,12 +35,14 @@
     containers:
       storagebase: !type:AllSelector
         children:
+        - id: DrinkAbsintheBottleFull
         - id: DrinkAleBottleFullGrowler
         - id: DrinkBeerGrowler
+        - id: DrinkBlueCuracaoBottleFull
         - id: DrinkCoffeeLiqueurBottleFull
         - id: DrinkCognacBottleFull
         - id: DrinkGinBottleFull
-        - id: DrinkMeadJug
+        - id: DrinkMelonLiquorBottleFull
         - id: DrinkRumBottleFull
         - id: DrinkTequilaBottleFull
         - id: DrinkVermouthBottleFull
