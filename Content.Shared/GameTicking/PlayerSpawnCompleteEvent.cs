@@ -14,6 +14,7 @@ public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
 {
     public EntityUid Mob { get; }
     public ICommonSession Player { get; }
+    public string Name { get; }
     public string? JobId { get; }
     public bool LateJoin { get; }
     public bool Silent { get; }
@@ -25,6 +26,7 @@ public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
 
     public PlayerSpawnCompleteEvent(EntityUid mob,
         ICommonSession player,
+        string name,
         string? jobId,
         bool lateJoin,
         bool silent,
@@ -34,6 +36,7 @@ public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
     {
         Mob = mob;
         Player = player;
+        Name = name;
         JobId = jobId;
         LateJoin = lateJoin;
         Silent = silent;

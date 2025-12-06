@@ -46,6 +46,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     /// <summary>
     /// Attempts to spawn a player character onto the given station.
     /// </summary>
+    /// <param name="name">The character's name. This name will be applied to the spawned mob.</param>
     /// <param name="station">Station to spawn onto.</param>
     /// <param name="job">The job to assign, if any.</param>
     /// <param name="profile">The character profile to use, if any.</param>
@@ -55,12 +56,12 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     /// <remarks>
     /// This only spawns the character, and does none of the mind-related setup you'd need for it to be playable.
     /// </remarks>
-    public EntityUid? SpawnPlayerCharacterOnStation(EntityUid? station, ProtoId<JobPrototype>? job, HumanoidCharacterProfile? profile, StationSpawningComponent? stationSpawning = null)
+    public EntityUid? SpawnPlayerCharacterOnStation(EntityUid? station, string name, ProtoId<JobPrototype>? job, HumanoidCharacterProfile? profile, StationSpawningComponent? stationSpawning = null)
     {
         if (station != null && !Resolve(station.Value, ref stationSpawning))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
-        var ev = new PlayerSpawningEvent(job, profile, station);
+        var ev = new PlayerSpawningEvent(name, job, profile, station);
 
         RaiseLocalEvent(ev);
         DebugTools.Assert(ev.SpawnResult is { Valid: true } or null);
@@ -80,9 +81,11 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     /// <param name="profile">Appearance profile to use for the character.</param>
     /// <param name="station">The station this player is being spawned on.</param>
     /// <param name="entity">The entity to use, if one already exists.</param>
+    /// <param name="name">The character's name.</param>
     /// <returns>The spawned entity</returns>
     public EntityUid SpawnPlayerMob(
         EntityCoordinates coordinates,
+        string name,
         ProtoId<JobPrototype>? job,
         HumanoidCharacterProfile? profile,
         EntityUid? station,
@@ -112,13 +115,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             DebugTools.Assert(entity is null);
             var jobEntity = Spawn(prototype.JobEntity, coordinates);
             _mindSystem.MakeSentient(jobEntity);
-
-            // Make sure custom names get handled, what is gameticker control flow whoopy.
-            if (loadout != null)
-            {
-                EquipRoleName(jobEntity, loadout, roleProto!);
-            }
-
+            _metaSystem.SetEntityName(jobEntity, name);
             DoJobSpecials(job, jobEntity);
             _identity.QueueIdentityUpdate(jobEntity);
             return jobEntity;
@@ -134,13 +131,14 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
         if (profile != null)
         {
             _humanoidSystem.LoadProfile(entity.Value, profile);
-            _metaSystem.SetEntityName(entity.Value, profile.Name);
 
             if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
             {
                 AddComp<DetailExaminableComponent>(entity.Value).Content = profile.FlavorText;
             }
         }
+
+        _metaSystem.SetEntityName(entity.Value, name);
 
         if (loadout != null)
         {
@@ -233,6 +231,10 @@ public sealed class PlayerSpawningEvent : EntityEventArgs
     /// </summary>
     public EntityUid? SpawnResult;
     /// <summary>
+    /// The character's name. This can differ from the profile's name (e.g. for clowns, mimes and borgs).
+    /// </summary>
+    public readonly string Name;
+    /// <summary>
     /// The job to use, if any.
     /// </summary>
     public readonly ProtoId<JobPrototype>? Job;
@@ -245,8 +247,9 @@ public sealed class PlayerSpawningEvent : EntityEventArgs
     /// </summary>
     public readonly EntityUid? Station;
 
-    public PlayerSpawningEvent(ProtoId<JobPrototype>? job, HumanoidCharacterProfile? humanoidCharacterProfile, EntityUid? station)
+    public PlayerSpawningEvent(string name, ProtoId<JobPrototype>? job, HumanoidCharacterProfile? humanoidCharacterProfile, EntityUid? station)
     {
+        Name = name;
         Job = job;
         HumanoidCharacterProfile = humanoidCharacterProfile;
         Station = station;

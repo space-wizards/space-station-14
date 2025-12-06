@@ -2,25 +2,19 @@ using System.Linq;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
-using Content.Shared.Item;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
-using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Station;
 
 public abstract class SharedStationSpawningSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] protected readonly InventorySystem InventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
 
@@ -56,31 +50,6 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 
                 EquipStartingGear(entity, loadoutProto, raiseEvent: false);
             }
-        }
-
-        EquipRoleName(entity, loadout, roleProto);
-    }
-
-    /// <summary>
-    /// Applies the role's name as applicable to the entity.
-    /// </summary>
-    public void EquipRoleName(EntityUid entity, RoleLoadout loadout, RoleLoadoutPrototype roleProto)
-    {
-        string? name = null;
-
-        if (roleProto.CanCustomizeName)
-        {
-            name = loadout.EntityName;
-        }
-
-        if (string.IsNullOrEmpty(name) && PrototypeManager.Resolve(roleProto.NameDataset, out var nameData))
-        {
-            name = Loc.GetString(_random.Pick(nameData.Values));
-        }
-
-        if (!string.IsNullOrEmpty(name))
-        {
-            _metadata.SetEntityName(entity, name);
         }
     }
 
