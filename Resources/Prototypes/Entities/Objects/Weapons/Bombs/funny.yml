@@ -134,14 +134,15 @@
 
 - type: entity
   parent: SnapPop
-  id: SnapPopFake
-  suffix: fake
+  id: SnapPopExplosive
+  suffix: explosive
   components:
   - type: Explosive
     explosionType: Default
-    maxIntensity: 1
+    maxIntensity: 0.8
     intensitySlope: 1
-    totalIntensity: 5
+    totalIntensity: 3.5
+    canCauseVacuum: false
   - type: Construction
-    graph: SnapPopFakeGraph
-    node: snapPopFake
+    graph: SnapPopExplosiveGraph
+    node: snapPopExplosive

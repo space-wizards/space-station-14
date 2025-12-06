@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: SnapPopFakeGraph
+  id: SnapPopExplosiveGraph
   start: start
   graph:
   - node: start
@@ -14,7 +14,7 @@
   - node: snapPop
     entity: SnapPop
     edges:
-      - to: snapPopFake
+      - to: snapPopExplosive
         steps:
           - material: Gunpowder
             doAfter: 1
@@ -22,4 +22,4 @@
     actions:
     - !type:AdminLog
       message: "A fake snap pop was crafted"
-    entity: SnapPopFake
+    entity: SnapPopExplosive
