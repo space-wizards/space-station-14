@@ -1,0 +1,17 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+            Title="Random Gate Setup"
+            MinSize="200 100">
+    <BoxContainer Orientation="Vertical" Margin="5" SeparationOverride="10">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="Success Probability (%):"/>
+            <Control MinSize="5 0" />
+            <LineEdit Name="ProbabilityInput"
+                      MinSize="70 0"/>
+        </BoxContainer>
+        <Button Name="ApplyButton"
+                Text="Apply"
+                HorizontalAlignment="Right" />
+    </BoxContainer>
+</controls:FancyWindow>

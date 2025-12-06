@@ -304,10 +304,16 @@
       - state: random_gate
   - type: RandomGate
   - type: DeviceLinkSink
-    ports: 
+    ports:
     - RandomGateInput
   - type: DeviceLinkSource
-    ports: 
+    ports:
     - Output
+  - type: UserInterface
+    interfaces:
+      enum.RandomGateUiKey.Key:
+        type: RandomGateBoundUserInterface
+  - type: ActivatableUI
+    key: enum.RandomGateUiKey.Key
   - type: Construction
     node: random_gate
