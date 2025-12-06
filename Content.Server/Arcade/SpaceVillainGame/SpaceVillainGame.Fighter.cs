@@ -63,6 +63,11 @@ public sealed partial class SpaceVillainGame
         /// Whether the given fighter can take damage/lose mana.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Invincible = false;
+        public bool Invincible
+        {
+            get => _invincible;
+            set => _invincible = value;
+        }
+        private bool _invincible;
     }
 }
