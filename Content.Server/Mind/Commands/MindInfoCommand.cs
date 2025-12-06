@@ -27,18 +27,20 @@ namespace Content.Server.Mind.Commands
 
             if (!_playerManager.TryGetSessionByUsername(args[0], out var session))
             {
-                shell.WriteLine(Loc.GetString($"cmd-mindinfo-mind-not-found"));
+                shell.WriteLine(Loc.GetString("cmd-mindinfo-mind-not-found"));
                 return;
             }
 
             if (!_minds.TryGetMind(session, out var mindId, out var mind))
             {
-                shell.WriteLine(Loc.GetString($"cmd-mindinfo-mind-not-found"));
+                shell.WriteLine(Loc.GetString("cmd-mindinfo-mind-not-found"));
                 return;
             }
 
             var builder = new StringBuilder();
-            builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedEntity);
+            var playerStr = mind.UserId?.ToString() ?? string.Empty;
+            var mobStr = mind.OwnedEntity?.ToString() ?? string.Empty;
+            builder.AppendFormat(Loc.GetString("cmd-mindinfo-player-mob-roles", ("player", playerStr), ("mob", mobStr)));
 
             foreach (var role in _roles.MindGetAllRoleInfo(mindId))
             {

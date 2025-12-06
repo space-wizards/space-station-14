@@ -5,15 +5,13 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
-public sealed class ClearBluespaceLockerLinks : IConsoleCommand
+public sealed class ClearBluespaceLockerLinks : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    public string Command => "clearbluespacelockerlinks";
-    public string Description => "Removes the bluespace links of the given uid. Does not remove links this uid is the target of.";
-    public string Help => "Usage: clearbluespacelockerlinks <storage uid>";
+    public override string Command => "clearbluespacelockerlinks";
 
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
         {

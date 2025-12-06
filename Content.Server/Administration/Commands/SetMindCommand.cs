@@ -15,7 +15,7 @@ namespace Content.Server.Administration.Commands
 
         public override string Command => "setmind";
 
-        public override string Description => Loc.GetString("cmd-setmind-desc", ("requiredComponent", nameof(MindContainerComponent)));
+        public override string Description => Loc.GetString($"cmd-{Command}-desc", ("requiredComponent", nameof(MindContainerComponent)));
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {

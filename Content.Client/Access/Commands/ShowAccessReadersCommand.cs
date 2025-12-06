@@ -18,6 +18,6 @@ public sealed class ShowAccessReadersCommand : LocalizedEntityCommands
         if (!existing)
             _overlay.AddOverlay(new AccessOverlay(EntityManager, _cache, _xform));
 
-        shell.WriteLine(Loc.GetString($"cmd-showaccessreaders-status", ("status", !existing)));
+        shell.WriteLine(Loc.GetString("cmd-showaccessreaders-status", ("status", !existing)));
     }
 }

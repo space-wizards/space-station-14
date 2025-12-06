@@ -15,7 +15,7 @@ namespace Content.Server.Administration.Commands;
 /// Possible todo for future, store default values for cvars, and allow resetting to default.
 /// </remarks>
 [AnyCommand]
-public sealed class ChangeCvarCommand : IConsoleCommand
+public sealed class ChangeCvarCommand : LocalizedCommands
 {
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
@@ -66,10 +66,9 @@ public sealed class ChangeCvarCommand : IConsoleCommand
         return cvar.Name;
     }
 
-    public string Command => "changecvar";
-    public string Description { get; } = Loc.GetString("cmd-changecvar-desc");
-    public string Help { get; } = Loc.GetString("cmd-changecvar-help");
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "changecvar";
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
         {
@@ -188,12 +187,12 @@ public sealed class ChangeCvarCommand : IConsoleCommand
             }
             catch (FormatException)
             {
-                shell.WriteError(Loc.GetString("cmd-cvar-parse-error", ("type", type)));
+                shell.WriteError(Loc.GetString("cmd-changecvar-parse-error", ("type", type)));
             }
         }
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         var cvars = _cVarControlManager.GetAllRunnableCvars(shell);
 
