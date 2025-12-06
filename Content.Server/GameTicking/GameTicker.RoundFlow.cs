@@ -8,6 +8,7 @@ using Content.Server.Roles;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
+using Content.Shared.Maps;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
@@ -94,7 +95,7 @@ namespace Content.Server.GameTicking
 
             AddGamePresetRules();
 
-            var maps = new List<GameMapPrototype>();
+            var maps = new List<Shared.Maps.GameMapPrototype>();
 
             // the map might have been force-set by something
             // (i.e. votemap or forcemap)
