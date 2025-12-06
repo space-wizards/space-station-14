@@ -13,6 +13,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
@@ -41,6 +42,7 @@ public sealed partial class SleepingSystem : EntitySystem
     [Dependency] private readonly SharedEmitSoundSystem _emitSound = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public static readonly EntProtoId SleepActionId = "ActionSleep";
     public static readonly EntProtoId WakeActionId = "ActionWake";
@@ -270,7 +272,7 @@ public sealed partial class SleepingSystem : EntitySystem
     /// </summary>
     private void OnMobStateChanged(Entity<SleepingComponent> ent, ref MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Dead)
+        if (args.NewMobState == MobState.Dead || args.NewMobState == MobState.Critical)
         {
             RemComp<SpamEmitSoundComponent>(ent);
             RemComp<SleepingComponent>(ent);
@@ -294,6 +296,9 @@ public sealed partial class SleepingSystem : EntitySystem
     public bool TrySleeping(Entity<MobStateComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return false;
+
+        if (_mobState.IsIncapacitated(ent.Owner, ent.Comp))
             return false;
 
         var tryingToSleepEvent = new TryingToSleepEvent(ent);
