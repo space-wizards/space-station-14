@@ -1,6 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Movement.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 
@@ -20,36 +21,42 @@ public sealed partial class BlockingSystem
         SubscribeLocalEvent<BlockingUserComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<BlockingUserComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<BlockingUserComponent, EntityTerminatingEvent>(OnEntityTerminating);
+        SubscribeLocalEvent<HasRaisedShieldComponent, MoveInputEvent>(OnMoveInput);
     }
 
-    private void OnParentChanged(EntityUid uid, BlockingUserComponent component, ref EntParentChangedMessage args)
+    private void OnParentChanged(Entity<BlockingUserComponent> shieldUser, ref EntParentChangedMessage args)
     {
-        UserStopBlocking(uid, component);
+        UserStopBlocking(shieldUser);
     }
 
-    private void OnInsertAttempt(EntityUid uid, BlockingUserComponent component, ContainerGettingInsertedAttemptEvent args)
+    private void OnInsertAttempt(Entity<BlockingUserComponent> shieldUser, ref ContainerGettingInsertedAttemptEvent args)
     {
-        UserStopBlocking(uid, component);
+        UserStopBlocking(shieldUser);
     }
 
-    private void OnAnchorChanged(EntityUid uid, BlockingUserComponent component, ref AnchorStateChangedEvent args)
+    private void OnAnchorChanged(Entity<BlockingUserComponent> shieldUser, ref AnchorStateChangedEvent args)
     {
         if (args.Anchored)
             return;
 
-        UserStopBlocking(uid, component);
+        UserStopBlocking(shieldUser);
+    }
+
+    private void OnMoveInput(Entity<HasRaisedShieldComponent> shieldUser, ref MoveInputEvent args)
+    {
+        if (!TryComp<BlockingUserComponent>(shieldUser, out var shieldUserComp))
+            return;
+
+        UserStopBlocking((shieldUser, shieldUserComp));
     }
 
     private void OnUserDamageModified(EntityUid uid, BlockingUserComponent component, DamageModifyEvent args)
     {
-        if (component.BlockingItem is not { } item || !TryComp<BlockingComponent>(item, out var blocking))
-            return;
-
-        if (args.Damage.GetTotal() <= 0)
-            return;
-
-        // A shield should only block damage it can itself absorb. To determine that we need the Damageable component on it.
-        if (!TryComp<DamageableComponent>(item, out var dmgComp))
+        if (component.BlockingItem is not { } item
+            || !TryComp<BlockingComponent>(item, out var blocking)
+            || args.Damage.GetTotal() <= 0
+            // A shield should only block damage it can itself absorb. To determine that we need the Damageable component on it.
+            || !TryComp<DamageableComponent>(item, out var dmgComp))
             return;
 
         var blockFraction = blocking.IsBlocking ? blocking.ActiveBlockFraction : blocking.PassiveBlockFraction;
@@ -65,9 +72,8 @@ public sealed partial class BlockingSystem
         args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, modify);
 
         if (blocking.IsBlocking && !args.Damage.Equals(args.OriginalDamage))
-        {
             _audio.PlayPvs(blocking.BlockSound, uid);
-        }
+
     }
 
     private void OnDamageModified(EntityUid uid, BlockingComponent component, DamageModifyEvent args)
@@ -81,12 +87,12 @@ public sealed partial class BlockingSystem
         args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, modifier);
     }
 
-    private void OnEntityTerminating(EntityUid uid, BlockingUserComponent component, ref EntityTerminatingEvent args)
+    private void OnEntityTerminating(Entity<BlockingUserComponent> shieldUser, ref EntityTerminatingEvent args)
     {
-        if (!TryComp<BlockingComponent>(component.BlockingItem, out var blockingComponent))
+        if (!TryComp<BlockingComponent>(shieldUser.Comp.BlockingItem, out var blockingComponent))
             return;
 
-        StopBlockingHelper(component.BlockingItem.Value, blockingComponent, uid);
+        StopBlockingHelper((shieldUser.Comp.BlockingItem.Value, blockingComponent), shieldUser);
 
     }
 
@@ -94,11 +100,11 @@ public sealed partial class BlockingSystem
     /// Check for the shield and has the user stop blocking
     /// Used where you'd like the user to stop blocking, but also don't want to remove the <see cref="BlockingUserComponent"/>
     /// </summary>
-    /// <param name="uid">The user blocking</param>
+    /// <param name="shieldUser">The user entity with the shield</param>
     /// <param name="component">The <see cref="BlockingUserComponent"/></param>
-    private void UserStopBlocking(EntityUid uid, BlockingUserComponent component)
+    private void UserStopBlocking(Entity<BlockingUserComponent> shieldUser)
     {
-        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
-            StopBlocking(component.BlockingItem.Value, blockComp, uid);
+        if (TryComp<BlockingComponent>(shieldUser.Comp.BlockingItem, out var blockComp) && blockComp.IsBlocking)
+            StopBlocking((shieldUser.Comp.BlockingItem.Value, blockComp), shieldUser);
     }
 }

@@ -11,13 +11,13 @@ public sealed partial class BlockingUserComponent : Component
     /// <summary>
     /// The entity that's being used to block
     /// </summary>
-    [DataField("blockingItem")]
+    [DataField]
     public EntityUid? BlockingItem;
 
     /// <summary>
     /// Stores the entities original bodytype
     /// Used so that it can be put back to what it was after anchoring
     /// </summary>
-    [DataField("originalBodyType")]
+    [DataField]
     public BodyType OriginalBodyType;
 }
