@@ -29,4 +29,11 @@ public sealed partial class FTLDestinationComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
     public bool RequireCoordinateDisk = false;
+
+    /// <summary>
+    /// If true, this will prevent sub-map FTL jumps. That is, it prevents FTL
+    /// jumping to this map if you are already in that map.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool DisallowCoordinateFTLJumps;
 }

@@ -97,6 +97,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         destComp.BeaconsOnly = true;
         destComp.RequireCoordinateDisk = true;
         destComp.Enabled = true;
+        // No reason to allow self-jumps; it'll get deleted during ftl
+        destComp.DisallowCoordinateFTLJumps = true;
+        _entManager.Dirty(mapUid, destComp);
         _metaData.SetEntityName(
             mapUid,
             _entManager.System<SharedSalvageSystem>().GetFTLName(_prototypeManager.Index(SalvageSystem.PlanetNames), _missionParams.Seed));
