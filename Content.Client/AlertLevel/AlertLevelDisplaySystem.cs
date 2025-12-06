@@ -1,8 +1,7 @@
 using System.Linq;
 using Content.Shared.AlertLevel;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Shared.Utility;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.AlertLevel;
 
@@ -36,7 +35,7 @@ public sealed class AlertLevelDisplaySystem : EntitySystem
             return;
         }
 
-        if (alertLevelDisplay.AlertVisuals.TryGetValue((string)level, out var visual))
+        if (alertLevelDisplay.AlertVisuals.TryGetValue((ProtoId<AlertLevelPrototype>)level, out var visual))
         {
             _sprite.LayerSetRsiState((uid, args.Sprite), layer, visual);
         }
