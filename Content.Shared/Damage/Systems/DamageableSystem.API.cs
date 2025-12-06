@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -182,6 +183,119 @@ public sealed partial class DamageableSystem
             OnEntityDamageChanged((ent, ent.Comp), damageDone, interruptsDoAfters, origin);
 
         return damageDone;
+    }
+
+    /// <summary>
+    /// Will reduce the damage on the entity exactly by <see cref="amount"/> as close as equally distributed among all damage types the entity has.
+    /// If one of the damage types of the entity is too low. it will heal that completly and distribute the excess healing among the other damage types.
+    /// If the <see cref="amount"/> is larger than the total damage of the entity then it just clears all damage.
+    /// </summary>
+    /// <param name="ent">entity to be healed</param>
+    /// <param name="amount">how much to heal</param>
+    /// <param name="group">from which group to heal. if null, heal from all groups</param>
+    /// <param name="origin">who did the healing</param>
+    public DamageSpecifier HealEvenly(
+        Entity<DamageableComponent?> ent,
+        FixedPoint2 amount,
+        ProtoId<DamageGroupPrototype>? group = null,
+        EntityUid? origin = null
+    )
+    {
+        var damageChange = new DamageSpecifier();
+
+        if (!_damageableQuery.Resolve(ent, ref ent.Comp, false))
+            return damageChange;
+
+        if (amount <= 0)
+            return damageChange;
+
+        // get the damage should be healed (either all or only from one group)    
+        DamageSpecifier damageEntity;
+        if (group != null)
+        {
+            if (!_prototypeManager.TryIndex(group, out var groupProto))
+                return damageChange;
+
+            damageEntity = GetDamage((ent, ent.Comp), groupProto);
+        }
+        else
+            damageEntity = GetDamage((ent, ent.Comp));
+
+        // make sure damageChange has the same damage types as damageEntity
+        damageChange.DamageDict.EnsureCapacity(damageEntity.DamageDict.Count);
+        foreach (var type in damageEntity.DamageDict.Keys)
+            damageChange.DamageDict.Add(type, FixedPoint2.Zero);
+
+        // If trying to heal more than the total damage of damageEntity just heal everything
+        if (damageEntity.GetTotal() < amount)
+            return ChangeDamage(ent, -damageEntity, true, false, origin);
+
+        // This complicated math tries to share the remainingHeal equally among all damage types in damageEntity
+        // Any overheals will be then equally shared with all other damage types
+        var remainingHeal = amount;
+        while (remainingHeal > 0)
+        {
+            var damageLeftToHeal = (damageEntity + damageChange).DamageDict
+            .Where(pair => pair.Value != FixedPoint2.Zero)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
+
+            var valueToHeal = FixedPoint2.Min(
+                remainingHeal / damageLeftToHeal.Count,
+                damageLeftToHeal.Values.Min());
+
+            foreach (var type in damageLeftToHeal.Keys)
+                damageChange.DamageDict[type] -= valueToHeal;
+
+            remainingHeal -= valueToHeal * damageLeftToHeal.Count;
+        }
+
+        return ChangeDamage(ent, damageChange, true, false, origin);
+    }
+
+    /// <summary>
+    /// Returns a <see cref="DamageSpecifier"/> with all positive damage of the entity from the group specified
+    /// </summary>
+    /// <param name="ent">entity with damage</param>
+    /// <param name="group">group of damage to get values from</param>
+    /// <returns></returns>
+    private DamageSpecifier GetDamage(
+        Entity<DamageableComponent> ent,
+        DamageGroupPrototype group
+    )
+    {
+        var damageEntity = new DamageSpecifier();
+        damageEntity.DamageDict.EnsureCapacity(group.DamageTypes.Count);
+
+        foreach (var damageId in group.DamageTypes)
+        {
+            if (!ent.Comp.Damage.DamageDict.TryGetValue(damageId, out var value))
+                continue;
+            if (value > FixedPoint2.Zero)
+                damageEntity.DamageDict.Add(damageId, value);
+        }
+
+        return damageEntity;
+    }
+
+    /// <summary>
+    /// Returns a <see cref="DamageSpecifier"/> with all positive damage of the entity
+    /// </summary>
+    /// <param name="ent">entity with damage</param>
+    /// <returns></returns>
+    private DamageSpecifier GetDamage(
+        Entity<DamageableComponent> ent
+    )
+    {
+        var damageEntity = new DamageSpecifier();
+        damageEntity.DamageDict.EnsureCapacity(ent.Comp.Damage.DamageDict.Count);
+
+        foreach (var (damageId, value) in ent.Comp.Damage.DamageDict)
+        {
+            if (value > FixedPoint2.Zero)
+                damageEntity.DamageDict.Add(damageId, value);
+        }
+
+        return damageEntity;
     }
 
     /// <summary>
