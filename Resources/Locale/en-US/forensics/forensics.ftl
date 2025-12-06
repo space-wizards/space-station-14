@@ -22,6 +22,11 @@ forensic-scanner-printer-not-ready = Printer is not ready yet.
 forensic-scanner-verb-text = Scan
 forensic-scanner-verb-message = Perform a forensic scan
 
+forensic-damage-traces-melee-hands = punches
+forensic-damage-traces-melee-unknown = unidentified weaponized blow
+forensic-damage-traces-hitscan-unknown = unidentified beam trace
+forensic-damage-traces-projectile-unknown = unidentified high-speed hit
+
 forensics-dna-unknown = unknown DNA
 
 forensics-verb-text = Remove evidence

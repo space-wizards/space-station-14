@@ -38,6 +38,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
         private const int MaxDamageTraces = 10;
+        private const float MinRangedDamageThreshold = 2f;
 
         public override void Initialize()
         {
@@ -131,13 +132,17 @@ namespace Content.Server.Forensics
                             meleeDamageSourceUid = args.Weapon; //Get the UID
                             meleeDamageSourceName = Name(meleeDamageSourceUid); //and convert it into a name
 
+                            if (meleeDamageSourceUid == args.User) //When the UID of the attacker and his weapon are equal, it means the attacker use unarmed attack.
+                            {
+                                meleeDamageSourceName = "forensic-damage-traces-melee-hands";
+                            }
                         }
                         else
                         {
-                            meleeDamageSourceName = "unknown damage trace";
+                            meleeDamageSourceName = "forensic-damage-traces-melee-unknown";
                         }
 
-                        AddUniqueDamageTrace(targetComponent, meleeDamageSourceName); //No more copypaste, using separated method
+                        AddUniqueDamageTrace(targetComponent, meleeDamageSourceName);
                     }
                 }
             }
@@ -148,9 +153,17 @@ namespace Content.Server.Forensics
             var targetUid = args.Target;
             var projectileUid = ent.Owner;
             string projectileName = Name(projectileUid);
+
+            if (args.Damage == null || args.Damage.GetTotal() <= MinRangedDamageThreshold)
+                return;
+
             if (TryComp<MetaDataComponent>(projectileUid, out var projectileMeta))
             {
                 projectileName = projectileMeta.EntityName;
+            }
+            else
+            {
+                projectileName = "forensic-damage-traces-projectile-unknown";
             }
 
             if (HasComp<IgnoresDamageTracesComponent>(targetUid))
@@ -164,7 +177,13 @@ namespace Content.Server.Forensics
 
         private void OnHitscanHit(Entity<HitscanAmmoComponent> ent, ref HitscanRaycastFiredEvent args)
         {
-            if (args.Data.HitEntity == null)
+            if (args.Data.HitEntity == null) //miss check
+                return;
+
+            if (!TryComp<HitscanBasicDamageComponent>(ent.Owner, out var damageComponent)) //checking for non-zero damage
+                return;
+
+            if (damageComponent.Damage == null || damageComponent.Damage.GetTotal() <= MinRangedDamageThreshold) //another checking for non-zero damage
                 return;
 
             var targetUid = args.Data.HitEntity.Value;
@@ -174,8 +193,8 @@ namespace Content.Server.Forensics
             var component = EnsureComp<ForensicsComponent>(targetUid);
 
             // dubious logic because the rays have no name. Try to get the name, if it doesn't work, find out the prototype ID
-            string hitscanName = "unidentified beam trace";
-            string hitscanPrototypeId = "unknown beam trace";
+            string hitscanName = "forensic-damage-traces-hitscan-unknown";
+            string hitscanPrototypeId;
             if (TryComp<MetaDataComponent>(ent.Owner, out var hitscanMeta))
             {
                 if (!string.IsNullOrWhiteSpace(hitscanMeta.EntityName))
@@ -183,9 +202,9 @@ namespace Content.Server.Forensics
                     hitscanName = hitscanMeta.EntityName;
                     AddUniqueDamageTrace(component, hitscanName);
                 }
-                else
+                else //TODO: Delete this block when the rays get normal names..
                 {
-                    hitscanPrototypeId = Prototype(ent.Owner)?.ID ?? "unknown beam trace";
+                    hitscanPrototypeId = Prototype(ent.Owner)?.ID ?? "forensic-damage-traces-hitscan-unknown";
                     AddUniqueDamageTrace(component, hitscanPrototypeId);
                 }
             }
@@ -405,10 +424,11 @@ namespace Content.Server.Forensics
 
         private void AddUniqueDamageTrace(ForensicsComponent forensicsComponent, string traceName)
         {
-            // Delete duplicate entries
-            if (forensicsComponent.DamageTraces.Contains(traceName))
+            string localizedTraceName = Loc.GetString(traceName);
+
+            if (forensicsComponent.DamageTraces.Contains(localizedTraceName))
             {
-                forensicsComponent.DamageTraces.Remove(traceName);
+                forensicsComponent.DamageTraces.Remove(localizedTraceName);
             }
 
             // Set a limit of element via constant
@@ -419,7 +439,7 @@ namespace Content.Server.Forensics
             }
 
             // Add new trace
-            forensicsComponent.DamageTraces.Add(traceName);
+            forensicsComponent.DamageTraces.Add(localizedTraceName);
 
         }
 
