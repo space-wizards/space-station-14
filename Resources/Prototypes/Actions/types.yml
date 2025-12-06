@@ -488,3 +488,14 @@
     icon: Interface/Actions/shop.png
   - type: InstantAction
     event: !type:IntrinsicStoreActionEvent
+
+- type: entity
+  parent: BaseMentalAction
+  id: ActionIntrinsicReenterLobby
+  name: Reenter Lobby
+  description: Leave your current character and return to the server's lobby
+  components:
+  - type: Action
+    icon: Interface/home.png # TODO custom icon?
+  - type: InstantAction
+    event: !type:IntrinsicReenterLobbyActionEvent
