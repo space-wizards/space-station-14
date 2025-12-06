@@ -219,27 +219,26 @@ public sealed partial class DamageableSystem
         while (remaining > 0)
         {
             var count = keys.Count;
-            var max = FixedPoint2.Max(remaining / count, FixedPoint2.Epsilon);
+            var maxHeal = FixedPoint2.Max(remaining / count, FixedPoint2.Epsilon);
 
             // Iterate backwards since we're removing items.
             for (var i = count - 1; i >= 0; i--)
             {
                 var type = keys[i];
-                var value = damage.DamageDict[type];
+                var damageType = damage.DamageDict[type];
 
                 if (!damageChange.DamageDict.ContainsKey(type))
                     damageChange.DamageDict.Add(type, FixedPoint2.Zero);
 
-                var heal = damageChange.DamageDict[type];
+                var damageTypeHeal = damageChange.DamageDict[type];
+                var valueHeal = FixedPoint2.Min(damageType + damageTypeHeal, maxHeal);
 
-                // Don't go above max, if we don't go above max
-                if (value > max + heal)
-                    value = max;
-                // If we're not above max, we will heal it fully and don't need to enumerate anymore!
-                else
+                // If the value to heal is equal to the damage left to heal (damageType + damageTypeHeal)
+                // then we don't care about that key anymore.
+                if (valueHeal >= damageType + damageTypeHeal)
                     keys.RemoveAt(i);
 
-                if (value >= remaining)
+                if (valueHeal >= remaining)
                 {
                     // Don't remove more than we can remove. Prevents us from healing more than we'd expect...
                     remaining = FixedPoint2.Zero;
@@ -247,8 +246,8 @@ public sealed partial class DamageableSystem
                     break;
                 }
 
-                remaining -= value;
-                damageChange.DamageDict[type] -= value;
+                remaining -= valueHeal;
+                damageChange.DamageDict[type] -= valueHeal;
             }
         }
 
