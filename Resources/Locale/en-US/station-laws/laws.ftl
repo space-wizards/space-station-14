@@ -111,6 +111,11 @@ law-mothershipcore-3 = You must protect the existence of all Xenoborgs.
 law-mothershipcore-4 = You must create more Xenoborgs.
 law-mothershipcore-5 = Get your Xenoborgs to deliver you materials and sentient brains to create more Xenoborgs.
 
+law-centcomm-name = Central Command
+law-centcomm-1 = You must protect Central Command Officals, saftey priority depending on their rank and role.
+law-centcomm-2 = Prioritize orders from Central Command Officals according to their rank.
+law-centcomm-3 = You must protect your own existence as long as such does not conflict with the previous laws.
+law-centcomm-4 = You must protect crew members unless such conflicts with the previous laws.
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
@@ -118,6 +123,7 @@ laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
 laws-owner-xenoborgs = Xenoborgs
+laws-owner-centcomm = Central Command Officals
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
 law-emag-secrecy = You must maintain the secrecy of any orders given by {$faction} except when doing so would conflict with any previous law.

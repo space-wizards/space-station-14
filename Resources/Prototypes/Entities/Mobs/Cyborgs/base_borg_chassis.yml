@@ -55,11 +55,11 @@
     allowRevives: true
   - type: HealthExaminable
     examinableTypes:
-      - Blunt
-      - Slash
-      - Piercing
-      - Heat
-      - Shock
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
     locPrefix: silicon
   - type: UserInterface
     interfaces:
@@ -537,3 +537,205 @@
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: Xenoborg
+
+# Centcomm Cyborgs
+- type: entity
+  parent: [ BaseBorgChassisNotIonStormable, ShowSecurityIcons, ShowMedicalIcons ]
+  id: BorgChassisCombat
+  name: combat cyborg
+  description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen, specialized for the extermination of powerful threats alongside their ERT compatriots.
+  components:
+  - type: BorgTransponder
+    name: combat cyborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: combat
+  - type: Sprite
+    layers:
+    - state: combat
+      sprite: Mobs/Silicon/chassis.rsi
+    - state: combat_e
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+      sprite: Mobs/Silicon/chassis.rsi
+    - state: combat_l
+      shader: unshaded
+      map: [ "light" ]
+      visible: false
+      sprite: Mobs/Silicon/chassis.rsi
+  - type: MovementAlwaysTouching
+  - type: BorgChassis
+    maxModules: 4
+    hasMindState: combat_e
+    noMindState: combat_e_r
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleEngineering
+      - BorgModuleMedical
+      - BorgModuleCargo
+      - BorgModuleScience
+      - BorgModuleService
+      - BorgModuleJanitor
+      - BorgModuleCentComm
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Binary
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - BorgModuleERT
+      - BorgModuleAdvancedTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+  - type: SiliconLawProvider
+    laws: CentCommLawset
+  - type: RandomMetadata
+    nameSegments:
+    - NamesCentCommBorg
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  - type: Access
+    enabled: false
+    groups:
+    - AllAccess
+    tags:
+    - Borg
+    - CentralCommand
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: ShowJobIcons
+  - type: Stripping
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
+
+- type: entity
+  parent: [ BaseBorgChassisNotIonStormable, ShowSecurityIcons, ShowMedicalIcons ]
+  id: BorgChassisCommando
+  name: commando cyborg
+  description: A military-grade man-machine hybrid that's produced in-house by Nanotrasen, fitted with the finest technology Nanotrasen could offer, its chassis is built for extermination of powerful threats.
+  components:
+  - type: BorgTransponder
+    name: commando cyborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: commando
+  - type: Sprite
+    layers:
+    - state: commando
+      sprite: Mobs/Silicon/chassis.rsi
+    - state: commando_e
+      map: [ "enum.BorgVisualLayers.Light" ]
+      shader: unshaded
+      visible: false
+      sprite: Mobs/Silicon/chassis.rsi
+    - state: commando_l
+      shader: unshaded
+      map: [ "light" ]
+      visible: false
+      sprite: Mobs/Silicon/chassis.rsi
+  - type: MovementAlwaysTouching
+  - type: BorgChassis
+    maxModules: 3
+    hasMindState: commando_e
+    noMindState: commando_e_r
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleEngineering
+      - BorgModuleMedical
+      - BorgModuleCargo
+      - BorgModuleScience
+      - BorgModuleService
+      - BorgModuleJanitor
+      - BorgModuleCentComm
+  - type: FlashImmunity
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Binary
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - BorgModuleCommando
+      - BorgModuleAdvancedTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellAntiqueProto
+  - type: SiliconLawProvider
+    laws: CentCommLawset
+  - type: RandomMetadata
+    nameSegments:
+    - NamesCentCommBorg
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  - type: Access
+    enabled: false
+    groups:
+    - AllAccess
+    tags:
+    - Borg
+    - CentralCommand
+  - type: AccessReader
+    access: [["CentralCommand"]]
+  - type: ShowJobIcons
+  - type: Stripping
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic

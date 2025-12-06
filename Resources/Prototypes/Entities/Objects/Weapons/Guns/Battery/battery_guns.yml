@@ -985,3 +985,60 @@
   components:
   - type: BatteryAmmoProvider
     proto: RedHeavyLaser
+
+- type: entity
+  parent: WeaponPulseRifle
+  id: WeaponPulseRifleCyborg
+  name: cyborg pulse rifle
+  description: A weapon almost as infamous as its users. Draws power from the cyborg's internal cell, slowly recharging.
+  components:
+  - type: Gun
+    minAngle: -4
+    maxAngle: 4
+  - type: PredictedBatterySelfRecharger
+    autoRechargeRate: 10
+
+- type: entity
+  parent: BaseWeaponBattery
+  id: WeaponCyborgImmolatorCannon
+  name: cyborg immolator cannon
+  description: A modified version of the Pulse Carbine, made for cyborgs, by cyborgs. Comes with enough modes for nearly any situation.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi # works well for the sprite, and what I had in mind.
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Appearance
+  - type: PredictedBatterySelfRecharger
+    autoRechargeRate: 25
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+  - type: BatteryAmmoProvider
+    proto: Pulse
+    fireCost: 100
+  - type: PredictedBattery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: BatteryWeaponFireModes
+    fireModes:
+    - proto: BulletPulse # I'm not doing hitscan. The borgs are powerful anyway.
+      fireCost: 60
+    - proto: BulletPulseSpread
+      fireCost: 120
+    - proto: BulletPulseSpreadNarrow
+      fireCost: 120
+    - proto: BulletDisabler
+      fireCost: 30
+      pacifismAllowedMode: true
+  - type: Item
+    size: Large

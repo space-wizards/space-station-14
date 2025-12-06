@@ -452,6 +452,31 @@
       - state: base-stripes-inhand-right
         color: "#FF00CC"
 
+- type: entity
+  abstract: true
+  parent: BaseBorgModule
+  id: BaseBorgModuleCentComm
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleCentComm
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#9DD993"
+      - state: base-module-inhand-left
+        color: "#378631"
+      - state: base-stripes-inhand-left
+        color: "#404040"
+      right:
+      - state: base-icon-inhand-right
+        color: "#9DD993"
+      - state: base-module-inhand-right
+        color: "#378631"
+      - state: base-stripes-inhand-right
+        color: "#404040"
+
 # generic modules
 - type: entity
   id: BorgModuleCable
@@ -1671,3 +1696,40 @@
     - item: SuperCloakingDevice
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-eye2-module }
+
+# centcomm modules
+- type: entity
+  parent: [ BaseBorgModuleCentComm, BaseProviderBorgModule, BaseCentcommContraband ]
+  id: BorgModuleERT
+  name: emergency response team cyborg module
+  description: A module that comes with several tools for a Combat Cyborg.
+  components:
+  - type: Sprite
+    layers:
+    - state: centralcommand
+    - state: icon-ert
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponCyborgImmolatorCannon
+    - item: StunBatonCyborg
+    - item: SonicJackhammer
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: ert-module }
+
+- type: entity
+  parent: [ BaseBorgModuleCentComm, BaseProviderBorgModule, BaseCentcommContraband ]
+  id: BorgModuleCommando
+  name: commando cyborg module
+  description: A module just as infamous as its chassis.
+  components:
+  - type: Sprite
+    layers:
+    - state: centralcommand
+    - state: icon-ds
+  - type: ItemBorgModule
+    hands:
+    - item: WeaponPulseRifleCyborg
+    - item: EnergySword
+    - item: SonicJackhammer
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: ds-module }

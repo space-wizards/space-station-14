@@ -293,7 +293,7 @@
         Oxygen: 1.025689525 # oxygen
         Nitrogen: 1.025689525 # nitrogen
 
-# Infinite jetpack
+# Infinite jetpacks
 - type: entity
   parent: [ JetpackBlack, BaseXenoborgContraband ]
   id: JetpackXenoborg
