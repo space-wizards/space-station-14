@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Maps;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
+using Content.Shared.Maps;
 using Content.Shared.Power.Components;
 using Content.Shared.NodeContainer;
 using Robust.Server.GameObjects;
