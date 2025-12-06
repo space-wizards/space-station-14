@@ -232,7 +232,7 @@ public sealed class AdminSystem : EntitySystem
 
         // Starting role, antagonist status and role type
         RoleTypePrototype? roleType = null;
-        var startingRole = string.Empty;
+        ProtoId<JobPrototype>? startingRole = null;
         LocId? subtype = null;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp) && mindComp is not null)
         {
@@ -247,7 +247,7 @@ public sealed class AdminSystem : EntitySystem
                 Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(RoleTypePrototype.FallbackName)}' instead");
 
             antag = _role.MindIsAntagonist(mindId);
-            startingRole = _jobs.MindTryGetJobName(mindId);
+            _jobs.MindTryGetJobId(mindId, out startingRole);
         }
 
         // Connection status and playtime
