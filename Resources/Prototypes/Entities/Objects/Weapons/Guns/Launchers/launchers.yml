@@ -332,9 +332,10 @@
     - type: PacifismAllowedGun
 
 - type: entity
-  name: sticky hand
   parent: BaseItem
   id: WeaponStickyHand
+  name: sticky hand
+  description: They're saying you're reaching. They're saying it's a stretch. You'll show them all, and you'll stick it to them.
   components:
   - type: AmmoCounter
   - type: GrapplingGun
@@ -346,6 +347,7 @@
     soundGunshot: /Audio/Misc/stickystretch.ogg
     fireRate: 0.5
     clumsyProof: true
+    soundEmpty: /Audio/Misc/boing.ogg
   - type: BasicEntityAmmoProvider
     proto: StickyHandPalm
     capacity: 1
