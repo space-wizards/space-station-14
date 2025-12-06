@@ -1,0 +1,220 @@
+# Entities in this file are groups of commonly used together components for using solutions.
+# Using these helps to keep conceptually similar items working similarly.
+
+## Solution interaction
+# These bases define how the solution is accessed.
+
+# Almost everything. This base is used for entities that have a mundane container with freely accessible liquid, such as a bucket.
+- type: entity
+  abstract: true
+  id: BaseExposedSolutionContainer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      container:
+        maxVol: 30
+  - type: DnaSubstanceTrace
+  - type: Edible # You can eat (drink) this
+    edible: Drink
+    destroyOnEmpty: false
+    utensil: None # Spoons conflict with MixableSolution todo add straws :o)
+    solution: &sol container
+  - type: MixableSolution # Reagents in this entity can and special mixing actions used, like stirring or holy book.
+    solution: *sol
+  - type: Spillable # Verb for spillage.
+    solution: *sol
+  - type: DumpableSolution # Drag and drop.
+    solution: *sol
+  - type: DrawableSolution # Can be targeted by syringes.
+    solution: *sol
+  - type: RefillableSolution # Allows reagents to be added.
+    solution: *sol
+  - type: DrainableSolution # Allows the reagents to be removed.
+    solution: *sol
+  - type: InjectableSolution # Injectors (syringe) will fall back to RefillableSolution. This adds support for hyposprays and liquid anomalies.
+    solution: *sol
+  - type: ExaminableSolution # Default: the solution can be examined for contents at normal DetailsRange, for a vague total.
+    solution: *sol
+  - type: SolutionItemStatus # Solution information in your hand.
+    solution: *sol
+
+# This can be eaten, but is some kind of not-exactly food.
+- type: entity
+  abstract: true
+  id: BaseEdible
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+  - type: Edible
+    solution: &food food
+  - type: FlavorProfile
+    flavors:
+    - food
+
+# The everyday food, from hamburger to cake to banana.
+- type: entity
+  abstract: true
+  parent: [ BaseEdible, BaseItem, BaseSolEmptyTrash ]
+  id: BaseFood
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10 # There should ALWAYS be 5u of volume for condiments. TODO do this robustly
+  - type: InjectableSolution
+    solution: *food
+  - type: RefillableSolution # You can sneak fun stuff in :o)
+    solution: *food
+  - type: TrashOnSolutionEmpty
+    solution: *food
+
+# Adds a lid to the solution.
+- type: entity
+  abstract: true
+  id: BaseSolOpenable
+  components:
+  - type: Openable
+  - type: PressurizedSolution # Sprays when opened if the fizzy factor is high
+    solution: *sol
+  - type: Shakeable
+  - type: Sealable
+
+# Adds a lid, and pre-opens it.
+- type: entity
+  abstract: true
+  parent: BaseSolOpenable
+  id: BaseSolOpenableOpen
+  components:
+  - type: Openable
+    opened: true
+  - type: Sealable
+    sealed: false
+#  - type: Sprite # Needs to be done manually, since most drinks have more than one layer. Or just let the visualizer handle it
+#    layers:
+#    - state: icon_open
+#      map: ["enum.OpenableVisuals.Layer"]
+
+## Bases for visuals
+# New .rsi should mirror these state names to reduce clutter when creating new prototypes
+
+# Basic visualizer for an openable entity. Requires BaseSolOpenable
+- type: entity
+  abstract: true
+  id: BaseSolVisualsOpenable
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"} # lid off
+          False: {state: "icon"} # lid on
+  - type: Sprite
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: ExaminableSolution
+    solution: *sol
+    examinableWhileClosed: false # If you can't see the fill levels on the sprite, we can assume it's opaque
+    heldOnly: true # If it's opaque, you probably can't see through the open lid from a distance
+
+# Basic visualizer for an entity with fill levels
+- type: entity
+  abstract: true
+  id: BaseSolVisualsFill
+  components:
+  - type: Appearance
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    solutionName: *sol
+    maxFillLevels: 5
+    fillBaseName: fill-
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+
+# Layered visualizer for an entity with fill levels, and an overlay over the fill levels
+- type: entity
+  abstract: true
+  parent: BaseSolVisualsFill
+  id: BaseSolVisualsFillOverlay
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: fill-1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+
+# Basic visualizer for an entity with fill levels, already filled
+- type: entity
+  abstract: true
+  parent: BaseSolVisualsFill
+  id: BaseSolVisualsFillFilled
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+    - state: fill-5 # this will need to be different with a different maxFillLevels
+      map: ["enum.SolutionContainerLayers.Fill"]
+
+# Visualizer for an openable entity with fill levels. Requires BaseSolOpenable
+- type: entity
+  abstract: true
+  parent: [BaseSolVisualsOpenable, BaseSolVisualsFill]
+  id: BaseSolVisualsAll
+  components:
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"} # lid off
+          False: {state: "icon_empty"} # lid on
+  - type: Sprite
+    layers:
+    - state: icon_empty
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: ExaminableSolution
+    examinableWhileClosed: true # If you can see the fill levels it's not opaque
+    heldOnly: false
+
+# Visualizer for an openable entity with fill levels, already filled. Requires BaseSolOpenable
+- type: entity
+  abstract: true
+  parent: BaseSolVisualsAll
+  id: BaseSolVisualsAllFilled
+  components:
+  - type: Sprite
+    layers:
+    - state: icon_empty
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill-5 # this will need to be different with a different maxFillLevels
+      map: ["enum.SolutionContainerLayers.Fill"]
+
+
+## Misc bases
+
+# This solution is empty trash
+- type: entity
+  abstract: true
+  id: BaseSolEmptyTrash
+  suffix: Empty
+  components:
+  - type: SpaceGarbage
+  - type: TrashOnSolutionEmpty
+    solution: *sol
+  - type: Tag
+    tags:
+    - Trash

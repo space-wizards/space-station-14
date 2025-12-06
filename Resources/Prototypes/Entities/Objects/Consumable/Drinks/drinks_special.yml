@@ -1,12 +1,12 @@
 - type: entity
-  parent: [DrinkBaseMaterialGlass, DrinkBase, DrinkVisualsFillOverlay]
+  parent: [DrinkBaseMaterialGlass, DrinkBase, BaseSolVisualsFillOverlay]
   id: DrinkShotGlass
   name: shot glass
   description: Perfect for slamming down onto the table angrily.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      container:
         maxVol: 5
   - type: Item
     size: Tiny
@@ -16,7 +16,7 @@
     maxFillLevels: 2
     inHandsMaxFillLevels: 1
   - type: FitsInDispenser
-    solution: drink
+    solution: container
 
 - type: entity
   parent: [DrinkBaseMaterialMetal, DrinkBase]
@@ -26,7 +26,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      container:
         reagents:
         - ReagentId: Ice
           Quantity: 200
@@ -45,7 +45,7 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      container:
         maxVol: 100
         reagents:
         - ReagentId: Tea
@@ -53,7 +53,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
   - type: FitsInDispenser
-    solution: drink
+    solution: container
 
 # Probably shouldn't be here
 # Also probably shouldn't let you put the cola back in, and should spawn deadly plastic rings after removing the last one
@@ -115,10 +115,10 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      container:
         maxVol: 100
   - type: FitsInDispenser
-    solution: drink
+    solution: container
   - type: ExaminableSolution
     heldOnly: true # Opaque, can't see inside from a distance
   - type: Sprite
@@ -158,14 +158,14 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      container:
         maxVol: 20
   - type: SolutionTransfer
     canChangeTransferAmount: true
     minTransferAmount: 1
     maxTransferAmount: 20
   - type: FitsInDispenser
-    solution: drink
+    solution: container
   - type: ExaminableSolution
     heldOnly: true
     exactVolume: true
@@ -177,14 +177,14 @@
       Steel: 20
 
 - type: entity
-  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, DrinkVisualsFill]
+  parent: [DrinkBaseMaterialStrongMetal, DrinkBase, BaseSolVisualsFill]
   id: Pitcher
   name: metal pitcher
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
   - type: SolutionContainerManager
     solutions:
-      drink:
+      container:
         maxVol: 60
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pitcher.rsi
@@ -192,7 +192,7 @@
     maxFillLevels: 6
     inHandsMaxFillLevels: 2
   - type: FitsInDispenser
-    solution: drink
+    solution: container
 
 # Weird empty shakes
 
@@ -203,9 +203,9 @@
   description: ''
   components:
   - type: ExaminableSolution
-    solution: drink
+    solution: container
   - type: FitsInDispenser
-    solution: drink
+    solution: container
 
 - type: entity
   parent: DrinkShakeBase
