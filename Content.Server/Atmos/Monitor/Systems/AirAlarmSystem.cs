@@ -186,6 +186,7 @@ public sealed class AirAlarmSystem : EntitySystem
             subs.Event<AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
             subs.Event<AirAlarmUpdateAutoModeMessage>(OnUpdateAutoMode);
             subs.Event<AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
+            subs.Event<AirAlarmToggleThresholdsMessage>(OnToggleThresholds);
             subs.Event<AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
             subs.Event<AirAlarmCopyDeviceDataMessage>(OnCopyDeviceData);
         });
@@ -329,6 +330,25 @@ public sealed class AirAlarmSystem : EntitySystem
         {
             UpdateUI(uid, component);
         }
+    }
+
+    private void OnToggleThresholds(EntityUid uid, AirAlarmComponent comp, AirAlarmToggleThresholdsMessage args)
+    {
+        if (!AccessCheck(uid, args.Actor, comp))
+        {
+            UpdateUI(uid, comp);
+            return;
+        }
+
+        var data = args.CurrentSensorData;
+        data.PressureThreshold.Ignore = !data.PressureThreshold.Ignore;
+        data.TemperatureThreshold.Ignore = !data.TemperatureThreshold.Ignore;
+        foreach (var threshold in data.GasThresholds.Values)
+        {
+            threshold.Ignore = !threshold.Ignore;
+        }
+
+        SetAllThresholds(uid, args.Address, data);
     }
 
     private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args)
