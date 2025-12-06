@@ -1481,6 +1481,8 @@
     name: ghost-role-information-monkey-name
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-nonantagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
   - type: GhostTakeoverAvailable
   - type: Clumsy
     gunShootFailDamage:
@@ -1522,6 +1524,7 @@
     mindRoles:
     # This is for syndicate monkeys that randomly gain sentience, thus have no summoner to team with
     - MindRoleGhostRoleSoloAntagonist
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -1656,6 +1659,8 @@
     name: ghost-role-information-kobold-name
     description: ghost-role-information-kobold-description
     rules: ghost-role-information-nonantagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleProtected # This mob can speak and/or has hands.
 
 - type: entity
   name: kobold
