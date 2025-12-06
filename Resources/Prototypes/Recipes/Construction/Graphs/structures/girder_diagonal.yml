@@ -1,0 +1,169 @@
+- type: constructionGraph
+  id: GirderDiagonal
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: girderDiagonal
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+
+    - node: girderDiagonal
+      entity: GirderDiagonal
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+        - to: wallDiagonal
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2
+
+        - to: reinforcedGirderDiagonal
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Plasteel
+              amount: 1
+              doAfter: 1
+
+    - node: wallDiagonal
+      entity: WallSolidDiagonal
+      edges:
+        - to: girderDiagonal
+          completed:
+            - !type:GivePrototype
+              prototype: SheetSteel1
+              amount: 1
+          steps:
+            - tool: Welding
+              doAfter: 10
+
+    - node: reinforcedGirderDiagonal
+      entity: ReinforcedGirderDiagonal
+      edges:
+        - to: reinforcedWallDiagonal
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: Plasteel
+              amount: 1
+              doAfter: 1
+
+        - to: shuttleWallDiagonal
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: MetalRod
+              amount: 2
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 2
+            - material: Plasteel
+              amount: 1
+              doAfter: 1
+
+        - to: girderDiagonal
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 1
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Cutting
+              doAfter: 2
+
+    - node: reinforcedWallDiagonal
+      entity: WallReinforcedDiagonal
+      edges:
+        - to: reinforcedGirderDiagonal
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 1
+          steps:
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Welding
+              doAfter: 5
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+            - tool: Welding
+              doAfter: 10
+            - tool: Prying
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Cutting
+              doAfter: 1
+
+    - node: shuttleWallDiagonal
+      entity: WallShuttleDiagonal
+      edges:
+        - to: reinforcedGirderDiagonal
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 5
+            - tool: Cutting
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Welding
+              doAfter: 5
+            - tool: Prying
+              doAfter: 1
+            - tool: Anchoring
+              doAfter: 1
+            - tool: Welding
+              doAfter: 10
+            - tool: Prying
+              doAfter: 1
+            - tool: Screwing
+              doAfter: 1
+            - tool: Cutting
+              doAfter: 1
+
