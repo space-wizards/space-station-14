@@ -1,7 +1,7 @@
 - type: entity
   name: bed
   id: Bed
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   description: This is used to lie in, sleep in or strap on. Resting here provides extremely slow healing.
   components:
   - type: HealOnBuckle

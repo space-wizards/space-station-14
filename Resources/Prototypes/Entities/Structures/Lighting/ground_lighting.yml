@@ -3,7 +3,7 @@
   name: post light
   description: "An always powered light."
   suffix: Always Powered
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   components:
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi

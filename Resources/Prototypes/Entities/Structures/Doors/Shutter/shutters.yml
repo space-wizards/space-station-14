@@ -1,6 +1,6 @@
 - type: entity
   id: BaseShutter
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   name: shutter
   abstract: true
   description: One shudders to think about what might be behind this shutter.

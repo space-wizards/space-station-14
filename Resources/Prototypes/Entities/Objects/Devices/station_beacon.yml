@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseRelaxedAnchoring ]
   id: DefaultStationBeacon
   name: station beacon
   description: A small device that transmits information to station maps. Can be configured.
