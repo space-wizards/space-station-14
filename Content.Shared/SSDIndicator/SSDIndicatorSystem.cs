@@ -10,7 +10,7 @@ namespace Content.Shared.SSDIndicator;
 /// <summary>
 ///     Handle changing player SSD indicator status
 /// </summary>
-public sealed class SSDIndicatorSystem : EntitySystem
+public abstract class SharedSSDIndicatorSystem : EntitySystem
 {
     public static readonly EntProtoId StatusEffectSSDSleeping = "StatusEffectSSDSleeping";
 
@@ -24,7 +24,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<SSDIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
+
         SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnMapInit);
 
         _cfg.OnValueChanged(CCVars.ICSSDSleep, obj => _icSsdSleep = obj, true);
@@ -45,19 +45,6 @@ public sealed class SSDIndicatorSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnPlayerDetached(EntityUid uid, SSDIndicatorComponent component, PlayerDetachedEvent args)
-    {
-        component.IsSSD = true;
-
-        // Sets the time when the entity should fall asleep
-        if (_icSsdSleep)
-        {
-            component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
-        }
-
-        Dirty(uid, component);
-    }
-
     // Prevents mapped mobs to go to sleep immediately
     private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
     {
@@ -66,6 +53,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
         component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
         component.NextUpdate = _timing.CurTime + component.UpdateInterval;
+
         Dirty(uid, component);
     }
 
