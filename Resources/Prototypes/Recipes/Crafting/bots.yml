@@ -61,3 +61,11 @@
   targetNode: bot
   category: construction-category-utilities
   objectType: Item
+
+- type: construction
+  id: boombot
+  graph: BoomBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
