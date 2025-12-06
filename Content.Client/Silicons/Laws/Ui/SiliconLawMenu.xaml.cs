@@ -26,6 +26,8 @@ public sealed partial class SiliconLawMenu : FancyWindow
     {
         var laws = _lawSystem.GetLaws(uid);
 
+        laws.Laws.Sort();
+
         var channels = new HashSet<ProtoId<RadioChannelPrototype>>();
         if (_entity.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var radio))
             channels = radio.Channels;
