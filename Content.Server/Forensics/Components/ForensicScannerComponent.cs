@@ -41,6 +41,12 @@ namespace Content.Server.Forensics
         public List<string> Residues = new();
 
         /// <summary>
+        /// Residue that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly), DataField("damageTraces")]
+        public List<string> DamageTraces = new();
+
+        /// <summary>
         /// What is the name of the entity that was scanned last?
         /// </summary>
         /// <remarks>

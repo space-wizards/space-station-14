@@ -15,6 +15,12 @@ namespace Content.Server.Forensics
         [DataField("residues")]
         public HashSet<string> Residues = new();
 
+        [DataField("damageTraces")]
+        /// <summary>
+        /// List of damage source like hitscans and projectiles. TODO: add in this damage from throwing
+        /// </summary>
+        public HashSet<string> DamageTraces = new();
+
         /// <summary>
         /// How close you must be to wipe the prints/blood/etc. off of this entity
         /// </summary>
