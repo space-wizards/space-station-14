@@ -37,7 +37,7 @@ public interface IAtmosDeviceData
 [Serializable, NetSerializable]
 public sealed class AirAlarmUIState : BoundUserInterfaceState
 {
-    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, List<(string, IAtmosDeviceData)> deviceData, AirAlarmMode mode, AtmosAlarmType alarmType, bool autoMode, bool panicWireCut)
+    public AirAlarmUIState(string address, int deviceCount, float pressureAverage, float temperatureAverage, List<(string, IAtmosDeviceData)> deviceData, AirAlarmMode mode, AtmosAlarmType alarmType, bool autoMode, bool panicWireCut, bool isEmagged)
     {
         Address = address;
         DeviceCount = deviceCount;
@@ -48,6 +48,7 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
         AlarmType = alarmType;
         AutoMode = autoMode;
         PanicWireCut = panicWireCut;
+        IsEmagged = isEmagged;
     }
 
     public string Address { get; }
@@ -66,6 +67,7 @@ public sealed class AirAlarmUIState : BoundUserInterfaceState
     public AtmosAlarmType AlarmType { get; }
     public bool AutoMode { get; }
     public bool PanicWireCut { get; }
+    public bool IsEmagged { get; }
 }
 
 [Serializable, NetSerializable]
