@@ -21,6 +21,9 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<TriggerOnThrowComponent, ThrowEvent>(OnThrow);
         SubscribeLocalEvent<TriggerOnThrownComponent, ThrownEvent>(OnThrown);
 
+        SubscribeLocalEvent<TriggerOnUiOpenComponent, BoundUIOpenedEvent>(OnUiOpened);
+        SubscribeLocalEvent<TriggerOnUiCloseComponent, BoundUIClosedEvent>(OnUiClosed);
+
         SubscribeLocalEvent<ItemToggleOnTriggerComponent, TriggerEvent>(HandleItemToggleOnTrigger);
         SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(HandleAnchorOnTrigger);
         SubscribeLocalEvent<UseDelayOnTriggerComponent, TriggerEvent>(HandleUseDelayOnTrigger);
@@ -81,6 +84,22 @@ public sealed partial class TriggerSystem
     private void OnThrown(Entity<TriggerOnThrownComponent> ent, ref ThrownEvent args)
     {
         Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+    }
+
+    private void OnUiOpened(Entity<TriggerOnUiOpenComponent> ent, ref BoundUIOpenedEvent args)
+    {
+        if (ent.Comp.UiKeys == null || ent.Comp.UiKeys.Contains(args.UiKey))
+        {
+            Trigger(ent, args.Actor, ent.Comp.KeyOut);
+        }
+    }
+
+    private void OnUiClosed(Entity<TriggerOnUiCloseComponent> ent, ref BoundUIClosedEvent args)
+    {
+        if (ent.Comp.UiKeys == null || ent.Comp.UiKeys.Contains(args.UiKey))
+        {
+            Trigger(ent, args.Actor, ent.Comp.KeyOut);
+        }
     }
 
     private void HandleItemToggleOnTrigger(Entity<ItemToggleOnTriggerComponent> ent, ref TriggerEvent args)
