@@ -1,4 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Emp;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Containers;
@@ -22,11 +23,13 @@ public abstract class SharedPowerCellSystem : EntitySystem
         SubscribeLocalEvent<PowerCellSlotComponent, EntInsertedIntoContainerMessage>(OnCellInserted);
         SubscribeLocalEvent<PowerCellSlotComponent, EntRemovedFromContainerMessage>(OnCellRemoved);
         SubscribeLocalEvent<PowerCellSlotComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
+
+        SubscribeLocalEvent<PowerCellComponent, EmpAttemptEvent>(OnCellEmpAttempt);
     }
 
     private void OnMapInit(Entity<PowerCellDrawComponent> ent, ref MapInitEvent args)
     {
-        QueueUpdate((ent, ent.Comp));
+        ent.Comp.NextUpdateTime = Timing.CurTime + ent.Comp.Delay;
     }
 
     private void OnRejuvenate(EntityUid uid, PowerCellSlotComponent component, RejuvenateEvent args)
@@ -71,19 +74,21 @@ public abstract class SharedPowerCellSystem : EntitySystem
         RaiseLocalEvent(uid, new PowerCellChangedEvent(true), false);
     }
 
-    /// <summary>
-    /// Makes the draw logic update in the next tick.
-    /// </summary>
-    public void QueueUpdate(Entity<PowerCellDrawComponent?> ent)
+    private void OnCellEmpAttempt(Entity<PowerCellComponent> entity, ref EmpAttemptEvent args)
     {
-        if (Resolve(ent, ref ent.Comp))
-            ent.Comp.NextUpdateTime = Timing.CurTime;
+        var parent = Transform(entity).ParentUid;
+        // relay the attempt event to the slot so it can cancel it
+        if (HasComp<PowerCellSlotComponent>(parent))
+            RaiseLocalEvent(parent, ref args);
     }
 
     public void SetDrawEnabled(Entity<PowerCellDrawComponent?> ent, bool enabled)
     {
         if (!Resolve(ent, ref ent.Comp, false) || ent.Comp.Enabled == enabled)
             return;
+
+        if (enabled)
+            ent.Comp.NextUpdateTime = Timing.CurTime;
 
         ent.Comp.Enabled = enabled;
         Dirty(ent, ent.Comp);

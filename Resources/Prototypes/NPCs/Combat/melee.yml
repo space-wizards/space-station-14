@@ -178,3 +178,13 @@
               id: MeleeService
               proto: OrderedTargets
               key: Target
+
+- type: htnCompound
+  id: DoNotEscapeCompound
+  branches:
+  - preconditions:
+    - !type:InFriendlyContainerPrecondition
+      isInFriendlyContainer: true
+    tasks:
+    - !type:HTNPrimitiveTask
+      operator: !type:NoOperator

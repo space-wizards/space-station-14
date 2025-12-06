@@ -5,6 +5,7 @@ using Content.Server.Wires;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Prototypes;
 using Content.Shared.Storage.Components;
 using Content.Shared.VendingMachines;
@@ -20,6 +21,8 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(VendingMachineSystem))]
     public sealed class VendingMachineRestockTest : EntitySystem
     {
+        private static readonly ProtoId<DamageTypePrototype> TestDamageType = "Blunt";
+
         [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
@@ -293,15 +296,13 @@ namespace Content.IntegrationTests.Tests
                     "Did not start with zero ramen.");
 
                 restock = entityManager.SpawnEntity("TestRestockExplode", coordinates);
-                var damageSpec = new DamageSpecifier(prototypeManager.Index<DamageTypePrototype>("Blunt"), 100);
-                var damageResult = damageableSystem.TryChangeDamage(restock, damageSpec);
+                var damageSpec = new DamageSpecifier(prototypeManager.Index(TestDamageType), 100);
+                var damageResult = damageableSystem.ChangeDamage(restock, damageSpec);
 
 #pragma warning disable NUnit2045
-                Assert.That(damageResult, Is.Not.Null,
-                    "Received null damageResult when attempting to damage restock box.");
+                Assert.That(!damageResult.Empty, "Received empty damageResult when attempting to damage restock box.");
 
-                Assert.That((int) damageResult!.GetTotal(), Is.GreaterThan(0),
-                    "Box damage result was not greater than 0.");
+                Assert.That((int) damageResult.GetTotal(), Is.GreaterThan(0), "Box damage result was not greater than 0.");
 #pragma warning restore NUnit2045
             });
             await server.WaitRunTicks(15);

@@ -9,9 +9,6 @@
   - type: Item
     size: Normal
     sprite: Objects/Tanks/generic.rsi
-  - type: Tag
-    tags:
-    - GasTank
   - type: Clothing
     quickEquip: false
     sprite: Objects/Tanks/generic.rsi
@@ -36,7 +33,7 @@
       temperature: 293.15
     tankLowPressure: 30.0
   - type: Explosive
-    explosionType: Default
+    explosionType: MicroBomb
     maxIntensity: 20
   - type: MeleeWeapon
     wideAnimationRotation: 45
@@ -97,6 +94,7 @@
   - type: Item
     size: Small
     sprite: Objects/Tanks/emergency.rsi
+    storedRotation: -45
   - type: GasTank
     air:
       volume: 0.66

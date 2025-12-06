@@ -1,0 +1,23 @@
+- type: constructionGraph
+  id: Soil
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DeleteEntity {}
+    edges:
+    - to: fungalSoil
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: WoodPlank
+        amount: 10
+        doAfter: 10
+      - tag: Mushroom
+        name: soil-construction-graph-any-mushroom
+        icon:
+          sprite: Objects/Misc/spaceshroom.rsi
+          state: object
+  - node: fungalSoil
+    entity: FungalSoil

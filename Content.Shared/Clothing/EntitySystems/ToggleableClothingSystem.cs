@@ -213,7 +213,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (!TryComp(component.AttachedUid, out ToggleableClothingComponent? toggleComp))
             return;
 
-        if (toggleComp.LifeStage > ComponentLifeStage.Running)
+        if (LifeStage(component.AttachedUid) > EntityLifeStage.MapInitialized)
             return;
 
         // As unequipped gets called in the middle of container removal, we cannot call a container-insert without causing issues.
@@ -296,7 +296,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         }
 
         if (_actionContainer.EnsureAction(uid, ref component.ActionEntity, out var action, component.Action))
-            _actionsSystem.SetEntityIcon(component.ActionEntity.Value, component.ClothingUid, action);
+            _actionsSystem.SetEntityIcon((component.ActionEntity.Value, action), component.ClothingUid);
     }
 }
 

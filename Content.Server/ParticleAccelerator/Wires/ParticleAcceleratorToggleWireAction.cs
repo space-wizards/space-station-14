@@ -1,3 +1,4 @@
+using Content.Server.Machines.EntitySystems;
 using Content.Server.ParticleAccelerator.Components;
 using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Wires;
@@ -38,10 +39,11 @@ public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAc
     public override void Pulse(EntityUid user, Wire wire, ParticleAcceleratorControlBoxComponent controller)
     {
         var paSystem = EntityManager.System<ParticleAcceleratorSystem>();
+        var multipartMachine = EntityManager.System<MultipartMachineSystem>();
 
         if (controller.Enabled)
             paSystem.SwitchOff(wire.Owner, user, controller);
-        else if (controller.Assembled)
+        else if (multipartMachine.IsAssembled((wire.Owner, null)))
             paSystem.SwitchOn(wire.Owner, user, controller);
     }
 }

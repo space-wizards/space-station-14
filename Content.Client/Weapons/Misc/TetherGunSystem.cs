@@ -17,6 +17,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -33,7 +34,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         if (!TryComp<SpriteComponent>(component.Tethered, out var sprite))
             return;
 
-        sprite.Color = component.LineColor;
+        _sprite.SetColor((component.Tethered.Value, sprite), component.LineColor);
     }
 
     public override void Shutdown()
@@ -58,7 +59,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         var player = _player.LocalEntity;
 
         if (player == null ||
-            !TryGetTetherGun(player.Value, out var gunUid, out var gun) ||
+            !TryGetTetherGun(player.Value, out _, out var gun) ||
             gun.TetherEntity == null)
         {
             return;
@@ -81,11 +82,11 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             coords = TransformSystem.ToCoordinates(_mapSystem.GetMap(mouseWorldPos.MapId), mouseWorldPos);
         }
 
-        const float BufferDistance = 0.1f;
+        const float bufferDistance = 0.1f;
 
         if (TryComp(gun.TetherEntity, out TransformComponent? tetherXform) &&
             tetherXform.Coordinates.TryDistance(EntityManager, TransformSystem, coords, out var distance) &&
-            distance < BufferDistance)
+            distance < bufferDistance)
         {
             return;
         }
@@ -105,11 +106,11 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         if (TryComp<ForceGunComponent>(component.Tetherer, out var force))
         {
-            sprite.Color = force.LineColor;
+            _sprite.SetColor((uid, sprite), force.LineColor);
         }
         else if (TryComp<TetherGunComponent>(component.Tetherer, out var tether))
         {
-            sprite.Color = tether.LineColor;
+            _sprite.SetColor((uid, sprite), tether.LineColor);
         }
     }
 
@@ -118,6 +119,6 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        sprite.Color = Color.White;
+        _sprite.SetColor((uid, sprite), Color.White);
     }
 }

@@ -34,6 +34,17 @@
   - type: StaticPrice
     price: 100
   - type: BlockWeather
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 4000
 
 - type: entity
   id: PlastitaniumWindowSquareBase
@@ -66,6 +77,9 @@
   name: plastitanium window
   parent: PlastitaniumWindowSquareBase
   suffix: indestructible
+  components:
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
   id: PlastitaniumWindow
@@ -124,6 +138,7 @@
   - type: Tag
     tags:
     - Diagonal
+    - Window
   - type: Icon
     sprite: Structures/Windows/plastitanium_window_diagonal.rsi
     state: state0
@@ -144,6 +159,7 @@
         - FullTileMask
         layer:
         - GlassLayer
+        density: 4000
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
@@ -155,6 +171,9 @@
   name: plastitanium window
   parent: PlastitaniumWindowDiagonalBase
   suffix: diagonal, indestructible
+  components:
+  - type: ExaminableDamage
+    messages: null
 
 - type: entity
   id: PlastitaniumWindowDiagonal

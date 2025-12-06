@@ -1,10 +1,10 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Item;
+using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
@@ -63,6 +63,9 @@ public abstract class SharedHandheldLightSystem : EntitySystem
 
         Dirty(uid, component);
         UpdateVisuals(uid, component);
+
+        var ev = new LightToggleEvent(activated);
+        RaiseLocalEvent(uid, ev);
     }
 
     public void UpdateVisuals(EntityUid uid, HandheldLightComponent? component = null, AppearanceComponent? appearance = null)
@@ -80,7 +83,7 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         if (component.ToggleActionEntity != null)
             _actionSystem.SetToggled(component.ToggleActionEntity, component.Activated);
 
-        _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearance);
+        _appearance.SetData(uid, ToggleableVisuals.Enabled, component.Activated, appearance);
     }
 
     private void AddToggleLightVerb(Entity<HandheldLightComponent> ent, ref GetVerbsEvent<ActivationVerb> args)

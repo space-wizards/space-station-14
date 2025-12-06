@@ -96,10 +96,7 @@
     entities:
     - SalvageSpawnerTreasure
     - SalvageSpawnerTreasure
-    - SalvageSpawnerEquipment
-    - SalvageSpawnerEquipment
     - SalvageSpawnerTreasureValuable
-    - SalvageSpawnerEquipmentValuable
   - !type:BiomeEntityLayer
     allowedTiles:
     - FloorSteel
