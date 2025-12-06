@@ -16,14 +16,17 @@ public sealed class RandomGateSystem : EntitySystem
 
     private void OnSignalReceived(Entity<RandomGateComponent> ent, ref SignalReceivedEvent args)
     {
-        if (args.Port != ent.Comp.InputPort)
+        var comp = ent.Comp;
+
+        if (args.Port != comp.InputPort)
             return;
 
-        var output = _random.Prob(0.5f);
-        if (output != ent.Comp.LastOutput)
+        var output = _random.Prob(comp.SuccessProbability);
+
+        if (output != comp.LastOutput)
         {
-            ent.Comp.LastOutput = output;
-            _deviceLink.SendSignal(ent.Owner, ent.Comp.OutputPort, output);
+            comp.LastOutput = output;
+            _deviceLink.SendSignal(ent.Owner, comp.OutputPort, output);
         }
     }
 }
