@@ -596,6 +596,66 @@ public abstract partial class SharedActionsSystem : EntitySystem
         var performed = new ActionPerformedEvent(performer);
         RaiseLocalEvent(action, ref performed);
     }
+
+    /// <summary>
+    /// Attempts to perform an action, bypassing validation checks. Returns false on failure, true on success.
+    /// </summary>
+    /// <param name="performer">The entity performing the action</param>
+    /// <param name="action">The action being performed</param>
+    /// <param name="actionEvent">An event override to perform. If null, uses <see cref="GetEvent"/></param>
+    /// <param name="predicted">If false, prevents playing the action's sound on the client</param>
+    public bool TryPerformAction(Entity<ActionsComponent?> performer, Entity<ActionComponent> action, BaseActionEvent? actionEvent = null, bool predicted = true)
+    {
+        var handled = false;
+
+        // Note that attached entity and attached container are allowed to be null here.
+        if (action.Comp.AttachedEntity != null && action.Comp.AttachedEntity != performer)
+        {
+            Log.Error($"{ToPrettyString(performer)} is attempting to perform an action {ToPrettyString(action)} that is attached to another entity {ToPrettyString(action.Comp.AttachedEntity)}");
+            return handled;
+        }
+
+        actionEvent ??= GetEvent(action);
+
+        if (actionEvent is not {} ev)
+            return handled;
+
+        ev.Performer = performer;
+
+        // This here is required because of client-side prediction (RaisePredictiveEvent results in event re-use).
+        ev.Handled = false;
+        var target = performer.Owner;
+        ev.Performer = performer;
+        ev.Action = action;
+
+        // TODO: This is where we'd add support for event lists
+        if (!action.Comp.RaiseOnUser && action.Comp.Container is {} container && !_mindQuery.HasComp(container))
+            target = container;
+
+        if (action.Comp.RaiseOnAction)
+            target = action;
+
+        RaiseLocalEvent(target, (object) ev, broadcast: true);
+        handled = ev.Handled;
+
+        if (!handled)
+            return handled; // no interaction occurred.
+
+        // play sound, start cooldown
+        if (ev.Toggle)
+            SetToggled((action, action), !action.Comp.Toggled);
+
+        _audio.PlayPredicted(action.Comp.Sound, performer, predicted ? performer : null);
+
+        RemoveCooldown((action, action));
+        StartUseDelay((action, action));
+
+        UpdateAction(action);
+
+        var performed = new ActionPerformedEvent(performer);
+        RaiseLocalEvent(action, ref performed);
+        return handled;
+    }
     #endregion
 
     #region AddRemoveActions
