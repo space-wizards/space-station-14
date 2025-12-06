@@ -1,4 +1,4 @@
-namespace Content.Server.Maps;
+namespace Content.Shared.Maps;
 
 [ImplicitDataDefinitionForInheritors]
 public abstract partial class GameMapCondition

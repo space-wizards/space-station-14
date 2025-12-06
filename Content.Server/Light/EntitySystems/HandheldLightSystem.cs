@@ -1,7 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
@@ -44,7 +43,6 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<HandheldLightComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<HandheldLightComponent, ComponentShutdown>(OnShutdown);
 
-            SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
 
             SubscribeLocalEvent<HandheldLightComponent, ActivateInWorldEvent>(OnActivate);
 
@@ -140,13 +138,6 @@ namespace Content.Server.Light.EntitySystems
         public bool ToggleStatus(EntityUid user, Entity<HandheldLightComponent> ent)
         {
             return ent.Comp.Activated ? TurnOff(ent) : TurnOn(user, ent);
-        }
-
-        private void OnExamine(EntityUid uid, HandheldLightComponent component, ExaminedEvent args)
-        {
-            args.PushMarkup(component.Activated
-                ? Loc.GetString("handheld-light-component-on-examine-is-on-message")
-                : Loc.GetString("handheld-light-component-on-examine-is-off-message"));
         }
 
         public override void Shutdown()
