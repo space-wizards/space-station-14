@@ -210,7 +210,7 @@ public sealed partial class DamageableSystem
         if (!TryGetDamageGreaterThan((ent, ent.Comp), -amount, out var damage, group))
             return ChangeDamage(ent, -damage, true, false, origin);
 
-        // make sure damageChange has the same damage types as damageEntity
+        // make sure damageChange has the same damage types as damage
         damageChange.DamageDict.EnsureCapacity(damage.DamageDict.Count);
         foreach (var type in damage.DamageDict.Keys)
             damageChange.DamageDict.Add(type, FixedPoint2.Zero);
