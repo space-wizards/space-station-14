@@ -162,10 +162,7 @@
 #    slots: [ears, eyes, mask]
   - type: BreathMask
   - type: Sprite
-    layers:
-    - state: icon # default state used by most inheritors
-    - state: icon-unshaded
-      shader: unshaded
+    state: icon # default state used by most inheritors
   - type: Clickable
   - type: InteractionOutline
   - type: Clothing
@@ -216,6 +213,8 @@
   - type: Sprite
     layers:
     - state: icon
+    - state: icon-unshaded
+      shader: unshaded
     - state: light-overlay
       visible: false
       shader: unshaded

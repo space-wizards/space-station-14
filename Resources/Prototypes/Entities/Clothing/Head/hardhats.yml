@@ -12,6 +12,9 @@
       map: [ "light" ]
   - type: Clothing
     equippedPrefix: off
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
   - type: PointLight
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
@@ -63,6 +66,11 @@
         startingItem: PowerCellMedium
   - type: Item
     heldPrefix: off
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
@@ -78,16 +86,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/blue.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-helmet
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -97,16 +95,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/orange.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-helmet
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -116,16 +104,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/red.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-helmet
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -135,16 +113,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/white.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-helmet
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -154,16 +122,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/yellow.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-helmet
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -173,16 +131,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/dark_yellow.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-helmet
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -192,16 +140,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/armored.rsi
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: equipped-helmet
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
   - type: Armor #Copied from the sec helmet, as it's hard to give these sane values without locational damage existing.
     modifiers:
       coefficients:
