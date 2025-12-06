@@ -1,0 +1,20 @@
+- type: job
+  id: Trainee
+  name: job-name-trainee
+  description: job-description-trainee
+  playTimeTracker: JobTrainee
+  setPreference: false
+  startingGear: TraineeGear
+  icon: "JobIconUnknown"
+  supervisors: job-supervisors-nobody
+  canBeAntag: false
+  access:
+  - Maintenance
+
+- type: startingGear
+  id: TraineeGear
+  equipment:
+    id: PassengerPDA
+    jumpsuit: ClothingUniformJumpsuitColorOrange
+    back: ClothingBackpack
+    shoes: ClothingShoesColorWhite
