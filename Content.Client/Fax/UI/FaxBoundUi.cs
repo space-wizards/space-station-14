@@ -26,6 +26,7 @@ public sealed class FaxBoundUi : BoundUserInterface
         base.Open();
 
         _window = this.CreateWindow<FaxWindow>();
+        _window.ApplyStylesheetFrom(Owner);
         _window.FileButtonPressed += OnFileButtonPressed;
         _window.CopyButtonPressed += OnCopyButtonPressed;
         _window.SendButtonPressed += OnSendButtonPressed;
