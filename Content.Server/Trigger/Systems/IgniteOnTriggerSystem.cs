@@ -42,7 +42,7 @@ public sealed class IgniteOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<IgniteOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var target = ent.Comp.TargetUser ? args.User : ent.Owner;

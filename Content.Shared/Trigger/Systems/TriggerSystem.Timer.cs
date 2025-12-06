@@ -49,7 +49,7 @@ public sealed partial class TriggerSystem
 
     private void OnTimerTriggered(Entity<TimerTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         args.Handled |= ActivateTimerTrigger(ent.AsNullable(), args.User);
