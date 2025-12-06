@@ -6,7 +6,7 @@ using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Content.Shared.Forensics;
+using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction;
@@ -29,6 +29,9 @@ public sealed class HypospraySystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainers = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
+
+
 
     public override void Initialize()
     {
@@ -194,8 +197,7 @@ public sealed class HypospraySystem : EntitySystem
         _reactiveSystem.DoEntityReaction(target, removedSolution, ReactionMethod.Injection);
         _solutionContainers.TryAddSolution(targetSoln.Value, removedSolution);
 
-        var ev = new TransferDnaEvent { Donor = target, Recipient = uid };
-        RaiseLocalEvent(target, ref ev);
+        _forensics.TransferDna(uid, target);
 
         // same LogType as syringes...
         _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user):user} injected {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {ToPrettyString(uid):using}");
