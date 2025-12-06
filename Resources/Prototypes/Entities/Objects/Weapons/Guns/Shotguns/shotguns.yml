@@ -294,3 +294,52 @@
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunImprovised
+
+- type: entity
+  name: syndicate remote shotgun
+  parent: [BaseStructure, BaseSyndicateContraband]
+  id: RemoteShotgun
+  description: A syndicate mounted double barrel shotgun chambered in .50 shotgun shells. It can only be fired when linked to a transmitter.
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    layers:
+      - state: icon
+        map: [ "enum.GunVisualLayers.Base" ]
+    sprite: Objects/Weapons/Guns/Shotguns/remote_shotgun.rsi
+  - type: Gun
+    fireRate: 0.25
+    burstFireRate: 1.5
+    selectedMode: Burst
+    availableModes:
+    - Burst
+    shotsPerBurst: 2
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgun
+    capacity: 2
+    proto: ShellShotgun
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: Anchorable
+  - type: AmmoCounter
+  - type: GunSignalControl
+    addAdditionalTriggers: false
+  - type: Rotatable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 60
+        mask:
+        - MachineMask
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
