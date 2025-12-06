@@ -232,3 +232,12 @@
   wires:
   - !type:AccessWireAction
   - !type:AiInteractWireAction
+
+- type: wireLayout
+  id: MassDriver
+  dummyWires: 3
+  wires:
+  - !type:PowerWireAction
+  - !type:PowerWireAction
+    pulseTimeout: 15
+  - !type:MassDriverSecurityWireAction
