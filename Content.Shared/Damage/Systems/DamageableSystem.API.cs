@@ -212,6 +212,10 @@ public sealed partial class DamageableSystem
 
         // make sure damageChange has the same damage types as damageEntity
         damageChange.DamageDict.EnsureCapacity(damage.DamageDict.Count);
+        foreach (var type in  damage.DamageDict.Keys)
+        {
+            damageChange.DamageDict.Add(type, FixedPoint2.Zero);
+        }
 
         var remaining = -amount;
         var keys = damage.DamageDict.Keys.ToList();
@@ -219,27 +223,34 @@ public sealed partial class DamageableSystem
         while (remaining > 0)
         {
             var count = keys.Count;
-            var maxHeal = FixedPoint2.Max(remaining / count, FixedPoint2.Epsilon);
+            // We do this to ensure that we always round up when dividing to avoid excess loops.
+            // We already have logic to prevent healing more than we have.
+            var maxHeal = count == 1 ? remaining : ( remaining + FixedPoint2.Epsilon * (count - 1) ) / count;
 
             // Iterate backwards since we're removing items.
             for (var i = count - 1; i >= 0; i--)
             {
                 var type = keys[i];
-                var damageType = damage.DamageDict[type];
+                // This is the amount we're trying to heal, capped by maxHeal
+                var heal = damage.DamageDict[type] + damageChange.DamageDict[type];
 
-                if (!damageChange.DamageDict.ContainsKey(type))
-                    damageChange.DamageDict.Add(type, FixedPoint2.Zero);
-
-                var damageTypeHeal = damageChange.DamageDict[type];
-                var valueHeal = FixedPoint2.Min(damageType + damageTypeHeal, maxHeal, remaining);
-
-                // If the value to heal is equal to the damage left to heal (damageType + damageTypeHeal)
-                // then we don't care about that key anymore.
-                if (valueHeal >= damageType + damageTypeHeal)
+                // Don't go above max, if we don't go above max
+                if (heal > maxHeal)
+                    heal = maxHeal;
+                // If we're not above max, we will heal it fully and don't need to enumerate anymore!
+                else
                     keys.RemoveAt(i);
 
-                remaining -= valueHeal;
-                damageChange.DamageDict[type] -= valueHeal;
+                if (heal >= remaining)
+                {
+                    // Don't remove more than we can remove. Prevents us from healing more than we'd expect...
+                    damageChange.DamageDict[type] -= remaining;
+                    remaining = FixedPoint2.Zero;
+                    break;
+                }
+
+                remaining -= heal;
+                damageChange.DamageDict[type] -= heal;
             }
         }
 
