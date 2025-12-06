@@ -37,6 +37,12 @@
     delay: 0.5
   - type: HumanoidAppearance
     species: SlimePerson
+    femaleMarkingsDisplacement:
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
@@ -126,6 +132,12 @@
   components:
   - type: HumanoidAppearance
     species: SlimePerson
+    femaleMarkingsDisplacement:
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
   - type: Inventory
     femaleDisplacements:
       jumpsuit:
