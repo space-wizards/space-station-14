@@ -37,6 +37,7 @@
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+  - type: SmartEquipPickupStorage
   - type: ItemSlots
     slots:
       gun_magazine:
