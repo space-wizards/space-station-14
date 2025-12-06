@@ -177,6 +177,13 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         component.Lawset = ev.Laws;
     }
 
+    /// <summary>
+    /// Get the current laws of this silicon.
+    /// </summary>
+    /// <param name="uid">The silicon to get the laws of.</param>
+    /// <param name="component">Nullable SiliconLawProviderComponent, which gets resolved.</param>
+    /// <param name="refresh">Whether to run FetchLawset before getting the laws, effectively finding them via an event instead.</param>
+    /// <returns></returns>
     public SiliconLawset GetLaws(EntityUid uid, SiliconLawProviderComponent? component = null, bool refresh = false)
     {
         if (!Resolve(uid, ref component))
