@@ -5,7 +5,8 @@
 ///
 /// None - the default value
 /// Suspected - the person is suspected of doing something illegal
-/// Wanted - the person is being wanted by security
+/// Charged - the person has been charged with a crime and should be arrested
+/// Wanted - the person has evaded arrest and should be arrested on sight
 /// Hostile - the person has been admitted as hostile
 /// Detained - the person is detained by security
 /// Paroled - the person is on parole
@@ -16,6 +17,7 @@ public enum SecurityStatus : byte
 {
     None,
     Suspected,
+    Charged,
     Wanted,
     Hostile,
     Detained,

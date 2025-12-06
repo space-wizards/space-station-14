@@ -11,6 +11,7 @@ criminal-records-console-show-all = All
 
 criminal-records-console-status = Status
 criminal-records-status-none = None
+criminal-records-status-charged = Charged
 criminal-records-status-wanted = Wanted
 criminal-records-status-detained = Detained
 criminal-records-status-suspected = Suspect
@@ -19,6 +20,7 @@ criminal-records-status-paroled = Paroled
 criminal-records-status-hostile = Hostile
 criminal-records-status-eliminated = Eliminated
 
+criminal-records-console-charged-reason = Charged Reason
 criminal-records-console-wanted-reason = Wanted Reason
 criminal-records-console-suspected-reason = Suspected Reason
 criminal-records-console-reason = Reason
@@ -36,6 +38,9 @@ criminal-records-permission-denied = Permission denied
 
 ## Security channel notifications
 
+criminal-records-console-charged = {$name} ($job) was charged by {$officer} for: {$reason}.
+criminal-records-console-not-charged = {$officer} cleared the charged status of {$name} ({$job}).
+criminal-records-console-wanted-upgrade = {$officer} has upgraded {$name} ({$job}) from charged to wanted.
 criminal-records-console-wanted = {$name} ({$job}) was made wanted by {$officer} for: {$reason}.
 criminal-records-console-not-wanted = {$officer} cleared the wanted status of {$name} ({$job}).
 criminal-records-console-suspected = {$officer} marked {$name} ({$job}) as suspicious because of: {$reason}

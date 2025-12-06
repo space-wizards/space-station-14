@@ -276,7 +276,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     private void SetStatus(SecurityStatus status)
     {
-        if (status == SecurityStatus.Wanted || status == SecurityStatus.Suspected || status == SecurityStatus.Hostile)
+        if (status == SecurityStatus.Wanted || status == SecurityStatus.Charged || status == SecurityStatus.Suspected || status == SecurityStatus.Hostile)
         {
             GetReason(status);
             return;
@@ -318,6 +318,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         return status switch
         {
             SecurityStatus.Paroled => "hud_paroled",
+            SecurityStatus.Charged => "hud_charged",
             SecurityStatus.Wanted => "hud_wanted",
             SecurityStatus.Detained => "hud_incarcerated",
             SecurityStatus.Discharged => "hud_discharged",

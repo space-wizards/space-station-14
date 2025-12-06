@@ -17,7 +17,7 @@ public sealed partial record CriminalRecord
     public SecurityStatus Status = SecurityStatus.None;
 
     /// <summary>
-    /// When Status is Wanted, the reason for it.
+    /// When Status is Wanted or Charged, the reason for it.
     /// Should never be set otherwise.
     /// </summary>
     [DataField]
