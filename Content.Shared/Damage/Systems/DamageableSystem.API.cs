@@ -226,8 +226,11 @@ public sealed partial class DamageableSystem
             {
                 var type = keys[i];
                 var value = damage.DamageDict[type];
-                if (!damageChange.DamageDict.TryGetValue(type, out var heal))
+
+                if (!damageChange.DamageDict.ContainsKey(type))
                     damageChange.DamageDict.Add(type, FixedPoint2.Zero);
+
+                var heal = damageChange.DamageDict[type];
 
                 // Don't go above max, if we don't go above max
                 if (value > max + heal)
