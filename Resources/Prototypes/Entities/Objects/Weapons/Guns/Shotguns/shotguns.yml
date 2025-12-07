@@ -330,6 +330,7 @@
   - type: AmmoCounter
   - type: GunSignalControl
     addAdditionalTriggers: false
+  - type: ContainerContainer
   - type: Rotatable
   - type: Fixtures
     fixtures:
