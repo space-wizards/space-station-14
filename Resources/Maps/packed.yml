@@ -4,8 +4,8 @@ meta:
   engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/01/2025 20:40:27
-  entityCount: 16060
+  time: 12/07/2025 02:12:06
+  entityCount: 16058
 maps:
 - 126
 grids:
@@ -7123,6 +7123,7 @@ entities:
     - type: RadiationGridResistance
     - type: SpreaderGrid
     - type: ImplicitRoof
+    - type: ExplosionAirtightGrid
   - uid: 126
     components:
     - type: MetaData
@@ -43989,7 +43990,7 @@ entities:
       pos: 59.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -19835.2
+      secondsUntilStateChange: -19911.514
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -49845,7 +49846,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67128.984
+      secondsUntilStateChange: -67205.3
       state: Closing
   - uid: 9362
     components:
@@ -72826,7 +72827,7 @@ entities:
       pos: 12.5,12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5300.9326
+      secondsUntilStateChange: -5377.2476
       state: Closing
   - uid: 5750
     components:
@@ -103229,6 +103230,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: 16.5,-2.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        10272:
+        - - DoorStatus
+          - Close
   - uid: 758
     components:
     - type: Transform
@@ -103264,18 +103272,6 @@ entities:
       parent: 2
     - type: AccessReader
       accessListsOriginal: []
-  - uid: 7775
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 16.5,-1.5
-      parent: 2
-  - uid: 7778
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 13.5,-1.5
-      parent: 2
   - uid: 14990
     components:
     - type: Transform
@@ -103592,6 +103588,15 @@ entities:
     - type: Transform
       pos: 16.5,-2.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        563:
+        - - DoorStatus
+          - Close
+    - type: AccessReader
+      accessListsOriginal: []
 - proto: WindoorSecureMedicalLocked
   entities:
   - uid: 9615
