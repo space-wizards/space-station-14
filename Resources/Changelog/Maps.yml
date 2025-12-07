@@ -826,4 +826,57 @@
   id: 100
   time: '2025-11-07T08:36:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41329
+- author: Blackern5000
+  changes:
+  - message: Entirely remade the meatball magnet wreck to better work as a wreck for
+      salvage.
+    type: Tweak
+  id: 101
+  time: '2025-11-27T10:28:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41589
+- author: korczoczek
+  changes:
+  - message: Added an extra pair of lateral thrusters to Elkridge Depot's cargo shuttle
+    type: Tweak
+  id: 102
+  time: '2025-11-27T10:55:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41570
+- author: Spessmann
+  changes:
+  - message: Added a new station, Snowball, a round and icy lowpop station.
+    type: Add
+  - message: Removed Amber station.
+    type: Remove
+  id: 103
+  time: '2025-12-02T07:25:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40300
+- author: Hitlinemoss
+  changes:
+  - message: On Snowball, the airlock connecting EVA Storage and the Head of Personnel's
+      office now uses Head of Personnel access rather than Externals access.
+    type: Fix
+  - message: On Snowball, the Head of Personnel's office windoors are now linked to
+      each other, like on other maps.
+    type: Fix
+  id: 104
+  time: '2025-12-02T19:16:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41675
+- author: Spessmann
+  changes:
+  - message: On Snowball, the Service access requirement on the dorms airlocks has
+      been removed
+    type: Fix
+  - message: On Snowball, more station beacons have been added to medical.
+    type: Add
+  id: 105
+  time: '2025-12-03T07:48:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41683
+- author: Hitlinemoss
+  changes:
+  - message: On Snowball, the Head of Security's hardsuit is no longer absent, and
+      now spawns in their locker.
+    type: Fix
+  id: 106
+  time: '2025-12-04T03:44:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41698
 Order: 2
