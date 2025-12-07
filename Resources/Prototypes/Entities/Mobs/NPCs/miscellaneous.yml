@@ -47,13 +47,12 @@
     - type: Tag
       tags:
         - FootstepSound
-    - type: HitscanBatteryAmmoProvider
+    - type: BatteryAmmoProvider
       proto: RedLightLaser
       fireCost: 50
-    - type: BatterySelfRecharger
-      autoRecharge: true
+    - type: PredictedBatterySelfRecharger
       autoRechargeRate: 50
-    - type: Battery
+    - type: PredictedBattery
       maxCharge: 1000
       startingCharge: 1000
     - type: Gun
@@ -151,7 +150,10 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
   - type: Bloodstream
-    bloodReagent: JuiceTomato
+    bloodReagents:
+      reagents:
+      - ReagentId: JuiceTomato
+        Quantity: 1
     bloodMaxVolume: 50
     chemicalMaxVolume: 30
   - type: DamageStateVisuals

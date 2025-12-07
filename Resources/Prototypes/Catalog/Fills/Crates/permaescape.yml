@@ -1,31 +1,31 @@
 - type: entity
-  name: Perma Escape Crate Spawner
-  id: CratePermaEscapeSpawner
   parent: CrateEmptySpawner
+  id: CratePermaEscapeSpawner
+  name: Perma Escape Crate Spawner
   components:
   - type: RandomSpawner
     prototypes:
     # Please note any duplicates & alphabetize <3
+      - ClosetMaintenanceFilledRandom # x3
+      - ClosetMaintenanceFilledRandom
+      - ClosetMaintenanceFilledRandom
       - CrateEngineeringMiniJetpack
       - CratePermaEscapeBureaucracy
-      - CratePermaEscapeEVA
-      - CratePermaEscapeGiftsFromSyndicate
-      - CratePermaEscapeGun
-      - CratePermaEscapeLights
-      - CratePermaEscapeMerc
-      - CrateServiceCustomSmokable
-      - CrateTrashCartFilled
       - CratePermaEscapeComs # x2
       - CratePermaEscapeComs
       - CratePermaEscapeDigging # x2
       - CratePermaEscapeDigging
+      - CratePermaEscapeEVA
+      - CratePermaEscapeGiftsFromSyndicate
+      - CratePermaEscapeGun
+      - CratePermaEscapeLights
       - CratePermaEscapeMats #x2
       - CratePermaEscapeMats
+      - CratePermaEscapeMerc
       - CratePermaEscapeTowercap # x2
       - CratePermaEscapeTowercap
-      - ClosetMaintenanceFilledRandom # x3
-      - ClosetMaintenanceFilledRandom
-      - ClosetMaintenanceFilledRandom
+      - CrateTrashCartFilled
+      - CrateServiceCustomSmokable
     rarePrototypes:
       - MobTick # These need to be killable by one dude with a shovel.
     rareChance: .30
@@ -33,337 +33,295 @@
     offset: 0.0
 
 - type: entity
-  id: CratePermaEscapeDigging
   parent: CrateGenericSteel
+  id: CratePermaEscapeDigging
   suffix: Digging
   components:
-  - type: StorageFill
-    contents:
-      - id: Shovel
-      - id: Pickaxe
-        prob: 0.90
-      - id: Pickaxe
-        prob: 0.40
-      - id: Pickaxe
-        prob: 0.10
-      - id: Shovel
-        prob: 0.50
-      - id: Shovel
-        prob: 0.20
-      - id: HydroponicsToolSpade
-        prob: 0.10
-      - id: HydroponicsToolHatchet
-        prob: 0.05
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: Shovel
+        - id: Pickaxe
+          prob: 0.90
+        - id: Pickaxe
+          prob: 0.40
+        - id: Pickaxe
+          prob: 0.10
+        - id: Shovel
+          prob: 0.50
+        - id: Shovel
+          prob: 0.20
+        - id: HydroponicsToolSpade
+          prob: 0.10
+        - id: HydroponicsToolHatchet
+          prob: 0.05
 
 - type: entity
+  parent: CrateGenericSteel
   id: CratePermaEscapeEVA
-  parent: CrateGenericSteel
-  suffix: EVAs
+  suffix: EVA
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadHelmetEVALarge
-      - id: ClothingOuterHardsuitEVAPrisoner
-      - id: ClothingHeadHelmetEVALarge
-        prob: 0.80
-      - id: ClothingOuterHardsuitEVAPrisoner
-        prob: 0.80
-      - id: ClothingOuterHardsuitVoidParamed
-        prob: 0.10
-      - id: ClothingOuterRedRacoon
-        prob: 0.10
-      - id: ClothingOuterSanta
-        prob: 0.10
-      - id: ClothingOuterEVASuitSyndicate
-        prob: 0.20
-      - id: EmergencyOxygenTankFilled
-        prob: 0.25
-      - id: EmergencyOxygenTank
-        prob: 0.25
-      - id: OxygenTankFilled
-        prob: 0.05
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingHeadHelmetEVALarge
+        - id: ClothingOuterHardsuitEVAPrisoner
+        - id: ClothingHeadHelmetEVALarge
+          prob: 0.80
+        - id: ClothingOuterHardsuitEVAPrisoner
+          prob: 0.80
+        - id: ClothingOuterHardsuitVoidParamed
+          prob: 0.10
+        - id: ClothingOuterRedRacoon
+          prob: 0.10
+        - id: ClothingOuterSanta
+          prob: 0.10
+        - id: ClothingOuterEVASuitSyndicate
+          prob: 0.20
+        - id: EmergencyOxygenTankFilled
+          prob: 0.25
+        - id: EmergencyOxygenTank
+          prob: 0.25
+        - id: OxygenTankFilled
+          prob: 0.05
 
 - type: entity
-  id: CratePermaEscapeGun
   parent: CrateGenericSteel
+  id: CratePermaEscapeGun
   suffix: Gun
   components:
-  - type: StorageFill
-    contents:
-    - id: WeaponPistolMk58
-      prob: 0.15
-      orGroup: gun
-    - id: FoamCrossbow
-      prob: 0.10
-      orGroup: gun
-    - id: WeaponRifleFoam
-      prob: 0.05
-      orGroup: gun
-    - id: WeaponPistolFlintlock
-      prob: 0.20
-      orGroup: gun
-    - id: WeaponShotgunBlunderbuss
-      prob: 0.10
-      orGroup: gun
-    - id: WeaponShotgunBlunderbuss
-      prob: 0.15
-      orGroup: gun
-    - id: WeaponRevolverPirate
-      prob: 0.15
-      orGroup: gun
-    - id: WeaponProtoKineticAccelerator
-      prob: 0.20
-      orGroup: gun
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:GroupSelector
+        children:
+        - id: WeaponPistolMk58
+          weight: 1.5
+        - id: FoamCrossbow
+        - id: WeaponRifleFoam
+          weight: 0.5
+        - id: WeaponPistolFlintlock
+          weight: 2
+        - id: WeaponShotgunBlunderbuss
+        - id: WeaponShotgunBlunderbuss
+          weight: 1.5
+        - id: WeaponRevolverPirate
+          weight: 1.5
+        - id: WeaponProtoKineticAccelerator
+          weight: 2
 
 - type: entity
+  parent: CrateGenericSteel
   id: CratePermaEscapeBureaucracy
-  parent: CrateGenericSteel
-  suffix: Writing
+  suffix: Bureaucracy
   components:
-  - type: StorageFill
-    contents:
-      - id: RubberStampApproved
-      - id: RubberStampDenied
-      - id: Paper
-        amount: 5
-      - id: Pen
-        amount: 3
-      - id: BoxFolderBaseEmpty
-        orGroup: folderA
-      - id: BoxFolderBlackEmpty
-        orGroup: folderA
-      - id: BoxFolderBlueEmpty
-        orGroup: folderA
-      - id: BoxFolderGreenEmpty
-        orGroup: folderA
-      - id: BoxFolderGreyEmpty
-        orGroup: folderA
-      - id: BoxFolderRedEmpty
-        orGroup: folderA
-      - id: BoxFolderYellowEmpty
-        orGroup: folderA
-      - id: BoxFolderBaseEmpty
-        orGroup: folderB
-      - id: BoxFolderBlackEmpty
-        orGroup: folderB
-      - id: BoxFolderBlueEmpty
-        orGroup: folderB
-      - id: BoxFolderGreenEmpty
-        orGroup: folderB
-      - id: BoxFolderGreyEmpty
-        orGroup: folderB
-      - id: BoxFolderRedEmpty
-        orGroup: folderB
-      - id: BoxFolderYellowEmpty
-        orGroup: folderB
-      - id: CrayonBox
-        prob: 0.50
-      - id: CrayonBox
-        prob: 0.10
-      - id: ClearPDA # change to visitor one day.
-        prob: 0.10
-      - id: PersonalAI
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+        - id: Paper
+          amount: 5
+        - id: Pen
+          amount: 3
+        - !type:GroupSelector
+          rolls: 2
+          children:
+          - id: BoxFolderBaseEmpty
+          - id: BoxFolderBlackEmpty
+          - id: BoxFolderBlueEmpty
+          - id: BoxFolderGreenEmpty
+          - id: BoxFolderGreyEmpty
+          - id: BoxFolderRedEmpty
+          - id: BoxFolderYellowEmpty
+        - id: CrayonBox
+          prob: 0.50
+        - id: CrayonBox
+          prob: 0.10
+        - id: ClearPDA # change to visitor one day.
+          prob: 0.10
+        - id: PersonalAI
 
 - type: entity
-  id: CratePermaEscapeLights
   parent: CrateGenericSteel
+  id: CratePermaEscapeLights
   suffix: Glowsticks
   components:
-  - type: StorageFill
-    contents:
-      - id: GlowstickBlue
-        prob: 0.50
-      - id: GlowstickBlue
-        prob: 0.20
-      - id: GlowstickBlue
-        prob: 0.05
-      - id: GlowstickBase
-        prob: 0.50
-      - id: GlowstickBase
-        prob: 0.20
-      - id: GlowstickBase
-        prob: 0.05
-      - id: GlowstickPurple
-        prob: 0.50
-      - id: GlowstickPurple
-        prob: 0.20
-      - id: GlowstickPurple
-        prob: 0.05
-      - id: GlowstickRed
-        prob: 0.50
-      - id: GlowstickRed
-        prob: 0.20
-      - id: GlowstickRed
-        prob: 0.05
-      - id: GlowstickYellow
-        prob: 0.50
-      - id: GlowstickYellow
-        prob: 0.20
-      - id: GlowstickYellow
-        prob: 0.05
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: GlowstickBlue
+          prob: 0.50
+        - id: GlowstickBlue
+          prob: 0.20
+        - id: GlowstickBlue
+          prob: 0.05
+        - id: GlowstickBase
+          prob: 0.50
+        - id: GlowstickBase
+          prob: 0.20
+        - id: GlowstickBase
+          prob: 0.05
+        - id: GlowstickPurple
+          prob: 0.50
+        - id: GlowstickPurple
+          prob: 0.20
+        - id: GlowstickPurple
+          prob: 0.05
+        - id: GlowstickRed
+          prob: 0.50
+        - id: GlowstickRed
+          prob: 0.20
+        - id: GlowstickRed
+          prob: 0.05
+        - id: GlowstickYellow
+          prob: 0.50
+        - id: GlowstickYellow
+          prob: 0.20
+        - id: GlowstickYellow
+          prob: 0.05
 
 - type: entity
+  parent: CrateGenericSteel
   id: CratePermaEscapeMats
-  parent: CrateGenericSteel
-  suffix: Mats
+  suffix: Materials
   components:
-  - type: StorageFill
-    contents:
-      - id: SheetSteel
-        orGroup: matA
-      - id: PartRodMetal
-        orGroup: matA
-      - id: SheetSteel
-        orGroup: matB
-      - id: PartRodMetal
-        orGroup: matB
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:GroupSelector
+        rolls: 2
+        children:
+         - id: SheetSteel
+         - id: PartRodMetal
 
 - type: entity
+  parent: CrateGenericSteel
   id: CratePermaEscapeGiftsFromSyndicate
-  parent: CrateGenericSteel
-  suffix: Syndi Gifts
+  suffix: Syndicate gifts
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingEyesGlassesOutlawGlasses
-      - id: ClothingHeadHatOutlawHat
-      - id: HappyHonkNukieSnacks
-      # - id: BaseUplinkRadio # too spicy I think.
-        # prob: 0.50
-      # - id: Telecrystal
-        # prob: 0.80
-      # - id: Telecrystal
-        # prob: 0.80
-      # - id: Telecrystal
-        # prob: 0.70
-      # - id: Telecrystal
-        # prob: 0.50
-      # - id: Telecrystal
-        # prob: 0.20
-      # - id: Telecrystal
-        # prob: 0.10
-      # - id: Telecrystal
-        # prob: 0.05
-      # - id: Telecrystal
-        # prob: 0.01
-      # - id: Telecrystal5
-        # prob: 0.01
-      - id: CyberPen
-        prob: 0.10
-      - id: CockroachCube
-        orGroup: cube
-      - id: AbominationCube
-        prob: 0.20
-        orGroup: cube
-      - id: SpaceCarpCube
-        prob: 0.20
-        orGroup: cube
-      - id: SyndicateSponge
-        prob: 0.20
-        orGroup: cube
-      - id: MindShieldImplanter
-        prob: 0.20
-      - id: ClothingHandsGlovesConducting # funny
-        prob: 0.30
-      - id: CigPackSyndicate
-        prob: 0.80
-      - id: StimpackMini
-        prob: 0.20
-      - id: StimpackMini
-        prob: 0.10
-      - id: CombatMedipen
-        prob: 0.05
-      - id: MedkitCombatFilled
-        prob: 0.01
-      - id: SoapSyndie
-        prob: 0.15
-      - id: DnaScramblerImplanter
-        prob: 0.005
-
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingEyesGlassesOutlawGlasses
+        - id: ClothingHeadHatOutlawHat
+        - id: HappyHonkNukieSnacks
+        - id: CyberPen
+          prob: 0.10
+        - !type:GroupSelector
+          children:
+          - id: CockroachCube
+          - id: AbominationCube
+            weight: 0.20
+          - id: SpaceCarpCube
+            weight: 0.20
+          - id: SyndicateSponge
+            weight: 0.20
+        - id: MindShieldImplanter
+          prob: 0.20
+        - id: ClothingHandsGlovesConducting # funny
+          prob: 0.30
+        - id: CigPackSyndicate
+          prob: 0.80
+        - id: StimpackMini
+          prob: 0.20
+        - id: StimpackMini
+          prob: 0.10
+        - id: CombatMedipen
+          prob: 0.05
+        - id: MedkitCombatFilled
+          prob: 0.01
+        - id: SoapSyndie
+          prob: 0.15
+        - id: DnaScramblerImplanter
+          prob: 0.005
 
 - type: entity
+  parent: CrateGenericSteel
   id: CratePermaEscapeMerc
-  parent: CrateGenericSteel
-  suffix: Merc
+  suffix: Mercenary
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitMercenary
-      - id: ClothingHeadBandMerc
-        prob: 0.50
-      - id: ClothingHeadHatBeretMerc
-        prob: 0.20
-      - id: ClothingHeadHelmetMerc
-        prob: 0.05
-      - id: ClothingEyesGlassesMercenary
-        prob: 0.20
-      - id: ClothingMaskGasMerc
-        prob: 0.10
-      - id: ClothingHandsGlovesMercFingerless
-        prob: 0.20
-      - id: ClothingHandsMercGlovesCombat
-        prob: 0.05
-      - id: ClothingBackpackMerc
-        prob: 0.50
-      - id: ClothingShoesBootsMerc
-        prob: 0.50
-      - id: ClothingOuterVestWebMerc
-        prob: 0.25
-      - id: ClothingBeltMercWebbing
-        prob: 0.05
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitMercenary
+        - id: ClothingHeadBandMerc
+          prob: 0.50
+        - id: ClothingHeadHatBeretMerc
+          prob: 0.20
+        - id: ClothingHeadHelmetMerc
+          prob: 0.05
+        - id: ClothingEyesGlassesMercenary
+          prob: 0.20
+        - id: ClothingMaskGasMerc
+          prob: 0.10
+        - id: ClothingHandsGlovesMercFingerless
+          prob: 0.20
+        - id: ClothingHandsMercGlovesCombat
+          prob: 0.05
+        - id: ClothingBackpackMerc
+          prob: 0.50
+        - id: ClothingShoesBootsMerc
+          prob: 0.50
+        - id: ClothingOuterVestWebMerc
+          prob: 0.25
+        - id: ClothingBeltMercWebbing
+          prob: 0.05
 
 - type: entity
+  parent: CrateGenericSteel
   id: CratePermaEscapeComs
-  parent: CrateGenericSteel
-  suffix: Coms
+  suffix: Comms
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHeadsetMining
-        orGroup: coms
-      - id: ClothingHeadsetMining
-        orGroup: coms
-      - id: ClothingHeadsetMining
-        orGroup: coms
-      - id: ClothingHeadsetGrey
-        orGroup: coms
-      - id: ClothingHeadsetScience
-        orGroup: coms
-      - id: ClothingHeadsetService
-        orGroup: coms
-      - id: ClothingHeadsetEngineering
-        orGroup: coms
-      - id: ClothingHeadsetMedical
-        orGroup: coms
-      - id: EncryptionKeyCargo
-        prob: 0.05
-      - id: EncryptionKeyScience
-        prob: 0.05
-      - id: EncryptionKeyService
-        prob: 0.05
-      - id: EncryptionKeyMedical
-        prob: 0.05
-      - id: EncryptionKeyEngineering
-        prob: 0.05
-      - id: EncryptionKeySecurity
-        prob: 0.01
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:GroupSelector
+          children:
+          - id: ClothingHeadsetMining
+          - id: ClothingHeadsetMining
+          - id: ClothingHeadsetMining
+          - id: ClothingHeadsetGrey
+          - id: ClothingHeadsetScience
+          - id: ClothingHeadsetService
+          - id: ClothingHeadsetEngineering
+          - id: ClothingHeadsetMedical
+        - id: EncryptionKeyCargo
+          prob: 0.05
+        - id: EncryptionKeyScience
+          prob: 0.05
+        - id: EncryptionKeyService
+          prob: 0.05
+        - id: EncryptionKeyMedical
+          prob: 0.05
+        - id: EncryptionKeyEngineering
+          prob: 0.05
+        - id: EncryptionKeySecurity
+          prob: 0.01
 
 - type: entity
-  id: CratePermaEscapeTowercap
   parent: CrateGenericSteel
+  id: CratePermaEscapeTowercap
   suffix: Towercap
   components:
-  - type: StorageFill
-    contents:
-      - id: TowercapSeeds
-      - id: TowercapSeeds
-        prob: 0.80
-      - id: TowercapSeeds
-        prob: 0.50
-      - id: TowercapSeeds
-        prob: 0.20
-      - id: SteelcapSeeds
-        prob: 0.10
-      - id: SteelLog
-      - id: HydroponicsToolHatchet
-        prob: 0.75
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: TowercapSeeds
+        - id: TowercapSeeds
+          prob: 0.80
+        - id: TowercapSeeds
+          prob: 0.50
+        - id: TowercapSeeds
+          prob: 0.20
+        - id: SteelcapSeeds
+          prob: 0.10
+        - id: SteelLog
+        - id: HydroponicsToolHatchet
+          prob: 0.75
