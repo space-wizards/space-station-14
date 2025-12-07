@@ -7,16 +7,16 @@
   name: figurine
   description: A small miniature.
   components:
+  - type: Sprite
+    sprite: Objects/Fun/figurines.rsi
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
+  - type: StaticPrice
+    price: 75
   - type: Tag
     tags:
     - Figurine
-  - type: Sprite
-    sprite: Objects/Fun/figurines.rsi
-  - type: StaticPrice
-    price: 75
   - type: UseDelay
     delay: 5
   - type: UseDelayOnTrigger
