@@ -726,7 +726,6 @@ PrefilledSyringe: Syringe
 BibleTanakh: null
 BibleSatanic: null
 
-
 # 2025-10-08
 ClothingBeltAssault: ClothingBeltMilitaryWebbing
 WarpPointBombing: null
@@ -741,6 +740,9 @@ DrinkKiraSpecial: DrinkOrangeLimeSodaGlass
 
 # 2025-12-02
 GhostWarpPoint: null
+
+# 2025-12-05
+GlowstickBase: GlowstickGreen
 
 # 2025-12-06
 SpawnPointZookeeper: null
