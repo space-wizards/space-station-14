@@ -85,11 +85,12 @@
     doAfterDelay: 30 # you can heal the mothership core, but it takes a while
   - type: DamagedSiliconAccent
     enableChargeCorruption: false
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 100
-    intensitySlope: 2
-    totalIntensity: 200
+  # TODO: make it explosive again once until issue https://github.com/space-wizards/space-station-14/issues/40606 is fixed
+  # - type: Explosive
+  #   explosionType: Default
+  #   maxIntensity: 100
+  #   intensitySlope: 2
+  #   totalIntensity: 200
   - type: SurveillanceCameraSpeaker
   - type: SurveillanceCameraMonitor
   - type: RoboticsConsole

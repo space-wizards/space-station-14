@@ -488,3 +488,11 @@
     icon: Interface/Actions/shop.png
   - type: InstantAction
     event: !type:IntrinsicStoreActionEvent
+
+- type: entity
+  parent: ActionChangeVoiceMask
+  id: ActionChangeVoiceMaskImplant
+  components:
+  - type: Action
+    icon: { sprite: Interface/Actions/voice-mask.rsi, state: icon }
+    itemIconStyle: BigAction
