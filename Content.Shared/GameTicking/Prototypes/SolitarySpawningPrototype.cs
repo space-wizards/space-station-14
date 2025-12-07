@@ -1,9 +1,8 @@
-using System.ComponentModel.DataAnnotations;
-using Content.Server.Maps;
+using Content.Shared.Maps;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameTicking.Prototypes;
+namespace Content.Shared.GameTicking.Prototypes;
 
 /// <summary>
 /// This prototype defines details for a spawn option for SolitarySpawningRule.

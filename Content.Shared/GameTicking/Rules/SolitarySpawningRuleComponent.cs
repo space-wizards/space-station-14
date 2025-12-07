@@ -1,8 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using Content.Server.GameTicking.Prototypes;
+using Content.Shared.GameTicking.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.GameTicking.Rules.Components;
+namespace Content.Shared.GameTicking.Rules;
 
 /// <summary>
 /// When this game rule is active, each player joining the round will spawn on their own solitary map.
