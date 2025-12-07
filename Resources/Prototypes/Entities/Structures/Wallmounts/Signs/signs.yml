@@ -696,7 +696,7 @@
   parent: BaseSign
   id: SignNews
   name: newsroom sign
-  description: A sign indicating where the Reporter works.
+  description: A sign indicating the newsroom.
   components:
   - type: Sprite
     state: news
