@@ -125,14 +125,13 @@
     soundEmpty:
       path: /Audio/Items/hiss.ogg
     clumsyProof: true
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: FoodPieBananaCream
     fireCost: 30
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 90
     startingCharge: 90
-  - type: BatterySelfRecharger
-    autoRecharge: true
+  - type: PredictedBatterySelfRecharger
     autoRechargeRate: 1
   - type: AmmoCounter
   - type: Item
