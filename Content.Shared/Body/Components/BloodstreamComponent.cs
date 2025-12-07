@@ -137,27 +137,20 @@ public sealed partial class BloodstreamComponent : Component
     // TODO probably damage bleed thresholds.
 
     /// <summary>
-    /// Normal volume of internal blood storage,
-    /// and starting level of blood.
-    /// </summary>
-    [DataField]
-    public FixedPoint2 BloodReferenceVolume = FixedPoint2.New(300);
-
-    /// <summary>
-    /// Factor which multiplied with <see cref="BloodReferenceVolume"/>
+    /// Factor which multiplied with <see cref="BloodReferenceSolution.Volume"/>
     /// gives maximum volume for bloodstream.
     /// </summary>
     [DataField]
     public float MaxVolumeFactor = 2f;
 
     /// <summary>
-    /// Which reagents are considered this entities 'blood'?
+    /// Defines which reagents are considered as 'blood' and how much of it is normal.
     /// </summary>
     /// <remarks>
     /// Slime-people might use slime as their blood or something like that.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public Solution BloodReagents = new([new("Blood", 1)]);
+    public Solution BloodReferenceSolution = new([new("Blood", 300)]);
 
     /// <summary>
     /// Name/Key that <see cref="BloodSolution"/> is indexed by.
