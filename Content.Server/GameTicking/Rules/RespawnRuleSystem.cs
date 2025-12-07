@@ -1,5 +1,4 @@
 using Content.Server.Chat.Managers;
-using Content.Server.Database.Migrations.Postgres;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
@@ -8,6 +7,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Players;
+using Content.Shared.Respawn;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -22,6 +22,7 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -33,6 +34,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
         SubscribeLocalEvent<SuicideEvent>(OnSuicide);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<ActorComponent, IntrinsicReenterLobbyActionEvent>(OnReenterLobbyAction);
     }
 
     public override void Update(float frameTime)
@@ -58,6 +60,11 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
                 tracker.RespawnQueue.Remove(player);
             }
         }
+    }
+
+    private void OnReenterLobbyAction(Entity<ActorComponent> ent, ref IntrinsicReenterLobbyActionEvent args)
+    {
+        _gameTicker.Respawn(ent.Comp.PlayerSession);
     }
 
     private void OnSuicide(SuicideEvent ev)
