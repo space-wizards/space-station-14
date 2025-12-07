@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed clones not getting the thieving skill.
-    type: Fix
-  id: 8762
-  time: '2025-07-10T21:37:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38914
 - author: Ertanic and whatston3
   changes:
   - message: The spray painter can now paint gas canisters, crates, lockers, and floor
@@ -3926,3 +3919,11 @@
   id: 9262
   time: '2025-12-07T11:56:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41755
+- author: Velken
+  changes:
+  - message: Snap Pops can now crafted into a more dangerous version by adding extra
+      gunpowder.
+    type: Add
+  id: 9263
+  time: '2025-12-07T13:38:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38654
