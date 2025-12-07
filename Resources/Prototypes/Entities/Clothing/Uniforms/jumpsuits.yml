@@ -41,7 +41,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/punpun.rsi
   - type: SuitSensor
     controlsLocked: false
-    randomMode: false
     mode: SensorCords
 
 - type: entity
