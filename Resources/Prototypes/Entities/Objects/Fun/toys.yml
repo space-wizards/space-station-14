@@ -386,6 +386,69 @@
     sprite: Objects/Fun/Foam/foam_blade.rsi
   - type: UseDelay
 
+# Balloons
+
+- type: entity
+  parent: BaseItem
+  id: BaseBalloon
+  abstract: true
+  components:
+  - type: Sprite
+    noRot: true
+  - type: Item
+    size: Small
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/balloon_hits.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/balloon_hits.ogg
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: TileFrictionModifier
+    modifier: 0.3
+  - type: Tag
+    tags:
+    - Balloon
+
+- type: entity
+  parent: BaseBalloon
+  id: BalloonSyn
+  name: syndie balloon
+  description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balloons/syndicate.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Balloons/syndicate.rsi
+  - type: StaticPrice
+    price: 5000 # Entertainment.
+
+- type: entity
+  parent: BaseBalloon
+  id: BalloonNT
+  name: nanotrasen balloon
+  description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balloons/nanotrasen.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Balloons/nanotrasen.rsi
+
+- type: entity
+  parent: BaseBalloon
+  id: BalloonCorgi
+  name: corgi balloon
+  description: Just like owning a real dog - but a lot floatier.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balloons/corgi.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Balloons/corgi.rsi
+
 # MISC
 
 - type: entity
@@ -497,116 +560,71 @@
   name: beach ball
   description: The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen
   components:
-    - type: Sprite
-      sprite: Objects/Fun/Balls/beach_ball.rsi
-      state: icon
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape: !type:PhysShapeCircle
-            radius: 0.3
-            position: "0,-0.2"
-          density: 20
-          mask:
-            - ThrownItem
-          restitution: 0.2 # not bouncy
-          friction: 0.2
-    - type: Catchable
-      catchChance: 0.8
-      catchSuccessSound:
-        path: /Audio/Effects/Footsteps/bounce.ogg
-    - type: Item
-      size: Normal
-      sprite: Objects/Fun/Balls/beach_ball.rsi
-    - type: TileFrictionModifier
-      modifier: 0.05
-    - type: TriggerOnCollide
-      fixtureID: fix1
-      keyOut: OnCollide
-    - type: EmitSoundOnTrigger
-      sound:
-        path: /Audio/Effects/Footsteps/bounce.ogg
-      keysIn:
-        - OnCollide
+  - type: Sprite
+    sprite: Objects/Fun/Balls/beach_ball.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.3
+          position: "0,-0.2"
+        density: 20
+        mask:
+          - ItemMask
+        restitution: 0.2 # not bouncy
+        friction: 0.2
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/Balls/beach_ball.rsi
+  - type: TileFrictionModifier
+    modifier: 0.05
+  - type: TriggerOnCollide
+    fixtureID: fix1
+    keyOut: OnCollide
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+    keysIn:
+      - OnCollide
 
 - type: entity
   parent: BeachBall
   id: EvilBeachBall
-  suffix: evil
+  suffix: EVIL/ADMEME
   description: Someone's drawn ">:3c" on the side of this beach ball in indelible ink.
   components:
-    - type: LaunchOnTrigger
-      impulse: 100.0
-      keysIn:
-        - OnCollide
-    - type: StaminaDamageOnTrigger
-      stamina: 25.0
-      keysIn:
-        - OnCollide
-      targetUser: true
-    - type: DamageOnTrigger
-      damage:
-        types:
-          Blunt: 20
-      keysIn:
-        - OnCollide
-      targetUser: true
-
-- type: entity
-  parent: BaseItem
-  id: BalloonSyn
-  name: syndie balloon
-  description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Balloons/syndicate.rsi
-    state: icon
-  - type: Item
-    size: Small
-    sprite: Objects/Fun/Balloons/syndicate.rsi
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Tag
-    tags:
-    - Balloon
-  - type: StaticPrice
-    price: 5000 # Entertainment.
-
-- type: entity
-  parent: BaseItem
-  id: BalloonNT
-  name: nanotrasen balloon
-  description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Balloons/nanotrasen.rsi
-    state: icon
-  - type: Item
-    size: Small
-    sprite: Objects/Fun/Balloons/nanotrasen.rsi
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Tag
-    tags:
-    - Balloon
-
-- type: entity
-  parent: BaseItem
-  id: BalloonCorgi
-  name: corgi balloon
-  description: Just like owning a real dog - but a lot floatier.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Balloons/corgi.rsi
-    state: icon
-  - type: Item
-    size: Small
-    sprite: Objects/Fun/Balloons/corgi.rsi
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Tag
-    tags:
-    - Balloon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.3
+          position: "0,-0.2"
+        density: 20
+        mask:
+        - ThrownItem
+        restitution: 0.5 # very bouncy
+        friction: 0.2
+  - type: LaunchOnTrigger
+    impulse: 100.0
+    keysIn:
+      - OnCollide
+  - type: StaminaDamageOnTrigger
+    stamina: 25.0
+    keysIn:
+      - OnCollide
+    targetUser: true
+  - type: DamageOnTrigger
+    damage:
+      types:
+        Blunt: 20
+    keysIn:
+      - OnCollide
+    targetUser: true
 
 - type: entity
   parent: BaseItem

@@ -353,6 +353,7 @@ public sealed partial class StatusEffectsSystem
     /// <summary>
     /// Returns all status effects that have the specified component.
     /// </summary>
+    /// <returns>Returns true if any entity with the specified component is found.</returns>
     public bool TryEffectsWithComp<T>(EntityUid? target, [NotNullWhen(true)] out HashSet<Entity<T, StatusEffectComponent>>? effects) where T : IComponent
     {
         effects = null;
