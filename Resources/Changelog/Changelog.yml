@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: Muzzles now prevent wearers from screaming and suppress sounds on audio
-      emotes.
-    type: Tweak
-  id: 8765
-  time: '2025-07-11T17:18:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32588
 - author: TiniestShark
   changes:
   - message: Added inhand sprites to all bottled drinks.
@@ -3923,3 +3915,10 @@
   id: 9265
   time: '2025-12-07T16:47:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34971
+- author: Samuka
+  changes:
+  - message: Xenoborg lights are now brighter
+    type: Tweak
+  id: 9266
+  time: '2025-12-07T18:04:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41580
