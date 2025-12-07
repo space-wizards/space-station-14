@@ -6,6 +6,9 @@ namespace Content.Shared.Projectiles;
 [ByRefEvent]
 public readonly record struct EmbedEvent(EntityUid? Shooter, EntityUid Embedded)
 {
+    /// <summary>
+    /// The entity that threw/shot the embed, if any.
+    /// </summary>
     public readonly EntityUid? Shooter = Shooter;
 
     /// <summary>
@@ -20,6 +23,9 @@ public readonly record struct EmbedEvent(EntityUid? Shooter, EntityUid Embedded)
 [ByRefEvent]
 public readonly record struct EmbedDetachEvent(EntityUid? Detacher, EntityUid Embedded)
 {
+    /// <summary>
+    /// The entity that detached the embed, if any.
+    /// </summary>
     public readonly EntityUid? Detacher = Detacher;
 
     /// <summary>
