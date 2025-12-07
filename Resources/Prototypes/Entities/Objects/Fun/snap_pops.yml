@@ -33,6 +33,9 @@
     maxIntensity: 0.01
     intensitySlope: 1
     totalIntensity: 0.01
+  - type: Construction
+    graph: SnapPopExplosiveGraph
+    node: snapPop
 
 - type: entity
   parent: BaseStorageItem
