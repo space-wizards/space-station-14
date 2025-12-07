@@ -1104,9 +1104,9 @@
   productEntity: UnassembledRemoteShotgun
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 3
+    Telecrystal: 2
   cost:
-    Telecrystal: 5
+    Telecrystal: 3
   categories:
   - UplinkDisruption
   conditions:
