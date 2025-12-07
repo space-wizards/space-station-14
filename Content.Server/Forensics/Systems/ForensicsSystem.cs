@@ -197,21 +197,18 @@ namespace Content.Server.Forensics
 
             var component = EnsureComp<ForensicsComponent>(targetUid);
 
-            // dubious logic because the rays have no name. Try to get the name, if it doesn't work, find out the prototype ID
-            string hitscanName = DamageTraceHitscanUnknown;
-            string hitscanPrototypeId;
+            string hitscanName;
             if (TryComp<MetaDataComponent>(ent.Owner, out var hitscanMeta))
             {
                 if (!string.IsNullOrWhiteSpace(hitscanMeta.EntityName))
                 {
                     hitscanName = hitscanMeta.EntityName;
-                    AddUniqueDamageTrace(component, hitscanName);
                 }
-                else //TODO: Delete this block when the hitscans get normal names..
+                else
                 {
-                    hitscanPrototypeId = Prototype(ent.Owner)?.ID ?? DamageTraceHitscanUnknown;
-                    AddUniqueDamageTrace(component, hitscanPrototypeId);
+                    hitscanName = DamageTraceHitscanUnknown;
                 }
+                AddUniqueDamageTrace(component, hitscanName);
             }
         }
 
