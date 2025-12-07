@@ -524,3 +524,9 @@ entity-effect-guidebook-plant-mutate-consume-gasses =
         [1] Mutates
         *[other] mutate
     } the plant to consume gases between {$minValue} and {$maxValue} moles
+
+entity-effect-guidebook-plant-mutate-chemicals =
+    { $chance ->
+        [1] Mutates
+        *[other] mutate
+    } a plant to produce {$name}
