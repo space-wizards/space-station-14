@@ -722,11 +722,11 @@
 
 - type: entity
   parent: DefaultStationBeacon
-  id: DefaultStationBeaconReporter
+  id: DefaultStationBeaconNewsroom
   suffix: Reporter
   components:
   - type: NavMapBeacon
-    defaultText: station-beacon-reporter
+    defaultText: station-beacon-newsroom
 
 - type: entity
   parent: DefaultStationBeacon

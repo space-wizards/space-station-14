@@ -742,3 +742,6 @@ DrinkKiraSpecial: DrinkOrangeLimeSodaGlass
 # 2025-12-06
 SpawnPointZookeeper: null
 SpawnPointBoxer: null
+
+# 2025-12-07
+DefaultStationBeaconReporter: DefaultStationBeaconNewsroom
