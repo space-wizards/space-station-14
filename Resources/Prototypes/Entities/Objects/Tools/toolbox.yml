@@ -159,3 +159,20 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/foolbox.rsi
+  - type: Storage
+    storageOpenSound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
+    storageCloseSound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
+    storageInsertSound:
+      collection: FootstepClown
+      params:
+        variation: 0.125
+    storageRemoveSound:
+      collection: FootstepClown
+      params:
+        variation: 0.125
