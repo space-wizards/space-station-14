@@ -1,4 +1,14 @@
 - type: entityTable
+  id: AllFigurinesTable
+  table: !type:GroupSelector
+    children:
+
+- type: entityTable
+  id: AllToysTable
+  table: !type:GroupSelector
+    children:
+
+- type: entityTable
   id: AllPlushiesTable
   table: !type:GroupSelector
     children:

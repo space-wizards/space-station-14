@@ -191,6 +191,12 @@
     count: 9
 
 - type: localizedDataset
+  id: FigurinesAI
+  values:
+    prefix: figurines-AI-
+    count: 5
+
+- type: localizedDataset
   id: FigurinesNukie
   values:
     prefix: figurines-nukie-
@@ -282,6 +288,12 @@
 
 - type: localizedDataset
   id: FigurinesGriffin
+  values:
+    prefix: figurines-griffin-
+    count: 5
+
+- type: localizedDataset
+  id: FigurinesAI
   values:
     prefix: figurines-griffin-
     count: 5
