@@ -30,31 +30,21 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
         var specialCase = "";
 
-        if (TryComp<LastBodyDamageComponent>(mind, out var storedDamage))
-        {
-            if (storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
-            {
-                damageTypes = _damageable.GetDamages(storedDamage.DamagePerGroup, storedDamage.Damage);
-            }
-            specialCase = storedDamage.SpecialCauseOfDeath;
+        if (!TryComp<LastBodyDamageComponent>(mind, out var storedDamage))
+          return;
 
-            Dirty(mind, storedDamage);
+        if (storedDamage.DamagePerGroup != null && storedDamage.Damage != null)
+        {
+            damageTypes = _damageable.GetDamages(storedDamage.DamagePerGroup, storedDamage.Damage);
         }
-        else
+        specialCase = storedDamage.SpecialCauseOfDeath;
+        Dirty(mind, storedDamage);
+
+        var damageTypesSorted = damageTypes.OrderByDescending(x => x.Value).ToDictionary();
+        if (damageTypesSorted.Count == 0)
             return;
 
-        var sortedDict = damageTypes.OrderBy(x => x.Value).ToDictionary();
-        List<ProtoId<DamageTypePrototype>> highestTypes = new();
-
-        for (var i = sortedDict.Count - 1; i >= 0; i--) // Go through the dictionary values and save the ProtoId's of the highest value
-        {
-            if (sortedDict.ElementAt(i).Value == sortedDict.ElementAt(sortedDict.Count - 1).Value)
-            {
-                highestTypes.Add(sortedDict.ElementAt(i).Key);
-            }
-        }
-        if (highestTypes.Count == 0)
-            return;
+        var highestType = damageTypesSorted.First().Key; // We only need 1 of the values
 
         // TODO: Replace with RandomPredicted once the engine PR is merged
         var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
@@ -68,8 +58,8 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         }
         else
         {
-            if (ent.Comp.DamageMap.TryGetValue(highestTypes[0], out var spriteAmount))  // Chooses a random sprite state if needed
-                spriteState = highestTypes[0] + rand.Next(0, spriteAmount - 1);
+            if (ent.Comp.DamageMap.TryGetValue(highestType, out var spriteAmount))  // Chooses a random sprite state if needed
+                spriteState = highestType + rand.Next(0, spriteAmount - 1);
         }
 
         if (spriteState != null)

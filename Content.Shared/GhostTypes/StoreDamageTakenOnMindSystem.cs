@@ -52,7 +52,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     {
         if (!TryComp<DamageableComponent>(ent, out var damageable)
             || !TryComp<MindContainerComponent>(ent, out var mindContainer)
-            || !TryComp<MindComponent>(mindContainer.Mind, out _))
+            || !HasComp<MindComponent>(mindContainer.Mind))
             return;
 
         EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
@@ -67,7 +67,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     private void SaveSpecialCauseOfDeath(EntityUid ent, string cause)
     {
         if (!TryComp<MindContainerComponent>(ent, out var mindContainer)
-            || !TryComp<MindComponent>(mindContainer.Mind, out _))
+            || !HasComp<MindComponent>(mindContainer.Mind))
             return;
 
         EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
@@ -82,7 +82,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     private void ClearSpecialCause(EntityUid ent)
     {
         if (!TryComp<MindContainerComponent>(ent, out var mindContainer)  // this should prolly be a method sincee im doing the same thingi 3 times tis system
-            || !TryComp<MindComponent>(mindContainer.Mind, out _))
+            || !HasComp<MindComponent>(mindContainer.Mind))
             return;
 
         EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
