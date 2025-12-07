@@ -10,9 +10,9 @@ namespace Content.Shared.Trigger.Components.Triggers;
 public sealed partial class TriggerOnEmbedComponent : BaseTriggerOnXComponent
 {
     /// <summary>
-    /// Whether the trigger user will be the one that embedded them.
-    /// If true, the trigger user will be the actual embed.
+    /// If false the trigger user will be the mob that shot the embeddable projectile.
+    /// If true, the trigger user will be the entity the projectile was embedded into.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool UserIsEmbed;
+    public bool UserIsEmbeddedInto;
 }

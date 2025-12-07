@@ -12,9 +12,9 @@ namespace Content.Shared.Trigger.Components.Triggers;
 public sealed partial class TriggerOnUnembedComponent : BaseTriggerOnXComponent
 {
     /// <summary>
-    /// Whether the trigger user will be the one that detached them.
-    /// If true, the trigger user will be the actual embed.
+    /// If false the trigger user will be the one that detaches the embedded entity.
+    /// If true, the trigger user will be the entity the projectile was embedded into.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool UserIsEmbed;
+    public bool UserIsEmbeddedInto;
 }
