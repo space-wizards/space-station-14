@@ -45,136 +45,136 @@ public sealed class CloningConsoleSystem : EntitySystem
         SubscribeLocalEvent<CloningConsoleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
     }
 
-    private void OnInit(EntityUid uid, CloningConsoleComponent component, ComponentInit args)
+    private void OnInit(Entity<CloningConsoleComponent> ent, ref ComponentInit args)
     {
-        _deviceLink.EnsureSourcePorts(uid, CloningConsoleComponent.ScannerPort, CloningConsoleComponent.PodPort);
+        _deviceLink.EnsureSourcePorts(ent.Owner, CloningConsoleComponent.ScannerPort, CloningConsoleComponent.PodPort);
     }
 
-    private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
+    private void OnButtonPressed(Entity<CloningConsoleComponent> ent, ref UiButtonPressedMessage args)
     {
-        if (!_powerReceiver.IsPowered(uid))
+        if (!_powerReceiver.IsPowered(ent.Owner))
             return;
 
         switch (args.Button)
         {
             case UiButton.Clone:
-                if (consoleComponent.GeneticScanner != null && consoleComponent.CloningPod != null)
-                    TryClone(uid, consoleComponent.CloningPod.Value, consoleComponent.GeneticScanner.Value, consoleComponent: consoleComponent);
+                if (ent.Comp.GeneticScanner != null && ent.Comp.CloningPod != null)
+                    TryClone(ent.Owner, ent.Comp.CloningPod.Value, ent.Comp.GeneticScanner.Value);
                 break;
         }
 
-        UpdateUserInterface(uid, consoleComponent);
+        UpdateUserInterface(ent);
     }
 
-    private void OnPowerChanged(EntityUid uid, CloningConsoleComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<CloningConsoleComponent> ent, ref PowerChangedEvent args)
     {
-        UpdateUserInterface(uid, component);
+        UpdateUserInterface(ent);
     }
 
-    private void OnMapInit(EntityUid uid, CloningConsoleComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<CloningConsoleComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<DeviceLinkSourceComponent>(uid, out var receiver))
+        if (!TryComp<DeviceLinkSourceComponent>(ent.Owner, out var receiver))
             return;
 
         foreach (var port in receiver.Outputs.Values.SelectMany(ports => ports))
         {
             if (TryComp<MedicalScannerComponent>(port, out var scanner))
             {
-                component.GeneticScanner = port;
-                scanner.ConnectedConsole = uid;
+                ent.Comp.GeneticScanner = port;
+                scanner.ConnectedConsole = ent.Owner;
                 Dirty(port, scanner);
             }
 
             if (TryComp<CloningPodComponent>(port, out var pod))
             {
-                component.CloningPod = port;
-                pod.ConnectedConsole = uid;
+                ent.Comp.CloningPod = port;
+                pod.ConnectedConsole = ent.Owner;
                 Dirty(port, pod);
             }
         }
     }
 
-    private void OnNewLink(EntityUid uid, CloningConsoleComponent component, NewLinkEvent args)
+    private void OnNewLink(Entity<CloningConsoleComponent> ent, ref NewLinkEvent args)
     {
         if (TryComp<MedicalScannerComponent>(args.Sink, out var scanner) && args.SourcePort == CloningConsoleComponent.ScannerPort)
         {
-            component.GeneticScanner = args.Sink;
-            scanner.ConnectedConsole = uid;
+            ent.Comp.GeneticScanner = args.Sink;
+            scanner.ConnectedConsole = ent.Owner;
             Dirty(args.Sink, scanner);
         }
 
         if (TryComp<CloningPodComponent>(args.Sink, out var pod) && args.SourcePort == CloningConsoleComponent.PodPort)
         {
-            component.CloningPod = args.Sink;
-            pod.ConnectedConsole = uid;
+            ent.Comp.CloningPod = args.Sink;
+            pod.ConnectedConsole = ent.Owner;
             Dirty(args.Sink, pod);
         }
 
-        Dirty(uid, component);
-        RecheckConnections(uid, component.CloningPod, component.GeneticScanner, component);
+        Dirty(ent);
+        RecheckConnections(ent.Owner, ent.Comp.CloningPod, ent.Comp.GeneticScanner);
     }
 
-    private void OnPortDisconnected(EntityUid uid, CloningConsoleComponent component, PortDisconnectedEvent args)
+    private void OnPortDisconnected(Entity<CloningConsoleComponent> ent, ref PortDisconnectedEvent args)
     {
         if (args.Port == CloningConsoleComponent.ScannerPort)
-            component.GeneticScanner = null;
+            ent.Comp.GeneticScanner = null;
 
         if (args.Port == CloningConsoleComponent.PodPort)
-            component.CloningPod = null;
+            ent.Comp.CloningPod = null;
 
-        Dirty(uid, component);
-        UpdateUserInterface(uid, component);
+        Dirty(ent);
+        UpdateUserInterface(ent);
     }
 
-    private void OnUIOpen(EntityUid uid, CloningConsoleComponent component, AfterActivatableUIOpenEvent args)
+    private void OnUIOpen(Entity<CloningConsoleComponent> ent, ref AfterActivatableUIOpenEvent args)
     {
-        UpdateUserInterface(uid, component);
+        UpdateUserInterface(ent);
     }
 
-    private void OnAnchorChanged(EntityUid uid, CloningConsoleComponent component, ref AnchorStateChangedEvent args)
+    private void OnAnchorChanged(Entity<CloningConsoleComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (args.Anchored)
         {
-            RecheckConnections(uid, component.CloningPod, component.GeneticScanner, component);
+            RecheckConnections(ent.Owner, ent.Comp.CloningPod, ent.Comp.GeneticScanner);
             return;
         }
 
-        UpdateUserInterface(uid, component);
+        UpdateUserInterface(ent);
     }
 
     /// <summary>
     /// Updates the state of the user interface for the cloning console.
     /// </summary>
-    public void UpdateUserInterface(EntityUid consoleUid, CloningConsoleComponent consoleComponent)
+    public void UpdateUserInterface(Entity<CloningConsoleComponent> ent)
     {
-        if (!_ui.HasUi(consoleUid, CloningConsoleUiKey.Key))
+        if (!_ui.HasUi(ent.Owner, CloningConsoleUiKey.Key))
             return;
 
-        if (!_powerReceiver.IsPowered(consoleUid))
+        if (!_powerReceiver.IsPowered(ent.Owner))
         {
-            _ui.CloseUis(consoleUid);
+            _ui.CloseUis(ent.Owner);
             return;
         }
 
-        var newState = GetUserInterfaceState(consoleComponent);
-        _ui.SetUiState(consoleUid, CloningConsoleUiKey.Key, newState);
+        var newState = GetUserInterfaceState(ent.Comp);
+        _ui.SetUiState(ent.Owner, CloningConsoleUiKey.Key, newState);
     }
 
     /// <summary>
     /// Attempts to start a cloning operation given the relevant entities.
     /// </summary>
-    public void TryClone(EntityUid uid, EntityUid cloningPodUid, EntityUid scannerUid, CloningPodComponent? cloningPod = null, MedicalScannerComponent? scannerComp = null, CloningConsoleComponent? consoleComponent = null)
+    public void TryClone(Entity<CloningConsoleComponent?> ent, Entity<CloningPodComponent?> entPod, Entity<MedicalScannerComponent?> entScanner)
     {
-        if (!Resolve(uid, ref consoleComponent) || !Resolve(cloningPodUid, ref cloningPod) || !Resolve(scannerUid, ref scannerComp))
+        if (!Resolve(ent.Owner, ref ent.Comp) || !Resolve(entPod.Owner, ref entPod.Comp) || !Resolve(entScanner.Owner, ref entScanner.Comp))
             return;
 
-        if (!Transform(cloningPodUid).Anchored || !Transform(scannerUid).Anchored)
+        if (!Transform(entPod.Owner).Anchored || !Transform(entScanner.Owner).Anchored)
             return;
 
-        if (!consoleComponent.CloningPodInRange || !consoleComponent.GeneticScannerInRange)
+        if (!ent.Comp.CloningPodInRange || !ent.Comp.GeneticScannerInRange)
             return;
 
-        var body = scannerComp.BodyContainer.ContainedEntity;
+        var body = entScanner.Comp.BodyContainer.ContainedEntity;
 
         if (body is null)
             return;
@@ -185,33 +185,34 @@ public sealed class CloningConsoleSystem : EntitySystem
         if (mind.UserId.HasValue == false || !_playerManager.ValidSessionId(mind.UserId.Value))
             return;
 
-        if (_cloningPod.TryCloning(cloningPodUid, body.Value, (mindId, mind), cloningPod, scannerComp.CloningFailChanceMultiplier))
-            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(uid)} successfully cloned {ToPrettyString(body.Value)}.");
+        if (_cloningPod.TryCloning(entPod, body.Value, (mindId, mind), entScanner.Comp.CloningFailChanceMultiplier))
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(ent.Owner)} successfully cloned {ToPrettyString(body.Value)}.");
     }
 
     /// <summary>
     /// Checks distance connections between the console and machines, and updates states accordingly.
     /// </summary>
-    public void RecheckConnections(EntityUid console, EntityUid? cloningPod, EntityUid? scanner, CloningConsoleComponent? consoleComp = null)
+    public void RecheckConnections(Entity<CloningConsoleComponent?> ent, EntityUid? cloningPod, EntityUid? scanner)
     {
-        if (!Resolve(console, ref consoleComp))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
         if (scanner != null && Exists(scanner.Value))
         {
-            Transform(scanner.Value).Coordinates.TryDistance(EntityManager, Transform(console).Coordinates, out var scannerDistance);
-            consoleComp.GeneticScannerInRange = scannerDistance <= consoleComp.MaxDistance;
+            Transform(scanner.Value).Coordinates.TryDistance(EntityManager, Transform(ent.Owner).Coordinates, out var scannerDistance);
+            ent.Comp.GeneticScannerInRange = scannerDistance <= ent.Comp.MaxDistance;
         }
 
         if (cloningPod != null && Exists(cloningPod.Value))
         {
-            Transform(cloningPod.Value).Coordinates.TryDistance(EntityManager, Transform(console).Coordinates, out var podDistance);
-            consoleComp.CloningPodInRange = podDistance <= consoleComp.MaxDistance;
+            Transform(cloningPod.Value).Coordinates.TryDistance(EntityManager, Transform(ent.Owner).Coordinates, out var podDistance);
+            ent.Comp.CloningPodInRange = podDistance <= ent.Comp.MaxDistance;
         }
 
-        Dirty(console, consoleComp);
-        UpdateUserInterface(console, consoleComp);
+        Dirty(ent);
+        UpdateUserInterface((ent.Owner, ent.Comp));
     }
+
     private CloningConsoleBoundUserInterfaceState GetUserInterfaceState(CloningConsoleComponent consoleComponent)
     {
         var clonerStatus = ClonerStatus.Ready;

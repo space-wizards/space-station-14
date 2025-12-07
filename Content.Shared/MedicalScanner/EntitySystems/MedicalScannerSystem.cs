@@ -48,71 +48,72 @@ public sealed class MedicalScannerSystem : EntitySystem
         SubscribeLocalEvent<MedicalScannerComponent, CanDropTargetEvent>(OnCanDragDropOn);
     }
 
-    private void OnCanDragDropOn(EntityUid uid, MedicalScannerComponent component, ref CanDropTargetEvent args)
+    private void OnCanDragDropOn(Entity<MedicalScannerComponent> ent, ref CanDropTargetEvent args)
     {
         args.Handled = true;
-        args.CanDrop |= CanScannerInsert(uid, args.Dragged, component);
+        args.CanDrop |= CanScannerInsert(ent.AsNullable(), args.Dragged);
     }
 
     /// <summary>
     /// Checks if a given entity can be inserted into the scanner.
     /// </summary>
-    public bool CanScannerInsert(EntityUid uid, EntityUid target, MedicalScannerComponent? component = null)
+    public bool CanScannerInsert(Entity<MedicalScannerComponent?> ent, EntityUid target)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return false;
 
         return HasComp<BodyComponent>(target);
     }
 
-    private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
+    private void OnComponentInit(Entity<MedicalScannerComponent> ent, ref ComponentInit args)
     {
         base.Initialize();
-        scannerComponent.BodyContainer = _container.EnsureContainer<ContainerSlot>(uid, $"scanner-bodyContainer");
-        _deviceLink.EnsureSinkPorts(uid, MedicalScannerComponent.ScannerPort);
+        ent.Comp.BodyContainer = _container.EnsureContainer<ContainerSlot>(ent.Owner, $"scanner-bodyContainer");
+        _deviceLink.EnsureSinkPorts(ent.Owner, MedicalScannerComponent.ScannerPort);
     }
 
-    private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, ref ContainerRelayMovementEntityEvent args)
+    private void OnRelayMovement(Entity<MedicalScannerComponent> ent, ref ContainerRelayMovementEntityEvent args)
     {
-        if (!_blocker.CanInteract(args.Entity, uid))
+        if (!_blocker.CanInteract(args.Entity, ent.Owner))
             return;
 
-        EjectBody(uid, scannerComponent);
+        EjectBody(ent.AsNullable());
     }
 
-    private void AddInsertOtherVerb(EntityUid uid, MedicalScannerComponent component, GetVerbsEvent<InteractionVerb> args)
+    private void AddInsertOtherVerb(Entity<MedicalScannerComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
     {
         if (args.Using == null ||
             !args.CanAccess ||
             !args.CanInteract ||
-            IsOccupied(component) ||
-            !CanScannerInsert(uid, args.Using.Value, component))
+            IsOccupied(ent.Comp) ||
+            !CanScannerInsert(ent.AsNullable(), args.Using.Value))
             return;
 
         var name = Loc.GetString("generic-unknown-title");
         if (TryComp(args.Using.Value, out MetaDataComponent? metadata))
             name = metadata.EntityName;
 
+        var target = args.Target;
         InteractionVerb verb = new()
         {
-            Act = () => InsertBody(uid, args.Target, component),
+            Act = () => InsertBody(ent.AsNullable(), target),
             Category = VerbCategory.Insert,
             Text = name
         };
         args.Verbs.Add(verb);
     }
 
-    private void AddAlternativeVerbs(EntityUid uid, MedicalScannerComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void AddAlternativeVerbs(Entity<MedicalScannerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
 
         // Eject verb.
-        if (IsOccupied(component))
+        if (IsOccupied(ent.Comp))
         {
             AlternativeVerb verb = new()
             {
-                Act = () => EjectBody(uid, component),
+                Act = () => EjectBody(ent.AsNullable()),
                 Category = VerbCategory.Eject,
                 Text = Loc.GetString("medical-scanner-verb-noun-occupant"),
                 Priority = 1 // Promote to top to make ejecting the ALT-click action.
@@ -121,55 +122,56 @@ public sealed class MedicalScannerSystem : EntitySystem
         }
 
         // Self-insert verb.
-        if (!IsOccupied(component) &&
-            CanScannerInsert(uid, args.User, component) &&
+        var user = args.User;
+        if (!IsOccupied(ent.Comp) &&
+            CanScannerInsert(ent.AsNullable(), args.User) &&
             _blocker.CanMove(args.User))
         {
             AlternativeVerb verb = new()
             {
-                Act = () => InsertBody(uid, args.User, component),
+                Act = () => InsertBody(ent.AsNullable(), user),
                 Text = Loc.GetString("medical-scanner-verb-enter")
             };
             args.Verbs.Add(verb);
         }
     }
 
-    private void OnDestroyed(EntityUid uid, MedicalScannerComponent scannerComponent, DestructionEventArgs args)
+    private void OnDestroyed(Entity<MedicalScannerComponent> ent, ref DestructionEventArgs args)
     {
-        EjectBody(uid, scannerComponent);
+        EjectBody(ent.AsNullable());
     }
 
-    private void OnDragDropOn(EntityUid uid, MedicalScannerComponent scannerComponent, ref DragDropTargetEvent args)
+    private void OnDragDropOn(Entity<MedicalScannerComponent> ent, ref DragDropTargetEvent args)
     {
-        InsertBody(uid, args.Dragged, scannerComponent);
+        InsertBody(ent.AsNullable(), args.Dragged);
     }
 
-    private void OnPortDisconnected(EntityUid uid, MedicalScannerComponent component, PortDisconnectedEvent args)
+    private void OnPortDisconnected(Entity<MedicalScannerComponent> ent, ref PortDisconnectedEvent args)
     {
-        component.ConnectedConsole = null;
-        Dirty(uid, component);
+        ent.Comp.ConnectedConsole = null;
+        Dirty(ent);
     }
 
-    private void OnAnchorChanged(EntityUid uid, MedicalScannerComponent component, ref AnchorStateChangedEvent args)
+    private void OnAnchorChanged(Entity<MedicalScannerComponent> ent, ref AnchorStateChangedEvent args)
     {
-        if (component.ConnectedConsole == null || !TryComp<CloningConsoleComponent>(component.ConnectedConsole, out var console))
+        if (ent.Comp.ConnectedConsole == null || !TryComp<CloningConsoleComponent>(ent.Comp.ConnectedConsole, out var console))
             return;
 
         if (args.Anchored)
         {
-            _cloningConsole.RecheckConnections(component.ConnectedConsole.Value, console.CloningPod, uid, console);
+            _cloningConsole.RecheckConnections(ent.Comp.ConnectedConsole.Value, console.CloningPod, ent.Owner);
             return;
         }
 
-        _cloningConsole.UpdateUserInterface(component.ConnectedConsole.Value, console);
-        Dirty(uid, component);
+        _cloningConsole.UpdateUserInterface((ent.Comp.ConnectedConsole.Value, console));
+        Dirty(ent);
     }
 
-    private MedicalScannerStatus GetStatus(EntityUid uid, MedicalScannerComponent scannerComponent)
+    private MedicalScannerStatus GetStatus(Entity<MedicalScannerComponent> ent)
     {
-        if (_powerReceiver.IsPowered(uid))
+        if (_powerReceiver.IsPowered(ent.Owner))
         {
-            var body = scannerComponent.BodyContainer.ContainedEntity;
+            var body = ent.Comp.BodyContainer.ContainedEntity;
             if (body == null)
                 return MedicalScannerStatus.Open;
 
@@ -177,7 +179,7 @@ public sealed class MedicalScannerSystem : EntitySystem
             if (!TryComp<MobStateComponent>(body.Value, out var state))
                 return MedicalScannerStatus.Yellow;
 
-            return GetStatusFromDamageState(body.Value, state);
+            return GetStatusFromDamageState((body.Value, state));
         }
         return MedicalScannerStatus.Off;
     }
@@ -187,24 +189,24 @@ public sealed class MedicalScannerSystem : EntitySystem
         return scannerComponent.BodyContainer.ContainedEntity != null;
     }
 
-    private MedicalScannerStatus GetStatusFromDamageState(EntityUid uid, MobStateComponent state)
+    private MedicalScannerStatus GetStatusFromDamageState(Entity<MobStateComponent> ent)
     {
-        if (_mobState.IsAlive(uid, state))
+        if (_mobState.IsAlive(ent))
             return MedicalScannerStatus.Green;
 
-        if (_mobState.IsCritical(uid, state))
+        if (_mobState.IsCritical(ent))
             return MedicalScannerStatus.Red;
 
-        if (_mobState.IsDead(uid, state))
+        if (_mobState.IsDead(ent))
             return MedicalScannerStatus.Death;
 
         return MedicalScannerStatus.Yellow;
     }
 
-    private void UpdateAppearance(EntityUid uid, MedicalScannerComponent scannerComponent)
+    private void UpdateAppearance(Entity<MedicalScannerComponent> ent)
     {
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-            _appearance.SetData(uid, MedicalScannerVisuals.Status, GetStatus(uid, scannerComponent), appearance);
+        if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
+            _appearance.SetData(ent.Owner, MedicalScannerVisuals.Status, GetStatus(ent), appearance);
     }
 
     public override void Update(float frameTime)
@@ -220,35 +222,35 @@ public sealed class MedicalScannerSystem : EntitySystem
         var query = EntityQueryEnumerator<MedicalScannerComponent>();
         while (query.MoveNext(out var uid, out var scanner))
         {
-            UpdateAppearance(uid, scanner);
+            UpdateAppearance((uid, scanner));
         }
     }
 
-    public void InsertBody(EntityUid uid, EntityUid to_insert, MedicalScannerComponent? scannerComponent)
+    public void InsertBody(Entity<MedicalScannerComponent?> ent, EntityUid toInsert)
     {
-        if (!Resolve(uid, ref scannerComponent))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        if (scannerComponent.BodyContainer.ContainedEntity != null)
+        if (ent.Comp.BodyContainer.ContainedEntity != null)
             return;
 
-        if (!HasComp<BodyComponent>(to_insert))
+        if (!HasComp<BodyComponent>(toInsert))
             return;
 
-        _container.Insert(to_insert, scannerComponent.BodyContainer);
-        UpdateAppearance(uid, scannerComponent);
+        _container.Insert(toInsert, ent.Comp.BodyContainer);
+        UpdateAppearance((ent.Owner, ent.Comp));
     }
 
-    public void EjectBody(EntityUid uid, MedicalScannerComponent? scannerComponent)
+    public void EjectBody(Entity<MedicalScannerComponent?> ent)
     {
-        if (!Resolve(uid, ref scannerComponent))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        if (scannerComponent.BodyContainer.ContainedEntity is not { Valid: true } contained)
+        if (ent.Comp.BodyContainer.ContainedEntity is not { Valid: true } contained)
             return;
 
-        _container.Remove(contained, scannerComponent.BodyContainer);
-        _climb.ForciblySetClimbing(contained, uid);
-        UpdateAppearance(uid, scannerComponent);
+        _container.Remove(contained, ent.Comp.BodyContainer);
+        _climb.ForciblySetClimbing(contained, ent.Owner);
+        UpdateAppearance((ent.Owner, ent.Comp));
     }
 }

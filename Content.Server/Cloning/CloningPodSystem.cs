@@ -48,12 +48,12 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
     private const float EasyModeCloningCost = 0.7f;
 
     /// <inheritdoc/>
-    public override bool TryCloning(EntityUid uid, EntityUid bodyToClone, Entity<MindComponent> mindEnt, CloningPodComponent? clonePod, float failChanceModifier = 1)
+    public override bool TryCloning(Entity<CloningPodComponent?> ent, EntityUid bodyToClone, Entity<MindComponent> mindEnt, float failChanceModifier = 1)
     {
-        if (!Resolve(uid, ref clonePod))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return false;
 
-        if (HasComp<ActiveCloningPodComponent>(uid))
+        if (HasComp<ActiveCloningPodComponent>(ent.Owner))
             return false;
 
         var mind = mindEnt.Comp;
@@ -84,12 +84,12 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
             cloningCost = (int)Math.Round(cloningCost * EasyModeCloningCost);
 
         // biomass checks.
-        var biomassAmount = _material.GetMaterialAmount(uid, clonePod.RequiredMaterial);
+        var biomassAmount = _material.GetMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial);
 
         if (biomassAmount < cloningCost)
         {
-            if (clonePod.ConnectedConsole != null)
-                _chat.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-chat-error", ("units", cloningCost)), InGameICChatType.Speak, false);
+            if (ent.Comp.ConnectedConsole != null)
+                _chat.TrySendInGameICMessage(ent.Comp.ConnectedConsole.Value, Loc.GetString("cloning-console-chat-error", ("units", cloningCost)), InGameICChatType.Speak, false);
             return false;
         }
         // end of biomass checks.
@@ -101,17 +101,17 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
             var chance = Math.Clamp((float)(cellularDmg / 100), 0, 1);
             chance *= failChanceModifier;
 
-            if (cellularDmg > 0 && clonePod.ConnectedConsole != null)
-                _chat.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning", ("percent", Math.Round(100 - chance * 100))), InGameICChatType.Speak, false);
+            if (cellularDmg > 0 && ent.Comp.ConnectedConsole != null)
+                _chat.TrySendInGameICMessage(ent.Comp.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning", ("percent", Math.Round(100 - chance * 100))), InGameICChatType.Speak, false);
 
             if (_robustRandom.Prob(chance))
             {
-                clonePod.FailedClone = true;
-                UpdateStatus(uid, CloningPodStatus.Gore, clonePod);
-                AddComp<ActiveCloningPodComponent>(uid);
-                _material.TryChangeMaterialAmount(uid, clonePod.RequiredMaterial, -cloningCost);
-                clonePod.UsedBiomass = cloningCost;
-                Dirty(uid, clonePod);
+                ent.Comp.FailedClone = true;
+                UpdateStatus((ent.Owner, ent.Comp), CloningPodStatus.Gore);
+                AddComp<ActiveCloningPodComponent>(ent.Owner);
+                _material.TryChangeMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial, -cloningCost);
+                ent.Comp.UsedBiomass = cloningCost;
+                Dirty(ent);
                 return true;
             }
         }
@@ -119,23 +119,23 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
 
         if (!_cloning.TryCloning(bodyToClone, _transform.GetMapCoordinates(bodyToClone), _settingsId, out var mob)) // spawn a new body
         {
-            if (clonePod.ConnectedConsole != null)
-                _chat.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-uncloneable-trait-error"), InGameICChatType.Speak, false);
+            if (ent.Comp.ConnectedConsole != null)
+                _chat.TrySendInGameICMessage(ent.Comp.ConnectedConsole.Value, Loc.GetString("cloning-console-uncloneable-trait-error"), InGameICChatType.Speak, false);
             return false;
         }
 
         var cloneMindReturn = AddComp<BeingClonedComponent>(mob.Value);
         cloneMindReturn.Mind = mind;
-        cloneMindReturn.Parent = uid;
-        _container.Insert(mob.Value, clonePod.BodyContainer);
+        cloneMindReturn.Parent = ent.Owner;
+        _container.Insert(mob.Value, ent.Comp.BodyContainer);
         ClonesWaitingForMind.Add(mind, mob.Value);
         _euiManager.OpenEui(new AcceptCloningEui(mindEnt, mind, this), client);
 
-        UpdateStatus(uid, CloningPodStatus.NoMind, clonePod);
-        AddComp<ActiveCloningPodComponent>(uid);
-        _material.TryChangeMaterialAmount(uid, clonePod.RequiredMaterial, -cloningCost);
-        clonePod.UsedBiomass = cloningCost;
-        Dirty(uid, clonePod);
+        UpdateStatus((ent.Owner, ent.Comp), CloningPodStatus.NoMind);
+        AddComp<ActiveCloningPodComponent>(ent.Owner);
+        _material.TryChangeMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial, -cloningCost);
+        ent.Comp.UsedBiomass = cloningCost;
+        Dirty(ent);
         return true;
     }
 
@@ -157,42 +157,42 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
                 continue;
 
             if (cloning.FailedClone)
-                EndFailedCloning(uid, cloning);
+                EndFailedCloning((uid, cloning));
             else
-                Eject(uid, cloning);
+                Eject((uid, cloning));
         }
     }
 
-    public void Eject(EntityUid uid, CloningPodComponent? clonePod)
+    public void Eject(Entity<CloningPodComponent?> ent)
     {
-        if (!Resolve(uid, ref clonePod))
+        if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        if (clonePod.BodyContainer.ContainedEntity is not { Valid: true } entity || clonePod.NextUpdate < clonePod.CloningTime)
+        if (ent.Comp.BodyContainer.ContainedEntity is not { Valid: true } entity || ent.Comp.NextUpdate < ent.Comp.CloningTime)
             return;
 
         RemComp<BeingClonedComponent>(entity);
-        _container.Remove(entity, clonePod.BodyContainer);
-        clonePod.NextUpdate = TimeSpan.Zero;
-        clonePod.UsedBiomass = 0;
-        UpdateStatus(uid, CloningPodStatus.Idle, clonePod);
-        RemCompDeferred<ActiveCloningPodComponent>(uid);
-        Dirty(uid, clonePod);
+        _container.Remove(entity, ent.Comp.BodyContainer);
+        ent.Comp.NextUpdate = TimeSpan.Zero;
+        ent.Comp.UsedBiomass = 0;
+        UpdateStatus((ent.Owner, ent.Comp), CloningPodStatus.Idle);
+        RemCompDeferred<ActiveCloningPodComponent>(ent.Owner);
+        Dirty(ent);
     }
 
-    private void EndFailedCloning(EntityUid uid, CloningPodComponent clonePod)
+    private void EndFailedCloning(Entity<CloningPodComponent> ent)
     {
-        clonePod.FailedClone = false;
-        clonePod.NextUpdate = TimeSpan.Zero;
-        UpdateStatus(uid, CloningPodStatus.Idle, clonePod);
-        var transform = Transform(uid);
-        var indices = _transform.GetGridTilePositionOrDefault((uid, transform));
+        ent.Comp.FailedClone = false;
+        ent.Comp.NextUpdate = TimeSpan.Zero;
+        UpdateStatus(ent, CloningPodStatus.Idle);
+        var transform = Transform(ent.Owner);
+        var indices = _transform.GetGridTilePositionOrDefault((ent.Owner, transform));
         var tileMix = _atmosphere.GetTileMixture(transform.GridUid, null, indices, true);
 
-        if (HasComp<EmaggedComponent>(uid))
+        if (HasComp<EmaggedComponent>(ent.Owner))
         {
-            _audio.PlayPvs(clonePod.ScreamSound, uid);
-            Spawn(clonePod.MobSpawnId, transform.Coordinates);
+            _audio.PlayPvs(ent.Comp.ScreamSound, ent.Owner);
+            Spawn(ent.Comp.MobSpawnId, transform.Coordinates);
         }
 
         Solution bloodSolution = new();
@@ -205,13 +205,13 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
             if (_robustRandom.Prob(0.2f))
                 i++;
         }
-        _puddle.TrySpillAt(uid, bloodSolution, out _);
+        _puddle.TrySpillAt(ent.Owner, bloodSolution, out _);
 
-        if (!HasComp<EmaggedComponent>(uid))
-            _material.SpawnMultipleFromMaterial(_robustRandom.Next(1, (int)(clonePod.UsedBiomass / 2.5)), clonePod.RequiredMaterial, Transform(uid).Coordinates);
+        if (!HasComp<EmaggedComponent>(ent.Owner))
+            _material.SpawnMultipleFromMaterial(_robustRandom.Next(1, (int)(ent.Comp.UsedBiomass / 2.5)), ent.Comp.RequiredMaterial, Transform(ent.Owner).Coordinates);
 
-        clonePod.UsedBiomass = 0;
-        RemCompDeferred<ActiveCloningPodComponent>(uid);
-        Dirty(uid, clonePod);
+        ent.Comp.UsedBiomass = 0;
+        RemCompDeferred<ActiveCloningPodComponent>(ent.Owner);
+        Dirty(ent);
     }
 }

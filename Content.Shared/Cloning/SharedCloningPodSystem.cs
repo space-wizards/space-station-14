@@ -48,7 +48,7 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     /// <summary>
     /// Tries to start the cloning process for the specified mind and pod. Override in server.
     /// </summary>
-    public virtual bool TryCloning(EntityUid uid, EntityUid bodyToClone, Entity<MindComponent> mindEnt, CloningPodComponent? clonePod, float failChanceModifier = 1)
+    public virtual bool TryCloning(Entity<CloningPodComponent?> ent, EntityUid bodyToClone, Entity<MindComponent> mindEnt, float failChanceModifier = 1)
     {
         return false;
     }
@@ -56,10 +56,10 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     /// <summary>
     /// Updates the visual and logic status of the cloning pod.
     /// </summary>
-    public void UpdateStatus(EntityUid podUid, CloningPodStatus status, CloningPodComponent cloningPod)
+    public void UpdateStatus(Entity<CloningPodComponent> ent, CloningPodStatus status)
     {
-        cloningPod.Status = status;
-        _appearance.SetData(podUid, CloningPodVisuals.Status, cloningPod.Status);
+        ent.Comp.Status = status;
+        _appearance.SetData(ent.Owner, CloningPodVisuals.Status, ent.Comp.Status);
     }
 
     private void OnComponentInit(Entity<CloningPodComponent> ent, ref ComponentInit args)
@@ -84,18 +84,18 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
         ClonesWaitingForMind.Remove(mind);
     }
 
-    private void HandleMindAdded(EntityUid uid, BeingClonedComponent clonedComponent, MindAddedMessage message)
+    private void HandleMindAdded(Entity<BeingClonedComponent> ent, ref MindAddedMessage message)
     {
-        if (clonedComponent.Parent == EntityUid.Invalid ||
-            !Exists(clonedComponent.Parent) ||
-            !TryComp<CloningPodComponent>(clonedComponent.Parent, out var cloningPodComponent) ||
-            uid != cloningPodComponent.BodyContainer.ContainedEntity)
+        if (ent.Comp.Parent == EntityUid.Invalid ||
+            !Exists(ent.Comp.Parent) ||
+            !TryComp<CloningPodComponent>(ent.Comp.Parent, out var cloningPodComponent) ||
+            ent.Owner != cloningPodComponent.BodyContainer.ContainedEntity)
         {
-            RemComp<BeingClonedComponent>(uid);
+            RemComp<BeingClonedComponent>(ent.Owner);
             return;
         }
 
-        UpdateStatus(clonedComponent.Parent, CloningPodStatus.Cloning, cloningPodComponent);
+        UpdateStatus((ent.Comp.Parent, cloningPodComponent), CloningPodStatus.Cloning);
     }
 
     private void OnPortDisconnected(Entity<CloningPodComponent> ent, ref PortDisconnectedEvent args)
@@ -111,11 +111,11 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
 
         if (args.Anchored)
         {
-            _cloningConsole.RecheckConnections(ent.Comp.ConnectedConsole.Value, ent.Owner, console.GeneticScanner, console);
+            _cloningConsole.RecheckConnections(ent.Comp.ConnectedConsole.Value, ent.Owner, console.GeneticScanner);
             return;
         }
 
-        _cloningConsole.UpdateUserInterface(ent.Comp.ConnectedConsole.Value, console);
+        _cloningConsole.UpdateUserInterface((ent.Comp.ConnectedConsole.Value, console));
     }
 
     private void OnExamined(Entity<CloningPodComponent> ent, ref ExaminedEvent args)
