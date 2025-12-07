@@ -436,6 +436,45 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         return true;
     }
 
+    public bool TryRegulateBloodReagents(Entity<BloodstreamComponent?> ent, FixedPoint2 rate, float setpointFactor = 1f)
+    {
+        if (!Resolve(ent, ref ent.Comp, logMissing: false)
+            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
+            return false;
+
+        foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
+        {
+            var actualQuantity = bloodSolution.GetTotalPrototypeQuantity(referenceReagent.Prototype);
+            var error = referenceQuantity * setpointFactor - actualQuantity;
+
+            if (FixedPoint2.Abs(error) > rate)
+                error *= (float)referenceQuantity / (float)ent.Comp.BloodReferenceSolution.Volume;
+
+            if (error > 0)
+            {
+                ReagentId reagentToAdd = new ReagentId(referenceReagent.Prototype, GetEntityBloodData(ent));
+                bloodSolution.AddReagent(reagentToAdd, error);
+            }
+
+            if (error < 0)
+            {
+                error *= -1;
+                for (int i = bloodSolution.Contents.Count - 1; i >= 0; i--)
+                {
+                    var (reagentId, _) = bloodSolution.Contents[i];
+                    if (ent.Comp.BloodReferenceSolution.ContainsPrototype(reagentId.Prototype))
+                    {
+                        error -= bloodSolution.RemoveReagent(reagentId, error);
+
+                        if (error <= 0)
+                            return true;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     /// <summary>
     /// Removes blood by spilling out the bloodstream.
     /// </summary>
