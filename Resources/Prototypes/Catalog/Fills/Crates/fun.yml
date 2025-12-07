@@ -110,6 +110,7 @@
       - id: PlushieLizardJobMultiweh
         weight: 0.5 # 1 in >800
 
+
 - type: entityTable
   id: AllPottedPlantsTable
   table: !type:GroupSelector
