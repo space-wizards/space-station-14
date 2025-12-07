@@ -25,7 +25,7 @@
     sprite: Objects/Fun/figurines.rsi
     layers:
       - state: fig_box
-  - type: TriggerOnUse
+  - type: TriggerOnActivate
   - type: DeleteOnTrigger
   - type: EmitSoundOnTrigger
     positional: true
@@ -33,7 +33,7 @@
     sound:
       path: /Audio/Effects/unwrap.ogg
   - type: SpawnEntityTableOnTrigger
-    targetUser: true
+    useMapCoords: true
     table: !type:AllSelector
       children:
       - id: MysteryFigureBoxTrash
