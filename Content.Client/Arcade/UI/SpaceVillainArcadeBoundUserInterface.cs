@@ -1,8 +1,5 @@
-﻿using Robust.Client.GameObjects;
+﻿using Content.Shared.Arcade.SpaceVillain;
 using Robust.Client.UserInterface;
-using Robust.Shared.GameObjects;
-using Robust.Shared.ViewVariables;
-using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
 
 namespace Content.Client.Arcade.UI;
 
@@ -12,10 +9,10 @@ public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
 
     public SpaceVillainArcadeBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        SendAction(PlayerAction.RequestData);
+        SendAction(SpaceVillainPlayerAction.RequestData);
     }
 
-    public void SendAction(PlayerAction action)
+    public void SendAction(SpaceVillainPlayerAction action)
     {
         SendMessage(new SpaceVillainArcadePlayerActionMessage(action));
     }

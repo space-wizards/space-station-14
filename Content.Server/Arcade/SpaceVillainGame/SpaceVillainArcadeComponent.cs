@@ -1,4 +1,3 @@
-using Content.Shared.Arcade;
 using Content.Shared.Dataset;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -6,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Arcade.SpaceVillain;
 
 [RegisterComponent]
-public sealed partial class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent
+public sealed partial class SpaceVillainArcadeComponent : Component
 {
     /// <summary>
     /// Unused flag that can be hacked via wires.
@@ -74,28 +73,4 @@ public sealed partial class SpaceVillainArcadeComponent : SharedSpaceVillainArca
     /// </summary>
     [DataField]
     public ProtoId<LocalizedDatasetPrototype> PossibleLastEnemyNames = "SpaceVillainNamesEnemyLast";
-
-    /// <summary>
-    /// The prototypes that can be dispensed as a reward for winning the game.
-    /// </summary>
-    [DataField]
-    public List<EntProtoId> PossibleRewards = new();
-
-    /// <summary>
-    /// The minimum number of prizes the arcade machine can have.
-    /// </summary>
-    [DataField]
-    public int RewardMinAmount;
-
-    /// <summary>
-    /// The maximum number of prizes the arcade machine can have.
-    /// </summary>
-    [DataField]
-    public int RewardMaxAmount;
-
-    /// <summary>
-    /// The remaining number of prizes the arcade machine can dispense.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int RewardAmount = 0;
 }

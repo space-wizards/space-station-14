@@ -1,6 +1,6 @@
 using Content.Server.Arcade.SpaceVillain;
 using Content.Server.Wires;
-using Content.Shared.Arcade;
+using Content.Shared.Arcade.SpaceVillain;
 using Content.Shared.Wires;
 
 namespace Content.Server.Arcade;
@@ -11,7 +11,7 @@ public sealed partial class ArcadePlayerInvincibleWireAction : BaseToggleWireAct
 
     public override Color Color { get; set; } = Color.Purple;
 
-    public override object? StatusKey { get; } = SharedSpaceVillainArcadeComponent.Indicators.HealthManager;
+    public override object? StatusKey { get; } = SpaceVillainIndicators.HealthManager;
 
     public override void ToggleValue(EntityUid owner, bool setting)
     {
