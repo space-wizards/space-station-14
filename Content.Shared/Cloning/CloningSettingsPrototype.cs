@@ -19,11 +19,11 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     public string ID { get; private set; } = default!;
 
     [ParentDataField(typeof(PrototypeIdArraySerializer<CloningSettingsPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     [AbstractDataField]
     [NeverPushInheritance]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 
     /// <summary>
     ///     Determines if cloning can be prevented by traits etc.
@@ -49,6 +49,12 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     /// </summary>
     [DataField]
     public bool CopyImplants = true;
+
+    /// <summary>
+    ///     Should infinite status effects applied to an entity be copied or not?
+    /// </summary>
+    [DataField]
+    public bool CopyStatusEffects = true;
 
     /// <summary>
     ///     Whitelist for the equipment allowed to be copied.

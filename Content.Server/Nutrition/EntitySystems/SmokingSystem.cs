@@ -1,10 +1,9 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Forensics;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -17,7 +16,6 @@ using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using System.Linq;
 using Content.Shared.Atmos;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -159,7 +157,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
 
                 _reactiveSystem.DoEntityReaction(containerManager.Owner, inhaledSolution, ReactionMethod.Ingestion);
-                _bloodstreamSystem.TryAddToChemicals(containerManager.Owner, inhaledSolution, bloodstream);
+                _bloodstreamSystem.TryAddToChemicals((containerManager.Owner, bloodstream), inhaledSolution);
             }
 
             _timer -= UpdateTimer;

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Prototypes;
@@ -51,13 +52,18 @@ public abstract class SharedAnomalySystem : EntitySystem
             return;
 
         // anomalies are static by default, so we have set them to dynamic to be throwable
-        _physics.SetBodyType(ent, BodyType.Dynamic, body: body);
+        // only regular anomalies are static, so the check is meant to filter out things such as infection anomalies, which affect players
+        if (TryComp<PhysicsComponent>(ent, out var physics) && physics.BodyType == BodyType.Static)
+            _physics.SetBodyType(ent, BodyType.Dynamic, body: body);
         ChangeAnomalyStability(ent, Random.NextFloat(corePowered.StabilityPerThrow.X, corePowered.StabilityPerThrow.Y), ent.Comp);
     }
 
     private void OnLand(Entity<AnomalyComponent> ent, ref LandEvent args)
     {
-        // revert back to static
+        // revert back to static, but only if the object was dynamic (such as thrown anomalies, but not anomaly infected players)
+        if (!TryComp<PhysicsComponent>(ent, out var body) || body.BodyType != BodyType.Dynamic)
+            return;
+
         _physics.SetBodyType(ent, BodyType.Static);
     }
 
@@ -130,11 +136,12 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
 
-        Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, Transform(ent).Coordinates);
+        Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, ent);
 
         var super = AddComp<AnomalySupercriticalComponent>(ent);
-        super.EndTime = Timing.CurTime + super.SupercriticalDuration;
+        super.EndTime = Timing.CurTime + ent.Comp.SupercriticalDuration;
         Appearance.SetData(ent, AnomalyVisuals.Supercritical, true);
+        SetScannerSupercritical((ent, ent.Comp), true);
         Dirty(ent, super);
     }
 
@@ -335,7 +342,8 @@ public abstract class SharedAnomalySystem : EntitySystem
                 ChangeAnomalyHealth(ent, anomaly.HealthChangePerSecond * frameTime, anomaly);
             }
 
-            if (Timing.CurTime > anomaly.NextPulseTime)
+            var secondsUntilNextPulse = (anomaly.NextPulseTime - Timing.CurTime).TotalSeconds;
+            if (secondsUntilNextPulse < 0)
             {
                 DoAnomalyPulse(ent, anomaly);
             }
@@ -358,6 +366,18 @@ public abstract class SharedAnomalySystem : EntitySystem
                 continue;
             DoAnomalySupercriticalEvent(ent, anom);
             // Removal of the supercritical component is handled by DoAnomalySupercriticalEvent
+        }
+    }
+
+    private void SetScannerSupercritical(Entity<AnomalyComponent> anomalyEnt, bool value)
+    {
+        var scannerQuery = EntityQueryEnumerator<AnomalyScannerComponent>();
+        while (scannerQuery.MoveNext(out var scannerUid, out var scanner))
+        {
+            if (scanner.ScannedAnomaly != anomalyEnt)
+                continue;
+
+            Appearance.SetData(scannerUid, AnomalyScannerVisuals.AnomalyIsSupercritical, value);
         }
     }
 
@@ -436,10 +456,37 @@ public abstract class SharedAnomalySystem : EntitySystem
         }
         return resultList;
     }
+
+    public bool TryGetStabilityVisual(Entity<AnomalyComponent?> ent, [NotNullWhen(true)] out AnomalyStabilityVisuals? visual)
+    {
+        visual = null;
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
+            return false;
+
+        visual = AnomalyStabilityVisuals.Stable;
+        if (ent.Comp.Stability <= ent.Comp.DecayThreshold)
+        {
+            visual = AnomalyStabilityVisuals.Decaying;
+        }
+        else if (ent.Comp.Stability >= ent.Comp.GrowthThreshold)
+        {
+            visual = AnomalyStabilityVisuals.Growing;
+        }
+
+        return true;
+    }
+
+    public AnomalyStabilityVisuals GetStabilityVisualOrStable(Entity<AnomalyComponent?> ent)
+    {
+        if(TryGetStabilityVisual(ent, out var visual))
+            return visual.Value;
+
+        return AnomalyStabilityVisuals.Stable;
+    }
 }
 
 [DataRecord]
-public record struct AnomalySpawnSettings()
+public partial record struct AnomalySpawnSettings()
 {
     /// <summary>
     /// should entities block spawning?

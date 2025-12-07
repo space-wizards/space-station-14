@@ -1,7 +1,7 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: Crayon
+  id: CrayonInedible
   name: crayon
   description: A colourful crayon. Looks tasty. Mmmm...
   components:
@@ -21,8 +21,28 @@
       enum.CrayonUiKey.Key:
         type: CrayonBoundUserInterface
   - type: Crayon
-    capacity: 25
-  - type: Food
+    selectedState: like
+  - type: LimitedCharges
+    maxCharges: 25
+  - type: StaticPrice
+    price: 5
+
+- type: entity
+  abstract: true
+  parent: CrayonInedible
+  id: Crayon
+  name: crayon
+  description: A colourful crayon. Looks tasty. Mmmm...
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/crayons.rsi
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: Tiny
+  - type: Tag
+    tags:
+    - Recyclable
+  - type: Edible
   - type: FlavorProfile
     flavors:
     - chewy
@@ -35,8 +55,6 @@
           Quantity: 3
         - ReagentId: MindbreakerToxin
           Quantity: 2
-  - type: StaticPrice
-    price: 5
 
 - type: entity
   parent: Crayon
@@ -88,12 +106,47 @@
   - type: Crayon
     color: Red
     selectableColor: true
-    capacity: 30
+  - type: LimitedCharges
+    maxCharges: 30
   - type: Tag
     tags:
     - Write
     - Crayon
     - Recyclable
+    - Trash
+
+- type: entity
+  parent: CrayonRainbow
+  id: CrayonInfinite # should not be player available to prevent decal spam
+  name: infinite crayon
+  components:
+  - type: Crayon
+    deleteEmpty: false
+  - type: AutoRecharge
+    rechargeDuration: 5
+
+- type: entity
+  parent: CrayonInedible
+  id: CrayonBorg
+  name: electric crayon
+  description: Supposedly the most delicious crayon type in all the universes; unfortunately, you cannot eat.
+  components:
+  - type: Sprite
+    state: electric
+  - type: Item
+    heldPrefix: electric
+  - type: Crayon
+    deleteEmpty: false
+    color: Red
+    selectableColor: true
+  - type: LimitedCharges
+    maxCharges: 30
+  - type: AutoRecharge
+    rechargeDuration: 5
+  - type: Tag
+    tags:
+    - Write
+    - Crayon
     - Trash
 
 - type: entity
@@ -246,16 +299,18 @@
     sprite: Objects/Fun/crayons.rsi
     size: Small
     heldPrefix: box
-  - type: StorageFill
-    contents:
-    - id: CrayonRed
-    - id: CrayonOrange
-    - id: CrayonYellow
-    - id: CrayonGreen
-    - id: CrayonBlue
-    - id: CrayonPurple
-    - id: CrayonBlack
-    - id: CrayonWhite
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: CrayonRed
+        - id: CrayonOrange
+        - id: CrayonYellow
+        - id: CrayonGreen
+        - id: CrayonBlue
+        - id: CrayonPurple
+        - id: CrayonBlack
+        - id: CrayonWhite
   - type: ItemMapper
     mapLayers:
       black_box:
