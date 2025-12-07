@@ -17,6 +17,24 @@
       - HideContextMenu
 
 - type: entity
+  id: HitsImpactEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 0.3
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Hits.rsi
+      state: hit1
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
   id: BulletImpactEffectDisabler
   categories: [ HideSpawnMenu ]
   components:
@@ -66,6 +84,24 @@
       map: ["enum.EffectLayers.Unshaded"]
       sprite: Effects/arcs.rsi
       state: punch
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
+
+- type: entity
+  id: RasengunImpactEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 0.5
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: Objects/counterstrike/Weapons/Dota/Radiant/Сhieftain/hit.rsi
+      state: hit
   - type: EffectVisuals
   - type: Tag
     tags:

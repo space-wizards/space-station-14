@@ -1,0 +1,26 @@
+- type: entity
+  id: Rasengun
+  name: rasengun
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/counterstrike/Weapons/Dota/Radiant/Сhieftain/magic.rsi
+    layers:
+      - state: rasengun
+  - type: Projectile
+    impactEffect: RasengunImpactEffect
+    damage:
+      types:
+        Blunt: 45
+    deleteOnCollide: true
+  - type: KnockbackOnProjectileHit
+    distance: 4
+    speed: 10
+    unanchor: false
+  - type: AreaOnImpact
+    tileRadius: 1
+    damage:
+      types:
+        Blunt: 30
+    ignoreResistances: false

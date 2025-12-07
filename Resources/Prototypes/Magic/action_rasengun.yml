@@ -1,0 +1,13 @@
+- type: entity
+  id: ActionRasengun
+  parent: ActionFireball
+  name: Rasengun Action
+  description: Fires the Rasengun projectile (customized speech).
+  components:
+  - type: SpeakOnAction
+    sentence: DATTEBAYO!
+  - type: Action
+    # keep the original icon/sound from parent
+    # if needed, override here
+  - type: ConsumeStaminaOnCast
+    amount: 25.0

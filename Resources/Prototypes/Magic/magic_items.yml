@@ -1,0 +1,16 @@
+- type: entity
+  id: ItemRasengunWand
+  name: Rasengun Wand
+  description: A simple wand that fires the Rasengun projectile when used in combat mode.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+      - state: spell_default
+  - type: Item
+    sprite: Objects/Magic/magicactions.rsi
+  - type: MagicItem
+    action: ActionRasengun
+    projectile: Rasengun
+    useDelaySeconds: 5

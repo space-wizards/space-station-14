@@ -86,6 +86,8 @@
         hard: False
   - type: Projectile
     impactEffect: BulletImpactEffect
+    mobImpactEffects:
+      - HitsImpactEffect
     damage:
       types:
         Piercing: 14

@@ -7,6 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 
@@ -115,6 +116,21 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
             if (!args.OurBody.LinearVelocity.IsLengthZero())
                 _sharedCameraRecoil.KickCamera(target, args.OurBody.LinearVelocity.Normalized());
+        }
+
+        // If the projectile declares any mob-only impact effects, play them when hitting mobs (players, animals, etc.).
+        if (!deleted && TryComp<MobStateComponent>(target, out var _mobState) && component.MobImpactEffects != null && TryComp(target, out TransformComponent? targetXform))
+        {
+            var coords = GetNetCoordinates(targetXform.Coordinates);
+            foreach (var proto in component.MobImpactEffects)
+            {
+                // EntProtoId is a value-type. Skip default/empty entries that may have been
+                // deserialized when the prototype id was missing or invalid.
+                if (proto == default || string.IsNullOrEmpty(proto.Id))
+                    continue;
+
+                RaiseNetworkEvent(new ImpactEffectEvent(proto, coords), Filter.Pvs(targetXform.Coordinates, entityMan: EntityManager));
+            }
         }
 
         if (component.DeleteOnCollide && component.ProjectileSpent)

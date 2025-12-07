@@ -27,6 +27,8 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
+using Content.Shared.Damage.Systems; // for stamina
+using Content.Shared.Damage.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Spawners;
@@ -62,6 +64,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly SharedStaminaSystem _stamina = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
@@ -79,9 +82,33 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
+        SubscribeLocalEvent<ConsumeStaminaActionEvent>(OnConsumeStamina);
         SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
         SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
         SubscribeLocalEvent<VoidApplauseSpellEvent>(OnVoidApplause);
+    }
+
+    private void OnConsumeStamina(ConsumeStaminaActionEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+
+        ev.Handled = true;
+
+        // Try to take stamina; if unsuccessful, cancel and notify user
+        if (!TryComp<StaminaComponent>(ev.Performer, out var comp))
+        {
+            // If performer has no stamina component, treat as success
+            return;
+        }
+
+        var success = _stamina.TryTakeStamina(ev.Performer, ev.Amount, component: comp, source: ev.Action);
+
+        if (!success)
+        {
+            // Inform user they lack stamina
+            _popup.PopupClient("Not enough stamina.", ev.Performer, ev.Performer);
+        }
     }
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)

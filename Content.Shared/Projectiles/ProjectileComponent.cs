@@ -22,6 +22,13 @@ public sealed partial class ProjectileComponent : Component
     public EntProtoId? ImpactEffect;
 
     /// <summary>
+    ///     Prototype(s) of effects that should be spawned only when the projectile hits a living mob.
+    ///     Useful to specify effects that apply only to players/animals/NPCs.
+    /// </summary>
+    [DataField("mobImpactEffects"), ViewVariables(VVAccess.ReadWrite)]
+    public List<EntProtoId>? MobImpactEffects;
+
+    /// <summary>
     ///     User that shot this projectile.
     /// </summary>
     [DataField, AutoNetworkedField]

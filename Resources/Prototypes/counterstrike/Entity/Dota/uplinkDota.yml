@@ -116,6 +116,17 @@
   categories:
   - DotaRadiantChieftain
 
+- type: listing
+  id: DotaRadiantRasengan
+  name: Rasengun Technique
+  description: dattebayo.
+  icon: { sprite: Objects/counterstrike/Weapons/Dota/Radiant/Сhieftain/magic.rsi, state: icon1 }
+  productEntity: ItemRasengunWand
+  cost:
+    Telecrystal: 30
+  categories:
+  - DotaRadiantChieftain
+
 #DIRE
 
 # recruit
