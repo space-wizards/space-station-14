@@ -1,3 +1,5 @@
+# When adding new figurines, also add them to id: AllFigurinesTable
+
 - type: entity
   abstract: true
   parent: BaseItem

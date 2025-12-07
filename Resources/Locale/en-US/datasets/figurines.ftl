@@ -176,6 +176,7 @@ figurines-boxer-2 = We settle this in the ring, alright?
 figurines-boxer-3 = I. AM. THE. CHAMPION!!
 figurines-boxer-4 = Don't look at me; he was shot, not punched.
 figurines-boxer-5 = 1v1 me, captain.
+figurines-boxer-6 = I only make special appearances these days.
 
 figurines-chaplain-1 = Would you like to join my cul- I mean religion.
 figurines-chaplain-2 = Gods, please make me a killing machine!
@@ -396,3 +397,8 @@ figurines-owlman-2 = Owl be seeing you later!
 figurines-owlman-3 = HOOT!!
 figurines-owlman-4 = What do you call an owl magician, HOO-DINI!
 figurines-owlman-5 = Don't worry citizen, I'll save the day!
+
+figurines-mech-generic-1 = Systems online.
+figurines-mech-generic-2 = WWWHHHRRR!!
+figurines-mech-generic-3 = VRRRMM UURRMMM!!
+figurines-mech-generic-4 = CLANG!!
