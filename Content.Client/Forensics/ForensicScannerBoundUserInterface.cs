@@ -25,6 +25,8 @@ namespace Content.Client.Forensics
             _window = this.CreateWindow<ForensicScannerMenu>();
             _window.Print.OnPressed += _ => Print();
             _window.Clear.OnPressed += _ => Clear();
+
+            Update();
         }
 
         private void Print()
@@ -48,7 +50,7 @@ namespace Content.Client.Forensics
                 return;
 
             _printCooldown = scanner.PrintCooldown;
-            _window.UpdateState((Owner, scanner));
+            _window?.Update(Owner);
         }
     }
 }

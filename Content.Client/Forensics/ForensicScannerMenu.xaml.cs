@@ -10,6 +10,7 @@ namespace Content.Client.Forensics
     [GenerateTypedNameReferences]
     public sealed partial class ForensicScannerMenu : DefaultWindow
     {
+        [Dependency] private readonly IEntityManager _entity = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public ForensicScannerMenu()
@@ -23,9 +24,11 @@ namespace Content.Client.Forensics
             Print.Disabled = disabled;
         }
 
-        public void UpdateState(Entity<ForensicScannerComponent> ent)
+        public void Update(EntityUid uid)
         {
-            if (string.IsNullOrEmpty(ent.Comp.LastScannedName))
+            var forensicComp = _entity.GetComponent<ForensicScannerComponent>(uid);
+
+            if (string.IsNullOrEmpty(forensicComp.LastScannedName))
             {
                 Print.Disabled = true;
                 Clear.Disabled = true;
@@ -34,39 +37,39 @@ namespace Content.Client.Forensics
                 return;
             }
 
-            Print.Disabled = (ent.Comp.PrintReadyAt > _gameTiming.CurTime);
+            Print.Disabled = (forensicComp.PrintReadyAt > _gameTiming.CurTime);
             Clear.Disabled = false;
 
-            NameLabel.Text = ent.Comp.LastScannedName;
+            NameLabel.Text = forensicComp.LastScannedName;
 
             var text = new StringBuilder();
 
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fingerprints"));
-            foreach (var fingerprint in ent.Comp.Fingerprints)
+            foreach (var fingerprint in forensicComp.Fingerprints)
             {
                 text.AppendLine(fingerprint);
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-fibers"));
-            foreach (var fiber in ent.Comp.Fibers)
+            foreach (var fiber in forensicComp.Fibers)
             {
                 text.AppendLine(fiber);
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in ent.Comp.DNAs)
+            foreach (var dna in forensicComp.DNAs)
             {
                 text.AppendLine(dna);
             }
-            foreach (var dna in ent.Comp.SolutionDNAs)
+            foreach (var dna in forensicComp.SolutionDNAs)
             {
-                if (ent.Comp.DNAs.Contains(dna))
+                if (forensicComp.DNAs.Contains(dna))
                     continue;
                 text.AppendLine(dna);
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-residues"));
-            foreach (var residue in ent.Comp.Residues)
+            foreach (var residue in forensicComp.Residues)
             {
                 text.AppendLine(residue);
             }
