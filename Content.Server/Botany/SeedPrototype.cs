@@ -1,4 +1,4 @@
-using Content.Shared.Atmos;
+using Content.Server.Botany.Components;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Random;
