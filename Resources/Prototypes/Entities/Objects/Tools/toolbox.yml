@@ -159,6 +159,15 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/foolbox.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 2
+    soundHit:
+      collection: RubberHammer
+      params:
+        variation: 0.03
+        volume: 3
   - type: Storage
     storageOpenSound:
       collection: BikeHorn
