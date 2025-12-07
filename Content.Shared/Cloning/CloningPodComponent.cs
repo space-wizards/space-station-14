@@ -5,13 +5,14 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Cloning;
 
 /// <summary>
 /// Component for cloning pods; manages cloning process, state, and cloning pod interactions.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class CloningPodComponent : Component
 {
     /// <summary>
@@ -23,25 +24,25 @@ public sealed partial class CloningPodComponent : Component
     /// <summary>
     /// Container slot for a body being cloned.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [ViewVariables]
     public ContainerSlot BodyContainer = default!;
 
     /// <summary>
     /// How long the cloning has been going on for.
     /// </summary>
-    [ViewVariables]
-    public float CloningProgress = 0;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
     /// Amount of biomass used in cloning.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public int UsedBiomass = 70;
 
     /// <summary>
     /// Was the clone process failed.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public bool FailedClone = false;
 
     /// <summary>

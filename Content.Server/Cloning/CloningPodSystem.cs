@@ -92,7 +92,6 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
                 _chat.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-chat-error", ("units", cloningCost)), InGameICChatType.Speak, false);
             return false;
         }
-
         // end of biomass checks.
 
         // genetic damage checks.
@@ -112,6 +111,7 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
                 AddComp<ActiveCloningPodComponent>(uid);
                 _material.TryChangeMaterialAmount(uid, clonePod.RequiredMaterial, -cloningCost);
                 clonePod.UsedBiomass = cloningCost;
+                Dirty(uid, clonePod);
                 return true;
             }
         }
@@ -135,11 +135,14 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
         AddComp<ActiveCloningPodComponent>(uid);
         _material.TryChangeMaterialAmount(uid, clonePod.RequiredMaterial, -cloningCost);
         clonePod.UsedBiomass = cloningCost;
+        Dirty(uid, clonePod);
         return true;
     }
 
     public override void Update(float frameTime)
     {
+        base.Update(frameTime);
+
         var query = EntityQueryEnumerator<ActiveCloningPodComponent, CloningPodComponent>();
         while (query.MoveNext(out var uid, out var _, out var cloning))
         {
@@ -149,8 +152,8 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
             if (cloning.BodyContainer.ContainedEntity == null && !cloning.FailedClone)
                 continue;
 
-            cloning.CloningProgress += frameTime;
-            if (cloning.CloningProgress < cloning.CloningTime)
+            cloning.NextUpdate += TimeSpan.FromSeconds(frameTime);
+            if (cloning.NextUpdate < cloning.CloningTime)
                 continue;
 
             if (cloning.FailedClone)
@@ -165,21 +168,22 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
         if (!Resolve(uid, ref clonePod))
             return;
 
-        if (clonePod.BodyContainer.ContainedEntity is not { Valid: true } entity || clonePod.CloningProgress < clonePod.CloningTime)
+        if (clonePod.BodyContainer.ContainedEntity is not { Valid: true } entity || clonePod.NextUpdate < clonePod.CloningTime)
             return;
 
         RemComp<BeingClonedComponent>(entity);
         _container.Remove(entity, clonePod.BodyContainer);
-        clonePod.CloningProgress = 0f;
+        clonePod.NextUpdate = TimeSpan.Zero;
         clonePod.UsedBiomass = 0;
         UpdateStatus(uid, CloningPodStatus.Idle, clonePod);
         RemCompDeferred<ActiveCloningPodComponent>(uid);
+        Dirty(uid, clonePod);
     }
 
     private void EndFailedCloning(EntityUid uid, CloningPodComponent clonePod)
     {
         clonePod.FailedClone = false;
-        clonePod.CloningProgress = 0f;
+        clonePod.NextUpdate = TimeSpan.Zero;
         UpdateStatus(uid, CloningPodStatus.Idle, clonePod);
         var transform = Transform(uid);
         var indices = _transform.GetGridTilePositionOrDefault((uid, transform));
@@ -204,11 +208,10 @@ public sealed class CloningPodSystem : SharedCloningPodSystem
         _puddle.TrySpillAt(uid, bloodSolution, out _);
 
         if (!HasComp<EmaggedComponent>(uid))
-        {
             _material.SpawnMultipleFromMaterial(_robustRandom.Next(1, (int)(clonePod.UsedBiomass / 2.5)), clonePod.RequiredMaterial, Transform(uid).Coordinates);
-        }
 
         clonePod.UsedBiomass = 0;
         RemCompDeferred<ActiveCloningPodComponent>(uid);
+        Dirty(uid, clonePod);
     }
 }

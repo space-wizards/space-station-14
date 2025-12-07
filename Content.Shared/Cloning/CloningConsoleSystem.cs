@@ -82,14 +82,14 @@ public sealed class CloningConsoleSystem : EntitySystem
             {
                 component.GeneticScanner = port;
                 scanner.ConnectedConsole = uid;
-                Dirty(uid, scanner);
+                Dirty(port, scanner);
             }
 
             if (TryComp<CloningPodComponent>(port, out var pod))
             {
                 component.CloningPod = port;
                 pod.ConnectedConsole = uid;
-                Dirty(uid, pod);
+                Dirty(port, pod);
             }
         }
     }
@@ -100,14 +100,14 @@ public sealed class CloningConsoleSystem : EntitySystem
         {
             component.GeneticScanner = args.Sink;
             scanner.ConnectedConsole = uid;
-            Dirty(uid, scanner);
+            Dirty(args.Sink, scanner);
         }
 
         if (TryComp<CloningPodComponent>(args.Sink, out var pod) && args.SourcePort == CloningConsoleComponent.PodPort)
         {
             component.CloningPod = args.Sink;
             pod.ConnectedConsole = uid;
-            Dirty(uid, pod);
+            Dirty(args.Sink, pod);
         }
 
         Dirty(uid, component);
@@ -197,13 +197,13 @@ public sealed class CloningConsoleSystem : EntitySystem
         if (!Resolve(console, ref consoleComp))
             return;
 
-        if (scanner != null)
+        if (scanner != null && Exists(scanner.Value))
         {
             Transform(scanner.Value).Coordinates.TryDistance(EntityManager, Transform(console).Coordinates, out var scannerDistance);
             consoleComp.GeneticScannerInRange = scannerDistance <= consoleComp.MaxDistance;
         }
 
-        if (cloningPod != null)
+        if (cloningPod != null && Exists(cloningPod.Value))
         {
             Transform(cloningPod.Value).Coordinates.TryDistance(EntityManager, Transform(console).Coordinates, out var podDistance);
             consoleComp.CloningPodInRange = podDistance <= consoleComp.MaxDistance;
@@ -223,7 +223,9 @@ public sealed class CloningConsoleSystem : EntitySystem
         if (consoleComponent.GeneticScanner != null && TryComp<MedicalScannerComponent>(consoleComponent.GeneticScanner, out var scanner))
         {
             scannerConnected = true;
-            var scanBody = scanner.BodyContainer.ContainedEntity;
+            EntityUid? scanBody = null;
+            if (scanner.BodyContainer != null)
+                scanBody = scanner.BodyContainer.ContainedEntity;
 
             // Get state.
             if (scanBody == null || !HasComp<MobStateComponent>(scanBody))
@@ -259,7 +261,9 @@ public sealed class CloningConsoleSystem : EntitySystem
         && Transform(consoleComponent.CloningPod.Value).Anchored)
         {
             clonerConnected = true;
-            var cloneBody = clonePod.BodyContainer.ContainedEntity;
+            EntityUid? cloneBody = null;
+            if (clonePod.BodyContainer != null)
+                cloneBody = clonePod.BodyContainer.ContainedEntity;
 
             clonerMindPresent = clonePod.Status == CloningPodStatus.Cloning;
             if (HasComp<ActiveCloningPodComponent>(consoleComponent.CloningPod))

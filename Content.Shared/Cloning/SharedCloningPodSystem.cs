@@ -66,7 +66,6 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     {
         ent.Comp.BodyContainer = _container.EnsureContainer<ContainerSlot>(ent.Owner, "clonepod-bodyContainer");
         _deviceLink.EnsureSinkPorts(ent.Owner, ent.Comp.PodPort);
-        Dirty(ent);
     }
 
     /// <summary>

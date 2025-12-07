@@ -147,6 +147,7 @@ public sealed class MedicalScannerSystem : EntitySystem
     private void OnPortDisconnected(EntityUid uid, MedicalScannerComponent component, PortDisconnectedEvent args)
     {
         component.ConnectedConsole = null;
+        Dirty(uid, component);
     }
 
     private void OnAnchorChanged(EntityUid uid, MedicalScannerComponent component, ref AnchorStateChangedEvent args)
@@ -159,7 +160,9 @@ public sealed class MedicalScannerSystem : EntitySystem
             _cloningConsole.RecheckConnections(component.ConnectedConsole.Value, console.CloningPod, uid, console);
             return;
         }
+
         _cloningConsole.UpdateUserInterface(component.ConnectedConsole.Value, console);
+        Dirty(uid, component);
     }
 
     private MedicalScannerStatus GetStatus(EntityUid uid, MedicalScannerComponent scannerComponent)

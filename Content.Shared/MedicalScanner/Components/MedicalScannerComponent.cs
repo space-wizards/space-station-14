@@ -18,11 +18,13 @@ public sealed partial class MedicalScannerComponent : Component
     /// <summary>
     /// Slot containing the body being scanned.
     /// </summary>
+    [ViewVariables]
     public ContainerSlot BodyContainer = default!;
 
     /// <summary>
     /// Reference to the connected console, if any.
     /// </summary>
+    [DataField, AutoNetworkedField]
     public EntityUid? ConnectedConsole;
 
     /// <summary>
