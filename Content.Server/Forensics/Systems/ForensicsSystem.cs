@@ -40,6 +40,11 @@ namespace Content.Server.Forensics
         private const int MaxDamageTraces = 10;
         private const float MinRangedDamageThreshold = 2f;
 
+        private const string DamageTraceMeleeSelf = "forensic-damage-traces-melee-hands";
+        private const string DamageTraceMeleeUnknown = "forensic-damage-traces-melee-unknown";
+        private const string DamageTraceProjectileUnknown = "forensic-damage-traces-projectile-unknown";
+        private const string DamageTraceHitscanUnknown = "forensic-damage-traces-hitscan-unknown";
+
         public override void Initialize()
         {
             SubscribeLocalEvent<HandsComponent, ContactInteractionEvent>(OnInteract);
@@ -134,12 +139,12 @@ namespace Content.Server.Forensics
 
                             if (meleeDamageSourceUid == args.User) //When the UID of the attacker and his weapon are equal, it means the attacker use unarmed attack.
                             {
-                                meleeDamageSourceName = "forensic-damage-traces-melee-hands";
+                                meleeDamageSourceName = DamageTraceMeleeSelf;
                             }
                         }
                         else
                         {
-                            meleeDamageSourceName = "forensic-damage-traces-melee-unknown";
+                            meleeDamageSourceName = DamageTraceMeleeUnknown;
                         }
 
                         AddUniqueDamageTrace(targetComponent, meleeDamageSourceName);
@@ -163,7 +168,7 @@ namespace Content.Server.Forensics
             }
             else
             {
-                projectileName = "forensic-damage-traces-projectile-unknown";
+                projectileName = DamageTraceProjectileUnknown;
             }
 
             if (HasComp<IgnoresDamageTracesComponent>(targetUid))
@@ -193,7 +198,7 @@ namespace Content.Server.Forensics
             var component = EnsureComp<ForensicsComponent>(targetUid);
 
             // dubious logic because the rays have no name. Try to get the name, if it doesn't work, find out the prototype ID
-            string hitscanName = "forensic-damage-traces-hitscan-unknown";
+            string hitscanName = DamageTraceHitscanUnknown;
             string hitscanPrototypeId;
             if (TryComp<MetaDataComponent>(ent.Owner, out var hitscanMeta))
             {
@@ -202,9 +207,9 @@ namespace Content.Server.Forensics
                     hitscanName = hitscanMeta.EntityName;
                     AddUniqueDamageTrace(component, hitscanName);
                 }
-                else //TODO: Delete this block when the rays get normal names..
+                else //TODO: Delete this block when the hitscans get normal names..
                 {
-                    hitscanPrototypeId = Prototype(ent.Owner)?.ID ?? "forensic-damage-traces-hitscan-unknown";
+                    hitscanPrototypeId = Prototype(ent.Owner)?.ID ?? DamageTraceHitscanUnknown;
                     AddUniqueDamageTrace(component, hitscanPrototypeId);
                 }
             }
