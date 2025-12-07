@@ -117,7 +117,6 @@ public sealed class PayloadSystem : EntitySystem
             AddComp(ent.Owner, (Component)temp!);
 
             trigger.GrantedComponents.Add(registration.Type);
-            Dirty(args.Entity, trigger);
         }
     }
 
@@ -132,7 +131,6 @@ public sealed class PayloadSystem : EntitySystem
             RemComp(ent.Owner, type);
 
         trigger.GrantedComponents.Clear();
-        Dirty(ent.Owner, trigger);
     }
 
     private void OnExamined(Entity<PayloadCaseComponent> ent, ref ExaminedEvent args)

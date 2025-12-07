@@ -42,6 +42,6 @@ public sealed partial class PayloadTriggerComponent : Component
     ///     when removing the component, to ensure that removal of this trigger only removes the components that it was
     ///     responsible for adding.
     /// </remarks>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public HashSet<Type> GrantedComponents = [];
 }
