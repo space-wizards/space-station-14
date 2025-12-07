@@ -117,7 +117,7 @@ public sealed class PayloadSystem : EntitySystem
             AddComp(ent.Owner, (Component)temp!);
 
             trigger.GrantedComponents.Add(registration.Type);
-            Dirty(ent.Owner, trigger);
+            Dirty(args.Entity, trigger);
         }
     }
 
