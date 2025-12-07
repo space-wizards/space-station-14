@@ -786,8 +786,6 @@
     - sprite: *icon-rsi
       offset: *icon-offset
       state: Boxer
-  - type: PresetIdCard
-    job: Boxer
 
 - type: entity
   parent: IDCardStandard
@@ -804,8 +802,6 @@
     - sprite: *icon-rsi
       offset: *icon-offset
       state: Zookeeper
-  - type: PresetIdCard
-    job: Zookeeper
 
 #Supply
 

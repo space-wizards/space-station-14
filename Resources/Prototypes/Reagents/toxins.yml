@@ -58,8 +58,6 @@
   physicalDesc: reagent-physical-desc-nondescript
   allowedDepartments:
   - Medical
-  allowedJobs:
-  - Zookeeper
   metabolisms:
     Poison:
       effects:
@@ -555,8 +553,6 @@
   allowedDepartments:
   - Security
   - Medical
-  allowedJobs:
-  - Zookeeper
   color: "#AAAAAA"
   metabolisms:
     Poison:
