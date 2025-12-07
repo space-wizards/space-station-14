@@ -18,7 +18,7 @@
         steps:
           - material: Gunpowder
             doAfter: 1
-  - node: snapPopFake
+  - node: snapPopExplosive
     actions:
     - !type:AdminLog
       message: "A fake snap pop was crafted"
