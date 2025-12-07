@@ -8,11 +8,8 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
-using Robust.Shared.Map;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Projectiles;
 
@@ -24,8 +21,6 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     [Dependency] private readonly DestructibleSystem _destructibleSystem = default!;
     [Dependency] private readonly GunSystem _guns = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -127,13 +122,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
         {
-            var coords = xform.Coordinates;
-            // This moves the impact coordinates back along the bullet's flight path to prevent the impact from visually overshooting too deep/behind the object.
-            // Maybe not the best solution but unless we want to implement raycasts to find the exact point of impact, it works.
-            if (TryComp(uid, out PhysicsComponent? physComp))
-                coords = new EntityCoordinates(xform.MapUid!.Value, _transform.GetWorldPosition(xform) - physComp.LinearVelocity * (float)_gameTiming.FrameTime.TotalSeconds * 0.5f);
-
-            RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(coords)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
+            RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
         }
     }
 }
