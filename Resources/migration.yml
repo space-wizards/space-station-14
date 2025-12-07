@@ -740,3 +740,7 @@ DrinkKiraSpecial: DrinkOrangeLimeSodaGlass
 
 # 2025-12-05
 GlowstickBase: GlowstickGreen
+
+# 2025-12-06
+SpawnPointZookeeper: null
+SpawnPointBoxer: null
