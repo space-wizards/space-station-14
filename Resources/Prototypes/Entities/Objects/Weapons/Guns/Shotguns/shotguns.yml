@@ -299,7 +299,7 @@
   name: syndicate remote shotgun
   parent: [BaseStructure, BaseSyndicateContraband]
   id: RemoteShotgun
-  description: A syndicate mounted double barrel shotgun chambered in .50 shotgun shells. It can only be fired when linked to a transmitter.
+  description: A syndicate mounted double barrel shotgun chambered in .50 shotgun shells. It fires both shells in quick succession upon being triggered by a linked device.
   components:
   - type: InteractionOutline
   - type: Sprite
@@ -343,3 +343,20 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: UnassembledRemoteShotgun
+  name: unassembled remote shotgun
+  description: A compact box containing an unsasembled remote shotgun.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/remote_shotgun.rsi
+    state: box
+  - type: SpawnItemsOnUse
+    items:
+    - id: RemoteShotgun
+    sound:
+      path: /Audio/Effects/unwrap.ogg

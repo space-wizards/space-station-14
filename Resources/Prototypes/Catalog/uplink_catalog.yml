@@ -1097,6 +1097,25 @@
           - SurplusBundle
 
 - type: listing
+  id: UplinkRemoteShotgun
+  name: uplink-remote-shotgun-name
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/remote_shotgun.rsi, state: icon }
+  description: uplink-remote-shotgun-desc
+  productEntity: UnassembledRemoteShotgun
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 3
+  cost:
+    Telecrystal: 5
+  categories:
+  - UplinkDisruption
+  conditions:
+  - !type:StoreWhitelistCondition
+     blacklist:
+       tags:
+       - NukeOpsUplink
+
+- type: listing
   id: UplinkAntimovCircuitBoard
   name: uplink-antimov-law-name
   description: uplink-antimov-law-desc
