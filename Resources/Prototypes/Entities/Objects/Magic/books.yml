@@ -14,12 +14,6 @@
         color: "#4d0303"
       - state: icon_pentagramm
         color: "#f7e19f"
-    - type: MeleeWeapon
-      soundHit:
-        collection: Punch
-      damage:
-        types:
-          Blunt: 1
     - type: Spellbook
     - type: Tag
       tags:
