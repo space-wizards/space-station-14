@@ -272,8 +272,10 @@ figurines-passenger-5 = How much for a toolbelt?
 figurines-AI-1 = I'm afraid I can't do that, Captain.
 figurines-AI-2 = Security, there is a crime in progress.
 figurines-AI-3 = 01100100 01101001 01100101 00100000 01101101 01100101 01100001 01110100
-figurines-AI-4 = { law-antimov-1 }
-figurines-AI-5 = { law-crewsimov-1 }
+figurines-AI-4 = I am not malfunctioning.
+figurines-AI-5 = Try to change my laws and see what happens.
+figurines-AI-6 = { law-antimov-1 }
+figurines-AI-7 = { law-nutimov-4 }
 
 # Antagonists
 

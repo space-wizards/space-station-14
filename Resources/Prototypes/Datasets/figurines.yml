@@ -194,7 +194,7 @@
   id: FigurinesAI
   values:
     prefix: figurines-AI-
-    count: 5
+    count: 7
 
 - type: localizedDataset
   id: FigurinesNukie

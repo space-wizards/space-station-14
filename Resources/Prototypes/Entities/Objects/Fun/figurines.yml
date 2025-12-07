@@ -1,24 +1,16 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: BaseFigurineCheapo
+  id: BaseFigurine
   name: figurine
   description: A small miniature.
   components:
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
-  - type: StaticPrice
-    price: 25
   - type: Tag
     tags:
     - Figurine
-
-- type: entity
-  abstract: true
-  parent: BaseFigurineCheapo
-  id: BaseFigurine
-  components:
   - type: Sprite
     sprite: Objects/Fun/figurines.rsi
   - type: StaticPrice
@@ -39,29 +31,6 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
-
-## Cheapo Figurines
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyAi
-  name: AI toy
-  description: A scaled-down toy AI core.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/AI.rsi
-    state: icon
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/AI.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.06"
-  - type: SpeakOnTrigger
-    pack: FigurinesAI
 
 #HUMANOID FIGURINES
 
@@ -636,3 +605,24 @@
     state: hamlet
   - type: SpeakOnTrigger
     pack: FigurinesHamlet
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyAi
+  name: AI toy
+  description: A scaled-down toy AI core.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/AI.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/AI.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.06"
+  - type: SpeakOnTrigger
+    pack: FigurinesAI
