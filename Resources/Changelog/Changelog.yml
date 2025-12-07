@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: SecTech vendor now starts with a few bolas.
-    type: Add
-  id: 8760
-  time: '2025-07-10T14:47:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38902
 - author: Hitlinemoss
   changes:
   - message: The station AI can now pick kobold/monkey holograms as customization
@@ -3926,3 +3919,10 @@
   id: 9260
   time: '2025-12-07T02:48:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41551
+- author: SlamBamActionman
+  changes:
+  - message: Removed the Zookeeper and Boxer jobs.
+    type: Remove
+  id: 9261
+  time: '2025-12-07T03:19:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41741
