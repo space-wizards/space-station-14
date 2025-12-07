@@ -331,7 +331,8 @@
   - type: GunSignalControl
     addAdditionalTriggers: false
   - type: ContainerContainer
-    ballistic-ammo: !type:Container
+    containers:
+      ballistic-ammo: !type:Container
   - type: Rotatable
   - type: Fixtures
     fixtures:
