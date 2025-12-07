@@ -1,14 +1,4 @@
 - type: entityTable
-  id: AllFigurinesTable
-  table: !type:GroupSelector
-    children:
-
-- type: entityTable
-  id: AllToysTable
-  table: !type:GroupSelector
-    children:
-
-- type: entityTable
   id: AllPlushiesTable
   table: !type:GroupSelector
     children:
@@ -119,7 +109,6 @@
       - id: PlushieLizardJobZookeeper
       - id: PlushieLizardJobMultiweh
         weight: 0.5 # 1 in >800
-
 
 - type: entityTable
   id: AllPottedPlantsTable
