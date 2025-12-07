@@ -35,7 +35,6 @@
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 3 ]
             Reporter: [ 1, 1 ]
-            Boxer: [ 2, 2 ]
             #engineering 
             AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 5 ]

@@ -4,8 +4,8 @@ meta:
   engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/20/2025 22:44:59
-  entityCount: 28349
+  time: 12/07/2025 22:38:49
+  entityCount: 28361
 maps:
 - 1
 grids:
@@ -68095,6 +68095,36 @@ entities:
     - type: Transform
       pos: -45.971844,-8.7849655
       parent: 2
+  - uid: 28356
+    components:
+    - type: Transform
+      pos: -12.443777,4.7697954
+      parent: 2
+  - uid: 28357
+    components:
+    - type: Transform
+      pos: -11.334402,4.8010454
+      parent: 2
+  - uid: 28358
+    components:
+    - type: Transform
+      pos: -10.225027,4.8322954
+      parent: 2
+  - uid: 28359
+    components:
+    - type: Transform
+      pos: -7.490652,4.8947954
+      parent: 2
+  - uid: 28360
+    components:
+    - type: Transform
+      pos: -6.365652,4.9572954
+      parent: 2
+  - uid: 28361
+    components:
+    - type: Transform
+      pos: -5.428152,4.9416704
+      parent: 2
 - proto: ClothingHeadHatShrineMaidenWig
   entities:
   - uid: 18940
@@ -68862,6 +68892,36 @@ entities:
     components:
     - type: Transform
       pos: -45.971844,-9.0349655
+      parent: 2
+  - uid: 28350
+    components:
+    - type: Transform
+      pos: -12.459402,4.6135454
+      parent: 2
+  - uid: 28351
+    components:
+    - type: Transform
+      pos: -11.490652,4.5979204
+      parent: 2
+  - uid: 28352
+    components:
+    - type: Transform
+      pos: -10.459402,4.6291704
+      parent: 2
+  - uid: 28353
+    components:
+    - type: Transform
+      pos: -7.506277,4.6447954
+      parent: 2
+  - uid: 28354
+    components:
+    - type: Transform
+      pos: -6.365652,4.6604204
+      parent: 2
+  - uid: 28355
+    components:
+    - type: Transform
+      pos: -5.521902,4.6760454
       parent: 2
 - proto: ClothingOuterSkub
   entities:
@@ -150610,18 +150670,6 @@ entities:
     - type: Transform
       pos: 14.5,-16.5
       parent: 2
-- proto: SpawnPointBoxer
-  entities:
-  - uid: 26921
-    components:
-    - type: Transform
-      pos: -37.5,-47.5
-      parent: 2
-  - uid: 26922
-    components:
-    - type: Transform
-      pos: -34.5,-47.5
-      parent: 2
 - proto: SpawnPointCaptain
   entities:
   - uid: 21498
@@ -158977,6 +159025,16 @@ entities:
     components:
     - type: Transform
       pos: -32.588467,-48.373352
+      parent: 2
+  - uid: 26921
+    components:
+    - type: Transform
+      pos: -32.698486,-48.550266
+      parent: 2
+  - uid: 26922
+    components:
+    - type: Transform
+      pos: -32.24536,-48.550266
       parent: 2
 - proto: UprightPianoInstrument
   entities:
