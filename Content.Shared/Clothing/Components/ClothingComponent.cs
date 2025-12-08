@@ -94,7 +94,7 @@ public sealed partial class ClothingComponent : Component
     /// while other types of clothing may require stopping (shoes, hard suits).
     /// </summary>
     [DataField]
-    public bool EquipOnMoving = false;
+    public bool EquipWhileMoving = false;
 
     /// <summary>
     /// Offset for the strip time for an entity with this component.
