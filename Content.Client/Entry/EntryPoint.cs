@@ -110,7 +110,6 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("holiday");
             _prototypeManager.RegisterIgnore("htnCompound");
             _prototypeManager.RegisterIgnore("htnPrimitive");
-            _prototypeManager.RegisterIgnore("gameMap");
             _prototypeManager.RegisterIgnore("gameMapPool");
             _prototypeManager.RegisterIgnore("gamePreset");
             _prototypeManager.RegisterIgnore("noiseChannel");
@@ -128,7 +127,6 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
             _prototypeManager.RegisterIgnore("codewordGenerator");
             _prototypeManager.RegisterIgnore("codewordFaction");
-            _prototypeManager.RegisterIgnore("solitarySpawning");
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();
