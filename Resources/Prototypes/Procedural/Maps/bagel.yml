@@ -6,13 +6,13 @@
   tags:
   - TheaterBagel
 
-- type: dungeonRoom
-  id: BagelTheater2 # this is the blank one
-  size: 11,8
-  atlas: /Maps/Dungeon/RandomMap/bagelrandom.yml
-  offset: 11,0
-  tags:
-  - TheaterBagel
+#- type: dungeonRoom
+#  id: BagelTheater2 # this is the blank one
+#  size: 11,8
+#  atlas: /Maps/Dungeon/RandomMap/bagelrandom.yml
+#  offset: 11,0
+#  tags:
+#  - TheaterBagel
 
 - type: dungeonRoom
   id: BagelTheater3
