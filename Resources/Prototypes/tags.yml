@@ -358,6 +358,9 @@
   id: ConveyorAssembly # ConstructionGraph: ConveyorGraph
 
 - type: Tag
+  id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
+
+- type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
 
 - type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
@@ -440,6 +443,9 @@
 
 - type: Tag
   id: CubanCarp # CargoBounty: BountyCubanCarp
+
+- type: Tag
+  id: Cutlet # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerDuck
 
 ## D ##
 
@@ -1167,6 +1173,9 @@
             # CargoBounty: BountyRadio. ConstructionGraph: HudMedSec
 
 - type: Tag
+  id: Raw # MaterialStorage whitelist: Sheetifier
+
+- type: Tag
   id: RawMaterial # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
@@ -1343,6 +1352,9 @@
 
 - type: Tag
   id: StringInstrument # MachineBoard construction: DawInstrumentMachineCircuitboard
+
+- type: Tag
+  id: Structure # # Targeting whitelist: HandLabeler
 
 - type: Tag
   id: StunImmune # Tagged mob entity cannot gain the stunned status effect. Blacklist on StatusEffectStunned.
