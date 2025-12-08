@@ -43,13 +43,6 @@
 
 - type: securityIcon
   parent: SecurityIcon
-  id: SecurityIconCharged
-  icon:
-    sprite: /Textures/Interface/Misc/security_icons.rsi
-    state: hud_charged
-
-- type: securityIcon
-  parent: SecurityIcon
   id: SecurityIconWanted
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi

@@ -8,15 +8,6 @@
   reasonText: criminal-records-console-wanted-reason
 
 - type: securityStatus
-  id: SecurityStatusCharged
-  name: criminal-records-status-charged
-  icon: SecurityIconCharged
-  statusSetAnnouncement: criminal-records-console-charged
-  statusUnSetAnnouncement: criminal-records-console-not-charged
-  needsReason: true
-  reasonText: criminal-records-console-charged-reason
-
-- type: securityStatus
   id: SecurityStatusDetained
   name: criminal-records-status-detained
   icon: SecurityIconIncarcerated
