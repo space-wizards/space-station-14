@@ -47,6 +47,14 @@
   needsReason: true
   reasonText: criminal-records-console-suspected-reason
 
+- type: securityStatus
+  id: SecurityStatusSearch
+  name: criminal-records-status-search
+  icon: SecurityIconSearch
+  statusSetAnnouncement: criminal-records-console-search
+  statusUnSetAnnouncement: criminal-records-console-not-search
+  needsReason: true
+  reasonText: criminal-records-console-search-reason
 
 - type: securityStatus
   id: SecurityStatusHostile
