@@ -1,5 +1,5 @@
 - type: entityTable # max size 1x2
-  id: AllSlipTable
+  id: SlipTable
   table: !type:GroupSelector
     children:
     - !type:NestedSelector
@@ -21,9 +21,7 @@
       children:
       - id: SoapSyndie
       - id: SlipocalypseClusterSoap
-        weight: 0.5 # 1 in 1,600
       - id: SoapOmega
-        weight: 0.1 # 1 in 8,000
 
 - type: entity
   parent: MarkerBase
@@ -37,7 +35,7 @@
       state: peel
   - type: EntityTableSpawner
     table: !type:NestedSelector
-      tableId: AllSlipTable
+      tableId: SlipTable
 
 - type: entity
   parent: MarkerBase

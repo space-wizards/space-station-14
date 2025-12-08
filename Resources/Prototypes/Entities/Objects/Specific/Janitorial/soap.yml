@@ -46,6 +46,9 @@
     solutions:
       soap:
         maxVol: 50
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 50
   - type: SolutionTransfer
     transferAmount: 10
     minTransferAmount: 1
@@ -69,20 +72,12 @@
 - type: entity
   parent: BaseSoap
   id: Soap
-  name: soap
   description: A cheap bar of soap. Doesn't smell.
   components:
   - type: Sprite
     layers:
     - state: soap-4
       map: ["enum.SolutionContainerLayers.Fill"]
-  - type: SolutionContainerManager
-    solutions:
-      soap:
-        maxVol: 50
-        reagents:
-        - ReagentId: SoapReagent
-          Quantity: 50
   - type: Residue
     residueColor: residue-green
 
@@ -164,6 +159,13 @@
   - type: Sprite
     layers:
     - state: syndie-soaplet
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 10
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 10
   - type: Slippery
   - type: StepTrigger
     intersectRatio: 0.04
@@ -206,8 +208,6 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     fillBaseName: gibs-
-  - type: Slippery
-  - type: StepTrigger
   - type: Item
     heldPrefix: gibs
   - type: FlavorProfile
