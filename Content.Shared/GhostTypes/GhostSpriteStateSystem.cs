@@ -54,15 +54,14 @@ public sealed class GhostSpriteStateSystem : EntitySystem
 
         ProtoId<DamageTypePrototype>? spriteState = null;
 
-        Log.Debug($"weh weh {specialCase}");
         if (specialCase != null)  // Possible special cases like death by an explosion
         {
             var prototype = _proto.Index(specialCase);
-            spriteState = specialCase + rand.Next(prototype.NumOfStates);  //figure out what the syntax is
+            spriteState = specialCase + rand.Next(prototype.NumOfStates);
         }
         else
         {
-            if (ent.Comp.DamageMap.TryGetValue(highestType, out var spriteAmount))  // Chooses a random sprite state if needed
+            if (ent.Comp.DamageMap.TryGetValue(highestType, out var spriteAmount))
                 spriteState = highestType + rand.Next(0, spriteAmount - 1);
         }
 

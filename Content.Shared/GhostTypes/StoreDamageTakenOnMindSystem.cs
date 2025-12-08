@@ -83,7 +83,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     /// </summary>
     private void ClearSpecialCause(EntityUid ent)
     {
-        if (!TryComp<MindContainerComponent>(ent, out var mindContainer)  // this should prolly be a method sincee im doing the same thingi 3 times tis system
+        if (!TryComp<MindContainerComponent>(ent, out var mindContainer)
             || !HasComp<MindComponent>(mindContainer.Mind))
             return;
 
