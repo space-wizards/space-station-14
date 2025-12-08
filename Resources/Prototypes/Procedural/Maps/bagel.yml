@@ -18,7 +18,7 @@
   id: BagelTheater3
   size: 11,8
   atlas: /Maps/Dungeon/RandomMap/bagelrandom.yml
-  offset: 1,9
+  offset: -1,9
   tags:
   - TheaterBagel
 
