@@ -43,8 +43,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
 
     private void DeathByExplosion(Entity<StoreDamageTakenOnMindComponent> ent, ref BeforeExplodeEvent args)
     {
-        ProtoId<SpecialCauseOfDeathPrototype> casePrototype = "Explosion";
-        SaveSpecialCauseOfDeath(ent, casePrototype);
+        SaveSpecialCauseOfDeath(ent, "Explosion");
     }
 
     /// <summary>

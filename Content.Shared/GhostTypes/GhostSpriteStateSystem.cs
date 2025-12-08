@@ -25,7 +25,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!TryComp<AppearanceComponent>(ent, out var appearance) || !TryComp<MindComponent>(mind, out var mindComp))
+        if (!TryComp<AppearanceComponent>(ent, out var appearance) || !HasComp<MindComponent>(mind))
             return;
 
         var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
@@ -59,10 +59,9 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             var prototype = _proto.Index(specialCase);
             spriteState = specialCase + rand.Next(prototype.NumOfStates);
         }
-        else
+        else if (ent.Comp.DamageMap.TryGetValue(highestType, out var spriteAmount))
         {
-            if (ent.Comp.DamageMap.TryGetValue(highestType, out var spriteAmount))
-                spriteState = highestType + rand.Next(0, spriteAmount - 1);
+                spriteState = highestType + rand.Next(spriteAmount);
         }
 
         if (spriteState != null)
