@@ -1,0 +1,64 @@
+- type: securityStatus
+  id: SecurityStatusWanted
+  name: criminal-records-status-wanted
+  icon: SecurityIconWanted
+  statusSetAnnouncement: criminal-records-console-wanted
+  statusUnSetAnnouncement: criminal-records-console-not-wanted
+  needsReason: true
+  reasonText: criminal-records-console-wanted-reason
+
+- type: securityStatus
+  id: SecurityStatusCharged
+  name: criminal-records-status-charged
+  icon: SecurityIconCharged
+  statusSetAnnouncement: criminal-records-console-charged
+  statusUnSetAnnouncement: criminal-records-console-not-charged
+  needsReason: true
+  reasonText: criminal-records-console-charged-reason
+
+- type: securityStatus
+  id: SecurityStatusDetained
+  name: criminal-records-status-detained
+  icon: SecurityIconIncarcerated
+  statusSetAnnouncement: criminal-records-console-detained
+  statusUnSetAnnouncement: criminal-records-console-not-detained
+
+- type: securityStatus
+  id: SecurityStatusDischarged
+  name: criminal-records-status-discharged
+  icon: SecurityIconDischarged
+  statusSetAnnouncement: criminal-records-console-discharged
+  statusUnSetAnnouncement: criminal-records-console-not-discharged
+
+- type: securityStatus
+  id: SecurityStatusParoled
+  name: criminal-records-status-paroled
+  icon: SecurityIconParoled
+  statusSetAnnouncement: criminal-records-console-paroled
+  statusUnSetAnnouncement: criminal-records-console-not-paroled
+
+- type: securityStatus
+  id: SecurityStatusSuspected
+  name: criminal-records-status-suspected
+  icon: SecurityIconSuspected
+  statusSetAnnouncement: criminal-records-console-suspected
+  statusUnSetAnnouncement: criminal-records-console-not-suspected
+  needsReason: true
+  reasonText: criminal-records-console-suspected-reason
+
+
+- type: securityStatus
+  id: SecurityStatusHostile
+  name: criminal-records-status-hostile
+  icon: SecurityIconHostile
+  statusSetAnnouncement: criminal-records-console-hostile
+  statusUnSetAnnouncement: criminal-records-console-not-hostile
+  needsReason: true
+  reasonText: criminal-records-console-hostile-reason
+
+- type: securityStatus
+  id: SecurityStatusEliminated
+  name: criminal-records-status-eliminated
+  status: SecurityIconEliminated
+  statusSetAnnouncement: criminal-records-console-eliminated
+  statusUnSetAnnouncement: criminal-records-console-not-eliminated

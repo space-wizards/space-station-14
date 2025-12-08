@@ -40,7 +40,7 @@ public sealed class CriminalRecordsHackerSystem : SharedCriminalRecordsHackerSys
         foreach (var (key, record) in _records.GetRecordsOfType<CriminalRecord>(station))
         {
             var reason = _random.Pick(reasons);
-            _criminalRecords.OverwriteStatus(new StationRecordKey(key, station), record, SecurityStatus.Wanted, reason);
+            _criminalRecords.OverwriteStatus(new StationRecordKey(key, station), record, "SecurityStatusWanted", reason);
             // no radio message since spam
             // no history since lazy and its easy to remove anyway
             // main damage with this is existing arrest warrants are lost and to anger beepsky

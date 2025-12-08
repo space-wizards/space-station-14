@@ -15,6 +15,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
 using System.Linq;
 using Content.Shared.Roles.Jobs;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -30,6 +31,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly StationRecordsSystem _records = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -85,11 +87,10 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
+        var statusProto = _prototypeManager.Index(msg.Status);
+
         // prevent malf client violating wanted/reason nullability
-        if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null) &&
-            msg.Status == SecurityStatus.Charged != (msg.Reason != null) &&
-            msg.Status == SecurityStatus.Suspected != (msg.Reason != null) &&
-            msg.Status == SecurityStatus.Hostile != (msg.Reason != null))
+        if (statusProto is not null && statusProto.NeedsReason && msg.Reason is null)
             return;
 
         if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
@@ -108,13 +109,14 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         }
 
         var oldStatus = record.Status;
+        var oldStatusProto = _prototypeManager.Index(oldStatus);
 
         var name = _records.RecordName(key.Value);
         GetOfficer(mob.Value, out var officer);
 
         // when arresting someone add it to history automatically
         // fallback exists if the player was not set to wanted beforehand
-        if (msg.Status == SecurityStatus.Detained)
+        if (msg.Status == "SecurityStatusDetained")
         {
             var oldReason = record.Reason ?? Loc.GetString("criminal-records-console-unspecified-reason");
             var history = Loc.GetString("criminal-records-console-auto-history", ("reason", oldReason));
@@ -144,38 +146,17 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             args = new (string, object)[] { ("name", name), ("officer", officer), ("job", jobName) };
 
         // figure out which radio message to send depending on transition
-        var statusString = (oldStatus, msg.Status) switch
+        var statusString = "not_wanted";
+        if (statusProto is not null)
         {
-            (_, SecurityStatus.Hostile) => "hostile",
-            (_, SecurityStatus.Eliminated) => "eliminated",
-            // person has been detained
-            (_, SecurityStatus.Detained) => "detained",
-            // person did something sus
-            (_, SecurityStatus.Suspected) => "suspected",
-            // released on parole
-            (_, SecurityStatus.Paroled) => "paroled",
-            // prisoner did their time
-            (_, SecurityStatus.Discharged) => "released",
-            (_, SecurityStatus.Charged) => "charged",
-            // upgrading from charged to wanted
-            (SecurityStatus.Charged, SecurityStatus.Wanted) => "wanted-upgrade",
-            // going from any other state to wanted, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
-            (_, SecurityStatus.Wanted) => "wanted",
-            (SecurityStatus.Hostile, SecurityStatus.None) => "not-hostile",
-            (SecurityStatus.Eliminated, SecurityStatus.None) => "not-eliminated",
-            // person is no longer sus
-            (SecurityStatus.Suspected, SecurityStatus.None) => "not-suspected",
-            (SecurityStatus.Charged, SecurityStatus.None) => "not-charged",
-            // going from wanted to none, must have been a mistake
-            (SecurityStatus.Wanted, SecurityStatus.None) => "not-wanted",
-            // criminal status removed
-            (SecurityStatus.Detained, SecurityStatus.None) => "released",
-            // criminal is no longer on parole
-            (SecurityStatus.Paroled, SecurityStatus.None) => "not-parole",
-            // this is impossible
-            _ => "not-wanted"
-        };
-        _radio.SendRadioMessage(ent, Loc.GetString($"criminal-records-console-{statusString}", args),
+            statusString = statusProto.StatusSetAnnouncement;
+        }
+        else if (msg.Status is null && oldStatusProto is not null)
+        {
+            statusString = oldStatusProto.StatusUnSetAnnouncement;
+        }
+
+        _radio.SendRadioMessage(ent, Loc.GetString(statusString, args),
             ent.Comp.SecurityChannel, ent);
 
         UpdateUserInterface(ent);
@@ -229,7 +210,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
         // filter the listing by the selected criminal record status
         //if NONE, dont filter by status, just show all crew
-        if (console.FilterStatus != SecurityStatus.None)
+        if (console.FilterStatus is not null)
         {
             listing = listing
                 .Where(x => _records.TryGetRecord<CriminalRecord>(new StationRecordKey(x.Key, owningStation.Value), out var record) && record.Status == console.FilterStatus)
