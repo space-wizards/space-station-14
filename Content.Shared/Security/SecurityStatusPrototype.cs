@@ -32,4 +32,7 @@ public sealed class SecurityStatusPrototype: IPrototype
 
     [DataField]
     public string HistoryText = default!;
+
+    [DataField]
+    public int Order = 0;
 }

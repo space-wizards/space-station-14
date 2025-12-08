@@ -76,11 +76,12 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
         OpenCentered();
 
-        _lookup.Add(null);
         foreach (var status in _proto.EnumeratePrototypes<SecurityStatusPrototype>())
         {
             _lookup.Add(status);
         }
+        _lookup.Sort((a, b) => _proto.Index(a!.Value).Order.CompareTo(_proto.Index(b!.Value).Order));
+        _lookup.Insert(0, null);
 
         foreach (var item in Enum.GetValues<StationRecordFilterType>())
         {
