@@ -119,7 +119,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
 
 - type: entity
   parent: BaseSubstation
@@ -128,7 +127,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
 
 - type: entity
   parent: BaseSubstationWall
@@ -137,7 +135,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
 
 - type: entity
   parent: BaseAPC
@@ -146,7 +143,6 @@
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-    autoRecharge: True
 
 - type: entity
   id: DebugPowerReceiver

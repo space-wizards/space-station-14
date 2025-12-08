@@ -726,7 +726,6 @@ PrefilledSyringe: Syringe
 BibleTanakh: null
 BibleSatanic: null
 
-
 # 2025-10-08
 ClothingBeltAssault: ClothingBeltMilitaryWebbing
 WarpPointBombing: null
@@ -748,3 +747,10 @@ MagazineCaselessRifle: MagazinePistolCaselessRifle
 MagazineCaselessRiflePractice: MagazinePistolCaselessRiflePractice
 SpeedLoaderPistol: null
 SpeedLoaderPistolPractice: null
+
+# 2025-12-05
+GlowstickBase: GlowstickGreen
+
+# 2025-12-06
+SpawnPointZookeeper: null
+SpawnPointBoxer: null
