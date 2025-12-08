@@ -31,12 +31,17 @@ public sealed partial class LastBodyDamageComponent : Component
     public ProtoId<SpecialCauseOfDeathPrototype>? SpecialCauseOfDeath = null;
 }
 
+/// <summary>
+/// Prototype for special causes of death (such as "Explosion")
+/// </summary>
 [Prototype]
 public sealed partial class SpecialCauseOfDeathPrototype : IPrototype
 {
     [ViewVariables, IdDataField]
     public string ID { get; private set; } = string.Empty;
 
+    // Specifies the amount of possible sprites for a special cause of death
+    // These values are set up in the special_cause_of_death_types.yml file
     [DataField]
     public int NumOfStates;
 }
