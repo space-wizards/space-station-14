@@ -1,4 +1,35 @@
 - type: entity
+  name: bang hitscan 1dmg
+  parent: BaseWeaponBatterySmall
+  id: WeaponHitscanDebug
+  description: pew pew!
+  suffix: DEBUG
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/debug.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/debug.rsi
+  - type: Gun
+    fireRate: 10
+    availableModes:
+    - SemiAuto
+    - FullAuto
+  - type: BatteryAmmoProvider
+    proto: DebugLaser
+    fireCost: 1
+  - type: PredictedBatterySelfRecharger
+    autoRechargeRate: 1000
+
+- type: entity
+  name: bang hitscan gibber
+  parent: WeaponHitscanDebug
+  id: WeaponHitscanDebugGib
+  components:
+  - type: BatteryAmmoProvider
+    proto: DebugLaserGib
+
+- type: entity
   name: bang, ded
   parent: BaseWeaponPistol
   id: WeaponPistolDebug
