@@ -1,31 +1,26 @@
-- type: entityTable
-  id: BagelTheaterTable
-  table: !type:GroupSelector
-    children:
-    - id: BagelTheater1
-    - id: BagelTheater2
-      prob: 0.5
-    - id: BagelTheater3
-  tags:
-  - TheaterBagel
-
 - type: dungeonRoom
   id: BagelTheater1
   size: 11,8
   atlas: /Maps/Dungeon/RandomMap/bagelrandom.yml
   offset: -1,0 # yeah i fucking hate myself too
+  tags:
+  - TheaterBagel
 
 - type: dungeonRoom
   id: BagelTheater2 # this is the blank one
   size: 11,8
   atlas: /Maps/Dungeon/RandomMap/bagelrandom.yml
   offset: 11,0
+  tags:
+  - TheaterBagel
 
 - type: dungeonRoom
   id: BagelTheater3
   size: 11,8
   atlas: /Maps/Dungeon/RandomMap/bagelrandom.yml
   offset: 1,9
+  tags:
+  - TheaterBagel
 
 - type: entity
   id: BagelTheaterRoomMarker
