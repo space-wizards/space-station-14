@@ -9,9 +9,11 @@
     - !type:GroupSelector # Other
       weight: 0.02 # 1 in 100
       children:
-      - id: BananaPhoneInstrument
       - id: FoodButter
       - id: FoodCannabisButter
+        weight: 0.5
+      - id: BananaPhoneInstrument
+        weight: 0.2
 
 - type: entityTable # max size 1x2
   id: AllSoapsTable
