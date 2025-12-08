@@ -157,6 +157,12 @@
     count: 8
 
 - type: localizedDataset
+  id: FigurinesGreytider
+  values:
+    prefix: figurines-greytider-
+    count: 6
+
+- type: localizedDataset
   id: FigurinesJanitor
   values:
     prefix: figurines-janitor-
@@ -186,23 +192,11 @@
     prefix: figurines-musician-
     count: 5
 
-# Misc. crew
-
-- type: localizedDataset
-  id: FigurinesGreytider
-  values:
-    prefix: figurines-greytider-
-    count: 6
-
 - type: localizedDataset
   id: FigurinesPassenger
   values:
     prefix: figurines-passenger-
     count: 5
-
-# Silicon
-
-# ...no voiced silicon figures at the moment.
 
 # Antagonists
 

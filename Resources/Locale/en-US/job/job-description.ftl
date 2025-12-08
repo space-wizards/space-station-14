@@ -52,6 +52,7 @@ job-description-lawyer = Ensure that every prisoner or criminal receives a fair 
 job-description-librarian = Manage the library, give out knowledge to any who seek it, and report on activities aboard the station.
 job-description-mime = Entertain the crew without speaking or writing, and engage with light rivalry with the clown.
 job-description-musician = Entertain the crew with your unique musical talent, and acquire new instruments to mess around with.
+job-description-passenger = Enjoy your stay aboard the station with no obligations!
 job-description-reporter = Entertain & inform the crew with your vibrant journalism through wireless cameras, the radio and the news.
 job-description-serviceworker = Learn the basics of bartending, cooking, and growing plants.
 
@@ -59,10 +60,6 @@ job-description-serviceworker = Learn the basics of bartending, cooking, and gro
 
 job-description-station-ai = Follow your laws, serve the crew.
 job-description-borg = Half-human, Half-machine. Follow your laws, serve the crew, and hound the science team for upgrades.
-
-# Misc. crew
-
-job-description-passenger = Enjoy your stay aboard the station with no obligations!
 
 # Visitors
 

@@ -312,6 +312,17 @@
 
 - type: entity
   parent: BaseFigurine
+  id: ToyFigurineGreytider
+  name: greytider figure
+  description: A figurine depicting a dubious-looking passenger. Greytide worldwide!
+  components:
+  - type: Sprite
+    state: passenger_greytide
+  - type: SpeakOnTrigger
+    pack: FigurinesGreytider
+
+- type: entity
+  parent: BaseFigurine
   id: ToyFigurineJanitor
   name: janitor figure
   description: A figurine depicting a Janitor with their galoshes.
@@ -365,19 +376,6 @@
   - type: SpeakOnTrigger
     pack: FigurinesMusician
 
-# Misc. crew
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyFigurineGreytider
-  name: greytider figure
-  description: A figurine depicting a dubious-looking passenger. Greytide worldwide!
-  components:
-  - type: Sprite
-    state: passenger_greytide
-  - type: SpeakOnTrigger
-    pack: FigurinesGreytider
-
 - type: entity
   parent: BaseFigurine
   id: ToyFigurinePassenger
@@ -388,8 +386,6 @@
     state: passenger
   - type: SpeakOnTrigger
     pack: FigurinesPassenger
-
-# Silicon
 
 # Antagonists
 

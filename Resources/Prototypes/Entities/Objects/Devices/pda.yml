@@ -1127,6 +1127,17 @@
 
 - type: entity
   parent: BasePDA
+  id: PassengerPDA
+  name: passenger PDA
+  description: Why isn't it gray?
+  components:
+  - type: Pda
+    id: PassengerIDCard
+  - type: PdaBorderColor
+    borderColor: "#717059"
+
+- type: entity
+  parent: BasePDA
   id: ReporterPDA
   name: reporter PDA
   description: Smells like freshly printed press.
@@ -1185,19 +1196,6 @@
     borderColor: "#ffe685"
   - type: Icon
     state: pda-zookeeper
-
-# Misc. crew
-
-- type: entity
-  parent: BasePDA
-  id: PassengerPDA
-  name: passenger PDA
-  description: Why isn't it gray?
-  components:
-  - type: Pda
-    id: PassengerIDCard
-  - type: PdaBorderColor
-    borderColor: "#717059"
 
 # Visitors
 

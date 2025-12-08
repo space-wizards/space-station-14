@@ -797,6 +797,20 @@
 
 - type: entity
   parent: IDCardStandard
+  id: PassengerIDCard
+  name: passenger ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: Passenger
+  - type: PresetIdCard
+    job: Passenger
+
+- type: entity
+  parent: IDCardStandard
   id: ServiceWorkerIDCard
   name: service worker ID card
   components:
@@ -828,59 +842,6 @@
     - sprite: *icon-rsi
       offset: *icon-offset
       state: Zookeeper
-
-#Misc. crew
-
-- type: entity
-  parent: IDCardStandard
-  id: PassengerIDCard
-  name: passenger ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: default
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Passenger
-  - type: PresetIdCard
-    job: Passenger
-
-- type: entity
-  parent: IDCardStandard
-  id: PrisonerIDCard
-  name: prisoner ID card
-  description: A generically printed ID card for scummy prisoners.
-  components:
-  - type: Sprite
-    layers:
-    - state: orange
-    - sprite: *icon-rsi
-      offset: *icon-offset
-      state: Prisoner
-  - type: Item
-    heldPrefix: orange
-  - type: Access
-    tags:
-    - GenpopEnter
-  - type: GenpopIdCard
-  - type: IdCard
-    jobTitle: job-name-prisoner
-    jobIcon: JobIconPrisoner
-    canMicrowave: false
-  - type: ExpireIdCard
-    expireMessage: genpop-prisoner-id-expire
-    expiredAccess:
-    - GenpopLeave
-  - type: Speech
-    speechVerb: Robotic
-  - type: Tag
-    tags:
-    - DoorBumpOpener
-    - WhitelistChameleon
-    - WhitelistChameleonIdCard
-    - Recyclable
-  - type: StaticPrice # these are infinitely producible.
-    price: 0
 
 # Visitors
 
@@ -1250,6 +1211,43 @@
     jobTitle: job-title-cluwne
     jobIcon: JobIconCluwne
   - type: Unremoveable
+
+- type: entity
+  parent: IDCardStandard
+  id: PrisonerIDCard
+  name: prisoner ID card
+  description: A generically printed ID card for scummy prisoners.
+  components:
+  - type: Sprite
+    layers:
+    - state: orange
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: Prisoner
+  - type: Item
+    heldPrefix: orange
+  - type: Access
+    tags:
+    - GenpopEnter
+  - type: GenpopIdCard
+  - type: IdCard
+    jobTitle: job-name-prisoner
+    jobIcon: JobIconPrisoner
+    canMicrowave: false
+  - type: ExpireIdCard
+    expireMessage: genpop-prisoner-id-expire
+    expiredAccess:
+    - GenpopLeave
+  - type: Speech
+    speechVerb: Robotic
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - WhitelistChameleonIdCard
+    - Recyclable
+  - type: StaticPrice # these are infinitely producible.
+    price: 0
 
 - type: entity
   parent: IDCardStandard
