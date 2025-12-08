@@ -75,7 +75,7 @@
 
 - type: entity
   parent: MarkerBase
-  id: RandomBananaPeel100
+  id: RandomBananaPeel80
   name: random banana peel spawner
   components:
   - type: Sprite
@@ -86,3 +86,4 @@
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: AllBananaPeelsTable
+      prob: 0.8
