@@ -52,7 +52,7 @@ public sealed partial class StatusEffectComponent : Component
     public EntityWhitelist? Blacklist;
 
     /// <summary>
-    /// QoL function, returns total duration of this status effect
+    /// QoL function, returns total duration of this status effect.
     /// </summary>
     [ViewVariables]
     public TimeSpan Duration => EndEffectTime == null ? TimeSpan.MaxValue : EndEffectTime.Value - StartEffectTime;
