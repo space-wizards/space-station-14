@@ -46,9 +46,7 @@ public sealed partial class StencilOverlay
                     {
                         // Ignored tiles for stencil
                         if (_weather.CanWeatherAffect((grid.Owner, grid, roofComp), tile))
-                        {
                             continue;
-                        }
 
                         var gridTile = new Box2(tile.GridIndices * grid.Comp.TileSize,
                             (tile.GridIndices + Vector2i.One) * grid.Comp.TileSize);
