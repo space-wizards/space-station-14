@@ -9,7 +9,32 @@ figurines-captain-6 = The disk was in my bag last I checked.
 figurines-captain-7 = The chain of command starts and ends with me.
 figurines-captain-8 = It's hard being at the top.
 
-# Cargo
+figurines-ce-1 = Everyone to the briefing!
+figurines-ce-2 = Wire the solars!
+figurines-ce-3 = How to setup the TEG?
+figurines-ce-4 = SINGULOOSE!
+figurines-ce-5 = TESLOOSE!
+figurines-ce-6 = Power's out again.
+
+figurines-cmo-1 = Suit sensors!
+figurines-cmo-2 = Why do we have meth?
+figurines-cmo-3 = Who drank all the chems?
+figurines-cmo-4 = Desoxyephedrine? Sounds healthy.
+figurines-cmo-5 = No, you're not getting my hypospray.
+
+figurines-hos-1 = Space law? What?
+figurines-hos-2 = Shoot the clown.
+figurines-hos-3 = Yes, I shot the clown. No, I don't regret it.
+figurines-hos-4 = Clown is now KOS.
+figurines-hos-5 = Armory is now open to the public!
+
+figurines-hop-1 = Papers, please.
+figurines-hop-2 = You are fired.
+figurines-hop-3 = BRB.
+figurines-hop-4 = Fill out the form.
+figurines-hop-5 = I was gone for two seconds...
+figurines-hop-6 = Go get this form stamped.
+figurines-hop-7 = Has anyone seen Ian?
 
 figurines-qm-1 = Who stole the shuttle?
 figurines-qm-2 = Wait, where did my digi-board go?
@@ -19,6 +44,15 @@ figurines-qm-5 = Time to gamble!
 figurines-qm-6 = Viva la Cargonia!
 figurines-qm-7 = Where'd all our money go?
 figurines-qm-8 = 99% of gamblers quit right before they hit it big!
+
+figurines-rd-1 = Blowing up all of the borgs!
+figurines-rd-2 = Tier 3 Arsenal? No way.
+figurines-rd-3 = Now where did I leave my hardsuit...?
+figurines-rd-4 = Now you're thinking with portals!
+figurines-rd-5 = The cake is a lie!
+figurines-rd-6 = The trait I look for in a scientist is expendability.
+
+# Cargo
 
 figurines-cargotech-1 = DRAGON ON ATS!
 figurines-cargotech-2 = I sold the station!
@@ -44,13 +78,6 @@ figurines-salvage-9 = Can we borrow the cargo shuttle? Please?
 
 # Engineering
 
-figurines-ce-1 = Everyone to the briefing!
-figurines-ce-2 = Wire the solars!
-figurines-ce-3 = How to setup the TEG?
-figurines-ce-4 = SINGULOOSE!
-figurines-ce-5 = TESLOOSE!
-figurines-ce-6 = Power's out again.
-
 figurines-atmostech-1 = I put plasma in distro.
 figurines-atmostech-2 = I will burn you in a burn chamber.
 figurines-atmostech-3 = Frezon...
@@ -70,12 +97,6 @@ figurines-engineer-6 = Someone bombed the medbay... again...
 figurines-engineer-7 = Well, why don't you come and fix it?
 
 # Medical
-
-figurines-cmo-1 = Suit sensors!
-figurines-cmo-2 = Why do we have meth?
-figurines-cmo-3 = Who drank all the chems?
-figurines-cmo-4 = Desoxyephedrine? Sounds healthy.
-figurines-cmo-5 = No, you're not getting my hypospray.
 
 figurines-chemist-1 = Get your pills!
 figurines-chemist-2 = We need to cook.
@@ -101,13 +122,6 @@ figurines-paramedic-5 = 14 dead in the clown's room.
 
 # Science
 
-figurines-rd-1 = Blowing up all of the borgs!
-figurines-rd-2 = Tier 3 Arsenal? No way.
-figurines-rd-3 = Now where did I leave my hardsuit...?
-figurines-rd-4 = Now you're thinking with portals!
-figurines-rd-5 = The cake is a lie!
-figurines-rd-6 = The trait I look for in a scientist is expendability.
-
 figurines-scientist-1 = Someone else must have made those bombs!
 figurines-scientist-2 = He asked to be borged!
 figurines-scientist-3 = Carp at sci!
@@ -116,12 +130,6 @@ figurines-scientist-5 = Anyone seen an anomaly?
 figurines-scientist-6 = The anomaly exploded!
 
 # Security
-
-figurines-hos-1 = Space law? What?
-figurines-hos-2 = Shoot the clown.
-figurines-hos-3 = Yes, I shot the clown. No, I don't regret it.
-figurines-hos-4 = Clown is now KOS.
-figurines-hos-5 = Armory is now open to the public!
 
 figurines-detective-1 = The butler did it.
 figurines-detective-2 = I need some whiskey after this.
@@ -148,14 +156,6 @@ figurines-warden-5 = Soap is now contraband.
 figurines-warden-6 = You're going away for a long time, buddy.
 
 # Service
-
-figurines-hop-1 = Papers, please.
-figurines-hop-2 = You are fired.
-figurines-hop-3 = BRB.
-figurines-hop-4 = Fill out the form.
-figurines-hop-5 = I was gone for two seconds...
-figurines-hop-6 = Go get this form stamped.
-figurines-hop-7 = Has anyone seen Ian?
 
 figurines-bartender-1 = Where's my monkey?
 figurines-bartender-2 = Sec won't drink.
@@ -301,7 +301,7 @@ figurines-nukie-commander-3 = The Syndicate sends its regards.
 figurines-nukie-commander-4 = Failure is not an option.
 figurines-nukie-commander-5 = Whoops.
 
-figurines-nukie-elite-1 = Not a word in Nanotrasen.
+figurines-nukie-elite-1 = Not a word to Nanotrasen.
 figurines-nukie-elite-2 = THAT'S A KEG!
 figurines-nukie-elite-3 = Guys, are you alive?
 figurines-nukie-elite-4 = Breach and clear!
