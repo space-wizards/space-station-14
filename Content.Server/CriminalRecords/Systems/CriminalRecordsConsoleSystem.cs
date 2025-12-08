@@ -116,7 +116,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
         // when arresting someone add it to history automatically
         // fallback exists if the player was not set to wanted beforehand
-        if (msg.Status == "SecurityStatusDetained")
+        if (statusProto?.StoreHistory ?? false)
         {
             var oldReason = record.Reason ?? Loc.GetString("criminal-records-console-unspecified-reason");
             var history = Loc.GetString("criminal-records-console-auto-history", ("reason", oldReason));

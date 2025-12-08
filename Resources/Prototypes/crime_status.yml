@@ -22,6 +22,7 @@
   icon: SecurityIconIncarcerated
   statusSetAnnouncement: criminal-records-console-detained
   statusUnSetAnnouncement: criminal-records-console-not-detained
+  storeHistory: true
 
 - type: securityStatus
   id: SecurityStatusDischarged
@@ -62,3 +63,4 @@
   status: SecurityIconEliminated
   statusSetAnnouncement: criminal-records-console-eliminated
   statusUnSetAnnouncement: criminal-records-console-not-eliminated
+  storeHistory: true
