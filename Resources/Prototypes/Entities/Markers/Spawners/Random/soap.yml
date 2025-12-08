@@ -1,4 +1,4 @@
-- type: entityTable # max size 1x2
+- type: entityTable # max size 1x2 (for now)
   id: SlipTable
   table: !type:GroupSelector
     children:
@@ -6,6 +6,12 @@
       tableId: AllBananaPeelsTable
     - !type:NestedSelector
       tableId: AllSoapsTable
+    - !type:GroupSelector # Other
+      weight: 0.02 # 1 in 100
+      children:
+      - id: BananaPhoneInstrument
+      - id: FoodButter
+      - id: FoodCannabisButter
 
 - type: entityTable # max size 1x2
   id: AllSoapsTable
@@ -17,7 +23,7 @@
     - id: SoapHomemade
     - id: SoapDeluxe
     - !type:GroupSelector # Rare soaps
-      weight: 0.01 # 1 in 500
+      weight: 0.02 # 1 in 250
       children:
       - id: SoapSyndie
       - id: SlipocalypseClusterSoap
