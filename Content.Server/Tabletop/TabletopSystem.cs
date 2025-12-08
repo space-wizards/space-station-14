@@ -47,7 +47,7 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         base.OnTabletopMove(msg, args);
     }
 
-    private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)
+    private void OnTabletopActivate(Entity<TabletopGameComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
@@ -56,12 +56,12 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
-        OpenSessionFor(actor.PlayerSession, uid);
+        OpenSessionFor(actor.PlayerSession, ent.Owner);
     }
 
-    private void OnGameShutdown(EntityUid uid, TabletopGameComponent component, ComponentShutdown args)
+    private void OnGameShutdown(Entity<TabletopGameComponent> ent, ref ComponentShutdown args)
     {
-        CleanupSession(uid);
+        CleanupSession(ent.Owner);
     }
 
     private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
@@ -69,19 +69,19 @@ public sealed partial class TabletopSystem : SharedTabletopSystem
         CloseSessionFor(args.SenderSession, GetEntity(msg.TableUid));
     }
 
-    private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)
+    private void OnPlayerDetached(Entity<TabletopGamerComponent> ent, ref PlayerDetachedEvent args)
     {
-        if (component.Tabletop.IsValid())
-            CloseSessionFor(args.Player, component.Tabletop);
+        if (ent.Comp.Tabletop.IsValid())
+            CloseSessionFor(args.Player, ent.Comp.Tabletop);
     }
 
-    private void OnGamerShutdown(EntityUid uid, TabletopGamerComponent component, ComponentShutdown args)
+    private void OnGamerShutdown(Entity<TabletopGamerComponent> ent, ref ComponentShutdown args)
     {
-        if (!TryComp(uid, out ActorComponent? actor))
+        if (!TryComp(ent.Owner, out ActorComponent? actor))
             return;
 
-        if (component.Tabletop.IsValid())
-            CloseSessionFor(actor.PlayerSession, component.Tabletop);
+        if (ent.Comp.Tabletop.IsValid())
+            CloseSessionFor(actor.PlayerSession, ent.Comp.Tabletop);
     }
 
     public override void Update(float frameTime)

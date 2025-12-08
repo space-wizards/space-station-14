@@ -18,7 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tabletop;
 
-public abstract class SharedTabletopSystem : EntitySystem
+public abstract partial class SharedTabletopSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -72,7 +72,7 @@ public abstract class SharedTabletopSystem : EntitySystem
         PredictedQueueDel(result);
     }
 
-    private void OnInteractUsing(EntityUid uid, TabletopGameComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(Entity<TabletopGameComponent> ent, ref InteractUsingEvent args)
     {
         if (!_cfg.GetCVar(CCVars.GameTabletopPlace))
             return;
@@ -80,10 +80,10 @@ public abstract class SharedTabletopSystem : EntitySystem
         if (!HasComp<HandsComponent>(args.User))
             return;
 
-        if (component.Session is not { } session)
+        if (ent.Comp.Session is not { } session)
             return;
 
-        if (!_hands.TryGetActiveItem(uid, out var handEnt))
+        if (!_hands.TryGetActiveItem(ent.Owner, out var handEnt))
             return;
 
         if (!HasComp<ItemComponent>(handEnt))
@@ -99,13 +99,13 @@ public abstract class SharedTabletopSystem : EntitySystem
         EnsureComp<TabletopHologramComponent>(hologram);
         session.Entities.Add(hologram);
 
-        _popup.PopupClient(Loc.GetString("tabletop-added-piece"), uid, args.User);
+        _popup.PopupClient(Loc.GetString("tabletop-added-piece"), ent.Owner, args.User);
     }
 
     /// <summary>
     /// Add a verb that allows the player to start playing a tabletop game.
     /// </summary>
-    private void AddPlayGameVerb(EntityUid uid, TabletopGameComponent component, GetVerbsEvent<ActivationVerb> args)
+    private void AddPlayGameVerb(Entity<TabletopGameComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
@@ -117,7 +117,7 @@ public abstract class SharedTabletopSystem : EntitySystem
         {
             Text = Loc.GetString("tabletop-verb-play-game"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
-            // Act = () => OpenSessionFor(actor.PlayerSession, uid)
+            Act = () => OpenSessionFor(actor.PlayerSession, ent.Owner)
         };
 
         args.Verbs.Add(playVerb);

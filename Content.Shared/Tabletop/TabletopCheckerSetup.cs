@@ -33,7 +33,7 @@ public sealed partial class TabletopCheckerSetup : TabletopSetup
     {
         static float GetOffset(float offset) => offset * 1f /* separation */;
 
-        Span<EntityUid> pieces = stackalloc EntityUid[42];
+        var pieces = new EntityUid[42];
         var pieceIndex = 0;
 
         // Pieces.
