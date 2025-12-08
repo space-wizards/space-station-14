@@ -40,8 +40,8 @@
       color: "#1b67a5"
     - state: stripe_bottom
       color: "#0e4069"
-    - sprite: *icon-rsi
-      offset: *icon-offset
+    - sprite: &icon-rsi Interface/Misc/job_icons.rsi # Copied to most IDs below! If you reorder any IDs above this one, move these lines too.
+      offset: &icon-offset -0.09375, 0.0625 # 3 pixels left, 2 pixels up
       state: Captain
   - type: Item
     heldPrefix: gold
@@ -839,8 +839,8 @@
   - type: Sprite
     layers:
     - state: default
-    - sprite: &icon-rsi Interface/Misc/job_icons.rsi
-      offset: &icon-offset -0.09375, 0.0625 #3 pixels left, 2 pixels up
+    - sprite: *icon-rsi
+      offset: *icon-offset
       state: Passenger
   - type: PresetIdCard
     job: Passenger
