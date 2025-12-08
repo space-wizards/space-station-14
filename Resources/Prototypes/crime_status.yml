@@ -32,15 +32,6 @@
   statusUnSetAnnouncement: criminal-records-console-not-discharged
 
 - type: securityStatus
-  id: SecurityStatusSuspected
-  name: criminal-records-status-suspected
-  icon: SecurityIconSuspected
-  statusSetAnnouncement: criminal-records-console-suspected
-  statusUnSetAnnouncement: criminal-records-console-not-suspected
-  needsReason: true
-  reasonText: criminal-records-console-suspected-reason
-
-- type: securityStatus
   id: SecurityStatusSearch
   name: criminal-records-status-search
   icon: SecurityIconSearch
