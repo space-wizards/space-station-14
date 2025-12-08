@@ -25,32 +25,47 @@ public sealed class ConsumeExudeGasGrowthSystem : PlantGrowthSystem
         var component = ent.Comp;
 
         PlantHolderComponent? holder = null;
-        Resolve(uid, ref holder);
+        PlantTraitsComponent? traits = null;
+        if (!Resolve(uid, ref holder, ref traits))
+            return;
 
-        if (holder == null || holder.Seed == null || holder.Dead)
+        if (holder.Seed == null || holder.Dead)
             return;
 
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
 
-        // Consume Gasses
-        foreach (var (gas, amount) in component.ConsumeGasses)
+        // Consume Gasses.
+        holder.MissingGas = 0;
+        if (component.ConsumeGasses.Count > 0)
         {
-            if (environment.GetMoles(gas) >= amount)
+            foreach (var (gas, amount) in component.ConsumeGasses)
             {
+                if (environment.GetMoles(gas) < amount)
+                {
+                    holder.MissingGas++;
+                    continue;
+                }
+
                 environment.AdjustMoles(gas, -amount);
+            }
+
+            if (holder.MissingGas > 0)
+            {
+                holder.Health -= holder.MissingGas * HydroponicsSpeedMultiplier;
+                if (holder.DrawWarnings)
+                    holder.UpdateSpriteAfterUpdate = true;
             }
         }
 
-        // Exude Gasses
-        foreach (var (gas, amount) in component.ExudeGasses)
+        // Exude Gasses.
+        var exudeCount = component.ExudeGasses.Count;
+        if (exudeCount > 0)
         {
-            environment.AdjustMoles(gas, amount);
-        }
-
-        var containingMixture = _atmosphere.GetContainingMixture(uid, true, true);
-        if (containingMixture != null)
-        {
-            _atmosphere.Merge(containingMixture, environment);
+            foreach (var (gas, amount) in component.ExudeGasses)
+            {
+                environment.AdjustMoles(gas,
+                    MathF.Max(1f, MathF.Round(amount * MathF.Round(traits.Potency) / exudeCount)));
+            }
         }
     }
 }
