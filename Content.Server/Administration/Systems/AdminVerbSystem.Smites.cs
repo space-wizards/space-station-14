@@ -13,7 +13,7 @@ using Content.Server.Roles;
 using Content.Server.Speech.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Tabletop;
-using Content.Server.Tabletop.Components;
+using Content.Shared.Tabletop.Components;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
