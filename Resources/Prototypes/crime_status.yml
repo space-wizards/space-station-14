@@ -32,13 +32,6 @@
   statusUnSetAnnouncement: criminal-records-console-not-discharged
 
 - type: securityStatus
-  id: SecurityStatusParoled
-  name: criminal-records-status-paroled
-  icon: SecurityIconParoled
-  statusSetAnnouncement: criminal-records-console-paroled
-  statusUnSetAnnouncement: criminal-records-console-not-paroled
-
-- type: securityStatus
   id: SecurityStatusSuspected
   name: criminal-records-status-suspected
   icon: SecurityIconSuspected
