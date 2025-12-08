@@ -66,7 +66,6 @@ public sealed partial class StencilOverlay
         foreach (var (uid, weather, status) in weathers)
         {
             var alpha = _weather.GetWeatherPercent((uid, status));
-
             var sprite = _sprite.GetFrame(weather.Sprite, curTime);
 
             // Draw the rain
