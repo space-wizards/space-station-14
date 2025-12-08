@@ -15,8 +15,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="conditions">Conditions we're checking</param>
-    /// <param name="parameters">Used to get check only subset of <paramref name="conditions"/> and pass to them
-    /// arguments</param>
+    /// <param name="source">Entity that initiated the check, it is passed to <paramref name="conditions"/> of optional
+    /// use. </param>
+    /// <param name="with">Additional entity to pass besides <paramref name="source"> for <paramref name="conditions"/>
+    /// to use. This is NOT <paramref name="target">. </param>
     /// <returns>Returns true if all conditions return true, false if any fail</returns>
     public bool TryConditions(EntityUid target, EntityCondition[]? conditions, EntityUid? source = null, EntityUid? with = null)
     {
@@ -41,8 +43,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="conditions">Conditions we're checking</param>
-    /// <param name="parameters">Used to get check only subset of <paramref name="conditions"/> and pass to them
-    /// arguments</param>
+    /// <param name="source">Entity that initiated the check, it is passed to <paramref name="conditions"/> of optional
+    /// use. </param>
+    /// <param name="with">Additional entity to pass besides <paramref name="source"> for <paramref name="conditions"/>
+    /// to use. This is NOT <paramref name="target">. </param>
     /// <returns>Returns true if any conditions return true</returns>
     public bool TryAnyCondition(EntityUid target, EntityCondition[]? conditions, EntityUid? source = null, EntityUid? with = null)
     {
@@ -67,7 +71,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// </summary>
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="condition">Condition we're checking</param>
-    /// <param name="parameters">Used to get check only subset of <paramref name="conditions"/> and pass to them
+    /// <param name="source">Entity that initiated the check, it is passed to <paramref name="conditions"/> of optional
+    /// use. </param>
+    /// <param name="with">Additional entity to pass besides <paramref name="source"> for <paramref name="conditions"/>
+    /// to use. This is NOT <paramref name="target">. </param>
     /// <returns>Returns true if we meet the condition and false otherwise</returns>
     public bool TryCondition(EntityUid target, EntityCondition condition, EntityUid? source = null, EntityUid? with = null)
     {
@@ -85,7 +92,10 @@ public sealed partial class SharedEntityConditionsSystem : EntitySystem, IEntity
     /// <param name="target">Target entity we're checking conditions on</param>
     /// <param name="condition">Condition we're checking</param>
     /// <param name="result">The result of condition check</param>
-    /// <param name="parameters">Used to get check only subset of <paramref name="conditions"/> and pass to them
+    /// <param name="source">Entity that initiated the check, it is passed to <paramref name="conditions"/> of optional
+    /// use. </param>
+    /// <param name="with">Additional entity to pass besides <paramref name="source"> for <paramref name="conditions"/>
+    /// to use. This is NOT <paramref name="target">. </param>
     /// arguments</param>
     /// <returns>Returns true if we meet the condition was valid for provided <paramref name="parameters"/></returns>
     public bool TryCondition(EntityUid target, EntityCondition condition, [NotNullWhen(true)] out bool? result, EntityUid? source = null, EntityUid? with = null)
