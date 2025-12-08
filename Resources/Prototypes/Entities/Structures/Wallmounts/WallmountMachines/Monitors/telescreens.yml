@@ -12,12 +12,23 @@
         state: telescreen_frame
       - map: ["computerLayerScreen"]
         state: telescreen
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
   - type: Construction
     graph: WallmountTelescreen
     node: Telescreen
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#b89f25"
   - type: DeviceNetwork
     deviceNetId: Wired

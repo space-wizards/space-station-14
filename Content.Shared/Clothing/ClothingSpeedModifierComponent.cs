@@ -15,6 +15,13 @@ public sealed partial class ClothingSpeedModifierComponent : Component
 
     [DataField]
     public float SprintModifier = 1.0f;
+
+    /// <summary>
+    /// An optional required standing state.
+    /// Set to true if you need to be standing, false if you need to not be standing, null if you don't care.
+    /// </summary>
+    [DataField]
+    public bool? Standing;
 }
 
 [Serializable, NetSerializable]

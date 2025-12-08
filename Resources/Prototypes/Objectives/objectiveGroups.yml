@@ -18,10 +18,11 @@
     MagbootsStealObjective: 1
     CorgiMeatStealObjective: 1
     ClipboardStealObjective: 1
+    KnuckleDustersStealObjective: 1
     CaptainGunStealObjective: 0.5
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
-    EnergyShotgunStealObjective: 0.5
+    EnergyMagnumStealObjective: 0.5
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
@@ -33,7 +34,7 @@
   id: TraitorObjectiveGroupState
   weights:
     EscapeShuttleObjective: 1
-    DieObjective: 0.05
+    DieObjective: 0.2
     #HijackShuttleObjective: 0.02
 
 - type: weightedRandom
@@ -62,26 +63,29 @@
     HeadBedsheetStealCollectionObjective: 1
     StampStealCollectionObjective: 1
     DoorRemoteStealCollectionObjective: 1
+    OfficerHandgunsStealCollectionObjective: 1         #sec
     TechnologyDiskStealCollectionObjective: 1           #sci
     MailStealCollectionObjective: 1                     #cargo
     IDCardsStealCollectionObjective: 1
-    LAMPStealCollectionObjective: 2                     #only for moth
+    LAMPStealCollectionObjective: 0.1                   #only for moth, weight decreased cause boring and insanely easy
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
   weights:
+    ChiefEngineerToolbeltStealObjective: 0.5             #command
+    CaptainSwordStealObjective: 0.5
+    ClothingHeadsetAltMedicalStealObjective: 1
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
     ClothingHeadHatWardenStealObjective: 1
     WantedListCartridgeStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
-    ClothingHeadsetAltMedicalStealObjective: 1
     FireAxeStealObjective: 1                            #eng
     AmePartFlatpackStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup
     CargoShuttleCircuitboardStealObjective: 1
-    ClothingEyesHudBeerStealObjective: 1                #srv
+    ClothingEyesHudBeerStealObjective: 0.5              #srv, beer goggles less common cause its so easy
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5

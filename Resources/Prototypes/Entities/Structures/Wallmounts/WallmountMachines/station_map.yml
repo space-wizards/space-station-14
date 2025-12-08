@@ -36,10 +36,9 @@
     - type: Sprite
       sprite: Structures/Machines/station_map.rsi
       layers:
-      - map: ["computerLayerBody"]
-        state: station_map0
-      - map: ["computerLayerScreen"]
-        state: unshaded
+      - state: station_map0
+      - state: unshaded
+        shader: unshaded
     - type: Icon
       sprite: Structures/Machines/station_map.rsi
       state: station_map0
@@ -59,29 +58,29 @@
       key: enum.StationMapUiKey.Key
     - type: Destructible
       thresholds:
-        - trigger: # Excess damage, don't spawn entities
-            !type:DamageTrigger
-            damage: 200
-          behaviors:
-            - !type:PlaySoundBehavior
-              sound:
-                collection: GlassBreak
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-        - trigger:
-            !type:DamageTrigger
-            damage: 100
-          behaviors:
-            - !type:PlaySoundBehavior
-              sound:
-                collection: GlassBreak
-            - !type:SpawnEntitiesBehavior
-              spawn:
-                StationMapBroken:
-                  min: 1
-                  max: 1
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
+      - trigger: # Excess damage, don't spawn entities
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: GlassBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            StationMapBroken:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - type: UserInterface
       interfaces:
         enum.StationMapUiKey.Key:

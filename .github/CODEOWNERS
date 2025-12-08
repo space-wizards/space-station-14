@@ -8,7 +8,8 @@
 /Resources/ServerInfo/ @crazybrain23
 /Resources/ServerInfo/Guidebook/ServerRules/ @crazybrain23
 
-/Resources/Prototypes/Maps/** @Emisse @ArtisticRoomba
+/Resources/Prototypes/Maps/** @Emisse @ArtisticRoomba @spanky-spanky
+/Resources/Maps/** @Emisse @ArtisticRoomba @spanky-spanky
 
 /Resources/Prototypes/Body/ @DrSmugleaf # suffering
 /Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
@@ -23,16 +24,16 @@
 
 /Content.*/Forensics/ @ficcialfaint
 
+/Content.*/Trigger/ @slarticodefast
+
+/Content.*/Stunnable/ @Princess-Cheeseballs
+/Content.*/Nutrition/ @Princess-Cheeseballs
+/Content.*/EntityEffects @Princess-Cheeseballs @sowelipililimute
+
 # SKREEEE
 /Content.*.Database/ @PJB3005 @DrSmugleaf
 /Content.Shared.Database/Log*.cs @PJB3005 @DrSmugleaf @crazybrain23
 /Pow3r/ @PJB3005
 /Content.Server/Power/Pow3r/ @PJB3005
 
-
-# Sloth
-/Content.*/Audio @metalgearsloth
-/Content.*/Movement @metalgearsloth
-/Content.*/NPC @metalgearsloth
-/Content.*/Shuttles @metalgearsloth
-/Content.*/Weapons @metalgearsloth
+/Content.Server/Discord/ @Simyon264
