@@ -68,21 +68,22 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
         _lookup.GetEntitiesInRange(userCoords, radius, _targetGrids);
         Entity<MapGridComponent>? targetGrid = null;
 
-        if (_targetGrids.Count == 0)
-            return null;
-
-        // Give preference to the grid the entity is currently on.
+        // Adds the user grid to target grids, and gives preference to the grid the entity is currently on.
         // This does not guarantee that if the probability fails that the owner's grid won't be picked.
         // In reality the probability is higher and depends on the number of grids.
         if (userXform.GridUid != null && TryComp<MapGridComponent>(userXform.GridUid, out var gridComp))
         {
             var userGrid = new Entity<MapGridComponent>(userXform.GridUid.Value, gridComp);
+            _targetGrids.Add(userGrid);
             if (_random.Prob(0.5f))
             {
                 _targetGrids.Remove(userGrid);
                 targetGrid = userGrid;
             }
         }
+
+        if (_targetGrids.Count == 0 && targetGrid == null)
+            return null;
 
         if (targetGrid == null)
             targetGrid = _random.GetRandom().PickAndTake(_targetGrids);
@@ -92,9 +93,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
         do
         {
             var valid = false;
-
-            var range = (float)Math.Sqrt(radius);
-            var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
+            var box = Box2.CenteredAround(userCoords.Position, new Vector2(radius, radius));
             var tilesInRange = _map.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
             var tileList = new ValueList<Vector2i>();
 
