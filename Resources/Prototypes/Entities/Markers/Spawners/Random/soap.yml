@@ -25,7 +25,7 @@
 
 - type: entity
   parent: MarkerBase
-  id: RandomSlip
+  id: RandomSlip100
   name: random slip spawner
   components:
   - type: Sprite

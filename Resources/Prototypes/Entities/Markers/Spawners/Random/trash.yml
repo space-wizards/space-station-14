@@ -72,3 +72,17 @@
     offset: 0.2
     table: !type:NestedSelector
       tableId: GenericTrashItems
+
+- type: entity
+  parent: MarkerBase
+  id: RandomBananaPeel100
+  name: random banana peel spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Hydroponics/banana.rsi
+      state: peel
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllBananaPeelsTable
