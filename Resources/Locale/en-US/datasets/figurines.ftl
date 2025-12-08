@@ -200,13 +200,6 @@ figurines-clown-6 = Do I annoy you?
 figurines-clown-7 = Can I have AA? Please?
 figurines-clown-8 = I'm a clown, but you're the whole circus!
 
-figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
-figurines-greytider-2 = Uh-oh, who's lost their stunbaton?
-figurines-greytider-3 = Robust.
-figurines-greytider-4 = I'm not me without a toolbox.
-figurines-greytider-5 = Grey tide station wide!
-figurines-greytider-6 = Viva la revolution.
-
 figurines-janitor-1 = Clown stole my soap. Again.
 figurines-janitor-2 = Look at the signs, you idiot.
 figurines-janitor-3 = I've never seen this much lube in my life.
@@ -260,6 +253,15 @@ figurines-musician-2 = Never gonna let you down!
 figurines-musician-3 = Music is an art.
 figurines-musician-4 = Thank you, I'll be here all night.
 figurines-musician-5 = I'm a one man band.
+
+# Misc. crew
+
+figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
+figurines-greytider-2 = Uh-oh, who's lost their stunbaton?
+figurines-greytider-3 = Robust.
+figurines-greytider-4 = I'm not me without a toolbox.
+figurines-greytider-5 = Grey tide station wide!
+figurines-greytider-6 = Viva la revolution.
 
 figurines-passenger-1 = Insuls please.
 figurines-passenger-2 = Call evac.
