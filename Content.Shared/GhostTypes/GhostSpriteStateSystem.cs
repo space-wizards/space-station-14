@@ -15,6 +15,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
 
     /// <summary>
     /// It goes through an entity damage and assigns them a sprite according to the highest damage type/s
@@ -28,7 +29,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             return;
 
         var damageTypes = new Dictionary<ProtoId<DamageTypePrototype>, FixedPoint2>();
-        var specialCase = "";
+        ProtoId<SpecialCauseOfDeathPrototype>? specialCase = null;
 
         if (!TryComp<LastBodyDamageComponent>(mind, out var storedDamage))
           return;
@@ -38,6 +39,7 @@ public sealed class GhostSpriteStateSystem : EntitySystem
             damageTypes = _damageable.GetDamages(storedDamage.DamagePerGroup, storedDamage.Damage);
         }
         specialCase = storedDamage.SpecialCauseOfDeath;
+
         Dirty(mind, storedDamage);
 
         var damageTypesSorted = damageTypes.OrderByDescending(x => x.Value).ToDictionary();
@@ -52,9 +54,11 @@ public sealed class GhostSpriteStateSystem : EntitySystem
 
         ProtoId<DamageTypePrototype>? spriteState = null;
 
-        if (specialCase != "")  // Possible special cases like death by an explosion
+        Log.Debug($"weh weh {specialCase}");
+        if (specialCase != null)  // Possible special cases like death by an explosion
         {
-            spriteState = specialCase + rand.Next(0, 3);
+            var prototype = _proto.Index(specialCase);
+            spriteState = specialCase + rand.Next(prototype.NumOfStates);  //figure out what the syntax is
         }
         else
         {

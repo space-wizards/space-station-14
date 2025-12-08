@@ -5,6 +5,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.GhostTypes;
 
@@ -42,7 +43,8 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
 
     private void DeathByExplosion(Entity<StoreDamageTakenOnMindComponent> ent, ref BeforeExplodeEvent args)
     {
-        SaveSpecialCauseOfDeath(ent, "Explosion");  //shouldnt be a string yeah make it a proto id
+        ProtoId<SpecialCauseOfDeathPrototype> casePrototype = "Explosion";
+        SaveSpecialCauseOfDeath(ent, casePrototype);
     }
 
     /// <summary>
@@ -64,7 +66,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
     /// <summary>
     /// Saves an specific cause of death inside of an entity LastBodyDamageComponent
     /// </summary>
-    private void SaveSpecialCauseOfDeath(EntityUid ent, string cause)
+    private void SaveSpecialCauseOfDeath(EntityUid ent, ProtoId<SpecialCauseOfDeathPrototype> cause)
     {
         if (!TryComp<MindContainerComponent>(ent, out var mindContainer)
             || !HasComp<MindComponent>(mindContainer.Mind))
@@ -87,7 +89,7 @@ public sealed class StoreDamageTakenOnMindSystem : EntitySystem
 
         EnsureComp<LastBodyDamageComponent>(mindContainer.Mind.Value, out var storedDamage);
 
-        storedDamage.SpecialCauseOfDeath = "";
+        storedDamage.SpecialCauseOfDeath = null;
         Dirty(mindContainer.Mind.Value, storedDamage);
     }
 }

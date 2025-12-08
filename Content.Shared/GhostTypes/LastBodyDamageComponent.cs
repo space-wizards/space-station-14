@@ -1,6 +1,7 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.GhostTypes;
 
@@ -27,5 +28,15 @@ public sealed partial class LastBodyDamageComponent : Component
     /// For example, a BeforeExplodeEvent will save "Explosion" as the special cause of death
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string SpecialCauseOfDeath;
+    public ProtoId<SpecialCauseOfDeathPrototype>? SpecialCauseOfDeath = null;
+}
+
+[Prototype]
+public sealed partial class SpecialCauseOfDeathPrototype : IPrototype
+{
+    [ViewVariables, IdDataField]
+    public string ID { get; private set; } = string.Empty;
+
+    [DataField]
+    public int NumOfStates;
 }
