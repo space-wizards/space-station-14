@@ -39,7 +39,7 @@ criminal-records-permission-denied = Permission denied
 
 ## Security channel notifications
 
-criminal-records-console-charged = {$name} ($job) was charged by {$officer} for: {$reason}.
+criminal-records-console-charged = {$name} ({$job}) was charged by {$officer} for: {$reason}.
 criminal-records-console-not-charged = {$officer} cleared the charged status of {$name} ({$job}).
 criminal-records-console-wanted = {$name} ({$job}) was made wanted by {$officer} for: {$reason}.
 criminal-records-console-not-wanted = {$officer} cleared the wanted status of {$name} ({$job}).
