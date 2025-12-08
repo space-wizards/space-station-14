@@ -28,7 +28,8 @@
   name: Bagel Theater interior marker
   components:
   - type: RoomFill
+    rotation: false
+    maxSize: 11, 8
     roomWhitelist:
       tags:
       - TheaterBagel
-    clearExisting: true
