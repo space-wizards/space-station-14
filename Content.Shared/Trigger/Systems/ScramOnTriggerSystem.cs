@@ -93,7 +93,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
         do
         {
             var valid = false;
-            var box = Box2.CenteredAround(userCoords.Position, new Vector2(radius, radius));
+            var box = Box2.CenteredAround(userCoords.Position, new Vector2(radius*2, radius*2));
             var tilesInRange = _map.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
             var tileList = new ValueList<Vector2i>();
 
