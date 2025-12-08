@@ -14,6 +14,7 @@
   statusSetAnnouncement: criminal-records-console-detained
   statusUnSetAnnouncement: criminal-records-console-not-detained
   storeHistory: true
+  historyText: DETAINED
 
 - type: securityStatus
   id: SecurityStatusDischarged
@@ -47,3 +48,4 @@
   statusSetAnnouncement: criminal-records-console-eliminated
   statusUnSetAnnouncement: criminal-records-console-not-eliminated
   storeHistory: true
+  historyText: ELIMINATED

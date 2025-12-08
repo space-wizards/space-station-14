@@ -119,7 +119,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         if (statusProto?.StoreHistory ?? false)
         {
             var oldReason = record.Reason ?? Loc.GetString("criminal-records-console-unspecified-reason");
-            var history = Loc.GetString("criminal-records-console-auto-history", ("reason", oldReason));
+            var historyText = statusProto.HistoryText;
+            var history = Loc.GetString("criminal-records-console-auto-history", ("reason", oldReason), ("text", historyText));
             _criminalRecords.TryAddHistory(key.Value, history, officer);
         }
 

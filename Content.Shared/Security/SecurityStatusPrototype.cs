@@ -29,4 +29,7 @@ public sealed class SecurityStatusPrototype: IPrototype
 
     [DataField]
     public bool StoreHistory = false;
+
+    [DataField]
+    public string HistoryText = default!;
 }
