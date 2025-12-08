@@ -42,7 +42,7 @@
   id: SecurityStatusEliminated
   order: 4
   name: criminal-records-status-eliminated
-  status: SecurityIconEliminated
+  icon: SecurityIconEliminated
   statusSetAnnouncement: criminal-records-console-eliminated
   statusUnSetAnnouncement: criminal-records-console-not-eliminated
   storeHistory: true
