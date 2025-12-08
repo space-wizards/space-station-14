@@ -18,7 +18,14 @@ public sealed partial class GunSignalControlSystem : EntitySystem
 
     private void OnInit(Entity<GunSignalControlComponent> gunControl, ref MapInitEvent args)
     {
-        _signalSystem.EnsureSinkPorts(gunControl, gunControl.Comp.TriggerPort, gunControl.Comp.TogglePort, gunControl.Comp.OnPort, gunControl.Comp.OffPort);
+        _signalSystem.EnsureSinkPorts(gunControl, gunControl.Comp.TriggerPort);
+        if(gunControl.Comp.addAdditionalTriggers)
+        {
+            gunControl.Comp.TogglePort = "Toggle";
+            gunControl.Comp.OnPort = "On";
+            gunControl.Comp.OffPort = "Off";
+            _signalSystem.EnsureSinkPorts(gunControl, gunControl.Comp.TriggerPort, gunControl.Comp.TogglePort, gunControl.Comp.OnPort, gunControl.Comp.OffPort);
+        }
     }
 
     private void OnSignalReceived(Entity<GunSignalControlComponent> gunControl, ref SignalReceivedEvent args)
@@ -27,18 +34,25 @@ public sealed partial class GunSignalControlSystem : EntitySystem
             return;
 
         if (args.Port == gunControl.Comp.TriggerPort)
+        {
             _gun.AttemptShoot(gunControl, gun);
+        }
+        if(gunControl.Comp.addAdditionalTriggers)
+        {
+            if (args.Port == gunControl.Comp.TriggerPort)
+                _gun.AttemptShoot(gunControl, gun);
 
-        if (!TryComp<AutoShootGunComponent>(gunControl, out var autoShoot))
-            return;
+            if (!TryComp<AutoShootGunComponent>(gunControl, out var autoShoot))
+                return;
 
-        if (args.Port == gunControl.Comp.TogglePort)
-           _gun.SetEnabled(gunControl, autoShoot, !autoShoot.Enabled);
+            if (args.Port == gunControl.Comp.TogglePort)
+                _gun.SetEnabled(gunControl, autoShoot, !autoShoot.Enabled);
 
-        if (args.Port == gunControl.Comp.OnPort)
-            _gun.SetEnabled(gunControl, autoShoot, true);
+            if (args.Port == gunControl.Comp.OnPort)
+                _gun.SetEnabled(gunControl, autoShoot, true);
 
-        if (args.Port == gunControl.Comp.OffPort)
-            _gun.SetEnabled(gunControl, autoShoot, false);
+            if (args.Port == gunControl.Comp.OffPort)
+                _gun.SetEnabled(gunControl, autoShoot, false);
+        }
     }
 }

@@ -31,6 +31,7 @@
     - Off
   - type: AutoShootGun
   - type: GunSignalControl
+    addAdditionalTriggers: true
   - type: StaticPrice
     price: 1500
 

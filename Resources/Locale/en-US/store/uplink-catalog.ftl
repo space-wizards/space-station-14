@@ -288,6 +288,9 @@ uplink-duffel-surgery-desc = A large duffel bag containing a full suite of surgi
 uplink-power-sink-name = Power Sink
 uplink-power-sink-desc = Drains immense amounts of electricity from the grid, then explodes once it's saturated. Use wrench to connect it to wires.
 
+uplink-remote-shotgun-name = Remote Shotgun
+uplink-remote-shotgun-desc = A box containing an unassembled syndicate remote shotgun. It acts as a double barreled shotgun that is able to be fired wirelessly when linked.
+
 uplink-carp-dehydrated-name = Dehydrated Space Carp
 uplink-carp-dehydrated-desc = Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
 

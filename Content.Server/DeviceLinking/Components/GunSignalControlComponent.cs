@@ -14,11 +14,14 @@ public sealed partial class GunSignalControlComponent : Component
     public ProtoId<SinkPortPrototype> TriggerPort = "Trigger";
 
     [DataField]
-    public ProtoId<SinkPortPrototype> TogglePort = "Toggle";
+    public bool addAdditionalTriggers = true;
 
     [DataField]
-    public ProtoId<SinkPortPrototype> OnPort = "On";
+    public ProtoId<SinkPortPrototype> TogglePort;
 
     [DataField]
-    public ProtoId<SinkPortPrototype> OffPort = "Off";
+    public ProtoId<SinkPortPrototype> OnPort;
+
+    [DataField]
+    public ProtoId<SinkPortPrototype> OffPort;
 }
