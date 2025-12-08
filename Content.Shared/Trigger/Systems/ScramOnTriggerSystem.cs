@@ -93,6 +93,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
         do
         {
             var valid = false;
+            // Creates the smallest possible bounding square that fits a circle with radius r, which has side length r*2
             var box = Box2.CenteredAround(userCoords.Position, new Vector2(radius*2, radius*2));
             var tilesInRange = _map.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
             var tileList = new ValueList<Vector2i>();
