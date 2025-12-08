@@ -1402,6 +1402,9 @@
 
 - type: Tag
   id: TeleportScrollWarpBlacklist
+  
+- type: Tag
+  id: TheaterBagel # used for Bagel Station's randomized theater
 
 - type: Tag
   id: TimerBrigElectronics # ConstructionGraph: Timer
