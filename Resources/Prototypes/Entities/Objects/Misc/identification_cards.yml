@@ -40,7 +40,7 @@
       color: "#1b67a5"
     - state: stripe_bottom
       color: "#0e4069"
-    - sprite: &icon-rsi Interface/Misc/job_icons.rsi # Copied to most IDs below! If you reorder any IDs above this one, move these lines too.
+    - sprite: &icon-rsi Interface/Misc/job_icons.rsi # Copied to most IDs below! If you reorder any IDs to be above this one, move these two lines too.
       offset: &icon-offset -0.09375, 0.0625 # 3 pixels left, 2 pixels up
       state: Captain
   - type: Item
