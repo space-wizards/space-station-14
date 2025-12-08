@@ -879,4 +879,46 @@
   id: 106
   time: '2025-12-04T03:44:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41698
+- author: ArtisticRoomba
+  changes:
+  - message: On Bagel, atomized the LV network for Science and Chemistry.
+    type: Fix
+  id: 107
+  time: '2025-12-07T22:40:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41769
+- author: ArtisticRoomba
+  changes:
+  - message: On Box, atomized the LV network for Medbay and Telecoms.
+    type: Fix
+  id: 108
+  time: '2025-12-08T00:34:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41770
+- author: ArtisticRoomba
+  changes:
+  - message: On Central Command, beefed up the LV network for Medbay.
+    type: Fix
+  id: 109
+  time: '2025-12-08T00:35:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41771
+- author: ArtisticRoomba
+  changes:
+  - message: On Elkridge, atomized the LV network for Atmospherics.
+    type: Fix
+  id: 110
+  time: '2025-12-08T00:35:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41772
+- author: ArtisticRoomba
+  changes:
+  - message: On Fland, atomized the LV network for Atmospherics and Telecoms.
+    type: Fix
+  id: 111
+  time: '2025-12-08T00:35:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41773
+- author: ArtisticRoomba
+  changes:
+  - message: On Oasis, atomized the LV powernet for Chemistry/Medical.
+    type: Fix
+  id: 112
+  time: '2025-12-08T01:02:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41776
 Order: 2
