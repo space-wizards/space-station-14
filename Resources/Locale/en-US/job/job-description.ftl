@@ -63,14 +63,14 @@ job-description-borg = Half-human, Half-machine. Follow your laws, serve the cre
 # Misc. crew
 
 job-description-passenger = Enjoy your stay aboard the station with no obligations!
+
+# Visitors
+
 job-description-visitor = Enjoy your visit to the station.
 
-# CentComm
+# CentComm / ERT
 
 job-description-centcomoff = Act as an ambassador to the newest state-of-the-art space station in Nanotrasen's fleet.
-
-# ERT
-
 job-description-ertleader = Lead the Emergency Response Team in dealing with threats to Nanotrasen assets.
 job-description-ertchaplain = Ensure the station crew's last rights are taken care of.
 job-description-ertengineer = Ensure that the station has power and clean air.
