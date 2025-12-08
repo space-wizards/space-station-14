@@ -1,21 +1,55 @@
+- type: entityTable # max size 1x2
+  id: AllSlipTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: AllBananaPeelsTable
+    - !type:NestedSelector
+      tableId: AllSoapsTable
+
+- type: entityTable # max size 1x2
+  id: AllSoapsTable
+  table: !type:GroupSelector
+    children:
+    - id: SoapNT
+      weight: 2
+    - id: Soap
+    - id: SoapHomemade
+    - id: SoapDeluxe
+    - !type:GroupSelector # Rare soaps
+      weight: 0.01 # 1 in 500
+      children:
+      - id: SoapSyndie
+      - id: SlipocalypseClusterSoap
+        weight: 0.5 # 1 in 1,600
+      - id: SoapOmega
+        weight: 0.1 # 1 in 8,000
+
 - type: entity
+  parent: MarkerBase
+  id: RandomSlip
+  name: random slip spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Hydroponics/banana.rsi
+      state: peel
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllSlipTable
+
+- type: entity
+  parent: MarkerBase
   id: RandomSoap
   name: random soap spawner
-  parent: MarkerBase
   components:
   - type: Sprite
     layers:
       - state: red
       - sprite: Objects/Specific/Janitorial/soap.rsi
         state: soap-4
-  - type: RandomSpawner
-    prototypes:
-      - Soap
-      - SoapHomemade
-      - SoapNT
-      - SoapDeluxe
-    chance: 0.95
-    rarePrototypes:
-      - SoapSyndie
-      - SoapOmega
-    rareChance: 0.05
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllSoapsTable
+

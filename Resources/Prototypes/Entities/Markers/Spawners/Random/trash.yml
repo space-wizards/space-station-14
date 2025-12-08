@@ -3,7 +3,7 @@
   table: !type:GroupSelector
     children:
     - !type:GroupSelector
-      weight: 95
+      weight: 90
       children:
       - id: FoodPacketBoritosTrash
       - id: FoodPacketCheesieTrash
@@ -25,11 +25,27 @@
       children:
       - id: FoodPlateSmallTrash
       - id: FoodBowlBigTrash
+    - !type:NestedSelector
+      weight: 5
+      tableId: AllBananaPeelsTable
+
+- type: entityTable # max size 1x2
+  id: AllBananaPeelsTable
+  table: !type:GroupSelector
+    children:
+    - id: TrashBananaPeel
+      weight: 5
+    - id: TrashBakedBananaPeel
+    - id: TrashMimanaPeel
+    - id: TrashBananiumPeel
+      weight: 0.5
+    - id: TrashBananaPeelExplosive
+      weight: 0.001 # 1 in 7,500
 
 - type: entity
-  name: Trash Spawner
-  id: RandomSpawner
   parent: MarkerBase
+  id: RandomSpawner
+  name: Trash Spawner
   suffix: 50
   components:
     - type: Sprite
