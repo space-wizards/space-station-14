@@ -28,10 +28,11 @@
   - Security
   - Armory
   - Maintenance
-  - Service
   - External
   - Detective
   - Cryogenics
+  - GenpopEnter
+  - GenpopLeave
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]

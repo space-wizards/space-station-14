@@ -152,7 +152,6 @@
   - Survival
   - Trinkets
   - JanitorJobTrinkets
-  - JanitorPlunger
   - GroupSpeciesBreathTool
 
 - type: roleLoadout
@@ -378,7 +377,6 @@
   - SurvivalSecurity
   - Trinkets
   - HeadofSecurityJobTrinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -393,7 +391,6 @@
   - SurvivalSecurity
   - Trinkets
   - WardenJobTrinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -409,7 +406,6 @@
   - SurvivalSecurity
   - Trinkets
   - SecurityJobTrinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -424,7 +420,6 @@
   - SurvivalSecurity
   - Trinkets
   - DetectiveJobTrinkets
-  - SecurityStar
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
@@ -520,17 +515,6 @@
 
 # Wildcards
 - type: roleLoadout
-  id: JobZookeeper
-  groups:
-  - GroupTankHarness
-  - CommonBackpack
-  - Glasses
-  - Survival
-  - Trinkets
-  - ZookeeperJobTrinkets
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
   id: JobReporter
   groups:
   - GroupTankHarness
@@ -552,19 +536,6 @@
   - Survival
   - Trinkets
   - PsychologistJobTrinkets
-  - GroupSpeciesBreathTool
-
-- type: roleLoadout
-  id: JobBoxer
-  groups:
-  - GroupTankHarness
-  - BoxerJumpsuit
-  - BoxerGloves
-  - CommonBackpack
-  - Glasses
-  - Survival
-  - Trinkets
-  - BoxerJobTrinkets
   - GroupSpeciesBreathTool
 
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
