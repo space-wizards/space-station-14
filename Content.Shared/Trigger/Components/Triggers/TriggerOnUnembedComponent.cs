@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
-/// Triggers on an item embedding into something.
+/// Triggers when this entity gets un-embedded from something.
 /// User is the item that was embedded or the actual embed depending on <see cref="UserIsEmbed"/>
 /// Handled by <seealso cref="TriggerOnEmbedSystem"/>
 /// </summary>
