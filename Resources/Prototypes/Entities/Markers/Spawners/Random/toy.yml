@@ -90,7 +90,7 @@
   parent: MarkerBase
   id: PlushieSpawner50
   name: Plushie Spawner
-  suffix: 50%
+  suffix: 50
   components:
   - type: Sprite
     layers:
@@ -106,7 +106,7 @@
   parent: MarkerBase
   id: MechFigurineSpawner50
   name: Mech Figurine Spawner
-  suffix: 50%
+  suffix: 50
   components:
   - type: Sprite
     layers:
@@ -122,7 +122,7 @@
   parent: MarkerBase
   id: SpacemenFigurineSpawner90
   name: Spacemen Minifigure Spawner
-  suffix: 90% Librarian only, map with care!
+  suffix: 90. Librarian only, map with care!
   components:
   - type: Sprite
     layers:
