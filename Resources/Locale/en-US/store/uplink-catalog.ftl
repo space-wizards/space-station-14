@@ -345,7 +345,7 @@ uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest, this one has added webbing. Extremely resistant to ballistics, but offers little protection otherwise.
 
 uplink-clothing-outer-vest-web-elite-name = Elite Web Vest
-uplink-clothing-outer-vest-web-elite-desc = A synthetic armor vest, This one has added webbing. Very resistant to all types of damage except for ballistic.
+uplink-clothing-outer-vest-web-elite-desc = A synthetic armor vest, this one has added webbing. Very resistant to all types of damage, except for bullets.
 
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
 uplink-clothing-shoes-boots-mag-syndie-desc = A pair of boots that prevent slipping, and in zero gravity allows you to move normally. slows movement when turned on. Additionally, they have jetpack functionality and come fueled, but don't last for long.
