@@ -159,11 +159,11 @@
           prob: 0.20
         - id: GlowstickBlue
           prob: 0.05
-        - id: GlowstickBase
+        - id: GlowstickGreen
           prob: 0.50
-        - id: GlowstickBase
+        - id: GlowstickGreen
           prob: 0.20
-        - id: GlowstickBase
+        - id: GlowstickGreen
           prob: 0.05
         - id: GlowstickPurple
           prob: 0.50

@@ -17,7 +17,7 @@
           children:
           - id: FlashlightLantern
           - id: Flare
-          - id: GlowstickBase
+          - id: GlowstickGreen
         # Low-chance items
         - id: FoodSnackChocolate
           prob: 0.15
