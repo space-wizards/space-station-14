@@ -2,11 +2,7 @@ using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
-using Robust.Client.Player;
-using Robust.Shared.Graphics;
 using Robust.Shared.Timing;
-using System.ComponentModel.Design;
-using static Content.Shared.Fax.AdminFaxEuiMsg;
 
 namespace Content.Client.Eye.Blinking;
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
@@ -28,31 +24,38 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var eyelids, false))
             return;
 
-
-        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var eyes, false))
-            return;
-
-        _sprite.LayerSetRsi(eyelids, eyes.RSI);
-        _sprite.LayerSetRsiState(eyelids, eyes.State);
+        // Maybe it's worth turning this into a field in a component that will be responsible for the sprite and State
+        if (_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var eyes, false))
+        {
+            _sprite.LayerSetRsi(eyelids, eyes.RSI);
+            _sprite.LayerSetRsiState(eyelids, eyes.State);
+        }
 
         ChangeEyeState(ent, ent.Comp.EyesClosed);
     }
 
     private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
-            return;
         if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
             return;
         if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var layer, false))
             return;
 
-        var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
-        var blinkColor = new Color(
-            humanoid.SkinColor.R * blinkFade,
-            humanoid.SkinColor.G * blinkFade,
-            humanoid.SkinColor.B * blinkFade);
-        var eyeColor = ent.Comp.EyelidsColor == null ? humanoid.EyeColor : ent.Comp.EyelidsColor.Value;
+        var blinkColor = Color.Transparent;
+
+        if (ent.Comp.EyelidsColor == null && TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
+        {
+            var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
+            blinkColor = new Color(
+                humanoid.SkinColor.R * blinkFade,
+                humanoid.SkinColor.G * blinkFade,
+                humanoid.SkinColor.B * blinkFade);
+        }
+        else if (ent.Comp.EyelidsColor != null)
+        {
+            blinkColor = ent.Comp.EyelidsColor.Value;
+        }
+
         _sprite.LayerSetColor(layer, eyeClsoed ? blinkColor : Color.Transparent);
     }
 

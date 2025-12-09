@@ -1723,12 +1723,16 @@
     speechSounds: Squeak
     speechVerb: SmallMob
     allowedEmotes: ['Squeak']
+  - type: EyeBlinking
+    eyelidsColor: "#ffffff"
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Animals/mouse.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mouse-0
+    - map: ["enum.HumanoidVisualLayers.Eyelids", "eyelids"]
+      state: mouse-eyelids-0
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -1924,6 +1928,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mouse-1
+    - map: ["enum.HumanoidVisualLayers.Eyelids", "eyelids"]
+      state: mouse-eyelids-1
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -1953,6 +1959,8 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base", "movement"]
       state: mouse-2
+    - map: ["enum.HumanoidVisualLayers.Eyelids", "eyelids"]
+      state: mouse-eyelids-2
   - type: SpriteMovement
     movementLayers:
       movement:
@@ -3798,7 +3806,7 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
-      color: "#ffffff"
+      color: "#ffff"
       sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
       state: body-overlay-2
       visible: false
