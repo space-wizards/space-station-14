@@ -181,7 +181,7 @@ uplink-syndicate-martyr-module-name = Martyr Cyborg Module
 uplink-syndicate-martyr-module-desc = Turn your emagged borg friend into a walking bomb with just this module. Make sure they're loyal to your cause, results may vary.
 
 uplink-singularity-beacon-name = Singularity Beacon
-uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered by LV. Causes singularities to grow when consumed.
+uplink-singularity-beacon-desc = A device that attracts singularities. Has to be anchored and powered by an LV cable connection. Causes singularities to grow when consumed.
 
 uplink-antimov-law-name = Antimov Law Circuit
 uplink-antimov-law-desc = A very dangerous Lawset to use when you want to cause the A.I. to go haywire, use with caution.
