@@ -54,6 +54,9 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Pullable
+  - type: ContainerContainer
+    containers:
+      contents: !type:ContainerSlot
   - type: WrappedParcel
     unwrapDelay: 0.5
     unwrapSound:
