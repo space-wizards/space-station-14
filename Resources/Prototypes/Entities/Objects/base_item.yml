@@ -78,8 +78,8 @@
 
 - type: entity
   id: BasePaperLabelable # Defines the behavior (but not the visuals!) for attaching paper labels to objects (e.g crates, parcels).
-  abstract: true         # Use this (NOT BasePaperLabelableVisualized) if the child prototype has its own GenericVisualizer (e.g WrappedParcel,
-  components:            # because parcels come in different sizes), or if it allows paper labels but has no sprites for it.
+  abstract: true         # Use this (NOT BasePaperLabelableVisualized) if the child prototype allows paper labels but has no sprites for it.
+  components:
   - type: ContainerContainer
     containers:
       paper_label: !type:ContainerSlot
@@ -98,9 +98,9 @@
 - type: entity
   parent: BasePaperLabelable
   id: BasePaperLabelableVisualized # Defines both the behavior (via parenting) and the visuals for attaching paper labels to objects (e.g crates, parcels).
-  abstract: true                   # Use this (NOT BasePaperLabelable) if the child prototype doesn't need its own GenericVisualizer.
-  components:                      # Actual sprites (and sprite layers!) still need to be defined on a per-item basis!
-  - type: Appearance
+  abstract: true                   # Use this (NOT BasePaperLabelable) if the child prototype doesn't need its own unique GenericVisualizer.
+  components:                      # If the child prototype DOES have its own GenericVisualizer already it'll just completely overwrite this one, so this still works as a sort of failsafe I guess?
+  - type: Appearance               # Actual sprites (and sprite layers!) still need to be defined on a per-item basis!
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:
