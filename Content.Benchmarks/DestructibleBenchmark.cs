@@ -61,6 +61,7 @@ public class DestructibleBenchmark
     private DamageableSystem _damageable = default!;
     private DestructibleSystem _destructible = default!;
     private SharedMapSystem _map = default!;
+    private TestMapData _mapData = default!;
 
     [GlobalSetup]
     public async Task SetupAsync()
@@ -70,7 +71,7 @@ public class DestructibleBenchmark
         _pair = await PoolManager.GetServerClient();
         var server = _pair.Server;
 
-        var mapdata = await _pair.CreateTestMap();
+        _mapData = await _pair.CreateTestMap();
 
         _entMan = server.ResolveDependency<IEntityManager>();
         _protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -86,12 +87,16 @@ public class DestructibleBenchmark
         _damage = new DamageSpecifier(type, DamageAmount);
 
         _random.SetSeed(69420); // Randomness needs to be deterministic for benchmarking.
+    }
 
+    [IterationSetup]
+    public async Task SetupIteration()
+    {
         var plating = _tileDefMan[TileRef].TileId;
-
+        var mapdata = _mapData;
         // We make a rectangular grid of destructible entities, and then damage them all simultaneously to stress test the system.
         // Needed for managing the performance of destructive effects and damage application.
-        await server.WaitPost(() =>
+        await _pair.Server.WaitPost(() =>
         {
             // Set up a thin line of tiles to place our objects on. They should be anchored for a "realistic" scenario...
             for (var x = 0; x < EntityCount; x++)
@@ -123,6 +128,20 @@ public class DestructibleBenchmark
         });
     }
 
+    [GlobalCleanup]
+    public async Task CleanupAsync()
+    {
+        await _pair.DisposeAsync();
+        PoolManager.Shutdown();
+    }
+
+    [IterationCleanup]
+    public async Task CleanupIteration()
+    {
+        await _pair.CleanReturnAsync();
+        _mapData = await _pair.CreateTestMap();
+    }
+
     [Benchmark]
     public async Task PerformDealDamage()
     {
@@ -148,13 +167,5 @@ public class DestructibleBenchmark
         {
             _destructible.TestAllBehaviors(_destructbiles);
         });
-    }
-
-
-    [GlobalCleanup]
-    public async Task CleanupAsync()
-    {
-        await _pair.DisposeAsync();
-        PoolManager.Shutdown();
     }
 }
