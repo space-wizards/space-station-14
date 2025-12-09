@@ -921,4 +921,22 @@
   id: 112
   time: '2025-12-08T01:02:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41776
+- author: ArtisticRoomba
+  changes:
+  - message: On Bagel, the Theater now chooses between a few randomized styles/layouts.
+    type: Add
+  id: 113
+  time: '2025-12-08T15:26:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41787
+- author: Spessmann
+  changes:
+  - message: On Snowball, observers will now spawn correctly on the station.
+    type: Fix
+  - message: On Snowball, a youtool vending machine has been added to engineering.
+    type: Add
+  - message: On Snowball, the AI core's exterior now has lights.
+    type: Add
+  id: 114
+  time: '2025-12-09T06:54:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41806
 Order: 2
