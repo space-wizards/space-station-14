@@ -101,7 +101,7 @@
   id: TechnologyDiskStealCollectionObjective
   components:
   - type: NotJobRequirement
-    job: Scientist
+    jobs: [ Scientist ]
   - type: StealCondition
     stealGroup: TechnologyDisk
     minCollectionSize: 5
@@ -115,7 +115,7 @@
   id: MailStealCollectionObjective
   components:
   - type: NotJobRequirement
-    job: CargoTechnician
+    jobs: [ CargoTechnician, SalvageSpecialist ]
   - type: StealCondition
     stealGroup: Mail
     minCollectionSize: 4
@@ -129,7 +129,7 @@
   id: IDCardsStealCollectionObjective
   components:
   - type: NotJobRequirement #Here cause you can buy a personnel crate from cargo which is 8 ID cards. Meaning the ID you start with is number nine and you only need to steal one.
-    job: CargoTechnician #TODO: add salvage specialist
+    jobs: [ CargoTechnician, SalvageSpecialist ]
   - type: StealCondition
     stealGroup: IDCard
     minCollectionSize: 5
@@ -143,7 +143,7 @@
   id: OfficerHandgunsStealCollectionObjective
   components:
   - type: NotJobRequirement
-    job: SecurityOfficer #TODO: Add HoS, Detective, and Warden
+    jobs: [ SecurityOfficer, HeadOfSecurity, Detective, Warden ]
   - type: StealCondition
     stealGroup: OfficerHandgun
     minCollectionSize: 2
@@ -174,7 +174,7 @@
   id: ForensicScannerStealObjective
   components:
   - type: NotJobRequirement
-    job: Detective
+    jobs: [ Detective ]
   - type: StealCondition
     stealGroup: ForensicScanner
   - type: Objective
@@ -185,7 +185,7 @@
   id: FlippoEngravedLighterStealObjective
   components:
   - type: NotJobRequirement
-    job: Detective
+    jobs: [ Detective ]
   - type: StealCondition
     stealGroup: FlippoEngravedLighter
   - type: Objective
@@ -214,7 +214,7 @@
   id: ClothingOuterHardsuitVoidParamedStealObjective
   components:
   - type: NotJobRequirement
-    job: Paramedic #TODO: make it so this also includes Medical Doctor, Chemist and Psychologist
+    jobs: [ MedicalDoctor, Paramedic, Chemist, Psychologist ]
   - type: StealCondition
     stealGroup: ClothingOuterHardsuitVoidParamed
   - type: Objective
@@ -225,7 +225,7 @@
   id: MedicalTechFabCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: MedicalDoctor #TODO: make it so this also includes Chemist, Paramedic and Psychologist
+    jobs: [ MedicalDoctor, Paramedic, Chemist, Psychologist ]
   - type: StealCondition
     stealGroup: MedicalTechFabCircuitboard
   - type: Objective
@@ -236,7 +236,7 @@
   id: ClothingHeadsetAltMedicalStealObjective
   components:
   - type: NotJobRequirement
-    job: ChiefMedicalOfficer
+    jobs: [ ChiefMedicalOfficer ]
   - type: StealCondition
     stealGroup: ClothingHeadsetAltMedical
   - type: Objective
@@ -247,7 +247,7 @@
   id: FireAxeStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    jobs: [ AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: FireAxe
   - type: Objective
@@ -258,7 +258,7 @@
   id: AmePartFlatpackStealObjective
   components:
   - type: NotJobRequirement
-    job: StationEngineer #TODO: make it so this also includes Atmos technician
+    jobs: [ StationEngineer, AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: AmePartFlatpack
   - type: Objective
@@ -269,7 +269,7 @@
   id: ChiefEngineerToolbeltStealObjective
   components:
   #- type: NotJobRequirement                      Is this really necessary? it's a pickpocket objective. Only thing is that it would be easier to get to CE
-  #  Job: StationEngineer, AtmosphericTechnician
+  #  jobs: [ StationEngineer, AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: ChiefEngineerToolBelt
   - type: Objective
@@ -280,7 +280,7 @@
   id: ExpeditionsCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: SalvageSpecialist
+    jobs: [ SalvageSpecialist ]
   - type: StealCondition
     stealGroup: SalvageExpeditionsComputerCircuitboard
   - type: Objective
@@ -291,7 +291,7 @@
   id: CargoShuttleCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: CargoTechnician #TODO: make it so this also includes Salvage Specialist
+    jobs: [ CargoTechnician, SalvageSpecialist ]
   - type: StealCondition
     stealGroup: CargoShuttleConsoleCircuitboard
   - type: Objective
@@ -302,7 +302,7 @@
   id: ClothingEyesHudBeerStealObjective
   components:
   - type: NotJobRequirement
-    job: Bartender #TODO: make it so this also includes Service worker
+    jobs: [ Bartender, ServiceWorker ]
   - type: StealCondition
     stealGroup: ClothingEyesHudBeer
   - type: Objective
@@ -313,7 +313,7 @@
   id: BibleStealObjective
   components:
   - type: NotJobRequirement
-    job: Chaplain
+    jobs: [ Chaplain ]
   - type: StealCondition
     stealGroup: Bible
   - type: Objective
@@ -324,7 +324,7 @@
   id: ClothingNeckGoldmedalStealObjective
   components:
   - type: NotJobRequirement
-    job: HeadOfPersonnel
+    jobs: [ HeadOfPersonnel ]
   - type: StealCondition
     stealGroup: ClothingNeckGoldmedal
   - type: Objective
@@ -335,7 +335,7 @@
   id: ClothingNeckClownmedalStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: ClothingNeckClownmedal
   - type: Objective
@@ -346,7 +346,7 @@
   id: CaptainSwordStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: CaptainSword
   - type: Objective
@@ -359,7 +359,7 @@
   id: NuclearBombStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: NuclearBomb
   - type: Objective
@@ -370,7 +370,7 @@
   id: FaxMachineCaptainStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: FaxMachineCaptain
   - type: Objective
@@ -381,7 +381,7 @@
   id: ChemDispenserStealObjective
   components:
   - type: NotJobRequirement
-    job: Chemist #TODO: make it so this also includes Scientist. It's a roundstart circuit they can construct.
+    jobs: [ Chemist, Scientist ]
   - type: StealCondition
     stealGroup: ChemDispenser
   - type: Objective
@@ -392,7 +392,7 @@
   id: XenoArtifactStealObjective
   components:
   - type: NotJobRequirement
-    job: Scientist
+    jobs: [ Scientist ]
   - type: StealCondition
     stealGroup: XenoArtifact
   - type: Objective
@@ -403,7 +403,7 @@
   id: FreezerHeaterStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician #TODO: make it so this also includes Engineer, Medical doctor, chemist and maybe also scientist. Medical doc and chemist cause cryogenics, scientist cause it can be built and is sometimes mapped in artisci
+    jobs: [ AtmosphericTechnician, MedicalDoctor, Chemist, Paramedic, Psychologist, Scientist, Chef ]
   - type: StealCondition
     stealGroup: FreezerHeater
   - type: Objective
@@ -414,7 +414,7 @@
   id: TegStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician #TODO: make it so this also includes Engineer, Several TEG only maps have TEG accessible by standard Engineers
+    jobs: [ AtmosphericTechnician, StationEngineer ]
   - type: StealCondition
     stealGroup: Teg
   - type: Objective
@@ -425,7 +425,7 @@
   id: BoozeDispenserStealObjective
   components:
   - type: NotJobRequirement
-    job: Bartender #TODO: make it so this also includes Service worker
+    jobs: [ Bartender, ServiceWorker ]
   - type: StealCondition
     stealGroup: BoozeDispenser
   - type: Objective
@@ -436,7 +436,7 @@
   id: AltarNanotrasenStealObjective
   components:
   - type: NotJobRequirement
-    job: Chaplain
+    jobs: [ Chaplain ]
   - type: StealCondition
     stealGroup: AltarNanotrasen
   - type: Objective
@@ -447,7 +447,7 @@
   id: PlantRDStealObjective
   components:
   - type: NotJobRequirement
-    job: Scientist
+    jobs: [ Scientist ]
   - type: StealCondition
     stealGroup: PlantRD
   - type: Objective
@@ -458,7 +458,7 @@
   id: ToiletGoldenStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: ToiletGoldenDirtyWater
   - type: Objective
@@ -471,7 +471,7 @@
   id: IanStealObjective
   components:
   - type: NotJobRequirement
-    job: HeadOfPersonnel
+    jobs: [ HeadOfPersonnel ]
   - type: StealCondition
     stealGroup: AnimalIan
   - type: Objective
@@ -491,7 +491,7 @@
   id: McGriffStealObjective
   components:
   - type: NotJobRequirement
-    job: Detective
+    jobs: [ Detective ]
   - type: StealCondition
     stealGroup: AnimalMcGriff
   - type: Objective
@@ -502,7 +502,7 @@
   id: WalterStealObjective
   components:
   - type: NotJobRequirement
-    job: Chemist
+    jobs: [ Chemist ]
   - type: StealCondition
     stealGroup: AnimalWalter
   - type: Objective
@@ -522,7 +522,7 @@
   id: RenaultStealObjective
   components:
   - type: NotJobRequirement
-    job: Captain
+    jobs: [ Captain ]
   - type: StealCondition
     stealGroup: AnimalRenault
   - type: Objective
@@ -533,7 +533,7 @@
   id: ShivaStealObjective
   components:
   - type: NotJobRequirement
-    job: SecurityOfficer
+    jobs: [ SecurityOfficer ]
   - type: StealCondition
     stealGroup: AnimalShiva
   - type: Objective
@@ -544,7 +544,7 @@
   id: TropicoStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    jobs: [ AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: AnimalTropico
   - type: Objective

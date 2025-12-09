@@ -110,7 +110,12 @@ public sealed partial class GunSystem
             _bulletRender.Count = count;
             _bulletRender.Capacity = capacity;
 
-            _bulletRender.Type = capacity > 50 ? BulletRender.BulletType.Tiny : BulletRender.BulletType.Normal;
+            _bulletRender.Type = capacity switch
+            {
+                > 50 => BulletRender.BulletType.Tiny,
+                > 15 => BulletRender.BulletType.Normal,
+                _ => BulletRender.BulletType.Large
+            };
         }
     }
 
@@ -236,7 +241,12 @@ public sealed partial class GunSystem
             _bulletRender.Count = count;
             _bulletRender.Capacity = capacity;
 
-            _bulletRender.Type = capacity > 50 ? BulletRender.BulletType.Tiny : BulletRender.BulletType.Normal;
+            _bulletRender.Type = capacity switch
+            {
+                > 50 => BulletRender.BulletType.Tiny,
+                > 15 => BulletRender.BulletType.Normal,
+                _ => BulletRender.BulletType.Large
+            };
 
             _ammoCount.Text = $"x{count:00}";
         }
