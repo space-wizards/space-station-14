@@ -329,7 +329,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         }
 
         var iconProto = _proto.Index(statusProto.Icon);
-        return ((SpriteSpecifier.Rsi)iconProto!.Icon).RsiState;
+        return ((SpriteSpecifier.Rsi)iconProto.Icon).RsiState;
     }
     private string GetTypeFilterLocals(StationRecordFilterType type)
     {

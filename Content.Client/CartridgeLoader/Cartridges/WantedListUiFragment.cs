@@ -210,7 +210,7 @@ public sealed partial class WantedListUiFragment : BoxContainer
         if (record.Status is not null)
         {
             var statusProto = _prototypeManager.Index(record.Status);
-            var proto = statusProto.Icon!.Value;
+            var proto = statusProto.Icon;
 
             if (_prototypeManager.TryIndex<SecurityIconPrototype>(proto, out var prototype))
             {
