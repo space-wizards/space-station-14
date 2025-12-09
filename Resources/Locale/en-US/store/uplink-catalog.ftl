@@ -286,7 +286,7 @@ uplink-duffel-surgery-name = Surgical Duffel Bag
 uplink-duffel-surgery-desc = A large duffel bag containing a full suite of surgical tools.
 
 uplink-power-sink-name = Power Sink
-uplink-power-sink-desc = Drains immense amounts of electricity from the grid, then explodes extremely violently once it's fully charged. Use wrench to connect it to HV wires.
+uplink-power-sink-desc = Drains immense amounts of electricity from the grid, then explodes extremely violently once it's fully charged. Use a wrench to connect it to HV wires.
 
 uplink-carp-dehydrated-name = Dehydrated Space Carp
 uplink-carp-dehydrated-desc = Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
