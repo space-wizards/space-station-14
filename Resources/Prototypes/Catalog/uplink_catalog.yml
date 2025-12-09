@@ -988,6 +988,20 @@
   categories:
   - UplinkDisruption
 
+# Inaccessable until in game testing complete + new sprite
+- type: listing
+  id: UplinkAiCameraJammer
+  name: uplink-ai-camera-jammer-name
+  description: uplink-ai-camera-jammer-desc
+  productEntity: AiCameraJammer
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkDisruption
+
 - type: listing
   id: UplinkSyndicateWeaponModule
   name: uplink-syndicate-weapon-module-name
