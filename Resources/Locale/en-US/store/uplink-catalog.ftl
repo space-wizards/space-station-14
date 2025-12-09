@@ -203,7 +203,7 @@ uplink-emp-implanter-name = EMP Implanter
 uplink-emp-implanter-desc = Detonates a small EMP pulse on activation that drains nearby electronics of their power, can be used three times before the internal battery runs out.
 
 uplink-macro-bomb-implanter-name = Macro Bomb Implanter
-uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb. Note: does not work if you will acidify.
+uplink-macro-bomb-implanter-desc = Inject this and on death you'll create a large explosion after a five second delay. Note: does not work with acidifier implants.
 
 uplink-uplink-implanter-name = Uplink Implanter
 uplink-uplink-implanter-desc = Stealthily order equipment without the need for a PDA. Swallow telecrystals to top up the uplink.
@@ -363,7 +363,7 @@ uplink-syndie-raid-name = Syndicate Raid Suit
 uplink-syndie-raid-desc = A very durable and reasonably flexible suit of blood-red armor, reinforced against all common forms of damage but not capable of space walks. Comes with a sick helmet.
 
 uplink-hardsuit-syndieelite-name = Syndicate Elite Hardsuit
-uplink-hardsuit-syndieelite-desc = An elite version of the blood-red hardsuit, with laser/fireproofing. Property of Gorlex Marauders.
+uplink-hardsuit-syndieelite-desc = An elite version of the blood-red hardsuit, has slightly less bullet resistance but is guaranteed to be immune to lasers, fire, and radiation. Property of Gorlex Marauders.
 
 uplink-clothing-outer-hardsuit-juggernaut-name = Cybersun Juggernaut Suit
 uplink-clothing-outer-hardsuit-juggernaut-desc = Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
