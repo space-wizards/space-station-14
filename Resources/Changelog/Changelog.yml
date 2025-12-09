@@ -3895,33 +3895,27 @@
   id: 9267
   time: '2025-12-07T20:39:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41748
-- author: ArtisticRoomba
-  changes:
-  - message: On Fland, atomized the LV network for Atmospherics and Telecoms.
-    type: Fix
-  id: 9268
-  time: '2025-12-08T00:35:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41773
-- author: ArtisticRoomba
-  changes:
-  - message: On Oasis, atomized the LV powernet for Chemistry/Medical.
-    type: Fix
-  id: 9269
-  time: '2025-12-08T01:02:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41776
 - author: Princess-Cheeseballs
   changes:
   - message: Bible has been restored to its normal healing rate.
     type: Fix
-  id: 9270
+  id: 9268
   time: '2025-12-08T01:23:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41777
 - author: UpAndLeaves
   changes:
   - message: New players no longer have a chance of being Dionae, Vox, Slime People,
-      or Vulpkanine when joining for the first time. They can still manually select
+      or Vulpkanin when joining for the first time. They can still manually select
       these species.
     type: Tweak
-  id: 9271
+  id: 9269
   time: '2025-12-08T01:49:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41678
+- author: kleinerstation13
+  changes:
+  - message: The Hushpup, a 10 TC silenced shotgun, is now available via the uplink
+      for traitors and nukies.
+    type: Add
+  id: 9270
+  time: '2025-12-08T20:20:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41512
