@@ -198,7 +198,7 @@
           # todo scale with temp like SS13
             Airloss: -3
             Brute: -2
-            Burn: -3
+            Burn: -2
             Toxin: -2
 
 - type: reagent
@@ -1349,7 +1349,7 @@
             max: 213.0
           damage:
             Brute: -2
-            Burn: -3
+            Burn: -2
         - !type:HealthChange
           conditions:
           - !type:TemperatureCondition
@@ -1375,7 +1375,7 @@
         - !type:TemperatureCondition
           max: 213.0
         damage:
-          Burn: -6.0
+          Burn: -4.5
 
 - type: reagent
   id : Mannitol # currently this is just a way to create psicodine
