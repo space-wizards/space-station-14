@@ -36,4 +36,11 @@ public sealed partial class XenoborgsRuleComponent : Component
     /// </summary>
     [DataField]
     public bool MothershipCoreDeathAnnouncmentSent = false;
+
+    /// <summary>
+    /// If the emergency shuttle trigged by <see cref="XenoborgShuttleCallPercentage"> was already called.
+    /// Will only call once. if a admin recalls it. it won't call again unless this is set to false by a admin
+    /// </summary>
+    [DataField]
+    public bool XenoborgShuttleCalled = false;
 }
