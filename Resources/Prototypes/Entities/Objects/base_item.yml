@@ -79,7 +79,7 @@
 - type: entity
   id: BasePaperLabelable # Defines the behavior (but not the visuals!) for attaching paper labels to objects (e.g crates, parcels).
   abstract: true         # Use this (NOT BasePaperLabelableVisualized) if the child prototype allows paper labels but has no sprites for it.
-  components:
+  components:            # Note that if an entity has its own ContainerContainer then paper_label needs to be added to that too to avoid bugs.
   - type: ContainerContainer
     containers:
       paper_label: !type:ContainerSlot

@@ -61,6 +61,7 @@
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
+      paper_label: !type:ContainerSlot
   - type: StaticPrice
     price: 75
   - type: Construction

@@ -57,6 +57,7 @@
   - type: ContainerContainer
     containers:
       contents: !type:ContainerSlot
+      paper_label: !type:ContainerSlot
   - type: WrappedParcel
     unwrapDelay: 0.5
     unwrapSound:
