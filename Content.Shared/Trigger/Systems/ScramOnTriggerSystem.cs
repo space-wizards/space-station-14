@@ -23,10 +23,9 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
-    private HashSet<Entity<MapGridComponent>> _targetGrids = new();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -60,81 +59,52 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
             args.Handled = true;
         }
     }
-
-    private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius)
+    /// <summary>
+    /// Method to find a random empty tile within a certain radius. Will not select off-grid tiles. Returns
+    /// null if no tile is found within a certain number of tries.
+    /// </summary>
+    private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius, int tries = 40)
     {
-        var userCoords = _transform.ToMapCoordinates(userXform.Coordinates);
-        _targetGrids.Clear();
-        _lookup.GetEntitiesInRange(userCoords, radius, _targetGrids);
-        Entity<MapGridComponent>? targetGrid = null;
-
-        // Adds the user grid to target grids, and gives preference to the grid the entity is currently on.
-        // This does not guarantee that if the probability fails that the owner's grid won't be picked.
-        // In reality the probability is higher and depends on the number of grids.
-        if (userXform.GridUid != null && TryComp<MapGridComponent>(userXform.GridUid, out var gridComp))
-        {
-            var userGrid = new Entity<MapGridComponent>(userXform.GridUid.Value, gridComp);
-            _targetGrids.Add(userGrid);
-            if (_random.Prob(0.5f))
-            {
-                _targetGrids.Remove(userGrid);
-                targetGrid = userGrid;
-            }
-        }
-
-        if (_targetGrids.Count == 0 && targetGrid == null)
-            return null;
-
-        if (targetGrid == null)
-            targetGrid = _random.GetRandom().PickAndTake(_targetGrids);
-
+        var userCoords = userXform.Coordinates;
         EntityCoordinates? targetCoords = null;
 
-        do
+        for (var i = 0; i < tries; i++)
         {
-            var valid = false;
-            // Creates the smallest possible bounding square that fits a circle with radius r, which has side length r*2
-            var box = Box2.CenteredAround(userCoords.Position, new Vector2(radius*2, radius*2));
-            var tilesInRange = _map.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
-            var tileList = new ValueList<Vector2i>();
+            // We get a distance by multiplying the radius by a random float between 0 and 1,
+            // then we multiply that with a randomly angled vector.
+            // The distance is then reduced percentage-wise based on the current try count,
+            // so subsequent tries are closer and closer towards the entity. This is
+            // beneficial for smaller maps, especially when the radius is large.
+            var distance = radius * MathF.Sqrt(_random.NextFloat()) * (1 - (float)i / tries);
+            var tempTargetCoords = userCoords.Offset(_random.NextAngle().ToVec() * distance);
 
-            while (tilesInRange.MoveNext(out var tile))
+            // Skip if there's no grid at the target coordinates
+            if (!_mapManager.TryFindGridAt(_transform.ToMapCoordinates(tempTargetCoords), out var gridUid, out var grid))
+                continue;
+
+            // Check every anchored entity on the tile for something that we don't want to
+            // teleport into, and skip if we find something.
+            var tileValid = true;
+            foreach (var entity in _map.GetAnchoredEntities(gridUid, grid, tempTargetCoords))
             {
-                tileList.Add(tile.GridIndices);
-            }
+                if (!_physicsQuery.TryGetComponent(entity, out var body))
+                    continue;
 
-            while (tileList.Count != 0)
-            {
-                var tile = tileList.RemoveSwap(_random.Next(tileList.Count));
-                valid = true;
-                foreach (var entity in _map.GetAnchoredEntities(targetGrid.Value.Owner, targetGrid.Value.Comp,
-                             tile))
-                {
-                    if (!_physicsQuery.TryGetComponent(entity, out var body))
-                        continue;
+                if (body.BodyType != BodyType.Static ||
+                    !body.Hard ||
+                    (body.CollisionLayer & (int)CollisionGroup.MobMask) == 0)
+                    continue;
 
-                    if (body.BodyType != BodyType.Static ||
-                        !body.Hard ||
-                        (body.CollisionLayer & (int)CollisionGroup.MobMask) == 0)
-                        continue;
-
-                    valid = false;
-                    break;
-                }
-
-                if (valid)
-                {
-                    targetCoords = new EntityCoordinates(targetGrid.Value.Owner,
-                        _map.TileCenterToVector(targetGrid.Value, tile));
-                    break;
-                }
-            }
-
-            if (valid || _targetGrids.Count == 0) // if we don't do the check here then PickAndTake will blow up on an empty set.
+                tileValid = false;
                 break;
+            }
 
-            targetGrid = _random.GetRandom().PickAndTake(_targetGrids);
-        } while (true);
+            if (!tileValid)
+                continue;
+
+            targetCoords = tempTargetCoords;
+            break;
+        }
 
         return targetCoords;
     }
