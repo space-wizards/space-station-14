@@ -4,6 +4,7 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Bible;
+using Content.Shared.Bible.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.IdentityManagement;
