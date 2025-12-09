@@ -23,7 +23,7 @@ public sealed class SecurityStatusPrototype: IPrototype
     /// The icon that someone with this status will display to someone looking at them with a sec hud.
     /// </summary>
     [DataField]
-    public ProtoId<SecurityIconPrototype> Icon;
+    public ProtoId<SecurityIconPrototype>? Icon;
 
     /// <summary>
     /// A localised string which is announced on sec radio when someone has their status set to this.
