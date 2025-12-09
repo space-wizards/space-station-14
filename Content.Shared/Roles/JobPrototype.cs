@@ -39,7 +39,7 @@ namespace Content.Shared.Roles
         ///     The name of this job as displayed to players.
         /// </summary>
         [DataField]
-        public string? Description { get; private set; }
+        public LocId? Description { get; private set; }
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string? LocalizedDescription => Description is null ? null : Loc.GetString(Description);
