@@ -1,6 +1,6 @@
 - type: marking
   id: GauzeLefteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Dwarf, Human, Arachnid]
   coloring:
@@ -14,7 +14,7 @@
 
 - type: marking
   id: GauzeLefteyePad
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
@@ -28,7 +28,7 @@
 
 - type: marking
   id: GauzeRighteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Dwarf, Human, Arachnid]
   coloring:
@@ -42,7 +42,7 @@
 
 - type: marking
   id: GauzeRighteyePad
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Dwarf, Human, Reptilian, Arachnid]
   coloring:
@@ -56,7 +56,7 @@
 
 - type: marking
   id: GauzeBlindfold
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Dwarf, Human, Arachnid]
   coloring:
@@ -239,7 +239,7 @@
 # Lizard Specific Markings
 - type: marking
   id: GauzeLizardLefteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Reptilian]
   coloring:
@@ -253,7 +253,7 @@
 
 - type: marking
   id: GauzeLizardRighteyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Reptilian]
   coloring:
@@ -295,7 +295,7 @@
 
 - type: marking
   id: GauzeLizardBlindfold
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Reptilian]
   coloring:
@@ -310,7 +310,7 @@
 # Moth Specific Markings
 - type: marking
   id: GauzeMothBlindfold
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Moth]
   coloring:
@@ -352,7 +352,7 @@
 
 - type: marking
   id: GauzeMothLeftEyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Moth]
   coloring:
@@ -366,7 +366,7 @@
 
 - type: marking
   id: GauzeMothLeftEyePad
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Moth]
   coloring:
@@ -380,7 +380,7 @@
 
 - type: marking
   id: GauzeMothRightEyePatch
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Moth]
   coloring:
@@ -394,7 +394,7 @@
 
 - type: marking
   id: GauzeMothRightEyePad
-  bodyPart: Eyes
+  bodyPart: Eyelids
   markingCategory: Overlay
   speciesRestriction: [Moth]
   coloring:

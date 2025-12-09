@@ -25,6 +25,7 @@
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobVoxTorso
     Eyes: MobVoxEyes
+    Eyelids: MobHumanoidAnyMarking
     LArm: MobVoxLArm
     RArm: MobVoxRArm
     LHand: MobVoxLHand

@@ -3,6 +3,7 @@ using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Graphics;
 using Robust.Shared.Timing;
 using System.ComponentModel.Design;
 using static Content.Shared.Fax.AdminFaxEuiMsg;
@@ -24,8 +25,15 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
 
-        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
+        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var eyelids, false))
             return;
+
+
+        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var eyes, false))
+            return;
+
+        _sprite.LayerSetRsi(eyelids, eyes.RSI);
+        _sprite.LayerSetRsiState(eyelids, "eyes");
 
         ChangeEyeState(ent, ent.Comp.EyesClosed);
     }
@@ -36,7 +44,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
         if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
             return;
-        if (!_sprite.LayerMapTryGet(ent.Owner, HumanoidVisualLayers.Eyes, out var layer, false))
+        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var layer, false))
             return;
 
         var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
@@ -45,7 +53,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             humanoid.SkinColor.G * blinkFade,
             humanoid.SkinColor.B * blinkFade);
         var eyeColor = humanoid.EyeColor;
-        _sprite.LayerSetColor((ent.Owner, sprite), HumanoidVisualLayers.Eyes, eyeClsoed ? blinkColor : eyeColor);
+        _sprite.LayerSetColor(layer, eyeClsoed ? blinkColor : Color.Transparent);
     }
 
     private void OnChangeEyeStateEvent(ChangeEyeStateEvent ev)
