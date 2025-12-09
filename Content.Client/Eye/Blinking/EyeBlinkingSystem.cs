@@ -33,7 +33,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
 
         _sprite.LayerSetRsi(eyelids, eyes.RSI);
-        _sprite.LayerSetRsiState(eyelids, "eyes");
+        _sprite.LayerSetRsiState(eyelids, eyes.State);
 
         ChangeEyeState(ent, ent.Comp.EyesClosed);
     }
