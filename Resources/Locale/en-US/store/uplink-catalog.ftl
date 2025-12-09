@@ -75,7 +75,7 @@ uplink-exploding-syndicate-bomb-fake-name = Decoy Syndicate Bomb
 uplink-exploding-syndicate-bomb-fake-desc = A training bomb carefully made to look just like the real thing. In all ways similar to a syndicate bomb, but only creates a tiny explosion.
 
 uplink-cluster-grenade-name = Cluster Grenade
-uplink-cluster-grenade-desc = Three explosive grenades bundled together. The cluster splits after 3.5 seconds and detonates instantly.
+uplink-cluster-grenade-desc = Three explosive grenades bundled together. The cluster splits after 3.5 seconds and detonates 1 second later.
 
 uplink-incendiary-grenade-name = Incendiary Grenade
 uplink-incendiary-grenade-desc = Releases a spray of incendiary fragments, igniting anyone near the detonation area.
