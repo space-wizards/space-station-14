@@ -76,6 +76,38 @@
           Open: { visible: true }
           Closed: { visible: false }
 
+- type: entity
+  id: BasePaperLabelable # Defines the behavior for attaching paper labels to objects (e.g crates, parcels).
+  abstract: true         # Includes the code for the label's visuals, but actual sprites (and sprite layers!) still need to be defined on a per-item basis
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+  - type: ContainerContainer
+    containers:
+      paper_label: !type:ContainerSlot
+  - type: ItemSlots
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
+      whitelist:
+        components:
+        - Paper
+      blacklist:
+        tags:
+        - Book
+
 # PowerCellSlot parents
 - type: entity
   id: PowerCellSlotSmallItem
