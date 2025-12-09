@@ -348,7 +348,7 @@ uplink-clothing-outer-vest-web-elite-name = Elite Web Vest
 uplink-clothing-outer-vest-web-elite-desc = A synthetic armor vest, this one has added webbing. Very resistant to all types of damage, except for bullets.
 
 uplink-clothing-shoes-boots-mag-syndie-name = Blood-red Magboots
-uplink-clothing-shoes-boots-mag-syndie-desc = A pair of boots that prevent slipping, and allow you to move normally in zero gravity. Slows movement when turned on. Additionally, they have jetpack functionality and come fueled, but don't last for long.
+uplink-clothing-shoes-boots-mag-syndie-desc = A pair of boots that prevent slipping and allow you to move normally in zero gravity. Slows movement when turned on. Additionally, they have jetpack functionality and come fueled, but don't last for long.
 
 uplink-eva-syndie-name = Syndicate EVA Bundle
 uplink-eva-syndie-desc = A simple EVA suit that offers no protection other than what's needed to survive in space.
