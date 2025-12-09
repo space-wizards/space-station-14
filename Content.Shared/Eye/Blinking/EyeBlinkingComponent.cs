@@ -48,4 +48,7 @@ public sealed partial class EyeBlinkingComponent : Component
 
     [DataField, AutoNetworkedField]
     public bool EyesClosed = false;
+
+    [DataField, AutoNetworkedField]
+    public Color? EyelidsColor = null;
 }

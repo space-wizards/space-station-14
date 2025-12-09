@@ -52,7 +52,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             humanoid.SkinColor.R * blinkFade,
             humanoid.SkinColor.G * blinkFade,
             humanoid.SkinColor.B * blinkFade);
-        var eyeColor = humanoid.EyeColor;
+        var eyeColor = ent.Comp.EyelidsColor == null ? humanoid.EyeColor : ent.Comp.EyelidsColor.Value;
         _sprite.LayerSetColor(layer, eyeClsoed ? blinkColor : Color.Transparent);
     }
 
