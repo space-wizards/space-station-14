@@ -420,8 +420,8 @@
   id: FestiveSeason
   name: holiday-name-festive-season
   beginDay: 1
-  endDay: 30
-  beginMonth: November
+  endDay: 31
+  beginMonth: December
   greet:
     !type:Custom
     text: holiday-custom-festive-season
