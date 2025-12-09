@@ -5,7 +5,7 @@
     TraitorObjectiveGroupSteal: 1
     TraitorObjectiveGroupKill: 1
     TraitorObjectiveGroupState: 1 #As in, something about your character. Alive, dead, arrested, gained an ability...
-    TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff
+  # TraitorObjectiveGroupSocial: 1 #Involves helping/harming others without killing them or stealing their stuff. Removed as part of the Traitor design document: "Solo Antagonists"
 
 - type: weightedRandom
   id: TraitorObjectiveGroupSteal
