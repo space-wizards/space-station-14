@@ -55,14 +55,12 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
-  - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: open
     stateDoorClosed: closed
   - type: ContainerContainer
     containers:
       entity_storage: !type:Container
-  - type: ItemSlots
   - type: StaticPrice
     price: 75
   - type: Construction
