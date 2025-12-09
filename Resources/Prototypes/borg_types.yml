@@ -157,9 +157,9 @@
 
   defaultModules:
   - BorgModuleTool
+  - BorgModuleFireExtinguisher
   - BorgModuleChemical
   - BorgModuleTopicals
-  - BorgModuleRescue
 
   radioChannels:
   - Science

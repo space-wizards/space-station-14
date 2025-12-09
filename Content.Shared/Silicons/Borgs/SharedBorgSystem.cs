@@ -93,6 +93,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, GetCharacterUnrevivableIcEvent>(OnGetUnrevivableIC);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<BorgChassisComponent, PowerCellChangedEvent>(OnPowerCellChanged);
+        SubscribeLocalEvent<BorgChassisComponent, BeforeThrowEvent>(OnBeforeThrow);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
@@ -353,6 +354,12 @@ public abstract partial class SharedBorgSystem : EntitySystem
     private void OnPowerCellChanged(Entity<BorgChassisComponent> chassis, ref PowerCellChangedEvent args)
     {
         TryActivate(chassis);
+    }
+
+    private void OnBeforeThrow(Entity<BorgChassisComponent> chassis, ref BeforeThrowEvent args)
+    {
+        // Do not leg borgs throw things! They will start chucking bombs.
+        args.Cancelled = true;
     }
 
     public override void Update(float frameTime)

@@ -130,7 +130,7 @@
   tier: 2
   cost: 5000
   recipeUnlocks:
-  - BorgModuleAdvancedChemical
+  - BorgModuleAdvancedTopical
 
 - type: technology
   id: AdvancedCleaning
