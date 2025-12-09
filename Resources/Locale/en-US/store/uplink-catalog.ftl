@@ -66,7 +66,7 @@ uplink-emp-grenade-name = EMP Grenade
 uplink-emp-grenade-desc = A grenade designed to disrupt electronic systems. Useful for disrupting communications, security's energy weapons, and APCs when you're in a tight spot.
 
 uplink-exploding-pen-name = Exploding pen
-uplink-exploding-pen-desc = A class IV small explosive device contained within a standard pen. Comes with a 4 second fuse.
+uplink-exploding-pen-desc = A class IV explosive device contained within a standard pen. Comes with a silent 4 second fuse, and can be thrown to embed into targets.
 
 uplink-exploding-syndicate-bomb-name = Syndicate Bomb
 uplink-exploding-syndicate-bomb-desc = A big, anchored bomb that can create a huge explosion if not defused in time. Useful as a distraction. Has an adjustable timer with a minimum setting of 180 seconds.
