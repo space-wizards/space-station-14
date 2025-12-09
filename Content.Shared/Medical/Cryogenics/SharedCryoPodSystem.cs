@@ -148,7 +148,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
             return;
 
         var containedEntity = ent.Comp.BodyContainer.ContainedEntity;
-        if (containedEntity == null || containedEntity == args.User || !HasComp<ActiveCryoPodComponent>(ent))
+        if (containedEntity == args.User)
             args.Cancel();
     }
 

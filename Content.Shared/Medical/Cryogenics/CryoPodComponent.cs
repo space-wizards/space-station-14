@@ -96,3 +96,9 @@ public enum CryoPodVisuals : byte
     ContainsEntity,
     IsOn
 }
+
+[Serializable, NetSerializable]
+public enum CryoPodUiKey : byte
+{
+    Key
+}
