@@ -1,6 +1,7 @@
 <controls:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:ui="clr-namespace:Content.Client.HealthAnalyzer.UI"
     MaxHeight="525"
     MinWidth="300">
     <ScrollContainer
@@ -11,7 +12,10 @@
             Name="RootContainer"
             VerticalExpand="True"
             Orientation="Vertical">
-            <Label Text="This is a placeholder for the cryo pod window (TODO)"/>
+
+            <ui:HealthAnalyzerControl
+                Name="HealthAnalyzer"/>
+
         </BoxContainer>
     </ScrollContainer>
 </controls:FancyWindow>

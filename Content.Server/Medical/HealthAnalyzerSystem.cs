@@ -72,7 +72,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
                 continue;
             }
 
-            UpdateScannedUser(uid, patient, true);
+            UpdateScannedUser((uid, component), patient, true);
         }
     }
 
@@ -183,9 +183,10 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     /// <param name="healthAnalyzer">The health analyzer</param>
     /// <param name="target">The entity being scanned</param>
     /// <param name="scanMode">True makes the UI show ACTIVE, False makes the UI show INACTIVE</param>
-    public void UpdateScannedUser(EntityUid healthAnalyzer, EntityUid target, bool scanMode)
+    public void UpdateScannedUser(Entity<HealthAnalyzerComponent> healthAnalyzer, EntityUid target, bool scanMode)
     {
-        if (!_uiSystem.HasUi(healthAnalyzer, HealthAnalyzerUiKey.Key))
+        var uiKey = healthAnalyzer.Comp.UiKey;
+        if (!_uiSystem.HasUi(healthAnalyzer, uiKey))
             return;
 
         if (!HasComp<DamageableComponent>(target))
@@ -211,7 +212,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         if (TryComp<UnrevivableComponent>(target, out var unrevivableComp) && unrevivableComp.Analyzable)
             unrevivable = true;
 
-        _uiSystem.ServerSendUiMessage(healthAnalyzer, HealthAnalyzerUiKey.Key, new HealthAnalyzerScannedUserMessage(
+        _uiSystem.ServerSendUiMessage(healthAnalyzer.Owner, uiKey, new HealthAnalyzerScannedUserMessage(
             GetNetEntity(target),
             bodyTemperature,
             bloodAmount,

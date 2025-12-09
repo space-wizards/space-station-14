@@ -1,3 +1,4 @@
+using Content.Shared.MedicalScanner;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -23,6 +24,11 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
     {
         if (_window == null)
             return;
+
+        if (message is HealthAnalyzerScannedUserMessage analyzerMsg)
+        {
+            _window.Populate(analyzerMsg);
+        }
 
     }
 }

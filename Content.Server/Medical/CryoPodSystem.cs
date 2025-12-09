@@ -36,7 +36,11 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
     private void OnActivateUI(Entity<CryoPodComponent> entity, ref AfterActivatableUIOpenEvent args)
     {
-        // TODO
+        if (entity.Comp.BodyContainer.ContainedEntity.HasValue
+            && TryComp<HealthAnalyzerComponent>(entity, out var healthAnalyzer))
+        {
+            healthAnalyzer.ScannedEntity = entity.Comp.BodyContainer.ContainedEntity;
+        }
     }
 
     private void OnCryoPodUpdateAtmosphere(Entity<CryoPodComponent> entity, ref AtmosDeviceUpdateEvent args)
