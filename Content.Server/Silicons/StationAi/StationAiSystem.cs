@@ -117,9 +117,8 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
                 // Set the new AI brain to the 'rebooting' state
                 if (TryComp<StationAiCustomizationComponent>(aiBrain, out var customization))
-                {
                     SetStationAiState((aiBrain, customization), StationAiState.Rebooting);
-                }
+                
             }
 
             // Delete the new AI brain if it cannot be inserted into the core
