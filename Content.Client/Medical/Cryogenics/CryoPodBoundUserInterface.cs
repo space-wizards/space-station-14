@@ -1,3 +1,4 @@
+using Content.Shared.Medical.Cryogenics;
 using Content.Shared.MedicalScanner;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -18,6 +19,17 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
         base.Open();
         _window = this.CreateWindow<CryoPodWindow>();
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        _window.OnEjectPressed += EjectPressed;
+    }
+
+    private void EjectPressed()
+    {
+        bool isLocked =
+            EntMan.TryGetComponent<CryoPodComponent>(Owner, out var cryoComp)
+            && cryoComp.Locked;
+        
+        _window?.SetEjectErrorVisible(isLocked);
+        SendMessage(new CryoPodUiMessage("Eject"));
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)

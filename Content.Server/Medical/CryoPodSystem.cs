@@ -32,6 +32,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, AtmosDeviceUpdateEvent>(OnCryoPodUpdateAtmosphere);
         SubscribeLocalEvent<CryoPodComponent, GasAnalyzerScanEvent>(OnGasAnalyzed);
         SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
+        SubscribeLocalEvent<CryoPodComponent, CryoPodUiMessage>(OnUiMessage);
     }
 
     private void OnActivateUI(Entity<CryoPodComponent> entity, ref AfterActivatableUIOpenEvent args)
@@ -86,5 +87,10 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
         // if body is ejected - no need to display health-analyzer
         _uiSystem.CloseUi(cryoPod.Owner, HealthAnalyzerUiKey.Key);
+    }
+
+    private void OnUiMessage(Entity<CryoPodComponent> cryoPod, ref CryoPodUiMessage msg)
+    {
+        TryEjectBody(cryoPod.Owner, msg.Actor, cryoPod.Comp);
     }
 }

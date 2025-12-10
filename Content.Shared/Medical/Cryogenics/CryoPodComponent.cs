@@ -102,3 +102,14 @@ public enum CryoPodUiKey : byte
 {
     Key
 }
+
+[Serializable, NetSerializable]
+public sealed class CryoPodUiMessage : BoundUserInterfaceMessage
+{
+    public readonly string Type;  // I'm going to tidy this up later.
+
+    public CryoPodUiMessage(string type)
+    {
+        Type = type;
+    }
+}

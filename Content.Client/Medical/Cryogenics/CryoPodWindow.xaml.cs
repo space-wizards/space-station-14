@@ -7,13 +7,21 @@ namespace Content.Client.Medical.Cryogenics;
 [GenerateTypedNameReferences]
 public sealed partial class CryoPodWindow : FancyWindow
 {
+    public event Action? OnEjectPressed;
+
     public CryoPodWindow()
     {
         RobustXamlLoader.Load(this);
+        EjectButton.OnPressed += _ => OnEjectPressed?.Invoke();
     }
 
     public void Populate(HealthAnalyzerScannedUserMessage msg)
     {
         HealthAnalyzer.Populate(msg);
+    }
+
+    public void SetEjectErrorVisible(bool isVisible)
+    {
+        EjectError.Visible = isVisible;
     }
 }

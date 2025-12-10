@@ -7,14 +7,27 @@
     <ScrollContainer
         Margin="5 5 5 5"
         ReturnMeasure="True"
-        VerticalExpand="True">
+        VerticalExpand="True"
+        HScrollEnabled="False">
         <BoxContainer
             Name="RootContainer"
             VerticalExpand="True"
             Orientation="Vertical">
 
-            <ui:HealthAnalyzerControl
-                Name="HealthAnalyzer"/>
+            <ui:HealthAnalyzerControl Name="HealthAnalyzer"/>
+
+            <!-- TODO: Translation -->
+            <Button Name="EjectButton"
+                    Text="Eject"
+                    StyleClasses="OpenBoth"/>
+            <RichTextLabel
+                Name="EjectError"
+                Visible="False"
+                Text="[color=red]Error in ejection mechanism. Contact a Nanotrasen-certified engineer for further support.[/color]"
+                HorizontalAlignment="Center"
+                Margin="5"
+                MaxWidth="300"
+                HorizontalExpand="True"/>
 
         </BoxContainer>
     </ScrollContainer>
