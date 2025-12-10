@@ -54,6 +54,7 @@ public sealed class ChangelingStasisSystem : EntitySystem
 
     private void OnStateChanged(Entity<ChangelingStasisComponent> ent, ref MobStateChangedEvent args)
     {
+        // If we are revived cancel the stasis.
         if (args.NewMobState == MobState.Alive && ent.Comp.IsInStasis)
             CancelStasis(ent.AsNullable());
     }
@@ -78,6 +79,9 @@ public sealed class ChangelingStasisSystem : EntitySystem
         EnterStasis((ent, ent.Comp));
     }
 
+    /// <summary>
+    /// Enter the stasis and set the action cooldown depending on the damage you have taken.
+    /// </summary>
     public void EnterStasis(Entity<ChangelingStasisComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp))
@@ -86,11 +90,16 @@ public sealed class ChangelingStasisSystem : EntitySystem
         if (ent.Comp.IsInStasis)
             return;
 
-        if (!_mobs.IsDead(ent))
-        {
+        // If going from Alive to Dead fake a death gasp.
+        // If going from Critical to Dead then DeathGaspSystem is already doing this,
+        // so we don't want to do it twice.
+        if (_mobs.IsAlive(ent))
             _deathgasp.Deathgasp(ent);
+
+        // Die temporarily until we revive.
+        // Ghosting will be blocked while in stasis.
+        if (!_mobs.IsDead(ent))
             _mobs.ChangeMobState(ent.Owner, MobState.Dead);
-        }
 
         _popup.PopupClient(Loc.GetString("changeling-stasis-enter"), ent.Owner, ent.Owner, PopupType.MediumCaution);
 

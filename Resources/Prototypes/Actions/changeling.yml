@@ -54,6 +54,8 @@
     iconOn: { sprite : Interface/Actions/changeling.rsi, state: "stasis_exit" }
     useDelay: 2
     priority: 1
+    checkCanInteract: false # You can heal even if you are killed
+    checkConciousness: false
   - type: InstantAction
     event: !type:ChangelingStasisActionEvent
 
