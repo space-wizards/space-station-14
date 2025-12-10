@@ -14,7 +14,7 @@ namespace Content.Client.Atmos.UI
     public sealed partial class GasAnalyzerWindow : DefaultWindow
     {
         private static readonly Vector2 WindowMinSize = new Vector2(270, 350);
-        private const float WindowMinHeightForScrollbar = 620;
+        private const float WindowMinHeightForScrollbar = 400;
 
         private NetEntity _currentEntity = NetEntity.Invalid;
 
@@ -72,10 +72,11 @@ namespace Content.Client.Atmos.UI
                 _currentEntity = msg.DeviceUid;
             }
 
-            // Maximum of two mixes side-by-side. Any more mixes go on a new row.
+            // Maximum of three mixes side-by-side. Any more mixes go on a new row.
+            const int columns = 3;
             var mixCount = msg.NodeGasMixes.Length - 1;
-            DeviceMixes.Columns = Math.Max(1, ((mixCount - 1) % 2) + 1);
-            DeviceMixes.Rows = Math.Max(1, ((mixCount - 1) / 2) + 1);
+            DeviceMixes.Columns = Math.Max(1, ((mixCount - 1) % columns) + 1);
+            DeviceMixes.Rows = Math.Max(1, ((mixCount - 1) / columns) + 1);
 
 
             var deviceMixes = msg.NodeGasMixes.Skip(1);
