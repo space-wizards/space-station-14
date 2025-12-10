@@ -1005,34 +1005,3 @@
   sprite:
     sprite: Decals/Flora/flora_flowers.rsi
     state: flowersy4
-
-# Large Bushes
-- type: decal
-  id: LargeBush1
-  suffix: large bush 1
-  tags: ["flora"]
-  snapCardinals: true
-  defaultSnap: false
-  sprite:
-    sprite: Decals/Flora/flora_large_bush.rsi
-    state: bush1
-
-- type: decal
-  id: LargeBush2
-  suffix: large bush 2
-  tags: ["flora"]
-  snapCardinals: true
-  defaultSnap: false
-  sprite:
-    sprite: Decals/Flora/flora_large_bush.rsi
-    state: bush2
-
-- type: decal
-  id: LargeBush3
-  suffix: large bush 3
-  tags: ["flora"]
-  snapCardinals: true
-  defaultSnap: false
-  sprite:
-    sprite: Decals/Flora/flora_large_bush.rsi
-    state: bush3
