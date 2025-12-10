@@ -1,0 +1,61 @@
+<BoxContainer xmlns="https://spacestation14.io"
+              xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+              MinSize="315 200"
+              VerticalExpand="True"
+              Orientation="Vertical">
+
+    <!-- Volume, pressure, temperature -->
+    <BoxContainer Orientation="Horizontal">
+        <Label Text="{Loc 'gas-analyzer-window-volume-text'}"/>
+        <Control MinWidth="10" HorizontalExpand="True"/>
+        <Label Name="VolumeLabel" Text="..." Align="Right"/>
+    </BoxContainer>
+
+    <BoxContainer Orientation="Horizontal">
+        <Label Text="{Loc 'gas-analyzer-window-pressure-text'}"/>
+        <Control MinWidth="10" HorizontalExpand="True"/>
+        <Label Name="PressureLabel" Text="..." Align="Right"/>
+    </BoxContainer>
+
+    <BoxContainer Orientation="Horizontal">
+        <Label Text="{Loc 'gas-analyzer-window-temperature-text'}"/>
+        <Control MinWidth="10" HorizontalExpand="True"/>
+        <Label Name="TemperatureLabel" Text="..." Align="Right"/>
+    </BoxContainer>
+
+    <!-- Empty placeholder -->
+    <Control MinHeight="10"/>
+    <Label Name="NoGasText"
+           Text="{Loc 'gas-analyzer-window-no-gas-text'}"
+           FontColorOverride="Gray"/>
+
+    <!-- Gas mixture table -->
+    <BoxContainer Name="Table" Visible="False" Orientation="Horizontal">
+        <BoxContainer Orientation="Vertical">
+            <Label Text="{Loc 'gas-analyzer-window-gas-column-name'}" Align="Center"/>
+            <controls:StripeBack/>
+            <BoxContainer Name="TableKey" Orientation="Vertical"/>
+        </BoxContainer>
+
+        <Control MinWidth="10" HorizontalExpand="True"/>
+
+        <BoxContainer Orientation="Vertical">
+            <Label Text="{Loc 'gas-analyzer-window-molarity-column-name'}" Align="Center"/>
+            <controls:StripeBack/>
+            <BoxContainer Name="TableValue" Orientation="Vertical"/>
+        </BoxContainer>
+
+        <Control MinWidth="10" HorizontalExpand="True"/>
+
+        <BoxContainer Orientation="Vertical">
+            <Label Text="{Loc 'gas-analyzer-window-percentage-column-name'}" Align="Center"/>
+            <controls:StripeBack/>
+            <BoxContainer Name="TablePercent" Orientation="Vertical"/>
+        </BoxContainer>
+    </BoxContainer>
+
+    <Control VerticalExpand="True"/>
+
+    <!-- Gas mixture segmented bar chart -->
+    <controls:SplitBar Name="BarChart" Visible="False" MinHeight="25" Margin="0 10 0 3"/>
+</BoxContainer>
