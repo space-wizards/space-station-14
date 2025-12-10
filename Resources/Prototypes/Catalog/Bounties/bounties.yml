@@ -519,6 +519,7 @@
     whitelist:
       components:
       - Battery
+      - PredictedBattery
 
 - type: cargoBounty
   id: BountyLaserGun
@@ -530,7 +531,7 @@
     amount: 6
     whitelist:
       components:
-      - HitscanBatteryAmmoProvider
+      - BatteryAmmoProvider
     blacklist:
       components:
       - PowerCell
