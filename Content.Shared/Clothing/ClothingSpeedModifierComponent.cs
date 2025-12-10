@@ -5,7 +5,7 @@ namespace Content.Shared.Clothing;
 
 /// <summary>
 /// Modifies speed when worn and activated.
-/// Supports <see cref="ItemToggleComponent">.
+/// Supports <see cref="ItemToggleComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(ClothingSpeedModifierSystem))]
 public sealed partial class ClothingSpeedModifierComponent : Component
@@ -17,7 +17,7 @@ public sealed partial class ClothingSpeedModifierComponent : Component
     public float SprintModifier = 1.0f;
 
     /// <summary>
-    /// Defines if the speed modifier requires <see cref="ItemToggleComponent"> activation to apply.
+    /// Defines if the speed modifier requires <see cref="ItemToggleComponent"/> activation to apply.
     /// </summary>
     [DataField]
     public bool RequireActivated = true;
