@@ -17,6 +17,12 @@ public sealed partial class ClothingSpeedModifierComponent : Component
     public float SprintModifier = 1.0f;
 
     /// <summary>
+    /// Defines if the speed modifier requires activation to apply.
+    /// </summary>
+    [DataField]
+    public bool RequireActivated = true;
+
+    /// <summary>
     /// An optional required standing state.
     /// Set to true if you need to be standing, false if you need to not be standing, null if you don't care.
     /// </summary>
