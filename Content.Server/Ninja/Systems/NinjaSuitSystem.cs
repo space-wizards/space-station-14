@@ -1,11 +1,10 @@
-using Content.Server.Emp;
 using Content.Server.Ninja.Events;
-using Content.Server.Power.Components;
-using Content.Server.PowerCell;
+using Content.Shared.Emp;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
-using Content.Shared.Popups;
+using Content.Shared.Power.Components;
+using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Robust.Shared.Containers;
 
@@ -13,10 +12,11 @@ namespace Content.Server.Ninja.Systems;
 
 /// <summary>
 /// Handles power cell upgrading and actions.
+/// TODO: Move all of this to shared and predict it
 /// </summary>
 public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 {
-    [Dependency] private readonly EmpSystem _emp = default!;
+    [Dependency] private readonly SharedEmpSystem _emp = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
@@ -30,7 +30,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
-        SubscribeLocalEvent<NinjaSuitComponent, EmpAttemptEvent>(OnEmpAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
         SubscribeLocalEvent<NinjaSuitComponent, NinjaEmpEvent>(OnEmp);
     }
@@ -44,7 +43,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         // raise event to let ninja components get starting battery
         _ninja.GetNinjaBattery(user.Owner, out var uid, out var _);
 
-        if (uid is not {} battery_uid)
+        if (uid is not { } battery_uid)
             return;
 
         var ev = new NinjaBatteryChangedEvent(battery_uid, ent.Owner);
@@ -52,8 +51,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         RaiseLocalEvent(user, ref ev);
     }
 
-    // TODO: if/when battery is in shared, put this there too
-    // TODO: or put MaxCharge in shared along with powercellslot
     private void OnSuitInsertAttempt(EntityUid uid, NinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
     {
         // this is for handling battery upgrading, not stopping actions from being added
@@ -62,10 +59,10 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
             return;
 
         // no power cell for some reason??? allow it
-        if (!_powerCell.TryGetBatteryFromSlot(uid, out var batteryUid, out var battery))
+        if (!_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             return;
 
-        if (!TryComp<BatteryComponent>(args.EntityUid, out var inserting))
+        if (!TryComp<PredictedBatteryComponent>(args.EntityUid, out var inserting))
         {
             args.Cancel();
             return;
@@ -74,7 +71,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var user = Transform(uid).ParentUid;
 
         // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
-        if (GetCellScore(args.EntityUid, inserting) <= GetCellScore(batteryUid.Value, battery))
+        if (GetCellScore(args.EntityUid, inserting) <= GetCellScore(battery.Value, battery.Value))
         {
             args.Cancel();
             Popup.PopupEntity(Loc.GetString("ninja-cell-downgrade"), user, user);
@@ -91,20 +88,13 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     }
 
     // this function assigns a score to a power cell depending on the capacity, to be used when comparing which cell is better.
-    private float GetCellScore(EntityUid uid, BatteryComponent battcomp)
+    private float GetCellScore(EntityUid uid, PredictedBatteryComponent battcomp)
     {
         // if a cell is able to automatically recharge, boost the score drastically depending on the recharge rate,
         // this is to ensure a ninja can still upgrade to a micro reactor cell even if they already have a medium or high.
-        if (TryComp<BatterySelfRechargerComponent>(uid, out var selfcomp) && selfcomp.AutoRecharge)
-            return battcomp.MaxCharge + (selfcomp.AutoRechargeRate*AutoRechargeValue);
+        if (TryComp<PredictedBatterySelfRechargerComponent>(uid, out var selfcomp))
+            return battcomp.MaxCharge + selfcomp.AutoRechargeRate * AutoRechargeValue;
         return battcomp.MaxCharge;
-    }
-
-    private void OnEmpAttempt(EntityUid uid, NinjaSuitComponent comp, EmpAttemptEvent args)
-    {
-        // ninja suit (battery) is immune to emp
-        // powercell relays the event to suit
-        args.Cancel();
     }
 
     protected override void UserUnequippedSuit(Entity<NinjaSuitComponent> ent, Entity<SpaceNinjaComponent> user)
@@ -159,7 +149,6 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         if (CheckDisabled(ent, user))
             return;
 
-        var coords = _transform.GetMapCoordinates(user);
-        _emp.EmpPulse(coords, comp.EmpRange, comp.EmpConsumption, comp.EmpDuration);
+        _emp.EmpPulse(Transform(user).Coordinates, comp.EmpRange, comp.EmpConsumption, comp.EmpDuration, user);
     }
 }

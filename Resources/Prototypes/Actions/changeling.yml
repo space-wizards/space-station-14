@@ -56,3 +56,9 @@
     priority: 1
   - type: InstantAction
     event: !type:ChangelingStasisActionEvent
+
+- type: entity
+  parent: ActionIntrinsicStore
+  id: ActionChangelingStore
+  name: DNA Store
+  description: Opens the ability store.

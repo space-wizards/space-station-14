@@ -1,14 +1,62 @@
+marking-TattooVoxNightlingHead-tattoo_nightling_head = Vox Head Tattoo (Nightling)
+marking-TattooVoxNightlingHead = Vox Head Tattoo (Nightling)
+
+marking-TattooVoxArrowHead-tattoo_arrow_head = Vox Head Tattoo (Arrow)
+marking-TattooVoxArrowHead = Vox Head Tattoo (Arrow)
+
+marking-VoxTattooEyeliner-eyeliner = Eyeliner
+marking-VoxTattooEyeliner = Eyeliner
+
+marking-VoxVisage-visage = Visage (Full)
+marking-VoxVisage = Visage (Full)
+
+marking-VoxVisageL-visage_l = Visage (Left)
+marking-VoxVisageL = Visage (Left)
+
+marking-VoxVisageR-visage_r = Visage (Right)
+marking-VoxVisageR = Visage (Right)
+
+marking-VoxCheek-cheekblush = Cheeks
+marking-VoxCheek = Cheeks
+
+marking-VoxBeak-beak = Beak (Pointed)
+marking-VoxBeak = Beak (Pointed)
+
+marking-VoxBeakSquareCere-beak_squarecere = Beak (Square Cere)
+marking-VoxBeakSquareCere = Beak (Square Cere)
+
+marking-VoxBeakHooked-beak_hooked = Beak (Hooked)
+marking-VoxBeakHooked = Beak (Hooked)
+
+marking-VoxBeakShaved-beak_shaved = Beak (Shaved)
+marking-VoxBeakShaved = Beak (Shaved)
+
+marking-VoxBeakCoverTip-beakcover_tip = Beak Tip
+marking-VoxBeakCoverTip = Beak Tip
+
+marking-VoxBeakCoverStripe-beakcover_stripe = Beak Stripe
+marking-VoxBeakCoverStripe = Beak Stripe
+
 marking-TattooVoxHeartLeftArm-heart_l_arm = Vox Left Arm Tattoo (Heart)
 marking-TattooVoxHeartLeftArm = Vox Left Arm Tattoo (Heart)
 
 marking-TattooVoxHeartRightArm-heart_r_arm = Vox Right Arm Tattoo (Heart)
 marking-TattooVoxHeartRightArm = Vox Right Arm Tattoo (Heart)
 
-marking-TattooVoxHiveChest-hive_s = Vox Chest Tattoo (hive)
-marking-TattooVoxHiveChest = Vox Chest Tattoo (hive)
+marking-TattooVoxHiveChest-hive_s = Vox Chest Tattoo (Hive)
+marking-TattooVoxHiveChest = Vox Chest Tattoo (Hive)
 
-marking-TattooVoxNightlingChest-nightling_s = Vox Chest Tattoo (nightling)
-marking-TattooVoxNightlingChest = Vox Chest Tattoo (nightling)
+marking-TattooVoxNightlingChest-nightling_s = Vox Chest Tattoo (Nightling)
+marking-TattooVoxNightlingChest = Vox Chest Tattoo (Nightling)
+
+marking-TattooVoxNightbelt-nightbelt = Vox Stomach Tattoo (Nightling)
+marking-TattooVoxNightbelt = Vox Stomach Tattoo (Nightling)
+
+marking-TattooVoxChestV-night_v = Vox Chest Tattoo (V Shape)
+marking-TattooVoxChestV = Vox Chest Tattoo (V Shape)
+
+marking-TattooVoxUnderbelly-underbelly = Underbelly
+marking-TattooVoxUnderbelly = Underbelly
 
 marking-VoxScarEyeRight-vox_scar_eye_right = Right Eye Scar
 marking-VoxScarEyeRight = Eye Scar (Right)
