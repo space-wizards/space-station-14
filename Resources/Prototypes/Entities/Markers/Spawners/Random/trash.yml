@@ -34,13 +34,14 @@
   table: !type:GroupSelector
     children:
     - id: TrashBananaPeel
-      weight: 5
+      weight: 3
     - id: TrashBakedBananaPeel
+      weight: 2
     - id: TrashMimanaPeel
     - id: TrashBananiumPeel
       weight: 0.5
     - id: TrashBananaPeelExplosive
-      weight: 0.001 # 1 in 7,500
+      weight: 0.001 # 1 in 6,500
 
 - type: entity
   parent: MarkerBase
@@ -75,7 +76,7 @@
 
 - type: entity
   parent: MarkerBase
-  id: RandomBananaPeel80
+  id: RandomBananaPeel90
   name: random banana peel spawner
   components:
   - type: Sprite
@@ -86,4 +87,4 @@
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: AllBananaPeelsTable
-      prob: 0.8
+      prob: 0.9
