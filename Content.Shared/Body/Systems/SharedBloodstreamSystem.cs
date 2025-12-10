@@ -74,8 +74,6 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             if (!SolutionContainer.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution))
                 continue;
 
-            var bloodLevel = GetBloodLevel(uid);
-
             // Blood level regulation. Must be alive.
             TryRegulateBloodReagents(uid, bloodstream.BloodRefreshAmount);
 
