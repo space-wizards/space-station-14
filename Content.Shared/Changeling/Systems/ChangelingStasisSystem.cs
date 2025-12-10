@@ -2,7 +2,8 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Changeling.Components;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Ghost;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
@@ -126,8 +127,8 @@ public sealed class ChangelingStasisSystem : EntitySystem
         if (!ent.Comp.IsInStasis)
             return;
 
-        // We remove all the damage.
-        //_damage.ClearAllDamage(ent.Owner, 0);
+        // Heal all damage.
+        _damage.ClearAllDamage(ent.Owner);
 
         // Heal bloodloss and stop bleeding.
         if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
@@ -136,6 +137,7 @@ public sealed class ChangelingStasisSystem : EntitySystem
             _bloodstream.TryModifyBleedAmount((ent, bloodstream), -bloodstream.BleedAmount);
         }
 
+        // Revive.
         _mobs.ChangeMobState(ent.Owner, MobState.Alive);
 
         _popup.PopupPredicted(Loc.GetString("changeling-stasis-exit"), Loc.GetString("changeling-stasis-exit-others", ("user", ent.Owner)), ent.Owner, ent.Owner, PopupType.MediumCaution);
