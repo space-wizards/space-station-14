@@ -36,7 +36,7 @@ public sealed partial class MeleeWeaponSystem
         if (!_xformQuery.TryGetComponent(user, out var userXform) || userXform.MapID == MapId.Nullspace)
             return;
 
-        // Allow systems to override how visuals are spawned/tracked
+        // Allow systems to override how visuals are spawned/tracked.
         var prepare = new PrepareMeleeLungeEvent(user, weapon, angle, localPos, animation)
         {
             SpawnAtMap = false,
