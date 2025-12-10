@@ -247,7 +247,7 @@
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
   - type: Prying # Borgs can natively pry open doors.
     pryPowered: true
-    speedModifier: 2
+    speedModifier: 1.5
     useSound:
       path: /Audio/Items/jaws_pry.ogg
 
