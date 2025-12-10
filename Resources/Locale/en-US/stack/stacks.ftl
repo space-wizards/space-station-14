@@ -36,6 +36,10 @@ stack-hv-cable = {$amount ->
     [1] hv cable
     *[other] hv cables
 }
+stack-explosive-cord = {$amount ->
+    [1] explosive cord
+    *[other] explosive cords
+}
 stack-wood-plank = {$amount ->
     [1] wood plank
     *[other] wood planks
@@ -224,6 +228,8 @@ stack-steel-maint-floor = steel maint floor
 stack-grating-maint-floor = grating maint floor
 stack-web-tile = web tile
 stack-astro-grass-floor = astro-grass floor
+stack-dark-astro-grass-floor = dark astro-grass floor
+stack-light-astro-grass-floor = light astro-grass floor
 stack-mowed-astro-grass-floor = mowed astro-grass floor
 stack-jungle-astro-grass-floor = jungle astro-grass floor
 stack-astro-ice-floor = astro-ice floor
@@ -231,6 +237,7 @@ stack-astro-snow-floor = astro-snow floor
 stack-large-wood-floor = large wood floor
 stack-red-circuit-floor = red-circuit floor
 stack-asteroid-astro-sand-floor = asteroid astro-sand floor
+stack-desert-astro-sand-floor = desert astro-sand floor
 stack-xeno-floor = xeno floor
 stack-xeno-steel = xeno steel tile
 stack-xeno-steel-corner = xeno steel corner tile

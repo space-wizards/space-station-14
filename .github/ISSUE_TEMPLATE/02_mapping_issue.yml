@@ -1,0 +1,48 @@
+name: Report an mapping issue
+description: For issues regarding mapping.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to fill out an issue. This template is intended for any issues related to mapping.
+        For feedback or help running Space Station 14, please join our [Discord](https://discord.gg/rGvu9hKffJ).
+  - type: input
+    attributes:
+      label: What version did the issue occur in?
+      description: You can find the version by opening the changelog in-game and looking at the bottom right corner of the changelog window.
+      placeholder: wizards/aa1337b
+    validations:
+      required: false
+  - type: input
+    attributes:
+      label: On what station, shuttle, or grid did the issue occur on?
+      description: The name of the station, shuttle, or grid. If you do not know the name, try to describe it.
+      placeholder: Bagel
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: |
+        A clear and concise description of what the issue is.
+        If the issue is visual in nature, consider posting a screenshot.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduction
+      description: List the steps required to reproduce the issue.
+      placeholder: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: Add any other additional context about the issue here.
+    validations:
+      required: false
+

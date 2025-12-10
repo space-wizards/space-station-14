@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using Content.Client.Administration.Components;
+using Content.Shared.Administration.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
 
