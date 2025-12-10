@@ -30,7 +30,7 @@ namespace Content.Shared.Roles
         ///     The name of this job as displayed to players.
         /// </summary>
         [DataField]
-        public LocId Name= string.Empty;
+        public LocId Name= "generic-unknown-title";
 
         [ViewVariables(VVAccess.ReadOnly), Obsolete("Use Loc.GetString(JobPrototype.Name) instead")]
         public string LocalizedName => Loc.GetString(Name);
