@@ -137,7 +137,7 @@ uplink-access-breaker-name = Access Breaker
 uplink-access-breaker-desc = A hacked access configurator and a good friend of the emag. This device is able to force airlocks open as well as erase access requirements from station equipment. Recharges automatically.
 
 uplink-agent-id-card-name = Agent ID Card
-uplink-agent-id-card-desc = A chameleon ID card that can copy accesses from other cards. it can also change its name and job title at will.
+uplink-agent-id-card-desc = A chameleon ID card that can copy accesses from other cards. It can also change its name and job title at will.
 
 uplink-syndicate-id-card-name = Syndicate ID Card
 uplink-syndicate-id-card-desc = A Syndicate ID card, with Syndicate access. Unlikely to be useful on its own, but goes great with reconfigured doors. Does not come with access-copying functionality.
