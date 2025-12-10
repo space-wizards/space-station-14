@@ -18,6 +18,7 @@ public sealed partial class ClothingSpeedModifierComponent : Component
 
     /// <summary>
     /// Defines if the speed modifier requires <see cref="ItemToggleComponent"/> activation to apply.
+    /// This will have no effect without an <see cref="ItemToggleComponent"/> on the entity.
     /// </summary>
     [DataField]
     public bool RequireActivated = true;
