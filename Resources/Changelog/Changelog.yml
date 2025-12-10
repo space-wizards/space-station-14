@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: The Kardashev-Mosin's bayonet can now be used while the weapon is wielded.
-      Tally ho!
-    type: Add
-  id: 8773
-  time: '2025-07-15T00:49:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38295
 - author: SlamBamActionman
   changes:
   - message: Throwable item hitboxes have been updated to better reflect their sprites.
@@ -3921,3 +3913,10 @@
   id: 9273
   time: '2025-12-09T13:17:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41788
+- author: K-Dynamic
+  changes:
+  - message: Chefs now start with chef shoes instead of black shoes.
+    type: Tweak
+  id: 9274
+  time: '2025-12-10T02:40:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41814
