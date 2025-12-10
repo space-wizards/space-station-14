@@ -162,7 +162,6 @@ namespace Content.Server.Light.EntitySystems
                     break;
             }
             UpdateVisualizer((uid, component));
-            component.StateExpiryTime += (float)component.RefuelMaterialTime.TotalSeconds;
             _stackSystem.ReduceCount((args.Used, stack), 1);
             args.Handled = true;
         }
