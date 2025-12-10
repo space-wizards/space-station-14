@@ -452,6 +452,7 @@
     state: bush1
     drawdepth: Overdoors
   - type: Physics
+    canCollide: False
     bodyType: Static
   - type: Clickable
 
