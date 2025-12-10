@@ -21,7 +21,6 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ToggleableGhostRoleComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<ToggleableGhostRoleComponent, ActivateToggleableGhostRole>(OnActivate);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindRemovedMessage>(OnMindRemoved);
@@ -50,12 +49,14 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
 
         UpdateAppearance(uid, ToggleableGhostRoleStatus.Searching);
 
-        var ev = new ActivateToggleableGhostRole();
-        RaiseLocalEvent(uid, ref ev);
+        ActivateGhostRole((uid, component));
     }
 
-    private void OnActivate(Entity<ToggleableGhostRoleComponent> ent, ref ActivateToggleableGhostRole args)
+    public void ActivateGhostRole(Entity<ToggleableGhostRoleComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
         var ghostRole = EnsureComp<GhostRoleComponent>(ent);
         EnsureComp<GhostTakeoverAvailableComponent>(ent);
 

@@ -2,6 +2,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Construction;
 using Content.Server.Destructible;
 using Content.Server.Ghost;
+using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Power.Components;
@@ -46,6 +47,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
+    [Dependency] private readonly ToggleableGhostRoleSystem _ghostrole = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
@@ -111,8 +113,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             else
             {
                 // If the brain had a ghost role attached, activate the station AI ghost role
-                var ev = new ActivateToggleableGhostRole();
-                RaiseLocalEvent(aiBrain, ref ev);
+                _ghostrole.ActivateGhostRole(aiBrain);
 
                 // Set the new AI brain to the 'rebooting' state
                 if (TryComp<StationAiCustomizationComponent>(aiBrain, out var customization))
