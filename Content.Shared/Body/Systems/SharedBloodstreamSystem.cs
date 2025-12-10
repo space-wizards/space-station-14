@@ -386,7 +386,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// </summary>
     public bool TryModifyBloodLevel(Entity<BloodstreamComponent?> ent, FixedPoint2 amount)
     {
-        float direction = float.PositiveInfinity;
+        float direction = 1f; // TODO: set this to float.PositiveInfinity after saline no longer overfills
 
         if (amount < 0)
         {
