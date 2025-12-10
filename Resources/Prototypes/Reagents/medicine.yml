@@ -1308,7 +1308,8 @@
     amount: -5
   - !type:PlantAdjustHealth
     amount: 5
-  - !type:PlantCryoxadone {}
+  - !type:PlantResurrect
+    minScale: 9
   metabolisms:
     Medicine:
       effects:
