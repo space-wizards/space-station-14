@@ -36,7 +36,7 @@ public sealed partial class PredictedBatterySystem
 
         TrySetChargeCooldown(ent.Owner);
 
-        var changedEv = new PredictedBatteryChargeChangedEvent(newValue, ent.Comp.ChargeRate, curTime, ent.Comp.MaxCharge);
+        var changedEv = new PredictedBatteryChargeChangedEvent(newValue, delta, ent.Comp.ChargeRate, ent.Comp.MaxCharge);
         RaiseLocalEvent(ent, ref changedEv);
 
         // Raise events if the battery status changed between full, empty, or neither.
@@ -95,7 +95,7 @@ public sealed partial class PredictedBatterySystem
         ent.Comp.LastUpdate = curTime;
         Dirty(ent);
 
-        var ev = new PredictedBatteryChargeChangedEvent(newValue, ent.Comp.ChargeRate, curTime, ent.Comp.MaxCharge);
+        var ev = new PredictedBatteryChargeChangedEvent(newValue, delta, ent.Comp.ChargeRate, ent.Comp.MaxCharge);
         RaiseLocalEvent(ent, ref ev);
 
         // Raise events if the battery status changed between full, empty, or neither.
@@ -115,13 +115,14 @@ public sealed partial class PredictedBatterySystem
         if (value == ent.Comp.MaxCharge)
             return;
 
+        var oldCharge = GetCharge(ent);
         ent.Comp.MaxCharge = Math.Max(value, 0);
         ent.Comp.LastCharge = GetCharge(ent); // This clamps it using the new max.
         var curTime = _timing.CurTime;
         ent.Comp.LastUpdate = curTime;
         Dirty(ent);
 
-        var ev = new PredictedBatteryChargeChangedEvent(ent.Comp.LastCharge, ent.Comp.ChargeRate, curTime, ent.Comp.MaxCharge);
+        var ev = new PredictedBatteryChargeChangedEvent(ent.Comp.LastCharge, ent.Comp.LastCharge - oldCharge, ent.Comp.ChargeRate, ent.Comp.MaxCharge);
         RaiseLocalEvent(ent, ref ev);
 
         // Raise events if the battery status changed between full, empty, or neither.
@@ -240,7 +241,7 @@ public sealed partial class PredictedBatterySystem
         Dirty(ent);
 
         // Inform other systems about the new rate;
-        var changedEv = new PredictedBatteryChargeChangedEvent(ent.Comp.LastCharge, ent.Comp.ChargeRate, curTime, ent.Comp.MaxCharge);
+        var changedEv = new PredictedBatteryChargeChangedEvent(ent.Comp.LastCharge, 0f, ent.Comp.ChargeRate, ent.Comp.MaxCharge);
         RaiseLocalEvent(ent, ref changedEv);
 
         return refreshEv.NewChargeRate;

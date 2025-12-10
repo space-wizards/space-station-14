@@ -26,7 +26,7 @@ public sealed partial class BatterySystem
 
         TrySetChargeCooldown(ent.Owner);
 
-        var ev = new ChargeChangedEvent(ent.Comp.CurrentCharge, ent.Comp.MaxCharge);
+        var ev = new ChargeChangedEvent(ent.Comp.CurrentCharge, delta, ent.Comp.MaxCharge);
         RaiseLocalEvent(ent, ref ev);
         return delta;
     }
@@ -61,21 +61,23 @@ public sealed partial class BatterySystem
             return;
         }
 
-        var ev = new ChargeChangedEvent(ent.Comp.CurrentCharge, ent.Comp.MaxCharge);
+        var ev = new ChargeChangedEvent(ent.Comp.CurrentCharge, ent.Comp.CurrentCharge - oldCharge, ent.Comp.MaxCharge);
         RaiseLocalEvent(ent, ref ev);
     }
+
     public override void SetMaxCharge(Entity<BatteryComponent?> ent, float value)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
         var old = ent.Comp.MaxCharge;
+        var oldCharge = ent.Comp.CurrentCharge;
         ent.Comp.MaxCharge = Math.Max(value, 0);
         ent.Comp.CurrentCharge = Math.Min(ent.Comp.CurrentCharge, ent.Comp.MaxCharge);
         if (MathHelper.CloseTo(ent.Comp.MaxCharge, old))
             return;
 
-        var ev = new ChargeChangedEvent(ent.Comp.CurrentCharge, ent.Comp.MaxCharge);
+        var ev = new ChargeChangedEvent(ent.Comp.CurrentCharge, ent.Comp.CurrentCharge - oldCharge, ent.Comp.MaxCharge);
         RaiseLocalEvent(ent, ref ev);
     }
 
