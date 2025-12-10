@@ -114,6 +114,9 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnToggled(Entity<ClothingSpeedModifierComponent> ent, ref ItemToggledEvent args)
     {
+        if (!ent.Comp.RequireActivated)
+            return;
+
         // make sentient boots slow or fast too
         _movementSpeed.RefreshMovementSpeedModifiers(ent);
 
