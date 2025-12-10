@@ -496,7 +496,7 @@
         - !type:AllSelector
           weight: 1
           children:
-          - id: ToySpawner
+          - id: PlushieSpawner50
 
 - type: entity
   id: XenoArtifactEffectLightFlicker
