@@ -101,8 +101,9 @@ public sealed class RiggableSystem : EntitySystem
         if (args.CurrentCharge == 0f)
             return; // No charge to cause an explosion.
 
-        if (args.CurrentChargeRate != 0f)
-            return; // We are not draining or charging the device.
+        // Don't explode if we are not using any charge.
+        if (args.CurrentChargeRate == 0f && args.Delta == 0f)
+            return;
 
         Explode(ent, args.CurrentCharge);
     }
