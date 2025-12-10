@@ -278,37 +278,22 @@ namespace Content.Shared.Damage
         /// <remakrs>
         ///     Does nothing If the given damage value is negative.
         /// </remakrs>
-        [Obsolete("Use the Entity<DamageableComponent?> variant instead.")]
         public void SetAllDamage(EntityUid uid, DamageableComponent component, FixedPoint2 newValue)
         {
-            SetAllDamage((uid, component), newValue);
-        }
-
-        /// <summary>
-        ///     Sets all damage types supported by a <see cref="DamageableComponent"/> to the specified value.
-        /// </summary>
-        /// <remakrs>
-        ///     Does nothing If the given damage value is negative.
-        /// </remakrs>
-        public void SetAllDamage(Entity<DamageableComponent?> ent, FixedPoint2 newValue)
-        {
-            if (!Resolve(ent, ref ent.Comp, false))
-                return;
-
             if (newValue < 0)
             {
                 // invalid value
                 return;
             }
 
-            foreach (var type in ent.Comp.Damage.DamageDict.Keys)
+            foreach (var type in component.Damage.DamageDict.Keys)
             {
-                ent.Comp.Damage.DamageDict[type] = newValue;
+                component.Damage.DamageDict[type] = newValue;
             }
 
             // Setting damage does not count as 'dealing' damage, even if it is set to a larger value, so we pass an
             // empty damage delta.
-            DamageChanged(ent.Owner, ent.Comp, new DamageSpecifier());
+            DamageChanged(uid, component, new DamageSpecifier());
         }
 
         public void SetDamageModifierSetId(EntityUid uid, string? damageModifierSetId, DamageableComponent? comp = null)

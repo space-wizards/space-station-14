@@ -43,6 +43,7 @@ public sealed class ChangelingStasisSystem : EntitySystem
 
         ent.Comp.InitialName = MetaData(ent.Comp.RegenStasisActionEntity.Value).EntityName;
         ent.Comp.InitialDescription = MetaData(ent.Comp.RegenStasisActionEntity.Value).EntityDescription;
+        Dirty(ent);
     }
 
     private void OnShutdown(Entity<ChangelingStasisComponent> ent, ref ComponentShutdown args)
@@ -53,7 +54,7 @@ public sealed class ChangelingStasisSystem : EntitySystem
     private void OnStateChanged(Entity<ChangelingStasisComponent> ent, ref MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Alive && ent.Comp.IsInStasis)
-            CancelStasis((ent, ent.Comp));
+            CancelStasis(ent.AsNullable());
     }
 
     private void OnMoveGhost(Entity<ChangelingStasisComponent> ent, ref GhostAttemptEvent args)
@@ -81,9 +82,6 @@ public sealed class ChangelingStasisSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        if (ent.Comp.RegenStasisActionEntity == null)
-            return;
-
         if (ent.Comp.IsInStasis)
             return;
 
@@ -96,40 +94,42 @@ public sealed class ChangelingStasisSystem : EntitySystem
         _popup.PopupClient(Loc.GetString("changeling-stasis-enter"), ent.Owner, ent.Owner, PopupType.MediumCaution);
 
         ent.Comp.IsInStasis = true;
+        Dirty(ent);
+
+        if (ent.Comp.RegenStasisActionEntity == null)
+            return;
+
+        var stasisDuration = ent.Comp.MinStasisCooldown;
+
+        if (TryComp<DamageableComponent>(ent.Owner, out var damageable))
+        {
+            stasisDuration += ent.Comp.BonusCooldownPerDamage * (double)damageable.TotalDamage;
+            stasisDuration = new TimeSpan(Math.Clamp(stasisDuration.Ticks, ent.Comp.MinStasisCooldown.Ticks, ent.Comp.MaxStasisCooldown.Ticks)); // No clamp method for TimeSpans
+        }
 
         _metaData.SetEntityName(ent.Comp.RegenStasisActionEntity.Value, Loc.GetString("changeling-stasis-active-name"));
         _metaData.SetEntityDescription(ent.Comp.RegenStasisActionEntity.Value, Loc.GetString("changeling-stasis-active-desc"));
 
         _actions.SetToggled(ent.Comp.RegenStasisActionEntity, ent.Comp.IsInStasis);
-
-        Dirty(ent);
-
-        var stasisDuration = ent.Comp.StasisCooldown;
-
-        if (TryComp<DamageableComponent>(ent.Owner, out var damageable))
-        {
-            var damagePercentage = Math.Clamp((damageable.TotalDamage / ent.Comp.StasisDamageDelta).Float(), 0, 1);
-
-            stasisDuration += ent.Comp.BonusStasisCooldown * damagePercentage;
-        }
-
         _actions.SetCooldown(ent.Comp.RegenStasisActionEntity, stasisDuration);
     }
 
+    /// <summary>
+    /// Exit the stasis and heal all damage and bloodloss.
+    /// TODO: Maybe add a some sort of rejuvenate lite so that we can also heal some status effects?
+    /// </summary>
     public void ExitStasis(Entity<ChangelingStasisComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
-            return;
-
-        if (ent.Comp.RegenStasisActionEntity == null)
             return;
 
         if (!ent.Comp.IsInStasis)
             return;
 
         // We remove all the damage.
-        _damage.SetAllDamage(ent.Owner, 0);
+        //_damage.ClearAllDamage(ent.Owner, 0);
 
+        // Heal bloodloss and stop bleeding.
         if (TryComp<BloodstreamComponent>(ent, out var bloodstream))
         {
             _bloodstream.TryModifyBloodLevel((ent, bloodstream), bloodstream.BloodMaxVolume);
@@ -138,10 +138,14 @@ public sealed class ChangelingStasisSystem : EntitySystem
 
         _mobs.ChangeMobState(ent.Owner, MobState.Alive);
 
-        ent.Comp.IsInStasis = false;
-
         _popup.PopupPredicted(Loc.GetString("changeling-stasis-exit"), Loc.GetString("changeling-stasis-exit-others", ("user", ent.Owner)), ent.Owner, ent.Owner, PopupType.MediumCaution);
         _audio.PlayPredicted(ent.Comp.ExitSound, ent.Owner, ent.Owner);
+
+        ent.Comp.IsInStasis = false;
+        Dirty(ent);
+
+        if (ent.Comp.RegenStasisActionEntity == null)
+            return;
 
         if (ent.Comp.InitialName != null)
             _metaData.SetEntityName(ent.Comp.RegenStasisActionEntity.Value, ent.Comp.InitialName);
@@ -149,19 +153,24 @@ public sealed class ChangelingStasisSystem : EntitySystem
             _metaData.SetEntityDescription(ent.Comp.RegenStasisActionEntity.Value, ent.Comp.InitialDescription);
 
         _actions.SetToggled(ent.Comp.RegenStasisActionEntity, ent.Comp.IsInStasis);
-
-        Dirty(ent);
     }
 
+    /// <summary>
+    /// Cancel the stasis without healing.
+    /// </summary>
     public void CancelStasis(Entity<ChangelingStasisComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (ent.Comp.RegenStasisActionEntity == null || !ent.Comp.IsInStasis)
+        if (!ent.Comp.IsInStasis)
             return;
 
         ent.Comp.IsInStasis = false;
+        Dirty(ent);
+
+        if (ent.Comp.RegenStasisActionEntity == null)
+            return;
 
         if (ent.Comp.InitialName != null)
             _metaData.SetEntityName(ent.Comp.RegenStasisActionEntity.Value, ent.Comp.InitialName);
@@ -169,8 +178,6 @@ public sealed class ChangelingStasisSystem : EntitySystem
             _metaData.SetEntityDescription(ent.Comp.RegenStasisActionEntity.Value, ent.Comp.InitialDescription);
 
         _actions.SetToggled(ent.Comp.RegenStasisActionEntity, ent.Comp.IsInStasis);
-
-        Dirty(ent);
     }
 }
 

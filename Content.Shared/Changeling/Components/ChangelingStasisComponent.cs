@@ -31,19 +31,19 @@ public sealed partial class ChangelingStasisComponent : Component
     /// Minimum time the entity has to be in stasis before they are allowed to get up.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan StasisCooldown = TimeSpan.FromSeconds(30);
+    public TimeSpan MinStasisCooldown = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Time added to the stasis cooldown, based on the entity's sustained damage and StasisDamageDelta.
+    /// Maximum time the entity has to be in stasis before they are allowed to get up, based on the entity's sustained damage and CooldownBonusPerDamage.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan BonusStasisCooldown = TimeSpan.FromSeconds(60);
+    public TimeSpan MaxStasisCooldown = TimeSpan.FromSeconds(60);
 
     /// <summary>
-    /// Maximum amount of damage on an entity allowed before adding the entire BonusStasisCooldown to the cooldown.
+    /// The amount of bonus cooldown time to add on top of <see cref="MinStasisCooldown"/> for each unit of damage.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int StasisDamageDelta = 400; // at 200 damage, the cooldown should be 60s
+    public TimeSpan BonusCooldownPerDamage = TimeSpan.FromSeconds(30d / 200d); // at 200 damage, the cooldown should be 60s
 
     /// <summary>
     /// The action entity for the stasis action.
@@ -66,13 +66,13 @@ public sealed partial class ChangelingStasisComponent : Component
     /// <summary>
     /// The name this entity's action started with.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? InitialName;
 
     /// <summary>
     /// The description this entity's action started with.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? InitialDescription;
 
     public override bool SendOnlyToOwner => true;

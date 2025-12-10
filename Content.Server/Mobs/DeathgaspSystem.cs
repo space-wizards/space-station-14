@@ -27,9 +27,6 @@ public sealed class DeathgaspSystem : SharedDeathgaspSystem
         Deathgasp(uid, component);
     }
 
-    /// <summary>
-    ///     Causes an entity to perform their deathgasp emote, if they have one.
-    /// </summary>
     public override bool Deathgasp(EntityUid uid, DeathgaspComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
