@@ -56,7 +56,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
-        if (component.RequireActivated & !_toggle.IsActivated(uid))
+        if (component.RequireActivated && !_toggle.IsActivated(uid))
             return;
 
         if (component.Standing != null && !_standing.IsMatchingState(args.Owner, component.Standing.Value))
