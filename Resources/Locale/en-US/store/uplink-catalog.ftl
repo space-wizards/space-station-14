@@ -6,7 +6,7 @@ uplink-revolver-python-name = Python
 uplink-revolver-python-desc = A brutally simple, effective, and loud Syndicate revolver. Comes loaded with armor-piercing rounds. Uses speedloaders (.45 magnum).
 
 uplink-pistol-cobra-name = Cobra
-uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Uses caseless pistol magazines (.25 caseless).
+uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Uses pistol magazines (.25 caseless).
 
 uplink-rifle-mosin-name = Kardashev-Mosin
 uplink-rifle-mosin-desc = A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
@@ -43,13 +43,13 @@ uplink-flash-grenade-name = Flashbang
 uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and slowing down anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
 
 uplink-smoke-grenade-name = Smoke Grenade
-uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke, perfect for killing someone in the shadows or making a sneaky getaway.
+uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke for 30 seconds, perfect for killing someone in the shadows or making a sneaky getaway.
 
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a 5 second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
 uplink-singularity-grenade-name = Singularity Grenade
-uplink-singularity-grenade-desc = Grenade that simulates the power of a singularity, generates a powerful gravity well.
+uplink-singularity-grenade-desc = Grenade that simulates the power of a singularity, generates a powerful gravity well for about 10 seconds.
 
 uplink-whitehole-grenade-name = Whitehole Grenade
 uplink-whitehole-grenade-desc = Grenade that repulses everything around it for about 10 seconds. Very useful in small rooms and for chasing someone.
@@ -79,7 +79,7 @@ uplink-exploding-syndicate-bomb-fake-name = Decoy Syndicate Bomb
 uplink-exploding-syndicate-bomb-fake-desc = A training bomb carefully made to look just like the real thing. In all ways similar to a syndicate bomb, but only creates a tiny explosion.
 
 uplink-cluster-grenade-name = Cluster Grenade
-uplink-cluster-grenade-desc = Three explosive grenades bundled together. The cluster splits after 3.5 seconds and detonates 1 second later.
+uplink-cluster-grenade-desc = Three explosive grenades bundled together. The cluster splits after 3.5 seconds then explodes in a very large radius.
 
 uplink-incendiary-grenade-name = Incendiary Grenade
 uplink-incendiary-grenade-desc = Releases a spray of incendiary fragments, igniting anyone near the detonation area.
@@ -137,7 +137,7 @@ uplink-access-breaker-name = Access Breaker
 uplink-access-breaker-desc = A hacked access configurator and a good friend of the emag. This device is able to force airlocks open as well as erase access requirements from station equipment. Recharges automatically.
 
 uplink-agent-id-card-name = Agent ID Card
-uplink-agent-id-card-desc = A chameleon ID card that can copy accesses from other cards, change its name, and job title at will.
+uplink-agent-id-card-desc = A chameleon ID card that can copy accesses from other cards. it can also change its name and job title at will.
 
 uplink-syndicate-id-card-name = Syndicate ID Card
 uplink-syndicate-id-card-desc = A Syndicate ID card, with Syndicate access. Unlikely to be useful on its own, but goes great with reconfigured doors. Does not come with access-copying functionality.
@@ -284,7 +284,7 @@ uplink-toolbox-name = Toolbox
 uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves and a syndicate gas mask as well.
 
 uplink-syndicate-jaws-of-life-name = Jaws Of Life
-uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments.
+uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments. Can even open bolted doors!
 
 uplink-duffel-surgery-name = Surgical Duffel Bag
 uplink-duffel-surgery-desc = A large duffel bag containing a full suite of surgical tools.
