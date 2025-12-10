@@ -112,7 +112,7 @@ public sealed class RootableSystem : EntitySystem
         _reactive.DoEntityReaction(ent, transferSolution, ReactionMethod.Ingestion);
 
         // Log solution addition by puddle.
-        if (_blood.TryAddToChemicals((ent, ent.Comp2), transferSolution))
+        if (_blood.TryAddToBloodstream((ent, ent.Comp2), transferSolution))
             _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(ent):target} absorbed puddle {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");
     }
 

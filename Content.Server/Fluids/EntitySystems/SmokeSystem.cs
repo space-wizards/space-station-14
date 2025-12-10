@@ -287,7 +287,7 @@ public sealed class SmokeSystem : EntitySystem
         if (blockIngestion)
             return;
 
-        if (_blood.TryAddToChemicals((entity, bloodstream), transferSolution))
+        if (_blood.TryAddToBloodstream((entity, bloodstream), transferSolution))
         {
             // Log solution addition by smoke
             _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):target} ingested smoke {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");

@@ -360,7 +360,7 @@ public abstract class SharedInjectorSystem : EntitySystem
         // Move units from attackSolution to targetSolution
         var removedSolution = SolutionContainer.SplitSolution(target.Comp.BloodSolution.Value, realTransferAmount);
 
-        _blood.TryAddToChemicals(target.AsNullable(), removedSolution);
+        _blood.TryAddToBloodstream(target.AsNullable(), removedSolution);
 
         _reactiveSystem.DoEntityReaction(target, removedSolution, ReactionMethod.Injection);
 

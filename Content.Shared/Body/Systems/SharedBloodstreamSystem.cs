@@ -339,7 +339,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// <summary>
     /// Attempt to transfer a provided solution to internal solution.
     /// </summary>
-    public bool TryAddToChemicals(Entity<BloodstreamComponent?> ent, Solution solution)
+    public bool TryAddToBloodstream(Entity<BloodstreamComponent?> ent, Solution solution)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
             || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution))
