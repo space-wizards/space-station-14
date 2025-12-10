@@ -17,7 +17,7 @@ public sealed partial class ClothingSpeedModifierComponent : Component
     public float SprintModifier = 1.0f;
 
     /// <summary>
-    /// Defines if the speed modifier requires activation to apply.
+    /// Defines if the speed modifier requires ItemToggleSystem activation to apply.
     /// </summary>
     [DataField]
     public bool RequireActivated = true;
