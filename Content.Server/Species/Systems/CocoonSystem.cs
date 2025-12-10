@@ -8,7 +8,6 @@ using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Eye.Blinding.Components;
@@ -30,6 +29,9 @@ using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Destructible;
+using Content.Shared.Gibbing.Events;
+using Content.Server.Body.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -56,6 +58,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private const string CocoonContainerId = "cocoon_victim";
+    private readonly HashSet<EntityUid> _processingDamage = new();
 
     public override void Initialize()
     {
@@ -65,57 +68,97 @@ public sealed class CocoonSystem : SharedCocoonSystem
         SubscribeLocalEvent<CocoonerComponent, WrapDoAfterEvent>(OnWrapDoAfter);
 
         SubscribeLocalEvent<CocoonContainerComponent, ComponentShutdown>(OnCocoonContainerShutdown);
-        SubscribeLocalEvent<CocoonContainerComponent, DamageModifyEvent>(OnCocoonContainerDamage);
+        SubscribeLocalEvent<CocoonContainerComponent, DamageChangedEvent>(OnCocoonContainerDamage);
+        SubscribeLocalEvent<CocoonContainerComponent, DestructionEventArgs>(OnCocoonContainerDestroyed);
         SubscribeLocalEvent<CocoonContainerComponent, GetVerbsEvent<InteractionVerb>>(OnGetUnwrapVerb);
         SubscribeLocalEvent<CocoonContainerComponent, UnwrapDoAfterEvent>(OnUnwrapDoAfter);
 
+        SubscribeLocalEvent<ContainerManagerComponent, ComponentShutdown>(OnCocoonContainerManagerShutdown);
+
         SubscribeLocalEvent<CocoonedComponent, RemoveCocoonAlertEvent>(OnRemoveCocoonAlert);
         SubscribeLocalEvent<CocoonedComponent, AttackAttemptEvent>(OnCocoonedAttackAttempt);
+
+        SubscribeLocalEvent<CocoonedComponent, BeingGibbedEvent>(OnCocoonedVictimGibbed);
     }
 
-    private void OnCocoonContainerDamage(Entity<CocoonContainerComponent> ent, ref DamageModifyEvent args)
+    private void OnCocoonContainerDamage(EntityUid uid, CocoonContainerComponent component, DamageChangedEvent args)
     {
-        // Only absorb positive damage
-        if (!args.OriginalDamage.AnyPositive())
+        // Skip if we're already processing damage for this entity (prevents recursion from SetDamage)
+        if (_processingDamage.Contains(uid))
             return;
 
-        var originalTotalDamage = args.OriginalDamage.GetTotal().Float();
-        if (originalTotalDamage <= 0)
+        // Only process if damage was actually increased
+        if (!args.DamageIncreased || args.DamageDelta == null)
             return;
 
-        // Calculate percentage of the original damage to absorb
-        var absorbedDamage = originalTotalDamage * ent.Comp.AbsorbPercentage;
+        var damageDelta = args.DamageDelta;
+        var totalDamage = damageDelta.GetTotal().Float();
+        if (totalDamage <= 0)
+            return;
 
-        // Reduce the damage by the absorb percentage (victim only takes the remainder)
-        // Apply coefficient to all damage types that were originally present
-        var reducePercentage = 1f - ent.Comp.AbsorbPercentage;
-        var modifier = new DamageModifierSet();
-        foreach (var key in args.OriginalDamage.DamageDict.Keys)
+        // Calculate the absorbed damage per damage type
+        var absorbedDamageSpec = new DamageSpecifier();
+        foreach (var (key, value) in damageDelta.DamageDict)
         {
-            modifier.Coefficients.TryAdd(key, reducePercentage);
+            absorbedDamageSpec.DamageDict[key] = value * component.AbsorbPercentage;
         }
-        args.Damage = DamageSpecifier.ApplyModifierSet(args.Damage, modifier);
 
-        // Accumulate the absorbed damage on the cocoon container
-        ent.Comp.AccumulatedDamage += absorbedDamage;
-        Dirty(ent, ent.Comp);
+        // Calculate victim damage: total damage - absorbed damage
+        var victimDamage = damageDelta - absorbedDamageSpec;
+
+        // Modify the DamageableComponent's damage to only include the absorbed portion
+        // Current damage already includes the full delta, so we need to:
+        // 1. Get current damage
+        // 2. Subtract the delta that was just added
+        // 3. Add only the absorbed portion
+        var currentDamage = args.Damageable.Damage;
+
+        // Set damage to: current - delta + absorbed (using DamageSpecifier operators)
+        var newDamage = currentDamage - damageDelta + absorbedDamageSpec;
+
+        // Mark as processing to prevent recursion
+        _processingDamage.Add(uid);
+
+        try
+        {
+            // Set the damage to only the absorbed portion
+            _damageable.SetDamage(uid, args.Damageable, newDamage);
+        }
+        finally
+        {
+            _processingDamage.Remove(uid);
+        }
 
         // Pass the reduced damage to the victim inside
-        if (ent.Comp.Victim != null && Exists(ent.Comp.Victim.Value))
+        if (component.Victim != null && Exists(component.Victim.Value))
         {
             // Apply the reduced damage directly to the victim
-            _damageable.TryChangeDamage(ent.Comp.Victim.Value, args.Damage, origin: args.Origin);
+            _damageable.TryChangeDamage(component.Victim.Value, victimDamage, origin: args.Origin);
         }
 
-        // The container itself takes minimal/no damage (we handle breaking via accumulated damage)
-        // Set damage to zero so the container doesn't take structural damage
-        args.Damage = new DamageSpecifier();
+        // The DestructibleComponent will automatically trigger when damage reaches the threshold
+    }
 
-        // Break the cocoon if it reaches max damage
-        if (ent.Comp.AccumulatedDamage >= ent.Comp.MaxDamage)
+    private void OnCocoonContainerDestroyed(EntityUid uid, CocoonContainerComponent component, DestructionEventArgs args)
+    {
+        PlayCocoonRemovalSound(uid);
+
+        // Show popup to victim - OnCocoonContainerShutdown will handle cleanup
+        if (component.Victim != null && Exists(component.Victim.Value))
         {
-            BreakCocoon(ent);
+            _popups.PopupEntity(Loc.GetString("arachnid-cocoon-broken"), component.Victim.Value, component.Victim.Value, PopupType.LargeCaution);
         }
+    }
+
+    /// <summary>
+    ///     Plays a sound at the entity's location for everyone within range.
+    /// </summary>
+    private void PlaySoundAtEntity(EntityUid uid, SoundPathSpecifier sound, float range = 10f)
+    {
+        var mapCoords = _transform.GetMapCoordinates(uid);
+        var filter = Filter.Empty().AddInRange(mapCoords, range);
+        var entityCoords = _transform.ToCoordinates(mapCoords);
+        _audio.PlayStatic(sound, filter, entityCoords, true);
     }
 
     /// <summary>
@@ -123,10 +166,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
     /// </summary>
     private void PlayCocoonRemovalSound(EntityUid uid)
     {
-        var mapCoords = _transform.GetMapCoordinates(uid);
-        var filter = Filter.Empty().AddInRange(mapCoords, 10f);
-        var entityCoords = _transform.ToCoordinates(mapCoords);
-        _audio.PlayStatic(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_breakout.ogg"), filter, entityCoords, true);
+        PlaySoundAtEntity(uid, new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_breakout.ogg"));
     }
 
     /// <summary>
@@ -180,6 +220,39 @@ public sealed class CocoonSystem : SharedCocoonSystem
         {
             RemComp<TemporaryBlindnessComponent>(victim);
         }
+    }
+
+    /// <summary>
+    /// Empties the cocoon container, removing all entities to prevent them from being deleted.
+    /// </summary>
+    private void EmptyCocoonContainer(EntityUid uid)
+    {
+        if (!_container.TryGetContainer(uid, CocoonContainerId, out var container))
+            return;
+
+        var coords = Transform(uid).Coordinates;
+        var containedEntities = container.ContainedEntities.ToList();
+        foreach (var entity in containedEntities)
+        {
+            if (!Deleted(entity) && container.Contains(entity))
+            {
+                _container.Remove(entity, container, destination: coords, force: true);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ensures the cocoon container is empty before ContainerManagerComponent shutdown.
+    /// This prevents InternalShutdown from deleting contained entities (like gibbed body parts).
+    /// EmptyAllContainersBehaviour should handle this, but we ensure it here as a safety measure.
+    /// </summary>
+    private void OnCocoonContainerManagerShutdown(EntityUid uid, ContainerManagerComponent component, ComponentShutdown args)
+    {
+        // Only handle cocoon containers
+        if (!HasComp<CocoonContainerComponent>(uid))
+            return;
+
+        EmptyCocoonContainer(uid);
     }
 
     private void OnWrapAction(EntityUid uid, CocoonerComponent component, ref WrapActionEvent args)
@@ -245,10 +318,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         _adminLog.Add(LogType.Action, LogImpact.High,
             $"{ToPrettyString(user):player} is trying to cocoon {ToPrettyString(target):player}");
 
-        var mapCoords = _transform.GetMapCoordinates(target);
-        var filter = Filter.Empty().AddInRange(mapCoords, 10f);
-        var entityCoords = _transform.ToCoordinates(mapCoords);
-        _audio.PlayStatic(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_start.ogg"), filter, entityCoords, true);
+        PlaySoundAtEntity(target, new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_start.ogg"));
 
         _popups.PopupEntity(Loc.GetString("arachnid-wrap-start-user", ("target", target)), user, user);
         _popups.PopupEntity(Loc.GetString("arachnid-wrap-start-target", ("user", user)), target, target, PopupType.LargeCaution);
@@ -357,9 +427,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         // Send networked event to client for additional client-side visual handling (scale adjustment, etc.)
         RaiseNetworkEvent(new CocoonRotationAnimationEvent(GetNetEntity(cocoonContainer), victimWasStanding));
 
-        var filter = Filter.Empty().AddInRange(targetCoords, 10f);
-        var entityCoords = _transform.ToCoordinates(targetCoords);
-        _audio.PlayStatic(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_end.ogg"), filter, entityCoords, true);
+        PlaySoundAtEntity(cocoonContainer, new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_end.ogg"));
 
         _popups.PopupEntity(Loc.GetString("arachnid-wrap-complete-user", ("target", target)), performer, performer);
         _popups.PopupEntity(Loc.GetString("arachnid-wrap-complete-target"), target, target, PopupType.LargeCaution);
@@ -375,29 +443,15 @@ public sealed class CocoonSystem : SharedCocoonSystem
         if (args.Cancelled || args.Handled)
             return;
 
-        // Play cocoon removal sound for everyone within 10 meters
+        // Play cocoon removal sound before deletion (entity must be valid for coordinates)
         PlayCocoonRemovalSound(uid);
 
-        // Remove virtual items from victim's hands before removing from container
-        if (component.Victim != null && Exists(component.Victim.Value))
-        {
-            var victim = component.Victim.Value;
-            _virtualItem.DeleteInHandsMatching(victim, uid);
+        // Empty the container before deletion
+        // OnCocoonContainerManagerShutdown handles this for destructible-triggered destruction,
+        // but we need to do it manually here since Del() queues deletion and shutdowns happen later
+        EmptyCocoonContainer(uid);
 
-            // Remove CocoonedComponent and clear alert
-            if (TryComp<CocoonedComponent>(victim, out var cocoonedComp))
-            {
-                _alerts.ClearAlert(victim, cocoonedComp.CocoonedAlert);
-                RemComp<CocoonedComponent>(victim);
-            }
-
-            if (_container.TryGetContainer(uid, CocoonContainerId, out var container))
-            {
-                _container.Remove(victim, container);
-            }
-        }
-
-        // Delete the container
+        // Delete the container - OnCocoonContainerShutdown will handle victim cleanup
         Del(uid);
 
         if (component.Victim != null && Exists(component.Victim.Value))
@@ -449,10 +503,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
                 if (!_doAfter.TryStartDoAfter(doAfter))
                     return;
 
-                var mapCoords = _transform.GetMapCoordinates(uid);
-                var filter = Filter.Empty().AddInRange(mapCoords, 10f);
-                var entityCoords = _transform.ToCoordinates(mapCoords);
-                _audio.PlayStatic(new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_start.ogg"), filter, entityCoords, true);
+                PlaySoundAtEntity(uid, new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_start.ogg"));
 
                 var targetName = component.Victim != null && Exists(component.Victim.Value) ? component.Victim.Value : uid;
                 _popups.PopupEntity(Loc.GetString("arachnid-unwrap-start-user", ("target", targetName)), args.User, args.User);
@@ -470,30 +521,21 @@ public sealed class CocoonSystem : SharedCocoonSystem
     /// </summary>
     public void BreakCocoon(Entity<CocoonContainerComponent> cocoon)
     {
-        PlayCocoonRemovalSound(cocoon);
-
-        // Remove victim from container before deleting
+        // Show popup to victim
         if (cocoon.Comp.Victim != null && Exists(cocoon.Comp.Victim.Value))
         {
-            var victim = cocoon.Comp.Victim.Value;
-            // Remove virtual items from victim's hands
-            _virtualItem.DeleteInHandsMatching(victim, cocoon);
-
-            // Remove CocoonedComponent and clear alert
-            if (TryComp<CocoonedComponent>(victim, out var cocoonedComp))
-            {
-                _alerts.ClearAlert(victim, cocoonedComp.CocoonedAlert);
-                RemComp<CocoonedComponent>(victim);
-            }
-
-            if (_container.TryGetContainer(cocoon, CocoonContainerId, out var container))
-            {
-                _container.Remove(victim, container);
-            }
-            _popups.PopupEntity(Loc.GetString("arachnid-cocoon-broken"), victim, victim, PopupType.LargeCaution);
+            _popups.PopupEntity(Loc.GetString("arachnid-cocoon-broken"), cocoon.Comp.Victim.Value, cocoon.Comp.Victim.Value, PopupType.LargeCaution);
         }
 
-        // Delete the container
+        // Play cocoon removal sound before deletion (entity must be valid for coordinates)
+        PlayCocoonRemovalSound(cocoon);
+
+        // Empty the container before deletion
+        // OnCocoonContainerManagerShutdown handles this for destructible-triggered destruction,
+        // but we need to do it manually here since Del() queues deletion and shutdowns happen later
+        EmptyCocoonContainer(cocoon);
+
+        // Delete the container - OnCocoonContainerShutdown will handle victim cleanup
         Del(cocoon);
     }
 
@@ -511,6 +553,39 @@ public sealed class CocoonSystem : SharedCocoonSystem
     {
         // Prevent cocooned victims from attacking at all (similar to handcuffs)
         args.Cancel();
+    }
+
+    private void OnCocoonedVictimGibbed(Entity<CocoonedComponent> ent, ref BeingGibbedEvent args)
+    {
+        // Find the cocoon container that contains this victim
+        if (!_container.TryGetContainingContainer(ent.Owner, out var container))
+            return;
+
+        if (!TryComp<CocoonContainerComponent>(container.Owner, out var cocoonComp))
+            return;
+
+        // Move all gibbed parts into the cocoon container
+        if (!_container.TryGetContainer(container.Owner, CocoonContainerId, out var victimContainer))
+            return;
+
+        foreach (var gibbedPart in args.GibbedParts)
+        {
+            if (Deleted(gibbedPart) || !Exists(gibbedPart))
+                continue;
+
+            // If it's a transform child of the cocoon, detach it first
+            var gibbedTransform = Transform(gibbedPart);
+            if (gibbedTransform.ParentUid == container.Owner)
+            {
+                _transform.DetachEntity(gibbedPart, gibbedTransform);
+            }
+
+            // Insert into the container
+            if (!victimContainer.Contains(gibbedPart))
+            {
+                _container.Insert(gibbedPart, victimContainer, force: true);
+            }
+        }
     }
 
 }

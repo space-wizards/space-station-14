@@ -1,3 +1,4 @@
+// SPDX-FileCopyrightText: 2025 Drywink <43855731+Drywink@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Drywink <hugogrethen@gmail.com>
 //
 // SPDX-License-Identifier: MIT
@@ -23,19 +24,9 @@ public sealed partial class CocoonContainerComponent : Component
     public EntityUid? Victim;
 
     /// <summary>
-    /// Accumulated damage that the cocoon has absorbed. The cocoon breaks after reaching MaxDamage.
-    /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float AccumulatedDamage = 0f;
-
-    /// <summary>
-    /// Maximum damage the cocoon can absorb before breaking.
-    /// </summary>
-    [DataField]
-    public float MaxDamage = 10f;
-
-    /// <summary>
     /// Percentage of damage that the cocoon absorbs (0.3 = 30%).
+    /// The absorbed damage is stored in the DamageableComponent, and the DestructibleComponent
+    /// threshold determines when the cocoon breaks.
     /// </summary>
     [DataField]
     public float AbsorbPercentage = 0.3f;

@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2025 Drywink <43855731+Drywink@users.noreply.github.com>
 # SPDX-FileCopyrightText: 2025 Drywink <hugogrethen@gmail.com>
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
@@ -29,10 +30,18 @@
     containers:
       cocoon_victim: !type:Container
   - type: CocoonContainer
-    maxDamage: 10
     absorbPercentage: 0.3
   - type: Damageable
     damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Appearance
   - type: RotationVisuals
     defaultRotation: 0
