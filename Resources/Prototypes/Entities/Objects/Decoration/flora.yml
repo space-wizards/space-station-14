@@ -295,6 +295,22 @@
         treeconifer03: ""
 
 - type: entity
+  parent: FloraTree
+  id: FloraTreePalm
+  name: palm tree
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_shadow_trees.rsi
+    layers:
+    - state: palm1
+      map: ["random"]
+  - type: RandomSprite
+    available:
+    - random:
+        palm1: ""
+        palm2: ""
+
+- type: entity
   parent: BaseTreeConifer
   id: FloraTreeChristmas01
   name: christmas tree
