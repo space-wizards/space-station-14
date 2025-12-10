@@ -696,6 +696,7 @@
       borg_brain:
       - PositronicBrain
       borg_module:
+      - BorgModuleTool
       - BorgModuleFireExtinguisher
       - BorgModuleCleaning
       - BorgModuleCustodial
@@ -732,6 +733,7 @@
       borg_brain:
       - PositronicBrain
       borg_module:
+      - BorgModuleTool
       - BorgModuleFireExtinguisher
       - BorgModuleChemical
       - BorgModuleTopicals
