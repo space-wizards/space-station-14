@@ -8,137 +8,136 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.XAML;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 
-namespace Content.Client.Atmos.UI
+namespace Content.Client.Atmos.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class GasAnalyzerWindow : DefaultWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class GasAnalyzerWindow : DefaultWindow
+    private static readonly Vector2 WindowMinSize = new Vector2(270, 350);
+    private const float WindowMinHeightForScrollbar = 500;
+
+    private NetEntity _currentEntity = NetEntity.Invalid;
+
+    public GasAnalyzerWindow()
     {
-        private static readonly Vector2 WindowMinSize = new Vector2(270, 350);
-        private const float WindowMinHeightForScrollbar = 500;
+        RobustXamlLoader.Load(this);
+    }
 
-        private NetEntity _currentEntity = NetEntity.Invalid;
+    public void Populate(GasAnalyzerUserMessage msg)
+    {
+        DeviceName.InvalidateMeasure();  // "Just OK" workaround for a layout engine bug
+        InvalidateMeasure();
 
-        public GasAnalyzerWindow()
+        // Errors
+        if (msg.Error != null)
         {
-            RobustXamlLoader.Load(this);
+            ErrorText.Text = Loc.GetString("gas-analyzer-window-error-text", ("errorText", msg.Error));
+            return;
         }
 
-        public void Populate(GasAnalyzerUserMessage msg)
+        if (msg.NodeGasMixes.Length == 0)
         {
-            DeviceName.InvalidateMeasure();  // "Just OK" workaround for a layout engine bug
-            InvalidateMeasure();
-
-            // Errors
-            if (msg.Error != null)
-            {
-                ErrorText.Text = Loc.GetString("gas-analyzer-window-error-text", ("errorText", msg.Error));
-                return;
-            }
-
-            if (msg.NodeGasMixes.Length == 0)
-            {
-                ErrorText.Text = Loc.GetString("gas-analyzer-window-no-data");
-                return;
-            }
-
-            // Environment tab
-            var envMix = msg.NodeGasMixes[0];
-            Tabs.SetTabTitle(1, envMix.Name);
-            EnvironmentMix.Populate(envMix);
-
-            // Device tab
-            DeviceMixes.RemoveAllChildren();
-            bool hasDeviceTab = (msg.NodeGasMixes.Length > 1);
-            Tabs.SetTabVisible(0, hasDeviceTab);
-
-            if (!hasDeviceTab)
-            {
-                // There are no device mixes. Show only the environment mix.
-                Tabs.CurrentTab = 1;
-                _currentEntity = NetEntity.Invalid;
-                return;
-            }
-
-            var device = IoCManager.Resolve<IEntityManager>().GetEntity(msg.DeviceUid);
-            var deviceName = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.DeviceName));
-            DeviceIcon.SetEntity(device);
-            DeviceName.Text = deviceName;
-            Tabs.SetTabTitle(0, deviceName);
-
-            // When the user targets a new device, switch to the device mix tab.
-            if (_currentEntity != msg.DeviceUid)
-            {
-                Tabs.CurrentTab = 0;
-                _currentEntity = msg.DeviceUid;
-            }
-
-            // Up to three columns. Any more mixes go on a new row.
-            const int maxColumns = 3;
-            var mixCount = msg.NodeGasMixes.Length - 1;
-            DeviceMixes.Columns = Math.Max(1, ((mixCount - 1) % maxColumns) + 1);
-
-            var deviceMixes = msg.NodeGasMixes.Skip(1);
-            if (msg.DeviceFlipped)
-                deviceMixes = deviceMixes.Reverse();
-
-            foreach (var mix in deviceMixes)
-            {
-                var outlinePanel = new PanelContainer
-                {
-                    HorizontalAlignment = HAlignment.Center,
-                    VerticalExpand = true,
-                    Margin = new Thickness(4),
-                    PanelOverride = new StyleBoxFlat
-                    {
-                        BorderThickness = new Thickness(1),
-                        BorderColor = Color.FromHex("#4f4f4f")
-                    }
-                };
-
-                var vbox = new BoxContainer
-                {
-                    Orientation = BoxContainer.LayoutOrientation.Vertical,
-                    HorizontalExpand = true,
-                    VerticalExpand = true
-                };
-
-                var nameLabel = new Label
-                {
-                    Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", mix.Name)),
-                    Align = Label.AlignMode.Center,
-                    HorizontalExpand = true
-                };
-
-                var spacer = new Control { MinHeight = 12 };
-
-                var gasAnalysis = new GasAnalyzerControl { Margin = new Thickness(8) };
-                gasAnalysis.Populate(mix);
-
-                vbox.AddChild(nameLabel);
-                vbox.AddChild(spacer);
-                vbox.AddChild(gasAnalysis);
-                outlinePanel.AddChild(vbox);
-                DeviceMixes.AddChild(outlinePanel);
-            }
+            ErrorText.Text = Loc.GetString("gas-analyzer-window-no-data");
+            return;
         }
 
-        protected override Vector2 MeasureOverride(Vector2 availableSize)
-        {
-            // Here we make sure that the DesiredSize of the tabs is initialized to a reasonable size, but we invalidate
-            // it again afterwards so that it will still be calculated the normal way.
-            EnvironmentTabContent.Measure(availableSize);
-            DevicesTabContents.Measure(availableSize);
-            EnvironmentTabContent.InvalidateMeasure();
-            DevicesTabContents.InvalidateMeasure();
+        // Environment tab
+        var envMix = msg.NodeGasMixes[0];
+        Tabs.SetTabTitle(1, envMix.Name);
+        EnvironmentMix.Populate(envMix);
 
-            // The size of the window is the size of the bigger tab, but allowing for a scrollbar if the height is
-            // greater than WindowMinHeightForScrollbar.
-            var tab1Size = EnvironmentTabContent.DesiredSize;
-            var tab2Size = DevicesTabContents.DesiredSize;
-            var contentSize = Vector2.Max(tab1Size, tab2Size)
-                              + new Vector2(50, 100);  // Extra space for margins, tabs and scrollbar.
-            contentSize.Y = Math.Min(contentSize.Y, WindowMinHeightForScrollbar);
-            return Vector2.Max(WindowMinSize, contentSize);
+        // Device tab
+        DeviceMixes.RemoveAllChildren();
+        bool hasDeviceTab = (msg.NodeGasMixes.Length > 1);
+        Tabs.SetTabVisible(0, hasDeviceTab);
+
+        if (!hasDeviceTab)
+        {
+            // There are no device mixes. Show only the environment mix.
+            Tabs.CurrentTab = 1;
+            _currentEntity = NetEntity.Invalid;
+            return;
         }
+
+        var device = IoCManager.Resolve<IEntityManager>().GetEntity(msg.DeviceUid);
+        var deviceName = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", msg.DeviceName));
+        DeviceIcon.SetEntity(device);
+        DeviceName.Text = deviceName;
+        Tabs.SetTabTitle(0, deviceName);
+
+        // When the user targets a new device, switch to the device mix tab.
+        if (_currentEntity != msg.DeviceUid)
+        {
+            Tabs.CurrentTab = 0;
+            _currentEntity = msg.DeviceUid;
+        }
+
+        // Up to three columns. Any more mixes go on a new row.
+        const int maxColumns = 3;
+        var mixCount = msg.NodeGasMixes.Length - 1;
+        DeviceMixes.Columns = Math.Max(1, ((mixCount - 1) % maxColumns) + 1);
+
+        var deviceMixes = msg.NodeGasMixes.Skip(1);
+        if (msg.DeviceFlipped)
+            deviceMixes = deviceMixes.Reverse();
+
+        foreach (var mix in deviceMixes)
+        {
+            var outlinePanel = new PanelContainer
+            {
+                HorizontalAlignment = HAlignment.Center,
+                VerticalExpand = true,
+                Margin = new Thickness(4),
+                PanelOverride = new StyleBoxFlat
+                {
+                    BorderThickness = new Thickness(1),
+                    BorderColor = Color.FromHex("#4f4f4f")
+                }
+            };
+
+            var vbox = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical,
+                HorizontalExpand = true,
+                VerticalExpand = true
+            };
+
+            var nameLabel = new Label
+            {
+                Text = Loc.GetString("gas-analyzer-window-tab-title-capitalized", ("title", mix.Name)),
+                Align = Label.AlignMode.Center,
+                HorizontalExpand = true
+            };
+
+            var spacer = new Control { MinHeight = 12 };
+
+            var gasAnalysis = new GasAnalyzerControl { Margin = new Thickness(8) };
+            gasAnalysis.Populate(mix);
+
+            vbox.AddChild(nameLabel);
+            vbox.AddChild(spacer);
+            vbox.AddChild(gasAnalysis);
+            outlinePanel.AddChild(vbox);
+            DeviceMixes.AddChild(outlinePanel);
+        }
+    }
+
+    protected override Vector2 MeasureOverride(Vector2 availableSize)
+    {
+        // Here we make sure that the DesiredSize of the tabs is initialized to a reasonable size, but we invalidate
+        // it again afterwards so that it will still be calculated the normal way.
+        EnvironmentTabContent.Measure(availableSize);
+        DevicesTabContents.Measure(availableSize);
+        EnvironmentTabContent.InvalidateMeasure();
+        DevicesTabContents.InvalidateMeasure();
+
+        // The size of the window is the size of the bigger tab, but allowing for a scrollbar if the height is
+        // greater than WindowMinHeightForScrollbar.
+        var tab1Size = EnvironmentTabContent.DesiredSize;
+        var tab2Size = DevicesTabContents.DesiredSize;
+        var contentSize = Vector2.Max(tab1Size, tab2Size)
+                          + new Vector2(50, 100);  // Extra space for margins, tabs and scrollbar.
+        contentSize.Y = Math.Min(contentSize.Y, WindowMinHeightForScrollbar);
+        return Vector2.Max(WindowMinSize, contentSize);
     }
 }
