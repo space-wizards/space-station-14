@@ -1,6 +1,6 @@
 - type: entity
-  id: CrateVendingMachineRestockEngineeringFilled
   parent: CrateEngineeringSecure
+  id: CrateVendingMachineRestockEngineeringFilled
   name: EngiVend restock crate
   description: Contains a restock box for the EngiVend. Also supports the YouTool.
   components:
@@ -10,8 +10,8 @@
         id: VendingMachineRestockEngineering
 
 - type: entity
-  id: CrateVendingMachineRestockMedicalFilled
   parent: CrateMedicalSecure
+  id: CrateVendingMachineRestockMedicalFilled
   name: NanoMed restock crate
   description: Contains a restock box, compatible with the NanoMed and NanoMedPlus.
   components:
@@ -21,8 +21,8 @@
         id: VendingMachineRestockMedical
 
 - type: entity
-  id: CrateVendingMachineRestockChemVendFilled
   parent: CrateMedicalSecure
+  id: CrateVendingMachineRestockChemVendFilled
   name: ChemVend restock crate
   description: Contains a restock box for the ChemVend.
   components:
@@ -32,8 +32,8 @@
         id: VendingMachineRestockChemVend
 
 - type: entity
-  id: CrateVendingMachineRestockNutriMaxFilled
   parent: CrateHydroSecure
+  id: CrateVendingMachineRestockNutriMaxFilled
   name: NutriMax restock crate
   description: Contains a restock box for the NutriMax vending machine.
   components:
@@ -43,8 +43,8 @@
         id: VendingMachineRestockNutriMax
 
 - type: entity
-  id: CrateVendingMachineRestockSecTechFilled
   parent: CrateSecgear
+  id: CrateVendingMachineRestockSecTechFilled
   name: SecTech restock crate
   description: Contains a restock box for the SecTech vending machine.
   components:
@@ -54,8 +54,8 @@
         id: VendingMachineRestockSecTech
 
 - type: entity
-  id: CrateVendingMachineRestockSeedsFilled
   parent: CrateHydroSecure
+  id: CrateVendingMachineRestockSeedsFilled
   name: MegaSeed restock crate
   description: Contains a restock box for the MegaSeed vending machine.
   components:
@@ -65,8 +65,8 @@
         id: VendingMachineRestockSeeds
 
 - type: entity
-  id: CrateVendingMachineRestockRoboticsFilled
   parent: CrateScienceSecure
+  id: CrateVendingMachineRestockRoboticsFilled
   name: Robotech Deluxe restock crate
   description: Contains a restock box for a Robotech Deluxe vending machine.
   components:
