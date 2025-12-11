@@ -12,7 +12,6 @@ namespace Content.Client.Nuke
     [GenerateTypedNameReferences]
     public sealed partial class NukeMenu : DefaultWindow
     {
-        public Button EnterBtn = default!;
         public event Action<int>? OnKeypadButtonPressed;
         public event Action? OnClearButtonPressed;
         public event Action? OnEnterButtonPressed;
@@ -46,12 +45,12 @@ namespace Content.Client.Nuke
             AddKeypadButton(0);
 
             // enter button
-            EnterBtn = new Button()
+            var enterBtn = new Button()
             {
                 Text = "E"
             };
-            EnterBtn.OnPressed += _ => OnEnterButtonPressed?.Invoke();
-            KeypadGrid.AddChild(EnterBtn);
+            enterBtn.OnPressed += _ => OnEnterButtonPressed?.Invoke();
+            KeypadGrid.AddChild(enterBtn);
         }
 
         private void AddKeypadButton(int i)
