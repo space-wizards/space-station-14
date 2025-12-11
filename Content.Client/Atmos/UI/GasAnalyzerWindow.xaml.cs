@@ -14,7 +14,7 @@ namespace Content.Client.Atmos.UI
     public sealed partial class GasAnalyzerWindow : DefaultWindow
     {
         private static readonly Vector2 WindowMinSize = new Vector2(270, 350);
-        private const float WindowMinHeightForScrollbar = 400;
+        private const float WindowMinHeightForScrollbar = 500;
 
         private NetEntity _currentEntity = NetEntity.Invalid;
 
@@ -72,12 +72,10 @@ namespace Content.Client.Atmos.UI
                 _currentEntity = msg.DeviceUid;
             }
 
-            // Maximum of three mixes side-by-side. Any more mixes go on a new row.
-            const int columns = 3;
+            // Up to three columns. Any more mixes go on a new row.
+            const int maxColumns = 3;
             var mixCount = msg.NodeGasMixes.Length - 1;
-            DeviceMixes.Columns = Math.Max(1, ((mixCount - 1) % columns) + 1);
-            DeviceMixes.Rows = Math.Max(1, ((mixCount - 1) / columns) + 1);
-
+            DeviceMixes.Columns = Math.Max(1, ((mixCount - 1) % maxColumns) + 1);
 
             var deviceMixes = msg.NodeGasMixes.Skip(1);
             if (msg.DeviceFlipped)
@@ -124,16 +122,8 @@ namespace Content.Client.Atmos.UI
             }
         }
 
-        protected override Vector2 MeasureCore(Vector2 availableSize)
+        protected override Vector2 MeasureOverride(Vector2 availableSize)
         {
-            // Note that we override MeasureCore instead of MeasureOverride because we want to recalculate the minimum
-            // and maximum size on the fly rather than making them constants. (Also resizable windows with a MaxSize are
-            // very broken at the time of writing so we have to do it ourselves)
-
-            var size = MeasureOverride(availableSize);
-            if (!float.IsNaN(SetWidth) && !float.IsNaN(SetHeight))
-                size = SetSize;
-
             // Here we make sure that the DesiredSize of the tabs is initialized to a reasonable size, but we invalidate
             // it again afterwards so that it will still be calculated the normal way.
             EnvironmentTabContent.Measure(availableSize);
@@ -147,16 +137,8 @@ namespace Content.Client.Atmos.UI
             var tab2Size = DevicesTabContents.DesiredSize;
             var contentSize = Vector2.Max(tab1Size, tab2Size)
                               + new Vector2(50, 100);  // Extra space for margins, tabs and scrollbar.
-
-            var maxSize = Vector2.Max(WindowMinSize, contentSize);
-            var minSize = maxSize with { Y = Math.Min(maxSize.Y, WindowMinHeightForScrollbar) };
-            return Vector2.Clamp(size, minSize, maxSize);
-        }
-
-        protected override Vector2 ArrangeOverride(Vector2 finalSize)
-        {
-            // The correct window size is exactly DesiredSize.
-            return base.ArrangeOverride(DesiredSize);
+            contentSize.Y = Math.Min(contentSize.Y, WindowMinHeightForScrollbar);
+            return Vector2.Max(WindowMinSize, contentSize);
         }
     }
 }

@@ -3,8 +3,7 @@
                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                MinSize="270 350"
                Title="{Loc 'gas-analyzer-window-name'}"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top">
+               Resizable="False">
     <BoxContainer Orientation="Vertical"
                   Margin="5 5 5 5">
 
@@ -16,16 +15,14 @@
                       Margin="1 1 1 2">
 
             <!-- Device tab -->
-            <ScrollContainer VerticalExpand="True"
-                             HScrollEnabled="False">
+            <ScrollContainer HorizontalExpand="True"
+                             VerticalExpand="True">
                 <BoxContainer Name="DevicesTabContents"
-                              VerticalExpand="True"
-                              HorizontalExpand="True"
                               Orientation="Vertical">
 
                     <!-- Header with icon -->
-                    <BoxContainer HorizontalExpand="True"
-                                  Orientation="Horizontal"
+                    <BoxContainer Orientation="Horizontal"
+                                  HorizontalExpand="True"
                                   Align="Center"
                                   RectClipContent="True">
                         <SpriteView Name="DeviceIcon"
@@ -38,12 +35,9 @@
                     <!-- Contents -->
                     <GridContainer Name="DeviceMixes"
                                    Columns="1"
-                                   Rows="1"
-                                   VerticalExpand="True"
                                    HorizontalExpand="True"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Top"/>
-
                 </BoxContainer>
             </ScrollContainer>
 
