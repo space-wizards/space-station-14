@@ -70,12 +70,16 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
 
         for (var i = 0; i < tries; i++)
         {
-            // We get a distance by multiplying the radius by a random float between 0 and 1,
-            // then we multiply that with a randomly angled vector.
-            // The distance is then reduced percentage-wise based on the current try count,
-            // so subsequent tries are closer and closer towards the entity. This is
-            // beneficial for smaller maps, especially when the radius is large.
+            // distance = r * sq(x) * i
+            // r = the radius of the search area.
+            // sq(x) = the square root of [0 - 1]. Gives a number trending to the
+            // upper range of [0, 1] so that you tend to teleport further. 
+            // i = A percentage based on the current try count, which results in each
+            // subsequent try landing closer and closer towards the entity.
+            // Beneficial for smaller maps, especially when the radius is large.
             var distance = radius * MathF.Sqrt(_random.NextFloat()) * (1 - (float)i / tries);
+            
+            // We then offset the user coords from a random angle * distance
             var tempTargetCoords = userCoords.Offset(_random.NextAngle().ToVec() * distance);
 
             // Skip if there's no grid at the target coordinates
