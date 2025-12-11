@@ -26,8 +26,16 @@
             <!-- Patient tab -->
             <ScrollContainer VerticalExpand="True"
                              HScrollEnabled="False">
+
+                <Label Name="LoadingPlaceHolder"
+                       Text="Loading"
+                       Align="Center"
+                       HorizontalExpand="True"
+                       VerticalExpand="True"/>
+
                 <BoxContainer Name="PatientTabContent"
                               Orientation="Vertical"
+                              Visible="False"
                               Margin="5">
 
                     <!-- Pressure warning -->
@@ -60,7 +68,6 @@
 
                     <Button Name="EjectButton"
                             Text="Eject patient"
-                            Disabled="True"
                             StyleClasses="OpenBoth"/>
 
                 </BoxContainer>
