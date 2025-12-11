@@ -129,8 +129,8 @@ public sealed partial class PowerCellSystem : EntitySystem
 
     private void OnBatteryExamined(Entity<PredictedBatteryComponent> ent, ref ExaminedEvent args)
     {
-        var charge = _battery.GetCharge(ent.AsNullable()) / ent.Comp.MaxCharge * 100;
-        args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
+        var chargePercent = _battery.GetChargeLevel(ent.AsNullable()) * 100;
+        args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{chargePercent:F0}")));
     }
 
     private void OnDrawRefreshChargeRate(Entity<PowerCellDrawComponent> ent, ref RefreshChargeRateEvent args)

@@ -36,7 +36,7 @@ public sealed class DamagedSiliconAccentSystem : EntitySystem
             }
             else if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             {
-                currentChargeLevel = _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge;
+                currentChargeLevel = _battery.GetChargeLevel(battery.Value.AsNullable());
             }
             currentChargeLevel = Math.Clamp(currentChargeLevel, 0.0f, 1.0f);
             // Corrupt due to low power (drops characters on longer messages)
