@@ -30,7 +30,7 @@ public sealed partial class GasAnalyzerControl : BoxContainer
                                          ("volume", $"{gasMix.Volume:0.##}"));
         PressureLabel.Text = Loc.GetString("gas-analyzer-window-pressure-val-text",
                                            ("pressure", $"{gasMix.Pressure:0.00}"));
-        TemperatureLabel.Text = "N/A";  // TODO translation
+        TemperatureLabel.Text = Loc.GetString("gas-analyzer-window-not-available");
 
         if (hasGas)
         {
