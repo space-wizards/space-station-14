@@ -165,6 +165,14 @@ namespace Content.Server.Nuke
         public string EnteredCode = "";
 
         /// <summary>
+        ///     Time at which the last nuke code was entered.
+        ///     Used to apply a cooldown to prevent clients from attempting to brute force the nuke code by sending keypad messages every tick.
+        ///     <seealso cref="SharedNukeComponent.EnterCodeCoolDown"/>
+        /// </summary>
+        [DataField]
+        public TimeSpan LastCodeEnteredAt = TimeSpan.Zero;
+
+        /// <summary>
         ///     Current status of a nuclear bomb.
         /// </summary>
         [DataField]

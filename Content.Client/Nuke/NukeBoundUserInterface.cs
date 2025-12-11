@@ -1,7 +1,7 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+using Robust.Shared.Timing;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Nuke
@@ -29,6 +29,9 @@ namespace Content.Client.Nuke
             _menu.OnEnterButtonPressed += () =>
             {
                 SendMessage(new NukeKeypadEnterMessage());
+                _menu.EnterBtn.Disabled = true;
+
+                Timer.Spawn((int)SharedNukeComponent.EnterCodeCoolDown.TotalMilliseconds, () => _menu.EnterBtn.Disabled = false);
             };
             _menu.OnClearButtonPressed += () =>
             {
