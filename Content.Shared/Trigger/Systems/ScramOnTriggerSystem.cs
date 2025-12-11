@@ -7,7 +7,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Trigger.Systems;
@@ -15,15 +14,11 @@ namespace Content.Shared.Trigger.Systems;
 public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerComponent>
 {
     [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly TurfSystem _turfSystem = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     public override void Initialize()
