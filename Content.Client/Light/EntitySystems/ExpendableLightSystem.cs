@@ -27,6 +27,7 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
         component.PlayingStream = _audioSystem.Stop(component.PlayingStream);
     }
 
+    // TODO This is a duplicate of the server method (and has to be eventually deduplicated) due to lacking a non-abstract component in Shared to subscribe to.
     private void OnExamine(Entity<ExpendableLightComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
