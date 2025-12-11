@@ -31,7 +31,7 @@ namespace Content.Client.Nuke
                 SendMessage(new NukeKeypadEnterMessage());
                 _menu.EnterBtn.Disabled = true;
 
-                Timer.Spawn((int)SharedNukeComponent.EnterCodeCoolDown.TotalMilliseconds, () => _menu.EnterBtn.Disabled = false);
+                Timer.Spawn((int)SharedNukeComponent.EnterCodeCooldown.TotalMilliseconds, () => _menu.EnterBtn.Disabled = false);
             };
             _menu.OnClearButtonPressed += () =>
             {

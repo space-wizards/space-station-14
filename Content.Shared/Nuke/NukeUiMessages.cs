@@ -10,7 +10,7 @@ namespace Content.Shared.Nuke
         /// Cooldown time between attempts to enter the nuke code.
         /// Used to prevent clients from trying to brute force it.
         /// </summary>
-        public static readonly TimeSpan EnterCodeCoolDown = TimeSpan.FromSeconds(1);
+        public static readonly TimeSpan EnterCodeCooldown = TimeSpan.FromSeconds(1);
     }
 
     [Serializable, NetSerializable]

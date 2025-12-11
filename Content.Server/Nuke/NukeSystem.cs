@@ -233,7 +233,7 @@ public sealed class NukeSystem : EntitySystem
             return;
 
         var curTime = _timing.CurTime;
-        if (curTime < component.LastCodeEnteredAt + SharedNukeComponent.EnterCodeCoolDown)
+        if (curTime < component.LastCodeEnteredAt + SharedNukeComponent.EnterCodeCooldown)
             return; // Validate that they are not entering codes faster than the cooldown.
 
         component.LastCodeEnteredAt = curTime;
