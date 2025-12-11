@@ -14,26 +14,26 @@ public sealed partial class BallisticAmmoSelfRefillerComponent : Component
     /// <summary>
     /// Whether or not the refilling behavior is active.
     /// </summary>
-    [DataField, ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool AutoRefill = true;
 
     /// <summary>
     /// How often a new piece of ammunition is inserted into the owner's <see cref="BallisticAmmoProviderComponent"/>.
     /// </summary>
-    [DataField, ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public TimeSpan AutoRefillRate;
 
     /// <summary>
     /// If true, causes the refilling behavior to be delayed by at least <see cref="AutoRefillPauseDuration"/> after
     /// the owner is fired.
     /// </summary>
-    [DataField, ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool FiringPausesAutoRefill = false;
 
     /// <summary>
     /// How long to pause for if <see cref="FiringPausesAutoRefill"/> is true.
     /// </summary>
-    [DataField, ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public TimeSpan AutoRefillPauseDuration = TimeSpan.Zero;
 
     /// <summary>
@@ -41,13 +41,13 @@ public sealed partial class BallisticAmmoSelfRefillerComponent : Component
     /// <see cref="BallisticAmmoProviderComponent.Proto"/>. If that's also null, this component does nothing but log
     /// errors.
     /// </summary>
-    [DataField, ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntProtoId? AmmoProto;
 
     /// <summary>
     /// If true, EMPs will pause this component's behavior.
     /// </summary>
-    [DataField, ViewVariables, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool AffectedByEmp = false;
 
     /// <summary>
