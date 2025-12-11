@@ -5,6 +5,7 @@ using Content.Shared.Explosion;
 using Content.Shared.Nuke;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Nuke
@@ -169,7 +170,7 @@ namespace Content.Server.Nuke
         ///     Used to apply a cooldown to prevent clients from attempting to brute force the nuke code by sending keypad messages every tick.
         ///     <seealso cref="SharedNukeComponent.EnterCodeCooldown"/>
         /// </summary>
-        [DataField]
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan LastCodeEnteredAt = TimeSpan.Zero;
 
         /// <summary>
