@@ -1,3 +1,6 @@
+using Content.Shared.CCVar;
+using Content.Shared.Chat;
+using Content.Shared.Damage.Components;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Systems;
@@ -6,9 +9,17 @@ using Content.Shared.GameTicking;
 using Content.Shared.Materials;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Cloning;
 
@@ -20,16 +31,27 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
 {
     [Dependency] private readonly CloningConsoleSystem _cloningConsole = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISharedPlayerManager _playerManager = null!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedChatSystem _chat = default!;
+    [Dependency] private readonly SharedCloningSystem _cloning = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _material = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// Tracks which minds are waiting to be transferred into a clone.
     public readonly Dictionary<MindComponent, EntityUid> ClonesWaitingForMind = [];
+    private readonly ProtoId<CloningSettingsPrototype> _settingsId = "CloningPod";
+
+    private const float EasyModeCloningCost = 0.7f;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -46,11 +68,108 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     }
 
     /// <summary>
-    /// Tries to start the cloning process for the specified mind and pod. Override in server.
+    /// Tries to start the cloning process for the specified mind and pod.
     /// </summary>
-    public virtual bool TryCloning(Entity<CloningPodComponent?> ent, EntityUid bodyToClone, Entity<MindComponent> mindEnt, float failChanceModifier = 1)
+    /// <param name="ent">The cloning pod entity.</param>
+    /// <param name="bodyToClone">The body to clone.</param>
+    /// <param name="mindEnt">The mind entity.</param>
+    /// <param name="failChanceModifier">The chance modifier for the cloning process.</param>
+    /// <returns>True if the cloning process was started, false otherwise.</returns>
+    public bool TryCloning(Entity<CloningPodComponent?> ent, EntityUid bodyToClone, Entity<MindComponent> mindEnt, float failChanceModifier = 1)
     {
-        return false;
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        if (HasComp<ActiveCloningPodComponent>(ent.Owner))
+            return false;
+
+        var mind = mindEnt.Comp;
+        if (ClonesWaitingForMind.TryGetValue(mind, out var clone))
+        {
+            if (Exists(clone) &&
+                !_mobState.IsDead(clone) &&
+                TryComp<MindContainerComponent>(clone, out var cloneMindComp) &&
+                (cloneMindComp.Mind == null || cloneMindComp.Mind == mindEnt))
+                return false; // Mind already has clone.
+
+            ClonesWaitingForMind.Remove(mind);
+        }
+
+        if (mind.OwnedEntity != null && !_mobState.IsDead(mind.OwnedEntity.Value))
+            return false; // Body controlled by mind is not dead.
+
+        // Yes, we still need to track down the client because we need to open the Eui.
+        if (mind.UserId == null || !_playerManager.TryGetSessionById(mind.UserId.Value, out var client))
+            return false; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
+
+        if (!TryComp<PhysicsComponent>(bodyToClone, out var physics))
+            return false;
+
+        var cloningCost = (int)Math.Round(physics.FixturesMass);
+
+        if (_configManager.GetCVar(CCVars.BiomassEasyMode))
+            cloningCost = (int)Math.Round(cloningCost * EasyModeCloningCost);
+
+        // biomass checks.
+        var biomassAmount = _material.GetMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial);
+
+        if (biomassAmount < cloningCost)
+        {
+            if (ent.Comp.ConnectedConsole != null)
+                _chat.TrySendInGameICMessage(ent.Comp.ConnectedConsole.Value, Loc.GetString("cloning-console-chat-error", ("units", cloningCost)), InGameICChatType.Speak, false);
+            return false;
+        }
+        // end of biomass checks.
+
+        // genetic damage checks.
+        if (TryComp<DamageableComponent>(bodyToClone, out var damageable) &&
+            damageable.Damage.DamageDict.TryGetValue("Cellular", out var cellularDmg))
+        {
+            var chance = Math.Clamp((float)(cellularDmg / 100), 0, 1);
+            chance *= failChanceModifier;
+
+            if (cellularDmg > 0 && ent.Comp.ConnectedConsole != null)
+                _chat.TrySendInGameICMessage(ent.Comp.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning", ("percent", Math.Round(100 - chance * 100))), InGameICChatType.Speak, false);
+
+            // TODO: Replace with RandomPredicted once the engine PR is merged
+            var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+            var rand = new System.Random(seed);
+            if (rand.Prob(chance))
+            {
+                ent.Comp.FailedClone = true;
+                UpdateStatus((ent.Owner, ent.Comp), CloningPodStatus.Gore);
+                AddComp<ActiveCloningPodComponent>(ent.Owner);
+                _material.TryChangeMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial, -cloningCost);
+                ent.Comp.UsedBiomass = cloningCost;
+                Dirty(ent);
+                return true;
+            }
+        }
+        // end of genetic damage checks.
+
+        if (!_cloning.TryCloning(bodyToClone, _transform.GetMapCoordinates(bodyToClone), _settingsId, out var mob)) // spawn a new body
+        {
+            if (ent.Comp.ConnectedConsole != null)
+                _chat.TrySendInGameICMessage(ent.Comp.ConnectedConsole.Value, Loc.GetString("cloning-console-uncloneable-trait-error"), InGameICChatType.Speak, false);
+            return false;
+        }
+
+        var cloneMindReturn = AddComp<BeingClonedComponent>(mob.Value);
+        cloneMindReturn.Mind = mind;
+        cloneMindReturn.Parent = ent.Owner;
+
+        _container.Insert(mob.Value, ent.Comp.BodyContainer);
+        ClonesWaitingForMind.Add(mind, mob.Value);
+
+        _material.TryChangeMaterialAmount(ent.Owner, ent.Comp.RequiredMaterial, -cloningCost);
+        ent.Comp.UsedBiomass = cloningCost;
+
+        AddComp<ActiveCloningPodComponent>(ent.Owner);
+        OpenEui(mindEnt, mind, client);
+        UpdateStatus((ent.Owner, ent.Comp), CloningPodStatus.NoMind);
+        Dirty(ent);
+
+        return true;
     }
 
     /// <summary>
@@ -151,4 +270,7 @@ public abstract partial class SharedCloningPodSystem : EntitySystem
     {
         ClonesWaitingForMind.Clear();
     }
+
+    // TODO: SharedEuiManager so that we can just directly open the eui from shared.
+    protected virtual void OpenEui(Entity<MindComponent> mindEnt, MindComponent mind, ICommonSession client) { }
 }
