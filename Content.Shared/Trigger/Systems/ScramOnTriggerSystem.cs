@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
@@ -24,6 +25,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly TurfSystem _turfSystem = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     public override void Initialize()
@@ -73,37 +75,18 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
             // distance = r * sq(x) * i
             // r = the radius of the search area.
             // sq(x) = the square root of [0 - 1]. Gives a number trending to the
-            // upper range of [0, 1] so that you tend to teleport further. 
+            // upper range of [0, 1] so that you tend to teleport further.
             // i = A percentage based on the current try count, which results in each
             // subsequent try landing closer and closer towards the entity.
             // Beneficial for smaller maps, especially when the radius is large.
             var distance = radius * MathF.Sqrt(_random.NextFloat()) * (1 - (float)i / tries);
-            
+
             // We then offset the user coords from a random angle * distance
             var tempTargetCoords = userCoords.Offset(_random.NextAngle().ToVec() * distance);
 
-            // Skip if there's no grid at the target coordinates
-            if (!_mapManager.TryFindGridAt(_transform.ToMapCoordinates(tempTargetCoords), out var gridUid, out var grid))
-                continue;
-
-            // Check every anchored entity on the tile for something that we don't want to
-            // teleport into, and skip if we find something.
-            var tileValid = true;
-            foreach (var entity in _map.GetAnchoredEntities(gridUid, grid, tempTargetCoords))
-            {
-                if (!_physicsQuery.TryGetComponent(entity, out var body))
-                    continue;
-
-                if (body.BodyType != BodyType.Static ||
-                    !body.Hard ||
-                    (body.CollisionLayer & (int)CollisionGroup.MobMask) == 0)
-                    continue;
-
-                tileValid = false;
-                break;
-            }
-
-            if (!tileValid)
+            if (!_turfSystem.TryGetTileRef(tempTargetCoords, out var tileRef)
+                || _turfSystem.IsSpace(tileRef.Value)
+                || _turfSystem.IsTileBlocked(tileRef.Value, CollisionGroup.MobMask))
                 continue;
 
             targetCoords = tempTargetCoords;
