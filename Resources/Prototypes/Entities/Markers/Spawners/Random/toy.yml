@@ -86,6 +86,89 @@
     - id: ToyPhazon
     - id: ToyReticence
 
+- type: entityTable
+  id: AllToysTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector # Boring toys (subjective) :o)
+      weight: 0.5
+      children:
+      - !type:NestedSelector
+        tableId: AllFigurinesTable
+      - !type:NestedSelector
+        tableId: AllPlushiesTable
+    - !type:NestedSelector
+      tableId: SlipTable
+    - !type:NestedSelector
+      tableId: AllToyWeaponsTable
+    - !type:NestedSelector
+      tableId: AllToyToysTable
+    - !type:NestedSelector
+      tableId: AllToySoundMakerTable
+
+- type: entityTable
+  id: AllToyWeaponsTable
+  table: !type:GroupSelector
+    children:
+    - id: FoamCrossbow
+    - id: RevolverCapGun
+    - id: RevolverCapGunFake
+    - id: FoamBlade
+    - id: ToySword
+    - id: FoamCutlass
+    - id: CardSword
+    - id: ToyHammer
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+
+- type: entityTable
+  id: AllToyToysTable
+  table: !type:GroupSelector
+    children:
+    - id: BalloonSyn
+    - id: BalloonNT
+    - id: BalloonCorgi
+    - id: Basketball
+    - id: Football
+    - id: TennisBall
+    - id: BeachBall
+    - id: SingularityToy
+    - id: TeslaToy
+    - id: PonderingOrb
+    - id: PlasticBanana
+    - id: CrazyGlue
+    - id: CrazyLube
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+
+# Entities that don't do much except make a funny sound
+- type: entityTable
+  id: AllToySoundMakerTable
+  table: !type:GroupSelector
+    children:
+    - id: ToyRubberDuck
+    - id: RubberChicken
+    - id: ToyIan
+    - id: ClownRecorder
+    - id: WhoopieCushion
+    - id: NewtonCradle
+    - id: BikeHorn
+    - id: CluwneHorn
+    - id: GoldenBikeHorn
+    - id: BananiumHorn
+    - id: PushHorn
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineQuartermaster
+
 - type: entity
   parent: MarkerBase
   id: PlushieSpawner50

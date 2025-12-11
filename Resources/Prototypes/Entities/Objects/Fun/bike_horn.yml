@@ -17,48 +17,32 @@
   - type: UseDelay
     delay: 0.5
   - type: EmitSoundOnUse
-    sound:
+    sound: &SoundBikeHorn
       collection: BikeHorn
       params:
         variation: 0.125
   - type: EmitSoundOnLand
-    sound:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    sound: *SoundBikeHorn
   - type: EmitSoundOnTrigger
-    sound:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    sound: *SoundBikeHorn
   - type: EmitSoundOnActivate
-    sound:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    sound: *SoundBikeHorn
   - type: EmitSoundOnCollide
-    sound:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    sound: *SoundBikeHorn
   - type: Tag
     tags:
     - Payload # yes, you can make re-usable prank grenades
     - BikeHorn
   - type: MeleeWeapon
     wideAnimationRotation: 135
-    soundHit:
-      collection: BikeHorn
-      params:
-        variation: 0.125
+    soundHit: *SoundBikeHorn
     damage:
       types:
         Blunt: 0
   - type: Tool
     qualities:
     - Honking
-    useSound:
-      collection: BikeHorn
+    useSound: *SoundBikeHorn
 
 - type: entity
   parent: BaseItem
@@ -82,47 +66,31 @@
     - Payload # yes, you can make re-usable prank grenades
     - CluwneHorn
   - type: EmitSoundOnTrigger
-    sound:
+    sound: &SoundCluwneHorn
       collection: CluwneHorn
       params:
         variation: 0.125
   - type: EmitSoundOnUse
-    sound:
-      collection: CluwneHorn
-      params:
-        variation: 0.125
+    sound: *SoundCluwneHorn
   - type: EmitSoundOnActivate
-    sound:
-      collection: CluwneHorn
-      params:
-        variation: 0.125
+    sound: *SoundCluwneHorn
   - type: EmitSoundOnCollide
-    sound:
-      collection: CluwneHorn
-      params:
-        variation: 0.125
+    sound: *SoundCluwneHorn
   - type: EmitSoundOnLand
-    sound:
-      collection: CluwneHorn
-      params:
-        variation: 0.125
+    sound: *SoundCluwneHorn
   - type: MeleeWeapon
     wideAnimationRotation: 135
-    soundHit:
-      collection: CluwneHorn
-      params:
-        variation: 0.125
+    soundHit: *SoundCluwneHorn
     damage:
       types:
         Blunt: 5
-
 
 - type: entity
   parent: BikeHorn
   id: GoldenBikeHorn
   name: golden honker
-  categories: [ DoNotMap ]
   description: A happy honk prize, pray to the gods for your reward.
+  categories: [ DoNotMap ]
   components:
   - type: Sprite
     sprite: Objects/Fun/goldbikehorn.rsi
@@ -161,36 +129,21 @@
   - type: UseDelay
     delay: 3
   - type: EmitSoundOnUse
-    sound:
+    sound: &SoundBananiumHorn
       collection: BananiumHorn
       params:
         variation: 0.246
   - type: EmitSoundOnLand
-    sound:
-      collection: BananiumHorn
-      params:
-        variation: 0.246
+    sound: *SoundBananiumHorn
   - type: EmitSoundOnTrigger
-    sound:
-      collection: BananiumHorn
-      params:
-        variation: 0.246
+    sound: *SoundBananiumHorn
   - type: EmitSoundOnActivate
-    sound:
-      collection: BananiumHorn
-      params:
-        variation: 0.246
+    sound: *SoundBananiumHorn
   - type: EmitSoundOnCollide
-    sound:
-      collection: BananiumHorn
-      params:
-        variation: 0.246
+    sound: *SoundBananiumHorn
   - type: MeleeWeapon
     wideAnimationRotation: 135
-    soundHit:
-      collection: BananiumHorn
-      params:
-        variation: 0.246
+    soundHit: *SoundBananiumHorn
     damage:
       types:
         Blunt: 0
@@ -198,6 +151,8 @@
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn
+  - type: Tool
+    useSound: *SoundBananiumHorn
 
 - type: entity
   parent: BaseItem

@@ -1,8 +1,8 @@
 ## Base stash
 
 - type: entity
-  id: BaseStash
   abstract: true
+  id: BaseStash
   components:
   - type: Speech
     speechVerb: Default # for pais (In the secret stash)
@@ -24,9 +24,9 @@
 ## Rubber
 
 - type: entity
+  abstract: true
   parent: [BaseItem, BaseStash]
   id: BaseRubberToy
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -46,9 +46,6 @@
       Plastic: 25
   - type: StaticPrice
     price: 5
-  - type: ContainerContainer
-    containers:
-      stash: !type:ContainerSlot {}
 
 - type: entity
   parent: BaseRubberToy
@@ -67,20 +64,18 @@
   - type: Item
     size: Tiny
   - type: EmitSoundOnUse
-    sound:
+    sound: &SoundQuack
       path: /Audio/Items/Toys/quack.ogg
   - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
+    sound: *SoundQuack
   - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
+    sound: *SoundQuack
   - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
+    sound: *SoundQuack
   - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Items/Toys/quack.ogg
+    sound: *SoundQuack
+  - type: MeleeWeapon
+    soundHit: *SoundQuack
   - type: Tag
     tags:
     - ToyRubberDuck
@@ -95,36 +90,21 @@
     sprite: Objects/Fun/rubber_chicken.rsi
     state: icon
   - type: EmitSoundOnUse
-    sound:
+    sound: &SoundRubberChicken
       collection: RubberChicken
       params:
         variation: 0.125
   - type: EmitSoundOnLand
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
+    sound: *SoundRubberChicken
   - type: EmitSoundOnActivate
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
+    sound: *SoundRubberChicken
   - type: EmitSoundOnCollide
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
+    sound: *SoundRubberChicken
   - type: EmitSoundOnTrigger
-    sound:
-      collection: RubberChicken
-      params:
-        variation: 0.125
+    sound: *SoundRubberChicken
   - type: MeleeWeapon
     wideAnimationRotation: 110
-    soundHit:
-      collection: RubberChicken
-      params:
-        variation: 0.125
+    soundHit: *SoundRubberChicken
 
 - type: entity
   parent: BasePlushie
@@ -147,26 +127,19 @@
   - type: Item
     size: Tiny
   - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Items/Toys/ian.ogg
+    sound: &SoundIan
   - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Items/Toys/ian.ogg
+    sound: *SoundIan
   - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Items/Toys/ian.ogg
+    sound: *SoundIan
   - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Items/Toys/ian.ogg
+    sound: *SoundIan
   - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Items/Toys/ian.ogg
+    sound: *SoundIan
   - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Items/Toys/ian.ogg
+    soundHit: *SoundIan
   - type: Edible
-    useSound:
-      path: /Audio/Items/Toys/ian.ogg
+    useSound: *SoundIan
   - type: FoodSequenceElement
     entries:
       CottonBurger: IanPlushie
@@ -176,6 +149,15 @@
 - type: entity
   abstract: true
   parent: BaseItem
+  id: BaseFoamToy
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+
+- type: entity
+  abstract: true
+  parent: BaseFoamToy
   id: FoamWeaponBase
   components:
   - type: Sprite
@@ -215,11 +197,11 @@
         ents: []
 
 - type: entity
+  abstract: true
   parent: BaseItem
   id: ToyGunBase
   name: ToyGunBase
   description: A rooty tooty point and shooty.
-  abstract: true
   components:
   - type: Sprite
 
@@ -244,6 +226,7 @@
     tags:
     - Sidearm
     - ToySidearm
+  - type: AmmoCounter
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
@@ -269,6 +252,7 @@
     containers:
       revolver-ammo: !type:Container
 
+
 - type: entity
   parent: RevolverCapGun
   id: RevolverCapGunFake
@@ -286,7 +270,7 @@
     proto: CartridgeMagnumAP
 
 - type: entity
-  parent: BaseItem
+  parent: BaseFoamToy
   id: FoamBlade
   name: foamblade
   description: It says "Sternside Changs number 1 fan" on it.
@@ -307,23 +291,46 @@
     sprite: Objects/Fun/Foam/foam_blade.rsi
   - type: UseDelay
 
+- type: entity
+  parent: BaseFoamToy
+  id: FoamCutlass
+  name: foam cutlass
+  description: Cosplay as a pirate and force your friends to walk the plank.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cutlass.rsi
+    state: foam_icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.5
+    range: 2.0
+    damage:
+      types:
+        Blunt: 0
+  - type: Item
+    size: Normal
+    storedSprite:
+      state: foam_storage
+      sprite: Objects/Weapons/Melee/cutlass.rsi
+    shape:
+    - 0,0,0,2
+
 # Balloons
 
 - type: entity
+  abstract: true
   parent: BaseItem
   id: BaseBalloon
-  abstract: true
   components:
   - type: Sprite
     noRot: true
   - type: Item
     size: Small
   - type: EmitSoundOnCollide
-    sound:
+    sound: &SoundBalloonHit
       path: /Audio/Effects/balloon_hits.ogg
   - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Effects/balloon_hits.ogg
+    sound: *SoundBalloonHit
   - type: Damageable
     damageContainer: Inorganic
   - type: TileFrictionModifier
@@ -374,6 +381,19 @@
 
 - type: entity
   parent: BaseItem
+  id: BaseSportsBall # How about that game with the pigskin?
+  components:
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound: &SoundSportsBounce
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: EmitSoundOnCollide
+    sound: *SoundSportsBounce
+  - type: EmitSoundOnLand
+    sound: *SoundSportsBounce
+
+- type: entity
+  parent: BaseSportsBall
   id: Basketball
   name: basketball
   description: Where dah courts at?
@@ -391,13 +411,6 @@
         - ItemMask
         restitution: 0.8 # bouncy
         friction: 0.2
-  - type: Catchable
-    catchChance: 0.8
-    catchSuccessSound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
-  - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: Normal
     sprite: Objects/Fun/Balls/basketball.rsi
@@ -405,7 +418,7 @@
     modifier: 0.5
 
 - type: entity
-  parent: BaseItem
+  parent: BaseSportsBall
   id: Football
   name: football
   description: Otherwise known as a handegg.
@@ -423,19 +436,12 @@
         - ItemMask
         restitution: 0.5 # a little bouncy
         friction: 0.2
-  - type: Catchable
-    catchChance: 0.8
-    catchSuccessSound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
-  - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: Small
     sprite: Objects/Fun/Balls/football.rsi
 
 - type: entity
-  parent: BaseItem
+  parent: BaseSportsBall
   id: TennisBall
   name: tennis ball
   description: A fuzzy orb of endless betrayal.
@@ -453,13 +459,6 @@
         - ItemMask
         restitution: 0.5 # a little bouncy
         friction: 0.2
-  - type: Catchable
-    catchChance: 0.8
-    catchSuccessSound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
-  - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: Small
     sprite: Objects/Fun/Balls/tennisball.rsi
@@ -476,7 +475,7 @@
     - PetWearable
 
 - type: entity
-  parent: BaseItem
+  parent: BaseSportsBall
   id: BeachBall
   name: beach ball
   description: The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen
@@ -495,23 +494,11 @@
           - ItemMask
         restitution: 0.2 # not bouncy
         friction: 0.2
-  - type: Catchable
-    catchChance: 0.8
-    catchSuccessSound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: Normal
     sprite: Objects/Fun/Balls/beach_ball.rsi
   - type: TileFrictionModifier
     modifier: 0.05
-  - type: TriggerOnCollide
-    fixtureID: fix1
-    keyOut: OnCollide
-  - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
-    keysIn:
-      - OnCollide
 
 - type: entity
   parent: BeachBall
@@ -753,31 +740,6 @@
 #    entries:
 #      CottonBurger: AmongPequeno
 
-
-- type: entity
-  parent: BaseItem
-  id: FoamCutlass
-  name: foam cutlass
-  description: Cosplay as a pirate and force your friends to walk the plank.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Melee/cutlass.rsi
-    state: foam_icon
-  - type: MeleeWeapon
-    wideAnimationRotation: -135
-    attackRate: 1.5
-    range: 2.0
-    damage:
-      types:
-        Blunt: 0
-  - type: Item
-    size: Normal
-    storedSprite:
-      state: foam_storage
-      sprite: Objects/Weapons/Melee/cutlass.rsi
-    shape:
-    - 0,0,0,2
-
 - type: entity
   parent: BaseItem
   id: CardSword
@@ -826,20 +788,16 @@
     sprite: Objects/Fun/clownrecorder.rsi
     state: icon
   - type: EmitSoundOnUse
-    sound:
+    sound: &SoundClownRecorder
       collection: ClownRecorder
   - type: EmitSoundOnLand
-    sound:
-      collection: ClownRecorder
+    sound: *SoundClownRecorder
   - type: EmitSoundOnActivate
-    sound:
-      collection: ClownRecorder
+    sound: *SoundClownRecorder
   - type: EmitSoundOnTrigger
-    sound:
-      collection: ClownRecorder
+    sound: *SoundClownRecorder
   - type: EmitSoundOnCollide
-    sound:
-      collection: ClownRecorder
+    sound: *SoundClownRecorder
   - type: UseDelay
     delay: 30.0
   - type: Tag
@@ -856,7 +814,7 @@
   - type: Sprite
     sprite: Objects/Fun/rubber_hammer.rsi
     state: icon
-  - type: WeaponRandom
+  - type: WeaponRandom # 1 in 100,000 to "win" the "fight"
     damageBonus:
       types:
         Blunt: 1000
@@ -865,21 +823,16 @@
   - type: Item
     size: Small
     sprite: Objects/Fun/rubber_hammer.rsi
-  - type: Appearance
   - type: DisarmMalus
     malus: 0
   - type: MeleeWeapon
     wideAnimationRotation: -135
-    soundHit:
+    soundHit: &SoundRubberHammer
       collection: RubberHammer
       params:
         variation: 0.03
         volume: 3
-    soundNoDamage:
-      collection: RubberHammer
-      params:
-        variation: 0.03
-        volume: 3
+    soundNoDamage: *SoundRubberHammer
     damage:
       types:
         Blunt: 0
@@ -897,25 +850,16 @@
     tags:
     - Payload
   - type: EmitSoundOnUse
-    sound:
+    sound: &SoundParp
       collection: Parp
       params:
         variation: 0.125
   - type: EmitSoundOnLand
-    sound:
-      collection: Parp
-      params:
-        variation: 0.125
+    sound: *SoundParp
   - type: EmitSoundOnActivate
-    sound:
-      collection: Parp
-      params:
-        variation: 0.125
+    sound: *SoundParp
   - type: EmitSoundOnCollide
-    sound:
-      collection: Parp
-      params:
-        variation: 0.125
+    sound: *SoundParp
   - type: UseDelay
     delay: 0.8
   - type: Slippery
@@ -925,23 +869,16 @@
       stunTime: 0
       knockdownTime: 0
       launchForwardsMultiplier: 0
-    slipSound:
-      collection: Parp
-      params:
-        variation: 0.125
+    slipSound: *SoundParp
   - type: MeleeWeapon
-    soundHit:
-      collection: Parp
-      params:
-        variation: 0.125
+    soundHit: *SoundParp
     damage:
       types:
         Blunt: 0
   - type: StepTrigger
     intersectRatio: 0.2
     requiredTriggeredSpeed: 2
-  - type: TriggerOnStepTrigger # for payloads
-  - type: Appearance
+  - type: TriggerOnStepTrigger # for payloads, that don't work because of trouble with sound prediction
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -964,11 +901,11 @@
         - ItemMask
 
 - type: entity
-  name: banana
   parent: FoodProduceBase
   id: PlasticBanana
-  description: A plastic banana.
+  name: banana
   suffix: Plastic
+  description: A plastic banana.
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
