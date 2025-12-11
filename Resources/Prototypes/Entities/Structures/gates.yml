@@ -308,7 +308,8 @@
     - RandomGateInput
   - type: DeviceLinkSource
     ports:
-    - Output
+    - OutputA
+    - OutputB
   - type: UserInterface
     interfaces:
       enum.RandomGateUiKey.Key:
@@ -317,3 +318,4 @@
     key: enum.RandomGateUiKey.Key
   - type: Construction
     node: random_gate
+

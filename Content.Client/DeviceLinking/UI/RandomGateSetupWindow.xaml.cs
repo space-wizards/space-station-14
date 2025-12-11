@@ -4,15 +4,21 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.DeviceLinking.UI;
 
+/// <summary>
+/// Window for setting up the random gate probability.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class RandomGateSetupWindow : FancyWindow
 {
+    /// <summary>
+    /// Event triggered when the "Apply" button is pressed.
+    /// </summary>
     public event Action<string>? OnApplyPressed;
 
     public RandomGateSetupWindow()
     {
         RobustXamlLoader.Load(this);
-        ApplyButton.OnPressed += _ => OnApplyPressed?.Invoke(ProbabilityInput.Text ?? "0");
+        ApplyButton.OnPressed += _ => OnApplyPressed?.Invoke(ProbabilityInput.Text);
     }
 
     public void SetProbability(float probability)

@@ -11,7 +11,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly  _uiSystem = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()

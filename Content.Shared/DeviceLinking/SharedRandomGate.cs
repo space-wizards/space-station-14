@@ -3,25 +3,15 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.DeviceLinking;
 
 [Serializable, NetSerializable]
-public sealed class RandomGateBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class RandomGateBoundUserInterfaceState(float successProbability) : BoundUserInterfaceState
 {
-    public float SuccessProbability { get; }
-
-    public RandomGateBoundUserInterfaceState(float successProbability)
-    {
-        SuccessProbability = successProbability;
-    }
+    public float SuccessProbability { get; } = successProbability;
 }
 
 [Serializable, NetSerializable]
-public sealed class RandomGateProbabilityChangedMessage : BoundUserInterfaceMessage
+public sealed class RandomGateProbabilityChangedMessage(float probability) : BoundUserInterfaceMessage
 {
-    public float Probability { get; }
-
-    public RandomGateProbabilityChangedMessage(float probability)
-    {
-        Probability = probability;
-    }
+    public float Probability { get; } = probability;
 }
 
 [Serializable, NetSerializable]
