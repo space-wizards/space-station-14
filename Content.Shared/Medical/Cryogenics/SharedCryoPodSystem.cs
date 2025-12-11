@@ -1,9 +1,5 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Systems;
-using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Containers.ItemSlots;
@@ -42,17 +38,10 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
-    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
-
-    private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
-    private EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
-    private EntityQuery<FitsInDispenserComponent> _dispenserQuery;
-    private EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery;
 
     public override void Initialize()
     {
@@ -70,48 +59,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         SubscribeLocalEvent<CryoPodComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
 
-        _bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
-        _itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
-        _dispenserQuery = GetEntityQuery<FitsInDispenserComponent>();
-        _solutionContainerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
-
         InitializeInsideCryoPod();
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var curTime = _timing.CurTime;
-        var query = EntityQueryEnumerator<ActiveCryoPodComponent, CryoPodComponent>();
-
-        while (query.MoveNext(out var uid, out _, out var cryoPod))
-        {
-            if (curTime < cryoPod.NextInjectionTime)
-                continue;
-
-            cryoPod.NextInjectionTime += cryoPod.BeakerTransferTime;
-            Dirty(uid, cryoPod);
-
-            if (!_itemSlotsQuery.TryComp(uid, out var itemSlotsComponent))
-                continue;
-
-            var container = _itemSlots.GetItemOrNull(uid, cryoPod.SolutionContainerName, itemSlotsComponent);
-            var patient = cryoPod.BodyContainer.ContainedEntity;
-            if (container != null
-                && container.Value.Valid
-                && patient != null
-                && _dispenserQuery.TryComp(container, out var fitsInDispenserComponent)
-                && _solutionContainerQuery.TryComp(container, out var solutionContainerManagerComponent)
-                && _solutionContainer.TryGetFitsInDispenser((container.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
-                    out var containerSolution, out _)
-                && _bloodstreamQuery.TryComp(patient, out var bloodstream))
-            {
-                var solutionToInject = _solutionContainer.SplitSolution(containerSolution.Value, cryoPod.BeakerTransferAmount);
-                _bloodstream.TryAddToChemicals((patient.Value, bloodstream), solutionToInject);
-                _reactive.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
-            }
-        }
     }
 
     private void HandleDragDropOn(Entity<CryoPodComponent> ent, ref DragDropTargetEvent args)

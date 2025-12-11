@@ -1,4 +1,6 @@
+using Content.Shared.Atmos.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.MedicalScanner;
 using Content.Shared.Tools;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -46,6 +48,20 @@ public sealed partial class CryoPodComponent : Component
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextInjectionTime = TimeSpan.Zero;
+
+
+    /// <summary>
+    /// How often the UI is updated.
+    /// </summary>
+    [DataField]
+    public TimeSpan UiUpdateInterval = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// The timestamp for the next UI update.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
+    public TimeSpan NextUiUpdateTime = TimeSpan.Zero;
 
     /// <summary>
     /// How many units to transfer per injection from the beaker to the mob?
@@ -104,9 +120,22 @@ public enum CryoPodUiKey : byte
 }
 
 [Serializable, NetSerializable]
+public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
+{
+    public GasAnalyzerComponent.GasMixEntry GasMix;
+    public HealthAnalyzerUiState Health;
+
+    public CryoPodUserMessage(GasAnalyzerComponent.GasMixEntry gasMix, HealthAnalyzerUiState health)
+    {
+        GasMix = gasMix;
+        Health = health;
+    }
+}
+
+[Serializable, NetSerializable]
 public sealed class CryoPodUiMessage : BoundUserInterfaceMessage
 {
-    public readonly string Type;  // I'm going to tidy this up later.
+    public readonly string Type;  // TODO: Tidy this up. Replace with enum.
 
     public CryoPodUiMessage(string type)
     {

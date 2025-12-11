@@ -7,12 +7,15 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Medical.Cryogenics;
-using Content.Shared.MedicalScanner;
-using Content.Shared.Temperature.Components;
-using Content.Shared.UserInterface;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Medical;
 
@@ -20,27 +23,62 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly GasCanisterSystem _gasCanisterSystem = default!;
+    [Dependency] private readonly GasAnalyzerSystem _gasAnalyzerSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly HealthAnalyzerSystem _healthAnalyzerSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly ReactiveSystem _reactive = default!;
+
+    private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
+    private EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
+    private EntityQuery<FitsInDispenserComponent> _dispenserQuery;
+    private EntityQuery<SolutionContainerManagerComponent> _solutionContainerQuery;
+
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CryoPodComponent, AfterActivatableUIOpenEvent>(OnActivateUI);
         SubscribeLocalEvent<CryoPodComponent, AtmosDeviceUpdateEvent>(OnCryoPodUpdateAtmosphere);
         SubscribeLocalEvent<CryoPodComponent, GasAnalyzerScanEvent>(OnGasAnalyzed);
         SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
         SubscribeLocalEvent<CryoPodComponent, CryoPodUiMessage>(OnUiMessage);
+
+        _bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
+        _itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
+        _dispenserQuery = GetEntityQuery<FitsInDispenserComponent>();
+        _solutionContainerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
+
+        Subs.BuiEvents<CryoPodComponent>(CryoPodUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(OnBoundUiOpened);
+        });
     }
 
-    private void OnActivateUI(Entity<CryoPodComponent> entity, ref AfterActivatableUIOpenEvent args)
+    public override void Update(float frameTime)
     {
-        if (entity.Comp.BodyContainer.ContainedEntity.HasValue
-            && TryComp<HealthAnalyzerComponent>(entity, out var healthAnalyzer))
+        var curTime = _timing.CurTime;
+        var query = EntityQueryEnumerator<ActiveCryoPodComponent, CryoPodComponent>();
+
+        while (query.MoveNext(out var uid, out _, out var cryoPod))
         {
-            healthAnalyzer.ScannedEntity = entity.Comp.BodyContainer.ContainedEntity;
+            if (curTime >= cryoPod.NextInjectionTime)
+            {
+                cryoPod.NextInjectionTime += cryoPod.BeakerTransferTime;
+                Dirty(uid, cryoPod);
+                UpdateInjection((uid, cryoPod));
+            }
+
+            if (curTime >= cryoPod.NextUiUpdateTime)
+            {
+                cryoPod.NextUiUpdateTime += cryoPod.UiUpdateInterval;
+                Dirty(uid, cryoPod);
+                UpdateUi((uid, cryoPod));
+            }
         }
     }
 
@@ -78,19 +116,59 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         }
     }
 
-    private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
-    {
-        if (TryComp<HealthAnalyzerComponent>(cryoPod.Owner, out var healthAnalyzer))
-        {
-            healthAnalyzer.ScannedEntity = null;
-        }
-
-        // if body is ejected - no need to display health-analyzer
-        _uiSystem.CloseUi(cryoPod.Owner, HealthAnalyzerUiKey.Key);
-    }
-
     private void OnUiMessage(Entity<CryoPodComponent> cryoPod, ref CryoPodUiMessage msg)
     {
         TryEjectBody(cryoPod.Owner, msg.Actor, cryoPod.Comp);
+    }
+
+    private void OnBoundUiOpened(Entity<CryoPodComponent> cryoPod, ref BoundUIOpenedEvent args)
+    {
+        UpdateUi(cryoPod);
+    }
+
+    private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
+    {
+        UpdateUi(cryoPod);
+    }
+
+    private void UpdateInjection(Entity<CryoPodComponent> entity)
+    {
+        if (!_itemSlotsQuery.TryComp(entity.Owner, out var itemSlotsComponent))
+            return;
+
+        var container = _itemSlots.GetItemOrNull(entity.Owner, entity.Comp.SolutionContainerName, itemSlotsComponent);
+        var patient = entity.Comp.BodyContainer.ContainedEntity;
+
+        if (container != null
+            && container.Value.Valid
+            && patient != null
+            && _dispenserQuery.TryComp(container, out var fitsInDispenserComponent)
+            && _solutionContainerQuery.TryComp(container, out var solutionContainerManagerComponent)
+            && _solutionContainer.TryGetFitsInDispenser((container.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
+                out var containerSolution, out _)
+            && _bloodstreamQuery.TryComp(patient, out var bloodstream))
+        {
+            var solutionToInject = _solutionContainer.SplitSolution(containerSolution.Value, entity.Comp.BeakerTransferAmount);
+            _bloodstream.TryAddToChemicals((patient.Value, bloodstream), solutionToInject);
+            _reactive.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
+        }
+    }
+
+    private void UpdateUi(Entity<CryoPodComponent> entity)
+    {
+        if (!_uiSystem.IsUiOpen(entity.Owner, CryoPodUiKey.Key)
+            || !TryComp(entity, out CryoPodAirComponent? air))
+            return;
+
+        var patient = entity.Comp.BodyContainer.ContainedEntity;
+        var gasMix = _gasAnalyzerSystem.GenerateGasMixEntry("Cryo pod", air.Air);
+        var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient);
+        health.ScanMode = true;
+
+        _uiSystem.ServerSendUiMessage(
+            entity.Owner,
+            CryoPodUiKey.Key,
+            new CryoPodUserMessage(gasMix, health)
+        );
     }
 }

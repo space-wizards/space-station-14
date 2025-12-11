@@ -1,34 +1,88 @@
-<controls:FancyWindow
-    xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:ui="clr-namespace:Content.Client.HealthAnalyzer.UI"
-    MaxHeight="525"
-    MinWidth="300">
-    <ScrollContainer
-        Margin="5 5 5 5"
-        ReturnMeasure="True"
-        VerticalExpand="True"
-        HScrollEnabled="False">
-        <BoxContainer
-            Name="RootContainer"
-            VerticalExpand="True"
-            Orientation="Vertical">
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+               xmlns:atmos="clr-namespace:Content.Client.Atmos.UI"
+               xmlns:health="clr-namespace:Content.Client.HealthAnalyzer.UI"
+               MinSize="350 300"
+               MaxSize="350 800"
+               Resizable="False">
+    <BoxContainer Orientation="Vertical"
+                  Margin="5">
 
-            <ui:HealthAnalyzerControl Name="HealthAnalyzer"/>
+        <!-- TODO: Translation -->
 
-            <!-- TODO: Translation -->
-            <Button Name="EjectButton"
-                    Text="Eject"
-                    StyleClasses="OpenBoth"/>
-            <RichTextLabel
-                Name="EjectError"
-                Visible="False"
-                Text="[color=red]Error in ejection mechanism. Contact a Nanotrasen-certified engineer for further support.[/color]"
-                HorizontalAlignment="Center"
-                Margin="5"
-                MaxWidth="300"
-                HorizontalExpand="True"/>
+        <!-- Errors & warnings at the top of the window -->
+        <RichTextLabel Name="EjectError"
+                       Visible="False"
+                       Text="ERROR: Ejection mechanism failed. Contact a Nanotrasen-certified engineer for further support."
+                       HorizontalAlignment="Center"
+                       Margin="16"
+                       MaxWidth="260"/>
 
-        </BoxContainer>
-    </ScrollContainer>
-</controls:FancyWindow>
+        <!-- Tabs -->
+        <TabContainer Name="Tabs"
+                      VerticalExpand="True"
+                      Margin="1">
+
+            <!-- Patient tab -->
+            <ScrollContainer VerticalExpand="True"
+                             HScrollEnabled="False">
+                <BoxContainer Name="PatientTabContent"
+                              Orientation="Vertical"
+                              Margin="5">
+
+                    <!-- Pressure warning -->
+                    <PanelContainer Name="LowPressureWarning"
+                                    Visible="False"
+                                    HorizontalExpand="True"
+                                    Margin="16">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BorderThickness="1" BorderColor="orange"/>
+                        </PanelContainer.PanelOverride>
+
+                        <BoxContainer Orientation="Vertical"
+                                      Margin="6">
+                            <Label Text="WARNING"
+                                   FontColorOverride="orange"
+                                   Align="Center"/>
+                            <RichTextLabel Text="Dangerously low pressure. Gas pressure must be approximately 100 kPa for safe operation."/>
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <!-- No patient placeholder, health analyzer, eject button -->
+                    <Label Name="NoPatientText"
+                           Text="No patient"
+                           FontColorOverride="Gray"/>
+
+                    <health:HealthAnalyzerControl Name="HealthAnalyzer"
+                                                  Visible="False"/>
+
+                    <Control VerticalExpand="True"/>
+
+                    <Button Name="EjectButton"
+                            Text="Eject patient"
+                            Disabled="True"
+                            StyleClasses="OpenBoth"/>
+
+                </BoxContainer>
+            </ScrollContainer>
+
+            <!-- Gas mix tab -->
+            <ScrollContainer VerticalExpand="True"
+                             HScrollEnabled="False">
+                <PanelContainer Name="GasMixTabContent"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Margin="4">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#4f4f4f"/>
+                    </PanelContainer.PanelOverride>
+
+                    <atmos:GasAnalyzerControl Name="GasMix"
+                                              Margin="8"/>
+                </PanelContainer>
+            </ScrollContainer>
+
+        </TabContainer>
+
+    </BoxContainer>
+</DefaultWindow>
