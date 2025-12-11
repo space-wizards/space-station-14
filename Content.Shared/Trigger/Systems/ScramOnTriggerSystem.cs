@@ -7,6 +7,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Trigger.Systems;
@@ -22,6 +23,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly TurfSystem _turfSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     public override void Initialize()
@@ -48,8 +50,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
         if (_net.IsClient)
             return;
 
-        var xform = Transform(target);
-        var targetCoords = SelectRandomTileInRange(xform, ent.Comp.TeleportRadius);
+        var targetCoords = SelectRandomTileInRange(target, ent.Comp.TeleportRadius);
 
         if (targetCoords != null)
         {
@@ -62,10 +63,14 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     /// null if no tile is found within a certain number of tries.
     /// </summary>
     /// <remarks> Trends towards the outer radius. Compensates for small grids. </remarks>
-    private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius, int tries = 40)
+    private EntityCoordinates? SelectRandomTileInRange(EntityUid uid, float radius, int tries = 40, PhysicsComponent? physicsComponent = null)
     {
-        var userCoords = userXform.Coordinates;
+        var userCoords = Transform(uid).Coordinates;
         EntityCoordinates? targetCoords = null;
+
+        if (!Resolve(uid, ref physicsComponent))
+            return targetCoords;
+
 
         for (var i = 0; i < tries; i++)
         {
@@ -83,7 +88,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
 
             if (!_turfSystem.TryGetTileRef(tempTargetCoords, out var tileRef)
                 || _turfSystem.IsSpace(tileRef.Value)
-                || _turfSystem.IsTileBlocked(tileRef.Value, CollisionGroup.MobMask))
+                || _turfSystem.IsTileBlocked(tileRef.Value, (CollisionGroup)physicsComponent.CollisionMask))
                 continue;
 
             targetCoords = tempTargetCoords;
