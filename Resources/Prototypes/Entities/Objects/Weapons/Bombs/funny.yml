@@ -75,10 +75,9 @@
   - type: AnimationPlayer
 
 - type: entity
-  name: banana peel
-  suffix: Explosive
   parent: TrashBananaPeel
   id: TrashBananaPeelExplosive
+  suffix: Explosive
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi

@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: nabegator
-  changes:
-  - message: You can now put remote signallers into utility belts.
-    type: Tweak
-  id: 8776
-  time: '2025-07-16T00:43:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35212
 - author: ArtisticRoomba
   changes:
   - message: Firelocks will now properly drop fast enough to prevent the spacing of
@@ -3920,3 +3913,10 @@
   id: 9276
   time: '2025-12-10T10:55:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41809
+- author: kontakt
+  changes:
+  - message: Paramedic Void Suit now uses the correct speed reduction when worn again.
+    type: Fix
+  id: 9277
+  time: '2025-12-10T19:04:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41820
