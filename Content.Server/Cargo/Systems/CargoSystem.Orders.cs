@@ -622,17 +622,16 @@ namespace Content.Server.Cargo.Systems
 
             // Create the item itself
             var item = Spawn(product.Product, spawn);
+            var itemXForm = Transform(item);
 
             // Ensure the item doesn't start anchored
-            _transformSystem.Unanchor(item, Transform(item));
+            _transformSystem.Unanchor(item, itemXForm);
 
             // Spawn container and insert the item into it if a container is defined.
             if (product.Container is { } productContainer)
             {
-                var itemXForm = Transform(item);
                 var containerEntity = Spawn(productContainer.Entity, itemXForm.Coordinates);
                 _transformSystem.SetLocalRotation(containerEntity, itemXForm.LocalRotation);
-
 
                 if (!_container.TryGetContainer(containerEntity, productContainer.ContainerId, out var container1) ||
                     !_container.Insert(item, container1, force: true))

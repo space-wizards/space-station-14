@@ -48,7 +48,7 @@ public sealed partial class ParcelWrappingSystem
 
         // If this wrap maintains the size when wrapping, set the parcel's size to the target's size, or the fallback
         // size if the target does not have a size.
-        TryComp<ItemComponent>(args.Entity, out var targetItemComp);
+        var targetItemComp = CompOrNull<ItemComponent>(args.Entity);
         if (entity.Comp.GetsSizeFromContent)
         {
             var size = targetItemComp?.Size ?? _fallbackParcelSize;

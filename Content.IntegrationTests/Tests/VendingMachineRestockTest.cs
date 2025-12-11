@@ -123,14 +123,16 @@ namespace Content.IntegrationTests.Tests
             await server.WaitAssertion(() =>
             {
                 // Collect all entity prototypes which are vending machine restocks.
-                var restockEntities = prototypeManager.EnumeratePrototypes<EntityPrototype>()
-                    .Where(proto =>
-                        !proto.Abstract
-                        && !pair.IsTestPrototype(proto)
-                        && proto.HasComponent<VendingMachineRestockComponent>()
-                    )
-                    .Select(EntProtoId<VendingMachineRestockComponent> (proto) => proto.ID)
-                    .ToHashSet();
+                var restockEntities = new HashSet<EntProtoId<VendingMachineRestockComponent>>();
+                foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (proto.Abstract
+                        || pair.IsTestPrototype(proto)
+                        || !proto.HasComponent<VendingMachineRestockComponent>())
+                        continue;
+
+                    restockEntities.Add(proto.ID);
+                }
 
                 // Collect all entity prototypes with `EntityTableContainerFill`s which contain those restock entities.
                 // Specifically, this is a mapping of entities-with-container-fill to their-contained-entities-which-are-restocks.
@@ -147,10 +149,12 @@ namespace Content.IntegrationTests.Tests
                     if (!containers.TryGetValue(SharedEntityStorageSystem.ContainerName, out var container))
                         continue;
 
-                    var entitiesInProtoContainingRestock = entityTable.GetSpawns(container)
-                        .Where(fillSpawnEntry => restockEntities.Contains(fillSpawnEntry.Id))
-                        .Select(EntProtoId<VendingMachineRestockComponent> (entry) => entry.Id)
-                        .ToList();
+                    var entitiesInProtoContainingRestock = new List<EntProtoId<VendingMachineRestockComponent>>();
+                    foreach (var fillSpawnEntry in entityTable.GetSpawns(container))
+                    {
+                        if (restockEntities.Contains(fillSpawnEntry.Id))
+                            entitiesInProtoContainingRestock.Add(fillSpawnEntry.Id);
+                    }
 
                     if (entitiesInProtoContainingRestock.Count > 0)
                         entitiesWhichSpawnRestocks.Add(proto.ID, entitiesInProtoContainingRestock);
