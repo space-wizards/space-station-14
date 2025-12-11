@@ -55,7 +55,7 @@
     useDelay: 2
     priority: 1
     checkCanInteract: false # You can heal even if you are killed
-    checkConciousness: false
+    checkConsciousness: false
   - type: InstantAction
     event: !type:ChangelingStasisActionEvent
 
