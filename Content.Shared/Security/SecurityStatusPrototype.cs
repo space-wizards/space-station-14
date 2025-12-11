@@ -17,7 +17,7 @@ public sealed class SecurityStatusPrototype: IPrototype
     /// The localised name for this status.
     /// </summary>
     [DataField]
-    public string Name = default!;
+    public string Name = string.Empty;
 
     /// <summary>
     /// The icon that someone with this status will display to someone looking at them with a sec hud.
@@ -29,13 +29,13 @@ public sealed class SecurityStatusPrototype: IPrototype
     /// A localised string which is announced on sec radio when someone has their status set to this.
     /// </summary>
     [DataField]
-    public string StatusSetAnnouncement = default!;
+    public string StatusSetAnnouncement = string.Empty;
 
     /// <summary>
     /// A localised string which is announced on sec radio when someone had this status but it was set to `null`.
     /// </summary>
     [DataField]
-    public string StatusUnSetAnnouncement = default!;
+    public string StatusUnSetAnnouncement = string.Empty;
 
     /// <summary>
     /// Does this status need an accompanying reason?
@@ -48,7 +48,7 @@ public sealed class SecurityStatusPrototype: IPrototype
     /// A little localised string which is display in the criminal records console alongside the reason associated with the status.
     /// </summary>
     [DataField]
-    public string ReasonText = default!;
+    public string ReasonText = string.Empty;
 
     /// <summary>
     /// Should this status automatically update the person's criminal record?
@@ -62,7 +62,7 @@ public sealed class SecurityStatusPrototype: IPrototype
     /// For example, `Detained` will prepend the string `DETAINED: ...` to any automatically generated crime history.
     /// </summary>
     [DataField]
-    public string HistoryText = default!;
+    public string HistoryText = string.Empty;
 
     /// <summary>
     /// What order should all the statuses appear in the drop down in the criminal records console?
