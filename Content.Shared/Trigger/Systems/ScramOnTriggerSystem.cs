@@ -63,6 +63,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     /// Method to find a random empty tile within a certain radius. Will not select off-grid tiles. Returns
     /// null if no tile is found within a certain number of tries.
     /// </summary>
+    /// <remarks> Trends towards the outer radius. Compensates for small grids. </remarks>
     private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius, int tries = 40)
     {
         var userCoords = userXform.Coordinates;
