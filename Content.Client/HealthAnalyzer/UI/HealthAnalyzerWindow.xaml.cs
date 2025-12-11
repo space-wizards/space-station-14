@@ -15,6 +15,6 @@ public sealed partial class HealthAnalyzerWindow : FancyWindow
 
     public void Populate(HealthAnalyzerScannedUserMessage msg)
     {
-        HealthAnalyzer.Populate(msg);
+        HealthAnalyzer.Populate(msg.State);
     }
 }

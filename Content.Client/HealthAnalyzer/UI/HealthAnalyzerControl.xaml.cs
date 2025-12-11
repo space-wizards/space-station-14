@@ -43,9 +43,9 @@ namespace Content.Client.HealthAnalyzer.UI
             _cache = dependencies.Resolve<IResourceCache>();
         }
 
-        public void Populate(HealthAnalyzerScannedUserMessage msg)
+        public void Populate(HealthAnalyzerUiState state)
         {
-            var target = _entityManager.GetEntity(msg.TargetEntity);
+            var target = _entityManager.GetEntity(state.TargetEntity);
 
             if (target == null
                 || !_entityManager.TryGetComponent<DamageableComponent>(target, out var damageable))
@@ -58,18 +58,18 @@ namespace Content.Client.HealthAnalyzer.UI
 
             // Scan Mode
 
-            ScanModeLabel.Text = msg.ScanMode.HasValue
-                ? msg.ScanMode.Value
+            ScanModeLabel.Text = state.ScanMode.HasValue
+                ? state.ScanMode.Value
                     ? Loc.GetString("health-analyzer-window-scan-mode-active")
                     : Loc.GetString("health-analyzer-window-scan-mode-inactive")
                 : Loc.GetString("health-analyzer-window-entity-unknown-text");
 
-            ScanModeLabel.FontColorOverride = msg.ScanMode.HasValue && msg.ScanMode.Value ? Color.Green : Color.Red;
+            ScanModeLabel.FontColorOverride = state.ScanMode.HasValue && state.ScanMode.Value ? Color.Green : Color.Red;
 
             // Patient Information
 
             SpriteView.SetEntity(target.Value);
-            SpriteView.Visible = msg.ScanMode.HasValue && msg.ScanMode.Value;
+            SpriteView.Visible = state.ScanMode.HasValue && state.ScanMode.Value;
             NoDataTex.Visible = !SpriteView.Visible;
 
             var name = new FormattedMessage();
@@ -87,12 +87,12 @@ namespace Content.Client.HealthAnalyzer.UI
 
             // Basic Diagnostic
 
-            TemperatureLabel.Text = !float.IsNaN(msg.Temperature)
-                ? $"{msg.Temperature - Atmospherics.T0C:F1} °C ({msg.Temperature:F1} K)"
+            TemperatureLabel.Text = !float.IsNaN(state.Temperature)
+                ? $"{state.Temperature - Atmospherics.T0C:F1} °C ({state.Temperature:F1} K)"
                 : Loc.GetString("health-analyzer-window-entity-unknown-value-text");
 
-            BloodLabel.Text = !float.IsNaN(msg.BloodLevel)
-                ? $"{msg.BloodLevel * 100:F1} %"
+            BloodLabel.Text = !float.IsNaN(state.BloodLevel)
+                ? $"{state.BloodLevel * 100:F1} %"
                 : Loc.GetString("health-analyzer-window-entity-unknown-value-text");
 
             StatusLabel.Text =
@@ -106,7 +106,7 @@ namespace Content.Client.HealthAnalyzer.UI
 
             // Alerts
 
-            var showAlerts = msg.Unrevivable == true || msg.Bleeding == true;
+            var showAlerts = state.Unrevivable == true || state.Bleeding == true;
 
             AlertsDivider.Visible = showAlerts;
             AlertsContainer.Visible = showAlerts;
@@ -114,7 +114,7 @@ namespace Content.Client.HealthAnalyzer.UI
             if (showAlerts)
                 AlertsContainer.RemoveAllChildren();
 
-            if (msg.Unrevivable == true)
+            if (state.Unrevivable == true)
                 AlertsContainer.AddChild(new RichTextLabel
                 {
                     Text = Loc.GetString("health-analyzer-window-entity-unrevivable-text"),
@@ -122,7 +122,7 @@ namespace Content.Client.HealthAnalyzer.UI
                     MaxWidth = 300
                 });
 
-            if (msg.Bleeding == true)
+            if (state.Bleeding == true)
                 AlertsContainer.AddChild(new RichTextLabel
                 {
                     Text = Loc.GetString("health-analyzer-window-entity-bleeding-text"),
