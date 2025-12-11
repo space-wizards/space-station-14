@@ -43,23 +43,6 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<ExpendableLightComponent, GetVerbsEvent<ActivationVerb>>(AddIgniteVerb);
             SubscribeLocalEvent<ExpendableLightComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ExpendableLightComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
-            SubscribeLocalEvent<ExpendableLightComponent, ExaminedEvent>(OnExamine);
-        }
-
-        private void OnExamine(Entity<ExpendableLightComponent> ent, ref ExaminedEvent args)
-        {
-            if (!args.IsInDetailsRange)
-                return;
-
-            var protoId = ent.Comp.RefuelMaterialID;
-
-            if (!_protoManager.Resolve(protoId, out var proto))
-                return;
-
-            using (args.PushGroup(nameof(ExpendableLightComponent)))
-            {
-                args.PushMarkup(Loc.GetString("expendable-light-description", ("stackName", Loc.GetString(proto.Name))));
-            }
         }
 
         public override void Update(float frameTime)
