@@ -8,12 +8,10 @@
     <BoxContainer Orientation="Vertical"
                   Margin="5">
 
-        <!-- TODO: Translation -->
-
         <!-- Errors & warnings at the top of the window -->
         <RichTextLabel Name="EjectError"
                        Visible="False"
-                       Text="ERROR: Ejection mechanism failed. Contact a Nanotrasen-certified engineer for further support."
+                       Text="{Loc 'cryo-pod-window-eject-error'}"
                        HorizontalAlignment="Center"
                        Margin="16"
                        MaxWidth="260"/>
@@ -28,7 +26,7 @@
                              HScrollEnabled="False">
 
                 <Label Name="LoadingPlaceHolder"
-                       Text="Loading"
+                       Text="{Loc 'cryo-pod-window-loading'}"
                        Align="Center"
                        HorizontalExpand="True"
                        VerticalExpand="True"/>
@@ -49,16 +47,16 @@
 
                         <BoxContainer Orientation="Vertical"
                                       Margin="6">
-                            <Label Text="WARNING"
+                            <Label Text="{Loc 'cryo-pod-window-warning-header'}"
                                    FontColorOverride="orange"
                                    Align="Center"/>
-                            <RichTextLabel Text="Dangerously low pressure. Gas pressure must be approximately 100 kPa for safe operation."/>
+                            <RichTextLabel Text="{Loc 'cryo-pod-window-low-pressure-warning'}"/>
                         </BoxContainer>
                     </PanelContainer>
 
                     <!-- No patient placeholder, health analyzer, eject button -->
                     <Label Name="NoPatientText"
-                           Text="No patient"
+                           Text="{Loc 'cryo-pod-window-no-patient'}"
                            FontColorOverride="Gray"/>
 
                     <health:HealthAnalyzerControl Name="HealthAnalyzer"
@@ -67,7 +65,7 @@
                     <Control VerticalExpand="True"/>
 
                     <Button Name="EjectButton"
-                            Text="Eject patient"
+                            Text="{Loc 'cryo-pod-window-eject-button'}"
                             StyleClasses="OpenBoth"/>
 
                 </BoxContainer>
