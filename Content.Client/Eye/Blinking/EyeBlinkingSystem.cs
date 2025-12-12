@@ -1,6 +1,8 @@
+using Content.Shared.Cloning.Events;
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -19,10 +21,26 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
-        SubscribeLocalEvent<EyeBlinkingComponent, ComponentStartup>(OnMapInit);
+        SubscribeNetworkEvent<UpdateEyelidsAfterCloningEvent>(OnUpdateEyelidsAfterCloningEventHandler);
+        SubscribeLocalEvent<EyeBlinkingComponent, ComponentInit>(OnComponentInit);
     }
 
-    private void OnMapInit(Entity<EyeBlinkingComponent> ent, ref ComponentStartup args)
+    private void OnUpdateEyelidsAfterCloningEventHandler(UpdateEyelidsAfterCloningEvent ev)
+    {
+        var ent = GetEntity(ev.NetEntity);
+
+        if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
+            return;
+
+        InitEyeBlinking((ent, blinkingComp));
+    }
+
+    private void OnComponentInit(Entity<EyeBlinkingComponent> ent, ref ComponentInit args)
+    {
+        InitEyeBlinking(ent);
+    }
+
+    private void InitEyeBlinking(Entity<EyeBlinkingComponent> ent)
     {
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
@@ -67,7 +85,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
         }
     }
-
 
     private void OnBlinkEyeEvent(BlinkEyeEvent ev)
     {

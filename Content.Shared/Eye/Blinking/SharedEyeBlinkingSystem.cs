@@ -1,4 +1,5 @@
 using Content.Shared.Chat;
+using Content.Shared.Cloning.Events;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
 using Robust.Shared.Serialization;
@@ -14,7 +15,16 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<EyeBlinkingComponent, BlindnessChangedEvent>(BlindnessChangedEventHanlder);
         SubscribeLocalEvent<EyeBlinkingComponent, MobStateChangedEvent>(MobStateChangedEventHandler);
+        SubscribeLocalEvent<EyeBlinkingComponent, CloningEvent>(OnCloningEventHandler);
         SubscribeLocalEvent<EyeBlinkingComponent, EmoteEvent>(EmoteEventHandler);
+    }
+
+    private void OnCloningEventHandler(Entity<EyeBlinkingComponent> ent, ref CloningEvent args)
+    {
+        Logger.Info("CloningEvent!");
+
+        var ev = new UpdateEyelidsAfterCloningEvent(GetNetEntity(ent.Owner));
+        RaiseNetworkEvent(ev);
     }
 
     public void EmoteEventHandler(Entity<EyeBlinkingComponent> ent, ref EmoteEvent args)
@@ -64,6 +74,15 @@ public sealed class BlinkEyeEvent(NetEntity netEntity) : EntityEventArgs
 {
     /// <summary>
     /// The entity performing the blink.
+    /// </summary>
+    public readonly NetEntity NetEntity = netEntity;
+}
+
+[Serializable, NetSerializable]
+public sealed class UpdateEyelidsAfterCloningEvent(NetEntity netEntity) : EntityEventArgs
+{
+    /// <summary>
+    /// The entity who be cloned.
     /// </summary>
     public readonly NetEntity NetEntity = netEntity;
 }
