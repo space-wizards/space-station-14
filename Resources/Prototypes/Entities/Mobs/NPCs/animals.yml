@@ -192,7 +192,6 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: ZombieImmune
 
 - type: entity
   name: chicken
@@ -350,6 +349,8 @@
   id: MobCockroach
   description: This station is just crawling with bugs.
   components:
+  - type: Body
+    prototype: TinyAnimal
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Animals/cockroach.rsi
@@ -396,6 +397,7 @@
       - ReagentId: InsectBlood
         Quantity: 1
     bloodMaxVolume: 20
+    chemicalMaxVolume: 2
   - type: Edible
   - type: FlavorProfile
     flavors:
@@ -848,6 +850,7 @@
       - ReagentId: InsectBlood
         Quantity: 1
     bloodMaxVolume: 0.1
+    chemicalMaxVolume: 2
   - type: MobPrice
     price: 50
   - type: Destructible
@@ -2139,6 +2142,7 @@
     interactSuccessSpawn: EffectHearts
   - type: Bloodstream
     bloodMaxVolume: 50
+    chemicalMaxVolume: 2
 
 - type: entity
   name: frog
