@@ -19,10 +19,10 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         SubscribeLocalEvent<EyeBlinkingComponent, AppearanceChangeEvent>(OnApperanceChangeEventHandler);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
-        SubscribeLocalEvent<EyeBlinkingComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<EyeBlinkingComponent, ComponentStartup>(OnMapInit);
     }
 
-    private void OnMapInit(Entity<EyeBlinkingComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<EyeBlinkingComponent> ent, ref ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
@@ -52,7 +52,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
         }
 
-        ChangeEyeState(ent, eyeClosed);
+        ChangeEyeState(ent, false);
     }
 
     private void OnApperanceChangeEventHandler(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
@@ -118,8 +118,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!ent.Owner.IsValid())
             return;
 
+        if (ent.Comp.Enabled == false)
+            return;
+
         if (_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed && eyeClosed)
-                return;
+            return;
 
         if (ent.Comp.BlinkInProgress)
             return;
@@ -137,6 +140,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void OpenEye(Entity<EyeBlinkingComponent> ent)
     {
+        if (ent.Owner.IsValid())
+            return;
+
+        if (ent.Comp.Enabled == false)
+            return;
+
         ent.Comp.BlinkInProgress = false;
 
         if (_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed && eyeClosed)
