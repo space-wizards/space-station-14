@@ -21,23 +21,31 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentStartup>(OnStartup);
     }
 
+
     private void OnStartup(Entity<EyeBlinkingComponent> ent, ref ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
 
+        // Check if the entity has an Eyelids layer. If not, we can't do anything visually.
         if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var eyelids, false))
             return;
 
-        // Maybe it's worth turning this into a field in a component that will be responsible for the sprite and State
+        // Attempt to sync the eyelids' RSI and state with the Eyes layer for a consistent look.
+        // NOTE: This logic needs to be expanded to support other mobs that use randomized colors or sprites (e.g., Scurrets).
+        // - Mice and other simple mobs work out-of-the-box. They only require an eyelid sprite and a set color of #ffffff so it isn't overridden.
+        // - Scurrets are currently problematic due to their use of RandomSprite; we need a way to handle this after color initialization.
+        // Maybe it's worth turning this into a field in the component that determines the sprite and State.
         if (_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyes, out var eyes, false))
         {
             _sprite.LayerSetRsi(eyelids, eyes.RSI);
             _sprite.LayerSetRsiState(eyelids, eyes.State);
         }
 
+        // Initialize and randomize the blink timer.
         ResetBlink(ent);
 
+        // Apply the initial eye state (open or closed).
         ChangeEyeState(ent, ent.Comp.EyesClosed);
     }
 
