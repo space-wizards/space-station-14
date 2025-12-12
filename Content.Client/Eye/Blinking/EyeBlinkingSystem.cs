@@ -52,7 +52,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
         }
 
-        ChangeEyeState(ent, false);
+        ChangeEyeState(ent, eyeClosed);
     }
 
     private void OnApperanceChangeEventHandler(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
@@ -140,7 +140,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void OpenEye(Entity<EyeBlinkingComponent> ent)
     {
-        if (ent.Owner.IsValid())
+        if (!ent.Owner.IsValid())
             return;
 
         if (ent.Comp.Enabled == false)
