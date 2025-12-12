@@ -129,6 +129,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!ent.Owner.IsValid())
             return;
 
+        ResetBlink(ent);
+
         if (ent.Comp.Enabled == false)
             return;
 
@@ -138,7 +140,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (ent.Comp.BlinkInProgress)
             return;
 
-        ResetBlink(ent);
 
         ent.Comp.BlinkInProgress = true;
         var minDuration = ent.Comp.MinBlinkDuration;
@@ -154,10 +155,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!ent.Owner.IsValid())
             return;
 
+        ent.Comp.BlinkInProgress = false;
+
         if (ent.Comp.Enabled == false)
             return;
 
-        ent.Comp.BlinkInProgress = false;
 
         if (_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed && eyeClosed)
             return;
