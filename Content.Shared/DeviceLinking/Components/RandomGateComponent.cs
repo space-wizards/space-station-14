@@ -16,16 +16,10 @@ public sealed partial class RandomGateComponent : Component
     public ProtoId<SinkPortPrototype> InputPort = "RandomGateInput";
 
     /// <summary>
-    /// The output port A for sending signals.
+    /// The output port for sending signals.
     /// </summary>
     [DataField]
-    public ProtoId<SourcePortPrototype> OutputPortA = "OutputA";
-
-    /// <summary>
-    /// The output port B for sending signals.
-    /// </summary>
-    [DataField]
-    public ProtoId<SourcePortPrototype> OutputPortB = "OutputB";
+    public ProtoId<SourcePortPrototype> OutputPort = "Output";
 
     /// <summary>
     /// The last output state of the gate.

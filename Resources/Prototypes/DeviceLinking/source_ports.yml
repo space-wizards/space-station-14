@@ -159,16 +159,6 @@
   description: signal-port-description-power-discharging
 
 - type: sourcePort
-  id: OutputA
-  name: signal-port-name-logic-output-a
-  description: signal-port-description-logic-output-a
-
-- type: sourcePort
-  id: OutputB
-  name: signal-port-name-logic-output-b
-  description: signal-port-description-logic-output-b
-
-- type: sourcePort
   id: Trigger
   name: signal-port-name-trigger-sender
   description: signal-port-description-trigger-sender

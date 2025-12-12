@@ -20,7 +20,7 @@ public abstract class SharedRandomGateSystem : EntitySystem
 
     private void OnProbabilityChanged(EntityUid uid, RandomGateComponent component, RandomGateProbabilityChangedMessage args)
     {
-        component.SuccessProbability = Math.Clamp(args.Probability, 0f, 1f);
+        component.SuccessProbability = Math.Clamp(args.Probability, 0f, 100f) / 100f;
         UpdateUI(uid, component);
     }
 
@@ -28,6 +28,7 @@ public abstract class SharedRandomGateSystem : EntitySystem
     {
         if (!_ui.HasUi(uid, RandomGateUiKey.Key))
             return;
+
         _ui.SetUiState(uid, RandomGateUiKey.Key, new RandomGateBoundUserInterfaceState(component.SuccessProbability));
     }
 }

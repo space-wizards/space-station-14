@@ -25,8 +25,7 @@ public sealed class RandomGateSystem : SharedRandomGateSystem
         if (output != component.LastOutput)
         {
             component.LastOutput = output;
-            _deviceLink.SendSignal(uid, component.OutputPortA, output ? false : true);
-            _deviceLink.SendSignal(uid, component.OutputPortB, output ? true : false);
+            _deviceLink.SendSignal(uid, component.OutputPort, output);
         }
     }
 }

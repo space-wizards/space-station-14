@@ -89,9 +89,3 @@ signal-port-description-logic-enable = Only loads the input signal into the memo
 
 signal-port-name-logic-random-input = Input Signal
 signal-port-description-logic-random-input = Receives any signal to trigger a random output.
-
-signal-port-name-logic-output-a = Output A
-signal-port-description-logic-output-a = Outputs 1 if the gate fails, 0 if it succeeds.
-
-signal-port-name-logic-output-b = Output B
-signal-port-description-logic-output-b = Outputs 0 if the gate fails, 1 if it succeeds.

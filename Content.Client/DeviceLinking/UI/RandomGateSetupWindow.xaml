@@ -2,10 +2,10 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="Random Gate Setup"
-            MinSize="200 100">
+            MinSize="260 115">
     <BoxContainer Orientation="Vertical" Margin="5" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="Success Probability (%):"/>
+            <Label Text="{Loc 'random-gate-menu-settings'}"/>
             <Control MinSize="5 0" />
             <LineEdit Name="ProbabilityInput"
                       MinSize="70 0"/>

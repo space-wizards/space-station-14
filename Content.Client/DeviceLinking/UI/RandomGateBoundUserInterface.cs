@@ -22,9 +22,8 @@ public sealed class RandomGateBoundUserInterface : BoundUserInterface
     private void OnProbabilityChanged(string value)
     {
         if (!float.TryParse(value, out var probability))
-            probability = 0f;
+            return;
 
-        probability = Math.Clamp(probability, 0f, 100f) / 100f;
         SendMessage(new RandomGateProbabilityChangedMessage(probability));
     }
 
