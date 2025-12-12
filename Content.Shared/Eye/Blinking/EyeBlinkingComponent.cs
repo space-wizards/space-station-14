@@ -73,12 +73,6 @@ public sealed partial class EyeBlinkingComponent : Component
     public bool BlinkInProgress = false;
 
     /// <summary>
-    /// Whether the eyes are visually closed.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool EyesClosed = false;
-
-    /// <summary>
     /// The specific color of the eyelids.
     /// If null, the color is derived from <see cref="HumanoidAppearanceComponent.SkinColor"/> multiplied by <see cref="BlinkSkinColorMultiplier"/>.
     /// Entities without appearance components will have transparent eyelids.

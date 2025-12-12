@@ -7,6 +7,8 @@ namespace Content.Shared.Eye.Blinking;
 
 public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _apperance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -17,7 +19,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     public void EmoteEventHandler(Entity<EyeBlinkingComponent> ent, ref EmoteEvent args)
     {
-        if (args.Emote.ID != ent.Comp.BlinkEmoteId)
+        if (!ent.Comp.BlinkEmoteId.Contains(args.Emote.ID))
             return;
 
         if (!ent.Comp.Enabled)
@@ -34,9 +36,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     public virtual void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
     {
-        ent.Comp.EyesClosed = args.Blind;
-        var ev = new EyeStateChangedEvent(GetNetEntity(ent.Owner), args.Blind);
-        RaiseNetworkEvent(ev);
+        _apperance.SetData(ent, EyeBlinkingVisuals.EyesClosed, args.Blind);
         SetEnabled(ent, !args.Blind);
     }
 
@@ -54,24 +54,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 public enum EyeBlinkingVisuals : byte
 {
     EyesClosed
-}
-
-/// <summary>
-/// Event raised when the <see cref="BlindnessChangedEvent"/> is triggered on an entity.
-/// Used to synchronize the visual state of the eyes (open/closed) based on blindness.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class EyeStateChangedEvent(NetEntity netEntity, bool eyesClosed) : EntityEventArgs
-{
-    /// <summary>
-    /// The entity whose blindness/sight state has changed.
-    /// </summary>
-    public readonly NetEntity NetEntity = netEntity;
-
-    /// <summary>
-    /// Indicates whether the eyes are currently closed.
-    /// </summary>
-    public readonly bool EyesClosed = eyesClosed;
 }
 
 /// <summary>
