@@ -1,4 +1,5 @@
-- type: entityTable # Max size 1x2
+# Figurines representing all your favorite coworkers
+- type: entityTable # size 1x2
   id: AllFigurinesTable
   table: !type:GroupSelector
     children:
@@ -70,7 +71,8 @@
     - !type:NestedSelector
       tableId: AllFigurineMechsTable
 
-- type: entityTable # Max size 1x2
+# Figurines representing the hopes and dreams of the robotics department
+- type: entityTable # size 1x2
   id: AllFigurineMechsTable
   table: !type:GroupSelector
     children:
@@ -86,84 +88,133 @@
     - id: ToyPhazon
     - id: ToyReticence
 
-- type: entityTable
+# Items in this table are generally useless. They don't help in combat and aren't interesting to serious people.
+# If you're wondering if an entity should go in this table, ask your inner child / local clown.
+- type: entityTable # size 2x4 or 3x3
   id: AllToysTable
   table: !type:GroupSelector
     children:
+    - !type:NestedSelector
+      tableId: AllToyWeaponsTable
+    - !type:NestedSelector
+      tableId: AllMiscToysTable
+    - !type:NestedSelector
+      tableId: AllToySoundMakerTable
     - !type:GroupSelector # Boring toys (subjective) :o)
-      weight: 0.5
+      weight: 0.5 # 1 in 7
       children:
       - !type:NestedSelector
         tableId: AllFigurinesTable
       - !type:NestedSelector
         tableId: AllPlushiesTable
-    - !type:NestedSelector
-      tableId: SlipTable
-    - !type:NestedSelector
-      tableId: AllToyWeaponsTable
-    - !type:NestedSelector
-      tableId: AllToyToysTable
-    - !type:NestedSelector
-      tableId: AllToySoundMakerTable
 
-- type: entityTable
+# Items that are used to "attack" people. Legitimate combat use for these is limited (with thematic exceptions)
+- type: entityTable # size 2x4
   id: AllToyWeaponsTable
   table: !type:GroupSelector
     children:
-    - !type:NestedSelector
-      tableId: SlipTable
-    - id: RevolverCapGun
-    - id: BoxCartridgeCap
-    - id: RevolverCapGunFake
-    - id: FoamBlade
-    - id: ToySword
-    - id: FoamCutlass
-    - id: CardSword
-    - id: ToyHammer
-    - id: SnapPopBox
-    - id: BoxDarts
-    - id: WeaponStickyHand
-    - id: LauncherCreamPieFilled
-    - id: FoodPieBananaCream
-    - id: WeaponWaterBlaster
-    - id: WeaponWaterPistol
-    - id: FoamCrossbow
-    - id: WeaponRifleFoam
-    - id: GrenadeFoamDart
+    - !type:GroupSelector # Swords type group
+      children:
+      - id: ToyHammer
+      - id: ToySword
+      - id: FoamBlade
+      - id: FoamCutlass
+      - id: CardSword
+    - !type:GroupSelector # Throwing type group
+      rolls: 2 # Expendables need restocks
+      children:
+      - id: FoodPieBananaCream
+      - id: SnapPopBox
+      - id: BoxDarts
+      - id: GrenadeFoamDart
+    - !type:GroupSelector # Guns type group
+      - id: WeaponStickyHand
+      - id: LauncherCreamPieFilled
+        weight: 0.5 # 1 in 30
+      - !type:GroupSelector # Water subgroup
+        - id: WeaponWaterBlaster
+        - id: WeaponWaterPistol
+      - !type:NestedSelector
+        tableId: RandomFoamGunTable
+      - !type:NestedSelector
+        tableId: RandomCapGunTable
+
+- type: entityTable
+  id: RandomFoamGunTable
+  table: !type:AllSelector # Need to spawn with ammo
+    children:
+    - !type:GroupSelector
+      children:
+      - id: FoamCrossbow
+      - id: WeaponRifleFoam
     - id: BoxDonkSoftBox
 
 - type: entityTable
+  id: RandomCapGunTable
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector # real or fake?
+      children:
+      - id: RevolverCapGun
+      - id: RevolverCapGunFake
+        weight: 0.01 # 1 in 101
+    - !type:GroupSelector # ready for reload
+      prob: 0.9
+      children:
+      - id: SpeedLoaderCap
+      - id: BoxCartridgeCap
+
+# A group of items with fun or unique properties. Highly varied (they aren't all winners)
+- type: entityTable # size 3x3, or 2 2x2
   id: AllMiscToysTable
   table: !type:GroupSelector
     children:
-    - id: BalloonSyn
-    - id: BalloonNT
-    - id: BalloonCorgi
-    - id: Basketball
-    - id: Football
-    - id: TennisBall
-    - id: BeachBall
-    - id: SingularityToy
-    - id: TeslaToy
-    - id: PonderingOrb
     - id: PlasticBanana
-    - id: CrazyGlue
-    - id: CrazyLube
-    - id: MrChips
-    - id: MrDips
-    - id: PersonalAI
-    - id: SyndicatePersonalAI
-    - id: GoldenPersonalAI
-    - id: PotatoAI
+    - id: NukeDiskFake
     - id: DiceBag
     - id: CrayonBox
     - id: SpectralLocator
     - id: BarberScissors
     - id: SprayFlowerPin
     - id: ClothingShoesSkates
+    - !type:AllSelector # No Chip without the Dip
+      children:
+      - id: MrChips
+      - id: MrDips
+    - !type:GroupSelector # Crazy liquids
+      children:
+      - id: CrazyGlue
+      - id: CrazyLube
+    - !type:GroupSelector # Ballons
+      children:
+      - id: BalloonNT
+        weight: 3 # NT bias
+      - id: BalloonSyn
+      - id: BalloonCorgi
+    - !type:GroupSelector # Sports ball
+      children:
+      - id: Basketball
+      - id: Football
+      - id: BeachBall
+      - id: TennisBall
+        amount: 2
+    - !type:GroupSelector # PAIs are basically toys
+      children:
+      - id: PersonalAI
+        weight: 8
+      - id: PotatoAI
+      - id: SyndicatePersonalAI
+      - id: GoldenPersonalAI
+        weight: 0.01 # 1 in 12,000
+    - !type:GroupSelector # Orbs of "power"
+      weight: 0.01 # 1 in 1,200
+      children:
+      - id: SingularityToy
+      - id: TeslaToy
+      - id: PonderingOrb
 
-# Entities that don't do much more than make a unique sound
-- type: entityTable
+# Entities that don't do much more than make a unique sound. Plushies excluded.
+- type: entityTable # size 1x2
   id: AllToySoundMakerTable
   table: !type:GroupSelector
     children:
@@ -172,18 +223,31 @@
     - id: ClownRecorder
     - id: WhoopieCushion
     - id: NewtonCradle
-    - id: BikeHorn
-    - id: CluwneHorn
-    - id: GoldenBikeHorn
-    - id: BananiumHorn
     - id: Skub
-    - id: Whistle
-    - id: SyndicateWhistle
     - id: DeskBell
     - id: BikeHornImplanter
     - id: SadTromboneImplanter
+    - !type:GroupSelector
+      children:
+      - id: Whistle
+      - id: SyndicateWhistle
+    - !type:NestedSelector # The original
+      tableId: RandomBikeHornTable
 
-- type: entityTable # max size 1x2
+- type: entityTable # size 1x2
+  id: RandomBikeHornTable
+  table: !type:GroupSelector
+    children:
+    - id: BikeHorn
+    - !type:GroupSelector # Usually get the normal horn
+      weight: .001 # 1 in 1,000
+      children:
+      - id: CluwneHorn # you lose, clown >:o)
+      - id: BananiumHorn
+      - id: PushHorn
+      - id: GoldenBikeHorn
+
+- type: entityTable # size 1x2
   id: AllBoardGamesTable
   table: !type:GroupSelector
     children:
@@ -192,7 +256,7 @@
     - id: ParchisBoard
     - id: CheckerBoard
 
-- type: entityTable # max size 1x2
+- type: entityTable # size 1x2
   id: AllBattlemapsTable
   table: !type:GroupSelector
     children:
@@ -202,7 +266,7 @@
     - id: SnowBattlemap
     - id: ShipBattlemap
 
-- type: entityTable # max size 1x1
+- type: entityTable # size 1x1
   id: AllCrayonsTable
   table: !type:GroupSelector
     children:
