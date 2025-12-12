@@ -11,18 +11,18 @@ namespace Content.Server.DeviceNetwork.Systems
         {
             base.Initialize();
             SubscribeLocalEvent<WiredNetworkComponent, BeforePacketSentEvent>(OnBeforePacketSent);
-        }
 
+        }
         /// <summary>
-        /// Handles wired network logic, allowing or denying connectivity
+        /// Handles wired network logic, allowing or denying connectivity.
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
-            // If the entity can connect off grid, let it send the packets
-            if (component.ConnectsOffGrid)
+            // If either of the entities transferring packets are the pondering orb, let it send the packets
+            if (MetaData(uid).EntityName == "pondering orb" || (MetaData(args.Sender)).EntityName == "pondering orb")
                 return;
 
-            // If they're not on the same grid, cancel 
+            // If they're not on the same grid, cancel the packet transfer 
             if (Transform(uid).GridUid != args.SenderTransform.GridUid)
             {
                 args.Cancel();
