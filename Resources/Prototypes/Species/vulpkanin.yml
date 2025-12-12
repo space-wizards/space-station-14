@@ -27,7 +27,7 @@
     HeadSide: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
     Eyes: MobVulpkaninEyes
-    Eyelids: MobHumanoidAnyMarking
+    Eyelids: MobVulpkaninEyes
     LArm: MobVulpkaninLArm
     RArm: MobVulpkaninRArm
     LHand: MobVulpkaninLHand

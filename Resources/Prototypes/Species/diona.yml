@@ -23,7 +23,7 @@
     UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobDionaTorso
     Eyes: MobDionaEyes
-    Eyelids: MobHumanoidAnyMarking
+    Eyelids: MobDionaEyes
     LArm: MobDionaLArm
     RArm: MobDionaRArm
     LHand: MobDionaLHand

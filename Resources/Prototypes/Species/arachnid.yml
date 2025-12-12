@@ -26,7 +26,7 @@
     HeadSide: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
     Eyes: MobArachnidEyes
-    Eyelids: MobHumanoidAnyMarking
+    Eyelids: MobArachnidEyes
     LArm: MobArachnidLArm
     RArm: MobArachnidRArm
     LHand: MobArachnidLHand
