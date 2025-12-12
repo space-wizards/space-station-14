@@ -20,14 +20,6 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly TurfSystem _turfSystem = default!;
 
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-    }
-
     protected override void OnTrigger(Entity<ScramOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
         // We need stop the user from being pulled so they don't just get "attached" with whoever is pulling them.
