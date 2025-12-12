@@ -6,67 +6,84 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Eye.Blinking;
 
 /// <summary>
-/// A component required for entities to blink if they have the <see cref="HumanoidVisualLayers.Eyes"/> layer.
-/// Handled by <see cref="EyeBlinkingSystem"/>.
+/// A component that handles automatic eye blinking for entities with the <see cref="HumanoidVisualLayers.Eyes"/> layer.
+/// Logic is handled by <see cref="EyeBlinkingSystem"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class EyeBlinkingComponent : Component
 {
     /// <summary>
-    /// Min duration of a single blink in seconds.
+    /// The minimum duration of a single blink, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float MinBlinkDuration = 0.2f;
 
     /// <summary>
-    /// Max duration of a single blink in seconds.
+    /// The maximum duration of a single blink, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float MaxBlinkDuration = 0.5f;
 
     /// <summary>
-    /// Time when entity open eye agter blinking.
+    /// The timestamp at which the entity will open their eyes after blinking.
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan NextOpenEyeTime;
 
     /// <summary>
-    /// The min interval between blinks in seconds..
+    /// The minimum interval between blinks, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float MinBlinkInterval = 3f;
 
     /// <summary>
-    /// The max interval between blinks in seconds..
+    /// The maximum interval between blinks, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float MaxBlinkInterval = 10f;
 
     /// <summary>
-    /// The multiplier applied to the skin color to create the eyelid shading.
+    /// The multiplier applied to the skin color to calculate the eyelid shading.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float BlinkSkinColorMultiplier = 0.9f;
 
     /// <summary>
-    /// The next time the entity should blink.
+    /// The timestamp for the next blink event.
     /// </summary>
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan NextBlinkingTime;
 
+    /// <summary>
+    /// Whether the blinking logic is currently active.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = true;
 
+    /// <summary>
+    /// The prototype ID of the emote that triggers a forced blink.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<EmotePrototype> BlinkEmoteId = "Blink";
 
+    /// <summary>
+    /// Indicates whether a blink is currently in progress.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool BlinkInProgress = false;
 
+    /// <summary>
+    /// Whether the eyes are visually closed.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool EyesClosed = false;
 
+    /// <summary>
+    /// The specific color of the eyelids.
+    /// If null, the color is derived from <see cref="HumanoidAppearanceComponent.SkinColor"/> multiplied by <see cref="BlinkSkinColorMultiplier"/>.
+    /// Entities without appearance components will have transparent eyelids.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public Color? EyelidsColor = null;
 }
