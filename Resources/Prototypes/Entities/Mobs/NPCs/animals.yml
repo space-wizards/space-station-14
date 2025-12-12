@@ -85,6 +85,8 @@
   id: MobBee
   description: Nice to have, but you can't build a civilization on a foundation of honey alone.
   components:
+  - type: Body
+    prototype: TinyAnimal
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
@@ -145,6 +147,7 @@
       - ReagentId: InsectBlood
         Quantity: 1
     bloodMaxVolume: 0.1
+    chemicalMaxVolume: 2
   - type: MobPrice
     price: 50
   - type: NPCRetaliation
@@ -189,10 +192,7 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: Bloodstream
-    bloodMaxVolume: 0.1
   - type: ZombieImmune
-
 
 - type: entity
   name: chicken
@@ -787,6 +787,8 @@
   id: MobButterfly
   description: Despite popular misconceptions, it's not actually made of butter.
   components:
+  - type: Body
+    prototype: TinyAnimal
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 6
@@ -2095,6 +2097,8 @@
   id: MobSlug
   description: And they called this a lizard?
   components:
+  - type: Body
+    prototype: TinyAnimal
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
@@ -2686,6 +2690,7 @@
         reagents:
         - ReagentId: Laughter
           Quantity: 1
+
 - type: entity
   name: wizard spider
   parent: MobGiantSpider

@@ -41,3 +41,26 @@
       - feet
     feet:
       part: FeetAnimal
+
+# For when you want an animal to only eat itty-bitty bites
+- type: body
+  id: TinyAnimal
+  name: "tinyAnimal"
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - legs
+      organs:
+        lungs: OrganAnimalLungs
+        stomach: OrganTinyAnimalStomach
+        liver: OrganAnimalLiver
+        heart: OrganAnimalHeart
+        kidneys: OrganAnimalKidneys
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal
