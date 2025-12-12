@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Reflection;
 using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
@@ -22,9 +24,13 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
         var targetValue = args.Effect.TargetValue;
 
         // Scan live plant growth components and mutate the first matching field.
-        foreach (var growthComp in EntityManager.GetComponents<PlantGrowthComponent>(entity.Owner))
+        foreach (var growthComp in EntityManager.GetComponents<Component>(entity.Owner))
         {
+            
             var componentType = growthComp.GetType();
+            if(!GrowthComponentsHolder.GrowthComponentTypes.Contains(componentType))
+                continue;
+
             var field = componentType.GetField(targetValue);
 
             if (field == null)
@@ -34,23 +40,22 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
             if (currentValue == null)
                 continue;
 
-            if (field.FieldType == typeof(float))
+            if (TryGetValue<float>(currentValue, out var floatVal))
             {
-                var floatVal = (float)currentValue;
                 MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
                 field.SetValue(growthComp, floatVal);
                 return;
             }
-            else if (field.FieldType == typeof(int))
+
+            if (TryGetValue<int>(currentValue, out var intVal))
             {
-                var intVal = (int)currentValue;
                 MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
                 field.SetValue(growthComp, intVal);
                 return;
             }
-            else if (field.FieldType == typeof(bool))
+
+            if (TryGetValue<bool>(currentValue, out var boolVal))
             {
-                var boolVal = (bool)currentValue;
                 field.SetValue(growthComp, !boolVal);
                 return;
             }
@@ -58,6 +63,18 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
 
         // Field not found in any component.
         Log.Error($"{nameof(PlantChangeStat)} Error: Field '{targetValue}' not found in any plant component. Did you misspell it?");
+    }
+
+    private bool TryGetValue<T>(object value, out T? result)
+    {
+        result = default;
+        if (value is T val)
+        {
+            result = val;
+            return true;
+        }
+
+        return false;
     }
 
     // Mutate reference 'val' between 'min' and 'max' by pretending the value

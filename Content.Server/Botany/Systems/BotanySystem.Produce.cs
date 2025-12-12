@@ -37,7 +37,7 @@ public sealed partial class BotanySystem
             var amount = quantity.Min;
 
             if (quantity.PotencyDivisor > 0 && traits.Potency > 0)
-                amount += FixedPoint2.New(traits.Potency / quantity.PotencyDivisor);
+                amount += traits.Potency / quantity.PotencyDivisor;
 
             amount = FixedPoint2.Clamp(amount, quantity.Min, quantity.Max);
             solutionContainer.MaxVolume += amount;

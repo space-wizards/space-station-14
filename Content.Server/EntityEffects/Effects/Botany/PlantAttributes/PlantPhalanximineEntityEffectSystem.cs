@@ -4,6 +4,9 @@ using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
+/// <summary>
+/// Entity effect that mutates plant to lose health with time.
+/// </summary>
 public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantPhalanximine>
 {
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantPhalanximine> args)

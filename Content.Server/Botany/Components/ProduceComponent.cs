@@ -4,6 +4,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Botany.Components;
 
+/// <summary>
+/// Produce-related data for plant and plant growth cycle.
+/// </summary>
 [RegisterComponent]
 [Access(typeof(BotanySystem))]
 public sealed partial class ProduceComponent : SharedProduceComponent

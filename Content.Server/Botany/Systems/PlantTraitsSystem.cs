@@ -19,13 +19,12 @@ public sealed class PlantTraitsSystem : PlantGrowthSystem
 
     private void OnPlantGrow(Entity<PlantTraitsComponent> ent, ref OnPlantGrowEvent args)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
         Resolve(uid, ref holder);
 
-        if (holder == null || holder.Seed == null || holder.Dead)
+        if (holder?.Seed == null || holder.Dead)
             return;
 
         // Check if plant is too old
@@ -42,7 +41,7 @@ public sealed class PlantTraitsSystem : PlantGrowthSystem
     /// </summary>
     public void AdjustPotency(Entity<PlantTraitsComponent> ent, float delta)
     {
-        ref var traits = ref ent.Comp;
+        var traits = ent.Comp;
         traits.Potency = Math.Max(traits.Potency + delta, 1);
         Dirty(ent);
     }

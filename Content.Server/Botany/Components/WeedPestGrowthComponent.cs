@@ -1,8 +1,12 @@
 namespace Content.Server.Botany.Components;
 
+/// <summary>
+/// Data for weed and pest problems which can happen to plants - how well plant tolerates them,
+/// chances to develop them, how big of a problem they will be.
+/// </summary>
 [RegisterComponent]
 [DataDefinition]
-public sealed partial class WeedPestGrowthComponent : PlantGrowthComponent
+public sealed partial class WeedPestGrowthComponent : Component
 {
     /// <summary>
     /// Maximum weed level the plant can tolerate before taking damage.

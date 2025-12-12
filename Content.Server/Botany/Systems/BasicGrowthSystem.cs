@@ -37,7 +37,7 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
         var swabComp = swab.SeedData.GrowthComponents.BasicGrowth;
         if (swabComp == null)
         {
-            swab.SeedData.GrowthComponents.BasicGrowth = new BasicGrowthComponent()
+            swab.SeedData.GrowthComponents.BasicGrowth = new BasicGrowthComponent
             {
                 WaterConsumption = component.WaterConsumption,
                 NutrientConsumption = component.NutrientConsumption
@@ -54,8 +54,7 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
 
     private void OnPlantGrow(Entity<BasicGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
         Resolve(uid, ref holder);
@@ -69,6 +68,7 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
             holder.Health -= _random.Next(5, 10) * HydroponicsSpeedMultiplier;
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
+
             return;
         }
 

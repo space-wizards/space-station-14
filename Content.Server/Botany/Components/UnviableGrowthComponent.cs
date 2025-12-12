@@ -1,8 +1,9 @@
 namespace Content.Server.Botany.Components;
 
+/// <summary> Damage tolerance of plant. </summary>
 [RegisterComponent]
 [DataDefinition]
-public sealed partial class UnviableGrowthComponent : PlantGrowthComponent
+public sealed partial class UnviableGrowthComponent : Component
 {
     /// <summary>
     /// Chance per tick for the plant to take damage due to being unviable.

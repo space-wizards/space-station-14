@@ -2,9 +2,12 @@ using Content.Shared.Atmos;
 
 namespace Content.Server.Botany.Components;
 
+/// <summary>
+/// Data for gas to consume/exude on plant growth.
+/// </summary>
 [RegisterComponent]
 [DataDefinition]
-public sealed partial class ConsumeExudeGasGrowthComponent : PlantGrowthComponent
+public sealed partial class ConsumeExudeGasGrowthComponent : Component
 {
     /// <summary>
     /// Dictionary of gases and their consumption rates per growth tick.

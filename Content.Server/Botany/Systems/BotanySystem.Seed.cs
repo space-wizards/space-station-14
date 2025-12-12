@@ -6,7 +6,6 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Random;
-using Content.Shared.Random.Helpers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -125,7 +124,7 @@ public sealed partial class BotanySystem : EntitySystem
         return seed;
     }
 
-    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, EntityCoordinates position, EntityUid? plantEntity = null)
+    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, EntityCoordinates position, EntityUid plantEntity)
     {
         if (position.IsValid(EntityManager) &&
             proto.ProductPrototypes.Count > 0)
@@ -139,7 +138,7 @@ public sealed partial class BotanySystem : EntitySystem
         return Enumerable.Empty<EntityUid>();
     }
 
-    public IEnumerable<EntityUid> Harvest(SeedData proto, EntityUid user, EntityUid? plantEntity = null)
+    public IEnumerable<EntityUid> Harvest(SeedData proto, EntityUid user, EntityUid plantEntity)
     {
         var traits = GetPlantTraits(proto);
         if (traits == null || proto.ProductPrototypes.Count == 0 || traits.Yield <= 0)
@@ -157,13 +156,13 @@ public sealed partial class BotanySystem : EntitySystem
         return GenerateProduct(proto, Transform(user).Coordinates, plantEntity);
     }
 
-    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, EntityUid? plantEntity = null)
+    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, EntityUid plantEntity)
     {
         var traits = GetPlantTraits(proto);
         if (traits == null)
             return Enumerable.Empty<EntityUid>();
 
-        var yieldMod = Comp<PlantHolderComponent>(plantEntity!.Value).YieldMod;
+        var yieldMod = Comp<PlantHolderComponent>(plantEntity).YieldMod;
         var totalYield = 0;
 
         if (traits.Yield > -1)

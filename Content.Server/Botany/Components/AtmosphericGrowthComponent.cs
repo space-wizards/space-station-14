@@ -2,9 +2,12 @@ using Content.Shared.Atmos;
 
 namespace Content.Server.Botany.Components;
 
+/// <summary>
+/// Atmospheric-related requirements for proper entity growth. Used in botany.
+/// </summary>
 [RegisterComponent]
 [DataDefinition]
-public sealed partial class AtmosphericGrowthComponent : PlantGrowthComponent
+public sealed partial class AtmosphericGrowthComponent : Component
 {
     /// <summary>
     /// Ideal temperature for plant growth in Kelvin.
@@ -13,10 +16,10 @@ public sealed partial class AtmosphericGrowthComponent : PlantGrowthComponent
     public float IdealHeat = Atmospherics.T20C;
 
     /// <summary>
-    /// Temperature tolerance range around ideal heat.
+    /// Temperature tolerance range around <see cref="IdealHeat"/>.
     /// </summary>
     [DataField]
-    public float HeatTolerance = Atmospherics.T0C + 10f;
+    public float HeatTolerance = 10f;
 
     /// <summary>
     /// Minimum pressure tolerance for plant growth.

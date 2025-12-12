@@ -23,13 +23,12 @@ public sealed class AtmosphericGrowthSystem : PlantGrowthSystem
 
     private void OnPlantGrow(Entity<AtmosphericGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
         Resolve(uid, ref holder);
 
-        if (holder == null || holder.Seed == null || holder.Dead)
+        if (holder?.Seed == null || holder.Dead)
             return;
 
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;

@@ -21,8 +21,7 @@ public sealed class ConsumeExudeGasGrowthSystem : PlantGrowthSystem
 
     private void OnPlantGrow(Entity<ConsumeExudeGasGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
         PlantTraitsComponent? traits = null;

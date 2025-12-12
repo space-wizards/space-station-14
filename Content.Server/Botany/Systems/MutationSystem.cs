@@ -6,6 +6,7 @@ using Content.Shared.Random;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Botany;
 
@@ -15,7 +16,7 @@ public sealed class MutationSystem : EntitySystem
 
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly BotanySystem _botanySystem = default!;
+    [Dependency] private readonly ISerializationManager _serializationManager = default!;
     [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
@@ -27,8 +28,6 @@ public sealed class MutationSystem : EntitySystem
     /// <summary>
     /// For each random mutation, see if it occurs on this plant this check.
     /// </summary>
-    /// <param name="seed"></param>
-    /// <param name="severity"></param>
     public void CheckRandomMutations(EntityUid plantHolder, ref SeedData seed, float severity)
     {
         foreach (var mutation in _randomMutations.mutations)
@@ -68,11 +67,11 @@ public sealed class MutationSystem : EntitySystem
         // Fill missing components in the seed with defaults.
         seed.GrowthComponents.EnsureGrowthComponents();
 
-        foreach (var prop in typeof(GrowthComponentsHolder).GetProperties())
+        foreach (var prop in GrowthComponentsHolder.ComponentGetters)
         {
-            if (prop.GetValue(seed.GrowthComponents) is PlantGrowthComponent component && !EntityManager.HasComponent(plantHolder, component.GetType()))
+            if (prop.GetValue(seed.GrowthComponents) is Component component && !EntityManager.HasComponent(plantHolder, component.GetType()))
             {
-                var newComponent = component.DupeComponent();
+                var newComponent = _serializationManager.CreateCopy(component, notNullableOverride: true);
                 EntityManager.AddComponent(plantHolder, newComponent);
             }
         }
@@ -84,15 +83,15 @@ public sealed class MutationSystem : EntitySystem
 
         CrossChemicals(ref result.Chemicals, a.Chemicals);
 
-        var aTraits = BotanySystem.GetPlantTraits(a);
+        var sourceTraits = BotanySystem.GetPlantTraits(a);
         var resultTraits = BotanySystem.GetPlantTraits(result);
 
-        if (aTraits != null && resultTraits != null)
+        if (sourceTraits != null && resultTraits != null)
         {
-            CrossBool(ref resultTraits.Seedless, aTraits.Seedless);
-            CrossBool(ref resultTraits.Ligneous, aTraits.Ligneous);
-            CrossBool(ref resultTraits.CanScream, aTraits.CanScream);
-            CrossBool(ref resultTraits.TurnIntoKudzu, aTraits.TurnIntoKudzu);
+            CrossBool(ref resultTraits.Seedless, sourceTraits.Seedless);
+            CrossBool(ref resultTraits.Ligneous, sourceTraits.Ligneous);
+            CrossBool(ref resultTraits.CanScream, sourceTraits.CanScream);
+            CrossBool(ref resultTraits.TurnIntoKudzu, sourceTraits.TurnIntoKudzu);
         }
 
         // LINQ Explanation

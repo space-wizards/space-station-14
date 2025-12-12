@@ -1,8 +1,11 @@
 namespace Content.Server.Botany.Components;
 
+/// <summary>
+/// Basic parameters for plant growth.
+/// </summary>
 [RegisterComponent]
 [DataDefinition]
-public sealed partial class BasicGrowthComponent : PlantGrowthComponent
+public sealed partial class BasicGrowthComponent : Component
 {
     /// <summary>
     /// Amount of water consumed per growth tick.

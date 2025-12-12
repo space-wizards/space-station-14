@@ -6,6 +6,9 @@ using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
+/// <summary>
+/// Entity effect that restores ability to get seeds from plant seed maker.
+/// </summary>
 public sealed partial class PlantRestoreSeedsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantRestoreSeeds>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;

@@ -24,12 +24,12 @@ public sealed class HarvestSystem : EntitySystem
 
         SubscribeLocalEvent<PlantHarvestComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<PlantHarvestComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<PlantHarvestComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
     private void OnPlantGrow(Entity<PlantHarvestComponent> ent, ref OnPlantGrowEvent args)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
 
         PlantHolderComponent? plantHolder = null;
         PlantTraitsComponent? traits = null;
@@ -39,8 +39,8 @@ public sealed class HarvestSystem : EntitySystem
         if (plantHolder.Dead || plantHolder.Seed == null)
             return;
 
-        if (component.ReadyForHarvest && component.HarvestRepeat == HarvestType.SelfHarvest)
-            AutoHarvest(ent);
+        if (component is { ReadyForHarvest: true, HarvestRepeat: HarvestType.SelfHarvest })
+            AutoHarvest((ent, ent, plantHolder));
 
         // Check if plant is ready for harvest
         var timeLastHarvest = plantHolder.Age - component.LastHarvest;
@@ -52,39 +52,55 @@ public sealed class HarvestSystem : EntitySystem
         }
     }
 
-    private void OnInteractHand(Entity<PlantHarvestComponent> ent, ref InteractHandEvent args)
+    private void OnInteractUsing(Entity<PlantHarvestComponent> ent, ref InteractUsingEvent args)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
 
         PlantHolderComponent? plantHolder = null;
         PlantTraitsComponent? traits = null;
         if (!Resolve(uid, ref plantHolder, ref traits))
             return;
 
-        if (!component.ReadyForHarvest || plantHolder.Dead)
+        if (!component.ReadyForHarvest || plantHolder.Dead || plantHolder.Seed == null)
+            return;
+
+        // Check if sharp tool is required
+        if (traits.Ligneous && !_botany.CanHarvest(plantHolder.Seed, args.Used))
+        {
+            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
+            return;
+        }
+
+        // Perform harvest
+        DoHarvest(ent, args.User);
+    }
+
+    private void OnInteractHand(Entity<PlantHarvestComponent> ent, ref InteractHandEvent args)
+    {
+        var (uid, component) = ent;
+
+        PlantHolderComponent? plantHolder = null;
+        PlantTraitsComponent? traits = null;
+        if (!Resolve(uid, ref plantHolder, ref traits))
+            return;
+
+        if (!component.ReadyForHarvest || plantHolder.Dead || plantHolder.Seed == null)
             return;
 
         // Check if sharp tool is required
         if (traits.Ligneous)
         {
-            if (!_hands.TryGetActiveItem(args.User, out var activeItem) ||
-                plantHolder.Seed == null ||
-                !_botany.CanHarvest(plantHolder.Seed, activeItem))
-            {
-                _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
-                return;
-            }
+            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
+            return;
         }
 
         // Perform harvest
-        DoHarvest(ent);
+        DoHarvest(ent, args.User);
     }
 
-    public void DoHarvest(Entity<PlantHarvestComponent> ent)
+    public void DoHarvest(Entity<PlantHarvestComponent> ent, EntityUid user)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
 
         PlantHolderComponent? plantHolder = null;
         PlantTraitsComponent? traits = null;
@@ -103,47 +119,19 @@ public sealed class HarvestSystem : EntitySystem
             return;
 
         // Spawn products
-        var yield = traits.Yield;
-        if (plantHolder.Seed?.ProductPrototypes != null)
-        {
-            for (var i = 0; i < yield; i++)
-            {
-                foreach (var productPrototype in plantHolder.Seed.ProductPrototypes)
-                {
-                    var product = Spawn(productPrototype, Transform(uid).Coordinates);
-
-                    // Apply mutations to product
-                    if (TryComp<ProduceComponent>(product, out var produce))
-                    {
-                        _botany.ProduceGrown(product, produce);
-                    }
-                }
-            }
-        }
+        if(plantHolder.Seed != null)
+            _botany.Harvest(plantHolder.Seed, user, ent);
 
         // Handle harvest type
-        switch (component.HarvestRepeat)
-        {
-            case HarvestType.NoRepeat:
-                _plantHolder.RemovePlant(uid, plantHolder);
-                break;
-            case HarvestType.Repeat:
-            case HarvestType.SelfHarvest:
-                component.ReadyForHarvest = false;
-                component.LastHarvest = plantHolder.Age;
-                break;
-        }
+        if (component.HarvestRepeat == HarvestType.NoRepeat)
+            _plantHolder.RemovePlant(uid, plantHolder);
 
-        AfterHarvest(ent);
+        AfterHarvest(ent, plantHolder, traits);
     }
 
-    private void AfterHarvest(Entity<PlantHarvestComponent> ent)
+    private void AfterHarvest(Entity<PlantHarvestComponent> ent, PlantHolderComponent? plantHolder = null, PlantTraitsComponent? traits = null)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
-
-        PlantTraitsComponent? traits = null;
-        PlantHolderComponent? plantHolder = null;
+        var (uid, component) = ent;
         if (!Resolve(uid, ref traits, ref plantHolder))
             return;
 
@@ -161,11 +149,12 @@ public sealed class HarvestSystem : EntitySystem
     /// <summary>
     /// Auto-harvests a plant.
     /// </summary>
-    public void AutoHarvest(Entity<PlantHarvestComponent> ent)
+    public void AutoHarvest(Entity<PlantHarvestComponent, PlantHolderComponent> ent)
     {
-        if (!ent.Comp.ReadyForHarvest)
+        if (!ent.Comp1.ReadyForHarvest || ent.Comp2.Seed == null)
             return;
 
+        _botany.AutoHarvest(ent.Comp2.Seed, Transform(ent.Owner).Coordinates, ent);
         AfterHarvest(ent);
     }
 }

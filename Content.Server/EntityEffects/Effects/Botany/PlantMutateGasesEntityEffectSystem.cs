@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
@@ -7,6 +6,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects.Botany;
 
+/// <summary>
+/// Plant mutation entity effect that forces plant to exude gas while living.
+/// </summary>
 public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantMutateExudeGases>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -30,6 +32,9 @@ public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffe
     }
 }
 
+/// <summary>
+/// Plant mutation entity effect that forces plant to consume gas while living.
+/// </summary>
 public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantMutateConsumeGases>
 {
     [Dependency] private readonly IRobustRandom _random = default!;

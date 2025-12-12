@@ -22,13 +22,12 @@ public sealed class WeedPestGrowthSystem : PlantGrowthSystem
 
     private void OnPlantGrow(Entity<WeedPestGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
         Resolve(uid, ref holder);
 
-        if (holder == null || holder.Seed == null || holder.Dead)
+        if (holder?.Seed == null || holder.Dead)
             return;
 
         // Weed growth logic
@@ -53,32 +52,35 @@ public sealed class WeedPestGrowthSystem : PlantGrowthSystem
     /// </summary>
     private void OnTrayUpdate(Entity<PlantHolderComponent> ent, ref OnPlantGrowEvent args)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
+
+        if (!TryComp<PlantTraitsComponent>(uid, out var traits))
+            return;
 
         // Weeds like water and nutrients! They may appear even if there's not a seed planted
-        if (component.WaterLevel > 10 && component.NutritionLevel > 5)
+        if (component is { WaterLevel: > 10, NutritionLevel: > 5 })
         {
             float chance;
             if (component.Seed == null)
                 chance = 0.05f;
-            else if (TryComp<PlantTraitsComponent>(uid, out var traits) && traits.TurnIntoKudzu)
+            else if (traits.TurnIntoKudzu)
                 chance = 1f;
             else
                 chance = 0.01f;
 
             if (_random.Prob(chance))
                 component.WeedLevel += 1 + component.WeedCoefficient;
+
             if (component.DrawWarnings)
                 component.UpdateSpriteAfterUpdate = true;
         }
 
         // Handle kudzu transformation
-        if (component.Seed != null && !component.Dead &&
-            TryComp<WeedPestGrowthComponent>(uid, out var weed) &&
-            TryComp<PlantTraitsComponent>(uid, out var kudzuTraits) &&
-            kudzuTraits.TurnIntoKudzu &&
-            component.WeedLevel >= weed.WeedHighLevelThreshold)
+        if (component is { Seed: not null, Dead: false }
+            && TryComp<WeedPestGrowthComponent>(uid, out var weed)
+            && TryComp<PlantTraitsComponent>(uid, out var kudzuTraits)
+            && kudzuTraits.TurnIntoKudzu
+            && component.WeedLevel >= weed.WeedHighLevelThreshold)
         {
             Spawn(component.Seed.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
             kudzuTraits.TurnIntoKudzu = false;

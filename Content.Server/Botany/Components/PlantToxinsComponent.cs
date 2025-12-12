@@ -1,8 +1,11 @@
 namespace Content.Server.Botany.Components;
 
+/// <summary>
+/// Data for plant resistance to toxins.
+/// </summary>
 [RegisterComponent]
 [DataDefinition]
-public sealed partial class PlantToxinsComponent : PlantGrowthComponent
+public sealed partial class PlantToxinsComponent : Component
 {
     /// <summary>
     /// Maximum toxin level the plant can tolerate before taking damage.

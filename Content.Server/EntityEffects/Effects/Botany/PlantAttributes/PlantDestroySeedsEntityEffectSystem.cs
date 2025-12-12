@@ -7,6 +7,9 @@ using Content.Shared.Popups;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
+/// <summary>
+/// Entity effect that removes ability to get seeds from plant using seed maker.
+/// </summary>
 public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantDestroySeeds>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
@@ -17,10 +20,7 @@ public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSy
         if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
             return;
 
-        if (!TryComp<PlantTraitsComponent>(entity, out var traits))
-            return;
-
-        if (traits.Seedless)
+        if (!TryComp<PlantTraitsComponent>(entity, out var traits) || traits.Seedless)
             return;
 
         _plantHolder.EnsureUniqueSeed(entity, entity.Comp);

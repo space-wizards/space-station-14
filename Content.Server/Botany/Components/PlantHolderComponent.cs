@@ -4,6 +4,9 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.Botany.Components;
 
+/// <summary>
+/// Container for plant-holder and plant combined data.
+/// </summary>
 [RegisterComponent]
 public sealed partial class PlantHolderComponent : Component
 {

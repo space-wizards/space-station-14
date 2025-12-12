@@ -1,7 +1,4 @@
-using System;
-using Content.Server.Botany.Components;
-
-namespace Content.Server.Botany;
+namespace Content.Server.Botany.Components;
 
 /// <summary>
 /// Anything that can be used to cross-pollinate plants.

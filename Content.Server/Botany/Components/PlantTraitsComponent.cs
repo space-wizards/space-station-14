@@ -1,10 +1,9 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-
 namespace Content.Server.Botany.Components;
 
+/// <summary> Aggregate for general plant information and rare quirks. </summary>
 [RegisterComponent]
 [DataDefinition]
-public sealed partial class PlantTraitsComponent : PlantGrowthComponent
+public sealed partial class PlantTraitsComponent : Component
 {
     /// <summary>
     /// The plant's max health.

@@ -17,13 +17,12 @@ public sealed class ToxinsSystem : PlantGrowthSystem
 
     private void OnPlantGrow(Entity<PlantToxinsComponent> ent, ref OnPlantGrowEvent args)
     {
-        var uid = ent.Owner;
-        var component = ent.Comp;
+        var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
         Resolve(uid, ref holder);
 
-        if (holder == null || holder.Seed == null || holder.Dead)
+        if (holder?.Seed == null || holder.Dead)
             return;
 
         if (holder.Toxins > 0)
