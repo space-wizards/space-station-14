@@ -632,7 +632,7 @@
     collection: FootstepTile
   itemDrop: FloorTileItemMiningLight
 
-# Departamental
+# Departmental
 - type: tile
   id: FloorFreezer
   parent: BaseStationTile
@@ -1672,6 +1672,24 @@
   deconstructTools: [ Cutting ]
   itemDrop: FloorTileItemJungleAstroGrass
 
+- type: tile
+  parent: FloorGrassDark
+  id: FloorDarkAstroGrass
+  name: tiles-dark-astro-grass
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemDarkAstroGrass
+
+- type: tile
+  parent: FloorGrassLight
+  id: FloorLightAstroGrass
+  name: tiles-light-astro-grass
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Cutting ]
+  itemDrop: FloorTileItemLightAstroGrass
+
 # Ice
 - type: tile
   id: FloorAstroIce
@@ -1711,6 +1729,16 @@
   weather: false
 
 - type: tile
+  parent: FloorDesert
+  id: FloorDesertAstroSand
+  name: tiles-desert-astro-sand
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  itemDrop: FloorTileItemDesertAstroSand
+  weather: false
+
+- type: tile
   id: FloorWoodLarge
   parent: BaseStationTile
   name: tiles-wood-large
@@ -1726,6 +1754,18 @@
   barestepSounds:
     collection: BarestepWood
   itemDrop: FloorTileItemWoodLarge
+
+- type: tile
+  id: FloorXenoborg
+  name: tiles-xenoborg-floor
+  sprite: /Textures/Tiles/exoborg.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemXenoborg
+  heatCapacity: 10000
 
 - type: tile
   id: FloorXeno

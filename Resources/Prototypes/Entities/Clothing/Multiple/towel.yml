@@ -9,18 +9,16 @@
     sprite: Clothing/Multiple/towel.rsi
   - type: Clothing
     sprite: Clothing/Multiple/towel.rsi
-    slots: 
+    slots:
     - BELT
     - INNERCLOTHING
     - HEAD
     femaleMask: UniformTop
-    equipSound: 
-    unequipSound: 
+    equipSound:
+    unequipSound:
   - type: Spillable
     solution: absorbed
     spillWhenThrown: false
-  - type: DrainableSolution
-    solution: absorbed
   - type: Absorbent
     pickupAmount: 15
   - type: SolutionContainerManager
@@ -163,7 +161,7 @@
         color: "#0089EF"
   - type: Fiber
     fiberColor: fibers-blue
-    
+
 - type: entity
   id: TowelColorDarkBlue
   name: dark blue towel
@@ -389,26 +387,26 @@
   - type: Sprite
     layers:
     - state: icon
-      color: "#79CC26"
+      color: "#639137"
   - type: Item
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#79CC26"
+        color: "#639137"
       right:
       - state: inhand-right
-        color: "#79CC26"
+        color: "#639137"
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-HELMET
-        color: "#79CC26"
+        color: "#639137"
       jumpsuit:
       - state: equipped-INNERCLOTHING
-        color: "#79CC26"
+        color: "#639137"
       belt:
       - state: equipped-BELT
-        color: "#79CC26"
+        color: "#639137"
   - type: Fiber
     fiberColor: fibers-green
 
@@ -766,4 +764,3 @@
         color: "#535353"
   - type: Fiber
     fiberColor: fibers-black
-    

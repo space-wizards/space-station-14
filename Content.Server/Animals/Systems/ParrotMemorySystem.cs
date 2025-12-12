@@ -5,13 +5,13 @@ using Content.Server.Animals.Components;
 using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Radio;
-using Content.Server.Speech;
-using Content.Server.Speech.Components;
 using Content.Server.Vocalization.Systems;
+using Content.Shared.Animals.Components;
+using Content.Shared.Animals.Systems;
 using Content.Shared.Database;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Popups;
-using Content.Shared.Verbs;
+using Content.Shared.Speech;
+using Content.Shared.Speech.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
@@ -25,24 +25,20 @@ namespace Content.Server.Animals.Systems;
 /// (radiovocalizer) and stores them in a list. When an entity with a VocalizerComponent attempts to vocalize, this will
 /// try to set the message from memory.
 /// </summary>
-public sealed partial class ParrotMemorySystem : EntitySystem
+public sealed partial class ParrotMemorySystem : SharedParrotMemorySystem
 {
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<EraseEvent>(OnErase);
-
-        SubscribeLocalEvent<ParrotMemoryComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
 
         SubscribeLocalEvent<ParrotListenerComponent, MapInitEvent>(ListenerOnMapInit);
 
@@ -55,30 +51,6 @@ public sealed partial class ParrotMemorySystem : EntitySystem
     private void OnErase(ref EraseEvent args)
     {
         DeletePlayerMessages(args.PlayerNetUserId);
-    }
-
-    private void OnGetVerbs(Entity<ParrotMemoryComponent> entity, ref GetVerbsEvent<Verb> args)
-    {
-        var user = args.User;
-
-        // limit this to admins
-        if (!_admin.IsAdmin(user))
-            return;
-
-        // simple verb that just clears the memory list
-        var clearMemoryVerb = new Verb()
-        {
-            Text = Loc.GetString("parrot-verb-clear-memory"),
-            Category = VerbCategory.Admin,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/clear-parrot.png")),
-            Act = () =>
-            {
-                entity.Comp.SpeechMemories.Clear();
-                _popup.PopupEntity(Loc.GetString("parrot-popup-memory-cleared"), entity, user, PopupType.Medium);
-            },
-        };
-
-        args.Verbs.Add(clearMemoryVerb);
     }
 
     private void ListenerOnMapInit(Entity<ParrotListenerComponent> entity, ref MapInitEvent args)
