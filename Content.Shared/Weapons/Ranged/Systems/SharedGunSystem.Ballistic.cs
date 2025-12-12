@@ -383,6 +383,8 @@ public abstract partial class SharedGunSystem
             Timing.CurTime < refiller.NextAutoRefill)
             return;
 
+        refiller.NextAutoRefill = Timing.CurTime + refiller.AutoRefillRate;
+
         if (refiller.AmmoProto is not { } refillerAmmoProto)
         {
             // No ammo proto on the refiller, so just increment the unspawned count on the provider
@@ -415,7 +417,6 @@ public abstract partial class SharedGunSystem
             }
         }
 
-        refiller.NextAutoRefill = Timing.CurTime + refiller.AutoRefillRate;
         Dirty(entity);
     }
 }
