@@ -14,16 +14,34 @@ namespace Content.Shared.Eye.Blinking;
 public sealed partial class EyeBlinkingComponent : Component
 {
     /// <summary>
-    /// Duration of a single blink.
+    /// Min duration of a single blink in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan BlinkDuration = TimeSpan.FromSeconds(0.5f);
+    public float MinBlinkDuration = 0.2f;
 
     /// <summary>
-    /// The interval between blinks.
+    /// Max duration of a single blink in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan BlinkInterval = TimeSpan.FromSeconds(5);
+    public float MaxBlinkDuration = 0.5f;
+
+    /// <summary>
+    /// Time when entity open eye agter blinking.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan NextOpenEyeTime;
+
+    /// <summary>
+    /// The min interval between blinks in seconds..
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float MinBlinkInterval = 3f;
+
+    /// <summary>
+    /// The max interval between blinks in seconds..
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float MaxBlinkInterval = 10f;
 
     /// <summary>
     /// The multiplier applied to the skin color to create the eyelid shading.

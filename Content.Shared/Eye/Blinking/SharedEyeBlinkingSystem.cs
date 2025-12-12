@@ -1,6 +1,7 @@
 using Content.Shared.Chat;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Mobs;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -24,8 +25,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         if (!ent.Comp.Enabled)
             return;
 
-        var ev = new BlinkEyeEvent();
-        RaiseLocalEvent(ent.Owner, ev);
+        var ev = new BlinkEyeEvent(GetNetEntity(ent.Owner));
+        RaiseNetworkEvent(ev);
     }
 
     private void MobStateChangedEventHandler(Entity<EyeBlinkingComponent> ent, ref MobStateChangedEvent args)
@@ -37,7 +38,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     {
         ent.Comp.EyesClosed = args.Blind;
         var ev = new ChangeEyeStateEvent(GetNetEntity(ent.Owner), args.Blind);
-        RaiseLocalEvent(ent.Owner, ev);
+        RaiseNetworkEvent(ev);
         SetEnabled(ent, !args.Blind);
     }
 
@@ -65,4 +66,7 @@ public sealed class ChangeEyeStateEvent(NetEntity netEntity, bool eyesClosed) : 
 }
 
 [Serializable, NetSerializable]
-public sealed class BlinkEyeEvent : EntityEventArgs;
+public sealed class BlinkEyeEvent(NetEntity netEntity) : EntityEventArgs
+{
+    public readonly NetEntity NetEntity = netEntity;
+}

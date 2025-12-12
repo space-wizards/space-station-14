@@ -2,6 +2,7 @@ using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Eye.Blinking;
@@ -11,13 +12,14 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly ITimerManager _timer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EyeBlinkingComponent, ChangeEyeStateEvent>(OnChangeEyeStateEvent);
-        SubscribeLocalEvent<EyeBlinkingComponent, BlinkEyeEvent>(OnBlinkEyeEvent);
+        SubscribeNetworkEvent<ChangeEyeStateEvent>(OnChangeEyeStateEvent);
+        SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentStartup>(OnStartup);
     }
 
@@ -36,19 +38,30 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             _sprite.LayerSetRsiState(eyelids, eyes.State);
         }
 
+        ResetBlink(ent);
+
         ChangeEyeState(ent, ent.Comp.EyesClosed);
     }
 
-    private void OnChangeEyeStateEvent(Entity<EyeBlinkingComponent> ent, ref ChangeEyeStateEvent args)
+    private void OnChangeEyeStateEvent(ChangeEyeStateEvent ev)
     {
-        ChangeEyeState(ent, args.EyesClosed);
+        var ent = GetEntity(ev.NetEntity);
+
+        if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
+            return;
+
+        ChangeEyeState((ent, blinkingComp), ev.EyesClosed);
     }
 
-    private void OnBlinkEyeEvent(Entity<EyeBlinkingComponent> ent, ref BlinkEyeEvent args)
+    private void OnBlinkEyeEvent(BlinkEyeEvent ev)
     {
-        Blink(ent);
-    }
+        var ent = GetEntity(ev.NetEntity);
 
+        if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
+            return;
+
+        Blink((ent, blinkingComp));
+    }
 
     private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
     {
@@ -75,15 +88,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         _sprite.LayerSetColor(layer, eyeClsoed ? blinkColor : Color.Transparent);
     }
 
-    public override void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
-    {
-        base.BlindnessChangedEventHanlder(ent, ref args);
-        if (!ent.Owner.IsValid())
-            return;
-
-        ChangeEyeState(ent, args.Blind);
-    }
-
     public void Blink(Entity<EyeBlinkingComponent> ent)
     {
         if (!ent.Owner.IsValid())
@@ -98,12 +102,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
 
         ent.Comp.BlinkInProgress = true;
+        var minDuration = ent.Comp.MinBlinkDuration;
+        var maxDuration = ent.Comp.MaxBlinkDuration;
+        var randomSeconds = minDuration + (_random.NextDouble() * (maxDuration - minDuration));
+        ent.Comp.NextOpenEyeTime = _timing.CurTime + TimeSpan.FromSeconds(randomSeconds);
 
         ChangeEyeState(ent, true);
-
-        Timer timer = new Timer((int)ent.Comp.BlinkDuration.TotalMilliseconds, false, () => OpenEye(ent));
-
-        _timer.AddTimer(timer);
     }
 
     private void OpenEye(Entity<EyeBlinkingComponent> ent)
@@ -118,7 +122,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     public void ResetBlink(Entity<EyeBlinkingComponent> ent)
     {
-        ent.Comp.NextBlinkingTime = _timing.CurTime + ent.Comp.BlinkInterval + ent.Comp.BlinkDuration;
+        var minInterval = ent.Comp.MinBlinkInterval;
+        var maxInterval = ent.Comp.MaxBlinkInterval;
+        var randomSeconds = minInterval + (_random.NextDouble() * (maxInterval - minInterval));
+
+        ent.Comp.NextBlinkingTime = _timing.CurTime + TimeSpan.FromSeconds(randomSeconds);
     }
 
     public override void Update(float frameTime)
@@ -131,6 +139,14 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         while (query.MoveNext(out var uid, out var comp) && comp.Enabled)
         {
+            if (comp.BlinkInProgress)
+            {
+                if (curTime >= comp.NextOpenEyeTime)
+                {
+                    OpenEye((uid, comp));
+                }
+                continue;
+            }
             if (comp.NextBlinkingTime > curTime)
                 continue;
 
