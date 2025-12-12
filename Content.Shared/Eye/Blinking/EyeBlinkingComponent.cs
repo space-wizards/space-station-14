@@ -16,13 +16,13 @@ public sealed partial class EyeBlinkingComponent : Component
     /// The minimum duration of a single blink, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float MinBlinkDuration = 0.2f;
+    public TimeSpan MinBlinkDuration = TimeSpan.FromSeconds(0.2f);
 
     /// <summary>
     /// The maximum duration of a single blink, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float MaxBlinkDuration = 0.5f;
+    public TimeSpan MaxBlinkDuration = TimeSpan.FromSeconds(0.5f);
 
     /// <summary>
     /// The timestamp at which the entity will open their eyes after blinking.
@@ -34,13 +34,13 @@ public sealed partial class EyeBlinkingComponent : Component
     /// The minimum interval between blinks, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float MinBlinkInterval = 3f;
+    public TimeSpan MinBlinkInterval = TimeSpan.FromSeconds(3f);
 
     /// <summary>
     /// The maximum interval between blinks, in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float MaxBlinkInterval = 10f;
+    public TimeSpan MaxBlinkInterval = TimeSpan.FromSeconds(10f);
 
     /// <summary>
     /// The multiplier applied to the skin color to calculate the eyelid shading.
@@ -64,7 +64,7 @@ public sealed partial class EyeBlinkingComponent : Component
     /// The prototype ID of the emote that triggers a forced blink.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<EmotePrototype> BlinkEmoteId = "Blink";
+    public List<ProtoId<EmotePrototype>> BlinkEmoteId = new() { "Blink" };
 
     /// <summary>
     /// Indicates whether a blink is currently in progress.

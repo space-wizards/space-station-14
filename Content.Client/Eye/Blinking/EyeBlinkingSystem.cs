@@ -18,11 +18,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         SubscribeNetworkEvent<EyeStateChangedEvent>(OnChangeEyeStateEvent);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
-        SubscribeLocalEvent<EyeBlinkingComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<EyeBlinkingComponent, MapInitEvent>(OnMapInit);
     }
 
 
-    private void OnStartup(Entity<EyeBlinkingComponent> ent, ref ComponentStartup args)
+    private void OnMapInit(Entity<EyeBlinkingComponent> ent, ref MapInitEvent args)
     {
         if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComponent))
             return;
@@ -94,12 +94,19 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         _sprite.LayerSetColor(layer, eyeClsoed ? blinkColor : Color.Transparent);
     }
 
+    /// <summary>
+    /// Initiates a blink action for the specified entity if its eyes are currently open and no blink is already in
+    /// progress.
+    /// </summary>
+    /// <remarks>If a blink is already in progress or the entity's eyes are closed, this method has no effect.
+    /// The blink duration is determined randomly within the component's configured minimum and maximum blink
+    /// durations.</remarks>
+    /// <param name="ent">The entity containing the <see cref="EyeBlinkingComponent"/> to blink. The entity's owner must be valid, and its
+    /// eyes must not already be closed.</param>
     public void Blink(Entity<EyeBlinkingComponent> ent)
     {
         if (!ent.Owner.IsValid())
             return;
-
-        ResetBlink(ent);
 
         if (ent.Comp.EyesClosed)
             return;
@@ -107,11 +114,13 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (ent.Comp.BlinkInProgress)
             return;
 
+        ResetBlink(ent);
+
         ent.Comp.BlinkInProgress = true;
         var minDuration = ent.Comp.MinBlinkDuration;
         var maxDuration = ent.Comp.MaxBlinkDuration;
         var randomSeconds = minDuration + (_random.NextDouble() * (maxDuration - minDuration));
-        ent.Comp.NextOpenEyeTime = _timing.CurTime + TimeSpan.FromSeconds(randomSeconds);
+        ent.Comp.NextOpenEyeTime = _timing.CurTime + randomSeconds;
 
         ChangeEyeState(ent, true);
     }
@@ -126,13 +135,21 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         ChangeEyeState(ent, false);
     }
 
+    /// <summary>
+    /// Resets the blink timer for the specified entity, scheduling the next blink within the entity's configured
+    /// interval range.
+    /// </summary>
+    /// <remarks>The next blink time is set to a random value between the minimum and maximum blink intervals,
+    /// starting from the current time.</remarks>
+    /// <param name="ent">The entity whose blink timer is to be reset. The entity must have a valid <see cref="EyeBlinkingComponent"/>
+    /// with defined minimum and maximum blink intervals.</param>
     public void ResetBlink(Entity<EyeBlinkingComponent> ent)
     {
         var minInterval = ent.Comp.MinBlinkInterval;
         var maxInterval = ent.Comp.MaxBlinkInterval;
         var randomSeconds = minInterval + (_random.NextDouble() * (maxInterval - minInterval));
 
-        ent.Comp.NextBlinkingTime = _timing.CurTime + TimeSpan.FromSeconds(randomSeconds);
+        ent.Comp.NextBlinkingTime = _timing.CurTime + randomSeconds;
     }
 
     public override void Update(float frameTime)

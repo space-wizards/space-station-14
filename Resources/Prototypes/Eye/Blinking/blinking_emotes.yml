@@ -8,5 +8,4 @@
   chatMessages: ["chat-emote-msg-blink"]
   chatTriggers:
     - blink
-    - blink!
-    - blink.
+    - blinks
