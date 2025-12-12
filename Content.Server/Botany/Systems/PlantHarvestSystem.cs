@@ -61,11 +61,11 @@ public sealed class HarvestSystem : EntitySystem
         if (!Resolve(uid, ref plantHolder, ref traits))
             return;
 
-        if (!component.ReadyForHarvest || plantHolder.Dead || plantHolder.Seed == null)
+        if (!component.ReadyForHarvest || plantHolder.Dead || plantHolder.Seed == null || !traits.Ligneous)
             return;
 
         // Check if sharp tool is required
-        if (traits.Ligneous && !_botany.CanHarvest(plantHolder.Seed, args.Used))
+        if (!_botany.CanHarvest(plantHolder.Seed, args.Used))
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
             return;
