@@ -63,9 +63,10 @@
       gas_tank: !type:ContainerSlot
 
 - type: entity
-  name: pie cannon
   parent: BaseStorageItem
   id: LauncherCreamPie
+  name: pie cannon
+  suffix: Empty
   description: Load cream pie for optimal results.
   components:
   - type: Sprite
@@ -103,6 +104,17 @@
     containers:
       storagebase: !type:Container
         ents: []
+
+- type: entity
+  parent: LauncherCreamPie
+  id: LauncherCreamPieFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: FoodPieBananaCream
+        amount: 4
 
 - type: entity
   name: experimental pie cannon

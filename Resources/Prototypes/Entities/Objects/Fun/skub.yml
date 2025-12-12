@@ -13,23 +13,18 @@
   - type: Item
     sprite: Objects/Misc/skub.rsi
   - type: EmitSoundOnUse
-    sound:
+    sound: &SoundSkub
       collection: Skub
   - type: EmitSoundOnLand
-    sound:
-      collection: Skub
+    sound: *SoundSkub
   - type: EmitSoundOnTrigger
-    sound:
-      collection: Skub
+    sound: *SoundSkub
   - type: EmitSoundOnActivate
-    sound:
-      collection: Skub
+    sound: *SoundSkub
   - type: EmitSoundOnCollide
-    sound:
-      collection: Skub
+    sound: *SoundSkub
   - type: MeleeWeapon
-    soundHit:
-      collection: Skub
+    soundHit: *SoundSkub
     damage:
       types:
         Blunt: 0

@@ -1,9 +1,9 @@
 - type: entity
-  id: SpectralLocatorUnpowered
   parent: BaseItem
+  id: SpectralLocatorUnpowered
   name: spectral locator
-  description: Appears to be a modified anomaly locator. Seems very old.
   suffix: Always Powered
+  description: Appears to be a modified anomaly locator. Seems very old.
   components:
   - type: Sprite
     sprite: Objects/Fun/spectrallocator.rsi
@@ -37,8 +37,8 @@
         volume: -8
 
 - type: entity
-  id: SpectralLocator
   parent: [ SpectralLocatorUnpowered, PowerCellSlotSmallItem ]
+  id: SpectralLocator
   suffix: ""
   components:
   - type: PowerCellDraw
@@ -47,8 +47,8 @@
   - type: ToggleCellDraw
 
 - type: entity
-  id: SpectralLocatorEmpty
   parent: SpectralLocator
+  id: SpectralLocatorEmpty
   suffix: Empty
   components:
   - type: ItemSlots

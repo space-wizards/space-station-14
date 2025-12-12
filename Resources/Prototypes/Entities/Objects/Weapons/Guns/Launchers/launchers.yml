@@ -337,7 +337,6 @@
   name: sticky hand
   description: They're saying you're reaching. They're saying it's a stretch. You'll show them all, and you'll stick it to them.
   components:
-  - type: AmmoCounter
   - type: GrapplingGun
     cycleSound: /Audio/Misc/woosh.ogg
     ropeSprite:

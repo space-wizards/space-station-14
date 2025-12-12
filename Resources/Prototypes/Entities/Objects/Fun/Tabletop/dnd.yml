@@ -1,19 +1,15 @@
 ﻿# Board item (given to players)
 - type: entity
+  abstract: true
   parent: BaseBoardEntity
   id: BaseBattlemap
   name: battlemap
-  abstract: true
   description: A battlemap for your epic dungeon exploring to begin, pieces not included!
   components:
     - type: Sprite
-      sprite: Objects/Fun/Tabletop/grassbm.rsi
       state: icon
     - type: TabletopGame
       boardName: tabletop-battlemap-board-name
-      setup:
-        !type:TabletopEmptySetup
-        boardPrototype: GrassBoardTabletop
 
 - type: entity
   parent: BaseBattlemap
@@ -26,7 +22,7 @@
     - type: TabletopGame
       setup:
         !type:TabletopEmptySetup
-        boardPrototype: GrassBoardTabletop
+        boardPrototype: &GrassBoard GrassBoardTabletop
 
 - type: entity
   parent: BaseBattlemap
@@ -39,7 +35,7 @@
     - type: TabletopGame
       setup:
         !type:TabletopEmptySetup
-        boardPrototype: MoonBoardTabletop
+        boardPrototype: &MoonBoard MoonBoardTabletop
 
 - type: entity
   parent: BaseBattlemap
@@ -52,7 +48,7 @@
     - type: TabletopGame
       setup:
         !type:TabletopEmptySetup
-        boardPrototype: SandBoardTabletop
+        boardPrototype: &SandBoard SandBoardTabletop
 
 - type: entity
   parent: BaseBattlemap
@@ -65,7 +61,7 @@
     - type: TabletopGame
       setup:
         !type:TabletopEmptySetup
-        boardPrototype: SnowBoardTabletop
+        boardPrototype: &SnowBoard SnowBoardTabletop
 
 - type: entity
   parent: BaseBattlemap
@@ -79,24 +75,22 @@
       size: 543, 543
       setup:
         !type:TabletopEmptySetup
-        boardPrototype: ShipBoardTabletop
+        boardPrototype: &ShipBoard ShipBoardTabletop
 
 # Background entity (actually shown in the board)
 - type: entity
   parent: BaseBoardTabletop
-  id: GrassBoardTabletop
+  id: *GrassBoard
   name: grass battlemap
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/Battlemaps/grassbm_tabletop.rsi
     state: tabletop
-    noRot: false
-    drawdepth: FloorTiles
 
 - type: entity
   parent: BaseBoardTabletop
-  id: MoonBoardTabletop
+  id: *MoonBoard
   name: grass battlemap
   categories: [ HideSpawnMenu ]
   components:
@@ -106,7 +100,7 @@
 
 - type: entity
   parent: BaseBoardTabletop
-  id: SandBoardTabletop
+  id: *SandBoard
   name: sand battlemap
   categories: [ HideSpawnMenu ]
   components:
@@ -116,7 +110,7 @@
 
 - type: entity
   parent: BaseBoardTabletop
-  id: SnowBoardTabletop
+  id: *SnowBoard
   name: snow battlemap
   categories: [ HideSpawnMenu ]
   components:
@@ -126,7 +120,7 @@
 
 - type: entity
   parent: BaseBoardTabletop
-  id: ShipBoardTabletop
+  id: *ShipBoard
   name: ship battlemap
   categories: [ HideSpawnMenu ]
   components:

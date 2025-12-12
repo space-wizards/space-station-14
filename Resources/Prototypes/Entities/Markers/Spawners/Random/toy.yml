@@ -110,23 +110,30 @@
   id: AllToyWeaponsTable
   table: !type:GroupSelector
     children:
-    - id: FoamCrossbow
+    - !type:NestedSelector
+      tableId: SlipTable
     - id: RevolverCapGun
+    - id: BoxCartridgeCap
     - id: RevolverCapGunFake
     - id: FoamBlade
     - id: ToySword
     - id: FoamCutlass
     - id: CardSword
     - id: ToyHammer
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
+    - id: SnapPopBox
+    - id: BoxDarts
+    - id: WeaponStickyHand
+    - id: LauncherCreamPieFilled
+    - id: FoodPieBananaCream
+    - id: WeaponWaterBlaster
+    - id: WeaponWaterPistol
+    - id: FoamCrossbow
+    - id: WeaponRifleFoam
+    - id: GrenadeFoamDart
+    - id: BoxDonkSoftBox
 
 - type: entityTable
-  id: AllToyToysTable
+  id: AllMiscToysTable
   table: !type:GroupSelector
     children:
     - id: BalloonSyn
@@ -142,18 +149,26 @@
     - id: PlasticBanana
     - id: CrazyGlue
     - id: CrazyLube
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
+    - id: MrChips
+    - id: MrDips
+    - id: PersonalAI
+    - id: SyndicatePersonalAI
+    - id: GoldenPersonalAI
+    - id: PotatoAI
+    - id: DiceBag
+    - id: CrayonBox
+    - id: SpectralLocator
+    - id: BarberScissors
+    - id: SprayFlowerPin
+    - id: ClothingShoesSkates
 
-# Entities that don't do much except make a funny sound
+# Entities that don't do much more than make a unique sound
 - type: entityTable
   id: AllToySoundMakerTable
   table: !type:GroupSelector
     children:
     - id: ToyRubberDuck
     - id: RubberChicken
-    - id: ToyIan
     - id: ClownRecorder
     - id: WhoopieCushion
     - id: NewtonCradle
@@ -161,13 +176,48 @@
     - id: CluwneHorn
     - id: GoldenBikeHorn
     - id: BananiumHorn
-    - id: PushHorn
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
-    - id: ToyFigurineQuartermaster
+    - id: Skub
+    - id: Whistle
+    - id: SyndicateWhistle
+    - id: DeskBell
+    - id: BikeHornImplanter
+    - id: SadTromboneImplanter
+
+- type: entityTable # max size 1x2
+  id: AllBoardGamesTable
+  table: !type:GroupSelector
+    children:
+    - id: BackgammonBoard
+    - id: ChessBoard
+    - id: ParchisBoard
+    - id: CheckerBoard
+
+- type: entityTable # max size 1x2
+  id: AllBattlemapsTable
+  table: !type:GroupSelector
+    children:
+    - id: GrassBattlemap
+    - id: MoonBattlemap
+    - id: SandBattlemap
+    - id: SnowBattlemap
+    - id: ShipBattlemap
+
+- type: entityTable # max size 1x1
+  id: AllCrayonsTable
+  table: !type:GroupSelector
+    children:
+    - id: CrayonMime
+    - id: CrayonRainbow
+    - id: CrayonWhite
+    - id: CrayonBlack
+    - id: CrayonRed
+    - id: CrayonOrange
+    - id: CrayonYellow
+    - id: CrayonGreen
+    - id: CrayonBlue
+    - id: CrayonPurple
+#    - id: CrayonBox # Breaks size expectations for the table
+#      weight: 0.1 # 1 in 100
 
 - type: entity
   parent: MarkerBase
