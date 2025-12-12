@@ -9,6 +9,7 @@ cryo-pod-locked = The ejection mechanism is unresponsive!
 cryo-pod-window-loading = Loading
 cryo-pod-window-warning-header = WARNING
 cryo-pod-window-low-pressure-warning = Dangerously low pressure. Gas pressure must be approximately 100 kPa for safe operation.
+cryo-pod-window-high-temperature-warning = Temperature too high. {CAPITALIZE($reagent)} requires a temperature below {$temperature} K.
 cryo-pod-window-no-patient = No patient
 cryo-pod-window-eject-button = Eject patient
 # Shown when the eject button is pressed on a locked pod.

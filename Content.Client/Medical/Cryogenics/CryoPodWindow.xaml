@@ -54,7 +54,27 @@
                         </BoxContainer>
                     </PanelContainer>
 
-                    <!-- No patient placeholder, health analyzer, eject button -->
+                    <!-- Temperature warning -->
+                    <PanelContainer Name="HighTemperatureWarning"
+                                    Visible="False"
+                                    HorizontalExpand="True"
+                                    Margin="16">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BorderThickness="1" BorderColor="orange"/>
+                        </PanelContainer.PanelOverride>
+
+                        <BoxContainer Orientation="Vertical"
+                                      Margin="6">
+                            <Label Text="{Loc 'cryo-pod-window-warning-header'}"
+                                   FontColorOverride="orange"
+                                   Align="Center"/>
+                            <!-- Note: This placeholder text should never be visible. -->
+                            <RichTextLabel Name="HighTemperatureWarningText"
+                                           Text="Temperature too high."/>
+                        </BoxContainer>
+                    </PanelContainer>
+
+                    <!-- No patient placeholder, health analyzer -->
                     <Label Name="NoPatientText"
                            Text="{Loc 'cryo-pod-window-no-patient'}"
                            FontColorOverride="Gray"/>
@@ -62,11 +82,46 @@
                     <health:HealthAnalyzerControl Name="HealthAnalyzer"
                                                   Visible="False"/>
 
+                    <!-- -->
+
                     <Control VerticalExpand="True"/>
 
-                    <Button Name="EjectButton"
-                            Text="{Loc 'cryo-pod-window-eject-button'}"
-                            StyleClasses="OpenBoth"/>
+                    <PanelContainer StyleClasses="LowDivider" />
+
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="5">
+                        <Label Text="Chemicals"/>
+                        <Label Name="NoBeakerText"
+                               Text="No beaker inserted"
+                               FontColorOverride="Gray"/>
+
+                        <GridContainer Name="ChemicalsInfo"
+                                       Columns="2">
+                            <Label Text="Available:"
+                                   FontColorOverride="LightGray"/>
+                            <Label Name="AvailableQuantity"
+                                   FontColorOverride="LightGray"/>
+                            <!-- <Label Text="In chamber:" -->
+                            <!--        FontColorOverride="LightGray"/> -->
+                            <!-- <Label Name="InjectingQuantity"
+                                        FontColorOverride="LightGray"/> -->
+                        </GridContainer>
+                    </BoxContainer>
+
+                    <PanelContainer StyleClasses="LowDivider"
+                                    Margin="0 5 0 5"/>
+
+                    <BoxContainer Orientation="Horizontal">
+                        <Button Name="InjectButton"
+                                Text="Inject reagent"
+                                Disabled="True"
+                                HorizontalExpand="True"
+                                StyleClasses="OpenRight"/>
+                        <Button Name="EjectButton"
+                                Text="{Loc 'cryo-pod-window-eject-button'}"
+                                HorizontalExpand="True"
+                                StyleClasses="OpenLeft"/>
+                    </BoxContainer>
 
                 </BoxContainer>
             </ScrollContainer>

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.EntitySystems;
@@ -12,6 +13,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Medical.Cryogenics;
 using Robust.Shared.Containers;
@@ -162,13 +164,40 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
         var patient = entity.Comp.BodyContainer.ContainedEntity;
         var gasMix = _gasAnalyzerSystem.GenerateGasMixEntry("Cryo pod", air.Air);
+        var beaker = GetBeakerReagents(entity);
         var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient);
         health.ScanMode = true;
 
         _uiSystem.ServerSendUiMessage(
             entity.Owner,
             CryoPodUiKey.Key,
-            new CryoPodUserMessage(gasMix, health)
+            new CryoPodUserMessage(gasMix, health, beaker)
         );
+    }
+
+    private List<ReagentQuantity>? GetBeakerReagents(Entity<CryoPodComponent> entity)
+    {
+        if (!_itemSlotsQuery.TryComp(entity, out var itemSlotsComponent))
+            return null;
+
+        var beaker = _itemSlots.GetItemOrNull(
+            entity.Owner,
+            entity.Comp.SolutionContainerName,
+            itemSlotsComponent
+        );
+
+        if (beaker == null
+            || !beaker.Value.Valid
+            || !_dispenserQuery.TryComp(beaker, out var fitsInDispenserComponent)
+            || !_solutionContainerQuery.TryComp(beaker, out var solutionContainerManagerComponent)
+            || !_solutionContainer.TryGetFitsInDispenser(
+                    (beaker.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
+                    out var containerSolution,
+                    out _))
+            return null;
+
+        return containerSolution.Value.Comp.Solution.Contents
+            .Select(reagent => new ReagentQuantity(reagent.Reagent, reagent.Quantity))
+            .ToList();
     }
 }

@@ -1,4 +1,6 @@
 using Content.Shared.Atmos.Components;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Tools;
@@ -124,11 +126,16 @@ public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
 {
     public GasAnalyzerComponent.GasMixEntry GasMix;
     public HealthAnalyzerUiState Health;
+    public List<ReagentQuantity>? Beaker;
 
-    public CryoPodUserMessage(GasAnalyzerComponent.GasMixEntry gasMix, HealthAnalyzerUiState health)
+    public CryoPodUserMessage(
+        GasAnalyzerComponent.GasMixEntry gasMix,
+        HealthAnalyzerUiState health,
+        List<ReagentQuantity>? beaker)
     {
         GasMix = gasMix;
         Health = health;
+        Beaker = beaker;
     }
 }
 
