@@ -1,4 +1,3 @@
-using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
@@ -10,7 +9,6 @@ namespace Content.Client.Eye.Blinking;
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly ITimerManager _timer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -18,7 +16,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<ChangeEyeStateEvent>(OnChangeEyeStateEvent);
+        SubscribeNetworkEvent<EyeStateChangedEvent>(OnChangeEyeStateEvent);
         SubscribeNetworkEvent<BlinkEyeEvent>(OnBlinkEyeEvent);
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentStartup>(OnStartup);
     }
@@ -43,7 +41,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         ChangeEyeState(ent, ent.Comp.EyesClosed);
     }
 
-    private void OnChangeEyeStateEvent(ChangeEyeStateEvent ev)
+    private void OnChangeEyeStateEvent(EyeStateChangedEvent ev)
     {
         var ent = GetEntity(ev.NetEntity);
 
