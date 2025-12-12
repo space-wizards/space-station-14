@@ -289,7 +289,6 @@
       injector:
         maxVol: 5
   - type: Injector
-    injectOnly: false
     ignoreMobs: true
     ignoreClosed: false
     transferAmounts:
@@ -371,7 +370,6 @@
       injector:
         maxVol: 15
   - type: Injector
-    injectOnly: false
     transferAmounts:
     - 5
     - 10
@@ -505,8 +503,7 @@
       injector:
         maxVol: 100
   - type: Injector
-    delay: 2.5
-    injectOnly: false
+    injectTime: 2.5
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
@@ -537,7 +534,6 @@
         maxVol: 10
         canReact: false
   - type: Injector
-    injectOnly: false
     transferAmounts:
     - 5
     - 10

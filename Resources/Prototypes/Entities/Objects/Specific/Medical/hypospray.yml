@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: [BaseItem, BaseGrandTheftContraband]
+  parent: BaseItem
   id: BaseHypospray
   name: hypospray
   description: A sterile injector for rapid administration of drugs to patients.
@@ -55,6 +55,7 @@
   - type: Tag
     tags:
     - HighRiskItem
+    - Hypospray
   - type: StealTarget
     stealGroup: Hypospray
 
@@ -174,7 +175,6 @@
     allowedModes:
     - Inject
     injectPopupTarget: injector-component-feel-prick-message
-    onlyAffectsMobs: false
     injectEverything: true
   - type: Appearance
   - type: SolutionContainerVisuals

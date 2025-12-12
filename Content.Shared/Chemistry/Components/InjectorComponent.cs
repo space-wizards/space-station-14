@@ -193,5 +193,3 @@ public enum InjectorToggleMode
     /// </summary>
     Dynamic = 1 << 2,
 }
-
-
