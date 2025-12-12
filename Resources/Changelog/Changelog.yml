@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Firelocks will now properly drop fast enough to prevent the spacing of
-      an entire atmos volume.
-    type: Fix
-  - message: Only the necessary firelocks required to stop a spacing will drop when
-      a spacing is triggered, instead of all firelocks in a spaced volume.
-    type: Fix
-  id: 8777
-  time: '2025-07-16T03:18:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38918
 - author: ScarKy0
   changes:
   - message: Wizard's Mjollnir can no longer stun when thrown off-cooldown.
@@ -3920,3 +3909,10 @@
   id: 9277
   time: '2025-12-10T19:04:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41820
+- author: cloudyias
+  changes:
+  - message: Diona are now less harmed by rooting in blood
+    type: Add
+  id: 9278
+  time: '2025-12-12T02:13:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41642
