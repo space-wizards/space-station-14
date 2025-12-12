@@ -1,17 +1,18 @@
 - type: entity
+  abstract: true
   parent: [BaseItem, BaseGrandTheftContraband]
-  id: Hypospray
+  id: BaseHypospray
   name: hypospray
   description: A sterile injector for rapid administration of drugs to patients.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
     layers:
-      - state: hypo
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: hypo_fill1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: hypo
+      map: ["enum.SolutionContainerLayers.Base"]
+    - state: hypo_fill1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: SolutionContainerManager
@@ -23,17 +24,22 @@
   - type: ExaminableSolution
     solution: hypospray
     exactVolume: true
-  - type: Hypospray
-    onlyAffectsMobs: false
+  - type: Injector
+    solutionName: hypospray
+    transferAmounts:
+    - 5
+    injectTime: 0
+    delayPerVolume: 0
+    toggleState: Dynamic
+    injectSound: /Audio/Items/hypospray.ogg
+    allowedModes:
+    - Dynamic
+    - Inject
+    injectPopupTarget: injector-component-feel-prick-message
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
     price: 750
-  - type: Tag
-    tags:
-    - HighRiskItem
-  - type: StealTarget
-    stealGroup: Hypospray
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -41,7 +47,19 @@
     solutionName: hypospray
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseHypospray, BaseGrandTheftContraband]
+  id: Hypospray
+  name: hypospray
+  description: A sterile injector for rapid administration of drugs to patients.
+  components:
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StealTarget
+    stealGroup: Hypospray
+
+- type: entity
+  parent: [BaseHypospray, BaseSyndicateContraband]
   id: SyndiHypo
   name: gorlex hypospray
   description: A sterile injector for rapid administration of drugs. Reverse-engineered from Nanotrasen designs, Cybersun produces these in limited quantities for Gorlex Marauders' corpsmen.
@@ -60,16 +78,6 @@
     solutions:
       hypospray:
         maxVol: 20
-  - type: RefillableSolution
-    solution: hypospray
-  - type: ExaminableSolution
-    solution: hypospray
-    exactVolume: true
-  - type: Hypospray
-    onlyAffectsMobs: false
-  - type: UseDelay
-    delay: 0.5
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: hypo_fill
@@ -94,8 +102,18 @@
     solution: hypospray
   - type: ExaminableSolution
     solution: hypospray
-  - type: Hypospray
-    onlyAffectsMobs: false
+  - type: Injector
+    solutionName: hypospray
+    transferAmounts:
+    - 5
+    injectTime: 0
+    delayPerVolume: 0
+    toggleState: Dynamic
+    injectSound: /Audio/Items/hypospray.ogg
+    allowedModes:
+    - Dynamic
+    - Inject
+    injectPopupTarget: injector-component-feel-prick-message
   - type: UseDelay
     delay: 0.5
 
@@ -145,11 +163,19 @@
   - type: ExaminableSolution
     solution: pen
     exactVolume: true
-  - type: Hypospray
+  - type: Injector
     solutionName: pen
-    transferAmount: 15
+    transferAmounts:
+    - 5
+    injectTime: 0
+    delayPerVolume: 0
+    toggleState: Inject
+    injectSound: /Audio/Items/hypospray.ogg
+    allowedModes:
+    - Inject
+    injectPopupTarget: injector-component-feel-prick-message
     onlyAffectsMobs: false
-    injectOnly: true
+    injectEverything: true
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
@@ -253,11 +279,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: bicpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 20
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -295,11 +316,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: dermpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 20
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -337,11 +353,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: arithpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 20
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -379,11 +390,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: punctpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 15
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -421,11 +427,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: pyrapen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 20
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -463,11 +464,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: dexpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 40
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -506,11 +502,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: hypovolemic_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 30
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -557,11 +548,6 @@
     maxFillLevels: 1
     changeColor: false
     emptySpriteName: stimpen_empty
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 30
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: StaticPrice
     price: 1500
 
@@ -640,11 +626,6 @@
           Quantity: 25
         - ReagentId: TranexamicAcid
           Quantity: 5
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 30
-    onlyAffectsMobs: false
-    injectOnly: true
   - type: StaticPrice
     price: 1500
 
@@ -665,8 +646,18 @@
     solution: hypospray
     heldOnly: true # Allow examination only when held in hand.
     exactVolume: true
-  - type: Hypospray
-    onlyAffectsMobs: false
+  - type: Injector
+    solutionName: hypospray
+    transferAmounts:
+    - 5
+    injectTime: 0
+    delayPerVolume: 0
+    toggleState: Dynamic
+    injectSound: /Audio/Items/hypospray.ogg
+    allowedModes:
+    - Dynamic
+    - Inject
+    injectPopupTarget: injector-component-feel-prick-message
     drawTime: 0.75
   - type: UseDelay
     delay: 0.5
@@ -714,8 +705,3 @@
         reagents:
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 60
-  - type: Hypospray
-    solutionName: pen
-    transferAmount: 1
-    onlyAffectsMobs: false
-    injectOnly: true

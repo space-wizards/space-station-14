@@ -15,10 +15,10 @@ public sealed class InjectorStatusControl : Control
     private readonly SharedSolutionContainerSystem _solutionContainers;
     private readonly RichTextLabel _label;
 
-    private FixedPoint2 PrevVolume;
-    private FixedPoint2 PrevMaxVolume;
-    private FixedPoint2 PrevTransferAmount;
-    private InjectorToggleMode PrevToggleState;
+    private FixedPoint2 _prevVolume;
+    private FixedPoint2 _prevMaxVolume;
+    private FixedPoint2 _prevTransferAmount;
+    private InjectorToggleMode _prevToggleState;
 
     public InjectorStatusControl(Entity<InjectorComponent> parent, SharedSolutionContainerSystem solutionContainers)
     {
@@ -36,26 +36,33 @@ public sealed class InjectorStatusControl : Control
             return;
 
         // only updates the UI if any of the details are different than they previously were
-        if (PrevVolume == solution.Volume
-            && PrevMaxVolume == solution.MaxVolume
-            && PrevTransferAmount == _parent.Comp.CurrentTransferAmount
-            && PrevToggleState == _parent.Comp.ToggleState)
+        if (_prevVolume == solution.Volume
+            && _prevMaxVolume == solution.MaxVolume
+            && _prevTransferAmount == _parent.Comp.CurrentTransferAmount
+            && _prevToggleState == _parent.Comp.ToggleState)
             return;
 
-        PrevVolume = solution.Volume;
-        PrevMaxVolume = solution.MaxVolume;
-        PrevTransferAmount = _parent.Comp.CurrentTransferAmount;
-        PrevToggleState = _parent.Comp.ToggleState;
+        _prevVolume = solution.Volume;
+        _prevMaxVolume = solution.MaxVolume;
+        _prevTransferAmount = _parent.Comp.CurrentTransferAmount;
+        _prevToggleState = _parent.Comp.ToggleState;
 
         // Update current volume and injector state
         var modeStringLocalized = Loc.GetString(_parent.Comp.ToggleState switch
         {
             InjectorToggleMode.Draw => "injector-draw-text",
             InjectorToggleMode.Inject => "injector-inject-text",
-            _ => "injector-invalid-injector-toggle-mode"
+            InjectorToggleMode.Dynamic => "injector-dynamic-text",
+            _ => "injector-invalid-injector-toggle-mode",
         });
 
-        _label.SetMarkup(Loc.GetString("injector-volume-label",
+        var label = "injector-volume-label";
+        // Seeing transfer volume is only important for injectors that can change it.
+        if (_parent.Comp.TransferAmounts.Count > 1)
+            label = "injector-volume-transfer-label";
+
+
+        _label.SetMarkup(Loc.GetString(label,
             ("currentVolume", solution.Volume),
             ("totalVolume", solution.MaxVolume),
             ("modeString", modeStringLocalized),

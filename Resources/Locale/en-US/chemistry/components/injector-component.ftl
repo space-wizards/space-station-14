@@ -2,14 +2,19 @@
 
 injector-draw-text = Draw
 injector-inject-text = Inject
+injector-dynamic-text = Dynamic
 injector-invalid-injector-toggle-mode = Invalid
-injector-volume-label = Volume: [color=white]{$currentVolume}/{$totalVolume}[/color]
+injector-volume-transfer-label = Volume: [color=white]{$currentVolume}/{$totalVolume}u[/color]
     Mode: [color=white]{$modeString}[/color] ([color=white]{$transferVolume}u[/color])
+injector-volume-label = Volume: [color=white]{$currentVolume}/{$totalVolume}u[/color]
+    Mode: [color=white]{$modeString}[/color]
+injector-toggle-verb-text = Toggle Dynamic Mode
 
 ## Entity
 
-injector-component-drawing-text = Now drawing
-injector-component-injecting-text = Now injecting
+injector-component-drawing-text = Now only drawing
+injector-component-injecting-text = Now only injecting
+injector-component-dynamic-text = Now dynamic
 injector-component-cannot-transfer-message = You aren't able to transfer into {THE($target)}!
 injector-component-cannot-transfer-message-self = You aren't able to transfer into yourself!
 injector-component-cannot-draw-message = You aren't able to draw from {THE($target)}!
@@ -28,6 +33,11 @@ injector-component-target-is-empty-message = {CAPITALIZE(THE($target))} is empty
 injector-component-target-is-empty-message-self = You are empty!
 injector-component-cannot-toggle-draw-message = Too full to draw!
 injector-component-cannot-toggle-inject-message = Nothing to inject!
+injector-component-cannot-toggle-dynamic-message = Can't toggle dynamic!
+injector-component-empty-message = {CAPITALIZE(THE($injector))} is empty!
+injector-component-feel-prick-message = You feel a tiny prick!
+injector-component-blocked-user = Protective gear blocked your injection!
+injector-component-blocked-other = {CAPITALIZE(THE(POSS-ADJ($target)))} armor blocked {CAPITALIZE(THE($user))}'s injection!
 
 ## mob-inject doafter messages
 
