@@ -317,4 +317,3 @@
     key: enum.RandomGateUiKey.Key
   - type: Construction
     node: random_gate
-

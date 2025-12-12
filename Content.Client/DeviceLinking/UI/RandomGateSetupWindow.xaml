@@ -1,17 +1,20 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            Title="Random Gate Setup"
-            MinSize="260 115">
+            Title="{Loc 'random-gate-menu-setup'}"
+            MinSize="260 115"
+            MaxSize="275 140">
     <BoxContainer Orientation="Vertical" Margin="5" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Text="{Loc 'random-gate-menu-settings'}"/>
-            <Control MinSize="5 0" />
-            <LineEdit Name="ProbabilityInput"
-                      MinSize="70 0"/>
+            <Label Text="{Loc 'random-gate-menu-settings'}" VerticalAlignment="Center" />
+            <Control HorizontalExpand="True" />
+            <LineEdit Name="ProbabilityInput" MinSize="70 0" />
         </BoxContainer>
-        <Button Name="ApplyButton"
-                Text="Apply"
-                HorizontalAlignment="Right" />
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Control HorizontalExpand="True" />
+            <Button Name="ApplyButton"
+                    Text="{Loc 'random-gate-menu-apply'}"
+                    HorizontalAlignment="Right" />
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

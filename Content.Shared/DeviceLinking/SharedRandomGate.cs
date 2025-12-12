@@ -5,13 +5,13 @@ namespace Content.Shared.DeviceLinking;
 [Serializable, NetSerializable]
 public sealed class RandomGateBoundUserInterfaceState(float successProbability) : BoundUserInterfaceState
 {
-    public float SuccessProbability { get; } = successProbability;
+    public float SuccessProbability = successProbability;
 }
 
 [Serializable, NetSerializable]
 public sealed class RandomGateProbabilityChangedMessage(float probability) : BoundUserInterfaceMessage
 {
-    public float Probability { get; } = probability;
+    public float Probability = probability;
 }
 
 [Serializable, NetSerializable]

@@ -23,6 +23,6 @@ public sealed partial class RandomGateSetupWindow : FancyWindow
 
     public void SetProbability(float probability)
     {
-        ProbabilityInput.Text = probability.ToString("0");
+        ProbabilityInput.Text = ((int)probability).ToString();
     }
 }
