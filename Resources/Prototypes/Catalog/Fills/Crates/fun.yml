@@ -456,16 +456,15 @@
   parent: CratePlastic
   id: CrateFunFoamGuns
   name: Foam Force crate
-  description: Contains four Foam Force rifles, some grenades, and extra ammo. It's [REDACTED] or nothing!
+  description: Contains four Foam Force Battle Kits™. It's [REDACTED] or nothing!
   components:
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: WeaponRifleFoam
-          amount: 4
-        - id: BoxDonkSoftBox
-          amount: 2
+        - !type:NestedSelector
+          tableId: RandomFoamGunTable
+          rolls: 4
         - id: GrenadeFoamDart
           amount: 4
 
@@ -516,25 +515,18 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: SnapPopBox
-        - id: CrazyGlue
-        - id: CrazyLube
-        - id: PlasticBanana
-        - id: WhoopieCushion
-        - id: ToyHammer
-        - !type:GroupSelector
-          children:
-          - id: MrChips
-          - id: MrDips
-        - id: RevolverCapGun
-        - id: BalloonNT
-        - id: ClothingShoesClownLarge
-        - id: ClothingHeadHatMagician
-        - id: BeachBall
-        - id: TennisBall
-          amount: 2
-        - id: ClothingShoesSkates
-        - id: RubberChicken
+        - !type:NestedSelector
+          tableId: AllToyWeaponsTable
+          rolls: 2
+        - !type:NestedSelector
+          tableId: AllToySoundMakerTable
+          rolls: 2
+        - !type:NestedSelector
+          tableId: AllMiscToysTable
+          rolls: 2
+        - !type:NestedSelector # Extras rolls for extra variety
+          tableId: AllToysTable
+          rolls: 2
 
 - type: entity
   parent: CrateGenericSteel

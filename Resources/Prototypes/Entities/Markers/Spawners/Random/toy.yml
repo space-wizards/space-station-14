@@ -88,7 +88,7 @@
     - id: ToyPhazon
     - id: ToyReticence
 
-# Items in this table are generally useless. They don't help in combat and aren't interesting to serious people.
+# Items in this table are generally useless. They don't help in most situations and aren't interesting to serious people.
 # If you're wondering if an entity should go in this table, ask your inner child / local clown.
 - type: entityTable # size 2x4 or 3x3
   id: AllToysTable
@@ -128,10 +128,12 @@
       - id: BoxDarts
       - id: GrenadeFoamDart
     - !type:GroupSelector # Guns type group
+      children:
       - id: WeaponStickyHand
       - id: LauncherCreamPieFilled
         weight: 0.5 # 1 in 30
       - !type:GroupSelector # Water subgroup
+        children:
         - id: WeaponWaterBlaster
         - id: WeaponWaterPistol
       - !type:NestedSelector
@@ -165,7 +167,7 @@
       - id: BoxCartridgeCap
 
 # A group of items with fun or unique properties. Highly varied (they aren't all winners)
-- type: entityTable # size 3x3, or 2 2x2
+- type: entityTable # size 3x3
   id: AllMiscToysTable
   table: !type:GroupSelector
     children:
@@ -177,7 +179,7 @@
     - id: BarberScissors
     - id: SprayFlowerPin
     - id: ClothingShoesSkates
-    - !type:AllSelector # No Chip without the Dip
+    - !type:GroupSelector # Where there's Chips there's Dips
       children:
       - id: MrChips
       - id: MrDips
