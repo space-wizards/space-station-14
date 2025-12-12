@@ -47,7 +47,7 @@ namespace Content.Shared.Maps
         /// <summary>
         /// On what tiles this tile can be placed.
         /// </summary>
-        [DataField("baseWhitelist")]
+        [DataField]
         public List<ProtoId<ContentTileDefinition>>? BaseWhitelist { get; private set; } = new();
 
         [DataField]
