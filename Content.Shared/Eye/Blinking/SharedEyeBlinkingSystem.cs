@@ -5,10 +5,9 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Eye.Blinking;
+
 public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -25,8 +24,8 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
         if (!ent.Comp.Enabled)
             return;
 
-        ent.Comp.NextBlinkingTime = _timing.CurTime;
-        Dirty(ent);
+        var ev = new BlinkEyeEvent();
+        RaiseLocalEvent(ent.Owner, ev);
     }
 
     private void MobStateChangedEventHandler(Entity<EyeBlinkingComponent> ent, ref MobStateChangedEvent args)
@@ -38,7 +37,7 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
     {
         ent.Comp.EyesClosed = args.Blind;
         var ev = new ChangeEyeStateEvent(GetNetEntity(ent.Owner), args.Blind);
-        RaiseNetworkEvent(ev);
+        RaiseLocalEvent(ent.Owner, ev);
         SetEnabled(ent, !args.Blind);
     }
 
@@ -49,39 +48,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
         ent.Comp.Enabled = enabled;
         Dirty(ent);
-
-        if (enabled)
-            ResetBlink(ent);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var curTime = _timing.CurTime;
-
-        var query = EntityQueryEnumerator<EyeBlinkingComponent>();
-
-        while (query.MoveNext(out var uid, out var comp))
-        {
-            if (!comp.Enabled)
-                continue;
-
-            if (comp.NextBlinkingTime > curTime)
-                continue;
-            Blink((uid, comp));
-        }
-    }
-
-    public virtual void Blink(Entity<EyeBlinkingComponent> ent)
-    {
-        ResetBlink(ent);
-    }
-
-    protected virtual void ResetBlink(Entity<EyeBlinkingComponent> ent)
-    {
-        ent.Comp.NextBlinkingTime = _timing.CurTime + ent.Comp.BlinkInterval + ent.Comp.BlinkDuration;
-        Dirty(ent);
     }
 }
 
@@ -90,14 +56,13 @@ public enum EyeBlinkingVisuals : byte
 {
     EyesClosed
 }
+
 [Serializable, NetSerializable]
-public sealed class ChangeEyeStateEvent : EntityEventArgs
+public sealed class ChangeEyeStateEvent(NetEntity netEntity, bool eyesClosed) : EntityEventArgs
 {
-    public readonly NetEntity NetEntity;
-    public readonly bool EyesClosed;
-    public ChangeEyeStateEvent(NetEntity netEntity, bool eyesClosed)
-    {
-        NetEntity = netEntity;
-        EyesClosed = eyesClosed;
-    }
+    public readonly NetEntity NetEntity = netEntity;
+    public readonly bool EyesClosed = eyesClosed;
 }
+
+[Serializable, NetSerializable]
+public sealed class BlinkEyeEvent : EntityEventArgs;

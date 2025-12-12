@@ -5,14 +5,19 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Eye.Blinking;
+
 public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly ITimerManager _timer = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeNetworkEvent<ChangeEyeStateEvent>(OnChangeEyeStateEvent);
+
+        SubscribeLocalEvent<EyeBlinkingComponent, ChangeEyeStateEvent>(OnChangeEyeStateEvent);
+        SubscribeLocalEvent<EyeBlinkingComponent, BlinkEyeEvent>(OnBlinkEyeEvent);
         SubscribeLocalEvent<EyeBlinkingComponent, ComponentStartup>(OnStartup);
     }
 
@@ -33,6 +38,17 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         ChangeEyeState(ent, ent.Comp.EyesClosed);
     }
+
+    private void OnChangeEyeStateEvent(Entity<EyeBlinkingComponent> ent, ref ChangeEyeStateEvent args)
+    {
+        ChangeEyeState(ent, args.EyesClosed);
+    }
+
+    private void OnBlinkEyeEvent(Entity<EyeBlinkingComponent> ent, ref BlinkEyeEvent args)
+    {
+        Blink(ent);
+    }
+
 
     private void ChangeEyeState(Entity<EyeBlinkingComponent> ent, bool eyeClsoed)
     {
@@ -59,16 +75,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         _sprite.LayerSetColor(layer, eyeClsoed ? blinkColor : Color.Transparent);
     }
 
-    private void OnChangeEyeStateEvent(ChangeEyeStateEvent ev)
-    {
-        var ent = GetEntity(ev.NetEntity);
-
-        if (!ent.IsValid() || !TryComp<EyeBlinkingComponent>(ent, out var blinkingComp))
-            return;
-
-        ChangeEyeState((ent, blinkingComp), ev.EyesClosed);
-    }
-
     public override void BlindnessChangedEventHanlder(Entity<EyeBlinkingComponent> ent, ref BlindnessChangedEvent args)
     {
         base.BlindnessChangedEventHanlder(ent, ref args);
@@ -78,12 +84,12 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         ChangeEyeState(ent, args.Blind);
     }
 
-    public override void Blink(Entity<EyeBlinkingComponent> ent)
+    public void Blink(Entity<EyeBlinkingComponent> ent)
     {
         if (!ent.Owner.IsValid())
             return;
 
-        base.Blink(ent);
+        ResetBlink(ent);
 
         if (ent.Comp.EyesClosed)
             return;
@@ -107,7 +113,28 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (ent.Comp.EyesClosed)
             return;
 
-
         ChangeEyeState(ent, false);
+    }
+
+    public void ResetBlink(Entity<EyeBlinkingComponent> ent)
+    {
+        ent.Comp.NextBlinkingTime = _timing.CurTime + ent.Comp.BlinkInterval + ent.Comp.BlinkDuration;
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = _timing.CurTime;
+
+        var query = EntityQueryEnumerator<EyeBlinkingComponent>();
+
+        while (query.MoveNext(out var uid, out var comp) && comp.Enabled)
+        {
+            if (comp.NextBlinkingTime > curTime)
+                continue;
+
+            Blink((uid, comp));
+        }
     }
 }
