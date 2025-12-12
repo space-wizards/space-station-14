@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: NPC spiders now spin webs sometimes!
-    type: Add
-  id: 8780
-  time: '2025-07-17T16:34:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38319
 - author: Quantum-cross
   changes:
   - message: Anomalies make anomalous noises if you let them go supercritical
@@ -3917,3 +3910,10 @@
   id: 9280
   time: '2025-12-12T11:27:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41808
+- author: kontakt
+  changes:
+  - message: Potassium Iodide is now sometimes available in radiation lockers.
+    type: Add
+  id: 9281
+  time: '2025-12-12T17:58:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41576
