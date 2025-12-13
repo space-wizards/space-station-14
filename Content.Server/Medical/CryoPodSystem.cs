@@ -149,6 +149,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         if (args.Container.ID != CryoPodComponent.BodyContainerName)
             return;
 
+        _uiSystem.CloseUi(cryoPod.Owner, CryoPodUiKey.Key, args.Entity);
         ClearInjectingSolution(cryoPod);
         UpdateUi(cryoPod);
     }
