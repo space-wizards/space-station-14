@@ -76,12 +76,10 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      storagebase: !type:AllSelector
-        children:
-        - !type:NestedSelector
-          tableId: RandomCapGunTable
-          rolls: !type:RangeNumberSelector
-            range: 4, 7
+      storagebase: !type:NestedSelector
+        tableId: RandomCapGunTable
+        rolls: !type:RangeNumberSelector
+          range: 4, 7
 
 - type: entity
   parent: ClothingBackpackSatchelSmuggler

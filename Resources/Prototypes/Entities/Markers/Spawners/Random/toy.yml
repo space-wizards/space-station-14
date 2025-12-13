@@ -287,10 +287,12 @@
   id: AllMiscToysTable
   table: !type:GroupSelector
     children:
+    - !type:NestedSelector
+      tableId: AllCrayonsTable
+    - id: CrayonBox
     - id: PlasticBanana
     - id: NukeDiskFake
     - id: DiceBag
-    - id: CrayonBox
     - id: SpectralLocator
     - id: BarberScissors
     - id: SprayFlowerPin
@@ -323,9 +325,9 @@
       - id: PotatoAI
 #      - id: SyndicatePersonalAI # Inflates the possible price of the table
       - id: GoldenPersonalAI
-        weight: 0.01 # 1 in 13,000
+        weight: 0.01 # 1 in 14,000
     - !type:GroupSelector # Orbs of "power"
-      weight: 0.01 # 1 in 1,300
+      weight: 0.01 # 1 in 1,400
       children:
       - id: SingularityToy
       - id: TeslaToy
