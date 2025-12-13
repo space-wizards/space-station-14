@@ -1,6 +1,8 @@
 namespace Content.Server.Botany.Components;
 
-/// <summary> Data for plant harvesting process. </summary>
+/// <summary> 
+/// Data for plant harvesting process. 
+/// </summary>
 [RegisterComponent]
 [DataDefinition]
 public sealed partial class PlantHarvestComponent : Component
