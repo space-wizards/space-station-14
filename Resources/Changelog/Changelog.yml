@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Quantum-cross
-  changes:
-  - message: Anomalies make anomalous noises if you let them go supercritical
-    type: Add
-  id: 8781
-  time: '2025-07-17T17:01:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36425
 - author: ScarKy0
   changes:
   - message: There have been major tweaks to the contraband and emag vendor tables.
@@ -3917,3 +3910,11 @@
   id: 9281
   time: '2025-12-12T17:58:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41576
+- author: K-Dynamic
+  changes:
+  - message: Soda Dispenser, Booze Dispenser, and ChemDispenser have had their prices
+      reduced.
+    type: Tweak
+  id: 9282
+  time: '2025-12-13T02:46:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41756
