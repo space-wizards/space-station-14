@@ -13,7 +13,6 @@ namespace Content.Client.Atmos.UI;
 [GenerateTypedNameReferences]
 public sealed partial class GasAnalyzerWindow : DefaultWindow
 {
-    private static readonly Vector2 WindowMinSize = new Vector2(270, 350);
     private const float WindowMinHeightForScrollbar = 500;
 
     private NetEntity _currentEntity = NetEntity.Invalid;
@@ -135,9 +134,9 @@ public sealed partial class GasAnalyzerWindow : DefaultWindow
         // greater than WindowMinHeightForScrollbar.
         var tab1Size = EnvironmentTabContent.DesiredSize;
         var tab2Size = DevicesTabContents.DesiredSize;
-        var contentSize = Vector2.Max(tab1Size, tab2Size)
-                          + new Vector2(50, 100);  // Extra space for margins, tabs and scrollbar.
+        var contentSize = Vector2.Max(tab1Size, tab2Size);
+        contentSize += new Vector2(50, 100);  // Extra space for margins, tabs and scrollbar.
         contentSize.Y = Math.Min(contentSize.Y, WindowMinHeightForScrollbar);
-        return Vector2.Max(WindowMinSize, contentSize);
+        return contentSize;
     }
 }
