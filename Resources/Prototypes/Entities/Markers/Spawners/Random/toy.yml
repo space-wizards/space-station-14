@@ -1,4 +1,24 @@
-# Soft friends to play with, cut open with a knife, and eat
+# Items in this table are generally useless. They don't help in most situations and aren't interesting to serious people.
+# If you're wondering if an entity should go in this table, ask your inner child / local clown.
+- type: entityTable # size 2x4 or 3x3  # price 285
+  id: AllToysTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector # Boring toys (subjective) :o)
+      weight: 0.5 # 1 in 7
+      children:
+      - !type:NestedSelector
+        tableId: AllPlushiesTable
+      - !type:NestedSelector
+        tableId: AllFigurinesTable
+    - !type:NestedSelector
+      tableId: AllToyWeaponsTable
+    - !type:NestedSelector
+      tableId: AllMiscToysTable
+    - !type:NestedSelector
+      tableId: AllToySoundMakerTable
+
+# Soft friends to play with, cut open with a knife, and throw away when you need space
 - type: entityTable # size ginormous  # price 5
   id: AllPlushiesTable
   table: !type:GroupSelector
@@ -202,26 +222,6 @@
     - id: ToyPhazon
     - id: ToyReticence
 
-# Items in this table are generally useless. They don't help in most situations and aren't interesting to serious people.
-# If you're wondering if an entity should go in this table, ask your inner child / local clown.
-- type: entityTable # size 2x4 or 3x3  # price 285
-  id: AllToysTable
-  table: !type:GroupSelector
-    children:
-    - !type:NestedSelector
-      tableId: AllToyWeaponsTable
-    - !type:NestedSelector
-      tableId: AllMiscToysTable
-    - !type:NestedSelector
-      tableId: AllToySoundMakerTable
-    - !type:GroupSelector # Boring toys (subjective) :o)
-      weight: 0.5 # 1 in 7
-      children:
-      - !type:NestedSelector
-        tableId: AllFigurinesTable
-      - !type:NestedSelector
-        tableId: AllPlushiesTable
-
 # Items that are used to "attack" people. Legitimate combat use for these is limited (with thematic exceptions)
 - type: entityTable # size 2x4  # price 285
   id: AllToyWeaponsTable
@@ -348,6 +348,7 @@
     - !type:GroupSelector
       children:
       - id: Whistle
+      - id: SecurityWhistle
       - id: SyndicateWhistle
     - !type:NestedSelector # The original
       tableId: RandomBikeHornTable
@@ -401,6 +402,24 @@
 #    - id: CrayonBox # Breaks size expectations for the table
 #      weight: 0.1 # 1 in 100
 
+## Spawners ##
+
+- type: entity
+  parent: MarkerBase
+  id: ToySpawner90
+  name: Toy Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/bikehorn.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllToysTable
+      prob: 0.9
+
 - type: entity
   parent: MarkerBase
   id: PlushieSpawner50
@@ -409,13 +428,29 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Fun/Plushies/bee.rsi
-        state: icon
+    - state: red
+    - sprite: Objects/Fun/Plushies/bee.rsi
+      state: icon
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: AllPlushiesTable
       prob: 0.5
+
+- type: entity
+  parent: MarkerBase
+  id: SpacemenFigurineSpawner90
+  name: Spacemen Minifigure Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/figurines.rsi
+      state: figurine_spawner
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllFigurinesTable
+      prob: 0.9
 
 - type: entity
   parent: MarkerBase
@@ -425,9 +460,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Fun/mech_figurines.rsi
-        state: ripley
+    - state: red
+    - sprite: Objects/Fun/mech_figurines.rsi
+      state: ripley
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: AllFigurineMechsTable
@@ -435,15 +470,114 @@
 
 - type: entity
   parent: MarkerBase
-  id: SpacemenFigurineSpawner90
-  name: Spacemen Minifigure Spawner
-  suffix: 90. Librarian only, map with care!
+  id: ToyWeaponSpawner90
+  name: Toy Weapon Spawner
+  suffix: 90
   components:
   - type: Sprite
     layers:
-    - sprite: Objects/Fun/figurines.rsi
-      state: figurine_spawner
+    - state: red
+    - sprite: Objects/Fun/rubber_hammer.rsi
+      state: icon
   - type: EntityTableSpawner
     table: !type:NestedSelector
-      tableId: AllFigurinesTable
+      tableId: AllToyWeaponsTable
       prob: 0.9
+
+- type: entity
+  parent: MarkerBase
+  id: CapGunSpawner90
+  name: Cap Gun Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/capgun.rsi
+      state: base
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomCapGunTable
+      prob: 0.9
+
+- type: entity
+  parent: MarkerBase
+  id: MiscToySpawner90
+  name: Miscellaneous Toy Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/Balloons/nanotrasen.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllMiscToysTable
+      prob: 0.9
+
+- type: entity
+  parent: MarkerBase
+  id: ToySoundMakerSpawner90
+  name: Toy Sound Maker Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/rubber_chicken.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllToySoundMakerTable
+      prob: 0.9
+
+- type: entity
+  parent: MarkerBase
+  id: BoardGameSpawner100
+  name: Board Game Spawner
+  suffix: 100
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/Tabletop/chessboard.rsi
+      state: chessboard
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllBoardGamesTable
+
+- type: entity
+  parent: MarkerBase
+  id: BattleMapSpawner100
+  name: Battle Map Spawner
+  suffix: 100
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/Tabletop/Battlemaps/grassbm.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllBattlemapsTable
+
+- type: entity
+  parent: MarkerBase
+  id: CrayonSpawner90
+  name: Crayon Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/crayons.rsi
+      state: rainbow
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      prob: 0.9
+      children:
+      - !type:NestedSelector
+        tableId: AllCrayonsTable
+      - id: CrayonBox
+        weight: 0.02 # 1 in 50
