@@ -26,7 +26,7 @@ public sealed partial class TriggerOnUserInteractUsingComponent : BaseTriggerOnX
     public EntityWhitelist? Blacklist;
 
     /// <summary>
-    /// If false, the trigger user will be the user that initiated the interaction.
+    /// If false, the trigger user will be the entity that got interacted with.
     /// If true, the trigger user will the entity that was used to interact.
     /// </summary>
     [DataField, AutoNetworkedField]

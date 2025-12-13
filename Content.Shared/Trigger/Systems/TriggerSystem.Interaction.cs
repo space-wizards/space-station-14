@@ -164,7 +164,7 @@ public sealed partial class TriggerSystem
     {
         if (args.Handled)
             return;
-        
+
         if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
