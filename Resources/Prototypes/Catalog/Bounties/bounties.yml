@@ -523,7 +523,7 @@
 
 - type: cargoBounty
   id: BountyLaserGun
-  reward: 9500
+  reward: 9600
   description: bounty-description-lasergun
   idPrefix: IV
   entries:
