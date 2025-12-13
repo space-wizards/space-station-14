@@ -1,19 +1,29 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Created by github user @moonheart08 | cat, dog, it, nerd, peak states edited by ScarKy0(Github)",
+    "copyright": "Created by github user @moonheart08 | bald, cat, dog, furry, it, nerd, peak and stinky states edited by ScarKy0(Github)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
         {
+            "name": "bald",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
             "name": "cat",
             "directions": 1,
             "delays": [
                 [
-                    0.1,
-                    0.1
+                    0.15,
+                    0.15
                 ]
             ]
         },
@@ -22,8 +32,18 @@
             "directions": 1,
             "delays": [
                 [
-                    0.1,
-                    0.1
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "furry",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
                 ]
             ]
         },
@@ -32,8 +52,8 @@
             "directions": 1,
             "delays": [
                 [
-                    0.1,
-                    0.1
+                    0.15,
+                    0.15
                 ]
             ]
         },
@@ -42,8 +62,8 @@
             "directions": 1,
             "delays": [
                 [
-                    0.1,
-                    0.1
+                    0.15,
+                    0.15
                 ]
             ]
         },
@@ -52,8 +72,8 @@
             "directions": 1,
             "delays": [
                 [
-                    0.1,
-                    0.1
+                    0.15,
+                    0.15
                 ]
             ]
         },
@@ -62,8 +82,18 @@
             "directions": 1,
             "delays": [
                 [
-                    0.1,
-                    0.1
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "stinky",
+            "directions": 1,
+            "delays": [
+                [
+                    0.15,
+                    0.15
                 ]
             ]
         },
