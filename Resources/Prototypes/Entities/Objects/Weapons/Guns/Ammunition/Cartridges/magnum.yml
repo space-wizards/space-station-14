@@ -30,7 +30,7 @@
   parent: BaseCartridgeMagnum
   id: CartridgeMagnumPractice
   name: cartridge (.45 magnum practice)
-  description: Heavy magnum cartridge mostly used by revolvers. Practice ammunition uses chalk bullets that sting a little, but otherwise cause no lasting damage.
+  description: Heavy magnum cartridge mostly used by revolvers. Practice ammunition fires a chalk projectile that stings a little, but otherwise causes no lasting damage.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumPractice

@@ -30,7 +30,7 @@
   parent: BaseCartridgeLightRifle
   id: CartridgeLightRiflePractice
   name: cartridge (.30 rifle practice)
-  description: A classic intermediate cartridge used by many combat rifles and LMGs. Practice ammunition uses chalk bullets that sting a little, but otherwise cause no lasting damage.
+  description: A classic intermediate cartridge used by many combat rifles and LMGs. Practice ammunition fires a chalk projectile that stings a little, but otherwise causes no lasting damage.
   components:
   - type: CartridgeAmmo
     proto: BulletLightRiflePractice
