@@ -12,8 +12,6 @@ public sealed class PlantSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<PlantComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
@@ -21,8 +19,7 @@ public sealed class PlantSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        if (!Resolve(uid, ref holder))
+        if (!TryComp(uid, out PlantHolderComponent? holder))
             return;
 
         // Check if plant is too old.

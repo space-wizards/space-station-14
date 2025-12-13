@@ -14,8 +14,6 @@ public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<ConsumeExudeGasGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
@@ -23,9 +21,8 @@ public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        PlantComponent? plant = null;
-        if (!Resolve(uid, ref holder, ref plant))
+        if (!TryComp(uid, out PlantHolderComponent? holder)
+            || !TryComp(uid, out PlantComponent? plant))
             return;
 
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;

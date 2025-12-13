@@ -18,8 +18,6 @@ public sealed class HarvestSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<PlantHarvestComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<PlantHarvestComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<PlantHarvestComponent, InteractUsingEvent>(OnInteractUsing);
@@ -29,9 +27,8 @@ public sealed class HarvestSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        PlantComponent? plant = null;
-        if (!Resolve(uid, ref holder, ref plant))
+        if (!TryComp(uid, out PlantHolderComponent? holder)
+            || !TryComp(uid, out PlantComponent? plant))
             return;
 
         if (component is { ReadyForHarvest: true, HarvestRepeat: HarvestType.SelfHarvest })
@@ -51,9 +48,8 @@ public sealed class HarvestSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        PlantTraitsComponent? traits = null;
-        if (!Resolve(uid, ref holder, ref traits))
+        if (!TryComp(uid, out PlantHolderComponent? holder)
+            || !TryComp(uid, out PlantTraitsComponent? traits))
             return;
 
         if (!component.ReadyForHarvest || holder.Dead || holder.Seed == null || !traits.Ligneous)
@@ -74,9 +70,8 @@ public sealed class HarvestSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        PlantTraitsComponent? traits = null;
-        if (!Resolve(uid, ref holder, ref traits))
+        if (!TryComp(uid, out PlantHolderComponent? holder)
+            || !TryComp(uid, out PlantTraitsComponent? traits))
             return;
 
         if (!component.ReadyForHarvest || holder.Dead || holder.Seed == null)
@@ -97,9 +92,8 @@ public sealed class HarvestSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        PlantTraitsComponent? traits = null;
-        if (!Resolve(uid, ref holder, ref traits))
+        if (!TryComp(uid, out PlantHolderComponent? holder)
+            || !TryComp(uid, out PlantTraitsComponent? traits))
             return;
 
         if (holder.Dead)

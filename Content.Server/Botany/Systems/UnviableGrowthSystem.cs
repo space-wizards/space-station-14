@@ -9,8 +9,6 @@ public sealed class UnviableGrowthSystem : EntitySystem
 {
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<UnviableGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
@@ -18,8 +16,7 @@ public sealed class UnviableGrowthSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        if (!Resolve(uid, ref holder))
+        if (!TryComp(uid, out PlantHolderComponent? holder))
             return;
 
         holder.Health -= component.UnviableDamage;

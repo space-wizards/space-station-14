@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Reflection;
 using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;

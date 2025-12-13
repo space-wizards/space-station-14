@@ -27,8 +27,6 @@ public sealed class BasicGrowthSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<BasicGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<BasicGrowthComponent, BotanySwabDoAfterEvent>(OnSwab);
     }
@@ -65,15 +63,15 @@ public sealed class BasicGrowthSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        if (!Resolve(uid, ref holder))
+        if (!TryComp(uid, out PlantHolderComponent? holder)
+            || !TryComp<PlantTraitsComponent>(uid, out var traits))
             return;
 
         if (holder.Seed == null || holder.Dead)
             return;
 
         // Check if the plant is viable.
-        if (TryComp<PlantTraitsComponent>(uid, out var traits) && !traits.Viable)
+        if (!traits.Viable)
         {
             holder.Health -= _random.Next(5, 10) * HydroponicsSpeedMultiplier;
             if (holder.DrawWarnings)
@@ -163,9 +161,8 @@ public sealed class BasicGrowthSystem : EntitySystem
         if (component.Seed == null)
             return;
 
-        PlantHarvestComponent? harvest = null;
-        PlantComponent? plant = null;
-        if (!Resolve(uid, ref harvest, ref plant))
+        if (!TryComp(uid, out PlantHarvestComponent? harvest)
+            || !TryComp(uid, out PlantComponent? plant))
             return;
 
         if (amount > 0)

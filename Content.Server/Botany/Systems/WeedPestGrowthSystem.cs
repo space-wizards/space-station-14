@@ -14,8 +14,6 @@ public sealed class WeedPestGrowthSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<WeedPestGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<PlantHolderComponent, OnPlantGrowEvent>(OnTrayUpdate);
     }
@@ -24,8 +22,7 @@ public sealed class WeedPestGrowthSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        if (!Resolve(uid, ref holder))
+        if (!TryComp(uid, out PlantHolderComponent? holder))
             return;
 
         // Weed growth logic.
@@ -48,9 +45,8 @@ public sealed class WeedPestGrowthSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantTraitsComponent? traits = null;
-        WeedPestGrowthComponent? weed = null;
-        if (!Resolve(uid, ref traits, ref weed))
+        if (!TryComp(uid, out PlantTraitsComponent? traits)
+            || !TryComp(uid, out WeedPestGrowthComponent? weed))
             return;
 
         // Weeds like water and nutrients! They may appear even if there's not a seed planted.

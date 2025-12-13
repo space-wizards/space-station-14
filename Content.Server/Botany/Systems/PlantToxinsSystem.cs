@@ -10,8 +10,6 @@ public sealed class ToxinsSystem : EntitySystem
 {
     public override void Initialize()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<PlantToxinsComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
@@ -19,8 +17,7 @@ public sealed class ToxinsSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? holder = null;
-        if (!Resolve(uid, ref holder))
+        if (!TryComp(uid, out PlantHolderComponent? holder ))
             return;
 
         if (holder.Toxins < 0)
