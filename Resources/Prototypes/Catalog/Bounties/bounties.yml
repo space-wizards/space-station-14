@@ -306,7 +306,7 @@
 
 - type: cargoBounty
   id: BountyPie
-  reward: 1400
+  reward: 3141
   description: bounty-description-pie
   entries:
   - name: bounty-item-pie

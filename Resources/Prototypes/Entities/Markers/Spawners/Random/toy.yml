@@ -237,7 +237,6 @@
     - !type:GroupSelector # Throwing type group
       rolls: 2 # Expendables need restocks
       children:
-      - id: FoodPieBananaCream
       - id: SnapPopBox
       - id: BoxDarts
       - id: GrenadeFoamDart
@@ -246,8 +245,6 @@
     - !type:GroupSelector # Guns type group
       children:
       - id: WeaponStickyHand
-      - id: LauncherCreamPieFilled
-        weight: 0.5 # 1 in 27
       - !type:GroupSelector # Water subgroup
         children:
         - id: WeaponWaterBlaster

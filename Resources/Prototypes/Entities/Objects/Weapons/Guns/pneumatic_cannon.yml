@@ -106,17 +106,6 @@
         ents: []
 
 - type: entity
-  parent: LauncherCreamPie
-  id: LauncherCreamPieFilled
-  suffix: Filled
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      storagebase:
-        id: FoodPieBananaCream
-        amount: 3
-
-- type: entity
   name: experimental pie cannon
   parent: BaseWeaponBattery
   id: BorgLauncherCreamPie
