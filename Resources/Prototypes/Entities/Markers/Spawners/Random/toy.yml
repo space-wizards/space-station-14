@@ -297,6 +297,8 @@
     - id: BarberScissors
     - id: SprayFlowerPin
     - id: ClothingShoesSkates
+    - !type:NestedSelector
+      tableId: AllBoardGamesTable
     - !type:GroupSelector # Where there's Chips there's Dips
       children:
       - id: MrChips
@@ -325,9 +327,9 @@
       - id: PotatoAI
 #      - id: SyndicatePersonalAI # Inflates the possible price of the table
       - id: GoldenPersonalAI
-        weight: 0.01 # 1 in 14,000
+        weight: 0.01 # 1 in 15,000
     - !type:GroupSelector # Orbs of "power"
-      weight: 0.01 # 1 in 1,400
+      weight: 0.01 # 1 in 1,500
       children:
       - id: SingularityToy
       - id: TeslaToy
