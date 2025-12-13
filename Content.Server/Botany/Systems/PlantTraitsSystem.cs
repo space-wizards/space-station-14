@@ -6,7 +6,7 @@ namespace Content.Server.Botany.Systems;
 /// <summary>
 /// Applies plant trait effects on growth ticks.
 /// </summary>
-public sealed class PlantTraitsSystem : PlantGrowthSystem
+public sealed class PlantTraitsSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -22,15 +22,16 @@ public sealed class PlantTraitsSystem : PlantGrowthSystem
         var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
-        Resolve(uid, ref holder);
-
-        if (holder?.Seed == null || holder.Dead)
+        if (!Resolve(uid, ref holder))
             return;
 
-        // Check if plant is too old
+        if (holder.Seed == null || holder.Dead)
+            return;
+
+        // Check if plant is too old.
         if (holder.Age > component.Lifespan)
         {
-            holder.Health -= _random.Next(3, 5) * HydroponicsSpeedMultiplier;
+            holder.Health -= _random.Next(3, 5) * BasicGrowthSystem.HydroponicsSpeedMultiplier;
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }

@@ -1,6 +1,6 @@
 using Content.Server.Botany.Systems;
 using Content.Shared.Botany.Components;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Botany.Components;
 
@@ -14,7 +14,8 @@ public sealed partial class ProduceComponent : SharedProduceComponent
     /// <summary>
     /// Name of the solution container that holds the produce's contents.
     /// </summary>
-    [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
+    [DataField("targetSolution")]
+    public string SolutionName { get; set; } = "food";
 
     /// <summary>
     /// Seed data used to create a <see cref="SeedComponent"/> when this produce has its seeds extracted.
@@ -25,6 +26,6 @@ public sealed partial class ProduceComponent : SharedProduceComponent
     /// <summary>
     /// Prototype ID for the seed that can be extracted from this produce.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
-    public string? SeedId;
+    [DataField]
+    public ProtoId<SeedPrototype>? SeedId;
 }

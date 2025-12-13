@@ -6,10 +6,14 @@ using Content.Shared.Botany;
 using Content.Shared.Burial.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
+using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Labels.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Tag;
@@ -20,31 +24,26 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Database;
-using Content.Shared.EntityEffects;
-using Content.Shared.Labels.Components;
 
 namespace Content.Server.Botany.Systems;
 
 public sealed class PlantHolderSystem : EntitySystem
 {
-    [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISerializationManager _copier = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly MutationSystem _mutation = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
-
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private static readonly ProtoId<TagPrototype> HoeTag = "Hoe";
     private static readonly ProtoId<TagPrototype> PlantSampleTakerTag = "PlantSampleTaker";
@@ -190,7 +189,6 @@ public sealed class PlantHolderSystem : EntitySystem
                 plantHolder.Seed = seed.Clone();
                 plantHolder.Dead = false;
                 plantHolder.Age = 1;
-                plantHolder.DrawWarnings = true;
 
                 // Get endurance from seed's PlantTraitsComponent
                 var seedTraits = BotanySystem.GetPlantTraits(seed);
@@ -218,15 +216,12 @@ public sealed class PlantHolderSystem : EntitySystem
                     }
                 }
 
-                EnsureComp<PlantComponent>(uid);
-
                 if (TryComp<PaperLabelComponent>(args.Used, out var paperLabel))
                 {
                     _itemSlots.TryEjectToHands(args.Used, paperLabel.LabelSlot, args.User);
                 }
                 QueueDel(args.Used);
 
-                CheckLevelSanity(uid, plantHolder);
                 UpdateSprite(uid, plantHolder);
 
                 if (seed.PlantLogImpact != null)
@@ -243,7 +238,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_tagSystem.HasTag(args.Used, HoeTag))
+        if (_tag.HasTag(args.Used, HoeTag))
         {
             args.Handled = true;
             if (plantHolder.WeedLevel > 0)
@@ -294,7 +289,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_tagSystem.HasTag(args.Used, PlantSampleTakerTag))
+        if (_tag.HasTag(args.Used, PlantSampleTakerTag))
         {
             args.Handled = true;
             if (plantHolder.Seed == null)
@@ -360,7 +355,6 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (_random.Prob(0.3f))
                     plantHolder.Sampled = true;
 
-                CheckLevelSanity(uid, plantHolder);
                 ForceUpdateByExternalCause(uid, plantHolder);
             }
 
@@ -383,15 +377,15 @@ public sealed class PlantHolderSystem : EntitySystem
                 Filter.PvsExcept(args.User),
                 true);
 
-            if (_solutionContainerSystem.TryGetSolution(args.Used, produce.SolutionName, out var soln2, out var solution2))
+            if (_solutionContainer.TryGetSolution(args.Used, produce.SolutionName, out var soln2, out var solution2))
             {
-                if (_solutionContainerSystem.ResolveSolution(uid, plantHolder.SoilSolutionName, ref plantHolder.SoilSolution, out var solution1))
+                if (_solutionContainer.ResolveSolution(uid, plantHolder.SoilSolutionName, ref plantHolder.SoilSolution, out var solution1))
                 {
                     // We try to fit as much of the composted plant's contained solution into the hydroponics tray as we can,
                     // since the plant will be consumed anyway.
 
                     var fillAmount = FixedPoint2.Min(solution2.Volume, solution1.AvailableVolume);
-                    _solutionContainerSystem.TryAddSolution(plantHolder.SoilSolution.Value, _solutionContainerSystem.SplitSolution(soln2.Value, fillAmount));
+                    _solutionContainer.TryAddSolution(plantHolder.SoilSolution.Value, _solutionContainer.SplitSolution(soln2.Value, fillAmount));
 
                     ForceUpdateByExternalCause(uid, plantHolder);
                 }
@@ -461,37 +455,10 @@ public sealed class PlantHolderSystem : EntitySystem
         }
 
         CheckHealth(uid, component);
-        CheckLevelSanity(uid, component);
+
 
         if (component.UpdateSpriteAfterUpdate)
             UpdateSprite(uid, component);
-    }
-
-    /// <summary>
-    /// Ensures all plant holder levels are within valid ranges.
-    /// TODO: Move this validation logic to individual growth components
-    /// </summary>
-    public void CheckLevelSanity(EntityUid uid, PlantHolderComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (component.Seed != null && TryComp<PlantTraitsComponent>(uid, out var traits))
-            component.Health = MathHelper.Clamp(component.Health, 0, traits.Endurance);
-        else
-        {
-            component.Health = 0f;
-            component.Dead = false;
-        }
-
-        component.MutationLevel = MathHelper.Clamp(component.MutationLevel, 0f, 100f);
-        component.NutritionLevel = MathHelper.Clamp(component.NutritionLevel, 0f, 100f);
-        component.WaterLevel = MathHelper.Clamp(component.WaterLevel, 0f, 100f);
-        component.PestLevel = MathHelper.Clamp(component.PestLevel, 0f, 10f);
-        component.WeedLevel = MathHelper.Clamp(component.WeedLevel, 0f, 10f);
-        component.Toxins = MathHelper.Clamp(component.Toxins, 0f, 100f);
-        component.YieldMod = MathHelper.Clamp(component.YieldMod, 0, 2);
-        component.MutationMod = MathHelper.Clamp(component.MutationMod, 0f, 3f);
     }
 
     public void CheckHealth(EntityUid uid, PlantHolderComponent? component = null)
@@ -517,7 +484,7 @@ public sealed class PlantHolderSystem : EntitySystem
         component.YieldMod = 1;
         component.MutationMod = 1;
         component.ImproperPressure = false;
-        component.WeedLevel += 1;
+        component.WeedLevel += 1 * BasicGrowthSystem.HydroponicsSpeedMultiplier;
         component.PestLevel = 0;
 
         UpdateSprite(uid, component);
@@ -526,7 +493,10 @@ public sealed class PlantHolderSystem : EntitySystem
     public void RemovePlant(EntityUid uid, PlantHolderComponent? component = null)
     {
         PlantHarvestComponent? harvest = null;
-        if (!Resolve(uid, ref component, ref harvest) || component.Seed == null)
+        if (!Resolve(uid, ref component, ref harvest))
+            return;
+
+        if (component.Seed == null)
             return;
 
         // Remove all growth components before planting new seed
@@ -574,7 +544,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (!_solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution, out var solution))
+        if (!_solutionContainer.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution, out var solution))
             return;
 
         if (solution.Volume > 0 && component.MutationLevel < 25)
@@ -585,10 +555,8 @@ public sealed class PlantHolderSystem : EntitySystem
                 _entityEffects.ApplyEffects(uid, reagentProto.PlantMetabolisms.ToArray(), entry.Quantity.Float());
             }
 
-            _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, FixedPoint2.New(1));
+            _solutionContainer.RemoveEachReagent(component.SoilSolution.Value, FixedPoint2.New(1));
         }
-
-        CheckLevelSanity(uid, component);
     }
 
     private void Mutate(EntityUid uid, float severity, PlantHolderComponent? component = null)
@@ -661,7 +629,7 @@ public sealed class PlantHolderSystem : EntitySystem
         _appearance.SetData(uid,
             PlantHolderVisuals.AlertLight,
             component.WeedLevel >= 5 || component.PestLevel >= 5 || component.Toxins >= 40 || component.ImproperHeat
-            ||component.ImproperPressure || component.MissingGas > 0,
+            || component.ImproperPressure || component.MissingGas > 0,
             app);
         _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, harvest is { ReadyForHarvest: true }, app);
     }

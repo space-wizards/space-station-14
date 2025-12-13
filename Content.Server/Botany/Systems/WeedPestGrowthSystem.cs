@@ -8,7 +8,7 @@ namespace Content.Server.Botany.Systems;
 /// Manages weed growth and pest damage per growth tick, and handles tray-level
 /// weed spawning and kudzu transformation based on conditions.
 /// </summary>
-public sealed class WeedPestGrowthSystem : PlantGrowthSystem
+public sealed class WeedPestGrowthSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -25,12 +25,13 @@ public sealed class WeedPestGrowthSystem : PlantGrowthSystem
         var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
-        Resolve(uid, ref holder);
-
-        if (holder?.Seed == null || holder.Dead)
+        if (!Resolve(uid, ref holder))
             return;
 
-        // Weed growth logic
+        if (holder.Seed == null || holder.Dead)
+            return;
+
+        // Weed growth logic.
         if (_random.Prob(component.WeedGrowthChance))
         {
             holder.WeedLevel += component.WeedGrowthAmount;
@@ -38,13 +39,9 @@ public sealed class WeedPestGrowthSystem : PlantGrowthSystem
                 holder.UpdateSpriteAfterUpdate = true;
         }
 
-        // Pest damage logic
+        // Pest damage logic.
         if (_random.Prob(component.PestDamageChance))
-        {
             holder.Health -= component.PestDamageAmount;
-            if (holder.DrawWarnings)
-                holder.UpdateSpriteAfterUpdate = true;
-        }
     }
 
     /// <summary>
@@ -54,7 +51,9 @@ public sealed class WeedPestGrowthSystem : PlantGrowthSystem
     {
         var (uid, component) = ent;
 
-        if (!TryComp<PlantTraitsComponent>(uid, out var traits))
+        PlantTraitsComponent? traits = null;
+        WeedPestGrowthComponent? weed = null;
+        if (!Resolve(uid, ref traits, ref weed))
             return;
 
         // Weeds like water and nutrients! They may appear even if there's not a seed planted
@@ -69,21 +68,19 @@ public sealed class WeedPestGrowthSystem : PlantGrowthSystem
                 chance = 0.01f;
 
             if (_random.Prob(chance))
-                component.WeedLevel += 1 + component.WeedCoefficient;
+                component.WeedLevel += 1 + component.WeedCoefficient * BasicGrowthSystem.HydroponicsSpeedMultiplier;
 
             if (component.DrawWarnings)
                 component.UpdateSpriteAfterUpdate = true;
         }
 
-        // Handle kudzu transformation
+        // Handle kudzu transformation.
         if (component is { Seed: not null, Dead: false }
-            && TryComp<WeedPestGrowthComponent>(uid, out var weed)
-            && TryComp<PlantTraitsComponent>(uid, out var kudzuTraits)
-            && kudzuTraits.TurnIntoKudzu
+            && traits.TurnIntoKudzu
             && component.WeedLevel >= weed.WeedHighLevelThreshold)
         {
-            Spawn(component.Seed.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
-            kudzuTraits.TurnIntoKudzu = false;
+            Spawn(traits.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
+            traits.TurnIntoKudzu = false;
             component.Health = 0;
         }
     }

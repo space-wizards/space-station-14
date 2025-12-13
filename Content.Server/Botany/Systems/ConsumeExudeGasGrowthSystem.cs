@@ -8,7 +8,7 @@ namespace Content.Server.Botany.Systems;
 /// Consumes and emits configured gases around plants each growth tick, then merges
 /// the adjusted gas mixture back into the environment.
 /// </summary>
-public sealed class ConsumeExudeGasGrowthSystem : PlantGrowthSystem
+public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
@@ -50,7 +50,7 @@ public sealed class ConsumeExudeGasGrowthSystem : PlantGrowthSystem
 
             if (holder.MissingGas > 0)
             {
-                holder.Health -= holder.MissingGas * HydroponicsSpeedMultiplier;
+                holder.Health -= holder.MissingGas * BasicGrowthSystem.HydroponicsSpeedMultiplier;
                 if (holder.DrawWarnings)
                     holder.UpdateSpriteAfterUpdate = true;
             }

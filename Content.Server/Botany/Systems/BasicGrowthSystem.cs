@@ -4,17 +4,26 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
 
-// TODO: make CO2Boost (add potency if the plant can eat an increasing amount of CO2). separate PR post-merge
-// TODO: make GrowLight (run bonus ticks if theres a grow light nearby). separate PR post-merge.
 /// <summary>
 /// Handles baseline plant progression each growth tick: aging, resource consumption,
 /// simple viability checks, and basic swab cross-pollination behavior.
 /// </summary>
-public sealed class BasicGrowthSystem : PlantGrowthSystem
+public sealed class BasicGrowthSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+
+    // TODO: Multipliers should be taken from the hydroponics component.
+    /// <summary>
+    /// Multiplier for plant growth speed in hydroponics.
+    /// </summary>
+    public const float HydroponicsSpeedMultiplier = 1f;
+
+    /// <summary>
+    /// Multiplier for resource consumption (water, nutrients) in hydroponics.
+    /// </summary>
+    public const float HydroponicsConsumptionMultiplier = 2f;
 
     public override void Initialize()
     {
@@ -57,12 +66,13 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
         var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
-        Resolve(uid, ref holder);
-
-        if (holder == null || holder.Seed == null || holder.Dead)
+        if (!Resolve(uid, ref holder))
             return;
 
-        // Check if the plant is viable
+        if (holder.Seed == null || holder.Dead)
+            return;
+
+        // Check if the plant is viable.
         if (TryComp<PlantTraitsComponent>(uid, out var traits) && !traits.Viable)
         {
             holder.Health -= _random.Next(5, 10) * HydroponicsSpeedMultiplier;
@@ -74,30 +84,33 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
 
         // Advance plant age here.
         if (holder.SkipAging > 0)
+        {
             holder.SkipAging--;
+        }
         else
         {
             if (_random.Prob(0.8f))
-            {
                 holder.Age += (int)(1 * HydroponicsSpeedMultiplier);
-                holder.UpdateSpriteAfterUpdate = true;
-            }
+
+            holder.UpdateSpriteAfterUpdate = true;
         }
 
         if (holder.Age < 0) // Revert back to seed packet!
         {
             var packetSeed = holder.Seed;
-            // will put it in the trays hands if it has any, please do not try doing this
+            // will put it in the trays hands if it has any, please do not try doing this.
             _botany.SpawnSeedPacket(packetSeed, Transform(uid).Coordinates, uid);
             _plantHolder.RemovePlant(uid, holder);
             holder.ForceUpdate = true;
             _plantHolder.Update(uid, holder);
+            return;
         }
 
         if (component.WaterConsumption > 0 && holder.WaterLevel > 0 && _random.Prob(0.75f))
         {
             holder.WaterLevel -= MathF.Max(0f,
                 component.WaterConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }
@@ -106,6 +119,7 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
         {
             holder.NutritionLevel -= MathF.Max(0f,
                 component.NutrientConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+
             if (holder.DrawWarnings)
                 holder.UpdateSpriteAfterUpdate = true;
         }
@@ -133,6 +147,46 @@ public sealed class BasicGrowthSystem : PlantGrowthSystem
                 AffectGrowth((uid, holder), -1);
                 holder.Health -= healthMod;
             }
+
+            if (holder.DrawWarnings)
+                holder.UpdateSpriteAfterUpdate = true;
+        }
+    }
+
+    /// <summary>
+    /// Affects the growth of a plant by modifying its age or production timing.
+    /// </summary>
+    public void AffectGrowth(Entity<PlantHolderComponent> ent, int amount)
+    {
+        var (uid, component) = ent;
+
+        if (component.Seed == null)
+            return;
+
+        PlantHarvestComponent? harvest = null;
+        PlantTraitsComponent? traits = null;
+        if (!Resolve(uid, ref harvest, ref traits))
+            return;
+
+        if (amount > 0)
+        {
+            if (component.Age < traits.Maturation)
+                component.Age += amount;
+            else if (!harvest.ReadyForHarvest && traits.Yield <= 0f)
+                harvest.LastHarvest -= amount;
+        }
+        else
+        {
+            if (component.Age < traits.Maturation)
+                component.SkipAging++;
+            else if (!harvest.ReadyForHarvest && traits.Yield <= 0f)
+                harvest.LastHarvest += amount;
         }
     }
 }
+
+/// <summary>
+/// Event of plant growing ticking.
+/// </summary>
+[ByRefEvent]
+public readonly record struct OnPlantGrowEvent;

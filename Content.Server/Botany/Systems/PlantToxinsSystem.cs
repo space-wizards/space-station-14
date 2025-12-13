@@ -6,7 +6,7 @@ namespace Content.Server.Botany.Systems;
 /// Handles toxin accumulation and tolerance for plants, applying health damage
 /// and decrementing toxins based on per-tick uptake.
 /// </summary>
-public sealed class ToxinsSystem : PlantGrowthSystem
+public sealed class ToxinsSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -20,9 +20,10 @@ public sealed class ToxinsSystem : PlantGrowthSystem
         var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
-        Resolve(uid, ref holder);
+        if (!Resolve(uid, ref holder))
+            return;
 
-        if (holder?.Seed == null || holder.Dead)
+        if (holder.Seed == null || holder.Dead)
             return;
 
         if (holder.Toxins > 0)

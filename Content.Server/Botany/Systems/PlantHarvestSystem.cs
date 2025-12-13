@@ -1,5 +1,4 @@
 using Content.Server.Botany.Components;
-using Content.Server.Hands.Systems;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio.Systems;
@@ -13,10 +12,9 @@ namespace Content.Server.Botany.Systems;
 public sealed class HarvestSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     public override void Initialize()
     {
@@ -42,7 +40,7 @@ public sealed class HarvestSystem : EntitySystem
         if (component is { ReadyForHarvest: true, HarvestRepeat: HarvestType.SelfHarvest })
             AutoHarvest((ent, ent, plantHolder));
 
-        // Check if plant is ready for harvest
+        // Check if plant is ready for harvest.
         var timeLastHarvest = plantHolder.Age - component.LastHarvest;
         if (timeLastHarvest > traits.Production && !component.ReadyForHarvest)
         {
@@ -64,14 +62,14 @@ public sealed class HarvestSystem : EntitySystem
         if (!component.ReadyForHarvest || plantHolder.Dead || plantHolder.Seed == null || !traits.Ligneous)
             return;
 
-        // Check if sharp tool is required
+        // Check if sharp tool is required.
         if (!_botany.CanHarvest(plantHolder.Seed, args.Used))
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
             return;
         }
 
-        // Perform harvest
+        // Perform harvest.
         DoHarvest(ent, args.User);
     }
 
@@ -87,14 +85,14 @@ public sealed class HarvestSystem : EntitySystem
         if (!component.ReadyForHarvest || plantHolder.Dead || plantHolder.Seed == null)
             return;
 
-        // Check if sharp tool is required
+        // Check if sharp tool is required.
         if (traits.Ligneous)
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
             return;
         }
 
-        // Perform harvest
+        // Perform harvest.
         DoHarvest(ent, args.User);
     }
 
@@ -109,7 +107,7 @@ public sealed class HarvestSystem : EntitySystem
 
         if (plantHolder.Dead)
         {
-            // Remove dead plant
+            // Remove dead plant.
             _plantHolder.RemovePlant(uid, plantHolder);
             AfterHarvest(ent);
             return;
@@ -118,11 +116,11 @@ public sealed class HarvestSystem : EntitySystem
         if (!component.ReadyForHarvest)
             return;
 
-        // Spawn products
-        if(plantHolder.Seed != null)
+        // Spawn products.
+        if (plantHolder.Seed != null)
             _botany.Harvest(plantHolder.Seed, user, ent);
 
-        // Handle harvest type
+        // Handle harvest type.
         if (component.HarvestRepeat == HarvestType.NoRepeat)
             _plantHolder.RemovePlant(uid, plantHolder);
 
@@ -138,11 +136,11 @@ public sealed class HarvestSystem : EntitySystem
         component.ReadyForHarvest = false;
         component.LastHarvest = plantHolder.Age;
 
-        // Play scream sound if applicable
+        // Play scream sound if applicable.
         if (traits.CanScream && plantHolder.Seed != null)
             _audio.PlayPvs(plantHolder.Seed.ScreamSound, uid);
 
-        // Update sprite
+        // Update sprite.
         _plantHolder.UpdateSprite(uid, plantHolder);
     }
 

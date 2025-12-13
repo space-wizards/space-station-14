@@ -9,7 +9,7 @@ namespace Content.Server.Botany.Systems;
 /// Applies atmospheric temperature and pressure effects to plants during growth ticks.
 /// Uses current tile gas mixture to penalize or clear warnings based on tolerances.
 /// </summary>
-public sealed class AtmosphericGrowthSystem : PlantGrowthSystem
+public sealed class AtmosphericGrowthSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -26,9 +26,10 @@ public sealed class AtmosphericGrowthSystem : PlantGrowthSystem
         var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
-        Resolve(uid, ref holder);
+        if (!Resolve(uid, ref holder))
+            return;
 
-        if (holder?.Seed == null || holder.Dead)
+        if (holder.Seed == null || holder.Dead)
             return;
 
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;

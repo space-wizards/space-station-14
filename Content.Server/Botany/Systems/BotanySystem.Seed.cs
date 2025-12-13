@@ -1,9 +1,12 @@
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Random;
 using Robust.Server.GameObjects;
@@ -11,10 +14,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
-using Content.Shared.Kitchen.Components;
 
 namespace Content.Server.Botany.Systems;
 
@@ -47,7 +46,7 @@ public sealed partial class BotanySystem : EntitySystem
         }
 
         if (comp.SeedId != null
-            && _prototypeManager.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
+            && _prototypeManager.TryIndex(comp.SeedId, out var protoSeed))
         {
             seed = protoSeed.Clone();
             return true;
@@ -66,7 +65,7 @@ public sealed partial class BotanySystem : EntitySystem
         }
 
         if (comp.SeedId != null
-            && _prototypeManager.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
+            && _prototypeManager.TryIndex(comp.SeedId, out var protoSeed))
         {
             seed = protoSeed;
             return true;
@@ -135,7 +134,7 @@ public sealed partial class BotanySystem : EntitySystem
             return GenerateProduct(proto, position, plantEntity);
         }
 
-        return Enumerable.Empty<EntityUid>();
+        return [];
     }
 
     public IEnumerable<EntityUid> Harvest(SeedData proto, EntityUid user, EntityUid plantEntity)
@@ -144,7 +143,7 @@ public sealed partial class BotanySystem : EntitySystem
         if (traits == null || proto.ProductPrototypes.Count == 0 || traits.Yield <= 0)
         {
             _popupSystem.PopupCursor(Loc.GetString("botany-harvest-fail-message"), user, PopupType.Medium);
-            return Enumerable.Empty<EntityUid>();
+            return [];
         }
 
         var name = Loc.GetString(proto.DisplayName);
@@ -160,9 +159,11 @@ public sealed partial class BotanySystem : EntitySystem
     {
         var traits = GetPlantTraits(proto);
         if (traits == null)
-            return Enumerable.Empty<EntityUid>();
+            return [];
 
         var yieldMod = Comp<PlantHolderComponent>(plantEntity).YieldMod;
+        var harvest = Comp<PlantHarvestComponent>(plantEntity);
+
         var totalYield = 0;
 
         if (traits.Yield > -1)
@@ -177,7 +178,7 @@ public sealed partial class BotanySystem : EntitySystem
 
         var products = new List<EntityUid>();
 
-        if (totalYield > 1)
+        if (totalYield > 1 || harvest.HarvestRepeat != HarvestType.NoRepeat)
             proto.Unique = false;
 
         for (var i = 0; i < totalYield; i++)

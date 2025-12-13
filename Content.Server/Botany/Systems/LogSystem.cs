@@ -25,7 +25,7 @@ public sealed class LogSystem : EntitySystem
         if (!HasComp<SharpComponent>(args.Used))
             return;
 
-        // if in some container, try pick up, else just drop to world
+        // if in some container, try pick up, else just drop to world.
         var inContainer = _containerSystem.IsEntityInContainer(uid);
         var pos = Transform(uid).Coordinates;
 

@@ -1,15 +1,12 @@
 using Content.Server.Botany.Components;
-using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
 
 /// <summary>
 /// Applies a death chance and damage to unviable plants each growth tick, updating visuals when necessary.
 /// </summary>
-public sealed class UnviableGrowthSystem : PlantGrowthSystem
+public sealed class UnviableGrowthSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -22,17 +19,14 @@ public sealed class UnviableGrowthSystem : PlantGrowthSystem
         var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
-        Resolve(uid, ref holder);
-
-        if (holder?.Seed == null || holder.Dead)
+        if (!Resolve(uid, ref holder))
             return;
 
-        // Unviable plants have a chance to die each growth cycle
-        if (_random.Prob(component.DeathChance))
-        {
-            holder.Health -= component.DeathDamage;
-            if (holder.DrawWarnings)
-                holder.UpdateSpriteAfterUpdate = true;
-        }
+        if (holder.Seed == null || holder.Dead)
+            return;
+
+        holder.Health -= component.UnviableDamage;
+        if (holder.DrawWarnings)
+            holder.UpdateSpriteAfterUpdate = true;
     }
 }

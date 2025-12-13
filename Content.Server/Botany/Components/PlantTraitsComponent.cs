@@ -1,6 +1,10 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.Botany.Components;
 
-/// <summary> Aggregate for general plant information and rare quirks. </summary>
+/// <summary>
+/// Aggregate for general plant information and rare quirks.
+/// </summary>
 [RegisterComponent]
 [DataDefinition]
 public sealed partial class PlantTraitsComponent : Component
@@ -73,6 +77,12 @@ public sealed partial class PlantTraitsComponent : Component
     /// </summary>
     [DataField]
     public bool TurnIntoKudzu = false;
+
+    /// <summary>
+    /// Which kind of kudzu this plant will turn into if it kuzuifies.
+    /// </summary>
+    [DataField]
+    public EntProtoId KudzuPrototype = "WeakKudzu";
 
     /// <summary>
     /// If false, rapidly decrease health while growing. Adds a bit of challenge to keep mutated plants alive via Unviable's frequency.
