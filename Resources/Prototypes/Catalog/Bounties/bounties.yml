@@ -295,7 +295,7 @@
 
 - type: cargoBounty
   id: BountyPercussion
-  reward: 15000
+  reward: 2500
   description: bounty-description-percussion
   entries:
   - name: bounty-item-percussion
@@ -523,7 +523,7 @@
 
 - type: cargoBounty
   id: BountyLaserGun
-  reward: 28500
+  reward: 9500
   description: bounty-description-lasergun
   idPrefix: IV
   entries:
