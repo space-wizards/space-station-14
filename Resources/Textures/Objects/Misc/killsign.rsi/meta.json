@@ -27,6 +27,16 @@
                 ]
             ]
         },
+		{
+            "name": "it",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
         {
             "name": "icon",
             "directions": 1
