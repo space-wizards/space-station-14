@@ -63,7 +63,7 @@ public sealed class BotanySwabSystem : EntitySystem
 
         if (swab.SeedData == null)
         {
-            // Pick up pollen..=
+            // Pick up pollen.
             if (plant.Seed != null)
                 swab.SeedData = plant.Seed.Clone();
 
