@@ -17,12 +17,14 @@ public sealed partial class CryoPodWindow : DefaultWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public event Action? OnEjectPressed;
+    public event Action? OnInjectPressed;
 
     public CryoPodWindow()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
         EjectButton.OnPressed += _ => OnEjectPressed?.Invoke();
+        InjectButton.OnPressed += _ => OnInjectPressed?.Invoke();
         Tabs.SetTabTitle(0, "Medical");
         Tabs.SetTabTitle(1, "Atmosphere");
     }
@@ -53,20 +55,20 @@ public sealed partial class CryoPodWindow : DefaultWindow
             HealthAnalyzer.Populate(msg.Health);
 
         // Reagents
-        float? lowestTempRequirement = null;
-        ReagentId? lowestTempReagent = null;
         bool hasBeaker = (msg.Beaker != null);
         NoBeakerText.Visible = !hasBeaker;
         ChemicalsInfo.Visible = hasBeaker;
-        // TODO InjectingBox.Visible = hasBeaker;
+
+        float? lowestTempRequirement = null;
+        ReagentId? lowestTempReagent = null;
+        var availableQuantity = new FixedPoint2();
+        var injectingQuantity = new FixedPoint2();
 
         if (hasBeaker)
         {
-            var available = new FixedPoint2();
-
             foreach (var (reagent, quantity) in msg.Beaker!)
             {
-                available += quantity;
+                availableQuantity += quantity;
 
                 var temp = TryFindMaxTemperatureRequirement(reagent);
                 if (lowestTempRequirement == null
@@ -76,9 +78,19 @@ public sealed partial class CryoPodWindow : DefaultWindow
                     lowestTempReagent = reagent;
                 }
             }
-
-            AvailableQuantity.Text = $"{available:F1}u";
         }
+
+        if (msg.Injecting != null)
+        {
+            foreach (var (_, quantity) in msg.Injecting!)
+            {
+                injectingQuantity += quantity;
+            }
+        }
+
+        AvailableQuantity.Text = $"{availableQuantity:F1}u";
+        InjectingQuantity.Text = $"{injectingQuantity:F1}u";
+        InjectButton.Disabled = (!hasPatient || availableQuantity < 0.1f);
 
         // Temperature warning
         bool showsTemperatureWarning =

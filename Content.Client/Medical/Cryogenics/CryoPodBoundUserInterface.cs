@@ -19,6 +19,7 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
         _window = this.CreateWindowCenteredLeft<CryoPodWindow>();
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
         _window.OnEjectPressed += EjectPressed;
+        _window.OnInjectPressed += InjectPressed;
     }
 
     private void EjectPressed()
@@ -29,6 +30,11 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
 
         _window?.SetEjectErrorVisible(isLocked);
         SendMessage(new CryoPodUiMessage("Eject"));
+    }
+
+    private void InjectPressed()
+    {
+        SendMessage(new CryoPodUiMessage("Inject"));
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)

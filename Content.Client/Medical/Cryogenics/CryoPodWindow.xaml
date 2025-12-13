@@ -90,21 +90,22 @@
 
                     <BoxContainer Orientation="Vertical"
                                   Margin="5">
-                        <Label Text="Chemicals"/>
+                        <Label Text="{Loc 'cryo-pod-window-chems-header'}"/>
                         <Label Name="NoBeakerText"
-                               Text="No beaker inserted"
+                               Text="{Loc 'cryo-pod-window-chems-no-beaker'}"
                                FontColorOverride="Gray"/>
 
                         <GridContainer Name="ChemicalsInfo"
-                                       Columns="2">
-                            <Label Text="Available:"
+                                       Columns="2"
+                                       HSeparationOverride="0">
+                            <Label Text="{Loc 'cryo-pod-window-chems-available'}"
                                    FontColorOverride="LightGray"/>
                             <Label Name="AvailableQuantity"
                                    FontColorOverride="LightGray"/>
-                            <!-- <Label Text="In chamber:" -->
-                            <!--        FontColorOverride="LightGray"/> -->
-                            <!-- <Label Name="InjectingQuantity"
-                                        FontColorOverride="LightGray"/> -->
+                            <Label Text="{Loc 'cryo-pod-window-chems-pending'}"
+                                   FontColorOverride="LightGray"/>
+                            <Label Name="InjectingQuantity"
+                                   FontColorOverride="LightGray"/>
                         </GridContainer>
                     </BoxContainer>
 
@@ -113,7 +114,7 @@
 
                     <BoxContainer Orientation="Horizontal">
                         <Button Name="InjectButton"
-                                Text="Inject reagent"
+                                Text="{Loc 'cryo-pod-window-inject-button'}"
                                 Disabled="True"
                                 HorizontalExpand="True"
                                 StyleClasses="OpenRight"/>

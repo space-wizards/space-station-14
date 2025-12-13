@@ -105,6 +105,10 @@
   - type: EmptyOnMachineDeconstruct
     containers:
       - scanner-body
+  - type: SolutionContainerManager
+    solutions:
+      injectionBuffer:
+        maxVol: 50
   - type: CryoPod
   - type: CryoPodAir
   - type: Climbable # so that ejected bodies don't get stuck

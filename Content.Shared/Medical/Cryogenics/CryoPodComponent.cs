@@ -26,6 +26,11 @@ public sealed partial class CryoPodComponent : Component
     public const string BodyContainerName = "scanner-body";
 
     /// <summary>
+    /// The name of the solution container for the injection chamber.
+    /// </summary>
+    public const string InjectingSolutionName = "injectionBuffer";
+
+    /// <summary>
     /// Specifies the name of the atmospherics port to draw gas from.
     /// </summary>
     [DataField]
@@ -42,7 +47,7 @@ public sealed partial class CryoPodComponent : Component
     /// (injection interval)
     /// </summary>
     [DataField]
-    public TimeSpan BeakerTransferTime = TimeSpan.FromSeconds(1);
+    public TimeSpan BeakerTransferTime = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// The timestamp for the next injection.
@@ -127,15 +132,18 @@ public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
     public GasAnalyzerComponent.GasMixEntry GasMix;
     public HealthAnalyzerUiState Health;
     public List<ReagentQuantity>? Beaker;
+    public List<ReagentQuantity>? Injecting;
 
     public CryoPodUserMessage(
         GasAnalyzerComponent.GasMixEntry gasMix,
         HealthAnalyzerUiState health,
-        List<ReagentQuantity>? beaker)
+        List<ReagentQuantity>? beaker,
+        List<ReagentQuantity>? injecting)
     {
         GasMix = gasMix;
         Health = health;
         Beaker = beaker;
+        Injecting = injecting;
     }
 }
 
