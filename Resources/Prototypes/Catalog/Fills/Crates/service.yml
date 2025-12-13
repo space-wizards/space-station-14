@@ -8,13 +8,14 @@
     containers:
       entity_storage: !type:AllSelector
         children:
+        - !type:NestedSelector
+          tableId: AllSoapsTable
         - id: MopItem
         - id: MopBucketCubeWrapped
         - id: Bucket
           amount: 3
         - id: WetFloorSign
           amount: 2
-        - id: Soap
         - id: SprayBottleSpaceCleaner
           amount: 2
         - id: TrashBag
