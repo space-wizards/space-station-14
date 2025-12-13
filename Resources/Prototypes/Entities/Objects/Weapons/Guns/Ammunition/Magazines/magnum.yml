@@ -61,7 +61,7 @@
   parent: BaseMagazineMagnum
   id: MagazineMagnumPractice
   name: pistol magazine (.45 magnum practice)
-  description: 7-round single stack magazine for large-caliber pistols. Intended to hold non-harmful chalk ammunition.
+  description: 7-round single stack magazine for large-caliber pistols. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice

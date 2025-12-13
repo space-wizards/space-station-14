@@ -60,7 +60,7 @@
   parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRiflePractice
   name: ammunition box (.30 rifle practice)
-  description: A cardboard box of .30 rifle rounds. Intended to hold non-harmful chalk ammunition.
+  description: A cardboard box of .30 rifle rounds. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRiflePractice

@@ -215,7 +215,7 @@
   parent: BaseMagazinePistol
   id: MagazinePistolPractice
   name: pistol magazine (.35 auto practice)
-  description: 10-round single-stack magazine for pistols. Intended to hold non-harmful chalk ammunition.
+  description: 10-round single-stack magazine for pistols. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -314,7 +314,7 @@
   parent: BaseMagazinePistolSubMachineGun
   id: MagazinePistolSubMachineGunPractice
   name: SMG magazine (.35 auto practice)
-  description: 30-round double-stack magazine for submachine guns. Intended to hold non-harmful chalk ammunition.
+  description: 30-round double-stack magazine for submachine guns. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -438,7 +438,7 @@
   parent: BaseMagazinePistolHighCapacity
   id: MagazinePistolHighCapacityPractice
   name: machine pistol magazine (.35 auto practice)
-  description: Custom 16-round double-stack magazine for the Viper pistol. Intended to hold non-harmful chalk ammunition.
+  description: Custom 16-round double-stack magazine for the Viper pistol. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol

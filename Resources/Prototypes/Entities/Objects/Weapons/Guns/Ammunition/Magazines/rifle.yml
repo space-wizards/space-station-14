@@ -105,7 +105,7 @@
   parent: BaseMagazineRifle
   id: MagazineRiflePractice
   name: "magazine (.20 rifle practice)"
-  description: 25-round double stack magazine for combat rifles. Intended to hold non-harmful chalk ammunition.
+  description: 25-round double stack magazine for combat rifles. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeRiflePractice

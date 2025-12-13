@@ -102,7 +102,7 @@
   parent: BaseMagazineLightRifle
   id: MagazineLightRiflePractice
   name: "magazine (.30 rifle practice)"
-  description: Curved 30-round double stack magazine for combat rifles. Intended to hold non-harmful chalk ammunition.
+  description: Curved 30-round double stack magazine for combat rifles. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRiflePractice

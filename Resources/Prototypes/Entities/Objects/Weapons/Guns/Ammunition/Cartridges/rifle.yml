@@ -30,7 +30,7 @@
   parent: BaseCartridgeRifle
   id: CartridgeRiflePractice
   name: cartridge (.20 rifle practice)
-  description: A modern intermediate cartridge for combat rifles. Chalk ammunition is generally non-harmful, used for practice.
+  description: A modern intermediate cartridge for combat rifles. Practice ammunition uses chalk bullets that sting a little, but otherwise cause no lasting damage.
   components:
   - type: CartridgeAmmo
     proto: BulletRiflePractice

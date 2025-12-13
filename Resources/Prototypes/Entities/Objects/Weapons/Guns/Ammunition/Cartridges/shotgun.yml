@@ -103,7 +103,7 @@
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunPractice
   name: shell (.50 practice)
-  description: The standard cartridge used by most modern shotguns. Chalk ammunition is generally non-harmful, used for practice.
+  description: The standard cartridge used by most modern shotguns. Practice ammunition uses chalk pellets that sting a little, but otherwise cause no lasting damage.
   components:
   - type: Sprite
     layers:

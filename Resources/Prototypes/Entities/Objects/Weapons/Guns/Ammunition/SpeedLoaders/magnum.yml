@@ -87,7 +87,7 @@
   parent: BaseSpeedLoaderMagnum
   id: SpeedLoaderMagnumPractice
   name: "speed loader (.45 magnum practice)"
-  description: Designed to quickly load up to six rounds of .45 magnum into an empty revolver. Intended to hold non-harmful chalk ammunition.
+  description: Designed to quickly load up to six rounds of .45 magnum into an empty revolver. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice

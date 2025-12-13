@@ -151,7 +151,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
   name: ammunition box (.50 practice)
-  deacription: A cardboard box of .50 shotgun shells. Intended to hold non-harmful chalk ammunition.
+  deacription: A cardboard box of .50 shotgun shells. Intended to hold harmless practice ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
