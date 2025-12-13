@@ -33,7 +33,7 @@
 
 - type: entity
   abstract: true
-  parent: [ BaseItem, BaseSyndicateContraband ] # This is syndie contra for now because it only fits into the Viper (a syndie gun), but if we allow security pistols to use this mag in the future that might need to be changed
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: BaseMagazinePistolHighCapacity
   name: machine pistol magazine (.35 auto)
   components:
