@@ -22,6 +22,7 @@
   parent: [ BaseShellShotgun, BaseSecurityBartenderContraband ]
   id: ShellShotgunBeanbag
   name: shell (.50 beanbag)
+  description: The standard cartridge used by most modern shotguns. Beanbag ammunition contains a single less-than-lethal projectile that can stun targets.
   components:
   - type: Tag
     tags:
@@ -40,6 +41,7 @@
   parent: [ BaseShellShotgun, BaseSecurityContraband]
   id: ShellShotgunSlug
   name: shell (.50 slug)
+  description: The standard cartridge used by most modern shotguns. Slug ammunition contains a single high-density projectile effective at longer ranges than pellet ammunition.
   components:
   - type: Sprite
     layers:
@@ -54,6 +56,7 @@
   parent: BaseShellShotgun
   id: ShellShotgunFlare
   name: shell (.50 flare)
+  description: The standard cartridge used by most modern shotguns. Flare ammunition contains a single brightly-burning projectile intended for illumination and signalling, rather than combat.
   components:
   - type: Tag
     tags:
@@ -72,6 +75,7 @@
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgun
   name: shell (.50 pellet)
+  description: The standard cartridge used by most modern shotguns. Standard kinetic ammunition is common and useful in most situations.
   components:
   - type: Sprite
     layers:
@@ -84,6 +88,7 @@
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunIncendiary
   name: shell (.50 incendiary)
+  description: The standard cartridge used by most modern shotguns. Incendiary ammunition contains a self-igniting compound that sets targets ablaze.
   components:
   - type: Sprite
     layers:
@@ -98,6 +103,7 @@
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunPractice
   name: shell (.50 practice)
+  description: The standard cartridge used by most modern shotguns. Chalk ammunition is generally non-harmful, used for practice.
   components:
   - type: Sprite
     layers:
@@ -112,6 +118,7 @@
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellTranquilizer
   name: shell (.50 tranquilizer)
+  description: The standard cartridge used by most modern shotguns. Tranquilizer ammunition contains a single ballistic syringe loaded with a strong sedative that harmlessly puts targets to sleep.
   components:
   - type: Tag
     tags:
@@ -139,7 +146,7 @@
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunImprovised
   name: improvised shotgun shell
-  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
+  description: A homemade shotgun shell loaded with chunks of glass shrapnel. Surprisingly effective, but the spread is so wide that you couldn't hit the broad side of a barn.
   components:
   - type: Tag
     tags:
@@ -161,6 +168,7 @@
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunUranium
   name: uranium shotgun shell
+  description: The standard cartridge used by most modern shotguns. Uranium-core ammunition contains a load of fissile material, irradiating targets from the inside.
   components:
     - type: Sprite
       layers:

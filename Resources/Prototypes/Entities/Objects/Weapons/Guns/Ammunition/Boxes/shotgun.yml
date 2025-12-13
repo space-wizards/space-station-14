@@ -35,6 +35,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxBeanbag
   name: ammunition box (.50 beanbag)
+  deacription: A cardboard box of .50 shotgun shells. Intended to hold less-than-lethal beanbag ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunBeanbag
@@ -54,6 +55,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
   name: ammunition box (.50 pellet)
+  deacription: A cardboard box of .50 shotgun shells. Intended to hold general-purpose kinetic ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgun
@@ -69,6 +71,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
   name: ammunition box (.50 slug)
+  deacription: A cardboard box of .50 shotgun shells. Intended to hold long-ranged slug ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
@@ -88,6 +91,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
   name: ammunition box (.50 flare)
+  deacription: A cardboard box of .50 shotgun shells. Intended to hold illuminating flare ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
@@ -107,6 +111,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
   name: ammunition box (.50 incendiary)
+  deacription: A cardboard box of .50 shotgun shells. Intended to hold self-igniting incendiary ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
@@ -126,6 +131,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
   name: ammunition box (.50 uranium)
+  deacription: A cardboard box of .50 shotgun shells. Intended to hold exotic uranium-core ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
@@ -145,6 +151,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
   name: ammunition box (.50 practice)
+  deacription: A cardboard box of .50 shotgun shells. Intended to hold non-harmful chalk ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
@@ -164,6 +171,7 @@
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
   name: ammunition box (.50 tranquilizer)
+  deacription: A cardboard box of .50 shotgun shells. Intended to hold nonlethal tranquilizer ammunition.
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer
