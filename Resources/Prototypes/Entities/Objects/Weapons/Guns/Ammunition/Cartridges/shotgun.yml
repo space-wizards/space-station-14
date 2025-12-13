@@ -168,7 +168,7 @@
   parent: [ BaseShellShotgun, BaseSecurityContraband ]
   id: ShellShotgunUranium
   name: uranium shotgun shell
-  description: The standard cartridge used by most modern shotguns. Uranium-core ammunition contains a load of fissile material, irradiating targets from the inside.
+  description: The standard cartridge used by most modern shotguns. Uranium ammunition replaces the lead core of the pellets with fissile material, irradiating targets from the inside.
   components:
     - type: Sprite
       layers:
