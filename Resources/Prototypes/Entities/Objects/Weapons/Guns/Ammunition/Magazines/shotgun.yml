@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: BaseMagazineShotgun
   name: ammo drum (.50 shells)
-  parent: [ BaseItem, BaseSecurityContraband ]
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -52,9 +52,9 @@
     proto: null
 
 - type: entity
+  parent: BaseMagazineShotgun
   id: MagazineShotgun
   name: ammo drum (.50 pellet)
-  parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgun
@@ -76,9 +76,9 @@
         color: "#ba7710"
 
 - type: entity
+  parent: BaseMagazineShotgun
   id: MagazineShotgunBeanbag
   name: ammo drum (.50 beanbags)
-  parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunBeanbag
@@ -100,9 +100,9 @@
         color: "#30722d"
 
 - type: entity
+  parent: BaseMagazineShotgun
   id: MagazineShotgunSlug
   name: ammo drum (.50 slug)
-  parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunSlug
@@ -124,9 +124,9 @@
         color: "#72382d"
 
 - type: entity
+  parent: BaseMagazineShotgun
   id: MagazineShotgunIncendiary
   name: ammo drum (.50 incendiary)
-  parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
     proto: ShellShotgunIncendiary

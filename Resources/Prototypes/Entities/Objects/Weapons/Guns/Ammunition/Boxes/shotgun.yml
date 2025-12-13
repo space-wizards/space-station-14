@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: BaseItem
   id: BaseAmmoProvider
-  abstract: true
   components:
   - type: ContainerContainer
     containers:
@@ -12,9 +12,9 @@
     sprite: Objects/Storage/boxes.rsi
 
 - type: entity
+  abstract: true
   parent: BaseAmmoProvider
   id: AmmoProviderShotgunShell
-  abstract: true
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi
@@ -51,9 +51,9 @@
       - state: beanbag
 
 - type: entity
-  name: ammunition box (.50 pellet)
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
+  name: ammunition box (.50 pellet)
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgun
@@ -66,9 +66,9 @@
       - state: lethal
 
 - type: entity
-  name: ammunition box (.50 slug)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunSlug
+  name: ammunition box (.50 slug)
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunSlug
@@ -85,9 +85,9 @@
       - state: slug
 
 - type: entity
-  name: ammunition box (.50 flare)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunFlare
+  name: ammunition box (.50 flare)
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunFlare
@@ -104,9 +104,9 @@
       - state: flare
 
 - type: entity
-  name: ammunition box (.50 incendiary)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunIncendiary
+  name: ammunition box (.50 incendiary)
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunIncendiary
@@ -123,9 +123,9 @@
       - state: incendiary
 
 - type: entity
-  name: ammunition box (.50 uranium)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunUranium
+  name: ammunition box (.50 uranium)
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
@@ -142,9 +142,9 @@
       - state: uranium
 
 - type: entity
-  name: ammunition box (.50 practice)
   parent: AmmoProviderShotgunShell
   id: BoxShotgunPractice
+  name: ammunition box (.50 practice)
   components:
     - type: BallisticAmmoProvider
       proto: ShellShotgunPractice
@@ -161,9 +161,9 @@
       - state: practice
 
 - type: entity
-  name: ammunition box (.50 tranquilizer)
   parent: AmmoProviderShotgunShell
   id: BoxShellTranquilizer
+  name: ammunition box (.50 tranquilizer)
   components:
     - type: BallisticAmmoProvider
       proto: ShellTranquilizer
