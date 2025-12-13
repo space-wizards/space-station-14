@@ -1,12 +1,42 @@
 {
     "version": 1,
     "license": "CC-BY-NC-SA-3.0",
-    "copyright": "Created by github user @moonheart08, peak edited by ScarKy0(Github)",
+    "copyright": "Created by github user @moonheart08 | cat, dog, it, nerd, peak states edited by ScarKy0(Github)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
+        {
+            "name": "cat",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "dog",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "it",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
         {
             "name": "kill",
             "directions": 1,
@@ -17,8 +47,8 @@
                 ]
             ]
         },
-		{
-            "name": "peak",
+        {
+            "name": "nerd",
             "directions": 1,
             "delays": [
                 [
@@ -27,8 +57,8 @@
                 ]
             ]
         },
-		{
-            "name": "it",
+        {
+            "name": "peak",
             "directions": 1,
             "delays": [
                 [
