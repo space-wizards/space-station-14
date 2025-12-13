@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using System.Numerics;
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Administration.Components;
@@ -26,4 +27,10 @@ public sealed partial class KillSignComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool DoOffset = true;
+
+    /// <summary>
+    /// The scale of the sprite.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Vector2 Scale =  Vector2.One;
 }
