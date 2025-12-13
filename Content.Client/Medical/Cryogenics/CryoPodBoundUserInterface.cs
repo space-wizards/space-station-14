@@ -29,12 +29,12 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
             && cryoComp.Locked;
 
         _window?.SetEjectErrorVisible(isLocked);
-        SendMessage(new CryoPodUiMessage("Eject"));
+        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.Eject));
     }
 
     private void InjectPressed()
     {
-        SendMessage(new CryoPodUiMessage("Inject"));
+        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.Inject));
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)

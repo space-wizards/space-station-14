@@ -149,9 +149,11 @@ public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class CryoPodUiMessage : BoundUserInterfaceMessage
 {
-    public readonly string Type;  // TODO: Tidy this up. Replace with enum.
+    public enum MessageType { Eject, Inject }
 
-    public CryoPodUiMessage(string type)
+    public readonly MessageType Type;
+
+    public CryoPodUiMessage(MessageType type)
     {
         Type = type;
     }

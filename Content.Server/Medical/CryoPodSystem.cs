@@ -124,10 +124,10 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     {
         switch (msg.Type)
         {
-            case "Eject":
+            case CryoPodUiMessage.MessageType.Eject:
                 TryEjectBody(cryoPod.Owner, msg.Actor, cryoPod.Comp);
                 break;
-            case "Inject":
+            case CryoPodUiMessage.MessageType.Inject:
                 TryInject(cryoPod);
                 break;
         }
