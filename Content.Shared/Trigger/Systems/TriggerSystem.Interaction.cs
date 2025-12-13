@@ -162,6 +162,9 @@ public sealed partial class TriggerSystem
 
     private void OnUserInteractUsing(Entity<TriggerOnUserInteractUsingComponent> ent, ref UserInteractUsingEvent args)
     {
+        if (args.Handled)
+            return;
+        
         if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
