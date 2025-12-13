@@ -1,12 +1,14 @@
 ﻿using System.Numerics;
 using Content.Shared.Administration.Components;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 
 namespace Content.Client.Administration.Systems;
 
 public sealed class KillSignSystem : EntitySystem
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -36,6 +38,9 @@ public sealed class KillSignSystem : EntitySystem
 
     private void AddKillsign(Entity<KillSignComponent> ent)
     {
+        if (ent.Comp.HideFromOwner && _player.LocalEntity == ent)
+            return;
+
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 

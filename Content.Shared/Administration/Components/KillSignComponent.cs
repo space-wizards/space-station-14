@@ -30,6 +30,12 @@ public sealed partial class KillSignComponent : Component
     public bool DoOffset = true;
 
     /// <summary>
+    /// Prevents the sign from displaying to the owner of the component, allowing everyone but them to see it.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool HideFromOwner = false;
+
+    /// <summary>
     /// The scale of the sprite.
     /// </summary>
     [DataField, AutoNetworkedField]
