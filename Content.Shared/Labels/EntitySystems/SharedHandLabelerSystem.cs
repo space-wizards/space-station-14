@@ -94,11 +94,9 @@ public abstract class SharedHandLabelerSystem : EntitySystem
         if (args.Target is not { Valid: true } target || _whitelistSystem.IsWhitelistFail(ent.Comp.Whitelist, target) || !args.CanAccess)
             return;
 
-        bool labelerBlank = (ent.Comp.AssignedLabel == string.Empty);
-
         var user = args.User;   // can't use ref parameter in lambdas
 
-        if (!labelerBlank)
+        if (ent.Comp.AssignedLabel != string.Empty)
         {
             var labelVerb = new UtilityVerb()
             {
@@ -122,11 +120,6 @@ public abstract class SharedHandLabelerSystem : EntitySystem
             Text = Loc.GetString("hand-labeler-remove-label-text"),
             Priority = -1,
         };
-
-        if (!labelerBlank)
-        {
-            unLabelVerb.TextStyleClass = Verb.DefaultTextStyleClass;
-        }
 
         args.Verbs.Add(unLabelVerb);
     }
