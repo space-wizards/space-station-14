@@ -10,16 +10,16 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// </summary>
 public sealed partial class PlantAdjustPotencyEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustPotency>
 {
-    [Dependency] private readonly PlantTraitsSystem _plantTraits = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
 
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustPotency> args)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        if (!TryComp<PlantTraitsComponent>(entity, out var traits))
+        if (!TryComp<PlantComponent>(entity, out var plant))
             return;
 
-        _plantTraits.AdjustPotency((entity.Owner, traits), args.Effect.Amount);
+        _plant.AdjustPotency((entity.Owner, plant), args.Effect.Amount);
     }
 }

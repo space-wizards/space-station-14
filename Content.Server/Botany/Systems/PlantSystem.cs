@@ -6,7 +6,7 @@ namespace Content.Server.Botany.Systems;
 /// <summary>
 /// Applies plant trait effects on growth ticks.
 /// </summary>
-public sealed class PlantTraitsSystem : EntitySystem
+public sealed class PlantSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -14,18 +14,15 @@ public sealed class PlantTraitsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PlantTraitsComponent, OnPlantGrowEvent>(OnPlantGrow);
+        SubscribeLocalEvent<PlantComponent, OnPlantGrowEvent>(OnPlantGrow);
     }
 
-    private void OnPlantGrow(Entity<PlantTraitsComponent> ent, ref OnPlantGrowEvent args)
+    private void OnPlantGrow(Entity<PlantComponent> ent, ref OnPlantGrowEvent args)
     {
         var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
         if (!Resolve(uid, ref holder))
-            return;
-
-        if (holder.Seed == null || holder.Dead)
             return;
 
         // Check if plant is too old.
@@ -38,12 +35,12 @@ public sealed class PlantTraitsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Adjusts the potency of a plant traits component.
+    /// Adjusts the potency of a plant component.
     /// </summary>
-    public void AdjustPotency(Entity<PlantTraitsComponent> ent, float delta)
+    public void AdjustPotency(Entity<PlantComponent> ent, float delta)
     {
-        var traits = ent.Comp;
-        traits.Potency = Math.Max(traits.Potency + delta, 1);
+        var plant = ent.Comp;
+        plant.Potency = Math.Max(plant.Potency + delta, 1);
         Dirty(ent);
     }
 }

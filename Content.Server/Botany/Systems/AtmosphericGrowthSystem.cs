@@ -29,9 +29,6 @@ public sealed class AtmosphericGrowthSystem : EntitySystem
         if (!Resolve(uid, ref holder))
             return;
 
-        if (holder.Seed == null || holder.Dead)
-            return;
-
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
         if (MathF.Abs(environment.Temperature - component.IdealHeat) > component.HeatTolerance)
         {

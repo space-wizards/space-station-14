@@ -17,12 +17,12 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        if (!TryComp<PlantTraitsComponent>(entity, out var traits) || !TryComp<PlantHarvestComponent>(entity, out var harvest))
+        if (!TryComp<PlantComponent>(entity, out var plant) || !TryComp<PlantHarvestComponent>(entity, out var harvest))
             return;
 
-        var deviation = entity.Comp.Age > traits.Maturation
-            ? (int)Math.Max(traits.Maturation - 1, entity.Comp.Age - _random.Next(7, 10))
-            : (int)(traits.Maturation / traits.GrowthStages);
+        var deviation = entity.Comp.Age > plant.Maturation
+            ? (int)Math.Max(plant.Maturation - 1, entity.Comp.Age - _random.Next(7, 10))
+            : (int)(plant.Maturation / plant.GrowthStages);
 
         entity.Comp.Age -= deviation;
         entity.Comp.SkipAging++;

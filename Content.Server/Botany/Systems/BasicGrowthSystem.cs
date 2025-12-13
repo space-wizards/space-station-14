@@ -164,22 +164,22 @@ public sealed class BasicGrowthSystem : EntitySystem
             return;
 
         PlantHarvestComponent? harvest = null;
-        PlantTraitsComponent? traits = null;
-        if (!Resolve(uid, ref harvest, ref traits))
+        PlantComponent? plant = null;
+        if (!Resolve(uid, ref harvest, ref plant))
             return;
 
         if (amount > 0)
         {
-            if (component.Age < traits.Maturation)
+            if (component.Age < plant.Maturation)
                 component.Age += amount;
-            else if (!harvest.ReadyForHarvest && traits.Yield <= 0f)
+            else if (!harvest.ReadyForHarvest && plant.Yield <= 0f)
                 harvest.LastHarvest -= amount;
         }
         else
         {
-            if (component.Age < traits.Maturation)
+            if (component.Age < plant.Maturation)
                 component.SkipAging++;
-            else if (!harvest.ReadyForHarvest && traits.Yield <= 0f)
+            else if (!harvest.ReadyForHarvest && plant.Yield <= 0f)
                 harvest.LastHarvest += amount;
         }
     }

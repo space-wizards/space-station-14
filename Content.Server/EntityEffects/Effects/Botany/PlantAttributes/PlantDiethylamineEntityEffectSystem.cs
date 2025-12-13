@@ -17,13 +17,13 @@ public sealed partial class PlantDiethylamineEntityEffectSystem : EntityEffectSy
         if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
             return;
 
-        if(!TryComp<PlantTraitsComponent>(entity, out var traits))
+        if (!TryComp<PlantComponent>(entity, out var plant))
             return;
 
         if (_random.Prob(0.1f))
-            traits.Lifespan++;
+            plant.Lifespan++;
 
         if (_random.Prob(0.1f))
-            traits.Endurance++;
+            plant.Endurance++;
     }
 }

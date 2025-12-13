@@ -28,9 +28,6 @@ public sealed class WeedPestGrowthSystem : EntitySystem
         if (!Resolve(uid, ref holder))
             return;
 
-        if (holder.Seed == null || holder.Dead)
-            return;
-
         // Weed growth logic.
         if (_random.Prob(component.WeedGrowthChance))
         {
@@ -56,7 +53,7 @@ public sealed class WeedPestGrowthSystem : EntitySystem
         if (!Resolve(uid, ref traits, ref weed))
             return;
 
-        // Weeds like water and nutrients! They may appear even if there's not a seed planted
+        // Weeds like water and nutrients! They may appear even if there's not a seed planted.
         if (component is { WaterLevel: > 10, NutritionLevel: > 5 })
         {
             float chance;

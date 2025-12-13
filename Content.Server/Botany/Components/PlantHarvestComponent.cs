@@ -1,7 +1,7 @@
 namespace Content.Server.Botany.Components;
 
-/// <summary> 
-/// Data for plant harvesting process. 
+/// <summary>
+/// Data for plant harvesting process.
 /// </summary>
 [RegisterComponent]
 [DataDefinition]

@@ -22,6 +22,12 @@ public sealed partial class GrowthComponentsHolder
     public PlantTraitsComponent? PlantTraits { get; set; }
 
     /// <summary>
+    /// Plant characteristics.
+    /// </summary>
+    [DataField]
+    public PlantComponent? Plant { get; set; }
+
+    /// <summary>
     /// Basic properties for plant growth.
     /// </summary>
     [DataField]

@@ -24,11 +24,8 @@ public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
         var (uid, component) = ent;
 
         PlantHolderComponent? holder = null;
-        PlantTraitsComponent? traits = null;
-        if (!Resolve(uid, ref holder, ref traits))
-            return;
-
-        if (holder.Seed == null || holder.Dead)
+        PlantComponent? plant = null;
+        if (!Resolve(uid, ref holder, ref plant))
             return;
 
         var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
@@ -63,7 +60,7 @@ public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
             foreach (var (gas, amount) in component.ExudeGasses)
             {
                 environment.AdjustMoles(gas,
-                    MathF.Max(1f, MathF.Round(amount * MathF.Round(traits.Potency) / exudeCount)));
+                    MathF.Max(1f, MathF.Round(amount * MathF.Round(plant.Potency) / exudeCount)));
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Content.Server.Botany.Systems;
 public sealed class HarvestSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantHolderSystem _holder = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -29,24 +29,21 @@ public sealed class HarvestSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? plantHolder = null;
-        PlantTraitsComponent? traits = null;
-        if (!Resolve(uid, ref plantHolder, ref traits))
-            return;
-
-        if (plantHolder.Dead || plantHolder.Seed == null)
+        PlantHolderComponent? holder = null;
+        PlantComponent? plant = null;
+        if (!Resolve(uid, ref holder, ref plant))
             return;
 
         if (component is { ReadyForHarvest: true, HarvestRepeat: HarvestType.SelfHarvest })
-            AutoHarvest((ent, ent, plantHolder));
+            AutoHarvest((ent, ent, holder));
 
         // Check if plant is ready for harvest.
-        var timeLastHarvest = plantHolder.Age - component.LastHarvest;
-        if (timeLastHarvest > traits.Production && !component.ReadyForHarvest)
+        var timeLastHarvest = holder.Age - component.LastHarvest;
+        if (timeLastHarvest > plant.Production && !component.ReadyForHarvest)
         {
             component.ReadyForHarvest = true;
-            component.LastHarvest = plantHolder.Age;
-            plantHolder.UpdateSpriteAfterUpdate = true;
+            component.LastHarvest = holder.Age;
+            holder.UpdateSpriteAfterUpdate = true;
         }
     }
 
@@ -54,16 +51,16 @@ public sealed class HarvestSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? plantHolder = null;
+        PlantHolderComponent? holder = null;
         PlantTraitsComponent? traits = null;
-        if (!Resolve(uid, ref plantHolder, ref traits))
+        if (!Resolve(uid, ref holder, ref traits))
             return;
 
-        if (!component.ReadyForHarvest || plantHolder.Dead || plantHolder.Seed == null || !traits.Ligneous)
+        if (!component.ReadyForHarvest || holder.Dead || holder.Seed == null || !traits.Ligneous)
             return;
 
         // Check if sharp tool is required.
-        if (!_botany.CanHarvest(plantHolder.Seed, args.Used))
+        if (!_botany.CanHarvest(holder.Seed, args.Used))
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
             return;
@@ -77,12 +74,12 @@ public sealed class HarvestSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? plantHolder = null;
+        PlantHolderComponent? holder = null;
         PlantTraitsComponent? traits = null;
-        if (!Resolve(uid, ref plantHolder, ref traits))
+        if (!Resolve(uid, ref holder, ref traits))
             return;
 
-        if (!component.ReadyForHarvest || plantHolder.Dead || plantHolder.Seed == null)
+        if (!component.ReadyForHarvest || holder.Dead || holder.Seed == null)
             return;
 
         // Check if sharp tool is required.
@@ -100,15 +97,15 @@ public sealed class HarvestSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantHolderComponent? plantHolder = null;
+        PlantHolderComponent? holder = null;
         PlantTraitsComponent? traits = null;
-        if (!Resolve(uid, ref plantHolder, ref traits))
+        if (!Resolve(uid, ref holder, ref traits))
             return;
 
-        if (plantHolder.Dead)
+        if (holder.Dead)
         {
             // Remove dead plant.
-            _plantHolder.RemovePlant(uid, plantHolder);
+            _holder.RemovePlant(uid, holder);
             AfterHarvest(ent);
             return;
         }
@@ -117,31 +114,31 @@ public sealed class HarvestSystem : EntitySystem
             return;
 
         // Spawn products.
-        if (plantHolder.Seed != null)
-            _botany.Harvest(plantHolder.Seed, user, ent);
+        if (holder.Seed != null)
+            _botany.Harvest(holder.Seed, user, ent);
 
         // Handle harvest type.
         if (component.HarvestRepeat == HarvestType.NoRepeat)
-            _plantHolder.RemovePlant(uid, plantHolder);
+            _holder.RemovePlant(uid, holder);
 
-        AfterHarvest(ent, plantHolder, traits);
+        AfterHarvest(ent, holder, traits);
     }
 
-    private void AfterHarvest(Entity<PlantHarvestComponent> ent, PlantHolderComponent? plantHolder = null, PlantTraitsComponent? traits = null)
+    private void AfterHarvest(Entity<PlantHarvestComponent> ent, PlantHolderComponent? holder = null, PlantTraitsComponent? traits = null)
     {
         var (uid, component) = ent;
-        if (!Resolve(uid, ref traits, ref plantHolder))
+        if (!Resolve(uid, ref traits, ref holder))
             return;
 
         component.ReadyForHarvest = false;
-        component.LastHarvest = plantHolder.Age;
+        component.LastHarvest = holder.Age;
 
         // Play scream sound if applicable.
-        if (traits.CanScream && plantHolder.Seed != null)
-            _audio.PlayPvs(plantHolder.Seed.ScreamSound, uid);
+        if (traits.CanScream && holder.Seed != null)
+            _audio.PlayPvs(holder.Seed.ScreamSound, uid);
 
         // Update sprite.
-        _plantHolder.UpdateSprite(uid, plantHolder);
+        _holder.UpdateSprite(uid, holder);
     }
 
     /// <summary>

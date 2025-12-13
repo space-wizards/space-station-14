@@ -486,7 +486,7 @@ entities:
       health: 100
       seed:
         growthComponents:
-          plantTraits:
+          plant:
             lifespan: 75
             endurance: 100
           basicGrowth:
@@ -559,7 +559,7 @@ entities:
       health: 100
       seed:
         growthComponents:
-          plantTraits:
+          plant:
             lifespan: 25
             endurance: 100
           basicGrowth:

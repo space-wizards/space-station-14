@@ -23,20 +23,16 @@ public sealed class ToxinsSystem : EntitySystem
         if (!Resolve(uid, ref holder))
             return;
 
-        if (holder.Seed == null || holder.Dead)
+        if (holder.Toxins < 0)
             return;
 
-        if (holder.Toxins > 0)
-        {
-            var toxinUptake = MathF.Max(1, MathF.Round(holder.Toxins / component.ToxinUptakeDivisor));
-            if (holder.Toxins > component.ToxinsTolerance)
-            {
-                holder.Health -= toxinUptake;
-            }
+        var toxinUptake = MathF.Max(1, MathF.Round(holder.Toxins / component.ToxinUptakeDivisor));
+        if (holder.Toxins > component.ToxinsTolerance)
+            holder.Health -= toxinUptake;
 
-            holder.Toxins -= toxinUptake;
-            if (holder.DrawWarnings)
-                holder.UpdateSpriteAfterUpdate = true;
-        }
+        holder.Toxins -= toxinUptake;
+
+        if (holder.DrawWarnings)
+            holder.UpdateSpriteAfterUpdate = true;
     }
 }

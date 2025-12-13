@@ -22,9 +22,6 @@ public sealed class UnviableGrowthSystem : EntitySystem
         if (!Resolve(uid, ref holder))
             return;
 
-        if (holder.Seed == null || holder.Dead)
-            return;
-
         holder.Health -= component.UnviableDamage;
         if (holder.DrawWarnings)
             holder.UpdateSpriteAfterUpdate = true;
