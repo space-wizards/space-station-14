@@ -94,9 +94,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Fun/Plushies/bee.rsi
-        state: icon
+    - state: red
+    - sprite: Objects/Fun/Plushies/bee.rsi
+      state: icon
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: AllPlushiesTable
@@ -110,9 +110,9 @@
   components:
   - type: Sprite
     layers:
-      - state: red
-      - sprite: Objects/Fun/mech_figurines.rsi
-        state: ripley
+    - state: red
+    - sprite: Objects/Fun/mech_figurines.rsi
+      state: ripley
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: AllFigurineMechsTable
