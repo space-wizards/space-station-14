@@ -27,6 +27,9 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<ItemToggleOnTriggerComponent, TriggerEvent>(HandleItemToggleOnTrigger);
         SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(HandleAnchorOnTrigger);
         SubscribeLocalEvent<UseDelayOnTriggerComponent, TriggerEvent>(HandleUseDelayOnTrigger);
+
+        SubscribeLocalEvent<TriggerOnUserInteractUsingComponent, UserInteractUsingEvent>(OnUserInteractUsing);
+        SubscribeLocalEvent<TriggerOnUserInteractHandComponent, UserInteractHandEvent>(OnUserInteractHand);
     }
 
     private void OnExamined(Entity<TriggerOnExaminedComponent> ent, ref ExaminedEvent args)
@@ -155,5 +158,27 @@ public sealed partial class TriggerSystem
             return;
 
         args.Handled |= _useDelay.TryResetDelay(target.Value, ent.Comp.CheckDelayed);
+    }
+
+    private void OnUserInteractUsing(Entity<TriggerOnUserInteractUsingComponent> ent, ref UserInteractUsingEvent args)
+    {
+        if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
+            return;
+
+        Trigger(ent.Owner, ent.Comp.TargetUsed ? args.Used : args.Target, ent.Comp.KeyOut);
+
+        if (ent.Comp.Handle)
+            args.Handled = true;
+    }
+
+    private void OnUserInteractHand(Entity<TriggerOnUserInteractHandComponent> ent, ref UserInteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        Trigger(ent.Owner, args.Target, ent.Comp.KeyOut);
+
+        if (ent.Comp.Handle)
+            args.Handled = true;
     }
 }
