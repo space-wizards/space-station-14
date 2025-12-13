@@ -30,6 +30,13 @@ public sealed partial class CocoonContainerComponent : Component
     /// </summary>
     [DataField]
     public float AbsorbPercentage = 0.3f;
+
+    /// <summary>
+    /// Flag to prevent recursion when processing damage changes.
+    /// This is set to true while we're modifying damage to avoid infinite loops.
+    /// </summary>
+    [ViewVariables]
+    public bool ProcessingDamage = false;
 }
 
 /// <summary>

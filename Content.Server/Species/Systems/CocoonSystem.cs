@@ -58,7 +58,6 @@ public sealed class CocoonSystem : SharedCocoonSystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private const string CocoonContainerId = "cocoon_victim";
-    private readonly HashSet<EntityUid> _processingDamage = new();
 
     public override void Initialize()
     {
@@ -84,7 +83,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
     private void OnCocoonContainerDamage(EntityUid uid, CocoonContainerComponent component, DamageChangedEvent args)
     {
         // Skip if we're already processing damage for this entity (prevents recursion from SetDamage)
-        if (_processingDamage.Contains(uid))
+        if (component.ProcessingDamage)
             return;
 
         // Only process if damage was actually increased
@@ -117,7 +116,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         var newDamage = currentDamage - damageDelta + absorbedDamageSpec;
 
         // Mark as processing to prevent recursion
-        _processingDamage.Add(uid);
+        component.ProcessingDamage = true;
 
         try
         {
@@ -126,7 +125,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         }
         finally
         {
-            _processingDamage.Remove(uid);
+            component.ProcessingDamage = false;
         }
 
         // Pass the reduced damage to the victim inside
@@ -180,15 +179,11 @@ public sealed class CocoonSystem : SharedCocoonSystem
             _standing.Down(victim);
         }
 
-        if (!HasComp<BlockMovementComponent>(victim))
-        {
-            AddComp<BlockMovementComponent>(victim);
-        }
+        EnsureComp<BlockMovementComponent>(victim);
 
         EnsureComp<MumbleAccentComponent>(victim);
         EnsureComp<TemporaryBlindnessComponent>(victim);
     }
-
 
     private void OnCocoonContainerShutdown(EntityUid uid, CocoonContainerComponent component, ComponentShutdown args)
     {
@@ -505,11 +500,15 @@ public sealed class CocoonSystem : SharedCocoonSystem
 
                 PlaySoundAtEntity(uid, new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_start.ogg"));
 
-                var targetName = component.Victim != null && Exists(component.Victim.Value) ? component.Victim.Value : uid;
-                _popups.PopupEntity(Loc.GetString("arachnid-unwrap-start-user", ("target", targetName)), args.User, args.User);
                 if (component.Victim != null && Exists(component.Victim.Value))
                 {
-                    _popups.PopupEntity(Loc.GetString("arachnid-unwrap-start-target", ("user", args.User)), component.Victim.Value, component.Victim.Value);
+                    var victim = component.Victim.Value;
+                    _popups.PopupEntity(Loc.GetString("arachnid-unwrap-start-user", ("target", victim)), args.User, args.User);
+                    _popups.PopupEntity(Loc.GetString("arachnid-unwrap-start-target", ("user", args.User)), victim, victim);
+                }
+                else
+                {
+                    _popups.PopupEntity(Loc.GetString("arachnid-unwrap-start-user-empty"), args.User, args.User);
                 }
             }
         };
@@ -570,7 +569,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
 
         foreach (var gibbedPart in args.GibbedParts)
         {
-            if (Deleted(gibbedPart) || !Exists(gibbedPart))
+            if (Deleted(gibbedPart))
                 continue;
 
             // If it's a transform child of the cocoon, detach it first
