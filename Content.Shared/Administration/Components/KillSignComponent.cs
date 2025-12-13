@@ -5,7 +5,8 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Administration.Components;
 
 /// <summary>
-/// Marks this entity as killsigned, giving them a giant sign saying "KILL" above their head.
+/// Displays a sprite above an entity.
+/// By default a huge sign saying "KILL".
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class KillSignComponent : Component

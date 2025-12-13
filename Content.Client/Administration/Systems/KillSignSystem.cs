@@ -27,6 +27,9 @@ public sealed class KillSignSystem : EntitySystem
 
     private void AfterAutoHandleState(Entity<KillSignComponent> ent, ref AfterAutoHandleStateEvent args)
     {
+        // After receiving a new state for the component, we remove the old killsign and build a new one.
+        // This is so changes to the sprite can be displayed live and allowing them to me edited via ViewVariables.
+        // This could just update an existing sprite, but this is both easier and runs rarely anyways.
         RemoveKillsign(ent);
         AddKillsign(ent);
     }
