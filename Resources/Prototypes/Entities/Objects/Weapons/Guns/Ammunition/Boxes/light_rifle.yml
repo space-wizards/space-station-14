@@ -73,8 +73,8 @@
     - state: practice
 
 - type: entity
-  id: MagazineBoxLightRifleIncendiary
   parent: BaseMagazineBoxLightRifle
+  id: MagazineBoxLightRifleIncendiary
   name: ammunition box (.30 rifle incendiary)
   description: A cardboard box of .30 rifle rounds. Intended to hold self-igniting incendiary ammunition.
   components:
