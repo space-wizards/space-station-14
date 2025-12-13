@@ -73,17 +73,14 @@
   id: LotteryJunkEntityTable
   table: !type:GroupSelector
     children:
+    - !type:NestedSelector
+      tableId: AllBananaPeelsTable
+      weight: 4
     - id: CigaretteSpent
     - id: FoodBowlBigTrash
     - id: FoodFrozenPopsicleTrash
     - id: FoodCornTrash
-    - id: TrashBananaPeel
-    - id: TrashBananaPeelExplosive
-      weight: 0.01
     - id: FoodTinBeansTrash
-    - id: TrashBakedBananaPeel
-    - id: TrashMimanaPeel
-    - id: TrashBananiumPeel
 
 - type: entityTable
   id: LotteryCanistersEntityTable
