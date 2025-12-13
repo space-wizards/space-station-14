@@ -1,138 +1,134 @@
-- type: entity
-  name: Toy Spawner
-  id: ToySpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Fun/Plushies/bee.rsi
-          state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - FoamBlade
-        - PlushieGhost
-      rareChance: 0.03
-      prototypes:
-        - PlushieBee
-        - PlushieAtmosian
-        - PlushieNuke
-        - PlushieLizard
-        - PlushieNar
-        - PlushieCarp
-        - PlushieSlime
-        - PlushieSnake
-        - PlushieVox
-        - PlushieRatvar
-        - PlushieSpaceLizard
-        - PlushieRouny
-        - PlushieLamp
-        - PlushieSharkBlue
-        - PlushieSharkPink
-        - PlushieSharkGrey
-        - ToyAmongPequeno
-        - ToyMouse
-        - PlushieDiona
-        - PlushieArachind
-      chance: 0.5
-      offset: 0.2
+- type: entityTable # Max size 1x2
+  id: AllFigurinesTable
+  table: !type:GroupSelector
+    children:
+    # Cargo
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineCargoTech
+    - id: ToyFigurineSalvage
+    # Command
+    - id: ToyFigurineCaptain
+    # Engineering
+    - id: ToyFigurineChiefEngineer
+    - id: ToyFigurineEngineer
+    - id: ToyFigurineAtmosTech
+    # Medical
+    - id: ToyFigurineChiefMedicalOfficer
+    - id: ToyFigurineChemist
+    - id: ToyFigurineParamedic
+    - id: ToyFigurineMedicalDoctor
+    # Science
+    - id: ToyFigurineResearchDirector
+    - id: ToyFigurineScientist
+    # Security
+    - id: ToyFigurineHeadOfSecurity
+    - id: ToyFigurineWarden
+    - id: ToyFigurineDetective
+    - id: ToyFigurineSecurity
+    # Service
+    - id: ToyFigurineHeadOfPersonnel
+    - id: ToyFigurinePassenger
+    - id: ToyFigurineGreytider
+    - id: ToyFigurineClown # :o)
+    - id: ToyFigurineMime #
+    - id: ToyFigurineMusician
+    - id: ToyFigurineBoxer
+    - id: ToyFigurineLibrarian
+    - id: ToyFigurineChaplain
+    - id: ToyFigurineChef
+    - id: ToyFigurineBartender
+    - id: ToyFigurineBotanist
+    - id: ToyFigurineJanitor
+    - id: ToyFigurineLawyer
+    # Silicon
+    - id: ToyAi
+    # Syndicate
+    - id: ToyFigurineNukie
+    - id: ToyFigurineNukieElite
+    - id: ToyFigurineNukieCommander
+    - id: ToyFigurineFootsoldier
+    - id: ToyFigurineHoloClown # >:o)
+    # Antagonists
+    - id: ToyFigurineWizard
+    - id: ToyFigurineSpaceDragon
+    - id: ToyFigurineThief
+    - id: ToyFigurineQueen
+    - id: ToyFigurineRatKing
+    - id: ToyFigurineRatServant
+    - id: ToyFigurineGriffin
+    # Animals
+    - id: ToyFigurineMouse
+    - id: ToyFigurineSlime
+    - id: ToyFigurineHamlet
+    # Other
+    - id: MysteryFigureBox # More suspense
+      weight: 10
+    - id: ToyFigurineWizardFake
+    - id: ToyFigurineSkeleton
+    - id: ToyNuke
+    - id: ToyFigurineOwlman
+    - !type:NestedSelector
+      tableId: AllFigurineMechsTable
+
+- type: entityTable # Max size 1x2
+  id: AllFigurineMechsTable
+  table: !type:GroupSelector
+    children:
+    - id: ToyRipley
+    - id: ToyFireRipley
+    - id: ToyDeathRipley
+    - id: ToyGygax
+    - id: ToyDurand
+    - id: ToyMarauder
+    - id: ToySeraph
+    - id: ToyMauler
+    - id: ToyOdysseus
+    - id: ToyPhazon
+    - id: ToyReticence
 
 - type: entity
-  name: Prize Figurine Spawner
-  id: FigureSpawner
   parent: MarkerBase
+  id: PlushieSpawner50
+  name: Plushie Spawner
+  suffix: 50
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Fun/mech_figurines.rsi
-          state: ripley
-    - type: RandomSpawner
-      prototypes:
-        - ToyAi
-        - ToyNuke
-        - ToyFigurinePassenger
-        - ToyFigurineGriffin
-        - ToyHonk
-        - ToyIan
-        - ToyMarauder
-        - ToyMauler
-        - ToyGygax
-        - ToyOdysseus
-        - ToyFigurineOwlman
-        - ToyDeathRipley
-        - ToyPhazon
-        - ToyFireRipley
-        - ToyReticence
-        - ToyRipley
-        - ToySeraph
-        - ToyDurand
-        - ToyFigurineSkeleton
-        - MysteryFigureBox
-      chance: 0.5
-      offset: 0.2
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/Plushies/bee.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllPlushiesTable
+      prob: 0.5
 
 - type: entity
+  parent: MarkerBase
+  id: MechFigurineSpawner50
+  name: Mech Figurine Spawner
+  suffix: 50
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/mech_figurines.rsi
+      state: ripley
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllFigurineMechsTable
+      prob: 0.5
+
+- type: entity
+  parent: MarkerBase
+  id: SpacemenFigurineSpawner90
   name: Spacemen Minifigure Spawner
-  suffix: Librarian only, map with care!
-  id: SpacemenFigureSpawner
-  parent: MarkerBase
+  suffix: 90. Librarian only, map with care!
   components:
-    - type: Sprite
-      layers:
-        - sprite: Objects/Fun/figurines.rsi
-          state: figurine_spawner
-    - type: RandomSpawner
-      rarePrototypes:
-      - ToyFigurineNukieElite
-      - ToyFigurineNukieCommander
-      rareChance: 0.05
-      prototypes:
-      - ToyFigurinePassenger
-      - ToyFigurineClown
-      - ToyFigurineMime
-      - ToyFigurineMusician
-      - ToyFigurineBoxer
-      - ToyFigurineCaptain
-      - ToyFigurineHeadOfSecurity
-      - ToyFigurineWarden
-      - ToyFigurineDetective
-      - ToyFigurineSecurity
-      - ToyFigurineLawyer
-      - ToyFigurineCargoTech
-      - ToyFigurineSalvage
-      - ToyFigurineQuartermaster
-      - ToyFigurineChiefEngineer
-      - ToyFigurineAtmosTech
-      - ToyFigurineEngineer
-      - ToyFigurineResearchDirector
-      - ToyFigurineScientist
-      - ToyFigurineChiefMedicalOfficer
-      - ToyFigurineChemist
-      - ToyFigurineParamedic
-      - ToyFigurineMedicalDoctor
-      - ToyFigurineHeadOfPersonnel
-      - ToyFigurineLibrarian
-      - ToyFigurineChaplain
-      - ToyFigurineChef
-      - ToyFigurineBartender
-      - ToyFigurineBotanist
-      - ToyFigurineJanitor
-      - ToyFigurineNukie
-      - ToyFigurineFootsoldier
-      - ToyFigurineWizardFake
-      - ToyFigurineSlime
-      - ToyFigurineGreytider
-      - ToyFigurineWizard
-      - ToyFigurineGriffin
-      - ToyFigurineOwlman
-      - ToyFigurineSkeleton
-      - ToyFigurineQueen
-      - ToyFigurineSpaceDragon
-      - ToyFigurineRatKing
-      - ToyFigurineRatServant
-      - ToyFigurineMouse
-      - ToyFigurineHamlet
-      - ToyFigurineThief
-      chance: 0.90
-      offset: 0.2
+  - type: Sprite
+    layers:
+    - sprite: Objects/Fun/figurines.rsi
+      state: figurine_spawner
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllFigurinesTable
+      prob: 0.9

@@ -414,7 +414,7 @@
     containers:
       entity_storage: !type:AllSelector
         children:
-        - id: GlowstickBase
+        - id: GlowstickGreen
           amount: 2
         - id: GlowstickBlue
           amount: 2
