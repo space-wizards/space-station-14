@@ -22,7 +22,6 @@ public sealed partial class PlantRestoreSeedsEntityEffectSystem : EntityEffectSy
         if (!TryComp<PlantTraitsComponent>(entity, out var traits) || !traits.Seedless)
             return;
 
-        _plantHolder.EnsureUniqueSeed(entity, entity.Comp);
         _popup.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), entity);
         traits.Seedless = false;
     }

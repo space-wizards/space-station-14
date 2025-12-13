@@ -561,10 +561,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         if (component.Seed != null)
-        {
-            EnsureUniqueSeed(uid, component);
             _mutation.MutateSeed(uid, ref component.Seed, severity);
-        }
     }
 
     public void UpdateSprite(EntityUid uid, PlantHolderComponent component)
@@ -628,19 +625,6 @@ public sealed class PlantHolderSystem : EntitySystem
             || component.ImproperPressure || component.MissingGas > 0,
             app);
         _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, harvest is { ReadyForHarvest: true }, app);
-    }
-
-    /// <summary>
-    /// Check if the currently contained seed is unique. If it is not, clone it so that we have a unique seed.
-    /// Necessary to avoid modifying global seeds.
-    /// </summary>
-    public void EnsureUniqueSeed(EntityUid uid, PlantHolderComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (component.Seed is { Unique: false })
-            component.Seed = component.Seed.Clone();
     }
 
     public void ForceUpdateByExternalCause(EntityUid uid, PlantHolderComponent? component = null)

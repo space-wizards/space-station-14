@@ -23,7 +23,6 @@ public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSy
         if (!TryComp<PlantTraitsComponent>(entity, out var traits) || traits.Seedless)
             return;
 
-        _plantHolder.EnsureUniqueSeed(entity, entity.Comp);
         _popup.PopupEntity(
             Loc.GetString("botany-plant-seedsdestroyed"),
             entity,

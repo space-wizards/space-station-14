@@ -4,7 +4,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Botany.Systems;
 
 /// <summary>
-/// Applies plant trait effects on growth ticks.
+/// Handles plant behavior and growth processing.
 /// </summary>
 public sealed class PlantSystem : EntitySystem
 {
