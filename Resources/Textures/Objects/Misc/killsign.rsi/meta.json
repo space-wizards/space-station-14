@@ -8,7 +8,17 @@
     },
     "states": [
         {
-            "name": "sign",
+            "name": "kill",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+		{
+            "name": "peak",
             "directions": 1,
             "delays": [
                 [

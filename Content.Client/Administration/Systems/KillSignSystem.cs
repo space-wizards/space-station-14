@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
 using Content.Shared.Administration.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Systems;
 
@@ -13,34 +12,56 @@ public sealed class KillSignSystem : EntitySystem
     {
         SubscribeLocalEvent<KillSignComponent, ComponentStartup>(KillSignAdded);
         SubscribeLocalEvent<KillSignComponent, ComponentShutdown>(KillSignRemoved);
+        SubscribeLocalEvent<KillSignComponent, AfterAutoHandleStateEvent>(AfterAutoHandleState);
     }
 
-    private void KillSignRemoved(EntityUid uid, KillSignComponent component, ComponentShutdown args)
+    private void KillSignRemoved(Entity<KillSignComponent> ent, ref ComponentShutdown args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
-            return;
-
-        if (!_sprite.LayerMapTryGet((uid, sprite), KillSignKey.Key, out var layer, false))
-            return;
-
-        _sprite.RemoveLayer((uid, sprite), layer);
+        RemoveKillsign(ent);
     }
 
-    private void KillSignAdded(EntityUid uid, KillSignComponent component, ComponentStartup args)
+    private void KillSignAdded(Entity<KillSignComponent> ent, ref ComponentStartup args)
     {
-        if (!TryComp<SpriteComponent>(uid, out var sprite))
+        AddKillsign(ent);
+    }
+
+    private void AfterAutoHandleState(Entity<KillSignComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        RemoveKillsign(ent);
+        AddKillsign(ent);
+    }
+
+    private void AddKillsign(Entity<KillSignComponent> ent)
+    {
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        if (_sprite.LayerMapTryGet((uid, sprite), KillSignKey.Key, out var _, false))
+        if (_sprite.LayerMapTryGet((ent, sprite), KillSignKey.Key, out var _, false))
             return;
 
-        var adj = _sprite.GetLocalBounds((uid, sprite)).Height / 2 + ((1.0f / 32) * 6.0f);
+        if (ent.Comp.Sprite == null)
+            return;
 
-        var layer = _sprite.AddLayer((uid, sprite), new SpriteSpecifier.Rsi(new ResPath("Objects/Misc/killsign.rsi"), "sign"));
-        _sprite.LayerMapSet((uid, sprite), KillSignKey.Key, layer);
+        var adj = _sprite.GetLocalBounds((ent, sprite)).Height / 2 + ((1.0f / 32) * 6.0f);
 
-        _sprite.LayerSetOffset((uid, sprite), layer, new Vector2(0.0f, adj));
-        sprite.LayerSetShader(layer, "unshaded");
+        var layer = _sprite.AddLayer((ent, sprite), ent.Comp.Sprite);
+        _sprite.LayerMapSet((ent, sprite), KillSignKey.Key, layer);
+
+        _sprite.LayerSetOffset((ent, sprite), layer, ent.Comp.DoOffset ? new Vector2(0.0f, adj) : new Vector2(0.0f, 0.0f));
+
+        if (ent.Comp.ForceUnshaded)
+            sprite.LayerSetShader(layer, "unshaded");
+    }
+
+    private void RemoveKillsign(Entity<KillSignComponent> ent)
+    {
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
+            return;
+
+        if (!_sprite.LayerMapTryGet((ent, sprite), KillSignKey.Key, out var layer, false))
+            return;
+
+        _sprite.RemoveLayer((ent, sprite), layer);
     }
 
     private enum KillSignKey
