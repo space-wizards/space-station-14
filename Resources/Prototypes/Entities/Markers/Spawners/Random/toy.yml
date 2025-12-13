@@ -1,6 +1,6 @@
 # Items in this table are generally useless. They don't help in most situations and aren't interesting to serious people.
 # If you're wondering if an entity should go in this table, ask your inner child / local clown.
-- type: entityTable # size 2x4 or 3x3  # price 285
+- type: entityTable # size 2x4 or 3x3  # price 100
   id: AllToysTable
   table: !type:GroupSelector
     children:
@@ -222,8 +222,8 @@
     - id: ToyPhazon
     - id: ToyReticence
 
-# Items that are used to "attack" people. Legitimate combat use for these is limited (with thematic exceptions)
-- type: entityTable # size 2x4  # price 285
+# Items that are used to "attack" people. Legitimate combat use for these is limited
+- type: entityTable # size 2x4  # price 100
   id: AllToyWeaponsTable
   table: !type:GroupSelector
     children:
@@ -254,7 +254,7 @@
       - !type:NestedSelector
         tableId: RandomCapGunTable
 
-- type: entityTable
+- type: entityTable # price 100
   id: RandomFoamGunTable
   table: !type:AllSelector # Need to spawn with ammo
     children:

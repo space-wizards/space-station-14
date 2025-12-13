@@ -194,7 +194,7 @@
     sprite: Structures/Storage/Crates/toybox.rsi
     state: crate_icon
   product: CrateFunToyBox
-  cost: 1440
+  cost: 900
   category: cargoproduct-category-name-fun
   group: market
 
