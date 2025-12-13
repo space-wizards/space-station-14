@@ -186,15 +186,18 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     /// <param name="scanMode">True makes the UI show ACTIVE, False makes the UI show INACTIVE</param>
     public void UpdateScannedUser(Entity<HealthAnalyzerComponent> healthAnalyzer, EntityUid target, bool scanMode)
     {
-        var uiKey = healthAnalyzer.Comp.UiKey;
-        if (!_uiSystem.HasUi(healthAnalyzer, uiKey)
+        if (!_uiSystem.HasUi(healthAnalyzer, HealthAnalyzerUiKey.Key)
             || !HasComp<DamageableComponent>(target))
             return;
 
         var uiState = GetHealthAnalyzerUiState(target);
         uiState.ScanMode = scanMode;
 
-        _uiSystem.ServerSendUiMessage(healthAnalyzer.Owner, uiKey, new HealthAnalyzerScannedUserMessage(uiState));
+        _uiSystem.ServerSendUiMessage(
+            healthAnalyzer.Owner,
+            HealthAnalyzerUiKey.Key,
+            new HealthAnalyzerScannedUserMessage(uiState)
+        );
     }
 
     /// <summary>

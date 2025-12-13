@@ -62,8 +62,4 @@ public sealed partial class HealthAnalyzerComponent : Component
     /// </summary>
     [DataField]
     public bool Silent;
-
-    // TODO summary
-    [DataField]
-    public Enum UiKey = HealthAnalyzerUiKey.Key;
 }
