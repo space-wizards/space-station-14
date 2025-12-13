@@ -89,8 +89,7 @@
       - id: ClothingUniformJumpsuitLoungewear
       - id: ClothingHeadHatCowboyRed
       - !type:NestedSelector
-        children:
-        - id: AllToysTable
+        tableId: AllToysTable
     # Uncommon Group
     - !type:GroupSelector
       weight: 23

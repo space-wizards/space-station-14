@@ -114,7 +114,7 @@
     containers:
       storagebase:
         id: FoodPieBananaCream
-        amount: 4
+        amount: 3
 
 - type: entity
   name: experimental pie cannon

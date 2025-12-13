@@ -1,5 +1,119 @@
+# Soft friends to play with, cut open with a knife, and eat
+- type: entityTable # size ginormous  # price 5
+  id: AllPlushiesTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: AllLizardPlushieTable
+    - id: PlushieNuke
+    - id: PlushieSlime
+    - id: PlushieSnake
+    - id: PlushieExperiment
+    - id: PlushieVox
+    - id: PlushieRouny
+    - id: PlushieAtmosian
+    - id: PlushieDiona
+    - id: PlushieXeno
+    - id: PlushieHampter
+    - id: PlushieMoth
+    - id: PlushieArachind
+    - id: PlushiePenguin
+    - id: PlushieVulp
+    - !type:GroupSelector
+      children:
+      - id: PlushieBee
+      - id: PlushieRGBee
+        weight: 0.1
+    - !type:GroupSelector
+      children:
+      - id: PlushieCarp
+      - id: PlushieHolocarp
+        weight: 0.25
+      - id: PlushieMagicarp
+        weight: 0.25
+      - id: PlushieRainbowCarp
+        weight: 0.15
+    - !type:GroupSelector
+      children:
+      - id: PlushieSharkBlue
+      - id: PlushieSharkGrey
+      - id: PlushieSharkPink
+    - !type:GroupSelector # Toy plushies
+      children:
+      - id: ToyIan
+      - id: ToyAmongPequeno
+      - id: ToyMouse
+    - !type:GroupSelector # Giant plushies
+      children:
+      - id: PlushieNar
+      - id: PlushieRatvar
+    - !type:GroupSelector # Rare plushies
+      weight: 0.1 # 1 in >210
+      children:
+      - id: PlushieHuman
+      - id: PlushieGhost
+      - id: PlushieLamp
+    - !type:GroupSelector # Legendary plushies
+      weight: 0.002 # 1 in >10,500
+      children:
+      - id: PlushieThrongler
+      - id: PlushieGhostRevenant # You got the god roll, and failed
+
+# Weh!
+- type: entityTable
+  id: AllLizardPlushieTable
+  table: !type:GroupSelector
+    children:
+    - id: PlushieLizard
+      weight: 8
+    - id: PlushieSpaceLizard
+      weight: 1
+    - id: PlushieLizardInversed
+      weight: 0.1 # 1 in >100
+    - !type:GroupSelector # Lizard gets a job table
+      children:
+      - id: PlushieLizardJobAtmospherictechnician
+      - id: PlushieLizardJobBartender
+      - id: PlushieLizardJobBotanist
+      - id: PlushieLizardJobBoxer
+      - id: PlushieLizardJobCaptain
+      - id: PlushieLizardJobCargotechnician
+      - id: PlushieLizardJobChaplain
+      - id: PlushieLizardJobChef
+      - id: PlushieLizardJobChemist
+      - id: PlushieLizardJobChiefengineer
+      - id: PlushieLizardJobChiefmedicalofficer
+      - id: PlushieLizardJobClown # :o)
+      - id: PlushieLizardJobDetective
+      - id: PlushieLizardJobHeadofpersonnel
+      - id: PlushieLizardJobHeadofsecurity
+      - id: PlushieLizardJobJanitor
+      - id: PlushieLizardJobLawyer
+      - id: PlushieLizardJobLibrarian
+      - id: PlushieLizardJobMedicaldoctor
+      - id: PlushieLizardJobMedicalintern
+      - id: PlushieLizardJobMime #
+      - id: PlushieLizardJobMusician
+      - id: PlushieLizardJobParamedic
+      - id: PlushieLizardJobPassenger
+      - id: PlushieLizardJobPsychologist
+      - id: PlushieLizardJobQuartermaster
+      - id: PlushieLizardJobReporter
+      - id: PlushieLizardJobResearchassistant
+      - id: PlushieLizardJobResearchdirector
+      - id: PlushieLizardJobSalvagespecialist
+      - id: PlushieLizardJobScientist
+      - id: PlushieLizardJobSecuritycadet
+      - id: PlushieLizardJobSecurityofficer
+      - id: PlushieLizardJobServiceworker
+      - id: PlushieLizardJobStationengineer
+      - id: PlushieLizardJobTechnicalassistant
+      - id: PlushieLizardJobZookeeper
+      - id: PlushieLizardJobMultiweh
+        weight: 0.5 # 1 in >800
+
 # Figurines representing all your favorite coworkers
-- type: entityTable # size 1x2
+- type: entityTable # size 1x2  # price 75
   id: AllFigurinesTable
   table: !type:GroupSelector
     children:
@@ -72,7 +186,7 @@
       tableId: AllFigurineMechsTable
 
 # Figurines representing the hopes and dreams of the robotics department
-- type: entityTable # size 1x2
+- type: entityTable # size 1x2  # price 75
   id: AllFigurineMechsTable
   table: !type:GroupSelector
     children:
@@ -90,7 +204,7 @@
 
 # Items in this table are generally useless. They don't help in most situations and aren't interesting to serious people.
 # If you're wondering if an entity should go in this table, ask your inner child / local clown.
-- type: entityTable # size 2x4 or 3x3
+- type: entityTable # size 2x4 or 3x3  # price 285
   id: AllToysTable
   table: !type:GroupSelector
     children:
@@ -109,7 +223,7 @@
         tableId: AllPlushiesTable
 
 # Items that are used to "attack" people. Legitimate combat use for these is limited (with thematic exceptions)
-- type: entityTable # size 2x4
+- type: entityTable # size 2x4  # price 285
   id: AllToyWeaponsTable
   table: !type:GroupSelector
     children:
@@ -127,6 +241,8 @@
       - id: SnapPopBox
       - id: BoxDarts
       - id: GrenadeFoamDart
+      - id: GrenadeDummy
+#      - id: SyndieTrickyBomb # Inflates the possible price of the table
     - !type:GroupSelector # Guns type group
       children:
       - id: WeaponStickyHand
@@ -167,7 +283,7 @@
       - id: BoxCartridgeCap
 
 # A group of items with fun or unique properties. Highly varied (they aren't all winners)
-- type: entityTable # size 3x3
+- type: entityTable # size 3x3  # price 98
   id: AllMiscToysTable
   table: !type:GroupSelector
     children:
@@ -191,8 +307,8 @@
       children:
       - id: BalloonNT
         weight: 3 # NT bias
-      - id: BalloonSyn
       - id: BalloonCorgi
+#      - id: BalloonSyn # Inflates the possible price of the table
     - !type:GroupSelector # Sports ball
       children:
       - id: Basketball
@@ -205,18 +321,18 @@
       - id: PersonalAI
         weight: 8
       - id: PotatoAI
-      - id: SyndicatePersonalAI
+#      - id: SyndicatePersonalAI # Inflates the possible price of the table
       - id: GoldenPersonalAI
-        weight: 0.01 # 1 in 12,000
+        weight: 0.01 # 1 in 13,000
     - !type:GroupSelector # Orbs of "power"
-      weight: 0.01 # 1 in 1,200
+      weight: 0.01 # 1 in 1,300
       children:
       - id: SingularityToy
       - id: TeslaToy
       - id: PonderingOrb
 
 # Entities that don't do much more than make a unique sound. Plushies excluded.
-- type: entityTable # size 1x2
+- type: entityTable # size 1x2  # price 5
   id: AllToySoundMakerTable
   table: !type:GroupSelector
     children:
@@ -247,7 +363,7 @@
       - id: CluwneHorn # you lose, clown >:o)
       - id: BananiumHorn
       - id: PushHorn
-      - id: GoldenBikeHorn
+#      - id: GoldenBikeHorn # inflates the price of the table
 
 - type: entityTable # size 1x2
   id: AllBoardGamesTable
