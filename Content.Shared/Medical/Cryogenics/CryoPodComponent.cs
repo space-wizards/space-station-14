@@ -1,5 +1,4 @@
 using Content.Shared.Atmos.Components;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.MedicalScanner;

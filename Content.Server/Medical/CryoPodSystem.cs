@@ -180,7 +180,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
             return;
         }
 
-        // Try to transfer 5u from beaker to injecting
+        // Try to transfer 5u from the beaker to the injection buffer.
         if (injectingSolution.AvailableVolume < 1)
             return;
 
