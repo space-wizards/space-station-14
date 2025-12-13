@@ -3801,7 +3801,7 @@
       state: corgi
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi # Would do a custom dog handcuff sprite but unfortunately handcuffs have their overlay baked-in to the cuff itself so this is mostly filler
+      sprite: Objects/Misc/handcuffs.rsi
       state: body-overlay-dog-2
       visible: false
   - type: UserInterface
