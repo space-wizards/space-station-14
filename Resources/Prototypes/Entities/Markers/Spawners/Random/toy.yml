@@ -247,7 +247,7 @@
       children:
       - id: WeaponStickyHand
       - id: LauncherCreamPieFilled
-        weight: 0.5 # 1 in 30
+        weight: 0.5 # 1 in 27
       - !type:GroupSelector # Water subgroup
         children:
         - id: WeaponWaterBlaster
@@ -282,7 +282,7 @@
       - id: SpeedLoaderCap
       - id: BoxCartridgeCap
 
-# A group of items with fun or unique properties. Highly varied (they aren't all winners)
+# A group of items with fun or unique properties. Highly varied (some are more fun than others)
 - type: entityTable # size 3x3  # price 98
   id: AllMiscToysTable
   table: !type:GroupSelector
@@ -297,16 +297,14 @@
     - id: BarberScissors
     - id: SprayFlowerPin
     - id: ClothingShoesSkates
+    - id: CrazyGlue
+    - id: CrazyLube
     - !type:NestedSelector
       tableId: AllBoardGamesTable
     - !type:GroupSelector # Where there's Chips there's Dips
       children:
       - id: MrChips
       - id: MrDips
-    - !type:GroupSelector # Crazy liquids
-      children:
-      - id: CrazyGlue
-      - id: CrazyLube
     - !type:GroupSelector # Ballons
       children:
       - id: BalloonNT
@@ -327,9 +325,9 @@
       - id: PotatoAI
 #      - id: SyndicatePersonalAI # Inflates the possible price of the table
       - id: GoldenPersonalAI
-        weight: 0.01 # 1 in 15,000
+        weight: 0.01 # 1 in 16,000
     - !type:GroupSelector # Orbs of "power"
-      weight: 0.01 # 1 in 1,500
+      weight: 0.01 # 1 in 1,600
       children:
       - id: SingularityToy
       - id: TeslaToy
@@ -363,7 +361,7 @@
     children:
     - id: BikeHorn
     - !type:GroupSelector # Usually get the normal horn
-      weight: .01 # 1 in 100
+      weight: .005 # 1 in 200
       children:
       - id: CluwneHorn # you lose, clown >:o)
       - id: BananiumHorn
@@ -384,8 +382,8 @@
     - id: CrayonGreen
     - id: CrayonBlue
     - id: CrayonPurple
-#    - id: CrayonBox # Breaks size expectations for the table
-#      weight: 0.1 # 1 in 100
+#    - id: CrayonBox # Breaks size expectations for the table. Consider adding this if size isn't relevant.
+#      weight: 0.5 # 1 in 20
 
 ## Spawners ##
 
@@ -535,4 +533,4 @@
       - !type:NestedSelector
         tableId: AllCrayonsTable
       - id: CrayonBox
-        weight: 0.02 # 1 in 50
+        weight: 0.05 # 1 in 20

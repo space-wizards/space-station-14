@@ -78,8 +78,7 @@
     containers:
       storagebase: !type:NestedSelector
         tableId: RandomCapGunTable
-        rolls: !type:RangeNumberSelector
-          range: 4, 7
+        rolls: 4, 7
 
 - type: entity
   parent: ClothingBackpackSatchelSmuggler
