@@ -30,14 +30,16 @@ public sealed class KillSignSystem : EntitySystem
     private void AfterAutoHandleState(Entity<KillSignComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         // After receiving a new state for the component, we remove the old killsign and build a new one.
-        // This is so changes to the sprite can be displayed live and allowing them to me edited via ViewVariables.
-        // This could just update an existing sprite, but this is both easier and runs rarely anyways.
+        // This is so changes to the sprite can be displayed live and allowing them to be edited via ViewVariables.
+        // This could just update an existing sprite, but this is both easier and runs rarely anyway.
         RemoveKillsign(ent);
         AddKillsign(ent);
     }
 
     private void AddKillsign(Entity<KillSignComponent> ent)
     {
+        // If we hide from owner and we ARE the owner, don't add a killsign.
+        // This could be used for manual networking, to FULLY hide it. But I am too lazy right now.
         if (ent.Comp.HideFromOwner && _player.LocalEntity == ent)
             return;
 

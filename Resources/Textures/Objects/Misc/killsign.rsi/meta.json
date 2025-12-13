@@ -110,6 +110,10 @@
         {
             "name": "icon",
             "directions": 1
+        },
+        {
+            "name": "icon-hidden",
+            "directions": 1
         }
     ]
 }
