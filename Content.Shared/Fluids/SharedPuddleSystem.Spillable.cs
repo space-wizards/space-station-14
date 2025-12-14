@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Prototypes;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Database;
@@ -77,7 +78,7 @@ public abstract partial class SharedPuddleSystem
                 // Injectors should not be hardcoded here.
                 if (TryComp<InjectorComponent>(entity, out var injectorComp))
                 {
-                    injectorComp.ToggleState = InjectorToggleMode.Draw;
+                    injectorComp.ActiveMode.ToggleState = InjectorToggleMode.Draw;
                     Dirty(entity, injectorComp);
                 }
             };

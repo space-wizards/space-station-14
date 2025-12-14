@@ -291,12 +291,10 @@
   - type: Injector
     ignoreMobs: true
     ignoreClosed: false
-    transferAmounts:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
+    activeMode: DrawMode
+    allowedModes:
+    - DrawMode
+    - InjectMode
     currentTransferAmount: 1
   - type: ExaminableSolution
     solution: dropper
@@ -370,10 +368,10 @@
       injector:
         maxVol: 15
   - type: Injector
-    transferAmounts:
-    - 5
-    - 10
-    - 15
+    activeMode: DrawMode
+    allowedModes:
+    - DrawMode
+    - InjectMode
   - type: ExaminableSolution
     solution: injector
     exactVolume: true
@@ -420,12 +418,6 @@
       injector:
         maxVol: 5
   - type: Injector
-    transferAmounts:
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
     currentTransferAmount: 5
   - type: SolutionContainerVisuals
     maxFillLevels: 3
@@ -480,7 +472,7 @@
   id: PrefilledSyringe
   components:
   - type: Injector
-    toggleState: Inject
+    activeMode: InjectMode
 
 - type: entity
   id: SyringeBluespace
@@ -534,9 +526,10 @@
         maxVol: 10
         canReact: false
   - type: Injector
-    transferAmounts:
-    - 5
-    - 10
+    activeMode: DrawMode
+    allowedModes:
+    - DrawMode
+    - InjectMode
     currentTransferAmount: 10
   - type: Tag
     tags:

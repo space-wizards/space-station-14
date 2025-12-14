@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
@@ -34,12 +35,6 @@ public sealed partial class InjectorComponent : Component
     public Entity<SolutionComponent>? Solution = null;
 
     /// <summary>
-    /// The transfer amounts for the set-transfer verb.
-    /// </summary>
-    [DataField]
-    public List<FixedPoint2> TransferAmounts = new() { 1, 5, 10, 15 };
-
-    /// <summary>
     /// Amount to inject or draw on each usage.
     /// </summary>
     /// <remarks>
@@ -47,6 +42,12 @@ public sealed partial class InjectorComponent : Component
     /// </remarks>
     [DataField, AutoNetworkedField]
     public FixedPoint2? CurrentTransferAmount = FixedPoint2.New(5);
+
+    [DataField(required: true), AutoNetworkedField]
+    public InjectorModePrototype ActiveMode;
+
+    [DataField(required: true)]
+    public List<InjectorModePrototype> AllowedModes;
 
     /// <summary>
     /// Injection delay (seconds) when the target is a mob.
@@ -96,57 +97,12 @@ public sealed partial class InjectorComponent : Component
     public bool IgnoreClosed = true;
 
     /// <summary>
-    /// What message will be displayed to the user when attempting to inject someone.
-    /// </summary>
-    /// <remarks>
-    /// This is used for when you aren't injecting with a needle or an instant hypospray.
-    /// It would be weird if someone injects with a spray, but the popup says "needle".
-    /// </remarks>
-    [DataField]
-    public string PreparingInjectorUser = "injector-component-injecting-user";
-
-    /// <summary>
-    /// What message will be displayed to the target when someone attempts to inject into them.
-    /// </summary>
-    [DataField]
-    public string PreparingInjectorTarget = "injector-component-injecting-target";
-
-    /// <summary>
-    /// The state of the injector. Determines it's attack behavior. Containers must have the
-    /// right SolutionCaps to support injection/drawing. For InjectOnly injectors this should
-    /// only ever be set to Inject
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public InjectorToggleMode ToggleState = InjectorToggleMode.Draw;
-
-    /// <summary>
-    /// The state of the injector. Injection/Drawing behavior. Containers must have the
-    /// right SolutionCaps to support injection/drawing. For InjectOnly injectors this should
-    /// only ever be set to Inject
-    /// </summary>
-    [DataField]
-    public InjectorToggleMode AllowedModes = InjectorToggleMode.Draw | InjectorToggleMode.Inject;
-
-    /// <summary>
     /// Reagents that are allowed to be within this injector.
     /// If a solution has both allowed and non-allowed reagents, only allowed reagents will be drawn into this injector.
     /// A null ReagentWhitelist indicates all reagents are allowed.
     /// </summary>
     [DataField]
     public List<ProtoId<ReagentPrototype>>? ReagentWhitelist = null;
-
-    /// <summary>
-    ///     Sound that will be played when injecting.
-    /// </summary>
-    [DataField]
-    public SoundSpecifier? InjectSound;
-
-    /// <summary>
-    /// A popup for the target upon a successful injection.
-    /// It's imperative that this is not null when <see cref="InjectTime"/> is instant.
-    /// </summary>
-    [DataField]
-    public string? InjectPopupTarget;
 
     #region Arguments for injection doafter
 
@@ -163,28 +119,6 @@ public sealed partial class InjectorComponent : Component
     public float MovementThreshold = 0.1f;
 
     #endregion
-}
-
-/// <summary>
-/// Possible modes for an <see cref="InjectorComponent"/>.
-/// </summary>
-[Serializable, NetSerializable, Flags]
-public enum InjectorToggleMode
-{
-    /// <summary>
-    /// The injector will try to inject reagent into things.
-    /// </summary>
-    Inject = 1 << 0,
-
-    /// <summary>
-    /// The injector will try to draw reagent from things.
-    /// </summary>
-    Draw = 1 << 1,
-
-    /// <summary>
-    /// The injector will draw from containers and inject into mobs.
-    /// </summary>
-    Dynamic = 1 << 2,
 }
 
 internal static class InjectorToggleModeExtensions

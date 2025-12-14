@@ -1,3 +1,24 @@
+- type: InjectorMode
+  id: HyposprayDynamicMode
+  injectSound: /Audio/Items/hypospray.ogg
+  injectPopupTarget: injector-component-feel-prick-message
+  toggleState: Dynamic
+  transferAmounts:
+  - 5
+
+- type: InjectorMode
+  id: DrawMode
+  toggleState: Draw
+
+- type: InjectorMode
+  id: InjectMode
+  toggleState: Inject
+
+- type: InjectorMode
+  parent: HyposprayDynamicMode
+  id: HyposprayInjectMode
+  toggleState: Inject
+
 - type: entity
   abstract: true
   parent: BaseItem
@@ -9,13 +30,11 @@
     - 5
     injectTime: 0
     delayPerVolume: 0
-    toggleState: Dynamic
-    allowedModes:
-    - Dynamic
-    - Inject
-    injectSound: /Audio/Items/hypospray.ogg
-    injectPopupTarget: injector-component-feel-prick-message
     ignoreClosed: false
+    activeMode: HyposprayDynamicMode
+    allowedModes:
+    - HyposprayDynamicMode
+    - HyposprayInjectMode
 
 - type: entity
   parent: [BaseHypospray, BaseGrandTheftContraband]
@@ -153,9 +172,9 @@
   - type: Injector
     solutionName: pen
     currentTransferAmount: null
-    toggleState: Inject
+    activeMode: HyposprayInjectMode
     allowedModes:
-    - Inject
+    - HyposprayInjectMode
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
@@ -628,15 +647,13 @@
     exactVolume: true
   - type: Injector
     solutionName: hypospray
-    transferAmounts:
-    - 5
     injectTime: 0
     delayPerVolume: 0
-    toggleState: Dynamic
     injectSound: /Audio/Items/hypospray.ogg
+    activeMode: HyposprayDynamicMode
     allowedModes:
-    - Dynamic
-    - Inject
+    - HyposprayDynamicMode
+    - HyposprayInjectMode
     injectPopupTarget: injector-component-feel-prick-message
     drawTime: 0.75
   - type: UseDelay
