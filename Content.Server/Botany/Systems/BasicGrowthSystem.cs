@@ -156,7 +156,7 @@ public sealed class BasicGrowthSystem : EntitySystem
     /// </summary>
     public void AffectGrowth(Entity<PlantHolderComponent> ent, int amount)
     {
-        if(amount == 0)
+        if (amount == 0)
             return;
 
         var (uid, component) = ent;

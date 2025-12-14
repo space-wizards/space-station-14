@@ -153,9 +153,7 @@ public partial class SeedData
     public SeedData Clone()
     {
         if (Immutable)
-        {
             return this;
-        }
 
         var serializationManager = IoCManager.Resolve<ISerializationManager>();
 

@@ -575,7 +575,7 @@ public sealed class PlantHolderSystem : EntitySystem
             _appearance.SetData(uid, PlantHolderVisuals.HealthLight, false, app);
             _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, false, app);
         }
-        else if(harvest != null && plant != null)
+        else if (harvest != null && plant != null)
         {
             if (component.DrawWarnings)
             {
@@ -610,7 +610,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!component.DrawWarnings)
             return;
 
-        // todo: dehardcode those alert levels.
+        // TODO: dehardcode those alert levels.
         // Not obvious where they go, as plant holder have alerts, sure, but some plants could have
         // very different consumption rates so it would make sense to have different thresholds
         _appearance.SetData(uid, PlantHolderVisuals.WaterLight, component.WaterLevel <= 15, app);

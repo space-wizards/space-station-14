@@ -79,9 +79,7 @@ public sealed class MutationSystem : EntitySystem
     public SeedData Cross(SeedData a, SeedData b)
     {
         if (b.Immutable)
-        {
             return b;
-        }
 
         var result = b.Clone();
 
