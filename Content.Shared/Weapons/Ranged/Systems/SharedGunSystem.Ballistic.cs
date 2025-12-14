@@ -32,7 +32,13 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
 
+        SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, MapInitEvent>(OnBallisticRefillerMapInit);
         SubscribeLocalEvent<BallisticAmmoSelfRefillerComponent, EmpPulseEvent>(OnRefillerEmpPulsed);
+    }
+
+    private void OnBallisticRefillerMapInit(Entity<BallisticAmmoSelfRefillerComponent> entity, ref MapInitEvent args)
+    {
+        entity.Comp.NextAutoRefill = Timing.CurTime + entity.Comp.AutoRefillRate;
     }
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)
@@ -379,11 +385,14 @@ public abstract partial class SharedGunSystem
         var ammo = entity.Comp1;
         var refiller = entity.Comp2;
         if (!refiller.AutoRefill ||
-            IsFull(entity) ||
             Timing.CurTime < refiller.NextAutoRefill)
             return;
 
-        refiller.NextAutoRefill = Timing.CurTime + refiller.AutoRefillRate;
+        refiller.NextAutoRefill += refiller.AutoRefillRate;
+        Dirty(entity, refiller);
+
+        if (IsFull(entity))
+            return;
 
         if (refiller.AmmoProto is not { } refillerAmmoProto)
         {

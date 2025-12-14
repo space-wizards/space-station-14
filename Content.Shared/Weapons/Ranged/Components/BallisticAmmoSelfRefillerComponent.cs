@@ -1,18 +1,21 @@
-﻿using Content.Shared.Weapons.Ranged.Systems;
+﻿using Content.Shared.Power.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
 /// <summary>
-/// This component, analogous to <c>BatterySelfRechargerComponent</c>, will attempt insert ballistic ammunition into
-/// its owner's <see cref="BallisticAmmoProviderComponent"/>.
+/// This component, analogous to <see cref="BatterySelfRechargerComponent"/>, will attempt insert ballistic ammunition
+/// into its owner's <see cref="BallisticAmmoProviderComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause, Access(typeof(SharedGunSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause,
+ Access(typeof(SharedGunSystem))]
 public sealed partial class BallisticAmmoSelfRefillerComponent : Component
 {
     /// <summary>
-    /// Whether or not the refilling behavior is active.
+    /// True if the refilling behavior is active, false otherwise.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool AutoRefill = true;
@@ -21,7 +24,7 @@ public sealed partial class BallisticAmmoSelfRefillerComponent : Component
     /// How often a new piece of ammunition is inserted into the owner's <see cref="BallisticAmmoProviderComponent"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan AutoRefillRate;
+    public TimeSpan AutoRefillRate = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// If true, causes the refilling behavior to be delayed by at least <see cref="AutoRefillPauseDuration"/> after
@@ -53,6 +56,6 @@ public sealed partial class BallisticAmmoSelfRefillerComponent : Component
     /// <summary>
     /// When the next auto refill should occur. This is just implementation state.
     /// </summary>
-    [ViewVariables, AutoNetworkedField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimespanSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextAutoRefill = TimeSpan.Zero;
 }
