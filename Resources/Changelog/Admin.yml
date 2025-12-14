@@ -1542,5 +1542,12 @@ Entries:
   id: 187
   time: '2025-12-14T02:16:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41845
+- author: AshBats
+  changes:
+  - message: The admin log now shows APC power toggle interactions.
+    type: Add
+  id: 188
+  time: '2025-12-14T03:27:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41839
 Name: Admin
 Order: 3
