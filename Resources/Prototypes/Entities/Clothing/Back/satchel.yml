@@ -65,6 +65,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/mime.rsi
+  - type: Storage
+    storageOpenSound: null
+    storageInsertSound: null
 
 - type: entity
   parent: ClothingBackpackSatchel
