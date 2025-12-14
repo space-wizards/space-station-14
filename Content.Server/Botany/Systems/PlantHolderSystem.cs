@@ -174,7 +174,7 @@ public sealed class PlantHolderSystem : EntitySystem
         {
             if (plantHolder.Seed == null)
             {
-                if (!_botany.TryGetSeed(seeds, out var seed))
+                if (!_botany.TryGetSeed(seeds, out var seed) || !BotanySystem.TryGetPlant(seed, out var seedPlant))
                     return;
 
                 args.Handled = true;
@@ -190,11 +190,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 plantHolder.Dead = false;
                 plantHolder.Age = 1;
 
-                var seedPlant = BotanySystem.GetPlantComponent(seed);
-                if (seeds.HealthOverride != null)
-                    plantHolder.Health = seeds.HealthOverride.Value;
-                else if (seedPlant != null)
-                    plantHolder.Health = seedPlant.Endurance;
+                plantHolder.Health = seeds.HealthOverride ?? seedPlant.Endurance;
 
                 plantHolder.LastCycle = _gameTiming.CurTime;
 
@@ -387,14 +383,10 @@ public sealed class PlantHolderSystem : EntitySystem
                 }
             }
             var seed = produce.Seed;
-            if (seed != null)
+            if (seed != null && BotanySystem.TryGetPlant(seed, out var seedPlant))
             {
-                var seedPlant = BotanySystem.GetPlantComponent(seed);
-                if (seedPlant != null)
-                {
-                    var nutrientBonus = seedPlant.Potency / 2.5f;
-                    AdjustNutrient(uid, nutrientBonus, plantHolder);
-                }
+                var nutrientBonus = seedPlant.Potency / 2.5f;
+                AdjustNutrient(uid, nutrientBonus, plantHolder);
             }
             QueueDel(args.Used);
         }
@@ -563,16 +555,18 @@ public sealed class PlantHolderSystem : EntitySystem
             _mutation.MutateSeed(uid, ref component.Seed, severity);
     }
 
-    public void UpdateSprite(EntityUid uid, PlantHolderComponent component)
+    public void UpdateSprite(EntityUid uid, PlantHolderComponent? component = null)
     {
         PlantHarvestComponent? harvest = null;
         PlantComponent? plant = null;
-        Resolve(uid, ref harvest, ref plant, false);
+        Resolve(uid, ref harvest, ref plant, ref component, false);
+
+        if (!TryComp<AppearanceComponent>(uid, out var app)
+            || component == null)
+            return;
+
 
         component.UpdateSpriteAfterUpdate = false;
-
-        if (!TryComp<AppearanceComponent>(uid, out var app))
-            return;
 
         // If no seed, clear visuals regardless of traits.
         if (component.Seed == null)
@@ -581,7 +575,7 @@ public sealed class PlantHolderSystem : EntitySystem
             _appearance.SetData(uid, PlantHolderVisuals.HealthLight, false, app);
             _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, false, app);
         }
-        else if (harvest != null && plant != null)
+        else if(harvest != null && plant != null)
         {
             if (component.DrawWarnings)
             {
@@ -616,6 +610,9 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!component.DrawWarnings)
             return;
 
+        // todo: dehardcode those alert levels.
+        // Not obvious where they go, as plant holder have alerts, sure, but some plants could have
+        // very different consumption rates so it would make sense to have different thresholds
         _appearance.SetData(uid, PlantHolderVisuals.WaterLight, component.WaterLevel <= 15, app);
         _appearance.SetData(uid, PlantHolderVisuals.NutritionLight, component.NutritionLevel <= 8, app);
         _appearance.SetData(uid,

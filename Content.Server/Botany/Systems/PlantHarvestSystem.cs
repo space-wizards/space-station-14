@@ -48,44 +48,46 @@ public sealed class HarvestSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        if (!TryComp(uid, out PlantHolderComponent? holder)
-            || !TryComp(uid, out PlantTraitsComponent? traits))
-            return;
-
-        if (!component.ReadyForHarvest || holder.Dead || holder.Seed == null || !traits.Ligneous)
-            return;
-
-        // Check if sharp tool is required.
-        if (!_botany.CanHarvest(holder.Seed, args.Used))
-        {
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
-            return;
-        }
-
-        // Perform harvest.
-        DoHarvest(ent, args.User);
-    }
-
-    private void OnInteractHand(Entity<PlantHarvestComponent> ent, ref InteractHandEvent args)
-    {
-        var (uid, component) = ent;
-
-        if (!TryComp(uid, out PlantHolderComponent? holder)
-            || !TryComp(uid, out PlantTraitsComponent? traits))
+        if (!TryComp(uid, out PlantTraitsComponent? traits)
+            || !traits.Ligneous
+            || !TryComp(uid, out PlantHolderComponent? holder)
+            || holder.Seed == null)
             return;
 
         if (!component.ReadyForHarvest || holder.Dead || holder.Seed == null)
             return;
 
-        // Check if sharp tool is required.
-        if (traits.Ligneous)
+        var canHarvestUsing = _botany.CanHarvest(holder.Seed, args.Used);
+        HandleInteraction((ent, ent, holder), args.User, !canHarvestUsing);
+    }
+
+    private void OnInteractHand(Entity<PlantHarvestComponent> ent, ref InteractHandEvent args)
+    {
+        if (!TryComp(ent, out PlantHolderComponent? holder)
+            || !TryComp(ent, out PlantTraitsComponent? traits))
+            return;
+
+        HandleInteraction((ent, ent, holder), args.User, traits.Ligneous);
+    }
+
+    private void HandleInteraction(
+        Entity<PlantHarvestComponent, PlantHolderComponent> ent,
+        EntityUid user,
+        bool missingRequiredTool
+    )
+    {
+        if (missingRequiredTool)
         {
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
+            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
             return;
         }
 
+        var (_, harvest, holder) = ent;
+        if (!harvest.ReadyForHarvest || holder.Dead || holder.Seed == null)
+            return;
+
         // Perform harvest.
-        DoHarvest(ent, args.User);
+        DoHarvest(ent, user);
     }
 
     public void DoHarvest(Entity<PlantHarvestComponent> ent, EntityUid user)

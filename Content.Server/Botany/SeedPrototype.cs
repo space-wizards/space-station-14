@@ -79,7 +79,7 @@ public partial class SeedData
     public bool Immutable;
 
     /// <summary>
-    /// If true, there is only a single reference to this seed and it's properties can be directly modified without
+    /// If true, there is only a single reference to this seed and its properties can be directly modified without
     /// needing to clone the seed.
     /// </summary>
     [ViewVariables]
@@ -152,7 +152,11 @@ public partial class SeedData
 
     public SeedData Clone()
     {
-        DebugTools.Assert(!Immutable, "There should be no need to clone an immutable seed.");
+        if (Immutable)
+        {
+            return this;
+        }
+
         var serializationManager = IoCManager.Resolve<ISerializationManager>();
 
         var newSeed = new SeedData

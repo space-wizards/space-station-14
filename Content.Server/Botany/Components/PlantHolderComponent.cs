@@ -163,12 +163,6 @@ public sealed partial class PlantHolderComponent : Component
     public bool ImproperPressure;
 
     /// <summary>
-    /// Not currently used.
-    /// </summary>
-    [DataField]
-    public bool ImproperLight;
-
-    /// <summary>
     /// Set to true to force a plant update (visuals, component, etc.) regardless of the current
     /// update cycle time. Typically used when some interaction affects this plant.
     /// </summary>

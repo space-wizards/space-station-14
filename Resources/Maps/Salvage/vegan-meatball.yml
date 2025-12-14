@@ -488,20 +488,10 @@ entities:
         growthComponents:
           plant:
             lifespan: 75
-            endurance: 100
           basicGrowth:
             waterConsumption: 0.4
-            nutrientConsumption: 0.75
           atmosphericGrowth:
             idealHeat: 298
-            heatTolerance: 10
-            lowPressureTolerance: 81
-            highPressureTolerance: 121
-          weedPestGrowth:
-            weedTolerance: 5
-            pestTolerance: 5
-          toxins:
-            toxinsTolerance: 4
         chemicals:
           THC:
             Inherent: True
@@ -561,20 +551,10 @@ entities:
         growthComponents:
           plant:
             lifespan: 25
-            endurance: 100
           basicGrowth:
             waterConsumption: 0.6
-            nutrientConsumption: 0.75
           atmosphericGrowth:
             idealHeat: 293
-            heatTolerance: 10
-            lowPressureTolerance: 81
-            highPressureTolerance: 121
-          weedPestGrowth:
-            weedTolerance: 5
-            pestTolerance: 5
-          toxins:
-            toxinsTolerance: 4
         chemicals:
           Stellibinin:
             Inherent: True

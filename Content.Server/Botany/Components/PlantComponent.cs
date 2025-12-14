@@ -44,7 +44,7 @@ public sealed partial class PlantComponent : Component
     public int GrowthStages = 6;
 
     /// <summary>
-    /// A scalar for sprite size and chemical quantity on the produce. Caps at 100.
+    /// A scalar for sprite size and chemical solution volume in the produce. Caps at 100.
     /// </summary>
     [DataField]
     public float Potency = 1f;

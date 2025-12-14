@@ -27,6 +27,8 @@ public sealed class ToxinsSystem : EntitySystem
         if (holder.Toxins > component.ToxinsTolerance)
             holder.Health -= toxinUptake;
 
+        // there is a possibility that it will remove more toxin than amount of damage it took on plant health (and killed it).
+        // todo: get min out of health left and toxin uptake - would work better, probably.
         holder.Toxins -= toxinUptake;
 
         if (holder.DrawWarnings)

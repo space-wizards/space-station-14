@@ -31,8 +31,7 @@ public sealed class SeedExtractorSystem : EntitySystem
         if (!_botanySystem.TryGetSeed(produce, out var seed))
             return;
 
-        var traits = BotanySystem.GetPlantTraitsComponent(seed);
-        if (traits?.Seedless == true)
+        if (!BotanySystem.TryGetPlantTraits(seed, out var traits) || traits.Seedless)
         {
             _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User, PopupType.MediumCaution);

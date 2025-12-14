@@ -8,7 +8,7 @@ namespace Content.Server.Botany.Components;
 public sealed partial class UnviableGrowthComponent : Component
 {
     /// <summary>
-    /// Amount of damage dealt to the plant per successful tick with unviable.
+    /// Amount of damage dealt to the plant per growth tick with unviable.
     /// </summary>
     [DataField]
     public float UnviableDamage = 6f;

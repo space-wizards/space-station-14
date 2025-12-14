@@ -11,7 +11,7 @@ public sealed partial class BotanySystem
 
     public void ProduceGrown(EntityUid uid, ProduceComponent produce)
     {
-        if (!TryGetSeed(produce, out var seed))
+        if (!TryGetSeed(produce, out var seed) || !TryGetPlant(seed, out var plant))
             return;
 
         foreach (var mutation in seed.Mutations)
@@ -27,10 +27,6 @@ public sealed partial class BotanySystem
             return;
 
         solutionContainer.RemoveAllSolution();
-
-        var plant = GetPlantComponent(seed);
-        if (plant == null)
-            return;
 
         foreach (var (chem, quantity) in seed.Chemicals)
         {

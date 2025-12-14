@@ -20,7 +20,7 @@ public sealed partial class PlantHarvestComponent : Component
     public bool ReadyForHarvest = false;
 
     /// <summary>
-    /// The last time this plant was harvested.
+    /// The age of the plant when last harvested.
     /// </summary>
     [ViewVariables]
     public int LastHarvest = 0;

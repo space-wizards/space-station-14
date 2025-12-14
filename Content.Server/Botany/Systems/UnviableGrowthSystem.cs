@@ -16,7 +16,9 @@ public sealed class UnviableGrowthSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        if (!TryComp(uid, out PlantHolderComponent? holder))
+        if (!TryComp(uid, out PlantHolderComponent? holder)
+            || !BotanySystem.TryGetPlantTraits(holder.Seed, out var traits)
+            || traits.Viable)
             return;
 
         holder.Health -= component.UnviableDamage;

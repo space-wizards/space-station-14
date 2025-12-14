@@ -68,7 +68,7 @@ public sealed class WeedPestGrowthSystem : EntitySystem
         }
 
         // Handle kudzu transformation.
-        if (component is { Seed: not null, Dead: false }
+        if (component is { Seed: not null }
             && traits.TurnIntoKudzu
             && component.WeedLevel >= weed.WeedHighLevelThreshold)
         {
