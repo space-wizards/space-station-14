@@ -1532,5 +1532,15 @@ Entries:
   id: 186
   time: '2025-11-21T21:53:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41273
+- author: ScarKy0
+  changes:
+  - message: The killsign can now be customized to use any sprite via it's component.
+    type: Add
+  - message: Hidden Kill Sign smite. Visible to everyone but the person you apply
+      it to.
+    type: Add
+  id: 187
+  time: '2025-12-14T02:16:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41845
 Name: Admin
 Order: 3
