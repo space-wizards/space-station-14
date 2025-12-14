@@ -1,6 +1,6 @@
 using Content.Server.Atmos.Components;
-using Content.Shared.Examine;
-using Robust.Shared.Map.Components;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.EntitySystems;
 /// This system handles the adding and removing of entities to a processing list,
 /// as well as any field changes via the API.</para>
 /// </summary>
-public sealed class DeltaPressureSystem : EntitySystem
+public sealed partial class DeltaPressureSystem : SharedDeltaPressureSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
@@ -24,8 +24,6 @@ public sealed class DeltaPressureSystem : EntitySystem
 
         SubscribeLocalEvent<DeltaPressureComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DeltaPressureComponent, ComponentShutdown>(OnComponentShutdown);
-        SubscribeLocalEvent<DeltaPressureComponent, ExaminedEvent>(OnExamined);
-
         SubscribeLocalEvent<DeltaPressureComponent, GridUidChangedEvent>(OnGridChanged);
     }
 
@@ -46,12 +44,6 @@ public sealed class DeltaPressureSystem : EntitySystem
             return;
 
         _atmosphereSystem.TryRemoveDeltaPressureEntity(ent.Comp.GridUid.Value, ent);
-    }
-
-    private void OnExamined(Entity<DeltaPressureComponent> ent, ref ExaminedEvent args)
-    {
-        if (ent.Comp.IsTakingDamage)
-            args.PushMarkup(Loc.GetString("window-taking-damage"));
     }
 
     private void OnGridChanged(Entity<DeltaPressureComponent> ent, ref GridUidChangedEvent args)
