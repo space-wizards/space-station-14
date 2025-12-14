@@ -30,7 +30,7 @@ public sealed class ToolOpenableSystem : EntitySystem
 
     private void OnInteractUsing(Entity<ToolOpenableComponent> entity, ref InteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || entity.Comp.VerbOnly)
             return;
 
         if (TryOpenClose(entity, args.Used, args.User))

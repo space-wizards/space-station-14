@@ -11,6 +11,8 @@ device-frequency-prototype-name-cyborg-control = Cyborg Control
 device-frequency-prototype-name-robotics-console = Robotics Console
 device-frequency-prototype-name-turret = Sentry Turret
 device-frequency-prototype-name-turret-control = Sentry Turret Control
+device-frequency-prototype-name-xenoborg = Xenoborg
+device-frequency-prototype-name-mothership = Mothership
 
 ## camera frequencies
 device-frequency-prototype-name-surveillance-camera-test = Subnet Test

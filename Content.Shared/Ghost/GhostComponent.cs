@@ -4,6 +4,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Ghost;
 
+/// <summary>
+/// Represents an observer ghost.
+/// Handles limiting interactions, using ghost abilities, ghost visibility, and ghost warping.
+/// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGhostSystem))]
 [AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class GhostComponent : Component
@@ -41,46 +45,47 @@ public sealed partial class GhostComponent : Component
 
     // End actions
 
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoPausedField]
+    /// <summary>
+    /// Time at which the player died and created this ghost.
+    /// Used to determine votekick eligibility.
+    /// </summary>
+    /// <remarks>
+    /// May not reflect actual time of death if this entity has been paused,
+    /// but will give an accurate length of time <i>since</i> death.
+    /// </remarks>
+    [DataField, AutoPausedField]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
-    [DataField("booRadius"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Range of the Boo action.
+    /// </summary>
+    [DataField]
     public float BooRadius = 3;
 
-    [DataField("booMaxTargets"), ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Maximum number of entities that can affected by the Boo action.
+    /// </summary>
+    [DataField]
     public int BooMaxTargets = 3;
 
-    // TODO: instead of this funny stuff just give it access and update in system dirtying when needed
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool CanGhostInteract
-    {
-        get => _canGhostInteract;
-        set
-        {
-            if (_canGhostInteract == value) return;
-            _canGhostInteract = value;
-            Dirty();
-        }
-    }
-
+    /// <summary>
+    /// Is this ghost allowed to interact with entities?
+    /// </summary>
+    /// <remarks>
+    /// Used to allow admins ghosts to interact with the world.
+    /// Changed by <see cref="SharedGhostSystem.SetCanGhostInteract"/>.
+    /// </remarks>
     [DataField("canInteract"), AutoNetworkedField]
-    private bool _canGhostInteract;
+    public bool CanGhostInteract;
 
     /// <summary>
-    ///     Changed by <see cref="SharedGhostSystem.SetCanReturnToBody"/>
+    /// Is this ghost player allowed to return to their original body?
     /// </summary>
-    // TODO MIRROR change this to use friend classes when thats merged
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool CanReturnToBody
-    {
-        get => _canReturnToBody;
-        set
-        {
-            if (_canReturnToBody == value) return;
-            _canReturnToBody = value;
-            Dirty();
-        }
-    }
+    /// <remarks>
+    /// Changed by <see cref="SharedGhostSystem.SetCanReturnToBody"/>.
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public bool CanReturnToBody;
 
     /// <summary>
     /// Ghost color
@@ -88,9 +93,6 @@ public sealed partial class GhostComponent : Component
     /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>
     [DataField, AutoNetworkedField]
     public Color Color = Color.White;
-
-    [DataField("canReturnToBody"), AutoNetworkedField]
-    private bool _canReturnToBody;
 }
 
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }

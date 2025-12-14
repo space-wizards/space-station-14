@@ -1,24 +1,26 @@
 - type: entity
+  parent: BaseSuicideAction
   id: DionaGibAction
   name: Gib Yourself!
   description: Split apart into 3 nymphs.
   components:
-  - type: InstantAction
+  - type: Action
     icon:
       sprite: Mobs/Species/Diona/organs.rsi
       state: brain
+  - type: InstantAction
     event: !type:GibActionEvent {}
-    checkCanInteract: false
-    checkConsciousness: false
 
 - type: entity
+  parent: BaseAction
   id: DionaReformAction
   name: Reform
   description: Reform back into a whole Diona.
   components:
-  - type: InstantAction
+  - type: Action
+    useDelay: 600 # Once every 10 minutes. Keep them dead for a fair bit before reforming
     icon:
       sprite: Mobs/Species/Diona/parts.rsi
       state: full
+  - type: InstantAction
     event: !type:ReformEvent {}
-    useDelay: 600 # Once every 10 minutes. Keep them dead for a fair bit before reforming

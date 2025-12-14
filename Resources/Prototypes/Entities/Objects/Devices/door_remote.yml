@@ -11,8 +11,31 @@
     storedRotation: -90
   - type: Access
   - type: DoorRemote
+    options:
+    - mode: OpenClose
+      tooltip: door-remote-open-close-text
+      icon:
+        sprite: /Textures/Structures/Doors/Airlocks/Standard/basic.rsi
+        state: assembly
+    - mode: ToggleBolts
+      tooltip: door-remote-toggle-bolt-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: bolt_door
+    - mode: ToggleEmergencyAccess
+      tooltip: door-remote-emergency-access-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: emergency_on
   - type: StealTarget
     stealGroup: DoorRemote
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.DoorRemoteUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.DoorRemoteUiKey.Key:
+        type: DoorRemoteBoundUserInterface
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -29,6 +52,24 @@
   - type: Access
     groups:
     - Command
+  - type: DoorRemote
+
+- type: entity
+  parent: [DoorRemoteDefault, BaseCommandContraband]
+  id: DoorRemoteCustom
+  name: custom door remote
+  description: A gadget which can open and bolt doors remotely. This advanced variant does not have built-in access, instead inheriting the ID access of the user.
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#0077FF"
+    - state: door_remotescreencolour
+      color: "#0033EE"
+  - type: Access
+  - type: DoorRemote
+    includeUserAccess: true
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -155,6 +196,8 @@
       color: "#2eba22"
     - state: door_remotescreencolour
       color: "#22871a"
+  - type: DoorRemote
+    includeUserAccess: true
   - type: Access
     groups:
     - AllAccess
@@ -162,3 +205,21 @@
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
+    - Wizard
+    - Xenoborg
+
+- type: entity
+  parent: [ DoorRemoteDefault, BaseXenoborgContraband ]
+  id: DoorRemoteXenoborg
+  name: xenoborg door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#2eba22"
+    - state: door_remotescreencolour
+      color: "#22871a"
+  - type: Access
+    tags:
+    - Xenoborg

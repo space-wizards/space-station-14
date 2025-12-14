@@ -13,12 +13,13 @@
     Extinguish:
       methods: [ Touch ]
       effects:
-      - !type:ExtinguishReaction
+      - !type:Extinguish
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
   tileReactions:
   - !type:ExtinguishTileReaction { }
+  - !type:SpillIfPuddlePresentTileReaction { }
 
 - type: reagent
   id: BaseSoda
@@ -37,9 +38,7 @@
   - !type:PlantAdjustHealth
     amount: -0.1
   footstepSound:
-    collection: FootstepSticky
-    params:
-      volume: 6
+    collection: FootstepSlime
   fizziness: 0.5
 
 - type: reagent
@@ -61,7 +60,7 @@
     Flammable:
       methods: [ Touch ]
       effects:
-      - !type:FlammableReaction
+      - !type:Flammable
   tileReactions:
   - !type:FlammableTileReaction
     temperatureMultiplier: 1.35
@@ -77,6 +76,4 @@
   abstract: true
   flavor: sweet
   footstepSound:
-    collection: FootstepSticky
-    params:
-      volume: 6
+    collection: FootstepSlime

@@ -8,6 +8,7 @@ using Content.Shared.Hands;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Polymorph;
+using Content.Shared.Silicons.StationAi;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -34,6 +35,7 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly ISharedAdminManager _adminManager = default!;
 
     private static readonly ProtoId<TagPrototype> ForceableFollowTag = "ForceableFollow";
+    private static readonly ProtoId<TagPrototype> PreventGhostnadoWarpTag = "NotGhostnadoWarpable";
 
     public override void Initialize()
     {
@@ -43,13 +45,13 @@ public sealed class FollowerSystem : EntitySystem
         SubscribeLocalEvent<FollowerComponent, MoveInputEvent>(OnFollowerMove);
         SubscribeLocalEvent<FollowerComponent, PullStartedMessage>(OnPullStarted);
         SubscribeLocalEvent<FollowerComponent, EntityTerminatingEvent>(OnFollowerTerminating);
-        SubscribeLocalEvent<FollowerComponent, AfterAutoHandleStateEvent>(OnAfterHandleState);
 
         SubscribeLocalEvent<FollowedComponent, ComponentGetStateAttemptEvent>(OnFollowedAttempt);
         SubscribeLocalEvent<FollowerComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
         SubscribeLocalEvent<BeforeSerializationEvent>(OnBeforeSave);
         SubscribeLocalEvent<FollowedComponent, PolymorphedEvent>(OnFollowedPolymorphed);
+        SubscribeLocalEvent<FollowedComponent, StationAiRemoteEntityReplacementEvent>(OnFollowedStationAiRemoteEntityReplaced);
     }
 
     private void OnFollowedAttempt(Entity<FollowedComponent> ent, ref ComponentGetStateAttemptEvent args)
@@ -148,11 +150,6 @@ public sealed class FollowerSystem : EntitySystem
         StopFollowingEntity(uid, component.Following, deparent: false);
     }
 
-    private void OnAfterHandleState(Entity<FollowerComponent> entity, ref AfterAutoHandleStateEvent args)
-    {
-        StartFollowingEntity(entity, entity.Comp.Following);
-    }
-
     // Since we parent our observer to the followed entity, we need to detach
     // before they get deleted so that we don't get recursively deleted too.
     private void OnFollowedTerminating(EntityUid uid, FollowedComponent component, ref EntityTerminatingEvent args)
@@ -169,6 +166,17 @@ public sealed class FollowerSystem : EntitySystem
         }
     }
 
+    // TODO: Slartibarfast mentioned that ideally this should be generalized and made part of SetRelay in SharedMoverController.Relay.cs.
+    // This would apply to polymorphed entities as well
+    private void OnFollowedStationAiRemoteEntityReplaced(Entity<FollowedComponent> entity, ref StationAiRemoteEntityReplacementEvent args)
+    {
+        if (args.NewRemoteEntity == null)
+            return;
+
+        foreach (var follower in entity.Comp.Following)
+            StartFollowingEntity(follower, args.NewRemoteEntity.Value);
+    }
+
     /// <summary>
     ///     Makes an entity follow another entity, by parenting to it.
     /// </summary>
@@ -176,6 +184,9 @@ public sealed class FollowerSystem : EntitySystem
     /// <param name="entity">The entity to be followed</param>
     public void StartFollowingEntity(EntityUid follower, EntityUid entity)
     {
+        if (follower == entity || TerminatingOrDeleted(entity))
+            return;
+
         // No recursion for you
         var targetXform = Transform(entity);
         while (targetXform.ParentUid.IsValid())
@@ -310,11 +321,17 @@ public sealed class FollowerSystem : EntitySystem
         var query = EntityQueryEnumerator<FollowerComponent, GhostComponent, ActorComponent>();
         while (query.MoveNext(out _, out var follower, out _, out var actor))
         {
-            // Exclude admins
+            // Don't count admin followers so that players cannot notice if admins are in stealth mode and following someone.
             if (_adminManager.IsAdmin(actor.PlayerSession))
                 continue;
 
             var followed = follower.Following;
+
+            // If the followed entity cannot be ghostnado'd to, we don't count it.
+            // Used for making admins not warpable to, but IsAdmin isn't used for cases where the admin wants to be followed, for example during events.
+            if (_tagSystem.HasTag(followed, PreventGhostnadoWarpTag))
+                continue;
+
             // Add new entry or increment existing
             followedEnts.TryGetValue(followed, out var currentValue);
             followedEnts[followed] = currentValue + 1;

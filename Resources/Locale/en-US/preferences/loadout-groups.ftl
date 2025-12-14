@@ -3,6 +3,7 @@ loadout-group-species-restriction = This item is not available for your current 
 
 # Miscellaneous
 loadout-group-trinkets = Trinkets
+loadout-group-jobtrinkets = Job trinkets
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
@@ -43,6 +44,7 @@ loadout-group-passenger-neck = Passenger neck
 loadout-group-bartender-head = Bartender head
 loadout-group-bartender-jumpsuit = Bartender jumpsuit
 loadout-group-bartender-outerclothing = Bartender outer clothing
+loadout-group-bartender-shaker = Bartender shaker
 
 loadout-group-chef-head = Chef head
 loadout-group-chef-mask = Chef mask
@@ -59,6 +61,7 @@ loadout-group-chaplain-mask = Chaplain mask
 loadout-group-chaplain-jumpsuit = Chaplain jumpsuit
 loadout-group-chaplain-outerclothing = Chaplain outer clothing
 loadout-group-chaplain-neck = Chaplain neck
+loadout-group-chaplain-bible = Holy Book
 
 loadout-group-janitor-head = Janitor head
 loadout-group-janitor-jumpsuit = Janitor jumpsuit
@@ -99,6 +102,7 @@ loadout-group-cargo-technician-jumpsuit = Cargo Technician jumpsuit
 loadout-group-cargo-technician-backpack = Cargo Technician backpack
 loadout-group-cargo-technician-outerclothing = Cargo Technician outer clothing
 loadout-group-cargo-technician-shoes = Cargo Technician shoes
+loadout-group-cargo-technician-id = Cargo Technician ID
 
 loadout-group-salvage-specialist-backpack = Salvage Specialist backpack
 loadout-group-salvage-specialist-outerclothing = Salvage Specialist outer clothing
@@ -197,10 +201,9 @@ loadout-group-paramedic-jumpsuit = Paramedic jumpsuit
 loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-shoes = Paramedic shoes
 
+loadout-group-medical-glasses = Medical glasses
+
 # Wildcards
 loadout-group-reporter-jumpsuit = Reporter jumpsuit
 
 loadout-group-psychologist-jumpsuit = Psychologist jumpsuit
-
-loadout-group-boxer-jumpsuit = Boxer jumpsuit
-loadout-group-boxer-gloves = Boxer gloves

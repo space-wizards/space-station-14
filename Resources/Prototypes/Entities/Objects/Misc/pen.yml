@@ -26,6 +26,20 @@
         maxDistance: 2
   - type: UseDelay
     delay: 1.5
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+          - -0.3,0.1
+          - -0.1,0.3
+          - 0.3,-0.1
+          - 0.1,-0.3
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
 - type: entity
   parent: Pen
@@ -65,7 +79,6 @@
     tags:
     - Write
     - WriteIgnoreStamps
-    - Pickaxe
     - Pen
   - type: MeleeWeapon
     wideAnimationRotation: -45
@@ -90,6 +103,8 @@
     state: overpriced_pen
   - type: Item
     heldPrefix: overpriced_pen
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   name: CentComm pen

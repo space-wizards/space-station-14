@@ -5,12 +5,13 @@ steal-target-groups-clothing-outer-hardsuit-rd = experimental research hardsuit
 steal-target-groups-hand-teleporter = hand teleporter
 steal-target-groups-clothing-shoes-boots-mag-adv = advanced magboots
 steal-target-groups-box-folder-qm-clipboard = requisition digi-board
+steal-target-groups-clothing-hands-knuckledusters-qm = golden knuckledusters
 steal-target-groups-food-meat-corgi = prime-cut corgi meat
 steal-target-groups-captain-id-card = captain ID card
 steal-target-groups-jetpack-captain-filled = captain's jetpack
 steal-target-groups-weapon-antique-laser = antique laser pistol
 steal-target-groups-nuke-disk = nuclear authentication disk
-steal-target-groups-weapon-energy-shot-gun = energy shotgun
+steal-target-groups-weapon-energy-magnum = energy magnum
 
 # Thief Collection
 steal-target-groups-figurines = figurine
@@ -22,6 +23,7 @@ steal-target-groups-encryption-keys = encryption key
 steal-target-groups-technology-disks = technology disk
 steal-target-groups-mail = mail
 steal-target-groups-id-cards = ID Card
+steal-target-groups-officer-handguns = security officer's handgun
 steal-target-groups-lamps = LAMP
 
 # Thief single item
@@ -42,6 +44,8 @@ steal-target-groups-bible = bible
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
 steal-target-groups-wanted-list-cartridge = wanted list cartridge
+steal-target-groups-belt-ce = chief engineer's toolbelt
+steal-target-groups-captain-sword = captain's sabre
 
 # Thief structures
 steal-target-groups-teg = teg generator part
