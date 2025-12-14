@@ -1,176 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Added several new vox customization options, including additional tails,
-      hairstyles, and tattoos.
-    type: Add
-  - message: Added eyeshadow markings. They're available on every species except for
-      Moth and Arachnid.
-    type: Add
-  id: 8771
-  time: '2025-07-14T02:49:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38906
-- author: Trosling
-  changes:
-  - message: Moved Bible/Holy Book choice to loadout options for chaplain.
-    type: Tweak
-  - message: Implemented new holy book sprites, as well as one existing one (space
-      quran).
-    type: Add
-  id: 8772
-  time: '2025-07-15T00:49:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38986
-- author: RedBookcase
-  changes:
-  - message: The Kardashev-Mosin's bayonet can now be used while the weapon is wielded.
-      Tally ho!
-    type: Add
-  id: 8773
-  time: '2025-07-15T00:49:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38295
-- author: SlamBamActionman
-  changes:
-  - message: Throwable item hitboxes have been updated to better reflect their sprites.
-    type: Tweak
-  id: 8774
-  time: '2025-07-15T00:51:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38985
-- author: Velken
-  changes:
-  - message: Moproaches have been added to the game.
-    type: Add
-  - message: Moproaches can sometimes appear from the station's sewage system.
-    type: Add
-  id: 8775
-  time: '2025-07-15T02:47:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38700
-- author: nabegator
-  changes:
-  - message: You can now put remote signallers into utility belts.
-    type: Tweak
-  id: 8776
-  time: '2025-07-16T00:43:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35212
-- author: ArtisticRoomba
-  changes:
-  - message: Firelocks will now properly drop fast enough to prevent the spacing of
-      an entire atmos volume.
-    type: Fix
-  - message: Only the necessary firelocks required to stop a spacing will drop when
-      a spacing is triggered, instead of all firelocks in a spaced volume.
-    type: Fix
-  id: 8777
-  time: '2025-07-16T03:18:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38918
-- author: ScarKy0
-  changes:
-  - message: Wizard's Mjollnir can no longer stun when thrown off-cooldown.
-    type: Fix
-  id: 8778
-  time: '2025-07-16T20:27:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39018
-- author: SlamBamActionman
-  changes:
-  - message: Grilles under diagonal windows no longer electrocute you.
-    type: Fix
-  id: 8779
-  time: '2025-07-17T13:33:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39032
-- author: qwerltaz
-  changes:
-  - message: NPC spiders now spin webs sometimes!
-    type: Add
-  id: 8780
-  time: '2025-07-17T16:34:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38319
-- author: Quantum-cross
-  changes:
-  - message: Anomalies make anomalous noises if you let them go supercritical
-    type: Add
-  id: 8781
-  time: '2025-07-17T17:01:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36425
-- author: ScarKy0
-  changes:
-  - message: There have been major tweaks to the contraband and emag vendor tables.
-      Mainly emagged inventories now only contain syndie flavor items(clothing and
-      similiar), while the rest has either been moved to the contraband inventory
-      or removed.
-    type: Tweak
-  id: 8782
-  time: '2025-07-17T21:36:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36839
-- author: ScarKy0
-  changes:
-  - message: Added the acolyte armor to the chaplain's uplink.
-    type: Add
-  - message: Syndicate bundles are now correctly marked as syndicate contraband.
-    type: Fix
-  id: 8783
-  time: '2025-07-17T22:00:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36843
-- author: SeaWyrm
-  changes:
-  - message: Four varieties of marble tile can now be produced at Cutter lathes.
-    type: Add
-  id: 8784
-  time: '2025-07-17T23:44:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38007
-- author: august-sun
-  changes:
-  - message: Added Estoc magazines to the syndicate ammo bundle.
-    type: Add
-  id: 8785
-  time: '2025-07-18T10:35:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38413
-- author: Kowlin
-  changes:
-  - message: The access configurator can now set GenPop enter and leave accesses on
-      doors and turnstiles.
-    type: Tweak
-  id: 8786
-  time: '2025-07-18T10:53:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39043
-- author: Quantum-cross
-  changes:
-  - message: The bartender's mailing unit on plasma is properly configured.
-    type: Fix
-  id: 8787
-  time: '2025-07-18T10:54:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38098
-- author: Quantum-cross
-  changes:
-  - message: Unwarmed honk pockets no longer contain omnizine
-    type: Fix
-  - message: Honk pockets make you honk
-    type: Fix
-  id: 8788
-  time: '2025-07-18T11:03:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38152
-- author: TeenSarlacc
-  changes:
-  - message: Lowered Double Barrel shotgun spread to 60%.
-    type: Tweak
-  - message: Increased Sawn Off shotgun spread to 140%.
-    type: Tweak
-  id: 8789
-  time: '2025-07-18T11:41:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37731
-- author: notquitehadouken
-  changes:
-  - message: Mass scanner now shows any grid's distance from the current grid/entity
-      in tiles instead of from the top left corner of the UI in pixels
-    type: Fix
-  id: 8790
-  time: '2025-07-18T15:33:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39041
-- author: Pyrovi
-  changes:
-  - message: Changed some outdated info in the guidebook
-    type: Tweak
-  id: 8791
-  time: '2025-07-19T01:41:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38987
 - author: TiniestShark
   changes:
   - message: Adds a new slot for the Golden Plunger on the Janitor Trolley.
@@ -3895,33 +3723,204 @@
   id: 9267
   time: '2025-12-07T20:39:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41748
-- author: ArtisticRoomba
-  changes:
-  - message: On Fland, atomized the LV network for Atmospherics and Telecoms.
-    type: Fix
-  id: 9268
-  time: '2025-12-08T00:35:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41773
-- author: ArtisticRoomba
-  changes:
-  - message: On Oasis, atomized the LV powernet for Chemistry/Medical.
-    type: Fix
-  id: 9269
-  time: '2025-12-08T01:02:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41776
 - author: Princess-Cheeseballs
   changes:
   - message: Bible has been restored to its normal healing rate.
     type: Fix
-  id: 9270
+  id: 9268
   time: '2025-12-08T01:23:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41777
 - author: UpAndLeaves
   changes:
   - message: New players no longer have a chance of being Dionae, Vox, Slime People,
-      or Vulpkanine when joining for the first time. They can still manually select
+      or Vulpkanin when joining for the first time. They can still manually select
       these species.
     type: Tweak
-  id: 9271
+  id: 9269
   time: '2025-12-08T01:49:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41678
+- author: kleinerstation13
+  changes:
+  - message: The Hushpup, a 10 TC silenced shotgun, is now available via the uplink
+      for traitors and nukies.
+    type: Add
+  id: 9270
+  time: '2025-12-08T20:20:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41512
+- author: TiniestShark
+  changes:
+  - message: Gas canisters can now have paper labels attached to them.
+    type: Add
+  id: 9271
+  time: '2025-12-09T09:45:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41737
+- author: ArtisticRoomba
+  changes:
+  - message: The syndicate jaws of life can now pry open bolted doors.
+    type: Tweak
+  - message: The authentication disruptor can now disrupt bolted doors.
+    type: Fix
+  id: 9272
+  time: '2025-12-09T13:03:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41138
+- author: alexalexmax
+  changes:
+  - message: Fixed monkeys(and other mobs) being immune to eye damage when welding
+    type: Fix
+  id: 9273
+  time: '2025-12-09T13:17:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41788
+- author: K-Dynamic
+  changes:
+  - message: Chefs now start with chef shoes instead of black shoes.
+    type: Tweak
+  id: 9274
+  time: '2025-12-10T02:40:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41814
+- author: slarticodefast
+  changes:
+  - message: Fixed rigged power cells immediately exploding when inserted into a device
+      even if it's toggled off.
+    type: Fix
+  id: 9275
+  time: '2025-12-10T10:40:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41813
+- author: jckspjf
+  changes:
+  - message: Escape objectives now properly specify escape via the shuttle rather
+      than escape pods.
+    type: Tweak
+  id: 9276
+  time: '2025-12-10T10:55:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41809
+- author: kontakt
+  changes:
+  - message: Paramedic Void Suit now uses the correct speed reduction when worn again.
+    type: Fix
+  id: 9277
+  time: '2025-12-10T19:04:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41820
+- author: cloudyias
+  changes:
+  - message: Diona are now less harmed by rooting in blood
+    type: Add
+  id: 9278
+  time: '2025-12-12T02:13:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41642
+- author: Princess-Cheeseballs
+  changes:
+  - message: You can no longer detonate or disable borgs with the robotics console.
+    type: Remove
+  id: 9279
+  time: '2025-12-12T10:36:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41834
+- author: alexalexmax
+  changes:
+  - message: The scram implanter now teleports you within a 100 tile radius, as originally
+      intended, and will not teleport you into open space.
+    type: Fix
+  id: 9280
+  time: '2025-12-12T11:27:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41808
+- author: kontakt
+  changes:
+  - message: Potassium Iodide is now sometimes available in radiation lockers.
+    type: Add
+  id: 9281
+  time: '2025-12-12T17:58:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41576
+- author: K-Dynamic
+  changes:
+  - message: Soda Dispenser, Booze Dispenser, and ChemDispenser have had their prices
+      reduced.
+    type: Tweak
+  id: 9282
+  time: '2025-12-13T02:46:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41756
+- author: Absotively
+  changes:
+  - message: Hand labelers can now remove labels via the verb menu whether or not
+      they have a label set.
+    type: Tweak
+  id: 9283
+  time: '2025-12-13T19:13:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40330
+- author: NoreUhh
+  changes:
+  - message: Vulpkanin hair no longer clips through hoods and hardsuits.
+    type: Fix
+  id: 9284
+  time: '2025-12-14T00:55:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41827
+- author: ScarKy0
+  changes:
+  - message: Cyborgs no longer lose access when they run out of power.
+    type: Tweak
+  id: 9285
+  time: '2025-12-14T00:55:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41844
+- author: aada
+  changes:
+  - message: Five cargo bounties have had their worth reduced so you can't make a
+      profit buying crates for them.
+    type: Fix
+  id: 9286
+  time: '2025-12-14T01:39:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41846
+- author: Mehnix
+  changes:
+  - message: Bananas, Mimanas, Corn, Gatfruit, Capfruit, Bungo, and Cherries can now
+      be butchered to get their waste product in addition to being eaten.
+    type: Add
+  id: 9287
+  time: '2025-12-14T02:30:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36786
+- author: Borsh
+  changes:
+  - message: Added random gate
+    type: Add
+  id: 9288
+  time: '2025-12-14T19:27:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41627
+- author: Hitlinemoss
+  changes:
+  - message: All shotgun shells (and associated ammo boxes / magazines) now have proper
+      descriptions.
+    type: Fix
+  - message: Machine pistol magazines are now considered Security contraband.
+    type: Fix
+  - message: Practice machine pistol magazines are no longer loaded with real bullets.
+    type: Fix
+  id: 9289
+  time: '2025-12-14T20:27:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41841
+- author: Hitlinemoss
+  changes:
+  - message: Skeletons are now vulnerable to Holy damage from sources such as the
+      space bible or holy water.
+    type: Add
+  id: 9290
+  time: '2025-12-14T20:41:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41757
+- author: Red_Spy
+  changes:
+  - message: The chamber is now empty by default for weapons with a removable magazine.
+    type: Tweak
+  id: 9291
+  time: '2025-12-14T20:55:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41791
+- author: aada
+  changes:
+  - message: Maintenance closets have more toys in them.
+    type: Tweak
+  - message: The toy box crate now has random contents.
+    type: Tweak
+  - message: The roller skate bounty now only requires 1 pair of roller skates but
+      gives less money
+    type: Tweak
+  - message: The syndicate balloon, syndicate tricky bomb, foam rifle, and golden
+      bike horn all had their value reduced
+    type: Tweak
+  id: 9292
+  time: '2025-12-14T20:56:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41840

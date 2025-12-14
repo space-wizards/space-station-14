@@ -754,3 +754,8 @@ GlowstickBase: GlowstickGreen
 # 2025-12-06
 SpawnPointZookeeper: null
 SpawnPointBoxer: null
+
+# 2025-12-07
+FigureSpawner: MechFigurineSpawner50
+ToySpawner: PlushieSpawner50
+SpacemenFigureSpawner: SpacemenFigurineSpawner90

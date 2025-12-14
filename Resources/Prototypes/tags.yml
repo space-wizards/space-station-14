@@ -1398,6 +1398,9 @@
   id: Taser # Storage whitelist: ClothingBeltSecurity
 
 - type: Tag
+  id: TheaterBagel # used for Bagel Station's randomized theater
+
+- type: Tag
   id: TimerBrigElectronics # ConstructionGraph: Timer
 
 - type: Tag
