@@ -344,7 +344,7 @@
   - type: Item
     sprite: Objects/Fun/Balloons/syndicate.rsi
   - type: StaticPrice
-    price: 5000 # Entertainment.
+    price: 100 # Entertainment.
 
 - type: entity
   parent: BaseBalloon
