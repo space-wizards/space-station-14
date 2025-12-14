@@ -40,7 +40,7 @@ uplink-explosive-grenade-name = Explosive Grenade
 uplink-explosive-grenade-desc = A simplistic grenade with a 3.5 second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
 
 uplink-flash-grenade-name = Flashbang
-uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and slowing down anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
+uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
 
 uplink-smoke-grenade-name = Smoke Grenade
 uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke for 30 seconds, perfect for killing someone in the shadows or making a sneaky getaway.
