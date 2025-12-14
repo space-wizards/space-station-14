@@ -140,7 +140,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
     private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
     {
-        ClearInjectingSolution(cryoPod);
+        ClearInjectionBuffer(cryoPod);
         UpdateUi(cryoPod);
     }
 
@@ -150,7 +150,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
             return;
 
         _uiSystem.CloseUi(cryoPod.Owner, CryoPodUiKey.Key, args.Entity);
-        ClearInjectingSolution(cryoPod);
+        ClearInjectionBuffer(cryoPod);
         UpdateUi(cryoPod);
     }
 
@@ -173,21 +173,21 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                 out _)
             || !_solutionContainer.TryGetSolution(
                 (cryoPod.Owner, podSolutionManager),
-                CryoPodComponent.InjectingSolutionName,
-                out var injectingSolutionComp,
-                out var injectingSolution))
+                CryoPodComponent.InjectionBufferSolutionName,
+                out var injectionSolutionComp,
+                out var injectionSolution))
         {
             return;
         }
 
         // Try to transfer 5u from the beaker to the injection buffer.
-        if (injectingSolution.AvailableVolume < 1)
+        if (injectionSolution.AvailableVolume < 1)
             return;
 
         var transferAmount = FixedPoint2.New(5);
-        var amountToTransfer = FixedPoint2.Min(transferAmount, injectingSolution.AvailableVolume);
+        var amountToTransfer = FixedPoint2.Min(transferAmount, injectionSolution.AvailableVolume);
         var solution = _solutionContainer.SplitSolution(beakerSolution.Value, amountToTransfer);
-        _solutionContainer.TryAddSolution(injectingSolutionComp.Value, solution);
+        _solutionContainer.TryAddSolution(injectionSolutionComp.Value, solution);
 
         UpdateUi(cryoPod);
     }
@@ -200,7 +200,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
             || !_solutionContainerQuery.TryComp(entity, out var podSolutionManager)
             || !_solutionContainer.TryGetSolution(
                 (entity.Owner, podSolutionManager),
-                CryoPodComponent.InjectingSolutionName,
+                CryoPodComponent.InjectionBufferSolutionName,
                 out var injectingSolution,
                 out _)
             || !_bloodstreamQuery.TryComp(patient, out var bloodstream))
@@ -218,12 +218,12 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         }
     }
 
-    private void ClearInjectingSolution(Entity<CryoPodComponent> cryoPod)
+    private void ClearInjectionBuffer(Entity<CryoPodComponent> cryoPod)
     {
         if (_solutionContainerQuery.TryComp(cryoPod, out var podSolutionManager)
             && _solutionContainer.TryGetSolution(
                 (cryoPod.Owner, podSolutionManager),
-                CryoPodComponent.InjectingSolutionName,
+                CryoPodComponent.InjectionBufferSolutionName,
                 out var injectingSolution,
                 out _))
         {
@@ -282,7 +282,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         if (!_solutionContainerQuery.TryComp(entity, out var solutionManager)
             || !_solutionContainer.TryGetSolution(
                 (entity.Owner, solutionManager),
-                CryoPodComponent.InjectingSolutionName,
+                CryoPodComponent.InjectionBufferSolutionName,
                 out var injectingSolution,
                 out _))
             return null;

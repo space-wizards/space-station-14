@@ -27,7 +27,7 @@ public sealed partial class CryoPodComponent : Component
     /// <summary>
     /// The name of the solution container for the injection chamber.
     /// </summary>
-    public const string InjectingSolutionName = "injectionBuffer";
+    public const string InjectionBufferSolutionName = "injectionBuffer";
 
     /// <summary>
     /// Specifies the name of the atmospherics port to draw gas from.
