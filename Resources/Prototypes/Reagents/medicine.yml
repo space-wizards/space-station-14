@@ -1309,7 +1309,7 @@
   - !type:PlantAdjustHealth
     amount: 5
   - !type:PlantResurrect
-    minScale: 9
+    minScale: 4
   metabolisms:
     Medicine:
       effects:
