@@ -2,7 +2,7 @@
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// This component, analogous to <see cref="BatterySelfRechargerComponent"/>, will attempt insert ballistic ammunition
 /// into its owner's <see cref="BallisticAmmoProviderComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause,
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause,
  Access(typeof(SharedGunSystem))]
 public sealed partial class BallisticAmmoSelfRefillerComponent : Component
 {
@@ -56,6 +56,6 @@ public sealed partial class BallisticAmmoSelfRefillerComponent : Component
     /// <summary>
     /// When the next auto refill should occur. This is just implementation state.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimespanSerializer)), AutoNetworkedField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextAutoRefill = TimeSpan.Zero;
 }

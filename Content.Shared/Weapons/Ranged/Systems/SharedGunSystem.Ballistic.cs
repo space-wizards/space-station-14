@@ -291,7 +291,7 @@ public abstract partial class SharedGunSystem
         if (nextRefillByPause > entity.Comp.NextAutoRefill)
         {
             entity.Comp.NextAutoRefill = nextRefillByPause;
-            Dirty(entity);
+            DirtyField(entity.AsNullable(), nameof(BallisticAmmoSelfRefillerComponent.NextAutoRefill));
         }
     }
 
@@ -389,7 +389,7 @@ public abstract partial class SharedGunSystem
             return;
 
         refiller.NextAutoRefill += refiller.AutoRefillRate;
-        Dirty(entity, refiller);
+        DirtyField(entity, refiller, nameof(BallisticAmmoSelfRefillerComponent.NextAutoRefill));
 
         if (IsFull(entity))
             return;
@@ -422,11 +422,8 @@ public abstract partial class SharedGunSystem
                 PredictedQueueDel(ammoEntity);
                 Log.Error(
                     $"Failed to insert ammo {ammoEntity} into non-full {entity}. This is a configuration error. Is the {nameof(BallisticAmmoSelfRefillerComponent)}'s {nameof(BallisticAmmoSelfRefillerComponent.AmmoProto)} incorrect for the {nameof(BallisticAmmoProviderComponent)}'s {nameof(BallisticAmmoProviderComponent.Whitelist)}?");
-                return;
             }
         }
-
-        Dirty(entity);
     }
 }
 
