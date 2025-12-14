@@ -1,10 +1,12 @@
-using Content.Shared.Construction.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Ghost;
 using Content.Shared.Interaction;
 using Content.Shared.Materials;
+using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
@@ -78,11 +80,16 @@ public abstract class SharedFlatpackSystem : EntitySystem
 
         var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
         var coords = _map.ToCenterCoordinates(grid, buildPos);
+        var intersecting = _entityLookup.GetEntitiesIntersecting(coords, LookupFlags.Dynamic | LookupFlags.Static);
 
-        // TODO FLATPAK
-        // Make this logic smarter. This should eventually allow for shit like building microwaves on tables and such.
-        // Also: make it ignore ghosts
-        if (_entityLookup.AnyEntitiesIntersecting(coords, LookupFlags.Dynamic | LookupFlags.Static))
+        foreach (var i in intersecting)
+        {
+            if (HasComp<GhostComponent>(i) ||
+                comp.CanUnpackOnTable && HasComp<PlaceableSurfaceComponent>(i))
+                intersecting.Remove(i);
+        }
+
+        if (intersecting.Count != 0)
         {
             // this popup is on the server because the predicts on the intersection is crazy
             if (_net.IsServer)

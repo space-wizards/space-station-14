@@ -232,6 +232,7 @@
     - state: fax-machine
   - type: Flatpack
     entity: FaxMachineBase
+    canUnpackOnTable: true
 
 - type: entity
   parent: BaseFlatpack
