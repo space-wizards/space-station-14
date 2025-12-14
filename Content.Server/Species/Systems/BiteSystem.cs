@@ -1,3 +1,4 @@
+// SPDX-FileCopyrightText: 2025 Drywink <43855731+Drywink@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Drywink <hugogrethen@gmail.com>
 //
 // SPDX-License-Identifier: MIT
@@ -8,6 +9,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Species;
 using Robust.Shared.Player;
@@ -18,6 +20,7 @@ public sealed class BiteSystem : SharedBiteSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private readonly HungerSystem _hunger = default!;
 
     public override void Initialize()
     {
@@ -33,6 +36,17 @@ public sealed class BiteSystem : SharedBiteSystem
 
         var target = args.Target;
         var user = args.Performer;
+
+        // Check if entity has enough hunger to perform the action
+        if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(user, out var hungerComp))
+        {
+            var currentHunger = _hunger.GetHunger(hungerComp);
+            if (currentHunger < component.HungerCost)
+            {
+                _popup.PopupEntity(Loc.GetString("bite-component-insufficient-hunger"), user, user);
+                return;
+            }
+        }
 
         // Check if target has an injectable solution
         if (!_solution.TryGetInjectableSolution(target, out var targetSolution, out var _))
@@ -63,6 +77,12 @@ public sealed class BiteSystem : SharedBiteSystem
         // Notify the target
         _popup.PopupEntity(Loc.GetString("bite-component-bitten-message",
             ("user", Identity.Entity(user, EntityManager))), target, target, PopupType.MediumCaution);
+
+        // Consume hunger after successful bite
+        if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(user, out var hunger))
+        {
+            _hunger.ModifyHunger(user, -component.HungerCost);
+        }
 
         args.Handled = true;
     }
