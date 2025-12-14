@@ -1,6 +1,7 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.DeviceNetwork.Systems
 {
@@ -18,8 +19,8 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
-            // If either of the entities transferring packets are the pondering orb, let it send the packets
-            if (MetaData(uid).EntityName == "pondering orb" || (MetaData(args.Sender)).EntityName == "pondering orb")
+            // If either of the entities transferring packets have the ConnectsOffGrid component, let it send the packets
+            if (component.ConnectsOffGrid || Comp<WiredNetworkComponent>(args.Sender).ConnectsOffGrid)
                 return;
 
             // If they're not on the same grid, cancel the packet transfer 

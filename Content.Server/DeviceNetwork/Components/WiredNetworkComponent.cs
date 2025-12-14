@@ -4,5 +4,8 @@ namespace Content.Server.DeviceNetwork.Components
     [ComponentProtoName("WiredNetworkConnection")]
     public sealed partial class WiredNetworkComponent : Component
     {
+        [ViewVariables]
+        [DataField]
+        public bool ConnectsOffGrid;
     }
 }
