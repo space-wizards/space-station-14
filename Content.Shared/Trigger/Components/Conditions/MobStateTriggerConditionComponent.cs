@@ -11,8 +11,8 @@ namespace Content.Shared.Trigger.Components.Conditions;
 public sealed partial class MobStateTriggerConditionComponent : BaseTriggerConditionComponent
 {
     /// <summary>
-    /// If the user is in this mob state, the trigger will cancel.
-    /// If <see cref="Invert"/> is true, checks if the user is any condition other than this.
+    /// If the user is in this mob state, the trigger won't cancel.
+    /// If <see cref="Invert"/> is true, this mob state will cause the trigger to cancel instead.
     /// </summary>
     [DataField, AutoNetworkedField]
     public MobState MobState = MobState.Alive;
