@@ -39,7 +39,7 @@ public sealed class KillSignSystem : EntitySystem
     private void AddKillsign(Entity<KillSignComponent> ent)
     {
         // If we hide from owner and we ARE the owner, don't add a killsign.
-        // This could be used for manual networking, to FULLY hide it. But I am too lazy right now.
+        // This could use session specific networking to FULLY hide it, but I am too lazy right now.
         if (ent.Comp.HideFromOwner && _player.LocalEntity == ent)
             return;
 

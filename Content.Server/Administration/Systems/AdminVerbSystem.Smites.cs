@@ -599,7 +599,6 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(hiddenKillSign);
 
-
             var cluwneName = Loc.GetString("admin-smite-cluwne-name").ToLowerInvariant();
             Verb cluwne = new()
             {

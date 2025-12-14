@@ -8,17 +8,17 @@ namespace Content.Shared.Administration.Components;
 /// Displays a sprite above an entity.
 /// By default a huge sign saying "KILL".
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
 public sealed partial class KillSignComponent : Component
 {
     /// <summary>
-    /// The sprite to on the entity.
+    /// The sprite show above the entity.
     /// </summary>
     [DataField, AutoNetworkedField]
     public SpriteSpecifier? Sprite = new SpriteSpecifier.Rsi(new ResPath("Objects/Misc/killsign.rsi"), "kill");
 
     /// <summary>
-    /// Whether the granted layer should always be forced to unshaded.
+    /// Whether the granted layer should always be forced to be unshaded.
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool ForceUnshaded = true;
@@ -39,5 +39,5 @@ public sealed partial class KillSignComponent : Component
     /// The scale of the sprite.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Vector2 Scale =  Vector2.One;
+    public Vector2 Scale = Vector2.One;
 }
