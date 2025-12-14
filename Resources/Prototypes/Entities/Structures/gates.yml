@@ -300,8 +300,8 @@
   components:
   - type: Sprite
     layers:
-      - state: base
-      - state: random_gate
+    - state: base
+    - state: random_gate
   - type: RandomGate
   - type: DeviceLinkSink
     ports:
