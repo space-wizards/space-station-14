@@ -25,6 +25,13 @@
   id: SecurityIconSearch
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
+    state: hud_search
+
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconSuspicious
+  icon:
+    sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_suspected
 
 - type: securityIcon

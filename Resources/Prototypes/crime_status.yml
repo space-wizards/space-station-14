@@ -1,4 +1,14 @@
 - type: securityStatus
+  id: SecurityStatusSuspicious
+  order: 0
+  name: criminal-records-status-sus
+  icon: SecurityIconSuspicious
+  statusSetAnnouncement: criminal-records-console-sus
+  statusUnSetAnnouncement: criminal-records-console-not-sus
+  needsReason: true
+  reasonText: criminal-records-console-sus-reason
+
+- type: securityStatus
   id: SecurityStatusSearch
   order: 0
   name: criminal-records-status-search

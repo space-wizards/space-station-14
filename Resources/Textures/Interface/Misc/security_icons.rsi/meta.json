@@ -20,6 +20,9 @@
       "name": "hud_suspected"
     },
     {
+      "name": "hud_search"
+    },
+    {
       "name": "hud_wanted"
     },
     {

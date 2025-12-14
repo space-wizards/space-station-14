@@ -15,11 +15,13 @@ criminal-records-status-wanted = Wanted
 criminal-records-status-detained = Detained
 criminal-records-status-discharged = Discharged
 criminal-records-status-search = Search
+criminal-records-status-sus = Suspicious
 criminal-records-status-hostile = Hostile
 criminal-records-status-eliminated = Eliminated
 
 criminal-records-console-wanted-reason = Wanted Reason
 criminal-records-console-hostile-reason = Hostile Reason
+criminal-records-console-sus-reason = Suspicious Reason
 criminal-records-console-search-reason = Search Reason
 criminal-records-console-reason = Reason
 criminal-records-console-reason-placeholder = For example: {$placeholder}
@@ -36,6 +38,8 @@ criminal-records-permission-denied = Permission denied
 
 ## Security channel notifications
 
+criminal-records-console-sus = {$name} ({$job}) was marked as suspicious by {$officer} because of: {$reason}.
+criminal-records-console-not-sus = {$name} ({$job}) was cleared of suspicion by {$officer}.
 criminal-records-console-wanted = {$name} ({$job}) was made wanted by {$officer} for: {$reason}.
 criminal-records-console-not-wanted = {$officer} cleared the wanted status of {$name} ({$job}).
 criminal-records-console-search = {$officer} has requested a search of {$name} ({$job}) because of: {$reason}.
