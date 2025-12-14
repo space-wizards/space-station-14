@@ -7,7 +7,6 @@ namespace Content.Client.DeviceLinking.UI;
 [UsedImplicitly]
 public sealed class RandomGateBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     private RandomGateSetupWindow? _window;
 
     public RandomGateBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
