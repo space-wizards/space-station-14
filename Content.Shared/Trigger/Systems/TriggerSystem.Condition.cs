@@ -94,12 +94,12 @@ public sealed partial class TriggerSystem
         {
             if (!_mind.TryGetMind(ent.Owner, out var entMindId, out var entMindComp))
             {
-                args.Cancelled |= true; // the entity has no mind
+                args.Cancelled = true; // the entity has no mind
                 return;
             }
             if (!_role.MindHasRole((entMindId, entMindComp), ent.Comp.EntityWhitelist))
             {
-                args.Cancelled |= true; // the entity does not have the required role
+                args.Cancelled = true; // the entity does not have the required role
                 return;
             }
         }
@@ -108,12 +108,12 @@ public sealed partial class TriggerSystem
         {
             if (args.User == null || !_mind.TryGetMind(args.User.Value, out var userMindId, out var userMindComp))
             {
-                args.Cancelled |= true; // no user or the user has no mind
+                args.Cancelled = true; // no user or the user has no mind
                 return;
             }
             if (!_role.MindHasRole((userMindId, userMindComp), ent.Comp.UserWhitelist))
             {
-                args.Cancelled |= true; // the user does not have the required role
+                args.Cancelled = true; // the user does not have the required role
             }
         }
     }
@@ -125,7 +125,7 @@ public sealed partial class TriggerSystem
 
         if (!TryComp<MobStateComponent>(args.User, out var mobState))
         {
-            args.Cancelled |= true; // If the user has no MobState, no way they can pass the condition.
+            args.Cancelled = true; // If the user has no MobState, no way they can pass the condition.
             return;
         }
 
@@ -146,7 +146,7 @@ public sealed partial class TriggerSystem
 
         if (ent.Comp.Invert)
             cancel = !cancel;
-        
+
         args.Cancelled |= cancel;
     }
 }
