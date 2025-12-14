@@ -10,7 +10,7 @@
 
 - type: securityStatus
   id: SecurityStatusSearch
-  order: 0
+  order: 1
   name: criminal-records-status-search
   icon: SecurityIconSearch
   statusSetAnnouncement: criminal-records-console-search
@@ -20,7 +20,7 @@
 
 - type: securityStatus
   id: SecurityStatusWanted
-  order: 1
+  order: 2
   name: criminal-records-status-wanted
   icon: SecurityIconWanted
   statusSetAnnouncement: criminal-records-console-wanted
@@ -30,7 +30,7 @@
 
 - type: securityStatus
   id: SecurityStatusHostile
-  order: 2
+  order: 3
   name: criminal-records-status-hostile
   icon: SecurityIconHostile
   statusSetAnnouncement: criminal-records-console-hostile
@@ -40,7 +40,7 @@
 
 - type: securityStatus
   id: SecurityStatusDetained
-  order: 3
+  order: 4
   name: criminal-records-status-detained
   icon: SecurityIconIncarcerated
   statusSetAnnouncement: criminal-records-console-detained
@@ -50,7 +50,7 @@
 
 - type: securityStatus
   id: SecurityStatusEliminated
-  order: 4
+  order: 5
   name: criminal-records-status-eliminated
   icon: SecurityIconEliminated
   statusSetAnnouncement: criminal-records-console-eliminated
@@ -60,7 +60,7 @@
 
 - type: securityStatus
   id: SecurityStatusDischarged
-  order: 5
+  order: 6
   name: criminal-records-status-discharged
   icon: SecurityIconDischarged
   statusSetAnnouncement: criminal-records-console-discharged
