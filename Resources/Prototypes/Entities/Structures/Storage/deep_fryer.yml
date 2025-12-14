@@ -1,0 +1,72 @@
+- type: entity
+  id: DeepFryer
+  parent: BaseMachinePowered
+  name: deep fryer
+  description: The great greasy enabler of all things fast food. Somehow, using this never seems to end well...
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/morgue.rsi
+    layers:
+    - state: crema_closed
+      map: ["enum.CrematoriumVisualLayers.Base", "enum.StorageVisualLayers.Base"]
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: EntityStorage
+    openOnMove: false  
+    isCollidableWhenOpen: true
+    showContents: false
+    capacity: 1
+    airtight: true
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
+  - type: EntityStorageLayingDownOverride
+  - type: DeepFryer
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: crema_closed
+    stateBaseOpen: crema_open
+  - type: Transform
+    anchored: true
+  - type: Climbable
+    delay: 1
+  - type: AmbientSound
+    enabled: false
+    volume: -5
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/reclaimer_ambience.ogg
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: SolutionContainerManager
+    solutions:
+      drink: # This solution name and target volume is hard-coded in a lot of places
+        maxVol: 300
+  - type: MixableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: ExaminableSolution
+    solution: drink
+    exactVolume: true
+  - type: DrawableSolution
+    solution: drink
