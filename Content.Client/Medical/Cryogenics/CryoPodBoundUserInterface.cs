@@ -39,10 +39,7 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)
     {
-        if (_window == null)
-            return;
-
-        if (message is CryoPodUserMessage cryoMsg)
+        if (_window != null && message is CryoPodUserMessage cryoMsg)
         {
             _window.Populate(cryoMsg);
         }
