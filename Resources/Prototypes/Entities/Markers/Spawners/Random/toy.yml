@@ -240,8 +240,11 @@
       - id: SnapPopBox
       - id: BoxDarts
       - id: GrenadeFoamDart
-      - id: GrenadeDummy
-#      - id: SyndieTrickyBomb # Inflates the possible price of the table
+      - !type:GroupSelector # REAL fake grenades
+        weight: 0.05 # 2 in 186. Rare in order to not spoil the surprise
+        children:
+        - id: GrenadeDummy
+        - id: SyndieTrickyBomb
     - !type:GroupSelector # Guns type group
       children:
       - id: WeaponStickyHand
@@ -280,7 +283,7 @@
       - id: BoxCartridgeCap
 
 # A group of items with fun or unique properties. Highly varied (some are more fun than others)
-- type: entityTable # size 3x3  # price 98
+- type: entityTable # size 3x3  # price 100
   id: AllMiscToysTable
   table: !type:GroupSelector
     children:
@@ -305,9 +308,9 @@
     - !type:GroupSelector # Ballons
       children:
       - id: BalloonNT
-        weight: 3 # NT bias
+        weight: 5 # NT bias
       - id: BalloonCorgi
-#      - id: BalloonSyn # Inflates the possible price of the table
+      - id: BalloonSyn
     - !type:GroupSelector # Sports ball
       children:
       - id: Basketball
@@ -320,18 +323,17 @@
       - id: PersonalAI
         weight: 8
       - id: PotatoAI
-#      - id: SyndicatePersonalAI # Inflates the possible price of the table
       - id: GoldenPersonalAI
-        weight: 0.01 # 1 in 16,000
+        weight: 0.1 # 1 in 1,456. A truly rare item
     - !type:GroupSelector # Orbs of "power"
-      weight: 0.01 # 1 in 1,600
+      weight: 0.05 # 1 in 320
       children:
       - id: SingularityToy
       - id: TeslaToy
       - id: PonderingOrb
 
 # Entities that don't do much more than make a unique sound. Plushies excluded.
-- type: entityTable # size 1x2  # price 5
+- type: entityTable # size 1x2  # price 100
   id: AllToySoundMakerTable
   table: !type:GroupSelector
     children:
@@ -347,12 +349,14 @@
     - !type:GroupSelector
       children:
       - id: Whistle
+        weight: 5
       - id: SecurityWhistle
       - id: SyndicateWhistle
+        weight: 0.5 # 1 in 143
     - !type:NestedSelector # The original
       tableId: RandomBikeHornTable
 
-- type: entityTable # size 1x2
+- type: entityTable # size 1x2  # price 100
   id: RandomBikeHornTable
   table: !type:GroupSelector
     children:
@@ -363,7 +367,7 @@
       - id: CluwneHorn # you lose, clown >:o)
       - id: BananiumHorn
       - id: PushHorn
-#      - id: GoldenBikeHorn # inflates the price of the table
+      - id: GoldenBikeHorn
 
 - type: entityTable # size 1x1
   id: AllCrayonsTable
@@ -379,8 +383,6 @@
     - id: CrayonGreen
     - id: CrayonBlue
     - id: CrayonPurple
-#    - id: CrayonBox # Breaks size expectations for the table. Consider adding this if size isn't relevant.
-#      weight: 0.5 # 1 in 20
 
 ## Spawners ##
 

@@ -157,7 +157,7 @@
       map: ["screen"]
   - type: Appearance
   - type: StaticPrice
-    price: 5000
+    price: 100 # It's a shame to sell a rare ghost role
 
 - type: entity
   parent: PersonalAI
