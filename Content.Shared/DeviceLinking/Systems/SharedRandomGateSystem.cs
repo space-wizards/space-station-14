@@ -13,22 +13,23 @@ public abstract class SharedRandomGateSystem : EntitySystem
         SubscribeLocalEvent<RandomGateComponent, RandomGateProbabilityChangedMessage>(OnProbabilityChanged);
     }
 
-    private void OnAfterActivatableUIOpen(EntityUid uid, RandomGateComponent component, AfterActivatableUIOpenEvent args)
+    private void OnAfterActivatableUIOpen(Entity<RandomGateComponent> ent, ref AfterActivatableUIOpenEvent args)
     {
-        UpdateUI(uid, component);
+        UpdateUI(ent);
     }
 
-    private void OnProbabilityChanged(EntityUid uid, RandomGateComponent component, RandomGateProbabilityChangedMessage args)
+    private void OnProbabilityChanged(Entity<RandomGateComponent> ent, ref RandomGateProbabilityChangedMessage args)
     {
-        component.SuccessProbability = Math.Clamp(args.Probability, 0f, 100f) / 100f;
-        UpdateUI(uid, component);
+        ent.Comp.SuccessProbability = Math.Clamp(args.Probability, 0f, 100f) / 100f;
+        Dirty(ent);
+        UpdateUI(ent);
     }
 
-    private void UpdateUI(EntityUid uid, RandomGateComponent component)
+    private void UpdateUI(Entity<RandomGateComponent> ent)
     {
-        if (!_ui.HasUi(uid, RandomGateUiKey.Key))
+        if (!_ui.HasUi(ent.Owner, RandomGateUiKey.Key))
             return;
 
-        _ui.SetUiState(uid, RandomGateUiKey.Key, new RandomGateBoundUserInterfaceState(component.SuccessProbability));
+        _ui.SetUiState(ent.Owner, RandomGateUiKey.Key, new RandomGateBoundUserInterfaceState(ent.Comp.SuccessProbability));
     }
 }

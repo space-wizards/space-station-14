@@ -23,7 +23,7 @@ public sealed class RandomGateBoundUserInterface : BoundUserInterface
         if (!float.TryParse(value, out var probability))
             return;
 
-        SendMessage(new RandomGateProbabilityChangedMessage(probability));
+        SendPredictedMessage(new RandomGateProbabilityChangedMessage(probability));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

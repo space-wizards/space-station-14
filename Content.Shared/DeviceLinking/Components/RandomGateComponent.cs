@@ -1,12 +1,12 @@
 using Robust.Shared.Prototypes;
-using System.ComponentModel.DataAnnotations;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.DeviceLinking.Components;
 
 /// <summary>
 /// A component for a random gate, which outputs a signal with a given probability.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RandomGateComponent : Component
 {
     /// <summary>
@@ -24,12 +24,12 @@ public sealed partial class RandomGateComponent : Component
     /// <summary>
     /// The last output state of the gate.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool LastOutput;
 
     /// <summary>
     /// The probability (0.0 to 1.0) that the gate will output a signal.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float SuccessProbability = 0.5f;
 }
