@@ -1308,6 +1308,8 @@
     amount: -5
   - !type:PlantAdjustHealth
     amount: 5
+  - !type:PlantCryoxadone
+    probability: 0.5
   - !type:PlantResurrect
     minScale: 4
   metabolisms:

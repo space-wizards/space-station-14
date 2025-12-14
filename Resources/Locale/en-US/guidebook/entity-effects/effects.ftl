@@ -519,8 +519,8 @@ entity-effect-guidebook-plant-mutate-chemicals =
         *[other] mutate
     } a plant to produce {$name}
 
-entity-effect-guidebook-plant-resurrect = 
+entity-effect-guidebook-plant-resurrect =
     { $chance ->
         [1] Revives
-        *[other] revives 
+        *[other] revive
     } a plant from a dead state
