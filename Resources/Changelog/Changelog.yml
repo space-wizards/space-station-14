@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Added the acolyte armor to the chaplain's uplink.
-    type: Add
-  - message: Syndicate bundles are now correctly marked as syndicate contraband.
-    type: Fix
-  id: 8783
-  time: '2025-07-17T22:00:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36843
-- author: SeaWyrm
-  changes:
-  - message: Four varieties of marble tile can now be produced at Cutter lathes.
-    type: Add
-  id: 8784
-  time: '2025-07-17T23:44:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38007
 - author: august-sun
   changes:
   - message: Added Estoc magazines to the syndicate ammo bundle.
@@ -3916,3 +3900,17 @@
   id: 9283
   time: '2025-12-13T19:13:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40330
+- author: NoreUhh
+  changes:
+  - message: Vulpkanin hair no longer clips through hoods and hardsuits.
+    type: Fix
+  id: 9284
+  time: '2025-12-14T00:55:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41827
+- author: ScarKy0
+  changes:
+  - message: Cyborgs no longer lose access when they run out of power.
+    type: Tweak
+  id: 9285
+  time: '2025-12-14T00:55:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41844
