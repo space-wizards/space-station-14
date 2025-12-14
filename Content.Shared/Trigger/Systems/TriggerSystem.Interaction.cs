@@ -16,7 +16,9 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<TriggerOnActivateComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<TriggerOnUseComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<TriggerOnInteractHandComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<TriggerOnUserInteractHandComponent, UserInteractHandEvent>(OnUserInteractHand);
         SubscribeLocalEvent<TriggerOnInteractUsingComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<TriggerOnUserInteractUsingComponent, UserInteractUsingEvent>(OnUserInteractUsing);
 
         SubscribeLocalEvent<TriggerOnThrowComponent, ThrowEvent>(OnThrow);
         SubscribeLocalEvent<TriggerOnThrownComponent, ThrownEvent>(OnThrown);
@@ -27,9 +29,6 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<ItemToggleOnTriggerComponent, TriggerEvent>(HandleItemToggleOnTrigger);
         SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(HandleAnchorOnTrigger);
         SubscribeLocalEvent<UseDelayOnTriggerComponent, TriggerEvent>(HandleUseDelayOnTrigger);
-
-        SubscribeLocalEvent<TriggerOnUserInteractUsingComponent, UserInteractUsingEvent>(OnUserInteractUsing);
-        SubscribeLocalEvent<TriggerOnUserInteractHandComponent, UserInteractHandEvent>(OnUserInteractHand);
     }
 
     private void OnExamined(Entity<TriggerOnExaminedComponent> ent, ref ExaminedEvent args)
@@ -67,6 +66,17 @@ public sealed partial class TriggerSystem
         args.Handled = true;
     }
 
+    private void OnUserInteractHand(Entity<TriggerOnUserInteractHandComponent> ent, ref UserInteractHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        Trigger(ent.Owner, args.Target, ent.Comp.KeyOut);
+
+        if (ent.Comp.Handle)
+            args.Handled = true;
+    }
+
     private void OnInteractUsing(Entity<TriggerOnInteractUsingComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -77,6 +87,20 @@ public sealed partial class TriggerSystem
 
         Trigger(ent.Owner, ent.Comp.TargetUsed ? args.Used : args.User, ent.Comp.KeyOut);
         args.Handled = true;
+    }
+
+    private void OnUserInteractUsing(Entity<TriggerOnUserInteractUsingComponent> ent, ref UserInteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
+            return;
+
+        Trigger(ent.Owner, ent.Comp.TargetUsed ? args.Used : args.Target, ent.Comp.KeyOut);
+
+        if (ent.Comp.Handle)
+            args.Handled = true;
     }
 
     private void OnThrow(Entity<TriggerOnThrowComponent> ent, ref ThrowEvent args)
@@ -158,30 +182,5 @@ public sealed partial class TriggerSystem
             return;
 
         args.Handled |= _useDelay.TryResetDelay(target.Value, ent.Comp.CheckDelayed);
-    }
-
-    private void OnUserInteractUsing(Entity<TriggerOnUserInteractUsingComponent> ent, ref UserInteractUsingEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
-            return;
-
-        Trigger(ent.Owner, ent.Comp.TargetUsed ? args.Used : args.Target, ent.Comp.KeyOut);
-
-        if (ent.Comp.Handle)
-            args.Handled = true;
-    }
-
-    private void OnUserInteractHand(Entity<TriggerOnUserInteractHandComponent> ent, ref UserInteractHandEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        Trigger(ent.Owner, args.Target, ent.Comp.KeyOut);
-
-        if (ent.Comp.Handle)
-            args.Handled = true;
     }
 }

@@ -5,7 +5,7 @@ namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
 /// Trigger on <see cref="UserInteractHandEvent"/>, aka when owner clicks on an entity with an empty hand.
-/// User is the entity that got interacted with.
+/// The trigger user is the entity that got interacted with.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnUserInteractHandComponent : BaseTriggerOnXComponent
