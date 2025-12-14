@@ -2,8 +2,7 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="{Loc 'random-gate-menu-setup'}"
-            MinSize="260 115"
-            MaxSize="275 140">
+            MinSize="260 115">
     <BoxContainer Orientation="Vertical" Margin="5" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
             <Label Text="{Loc 'random-gate-menu-settings'}" VerticalAlignment="Center" />
