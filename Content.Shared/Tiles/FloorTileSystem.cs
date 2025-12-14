@@ -16,6 +16,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Tiles;
@@ -152,7 +153,7 @@ public sealed class FloorTileSystem : EntitySystem
                     return;
                 }
             }
-            else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
+            else if (HasBaseTurf(currentTileDefinition, new ProtoId<ContentTileDefinition>(ContentTileDefinition.SpaceID)))
             {
                 if (!_stackSystem.TryUse((uid, stack), 1))
                     continue;
@@ -171,15 +172,15 @@ public sealed class FloorTileSystem : EntitySystem
         }
     }
 
-    public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
+    public bool HasBaseTurf(ContentTileDefinition tileDef, ProtoId<ContentTileDefinition> baseTurf)
     {
         return tileDef.BaseTurf == baseTurf;
     }
 
-    private bool CanPlaceOn(ContentTileDefinition tileDef, string currentTurfId)
+    private bool CanPlaceOn(ContentTileDefinition tileDef, ProtoId<ContentTileDefinition> currentTurfId)
     {
         //Check exact BaseTurf match
-        if (!string.IsNullOrEmpty(tileDef.BaseTurf) && tileDef.BaseTurf == currentTurfId)
+        if (tileDef.BaseTurf == currentTurfId)
             return true;
 
         // Check whitelist match
@@ -201,6 +202,8 @@ public sealed class FloorTileSystem : EntitySystem
 
         _audio.PlayPredicted(placeSound, location, user);
     }
+
+
 
     public bool CanPlaceTile(EntityUid gridUid, MapGridComponent component, Vector2i gridIndices, [NotNullWhen(false)] out string? reason)
     {

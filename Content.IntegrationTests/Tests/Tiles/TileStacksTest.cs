@@ -19,20 +19,20 @@ public sealed class TileStacksTest
         Assert.That(protoMan.TryGetInstances<ContentTileDefinition>(out var tiles));
         Assert.That(tiles, Is.Not.EqualTo(null));
         //bool? stands for the node exploration status, int stands for distance from root to this node
-        var nodes = new List<(string, int)>();
+        var nodes = new List<(ProtoId<ContentTileDefinition>, int)>();
         //each element of list is a connection from BaseTurf tile to tile that goes on it
-        var edges = new List<(string, string)>();
+        var edges = new List<(ProtoId<ContentTileDefinition>, ProtoId<ContentTileDefinition>)>();
         foreach (var ctdef in tiles!.Values)
         {
             //at first, each node is unexplored and has infinite distance to root.
             //we use space node as root - everything is supposed to start at space, and it's hardcoded into the game anyway.
-            if (ctdef.ID != "Space")
+            if (ctdef.ID != ContentTileDefinition.SpaceID)
             {
                 nodes.Add((ctdef.ID, int.MaxValue));
                 edges.Add((ctdef.BaseTurf, ctdef.ID));
                 if (ctdef.BaseWhitelist is null)
                     continue;
-                edges.AddRange(ctdef.BaseWhitelist.Select(possibleTurf => (possibleTurf.ToString(), ctdef.ID)));
+                edges.AddRange(ctdef.BaseWhitelist.Select(possibleTurf => (possibleTurf, new ProtoId<ContentTileDefinition>(ctdef.ID))));
             }
             else
             {
@@ -43,10 +43,10 @@ public sealed class TileStacksTest
         await pair.CleanReturnAsync();
     }
 
-    private void Bfs(List<(string, int)> nodes, List<(string, string)> edges)
+    private void Bfs(List<(ProtoId<ContentTileDefinition>, int)> nodes, List<(ProtoId<ContentTileDefinition>, ProtoId<ContentTileDefinition>)> edges)
     {
         var root = nodes[0];
-        var queue = new Queue<(string, int)>();
+        var queue = new Queue<(ProtoId<ContentTileDefinition>, int)>();
         queue.Enqueue(root);
         while (queue.Count != 0)
         {

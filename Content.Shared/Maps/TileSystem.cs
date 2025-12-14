@@ -147,7 +147,7 @@ public sealed class TileSystem : EntitySystem
         //Create stack if needed
         if (!history.TileHistory.TryGetValue(key, out var stack))
         {
-            stack = new Stack<ProtoId<ContentTileDefinition>>();
+            stack = new List<ProtoId<ContentTileDefinition>>();
             history.TileHistory[key] = stack;
         }
 
@@ -155,7 +155,7 @@ public sealed class TileSystem : EntitySystem
         if (!tileref.Tile.IsEmpty)
         {
             var currentTileDef = (ContentTileDefinition)_tileDefinitionManager[tileref.Tile.TypeId];
-            stack.Push(currentTileDef.ID);
+            stack.Add(currentTileDef.ID);
         }
 
         var variant = PickVariant(replacementTile);
@@ -178,7 +178,7 @@ public sealed class TileSystem : EntitySystem
         var tileDef = (ContentTileDefinition)_tileDefinitionManager[tileRef.Tile.TypeId];
 
         //Can't deconstruct anything that doesn't have a base turf.
-        if (string.IsNullOrEmpty(tileDef.BaseTurf))
+        if (tileDef.BaseTurf == default)
             return false;
 
         var gridUid = tileRef.GridUid;
@@ -198,7 +198,8 @@ public sealed class TileSystem : EntitySystem
         //Pop from stack if we have history
         if (historyComp.TileHistory.TryGetValue(indices, out var stack) && stack.Count > 0)
         {
-            previousTileId = stack.Pop();
+            previousTileId = stack.Last();
+            stack.RemoveAt(stack.Count - 1);
 
             //Clean up empty stacks to avoid memory buildup
             if (stack.Count == 0)
@@ -208,7 +209,7 @@ public sealed class TileSystem : EntitySystem
         }
         else
         {
-            //No stack? Assume BaseTurf[0] was the layer below
+            //No stack? Assume BaseTurf was the layer below
             previousTileId = tileDef.BaseTurf;
         }
 

@@ -509,17 +509,31 @@ public sealed partial class ExplosionSystem
         else if (tileDef.MapAtmosphere)
             canCreateVacuum = true; // is already a vacuum.
 
+        var history = CompOrNull<TileHistoryComponent>(tileRef.GridUid);
+
         int tileBreakages = 0;
         while (maxTileBreak > tileBreakages && _robustRandom.Prob(type.TileBreakChance(effectiveIntensity)))
         {
             tileBreakages++;
             effectiveIntensity -= type.TileBreakRerollReduction;
 
-            // does this have a base-turf that we can break it down to?
-            if (string.IsNullOrEmpty(tileDef.BaseTurf))
-                break;
+            ContentTileDefinition? newDef = null;
 
-            if (_tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef)
+            if (history != null && history.TileHistory.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
+            {
+                var newId = stack[^1];
+                stack.RemoveAt(stack.Count - 1);
+                if (stack.Count == 0)
+                    history.TileHistory.Remove(tileRef.GridIndices);
+
+                newDef = (ContentTileDefinition) _tileDefinitionManager[newId.Id];
+            }
+            else if (tileDef.BaseTurf != default)
+            {
+                newDef = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf];
+            }
+
+            if (newDef == null)
                 break;
 
             if (newDef.MapAtmosphere && !canCreateVacuum)
