@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
@@ -19,37 +20,60 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        var effect = args.Effect;
-        var member = entity.Comp.Seed.GetType().GetField(args.Effect.TargetValue);
+        var targetValue = args.Effect.TargetValue;
 
-        if (member == null)
+        // Scan live plant growth components and mutate the first matching field.
+        foreach (var growthComp in EntityManager.GetComponents<Component>(entity.Owner))
         {
-            Log.Error($"{ effect.GetType().Name } Error: Member { args.Effect.TargetValue} not found on { entity.Comp.Seed.GetType().Name }. Did you misspell it?");
-            return;
+            
+            var componentType = growthComp.GetType();
+            if(!GrowthComponentsHolder.GrowthComponentTypes.Contains(componentType))
+                continue;
+
+            var field = componentType.GetField(targetValue);
+
+            if (field == null)
+                continue;
+
+            var currentValue = field.GetValue(growthComp);
+            if (currentValue == null)
+                continue;
+
+            if (TryGetValue<float>(currentValue, out var floatVal))
+            {
+                MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
+                field.SetValue(growthComp, floatVal);
+                return;
+            }
+
+            if (TryGetValue<int>(currentValue, out var intVal))
+            {
+                MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
+                field.SetValue(growthComp, intVal);
+                return;
+            }
+
+            if (TryGetValue<bool>(currentValue, out var boolVal))
+            {
+                field.SetValue(growthComp, !boolVal);
+                return;
+            }
         }
 
-        var currentValObj = member.GetValue(entity.Comp.Seed);
-        if (currentValObj == null)
-            return;
+        // Field not found in any component.
+        Log.Error($"{nameof(PlantChangeStat)} Error: Field '{targetValue}' not found in any plant component. Did you misspell it?");
+    }
 
-        if (member.FieldType == typeof(float))
+    private bool TryGetValue<T>(object value, out T? result)
+    {
+        result = default;
+        if (value is T val)
         {
-            var floatVal = (float)currentValObj;
-            MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
-            member.SetValue(entity.Comp.Seed, floatVal);
+            result = val;
+            return true;
         }
-        else if (member.FieldType == typeof(int))
-        {
-            var intVal = (int)currentValObj;
-            MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
-            member.SetValue(entity.Comp.Seed, intVal);
-        }
-        else if (member.FieldType == typeof(bool))
-        {
-            var boolVal = (bool)currentValObj;
-            boolVal = !boolVal;
-            member.SetValue(entity.Comp.Seed, boolVal);
-        }
+
+        return false;
     }
 
     // Mutate reference 'val' between 'min' and 'max' by pretending the value
@@ -65,14 +89,14 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
 
         // Starting number of bits that are high, between 0 and bits.
         // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
-        int valInt = (int)MathF.Round((val - min) / (max - min) * bits);
+        var valInt = (int)MathF.Round((val - min) / (max - min) * bits);
         // val may be outside the range of min/max due to starting prototype values, so clamp.
         valInt = Math.Clamp(valInt, 0, bits);
 
         // Probability that the bit flip increases n.
         // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasive it it.
         // In other words, it tends to go to the middle.
-        float probIncrease = 1 - (float)valInt / bits;
+        var probIncrease = 1 - (float)valInt / bits;
         int valIntMutated;
         if (_random.Prob(probIncrease))
         {
@@ -84,7 +108,7 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
         }
 
         // Set value based on mutated thermometer code.
-        float valMutated = Math.Clamp((float)valIntMutated / bits * (max - min) + min, min, max);
+        var valMutated = Math.Clamp((float)valIntMutated / bits * (max - min) + min, min, max);
         val = valMutated;
     }
 
@@ -98,14 +122,14 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
 
         // Starting number of bits that are high, between 0 and bits.
         // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
-        int valInt = (int)MathF.Round((val - min) / (max - min) * bits);
+        var valInt = (int)MathF.Round((val - min) / (max - min) * bits);
         // val may be outside the range of min/max due to starting prototype values, so clamp.
         valInt = Math.Clamp(valInt, 0, bits);
 
         // Probability that the bit flip increases n.
         // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasing it.
         // In other words, it tends to go to the middle.
-        float probIncrease = 1 - (float)valInt / bits;
+        var probIncrease = 1 - (float)valInt / bits;
         int valMutated;
         if (_random.Prob(probIncrease))
         {

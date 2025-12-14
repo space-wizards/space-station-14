@@ -9,22 +9,24 @@
     - WheatBushel
   mutationPrototypes:
     - meatwheat
-  lifespan: 25
-  maturation: 6
-  production: 3
-  yield: 3
-  potency: 5
-  idealLight: 8
-  nutrientConsumption: 0.40
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 6
+      production: 3
+      yield: 3
+      potency: 5
+    basicGrowth:
+      nutrientConsumption: 0.4
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 20
+      min: 1
+      max: 20
+      potencyDivisor: 20
     Flour:
-      Min: 5
-      Max: 20
-      PotencyDivisor: 20
+      min: 5
+      max: 20
+      potencyDivisor: 20
 
 - type: seed
   id: meatwheat
@@ -35,22 +37,24 @@
   packetPrototype: MeatwheatSeeds
   productPrototypes:
     - MeatwheatBushel
-  lifespan: 25
-  maturation: 6
-  production: 3
-  yield: 3
-  potency: 5
-  idealLight: 8
-  nutrientConsumption: 0.40
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 6
+      production: 3
+      yield: 3
+      potency: 5
+    basicGrowth:
+      nutrientConsumption: 0.4
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 20
+      min: 1
+      max: 20
+      potencyDivisor: 20
     UncookedAnimalProteins:
-      Min: 5
-      Max: 20
-      PotencyDivisor: 20
+      min: 5
+      max: 20
+      potencyDivisor: 20
 
 - type: seed
   id: oat
@@ -61,22 +65,24 @@
   packetPrototype: OatSeeds
   productPrototypes:
     - OatBushel
-  lifespan: 25
-  maturation: 6
-  production: 3
-  yield: 3
-  potency: 5
-  idealLight: 8
-  nutrientConsumption: 0.40
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 6
+      production: 3
+      yield: 3
+      potency: 5
+    basicGrowth:
+      nutrientConsumption: 0.4
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 20
+      min: 1
+      max: 20
+      potencyDivisor: 20
     Oats:
-      Min: 5
-      Max: 20
-      PotencyDivisor: 20
+      min: 5
+      max: 20
+      potencyDivisor: 20
 
 - type: seed
   id: banana
@@ -89,23 +95,27 @@
     - FoodBanana
   mutationPrototypes:
     - mimana
-  harvestRepeat: Repeat
-  lifespan: 50
-  maturation: 6
-  production: 6
-  yield: 2
-  idealLight: 9
-  waterConsumption: 0.60
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 50
+      maturation: 6
+      production: 6
+      yield: 2
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.6
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
 
 - type: seed
   id: mimana
@@ -116,23 +126,27 @@
   packetPrototype: MimanaSeeds
   productPrototypes:
     - FoodMimana
-  harvestRepeat: Repeat
-  lifespan: 50
-  maturation: 6
-  production: 6
-  yield: 2
-  idealLight: 9
-  waterConsumption: 0.60
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 50
+      maturation: 6
+      production: 6
+      yield: 2
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.6
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     MuteToxin:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
 
 - type: seed
   id: carrots
@@ -143,26 +157,29 @@
   packetPrototype: CarrotSeeds
   productPrototypes:
     - FoodCarrot
-  lifespan: 25
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 3
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     JuiceCarrot:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Oculine:
-      Min: 2
-      Max: 6
-      PotencyDivisor: 20
+      min: 2
+      max: 6
+      potencyDivisor: 20
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: laughinPea
@@ -175,29 +192,32 @@
     - FoodLaughinPeaPod
   mutationPrototypes:
     - worldPea
-  lifespan: 25
-  growthStages: 3
-  maturation: 7
-  production: 5
-  yield: 3
-  potency: 20
-  idealLight: 8
-  harvestRepeat: Repeat
-  nutrientConsumption: 0.6
-  waterConsumption: 0.6
+  growthComponents:
+    plant:
+      lifespan: 25
+      growthStages: 3
+      maturation: 7
+      production: 5
+      yield: 3
+      potency: 20
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.6
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 3
-      PotencyDivisor: 7
+      min: 1
+      max: 3
+      potencyDivisor: 7
     Sugar:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 5
+      min: 1
+      max: 10
+      potencyDivisor: 5
     Laughter:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 5
+      min: 1
+      max: 10
+      potencyDivisor: 5
 
 - type: seed
   id: lemon
@@ -212,22 +232,24 @@
     - lemoon
     - lime
     - orange
-  harvestRepeat: Repeat
-  lifespan: 55
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 10
-  idealLight: 8
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: lemoon
@@ -238,22 +260,24 @@
   packetPrototype: LemoonSeeds
   productPrototypes:
     - FoodLemoon
-  harvestRepeat: Repeat
-  lifespan: 90
-  maturation: 8
-  production: 6
-  yield: 4
-  potency: 1
-  idealLight: 8
+  growthComponents:
+    plant:
+      lifespan: 90
+      maturation: 8
+      production: 6
+      yield: 4
+      potency: 1
+    harvest:
+      harvestRepeat: Repeat
   chemicals:
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     Milk:
-      Min: 8
-      Max: 20
-      PotencyDivisor: 5
+      min: 8
+      max: 20
+      potencyDivisor: 5
 
 - type: seed
   id: lime
@@ -267,22 +291,24 @@
   mutationPrototypes:
     - orange
     - lemon
-  harvestRepeat: Repeat
-  lifespan: 55
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 10
-  idealLight: 8
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: orange
@@ -297,22 +323,24 @@
     - extradimensionalOrange
     - lemon
     - lime
-  harvestRepeat: Repeat
-  lifespan: 55
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 10
-  idealLight: 8
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: extradimensionalOrange
@@ -323,26 +351,28 @@
   packetPrototype: ExtradimensionalOrangeSeeds
   productPrototypes:
     - FoodExtradimensionalOrange
-  harvestRepeat: Repeat
-  lifespan: 55
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 10
-  idealLight: 8
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
   chemicals:
     Haloperidol:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: pineapple
@@ -353,27 +383,29 @@
   packetPrototype: PineappleSeeds
   productPrototypes:
     - FoodPineapple
-  harvestRepeat: Repeat
-  lifespan: 55
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 10
-  idealLight: 8
-  growthStages: 3
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 10
+      growthStages: 3
+    harvest:
+      harvestRepeat: Repeat
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 20
+      min: 1
+      max: 20
+      potencyDivisor: 20
     Water:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     Vitamin:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
 
 - type: seed
   id: potato
@@ -384,22 +416,25 @@
   packetPrototype: PotatoSeeds
   productPrototypes:
     - FoodPotato
-  lifespan: 30
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 4
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 30
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 4
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: sugarcane
@@ -412,19 +447,23 @@
     - Sugarcane
   mutationPrototypes:
     - papercane
-  harvestRepeat: Repeat
-  lifespan: 60
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 10
-  growthStages: 3
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 60
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 10
+      growthStages: 3
+    harvest:
+      harvestRepeat: Repeat
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Sugar:
-      Min: 4
-      Max: 5
-      PotencyDivisor: 5
+      min: 4
+      max: 5
+      potencyDivisor: 5
 
 - type: seed
   id: teaPlant
@@ -435,21 +474,25 @@
   packetPrototype: TeaPlantSeeds
   productPrototypes:
     - LeavesTea
-  harvestRepeat: Repeat
-  lifespan: 75
-  maturation: 5
-  production: 3
-  yield: 2
-  potency: 20
-  growthStages: 5
-  waterConsumption: 0.6
-  idealLight: 9
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 75
+      maturation: 5
+      production: 3
+      yield: 2
+      potency: 20
+      growthStages: 5
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.6
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Vitamin:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
 
 - type: seed
   id: papercane
@@ -460,14 +503,18 @@
   packetPrototype: PapercaneSeeds
   productPrototypes:
     - Papercane
-  harvestRepeat: Repeat
-  lifespan: 60
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 10
-  growthStages: 3
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 60
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 10
+      growthStages: 3
+    harvest:
+      harvestRepeat: Repeat
+    atmosphericGrowth:
+      idealHeat: 298
 
 - type: seed
   id: towercap
@@ -480,17 +527,21 @@
     - Log
   mutationPrototypes:
     - steelcap
-  lifespan: 80
-  maturation: 15
-  ligneous: true
-  production: 3
-  yield: 5
-  potency: 1
-  growthStages: 3
-  waterConsumption: 0.60
-  nutrientConsumption: 0.50
-  lightTolerance: 6
-  idealHeat: 288
+  growthComponents:
+    plant:
+      lifespan: 80
+      maturation: 15
+      production: 3
+      yield: 5
+      potency: 1
+      growthStages: 3
+    plantTraits:
+      ligneous: true
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.5
+    atmosphericGrowth:
+      idealHeat: 288
 
 - type: seed
   id: steelcap
@@ -501,17 +552,21 @@
   packetPrototype: SteelcapSeeds
   productPrototypes:
     - SteelLog
-  lifespan: 80
-  maturation: 15
-  ligneous: true
-  production: 3
-  yield: 3
-  potency: 1
-  growthStages: 3
-  waterConsumption: 0.60
-  nutrientConsumption: 0.80
-  lightTolerance: 6
-  idealHeat: 288
+  growthComponents:
+    plant:
+      lifespan: 80
+      maturation: 15
+      production: 3
+      yield: 3
+      potency: 1
+      growthStages: 3
+    plantTraits:
+      ligneous: true
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.8
+    atmosphericGrowth:
+      idealHeat: 288
 
 - type: seed
   id: tomato
@@ -525,30 +580,33 @@
   mutationPrototypes:
     - blueTomato
     - bloodTomato
-  harvestRepeat: Repeat
-  lifespan: 25
-  maturation: 8
-  production: 6
-  yield: 2
-  potency: 10
-  waterConsumption: 0.60
-  nutrientConsumption: 0.40
-  idealLight: 8
-  idealHeat: 298
-  splatPrototype: PuddleSplatter
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 6
+      yield: 2
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.4
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 7
-      PotencyDivisor: 14
+      min: 1
+      max: 7
+      potencyDivisor: 14
     Vitamin:
-      Min: 1
-      Max: 3
-      PotencyDivisor: 33
+      min: 1
+      max: 3
+      potencyDivisor: 33
     Water:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: blueTomato
@@ -559,30 +617,33 @@
   packetPrototype: BlueTomatoSeeds
   productPrototypes:
     - FoodBlueTomato
-  harvestRepeat: Repeat
-  lifespan: 25
-  maturation: 8
-  production: 6
-  yield: 2
-  potency: 10
-  waterConsumption: 0.60
-  nutrientConsumption: 0.70
-  idealLight: 8
-  idealHeat: 298
-  splatPrototype: PuddleSplatter
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 6
+      yield: 2
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.7
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     SpaceLube:
-      Min: 5
-      Max: 15
-      PotencyDivisor: 10
+      min: 5
+      max: 15
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: bloodTomato
@@ -595,26 +656,29 @@
     - FoodBloodTomato
   mutationPrototypes:
     - killerTomato
-  harvestRepeat: Repeat
-  lifespan: 60
-  maturation: 8
-  production: 6
-  yield: 2
-  potency: 10
-  waterConsumption: 0.60
-  nutrientConsumption: 0.70
-  idealLight: 8
-  idealHeat: 298
-  splatPrototype: PuddleSplatter
+  growthComponents:
+    plant:
+      lifespan: 60
+      maturation: 8
+      production: 6
+      yield: 2
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.7
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Blood:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: killerTomato
@@ -627,27 +691,30 @@
   packetPrototype: KillerTomatoSeeds
   productPrototypes:
     - MobTomatoKiller
-  harvestRepeat: Repeat
-  lifespan: 25
-  maturation: 15
-  production: 6
-  yield: 2
-  potency: 10
-  waterConsumption: 0.60
-  nutrientConsumption: 0.70
-  idealLight: 8
-  idealHeat: 298
-  growthStages: 2
-  splatPrototype: PuddleSplatter
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 15
+      production: 6
+      yield: 2
+      potency: 10
+      growthStages: 2
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.7
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Blood:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     JuiceTomato:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: eggplant
@@ -660,24 +727,27 @@
     - FoodEggplant
   mutationPrototypes:
     - eggy
-  harvestRepeat: Repeat
-  lifespan: 25
-  maturation: 6
-  production: 6
-  yield: 2
-  potency: 20
-  growthStages: 3
-  idealLight: 9
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 6
+      production: 6
+      yield: 2
+      potency: 20
+      growthStages: 3
+    harvest:
+      harvestRepeat: Repeat
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: cabbage
@@ -688,21 +758,23 @@
   packetPrototype: CabbageSeeds
   productPrototypes:
     - FoodCabbage
-  lifespan: 50
-  maturation: 7
-  production: 5
-  yield: 3
-  potency: 10
-  growthStages: 1
+  growthComponents:
+    plant:
+      lifespan: 50
+      maturation: 7
+      production: 5
+      yield: 3
+      potency: 10
+      growthStages: 1
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: garlic
@@ -713,25 +785,27 @@
   packetPrototype: GarlicSeeds
   productPrototypes:
     - FoodGarlic
-  lifespan: 25
-  maturation: 8
-  production: 5
-  yield: 3
-  potency: 25
-  growthStages: 3
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 5
+      yield: 3
+      potency: 25
+      growthStages: 3
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     Allicin:
-      Min: 1
-      Max: 8
-      PotencyDivisor: 25
+      min: 1
+      max: 8
+      potencyDivisor: 25
 
 - type: seed
   id: apple
@@ -744,22 +818,24 @@
     - FoodApple
   mutationPrototypes:
     - goldenApple
-  harvestRepeat: Repeat
-  lifespan: 55
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 10
-  idealLight: 6
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: goldenApple
@@ -770,28 +846,30 @@
   packetPrototype: GoldenAppleSeeds
   productPrototypes:
     - FoodGoldenApple
-  harvestRepeat: Repeat
-  lifespan: 55
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 10
-  idealLight: 6
-  waterConsumption: 0.75
-  nutrientConsumption: 0.75
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.75
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     DoctorsDelight:
-      Min: 3
-      Max: 13
-      PotencyDivisor: 10
+      min: 3
+      max: 13
+      potencyDivisor: 10
 
 - type: seed
   id: corn
@@ -802,24 +880,27 @@
   packetPrototype: CornSeeds
   productPrototypes:
     - FoodCorn
-  lifespan: 25
-  maturation: 8
-  production: 6
-  yield: 2
-  potency: 20
-  growthStages: 3
-  idealLight: 8
-  waterConsumption: 0.60
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 6
+      yield: 2
+      potency: 20
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 20
+      min: 1
+      max: 10
+      potencyDivisor: 20
     Cornmeal:
-      Min: 5
-      Max: 15
-      PotencyDivisor: 10
+      min: 5
+      max: 15
+      potencyDivisor: 10
 
 - type: seed
   id: onion
@@ -833,28 +914,31 @@
   mutationPrototypes:
     - onionred
     - bloonion
-  lifespan: 25
-  maturation: 8
-  production: 6
-  yield: 2
-  potency: 20
-  growthStages: 3
-  idealLight: 8
-  waterConsumption: 0.60
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 6
+      yield: 2
+      potency: 20
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     Allicin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: onionred
@@ -865,28 +949,31 @@
   packetPrototype: OnionRedSeeds
   productPrototypes:
     - FoodOnionRed
-  lifespan: 25
-  maturation: 8
-  production: 6
-  yield: 2
-  potency: 20
-  growthStages: 3
-  idealLight: 8
-  waterConsumption: 0.60
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 6
+      yield: 2
+      potency: 20
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     Allicin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: chanterelle
@@ -897,21 +984,24 @@
   packetPrototype: ChanterelleSeeds
   productPrototypes:
     - FoodMushroom
-  lifespan: 35
-  maturation: 10
-  production: 7
-  yield: 5
-  potency: 1
-  growthStages: 3
-  lightTolerance: 6
-  waterConsumption: 0.60
-  nutrientConsumption: 0.50
-  idealHeat: 288
+  growthComponents:
+    plant:
+      lifespan: 35
+      maturation: 10
+      production: 7
+      yield: 5
+      potency: 1
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.5
+    atmosphericGrowth:
+      idealHeat: 288
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 25
-      PotencyDivisor: 25
+      min: 1
+      max: 25
+      potencyDivisor: 25
 
 - type: seed
   id: eggy
@@ -922,20 +1012,24 @@
   packetPrototype: EggySeeds
   productPrototypes:
     - FoodEgg
-  harvestRepeat: Repeat
-  lifespan: 75
-  maturation: 6
-  production: 12
-  yield: 2
-  potency: 20
-  nutrientConsumption: 0.50
-  idealLight: 9
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 75
+      maturation: 6
+      production: 12
+      yield: 2
+      potency: 20
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      nutrientConsumption: 0.5
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Egg:
-      Min: 4
-      Max: 12
-      PotencyDivisor: 10
+      min: 4
+      max: 12
+      potencyDivisor: 10
 
 - type: seed
   id: cannabis
@@ -948,21 +1042,25 @@
     - LeavesCannabis
   mutationPrototypes:
     - rainbowCannabis
-  harvestRepeat: Repeat
-  lifespan: 75
-  maturation: 8
-  production: 12
-  yield: 2
-  potency: 20
-  growthStages: 3
-  waterConsumption: 0.40
-  idealLight: 9
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 75
+      maturation: 8
+      production: 12
+      yield: 2
+      potency: 20
+      growthStages: 3
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.4
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     THC:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
 
 - type: seed
   id: rainbowCannabis
@@ -973,41 +1071,45 @@
   packetPrototype: RainbowCannabisSeeds
   productPrototypes:
     - LeavesCannabisRainbow
-  harvestRepeat: Repeat
-  lifespan: 75
-  maturation: 8
-  production: 12
-  yield: 2
-  potency: 20
-  growthStages: 3
-  waterConsumption: 0.40
-  idealLight: 9
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 75
+      maturation: 8
+      production: 12
+      yield: 2
+      potency: 20
+      growthStages: 3
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.4
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     SpaceDrugs:
-      Min: 1
-      Max: 15
-      PotencyDivisor: 10
+      min: 1
+      max: 15
+      potencyDivisor: 10
     Lipolicide:
-      Min: 1
-      Max: 15
-      PotencyDivisor: 10
+      min: 1
+      max: 15
+      potencyDivisor: 10
     MindbreakerToxin:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Happiness:
-      Min: 1
-      Max: 5
-#     PotencyDivisor: 20
+      min: 1
+      max: 5
+#     potencyDivisor: 20
 #   ColorfulReagent:
-#     Min: 0
-#     Max: 5
-#     PotencyDivisor: 20
+#     min: 0
+#     max: 5
+#     potencyDivisor: 20
     Psicodine:
-      Min: 0
-      Max: 5
-      PotencyDivisor: 33
+      min: 0
+      max: 5
+      potencyDivisor: 33
 
 - type: seed
   id: tobacco
@@ -1018,21 +1120,25 @@
   packetPrototype: TobaccoSeeds
   productPrototypes:
     - LeavesTobacco
-  harvestRepeat: Repeat
-  lifespan: 75
-  maturation: 5
-  production: 5
-  yield: 2
-  potency: 20
-  growthStages: 3
-  waterConsumption: 0.40
-  idealLight: 9
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 75
+      maturation: 5
+      production: 5
+      yield: 2
+      potency: 20
+      growthStages: 3
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.4
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Nicotine:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
 
 - type: seed
   id: nettle
@@ -1045,20 +1151,23 @@
     - Nettle
   mutationPrototypes:
     - deathNettle
-  lifespan: 25
-  maturation: 8
-  production: 6
-  yield: 2
-  potency: 20
-  growthStages: 5
-  idealLight: 8
-  waterConsumption: 0.60
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 6
+      yield: 2
+      potency: 20
+      growthStages: 5
+    basicGrowth:
+      waterConsumption: 0.6
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Histamine:
-      Min: 1
-      Max: 25
-      PotencyDivisor: 4
+      min: 1
+      max: 25
+      potencyDivisor: 4
 
 - type: seed
   id: deathNettle
@@ -1071,25 +1180,28 @@
   harvestLogImpact: High
   productPrototypes:
     - DeathNettle
-  lifespan: 25
-  maturation: 8
-  production: 6
-  yield: 2
-  potency: 20
-  growthStages: 5
-  idealLight: 8
-  waterConsumption: 0.70
-  nutrientConsumption: 0.80
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 6
+      yield: 2
+      potency: 20
+      growthStages: 5
+    basicGrowth:
+      waterConsumption: 0.7
+      nutrientConsumption: 0.8
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     SulfuricAcid:
-      Min: 1
-      Max: 15
-      PotencyDivisor: 6
+      min: 1
+      max: 15
+      potencyDivisor: 6
     FluorosulfuricAcid:
-      Min: 1
-      Max: 15
-      PotencyDivisor: 6
+      min: 1
+      max: 15
+      potencyDivisor: 6
 
 - type: seed
   id: chili
@@ -1102,27 +1214,30 @@
     - FoodChiliPepper
   mutationPrototypes:
     - chilly
-  harvestRepeat: Repeat
-  lifespan: 25
-  maturation: 6
-  production: 6
-  yield: 2
-  potency: 20
-  idealLight: 9
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 6
+      production: 6
+      yield: 2
+      potency: 20
+    harvest:
+      harvestRepeat: Repeat
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     CapsaicinOil:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Nutriment:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: chilly
@@ -1133,27 +1248,30 @@
   packetPrototype: ChillySeeds
   productPrototypes:
     - FoodChillyPepper
-  harvestRepeat: Repeat
-  lifespan: 25
-  maturation: 6
-  production: 6
-  yield: 2
-  potency: 20
-  idealLight: 9
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 6
+      production: 6
+      yield: 2
+      potency: 20
+    harvest:
+      harvestRepeat: Repeat
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     FrostOil:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Nutriment:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: poppy
@@ -1166,22 +1284,25 @@
     - FoodPoppy
   mutationPrototypes:
     - lily
-  lifespan: 25
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 3
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
     Bicaridine:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 5
+      min: 1
+      max: 20
+      potencyDivisor: 5
 
 - type: seed
   id: aloe
@@ -1192,22 +1313,25 @@
   packetPrototype: AloeSeeds
   productPrototypes:
     - FoodAloe
-  lifespan: 25
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 5
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 5
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Aloe:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Dermaline:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
 
 - type: seed
   id: lily
@@ -1220,22 +1344,25 @@
     - FoodLily
   mutationPrototypes:
     - spacemansTrumpet
-  lifespan: 25
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 3
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
     Bicaridine:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 5
+      min: 1
+      max: 20
+      potencyDivisor: 5
 
 - type: seed
   id: lingzhi
@@ -1246,22 +1373,25 @@
   packetPrototype: LingzhiSeeds
   productPrototypes:
     - FoodLingzhi
-  lifespan: 25
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 3
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Ultravasculine:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 5
+      min: 1
+      max: 20
+      potencyDivisor: 5
     Epinephrine:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 5
+      min: 1
+      max: 20
+      potencyDivisor: 5
 
 - type: seed
   id: ambrosiaVulgaris
@@ -1274,30 +1404,33 @@
     - FoodAmbrosiaVulgaris
   mutationPrototypes:
     - ambrosiaDeus
-  lifespan: 25
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 6
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 6
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 10
+      min: 1
+      max: 2
+      potencyDivisor: 10
     Bicaridine:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Kelotane:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Vitamin:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
 
 - type: seed
   id: ambrosiaDeus
@@ -1308,26 +1441,29 @@
   packetPrototype: AmbrosiaDeusSeeds
   productPrototypes:
     - FoodAmbrosiaDeus
-  lifespan: 25
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 6
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 6
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 10
+      min: 1
+      max: 2
+      potencyDivisor: 10
     Omnizine: # Don't kill me
-      Min: 1
-      Max: 3
-      PotencyDivisor: 35
+      min: 1
+      max: 3
+      potencyDivisor: 35
     SpaceDrugs:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
 
 - type: seed
   id: galaxythistle
@@ -1340,18 +1476,21 @@
     - FoodGalaxythistle
   mutationPrototypes:
     - glasstle
-  lifespan: 25
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 3
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Stellibinin:
-      Min: 1
-      Max: 25
-      PotencyDivisor: 4
+      min: 1
+      max: 25
+      potencyDivisor: 4
 
 - type: seed
   id: glasstle
@@ -1362,22 +1501,23 @@
   packetPrototype: GlasstleSeeds
   productPrototypes:
     - FoodGlasstle
-  lifespan: 25
-  maturation: 10
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 3
-  waterConsumption: 0.5
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 10
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 3
   chemicals:
     Razorium:
-      Min: 1
-      Max: 25
-      PotencyDivisor: 4
+      min: 1
+      max: 25
+      potencyDivisor: 4
     Desoxyephedrine: # meff!!
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
 
 - type: seed
   id: flyAmanita
@@ -1388,23 +1528,26 @@
   packetPrototype: FlyAmanitaSeeds
   productPrototypes:
     - FoodFlyAmanita
-  lifespan: 25
-  maturation: 12
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 2
-  waterConsumption: 0.60
-  nutrientConsumption: 0.50
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 12
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 2
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.5
   chemicals:
     Amatoxin:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 12
+      min: 1
+      max: 10
+      potencyDivisor: 12
     Nutriment: ## yumby :)
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
 
 - type: seed
   id: gatfruit
@@ -1418,22 +1561,23 @@
   mutationPrototypes:
     - fakeCapfruit
     - realCapfruit
-  lifespan: 65
-  maturation: 25
-  production: 25
-  yield: 1
-  potency: 10
-  growthStages: 2
-  idealLight: 6
+  growthComponents:
+    plant:
+      lifespan: 65
+      maturation: 25
+      production: 25
+      yield: 1
+      potency: 10
+      growthStages: 2
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Sulfur:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
 
 - type: seed
   id: fakeCapfruit
@@ -1444,22 +1588,23 @@
   packetPrototype: FakeCapfruitSeeds
   productPrototypes:
     - FoodFakeCapfruit
-  lifespan: 65
-  maturation: 25
-  production: 25
-  yield: 1
-  potency: 10
-  growthStages: 2
-  idealLight: 6
+  growthComponents:
+    plant:
+      lifespan: 65
+      maturation: 25
+      production: 25
+      yield: 1
+      potency: 10
+      growthStages: 2
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Sulfur:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
 
 - type: seed
   id: realCapfruit
@@ -1470,22 +1615,23 @@
   packetPrototype: RealCapfruitSeeds
   productPrototypes:
     - FoodRealCapfruit
-  lifespan: 65
-  maturation: 25
-  production: 25
-  yield: 1
-  potency: 10
-  growthStages: 2
-  idealLight: 6
+  growthComponents:
+    plant:
+      lifespan: 65
+      maturation: 25
+      production: 25
+      yield: 1
+      potency: 10
+      growthStages: 2
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Sulfur:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
 
 - type: seed
   id: rice
@@ -1496,24 +1642,26 @@
   packetPrototype: RiceSeeds
   productPrototypes:
     - RiceBushel
-  lifespan: 25
-  maturation: 6
-  production: 3
-  yield: 3
-  potency: 5
-  growthStages: 4
-  idealLight: 5
-  nutrientConsumption: 0.40
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 6
+      production: 3
+      yield: 3
+      potency: 5
+      growthStages: 4
+    basicGrowth:
+      nutrientConsumption: 0.4
+      waterConsumption: 0.6
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 20
+      min: 1
+      max: 20
+      potencyDivisor: 20
     Rice:
-      Min: 5
-      Max: 20
-      PotencyDivisor: 20
+      min: 5
+      max: 20
+      potencyDivisor: 20
 
 - type: seed
   id: soybeans
@@ -1526,19 +1674,21 @@
     - FoodSoybeans
   mutationPrototypes:
     - koibean
-  growthStages: 4
-  lifespan: 25
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 5
-  idealLight: 7
-  nutrientConsumption: 0.40
+  growthComponents:
+    plant:
+      growthStages: 4
+      lifespan: 25
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 5
+    basicGrowth:
+      nutrientConsumption: 0.4
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
 
 - type: seed
   id: spacemansTrumpet
@@ -1549,22 +1699,25 @@
   packetPrototype: SpacemansTrumpetSeeds
   productPrototypes:
     - FoodSpacemansTrumpet
-  growthStages: 4
-  lifespan: 20
-  maturation: 14
-  production: 3
-  yield: 2
-  potency: 10
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      growthStages: 4
+      lifespan: 20
+      maturation: 14
+      production: 3
+      yield: 2
+      potency: 10
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 50
+      min: 1
+      max: 5
+      potencyDivisor: 50
     PolypyryliumOligomers:
-      Min: 1
-      Max: 15
-      PotencyDivisor: 5
+      min: 1
+      max: 15
+      potencyDivisor: 5
 
 - type: seed
   id: koibean
@@ -1575,23 +1728,25 @@
   packetPrototype: KoibeanSeeds
   productPrototypes:
     - FoodKoibean
-  growthStages: 4
-  lifespan: 25
-  maturation: 6
-  production: 6
-  yield: 3
-  potency: 5
-  idealLight: 7
-  nutrientConsumption: 0.40
+  growthComponents:
+    plant:
+      growthStages: 4
+      lifespan: 25
+      maturation: 6
+      production: 6
+      yield: 3
+      potency: 5
+    basicGrowth:
+      nutrientConsumption: 0.4
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     CarpoToxin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 30
+      min: 1
+      max: 4
+      potencyDivisor: 30
 
 - type: seed
   id: grape
@@ -1602,21 +1757,23 @@
   packetPrototype: GrapeSeeds
   productPrototypes:
     - FoodGrape
-  lifespan: 50
-  maturation: 6
-  production: 5
-  yield: 3
-  potency: 10
-  growthStages: 2
+  growthComponents:
+    plant:
+      lifespan: 50
+      maturation: 6
+      production: 5
+      yield: 3
+      potency: 10
+      growthStages: 2
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
 
 - type: seed
   id: watermelon
@@ -1629,25 +1786,26 @@
     - FoodWatermelon
   mutationPrototypes:
     - holymelon
-  lifespan: 55
-  maturation: 12
-  production: 3
-  yield: 1
-  potency: 1
-  idealLight: 8
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 12
+      production: 3
+      yield: 1
+      potency: 1
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Water:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
 
 - type: seed
   id: holymelon
@@ -1658,25 +1816,26 @@
   packetPrototype: HolymelonSeeds
   productPrototypes:
     - FoodHolymelon
-  lifespan: 55
-  maturation: 12
-  production: 3
-  yield: 1
-  potency: 1
-  idealLight: 8
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 12
+      production: 3
+      yield: 1
+      potency: 1
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Holywater:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10
     Vitamin:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
 
 - type: seed
   id: cocoa
@@ -1687,24 +1846,28 @@
   packetPrototype: CocoaSeeds
   productPrototypes:
     - FoodCocoaPod
-  harvestRepeat: Repeat
-  lifespan: 50
-  maturation: 6
-  production: 6
-  yield: 6
-  idealLight: 7
-  waterConsumption: 1
-  nutrientConsumption: 0.8
-  idealHeat: 298
+  growthComponents:
+    plant:
+      lifespan: 50
+      maturation: 6
+      production: 6
+      yield: 6
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 1.0
+      nutrientConsumption: 0.8
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25
+      min: 1
+      max: 4
+      potencyDivisor: 25
     Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
 
 - type: seed
   id: berries
@@ -1715,22 +1878,25 @@
   packetPrototype: BerrySeeds
   productPrototypes:
     - FoodBerries
-  harvestRepeat: Repeat
-  lifespan: 50
-  maturation: 6
-  production: 6
-  yield: 4
-  idealLight: 7
-  nutrientConsumption: 0.6
+  growthComponents:
+    plant:
+      lifespan: 50
+      maturation: 6
+      production: 6
+      yield: 4
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      nutrientConsumption: 0.6
   chemicals:
     Nutriment:
-      Min: 2
-      Max: 5
-      PotencyDivisor: 30
+      min: 2
+      max: 5
+      potencyDivisor: 30
     Vitamin:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 40
+      min: 1
+      max: 4
+      potencyDivisor: 40
 
 - type: seed
   id: bungo
@@ -1741,25 +1907,29 @@
   packetPrototype: BungoSeeds
   productPrototypes:
     - FoodBungo
-  harvestRepeat: Repeat
-  lifespan: 50
-  maturation: 8
-  production: 6
-  potency: 10
-  yield: 3
-  idealLight: 8
-  idealHeat: 298
-  growthStages: 4
-  waterConsumption: 0.6
+  growthComponents:
+    plant:
+      lifespan: 50
+      maturation: 8
+      production: 6
+      potency: 10
+      yield: 3
+      growthStages: 4
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      waterConsumption: 0.6
+    atmosphericGrowth:
+      idealHeat: 298
   chemicals:
     Nutriment:
-      Min: 5
-      Max: 10
-      PotencyDivisor: 20
+      min: 5
+      max: 10
+      potencyDivisor: 20
     Enzyme:
-      Min: 5
-      Max: 10
-      PotencyDivisor: 20
+      min: 5
+      max: 10
+      potencyDivisor: 20
 
 - type: seed
   id: pea
@@ -1772,25 +1942,27 @@
     - FoodPeaPod
   mutationPrototypes:
     - laughinPea
-  lifespan: 25
-  growthStages: 3
-  maturation: 8
-  production: 6
-  yield: 3
-  potency: 25
-  idealLight: 8
-  harvestRepeat: Repeat
-  nutrientConsumption: 0.5
-  waterConsumption: 0.5
+  growthComponents:
+    plant:
+      lifespan: 25
+      growthStages: 3
+      maturation: 8
+      production: 6
+      yield: 3
+      potency: 25
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      nutrientConsumption: 0.5
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 3
-      PotencyDivisor: 33
+      min: 1
+      max: 3
+      potencyDivisor: 33
     Vitamin:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
 
 - type: seed
   id: worldPea
@@ -1801,29 +1973,31 @@
   packetPrototype: PeaSeeds
   productPrototypes:
     - FoodWorldPeas
-  lifespan: 25
-  growthStages: 3
-  maturation: 20
-  production: 6
-  yield: 3
-  potency: 25
-  idealLight: 8
-  harvestRepeat: Repeat
-  nutrientConsumption: 0.5
-  waterConsumption: 0.5
+  growthComponents:
+    plant:
+      lifespan: 25
+      growthStages: 3
+      maturation: 20
+      production: 6
+      yield: 3
+      potency: 25
+    harvest:
+      harvestRepeat: Repeat
+    basicGrowth:
+      nutrientConsumption: 0.5
   chemicals:
     Happiness:
-      Min: 1
-      Max: 3
-      PotencyDivisor: 25
+      min: 1
+      max: 3
+      potencyDivisor: 25
     Nutriment:
-      Min: 1
-      Max: 3
-      PotencyDivisor: 20
+      min: 1
+      max: 3
+      potencyDivisor: 20
     Pax:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
+      min: 1
+      max: 2
+      potencyDivisor: 50
 
 - type: seed
   id: pumpkin
@@ -1836,22 +2010,25 @@
     - FoodPumpkin
   mutationPrototypes:
     - bluePumpkin
-  lifespan: 55
-  maturation: 10
-  production: 4
-  yield: 2
-  potency: 10
-  idealHeat: 288
-  growthStages: 3
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 10
+      production: 4
+      yield: 2
+      potency: 10
+      growthStages: 3
+    atmosphericGrowth:
+      idealHeat: 288
   chemicals:
     PumpkinFlesh:
-      Min: 1
-      Max: 20
-      PotencyDivisor: 5
+      min: 1
+      max: 20
+      potencyDivisor: 5
     Vitamin:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
 
 - type: seed
   id: bluePumpkin
@@ -1862,26 +2039,29 @@
   packetPrototype: BluePumpkinSeeds
   productPrototypes:
     - FoodBluePumpkin
-  lifespan: 55
-  maturation: 10
-  production: 4
-  yield: 2
-  potency: 10
-  idealHeat: 288
-  growthStages: 3
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 10
+      production: 4
+      yield: 2
+      potency: 10
+      growthStages: 3
+    atmosphericGrowth:
+      idealHeat: 288
   chemicals:
     Ammonia:
-      Min: 1
-      Max: 15
-      PotencyDivisor: 3
+      min: 1
+      max: 15
+      potencyDivisor: 3
     Chlorine:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 5
+      min: 1
+      max: 5
+      potencyDivisor: 5
     Vitamin:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 3
+      min: 1
+      max: 10
+      potencyDivisor: 3
 
 - type: seed
   id: cotton
@@ -1894,19 +2074,21 @@
     - CottonBol
   mutationPrototypes:
     - pyrotton
-  lifespan: 25
-  maturation: 8
-  production: 3
-  yield: 3
-  potency: 5
-  idealLight: 8
-  growthStages: 3
-  waterConsumption: 0.60
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 3
+      yield: 3
+      potency: 5
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.6
   chemicals:
     Fiber:
-      Min: 5
-      Max: 10
-      PotencyDivisor: 20
+      min: 5
+      max: 10
+      potencyDivisor: 20
 
 - type: seed
   id: pyrotton
@@ -1917,23 +2099,25 @@
   packetPrototype: PyrottonSeeds
   productPrototypes:
     - PyrottonBol
-  lifespan: 25
-  maturation: 8
-  production: 3
-  yield: 2
-  potency: 5
-  idealLight: 8
-  growthStages: 3
-  waterConsumption: 0.80
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 8
+      production: 3
+      yield: 2
+      potency: 5
+      growthStages: 3
+    basicGrowth:
+      waterConsumption: 0.8
   chemicals:
     Fiber:
-      Min: 5
-      Max: 10
-      PotencyDivisor: 20
+      min: 5
+      max: 10
+      potencyDivisor: 20
     Phlogiston:
-      Min: 4
-      Max: 8
-      PotencyDivisor: 30
+      min: 4
+      max: 8
+      potencyDivisor: 30
 
 - type: seed
   id: cherry
@@ -1944,22 +2128,24 @@
   packetPrototype: CherrySeeds
   productPrototypes:
     - FoodCherry
-  harvestRepeat: Repeat
-  lifespan: 55
-  maturation: 6
-  production: 6
-  yield: 5
-  potency: 10
-  idealLight: 6
+  growthComponents:
+    plant:
+      lifespan: 55
+      maturation: 6
+      production: 6
+      yield: 5
+      potency: 10
+    harvest:
+      harvestRepeat: Repeat
   chemicals:
     Nutriment:
-      Min: 1
-      Max: 3
-      PotencyDivisor: 30
+      min: 1
+      max: 3
+      potencyDivisor: 30
     Vitamin:
-      Min: 1
-      Max: 3
-      PotencyDivisor: 40
+      min: 1
+      max: 3
+      potencyDivisor: 40
 
 - type: seed
   id: anomalyBerry
@@ -1970,27 +2156,30 @@
   packetPrototype: AnomalyBerrySeeds
   productPrototypes:
     - FoodAnomalyBerry
-  lifespan: 25
-  maturation: 12
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 2
-  waterConsumption: 0.60
-  nutrientConsumption: 0.50
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 12
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 2
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.5
   chemicals:
     Artifexium:
-      Min: 1
-      Max: 1
-      PotencyDivisor: 4
+      min: 1
+      max: 1
+      potencyDivisor: 4
     Nutriment:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 30
+      min: 1
+      max: 2
+      potencyDivisor: 30
     Vitamin:
-      Min: 1
-      Max: 2
-      PotencyDivisor: 40
+      min: 1
+      max: 2
+      potencyDivisor: 40
 
 - type: seed
   id: bloonion
@@ -2001,28 +2190,31 @@
   packetPrototype: BloonionSeeds
   productPrototypes:
   - FoodBloonion
-  lifespan: 25
-  maturation: 15
-  production: 3
-  yield: 3
-  potency: 10
-  growthStages: 4
-  waterConsumption: 0.60
-  nutrientConsumption: 0.50
+  growthComponents:
+    plant:
+      lifespan: 25
+      maturation: 15
+      production: 3
+      yield: 3
+      potency: 10
+      growthStages: 4
+    basicGrowth:
+      waterConsumption: 0.6
+      nutrientConsumption: 0.5
   chemicals:
     Potassium:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Phosphorus:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Sugar:
-      Min: 1
-      Max: 5
-      PotencyDivisor: 20
+      min: 1
+      max: 5
+      potencyDivisor: 20
     Allicin:
-      Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      min: 1
+      max: 10
+      potencyDivisor: 10

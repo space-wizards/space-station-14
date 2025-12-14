@@ -5,15 +5,18 @@ using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
+/// <summary>
+/// Entity effect that increments plant age / growth cycle.
+/// </summary>
 public sealed partial class PlantAffectGrowthEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAffectGrowth>
 {
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly BasicGrowthSystem _plantGrowth = default!;
 
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAffectGrowth> args)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        _plantHolder.AffectGrowth(entity, (int)args.Effect.Amount, entity);
+        _plantGrowth.AffectGrowth(entity, (int)args.Effect.Amount);
     }
 }

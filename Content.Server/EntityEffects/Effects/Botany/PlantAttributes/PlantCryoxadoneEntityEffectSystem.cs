@@ -5,6 +5,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
+/// <summary>
+/// Entity effect that reverts aging of plant.
+/// </summary>
 public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantCryoxadone>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -14,17 +17,16 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        var deviation = 0;
-        var seed = entity.Comp.Seed;
-        if (seed == null)
+        if (!TryComp<PlantComponent>(entity, out var plant) || !TryComp<PlantHarvestComponent>(entity, out var harvest))
             return;
-        if (entity.Comp.Age > seed.Maturation)
-            deviation = (int) Math.Max(seed.Maturation - 1, entity.Comp.Age - _random.Next(7, 10));
-        else
-            deviation = (int) (seed.Maturation / seed.GrowthStages);
+
+        var deviation = entity.Comp.Age > plant.Maturation
+            ? (int)Math.Max(plant.Maturation - 1, entity.Comp.Age - _random.Next(7, 10))
+            : (int)(plant.Maturation / plant.GrowthStages);
+
         entity.Comp.Age -= deviation;
-        entity.Comp.LastProduce = entity.Comp.Age;
         entity.Comp.SkipAging++;
         entity.Comp.ForceUpdate = true;
+        harvest.LastHarvest = entity.Comp.Age;
     }
 }

@@ -1,10 +1,12 @@
-using Content.Server.Botany;
 using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
 
 namespace Content.Server.EntityEffects.Effects.Botany;
 
+/// <summary>
+/// Plant mutation entity effect that changes repeatability of plant harvesting (without re-planting).
+/// </summary>
 public sealed partial class PlantMutateHarvestEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantMutateHarvest>
 {
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantMutateHarvest> args)
@@ -12,13 +14,14 @@ public sealed partial class PlantMutateHarvestEntityEffectSystem : EntityEffectS
         if (entity.Comp.Seed == null)
             return;
 
-        switch (entity.Comp.Seed.HarvestRepeat)
+        var harvest = EnsureComp<PlantHarvestComponent>(entity);
+        switch (harvest.HarvestRepeat)
         {
             case HarvestType.NoRepeat:
-                entity.Comp.Seed.HarvestRepeat = HarvestType.Repeat;
+                harvest.HarvestRepeat = HarvestType.Repeat;
                 break;
             case HarvestType.Repeat:
-                entity.Comp.Seed.HarvestRepeat = HarvestType.SelfHarvest;
+                harvest.HarvestRepeat = HarvestType.SelfHarvest;
                 break;
         }
     }

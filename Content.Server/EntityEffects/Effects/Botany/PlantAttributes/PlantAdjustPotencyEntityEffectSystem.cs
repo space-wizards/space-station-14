@@ -5,15 +5,21 @@ using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
+/// <summary>
+/// Entity effect that sets plant potency.
+/// </summary>
 public sealed partial class PlantAdjustPotencyEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustPotency>
 {
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
+
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustPotency> args)
     {
         if (entity.Comp.Seed == null || entity.Comp.Dead)
             return;
 
-        _plantHolder.EnsureUniqueSeed(entity, entity.Comp);
-        entity.Comp.Seed.Potency = Math.Max(entity.Comp.Seed.Potency + args.Effect.Amount, 1);
+        if (!TryComp<PlantComponent>(entity, out var plant))
+            return;
+
+        _plant.AdjustPotency((entity.Owner, plant), args.Effect.Amount);
     }
 }

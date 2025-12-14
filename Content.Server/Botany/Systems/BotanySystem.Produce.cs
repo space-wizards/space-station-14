@@ -11,7 +11,7 @@ public sealed partial class BotanySystem
 
     public void ProduceGrown(EntityUid uid, ProduceComponent produce)
     {
-        if (!TryGetSeed(produce, out var seed))
+        if (!TryGetSeed(produce, out var seed) || !TryGetPlant(seed, out var plant))
             return;
 
         foreach (var mutation in seed.Mutations)
@@ -27,11 +27,12 @@ public sealed partial class BotanySystem
             return;
 
         solutionContainer.RemoveAllSolution();
+
         foreach (var (chem, quantity) in seed.Chemicals)
         {
             var amount = quantity.Min;
-            if (quantity.PotencyDivisor > 0 && seed.Potency > 0)
-                amount += seed.Potency / quantity.PotencyDivisor;
+            if (quantity.PotencyDivisor > 0 && plant.Potency > 0)
+                amount += plant.Potency / quantity.PotencyDivisor;
             amount = FixedPoint2.Clamp(amount, quantity.Min, quantity.Max);
             solutionContainer.MaxVolume += amount;
             solutionContainer.AddReagent(chem, amount);
