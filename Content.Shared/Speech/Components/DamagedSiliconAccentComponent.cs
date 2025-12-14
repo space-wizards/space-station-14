@@ -70,7 +70,7 @@ public sealed partial class DamagedSiliconAccentComponent : Component
     ///     The maximum probability that a character will be dropped due to charge level.
     /// </summary>
     [DataField]
-    public float MaxDropProbFromPower = 0.5f;
+    public float MaxDropProbFromPower = 0.25f;
 
     /// <summary>
     ///     If a character is "dropped", this is the probability that the character will be turned into a period instead
