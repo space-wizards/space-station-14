@@ -441,7 +441,7 @@
   description: Custom 16-round double-stack magazine for the Viper pistol. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgePistolPractice
   - type: Sprite
     layers:
     - state: base
