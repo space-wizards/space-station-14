@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: notquitehadouken
-  changes:
-  - message: Mass scanner now shows any grid's distance from the current grid/entity
-      in tiles instead of from the top left corner of the UI in pixels
-    type: Fix
-  id: 8790
-  time: '2025-07-18T15:33:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39041
-- author: Pyrovi
-  changes:
-  - message: Changed some outdated info in the guidebook
-    type: Tweak
-  id: 8791
-  time: '2025-07-19T01:41:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38987
 - author: TiniestShark
   changes:
   - message: Adds a new slot for the Golden Plunger on the Janitor Trolley.
@@ -3917,3 +3902,25 @@
   id: 9290
   time: '2025-12-14T20:41:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41757
+- author: Red_Spy
+  changes:
+  - message: The chamber is now empty by default for weapons with a removable magazine.
+    type: Tweak
+  id: 9291
+  time: '2025-12-14T20:55:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41791
+- author: aada
+  changes:
+  - message: Maintenance closets have more toys in them.
+    type: Tweak
+  - message: The toy box crate now has random contents.
+    type: Tweak
+  - message: The roller skate bounty now only requires 1 pair of roller skates but
+      gives less money
+    type: Tweak
+  - message: The syndicate balloon, syndicate tricky bomb, foam rifle, and golden
+      bike horn all had their value reduced
+    type: Tweak
+  id: 9292
+  time: '2025-12-14T20:56:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41840
