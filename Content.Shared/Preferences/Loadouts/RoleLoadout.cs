@@ -264,7 +264,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         reason = null;
 
         var protoManager = collection.Resolve<IPrototypeManager>();
-var loadouts = groupProto.MaxLimit > 0 ? groupLoadouts[..Math.Min(groupLoadouts.Count, groupProto.MaxLimit)] : groupLoadouts;
+
         if (!protoManager.TryIndex(loadout, out var loadoutProto))
         {
             // Uhh
