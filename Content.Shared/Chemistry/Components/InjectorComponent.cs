@@ -40,11 +40,13 @@ public sealed partial class InjectorComponent : Component
     public List<FixedPoint2> TransferAmounts = new() { 1, 5, 10, 15 };
 
     /// <summary>
-    /// Amount to inject or draw on each usage. If the injector is inject only, it will
-    /// attempt to inject it's entire contents upon use.
+    /// Amount to inject or draw on each usage.
     /// </summary>
+    /// <remarks>
+    /// If its set null, this injector is marked to inject its entire contents upon usage.
+    /// </remarks>
     [DataField, AutoNetworkedField]
-    public FixedPoint2 CurrentTransferAmount = FixedPoint2.New(5);
+    public FixedPoint2? CurrentTransferAmount = FixedPoint2.New(5);
 
     /// <summary>
     /// Injection delay (seconds) when the target is a mob.
@@ -74,15 +76,6 @@ public sealed partial class InjectorComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 IgnoreDelayForVolume = FixedPoint2.New(5);
-
-    /// <summary>
-    /// Whether the injector will inject it's entire content after usage.
-    /// </summary>
-    /// <example>
-    /// Medipens inject their entire capacity upon usage.
-    /// </example>
-    [DataField]
-    public bool InjectEverything;
 
     /// <summary>
     /// Whether the injector is able to draw from or inject from mobs.
@@ -127,7 +120,7 @@ public sealed partial class InjectorComponent : Component
     public InjectorToggleMode ToggleState = InjectorToggleMode.Draw;
 
     /// <summary>
-    /// The state of the injector. Determines it's attack behavior. Containers must have the
+    /// The state of the injector. Injection/Drawing behavior. Containers must have the
     /// right SolutionCaps to support injection/drawing. For InjectOnly injectors this should
     /// only ever be set to Inject
     /// </summary>
@@ -192,4 +185,12 @@ public enum InjectorToggleMode
     /// The injector will draw from containers and inject into mobs.
     /// </summary>
     Dynamic = 1 << 2,
+}
+
+internal static class InjectorToggleModeExtensions
+{
+    public static bool HasAnyFlag(this InjectorToggleMode s1, InjectorToggleMode s2)
+    {
+        return (s1 & s2) != 0;
+    }
 }

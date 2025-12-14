@@ -17,7 +17,7 @@ public sealed class InjectorStatusControl : Control
 
     private FixedPoint2 _prevVolume;
     private FixedPoint2 _prevMaxVolume;
-    private FixedPoint2 _prevTransferAmount;
+    private FixedPoint2? _prevTransferAmount;
     private InjectorToggleMode _prevToggleState;
 
     public InjectorStatusControl(Entity<InjectorComponent> parent, SharedSolutionContainerSystem solutionContainers)
@@ -56,16 +56,21 @@ public sealed class InjectorStatusControl : Control
             _ => "injector-invalid-injector-toggle-mode",
         });
 
-        var label = "injector-volume-label";
         // Seeing transfer volume is only important for injectors that can change it.
-        if (_parent.Comp.TransferAmounts.Count > 1)
-            label = "injector-volume-transfer-label";
-
-
-        _label.SetMarkup(Loc.GetString(label,
-            ("currentVolume", solution.Volume),
-            ("totalVolume", solution.MaxVolume),
-            ("modeString", modeStringLocalized),
-            ("transferVolume", _parent.Comp.CurrentTransferAmount)));
+        if (_parent.Comp.TransferAmounts.Count > 1 && _parent.Comp.CurrentTransferAmount.HasValue)
+        {
+            _label.SetMarkup(Loc.GetString("injector-volume-transfer-label",
+                ("currentVolume", solution.Volume),
+                ("totalVolume", solution.MaxVolume),
+                ("modeString", modeStringLocalized),
+                ("transferVolume", _parent.Comp.CurrentTransferAmount.Value)));
+        }
+        else
+        {
+            _label.SetMarkup(Loc.GetString("injector-volume-label",
+                ("currentVolume", solution.Volume),
+                ("totalVolume", solution.MaxVolume),
+                ("modeString", modeStringLocalized)));
+        }
     }
 }
