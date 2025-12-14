@@ -208,14 +208,6 @@ namespace Content.Shared.Chemistry.Reagent
             return removed;
         }
 
-        public IEnumerable<string> GuidebookReagentEffectsDescription(IPrototypeManager prototype, IEntitySystemManager entSys, IEnumerable<EntityEffect> effects)
-        {
-            return effects.Select(x => GuidebookReagentEffectDescription(prototype, entSys, x, FixedPoint2.New(1f)))
-                .Where(x => x is not null)
-                .Select(x => x!)
-                .ToArray();
-        }
-
         public IEnumerable<string> GuidebookReagentEffectsDescription(IPrototypeManager prototype, IEntitySystemManager entSys, IEnumerable<EntityEffect> effects, FixedPoint2 metabolism)
         {
             return effects.Select(x => GuidebookReagentEffectDescription(prototype, entSys, x, metabolism))
@@ -264,7 +256,7 @@ namespace Content.Shared.Chemistry.Reagent
             if (proto.PlantMetabolisms.Count > 0)
             {
                 PlantMetabolisms =
-                    new List<string>(proto.GuidebookReagentEffectsDescription(prototype, entSys, proto.PlantMetabolisms));
+                    new List<string>(proto.GuidebookReagentEffectsDescription(prototype, entSys, proto.PlantMetabolisms, FixedPoint2.New(1f)));
             }
         }
     }
