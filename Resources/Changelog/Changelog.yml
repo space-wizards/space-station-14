@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: august-sun
-  changes:
-  - message: Added Estoc magazines to the syndicate ammo bundle.
-    type: Add
-  id: 8785
-  time: '2025-07-18T10:35:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38413
 - author: Kowlin
   changes:
   - message: The access configurator can now set GenPop enter and leave accesses on
@@ -3914,3 +3907,11 @@
   id: 9285
   time: '2025-12-14T00:55:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41844
+- author: aada
+  changes:
+  - message: Five cargo bounties have had their worth reduced so you can't make a
+      profit buying crates for them.
+    type: Fix
+  id: 9286
+  time: '2025-12-14T01:39:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41846
