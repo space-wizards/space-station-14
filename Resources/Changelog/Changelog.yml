@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TeenSarlacc
-  changes:
-  - message: Lowered Double Barrel shotgun spread to 60%.
-    type: Tweak
-  - message: Increased Sawn Off shotgun spread to 140%.
-    type: Tweak
-  id: 8789
-  time: '2025-07-18T11:41:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37731
 - author: notquitehadouken
   changes:
   - message: Mass scanner now shows any grid's distance from the current grid/entity
@@ -3918,3 +3909,11 @@
   id: 9289
   time: '2025-12-14T20:27:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41841
+- author: Hitlinemoss
+  changes:
+  - message: Skeletons are now vulnerable to Holy damage from sources such as the
+      space bible or holy water.
+    type: Add
+  id: 9290
+  time: '2025-12-14T20:41:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41757
