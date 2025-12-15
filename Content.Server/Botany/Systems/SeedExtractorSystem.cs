@@ -10,8 +10,8 @@ namespace Content.Server.Botany.Systems;
 public sealed class SeedExtractorSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly BotanySystem _botanySystem = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly BotanySystem _botany = default!;
 
     public override void Initialize()
     {
@@ -25,20 +25,24 @@ public sealed class SeedExtractorSystem : EntitySystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        if (!TryComp(args.Used, out ProduceComponent? produce))
+        if (!TryComp<ProduceComponent>(args.Used, out var produce))
             return;
 
-        if (!_botanySystem.TryGetSeed(produce, out var seed))
+        if (produce.PlantData == null)
             return;
 
-        if (!BotanySystem.TryGetPlantTraits(seed, out var traits) || traits.Seedless)
+        var snapshot = produce.PlantData;
+        var protoId = produce.PlantProtoId;
+        produce.PlantData = null;
+
+        if (_botany.TryGetPlantComponent<PlantTraitsComponent>(snapshot, protoId, out var traits) && traits.Seedless)
         {
-            _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
+            _popup.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User, PopupType.MediumCaution);
             return;
         }
 
-        _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
+        _popup.PopupCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
             args.User, PopupType.Medium);
 
         QueueDel(args.Used);
@@ -47,13 +51,9 @@ public sealed class SeedExtractorSystem : EntitySystem
         var amount = _random.Next(seedExtractor.BaseMinSeeds, seedExtractor.BaseMaxSeeds + 1);
         var coords = Transform(uid).Coordinates;
 
-        var packetSeed = seed;
-        if (amount > 1)
-            packetSeed.Unique = false;
-
         for (var i = 0; i < amount; i++)
         {
-            _botanySystem.SpawnSeedPacket(packetSeed, coords, args.User);
+            _botany.SpawnSeedPacketFromSnapshot(snapshot, protoId, coords, args.User);
         }
     }
 }

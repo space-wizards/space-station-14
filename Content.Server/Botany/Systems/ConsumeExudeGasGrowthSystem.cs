@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Events;
 using Content.Shared.Atmos;
 
 namespace Content.Server.Botany.Systems;
@@ -11,42 +12,55 @@ namespace Content.Server.Botany.Systems;
 public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly BotanySystem _botany = default!;
+    [Dependency] private readonly MutationSystem _mutation = default!;
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<ConsumeExudeGasGrowthComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
         SubscribeLocalEvent<ConsumeExudeGasGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
+    }
+
+    private void OnCrossPollinate(Entity<ConsumeExudeGasGrowthComponent> ent, ref PlantCrossPollinateEvent args)
+    {
+        if (!_botany.TryGetPlantComponent<ConsumeExudeGasGrowthComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
+            return;
+
+        _mutation.CrossGasses(ref ent.Comp.ConsumeGasses, pollenData.ConsumeGasses);
+        _mutation.CrossGasses(ref ent.Comp.ExudeGasses, pollenData.ExudeGasses);
     }
 
     private void OnPlantGrow(Entity<ConsumeExudeGasGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (uid, component) = ent;
+        var (plantUid, component) = ent;
+        var (_, tray) = args.Tray;
 
-        if (!TryComp(uid, out PlantHolderComponent? holder)
-            || !TryComp(uid, out PlantComponent? plant))
+        if (!TryComp<PlantComponent>(plantUid, out var plant)
+            || !TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
 
-        var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
+        var environment = _atmosphere.GetContainingMixture(plantUid, true, true) ?? GasMixture.SpaceGas;
 
         // Consume Gasses.
-        holder.MissingGas = 0;
+        tray.MissingGas = 0;
         if (component.ConsumeGasses.Count > 0)
         {
             foreach (var (gas, amount) in component.ConsumeGasses)
             {
                 if (environment.GetMoles(gas) < amount)
                 {
-                    holder.MissingGas++;
+                    tray.MissingGas++;
                     continue;
                 }
 
                 environment.AdjustMoles(gas, -amount);
             }
 
-            if (holder.MissingGas > 0)
+            if (tray.MissingGas > 0)
             {
-                holder.Health -= holder.MissingGas * BasicGrowthSystem.HydroponicsSpeedMultiplier;
-                if (holder.DrawWarnings)
-                    holder.UpdateSpriteAfterUpdate = true;
+                holder.Health -= tray.MissingGas * tray.TraySpeedMultiplier;
+                if (tray.DrawWarnings)
+                    tray.UpdateSpriteAfterUpdate = true;
             }
         }
 

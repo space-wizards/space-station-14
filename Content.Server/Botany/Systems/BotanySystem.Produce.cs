@@ -11,10 +11,11 @@ public sealed partial class BotanySystem
 
     public void ProduceGrown(EntityUid uid, ProduceComponent produce)
     {
-        if (!TryGetSeed(produce, out var seed) || !TryGetPlant(seed, out var plant))
+        if (!TryGetPlantComponent<PlantComponent>(produce.PlantData, produce.PlantProtoId, out var plant)
+            || !TryGetPlantComponent<PlantChemicalsComponent>(produce.PlantData, produce.PlantProtoId, out var chems))
             return;
 
-        foreach (var mutation in seed.Mutations)
+        foreach (var mutation in plant.Mutations)
         {
             if (mutation.AppliesToProduce)
                 _entityEffects.TryApplyEffect(uid, mutation.Effect);
@@ -28,7 +29,7 @@ public sealed partial class BotanySystem
 
         solutionContainer.RemoveAllSolution();
 
-        foreach (var (chem, quantity) in seed.Chemicals)
+        foreach (var (chem, quantity) in chems.Chemicals)
         {
             var amount = quantity.Min;
             if (quantity.PotencyDivisor > 0 && plant.Potency > 0)
@@ -41,12 +42,15 @@ public sealed partial class BotanySystem
 
     public void OnProduceExamined(EntityUid uid, ProduceComponent comp, ExaminedEvent args)
     {
-        if (comp.Seed == null)
+        if (comp.PlantData == null)
+            return;
+
+        if (!TryGetPlantComponent<PlantComponent>(comp.PlantData, comp.PlantProtoId, out var plant))
             return;
 
         using (args.PushGroup(nameof(ProduceComponent)))
         {
-            foreach (var m in comp.Seed.Mutations)
+            foreach (var m in plant.Mutations)
             {
                 // Don't show mutations that have no effect on produce (sentience)
                 if (!m.AppliesToProduce)

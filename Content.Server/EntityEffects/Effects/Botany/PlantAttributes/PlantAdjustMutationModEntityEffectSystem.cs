@@ -4,13 +4,24 @@ using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantAdjustMutationModEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustMutationMod>
+/// <summary>
+/// Entity effect that adjusts the mutation mod of a plant.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantAdjustMutationModEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAdjustMutationMod>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustMutationMod> args)
+    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustMutationMod> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead)
+        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
             return;
 
-        entity.Comp.MutationMod += args.Effect.Amount;
+        var plantUid = entity.Comp.PlantEntity.Value;
+        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
+            return;
+
+        if (plantHolder.Dead)
+            return;
+
+        plantHolder.MutationMod += args.Effect.Amount;
     }
 }

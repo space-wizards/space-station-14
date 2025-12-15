@@ -5,12 +5,16 @@ using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantAdjustNutritionEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustNutrition>
+/// <summary>
+/// Entity effect that adjusts the nutrition of a plant.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantAdjustNutritionEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAdjustNutrition>
 {
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustNutrition> args)
+    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustNutrition> args)
     {
-        _plantHolder.AdjustNutrient(entity, args.Effect.Amount, entity);
+        _plantTray.AdjustNutrient(entity.AsNullable(), args.Effect.Amount);
     }
 }

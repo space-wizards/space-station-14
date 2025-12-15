@@ -8,25 +8,29 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// <summary>
 /// Entity effect that reverts aging of plant.
 /// </summary>
-public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantCryoxadone>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantCryoxadone>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
+    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead)
+        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
             return;
 
-        if (!TryComp<PlantComponent>(entity, out var plant) || !TryComp<PlantHarvestComponent>(entity, out var harvest))
+        var plantUid = entity.Comp.PlantEntity.Value;
+        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder) ||
+            !TryComp<PlantComponent>(plantUid, out var plant) ||
+            !TryComp<PlantHarvestComponent>(plantUid, out var harvest))
             return;
 
-        var deviation = entity.Comp.Age > plant.Maturation
-            ? (int)Math.Max(plant.Maturation - 1, entity.Comp.Age - _random.Next(7, 10))
+        var deviation = plantHolder.Age > plant.Maturation
+            ? (int)Math.Max(plant.Maturation - 1, plantHolder.Age - _random.Next(7, 10))
             : (int)(plant.Maturation / plant.GrowthStages);
 
-        entity.Comp.Age -= deviation;
-        entity.Comp.SkipAging++;
+        plantHolder.Age -= deviation;
+        plantHolder.SkipAging++;
         entity.Comp.ForceUpdate = true;
-        harvest.LastHarvest = entity.Comp.Age;
+        harvest.LastHarvest = plantHolder.Age;
     }
 }

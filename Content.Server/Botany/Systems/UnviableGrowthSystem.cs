@@ -14,15 +14,14 @@ public sealed class UnviableGrowthSystem : EntitySystem
 
     private void OnPlantGrow(Entity<UnviableGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (uid, component) = ent;
+        var (plantUid, component) = ent;
+        var (_, tray) = args.Tray;
 
-        if (!TryComp(uid, out PlantHolderComponent? holder)
-            || !BotanySystem.TryGetPlantTraits(holder.Seed, out var traits)
-            || traits.Viable)
+        if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
 
         holder.Health -= component.UnviableDamage;
-        if (holder.DrawWarnings)
-            holder.UpdateSpriteAfterUpdate = true;
+        if (tray.DrawWarnings)
+            tray.UpdateSpriteAfterUpdate = true;
     }
 }

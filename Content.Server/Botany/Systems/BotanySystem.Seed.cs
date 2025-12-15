@@ -1,33 +1,33 @@
+using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Botany;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Kitchen.Components;
-using Content.Shared.Popups;
 using Content.Shared.Random;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem : EntitySystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -37,188 +37,166 @@ public sealed partial class BotanySystem : EntitySystem
         SubscribeLocalEvent<ProduceComponent, ExaminedEvent>(OnProduceExamined);
     }
 
-    public bool TryGetSeed(SeedComponent comp, [NotNullWhen(true)] out SeedData? seed)
-    {
-        if (comp.Seed != null)
-        {
-            seed = comp.Seed;
-            return true;
-        }
-
-        if (comp.SeedId != null
-            && _prototypeManager.TryIndex(comp.SeedId, out var protoSeed))
-        {
-            seed = protoSeed.Clone();
-            return true;
-        }
-
-        seed = null;
-        return false;
-    }
-
-    public bool TryGetSeed(ProduceComponent comp, [NotNullWhen(true)] out SeedData? seed)
-    {
-        if (comp.Seed != null)
-        {
-            seed = comp.Seed;
-            return true;
-        }
-
-        if (comp.SeedId != null
-            && _prototypeManager.TryIndex(comp.SeedId, out var protoSeed))
-        {
-            seed = protoSeed;
-            return true;
-        }
-
-        seed = null;
-        return false;
-    }
-
-    /// TODO: Delete after plants transition to entities
-    public static bool TryGetPlant(SeedData? seed, [NotNullWhen(true)] out PlantComponent? plantComponent)
-    {
-        plantComponent = seed?.GrowthComponents.Plant;
-        return plantComponent != null;
-    }
-
-    /// TODO: Delete after plants transition to entities
-    public static bool TryGetPlantTraits(SeedData? seed, [NotNullWhen(true)] out PlantTraitsComponent? traitsComponent)
-    {
-        traitsComponent = seed?.GrowthComponents.PlantTraits;
-        return traitsComponent != null;
-    }
-
     private void OnExamined(EntityUid uid, SeedComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        if (!TryGetSeed(component, out var seed) || !TryGetPlant(seed, out var plant))
+        if (!TryGetPlantComponent<PlantComponent>(component.PlantData, component.PlantProtoId, out var plantComp))
             return;
 
         using (args.PushGroup(nameof(SeedComponent), 1))
         {
-            var name = Loc.GetString(seed.DisplayName);
-            args.PushMarkup(Loc.GetString($"seed-component-description", ("seedName", name)));
-            args.PushMarkup(Loc.GetString($"seed-component-plant-yield-text", ("seedYield", plant.Yield)));
-            args.PushMarkup(Loc.GetString($"seed-component-plant-potency-text", ("seedPotency", plant.Potency)));
+            var name = Loc.GetString(plantComp.DisplayName);
+            args.PushMarkup(Loc.GetString("seed-component-description", ("seedName", name)));
+            args.PushMarkup(Loc.GetString("seed-component-plant-yield-text", ("seedYield", plantComp.Yield)));
+            args.PushMarkup(Loc.GetString("seed-component-plant-potency-text", ("seedPotency", plantComp.Potency)));
         }
     }
-
-    #region SeedPrototype prototype stuff
 
     /// <summary>
-    /// Spawns a new seed packet on the floor at a position, then tries to put it in the user's hands if possible.
+    /// Tries to get a plant component from a snapshot or prototype.
     /// </summary>
-    public EntityUid SpawnSeedPacket(SeedData proto, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
+    /// <typeparam name="T">The type of component to get.</typeparam>
+    /// <param name="snapshot">The snapshot to get the component from.</param>
+    /// <param name="plantProtoId">The prototype ID to get the component from.</param>
+    /// <param name="plant">The plant component if found.</param>
+    [PublicAPI]
+    public bool TryGetPlantComponent<T>(ComponentRegistry? snapshot, EntProtoId? plantProtoId, [NotNullWhen(true)] out T? plant)
+        where T : class, IComponent, new()
     {
-        var seed = Spawn(proto.PacketPrototype, coords);
-        var seedComp = EnsureComp<SeedComponent>(seed);
-        seedComp.Seed = proto.Clone();
-        seedComp.HealthOverride = healthOverride;
+        plant = null;
 
-        var name = Loc.GetString(proto.Name);
-        var noun = Loc.GetString(proto.Noun);
-        var val = Loc.GetString("botany-seed-packet-name", ("seedName", name), ("seedNoun", noun));
-        _metaData.SetEntityName(seed, val);
-
-        // try to automatically place in user's other hand
-        _hands.TryPickupAnyHand(user, seed);
-        return seed;
-    }
-
-    public IEnumerable<EntityUid> AutoHarvest(SeedData proto, EntityCoordinates position, EntityUid plantEntity)
-    {
-        if (position.IsValid(EntityManager) &&
-            proto.ProductPrototypes.Count > 0)
-        {
-            if (proto.HarvestLogImpact != null)
-                _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(proto.Name):seed} at Pos:{position}.");
-
-            return GenerateProduct(proto, position, plantEntity);
-        }
-
-        return [];
-    }
-
-    public IEnumerable<EntityUid> Harvest(SeedData proto, EntityUid user, EntityUid plantEntity)
-    {
-        if (!TryGetPlant(proto, out var plant) || proto.ProductPrototypes.Count == 0 || plant.Yield <= 0)
-        {
-            _popupSystem.PopupCursor(Loc.GetString("botany-harvest-fail-message"), user, PopupType.Medium);
-            return [];
-        }
-
-        var name = Loc.GetString(proto.DisplayName);
-        _popupSystem.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
-
-        if (proto.HarvestLogImpact != null)
-            _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"{ToPrettyString(user):player} harvested {Loc.GetString(proto.Name):seed} at Pos:{Transform(user).Coordinates}.");
-
-        return GenerateProduct(proto, Transform(user).Coordinates, plantEntity);
-    }
-
-    public IEnumerable<EntityUid> GenerateProduct(SeedData proto, EntityCoordinates position, EntityUid plantEntity)
-    {
-        if (!TryGetPlant(proto, out var plant))
-            return [];
-
-        var yieldMod = Comp<PlantHolderComponent>(plantEntity).YieldMod;
-        var harvest = Comp<PlantHarvestComponent>(plantEntity);
-
-        var totalYield = 0;
-
-        if (plant.Yield > -1)
-        {
-            if (yieldMod < 0)
-                totalYield = plant.Yield;
-            else
-                totalYield = plant.Yield * yieldMod;
-
-            totalYield = Math.Max(1, totalYield);
-        }
-
-        var products = new List<EntityUid>();
-
-        if (totalYield > 1 || harvest.HarvestRepeat != HarvestType.NoRepeat)
-            proto.Unique = false;
-
-        for (var i = 0; i < totalYield; i++)
-        {
-            var product = _robustRandom.Pick(proto.ProductPrototypes);
-
-            var entity = Spawn(product, position);
-            _randomHelper.RandomOffset(entity, 0.25f);
-            products.Add(entity);
-
-            var produce = EnsureComp<ProduceComponent>(entity);
-
-            produce.Seed = proto.Clone();
-
-            ProduceGrown(entity, produce);
-
-            _appearance.SetData(entity, ProduceVisuals.Potency, plant.Potency);
-
-            if (proto.Mysterious)
-            {
-                var metaData = MetaData(entity);
-                _metaData.SetEntityName(entity, metaData.EntityName + "?", metaData);
-                _metaData.SetEntityDescription(entity,
-                    metaData.EntityDescription + " " + Loc.GetString("botany-mysterious-description-addon"), metaData);
-            }
-        }
-
-        return products;
-    }
-
-    public bool CanHarvest(SeedData proto, EntityUid? held = null)
-    {
-        if (!TryGetPlantTraits(proto, out var traits))
+        if (snapshot != null && snapshot.TryGetComponent(_componentFactory, out plant))
             return true;
 
-        return !traits.Ligneous || traits.Ligneous && held != null && HasComp<SharpComponent>(held);
+        if (plantProtoId == null)
+            return false;
+
+        if (!_prototypeManager.TryIndex(plantProtoId.Value, out var proto))
+            return false;
+
+        return proto.TryGetComponent(out plant, _componentFactory);
     }
 
-    #endregion
+    /// <summary>
+    /// Clones a component snapshot of a plant.
+    /// </summary>
+    /// <param name="source">The entity to clone the snapshot from.</param>
+    [PublicAPI]
+    public ComponentRegistry ClonePlantSnapshotData(EntityUid source)
+    {
+        var snap = new ComponentRegistry();
+
+        var typesToCopy = new[]
+        {
+            typeof(PlantComponent),
+            typeof(PlantChemicalsComponent),
+            typeof(PlantHarvestComponent),
+            typeof(PlantTraitsComponent),
+            typeof(BasicGrowthComponent),
+            typeof(AtmosphericGrowthComponent),
+            typeof(ConsumeExudeGasGrowthComponent),
+            typeof(WeedPestGrowthComponent),
+            typeof(UnviableGrowthComponent),
+            typeof(PlantToxinsComponent)
+        };
+
+        foreach (var type in typesToCopy)
+        {
+            if (!EntityManager.TryGetComponent(source, type, out var comp))
+                continue;
+
+            if (comp is not Component component)
+                continue;
+
+            var copied = _serialization.CreateCopy(component, notNullableOverride: true);
+            var compName = _componentFactory.GetComponentName(type);
+            snap[compName] = new EntityPrototype.ComponentRegistryEntry(copied, []);
+        }
+
+        return snap;
+    }
+
+    /// Applies a component snapshot to a plant.
+    /// </summary>
+    /// <param name="plant">The plant to apply the snapshot to.</param>
+    /// <param name="snapshot">The component snapshot to apply.</param>
+    [PublicAPI]
+    public void ApplyPlantSnapshotData(EntityUid plant, ComponentRegistry snapshot)
+    {
+        foreach (var (_, entry) in snapshot)
+        {
+            if (entry.Component is not Component component)
+                continue;
+
+            // Never apply runtime lifecycle component from a seed snapshot.
+            if (component is PlantHolderComponent)
+                continue;
+
+            var copied = _serialization.CreateCopy(component, notNullableOverride: true);
+            EntityManager.AddComponent(plant, copied, overwrite: true);
+        }
+    }
+
+    /// <summary>
+    /// Spawns a seed packet that stores a component snapshot of <paramref name="sourcePlant"/>.
+    /// </summary>
+    [PublicAPI]
+    public EntityUid SpawnSeedPacketFromPlant(EntityUid sourcePlant, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
+    {
+        if (!TryComp<PlantComponent>(sourcePlant, out var plant))
+            return EntityUid.Invalid;
+
+        var protoId = MetaData(sourcePlant).EntityPrototype?.ID;
+        var snapshot = ClonePlantSnapshotData(sourcePlant);
+
+        return SpawnSeedPacketInternal(plant, protoId, snapshot, coords, user, healthOverride);
+    }
+
+    /// <summary>
+    /// Spawns a seed packet that stores a component snapshot of <paramref name="snapshot"/>.
+    /// </summary
+    [PublicAPI]
+    public EntityUid SpawnSeedPacketFromSnapshot(ComponentRegistry snapshot, EntProtoId? plantProtoId, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
+    {
+        if (!TryGetPlantComponent<PlantComponent>(snapshot, plantProtoId, out var plant))
+            return EntityUid.Invalid;
+
+        return SpawnSeedPacketInternal(plant, plantProtoId, snapshot, coords, user, healthOverride);
+    }
+
+    /// <summary>
+    /// Internal method to spawn a seed packet from a plant component.
+    /// </summary>
+    /// <param name="plant">The plant component to spawn.</param>
+    /// <param name="plantProtoId">The plant prototype ID to store in the seed component.</param>
+    /// <param name="snapshot">The component snapshot to store in the seed component.</param>
+    /// <param name="coords">The coordinates to spawn the seed packet at.</param>
+    /// <param name="user">The user who is spawning the seed packet.</param>
+    /// <param name="healthOverride">The health override to store in the seed component.</param>
+    /// <returns>The spawned seed packet entity.</returns>
+    private EntityUid SpawnSeedPacketInternal(
+        PlantComponent plant,
+        EntProtoId? plantProtoId,
+        ComponentRegistry? snapshot,
+        EntityCoordinates coords,
+        EntityUid user,
+        float? healthOverride)
+    {
+        var seedItem = Spawn(plant.PacketPrototype, coords);
+        var seedComp = EnsureComp<SeedComponent>(seedItem);
+        seedComp.PlantProtoId = plantProtoId;
+        seedComp.PlantData = snapshot != null
+            ? _serialization.CreateCopy(snapshot, notNullableOverride: true)
+            : null;
+        seedComp.HealthOverride = healthOverride;
+
+        var name = Loc.GetString(plant.DisplayName);
+        var noun = Loc.GetString(plant.Noun);
+        _metaData.SetEntityName(seedItem, Loc.GetString("botany-seed-packet-name", ("seedName", name), ("seedNoun", noun)));
+
+        _hands.TryPickupAnyHand(user, seedItem);
+        return seedItem;
+    }
 }

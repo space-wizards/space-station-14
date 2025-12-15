@@ -7,14 +7,16 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// <summary>
 /// Entity effect that mutates plant to lose health with time.
 /// </summary>
-public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantPhalanximine>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantPhalanximine>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantPhalanximine> args)
+    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantPhalanximine> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
+        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
             return;
 
-        if (TryComp<PlantTraitsComponent>(entity, out var traits))
+        var plantUid = entity.Comp.PlantEntity.Value;
+        if (TryComp<PlantTraitsComponent>(plantUid, out var traits))
             traits.Viable = true;
     }
 }

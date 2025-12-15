@@ -10,26 +10,22 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// This system mutates an inputted stat for a PlantHolder, only works for floats, integers, and bools.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantChangeStat>
+public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantChangeStat>
 {
     // TODO: This is awful. I do not have the strength to refactor this. I want it gone.
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantChangeStat> args)
+    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantChangeStat> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead)
+        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
             return;
 
         var targetValue = args.Effect.TargetValue;
 
         // Scan live plant growth components and mutate the first matching field.
-        foreach (var growthComp in EntityManager.GetComponents<Component>(entity.Owner))
+        foreach (var growthComp in EntityManager.GetComponents<Component>(entity.Comp.PlantEntity.Value))
         {
-            
             var componentType = growthComp.GetType();
-            if(!GrowthComponentsHolder.GrowthComponentTypes.Contains(componentType))
-                continue;
-
             var field = componentType.GetField(targetValue);
 
             if (field == null)

@@ -1,4 +1,5 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Events;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -9,6 +10,7 @@ namespace Content.Server.Botany.Systems;
 
 public sealed class BotanySwabSystem : EntitySystem
 {
+    [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly MutationSystem _mutation = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -30,7 +32,7 @@ public sealed class BotanySwabSystem : EntitySystem
     {
         if (args.IsInDetailsRange)
         {
-            if (swab.SeedData != null)
+            if (swab.PlantData != null)
                 args.PushMarkup(Loc.GetString("swab-used"));
             else
                 args.PushMarkup(Loc.GetString("swab-unused"));
@@ -42,7 +44,7 @@ public sealed class BotanySwabSystem : EntitySystem
     /// </summary>
     private void OnAfterInteract(EntityUid uid, BotanySwabComponent swab, AfterInteractEvent args)
     {
-        if (args.Target == null || !args.CanReach || !HasComp<PlantHolderComponent>(args.Target))
+        if (args.Target == null || !args.CanReach || !HasComp<PlantComponent>(args.Target))
             return;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, swab.SwabDelay, new BotanySwabDoAfterEvent(), uid, target: args.Target, used: uid)
@@ -58,30 +60,32 @@ public sealed class BotanySwabSystem : EntitySystem
     /// </summary>
     private void OnDoAfter(EntityUid uid, BotanySwabComponent swab, DoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || !TryComp<PlantHolderComponent>(args.Args.Target, out var plant))
+        if (args.Cancelled || args.Handled || !HasComp<PlantComponent>(args.Args.Target))
             return;
 
-        if (swab.SeedData == null)
-        {
-            // Pick up pollen.
-            if (plant.Seed != null)
-                swab.SeedData = plant.Seed.Clone();
+        var targetPlant = args.Args.Target.Value;
 
-            _popup.PopupEntity(Loc.GetString("botany-swab-from"), args.Args.Target.Value, args.Args.User);
+        if (swab.PlantData == null)
+        {
+            // Pick up pollen snapshot.
+            swab.PlantProtoId = MetaData(targetPlant).EntityPrototype?.ID;
+            swab.PlantData = _botany.ClonePlantSnapshotData(targetPlant);
+
+            _popup.PopupEntity(Loc.GetString("botany-swab-from"), targetPlant, args.Args.User);
         }
         else
         {
-            var old = plant.Seed;
-            if (old == null)
-                return;
+            _mutation.CrossMutations(swab.PlantData, swab.PlantProtoId, targetPlant);
 
-            // Cross-pollinate the plants.
-            plant.Seed = _mutation.Cross(swab.SeedData, old);
+            // Notify growth systems to apply their per-component cross logic.
+            var crossEv = new PlantCrossPollinateEvent(swab.PlantData, swab.PlantProtoId);
+            RaiseLocalEvent(targetPlant, ref crossEv);
 
-            // Transfer old plant pollen to swab.
-            swab.SeedData = old.Clone();
+            // Swap: store old target pollen on the swab, apply cross to the target using swab pollen.
+            swab.PlantProtoId = MetaData(targetPlant).EntityPrototype?.ID;
+            swab.PlantData = _botany.ClonePlantSnapshotData(targetPlant);
 
-            _popup.PopupEntity(Loc.GetString("botany-swab-to"), args.Args.Target.Value, args.Args.User);
+            _popup.PopupEntity(Loc.GetString("botany-swab-to"), targetPlant, args.Args.User);
         }
 
         args.Handled = true;

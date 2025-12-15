@@ -1,4 +1,3 @@
-using Content.Server.Botany;
 using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
@@ -8,24 +7,29 @@ using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects.Botany;
 
-public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantMutateChemicals>
+/// <summary>
+/// Entity effect that mutates the chemicals of a plant.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantMutateChemicals>
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
+    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
     {
-        if (entity.Comp.Seed == null)
+        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
             return;
 
-        var chemicals = entity.Comp.Seed.Chemicals;
+        var plantUid = entity.Comp.PlantEntity.Value;
+        var chemicals = EnsureComp<PlantChemicalsComponent>(plantUid).Chemicals;
         var randomChems = _proto.Index(args.Effect.RandomPickBotanyReagent).Fills;
 
         // Add a random amount of a random chemical to this set of chemicals
         var pick = _random.Pick(randomChems);
         var chemicalId = _random.Pick(pick.Reagents);
         var amount = _random.NextFloat(0.1f, (float)pick.Quantity);
-        var seedChemQuantity = new SeedChemQuantity();
+        var seedChemQuantity = new PlantChemQuantity();
         if (chemicals.ContainsKey(chemicalId))
         {
             seedChemQuantity.Min = chemicals[chemicalId].Min;
@@ -38,7 +42,7 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
             seedChemQuantity.Inherent = false;
         }
         var potencyDivisor = 100f / seedChemQuantity.Max;
-        seedChemQuantity.PotencyDivisor = (float) potencyDivisor;
+        seedChemQuantity.PotencyDivisor = (float)potencyDivisor;
         chemicals[chemicalId] = seedChemQuantity;
     }
 }

@@ -11,16 +11,17 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// Potency directly correlates to the size of the plant's produce.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, RobustHarvest>
+public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, RobustHarvest>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<RobustHarvest> args)
+    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<RobustHarvest> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead)
+        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
             return;
 
-        if (!TryComp<PlantComponent>(entity, out var plant) || !TryComp<PlantTraitsComponent>(entity, out var traits))
+        var plantUid = entity.Comp.PlantEntity.Value;
+        if (!TryComp<PlantComponent>(plantUid, out var plant) || !TryComp<PlantTraitsComponent>(plantUid, out var traits) || !TryComp<PlantHolderComponent>(plantUid, out var plantHolder) || plantHolder.Dead)
             return;
 
         if (plant.Potency < args.Effect.PotencyLimit)

@@ -1,5 +1,5 @@
 using Content.Server.Botany.Components;
-using Content.Shared.Swab;
+using Content.Server.Botany.Events;
 using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
@@ -12,70 +12,38 @@ public sealed class BasicGrowthSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-
-    // TODO: Multipliers should be taken from the hydroponics component.
-    /// <summary>
-    /// Multiplier for plant growth speed in hydroponics.
-    /// </summary>
-    public const float HydroponicsSpeedMultiplier = 1f;
-
-    /// <summary>
-    /// Multiplier for resource consumption (water, nutrients) in hydroponics.
-    /// </summary>
-    public const float HydroponicsConsumptionMultiplier = 2f;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
+    [Dependency] private readonly MutationSystem _mutation = default!;
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<BasicGrowthComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
         SubscribeLocalEvent<BasicGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
-        SubscribeLocalEvent<BasicGrowthComponent, BotanySwabDoAfterEvent>(OnSwab);
     }
 
-    private void OnSwab(Entity<BasicGrowthComponent> ent, ref BotanySwabDoAfterEvent args)
+    private void OnCrossPollinate(Entity<BasicGrowthComponent> ent, ref PlantCrossPollinateEvent args)
     {
-        var component = ent.Comp;
-
-        if (args.Cancelled || args.Handled || args.Used == null)
+        if (!_botany.TryGetPlantComponent<BasicGrowthComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
             return;
 
-        if (!TryComp<BotanySwabComponent>(args.Used.Value, out var swab) || swab.SeedData == null)
-            return;
-
-        var swabComp = swab.SeedData.GrowthComponents.BasicGrowth;
-        if (swabComp == null)
-        {
-            swab.SeedData.GrowthComponents.BasicGrowth = new BasicGrowthComponent
-            {
-                WaterConsumption = component.WaterConsumption,
-                NutrientConsumption = component.NutrientConsumption
-            };
-        }
-        else
-        {
-            if (_random.Prob(0.5f))
-                swabComp.WaterConsumption = component.WaterConsumption;
-            if (_random.Prob(0.5f))
-                swabComp.NutrientConsumption = component.NutrientConsumption;
-        }
+        _mutation.CrossFloat(ref ent.Comp.WaterConsumption, pollenData.WaterConsumption);
+        _mutation.CrossFloat(ref ent.Comp.NutrientConsumption, pollenData.NutrientConsumption);
     }
 
     private void OnPlantGrow(Entity<BasicGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (uid, component) = ent;
+        var (plantUid, component) = ent;
+        var (_, tray) = args.Tray;
 
-        if (!TryComp(uid, out PlantHolderComponent? holder)
-            || !TryComp<PlantTraitsComponent>(uid, out var traits))
-            return;
-
-        if (holder.Seed == null || holder.Dead)
+        if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
 
         // Check if the plant is viable.
-        if (!traits.Viable)
+        if (TryComp<PlantTraitsComponent>(plantUid, out var traits) && !traits.Viable)
         {
-            holder.Health -= _random.Next(5, 10) * HydroponicsSpeedMultiplier;
-            if (holder.DrawWarnings)
-                holder.UpdateSpriteAfterUpdate = true;
+            holder.Health -= _random.Next(5, 10) * tray.TraySpeedMultiplier;
+            if (tray.DrawWarnings)
+                tray.UpdateSpriteAfterUpdate = true;
 
             return;
         }
@@ -88,66 +56,65 @@ public sealed class BasicGrowthSystem : EntitySystem
         else
         {
             if (_random.Prob(0.8f))
-                holder.Age += (int)(1 * HydroponicsSpeedMultiplier);
+                holder.Age += (int)(1 * tray.TraySpeedMultiplier);
 
-            holder.UpdateSpriteAfterUpdate = true;
+            tray.UpdateSpriteAfterUpdate = true;
         }
 
         if (holder.Age < 0) // Revert back to seed packet!
         {
-            var packetSeed = holder.Seed;
             // will put it in the trays hands if it has any, please do not try doing this.
-            _botany.SpawnSeedPacket(packetSeed, Transform(uid).Coordinates, uid);
-            _plantHolder.RemovePlant(uid, holder);
-            holder.ForceUpdate = true;
-            _plantHolder.Update(uid, holder);
+            _botany.SpawnSeedPacketFromPlant(plantUid, Transform(args.Tray.Owner).Coordinates, args.Tray.Owner);
+            _plantTray.RemovePlant(args.Tray.AsNullable());
+            tray.ForceUpdate = true;
+            _plantTray.Update(args.Tray.AsNullable());
             return;
         }
 
-        if (component.WaterConsumption > 0 && holder.WaterLevel > 0 && _random.Prob(0.75f))
+        if (component.WaterConsumption > 0 && tray.WaterLevel > 0 && _random.Prob(0.75f))
         {
-            holder.WaterLevel -= MathF.Max(0f,
-                component.WaterConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+            tray.WaterLevel -= MathF.Max(0f,
+                component.WaterConsumption * tray.TrayConsumptionMultiplier * tray.TraySpeedMultiplier);
 
-            if (holder.DrawWarnings)
-                holder.UpdateSpriteAfterUpdate = true;
+            if (tray.DrawWarnings)
+                tray.UpdateSpriteAfterUpdate = true;
         }
 
-        if (component.NutrientConsumption > 0 && holder.NutritionLevel > 0 && _random.Prob(0.75f))
+        if (component.NutrientConsumption > 0 && tray.NutritionLevel > 0 && _random.Prob(0.75f))
         {
-            holder.NutritionLevel -= MathF.Max(0f,
-                component.NutrientConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+            tray.NutritionLevel -= MathF.Max(0f,
+                component.NutrientConsumption * tray.TrayConsumptionMultiplier * tray.TraySpeedMultiplier);
 
-            if (holder.DrawWarnings)
-                holder.UpdateSpriteAfterUpdate = true;
+            if (tray.DrawWarnings)
+                tray.UpdateSpriteAfterUpdate = true;
         }
 
-        var healthMod = _random.Next(1, 3) * HydroponicsSpeedMultiplier;
+        var healthMod = _random.Next(1, 3) * tray.TraySpeedMultiplier;
         if (holder.SkipAging < 10)
         {
             // Make sure the plant is not thirsty.
-            if (holder.WaterLevel > 10)
+            if (tray.WaterLevel > 10)
             {
                 holder.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
             }
             else
             {
-                AffectGrowth((uid, holder), -1);
+                AffectGrowth((plantUid, holder), -1);
                 holder.Health -= healthMod;
             }
 
-            if (holder.NutritionLevel > 5)
+            if (tray.NutritionLevel > 5)
             {
                 holder.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
             }
             else
             {
-                AffectGrowth((uid, holder), -1);
+                AffectGrowth((plantUid, holder), -1);
                 holder.Health -= healthMod;
             }
 
-            if (holder.DrawWarnings)
-                holder.UpdateSpriteAfterUpdate = true;
+            if (tray.DrawWarnings)
+                tray.UpdateSpriteAfterUpdate = true;
         }
     }
 
@@ -161,11 +128,8 @@ public sealed class BasicGrowthSystem : EntitySystem
 
         var (uid, component) = ent;
 
-        if (component.Seed == null)
-            return;
-
-        if (!TryComp(uid, out PlantHarvestComponent? harvest)
-            || !TryComp(uid, out PlantComponent? plant))
+        if (!TryComp<PlantHarvestComponent>(uid, out var harvest)
+            || !TryComp<PlantComponent>(uid, out var plant))
             return;
 
         if (amount > 0)
@@ -189,4 +153,4 @@ public sealed class BasicGrowthSystem : EntitySystem
 /// Event of plant growing ticking.
 /// </summary>
 [ByRefEvent]
-public readonly record struct OnPlantGrowEvent;
+public readonly record struct OnPlantGrowEvent(Entity<PlantTrayComponent> Tray);
