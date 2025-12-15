@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Turrets and NPCs can now shoot downed targets.
-    type: Tweak
-  id: 8796
-  time: '2025-07-20T21:23:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39085
 - author: sowelipililimute
   changes:
   - message: SmartFridges are now implemented. You can store large amounts of chemicals
@@ -3922,3 +3915,10 @@
   id: 9296
   time: '2025-12-15T03:59:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41861
+- author: Samuka
+  changes:
+  - message: Repairing borgs now takes multiple mini doafters instead of one big one
+    type: Tweak
+  id: 9297
+  time: '2025-12-15T12:27:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41638
