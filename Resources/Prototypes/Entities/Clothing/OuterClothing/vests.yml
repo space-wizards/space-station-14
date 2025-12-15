@@ -13,6 +13,11 @@
     - state: icon
     - state: icon-unshaded
       shader: unshaded
+    - state: icon-unshaded
+      shader: shaded
+      #This is a neat trick I found to sort of "hack" an emissive map into ss14. Basically, the icon-unshaded texture has an alpha channel.
+      #Alpha doesn't work for unshaded, but for *shaded* it does, and by putting a shaded texture infront of the unshaded, we can dim the unshaded texture, effectively allowing brightness control.
+      #I go further indepth on this in my PR, https://github.com/space-wizards/space-station-14/pull/37869
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/hazard.rsi
     clothingVisuals:
@@ -20,9 +25,18 @@
       - state: equipped-OUTERCLOTHING
       - state: equipped-OUTERCLOTHING-unshaded
         shader: unshaded
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: shaded
+        #same trick here
+  - type: Reflect
+    reflectProb: 0.02
+    reflects:
+    - Energy
+    reflectingInHands: false
   - type: Tag
     tags:
     - HiViz
+    - WhitelistChameleon
 
 #(Bartender) vest
 - type: entity

@@ -26,6 +26,7 @@ reagent-name-dexalin = dexalin
 reagent-desc-dexalin = Used for treating minor oxygen deprivation and bloodloss. A required reagent for dexalin plus.
 
 reagent-name-dexalin-plus = dexalin plus
+reagent-name-dexalin-plus-saline = dexalin plus & saline
 reagent-desc-dexalin-plus = Used in treatment of extreme cases of oxygen deprivation and bloodloss. Flushes heartbreaker toxin out of the blood stream.
 
 reagent-name-epinephrine = epinephrine
@@ -113,6 +114,7 @@ reagent-name-lacerinol = lacerinol
 reagent-desc-lacerinol = A fairly unreactive chemical that boosts collagen sythesis to incredible levels, healing slash trauma.
 
 reagent-name-puncturase = puncturase
+reagent-name-puncturase-tranexamic = puncturase & tranexamic
 reagent-desc-puncturase = A fizzy chemical that helps rebuild trauma caused by piercing damage, leaving a slight amount of tissue damage behind.
 
 reagent-name-bruizine = bruizine
@@ -122,6 +124,7 @@ reagent-name-holywater = holy water
 reagent-desc-holywater = The cleanest and purest of waters straight from the hands of god, is known to magically heal wounds.
 
 reagent-name-pyrazine = pyrazine
+reagent-name-pyrazine-dermaline = pyrazine & dermaline
 reagent-desc-pyrazine = Efficiently heals burns from the hottest of fires. Causes massive internal bleeding when overdosed.
 
 reagent-name-insuzine = insuzine
@@ -134,7 +137,7 @@ reagent-name-necrosol = necrosol
 reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It can treat and rejuvenate plants when applied in small doses.
 
 reagent-name-aloxadone = aloxadone
-reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe third degree burns via regeneration of the burnt tissue. Works regardless of the patient being alive or dead.
+reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe burns and frostbite via regeneration of the affected tissue. Works regardless of the patient being alive or dead.
 
 reagent-name-mannitol = mannitol
 reagent-desc-mannitol = Efficiently restores brain damage.
@@ -148,5 +151,5 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
 
-reagent-name-traumoxadone = traumoxadone
-reagent-desc-traumoxadone = A cryogenics chemical. Used to treat severe trauma to tissues via patching them with tiny particles within the liquid. Works regardless of the patient being alive or dead.
+reagent-name-warfarin = warfarin
+reagent-desc-warfarin = Commonly used as an anticoagulant medication. Causes blood to have difficulty forming clots. Can cause internal bleeding when overdosed.

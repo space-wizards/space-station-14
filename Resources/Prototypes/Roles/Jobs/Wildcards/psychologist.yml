@@ -21,3 +21,15 @@
   storage:
     back:
     - RubberStampPsychologist
+
+- type: chameleonOutfit
+  id: PsychologistChameleonOutfit
+  job: Psychologist
+  equipment:
+    head: ClothingHeadHatBeretMedic
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    outerClothing: ClothingOuterCoatLab
+    neck: ClothingNeckStethoscope
+    belt: ClothingBeltMedical
+    gloves: ClothingHandsGlovesLatex

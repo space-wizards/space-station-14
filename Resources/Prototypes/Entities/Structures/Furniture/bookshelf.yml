@@ -20,6 +20,15 @@
     damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
+    - trigger: # Excess damage, don't spawn entities
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
     - trigger:
         !type:DamageTrigger
         damage: 30
@@ -48,7 +57,7 @@
   - type: Occluder
   - type: Storage
     grid:
-    - 0,0,15,3
+    - 0,0,9,3
     maxItemSize: Normal
     whitelist:
       tags:

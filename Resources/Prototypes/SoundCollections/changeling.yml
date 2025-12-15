@@ -1,0 +1,14 @@
+﻿- type: soundCollection
+  id: ChangelingDevourConsume
+  files:
+  - /Audio/Effects/Changeling/devour_consume.ogg
+
+- type: soundCollection
+  id: ChangelingDevourWindup
+  files:
+  - /Audio/Effects/Changeling/devour_windup.ogg
+
+- type: soundCollection
+  id: ChangelingTransformAttempt
+  files:
+  - /Audio/Effects/Changeling/changeling_transform.ogg

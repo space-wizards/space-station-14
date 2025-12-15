@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos.Piping.Portable.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Power;
 using Content.Shared.UserInterface;
@@ -41,6 +42,7 @@ public sealed class SpaceHeaterSystem : EntitySystem
     {
         if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
             return;
+
         thermoMachine.Cp = spaceHeater.HeatingCp;
         thermoMachine.HeatCapacity = spaceHeater.PowerConsumption;
     }
@@ -52,11 +54,13 @@ public sealed class SpaceHeaterSystem : EntitySystem
 
     private void OnUIActivationAttempt(EntityUid uid, SpaceHeaterComponent spaceHeater, ActivatableUIOpenAttemptEvent args)
     {
-        if (!Comp<TransformComponent>(uid).Anchored)
-        {
+        if (Comp<TransformComponent>(uid).Anchored)
+            return;
+
+        if (!args.Silent)
             _popup.PopupEntity(Loc.GetString("comp-space-heater-unanchored", ("device", Loc.GetString("comp-space-heater-device-name"))), uid, args.User);
-            args.Cancel();
-        }
+
+        args.Cancel();
     }
 
     private void OnDeviceUpdated(EntityUid uid, SpaceHeaterComponent spaceHeater, ref AtmosDeviceUpdateEvent args)
@@ -110,7 +114,9 @@ public sealed class SpaceHeaterSystem : EntitySystem
         if (!TryComp<GasThermoMachineComponent>(uid, out var thermoMachine))
             return;
 
-        thermoMachine.TargetTemperature = float.Clamp(thermoMachine.TargetTemperature + args.Temperature, thermoMachine.MinTemperature, thermoMachine.MaxTemperature);
+        thermoMachine.TargetTemperature = float.Clamp(thermoMachine.TargetTemperature + args.Temperature,
+                                                      spaceHeater.MinTemperature,
+                                                      spaceHeater.MaxTemperature);
 
         UpdateAppearance(uid);
         DirtyUI(uid, spaceHeater);

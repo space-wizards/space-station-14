@@ -113,7 +113,7 @@
 
 - files: ["weh.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Modified from plushie_lizard.png by TyAshley (AllenTheGreat) & Sarahon"
+  copyright: "Modified from plushie_lizard.png (icon.png in Plushies/lizard.rsi) by TyAshley (AllenTheGreat) & Sarahon"
   source: "https://github.com/TyAshley"
 
 - files: ["whistle.png"]
