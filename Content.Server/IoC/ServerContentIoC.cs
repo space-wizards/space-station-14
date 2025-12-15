@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers.Bwoink;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
 using Content.Server.Chat.Managers;
@@ -25,6 +26,7 @@ using Content.Server.Voting.Managers;
 using Content.Server.Worldgen.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
+using Content.Shared.Administration.Managers.Bwoink;
 using Content.Shared.Chat;
 using Content.Shared.IoC;
 using Content.Shared.Kitchen;
@@ -80,5 +82,12 @@ internal static class ServerContentIoC
         deps.Register<CVarControlManager>();
         deps.Register<DiscordLink>();
         deps.Register<DiscordChatLink>();
+
+        var bwoinkInstance = new ServerBwoinkManager(); // There HAS to be a better way of doing this.
+        deps.RegisterInstance<ServerBwoinkManager>(bwoinkInstance);
+        deps.RegisterInstance<SharedBwoinkManager>(bwoinkInstance);
+
+        deps.Register<BwoinkDiscordRelayManager>();
+        deps.Register<MessageBwoinkManager>();
     }
 }

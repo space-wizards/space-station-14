@@ -1,0 +1,42 @@
+﻿- type: bwoinkChannel
+  id: AdminHelp
+  name: bwoink-channel-ahelp
+  helpText: bwoink-channel-ahelp-help
+  order: -1 # We always want this one to be the first
+  manageRequirement:
+    requirements:
+    - !type:AdminFlagRequirement
+      flags: Adminhelp
+  features:
+  - !type:SoundOnMessage
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Effects/adminhelp.ogg
+  - !type:ManagerOnlyMessages
+    prefix: bwoink-message-admin-only
+    checkName: admin-ahelp-admin-only
+  - !type:DiscordRelay
+    channelCvar: discord.bwoink.channel.ahelp
+  - !type:StatusMessages
+  - !type:AllowClientActionRow
+  - !type:ActionRow
+    buttons:
+    - label: admin-player-actions-bans
+      command: 'banlist "$ID"'
+      flags: Ban
+    - label: admin-player-actions-notes
+      command: 'adminnotes "$ID"'
+      flags: ViewNotes
+    - label: admin-player-actions-kick
+      command: 'kick "$ID"'
+      flags: Moderator
+      confirm: true
+    - label: admin-player-actions-ban
+      command: 'banpanel "$ID"'
+      flags: Ban
+    - label: admin-player-actions-respawn
+      command: 'respawn "$ID"'
+      flags: Moderator
+      confirm: true
+    - label: admin-player-actions-follow
+      command: 'follow $NetEnt'
+      flags: Admin
