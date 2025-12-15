@@ -6,6 +6,26 @@ command-description-acmd-perms =
     Returns the admin permissions of the given command, if any.
 command-description-acmd-caninvoke =
     Check if the given player can invoke the given command.
+command-description-bank-accounts = 
+    Returns all accounts on a station.
+command-description-bank-account = 
+    Returns a given bank account from a station.
+command-description-bank-adjust =
+    Adjusts the money for the given bank account.
+command-description-bank-set =
+    Sets the money for the given bank account.
+command-description-bank-amount =
+    Returns the money for the given bank account.
+command-description-clone-humanoidappearance =
+    Clones the humanoid appearance of provided entity to all input entities.
+command-description-clone-comps =
+    Clones all components from the provided entity to all input entities. Only works for supported components.
+command-description-clone-equipment =
+    Clones the equipment from the provided entity to all input entities. Uses base prototypes, meaning changes to equipment won't persist to the cloned versions.
+command-description-clone-implants =
+    Clones the implants from the provided entity to all input entities. Uses base prototypes, meaning changes to implants won't persist to the cloned versions.
+command-description-clone-storage =
+    Clones the storage from the provided entity to all input entities. Uses base prototypes, meaning changes to contents won't persist to the cloned versions.
 command-description-jobs-jobs =
     Returns all jobs on a station.
 command-description-jobs-job =
@@ -96,3 +116,53 @@ command-description-xenoartifact-unlockAllNodes =
     Unlocks all nodes of artifact.
 command-description-jobboard-completeJob =
     Completes a given salvage job board job for the station.
+command-description-scale-set =
+    Sets an entity's sprite size to a certain scale (without changing its fixture).
+command-description-scale-get =
+    Get an entity's sprite scale as set by ScaleVisualsComponent. Does not include any changes directly made in the SpriteComponent.
+command-description-scale-multiply =
+    Multiply an entity's sprite size with a certain factor (without changing its fixture).
+command-description-scale-multiplyvector =
+    Multiply an entity's sprite size with a certain 2d vector (without changing its fixture).
+command-description-scale-multiplywithfixture =
+    Multiply an entity's sprite size with a certain factor (including its fixture).
+command-description-storage-fasttake =
+    Takes the most recently placed item from the piped storage entity.
+command-description-storage-insert =
+    Inserts the piped entity into the given storage entity.
+command-description-inventory-getflags =
+    Gets all entities in slots on the piped inventory entity matching a certain slot flag.
+command-description-inventory-getnamed =
+    Gets all entities in slots on the piped inventory entity matching a certain slot name.
+command-description-inventory-forceput =
+    Puts a given entity on the first piped entity that has a slot matching the given flag, deleting any item previously in that slot.
+command-description-inventory-forcespawn =
+    Spawns a given prototype on the first piped entity that has a slot matching the given flag, deleting any item previously in that slot.
+command-description-inventory-put =
+    Puts a given entity on the first piped entity that has a slot matching the given flag, unequiping any item previously in that slot.
+command-description-inventory-spawn =
+    Spawns a given prototype on the first piped entity that has a slot matching the given flag, unequiping any item previously in that slot.
+command-description-inventory-tryput =
+    Tries to put a given entity on the first piped entity that has a slot matching the given flag, failing if any item is in currently in that slot.
+command-description-inventory-tryspawn =
+    Tries to spawn a given prototype on the first piped entity that has a slot matching the given flag, failing if any item is in currently in that slot.
+command-description-inventory-ensure =
+    Puts a given entity on the first piped entity that has a slot matching the given flag if none exists, passing through the UID of whatever is in the slot by the end.
+command-description-inventory-ensurespawn =
+    Spawns a given prototype on the first piped entity that has a slot matching the given flag if none exists, passing through the UID of whatever is in the slot by the end.
+command-description-dynamicrule-list =
+    Lists all currently active dynamic rules, usually this is just one.
+command-description-dynamicrule-get =
+    Gets the currently active dynamic rule.
+command-description-dynamicrule-budget =
+    Gets the current budget of the piped dynamic rule(s).
+command-description-dynamicrule-adjust =
+    Adjusts the budget of the piped dynamic rule(s) by the specified amount.
+command-description-dynamicrule-set =
+    Sets the budget of the piped dynamic rule(s) to the specified amount.
+command-description-dynamicrule-dryrun =
+    Returns a list of rules that could be activated if the rule ran at this moment with all current context. This is not a complete list of every single rule that could be run, just a sample of the current valid ones.
+command-description-dynamicrule-executenow =
+    Executes the piped dynamic rule as if it had reached its regular update time.
+command-description-dynamicrule-rules =
+    Gets a list of all the rules spawned by the piped dynamic rule.

@@ -1,7 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -36,6 +35,18 @@ public sealed partial class BloodstreamComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan UpdateInterval = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    /// Multiplier applied to <see cref="UpdateInterval"/> for adjusting based on metabolic rate multiplier.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float UpdateIntervalMultiplier = 1f;
+
+    /// <summary>
+    /// Adjusted update interval based off of the multiplier value.
+    /// </summary>
+    [ViewVariables]
+    public TimeSpan AdjustedUpdateInterval => UpdateInterval * UpdateIntervalMultiplier;
 
     /// <summary>
     /// How much is this entity currently bleeding?
@@ -140,13 +151,13 @@ public sealed partial class BloodstreamComponent : Component
     public FixedPoint2 BloodMaxVolume = FixedPoint2.New(300);
 
     /// <summary>
-    /// Which reagent is considered this entities 'blood'?
+    /// Which reagents are considered this entities 'blood'?
     /// </summary>
     /// <remarks>
     /// Slime-people might use slime as their blood or something like that.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public ProtoId<ReagentPrototype> BloodReagent = "Blood";
+    public Solution BloodReagents = new([new("Blood", 1)]);
 
     /// <summary>
     /// Name/Key that <see cref="BloodSolution"/> is indexed by.
@@ -185,12 +196,6 @@ public sealed partial class BloodstreamComponent : Component
     /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? TemporarySolution;
-
-    /// <summary>
-    /// Variable that stores the amount of status time added by having a low blood level.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan StatusTime;
 
     /// <summary>
     /// Alert to show when bleeding.

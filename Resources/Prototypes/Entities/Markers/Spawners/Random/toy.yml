@@ -1,138 +1,535 @@
+# Items in this table are generally useless. They don't help in most situations and aren't interesting to serious people.
+# If you're wondering if an entity should go in this table, ask your inner child / local clown.
+- type: entityTable # size 2x4 or 3x3  # price 100
+  id: AllToysTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector # Boring toys (subjective) :o)
+      weight: 0.5 # 1 in 7
+      children:
+      - !type:NestedSelector
+        tableId: AllPlushiesTable
+      - !type:NestedSelector
+        tableId: AllFigurinesTable
+    - !type:NestedSelector
+      tableId: AllToyWeaponsTable
+    - !type:NestedSelector
+      tableId: AllMiscToysTable
+    - !type:NestedSelector
+      tableId: AllToySoundMakerTable
+
+# Soft friends to play with, cut open with a knife, and throw away when you need space
+- type: entityTable # size ginormous  # price 5
+  id: AllPlushiesTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: AllLizardPlushieTable
+    - id: PlushieNuke
+    - id: PlushieSlime
+    - id: PlushieSnake
+    - id: PlushieExperiment
+    - id: PlushieVox
+    - id: PlushieRouny
+    - id: PlushieAtmosian
+    - id: PlushieDiona
+    - id: PlushieXeno
+    - id: PlushieHampter
+    - id: PlushieMoth
+    - id: PlushieArachind
+    - id: PlushiePenguin
+    - id: PlushieVulp
+    - !type:GroupSelector
+      children:
+      - id: PlushieBee
+      - id: PlushieRGBee
+        weight: 0.1
+    - !type:GroupSelector
+      children:
+      - id: PlushieCarp
+      - id: PlushieHolocarp
+        weight: 0.25
+      - id: PlushieMagicarp
+        weight: 0.25
+      - id: PlushieRainbowCarp
+        weight: 0.15
+    - !type:GroupSelector
+      children:
+      - id: PlushieSharkBlue
+      - id: PlushieSharkGrey
+      - id: PlushieSharkPink
+    - !type:GroupSelector # Toy plushies
+      children:
+      - id: ToyIan
+      - id: ToyAmongPequeno
+      - id: ToyMouse
+    - !type:GroupSelector # Giant plushies
+      children:
+      - id: PlushieNar
+      - id: PlushieRatvar
+    - !type:GroupSelector # Rare plushies
+      weight: 0.1 # 1 in >210
+      children:
+      - id: PlushieHuman
+      - id: PlushieGhost
+      - id: PlushieLamp
+    - !type:GroupSelector # Legendary plushies
+      weight: 0.002 # 1 in >10,500
+      children:
+      - id: PlushieThrongler
+      - id: PlushieGhostRevenant # You got the god roll, and failed
+
+# Weh!
+- type: entityTable
+  id: AllLizardPlushieTable
+  table: !type:GroupSelector
+    children:
+    - id: PlushieLizard
+      weight: 8
+    - id: PlushieSpaceLizard
+      weight: 1
+    - id: PlushieLizardInversed
+      weight: 0.1 # 1 in >100
+    - !type:GroupSelector # Lizard gets a job table
+      children:
+      - id: PlushieLizardJobAtmospherictechnician
+      - id: PlushieLizardJobBartender
+      - id: PlushieLizardJobBotanist
+      - id: PlushieLizardJobBoxer
+      - id: PlushieLizardJobCaptain
+      - id: PlushieLizardJobCargotechnician
+      - id: PlushieLizardJobChaplain
+      - id: PlushieLizardJobChef
+      - id: PlushieLizardJobChemist
+      - id: PlushieLizardJobChiefengineer
+      - id: PlushieLizardJobChiefmedicalofficer
+      - id: PlushieLizardJobClown # :o)
+      - id: PlushieLizardJobDetective
+      - id: PlushieLizardJobHeadofpersonnel
+      - id: PlushieLizardJobHeadofsecurity
+      - id: PlushieLizardJobJanitor
+      - id: PlushieLizardJobLawyer
+      - id: PlushieLizardJobLibrarian
+      - id: PlushieLizardJobMedicaldoctor
+      - id: PlushieLizardJobMedicalintern
+      - id: PlushieLizardJobMime #
+      - id: PlushieLizardJobMusician
+      - id: PlushieLizardJobParamedic
+      - id: PlushieLizardJobPassenger
+      - id: PlushieLizardJobPsychologist
+      - id: PlushieLizardJobQuartermaster
+      - id: PlushieLizardJobReporter
+      - id: PlushieLizardJobResearchassistant
+      - id: PlushieLizardJobResearchdirector
+      - id: PlushieLizardJobSalvagespecialist
+      - id: PlushieLizardJobScientist
+      - id: PlushieLizardJobSecuritycadet
+      - id: PlushieLizardJobSecurityofficer
+      - id: PlushieLizardJobServiceworker
+      - id: PlushieLizardJobStationengineer
+      - id: PlushieLizardJobTechnicalassistant
+      - id: PlushieLizardJobZookeeper
+      - id: PlushieLizardJobMultiweh
+        weight: 0.5 # 1 in >800
+
+# Figurines representing all your favorite coworkers
+- type: entityTable # size 1x2  # price 75
+  id: AllFigurinesTable
+  table: !type:GroupSelector
+    children:
+    # Cargo
+    - id: ToyFigurineQuartermaster
+    - id: ToyFigurineCargoTech
+    - id: ToyFigurineSalvage
+    # Command
+    - id: ToyFigurineCaptain
+    # Engineering
+    - id: ToyFigurineChiefEngineer
+    - id: ToyFigurineEngineer
+    - id: ToyFigurineAtmosTech
+    # Medical
+    - id: ToyFigurineChiefMedicalOfficer
+    - id: ToyFigurineChemist
+    - id: ToyFigurineParamedic
+    - id: ToyFigurineMedicalDoctor
+    # Science
+    - id: ToyFigurineResearchDirector
+    - id: ToyFigurineScientist
+    # Security
+    - id: ToyFigurineHeadOfSecurity
+    - id: ToyFigurineWarden
+    - id: ToyFigurineDetective
+    - id: ToyFigurineSecurity
+    # Service
+    - id: ToyFigurineHeadOfPersonnel
+    - id: ToyFigurinePassenger
+    - id: ToyFigurineGreytider
+    - id: ToyFigurineClown # :o)
+    - id: ToyFigurineMime #
+    - id: ToyFigurineMusician
+    - id: ToyFigurineBoxer
+    - id: ToyFigurineLibrarian
+    - id: ToyFigurineChaplain
+    - id: ToyFigurineChef
+    - id: ToyFigurineBartender
+    - id: ToyFigurineBotanist
+    - id: ToyFigurineJanitor
+    - id: ToyFigurineLawyer
+    # Silicon
+    - id: ToyAi
+    # Syndicate
+    - id: ToyFigurineNukie
+    - id: ToyFigurineNukieElite
+    - id: ToyFigurineNukieCommander
+    - id: ToyFigurineFootsoldier
+    - id: ToyFigurineHoloClown # >:o)
+    # Antagonists
+    - id: ToyFigurineWizard
+    - id: ToyFigurineSpaceDragon
+    - id: ToyFigurineThief
+    - id: ToyFigurineQueen
+    - id: ToyFigurineRatKing
+    - id: ToyFigurineRatServant
+    - id: ToyFigurineGriffin
+    # Animals
+    - id: ToyFigurineMouse
+    - id: ToyFigurineSlime
+    - id: ToyFigurineHamlet
+    # Other
+    - id: MysteryFigureBox # More suspense
+      weight: 10
+    - id: ToyFigurineWizardFake
+    - id: ToyFigurineSkeleton
+    - id: ToyNuke
+    - id: ToyFigurineOwlman
+    - !type:NestedSelector
+      tableId: AllFigurineMechsTable
+
+# Figurines representing the hopes and dreams of the robotics department
+- type: entityTable # size 1x2  # price 75
+  id: AllFigurineMechsTable
+  table: !type:GroupSelector
+    children:
+    - id: ToyRipley
+    - id: ToyFireRipley
+    - id: ToyDeathRipley
+    - id: ToyGygax
+    - id: ToyDurand
+    - id: ToyMarauder
+    - id: ToySeraph
+    - id: ToyMauler
+    - id: ToyOdysseus
+    - id: ToyPhazon
+    - id: ToyReticence
+
+# Items that are used to "attack" people. Legitimate combat use for these is limited
+- type: entityTable # size 2x4  # price 100
+  id: AllToyWeaponsTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector # Swords type group
+      children:
+      - id: ToyHammer
+      - id: ToySword
+      - id: FoamBlade
+      - id: FoamCutlass
+      - id: CardSword
+    - !type:GroupSelector # Throwing type group
+      rolls: 2 # Expendables need restocks
+      children:
+      - id: SnapPopBox
+      - id: BoxDarts
+      - id: GrenadeFoamDart
+      - !type:GroupSelector # REAL fake grenades
+        weight: 0.05 # 2 in 186. Rare in order to not spoil the surprise
+        children:
+        - id: GrenadeDummy
+        - id: SyndieTrickyBomb
+    - !type:GroupSelector # Guns type group
+      children:
+      - id: WeaponStickyHand
+      - !type:GroupSelector # Water subgroup
+        children:
+        - id: WeaponWaterBlaster
+        - id: WeaponWaterPistol
+      - !type:NestedSelector
+        tableId: RandomFoamGunTable
+      - !type:NestedSelector
+        tableId: RandomCapGunTable
+
+- type: entityTable # price 100
+  id: RandomFoamGunTable
+  table: !type:AllSelector # Need to spawn with ammo
+    children:
+    - !type:GroupSelector
+      children:
+      - id: FoamCrossbow
+      - id: WeaponRifleFoam
+    - id: BoxDonkSoftBox
+
+- type: entityTable
+  id: RandomCapGunTable
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector # real or fake?
+      children:
+      - id: RevolverCapGun
+      - id: RevolverCapGunFake
+        weight: 0.01 # 1 in 101
+    - !type:GroupSelector # ready for reload
+      prob: 0.9
+      children:
+      - id: SpeedLoaderCap
+      - id: BoxCartridgeCap
+
+# A group of items with fun or unique properties. Highly varied (some are more fun than others)
+- type: entityTable # size 3x3  # price 100
+  id: AllMiscToysTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: AllCrayonsTable
+    - id: CrayonBox
+    - id: PlasticBanana
+    - id: NukeDiskFake
+    - id: DiceBag
+    - id: SpectralLocator
+    - id: BarberScissors
+    - id: SprayFlowerPin
+    - id: ClothingShoesSkates
+    - id: CrazyGlue
+    - id: CrazyLube
+    - !type:NestedSelector
+      tableId: AllBoardGamesTable
+    - !type:GroupSelector # Where there's Chips there's Dips
+      children:
+      - id: MrChips
+      - id: MrDips
+    - !type:GroupSelector # Ballons
+      children:
+      - id: BalloonNT
+        weight: 5 # NT bias
+      - id: BalloonCorgi
+      - id: BalloonSyn
+    - !type:GroupSelector # Sports ball
+      children:
+      - id: Basketball
+      - id: Football
+      - id: BeachBall
+      - id: TennisBall
+        amount: 2
+    - !type:GroupSelector # PAIs are basically toys
+      children:
+      - id: PersonalAI
+        weight: 8
+      - id: PotatoAI
+      - id: GoldenPersonalAI
+        weight: 0.1 # 1 in 1,456. A truly rare item
+    - !type:GroupSelector # Orbs of "power"
+      weight: 0.05 # 1 in 320
+      children:
+      - id: SingularityToy
+      - id: TeslaToy
+      - id: PonderingOrb
+
+# Entities that don't do much more than make a unique sound. Plushies excluded.
+- type: entityTable # size 1x2  # price 100
+  id: AllToySoundMakerTable
+  table: !type:GroupSelector
+    children:
+    - id: ToyRubberDuck
+    - id: RubberChicken
+    - id: ClownRecorder
+    - id: WhoopieCushion
+    - id: NewtonCradle
+    - id: Skub
+    - id: DeskBell
+    - id: BikeHornImplanter
+    - id: SadTromboneImplanter
+    - !type:GroupSelector
+      children:
+      - id: Whistle
+        weight: 5
+      - id: SecurityWhistle
+      - id: SyndicateWhistle
+        weight: 0.5 # 1 in 143
+    - !type:NestedSelector # The original
+      tableId: RandomBikeHornTable
+
+- type: entityTable # size 1x2  # price 100
+  id: RandomBikeHornTable
+  table: !type:GroupSelector
+    children:
+    - id: BikeHorn
+    - !type:GroupSelector # Usually get the normal horn
+      weight: .005 # 1 in 200
+      children:
+      - id: CluwneHorn # you lose, clown >:o)
+      - id: BananiumHorn
+      - id: PushHorn
+      - id: GoldenBikeHorn
+
+- type: entityTable # size 1x1
+  id: AllCrayonsTable
+  table: !type:GroupSelector
+    children:
+    - id: CrayonMime
+    - id: CrayonRainbow
+    - id: CrayonWhite
+    - id: CrayonBlack
+    - id: CrayonRed
+    - id: CrayonOrange
+    - id: CrayonYellow
+    - id: CrayonGreen
+    - id: CrayonBlue
+    - id: CrayonPurple
+
+## Spawners ##
+
 - type: entity
+  parent: MarkerBase
+  id: ToySpawner90
   name: Toy Spawner
-  id: ToySpawner
-  parent: MarkerBase
+  suffix: 90
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Fun/Plushies/bee.rsi
-          state: icon
-    - type: RandomSpawner
-      rarePrototypes:
-        - FoamBlade
-        - PlushieGhost
-      rareChance: 0.03
-      prototypes:
-        - PlushieBee
-        - PlushieAtmosian
-        - PlushieNuke
-        - PlushieLizard
-        - PlushieNar
-        - PlushieCarp
-        - PlushieSlime
-        - PlushieSnake
-        - PlushieVox
-        - PlushieRatvar
-        - PlushieSpaceLizard
-        - PlushieRouny
-        - PlushieLamp
-        - PlushieSharkBlue
-        - PlushieSharkPink
-        - PlushieSharkGrey
-        - ToyAmongPequeno
-        - ToyMouse
-        - PlushieDiona
-        - PlushieArachind
-      chance: 0.5
-      offset: 0.2
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/bikehorn.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllToysTable
+      prob: 0.9
 
 - type: entity
-  name: Prize Figurine Spawner
-  id: FigureSpawner
   parent: MarkerBase
+  id: PlushieSpawner50
+  name: Plushie Spawner
+  suffix: 50
   components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Fun/mech_figurines.rsi
-          state: ripley
-    - type: RandomSpawner
-      prototypes:
-        - ToyAi
-        - ToyNuke
-        - ToyFigurinePassenger
-        - ToyGriffin
-        - ToyHonk
-        - ToyIan
-        - ToyMarauder
-        - ToyMauler
-        - ToyGygax
-        - ToyOdysseus
-        - ToyOwlman
-        - ToyDeathRipley
-        - ToyPhazon
-        - ToyFireRipley
-        - ToyReticence
-        - ToyRipley
-        - ToySeraph
-        - ToyDurand
-        - ToySkeleton
-        - MysteryFigureBox
-      chance: 0.5
-      offset: 0.2
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/Plushies/bee.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllPlushiesTable
+      prob: 0.5
 
 - type: entity
+  parent: MarkerBase
+  id: SpacemenFigurineSpawner90
   name: Spacemen Minifigure Spawner
-  suffix: Librarian only, map with care!
-  id: SpacemenFigureSpawner
-  parent: MarkerBase
+  suffix: 90
   components:
-    - type: Sprite
-      layers:
-        - sprite: Objects/Fun/figurines.rsi
-          state: figurine_spawner
-    - type: RandomSpawner
-      rarePrototypes:
-      - ToyFigurineNukieElite
-      - ToyFigurineNukieCommander
-      rareChance: 0.05
-      prototypes:
-      - ToyFigurinePassenger
-      - ToyFigurineClown
-      - ToyFigurineMime
-      - ToyFigurineMusician
-      - ToyFigurineBoxer
-      - ToyFigurineCaptain
-      - ToyFigurineHeadOfSecurity
-      - ToyFigurineWarden
-      - ToyFigurineDetective
-      - ToyFigurineSecurity
-      - ToyFigurineLawyer
-      - ToyFigurineCargoTech
-      - ToyFigurineSalvage
-      - ToyFigurineQuartermaster
-      - ToyFigurineChiefEngineer
-      - ToyFigurineAtmosTech
-      - ToyFigurineEngineer
-      - ToyFigurineResearchDirector
-      - ToyFigurineScientist
-      - ToyFigurineChiefMedicalOfficer
-      - ToyFigurineChemist
-      - ToyFigurineParamedic
-      - ToyFigurineMedicalDoctor
-      - ToyFigurineHeadOfPersonnel
-      - ToyFigurineLibrarian
-      - ToyFigurineChaplain
-      - ToyFigurineChef
-      - ToyFigurineBartender
-      - ToyFigurineBotanist
-      - ToyFigurineJanitor
-      - ToyFigurineNukie
-      - ToyFigurineFootsoldier
-      - ToyFigurineWizardFake
-      - ToyFigurineSlime
-      - ToyFigurineGreytider
-      - ToyFigurineWizard
-      - ToyGriffin
-      - ToyOwlman
-      - ToySkeleton
-      - ToyFigurineQueen
-      - ToyFigurineSpaceDragon
-      - ToyFigurineRatKing
-      - ToyFigurineRatServant
-      - ToyFigurineMouse
-      - ToyFigurineHamlet
-      - ToyFigurineThief
-      chance: 0.90
-      offset: 0.2
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/figurines.rsi
+      state: figurine_spawner
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllFigurinesTable
+      prob: 0.9
+
+- type: entity
+  parent: MarkerBase
+  id: MechFigurineSpawner50
+  name: Mech Figurine Spawner
+  suffix: 50
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/mech_figurines.rsi
+      state: ripley
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllFigurineMechsTable
+      prob: 0.5
+
+- type: entity
+  parent: MarkerBase
+  id: ToyWeaponSpawner90
+  name: Toy Weapon Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/rubber_hammer.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllToyWeaponsTable
+      prob: 0.9
+
+- type: entity
+  parent: MarkerBase
+  id: CapGunSpawner90
+  name: Cap Gun Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/capgun.rsi
+      state: base
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomCapGunTable
+      prob: 0.9
+
+- type: entity
+  parent: MarkerBase
+  id: MiscToySpawner90
+  name: Miscellaneous Toy Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/Balloons/nanotrasen.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllMiscToysTable
+      prob: 0.9
+
+- type: entity
+  parent: MarkerBase
+  id: ToySoundMakerSpawner90
+  name: Toy Sound Maker Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/rubber_chicken.rsi
+      state: icon
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: AllToySoundMakerTable
+      prob: 0.9
+
+- type: entity
+  parent: MarkerBase
+  id: CrayonSpawner90
+  name: Crayon Spawner
+  suffix: 90
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/crayons.rsi
+      state: rainbow
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      prob: 0.9
+      children:
+      - !type:NestedSelector
+        tableId: AllCrayonsTable
+      - id: CrayonBox
+        weight: 0.05 # 1 in 20
