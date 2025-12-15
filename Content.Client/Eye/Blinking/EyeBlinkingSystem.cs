@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Client.Eye.Blinking;
 
@@ -140,12 +141,34 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (ent.Comp.BlinkInProgress)
             return;
 
-
         ent.Comp.BlinkInProgress = true;
+
+        var curTime = _timing.CurTime;
+        var maxOpenTime = curTime;
+
         var minDuration = ent.Comp.MinBlinkDuration;
         var maxDuration = ent.Comp.MaxBlinkDuration;
-        var randomSeconds = minDuration + (_random.NextDouble() * (maxDuration - minDuration));
-        ent.Comp.NextOpenEyeTime = _timing.CurTime + randomSeconds;
+        var blinkDuration = minDuration + (_random.NextDouble() * (maxDuration - minDuration));
+
+        var layerIndices = ent.Comp.Eyelids.Keys.ToList();
+
+        foreach (var layerIndex in layerIndices)
+        {
+            var state = ent.Comp.Eyelids[layerIndex];
+
+            var sheduleCloseTime = curTime + _random.NextDouble() * ent.Comp.MaxAsyncBlink;
+            var sheduleOpenTime = sheduleCloseTime + blinkDuration + _random.NextDouble() * ent.Comp.MaxAsyncOpenBlink;
+
+            state.ScheduledCloseTime = sheduleCloseTime;
+            state.ScheduledOpenTime = sheduleOpenTime;
+
+            ent.Comp.Eyelids[layerIndex] = state;
+
+            if (sheduleOpenTime > maxOpenTime) maxOpenTime = sheduleOpenTime;
+        }
+
+
+        ent.Comp.NextOpenEyeTime = maxOpenTime;
 
         ChangeEyeState(ent, true);
     }

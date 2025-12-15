@@ -79,4 +79,24 @@ public sealed partial class EyeBlinkingComponent : Component
     /// </summary>
     [DataField]
     public Color? EyelidsColor = null;
+
+    [DataField]
+    public TimeSpan MaxAsyncBlink = TimeSpan.FromSeconds(0.1f);
+    [DataField]
+    public TimeSpan MaxAsyncOpenBlink = TimeSpan.FromSeconds(0.05f);
+
+    public Dictionary<int, EyelidState> Eyelids;
+}
+
+[DataDefinition]
+public partial struct EyelidState
+{
+    [DataField]
+    public bool IsClosed;
+
+    [DataField, AutoPausedField]
+    public TimeSpan ScheduledCloseTime;
+
+    [DataField, AutoPausedField]
+    public TimeSpan ScheduledOpenTime;
 }
