@@ -19,6 +19,7 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<TriggerOnUserInteractHandComponent, UserInteractHandEvent>(OnUserInteractHand);
         SubscribeLocalEvent<TriggerOnInteractUsingComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<TriggerOnUserInteractUsingComponent, UserInteractUsingEvent>(OnUserInteractUsing);
+        SubscribeLocalEvent<TriggerOnContactInteractionComponent, ContactInteractionEvent>(OnContactInteraction);
 
         SubscribeLocalEvent<TriggerOnThrowComponent, ThrowEvent>(OnThrow);
         SubscribeLocalEvent<TriggerOnThrownComponent, ThrownEvent>(OnThrown);
@@ -98,6 +99,17 @@ public sealed partial class TriggerSystem
             return;
 
         Trigger(ent.Owner, ent.Comp.TargetUsed ? args.Used : args.Target, ent.Comp.KeyOut);
+
+        if (ent.Comp.Handle)
+            args.Handled = true;
+    }
+
+    private void OnContactInteraction(Entity<TriggerOnContactInteractionComponent> ent, ref ContactInteractionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        Trigger(ent.Owner, args.Other, ent.Comp.KeyOut);
 
         if (ent.Comp.Handle)
             args.Handled = true;
