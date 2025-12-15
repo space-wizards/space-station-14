@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Trigger.Components.Conditions;
 
 /// <summary>
-/// Cancels the trigger if it's user and target are not the same.
+/// Cancels the trigger if its user and target are not the same.
 /// Useful for preventing triggering things on yourself.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
