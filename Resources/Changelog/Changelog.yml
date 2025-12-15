@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: SmartFridges are now implemented. You can store large amounts of chemicals
-      and plants within them for people to take.
-    type: Add
-  id: 8797
-  time: '2025-07-21T03:21:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38648
 - author: ArtisticRoomba
   changes:
   - message: China-lake fragmentation grenades now spew fragmentation in all directions
@@ -3922,3 +3914,10 @@
   id: 9297
   time: '2025-12-15T12:27:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41638
+- author: JesterX666
+  changes:
+  - message: Explosions with heat now ignite inflammable gas mixes in the atmosphere
+    type: Fix
+  id: 9298
+  time: '2025-12-15T23:39:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41262
