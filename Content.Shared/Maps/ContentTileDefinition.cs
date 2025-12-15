@@ -42,7 +42,7 @@ namespace Content.Shared.Maps
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
         [DataField("baseTurf")]
-        public ProtoId<ContentTileDefinition> BaseTurf { get; private set; } = default!;
+        public ProtoId<ContentTileDefinition>? BaseTurf { get; private set; }
 
         /// <summary>
         /// On what tiles this tile can be placed.

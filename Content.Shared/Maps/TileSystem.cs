@@ -170,7 +170,7 @@ public sealed class TileSystem : EntitySystem
     }
 
 
-    public bool DeconstructTile(TileRef tileRef)
+    public bool DeconstructTile(TileRef tileRef, bool spawnItem = true)
     {
         if (tileRef.Tile.IsEmpty)
             return false;
@@ -178,7 +178,7 @@ public sealed class TileSystem : EntitySystem
         var tileDef = (ContentTileDefinition)_tileDefinitionManager[tileRef.Tile.TypeId];
 
         //Can't deconstruct anything that doesn't have a base turf.
-        if (tileDef.BaseTurf == default)
+        if (tileDef.BaseTurf == null)
             return false;
 
         var gridUid = tileRef.GridUid;
@@ -210,12 +210,15 @@ public sealed class TileSystem : EntitySystem
         else
         {
             //No stack? Assume BaseTurf was the layer below
-            previousTileId = tileDef.BaseTurf;
+            previousTileId = tileDef.BaseTurf.Value;
         }
 
-        //Actually spawn the relevant tile item at the right position and give it some random offset.
-        var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
-        Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
+        if (spawnItem)
+        {
+            //Actually spawn the relevant tile item at the right position and give it some random offset.
+            var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
+            Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
+        }
 
         //Destroy any decals on the tile
         var decals = _decal.GetDecalsInRange(gridUid, coordinates.SnapToGrid(EntityManager, _mapManager).Position, 0.5f);

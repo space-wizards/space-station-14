@@ -528,9 +528,9 @@ public sealed partial class ExplosionSystem
 
                 newDef = (ContentTileDefinition) _tileDefinitionManager[newId.Id];
             }
-            else if (tileDef.BaseTurf != default)
+            else if (tileDef.BaseTurf.HasValue)
             {
-                newDef = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf];
+                newDef = (ContentTileDefinition) _tileDefinitionManager[tileDef.BaseTurf.Value];
             }
 
             if (newDef == null)

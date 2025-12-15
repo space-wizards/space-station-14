@@ -29,7 +29,8 @@ public sealed class TileStacksTest
             if (ctdef.ID != ContentTileDefinition.SpaceID)
             {
                 nodes.Add((ctdef.ID, int.MaxValue));
-                edges.Add((ctdef.BaseTurf, ctdef.ID));
+                if (ctdef.BaseTurf != null)
+                    edges.Add((ctdef.BaseTurf.Value, ctdef.ID));
                 if (ctdef.BaseWhitelist is null)
                     continue;
                 edges.AddRange(ctdef.BaseWhitelist.Select(possibleTurf => (possibleTurf, new ProtoId<ContentTileDefinition>(ctdef.ID))));
