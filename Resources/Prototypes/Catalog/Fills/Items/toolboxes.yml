@@ -166,10 +166,10 @@
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:NestedSelector
-        tableId: FooboxTable
+        tableId: FoolboxTable
 
 - type: entityTable
-  id: FooboxTable
+  id: FoolboxTable
   table: !type:AllSelector
     children:
     - !type:GroupSelector

@@ -168,20 +168,15 @@
       params:
         variation: 0.03
         volume: 3
+
   - type: Storage
-    storageOpenSound:
+    storageOpenSound: &SoundHorn
       collection: BikeHorn
       params:
         variation: 0.125
-    storageCloseSound:
-      collection: BikeHorn
-      params:
-        variation: 0.125
-    storageInsertSound:
+    storageCloseSound: *SoundHorn
+    storageInsertSound: &SoundSqueak
       collection: FootstepClown
       params:
         variation: 0.125
-    storageRemoveSound:
-      collection: FootstepClown
-      params:
-        variation: 0.125
+    storageRemoveSound: *SoundSqueak
