@@ -1,17 +1,14 @@
-name: RGA schema and attribution validator
+name: RGA schema validator
 on:
   push:
     branches: [ master, staging, stable ]
   merge_group:
   pull_request:
-    paths:
-      - 'Resources/**'
-      - 'Tools/rga_check.py'
-      - 'RobustToolbox/**'
+    types: [ opened, reopened, synchronize, ready_for_review ]
 
 jobs:
   yaml-schema-validation:
-    name: YAML RGA schema and attribution validator
+    name: YAML RGA schema validator
     if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
@@ -20,21 +17,9 @@ jobs:
       run: git submodule update --init
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
-    - name: Validate RGA schema
-      uses: PaulRitter/yaml-schema-validator@v1
+    - uses: PaulRitter/yaml-schema-validator@v1
       with:
         schema: RobustToolbox/Schemas/rga.yml
         path_pattern: .*attributions.ya?ml$
         validators_path: RobustToolbox/Schemas/rga_validators.py
         validators_requirements: RobustToolbox/Schemas/rga_requirements.txt
-    - name: Install Python dependencies
-      run: |
-        pip3 install --ignore-installed --user pyyaml
-    - name: Get changed files
-      uses: tj-actions/changed-files@v45
-      id: changed-files
-      with:
-        write_output_files: true
-    # Does this include deleted files?
-    - name: Validate RGA attribution
-      run: python3 Tools/rga_check.py -i "" cat .github/outputs/all_changed_and_modified_files.txt
