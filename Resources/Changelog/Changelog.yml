@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TiniestShark
-  changes:
-  - message: Adds a new slot for the Golden Plunger on the Janitor Trolley.
-    type: Add
-  - message: Holo and Magicarp plushies now show up in the mop bucket properly.
-    type: Tweak
-  id: 8792
-  time: '2025-07-19T15:33:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38494
 - author: Boaz1111
   changes:
   - message: More atmos devices can now be constructed on layers from the construction
@@ -3924,3 +3915,10 @@
   id: 9292
   time: '2025-12-14T20:56:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41840
+- author: jckspjf
+  changes:
+  - message: Added Pun Pun's jumpsuit into Bardrobes.
+    type: Add
+  id: 9293
+  time: '2025-12-15T01:33:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41705
