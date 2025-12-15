@@ -1,4 +1,5 @@
 ﻿using Content.Client.Message;
+using Content.Client.RichText;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.RichText;
 using Content.Shared.MassMedia.Systems;
@@ -19,17 +20,6 @@ public sealed partial class ArticleEditorPanel : Control
     public event Action<string, string>? ArticleDraftUpdated;
 
     private bool _preview;
-
-    private Type[] AllowedTags =
-    [
-        typeof(BoldItalicTag),
-        typeof(BoldTag),
-        typeof(BulletTag),
-        typeof(ColorTag),
-        typeof(HeadingTag),
-        typeof(ItalicTag),
-        typeof(MonoTag),
-    ];
 
     public ArticleEditorPanel()
     {
@@ -96,7 +86,7 @@ public sealed partial class ArticleEditorPanel : Control
         PreviewPanel.Visible = _preview;
 
         var articleBody = Rope.Collapse(ContentField.TextRope);
-        PreviewLabel.SetMessage(FormattedMessage.FromMarkupPermissive(articleBody), AllowedTags);
+        PreviewLabel.SetMessage(FormattedMessage.FromMarkupPermissive(articleBody), UserFormattableTags.BaseAllowedTags);
     }
 
     private void OnCancel(BaseButton.ButtonEventArgs eventArgs)
