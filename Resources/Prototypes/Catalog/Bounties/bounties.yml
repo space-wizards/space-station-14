@@ -600,7 +600,7 @@
 
 - type: cargoBounty
   id: BountyRollerskates
-  reward: 1400
+  reward: 900
   description: bounty-description-rollerskates
   entries:
   - name: bounty-item-rollerskates
