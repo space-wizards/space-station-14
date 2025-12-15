@@ -11,7 +11,7 @@ namespace Content.Shared.Trigger.Components.Conditions;
 public sealed partial class MobStateTriggerConditionComponent : BaseTriggerConditionComponent
 {
     /// <summary>
-    /// If the user is in this mob state, the trigger won't cancel.
+    /// If the user is in one of these mob states, the trigger won't cancel.
     /// </summary>
     [DataField, AutoNetworkedField]
     public HashSet<MobState> MobStates = new ();
