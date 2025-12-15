@@ -21,6 +21,7 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Throwing;
 using JetBrains.FormatRipper.Elf;
+using NetCord;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -120,7 +121,6 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
         _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Instigator):player} started deep frying {ToPrettyString(args.Climber):target} in {ToPrettyString(fryer):fryer}.");
         if (EntityStorage.CanInsert(args.Climber, fryer.Owner) && TryComp<EntityStorageComponent>(fryer, out var storage))
         {
-            _adminLogger.Add(LogType.Action, LogImpact.High, $"{storage.Contents.ContainedEntities.Count} items found in storage on fry.");
             // Dragging a creature into a deep fryer would be violent, so the existing contents get ejected at speed
             if (storage.Contents.ContainedEntities.Count > 0)
             {
@@ -145,17 +145,14 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
     /// </summary>
     private void AddTemperature(EntityUid uid, DeepFryerComponent fryer, float time)
     {
-        if (TryComp<EntityStorageComponent>(uid, out var storage) && TryComp<SolutionContainerManagerComponent>(uid, out var vat))
+        if (TryComp<EntityStorageComponent>(uid, out var storage)
+            && _solutionContainer.TryGetSolution(uid, fryer.SolutionName, out var deepFryerSoln, out var deepFryerSolution)
+            && deepFryerSolution.Volume != 0)
         {
             foreach (var entity in storage.Contents.ContainedEntities)
             {
-                var totalHeat = 0.0f;
-                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((uid, vat)))
-                {
-                    totalHeat += soln.Comp.Solution.Temperature;
-                }
                 if (TryComp<TemperatureComponent>(entity, out var tempComp))
-                    _temperature.ChangeHeat(entity, totalHeat, false, tempComp);
+                    _temperature.ChangeHeat(entity, deepFryerSolution.Temperature, false, tempComp);
 
                 if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
                     continue;
@@ -165,17 +162,18 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
                     if (solution.Temperature > fryer.MaxHeat)
                         continue;
 
-                    _solutionContainer.AddThermalEnergy(soln, totalHeat);
+                    _solutionContainer.AddThermalEnergy(soln, deepFryerSolution.Temperature);
                 }
             }
         }
     }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<ActiveHeatingDeepFryerComponent, DeepFryerComponent>();
-        while (query.MoveNext(out var uid, out _, out var fryer))
+        var query = EntityQueryEnumerator<DeepFryerComponent>();
+        while (query.MoveNext(out var uid, out var fryer))
         {
             AddTemperature(uid, fryer, frameTime);
         }

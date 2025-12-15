@@ -59,14 +59,14 @@
     powerLoad: 300
   - type: SolutionContainerManager
     solutions:
-      drink: # This solution name and target volume is hard-coded in a lot of places
+      fryer:
         maxVol: 300
   - type: MixableSolution
-    solution: drink
+    solution: fryer
   - type: RefillableSolution
-    solution: drink
+    solution: fryer
   - type: ExaminableSolution
-    solution: drink
+    solution: fryer
     exactVolume: true
   - type: DrawableSolution
-    solution: drink
+    solution: fryer

@@ -1,3 +1,5 @@
+using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -13,10 +15,16 @@ namespace Content.Shared.DeepFryer.Components;
 public sealed partial class DeepFryerComponent : Component
 {
     /// <summary>
+    /// Solution used by the deep fryer vat.
+    /// </summary>
+    [DataField]
+    public string SolutionName = "fryer";
+
+    /// <summary>
     /// The uninterrupted time it takes to deep fry non-mob entities.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan CookTime = TimeSpan.FromSeconds(7);
+    public TimeSpan CookTime = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// The least uninterrupted time it takes to deep fry mob entities.
@@ -65,6 +73,12 @@ public sealed partial class DeepFryerComponent : Component
     /// </summary>
     [DataField]
     public float HeatThreshold = 375.0f;
+
+    /// <summary>
+    /// Extra damage applied by deep fryer when heating. Not currently used.
+    /// </summary>
+    [DataField]
+    public float HeatingDamage = 2.0f;
 
     /// <summary>
     /// The timestamp at which deep frying is finished.

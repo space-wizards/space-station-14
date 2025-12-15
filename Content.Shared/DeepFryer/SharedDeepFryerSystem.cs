@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -18,7 +19,9 @@ using Content.Shared.Standing;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.FixedPoint;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Temperature.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -26,9 +29,9 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Numerics;
-using Content.Shared.Temperature.Systems;
 
 namespace Content.Shared.DeepFryer;
 
@@ -44,6 +47,7 @@ public abstract class SharedDeepFryerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
 
     public override void Initialize()
     {
@@ -127,6 +131,17 @@ public abstract class SharedDeepFryerSystem : EntitySystem
         var query = EntityQueryEnumerator<DeepFryerComponent>();
         while (query.MoveNext(out var uid, out var fryer))
         {
+            // If this doesn't have a solution or a entity storage component for some reason, skip execution
+            if (!_solutionContainer.TryGetSolution(uid, fryer.SolutionName, out var deepFryerSoln, out var deepFryerSolution))
+            {
+                continue;
+            }
+            // Had to add this as its own if statement so that using storage later doesn't error
+            if (!TryComp<EntityStorageComponent>(uid, out var storage))
+            {
+                continue;
+            }
+
             var canFry = false;
             // If deep fryer is powered, ramp up heat gain
             if (HasComp<ActiveHeatingDeepFryerComponent>(uid))
@@ -140,28 +155,31 @@ public abstract class SharedDeepFryerSystem : EntitySystem
             }
 
             // Alter vat solution temperature by HeatPerSecond, also check if you can fry
-            if (TryComp<SolutionContainerManagerComponent>(uid, out var vat))
+            var energy = fryer.HeatPerSecond * frameTime;
+            _solutionContainer.AddThermalEnergyClamped(deepFryerSoln.Value, energy, fryer.MinHeat, fryer.MaxHeat);
+            if (deepFryerSolution.Temperature > fryer.HeatThreshold && deepFryerSolution.Volume > 0)
             {
-                var energy = fryer.HeatPerSecond * frameTime;
-                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((uid, vat)))
-                {
-                    _solutionContainer.AddThermalEnergyClamped(soln, energy, fryer.MinHeat, fryer.MaxHeat);
-                    if (soln.Comp.Solution.Temperature > fryer.HeatThreshold && soln.Comp.Solution.Volume > 0)
-                    {
-                        canFry = true;
-                    }
-                }
+                canFry = true;
             }
 
             // As long as conditions are alright for frying, keep frying
             if (HasComp<ActiveFryingDeepFryerComponent>(uid))
             {
-                if (curTime < fryer.ActiveUntil && TryComp<SolutionContainerManagerComponent>(uid, out var vatt))
+                if (curTime < fryer.ActiveUntil)
                 {
-                    foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((uid, vat)))
+                    // Frying uses up a little bit of the solution in the vat each frame, and tries to inject it into whatever is being fried
+                    // Note: Make sure usedSolution is getting garbage collected if injection fails
+                    var usedSolution = _solutionContainer.SplitSolution(deepFryerSoln.Value, FixedPoint2.New(frameTime * 4.2f));
+                    if (storage.Contents.Count > 0 && TryComp<SolutionContainerManagerComponent>(storage.Contents.ContainedEntities[0], out var solutions))
                     {
-                        //Frying uses up a little bit of the solution in the vat each frame
-                        soln.Comp.Solution.Volume = soln.Comp.Solution.Volume - 0.1 * frameTime;
+                        foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((storage.Contents.ContainedEntities[0], solutions)))
+                        {
+                            if (soln.Comp.Solution.CanAddSolution(usedSolution))
+                            {
+                                _reactiveSystem.DoEntityReaction(storage.Contents.ContainedEntities[0], usedSolution, ReactionMethod.Injection);
+                                _solutionContainer.TryAddSolution(soln, usedSolution);
+                            }
+                        }
                     }
                     continue;
                 }
@@ -170,10 +188,10 @@ public abstract class SharedDeepFryerSystem : EntitySystem
             }
             // If powered, closed, and containing an unfried item, start frying
             if (canFry
-                && TryComp<EntityStorageComponent>(uid, out var storage)
                 && !storage.Open && storage.Contents.Count > 0
                 && !HasComp<BeenFriedComponent>(storage.Contents.ContainedEntities[0]))
             {
+                var selectedTime = HasComp<MobThresholdsComponent>(storage.Contents.ContainedEntities[0]) ? fryer.MobCookTime : fryer.CookTime;
                 fryer.ActiveUntil = _timing.CurTime + (HasComp<MobThresholdsComponent>(storage.Contents.ContainedEntities[0]) ? fryer.MobCookTime : fryer.CookTime);
                 DeepFry(uid);
             }
