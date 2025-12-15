@@ -53,7 +53,9 @@ public sealed partial class RepairableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Repairs some damage of a entity
+    /// Repairs some damage of a entity.
+    /// The healed amount will be evenly distributed among all damage types the entity has.
+    /// If one of the damage types of the entity is too low. it will heal that completly and distribute the excess healing among the other damage types
     /// </summary>
     /// <param name="ent">entity to be repaired</param>
     /// <param name="damageAmount">how much damage to repair (value have to be negative to repair)</param>
