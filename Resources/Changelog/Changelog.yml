@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: IgorAnt028
-  changes:
-  - message: The color of the pipe in a hand now matches the real color of the pipe
-    type: Fix
-  id: 8794
-  time: '2025-07-19T22:10:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30645
-- author: Princess-Cheeseballs
-  changes:
-  - message: Added crawling!
-    type: Add
-  id: 8795
-  time: '2025-07-19T23:54:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36881
 - author: Princess-Cheeseballs
   changes:
   - message: Turrets and NPCs can now shoot downed targets.
@@ -3922,3 +3908,17 @@
   id: 9294
   time: '2025-12-15T01:50:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41823
+- author: PJB3005
+  changes:
+  - message: Removed friendly & freelancer "unknown shuttle" events.
+    type: Remove
+  id: 9295
+  time: '2025-12-15T03:42:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41860
+- author: Meara1179
+  changes:
+  - message: Added crowbar to the Medical Borg's Rescue module.
+    type: Add
+  id: 9296
+  time: '2025-12-15T03:59:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41861
