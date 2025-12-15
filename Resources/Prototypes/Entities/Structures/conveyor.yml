@@ -67,6 +67,22 @@
         acts: [ "Destruction" ]
 
 - type: entity
+  id: ConveyorBeltForward
+  parent: ConveyorBelt
+  suffix: Forward
+  components:
+  - type: Conveyor
+    initialState: Forward
+
+- type: entity
+  id: ConveyorBeltReverse
+  parent: ConveyorBelt
+  suffix: Reverse
+  components:
+  - type: Conveyor
+    initialState: Reverse
+
+- type: entity
   id: ConveyorBeltAssembly
   parent: BaseItem
   name: conveyor belt
