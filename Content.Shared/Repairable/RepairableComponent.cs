@@ -27,7 +27,7 @@ public sealed partial class RepairableComponent : Component
     /// Amount of damage to repair of the entity equaly distributed among the damage types the entity has.
     /// </summary>
     /// <remarks>
-    /// Unlike <see cref="Damage"/> this value has to be positive.
+    /// in order to heal/repair the damage values have to be negative.
     /// </remarks>
     [DataField, AutoNetworkedField]
     public float? DamageValue;

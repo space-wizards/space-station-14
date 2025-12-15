@@ -56,7 +56,7 @@ public sealed partial class RepairableSystem : EntitySystem
     /// Repairs some damage of a entity
     /// </summary>
     /// <param name="ent">entity to be repaired</param>
-    /// <param name="damageAmount">how much damage to repair</param>
+    /// <param name="damageAmount">how much damage to repair (value have to be negative to repair)</param>
     /// <param name="user">who is doing the repair</param>
     private void RepairSomeDamage(Entity<DamageableComponent?> ent, float damageAmount, EntityUid user)
     {
