@@ -573,12 +573,31 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/killsign.rsi"), "icon"),
                 Act = () =>
                 {
-                    EnsureComp<KillSignComponent>(args.Target);
+                    EnsureComp<KillSignComponent>(args.Target, out var comp);
+                    comp.HideFromOwner = false; // We set it to false anyway, in case the hidden smite was used beforehand.
+                    Dirty(args.Target, comp);
                 },
                 Impact = LogImpact.Extreme,
                 Message = string.Join(": ", killSignName, Loc.GetString("admin-smite-kill-sign-description"))
             };
             args.Verbs.Add(killSign);
+
+            var hiddenKillSignName = Loc.GetString("admin-smite-kill-sign-hidden-name").ToLowerInvariant();
+            Verb hiddenKillSign = new()
+            {
+                Text = hiddenKillSignName,
+                Category = VerbCategory.Smite,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/killsign.rsi"), "icon-hidden"),
+                Act = () =>
+                {
+                    EnsureComp<KillSignComponent>(args.Target, out var comp);
+                    comp.HideFromOwner = true;
+                    Dirty(args.Target, comp);
+                },
+                Impact = LogImpact.Extreme,
+                Message = string.Join(": ", hiddenKillSignName, Loc.GetString("admin-smite-kill-sign-hidden-description"))
+            };
+            args.Verbs.Add(hiddenKillSign);
 
             var cluwneName = Loc.GetString("admin-smite-cluwne-name").ToLowerInvariant();
             Verb cluwne = new()

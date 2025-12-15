@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: BaseSpeedLoaderPistol
   name: "speed loader (.35 auto)"
-  parent: [ BaseItem, BaseSecurityContraband ]
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -21,9 +21,9 @@
         ents: []
 
 - type: entity
+  parent: BaseSpeedLoaderPistol
   id: SpeedLoaderPistol
   name: "speed loader (.35 auto)"
-  parent: BaseSpeedLoaderPistol
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -40,9 +40,9 @@
   - type: Appearance
 
 - type: entity
+  parent: BaseSpeedLoaderPistol
   id: SpeedLoaderPistolPractice
   name: "speed loader (.35 auto practice)"
-  parent: BaseSpeedLoaderPistol
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice

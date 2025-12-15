@@ -50,7 +50,6 @@ public abstract partial class SharedBorgSystem
     /// <summary>
     /// Activates or deactivates a borg.
     /// If active the borg
-    /// - has door access,
     /// - can use modules and
     /// - has full movement speed.
     /// </summary>
@@ -67,7 +66,6 @@ public abstract partial class SharedBorgSystem
         else
             DisableAllModules(chassis.AsNullable());
 
-        _access.SetAccessEnabled(chassis.Owner, active); // Needs a player so that scientists can't drag around an empty borg for free AA.
         _powerCell.SetDrawEnabled(chassis.Owner, active);
         _movementSpeedModifier.RefreshMovementSpeedModifiers(chassis);
 

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseBorgModule
   parent: BaseItem
   name: borg module
@@ -916,6 +916,7 @@
     hands:
     - item: HandheldHealthAnalyzerUnpowered
     - item: DefibrillatorOneHandedUnpowered
+    - item: Crowbar
     - item: BorgFireExtinguisher
     - item: BorgHandheldGPSBasic
     - item: HandLabeler

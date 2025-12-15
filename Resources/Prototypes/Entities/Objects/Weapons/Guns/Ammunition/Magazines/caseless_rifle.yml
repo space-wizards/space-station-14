@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: BaseMagazineCaselessRifle
   name: "magazine (.25 caseless)"
-  parent: [ BaseItem, BaseSecurityContraband ]
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -33,10 +33,10 @@
   - type: Appearance
 
 - type: entity
+  abstract: true
+  parent: BaseMagazineCaselessRifle
   id: BaseMagazinePistolCaselessRifle
   name: "pistol magazine (.25 caseless)"
-  parent: BaseMagazineCaselessRifle
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -63,9 +63,9 @@
   - type: Appearance
 
 - type: entity
+  parent: BaseMagazinePistolCaselessRifle
   id: MagazinePistolCaselessRifle
   name: "pistol magazine (.25 caseless)"
-  parent: BaseMagazinePistolCaselessRifle
   description: 10-round magazine for the Cobra pistol. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
@@ -91,10 +91,10 @@
       - state: inhand-right-stripe
 
 - type: entity
+  parent: BaseMagazinePistolCaselessRifle
   id: MagazinePistolCaselessRiflePractice
   name: "pistol magazine (.25 caseless practice)"
-  parent: BaseMagazinePistolCaselessRifle
-  description: 10-round magazine for the Cobra pistol. Intended to hold non-harmful chalk ammunition.
+  description: 10-round magazine for the Cobra pistol. Intended to hold harmless practice ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice
@@ -124,9 +124,9 @@
         color: "#dbdbdb"
 
 - type: entity
+  parent: BaseMagazineCaselessRifle
   id: MagazineCaselessRifle
   name: "magazine (.25 caseless)"
-  parent: BaseMagazineCaselessRifle
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
@@ -144,9 +144,9 @@
       - state: inhand-right-mag
 
 - type: entity
+  parent: BaseMagazineCaselessRifle
   id: MagazineCaselessRiflePractice
   name: "magazine (.25 caseless practice)"
-  parent: BaseMagazineCaselessRifle
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice

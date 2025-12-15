@@ -468,11 +468,17 @@
           amount: 4
 
 - type: entity
-  name: darts box
   parent: BoxCardboard
   id: BoxDarts
+  name: darts box
   description: A box filled with colorful darts.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,1,1
+  - type: Storage
+    maxItemSize: Tiny
   - type: Sprite
     layers:
       - state: box
