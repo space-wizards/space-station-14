@@ -295,6 +295,7 @@
     sprite: Objects/Fun/Foam/foam_rifle.rsi
   - type: Item
     sprite: Objects/Fun/Foam/foam_rifle_inhand_64x.rsi
+    size: Normal
     shape:
     - 0,0,3,0
   - type: BallisticAmmoProvider

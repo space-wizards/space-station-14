@@ -298,6 +298,8 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: Small
+    shape:
+    - 0,0,1,1
     heldPrefix: box
   - type: EntityTableContainerFill
     containers:
@@ -346,16 +348,3 @@
           tags:
           - CrayonWhite
   - type: Appearance
-
-- type: entityTable
-  id: RandomCrayonTable
-  table: !type:GroupSelector
-    children:
-    - id: CrayonRed
-    - id: CrayonOrange
-    - id: CrayonYellow
-    - id: CrayonGreen
-    - id: CrayonBlue
-    - id: CrayonPurple
-    - id: CrayonBlack
-    - id: CrayonWhite
