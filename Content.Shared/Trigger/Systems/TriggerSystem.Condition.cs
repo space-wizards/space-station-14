@@ -16,7 +16,7 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<RandomChanceTriggerConditionComponent, AttemptTriggerEvent>(OnRandomChanceTriggerAttempt);
         SubscribeLocalEvent<MindRoleTriggerConditionComponent, AttemptTriggerEvent>(OnMindRoleTriggerAttempt);
         SubscribeLocalEvent<MobStateTriggerConditionComponent, AttemptTriggerEvent>(OnMobStateTriggerAttempt);
-        SubscribeLocalEvent<UserIsTargetTriggerConditionComponent, AttemptTriggerEvent>(OnUserTargetTriggerAttempt);
+        SubscribeLocalEvent<UserIsOwnerTriggerConditionComponent, AttemptTriggerEvent>(OnUserTargetTriggerAttempt);
 
         SubscribeLocalEvent<ToggleTriggerConditionComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleGetAltVerbs);
     }
@@ -134,7 +134,7 @@ public sealed partial class TriggerSystem
         args.Cancelled |= cancel;
     }
 
-    private void OnUserTargetTriggerAttempt(Entity<UserIsTargetTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
+    private void OnUserTargetTriggerAttempt(Entity<UserIsOwnerTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
     {
         if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
             return;
