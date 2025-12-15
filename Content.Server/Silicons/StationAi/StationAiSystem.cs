@@ -4,7 +4,6 @@ using Content.Server.Destructible;
 using Content.Server.Ghost;
 using Content.Server.Mind;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Spawners.EntitySystems;
@@ -21,6 +20,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Power.Components;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Roles;
@@ -49,7 +49,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly GhostSystem _ghost = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -220,6 +220,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         UpdateDamagedAccent(entity);
     }
 
+    // TODO: This should just read the current damage and charge when speaking instead of updating the component all the time even if we don't even use it.
     private void UpdateDamagedAccent(Entity<StationAiCoreComponent> ent)
     {
         if (!TryGetHeld((ent.Owner, ent.Comp), out var held))
@@ -229,7 +230,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             return;
 
         if (TryComp<BatteryComponent>(ent, out var battery))
-            accent.OverrideChargeLevel = battery.CurrentCharge / battery.MaxCharge;
+            accent.OverrideChargeLevel = _battery.GetChargeLevel((ent.Owner, battery));
 
         if (TryComp<DamageableComponent>(ent, out var damageable))
             accent.OverrideTotalDamage = damageable.TotalDamage;
@@ -251,7 +252,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (!_proto.TryIndex(_batteryAlert, out var proto))
             return;
 
-        var chargePercent = battery.CurrentCharge / battery.MaxCharge;
+        var chargePercent = _battery.GetChargeLevel((ent.Owner, battery));
         var chargeLevel = Math.Round(chargePercent * proto.MaxSeverity);
 
         _alerts.ShowAlert(held.Value, _batteryAlert, (short)Math.Clamp(chargeLevel, 0, proto.MaxSeverity));

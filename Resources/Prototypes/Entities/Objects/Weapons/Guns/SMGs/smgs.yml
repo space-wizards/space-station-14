@@ -156,10 +156,10 @@
   - type: BatteryAmmoProvider
     proto: CartridgePistol
     fireCost: 100
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 3000
     startingCharge: 3000
-  - type: PredictedBatterySelfRecharger
+  - type: BatterySelfRecharger
     autoRechargeRate: 25
   - type: AmmoCounter
 

@@ -120,9 +120,9 @@
     - type: BatteryAmmoProvider
       proto: CartridgeLightRifle
       fireCost: 100
-    - type: PredictedBattery
+    - type: Battery
       maxCharge: 10000
       startingCharge: 10000
-    - type: PredictedBatterySelfRecharger
+    - type: BatterySelfRecharger
       autoRechargeRate: 25
     - type: AmmoCounter

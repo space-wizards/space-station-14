@@ -73,6 +73,11 @@
     sprite: Structures/Power/power.rsi
     state: provider
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
   - type: NodeContainer
     nodes:
       input:
@@ -104,6 +109,11 @@
     sprite: Structures/Power/power.rsi
     state: provider
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
   - type: NodeContainer
     nodes:
       input:
