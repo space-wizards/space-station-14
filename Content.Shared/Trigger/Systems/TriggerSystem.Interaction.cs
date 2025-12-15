@@ -19,6 +19,8 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<TriggerOnUserInteractHandComponent, UserInteractHandEvent>(OnUserInteractHand);
         SubscribeLocalEvent<TriggerOnInteractUsingComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<TriggerOnUserInteractUsingComponent, UserInteractUsingEvent>(OnUserInteractUsing);
+        SubscribeLocalEvent<TriggerOnAfterInteractComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<TriggerOnAfterInteractUsingComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
 
         SubscribeLocalEvent<TriggerOnThrowComponent, ThrowEvent>(OnThrow);
         SubscribeLocalEvent<TriggerOnThrownComponent, ThrownEvent>(OnThrown);
@@ -101,6 +103,32 @@ public sealed partial class TriggerSystem
 
         if (ent.Comp.Handle)
             args.Handled = true;
+    }
+
+    private void OnAfterInteract(Entity<TriggerOnAfterInteractComponent> ent, ref AfterInteractEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
+            return;
+
+        Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+
+        args.Handled = true;
+    }
+
+    private void OnAfterInteractUsing(Entity<TriggerOnAfterInteractUsingComponent> ent, ref AfterInteractUsingEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
+            return;
+
+        Trigger(ent.Owner, args.Target, ent.Comp.KeyOut);
+
+        args.Handled = true;
     }
 
     private void OnThrow(Entity<TriggerOnThrowComponent> ent, ref ThrowEvent args)
