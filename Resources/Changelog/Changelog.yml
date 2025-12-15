@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: More atmos devices can now be constructed on layers from the construction
-      menu.
-    type: Add
-  id: 8793
-  time: '2025-07-19T22:04:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38672
 - author: IgorAnt028
   changes:
   - message: The color of the pipe in a hand now matches the real color of the pipe
@@ -3922,3 +3914,11 @@
   id: 9293
   time: '2025-12-15T01:33:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41705
+- author: ScarKy0
+  changes:
+  - message: Removed roundstart tools module from the Medical, Service and Janitor
+      cyborgs. The module can still be printed at the exosuit fab.
+    type: Remove
+  id: 9294
+  time: '2025-12-15T01:50:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41823
