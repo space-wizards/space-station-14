@@ -26,12 +26,6 @@ public sealed partial class FlatpackComponent : Component
     public EntProtoId? Entity;
 
     /// <summary>
-    ///     True if this entity can be unpacked on top of a table.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool CanUnpackOnTable;
-
-    /// <summary>
     /// Sound effect played upon the object being unpacked.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]

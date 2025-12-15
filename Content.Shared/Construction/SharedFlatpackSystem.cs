@@ -1,18 +1,19 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Construction.Components;
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Examine;
-using Content.Shared.Ghost;
 using Content.Shared.Interaction;
 using Content.Shared.Materials;
-using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Construction;
@@ -22,16 +23,17 @@ public abstract class SharedFlatpackSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly AnchorableSystem _anchorable = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] protected readonly MachinePartSystem MachinePart = default!;
-    [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] protected readonly MachinePartSystem MachinePart = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected readonly SharedMaterialStorageSystem MaterialStorage = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -80,22 +82,19 @@ public abstract class SharedFlatpackSystem : EntitySystem
 
         var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
         var coords = _map.ToCenterCoordinates(grid, buildPos);
-        var intersecting = _entityLookup.GetEntitiesIntersecting(coords, LookupFlags.Dynamic | LookupFlags.Static);
 
-        foreach (var i in intersecting)
-        {
-            if (HasComp<GhostComponent>(i) ||
-                comp.CanUnpackOnTable && HasComp<PlaceableSurfaceComponent>(i))
-                intersecting.Remove(i);
-        }
+        var dummy = EntityManager.SpawnEntity(comp.Entity, MapCoordinates.Nullspace);
+        var entPhysics = EnsureComp<PhysicsComponent>(dummy);
 
-        if (intersecting.Count != 0)
+        if (!_anchorable.TileFree(coords, entPhysics))
         {
-            // this popup is on the server because the predicts on the intersection is crazy
+            // this popup is on the server because the predicts on the unpacking are crazy
             if (_net.IsServer)
                 _popup.PopupEntity(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
+            Del(dummy);
             return;
         }
+        Del(dummy);
 
         if (_net.IsServer)
         {
