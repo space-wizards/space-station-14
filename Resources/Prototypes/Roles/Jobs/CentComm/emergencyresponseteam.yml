@@ -70,17 +70,16 @@
     suitstorage: WeaponRifleLecterXL8
   storage:
     back:
-    - Binoculars
     - HoloprojectorField
     - PhoneInstrument
     - PinpointerNuclear
     - MagazineRifle
     - MagazineRifle
-    - MedkitCombatFilled # End of first line
     - MagazineRifleIncendiary
     - MagazineRifleUranium
+    - MedkitCombatFilled # End of first line
     - GrenadeShrapnel
-    - SmokeGrenade
+    - EmpGrenade
     belt:
     - Truncheon
     - Handcuffs
@@ -151,11 +150,6 @@
     - BodyBagFolded
     - JugWater
     - JugBlood # End of first row
-    - FoodPoppy
-    - FoodPoppy
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
-    - FoodBakedBunHotX
     - FoodBakedBunHotX
     - FoodBakedBunHotX
     - FoodBakedBunHotX
@@ -262,8 +256,8 @@
     - RCDAmmo
     - RCDAmmo # End of first line
     - CableDetStack
-    - C4 # Todo: Replace with fuse box
-    - BoxLethalshot
+    - BoxDetonator
+    - BoxShotgunSlug
     - BoxLethalshot
 
 - type: chameleonOutfit
@@ -409,21 +403,23 @@
     - ExGrenade
     - SmokeGrenade
     - EmpGrenade
-    - MedkitCombatFilled
     - HoloprojectorSecurity
-    - PowerCellHigh
     - TelescopicShield
     - TelescopicShield
-    - TelescopicShield # End of first line
+    - TelescopicShield
+    - MedkitCombatFilled # End of first line
+    - MagazinePistolSubMachineGunTopMounted
+    - MagazinePistolSubMachineGunTopMounted
+    - MagazinePistolSubMachineGunTopMounted
     - MagazinePistolSubMachineGunTopMounted
     belt:
     - Truncheon
     - Handcuffs
     - Handcuffs
     - CrowbarRed
-    - MagazinePistolSubMachineGunTopMounted
-    - MagazinePistolSubMachineGunTopMounted
-    - MagazinePistolSubMachineGunTopMounted
+    - WeaponPistolMk58
+    - MagazinePistol
+    - EmergencyMedipen
 
 - type: chameleonOutfit
   id: ERTSecurityChameleonOutfit
