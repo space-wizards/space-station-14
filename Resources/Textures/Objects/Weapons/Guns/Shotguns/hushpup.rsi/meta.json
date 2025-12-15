@@ -1,0 +1,41 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/b5f048539b43797b371061e69534554595704525. Created by pireamaineach (github). Bolt-open modified from icon.png by Flareguy.  Resprite by kleinerstation13 (Github). Suppressor sprite made by Kleinerstation13 (Github), inspired from sprites created by BoskiYourk (Github) at commit https://github.com/Sector-Crescent/Hullrot/commit/1f7e549e20528ca7f4154616ef615cc456fd1c6d.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "bolt-open"
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right",
+            "directions": 4
+        }
+    ]
+}

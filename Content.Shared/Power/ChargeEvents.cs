@@ -8,7 +8,23 @@ namespace Content.Shared.Power;
 /// Only raised for entities with <see cref="BatteryComponent"/>.
 /// </summary>
 [ByRefEvent]
-public readonly record struct ChargeChangedEvent(float Charge, float MaxCharge);
+public readonly record struct ChargeChangedEvent(float Charge, float Delta, float MaxCharge)
+{
+    /// <summary>
+    /// The new charge of the battery.
+    /// </summary>
+    public readonly float Charge = Charge;
+
+    /// <summary>
+    /// The amount the charge was changed by.
+    /// </summary>
+    public readonly float Delta = Delta;
+
+    /// <summary>
+    /// The maximum charge of the battery.
+    /// </summary>
+    public readonly float MaxCharge = MaxCharge;
+}
 
 /// <summary>
 /// Raised when a predicted battery's charge or capacity changes (capacity affects relative charge percentage).
@@ -18,7 +34,29 @@ public readonly record struct ChargeChangedEvent(float Charge, float MaxCharge);
 /// Only raised for entities with <see cref="PredictedBatteryComponent"/>.
 /// </summary>
 [ByRefEvent]
-public readonly record struct PredictedBatteryChargeChangedEvent(float CurrentCharge, float CurrentChargeRate, TimeSpan CurrentTime, float MaxCharge);
+public readonly record struct PredictedBatteryChargeChangedEvent(float CurrentCharge, float Delta, float CurrentChargeRate, float MaxCharge)
+{
+    /// <summary>
+    /// The new charge of the battery.
+    /// </summary>
+    public readonly float CurrentCharge = CurrentCharge;
+
+    /// <summary>
+    /// The amount the charge was changed by.
+    /// This might be 0 if only the charge rate was modified.
+    /// </summary>
+    public readonly float Delta = Delta;
+
+    /// <summary>
+    /// The new charge rate of the battery.
+    /// </summary>
+    public readonly float CurrentChargeRate = CurrentChargeRate;
+
+    /// <summary>
+    /// The maximum charge of the battery.
+    /// </summary>
+    public readonly float MaxCharge = MaxCharge;
+}
 
 /// <summary>
 /// Raised when a battery changes its state between full, empty, or neither.
