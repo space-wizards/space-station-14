@@ -85,7 +85,7 @@
   id: LizardHornsCurled
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [Reptilian, Human]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_curled
@@ -94,7 +94,7 @@
   id: LizardHornsRam
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [Reptilian, Human]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_ram
@@ -103,7 +103,7 @@
   id: LizardHornsShort
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [Reptilian, Human]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_short
@@ -112,7 +112,7 @@
   id: LizardHornsSimple
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [Reptilian, Human]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_simple
@@ -289,7 +289,7 @@
   id: LizardHornsArgali
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [Reptilian, Human]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_argali
@@ -298,7 +298,7 @@
   id: LizardHornsAyrshire
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [Reptilian, Human]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_ayrshire
@@ -307,7 +307,7 @@
   id: LizardHornsMyrsore
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [Reptilian, Human]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_myrsore
@@ -316,7 +316,7 @@
   id: LizardHornsBighorn
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [Reptilian, Human]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_bighorn
@@ -325,7 +325,7 @@
   id: LizardHornsDemonic
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Reptilian]
+  speciesRestriction: [Reptilian, Human]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: horns_demonic
