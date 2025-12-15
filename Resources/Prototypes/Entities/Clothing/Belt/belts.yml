@@ -125,8 +125,6 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
-  - type: Item
-    size: Ginormous
   - type: Storage
     maxItemSize: Huge
     grid:

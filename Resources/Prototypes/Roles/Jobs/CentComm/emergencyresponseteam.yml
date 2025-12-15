@@ -229,7 +229,7 @@
     - trayScanner
     - HolofanProjector
     - AccessConfigurator
-    - MiningDrill
+    - MiningDrillDiamond
     - RCDAmmo
     - RCDAmmo # End of first line
     - PowerCellHigh
@@ -258,12 +258,11 @@
     - trayScanner
     - HolofanProjector
     - AccessConfigurator
-    - MiningDrill
+    - MiningDrillDiamond
     - RCDAmmo
     - RCDAmmo # End of first line
-    - PowerCellHigh
-    - C4
-    - C4
+    - CableDetStack
+    - C4 # Todo: Replace with fuse box
     - BoxLethalshot
     - BoxLethalshot
 
@@ -361,10 +360,10 @@
     - CrowbarRed
     - Zipties
     - MedkitCombatFilled
-    - SmokeGrenade
-    - ExGrenade
     - MagazineRifle
     - MagazineRifle
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium
     - Zipties
 
 - type: startingGear
@@ -381,7 +380,7 @@
     - GrenadeBlast
     - GrenadeBlast
     - GrenadeBlast
-    - CrowbarRed
+    - MagazinePistol
     - MedkitCombatFilled # End of first line
     - GrenadeEMP
     - GrenadeEMP
@@ -389,6 +388,7 @@
     - GrenadeFlash
     - GrenadeFlash
     - GrenadeFlash
+    - MagazinePistol
     belt:
     - Truncheon
     - Handcuffs
@@ -400,30 +400,30 @@
 
 - type: startingGear
   parent: ERTSecurityGearEVA
-  id: ERTSecurityGearArmedMarksman
+  id: ERTSecurityGearArmedVanguard
   equipment:
     pocket2: WeaponDisabler
-    suitstorage: WeaponRifleLecterXL8
+    suitstorage: WeaponSubMachineGunWt550
   storage:
     back:
-    - CrowbarRed
     - ExGrenade
     - SmokeGrenade
-    - MagazineRifle
-    - MagazineRifle
-    - MagazineRifleIncendiary
-    - MagazineRifleUranium
-    - MedkitCombatFilled # End of first line
+    - EmpGrenade
+    - MedkitCombatFilled
     - HoloprojectorSecurity
     - PowerCellHigh
+    - TelescopicShield
+    - TelescopicShield
+    - TelescopicShield # End of first line
+    - MagazinePistolSubMachineGunTopMounted
     belt:
     - Truncheon
     - Handcuffs
     - Handcuffs
     - CrowbarRed
-    - WeaponPistolMk58
-    - MagazinePistol
-    - EmergencyMedipen
+    - MagazinePistolSubMachineGunTopMounted
+    - MagazinePistolSubMachineGunTopMounted
+    - MagazinePistolSubMachineGunTopMounted
 
 - type: chameleonOutfit
   id: ERTSecurityChameleonOutfit
@@ -501,7 +501,7 @@
   parent: ERTMedicalGearEVA
   id: ERTMedicalGearArmed
   equipment:
-    suitstorage: WeaponSubMachineGunDrozd
+    suitstorage: WeaponRifleLecter
     pocket2: WeaponDisabler
   storage:
     back:
@@ -517,12 +517,13 @@
     - PowerCellHigh
     belt:
     - Truncheon
-    - Handcuffs
-    - Handcuffs
+    - Zipties
     - CrowbarRed
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGunIncendiary
+    - MagazineRifle
+    - MagazineRifle
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium # End of first line
+    - Zipties
 
 - type: chameleonOutfit
   id: ERTMedicalChameleonOutfit
