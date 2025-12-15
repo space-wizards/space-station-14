@@ -1,0 +1,8 @@
+- type: entityTable
+  id: AllPartyHatsTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHeadHatPartyRed
+    - id: ClothingHeadHatPartyYellow
+    - id: ClothingHeadHatPartyGreen
+    - id: ClothingHeadHatPartyBlue

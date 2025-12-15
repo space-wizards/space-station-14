@@ -172,40 +172,32 @@
   id: FoolboxTable
   table: !type:AllSelector
     children:
-    - !type:GroupSelector
+    - !type:GroupSelector # Offensive clown items
       children:
-      - !type:NestedSelector # Offensive clown items
+      - !type:NestedSelector
         tableId: AllToyWeaponsTable
-      - id: ClothingHandsGlovesColorYellow
-        weight: 0.01
-      - id: ClothingHandsGlovesConducting
-        weight: 0.0025
-      - id: EnergySword
-        weight: 0.0005
+      - id: EnergySword # ~1/1001
+        weight: 0.001
     - !type:GroupSelector # Rarer clown tools
       rolls: 2
       children:
       - !type:NestedSelector
         tableId: AllMiscToysTable
-        weight: 5
+        weight: 4
       - !type:NestedSelector
         tableId: AllCrayonsTable
         rolls: 1, 3
-        weight: 3.5
-      - id: ClothingHandsGlovesColorYellowBudget
-        weight: 0.5
+        weight: 2.5
       - id: BarberScissors
         weight: 0.5
       - id: DrinkSpaceLube
       - id: DrinkSpaceGlue
-      - id: BikeHorn
-        weight: 0.25
       - !type:NestedSelector
         tableId: RandomBikeHornTable
-        weight: 0.25
       - !type:NestedSelector
         tableId: AllFigurinesTable
-        weight: 0.25
+      - id: RubberStampCaptain # ~1/111
+        weight: 0.1
     - !type:GroupSelector # Common clown consumables
       rolls: 2
       children:
@@ -215,3 +207,25 @@
       - id: FoodBanana
       - id: FoodPieBananaCream
         weight: 0.75
+    - !type:GroupSelector # Fun clothing
+      prob: 0.33
+      children:
+      - id: ClothingHandsGlovesColorYellowBudget
+      - id: SprayFlowerPin
+      - id: ClothingHeadHatMagician
+      - id: ClothingHeadSafari
+      - id: ClothingHeadHatPirate
+      - id: ClothingHeadHatWizardFake
+      - id: ClothingHeadHatCowboyBrown
+      - id: ClothingHeadHatWitch1
+      - !type:NestedSelector
+        tableId: AllPartyHatsTable
+      - !type:GroupSelector # ~1/121
+        weight: 0.075
+        children:
+        - id: ClothingHeadHatCatEars
+        - id: ClothingHeadHatFancyCrown
+        - id: ClothingHandsGlovesColorYellow
+        - id: ClothingHandsGlovesConducting
+        - id: ClothingHeadHatChameleon
+

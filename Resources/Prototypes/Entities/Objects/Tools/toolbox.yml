@@ -168,7 +168,6 @@
       params:
         variation: 0.03
         volume: 3
-
   - type: Storage
     storageOpenSound: &SoundHorn
       collection: BikeHorn
