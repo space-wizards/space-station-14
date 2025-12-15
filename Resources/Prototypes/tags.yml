@@ -1468,9 +1468,6 @@
 - type: Tag
   id: Vegetable # CargoBounty: BountyVegetable
 
-- type: Tag # Used on DungeonRoom prototypes.
-  id: VGRoidInterior # RoomFill spawner whitelist for VGRoidInteriorRoomMarker.
-
 - type: Tag
   id: VimPilot # Used synonymously with harmless animals such as mice, station pets, or genetic ancestors (monkeys).
                # Storage whitelist: MechVim, PetCarrier, BodyBag, MachineArtifactCrusher
