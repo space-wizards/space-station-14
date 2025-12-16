@@ -164,7 +164,7 @@ public sealed partial class BotanySystem : EntitySystem
     /// Spawns a seed packet that stores a component snapshot of <paramref name="snapshot"/>.
     /// </summary
     [PublicAPI]
-    public EntityUid SpawnSeedPacketFromSnapshot(ComponentRegistry snapshot, EntProtoId plantProtoId, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
+    public EntityUid SpawnSeedPacketFromSnapshot(ComponentRegistry? snapshot, EntProtoId plantProtoId, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
     {
         if (!TryGetPlantComponent<PlantDataComponent>(snapshot, plantProtoId, out var plantData))
             return EntityUid.Invalid;

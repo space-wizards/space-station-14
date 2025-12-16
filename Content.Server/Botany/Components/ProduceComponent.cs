@@ -14,7 +14,7 @@ public sealed partial class ProduceComponent : SharedProduceComponent
     /// Name of a base plant prototype to spawn when extracting seeds.
     /// </summary>
     [DataField]
-    public EntProtoId PlantProtoId;
+    public EntProtoId? PlantProtoId;
 
     /// <summary>
     /// Serialized snapshot of plant components.

@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
@@ -28,14 +29,15 @@ public sealed class SeedExtractorSystem : EntitySystem
         if (!TryComp<ProduceComponent>(args.Used, out var produce))
             return;
 
-        if (produce.PlantData == null)
+        if (produce.PlantProtoId == null)
             return;
 
-        var snapshot = produce.PlantData;
         var protoId = produce.PlantProtoId;
-        produce.PlantData = null;
+        ComponentRegistry? snapshot = null;
+        if (produce.PlantData != null)
+            snapshot = produce.PlantData;
 
-        if (_botany.TryGetPlantComponent<PlantTraitsComponent>(snapshot, protoId, out var traits) && traits.Seedless)
+        if (snapshot != null && _botany.TryGetPlantComponent<PlantTraitsComponent>(snapshot, protoId, out var traits) && traits.Seedless)
         {
             _popup.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User, PopupType.MediumCaution);
@@ -53,7 +55,10 @@ public sealed class SeedExtractorSystem : EntitySystem
 
         for (var i = 0; i < amount; i++)
         {
-            _botany.SpawnSeedPacketFromSnapshot(snapshot, protoId, coords, args.User);
+            if (snapshot == null)
+                _botany.SpawnSeedPacketFromSnapshot(null, protoId.Value, coords, args.User);
+            else
+                _botany.SpawnSeedPacketFromSnapshot(snapshot, protoId.Value, coords, args.User);
         }
     }
 }

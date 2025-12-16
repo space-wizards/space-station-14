@@ -18,7 +18,7 @@ public sealed partial class BotanySwabComponent : Component
     /// Name of a base plant prototype for the stored pollen snapshot.
     /// </summary>
     [DataField]
-    public EntProtoId PlantProtoId;
+    public EntProtoId? PlantProtoId;
 
     /// <summary>
     /// Serialized snapshot of plant components from the last swabbed plant.

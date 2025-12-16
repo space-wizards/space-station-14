@@ -2123,36 +2123,34 @@
     productPrototypes: [ FoodBloonion ]
   - type: Plant
     lifespan: 25
-    maturation: 10
-    production: 7
+    maturation: 15
+    production: 3
     yield: 3
-    potency: 20
-    growthStages: 3
+    potency: 10
+    growthStages: 4
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: BasicGrowth
     waterConsumption: 0.6
     nutrientConsumption: 0.5
-  - type: AtmosphericGrowth
-    idealHeat: 288
   - type: PlantChemicals
     chemicals:
-      Nutriment:
-        min: 1
-        max: 5
-        potencyDivisor: 20
-      Vitamin:
-        min: 1
-        max: 4
-        potencyDivisor: 25
+      Potassium:
+        Min: 1
+        Max: 5
+        PotencyDivisor: 20
+      Phosphorus:
+        Min: 1
+        Max: 5
+        PotencyDivisor: 20
+      Sugar:
+        Min: 1
+        Max: 5
+        PotencyDivisor: 20
       Allicin:
-        min: 1
-        max: 8
-        potencyDivisor: 25
-      Helium:
-        min: 1
-        max: 6
-        potencyDivisor: 5
+        Min: 1
+        Max: 10
+        PotencyDivisor: 10
 
 - type: entity
   id: CannabisPlants
@@ -2194,7 +2192,7 @@
   components:
   - type: PlantData
     noun: seeds-noun-seeds
-    displayName: seeds-rainbowcannabis-display-name
+    displayName: seeds-rainbow-cannabis-display-name
     plantRsi: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
     packetPrototype: RainbowCannabisSeeds
     productPrototypes: [ LeavesCannabisRainbow ]
