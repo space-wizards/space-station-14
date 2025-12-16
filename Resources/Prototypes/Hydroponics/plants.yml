@@ -52,10 +52,11 @@
   - type: BasicGrowth
     nutrientConsumption: 0.4
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 20
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 20
+        potencyDivisor: 20
 
 - type: entity
   id: CottonPlants
@@ -79,10 +80,11 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Fiber:
-      min: 5
-      max: 10
-      potencyDivisor: 20
+    chemicals:
+      Fiber:
+        min: 5
+        max: 10
+        potencyDivisor: 20
 
 - type: entity
   id: PyrottonPlants
@@ -105,14 +107,15 @@
   - type: BasicGrowth
     waterConsumption: 0.8
   - type: PlantChemicals
-    Fiber:
-      min: 5
-      max: 10
-      potencyDivisor: 20
-    Phlogiston:
-      min: 4
-      max: 8
-      potencyDivisor: 30
+    chemicals:
+      Fiber:
+        min: 5
+        max: 10
+        potencyDivisor: 20
+      Phlogiston:
+        min: 4
+        max: 8
+        potencyDivisor: 30
 
 - type: entity
   id: CherryPlants
@@ -134,14 +137,15 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 3
-      potencyDivisor: 30
-    Vitamin:
-      min: 1
-      max: 3
-      potencyDivisor: 40
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 3
+        potencyDivisor: 30
+      Vitamin:
+        min: 1
+        max: 3
+        potencyDivisor: 40
 
 - type: entity
   id: AnomalyBerryPlants
@@ -165,22 +169,23 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.5
   - type: PlantChemicals
-    Artifexium:
-      min: 1
-      max: 1
-      potencyDivisor: 4
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 30
-    Vitamin:
-      min: 1
-      max: 2
-      potencyDivisor: 40
-    Flour:
-      min: 5
-      max: 20
-      potencyDivisor: 20
+    chemicals:
+      Artifexium:
+        min: 1
+        max: 1
+        potencyDivisor: 4
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 30
+      Vitamin:
+        min: 1
+        max: 2
+        potencyDivisor: 40
+      Flour:
+        min: 5
+        max: 20
+        potencyDivisor: 20
 
 - type: entity
   id: MeatWheatPlants
@@ -202,14 +207,15 @@
   - type: BasicGrowth
     nutrientConsumption: 0.4
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 20
-      potencyDivisor: 20
-    UncookedAnimalProteins:
-      min: 5
-      max: 20
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 20
+        potencyDivisor: 20
+      UncookedAnimalProteins:
+        min: 5
+        max: 20
+        potencyDivisor: 20
 
 - type: entity
   id: OatPlants
@@ -231,14 +237,15 @@
   - type: BasicGrowth
     nutrientConsumption: 0.4
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 20
-      potencyDivisor: 20
-    Oats:
-      min: 5
-      max: 20
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 20
+        potencyDivisor: 20
+      Oats:
+        min: 5
+        max: 20
+        potencyDivisor: 20
 
 - type: entity
   id: BananaPlants
@@ -264,14 +271,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 50
+    chemicals:
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
 
 - type: entity
   id: MimanaPlants
@@ -296,14 +304,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    MuteToxin:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 50
+    chemicals:
+      MuteToxin:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
 
 - type: entity
   id: CarrotPlants
@@ -326,18 +335,19 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    JuiceCarrot:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Oculine:
-      min: 2
-      max: 6
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      JuiceCarrot:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Oculine:
+        min: 2
+        max: 6
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: LaughinPeaPlants
@@ -364,18 +374,19 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.6
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 3
-      potencyDivisor: 7
-    Sugar:
-      min: 1
-      max: 10
-      potencyDivisor: 5
-    Laughter:
-      min: 1
-      max: 10
-      potencyDivisor: 5
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 3
+        potencyDivisor: 7
+      Sugar:
+        min: 1
+        max: 10
+        potencyDivisor: 5
+      Laughter:
+        min: 1
+        max: 10
+        potencyDivisor: 5
 
 - type: entity
   id: LemonPlants
@@ -398,14 +409,15 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: LemoonPlants
@@ -427,14 +439,15 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantChemicals
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
-    Milk:
-      min: 8
-      max: 20
-      potencyDivisor: 5
+    chemicals:
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      Milk:
+        min: 8
+        max: 20
+        potencyDivisor: 5
 
 - type: entity
   id: LimePlants
@@ -457,14 +470,15 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: OrangePlants
@@ -487,14 +501,15 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: ExtradimensionalOrangePlants
@@ -516,18 +531,19 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantChemicals
-    Haloperidol:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Haloperidol:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: SugarcanePlants
@@ -553,10 +569,11 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Sugar:
-      min: 4
-      max: 5
-      potencyDivisor: 5
+    chemicals:
+      Sugar:
+        min: 4
+        max: 5
+        potencyDivisor: 5
 
 - type: entity
   id: PapercanePlants
@@ -606,10 +623,11 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Vitamin:
-      min: 1
-      max: 5
-      potencyDivisor: 20
+    chemicals:
+      Vitamin:
+        min: 1
+        max: 5
+        potencyDivisor: 20
 
 - type: entity
   id: TowercapPlants
@@ -690,18 +708,19 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 7
-      potencyDivisor: 14
-    Vitamin:
-      min: 1
-      max: 3
-      potencyDivisor: 33
-    Water:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 7
+        potencyDivisor: 14
+      Vitamin:
+        min: 1
+        max: 3
+        potencyDivisor: 33
+      Water:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: BlueTomatoPlants
@@ -728,18 +747,19 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    SpaceLube:
-      min: 5
-      max: 15
-      potencyDivisor: 10
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      SpaceLube:
+        min: 5
+        max: 15
+        potencyDivisor: 10
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: BloodTomatoPlants
@@ -767,14 +787,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Blood:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Blood:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: KillerTomatoPlants
@@ -804,14 +825,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Blood:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    JuiceTomato:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Blood:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      JuiceTomato:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: EggplantPlants
@@ -837,10 +859,11 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 10
-      potencyDivisor: 10
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 10
+        potencyDivisor: 10
 
 - type: entity
   id: GalaxythistlePlants
@@ -864,10 +887,11 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Stellibinin:
-      min: 1
-      max: 25
-      potencyDivisor: 4
+    chemicals:
+      Stellibinin:
+        min: 1
+        max: 25
+        potencyDivisor: 4
 
 - type: entity
   id: GlasstlePlants
@@ -888,14 +912,15 @@
     potency: 10
     growthStages: 3
   - type: PlantChemicals
-    Razorium:
-      min: 1
-      max: 25
-      potencyDivisor: 4
-    Desoxyephedrine:
-      min: 1
-      max: 10
-      potencyDivisor: 10
+    chemicals:
+      Razorium:
+        min: 1
+        max: 25
+        potencyDivisor: 4
+      Desoxyephedrine:
+        min: 1
+        max: 10
+        potencyDivisor: 10
 
 - type: entity
   id: FlyAmanitaPlants
@@ -919,14 +944,15 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.5
   - type: PlantChemicals
-    Amatoxin:
-      min: 1
-      max: 10
-      potencyDivisor: 12
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
+    chemicals:
+      Amatoxin:
+        min: 1
+        max: 10
+        potencyDivisor: 12
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
 
 - type: entity
   id: GatfruitPlants
@@ -948,14 +974,15 @@
     potency: 10
     growthStages: 2
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Sulfur:
-      min: 1
-      max: 5
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Sulfur:
+        min: 1
+        max: 5
+        potencyDivisor: 20
 
 - type: entity
   id: FakeCapfruitPlants
@@ -976,14 +1003,15 @@
     potency: 10
     growthStages: 2
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Sulfur:
-      min: 1
-      max: 5
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Sulfur:
+        min: 1
+        max: 5
+        potencyDivisor: 20
 
 - type: entity
   id: RealCapfruitPlants
@@ -1004,14 +1032,15 @@
     potency: 10
     growthStages: 2
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Sulfur:
-      min: 1
-      max: 5
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Sulfur:
+        min: 1
+        max: 5
+        potencyDivisor: 20
 
 - type: entity
   id: BungoPlants
@@ -1038,14 +1067,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Nutriment:
-      min: 5
-      max: 10
-      potencyDivisor: 20
-    Enzyme:
-      min: 5
-      max: 10
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 5
+        max: 10
+        potencyDivisor: 20
+      Enzyme:
+        min: 5
+        max: 10
+        potencyDivisor: 20
 
 - type: entity
   id: PeaPlants
@@ -1071,14 +1101,15 @@
   - type: BasicGrowth
     nutrientConsumption: 0.5
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 3
-      potencyDivisor: 33
-    Vitamin:
-      min: 1
-      max: 2
-      potencyDivisor: 50
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 3
+        potencyDivisor: 33
+      Vitamin:
+        min: 1
+        max: 2
+        potencyDivisor: 50
 
 - type: entity
   id: WorldPeaPlants
@@ -1103,18 +1134,19 @@
   - type: BasicGrowth
     nutrientConsumption: 0.5
   - type: PlantChemicals
-    Happiness:
-      min: 1
-      max: 3
-      potencyDivisor: 25
-    Nutriment:
-      min: 1
-      max: 3
-      potencyDivisor: 20
-    Pax:
-      min: 1
-      max: 2
-      potencyDivisor: 50
+    chemicals:
+      Happiness:
+        min: 1
+        max: 3
+        potencyDivisor: 25
+      Nutriment:
+        min: 1
+        max: 3
+        potencyDivisor: 20
+      Pax:
+        min: 1
+        max: 2
+        potencyDivisor: 50
 
 - type: entity
   id: PumpkinPlants
@@ -1138,14 +1170,15 @@
   - type: AtmosphericGrowth
     idealHeat: 288
   - type: PlantChemicals
-    PumpkinFlesh:
-      min: 1
-      max: 20
-      potencyDivisor: 5
-    Vitamin:
-      min: 1
-      max: 5
-      potencyDivisor: 20
+    chemicals:
+      PumpkinFlesh:
+        min: 1
+        max: 20
+        potencyDivisor: 5
+      Vitamin:
+        min: 1
+        max: 5
+        potencyDivisor: 20
 
 - type: entity
   id: BluePumpkinPlants
@@ -1168,18 +1201,19 @@
   - type: AtmosphericGrowth
     idealHeat: 288
   - type: PlantChemicals
-    Ammonia:
-      min: 1
-      max: 15
-      potencyDivisor: 3
-    Chlorine:
-      min: 1
-      max: 5
-      potencyDivisor: 5
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Ammonia:
+        min: 1
+        max: 15
+        potencyDivisor: 3
+      Chlorine:
+        min: 1
+        max: 5
+        potencyDivisor: 5
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: ApplePlants
@@ -1202,14 +1236,15 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: GoldenApplePlants
@@ -1233,18 +1268,19 @@
   - type: BasicGrowth
     waterConsumption: 0.75
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
-    DoctorsDelight:
-      min: 3
-      max: 13
-      potencyDivisor: 10
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      DoctorsDelight:
+        min: 3
+        max: 13
+        potencyDivisor: 10
 
 - type: entity
   id: CornPlants
@@ -1269,14 +1305,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 10
-      potencyDivisor: 20
-    Cornmeal:
-      min: 5
-      max: 15
-      potencyDivisor: 10
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 10
+        potencyDivisor: 20
+      Cornmeal:
+        min: 5
+        max: 15
+        potencyDivisor: 10
 
 - type: entity
   id: ChanterellePlants
@@ -1302,10 +1339,11 @@
   - type: AtmosphericGrowth
     idealHeat: 288
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 25
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 25
+        potencyDivisor: 25
 
 - type: entity
   id: RicePlants
@@ -1329,14 +1367,15 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.4
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 20
-      potencyDivisor: 20
-    Rice:
-      min: 5
-      max: 20
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 20
+        potencyDivisor: 20
+      Rice:
+        min: 5
+        max: 20
+        potencyDivisor: 20
 
 - type: entity
   id: SoybeanPlants
@@ -1360,10 +1399,11 @@
   - type: BasicGrowth
     nutrientConsumption: 0.4
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 50
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
 
 - type: entity
   id: SpacemansTrumpetPlants
@@ -1386,14 +1426,15 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 50
-    PolypyryliumOligomers:
-      min: 1
-      max: 15
-      potencyDivisor: 5
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 50
+      PolypyryliumOligomers:
+        min: 1
+        max: 15
+        potencyDivisor: 5
 
 - type: entity
   id: KoibeanPlants
@@ -1416,14 +1457,15 @@
   - type: BasicGrowth
     nutrientConsumption: 0.4
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    CarpoToxin:
-      min: 1
-      max: 4
-      potencyDivisor: 30
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      CarpoToxin:
+        min: 1
+        max: 4
+        potencyDivisor: 30
 
 - type: entity
   id: WatermelonPlants
@@ -1444,18 +1486,19 @@
     yield: 1
     potency: 1
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Water:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Vitamin:
-      min: 1
-      max: 5
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Water:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Vitamin:
+        min: 1
+        max: 5
+        potencyDivisor: 20
 
 - type: entity
   id: HolymelonPlants
@@ -1475,18 +1518,19 @@
     yield: 1
     potency: 1
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Holywater:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Vitamin:
-      min: 1
-      max: 5
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Holywater:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Vitamin:
+        min: 1
+        max: 5
+        potencyDivisor: 20
 
 - type: entity
   id: GrapePlants
@@ -1507,14 +1551,15 @@
     potency: 10
     growthStages: 2
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: CocoaPlants
@@ -1540,14 +1585,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 50
+    chemicals:
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
 
 - type: entity
   id: BerryPlants
@@ -1570,14 +1616,15 @@
   - type: BasicGrowth
     nutrientConsumption: 0.6
   - type: PlantChemicals
-    Nutriment:
-      min: 2
-      max: 5
-      potencyDivisor: 30
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 40
+    chemicals:
+      Nutriment:
+        min: 2
+        max: 5
+        potencyDivisor: 30
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 40
 
 - type: entity
   id: NettlePlants
@@ -1603,10 +1650,11 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Nicotine:
-      min: 1
-      max: 10
-      potencyDivisor: 10
+    chemicals:
+      Nicotine:
+        min: 1
+        max: 10
+        potencyDivisor: 10
 
 - type: entity
   id: TobaccoPlants
@@ -1633,10 +1681,11 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Nicotine:
-      min: 1
-      max: 10
-      potencyDivisor: 10
+    chemicals:
+      Nicotine:
+        min: 1
+        max: 10
+        potencyDivisor: 10
 
 - type: entity
   id: DeathNettlePlants
@@ -1666,14 +1715,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    MindbreakerToxin:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Psicodine:
-      min: 0
-      max: 5
-      potencyDivisor: 33
+    chemicals:
+      MindbreakerToxin:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Psicodine:
+        min: 0
+        max: 5
+        potencyDivisor: 33
 
 - type: entity
   id: ChiliPlants
@@ -1698,18 +1748,19 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    CapsaicinOil:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Nutriment:
-      min: 1
-      max: 4
-      potencyDivisor: 25
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      CapsaicinOil:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Nutriment:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: ChillyPlants
@@ -1733,18 +1784,19 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    FrostOil:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Nutriment:
-      min: 1
-      max: 4
-      potencyDivisor: 25
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      FrostOil:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Nutriment:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: PoppyPlants
@@ -1768,14 +1820,15 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 50
-    Bicaridine:
-      min: 1
-      max: 20
-      potencyDivisor: 5
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
+      Bicaridine:
+        min: 1
+        max: 20
+        potencyDivisor: 5
 
 - type: entity
   id: LilyPlants
@@ -1799,14 +1852,15 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 50
-    Bicaridine:
-      min: 1
-      max: 20
-      potencyDivisor: 5
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
+      Bicaridine:
+        min: 1
+        max: 20
+        potencyDivisor: 5
 
 - type: entity
   id: AloePlants
@@ -1829,14 +1883,15 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Aloe:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Dermaline:
-      min: 1
-      max: 10
-      potencyDivisor: 10
+    chemicals:
+      Aloe:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Dermaline:
+        min: 1
+        max: 10
+        potencyDivisor: 10
 
 - type: entity
   id: LingzhiPlants
@@ -1859,14 +1914,15 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Ultravasculine:
-      min: 1
-      max: 20
-      potencyDivisor: 5
-    Epinephrine:
-      min: 1
-      max: 20
-      potencyDivisor: 5
+    chemicals:
+      Ultravasculine:
+        min: 1
+        max: 20
+        potencyDivisor: 5
+      Epinephrine:
+        min: 1
+        max: 20
+        potencyDivisor: 5
 
 - type: entity
   id: AmbrosiaVulgarisPlants
@@ -1890,22 +1946,23 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 10
-    Bicaridine:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Kelotane:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 2
-      potencyDivisor: 50
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 10
+      Bicaridine:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Kelotane:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 2
+        potencyDivisor: 50
 
 - type: entity
   id: AmbrosiaDeusPlants
@@ -1928,18 +1985,19 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 10
-    Omnizine:
-      min: 1
-      max: 3
-      potencyDivisor: 35
-    SpaceDrugs:
-      min: 1
-      max: 5
-      potencyDivisor: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 10
+      Omnizine:
+        min: 1
+        max: 3
+        potencyDivisor: 35
+      SpaceDrugs:
+        min: 1
+        max: 5
+        potencyDivisor: 20
 
 - type: entity
   id: EggyPlants
@@ -1965,10 +2023,11 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    Egg:
-      min: 4
-      max: 12
-      potencyDivisor: 10
+    chemicals:
+      Egg:
+        min: 4
+        max: 12
+        potencyDivisor: 10
 
 - type: entity
   id: OnionPlants
@@ -1997,18 +2056,19 @@
   - type: AtmosphericGrowth
     idealHeat: 288
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
-    Allicin:
-      min: 1
-      max: 8
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      Allicin:
+        min: 1
+        max: 8
+        potencyDivisor: 25
 
 - type: entity
   id: OnionRedPlants
@@ -2036,18 +2096,19 @@
   - type: AtmosphericGrowth
     idealHeat: 288
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
-    Allicin:
-      min: 1
-      max: 8
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      Allicin:
+        min: 1
+        max: 8
+        potencyDivisor: 25
 
 - type: entity
   id: BloonionPlants
@@ -2075,22 +2136,23 @@
   - type: AtmosphericGrowth
     idealHeat: 288
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 5
-      potencyDivisor: 20
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
-    Allicin:
-      min: 1
-      max: 8
-      potencyDivisor: 25
-    Helium:
-      min: 1
-      max: 6
-      potencyDivisor: 5
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 5
+        potencyDivisor: 20
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
+      Allicin:
+        min: 1
+        max: 8
+        potencyDivisor: 25
+      Helium:
+        min: 1
+        max: 6
+        potencyDivisor: 5
 
 - type: entity
   id: CannabisPlants
@@ -2115,14 +2177,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    THC:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 50
+    chemicals:
+      THC:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
 
 - type: entity
   id: RainbowCannabisPlants
@@ -2146,14 +2209,15 @@
   - type: AtmosphericGrowth
     idealHeat: 298
   - type: PlantChemicals
-    THC:
-      min: 1
-      max: 15
-      potencyDivisor: 10
-    Nutriment:
-      min: 1
-      max: 2
-      potencyDivisor: 50
+    chemicals:
+      THC:
+        min: 1
+        max: 15
+        potencyDivisor: 10
+      Nutriment:
+        min: 1
+        max: 2
+        potencyDivisor: 50
 
 - type: entity
   id: PotatoPlants
@@ -2176,14 +2240,15 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: CabbagePlants
@@ -2204,14 +2269,15 @@
     potency: 10
     growthStages: 1
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 10
-      potencyDivisor: 10
-    Vitamin:
-      min: 1
-      max: 4
-      potencyDivisor: 25
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 10
+        potencyDivisor: 10
+      Vitamin:
+        min: 1
+        max: 4
+        potencyDivisor: 25
 
 - type: entity
   id: GarlicPlants
@@ -2232,10 +2298,11 @@
     potency: 25
     growthStages: 3
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 10
-      potencyDivisor: 10
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 10
+        potencyDivisor: 10
 
 - type: entity
   id: PineapplePlants
@@ -2258,6 +2325,7 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: PlantChemicals
-    Nutriment:
-      min: 1
-      max: 20
+    chemicals:
+      Nutriment:
+        min: 1
+        max: 20
