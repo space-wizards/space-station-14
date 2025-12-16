@@ -25,11 +25,22 @@
 
 ## Syringes
 - type: InjectorMode
+  abstract: true
   id: BaseSyringeMode
   transferAmounts:
   - 5
   - 10
   - 15
+
+- type: InjectorMode
+  abstract: true
+  id: BaseBluespaceSyringeMode
+  mobTime: 2.5
+  transferAmounts:
+  - 5
+  - 10
+  - 15
+  - 50
 
 - type: InjectorMode
   parent: [ BaseSyringeMode, BaseInjectMode ]
@@ -40,11 +51,16 @@
   id: SyringeDrawMode
 
 - type: InjectorMode
-  parent: SyringeInjectMode
+  parent: [ BaseBluespaceSyringeMode, BaseInjectMode ]
   id: BluespaceSyringeInjectMode
+
+- type: InjectorMode
+  parent: [ BaseBluespaceSyringeMode, BaseDrawMode ]
+  id: BluespaceSyringeDrawMode
 
 ## Dropper
 - type: InjectorMode
+  abstract: true
   id: BaseDropperMode
   transferAmounts:
   - 1
@@ -64,6 +80,7 @@
 ## Hyposprays
 - type: InjectorMode
   id: HyposprayBaseMode
+  abstract: true
   injectSound: /Audio/Items/hypospray.ogg
   injectPopupTarget: injector-component-feel-prick-message
   injectOnUse: true

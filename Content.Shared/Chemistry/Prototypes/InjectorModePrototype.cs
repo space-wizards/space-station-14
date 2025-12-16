@@ -3,20 +3,30 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 
 namespace Content.Shared.Chemistry.Prototypes;
 
-[Prototype("InjectorMode"), Serializable]
-public sealed partial class InjectorModePrototype : IPrototype
+[Prototype]
+public sealed partial class InjectorModePrototype : IPrototype, IInheritingPrototype
 {
+    /// <inheritdoc/>
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    /// <inheritdoc/>
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<InjectorModePrototype>))]
+    public string[]? Parents { get; }
+
+    /// <inheritdoc/>
+    [AbstractDataField, NeverPushInheritance]
+    public bool Abstract { get; }
 
     /// <summary>
     /// The name of the mode that will be shown on the label UI.
     /// </summary>
     [DataField(required: true)]
-    public required string Name;
+    public LocId Name;
 
     /// <summary>
     /// Whether using the injector via Y/Z will inject the user.
@@ -105,13 +115,13 @@ public sealed partial class InjectorModePrototype : IPrototype
     /// It would be weird if someone injects with a spray, but the popup says "needle".
     /// </remarks>
     [DataField]
-    public string PopupUserAttempt = "injector-component-needle-injecting-user";
+    public LocId PopupUserAttempt = "injector-component-needle-injecting-user";
 
     /// <summary>
     /// What message will be displayed to the target when someone attempts to inject into them.
     /// </summary>
     [DataField]
-    public string PopupTargetAttempt = "injector-component-needle-injecting-target";
+    public LocId PopupTargetAttempt = "injector-component-needle-injecting-target";
 
     /// <summary>
     /// The state of the injector. Determines its attack behavior. Containers must have the
@@ -132,7 +142,8 @@ public sealed partial class InjectorModePrototype : IPrototype
     /// It's imperative that this is not null when <see cref="MobTime"/> is instant.
     /// </summary>
     [DataField]
-    public string? InjectPopupTarget;
+    public LocId? InjectPopupTarget;
+
 }
 
 /// <summary>

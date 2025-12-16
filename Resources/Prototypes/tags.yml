@@ -782,7 +782,7 @@
   id: HudSecurity # ConstructionGraph: HudMedSec, GlassesSecHUD
 
 - type: Tag
-  id: Hypospray # For Belts showing the sprite.
+  id: Hypospray # ItemMapper: ClothingBeltMedical
 
 ## I ##
 

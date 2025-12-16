@@ -490,10 +490,10 @@
       injector:
         maxVol: 100
   - type: Injector
-    activeMode: SyringeDrawMode
+    activeMode: BluespaceSyringeDrawMode
     allowedModes:
     - BluespaceSyringeInjectMode
-    - SyringeDrawMode
+    - BluespaceSyringeDrawMode
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
