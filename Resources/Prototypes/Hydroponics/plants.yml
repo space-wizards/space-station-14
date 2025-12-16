@@ -2134,7 +2134,7 @@
     displayName: seeds-rainbowcannabis-display-name
     plantRsi: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
     packetPrototype: RainbowCannabisSeeds
-    productPrototypes: [ LeavesRainbowCannabis ]
+    productPrototypes: [ LeavesCannabisRainbow ]
   - type: Plant
     lifespan: 75
     maturation: 8
