@@ -6,6 +6,4 @@ namespace Content.Server.Atmos.Components;
 /// leaves the gas or the gas dissipates.
 /// </summary>
 [RegisterComponent]
-public sealed partial class ChargedElectrovaeAffectedComponent : Component
-{
-}
+public sealed partial class ChargedElectrovaeAffectedComponent : Component;

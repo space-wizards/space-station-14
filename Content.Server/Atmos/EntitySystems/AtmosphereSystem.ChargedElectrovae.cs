@@ -123,12 +123,15 @@ public sealed partial class AtmosphereSystem
             >= Atmospherics.ChargedElectrovaeHighIntensityThreshold => 3,
             >= Atmospherics.ChargedElectrovaeMediumIntensityThreshold => 2,
             >= Atmospherics.ChargedElectrovaeLowIntensityThreshold => 1,
-            _ => 0
+            _ => 0,
         };
 
         _entSet.Clear();
         _lookup.GetLocalEntitiesIntersecting(
-            tile.GridIndex, tile.GridIndices, _entSet, 0f);
+            tile.GridIndex,
+            tile.GridIndices,
+            _entSet,
+            0f);
 
         foreach (var entity in _entSet)
         {
@@ -167,7 +170,10 @@ public sealed partial class AtmosphereSystem
     {
         _entSet.Clear();
         _lookup.GetLocalEntitiesIntersecting(
-            tile.GridIndex, tile.GridIndices, _entSet, 0f);
+            tile.GridIndex,
+            tile.GridIndices,
+            _entSet,
+            0f);
 
         foreach (var entity in _entSet)
         {
@@ -300,7 +306,8 @@ public sealed partial class AtmosphereSystem
         var damage = (int)(baseDamage + intensity * damagePerIntensity);
         var stunTime = TimeSpan.FromSeconds(baseStunSeconds + intensity * stunSecondsPerIntensity);
 
-        _adminLog.Add(LogType.Electrocution, LogImpact.Medium,
+        _adminLog.Add(LogType.Electrocution,
+            LogImpact.Medium,
             $"{ToPrettyString(target):target} struck by charged electrovae lightning ({damage} damage, {stunTime.TotalSeconds:F1}s stun, intensity {intensity:F2})");
 
         _electrocution.TryDoElectrocution(

@@ -31,7 +31,7 @@ namespace Content.Server.Atmos.Portable
             Gas.NitrousOxide,
             Gas.Frezon,
             Gas.Electrovae,
-            Gas.ChargedElectrovae
+            Gas.ChargedElectrovae,
         };
 
         [ViewVariables(VVAccess.ReadWrite)]
