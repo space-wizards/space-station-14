@@ -182,19 +182,3 @@
     children:
     - id: ClothingHeadHelmetJanitorBombSuit
     - id: ClothingOuterSuitJanitorBomb
-
-- type: entity
-  id: LockerClownFilled
-  suffix: Filled
-  parent: LockerClown
-  components:
-  - type: EntityTableContainerFill
-    containers:
-      entity_storage: !type:NestedSelector
-        tableId: FillLockerClown
-
-- type: entityTable
-  id: FillLockerClown
-  table: !type:AllSelector
-    children:
-    - id: FoolboxFilled
