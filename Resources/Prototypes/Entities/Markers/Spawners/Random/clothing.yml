@@ -6,3 +6,11 @@
     - id: ClothingHeadHatPartyYellow
     - id: ClothingHeadHatPartyGreen
     - id: ClothingHeadHatPartyBlue
+
+- type: entityTable
+  id: AllSergicalHatsTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHeadHatSurgcapBlue
+    - id: ClothingHeadHatSurgcapPurple
+    - id: ClothingHeadHatSurgcapGreen

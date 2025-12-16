@@ -208,24 +208,54 @@
       - id: FoodPieBananaCream
         weight: 0.75
     - !type:GroupSelector # Fun clothing
-      prob: 0.33
+      prob: 0.75
       children:
-      - id: ClothingHandsGlovesColorYellowBudget
+      - !type:NestedSelector
+        tableId: ClownOtherJobTable
+        weight: 6
       - id: SprayFlowerPin
       - id: ClothingHeadHatMagician
       - id: ClothingHeadSafari
       - id: ClothingHeadHatPirate
       - id: ClothingHeadHatWizardFake
-      - id: ClothingHeadHatCowboyBrown
-      - id: ClothingHeadHatWitch1
+      - id: ClothingHeadHatCowboyRed
+      - id: ClothingHeadHatBowlerHat
+      - id: ClothingHeadHatWitch
+      - id: ClothingOuterCoatExpensive
+      - id: ClothingOuterGhostSheet
+      - id: ClothingOuterHospitalGown
+      - id: ClothingShoesBling
+        weight: 0.5
+      - id: ClothingOuterCoatSpaceAsshole
+        weight: 0.5
       - !type:NestedSelector
         tableId: AllPartyHatsTable
-      - !type:GroupSelector # ~1/121
-        weight: 0.075
+      - !type:NestedSelector
+        tableId: InsulsTable
+      - !type:GroupSelector # ~1/115
+        weight: 0.175
         children:
         - id: ClothingHeadHatCatEars
         - id: ClothingHeadHatFancyCrown
-        - id: ClothingHandsGlovesColorYellow
-        - id: ClothingHandsGlovesConducting
         - id: ClothingHeadHatChameleon
 
+- type: entityTable
+  id: ClownOtherJobTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHeadHatBeretCommand # Command
+    - id: ClothingOuterVestHazard # Engineering
+    - id: ClothingOuterCoatLab # Science
+    - id: ClothingMaskClownSecurity # Security
+    - id: ClothingHeadHatCargosoft # Cargo
+    - id: ClothingNeckStethoscope # Medical
+      weight: 0.5
+    - !type:NestedSelector
+      tableId: AllSergicalHatsTable
+      weight: 0.5
+    - id: ClothingUniformJumpsuitBartender # Bartender
+    - id: ClothingHeadHatChef # Chef
+    - id: ClothingHeadBandBotany # Botany
+    - id: ClothingHandsGlovesJanitor # Janitor
+    - id: ClothingUniformJumpsuitReporter # Reporter
+    - id: ClothingOuterWinterMime # Mime
