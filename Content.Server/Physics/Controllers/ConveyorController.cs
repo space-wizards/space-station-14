@@ -53,10 +53,10 @@ public sealed class ConveyorController : SharedConveyorController
     
     private void OnMapInit(EntityUid uid, ConveyorComponent component, MapInitEvent args)
     {
-        if (component.InitialState == ConveyorState.Off)
-            return;
-
-        SetState(uid, component.InitialState, component);
+        if (component.InitialState != ConveyorState.Off)
+        {
+            SetState(uid, component.InitialState, component);
+        }
     }
 
     private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
