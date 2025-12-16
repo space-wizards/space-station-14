@@ -89,7 +89,7 @@ public class DestructibleBenchmark
     }
 
     [IterationSetup]
-    public void IterationSetupAsync()
+    public void IterationSetup()
     {
         var plating = _tileDefMan[TileRef].TileId;
         var server = _pair.Server;
@@ -130,7 +130,8 @@ public class DestructibleBenchmark
                 _destructbiles.Add((uid, damageable, destructible));
             }
         })
-            .Wait();
+        .GetAwaiter()
+        .GetResult();
     }
 
     [Benchmark]
@@ -173,7 +174,9 @@ public class DestructibleBenchmark
 
         // Deletion of entities is often queued (QueueDel) which must be processed by running ticks
         // or else it will grow infinitely and leak memory.
-        _pair.Server.WaitRunTicks(2).Wait();
+        _pair.Server.WaitRunTicks(2)
+            .GetAwaiter()
+            .GetResult();
 
         _destructbiles.Clear();
         _damageables.Clear();
