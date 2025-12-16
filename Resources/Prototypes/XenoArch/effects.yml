@@ -133,7 +133,7 @@
     children:
     #- id: XenoArtifactBecomeRandomInstrument # removed until we have value-based system
     #- id: XenoArtifactGun
-    #  weight 0.4 #it conflicts with default interaction - it should activate artifact nodes
+    #  weight: 0.4 #it conflicts with default interaction - it should activate artifact nodes
     - id: XenoArtifactOmnitool
     - id: XenoArtifactDrill
 
