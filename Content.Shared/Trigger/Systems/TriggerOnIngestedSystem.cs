@@ -9,10 +9,10 @@ public sealed partial class TriggerOnIngestedSystem : TriggerOnXSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TriggerOnSlipComponent, IngestedEvent>(OnIngested);
+        SubscribeLocalEvent<TriggerOnIngestedComponent, IngestedEvent>(OnIngested);
     }
 
-    private void OnIngested(Entity<TriggerOnSlipComponent> ent, ref IngestedEvent args)
+    private void OnIngested(Entity<TriggerOnIngestedComponent> ent, ref IngestedEvent args)
     {
         // We do Target instead of User since Target is the entity actually eating, while User is the one feeding and will not always be the same.
         Trigger.Trigger(ent.Owner, args.Target, ent.Comp.KeyOut);

@@ -6,5 +6,5 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// Triggers when the owner of this component is ingested, like a pill or food.
 /// User is the entity ingesting this.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnIngestedComponent : BaseTriggerOnXComponent;
