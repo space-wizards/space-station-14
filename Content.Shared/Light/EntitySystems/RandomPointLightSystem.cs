@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.Random;
 using Content.Shared.Light.Components;
 
@@ -21,10 +22,15 @@ public sealed class RandomPointLightSystem : EntitySystem
     private void RandomLight(Entity<RandomPointLightComponent> ent, ref MapInitEvent args)
     {
         var rpl = ent.Comp;
-        var color = new Color(
+
+        // Keeping value between 0.5 and 1.0 so that it's always bright
+        var hsv = new Vector4(
             _random.NextFloat(0, 1),
             _random.NextFloat(0, 1),
-            _random.NextFloat(0, 1));
+            _random.NextFloat(0.5f, 1),
+            1);
+
+        var color = Color.FromHsv(hsv);
 
         _light.SetRadius(ent, _random.NextFloat(rpl.MinRadius, rpl.MaxRadius));
         _light.SetEnergy(ent, _random.NextFloat(rpl.MinEnergy, rpl.MaxEnergy));
