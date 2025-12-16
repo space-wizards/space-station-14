@@ -965,8 +965,8 @@
     plantRsi: Objects/Specific/Hydroponics/gatfruit.rsi
     packetPrototype: GatfruitSeeds
     productPrototypes: [ FoodGatfruit ]
-  - type: Plant
     mutationPrototypes: [ FakeCapfruitPlants, RealCapfruitPlants ]
+  - type: Plant
     lifespan: 65
     maturation: 25
     production: 25
