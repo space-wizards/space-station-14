@@ -313,6 +313,7 @@
   - MobSiliconBase
   - ShowMedicalIcons
   - StripableInventoryBase
+  - BaseRelaxedAnchoring
   id: MobMedibot
   name: medibot
   description: No substitute for a doctor, but better than nothing.
@@ -462,7 +463,7 @@
     needsHands: false
 
 - type: entity
-  parent: [ MobSiliconBase, MobCombat ]
+  parent: [ MobSiliconBase, MobCombat, BaseRelaxedAnchoring ]
   id: MobHugBot
   name: hugbot
   description: Awww, who needs a hug?

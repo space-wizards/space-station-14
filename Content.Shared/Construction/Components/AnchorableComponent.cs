@@ -1,5 +1,6 @@
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Tools;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -24,6 +25,13 @@ namespace Content.Shared.Construction.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField]
         public float Delay = 1f;
+
+        /// <summary>
+        /// Entities to ignore collision with when trying to anchor.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public EntityWhitelist? IgnoreCollisionsWhitelist;
     }
 
     [Flags]

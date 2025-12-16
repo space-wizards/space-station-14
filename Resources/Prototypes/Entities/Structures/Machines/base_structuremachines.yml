@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   id: BaseMachine
   components:
   - type: Animateable
@@ -57,6 +57,7 @@
 - type: entity
   abstract: true
   id: ConstructibleMachine
+  parent: BaseRelaxedAnchoring
   components:
   - type: Animateable
   - type: Machine
@@ -79,3 +80,4 @@
   id: SmallConstructibleMachine
   components:
     - type: RequireProjectileTarget
+

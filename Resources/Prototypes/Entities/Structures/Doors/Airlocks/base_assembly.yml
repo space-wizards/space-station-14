@@ -2,6 +2,7 @@
 - type: entity
   id: AirlockAssembly
   name: airlock assembly
+  parent: BaseRelaxedAnchoring
   description: It opens, it closes, and maybe crushes you.
   components:
   - type: Clickable

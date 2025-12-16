@@ -2,7 +2,7 @@
 
 - type: entity
   id: ShuttleGunBase
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   name: shittle gun
   abstract: true
   components:

@@ -1,6 +1,6 @@
 - type: entity
   id: AltarBase
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   name: altar
   description: Altar of the Gods.
   abstract: true

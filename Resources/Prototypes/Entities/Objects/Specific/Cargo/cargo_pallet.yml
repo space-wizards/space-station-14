@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCargoPallet
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   name: cargo pallet
   description: Common fixture of logistics and cargo. Subtle reminder where crates go during transport to avoid bruised shins.
   abstract: true

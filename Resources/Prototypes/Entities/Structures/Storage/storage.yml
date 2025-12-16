@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   id: Rack
   name: rack
   description: A rack for storing things on.

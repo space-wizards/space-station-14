@@ -1,6 +1,6 @@
 - type: entity
   id: BaseStructureComputer
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   abstract: true
   components:
   - type: Physics

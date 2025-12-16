@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: KitchenSpike
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   name: meat spike
   description: A spike for collecting meat from animals.
   components:

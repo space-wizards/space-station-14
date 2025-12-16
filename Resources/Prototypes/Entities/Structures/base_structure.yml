@@ -30,7 +30,7 @@
 - type: entity
   # This means that it's not anchored on spawn.
   id: BaseStructureDynamic
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   abstract: true
   components:
 # These might/might not be a good idea
@@ -65,5 +65,17 @@
     - type: TileFrictionModifier
       modifier: 0.4
 
+#abstract entity to be parented to anything that should be anchorable alongside structures that do not take up a full tile, such as directional windows
+- type: entity
+  id: BaseRelaxedAnchoring
+  abstract: true
+  components:
+  - type: Anchorable
+    ignoreCollisionsWhitelist:
+      tags:
+      - Directional
+
 - type: Tag
   id: Structure
+
+

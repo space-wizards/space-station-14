@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
   id: BaseSubfloorAnchorStorage
+  parent: BaseRelaxedAnchoring
   components:
   - type: Appearance
   - type: SubFloorHide

@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: Airlock
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:

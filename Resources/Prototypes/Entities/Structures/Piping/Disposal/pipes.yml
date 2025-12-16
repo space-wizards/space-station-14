@@ -2,6 +2,7 @@
 
 - type: entity
   id: DisposalPipeBase
+  parent: BaseRelaxedAnchoring
   abstract: true
   placement:
     mode: SnapgridCenter

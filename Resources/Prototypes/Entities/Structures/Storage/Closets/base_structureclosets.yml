@@ -218,7 +218,7 @@
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
 - type: entity
   id: SuitStorageBase
-  parent: BaseStructure
+  parent: [ BaseStructure, BaseRelaxedAnchoring ]
   name: suit storage unit
   description: A fancy hi-tech storage unit made for storing space suits.
   components:

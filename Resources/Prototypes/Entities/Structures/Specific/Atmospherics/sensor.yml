@@ -92,7 +92,7 @@
     - ForceFixRotations
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseRelaxedAnchoring ]
   id: AirSensorAssembly
   name: air sensor assembly
   description: Air sensor assembly. An assembly of air sensors?
