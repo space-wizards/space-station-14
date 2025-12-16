@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: Almost every instrument has been updated to a new soundfont (GeneralUser-GS),
-      unifying all operating systems and massively improving the sound of certain
-      instruments.
-    type: Add
-  id: 8802
-  time: '2025-07-23T15:51:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39142
 - author: slarticodefast
   changes:
   - message: Enabled the "showrot", "showvel" and "showangvel" commands for debug
@@ -3925,3 +3916,10 @@
   id: 9302
   time: '2025-12-16T01:50:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41610
+- author: Hitlinemoss
+  changes:
+  - message: Station AI is now rolled before most non-Command/non-Security roles.
+    type: Tweak
+  id: 9303
+  time: '2025-12-16T02:12:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41663
