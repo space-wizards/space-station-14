@@ -41,6 +41,7 @@ public sealed class DrunkOverlay : Overlay
     private const float MaxBoozePower = 100f;
 
     private const float BoozePowerScale = 8f;
+    private const float CircleMaskStrength = 0.035f;
 
     private float _visualScale = 0;
 
@@ -103,7 +104,7 @@ public sealed class DrunkOverlay : Overlay
         {
             _circleMaskShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
             _circleMaskShader.SetParameter("Zoom", 1f);
-            _circleMaskShader.SetParameter("CircleRadius", NoMotion_Radius / 0.027f);
+            _circleMaskShader.SetParameter("CircleRadius", NoMotion_Radius / CircleMaskStrength);
 
             handle.UseShader(_circleMaskShader);
             handle.DrawRect(args.WorldBounds, Color.White);
