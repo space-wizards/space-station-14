@@ -1,0 +1,84 @@
+﻿## Abstracts
+- type: InjectorMode
+  abstract: true
+  id: BaseInjectMode
+  name: Inject
+  behavior: Inject
+  popupUserAttempt: injector-component-needle-injecting-user
+  popupTargetAttempt: injector-component-needle-injecting-target
+
+- type: InjectorMode
+  abstract: true
+  id: BaseDrawMode
+  name: Draw
+  behavior: Draw
+  popupUserAttempt: injector-component-needle-drawing-user
+  popupTargetAttempt: injector-component-needle-drawing-target
+
+- type: InjectorMode
+  abstract: true
+  id: BaseDynamicMode
+  name: Dynamic
+  behavior: Dynamic
+  popupUserAttempt: injector-component-needle-injecting-user
+  popupTargetAttempt: injector-component-needle-injecting-target
+
+## Syringes
+- type: InjectorMode
+  parent: BaseInjectMode
+  id: SyringeInjectMode
+  transferAmounts:
+    - 5
+    - 10
+    - 15
+
+- type: InjectorMode
+  parent: BaseDrawMode
+  id: SyringeDrawMode
+  transferAmounts:
+  - 5
+  - 10
+  - 15
+
+## Dropper
+- type: InjectorMode
+  parent: BaseInjectMode
+  id: DropperInjectMode
+  transferAmounts:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+
+- type: InjectorMode
+  parent: BaseDrawMode
+  id: DropperDrawMode
+  transferAmounts:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+
+## Hyposprays
+- type: InjectorMode
+  id: HyposprayBaseMode
+  injectSound: /Audio/Items/hypospray.ogg
+  injectPopupTarget: injector-component-feel-prick-message
+  injectOnUse: true
+  transferAmounts:
+  - 5
+
+- type: InjectorMode
+  parent: [ HyposprayBaseMode, BaseInjectMode ]
+  id: HyposprayInjectMode
+
+- type: InjectorMode
+  parent: [ HyposprayBaseMode, BaseDynamicMode ]
+  id: HyposprayDynamicMode
+
+- type: InjectorMode
+  parent: HyposprayDynamicMode
+  id: HypopenDynamicMode
+  containerDrawTime: 0.75

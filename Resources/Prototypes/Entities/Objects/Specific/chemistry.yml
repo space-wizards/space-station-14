@@ -291,11 +291,10 @@
   - type: Injector
     ignoreMobs: true
     ignoreClosed: false
-    activeMode: DrawMode
+    activeMode: DropperDrawMode
     allowedModes:
-    - DrawMode
-    - InjectMode
-    currentTransferAmount: 1
+    - DropperDrawMode
+    - DropperInjectMode
   - type: ExaminableSolution
     solution: dropper
     exactVolume: true
@@ -368,10 +367,10 @@
       injector:
         maxVol: 15
   - type: Injector
-    activeMode: DrawMode
+    activeMode: SyringeDrawMode
     allowedModes:
-    - DrawMode
-    - InjectMode
+    - SyringeDrawMode
+    - SyringeInjectMode
   - type: ExaminableSolution
     solution: injector
     exactVolume: true
@@ -393,8 +392,6 @@
   parent: BaseSyringe
   id: Syringe
   components:
-  - type: Injector
-    currentTransferAmount: 15
   - type: Tag
     tags:
     - Syringe
@@ -417,8 +414,6 @@
     solutions:
       injector:
         maxVol: 5
-  - type: Injector
-    currentTransferAmount: 5
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe

@@ -1,24 +1,3 @@
-- type: InjectorMode
-  id: HyposprayDynamicMode
-  injectSound: /Audio/Items/hypospray.ogg
-  injectPopupTarget: injector-component-feel-prick-message
-  toggleState: Dynamic
-  transferAmounts:
-  - 5
-
-- type: InjectorMode
-  id: DrawMode
-  toggleState: Draw
-
-- type: InjectorMode
-  id: InjectMode
-  toggleState: Inject
-
-- type: InjectorMode
-  parent: HyposprayDynamicMode
-  id: HyposprayInjectMode
-  toggleState: Inject
-
 - type: entity
   abstract: true
   parent: BaseItem
@@ -26,10 +5,6 @@
   components:
   - type: Injector
     solutionName: hypospray
-    transferAmounts:
-    - 5
-    injectTime: 0
-    delayPerVolume: 0
     ignoreClosed: false
     activeMode: HyposprayDynamicMode
     allowedModes:
@@ -647,15 +622,10 @@
     exactVolume: true
   - type: Injector
     solutionName: hypospray
-    injectTime: 0
-    delayPerVolume: 0
-    injectSound: /Audio/Items/hypospray.ogg
-    activeMode: HyposprayDynamicMode
+    activeMode: HypopenDynamicMode
     allowedModes:
-    - HyposprayDynamicMode
     - HyposprayInjectMode
-    injectPopupTarget: injector-component-feel-prick-message
-    drawTime: 0.75
+    - HypopenDynamicMode
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta

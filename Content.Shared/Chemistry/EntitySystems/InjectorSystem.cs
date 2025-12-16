@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
@@ -18,6 +19,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Standing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
@@ -27,17 +29,17 @@ namespace Content.Shared.Chemistry.EntitySystems;
 
 public sealed partial class InjectorSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
-    [Dependency] private readonly SharedForensicsSystem _forensics = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly OpenableSystem _openable = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Robust.Shared.IoC.Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedForensicsSystem _forensics = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Robust.Shared.IoC.Dependency] private readonly MobStateSystem _mobState = default!;
+    [Robust.Shared.IoC.Dependency] private readonly OpenableSystem _openable = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Robust.Shared.IoC.Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Robust.Shared.IoC.Dependency] private readonly StandingStateSystem _standingState = default!;
+    [Robust.Shared.IoC.Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {
@@ -54,37 +56,32 @@ public sealed partial class InjectorSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (injector.Comp.ActiveMode.TransferAmounts.Count <= 1) // Injectors that can't toggle transferAmounts will be used.
-            MobsDoAfter(injector, args.User, args.User);
+        if (injector.Comp.ActiveMode.InjectOnUse) // Injectors that can't toggle transferAmounts will be used.
+            TryMobsDoAfter(injector, args.User, args.User);
         else // Syringes toggle Draw/Inject.
-            Toggle(injector, args.User);
+            ToggleMode(injector);
 
         args.Handled = true;
     }
 
     private void OnInjectorAfterInteract(Entity<InjectorComponent> injector, ref AfterInteractEvent args)
     {
-        if (args.Handled
-            || !args.CanReach
-            || args.Target is not { Valid: true } target
-            || !HasComp<SolutionContainerManagerComponent>(injector))
+        if (args.Handled || !args.CanReach || args.Target is not { Valid: true } target)
             return;
 
         // Is the target a mob? If yes, use a do-after to give them time to respond.
-        if (HasComp<MobStateComponent>(target) || HasComp<BloodstreamComponent>(target))
+        if (HasComp<BloodstreamComponent>(target))
         {
             // Are use using an injector capable of targeting a mob?
             if (injector.Comp.IgnoreMobs)
                 return;
 
-            MobsDoAfter(injector, args.User, target);
-            args.Handled = true;
+            args.Handled = TryMobsDoAfter(injector, args.User, target);
             return;
         }
 
         // Draw from or inject into jugs, bottles, etc.
-        ContainerDoAfter(injector, args.User, target);
-        args.Handled = true;
+        args.Handled = ContainerDoAfter(injector, args.User, target);
     }
 
     private void OnInjectDoAfter(Entity<InjectorComponent> injector, ref InjectorDoAfterEvent args)
@@ -100,26 +97,15 @@ public sealed partial class InjectorSystem : EntitySystem
         if (args.HitEntities is [])
             return;
 
-        MobsDoAfter(injector, args.User, args.HitEntities[0]);
+        TryMobsDoAfter(injector, args.User, args.HitEntities[0]);
     }
 
     private void AddSetTransferVerbs(Entity<InjectorComponent> injector, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || injector.Comp.ActiveMode == null)
             return;
 
         var user = args.User;
-        AlternativeVerb? dynamicVerb = null;
-
-        // If currentTransferAmount is null, this injector injects all its contents upon usage.
-        // Therefore, it mustn't change its transferAmount. Otherwise, check if it can even cycle.
-        if (injector.Comp.CurrentTransferAmount == null || injector.Comp.ActiveMode.TransferAmounts is not { Count: > 1 })
-        {
-            if (dynamicVerb != null)
-                args.Verbs.Add(dynamicVerb);
-            return;
-        }
-
         var min = injector.Comp.ActiveMode.TransferAmounts.Min();
         var max = injector.Comp.ActiveMode.TransferAmounts.Max();
         var cur = injector.Comp.CurrentTransferAmount;
@@ -165,12 +151,6 @@ public sealed partial class InjectorSystem : EntitySystem
 
             args.Verbs.Add(verb);
         }
-
-        if (dynamicVerb == null)
-            return;
-        // Add Dynamic verb at last, so it doesn't interfere with volume toggling.
-        dynamicVerb.Priority = priority;
-        args.Verbs.Add(dynamicVerb);
     }
     #endregion Events Handling
 
@@ -178,11 +158,11 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <summary>
     /// Send informative pop-up messages and wait for a do-after to complete.
     /// </summary>
-    private void MobsDoAfter(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
+    private bool TryMobsDoAfter(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
     {
         if (_useDelay.IsDelayed(injector.Owner) // Check for Delay.
-            || !GetMobsDoAfterTime(injector, user, target, out var doAfterTime)) // Get the DoAfter time.
-            return;
+            || !GetMobsDoAfterTime(injector, user, target, out var doAfterTime, out var amount)) // Get the DoAfter time.
+            return false;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, doAfterTime, new InjectorDoAfterEvent(), injector.Owner, target: target, used: injector.Owner)
         {
@@ -196,51 +176,22 @@ public sealed partial class InjectorSystem : EntitySystem
 
         // If the DoAfter was instant, don't send popups and logs indicating an attempt.
         if (doAfterTime == TimeSpan.Zero)
-            return;
+            return true;
 
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var injectorSolution))
-            return;
+            return false;
 
-        // Create a pop-up for the user
-        _popup.PopupClient(injector.Comp.ActiveMode.ToggleState == InjectorToggleMode.Draw
-                ? Loc.GetString("injector-component-drawing-user")
-                : Loc.GetString(injector.Comp.ActiveMode.PreparingInjectorUser),
-            target,
-            user);
+        var activeMode = injector.Comp.ActiveMode;
 
-        if (user != target) // injecting someone else
+        // Create a pop-up for the user.
+        _popup.PopupClient(Loc.GetString(activeMode.PopupUserAttempt), target, user);
+
+        if (user == target)
         {
-            // Create a pop-up for the target
-            var userName = Identity.Entity(user, EntityManager);
-            if (injector.Comp.ActiveMode.ToggleState == InjectorToggleMode.Draw)
-            {
-                _popup.PopupEntity(Loc.GetString("injector-component-drawing-target",
-                    ("user", userName)), user, target);
-            }
-            else
-            {
-                _popup.PopupEntity(Loc.GetString(injector.Comp.ActiveMode.PreparingInjectorTarget,
-                    ("user", userName)), user, target);
-            }
-
-            // Add an admin log, using the "force-feed" log type. It's not quite feeding, but the effect is the same.
-            if (injector.Comp.ActiveMode.ToggleState == InjectorToggleMode.Draw)
+            if (activeMode.Behavior.HasFlag(InjectorBehavior.Draw))
             {
                 _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to draw {injector.Comp.CurrentTransferAmount.ToString()} units from {ToPrettyString(target):target}");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to inject {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}");
-            }
-        }
-        else // injecting yourself
-        {
-            if (injector.Comp.ActiveMode.ToggleState == InjectorToggleMode.Draw)
-            {
-                _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to draw {injector.Comp.CurrentTransferAmount.ToString()} units from themselves.");
+                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from themselves.");
             }
             else
             {
@@ -248,6 +199,26 @@ public sealed partial class InjectorSystem : EntitySystem
                     $"{ToPrettyString(user):user} is attempting to inject themselves with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}.");
             }
         }
+        else
+        {
+            // Create a popup to the target.
+            var userName = Identity.Entity(user, EntityManager);
+            var popup = Loc.GetString(injector.Comp.ActiveMode.PopupTargetAttempt, ("user", userName));
+            _popup.PopupEntity(popup, user, target);
+
+            if (activeMode.Behavior.HasFlag(InjectorBehavior.Draw))
+            {
+                _adminLogger.Add(LogType.ForceFeed,
+                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from {ToPrettyString(target):target}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.ForceFeed,
+                    $"{ToPrettyString(user):user} is attempting to inject {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}");
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -257,62 +228,46 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <param name="user">The user using the injector.</param>
     /// <param name="target">The target mob.</param>
     /// <param name="doAfterTime">The duration of the resulting doAfter.</param>
+    /// <param name="amount">The amount of the reagents transferred.</param>
     /// <returns></returns>
-    private bool GetMobsDoAfterTime(Entity<InjectorComponent> injector, EntityUid user, EntityUid target, out TimeSpan doAfterTime)
+    private bool GetMobsDoAfterTime(Entity<InjectorComponent> injector, EntityUid user, EntityUid target,
+        out TimeSpan doAfterTime, out FixedPoint2 amount)
     {
-        // If it's injecting and injection delays are zero, return zero.
-        // Otherwise, it'll increase to the minimum of 1s, plus 1s if the target is in combat mode.
-        if (injector.Comp.ActiveMode.ToggleState.HasFlag(InjectorToggleMode.Dynamic & InjectorToggleMode.Inject)
-            && injector.Comp.InjectTime == TimeSpan.Zero
-            && injector.Comp.DelayPerVolume == TimeSpan.Zero)
-        {
-            doAfterTime = TimeSpan.Zero;
-            return true;
-        }
-
-        doAfterTime = injector.Comp.InjectTime;
+        var activeMode = injector.Comp.ActiveMode;
+        doAfterTime = activeMode.MobTime;
+        amount = FixedPoint2.Zero;
 
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var injectorSolution))
             return false;
 
-        FixedPoint2 amountToInject;
-        if (injector.Comp.ActiveMode.ToggleState == InjectorToggleMode.Draw && injector.Comp.CurrentTransferAmount != null)
+        // Can only draw blood with a draw mode and a transferAmount.
+        if (activeMode.Behavior.HasFlag(InjectorBehavior.Draw) && injector.Comp.CurrentTransferAmount != null)
         {
             // additional delay is based on actual volume left to draw in syringe when smaller than transfer amount
-            amountToInject = FixedPoint2.Min(injector.Comp.CurrentTransferAmount.Value, injectorSolution.AvailableVolume);
+            amount = FixedPoint2.Min(injector.Comp.CurrentTransferAmount.Value, injectorSolution.AvailableVolume);
         }
         else
         {
             // additional delay is based on actual volume left to inject in syringe when smaller than transfer amount
             // If CurrentTransferAmount is null, it'll want to inject its entire contents, e.g., epipens.
-            var plannedAmount = injector.Comp.CurrentTransferAmount ?? injectorSolution.Volume;
-            amountToInject = FixedPoint2.Min(plannedAmount, injectorSolution.Volume);
+            amount = injector.Comp.CurrentTransferAmount ?? injectorSolution.Volume;
+            amount = FixedPoint2.Min(amount, injectorSolution.Volume);
         }
 
-        // Injections over the IgnoreDelayForVolume amount take Xu times DelayPerVolume longer.
-        doAfterTime += injector.Comp.DelayPerVolume * FixedPoint2.Max(0, amountToInject - injector.Comp.IgnoreDelayForVolume).Double();
+        // Transfers over the IgnoreDelayForVolume amount take Xu times DelayPerVolume longer.
+        doAfterTime += activeMode.DelayPerVolume * FixedPoint2.Max(0, amount - activeMode.IgnoreDelayForVolume).Double();
 
-        // Ensure that the minimum delay before incapacitation checks is 1 seconds
-        doAfterTime = MathHelper.Max(doAfterTime, TimeSpan.FromSeconds(1));
-
-        if (user != target) // injecting someone else
+        // Check if the target is either the user or downed.
+        if (user == target) // Self-injections take priority.
         {
-            // Check if the target is incapacitated or in combat mode and modify time accordingly.
-            if (_mobState.IsIncapacitated(target))
-            {
-                doAfterTime /= 2.5f;
-            }
-            else if (_combatMode.IsInCombatMode(target))
-            {
-                // Slightly increase the delay when the target is in combat mode. Helps prevent cheese injections in
-                // combat with fast syringes and lag.
-                doAfterTime += TimeSpan.FromSeconds(1);
-            }
+            doAfterTime += activeMode.FlatSelfModifier;
+            doAfterTime /= activeMode.SelfModifier;
         }
-        else // injecting yourself
+        // Technically, both can be true, but that is probably a balance nightmare.
+        else if (_standingState.IsDown(target))
         {
-            // Self-injections take half as long.
-            doAfterTime /= 2;
+            doAfterTime += activeMode.FlatDownedModifier;
+            doAfterTime /= activeMode.DownedModifier;
         }
 
         return true;
@@ -320,10 +275,10 @@ public sealed partial class InjectorSystem : EntitySystem
     #endregion Mob Interaction
 
     #region Container Interaction
-    private void ContainerDoAfter(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
+    private bool ContainerDoAfter(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
     {
         if (!GetContainerDoAfterTime(injector, user, target, out var doAfterTime))
-            return;
+            return false;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, doAfterTime, new InjectorDoAfterEvent(), injector.Owner, target: target, used: injector.Owner)
         {
@@ -334,6 +289,8 @@ public sealed partial class InjectorSystem : EntitySystem
             BreakOnHandChange = injector.Comp.BreakOnHandChange,
             MovementThreshold = injector.Comp.MovementThreshold,
         });
+
+        return true;
     }
 
     /// <summary>
@@ -348,7 +305,8 @@ public sealed partial class InjectorSystem : EntitySystem
     {
         doAfterTime = TimeSpan.Zero;
 
-        if (!injector.Comp.ActiveMode.ToggleState.HasAnyFlag(InjectorToggleMode.Draw | InjectorToggleMode.Dynamic))
+        // Check if the Injector has a draw time, but only when drawing.
+        if (!injector.Comp.ActiveMode.Behavior.HasAnyFlag(InjectorBehavior.Draw | InjectorBehavior.Dynamic))
             return true;
 
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution)
@@ -370,8 +328,7 @@ public sealed partial class InjectorSystem : EntitySystem
             return false;
         }
 
-        doAfterTime = injector.Comp.DrawTime; // Check if the Injector has a draw time, but only when drawing.
-
+        doAfterTime = injector.Comp.ActiveMode.ContainerDrawTime;
         return true;
     }
     #endregion Container Interaction
@@ -383,10 +340,10 @@ public sealed partial class InjectorSystem : EntitySystem
 
         LocId msg = target == user ? "injector-component-cannot-transfer-message-self" : "injector-component-cannot-transfer-message";
 
-        switch (injector.Comp.ActiveMode.ToggleState)
+        switch (injector.Comp.ActiveMode.Behavior)
         {
             // Handle injecting/drawing for solutions
-            case InjectorToggleMode.Inject:
+            case InjectorBehavior.Inject:
             {
                 if (isOpenOrIgnored && _solutionContainer.TryGetInjectableSolution(target, out var injectableSolution, out _))
                     return TryInject(injector, user, target, injectableSolution.Value, false);
@@ -395,7 +352,7 @@ public sealed partial class InjectorSystem : EntitySystem
                     return TryInject(injector, user, target, refillableSolution.Value, true);
                 break;
             }
-            case InjectorToggleMode.Draw:
+            case InjectorBehavior.Draw:
             {
                 // Draw from a bloodstream if the target has that
                 if (TryComp<BloodstreamComponent>(target, out var stream) &&
@@ -412,7 +369,7 @@ public sealed partial class InjectorSystem : EntitySystem
                 _popup.PopupClient(Loc.GetString(msg, ("target", Identity.Entity(target, EntityManager))), injector, user);
                 break;
             }
-            case InjectorToggleMode.Dynamic:
+            case InjectorBehavior.Dynamic:
             {
                 if (HasComp<BloodstreamComponent>(target) // If it's a mob, inject. We're using injectableSolution so I don't have to code a sole method for injecting into bloodstreams.
                     && _solutionContainer.TryGetInjectableSolution(target, out var injectableSolution, out _))
@@ -425,6 +382,8 @@ public sealed partial class InjectorSystem : EntitySystem
                     return TryDraw(injector, user, target, drawableSolution.Value);
                 break;
             }
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
         _popup.PopupClient(Loc.GetString(msg, ("target", Identity.Entity(target, EntityManager))), injector, user);
@@ -515,6 +474,7 @@ public sealed partial class InjectorSystem : EntitySystem
         // Some injectors like hyposprays have sound, some like syringes have not.
         if (injector.Comp.ActiveMode.InjectSound != null)
             _audio.PlayPredicted(injector.Comp.ActiveMode.InjectSound, injector, user);
+
         // Log what happened.
         _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user):user} injected {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {ToPrettyString(injector):using}");
 
@@ -550,10 +510,8 @@ public sealed partial class InjectorSystem : EntitySystem
         if (realTransferAmount <= 0)
         {
             LocId msg = target.Owner == user ? "injector-component-target-is-empty-message-self" : "injector-component-target-is-empty-message";
-            _popup.PopupClient(
-                Loc.GetString(msg,
-                    ("target", Identity.Entity(target, EntityManager))),
-                injector.Owner, user);
+            var targetIdentity = Identity.Entity(target, EntityManager);
+            _popup.PopupClient(Loc.GetString(msg, ("target", targetIdentity)), injector.Owner, user);
             return false;
         }
 
@@ -576,11 +534,11 @@ public sealed partial class InjectorSystem : EntitySystem
         }
 
         LocId msgSuccess = target.Owner == user ? "injector-component-draw-success-message-self" : "injector-component-draw-success-message";
+        var targetIdentitySuccess = Identity.Entity(target, EntityManager);
         _popup.PopupClient(
-            Loc.GetString(msgSuccess,
-                ("amount", removedSolution.Volume),
-                ("target", Identity.Entity(target, EntityManager))),
-            injector.Owner, user);
+            Loc.GetString(msgSuccess, ("amount", removedSolution.Volume), ("target", targetIdentitySuccess)),
+            injector.Owner,
+            user);
 
         AfterDraw(injector, target);
         return true;
@@ -607,11 +565,11 @@ public sealed partial class InjectorSystem : EntitySystem
         }
 
         LocId msg = target.Owner == user ? "injector-component-draw-success-message-self" : "injector-component-draw-success-message";
+        var targetIdentity = Identity.Entity(target, EntityManager);
         _popup.PopupClient(
-            Loc.GetString(msg,
-                ("amount", transferAmount),
-                ("target", Identity.Entity(target, EntityManager))),
-            injector.Owner, user);
+            Loc.GetString(msg, ("amount", transferAmount), ("target", targetIdentity)),
+            injector.Owner,
+            user);
 
         AfterDraw(injector, target);
     }
@@ -623,12 +581,35 @@ public sealed partial class InjectorSystem : EntitySystem
         // Reset the delay, if present.
         if (TryComp<UseDelayComponent>(injector, out var delay))
             _useDelay.TryResetDelay((injector, delay));
+
+        foreach (var mode in injector.Comp.AllowedModes.Where(mode => mode.Behavior.HasFlag(InjectorBehavior.Draw)))
+        {
+            // Automatically set syringe to draw after completely draining it.
+            if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution)
+                || solution.Volume != 0)
+                continue;
+
+            ToggleMode(injector, mode);
+            return;
+        }
+
     }
 
     private void AfterDraw(Entity<InjectorComponent> injector, EntityUid target)
     {
         // Leave some DNA from the drawee on it
         _forensics.TransferDna(injector, target);
+
+        foreach (var mode in injector.Comp.AllowedModes.Where(mode => mode.Behavior.HasFlag(InjectorBehavior.Inject)))
+        {
+            // Automatically set syringe to draw after completely draining it.
+            if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution)
+                || solution.AvailableVolume != 0)
+                continue;
+
+            ToggleMode(injector, mode);
+            return;
+        }
     }
     #endregion Injecting/Drawing
 
@@ -636,12 +617,21 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <summary>
     /// Toggle the injector between draw/inject state if applicable.
     /// </summary>
-    public void Toggle(Entity<InjectorComponent> injector, EntityUid user)
+    public void ToggleMode(Entity<InjectorComponent> injector, InjectorModePrototype? mode = null)
     {
-        var index = injector.Comp.AllowedModes.FindIndex(nextMode => injector.Comp.ActiveMode == nextMode);
-        var newIndex = index + 1 == injector.Comp.AllowedModes.Count ? 0 : index + 1;
+        if (mode == null)
+        {
+            var index = injector.Comp.AllowedModes.FindIndex(nextMode => injector.Comp.ActiveMode == nextMode);
+            var newIndex = index + 1 == injector.Comp.AllowedModes.Count ? 0 : index + 1;
 
-        injector.Comp.ActiveMode = injector.Comp.AllowedModes[newIndex];
+            injector.Comp.ActiveMode = injector.Comp.AllowedModes[newIndex];
+        }
+        else
+        {
+            var index = injector.Comp.AllowedModes.FindIndex(nextMode => mode == nextMode);
+
+            injector.Comp.ActiveMode = injector.Comp.AllowedModes[index];
+        }
     }
     #endregion Mode Toggling
 }

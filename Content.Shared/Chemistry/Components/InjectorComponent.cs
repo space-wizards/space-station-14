@@ -18,7 +18,7 @@ namespace Content.Shared.Chemistry.Components;
 /// containers, and can directly inject into a mobs bloodstream.
 /// </remarks>
 /// <seealso cref="InjectorSystem"/>
-/// <seealso cref="InjectorToggleMode"/>
+/// <seealso cref="InjectorBehavior"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class InjectorComponent : Component
 {
@@ -43,40 +43,17 @@ public sealed partial class InjectorComponent : Component
     [DataField, AutoNetworkedField]
     public FixedPoint2? CurrentTransferAmount = FixedPoint2.New(5);
 
+    /// <summary>
+    /// The active <see cref="InjectorModePrototype"/>, defining the behavior of the injector.
+    /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public InjectorModePrototype ActiveMode;
 
+    /// <summary>
+    /// The possible <see cref="InjectorModePrototype"/> that it can switch between.
+    /// </summary>
     [DataField(required: true)]
     public List<InjectorModePrototype> AllowedModes;
-
-    /// <summary>
-    /// Injection delay (seconds) when the target is a mob.
-    /// </summary>
-    /// <remarks>
-    /// The base delay has a minimum of 1 second, but this will still be modified if the target is incapacitated or
-    /// in combat mode.
-    /// </remarks>
-    [DataField]
-    public TimeSpan InjectTime = TimeSpan.FromSeconds(5);
-
-    /// <summary>
-    /// The delay to draw reagents using the hypospray.
-    /// If set, <see cref="RefillableSolutionComponent"/> RefillTime should probably have the same value.
-    /// </summary>
-    [DataField]
-    public TimeSpan DrawTime = TimeSpan.Zero;
-
-    /// <summary>
-    /// Each additional 1u after first 5u increases the delay by X seconds.
-    /// </summary>
-    [DataField]
-    public TimeSpan DelayPerVolume = TimeSpan.FromSeconds(0.1);
-
-    /// <summary>
-    /// Each additional 1u after first 5u increases the delay by X seconds.
-    /// </summary>
-    [DataField]
-    public FixedPoint2 IgnoreDelayForVolume = FixedPoint2.New(5);
 
     /// <summary>
     /// Whether the injector is able to draw from or inject from mobs.
@@ -123,7 +100,7 @@ public sealed partial class InjectorComponent : Component
 
 internal static class InjectorToggleModeExtensions
 {
-    public static bool HasAnyFlag(this InjectorToggleMode s1, InjectorToggleMode s2)
+    public static bool HasAnyFlag(this InjectorBehavior s1, InjectorBehavior s2)
     {
         return (s1 & s2) != 0;
     }

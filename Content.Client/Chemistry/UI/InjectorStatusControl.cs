@@ -19,7 +19,7 @@ public sealed class InjectorStatusControl : Control
     private FixedPoint2 _prevVolume;
     private FixedPoint2 _prevMaxVolume;
     private FixedPoint2? _prevTransferAmount;
-    private InjectorToggleMode _prevToggleState;
+    private InjectorBehavior _prevToggleState;
 
     public InjectorStatusControl(Entity<InjectorComponent> parent, SharedSolutionContainerSystem solutionContainers)
     {
@@ -40,20 +40,20 @@ public sealed class InjectorStatusControl : Control
         if (_prevVolume == solution.Volume
             && _prevMaxVolume == solution.MaxVolume
             && _prevTransferAmount == _parent.Comp.CurrentTransferAmount
-            && _prevToggleState == _parent.Comp.ActiveMode.ToggleState)
+            && _prevToggleState == _parent.Comp.ActiveMode.Behavior)
             return;
 
         _prevVolume = solution.Volume;
         _prevMaxVolume = solution.MaxVolume;
         _prevTransferAmount = _parent.Comp.CurrentTransferAmount;
-        _prevToggleState = _parent.Comp.ActiveMode.ToggleState;
+        _prevToggleState = _parent.Comp.ActiveMode.Behavior;
 
         // Update current volume and injector state
-        var modeStringLocalized = Loc.GetString(_parent.Comp.ActiveMode.ToggleState switch
+        var modeStringLocalized = Loc.GetString(_parent.Comp.ActiveMode.Behavior switch
         {
-            InjectorToggleMode.Draw => "injector-draw-text",
-            InjectorToggleMode.Inject => "injector-inject-text",
-            InjectorToggleMode.Dynamic => "injector-dynamic-text",
+            InjectorBehavior.Draw => "injector-draw-text",
+            InjectorBehavior.Inject => "injector-inject-text",
+            InjectorBehavior.Dynamic => "injector-dynamic-text",
             _ => "injector-invalid-injector-toggle-mode",
         });
 

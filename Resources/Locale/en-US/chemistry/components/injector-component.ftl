@@ -37,11 +37,11 @@ injector-component-cannot-toggle-dynamic-message = Can't toggle dynamic!
 injector-component-empty-message = {CAPITALIZE(THE($injector))} is empty!
 injector-component-feel-prick-message = You feel a tiny prick!
 injector-component-blocked-user = Protective gear blocked your injection!
-injector-component-blocked-other = {CAPITALIZE(THE(POSS-ADJ($target)))} armor blocked {CAPITALIZE(THE($user))}'s injection!
+injector-component-blocked-other = {CAPITALIZE(THE(POSS-ADJ($target)))} armor blocked {THE($user)}'s injection!
 
 ## mob-inject doafter messages
 
-injector-component-drawing-user = You start drawing the needle.
-injector-component-injecting-user = You start injecting the needle.
-injector-component-drawing-target = {CAPITALIZE(THE($user))} is trying to use a needle to draw from you!
-injector-component-injecting-target = {CAPITALIZE(THE($user))} is trying to inject a needle into you!
+injector-component-needle-injecting-user = You start injecting the needle.
+injector-component-needle-injecting-target = {CAPITALIZE(THE($user))} is trying to inject a needle into you!
+injector-component-needle-drawing-user = You start drawing the needle.
+injector-component-needle-drawing-target = {CAPITALIZE(THE($user))} is trying to use a needle to draw from you!
