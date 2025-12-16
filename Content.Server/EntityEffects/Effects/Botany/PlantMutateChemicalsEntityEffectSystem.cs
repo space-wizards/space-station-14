@@ -1,4 +1,5 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
 using Content.Shared.FixedPoint;
@@ -15,17 +16,18 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
     {
-        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
+        if (!_plantTray.HasPlant(entity.AsNullable()))
             return;
 
-        var plantUid = entity.Comp.PlantEntity.Value;
-        var chemicals = EnsureComp<PlantChemicalsComponent>(plantUid).Chemicals;
+        var plantUid = entity.Comp.PlantEntity!.Value;
+        var chemicals = EnsureComp<PlantChemicalsComponent>(plantUid).MutateChemicals;
         var randomChems = _proto.Index(args.Effect.RandomPickBotanyReagent).Fills;
 
-        // Add a random amount of a random chemical to this set of chemicals
+        // Add a random amount of a random chemical to this set of chemicals.
         var pick = _random.Pick(randomChems);
         var chemicalId = _random.Pick(pick.Reagents);
         var amount = _random.NextFloat(0.1f, (float)pick.Quantity);

@@ -1,23 +1,26 @@
 using JetBrains.Annotations;
+using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
 using Content.Shared.Random;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Linq;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Botany.Systems;
 
 public sealed class MutationSystem : EntitySystem
 {
-    private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
-
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
+    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
+    private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
     public override void Initialize()
@@ -58,6 +61,28 @@ public sealed class MutationSystem : EntitySystem
             return;
 
         CheckRandomMutations(trayEnt, plantEnt, severity);
+    }
+
+    /// <summary>
+    /// Replaces the current plant species with a new one from prototype,
+    /// preserving lifecycle state.
+    /// </summary>
+    [PublicAPI]
+    public void SpeciesChange(Entity<PlantDataComponent?> oldPlant, EntProtoId newPlantEnt, Entity<PlantTrayComponent?> trayEnt)
+    {
+        if (!Resolve(oldPlant, ref oldPlant.Comp, false) || !Resolve(trayEnt, ref trayEnt.Comp, false))
+            return;
+
+        if (oldPlant.Comp.MutationPrototypes.Count == 0)
+            return;
+
+        var newPlantUid = Spawn(newPlantEnt);
+        var snapshot = _botany.ClonePlantSnapshotData(oldPlant.Owner, cloneLifecycle: true);
+
+        // Clone state via snapshot and apply to new plant.
+        QueueDel(oldPlant.Owner);
+        _plantTray.PlantingPlant(trayEnt, newPlantUid);
+        _botany.ApplyPlantSnapshotData(newPlantUid, snapshot);
     }
 
     [PublicAPI]

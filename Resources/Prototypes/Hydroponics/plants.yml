@@ -17,9 +17,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: AtmosphericGrowth
-  - type: BasicGrowth
-  - type: ConsumeExudeGasGrowth
+  - type: PlantData
   - type: Plant
   - type: PlantHolder
   - type: PlantHarvest
@@ -29,19 +27,23 @@
   - type: PlantVisuals
   - type: UnviableGrowth
   - type: WeedPestGrowth
+  - type: AtmosphericGrowth
+  - type: BasicGrowth
+  - type: ConsumeExudeGasGrowth
 
 - type: entity
   id: WheatPlants
   parent: BasePlant
   name: wheat
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-wheat-display-name
     plantRsi: Objects/Specific/Hydroponics/wheat.rsi
     packetPrototype: WheatSeeds
     productPrototypes: [ WheatBushel ]
     mutationPrototypes: [ MeatWheatPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 3
@@ -60,13 +62,14 @@
   parent: BasePlant
   name: cotton
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-cotton-display-name
     plantRsi: Objects/Specific/Hydroponics/cotton.rsi
     packetPrototype: CottonSeeds
     productPrototypes: [ CottonBol ]
     mutationPrototypes: [ PyrottonPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 3
@@ -86,12 +89,13 @@
   parent: BasePlant
   name: pyrotton
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-pyrotton-display-name
     plantRsi: Objects/Specific/Hydroponics/pyrotton.rsi
     packetPrototype: PyrottonSeeds
     productPrototypes: [ PyrottonBol ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 3
@@ -115,12 +119,13 @@
   parent: BasePlant
   name: cherry
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-cherry-display-name
     plantRsi: Objects/Specific/Hydroponics/cherry.rsi
     packetPrototype: CherrySeeds
     productPrototypes: [ FoodCherry ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -143,12 +148,13 @@
   parent: BasePlant
   name: anomaly berry
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-anomaly-berry-display-name
     plantRsi: Objects/Specific/Hydroponics/anomaly_berry.rsi
     packetPrototype: AnomalyBerrySeeds
     productPrototypes: [ FoodAnomalyBerry ]
+  - type: Plant
     lifespan: 25
     maturation: 12
     production: 3
@@ -181,12 +187,13 @@
   parent: BasePlant
   name: meatwheat
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-meatwheat-display-name
     plantRsi: Objects/Specific/Hydroponics/meatwheat.rsi
     packetPrototype: MeatwheatSeeds
     productPrototypes: [ MeatwheatBushel ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 3
@@ -209,12 +216,13 @@
   parent: BasePlant
   name: oat
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-oat-display-name
     plantRsi: Objects/Specific/Hydroponics/oat.rsi
     packetPrototype: OatSeeds
     productPrototypes: [ OatBushel ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 3
@@ -237,13 +245,14 @@
   parent: BasePlant
   name: banana
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-banana-display-name
     plantRsi: Objects/Specific/Hydroponics/banana.rsi
     packetPrototype: BananaSeeds
     productPrototypes: [ FoodBanana ]
     mutationPrototypes: [ MimanaPlants ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 6
@@ -269,12 +278,13 @@
   parent: BasePlant
   name: mimana
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-mimana-display-name
     plantRsi: Objects/Specific/Hydroponics/mimana.rsi
     packetPrototype: MimanaSeeds
     productPrototypes: [ FoodMimana ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 6
@@ -300,12 +310,13 @@
   parent: BasePlant
   name: carrots
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-carrots-display-name
     plantRsi: Objects/Specific/Hydroponics/carrot.rsi
     packetPrototype: CarrotSeeds
     productPrototypes: [ FoodCarrot ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -333,13 +344,14 @@
   parent: BasePlant
   name: laughin pea
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-laughin-pea-display-name
     plantRsi: Objects/Specific/Hydroponics/laughin_pea.rsi
     packetPrototype: LaughinPeaSeeds
     productPrototypes: [ FoodLaughinPeaPod ]
-    mutationPrototypes: [ worldPea ]
+    mutationPrototypes: [ WorldPeaPlants ]
+  - type: Plant
     lifespan: 25
     growthStages: 3
     maturation: 7
@@ -370,13 +382,14 @@
   parent: BasePlant
   name: lemon
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-lemon-display-name
     plantRsi: Objects/Specific/Hydroponics/lemon.rsi
     packetPrototype: LemonSeeds
     productPrototypes: [ FoodLemon ]
     mutationPrototypes: [ LemoonPlants, LimePlants, OrangePlants ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -399,12 +412,13 @@
   parent: BasePlant
   name: lemoon
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-lemoon-display-name
     plantRsi: Objects/Specific/Hydroponics/lemoon.rsi
     packetPrototype: LemoonSeeds
     productPrototypes: [ FoodLemoon ]
+  - type: Plant
     lifespan: 90
     maturation: 8
     production: 6
@@ -427,13 +441,14 @@
   parent: BasePlant
   name: lime
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-lime-display-name
     plantRsi: Objects/Specific/Hydroponics/lime.rsi
     packetPrototype: LimeSeeds
     productPrototypes: [ FoodLime ]
     mutationPrototypes: [ OrangePlants, LemonPlants ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -456,13 +471,14 @@
   parent: BasePlant
   name: orange
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-orange-display-name
     plantRsi: Objects/Specific/Hydroponics/orange.rsi
     packetPrototype: OrangeSeeds
     productPrototypes: [ FoodOrange ]
     mutationPrototypes: [ ExtradimensionalOrangePlants, LemonPlants, LimePlants ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -485,12 +501,13 @@
   parent: BasePlant
   name: extradimensional orange
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-extradimensionalorange-display-name
     plantRsi: Objects/Specific/Hydroponics/extradimensional_orange.rsi
     packetPrototype: ExtradimensionalOrangeSeeds
     productPrototypes: [ FoodExtradimensionalOrange ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -517,13 +534,14 @@
   parent: BasePlant
   name: sugarcane
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-sugarcane-display-name
     plantRsi: Objects/Specific/Hydroponics/sugarcane.rsi
     packetPrototype: SugarcaneSeeds
     productPrototypes: [ Sugarcane ]
     mutationPrototypes: [ PapercanePlants ]
+  - type: Plant
     lifespan: 60
     maturation: 6
     production: 6
@@ -545,12 +563,13 @@
   parent: BasePlant
   name: papercane
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-papercane-display-name
     plantRsi: Objects/Specific/Hydroponics/papercane.rsi
     packetPrototype: PapercaneSeeds
     productPrototypes: [ Papercane ]
+  - type: Plant
     lifespan: 60
     maturation: 6
     production: 6
@@ -567,12 +586,13 @@
   parent: BasePlant
   name: tea plant
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-teaplant-display-name
     plantRsi: Objects/Specific/Hydroponics/tea_plant.rsi
     packetPrototype: TeaPlantSeeds
     productPrototypes: [ LeavesTea ]
+  - type: Plant
     lifespan: 75
     maturation: 5
     production: 3
@@ -596,13 +616,14 @@
   parent: BasePlant
   name: towercap
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-towercap-display-name
     plantRsi: Objects/Specific/Hydroponics/towercap.rsi
     packetPrototype: TowercapSeeds
     productPrototypes: [ Log ]
     mutationPrototypes: [ SteelcapPlants ]
+  - type: Plant
     lifespan: 80
     maturation: 15
     production: 3
@@ -622,12 +643,13 @@
   parent: BasePlant
   name: steelcap
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-steelcap-display-name
     plantRsi: Objects/Specific/Hydroponics/steelcap.rsi
     packetPrototype: SteelcapSeeds
     productPrototypes: [ SteelLog ]
+  - type: Plant
     lifespan: 80
     maturation: 15
     production: 3
@@ -647,13 +669,14 @@
   parent: BasePlant
   name: tomato
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-tomato-display-name
     plantRsi: Objects/Specific/Hydroponics/tomato.rsi
     packetPrototype: TomatoSeeds
     productPrototypes: [ FoodTomato ]
     mutationPrototypes: [ BlueTomatoPlants, BloodTomatoPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -685,12 +708,13 @@
   parent: BasePlant
   name: blue tomato
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-bluetomato-display-name
     plantRsi: Objects/Specific/Hydroponics/blue_tomato.rsi
     packetPrototype: BlueTomatoSeeds
     productPrototypes: [ FoodBlueTomato ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -722,13 +746,14 @@
   parent: BasePlant
   name: blood tomato
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-bloodtomato-display-name
     plantRsi: Objects/Specific/Hydroponics/blood_tomato.rsi
     packetPrototype: BloodTomatoSeeds
     productPrototypes: [ FoodBloodTomato ]
     mutationPrototypes: [ KillerTomatoPlants ]
+  - type: Plant
     lifespan: 60
     maturation: 8
     production: 6
@@ -756,7 +781,7 @@
   parent: BasePlant
   name: killer tomato
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-killertomato-display-name
     plantRsi: Objects/Specific/Hydroponics/tomatokiller.rsi
@@ -764,6 +789,7 @@
     harvestLogImpact: High
     packetPrototype: KillerTomatoSeeds
     productPrototypes: [ MobTomatoKiller ]
+  - type: Plant
     lifespan: 25
     maturation: 15
     production: 6
@@ -792,13 +818,14 @@
   parent: BasePlant
   name: eggplant
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-eggplant-display-name
     plantRsi: Objects/Specific/Hydroponics/eggplant.rsi
     packetPrototype: EggplantSeeds
     productPrototypes: [ FoodEggplant ]
     mutationPrototypes: [ EggyPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -820,13 +847,14 @@
   parent: BasePlant
   name: galaxythistle
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-galaxythistle-display-name
     plantRsi: Objects/Specific/Hydroponics/galaxythistle.rsi
     packetPrototype: GalaxythistleSeeds
     productPrototypes: [ FoodGalaxythistle ]
     mutationPrototypes: [ GlasstlePlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -846,12 +874,13 @@
   parent: BasePlant
   name: glasstle
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-glasstle-display-name
     plantRsi: Objects/Specific/Hydroponics/glasstle.rsi
     packetPrototype: GlasstleSeeds
     productPrototypes: [ FoodGlasstle ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -873,12 +902,13 @@
   parent: BasePlant
   name: fly amanita
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-flyamanita-display-name
     plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
     packetPrototype: FlyAmanitaSeeds
     productPrototypes: [ FoodFlyAmanita ]
+  - type: Plant
     lifespan: 25
     maturation: 12
     production: 3
@@ -903,12 +933,13 @@
   parent: BasePlant
   name: gatfruit
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-gatfruit-display-name
     plantRsi: Objects/Specific/Hydroponics/gatfruit.rsi
     packetPrototype: GatfruitSeeds
     productPrototypes: [ FoodGatfruit ]
+  - type: Plant
     mutationPrototypes: [ FakeCapfruitPlants, RealCapfruitPlants ]
     lifespan: 65
     maturation: 25
@@ -931,12 +962,13 @@
   parent: BasePlant
   name: fake capfruit
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-capfruit-display-name
     plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
     packetPrototype: FakeCapfruitSeeds
     productPrototypes: [ FoodFakeCapfruit ]
+  - type: Plant
     lifespan: 65
     maturation: 25
     production: 25
@@ -958,12 +990,13 @@
   parent: BasePlant
   name: real capfruit
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-capfruit-display-name
     plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
     packetPrototype: RealCapfruitSeeds
     productPrototypes: [ FoodRealCapfruit ]
+  - type: Plant
     lifespan: 65
     maturation: 25
     production: 25
@@ -985,12 +1018,13 @@
   parent: BasePlant
   name: bungo
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-bungo-display-name
     plantRsi: Objects/Specific/Hydroponics/bungo.rsi
     packetPrototype: BungoSeeds
     productPrototypes: [ FoodBungo ]
+  - type: Plant
     lifespan: 50
     maturation: 8
     production: 6
@@ -1018,13 +1052,14 @@
   parent: BasePlant
   name: pea
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-pea-display-name
     plantRsi: Objects/Specific/Hydroponics/pea.rsi
     packetPrototype: PeaSeeds
     productPrototypes: [ FoodPeaPod ]
     mutationPrototypes: [ LaughinPeaPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -1050,12 +1085,13 @@
   parent: BasePlant
   name: world pea
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-worldpea-display-name
     plantRsi: Objects/Specific/Hydroponics/world_pea.rsi
     packetPrototype: PeaSeeds
     productPrototypes: [ FoodWorldPeas ]
+  - type: Plant
     lifespan: 25
     maturation: 20
     production: 6
@@ -1085,13 +1121,14 @@
   parent: BasePlant
   name: pumpkin
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-pumpkin-display-name
     plantRsi: Objects/Specific/Hydroponics/pumpkin.rsi
     packetPrototype: PumpkinSeeds
     productPrototypes: [ FoodPumpkin ]
     mutationPrototypes: [ BluePumpkinPlants ]
+  - type: Plant
     lifespan: 55
     maturation: 10
     production: 4
@@ -1115,12 +1152,13 @@
   parent: BasePlant
   name: blue pumpkin
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-blue-pumpkin-display-name
     plantRsi: Objects/Specific/Hydroponics/blue_pumpkin.rsi
     packetPrototype: BluePumpkinSeeds
     productPrototypes: [ FoodBluePumpkin ]
+  - type: Plant
     lifespan: 55
     maturation: 10
     production: 4
@@ -1148,13 +1186,14 @@
   parent: BasePlant
   name: apple
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-apple-display-name
     plantRsi: Objects/Specific/Hydroponics/apple.rsi
     packetPrototype: AppleSeeds
     productPrototypes: [ FoodApple ]
     mutationPrototypes: [ GoldenApplePlants ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -1177,12 +1216,13 @@
   parent: BasePlant
   name: golden apple
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-goldenapple-display-name
     plantRsi: Objects/Specific/Hydroponics/golden_apple.rsi
     packetPrototype: GoldenAppleSeeds
     productPrototypes: [ FoodGoldenApple ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6
@@ -1211,12 +1251,13 @@
   parent: BasePlant
   name: corn
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-corn-display-name
     plantRsi: Objects/Specific/Hydroponics/corn.rsi
     packetPrototype: CornSeeds
     productPrototypes: [ FoodCorn ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -1242,12 +1283,13 @@
   parent: BasePlant
   name: chanterelle
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-chanterelle-display-name
     plantRsi: Objects/Specific/Hydroponics/chanterelle.rsi
     packetPrototype: ChanterelleSeeds
     productPrototypes: [ FoodMushroom ]
+  - type: Plant
     lifespan: 35
     maturation: 10
     production: 7
@@ -1270,12 +1312,13 @@
   parent: BasePlant
   name: rice
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-rice-display-name
     plantRsi: Objects/Specific/Hydroponics/rice.rsi
     packetPrototype: RiceSeeds
     productPrototypes: [ RiceBushel ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 3
@@ -1300,13 +1343,14 @@
   parent: BasePlant
   name: soybeans
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-soybeans-display-name
     plantRsi: Objects/Specific/Hydroponics/soybeans.rsi
     packetPrototype: SoybeanSeeds
     productPrototypes: [ FoodSoybeans ]
     mutationPrototypes: [ KoibeanPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -1326,12 +1370,13 @@
   parent: BasePlant
   name: spaceman's trumpet
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-spacemans-trumpet-display-name
     plantRsi: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
     packetPrototype: SpacemansTrumpetSeeds
     productPrototypes: [ FoodSpacemansTrumpet ]
+  - type: Plant
     lifespan: 20
     maturation: 14
     production: 3
@@ -1355,12 +1400,13 @@
   parent: BasePlant
   name: koibean
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-koibean-display-name
     plantRsi: Objects/Specific/Hydroponics/koibean.rsi
     packetPrototype: KoibeanSeeds
     productPrototypes: [ FoodKoibean ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -1384,13 +1430,14 @@
   parent: BasePlant
   name: watermelon
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-watermelon-display-name
     plantRsi: Objects/Specific/Hydroponics/watermelon.rsi
     packetPrototype: WatermelonSeeds
     productPrototypes: [ FoodWatermelon ]
     mutationPrototypes: [ HolymelonPlants ]
+  - type: Plant
     lifespan: 55
     maturation: 12
     production: 3
@@ -1415,12 +1462,13 @@
   parent: BasePlant
   name: holymelon
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-holymelon-display-name
     plantRsi: Objects/Specific/Hydroponics/holymelon.rsi
     packetPrototype: HolymelonSeeds
     productPrototypes: [ FoodHolymelon ]
+  - type: Plant
     lifespan: 55
     maturation: 12
     production: 3
@@ -1445,12 +1493,13 @@
   parent: BasePlant
   name: grape
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-grape-display-name
     plantRsi: Objects/Specific/Hydroponics/grape.rsi
     packetPrototype: GrapeSeeds
     productPrototypes: [ FoodGrape ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 5
@@ -1472,12 +1521,13 @@
   parent: BasePlant
   name: cocoa
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-cocoa-display-name
     plantRsi: Objects/Specific/Hydroponics/cocoa.rsi
     packetPrototype: CocoaSeeds
     productPrototypes: [ FoodCocoaPod ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 6
@@ -1504,12 +1554,13 @@
   parent: BasePlant
   name: berries
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-berries-display-name
     plantRsi: Objects/Specific/Hydroponics/berries.rsi
     packetPrototype: BerrySeeds
     productPrototypes: [ FoodBerries ]
+  - type: Plant
     lifespan: 50
     maturation: 6
     production: 6
@@ -1533,13 +1584,14 @@
   parent: BasePlant
   name: nettle
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-nettle-display-name
     plantRsi: Objects/Specific/Hydroponics/nettle.rsi
     packetPrototype: NettleSeeds
     productPrototypes: [ Nettle ]
     mutationPrototypes: [ DeathNettlePlants ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -1561,12 +1613,13 @@
   parent: BasePlant
   name: tobacco
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-tobacco-display-name
     plantRsi: Objects/Specific/Hydroponics/tobacco.rsi
     packetPrototype: TobaccoSeeds
     productPrototypes: [ LeavesTobacco ]
+  - type: Plant
     lifespan: 75
     maturation: 5
     production: 5
@@ -1590,7 +1643,7 @@
   parent: BasePlant
   name: death nettle
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-deathnettle-display-name
     plantRsi: Objects/Specific/Hydroponics/death_nettle.rsi
@@ -1598,6 +1651,7 @@
     productPrototypes: [ DeathNettle ]
     plantLogImpact: High
     harvestLogImpact: High
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 6
@@ -1626,13 +1680,14 @@
   parent: BasePlant
   name: chili
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-chili-display-name
     plantRsi: Objects/Specific/Hydroponics/chili.rsi
     packetPrototype: ChiliSeeds
     productPrototypes: [ FoodChiliPepper ]
     mutationPrototypes: [ ChillyPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -1661,12 +1716,13 @@
   parent: BasePlant
   name: chilly
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-chilly-display-name
     plantRsi: Objects/Specific/Hydroponics/chilly.rsi
     packetPrototype: ChillySeeds
     productPrototypes: [ FoodChillyPepper ]
+  - type: Plant
     lifespan: 25
     maturation: 6
     production: 6
@@ -1695,13 +1751,14 @@
   parent: BasePlant
   name: poppy
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-poppy-display-name
     plantRsi: Objects/Specific/Hydroponics/poppy.rsi
     packetPrototype: PoppySeeds
     productPrototypes: [ FoodPoppy ]
     mutationPrototypes: [ LilyPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1725,13 +1782,14 @@
   parent: BasePlant
   name: lily
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-lily-display-name
     plantRsi: Objects/Specific/Hydroponics/lily.rsi
     packetPrototype: LilySeeds
     productPrototypes: [ FoodLily ]
     mutationPrototypes: [ SpacemansTrumpetPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1755,12 +1813,13 @@
   parent: BasePlant
   name: aloe
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-aloe-display-name
     plantRsi: Objects/Specific/Hydroponics/aloe.rsi
     packetPrototype: AloeSeeds
     productPrototypes: [ FoodAloe ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1784,12 +1843,13 @@
   parent: BasePlant
   name: lingzhi
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-lingzhi-display-name
     plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
     packetPrototype: LingzhiSeeds
     productPrototypes: [ FoodLingzhi ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1813,13 +1873,14 @@
   parent: BasePlant
   name: ambrosia vulgaris
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-ambrosiavulgaris-display-name
     plantRsi: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
     packetPrototype: AmbrosiaVulgarisSeeds
     productPrototypes: [ FoodAmbrosiaVulgaris ]
     mutationPrototypes: [ AmbrosiaDeusPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1851,12 +1912,13 @@
   parent: BasePlant
   name: ambrosia deus
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-ambrosiadeus-display-name
     plantRsi: Objects/Specific/Hydroponics/ambrosia_deus.rsi
     packetPrototype: AmbrosiaDeusSeeds
     productPrototypes: [ FoodAmbrosiaDeus ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 3
@@ -1884,12 +1946,13 @@
   parent: BasePlant
   name: eggy
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-eggy-display-name
     plantRsi: Objects/Specific/Hydroponics/eggy.rsi
     packetPrototype: EggySeeds
     productPrototypes: [ FoodEgg ]
+  - type: Plant
     lifespan: 75
     maturation: 6
     production: 12
@@ -1912,13 +1975,14 @@
   parent: BasePlant
   name: onion
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-onion-display-name
     plantRsi: Objects/Specific/Hydroponics/onion.rsi
     packetPrototype: OnionSeeds
     productPrototypes: [ FoodOnion ]
     mutationPrototypes: [ OnionRedPlants, BloonionPlants ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 7
@@ -1951,12 +2015,13 @@
   parent: BasePlant
   name: red onion
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-onionred-display-name
     plantRsi: Objects/Specific/Hydroponics/onion_red.rsi
     packetPrototype: OnionRedSeeds
     productPrototypes: [ FoodOnionRed ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 7
@@ -1989,12 +2054,13 @@
   parent: BasePlant
   name: bloonion
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-bloonion-display-name
     plantRsi: Objects/Specific/Hydroponics/bloonion.rsi
     packetPrototype: BloonionSeeds
     productPrototypes: [ FoodBloonion ]
+  - type: Plant
     lifespan: 25
     maturation: 10
     production: 7
@@ -2031,13 +2097,14 @@
   parent: BasePlant
   name: cannabis
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-cannabis-display-name
     plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
     packetPrototype: CannabisSeeds
     productPrototypes: [ LeavesCannabis ]
     mutationPrototypes: [ RainbowCannabisPlants ]
+  - type: Plant
     lifespan: 75
     maturation: 8
     production: 12
@@ -2062,12 +2129,13 @@
   parent: BasePlant
   name: rainbow cannabis
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-rainbowcannabis-display-name
     plantRsi: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
     packetPrototype: RainbowCannabisSeeds
     productPrototypes: [ LeavesRainbowCannabis ]
+  - type: Plant
     lifespan: 75
     maturation: 8
     production: 12
@@ -2092,12 +2160,13 @@
   parent: BasePlant
   name: potato
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-potato-display-name
     plantRsi: Objects/Specific/Hydroponics/potato.rsi
     packetPrototype: PotatoSeeds
     productPrototypes: [ FoodPotato ]
+  - type: Plant
     lifespan: 30
     maturation: 10
     production: 3
@@ -2121,12 +2190,13 @@
   parent: BasePlant
   name: cabbage
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-cabbage-display-name
     plantRsi: Objects/Specific/Hydroponics/cabbage.rsi
     packetPrototype: CabbageSeeds
     productPrototypes: [ FoodCabbage ]
+  - type: Plant
     lifespan: 50
     maturation: 7
     production: 5
@@ -2148,12 +2218,13 @@
   parent: BasePlant
   name: garlic
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-garlic-display-name
     plantRsi: Objects/Specific/Hydroponics/garlic.rsi
     packetPrototype: GarlicSeeds
     productPrototypes: [ FoodGarlic ]
+  - type: Plant
     lifespan: 25
     maturation: 8
     production: 5
@@ -2171,12 +2242,13 @@
   parent: BasePlant
   name: pineapple
   components:
-  - type: Plant
+  - type: PlantData
     noun: seeds-noun-seeds
     displayName: seeds-pineapple-display-name
     plantRsi: Objects/Specific/Hydroponics/pineapple.rsi
     packetPrototype: PineappleSeeds
     productPrototypes: [ FoodPineapple ]
+  - type: Plant
     lifespan: 55
     maturation: 6
     production: 6

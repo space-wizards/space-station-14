@@ -125,6 +125,7 @@ public sealed class HarvestSystem : EntitySystem
         var (trayUid, _) = trayEnt;
 
         if (!TryComp<PlantComponent>(plantUid, out var plant)
+            || !TryComp<PlantDataComponent>(plantUid, out var plantData)
             || !TryComp<PlantTraitsComponent>(plantUid, out var traits)
             || !TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
@@ -135,10 +136,10 @@ public sealed class HarvestSystem : EntitySystem
             return;
         }
 
-        if (!harvest.ReadyForHarvest || plant.ProductPrototypes.Count == 0 || plant.Yield == 0)
+        if (!harvest.ReadyForHarvest || plantData.ProductPrototypes.Count == 0 || plant.Yield == 0)
             return;
 
-        var name = Loc.GetString(plant.DisplayName);
+        var name = Loc.GetString(plantData.DisplayName);
         _popup.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
 
         var totalYield = 0;
@@ -151,7 +152,7 @@ public sealed class HarvestSystem : EntitySystem
         var position = Transform(trayUid).Coordinates;
         for (var i = 0; i < totalYield; i++)
         {
-            var product = _random.Pick(plant.ProductPrototypes);
+            var product = _random.Pick(plantData.ProductPrototypes);
             var entity = Spawn(product, position);
             _randomHelper.RandomOffset(entity, 0.25f);
 

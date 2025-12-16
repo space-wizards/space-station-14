@@ -12,16 +12,14 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class PlantAffectGrowthEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAffectGrowth>
 {
     [Dependency] private readonly BasicGrowthSystem _plantGrowth = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAffectGrowth> args)
     {
-        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
+        if (!_plantTray.HasPlant(entity.AsNullable()))
             return;
 
-        var plantUid = entity.Comp.PlantEntity.Value;
-        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
-            return;
-
-        _plantGrowth.AffectGrowth((plantUid, plantHolder), (int)args.Effect.Amount);
+        var plantUid = entity.Comp.PlantEntity!.Value;
+        _plantGrowth.AffectGrowth(plantUid, (int)args.Effect.Amount);
     }
 }

@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Events;
 using Content.Server.Popups;
@@ -33,7 +34,7 @@ public sealed class PlantSystem : EntitySystem
         SubscribeLocalEvent<PlantComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
         SubscribeLocalEvent<PlantComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<PlantComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<PlantComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
     private void OnCrossPollinate(Entity<PlantComponent> ent, ref PlantCrossPollinateEvent args)
@@ -84,12 +85,13 @@ public sealed class PlantSystem : EntitySystem
 
         var (uid, plant) = ent;
 
-        if (!TryComp<PlantHolderComponent>(uid, out var holder))
+        if (!TryComp<PlantHolderComponent>(uid, out var holder)
+            || !TryComp<PlantDataComponent>(uid, out var plantData))
             return;
 
         using (args.PushGroup(nameof(PlantComponent)))
         {
-            var displayName = Loc.GetString(plant.DisplayName);
+            var displayName = Loc.GetString(plantData.DisplayName);
             args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
                 ("seedName", displayName),
                 ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
@@ -127,36 +129,37 @@ public sealed class PlantSystem : EntitySystem
         }
     }
 
-    private void OnInteractUsing(Entity<PlantHolderComponent> ent, ref InteractUsingEvent args)
+    private void OnInteractUsing(Entity<PlantComponent> ent, ref InteractUsingEvent args)
     {
+        var (plantUid, plant) = ent;
+
         if (args.Handled)
             return;
 
         if (!_tag.HasTag(args.Used, PlantSampleTakerTag))
             return;
 
+        if (!TryComp<PlantHolderComponent>(plantUid, out var holder)
+            || !TryComp<PlantDataComponent>(plantUid, out var plantData))
+            return;
+
         args.Handled = true;
 
-        var (plantUid, plantData) = ent;
-
-        if (plantData.Sampled)
+        if (holder.Sampled)
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"), args.User);
             return;
         }
 
-        if (plantData.Dead)
+        if (holder.Dead)
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-dead-plant-message"), args.User);
             return;
         }
 
-        if (!TryComp<PlantComponent>(plantUid, out var plant))
-            return;
-
         // Prevent early sampling.
         var maturation = Math.Max(plant.Maturation, 1f);
-        var growthStage = Math.Max(1, (int)(plantData.Age * plant.GrowthStages / maturation));
+        var growthStage = Math.Max(1, (int)(holder.Age * plant.GrowthStages / maturation));
         if (growthStage <= 1)
         {
             _popup.PopupCursor(Loc.GetString("plant-holder-component-early-sample-message"), args.User);
@@ -164,23 +167,23 @@ public sealed class PlantSystem : EntitySystem
         }
 
         // Damage the plant and produce a seed packet snapshot.
-        plantData.Health -= _random.Next(3, 5) * 10;
+        holder.Health -= _random.Next(3, 5) * 10;
 
         float? healthOverride;
         if (TryComp<PlantHarvestComponent>(plantUid, out var harvest) && harvest.ReadyForHarvest)
             healthOverride = null;
         else
-            healthOverride = plantData.Health;
+            healthOverride = holder.Health;
 
         var seed = _botany.SpawnSeedPacketFromPlant(plantUid, Transform(args.User).Coordinates, args.User, healthOverride);
         _randomHelper.RandomOffset(seed, 0.25f);
 
-        var displayName = Loc.GetString(plant.DisplayName);
+        var displayName = Loc.GetString(plantData.DisplayName);
         _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
             ("seedName", displayName)), args.User);
 
         if (_random.Prob(0.3f))
-            plantData.Sampled = true;
+            holder.Sampled = true;
 
         var trayUid = Transform(plantUid).ParentUid;
         if (TryComp<PlantTrayComponent>(trayUid, out var tray))
@@ -193,6 +196,7 @@ public sealed class PlantSystem : EntitySystem
     /// <summary>
     /// Adjusts the potency of a plant component.
     /// </summary>
+    [PublicAPI]
     public void AdjustPotency(Entity<PlantComponent> ent, float delta)
     {
         var (_, plant) = ent;

@@ -12,14 +12,15 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class PlantAdjustPotencyEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAdjustPotency>
 {
     [Dependency] private readonly PlantSystem _plant = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustPotency> args)
     {
-        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
+        if (!_plantTray.HasPlantAlive(entity.AsNullable()))
             return;
 
-        var plantUid = entity.Comp.PlantEntity.Value;
-        if (!TryComp<PlantComponent>(plantUid, out var plant) || !TryComp<PlantHolderComponent>(plantUid, out var plantHolder) || plantHolder.Dead)
+        var plantUid = entity.Comp.PlantEntity!.Value;
+        if (!TryComp<PlantComponent>(plantUid, out var plant))
             return;
 
         _plant.AdjustPotency((plantUid, plant), args.Effect.Amount);

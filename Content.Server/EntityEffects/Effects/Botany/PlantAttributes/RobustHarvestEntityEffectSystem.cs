@@ -14,14 +14,15 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, RobustHarvest>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<RobustHarvest> args)
     {
-        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
+        if (!_plantTray.HasPlantAlive(entity.AsNullable()))
             return;
 
-        var plantUid = entity.Comp.PlantEntity.Value;
-        if (!TryComp<PlantComponent>(plantUid, out var plant) || !TryComp<PlantTraitsComponent>(plantUid, out var traits) || !TryComp<PlantHolderComponent>(plantUid, out var plantHolder) || plantHolder.Dead)
+        var plantUid = entity.Comp.PlantEntity!.Value;
+        if (!TryComp<PlantComponent>(plantUid, out var plant) || !TryComp<PlantTraitsComponent>(plantUid, out var traits))
             return;
 
         if (plant.Potency < args.Effect.PotencyLimit)

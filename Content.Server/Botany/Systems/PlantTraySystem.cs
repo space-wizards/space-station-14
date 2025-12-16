@@ -131,50 +131,27 @@ public sealed class PlantTraySystem : EntitySystem
                 if (seeds.PlantData != null)
                     _botany.ApplyPlantSnapshotData(plantUid, seeds.PlantData);
 
-                if (!TryComp<PlantComponent>(plantUid, out var plant))
+                if (!TryComp<PlantDataComponent>(plantUid, out var plantData))
                     return;
 
-                var name = Loc.GetString(plant.DisplayName);
-                var noun = Loc.GetString(plant.Noun);
+                var name = Loc.GetString(plantData.DisplayName);
+                var noun = Loc.GetString(plantData.Noun);
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
                         ("seedName", name),
                         ("seedNoun", noun)),
                     args.User,
                     PopupType.Medium);
 
-                var plantData = EnsureComp<PlantHolderComponent>(plantUid);
-                plantData.Dead = false;
-                plantData.Age = 1;
-
-                if (seeds.HealthOverride != null)
-                    plantData.Health = seeds.HealthOverride.Value;
-                else
-                    plantData.Health = plant.Endurance;
-
-                if (TryComp<PlantHarvestComponent>(plantUid, out var harvest))
-                {
-                    harvest.ReadyForHarvest = false;
-                    harvest.LastHarvest = 0;
-                }
-
-                tray.LastCycle = _gameTiming.CurTime;
+                PlantingPlant(uid, plantUid);
 
                 if (TryComp<PaperLabelComponent>(args.Used, out var paperLabel))
-                {
                     _itemSlots.TryEjectToHands(args.Used, paperLabel.LabelSlot, args.User);
-                }
 
                 QueueDel(args.Used);
 
-                _transform.SetCoordinates(plantUid, Transform(uid).Coordinates);
-                _transform.SetParent(plantUid, uid);
-                tray.PlantEntity = plantUid;
-
-                UpdateSprite(ent.AsNullable());
-
-                if (plant.PlantLogImpact != null)
-                    _adminLogger.Add(LogType.Botany, plant.PlantLogImpact.Value,
-                        $"{ToPrettyString(args.User):player} planted {Loc.GetString(plant.DisplayName):seed} at Pos:{Transform(uid).Coordinates}.");
+                if (plantData.PlantLogImpact != null)
+                    _adminLogger.Add(LogType.Botany, plantData.PlantLogImpact.Value,
+                        $"{ToPrettyString(args.User):player} planted {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(uid).Coordinates}.");
 
                 return;
             }
@@ -284,6 +261,40 @@ public sealed class PlantTraySystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Planting a plant in a tray.
+    /// </summary>
+    [PublicAPI]
+    public void PlantingPlant(Entity<PlantTrayComponent?> trayEnt, Entity<PlantComponent?> plantEnt)
+    {
+        var (trayUid, trayComp) = trayEnt;
+        var (plantUid, plantComp) = plantEnt;
+
+        if (!Resolve(trayUid, ref trayComp, false) || !Resolve(plantUid, ref plantComp, false))
+            return;
+
+        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
+            return;
+
+        plantHolder.Dead = false;
+        plantHolder.Age = 1;
+        plantHolder.Health = plantComp.Endurance;
+
+        if (TryComp<PlantHarvestComponent>(plantUid, out var harvest))
+        {
+            harvest.ReadyForHarvest = false;
+            harvest.LastHarvest = 0;
+        }
+
+        trayComp.LastCycle = _gameTiming.CurTime;
+
+        _transform.SetCoordinates(plantUid, Transform(trayUid).Coordinates);
+        _transform.SetParent(plantUid, trayUid);
+        trayComp.PlantEntity = plantUid;
+
+        UpdateSprite(trayEnt.AsNullable());
+    }
+
     private void OnSolutionTransferred(Entity<PlantTrayComponent> ent, ref SolutionTransferredEvent args)
     {
         _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner);
@@ -318,7 +329,6 @@ public sealed class PlantTraySystem : EntitySystem
         {
             if (component.UpdateSpriteAfterUpdate)
                 UpdateSprite(ent);
-
             return;
         }
 
@@ -482,11 +492,13 @@ public sealed class PlantTraySystem : EntitySystem
         PlantHarvestComponent? harvest = null;
         PlantComponent? plant = null;
         PlantHolderComponent? plantHolder = null;
+        PlantDataComponent? plantData = null;
         if (component.PlantEntity != null && !Deleted(component.PlantEntity))
         {
             TryComp(component.PlantEntity.Value, out harvest);
             TryComp(component.PlantEntity.Value, out plant);
             TryComp(component.PlantEntity.Value, out plantHolder);
+            TryComp(component.PlantEntity.Value, out plantData);
         }
 
         component.UpdateSpriteAfterUpdate = false;
@@ -494,11 +506,11 @@ public sealed class PlantTraySystem : EntitySystem
         // Tray should never render plant sprite.
         _appearance.SetData(uid, PlantVisuals.PlantState, string.Empty, app);
 
-        if (component.PlantEntity != null && !Deleted(component.PlantEntity) && harvest != null && plant != null && plantHolder != null)
+        if (component.PlantEntity != null && !Deleted(component.PlantEntity) && harvest != null && plant != null && plantHolder != null && plantData != null)
         {
             if (TryComp<AppearanceComponent>(component.PlantEntity.Value, out var plantApp))
             {
-                _appearance.SetData(component.PlantEntity.Value, PlantVisuals.PlantRsi, plant.PlantRsi.ToString(), plantApp);
+                _appearance.SetData(component.PlantEntity.Value, PlantVisuals.PlantRsi, plantData.PlantRsi.ToString(), plantApp);
 
                 if (plantHolder.Dead)
                     _appearance.SetData(component.PlantEntity.Value, PlantVisuals.PlantState, "dead", plantApp);
@@ -538,7 +550,6 @@ public sealed class PlantTraySystem : EntitySystem
     /// <summary>
     /// Forces an update of the tray by external cause.
     /// </summary>
-    /// <param name="ent">The entity tray component.</param>
     [PublicAPI]
     public void ForceUpdateByExternalCause(Entity<PlantTrayComponent?> ent)
     {
@@ -555,5 +566,41 @@ public sealed class PlantTraySystem : EntitySystem
 
         component.ForceUpdate = true;
         Update(ent);
+    }
+
+    /// <summary>
+    /// Checks if the tray contains a plant entity.
+    /// </summary>
+    [PublicAPI]
+    public bool HasPlant(Entity<PlantTrayComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return false;
+
+        if (ent.Comp.PlantEntity == null || Deleted(ent.Comp.PlantEntity))
+            return false;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if the tray contains a living plant entity.
+    /// </summary>
+    [PublicAPI]
+    public bool HasPlantAlive(Entity<PlantTrayComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        if (!HasPlant(ent.Owner))
+            return false;
+
+        if (!TryComp<PlantHolderComponent>(ent.Comp.PlantEntity!.Value, out var holder))
+            return false;
+
+        if (holder.Dead)
+            return false;
+
+        return true;
     }
 }

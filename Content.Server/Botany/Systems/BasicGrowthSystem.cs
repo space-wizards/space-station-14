@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Events;
 using Robust.Shared.Random;
@@ -121,12 +122,16 @@ public sealed class BasicGrowthSystem : EntitySystem
     /// <summary>
     /// Affects the growth of a plant by modifying its age or production timing.
     /// </summary>
-    public void AffectGrowth(Entity<PlantHolderComponent> ent, int amount)
+    [PublicAPI]
+    public void AffectGrowth(Entity<PlantHolderComponent?> ent, int amount)
     {
         if (amount == 0)
             return;
 
         var (uid, component) = ent;
+
+        if (!Resolve(uid, ref component, false))
+            return;
 
         if (!TryComp<PlantHarvestComponent>(uid, out var harvest)
             || !TryComp<PlantComponent>(uid, out var plant))

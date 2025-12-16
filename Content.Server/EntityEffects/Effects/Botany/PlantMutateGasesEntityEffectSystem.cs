@@ -1,4 +1,5 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
@@ -13,13 +14,14 @@ namespace Content.Server.EntityEffects.Effects.Botany;
 public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantMutateExudeGases>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateExudeGases> args)
     {
-        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
+        if (!_plantTray.HasPlant(entity.AsNullable()))
             return;
 
-        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Comp.PlantEntity.Value);
+        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Comp.PlantEntity!.Value);
         var gasses = gasComponent.ExudeGasses;
 
         // Add a random amount of a random gas to this gas dictionary.
@@ -40,13 +42,14 @@ public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffe
 public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantMutateConsumeGases>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateConsumeGases> args)
     {
-        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
+        if (!_plantTray.HasPlant(entity.AsNullable()))
             return;
 
-        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Comp.PlantEntity.Value);
+        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Comp.PlantEntity!.Value);
         var gasses = gasComponent.ConsumeGasses;
 
         // Add a random amount of a random gas to this gas dictionary.

@@ -42,15 +42,16 @@ public sealed partial class BotanySystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (!TryGetPlantComponent<PlantComponent>(component.PlantData, component.PlantProtoId, out var plantComp))
+        if (!TryGetPlantComponent<PlantComponent>(component.PlantData, component.PlantProtoId, out var plant)
+            || !TryGetPlantComponent<PlantDataComponent>(component.PlantData, component.PlantProtoId, out var plantData))
             return;
 
         using (args.PushGroup(nameof(SeedComponent), 1))
         {
-            var name = Loc.GetString(plantComp.DisplayName);
+            var name = Loc.GetString(plantData.DisplayName);
             args.PushMarkup(Loc.GetString("seed-component-description", ("seedName", name)));
-            args.PushMarkup(Loc.GetString("seed-component-plant-yield-text", ("seedYield", plantComp.Yield)));
-            args.PushMarkup(Loc.GetString("seed-component-plant-potency-text", ("seedPotency", plantComp.Potency)));
+            args.PushMarkup(Loc.GetString("seed-component-plant-yield-text", ("seedYield", plant.Yield)));
+            args.PushMarkup(Loc.GetString("seed-component-plant-potency-text", ("seedPotency", plant.Potency)));
         }
     }
 
@@ -83,8 +84,9 @@ public sealed partial class BotanySystem : EntitySystem
     /// Clones a component snapshot of a plant.
     /// </summary>
     /// <param name="source">The entity to clone the snapshot from.</param>
+    /// <param name="cloneLifecycle">If true, also clone lifecycle state into the snapshot.</param>
     [PublicAPI]
-    public ComponentRegistry ClonePlantSnapshotData(EntityUid source)
+    public ComponentRegistry ClonePlantSnapshotData(EntityUid source, bool cloneLifecycle = false)
     {
         var snap = new ComponentRegistry();
 
@@ -115,9 +117,17 @@ public sealed partial class BotanySystem : EntitySystem
             snap[compName] = new EntityPrototype.ComponentRegistryEntry(copied, []);
         }
 
+        if (cloneLifecycle && TryComp<PlantHolderComponent>(source, out var holder))
+        {
+            var copiedHolder = _serialization.CreateCopy(holder, notNullableOverride: true);
+            var holderName = _componentFactory.GetComponentName<PlantHolderComponent>();
+            snap[holderName] = new EntityPrototype.ComponentRegistryEntry(copiedHolder, []);
+        }
+
         return snap;
     }
 
+    /// <summary>
     /// Applies a component snapshot to a plant.
     /// </summary>
     /// <param name="plant">The plant to apply the snapshot to.</param>
@@ -128,10 +138,6 @@ public sealed partial class BotanySystem : EntitySystem
         foreach (var (_, entry) in snapshot)
         {
             if (entry.Component is not Component component)
-                continue;
-
-            // Never apply runtime lifecycle component from a seed snapshot.
-            if (component is PlantHolderComponent)
                 continue;
 
             var copied = _serialization.CreateCopy(component, notNullableOverride: true);
@@ -145,13 +151,13 @@ public sealed partial class BotanySystem : EntitySystem
     [PublicAPI]
     public EntityUid SpawnSeedPacketFromPlant(EntityUid sourcePlant, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
     {
-        if (!TryComp<PlantComponent>(sourcePlant, out var plant))
+        if (!TryComp<PlantDataComponent>(sourcePlant, out var plantData))
             return EntityUid.Invalid;
 
         var protoId = MetaData(sourcePlant).EntityPrototype?.ID;
         var snapshot = ClonePlantSnapshotData(sourcePlant);
 
-        return SpawnSeedPacketInternal(plant, protoId, snapshot, coords, user, healthOverride);
+        return SpawnSeedPacketInternal(plantData, protoId, snapshot, coords, user, healthOverride);
     }
 
     /// <summary>
@@ -160,10 +166,10 @@ public sealed partial class BotanySystem : EntitySystem
     [PublicAPI]
     public EntityUid SpawnSeedPacketFromSnapshot(ComponentRegistry snapshot, EntProtoId? plantProtoId, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
     {
-        if (!TryGetPlantComponent<PlantComponent>(snapshot, plantProtoId, out var plant))
+        if (!TryGetPlantComponent<PlantDataComponent>(snapshot, plantProtoId, out var plantData))
             return EntityUid.Invalid;
 
-        return SpawnSeedPacketInternal(plant, plantProtoId, snapshot, coords, user, healthOverride);
+        return SpawnSeedPacketInternal(plantData, plantProtoId, snapshot, coords, user, healthOverride);
     }
 
     /// <summary>
@@ -177,14 +183,14 @@ public sealed partial class BotanySystem : EntitySystem
     /// <param name="healthOverride">The health override to store in the seed component.</param>
     /// <returns>The spawned seed packet entity.</returns>
     private EntityUid SpawnSeedPacketInternal(
-        PlantComponent plant,
+        PlantDataComponent plantData,
         EntProtoId? plantProtoId,
         ComponentRegistry? snapshot,
         EntityCoordinates coords,
         EntityUid user,
         float? healthOverride)
     {
-        var seedItem = Spawn(plant.PacketPrototype, coords);
+        var seedItem = Spawn(plantData.PacketPrototype, coords);
         var seedComp = EnsureComp<SeedComponent>(seedItem);
         seedComp.PlantProtoId = plantProtoId;
         seedComp.PlantData = snapshot != null
@@ -192,8 +198,8 @@ public sealed partial class BotanySystem : EntitySystem
             : null;
         seedComp.HealthOverride = healthOverride;
 
-        var name = Loc.GetString(plant.DisplayName);
-        var noun = Loc.GetString(plant.Noun);
+        var name = Loc.GetString(plantData.DisplayName);
+        var noun = Loc.GetString(plantData.Noun);
         _metaData.SetEntityName(seedItem, Loc.GetString("botany-seed-packet-name", ("seedName", name), ("seedNoun", noun)));
 
         _hands.TryPickupAnyHand(user, seedItem);
