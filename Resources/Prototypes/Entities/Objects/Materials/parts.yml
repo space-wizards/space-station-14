@@ -96,3 +96,30 @@
     state: rods
   - type: Stack
     count: 1
+
+- type: entity
+  parent: PartBase
+  id: ConveyorBeltAssembly
+  name: conveyor assembly
+  suffix: Full
+  description: A conveyor belt assembly. Used to construct a conveyor belt.
+  components:
+  - type: Item
+    sprite: Structures/conveyor.rsi
+    size: Normal
+  - type: Sprite
+    sprite: Structures/conveyor.rsi
+    state: conveyor
+  - type: StackPrice
+    price: 5
+  - type: Stack
+    stackType: Conveyor
+    count: 5
+
+- type: entity
+  parent: ConveyorBeltAssembly
+  id: ConveyorBeltAssembly1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

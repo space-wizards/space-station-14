@@ -1,6 +1,6 @@
 - type: latheRecipe
   id: ConveyorBeltAssembly
-  result: ConveyorBeltAssembly
+  result: ConveyorBeltAssembly1
   completetime: 4
   materials:
     Steel: 250
