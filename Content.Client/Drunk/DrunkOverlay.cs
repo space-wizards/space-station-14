@@ -1,8 +1,10 @@
+using Content.Shared.CCVar;
 using Content.Shared.Drunk;
 using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -11,17 +13,20 @@ namespace Content.Client.Drunk;
 
 public sealed class DrunkOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "Drunk";
+    private static readonly ProtoId<ShaderPrototype> DrunkShader = "Drunk";
+    private static readonly ProtoId<ShaderPrototype> CircleShader = "CircleMask";
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _drunkShader;
+    private readonly ShaderInstance _circleMaskShader;
 
     public float CurrentBoozePower = 0.0f;
 
@@ -39,10 +44,21 @@ public sealed class DrunkOverlay : Overlay
 
     private float _visualScale = 0;
 
+    private const float NoMotion_Radius = 30.0f; // Base radius for the nomotion variant at its full strength
+    private const float NoMotion_Pow = 0.2f; // Exponent for the nomotion variant's gradient
+    private const float NoMotion_Max = 8.0f; // Max value for the nomotion variant's gradient
+    private const float NoMotion_Mult = 0.75f; // Multiplier for the nomotion variant
+
     public DrunkOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _drunkShader = _prototypeManager.Index(Shader).InstanceUnique();
+        _drunkShader = _prototypeManager.Index(DrunkShader).InstanceUnique();
+        _circleMaskShader = _prototypeManager.Index(CircleShader).InstanceUnique();
+
+        _circleMaskShader.SetParameter("CircleMinDist", 0.0f);
+        _circleMaskShader.SetParameter("CirclePow", NoMotion_Pow);
+        _circleMaskShader.SetParameter("CircleMax", NoMotion_Max);
+        _circleMaskShader.SetParameter("CircleMult", NoMotion_Mult);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -82,11 +98,25 @@ public sealed class DrunkOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
-        _drunkShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _drunkShader.SetParameter("boozePower", _visualScale);
-        handle.UseShader(_drunkShader);
-        handle.DrawRect(args.WorldBounds, Color.White);
-        handle.UseShader(null);
+
+        if (_configManager.GetCVar(CCVars.ReducedMotion))
+        {
+            _circleMaskShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+            _circleMaskShader.SetParameter("Zoom", 1f);
+            _circleMaskShader.SetParameter("CircleRadius", NoMotion_Radius / 0.027f);
+
+            handle.UseShader(_circleMaskShader);
+            handle.DrawRect(args.WorldBounds, Color.White);
+            handle.UseShader(null);
+        }
+        else
+        {
+            _drunkShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+            _drunkShader.SetParameter("boozePower", _visualScale);
+            handle.UseShader(_drunkShader);
+            handle.DrawRect(args.WorldBounds, Color.White);
+            handle.UseShader(null);
+        }
     }
 
     /// <summary>
