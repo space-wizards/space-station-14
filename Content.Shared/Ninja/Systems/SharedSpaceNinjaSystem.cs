@@ -1,4 +1,3 @@
-using Content.Shared.Clothing.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
