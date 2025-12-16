@@ -1,54 +1,23 @@
 - type: entity
   abstract: true
   parent: [ BaseItem, BaseSecurityContraband ]
-  id: BaseMagazineCaselessRifle
-  name: "magazine (.25 caseless)"
-  components:
-  - type: Tag
-    tags:
-      - MagazineCaselessRifle
-  - type: BallisticAmmoProvider
-    mayTransfer: true
-    whitelist:
-      tags:
-        - CartridgeCaselessRifle
-    proto: CartridgeCaselessRifle
-    capacity: 30
-  - type: Item
-    size: Small
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
-  - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_rifle_mag.rsi
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag
-    steps: 2
-    zeroVisible: false
-  - type: Appearance
-
-- type: entity
-  abstract: true
-  parent: BaseMagazineCaselessRifle
   id: BaseMagazinePistolCaselessRifle
   name: "pistol magazine (.25 caseless)"
   components:
   - type: Tag
     tags:
-      - MagazinePistolCaselessRifle
+    - MagazinePistolCaselessRifle
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeCaselessRifle
+      - CartridgeCaselessRifle
     proto: CartridgeCaselessRifle
     capacity: 10
   - type: Item
     size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
     layers:
@@ -68,20 +37,6 @@
   name: "pistol magazine (.25 caseless)"
   description: 10-round magazine for the Cobra pistol. Intended to hold general-purpose kinetic ammunition.
   components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifle
-    capacity: 10
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag
-    steps: 6
-    zeroVisible: false
-  - type: Appearance
   - type: Item
     inhandVisuals:
       left:
@@ -95,58 +50,6 @@
   id: MagazinePistolCaselessRiflePractice
   name: "pistol magazine (.25 caseless practice)"
   description: 10-round magazine for the Cobra pistol. Intended to hold harmless practice ammunition.
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRiflePractice
-    capacity: 10
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: stripe
-      color: "#dbdbdb"
-  - type: MagazineVisuals
-    magState: mag
-    steps: 6
-    zeroVisible: false
-  - type: Appearance
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      - state: inhand-left-stripe
-        color: "#dbdbdb"
-      right:
-      - state: inhand-right-mag
-      - state: inhand-right-stripe
-        color: "#dbdbdb"
-
-- type: entity
-  parent: BaseMagazineCaselessRifle
-  id: MagazineCaselessRifle
-  name: "magazine (.25 caseless)"
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeCaselessRifle
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-mag
-      right:
-      - state: inhand-right-mag
-
-- type: entity
-  parent: BaseMagazineCaselessRifle
-  id: MagazineCaselessRiflePractice
-  name: "magazine (.25 caseless practice)"
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRiflePractice

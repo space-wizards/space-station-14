@@ -1,62 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: SmartFridges are now implemented. You can store large amounts of chemicals
-      and plants within them for people to take.
-    type: Add
-  id: 8797
-  time: '2025-07-21T03:21:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38648
-- author: ArtisticRoomba
-  changes:
-  - message: China-lake fragmentation grenades now spew fragmentation in all directions
-      upon impact. They now do reduced explosion damage.
-    type: Tweak
-  - message: China-lake blast grenades no longer cause spacing.
-    type: Tweak
-  id: 8798
-  time: '2025-07-22T15:05:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39106
-- author: perryprog
-  changes:
-  - message: Void applause should now function as expected again.
-    type: Fix
-  id: 8799
-  time: '2025-07-22T19:34:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38731
-- author: treytipton
-  changes:
-  - message: Made NukeOps elimination announcement less wordy.
-    type: Tweak
-  id: 8800
-  time: '2025-07-23T02:58:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39158
-- author: lzk228
-  changes:
-  - message: The customvote command results now show the title the command had.
-    type: Tweak
-  id: 8801
-  time: '2025-07-23T14:15:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39137
-- author: FairlySadPanda
-  changes:
-  - message: Almost every instrument has been updated to a new soundfont (GeneralUser-GS),
-      unifying all operating systems and massively improving the sound of certain
-      instruments.
-    type: Add
-  id: 8802
-  time: '2025-07-23T15:51:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39142
-- author: slarticodefast
-  changes:
-  - message: Enabled the "showrot", "showvel" and "showangvel" commands for debug
-      permissions.
-    type: Tweak
-  - message: Fixed the "showplayervelocity" command permissions.
-    type: Tweak
-  id: 8803
-  time: '2025-07-23T18:06:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39167
 - author: Lokachop
   changes:
   - message: The engineering & chief engineer's hardsuit now properly glow in the
@@ -3922,3 +3864,61 @@
   id: 9297
   time: '2025-12-15T12:27:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41638
+- author: JesterX666
+  changes:
+  - message: Explosions with heat now ignite inflammable gas mixes in the atmosphere
+    type: Fix
+  id: 9298
+  time: '2025-12-15T23:39:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41262
+- author: SlamBamActionman
+  changes:
+  - message: Exo has been updated to the holiday version.
+    type: Tweak
+  id: 9299
+  time: '2025-12-16T01:07:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41715
+- author: Princess-Cheeseballs
+  changes:
+  - message: New cryo chem, arcryox.
+    type: Add
+  - message: Cryo chems now use EvenHeal making cryoxadone more like omnizine.
+    type: Tweak
+  id: 9300
+  time: '2025-12-16T01:20:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41696
+- author: Samuka
+  changes:
+  - message: Added the door control module for the engi xenoborg
+    type: Add
+  - message: The xenoborg door remote can now eletrify doors
+    type: Tweak
+  - message: Engi xenoborg can now see if doors are eletrified
+    type: Tweak
+  id: 9301
+  time: '2025-12-16T01:37:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41546
+- author: imatsoup
+  changes:
+  - message: Vupkanin now have audio for when they Weh, Hew, and Honk under the effects
+      of the chems that make you do those things.
+    type: Fix
+  id: 9302
+  time: '2025-12-16T01:50:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41610
+- author: Hitlinemoss
+  changes:
+  - message: Station AI is now rolled before most non-Command/non-Security roles.
+    type: Tweak
+  id: 9303
+  time: '2025-12-16T02:12:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41663
+- author: captainkawaii666
+  changes:
+  - message: A foolbox with various pranking items for clowns
+    type: Add
+  - message: Crayon boxes are now slightly smaller
+    type: Tweak
+  id: 9304
+  time: '2025-12-16T03:32:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41473
