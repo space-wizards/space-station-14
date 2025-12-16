@@ -24,7 +24,7 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
             return;
 
         var plantUid = entity.Comp.PlantEntity!.Value;
-        var chemicals = EnsureComp<PlantChemicalsComponent>(plantUid).MutateChemicals;
+        var chemicals = EnsureComp<PlantChemicalsComponent>(plantUid).Chemicals;
         var randomChems = _proto.Index(args.Effect.RandomPickBotanyReagent).Fills;
 
         // Add a random amount of a random chemical to this set of chemicals.

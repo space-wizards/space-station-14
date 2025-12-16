@@ -144,6 +144,12 @@ public sealed class PlantTraySystem : EntitySystem
 
                 PlantingPlant(uid, plantUid);
 
+                if (TryComp<PlantHolderComponent>(tray.PlantEntity!.Value, out var plantHolder)
+                    && seeds.HealthOverride != null)
+                {
+                    plantHolder.Health = seeds.HealthOverride.Value;
+                }
+
                 if (TryComp<PaperLabelComponent>(args.Used, out var paperLabel))
                     _itemSlots.TryEjectToHands(args.Used, paperLabel.LabelSlot, args.User);
 

@@ -1,6 +1,7 @@
 using Content.Client.Botany.Components;
 using Content.Shared.Botany;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Botany;
 
@@ -18,8 +19,8 @@ public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsCompone
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        sprite.LayerMapReserveBlank(PlantLayers.Plant);
-        sprite.LayerSetVisible(PlantLayers.Plant, false);
+        SpriteSystem.LayerMapReserve((uid, sprite), PlantLayers.Plant);
+        SpriteSystem.LayerSetVisible((uid, sprite), PlantLayers.Plant, false);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, PlantVisualsComponent component, ref AppearanceChangeEvent args)
@@ -32,12 +33,12 @@ public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsCompone
         {
             var valid = !string.IsNullOrWhiteSpace(state);
 
-            args.Sprite.LayerSetVisible(PlantLayers.Plant, valid);
+            SpriteSystem.LayerSetVisible((uid, args.Sprite), PlantLayers.Plant, valid);
 
             if (valid)
             {
-                args.Sprite.LayerSetRSI(PlantLayers.Plant, rsi);
-                args.Sprite.LayerSetState(PlantLayers.Plant, state);
+                SpriteSystem.LayerSetRsi((uid, args.Sprite), PlantLayers.Plant, new ResPath(rsi));
+                SpriteSystem.LayerSetRsiState((uid, args.Sprite), PlantLayers.Plant, state);
             }
         }
     }
