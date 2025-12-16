@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Trigger.Components.Triggers;
 
 /// <summary>
-/// Triggers when using an entity on another entity. Raised on the other entity.
+/// Triggers when using an entity on another entity. Raised on the entity that is interacted with.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class TriggerOnAfterInteractUsingComponent : BaseTriggerOnXComponent
@@ -23,4 +23,17 @@ public sealed partial class TriggerOnAfterInteractUsingComponent : BaseTriggerOn
     /// <remarks>No blacklist check when null.</remarks>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    /// If false, the trigger user will be the entity that was interacted with.
+    /// If true, the trigger user will be the entity was used to interact.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool TargetUsed = false;
+
+    /// <summary>
+    /// Whether the interaction should be marked as handled after it happens.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Handle = true;
 }

@@ -1,4 +1,3 @@
-using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
@@ -23,4 +22,17 @@ public sealed partial class TriggerOnAfterInteractComponent : BaseTriggerOnXComp
     /// <remarks>No blacklist check when null.</remarks>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Blacklist;
+
+    /// <summary>
+    /// If false, the trigger user will be the entity that was interacted with.
+    /// If true, the trigger user will be the entity was used to interact.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool TargetUsed = false;
+
+    /// <summary>
+    /// Whether the interaction should be marked as handled after it happens.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Handle = true;
 }

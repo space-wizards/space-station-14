@@ -107,28 +107,30 @@ public sealed partial class TriggerSystem
 
     private void OnAfterInteract(Entity<TriggerOnAfterInteractComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.CanReach)
             return;
 
         if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
-        Trigger(ent.Owner, args.User, ent.Comp.KeyOut);
+        Trigger(ent.Owner, ent.Comp.TargetUsed ? args.Used : args.Target, ent.Comp.KeyOut);
 
-        args.Handled = true;
+        if (ent.Comp.Handle)
+            args.Handled = true;
     }
 
     private void OnAfterInteractUsing(Entity<TriggerOnAfterInteractUsingComponent> ent, ref AfterInteractUsingEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.CanReach)
             return;
 
         if (!_whitelist.CheckBoth(args.Used, ent.Comp.Blacklist, ent.Comp.Whitelist))
             return;
 
-        Trigger(ent.Owner, args.Target, ent.Comp.KeyOut);
+        Trigger(ent.Owner, ent.Comp.TargetUsed ? args.Target : args.Used, ent.Comp.KeyOut);
 
-        args.Handled = true;
+        if (ent.Comp.Handle)
+            args.Handled = true;
     }
 
     private void OnThrow(Entity<TriggerOnThrowComponent> ent, ref ThrowEvent args)
