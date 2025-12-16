@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: The customvote command results now show the title the command had.
-    type: Tweak
-  id: 8801
-  time: '2025-07-23T14:15:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39137
 - author: FairlySadPanda
   changes:
   - message: Almost every instrument has been updated to a new soundfont (GeneralUser-GS),
@@ -3924,3 +3917,11 @@
   id: 9301
   time: '2025-12-16T01:37:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41546
+- author: imatsoup
+  changes:
+  - message: Vupkanin now have audio for when they Weh, Hew, and Honk under the effects
+      of the chems that make you do those things.
+    type: Fix
+  id: 9302
+  time: '2025-12-16T01:50:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41610
