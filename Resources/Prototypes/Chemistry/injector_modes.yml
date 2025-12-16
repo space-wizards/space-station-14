@@ -41,14 +41,6 @@
   - 15
 
 - type: InjectorMode
-  parent: BaseInjectMode
-  id: SyringeInjectMode
-  transferAmounts:
-  - 5
-  - 10
-  - 15
-
-- type: InjectorMode
   parent: SyringeInjectMode
   id: BluespaceSyringeInjectMode
   transferAmounts:
