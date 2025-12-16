@@ -63,7 +63,7 @@ public partial class MobStateSystem
     {
         _standing.Down(target);
         var ev = new DropHandItemsEvent();
-        RaiseLocalEvent(target, ref ev, false);
+        RaiseLocalEvent(target, ref ev);
     }
 
     private void CheckConcious(Entity<MobStateComponent> ent, ref ConsciousAttemptEvent args)

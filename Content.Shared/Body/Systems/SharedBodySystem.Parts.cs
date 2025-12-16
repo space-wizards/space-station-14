@@ -164,7 +164,7 @@ public partial class SharedBodySystem
         UpdateMovementSpeed(bodyEnt);
         Dirty(bodyEnt, bodyEnt.Comp);
 
-        if (bodyEnt.Comp.LegEntities.Any())
+        if (bodyEnt.Comp.LegEntities.Count != 0)
             return;
 
         if (!TryComp<StandingStateComponent>(bodyEnt, out var standingState)
@@ -173,7 +173,7 @@ public partial class SharedBodySystem
             return;
 
         var ev = new DropHandItemsEvent();
-        RaiseLocalEvent(bodyEnt, ref ev, false);
+        RaiseLocalEvent(bodyEnt, ref ev);
     }
 
     private void PartRemoveDamage(Entity<BodyComponent?> bodyEnt, Entity<BodyPartComponent> partEnt)

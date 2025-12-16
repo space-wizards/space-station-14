@@ -151,7 +151,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         RaiseLocalEvent(uid, ref ev);
 
         var evDropHands = new DropHandItemsEvent();
-        RaiseLocalEvent(uid, ref evDropHands, false);
+        RaiseLocalEvent(uid, ref evDropHands);
 
         var timeForLogs = duration.HasValue
             ? duration.Value.Seconds.ToString()
