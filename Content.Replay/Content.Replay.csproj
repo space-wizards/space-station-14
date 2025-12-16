@@ -18,8 +18,6 @@
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 
-  <ItemGroup>
-    <UseRobustApi Include="Client" />
-    <UseRobustApi Include="Shared" />
-  </ItemGroup>
+  <Import Project="..\RobustToolbox\Imports\Client.props" />
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
 </Project>

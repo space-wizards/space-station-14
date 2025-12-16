@@ -9,10 +9,9 @@
     <PackageReference Include="YamlDotNet" />
   </ItemGroup>
 
-  <ItemGroup>
-    <UseRobustApi Include="Lidgren" />
-    <UseRobustApi Include="Shared" />
-  </ItemGroup>
+  <Import Project="..\RobustToolbox\Imports\Lidgren.props" />
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
+
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared.Database\Content.Shared.Database.csproj" />
   </ItemGroup>

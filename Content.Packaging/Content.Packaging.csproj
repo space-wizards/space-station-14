@@ -9,8 +9,6 @@
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 
-  <ItemGroup>
-    <UseRobustApi Include="Packaging" />
-    <UseRobustApi Include="Shared" />
-  </ItemGroup>
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
+  <Import Project="..\RobustToolbox\Imports\Packaging.props" />
 </Project>

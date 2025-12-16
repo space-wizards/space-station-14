@@ -11,7 +11,5 @@
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 
-  <ItemGroup>
-    <UseRobustApi Include="Shared" />
-  </ItemGroup>
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
 </Project>

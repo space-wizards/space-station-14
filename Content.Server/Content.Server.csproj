@@ -23,10 +23,8 @@
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 
-  <ItemGroup>
-    <UseRobustApi Include="Lidgren" />
-    <UseRobustApi Include="Shared" />
-    <UseRobustApi Include="Server" />
-    <UseRobustApi Include="Packaging" />
-  </ItemGroup>
+  <Import Project="..\RobustToolbox\Imports\Lidgren.props" />
+  <Import Project="..\RobustToolbox\Imports\Server.props" />
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
+  <Import Project="..\RobustToolbox\Imports\Packaging.props" />
 </Project>

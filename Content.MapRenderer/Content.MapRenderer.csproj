@@ -21,11 +21,9 @@
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
 
-  <ItemGroup>
-    <UseRobustApi Include="Testing" />
-    <UseRobustApi Include="Shared" />
-    <UseRobustApi Include="Client" />
-    <UseRobustApi Include="Server" />
-  </ItemGroup>
+  <Import Project="..\RobustToolbox\Imports\Client.props" />
+  <Import Project="..\RobustToolbox\Imports\Server.props" />
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
+  <Import Project="..\RobustToolbox\Imports\Testing.props" />
 
 </Project>

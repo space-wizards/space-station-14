@@ -13,11 +13,11 @@
     <PackageReference Include="Pidgin" />
     <PackageReference Include="Robust.Shared.AuthLib" />
   </ItemGroup>
-  <ItemGroup>
-    <UseRobustApi Include="Client" />
-    <UseRobustApi Include="Shared" />
-    <UseRobustApi Include="Lidgren" />
-  </ItemGroup>
+
+  <Import Project="..\RobustToolbox\Imports\Lidgren.props" />
+  <Import Project="..\RobustToolbox\Imports\Client.props" />
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
+
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
