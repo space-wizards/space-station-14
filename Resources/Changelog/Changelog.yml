@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Lokachop
-  changes:
-  - message: The engineering & chief engineer's hardsuit now properly glow in the
-      dark
-    type: Fix
-  id: 8804
-  time: '2025-07-24T03:04:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39153
 - author: K-Dynamic
   changes:
   - message: Cold slowdowns are now less impactful.
@@ -3922,3 +3914,10 @@
   id: 9304
   time: '2025-12-16T03:32:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41473
+- author: Pangogie
+  changes:
+  - message: Killer tomatoes now have a 3x3 grid size.
+    type: Tweak
+  id: 9305
+  time: '2025-12-16T07:23:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35866
