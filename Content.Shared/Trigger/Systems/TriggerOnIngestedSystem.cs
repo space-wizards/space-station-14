@@ -14,7 +14,10 @@ public sealed partial class TriggerOnIngestedSystem : TriggerOnXSystem
 
     private void OnIngested(Entity<TriggerOnIngestedComponent> ent, ref IngestedEvent args)
     {
-        // We do Target instead of User since Target is the entity actually eating, while User is the one feeding and will not always be the same.
-        Trigger.Trigger(ent.Owner, args.Target, ent.Comp.KeyOut);
+        // args.Target is the entity being fed, while args.User is the entity doing the feeding.
+        // Since they are not always equal (feeding someone by force, for example) we use a bool to decide which one is the trigger user.
+        var user = ent.Comp.EatingIsUser ? args.Target : args.User;
+
+        Trigger.Trigger(ent.Owner, user, ent.Comp.KeyOut);
     }
 }

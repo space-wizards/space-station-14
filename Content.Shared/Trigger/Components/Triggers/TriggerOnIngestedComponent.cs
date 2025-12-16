@@ -7,4 +7,12 @@ namespace Content.Shared.Trigger.Components.Triggers;
 /// User is the entity ingesting this.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class TriggerOnIngestedComponent : BaseTriggerOnXComponent;
+public sealed partial class TriggerOnIngestedComponent : BaseTriggerOnXComponent
+{
+    /// <summary>
+    /// Whether the fed entity is the user.
+    /// If false, the entity feeding will be the user.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool EatingIsUser = true;
+}
