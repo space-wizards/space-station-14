@@ -942,8 +942,6 @@
     requiredTriggeredSpeed: 2
   - type: TriggerOnStepTrigger # for payloads
   - type: Appearance
-  - type: CollisionWake
-    enabled: false
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures

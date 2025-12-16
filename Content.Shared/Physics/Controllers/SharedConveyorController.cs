@@ -19,7 +19,6 @@ public abstract class SharedConveyorController : VirtualController
 {
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly IParallelManager _parallel = default!;
-    [Dependency] private   readonly CollisionWakeSystem _wake = default!;
     [Dependency] protected readonly EntityLookupSystem Lookup = default!;
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
@@ -47,9 +46,6 @@ public abstract class SharedConveyorController : VirtualController
         UpdatesAfter.Add(typeof(SharedMoverController));
 
         SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
-        SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
-        SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
-
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, ComponentStartup>(OnConveyorStartup);
 
@@ -63,17 +59,6 @@ public abstract class SharedConveyorController : VirtualController
 
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
         args.Modifier = 0f;
-    }
-
-    private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
-    {
-        // We need waking / sleeping to work and don't want collisionwake interfering with us.
-        _wake.SetEnabled(ent.Owner, false);
-    }
-
-    private void OnConveyedShutdown(Entity<ConveyedComponent> ent, ref ComponentShutdown args)
-    {
-        _wake.SetEnabled(ent.Owner, true);
     }
 
     private void OnConveyorStartup(Entity<ConveyorComponent> ent, ref ComponentStartup args)

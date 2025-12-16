@@ -126,8 +126,6 @@
     intersectRatio: 0.2
     requiredTriggeredSpeed: 0
     stepOn: true
-  - type: CollisionWake
-    enabled: false
   - type: Physics
     bodyType: Dynamic
   - type: Fixtures

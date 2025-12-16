@@ -4,7 +4,6 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: CollisionWake
   - type: TileFrictionModifier
     modifier: 0.5
   - type: Physics

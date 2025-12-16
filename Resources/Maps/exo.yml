@@ -45109,8 +45109,6 @@ entities:
     - type: Transform
       pos: 39.571434,-28.464401
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: ClothingNeckCloakBi
   entities:
@@ -61965,8 +61963,6 @@ entities:
     - type: Transform
       pos: 72.49038,-74.3934
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: FoodDonutPink
   entities:

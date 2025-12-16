@@ -100,8 +100,6 @@
     currentValue: 4
   - type: Sprite
     state: d4_4
-  - type: CollisionWake
-    enabled: false
   - type: Fixtures
     fixtures:
       slips:

@@ -65212,8 +65212,6 @@ entities:
     - type: Transform
       pos: 15.508248,1.1803949
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: FoodMeat
   entities:
@@ -65273,24 +65271,18 @@ entities:
     - type: Transform
       pos: 15.435732,1.2113514
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
   - uid: 15064
     components:
     - type: Transform
       pos: 16.48324,1.8657656
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
   - uid: 15259
     components:
     - type: Transform
       pos: 15.467615,-0.6186094
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: FoodPlateSmallPlastic
   entities:
@@ -92794,8 +92786,6 @@ entities:
     - type: Transform
       pos: 16.513134,-0.47798443
       parent: 2
-    - type: CollisionWake
-      enabled: False
     - type: Conveyed
 - proto: PaladinCircuitBoard
   entities:
