@@ -25,7 +25,7 @@ public sealed partial class ConveyorComponent : Component
     /// <summary>
     ///     The initial state of this conveyor
     /// </summary>
-    [DataField("initialState")]
+    [DataField]
     public ConveyorState InitialState = ConveyorState.Off;
 
     /// <summary>
