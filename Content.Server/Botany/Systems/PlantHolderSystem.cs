@@ -898,7 +898,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 _entityEffects.ApplyEffects(uid, reagentProto.PlantMetabolisms.ToArray(), entry.Quantity);
             }
 
-            _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, FixedPoint2.New(1));
+            _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, quantity);
         }
 
         CheckLevelSanity(uid, component);
