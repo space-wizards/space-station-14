@@ -484,7 +484,7 @@
     - BeakerSmallDiph
     - BeakerSmallSigy
     - ClothingEyesGlassesChemical
-    - PowerCellHigh
+    - ChemistryBottleOmnizine
     belt:
     - DefibrillatorCompact
     - MedkitCombatFilled
@@ -510,7 +510,7 @@
     - DefibrillatorCompact
     - MedkitCombatFilled
     - ClothingEyesGlassesChemical
-    - PowerCellHigh
+    - ChemistryBottleOmnizine
     belt:
     - Truncheon
     - Zipties
