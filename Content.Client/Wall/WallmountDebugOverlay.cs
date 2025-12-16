@@ -14,7 +14,7 @@ public sealed class WallmountDebugOverlay : Overlay
     [Dependency] private readonly IEntityManager _entManager = default!;
     private readonly SharedTransformSystem _transform;
     private readonly EntityLookupSystem _lookup;
-    private HashSet<Entity<WallMountComponent>> _intersecting = new();
+    private readonly HashSet<Entity<WallMountComponent>> _intersecting = [];
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
@@ -28,8 +28,6 @@ public sealed class WallmountDebugOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        var handle = args.WorldHandle;
-
         _intersecting.Clear();
         _lookup.GetEntitiesIntersecting(args.MapId, args.WorldBounds, _intersecting);
         foreach (var ent in _intersecting)
@@ -39,7 +37,7 @@ public sealed class WallmountDebugOverlay : Overlay
         }
     }
 
-    private void DrawArc(DrawingHandleWorld handle, Vector2 position, float radius, Angle rot, Angle arc)
+    private static void DrawArc(DrawingHandleWorld handle, Vector2 position, float radius, Angle rot, Angle arc)
     {
         // 32 segments for a full circle, but 2 at least
         var segments = Math.Max((int)(arc.Theta / Math.Tau * 32), 2);

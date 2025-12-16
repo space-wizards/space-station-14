@@ -19,6 +19,6 @@ public sealed class ShowWallmountsCommand : LocalizedCommands
         if (!existing)
             _overlay.AddOverlay(new WallmountDebugOverlay());
 
-        shell.WriteLine(Loc.GetString($"cmd-showwallmounts-status", ("status", !existing)));
+        shell.WriteLine(Loc.GetString("cmd-showwallmounts-status", ("status", !existing)));
     }
 }
