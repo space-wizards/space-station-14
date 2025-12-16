@@ -23,7 +23,7 @@ name-format-ert-pointman = Pointman {$part0}
 name-format-ert-officer = Officer {$part0}
 name-format-ert-rifle = Rifleman {$part0}
 name-format-ert-grenade = Grenadier {$part0}
-name-format-ert-marksman = Marksman {$part0}
+name-format-ert-vanguard = Vanguard {$part0}
 name-format-ert-doctor = Doctor {$part0}
 name-format-ert-corpsman = Corpsman {$part0}
 

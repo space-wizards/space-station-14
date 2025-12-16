@@ -222,15 +222,15 @@
     - GasAnalyzer
     - trayScanner
     - HolofanProjector
-    - AccessConfigurator
+    - PartRodMetal
+    - SheetPlasteel # End of first line
     - MiningDrillDiamond
     - RCDAmmo
-    - RCDAmmo # End of first line
-    - PowerCellHigh
+    - RCDAmmo
+    - RCDAmmo
+    - RCDAmmo
     - MetalFoamGrenade
     - AirGrenade
-    - SheetSteel
-    - SheetPlasteel
     belt:
     - JawsOfLife
     - PowerDrill
@@ -249,16 +249,16 @@
     back:
     - RCD
     - GasAnalyzer
-    - trayScanner
     - HolofanProjector
-    - AccessConfigurator
     - MiningDrillDiamond
+    - BoxLethalshot
+    - BoxShotgunSlug # End of first line
     - RCDAmmo
-    - RCDAmmo # End of first line
+    - RCDAmmo
+    - RCDAmmo
+    - RCDAmmo
     - CableDetStack
     - BoxDetonator
-    - BoxShotgunSlug
-    - BoxLethalshot
 
 - type: chameleonOutfit
   id: ERTEngineerChameleonOutfit
@@ -564,6 +564,7 @@
     back: ClothingBackpackERTJanitor
     shoes: ClothingShoesBootsMagERT
     mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesChemical
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTJanitor
     id: ERTJanitorPDA
