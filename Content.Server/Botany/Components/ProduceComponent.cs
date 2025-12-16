@@ -14,13 +14,7 @@ public sealed partial class ProduceComponent : SharedProduceComponent
     /// Name of a base plant prototype to spawn when extracting seeds.
     /// </summary>
     [DataField]
-    public EntProtoId? PlantProtoId;
-
-    /// <summary>
-    /// Name of the solution container that holds the produce's contents.
-    /// </summary>
-    [DataField("targetSolution")]
-    public string SolutionName { get; set; } = "food";
+    public EntProtoId PlantProtoId;
 
     /// <summary>
     /// Serialized snapshot of plant components.
@@ -28,4 +22,10 @@ public sealed partial class ProduceComponent : SharedProduceComponent
     /// </summary>
     [DataField]
     public ComponentRegistry? PlantData;
+
+    /// <summary>
+    /// Name of the solution container that holds the produce's contents.
+    /// </summary>
+    [DataField("targetSolution")]
+    public string SolutionName { get; set; } = "food";
 }

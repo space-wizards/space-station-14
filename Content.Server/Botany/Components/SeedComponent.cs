@@ -15,7 +15,7 @@ public sealed partial class SeedComponent : SharedSeedComponent
     /// Name of a base plant prototype to spawn.
     /// </summary>
     [DataField]
-    public EntProtoId? PlantProtoId;
+    public EntProtoId PlantProtoId;
 
     /// <summary>
     /// Serialized snapshot of plant components used to override defaults when planting.

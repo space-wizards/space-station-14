@@ -16,19 +16,19 @@ public sealed partial class PlantDataComponent : Component
     /// used to determine the name of seed packets.
     /// </summary>
     [DataField]
-    public string Noun { get; private set; } = "";
+    public LocId Noun = "seeds-noun-seeds";
 
     /// <summary>
     /// Name displayed when examining the hydroponics tray. Describes the actual plant, not the seed itself.
     /// </summary>
     [DataField]
-    public string DisplayName { get; private set; } = "";
+    public LocId DisplayName;
 
     /// <summary>
     /// The entity prototype that is spawned when this type of seed is extracted from produce using a seed extractor.
     /// </summary>
-    [DataField]
-    public EntProtoId PacketPrototype = "SeedBase";
+    [DataField(required: true)]
+    public EntProtoId PacketPrototype;
 
     /// <summary>
     /// The plant prototypes this plant may mutate into when prompted to.
@@ -39,14 +39,14 @@ public sealed partial class PlantDataComponent : Component
     /// <summary>
     /// The entity prototypes that are spawned when this type of seed is harvested.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public List<EntProtoId> ProductPrototypes = [];
 
     /// <summary>
     /// The RSI path to the plant's sprite.
     /// </summary>
     [DataField(required: true)]
-    public ResPath PlantRsi { get; set; } = default!;
+    public ResPath PlantRsi = default!;
 
     /// <summary>
     /// Log impact for harvest operations.

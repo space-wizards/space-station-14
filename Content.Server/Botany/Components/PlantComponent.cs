@@ -13,7 +13,7 @@ public sealed partial class PlantComponent : Component
     /// The mutation effects that have been applied to this plant.
     /// </summary>
     [DataField]
-    public List<RandomPlantMutation> Mutations { get; set; } = [];
+    public List<RandomPlantMutation> Mutations = [];
 
     /// <summary>
     /// The plant's max health.

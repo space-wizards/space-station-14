@@ -9,12 +9,12 @@ public sealed partial class SeedExtractorComponent : Component
     /// <summary>
     /// The minimum amount of seed packets dropped.
     /// </summary>
-    [DataField("baseMinSeeds"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int BaseMinSeeds = 1;
 
     /// <summary>
     /// The maximum amount of seed packets dropped.
     /// </summary>
-    [DataField("baseMaxSeeds"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int BaseMaxSeeds = 3;
 }

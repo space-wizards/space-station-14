@@ -154,7 +154,7 @@ public sealed partial class BotanySystem : EntitySystem
         if (!TryComp<PlantDataComponent>(sourcePlant, out var plantData))
             return EntityUid.Invalid;
 
-        var protoId = MetaData(sourcePlant).EntityPrototype?.ID;
+        var protoId = MetaData(sourcePlant).EntityPrototype!.ID;
         var snapshot = ClonePlantSnapshotData(sourcePlant);
 
         return SpawnSeedPacketInternal(plantData, protoId, snapshot, coords, user, healthOverride);
@@ -164,7 +164,7 @@ public sealed partial class BotanySystem : EntitySystem
     /// Spawns a seed packet that stores a component snapshot of <paramref name="snapshot"/>.
     /// </summary
     [PublicAPI]
-    public EntityUid SpawnSeedPacketFromSnapshot(ComponentRegistry snapshot, EntProtoId? plantProtoId, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
+    public EntityUid SpawnSeedPacketFromSnapshot(ComponentRegistry snapshot, EntProtoId plantProtoId, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
     {
         if (!TryGetPlantComponent<PlantDataComponent>(snapshot, plantProtoId, out var plantData))
             return EntityUid.Invalid;
@@ -184,7 +184,7 @@ public sealed partial class BotanySystem : EntitySystem
     /// <returns>The spawned seed packet entity.</returns>
     private EntityUid SpawnSeedPacketInternal(
         PlantDataComponent plantData,
-        EntProtoId? plantProtoId,
+        EntProtoId plantProtoId,
         ComponentRegistry? snapshot,
         EntityCoordinates coords,
         EntityUid user,

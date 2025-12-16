@@ -68,7 +68,7 @@ public sealed class BotanySwabSystem : EntitySystem
         if (swab.PlantData == null)
         {
             // Pick up pollen snapshot.
-            swab.PlantProtoId = MetaData(targetPlant).EntityPrototype?.ID;
+            swab.PlantProtoId = MetaData(targetPlant).EntityPrototype!.ID;
             swab.PlantData = _botany.ClonePlantSnapshotData(targetPlant);
 
             _popup.PopupEntity(Loc.GetString("botany-swab-from"), targetPlant, args.Args.User);
@@ -82,7 +82,7 @@ public sealed class BotanySwabSystem : EntitySystem
             RaiseLocalEvent(targetPlant, ref crossEv);
 
             // Swap: store old target pollen on the swab, apply cross to the target using swab pollen.
-            swab.PlantProtoId = MetaData(targetPlant).EntityPrototype?.ID;
+            swab.PlantProtoId = MetaData(targetPlant).EntityPrototype!.ID;
             swab.PlantData = _botany.ClonePlantSnapshotData(targetPlant);
 
             _popup.PopupEntity(Loc.GetString("botany-swab-to"), targetPlant, args.Args.User);

@@ -1,7 +1,9 @@
 using JetBrains.Annotations;
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Botany;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
@@ -19,6 +21,7 @@ namespace Content.Server.Botany.Systems;
 /// </summary>
 public sealed class HarvestSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -53,10 +56,8 @@ public sealed class HarvestSystem : EntitySystem
             component.ReadyForHarvest = true;
             component.LastHarvest = holder.Age;
             tray.UpdateSpriteAfterUpdate = true;
+            TryAutoHarvest(ent, args.Tray, trayUid);
         }
-
-        if (component is { ReadyForHarvest: true, HarvestRepeat: HarvestType.SelfHarvest })
-            DoHarvest(ent, args.Tray, trayUid);
     }
 
     private void OnInteractUsing(Entity<PlantHarvestComponent> ent, ref InteractUsingEvent args)
@@ -82,7 +83,7 @@ public sealed class HarvestSystem : EntitySystem
             return;
         }
 
-        DoHarvest((plantUid, harvest), (trayUid, tray), args.User);
+        TryHandleHarvest((plantUid, harvest), (trayUid, tray), args.User);
         args.Handled = true;
     }
 
@@ -108,8 +109,27 @@ public sealed class HarvestSystem : EntitySystem
             return;
         }
 
-        DoHarvest((plantUid, harvest), (trayUid, tray), args.User);
+        TryHandleHarvest((plantUid, harvest), (trayUid, tray), args.User);
         args.Handled = true;
+    }
+
+    private void TryHandleHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantTrayComponent> trayEnt, EntityUid user)
+    {
+        if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
+            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(trayEnt.Owner).Coordinates}.");
+
+        DoHarvest(ent, trayEnt, user);
+    }
+
+    private void TryAutoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantTrayComponent> trayEnt, EntityUid user)
+    {
+        if (ent.Comp.HarvestRepeat != HarvestType.SelfHarvest)
+            return;
+
+        if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
+            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(trayEnt.Owner).Coordinates}.");
+
+        DoHarvest(ent, trayEnt, user);
     }
 
     /// <summary>
@@ -143,7 +163,7 @@ public sealed class HarvestSystem : EntitySystem
         _popup.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
 
         var totalYield = 0;
-        if (plant.Yield > -1)
+        if (plant.Yield >= 0)
         {
             totalYield = holder.YieldMod < 0 ? plant.Yield : plant.Yield * holder.YieldMod;
             totalYield = Math.Max(1, totalYield);
@@ -157,7 +177,7 @@ public sealed class HarvestSystem : EntitySystem
             _randomHelper.RandomOffset(entity, 0.25f);
 
             var produce = EnsureComp<ProduceComponent>(entity);
-            produce.PlantProtoId = MetaData(plantUid).EntityPrototype?.ID;
+            produce.PlantProtoId = MetaData(plantUid).EntityPrototype!.ID;
             produce.PlantData = _botany.ClonePlantSnapshotData(plantUid);
             _botany.ProduceGrown(entity, produce);
             _appearance.SetData(entity, ProduceVisuals.Potency, plant.Potency);

@@ -122,11 +122,8 @@ public sealed class PlantTraySystem : EntitySystem
         {
             if (tray.PlantEntity == null || Deleted(tray.PlantEntity))
             {
-                if (seeds.PlantProtoId == null)
-                    return;
-
                 args.Handled = true;
-                var plantUid = Spawn(seeds.PlantProtoId.Value, Transform(uid).Coordinates);
+                var plantUid = Spawn(seeds.PlantProtoId, Transform(uid).Coordinates);
 
                 if (seeds.PlantData != null)
                     _botany.ApplyPlantSnapshotData(plantUid, seeds.PlantData);

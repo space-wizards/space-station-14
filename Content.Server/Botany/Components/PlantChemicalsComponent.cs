@@ -1,4 +1,6 @@
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Botany.Components;
 
@@ -13,7 +15,7 @@ public sealed partial class PlantChemicalsComponent : Component
     /// Mapping reagent id -> chemical info for this plant species.
     /// </summary>
     [DataField]
-    public Dictionary<string, PlantChemQuantity> Chemicals = [];
+    public Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> Chemicals = [];
 }
 
 [DataDefinition]
