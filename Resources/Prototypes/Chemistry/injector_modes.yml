@@ -25,38 +25,27 @@
 
 ## Syringes
 - type: InjectorMode
-  parent: BaseInjectMode
-  id: SyringeInjectMode
-  transferAmounts:
-    - 5
-    - 10
-    - 15
-
-- type: InjectorMode
-  parent: BaseDrawMode
-  id: SyringeDrawMode
+  id: BaseSyringeMode
   transferAmounts:
   - 5
   - 10
   - 15
+
+- type: InjectorMode
+  parent: [ BaseSyringeMode, BaseInjectMode ]
+  id: SyringeInjectMode
+
+- type: InjectorMode
+  parent: [ BaseSyringeMode, BaseDrawMode ]
+  id: SyringeDrawMode
 
 - type: InjectorMode
   parent: SyringeInjectMode
   id: BluespaceSyringeInjectMode
-  transferAmounts:
-  - 5
-  - 10
-  - 15
-
-- type: InjectorMode
-  parent: SyringeInjectMode
-  id: SyringeInjectMode
-  injectTime: 2.5
 
 ## Dropper
 - type: InjectorMode
-  parent: BaseInjectMode
-  id: DropperInjectMode
+  id: BaseDropperMode
   transferAmounts:
   - 1
   - 2
@@ -65,14 +54,12 @@
   - 5
 
 - type: InjectorMode
-  parent: BaseDrawMode
+  parent: [ BaseDropperMode, BaseInjectMode ]
+  id: DropperInjectMode
+
+- type: InjectorMode
+  parent: [ BaseDropperMode, BaseDrawMode ]
   id: DropperDrawMode
-  transferAmounts:
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
 
 ## Hyposprays
 - type: InjectorMode
