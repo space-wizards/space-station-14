@@ -1,7 +1,7 @@
 - type: entity
   id: UraniumWindow
   name: uranium window
-  parent: WindowRCDResistant
+  parent: [BaseDeltaPressurePlasma, WindowRCDResistant]
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -46,11 +46,6 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
-  - type: DeltaPressure
-    minPressure: 75000
-    minPressureDelta: 50000
-    scalingType: Linear
-    scalingPower: 0.0005
   - type: StaticPrice
     price: 200
   - type: RadiationBlocker
@@ -58,7 +53,7 @@
 
 - type: entity
   id: UraniumWindowDirectional
-  parent: WindowDirectionalRCDResistant
+  parent: [BaseDeltaPressurePlasmaQuarter, WindowDirectionalRCDResistant]
   name: directional uranium window
   description: Don't smudge up the glass down there.
   placement:
@@ -104,10 +99,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DeltaPressure
-    minPressure: 18750
-    minPressureDelta: 12500
-    scalingType: Threshold
   - type: StaticPrice
     price: 100
   - type: RadiationBlocker

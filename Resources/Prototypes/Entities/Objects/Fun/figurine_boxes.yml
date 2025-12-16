@@ -16,7 +16,7 @@
   - type: SpaceGarbage
 
 - type: entity
-  parent: PresentRandom
+  parent: BaseItem
   id: MysteryFigureBox
   name: mystery spacemen minifigure box
   description: A box containing a mystery minifigure. The side of the box depicts a few blacked-out 'rare' figures, including one with a large, non-humanoid shilouette.
@@ -25,114 +25,20 @@
     sprite: Objects/Fun/figurines.rsi
     layers:
       - state: fig_box
-  - type: SpawnItemsOnUse
-    items:
+  - type: TriggerOnActivate
+  - type: DeleteOnTrigger
+  - type: EmitSoundOnTrigger
+    positional: true
+    predicted: true
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+  - type: SpawnEntityTableOnTrigger
+    useMapCoords: true
+    table: !type:AllSelector
+      children:
       - id: MysteryFigureBoxTrash
-      - id: ToyFigurinePassenger
-        orGroup: SpacemenFig
-      - id: ToyFigurineClown
-        orGroup: SpacemenFig
-      - id: ToyFigurineMime
-        orGroup: SpacemenFig
-      - id: ToyFigurineMusician
-        orGroup: SpacemenFig
-      - id: ToyFigurineBoxer
-        orGroup: SpacemenFig
-      - id: ToyFigurineCaptain
-        orGroup: SpacemenFig
-      - id: ToyFigurineHeadOfSecurity
-        orGroup: SpacemenFig
-      - id: ToyFigurineWarden
-        orGroup: SpacemenFig
-      - id: ToyFigurineDetective
-        orGroup: SpacemenFig
-      - id: ToyFigurineSecurity
-        orGroup: SpacemenFig
-      - id: ToyFigurineLawyer
-        orGroup: SpacemenFig
-      - id: ToyFigurineCargoTech
-        orGroup: SpacemenFig
-      - id: ToyFigurineSalvage
-        orGroup: SpacemenFig
-      - id: ToyFigurineQuartermaster
-        orGroup: SpacemenFig
-      - id: ToyFigurineChiefEngineer
-        orGroup: SpacemenFig
-      - id: ToyFigurineAtmosTech
-        orGroup: SpacemenFig
-      - id: ToyFigurineEngineer
-        orGroup: SpacemenFig
-      - id: ToyFigurineResearchDirector
-        orGroup: SpacemenFig
-      - id: ToyFigurineScientist
-        orGroup: SpacemenFig
-      - id: ToyFigurineChiefMedicalOfficer
-        orGroup: SpacemenFig
-      - id: ToyFigurineChemist
-        orGroup: SpacemenFig
-      - id: ToyFigurineParamedic
-        orGroup: SpacemenFig
-      - id: ToyFigurineMedicalDoctor
-        orGroup: SpacemenFig
-      - id: ToyFigurineHeadOfPersonnel
-        orGroup: SpacemenFig
-      - id: ToyFigurineLibrarian
-        orGroup: SpacemenFig
-      - id: ToyFigurineChaplain
-        orGroup: SpacemenFig
-      - id: ToyFigurineChef
-        orGroup: SpacemenFig
-      - id: ToyFigurineBartender
-        orGroup: SpacemenFig
-      - id: ToyFigurineBotanist
-        orGroup: SpacemenFig
-      - id: ToyFigurineJanitor
-        orGroup: SpacemenFig
-      - id: ToyFigurineNukie
-        orGroup: SpacemenFig
-      - id: ToyFigurineNukieElite
-        orGroup: SpacemenFig
-      - id: ToyFigurineFootsoldier
-        orGroup: SpacemenFig
-      - id: ToyFigurineWizardFake
-        orGroup: SpacemenFig
-      - id: ToyFigurineSlime
-        orGroup: SpacemenFig
-      - id: ToyFigurineGreytider
-        orGroup: SpacemenFig
-      - id: ToyFigurineWizard
-        prob: 0.50
-        orGroup: SpacemenFig
-      - id: ToyFigurineNukieCommander
-        prob: 0.50
-        orGroup: SpacemenFig
-      - id: ToyGriffin
-        prob: 0.50
-        orGroup: SpacemenFig
-      - id: ToyOwlman
-        prob: 0.50
-        orGroup: SpacemenFig
-      - id: ToySkeleton
-        prob: 0.50
-        orGroup: SpacemenFig
-      - id: ToyFigurineRatKing
-        prob: 0.30
-        orGroup: SpacemenFig
-      - id: ToyFigurineRatServant
-        prob: 0.40
-        orGroup: SpacemenFig
-      - id: ToyFigurineMouse
-        prob: 0.50
-        orGroup: SpacemenFig
-      - id: ToyFigurineQueen
-        prob: 0.25
-        orGroup: SpacemenFig
-      - id: ToyFigurineSpaceDragon
-        prob: 0.10
-        orGroup: SpacemenFig
-      - id: ToyFigurineHamlet
-        prob: 0.20
-        orGroup: SpacemenFig
+      - !type:NestedSelector
+        tableId: AllFigurinesTable
 
 - type: entity
   parent: BaseItem
