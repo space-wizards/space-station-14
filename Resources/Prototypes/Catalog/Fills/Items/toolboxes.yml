@@ -183,21 +183,23 @@
       children:
       - !type:NestedSelector
         tableId: AllMiscToysTable
-        weight: 4
+        weight: 10
       - !type:NestedSelector
         tableId: AllCrayonsTable
         rolls: 1, 3
-        weight: 2.5
+        weight: 5
       - id: BarberScissors
-        weight: 0.5
+        weight: 0.75
       - id: DrinkSpaceLube
       - id: DrinkSpaceGlue
       - !type:NestedSelector
         tableId: RandomBikeHornTable
+        weight: 0.75
       - !type:NestedSelector
         tableId: AllFigurinesTable
-      - id: RubberStampCaptain # ~1/111
-        weight: 0.1
+        weight: 1.25
+      - id: RubberStampCaptain # ~1/100
+        weight: 0.2
     - !type:GroupSelector # Common clown consumables
       rolls: 2
       children:

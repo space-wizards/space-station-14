@@ -163,11 +163,13 @@
     damage:
       types:
         Blunt: 2
-    soundHit:
+    soundHit: &SoundRubberHammer
       collection: RubberHammer
       params:
         variation: 0.03
         volume: 3
+  - type: EmitSoundOnLand
+    sound: *SoundRubberHammer
   - type: Storage
     storageOpenSound: &SoundHorn
       collection: BikeHorn
