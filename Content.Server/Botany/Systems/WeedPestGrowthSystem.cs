@@ -12,6 +12,7 @@ namespace Content.Server.Botany.Systems;
 public sealed class WeedPestGrowthSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
     [Dependency] private readonly MutationSystem _mutation = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -58,45 +59,46 @@ public sealed class WeedPestGrowthSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        PlantTraitsComponent? traits = null;
-        WeedPestGrowthComponent? weed = null;
-        PlantHolderComponent? holder = null;
-        if (component.PlantEntity != null && !Deleted(component.PlantEntity))
+        if (_plantTray.HasPlant(ent.AsNullable()))
         {
-            TryComp(component.PlantEntity.Value, out traits);
-            TryComp(component.PlantEntity.Value, out weed);
-            TryComp(component.PlantEntity.Value, out holder);
-        }
+            var plantUid = component.PlantEntity!.Value;
+            if (!TryComp(plantUid, out PlantTraitsComponent? traits)
+                || !TryComp(plantUid, out WeedPestGrowthComponent? weed)
+                || !TryComp(plantUid, out PlantHolderComponent? holder))
+                return;
 
-        // Weeds like water and nutrients! They may appear even if there's not a seed planted.
-        if (component is { WaterLevel: > 10, NutritionLevel: > 5 })
-        {
-            float chance;
-            if (component.PlantEntity == null || Deleted(component.PlantEntity))
-                chance = 0.05f;
-            else if (traits != null && traits.TurnIntoKudzu)
-                chance = 1f;
-            else
-                chance = 0.01f;
+            // Weeds like water and nutrients! They may appear even if there's not a seed planted.
+            if (component is { WaterLevel: > 10, NutritionLevel: > 5 })
+            {
+                float chance;
+                if (traits.TurnIntoKudzu)
+                    chance = 1f;
+                else
+                    chance = 0.01f;
 
-            if (_random.Prob(chance))
-                component.WeedLevel += 1 + component.WeedCoefficient * component.TraySpeedMultiplier;
+                if (_random.Prob(chance))
+                    component.WeedLevel += 1 + component.WeedCoefficient * component.TraySpeedMultiplier;
+            }
 
-            if (component.DrawWarnings)
-                component.UpdateSpriteAfterUpdate = true;
-        }
-
-        // Handle kudzu transformation.
-        if (component.PlantEntity != null
-            && traits != null
-            && weed != null
-            && traits.TurnIntoKudzu
-            && component.WeedLevel >= weed.WeedHighLevelThreshold)
-        {
-            Spawn(traits.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
-            traits.TurnIntoKudzu = false;
-            if (holder != null)
+            // Handle kudzu transformation.
+            if (traits.TurnIntoKudzu
+                && component.WeedLevel >= weed.WeedHighLevelThreshold)
+            {
+                Spawn(traits.KudzuPrototype, Transform(uid).Coordinates.SnapToGrid(EntityManager));
+                traits.TurnIntoKudzu = false;
                 holder.Health = 0;
+            }
         }
+        else
+        {
+            if (component is { WaterLevel: > 10, NutritionLevel: > 5 })
+            {
+                if (_random.Prob(0.05f))
+                    component.WeedLevel += 1 + component.WeedCoefficient * component.TraySpeedMultiplier;
+            }
+        }
+
+        if (component.DrawWarnings)
+            component.UpdateSpriteAfterUpdate = true;
     }
 }
