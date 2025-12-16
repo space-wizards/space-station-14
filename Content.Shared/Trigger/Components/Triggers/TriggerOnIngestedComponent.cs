@@ -1,0 +1,10 @@
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.Trigger.Components.Triggers;
+
+/// <summary>
+/// Triggers when the owner of this component is ingested, like a pill or food.
+/// User is the entity ingesting this.
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed partial class TriggerOnIngestedComponent : BaseTriggerOnXComponent;
