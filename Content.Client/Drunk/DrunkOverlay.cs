@@ -14,7 +14,6 @@ namespace Content.Client.Drunk;
 public sealed class DrunkOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> DrunkShader = "Drunk";
-    private static readonly ProtoId<ShaderPrototype> CircleShader = "CircleMask";
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -26,7 +25,6 @@ public sealed class DrunkOverlay : Overlay
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
     private readonly ShaderInstance _drunkShader;
-    private readonly ShaderInstance _circleMaskShader;
 
     public float CurrentBoozePower = 0.0f;
 
@@ -41,25 +39,20 @@ public sealed class DrunkOverlay : Overlay
     private const float MaxBoozePower = 100f;
 
     private const float BoozePowerScale = 8f;
-    private const float CircleMaskStrength = 0.035f;
 
     private float _visualScale = 0;
-
-    private const float NoMotion_Radius = 30.0f; // Base radius for the nomotion variant at its full strength
-    private const float NoMotion_Pow = 0.2f; // Exponent for the nomotion variant's gradient
-    private const float NoMotion_Max = 8.0f; // Max value for the nomotion variant's gradient
-    private const float NoMotion_Mult = 0.75f; // Multiplier for the nomotion variant
+    private float _visualPowerScale = 0.35f;
 
     public DrunkOverlay()
     {
         IoCManager.InjectDependencies(this);
         _drunkShader = _prototypeManager.Index(DrunkShader).InstanceUnique();
-        _circleMaskShader = _prototypeManager.Index(CircleShader).InstanceUnique();
+        _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
+    }
 
-        _circleMaskShader.SetParameter("CircleMinDist", 0.0f);
-        _circleMaskShader.SetParameter("CirclePow", NoMotion_Pow);
-        _circleMaskShader.SetParameter("CircleMax", NoMotion_Max);
-        _circleMaskShader.SetParameter("CircleMult", NoMotion_Mult);
+    private void OnReducedMotionChanged(bool reducedMotion)
+    {
+        _visualPowerScale = _configManager.GetCVar(CCVars.ReducedMotion) ? 0.35f : 1.0f;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -100,24 +93,11 @@ public sealed class DrunkOverlay : Overlay
 
         var handle = args.WorldHandle;
 
-        if (_configManager.GetCVar(CCVars.ReducedMotion))
-        {
-            _circleMaskShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            _circleMaskShader.SetParameter("Zoom", 1f);
-            _circleMaskShader.SetParameter("CircleRadius", NoMotion_Radius / CircleMaskStrength);
-
-            handle.UseShader(_circleMaskShader);
-            handle.DrawRect(args.WorldBounds, Color.White);
-            handle.UseShader(null);
-        }
-        else
-        {
-            _drunkShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            _drunkShader.SetParameter("boozePower", _visualScale);
-            handle.UseShader(_drunkShader);
-            handle.DrawRect(args.WorldBounds, Color.White);
-            handle.UseShader(null);
-        }
+        _drunkShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        _drunkShader.SetParameter("boozePower", _visualScale * _visualPowerScale);
+        handle.UseShader(_drunkShader);
+        handle.DrawRect(args.WorldBounds, Color.White);
+        handle.UseShader(null);
     }
 
     /// <summary>
