@@ -32,14 +32,11 @@ using System.Numerics;
 namespace Content.Server.DeepFryer;
 public sealed class DeepFryerSystem : SharedDeepFryerSystem
 {
-    [Dependency] private readonly SharedAudioSystem _sharedAudioSystem = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
 
@@ -50,7 +47,6 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
         SubscribeLocalEvent<ActiveFryingDeepFryerComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ActiveFryingDeepFryerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DeepFryerComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
-        SubscribeLocalEvent<DeepFryerComponent, ClimbedOnEvent>(OnClimbedOn);
         SubscribeLocalEvent<DeepFryerComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
@@ -110,34 +106,6 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
             Del(victim);
         }
         args.Handled = true;
-    }
-
-    // TODO: Fix this
-    /// <summary>
-    /// What happens when a creature is dragged into the fryer.
-    /// </summary>
-    private void OnClimbedOn(Entity<DeepFryerComponent> fryer, ref ClimbedOnEvent args)
-    {
-        _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Instigator):player} started deep frying {ToPrettyString(args.Climber):target} in {ToPrettyString(fryer):fryer}.");
-        if (EntityStorage.CanInsert(args.Climber, fryer.Owner) && TryComp<EntityStorageComponent>(fryer, out var storage))
-        {
-            // Dragging a creature into a deep fryer would be violent, so the existing contents get ejected at speed
-            if (storage.Contents.ContainedEntities.Count > 0)
-            {
-                for (var i = 0; i < storage.Contents.ContainedEntities.Count; i++)
-                {
-                    var item = storage.Contents.ContainedEntities[i];
-                    EntityStorage.OpenStorage(fryer.Owner);
-                    var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
-                    _throwing.TryThrow(item, direction, 0.5f);
-                }
-            }
-
-            // Close the fryer (lower the basket) and add the dragged creature into it
-            Standing.Down(args.Climber, false);
-            EntityStorage.CloseStorage(fryer.Owner);
-            EntityStorage.Insert(args.Climber, fryer.Owner);
-        }
     }
 
     /// <summary>

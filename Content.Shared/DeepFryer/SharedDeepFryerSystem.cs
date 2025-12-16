@@ -3,14 +3,18 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DeepFryer.Components;
 using Content.Shared.EntityConditions.Conditions.Tags;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Morgue.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Nuke;
@@ -19,15 +23,19 @@ using Content.Shared.Standing;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
-using Content.Shared.FixedPoint;
+using Content.Shared.Stunnable;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
+using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Toolshed.TypeParsers;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
@@ -37,6 +45,7 @@ namespace Content.Shared.DeepFryer;
 
 public abstract class SharedDeepFryerSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly StandingStateSystem Standing = default!;
@@ -48,6 +57,11 @@ public abstract class SharedDeepFryerSystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly MobStateSystem _stateSystem = default!;
 
     public override void Initialize()
     {
@@ -55,27 +69,57 @@ public abstract class SharedDeepFryerSystem : EntitySystem
 
         SubscribeLocalEvent<DeepFryerComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ActiveFryingDeepFryerComponent, StorageAfterOpenEvent>(OnOpen);
+        SubscribeLocalEvent<DeepFryerComponent, ClimbedOnEvent>(OnClimbedOn);
     }
 
+    // Description hint added when mobs are in the deep fryer
     private void OnExamine(Entity<DeepFryerComponent> ent, ref ExaminedEvent args)
     {
-        if (!TryComp<AppearanceComponent>(ent, out var appearance))
-            return;
-
-        using (args.PushGroup(nameof(DeepFryerComponent)))
+        if (TryComp<EntityStorageComponent>(ent, out var storage)
+            && !storage.Open
+            && storage.Contents.Count > 0
+            && HasComp<MindContainerComponent>(storage.Contents.ContainedEntities[0]))
         {
-            if (_appearance.TryGetData<bool>(ent.Owner, StorageVisuals.HasContents, out var hasContents, appearance) &&
-                hasContents)
-            {
-                args.PushMarkup(Loc.GetString("deep-fryer-entity-storage-component-on-examine-details-big"));
-            }
+            args.PushMarkup(Loc.GetString("deep-fryer-entity-storage-component-on-examine-details-big"));
         }
     }
 
-    //Abort any currently active fry attempts
+    // Abort any currently active fry attempts
     private void OnOpen(Entity<ActiveFryingDeepFryerComponent> ent, ref StorageAfterOpenEvent args)
     {
         RemComp<ActiveFryingDeepFryerComponent>(ent);
+    }
+
+    /// <summary>
+    /// What happens when a creature is dragged into the fryer. Down code is just broken
+    /// </summary>
+    private void OnClimbedOn(Entity<DeepFryerComponent> fryer, ref ClimbedOnEvent args)
+    {
+        if (TryComp<EntityStorageComponent>(fryer, out var storage))
+        {
+            // Dragging a creature into a deep fryer would be violent, so the existing contents get ejected at speed
+            if (storage.Contents.ContainedEntities.Count > 0)
+            {
+                var item = storage.Contents.ContainedEntities[0];
+                EntityStorage.EmptyContents(fryer);
+                var direction = new Vector2(_robustRandom.Next(-2, 2), _robustRandom.Next(-2, 2));
+                _throwing.TryThrow(item, direction, 0.5f);
+            }
+
+            if (EntityStorage.CanInsert(args.Climber, fryer.Owner))
+            {
+                // Close the fryer (lower the basket) and add the dragged creature into it
+                EntityStorage.CloseStorage(fryer.Owner);
+                // The dragged creature is downed in the process
+                if (TryComp<CrawlerComponent>(args.Climber, out var climb))
+                {
+                    _stunSystem.TryKnockdown(args.Climber, TimeSpan.FromSeconds(10), true, false, false, true);
+                }
+                _stunSystem.TryAddStunDuration(args.Climber, TimeSpan.FromSeconds(10));
+                EntityStorage.Insert(args.Climber, fryer.Owner);
+                _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Instigator):player} started deep frying {ToPrettyString(args.Climber):target} in {ToPrettyString(fryer):fryer}.");
+            }
+        }
     }
 
     /// <summary>
@@ -157,15 +201,33 @@ public abstract class SharedDeepFryerSystem : EntitySystem
             // Alter vat solution temperature by HeatPerSecond, also check if you can fry
             var energy = fryer.HeatPerSecond * frameTime;
             _solutionContainer.AddThermalEnergyClamped(deepFryerSoln.Value, energy, fryer.MinHeat, fryer.MaxHeat);
-            if (deepFryerSolution.Temperature > fryer.HeatThreshold && deepFryerSolution.Volume > 0)
+            deepFryerSolution.GetReagentQuantity(new ReagentId("Oil", null));
+            // To fry, temperature must be above the threshold, a solution must in the fryer, and that solution must be at least 66% Oil.
+            if (deepFryerSolution.Temperature > fryer.HeatThreshold
+                && deepFryerSolution.Volume > 0
+                && deepFryerSolution.GetReagentQuantity(new ReagentId("Oil", null)) >= deepFryerSolution.Volume * (2.0f / 3.0f))
             {
                 canFry = true;
+            }
+
+            if (!canFry)
+            {
+                RemComp<ActiveFryingDeepFryerComponent>(uid);
             }
 
             // As long as conditions are alright for frying, keep frying
             if (HasComp<ActiveFryingDeepFryerComponent>(uid))
             {
-                if (curTime < fryer.ActiveUntil)
+                // If you are trying to fry a living being, it has to die first (sometimes from overheating in the fryer)
+                var isDead = false;
+                if (TryComp<MobStateComponent>(storage.Contents.ContainedEntities[0], out var mobSt))
+                {
+                    isDead = _stateSystem.IsDead(storage.Contents.ContainedEntities[0], mobSt);
+                }
+                if (curTime < fryer.ActiveUntil
+                    || storage.Contents.Count > 0
+                    && TryComp<MobStateComponent>(storage.Contents.ContainedEntities[0], out var mobState)
+                    && !_stateSystem.IsDead(storage.Contents.ContainedEntities[0], mobState))
                 {
                     // Frying uses up a little bit of the solution in the vat each frame, and tries to inject it into whatever is being fried
                     // Note: Make sure usedSolution is getting garbage collected if injection fails
@@ -183,16 +245,15 @@ public abstract class SharedDeepFryerSystem : EntitySystem
                     }
                     continue;
                 }
-
                 FinishFrying((uid, fryer, null));
             }
-            // If powered, closed, and containing an unfried item, start frying
+
+            // Fryer must also be closed and containing an unfried item to start the fry
             if (canFry
                 && !storage.Open && storage.Contents.Count > 0
                 && !HasComp<BeenFriedComponent>(storage.Contents.ContainedEntities[0]))
             {
-                var selectedTime = HasComp<MobThresholdsComponent>(storage.Contents.ContainedEntities[0]) ? fryer.MobCookTime : fryer.CookTime;
-                fryer.ActiveUntil = _timing.CurTime + (HasComp<MobThresholdsComponent>(storage.Contents.ContainedEntities[0]) ? fryer.MobCookTime : fryer.CookTime);
+                fryer.ActiveUntil = _timing.CurTime + fryer.CookTime;
                 DeepFry(uid);
             }
         }

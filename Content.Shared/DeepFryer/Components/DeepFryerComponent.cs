@@ -27,12 +27,6 @@ public sealed partial class DeepFryerComponent : Component
     public TimeSpan CookTime = TimeSpan.FromSeconds(10);
 
     /// <summary>
-    /// The least uninterrupted time it takes to deep fry mob entities.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan MobCookTime = TimeSpan.FromSeconds(30);
-
-    /// <summary>
     /// How much heat is added per second to the vat solution. Should start at zero so fryer isn't automatically "on" when map loads
     /// </summary>
     [DataField]
@@ -42,7 +36,7 @@ public sealed partial class DeepFryerComponent : Component
     /// Maximum heat the vat solution can reach.
     /// </summary>
     [DataField]
-    public float MaxHeat = 450.0f;
+    public float MaxHeat = 475.0f;
 
     /// <summary>
     /// Minimum heat the vat solution can reach. By default, room temperature.
