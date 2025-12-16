@@ -25,6 +25,7 @@ public sealed class ConveyorController : SharedConveyorController
     {
         UpdatesAfter.Add(typeof(MoverController));
         SubscribeLocalEvent<ConveyorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ConveyorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ConveyorComponent, ComponentShutdown>(OnConveyorShutdown);
         SubscribeLocalEvent<ConveyorComponent, BreakageEventArgs>(OnBreakage);
 
@@ -48,11 +49,14 @@ public sealed class ConveyorController : SharedConveyorController
                                        CollisionGroup.Impassable), hard: false, body: physics);
 
         }
+    }
+    
+    private void OnMapInit(EntityUid uid, ConveyorComponent component, MapInitEvent args)
+    {
+        if (component.InitialState == ConveyorState.Off)
+            return;
 
-        if (component.InitialState != ConveyorState.Off)
-        {
-            SetState(uid, component.InitialState, component);
-        }
+        SetState(uid, component.InitialState, component);
     }
 
     private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
