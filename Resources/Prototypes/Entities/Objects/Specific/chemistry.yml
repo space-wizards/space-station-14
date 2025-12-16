@@ -490,7 +490,10 @@
       injector:
         maxVol: 100
   - type: Injector
-    injectTime: 2.5
+    activeMode: SyringeDrawMode
+    allowedModes:
+    - BluespaceSyringeInjectMode
+    - SyringeDrawMode
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
@@ -525,7 +528,6 @@
     allowedModes:
     - DrawMode
     - InjectMode
-    currentTransferAmount: 10
   - type: Tag
     tags:
     - Syringe

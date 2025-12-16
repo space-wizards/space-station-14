@@ -40,6 +40,27 @@
   - 10
   - 15
 
+- type: InjectorMode
+  parent: BaseInjectMode
+  id: SyringeInjectMode
+  transferAmounts:
+  - 5
+  - 10
+  - 15
+
+- type: InjectorMode
+  parent: SyringeInjectMode
+  id: BluespaceSyringeInjectMode
+  transferAmounts:
+  - 5
+  - 10
+  - 15
+
+- type: InjectorMode
+  parent: SyringeInjectMode
+  id: SyringeInjectMode
+  injectTime: 2.5
+
 ## Dropper
 - type: InjectorMode
   parent: BaseInjectMode
