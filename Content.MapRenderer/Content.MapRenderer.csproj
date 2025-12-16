@@ -11,13 +11,21 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Content.IntegrationTests\Content.IntegrationTests.csproj" />
-    <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" />
+    <PackageReference Include="Moq" />
     <PackageReference Include="SixLabors.ImageSharp" />
   </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
+
+  <ItemGroup>
+    <UseRobustApi Include="Testing" />
+    <UseRobustApi Include="Shared" />
+    <UseRobustApi Include="Client" />
+    <UseRobustApi Include="Server" />
+  </ItemGroup>
+
 </Project>
