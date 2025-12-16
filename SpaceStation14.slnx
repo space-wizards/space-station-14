@@ -117,6 +117,7 @@
       <BuildType Solution="Tools|*" Project="Release" />
     </Project>
     <Project Path="RobustToolbox/Lidgren.Network/Lidgren.Network.csproj" />
+    <Project Path="RobustToolbox/Robust.Benchmarks/Robust.Benchmarks.csproj" />
     <Project Path="RobustToolbox/Robust.Client.Injectors/Robust.Client.Injectors.csproj">
       <BuildType Solution="DebugOpt|*" Project="Debug" />
       <BuildType Solution="Tools|*" Project="Release" />
