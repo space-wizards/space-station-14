@@ -11,6 +11,10 @@
   <Import Project="../MSBuild/Content.props" />
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" />
+
+    <!-- pin transitive deps -->
+    <PackageReference Include="System.Management" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Content.Client\Content.Client.csproj" />
