@@ -1,9 +1,11 @@
 using JetBrains.Annotations;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Botany.Components;
+using Content.Server.Cloning;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Cloning;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Random;
@@ -18,6 +20,7 @@ namespace Content.Server.Botany.Systems;
 public sealed partial class BotanySystem : EntitySystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly CloningSystem _cloning = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -28,6 +31,9 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+
+    public readonly ProtoId<CloningSettingsPrototype> SettingsId = "PlantClone";
+    public readonly ProtoId<CloningSettingsPrototype> LifecycleSettingsId = "PlantLifecycleClone";
 
     public override void Initialize()
     {
@@ -90,39 +96,31 @@ public sealed partial class BotanySystem : EntitySystem
     {
         var snap = new ComponentRegistry();
 
-        var typesToCopy = new[]
-        {
-            typeof(PlantComponent),
-            typeof(PlantChemicalsComponent),
-            typeof(PlantHarvestComponent),
-            typeof(PlantTraitsComponent),
-            typeof(BasicGrowthComponent),
-            typeof(AtmosphericGrowthComponent),
-            typeof(ConsumeExudeGasGrowthComponent),
-            typeof(WeedPestGrowthComponent),
-            typeof(UnviableGrowthComponent),
-            typeof(PlantToxinsComponent)
-        };
+        var settingsId = cloneLifecycle ? LifecycleSettingsId : SettingsId;
+        if (!_prototypeManager.TryIndex(settingsId, out var settings))
+            return snap;
 
-        foreach (var type in typesToCopy)
-        {
-            if (!EntityManager.TryGetComponent(source, type, out var comp))
-                continue;
+        // Create a temporary entity to receive cloned components.
+        var temp = EntityManager.CreateEntityUninitialized(null);
 
+        _cloning.CloneComponents(source, temp, settings);
+
+        // Copy the components to the snapshot.
+        foreach (var comp in EntityManager.GetComponents(temp))
+        {
             if (comp is not Component component)
                 continue;
 
+            var compName = _componentFactory.GetComponentName(component.GetType());
+            if (!settings.Components.Contains(compName))
+                continue;
+
             var copied = _serialization.CreateCopy(component, notNullableOverride: true);
-            var compName = _componentFactory.GetComponentName(type);
             snap[compName] = new EntityPrototype.ComponentRegistryEntry(copied, []);
         }
 
-        if (cloneLifecycle && TryComp<PlantHolderComponent>(source, out var holder))
-        {
-            var copiedHolder = _serialization.CreateCopy(holder, notNullableOverride: true);
-            var holderName = _componentFactory.GetComponentName<PlantHolderComponent>();
-            snap[holderName] = new EntityPrototype.ComponentRegistryEntry(copiedHolder, []);
-        }
+        // Delete the temporary entity.
+        EntityManager.DeleteEntity(temp);
 
         return snap;
     }
