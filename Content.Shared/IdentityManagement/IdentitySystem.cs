@@ -8,6 +8,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.VoiceMask;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
@@ -53,6 +54,7 @@ public sealed class IdentitySystem : EntitySystem
         SubscribeLocalEvent<IdentityComponent, DidUnequipHandEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, EntityRenamedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+        SubscribeLocalEvent<IdentityComponent, VoiceMaskNameUpdatedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
     }
 
     /// <summary>
@@ -78,11 +80,17 @@ public sealed class IdentitySystem : EntitySystem
     // Creates an identity entity, and store it in the identity container
     private void OnMapInit(Entity<IdentityComponent> ent, ref MapInitEvent args)
     {
+        if (ent.Comp.IdentityEntitySlot is not { } slot)
+        {
+            Log.Error($"Uninitialized IdentityEntitySlot for {ToPrettyString(ent.Owner)}.");
+            return;
+        }
+
         var ident = Spawn(null, Transform(ent).Coordinates);
 
         _metaData.SetEntityName(ident, "identity");
         QueueIdentityUpdate(ent);
-        _container.Insert(ident, ent.Comp.IdentityEntitySlot);
+        _container.Insert(ident, slot);
     }
 
     private void OnComponentInit(Entity<IdentityComponent> ent, ref ComponentInit args)
@@ -132,7 +140,7 @@ public sealed class IdentitySystem : EntitySystem
     /// </summary>
     private void UpdateIdentityInfo(Entity<IdentityComponent> ent)
     {
-        if (ent.Comp.IdentityEntitySlot.ContainedEntity is not { } ident)
+        if (ent.Comp.IdentityEntitySlot?.ContainedEntity is not { } ident)
             return;
 
         var representation = GetIdentityRepresentation(ent.Owner);
@@ -191,7 +199,7 @@ public sealed class IdentitySystem : EntitySystem
         var ev = new SeeIdentityAttemptEvent();
 
         RaiseLocalEvent(target, ev);
-        return representation.ToStringKnown(!ev.Cancelled);
+        return representation.ToStringKnown(!ev.Cancelled, ev.NameOverride);
     }
 
     /// <summary>

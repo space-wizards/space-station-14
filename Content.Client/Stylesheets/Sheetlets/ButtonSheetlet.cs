@@ -18,6 +18,7 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
         IIconConfig iconCfg = sheet;
 
         var crossTex = sheet.GetTextureOr(iconCfg.CrossIconPath, NanotrasenStylesheet.TextureRoot);
+        var refreshTex = sheet.GetTextureOr(iconCfg.RefreshIconPath, NanotrasenStylesheet.TextureRoot);
 
         var rules = new List<StyleRule>
         {
@@ -49,6 +50,11 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
             E<TextureButton>()
                 .Class(StyleClass.CrossButtonRed)
                 .Prop(TextureButton.StylePropertyTexture, crossTex),
+
+            // Refresh Button
+            E<TextureButton>()
+                .Class(StyleClass.RefreshButton)
+                .Prop(TextureButton.StylePropertyTexture, refreshTex),
 
             // Ensure labels in buttons are aligned.
             E<Label>()
