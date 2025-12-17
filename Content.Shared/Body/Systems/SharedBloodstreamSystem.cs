@@ -307,7 +307,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// For multi reagent bloodstreams, if you have 100 of Reagent Y need 100, and 50 of Reagent X and need 100,
     /// this will return 0.5f
     /// </summary>
-    /// <returns>Returns the current blood level as a value from 0 to <see cref="BloodstreamComponent.MaxVolumeFactor"/></returns>
+    /// <returns>Returns the current blood level as a value from 0 to <see cref="BloodstreamComponent.MaxVolumeModifier"/></returns>
     public float GetBloodLevel(Entity<BloodstreamComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp)
@@ -317,7 +317,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             return 0.0f;
         }
 
-        var totalBloodLevel = FixedPoint2.New(entity.Comp.MaxVolumeFactor); // Can't go above max volume factor...
+        var totalBloodLevel = FixedPoint2.New(entity.Comp.MaxVolumeModifier); // Can't go above max volume factor...
 
         foreach (var (reagentId, quantity) in entity.Comp.BloodReferenceSolution.Contents)
         {
@@ -361,7 +361,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// <returns>
     /// Solution of removed chemicals or null if none were removed.
     /// </returns>
-    public Solution? FlushChemicals(Entity<BloodstreamComponent?> ent, FixedPoint2 quantity, ProtoId<ReagentPrototype>? excludedReagentId = null )
+    public Solution? FlushChemicals(Entity<BloodstreamComponent?> ent, FixedPoint2 quantity, ProtoId<ReagentPrototype>? excludedReagent = null )
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
             || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
@@ -372,7 +372,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagentId, _) = bloodSolution.Contents[i];
-            if (ent.Comp.BloodReferenceSolution.ContainsPrototype(reagentId.Prototype) || reagentId.Prototype == excludedReagentId)
+            if (ent.Comp.BloodReferenceSolution.ContainsPrototype(reagentId.Prototype) || reagentId.Prototype == excludedReagent)
                 continue;
 
             var reagentFlushAmount = SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
@@ -414,7 +414,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             || amount == 0)
             return false;
 
-        referenceFactor = Math.Clamp(referenceFactor, 0f, ent.Comp.MaxVolumeFactor);
+        referenceFactor = Math.Clamp(referenceFactor, 0f, ent.Comp.MaxVolumeModifier);
 
         foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
         {

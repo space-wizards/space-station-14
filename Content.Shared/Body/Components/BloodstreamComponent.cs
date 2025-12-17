@@ -137,11 +137,10 @@ public sealed partial class BloodstreamComponent : Component
     // TODO probably damage bleed thresholds.
 
     /// <summary>
-    /// Factor which multiplied with <see cref="BloodReferenceSolution.Volume"/>
-    /// gives maximum volume for bloodstream.
+    /// Modifier applied to <see cref="BloodReferenceSolution.Volume"/> to determine maximum volume for bloodstream.
     /// </summary>
     [DataField]
-    public float MaxVolumeFactor = 2f;
+    public float MaxVolumeModifier = 2f;
 
     /// <summary>
     /// Defines which reagents are considered as 'blood' and how much of it is normal.
