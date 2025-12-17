@@ -61,8 +61,6 @@
     Steel: 1500
     Glass: 1500
 
-## heavy xenoborg modules
-
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleTileGunRecipe
@@ -70,6 +68,8 @@
   materials:
     Plasteel: 2000
     Steel: 1000
+
+## heavy xenoborg modules
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
