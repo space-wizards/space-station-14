@@ -1612,6 +1612,15 @@
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
+  id: SurvivalMilitaryDouble
+  name: loadout-group-survival-military
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenMilitaryDouble
+  - EmergencyOxygenMilitaryDouble
+
+- type: loadoutGroup
   id: GroupSpeciesBreathTool
   name: loadout-group-breath-tool
   minLimit: 1

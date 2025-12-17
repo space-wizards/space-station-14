@@ -22,8 +22,7 @@
         mask:
         - MachineMask
         layer:
-        - MidImpassable
-        - LowImpassable
+        - MachineLayer
   - type: Sprite
     sprite: Mobs/Silicon/mothership_core.rsi
     layers:

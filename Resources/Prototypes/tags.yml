@@ -358,6 +358,9 @@
   id: ConveyorAssembly # ConstructionGraph: ConveyorGraph
 
 - type: Tag
+  id: Cooked # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerCrab, FoodBurgerDuck
+
+- type: Tag
   id: CoordinatesDisk # Storage whitelist: DiskCase
 
 - type: Tag # designed to let corgis wear things; at present only for SmartCorgi.  View PR 33737 on upstream for more dog wearables
@@ -440,6 +443,9 @@
 
 - type: Tag
   id: CubanCarp # CargoBounty: BountyCubanCarp
+
+- type: Tag
+  id: Cutlet # MetamorphRecipe: FoodBurgerCheese, FoodBurgerChicken, FoodBurgerDuck
 
 ## D ##
 
@@ -712,7 +718,7 @@
   id: HardsuitSpatio # ConstructionGraph: HardsuitGoliath
 
 - type: Tag # Used on DungeonRoom prototypes.
-  id: Haunted # Unused. Exists on various DungeonRoomPrototypes in haunted.yml, presumably for an unimplemented PrefabDunGen whitelist.
+  id: Haunted # PrefabDunGen whitelist on Haunted DungeonConfig.
 
 - type: Tag
   id: Head # ConstructionGraph: RitualSeat
@@ -862,16 +868,10 @@
 # Tagged entities always have BallisticAmmoProviderComponent.
 
 - type: Tag
-  id: MagazineCaselessRifle # Unused (Exists on BaseMagazineCaselessRifle)
-
-- type: Tag
   id: MagazineDebug # WeaponPistolDebug
 
 - type: Tag
   id: MagazineGrenade # ShuttleGunDuster
-
-- type: Tag
-  id: MagazineHeavyRifle # Unused (Exists on BaseMagazineHeavyRifle)
 
 - type: Tag
   id: MagazineLightRifle # WeaponRifleAk
@@ -1173,6 +1173,9 @@
             # CargoBounty: BountyRadio. ConstructionGraph: HudMedSec
 
 - type: Tag
+  id: Raw # MaterialStorage whitelist: Sheetifier
+
+- type: Tag
   id: RawMaterial # MaterialStorage whitelist for many machines and lathes. Storage whitelist: MaterialBag
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
@@ -1320,12 +1323,6 @@
   id: SpeedLoaderMagnum # Ammo: BaseWeaponRevolver, XenoArtifactGun
 
 - type: Tag
-  id: SpeedLoaderPistol # Unused (Exists on BaseSpeedLoaderPistol)
-
-- type: Tag
-  id: SpeedLoaderRifle # Unused (Exists on SpeedLoaderLightRifle)
-
-- type: Tag
   id: SpiderCraft # Used on various ConstructionPrototypes to create exclusive recipes for tagged entity.
 
 - type: Tag
@@ -1355,6 +1352,9 @@
 
 - type: Tag
   id: StringInstrument # MachineBoard construction: DawInstrumentMachineCircuitboard
+
+- type: Tag
+  id: Structure # # Targeting whitelist: HandLabeler
 
 - type: Tag
   id: StunImmune # Tagged mob entity cannot gain the stunned status effect. Blacklist on StatusEffectStunned.

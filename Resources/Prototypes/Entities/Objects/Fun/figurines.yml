@@ -1,11 +1,11 @@
-#HUMANOID FIGURINES
+# When adding new figurines, also add them to id: AllFigurinesTable
 
 - type: entity
+  abstract: true
   parent: BaseItem
   id: BaseFigurine
   name: figurine
   description: A small miniature.
-  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Fun/figurines.rsi
@@ -33,6 +33,8 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
+
+#HUMANOID FIGURINES
 
 - type: entity
   parent: BaseFigurine
@@ -500,6 +502,37 @@
 
 - type: entity
   parent: BaseFigurine
+  id: ToyNuke
+  name: nuke toy
+  description: A plastic model of a Nuclear Fission Explosive. No uranium included... probably.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toy_nuke.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toy_nuke.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.12"
+  - type: Tag
+    tags:
+    - Figurine
+    - Payload
+  - type: UseDelay
+    delay: 180.0
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxDistance: 10
+
+- type: entity
+  parent: BaseFigurine
   id: ToyFigurineSpaceDragon
   name: space dragon figure
   description: A large figurine depicting a space dragon, its red eyes on gazing on its prey.
@@ -574,3 +607,24 @@
     state: hamlet
   - type: SpeakOnTrigger
     pack: FigurinesHamlet
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyAi
+  name: AI toy
+  description: A scaled-down toy AI core.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/AI.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/AI.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.06"
+  - type: SpeakOnTrigger
+    pack: FigurinesAI

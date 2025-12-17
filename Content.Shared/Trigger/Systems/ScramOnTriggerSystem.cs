@@ -1,15 +1,12 @@
-using System.Numerics;
+using Content.Shared.Maps;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Trigger.Components.Effects;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Collections;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Trigger.Systems;
@@ -17,22 +14,11 @@ namespace Content.Shared.Trigger.Systems;
 public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerComponent>
 {
     [Dependency] private readonly PullingSystem _pulling = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly INetManager _net = default!;
-
-    private EntityQuery<PhysicsComponent> _physicsQuery;
-    private HashSet<Entity<MapGridComponent>> _targetGrids = new();
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
-    }
+    [Dependency] private readonly TurfSystem _turfSystem = default!;
 
     protected override void OnTrigger(Entity<ScramOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
@@ -51,8 +37,7 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
         if (_net.IsClient)
             return;
 
-        var xform = Transform(target);
-        var targetCoords = SelectRandomTileInRange(xform, ent.Comp.TeleportRadius);
+        var targetCoords = SelectRandomTileInRange(target, ent.Comp.TeleportRadius);
 
         if (targetCoords != null)
         {
@@ -60,81 +45,42 @@ public sealed class ScramOnTriggerSystem : XOnTriggerSystem<ScramOnTriggerCompon
             args.Handled = true;
         }
     }
-
-    private EntityCoordinates? SelectRandomTileInRange(TransformComponent userXform, float radius)
+    /// <summary>
+    /// Method to find a random empty tile within a certain radius. Will not select off-grid tiles. Returns
+    /// null if no tile is found within a certain number of tries.
+    /// </summary>
+    /// <remarks> Trends towards the outer radius. Compensates for small grids. </remarks>
+    private EntityCoordinates? SelectRandomTileInRange(EntityUid uid, float radius, int tries = 40, PhysicsComponent? physicsComponent = null)
     {
-        var userCoords = _transform.ToMapCoordinates(userXform.Coordinates);
-        _targetGrids.Clear();
-        _lookup.GetEntitiesInRange(userCoords, radius, _targetGrids);
-        Entity<MapGridComponent>? targetGrid = null;
-
-        if (_targetGrids.Count == 0)
-            return null;
-
-        // Give preference to the grid the entity is currently on.
-        // This does not guarantee that if the probability fails that the owner's grid won't be picked.
-        // In reality the probability is higher and depends on the number of grids.
-        if (userXform.GridUid != null && TryComp<MapGridComponent>(userXform.GridUid, out var gridComp))
-        {
-            var userGrid = new Entity<MapGridComponent>(userXform.GridUid.Value, gridComp);
-            if (_random.Prob(0.5f))
-            {
-                _targetGrids.Remove(userGrid);
-                targetGrid = userGrid;
-            }
-        }
-
-        if (targetGrid == null)
-            targetGrid = _random.GetRandom().PickAndTake(_targetGrids);
-
+        var userCoords = Transform(uid).Coordinates;
         EntityCoordinates? targetCoords = null;
 
-        do
+        if (!Resolve(uid, ref physicsComponent))
+            return targetCoords;
+
+
+        for (var i = 0; i < tries; i++)
         {
-            var valid = false;
+            // distance = r * sq(x) * i
+            // r = the radius of the search area.
+            // sq(x) = the square root of [0 - 1]. Gives a number trending to the
+            // upper range of [0, 1] so that you tend to teleport further.
+            // i = A percentage based on the current try count, which results in each
+            // subsequent try landing closer and closer towards the entity.
+            // Beneficial for smaller maps, especially when the radius is large.
+            var distance = radius * MathF.Sqrt(_random.NextFloat()) * (1 - (float)i / tries);
 
-            var range = (float)Math.Sqrt(radius);
-            var box = Box2.CenteredAround(userCoords.Position, new Vector2(range, range));
-            var tilesInRange = _map.GetTilesEnumerator(targetGrid.Value.Owner, targetGrid.Value.Comp, box, false);
-            var tileList = new ValueList<Vector2i>();
+            // We then offset the user coords from a random angle * distance
+            var tempTargetCoords = userCoords.Offset(_random.NextAngle().ToVec() * distance);
 
-            while (tilesInRange.MoveNext(out var tile))
-            {
-                tileList.Add(tile.GridIndices);
-            }
+            if (!_turfSystem.TryGetTileRef(tempTargetCoords, out var tileRef)
+                || _turfSystem.IsSpace(tileRef.Value)
+                || _turfSystem.IsTileBlocked(tileRef.Value, (CollisionGroup)physicsComponent.CollisionMask))
+                continue;
 
-            while (tileList.Count != 0)
-            {
-                var tile = tileList.RemoveSwap(_random.Next(tileList.Count));
-                valid = true;
-                foreach (var entity in _map.GetAnchoredEntities(targetGrid.Value.Owner, targetGrid.Value.Comp,
-                             tile))
-                {
-                    if (!_physicsQuery.TryGetComponent(entity, out var body))
-                        continue;
-
-                    if (body.BodyType != BodyType.Static ||
-                        !body.Hard ||
-                        (body.CollisionLayer & (int)CollisionGroup.MobMask) == 0)
-                        continue;
-
-                    valid = false;
-                    break;
-                }
-
-                if (valid)
-                {
-                    targetCoords = new EntityCoordinates(targetGrid.Value.Owner,
-                        _map.TileCenterToVector(targetGrid.Value, tile));
-                    break;
-                }
-            }
-
-            if (valid || _targetGrids.Count == 0) // if we don't do the check here then PickAndTake will blow up on an empty set.
-                break;
-
-            targetGrid = _random.GetRandom().PickAndTake(_targetGrids);
-        } while (true);
+            targetCoords = tempTargetCoords;
+            break;
+        }
 
         return targetCoords;
     }

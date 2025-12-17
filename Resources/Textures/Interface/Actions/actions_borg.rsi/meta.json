@@ -140,6 +140,9 @@
             "name":"xenoborg-control-computer"
         },
         {
+            "name":"xenoborg-door-remote-module"
+        },
+        {
             "name":"xenoborg-extinguisher-module"
         },
         {

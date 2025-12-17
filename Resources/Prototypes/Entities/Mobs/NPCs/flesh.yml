@@ -48,7 +48,10 @@
     - id: FoodMeat
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:
@@ -247,7 +250,10 @@
     - id: FoodMeat
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 100
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Blood
+        Quantity: 100
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:

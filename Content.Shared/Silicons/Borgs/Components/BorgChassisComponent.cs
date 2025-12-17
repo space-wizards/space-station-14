@@ -21,7 +21,6 @@ public sealed partial class BorgChassisComponent : Component
     /// <summary>
     /// Is this borg currently activated?
     /// If activated the borg
-    /// - has door access,
     /// - can use modules and
     /// - has full movement speed.
     /// To be activated the borg

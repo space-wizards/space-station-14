@@ -108,7 +108,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
                 && _bloodstreamQuery.TryComp(patient, out var bloodstream))
             {
                 var solutionToInject = _solutionContainer.SplitSolution(containerSolution.Value, cryoPod.BeakerTransferAmount);
-                _bloodstream.TryAddToChemicals((patient.Value, bloodstream), solutionToInject);
+                _bloodstream.TryAddToBloodstream((patient.Value, bloodstream), solutionToInject);
                 _reactive.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
             }
         }
