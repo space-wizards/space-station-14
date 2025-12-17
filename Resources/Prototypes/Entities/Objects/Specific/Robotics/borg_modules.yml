@@ -1525,6 +1525,37 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-door-remote-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleTileGun
+  name: tile gun xenoborg module
+  description: Module with a tile gun. wait, a what?
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-tile
+  - type: ItemBorgModule
+    hands:
+    - item: Crowbar
+    - hand:
+        emptyRepresentative: FloorTileItemSteel
+        emptyLabel: &TileEmptyLabel borg-slot-tiles-empty
+        whitelist: &TileHandWhitelist
+          components:
+          - FloorTile
+    - hand:
+        emptyRepresentative: FloorTileItemWhite
+        emptyLabel: *TileEmptyLabel
+        whitelist: *TileHandWhitelist
+    - hand:
+        emptyRepresentative: FloorTileItemDark
+        emptyLabel: *TileEmptyLabel
+        whitelist: *TileHandWhitelist
+    - item: WeaponTileGunEmpty
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tile-module }
+
+- type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleJammer
   name: jammer xenoborg module
