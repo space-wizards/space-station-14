@@ -71,8 +71,6 @@
 
 ## scout xenoborg modules
 
-## scout xenoborg modules
-
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleEnergySwordRecipe
@@ -80,8 +78,6 @@
   materials:
     Steel: 1500
     Glass: 1500
-
-## stealth xenoborg modules
 
 ## stealth xenoborg modules
 
