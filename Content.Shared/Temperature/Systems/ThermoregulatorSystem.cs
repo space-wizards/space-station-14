@@ -56,7 +56,7 @@ public sealed class ThermoregulatorSystem : EntitySystem
 
     private void UpdateThermoregulator(Entity<ThermoregulatorComponent> ent, TimeSpan curTime)
     {
-        var dt = ent.Comp.UpdateInterval.TotalSeconds;      // Time between updates
+        var dt = ent.Comp.UpdateInterval.TotalSeconds;     // Time between updates
         var T = ent.Comp.Temperature;                        // Current temperature
         var C = ent.Comp.HeatCapacity;                       // Heat capacity
         var Ts = ent.Comp.Setpoint;                          // Temperature setpoint
@@ -65,77 +65,61 @@ public sealed class ThermoregulatorSystem : EntitySystem
         var PhMax = ent.Comp.HeatingPower;                   // Max heating power
         var PcMax = ent.Comp.CoolingPower;                   // Max cooling power
 
-        // Determine heating/cooling state using hysteresis.
-        // - Heating triggers below Ts - H
-        // - Cooling triggers above Ts + H
-        var heating = false;
-        var cooling = false;
+        // Figure out which way we need to go
+        var needsHeating = T < Ts;
 
-        switch (ent.Comp.Mode)
+        // Pick the right power value and direction multiplier
+        var maxPower = needsHeating ? PhMax : PcMax;
+        var sign = needsHeating ? 1f : -1f;
+
+        // Make sure the current mode allows us to operate in this direction
+        var modeAllows = ent.Comp.Mode == ThermoregulatorMode.Auto ||
+                         (needsHeating && ent.Comp.Mode == ThermoregulatorMode.Heating) ||
+                         (!needsHeating && ent.Comp.Mode == ThermoregulatorMode.Cooling);
+
+        // Apply hysteresis to avoid rapid on/off cycling
+        // If already active, stay on until we cross the setpoint
+        // If inactive, don't turn on until we're H degrees away from setpoint
+        var active = false;
+        if (modeAllows)
         {
-            case ThermoregulatorMode.Auto:
-                // Handle both heating and cooling
-                heating = (ent.Comp.ActiveMode == ThermoregulatorActiveMode.Heating && T < Ts) ||
-                          (ent.Comp.ActiveMode != ThermoregulatorActiveMode.Heating && T <= Ts - H);
+            var expectedActiveMode = needsHeating ? ThermoregulatorActiveMode.Heating : ThermoregulatorActiveMode.Cooling;
+            var alreadyActive = ent.Comp.ActiveMode == expectedActiveMode;
+            var threshold = Ts + (needsHeating ? -H : H);
+            var crossedThreshold = needsHeating ? T <= threshold : T >= threshold;
+            var stillNeeded = needsHeating ? T < Ts : T > Ts;
 
-                cooling = (ent.Comp.ActiveMode == ThermoregulatorActiveMode.Cooling && T > Ts) ||
-                          (ent.Comp.ActiveMode != ThermoregulatorActiveMode.Cooling && T >= Ts + H);
-                break;
-
-            case ThermoregulatorMode.Heating:
-                heating = (ent.Comp.ActiveMode == ThermoregulatorActiveMode.Heating && T < Ts) ||
-                          (ent.Comp.ActiveMode != ThermoregulatorActiveMode.Heating && T <= Ts - H);
-                break;
-
-            case ThermoregulatorMode.Cooling:
-                cooling = (ent.Comp.ActiveMode == ThermoregulatorActiveMode.Cooling && T > Ts) ||
-                          (ent.Comp.ActiveMode != ThermoregulatorActiveMode.Cooling && T >= Ts + H);
-                break;
+            active = (alreadyActive && stillNeeded) || (!alreadyActive && crossedThreshold);
         }
 
-        // Compute distance from the setpoint
+        // Scale power based on how far we are from the setpoint
+        // Quadratic ramp gives smooth control near the target
         var distance = MathF.Abs(T - Ts);
-
-        // Compute a power scale between 0 and 1 using a nonlinear (quadratic) ramp:
-        // This gives us a smooth curve: very low power near the hysteresis threshold,
-        // and high power as you get farther from the setpoint.
         var raw = Math.Clamp((distance - H) / (SB - H), 0f, 1f);
-        var scale = raw * raw; // quadratic response
+        var scale = raw * raw;
 
-        // If we're heating or cooling and the scaled power is too low (near zero),
-        // clamp to a small minimum (10%) so that the system doesn't stall just outside the deadband.
-        if ((heating || cooling) && scale < 0.1f)
+        // Minimum 10% power when active to avoid stalling
+        if (active && scale < 0.1f)
             scale = 0.1f;
 
-        // Calculate effective heating or cooling power
-        var heatPower = heating ? PhMax * scale : 0f;
-        var coolPower = cooling ? PcMax * scale : 0f;
+        // Calculate the actual power: sign flips between heating (+) and cooling (-)
+        var power = active ? sign * maxPower * scale : 0f;
 
-        // Compute net power (positive = heating, negative = cooling)
-        var netPower = heatPower - coolPower;
-
-        // Convert net power (watts) to energy (joules) applied over Δt
-        // Q = P × Δt
-        var energy = netPower * (float) dt;
-
-        // Apply the energy to update the temperature
-        // ΔT = Q / C
+        // Convert power to temperature change via Q = P × Δt and ΔT = Q / C
+        var energy = power * (float)dt;
         var deltaT = energy / C;
         var newTemperature = T + deltaT;
 
-        // Update active state
+        // Update the active state for the UI
         var newState = ThermoregulatorActiveMode.Idle;
-        if (heating)
-            newState = ThermoregulatorActiveMode.Heating;
-        else if (cooling)
-            newState = ThermoregulatorActiveMode.Cooling;
+        if (active)
+            newState = needsHeating ? ThermoregulatorActiveMode.Heating : ThermoregulatorActiveMode.Cooling;
 
-        if (!MathHelper.CloseTo(T, newTemperature))
-        {
-            ent.Comp.Temperature = newTemperature;
-            DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.Temperature));
-        }
+        // Update temperature but DON'T dirty it yet - event handlers might modify it
+        var originalTemperature = ent.Comp.Temperature;
+        ent.Comp.Temperature = newTemperature;
 
+        // Update active mode
         if (ent.Comp.ActiveMode != newState)
         {
             ent.Comp.ActiveMode = newState;
@@ -145,8 +129,15 @@ public sealed class ThermoregulatorSystem : EntitySystem
         ent.Comp.NextUpdate = curTime + ent.Comp.UpdateInterval;
         DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.NextUpdate));
 
+        // Raise event - handlers may further modify Temperature
         var ev = new ThermoregulatorUpdatedEvent(ent.Comp);
         RaiseLocalEvent(ent, ref ev);
+
+        // Now dirty Temperature once with the final value (after all modifications)
+        if (!MathHelper.CloseTo(originalTemperature, ent.Comp.Temperature))
+        {
+            DirtyField(ent.AsNullable(), nameof(ThermoregulatorComponent.Temperature));
+        }
     }
 
     [PublicAPI]
@@ -158,20 +149,23 @@ public sealed class ThermoregulatorSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        TransferHeatFromEntity(ent.Comp.HeatCapacity,
-            ref ent.Comp.Temperature,
+        var (newRegTemp, newTemp) = TransferHeatFromEntity(
+            ent.Comp.HeatCapacity,
+            ent.Comp.Temperature,
             heatCapacity,
-            ref temperature,
+            temperature,
             (float) ent.Comp.UpdateInterval.TotalSeconds);
-        DirtyField(ent, nameof(ThermoregulatorComponent.Temperature));
+
+        ent.Comp.Temperature = newRegTemp;
+        temperature = newTemp;
     }
 
     [PublicAPI]
-    public void TransferHeatFromEntity(
+    public (float regulatorTemperature, float temperature) TransferHeatFromEntity(
         float regulatorHeatCapacity,
-        ref float regulatorTemperature,
+        float regulatorTemperature,
         float heatCapacity,
-        ref float temperature,
+        float temperature,
         float deltaTime,
         float thermalConductivity = DefaultThermalConductivity)
     {
@@ -196,8 +190,10 @@ public sealed class ThermoregulatorSystem : EntitySystem
         // ΔT = ΔQ / C   (change in temperature = heat / heat capacity)
         //
         // One body gains heat, the other loses it.
-        regulatorTemperature += heatFlow / C1;
-        temperature           -= heatFlow / C2;
+        var newRegulatorTemperature = T1 + heatFlow / C1;
+        var newTemperature = T2 - heatFlow / C2;
+
+        return (newRegulatorTemperature, newTemperature);
     }
 
     /// <summary>

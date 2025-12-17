@@ -17,6 +17,8 @@
   - type: ContainerContainer
     containers:
       beakerSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
   - type: ItemSlots
     slots:
       beakerSlot:
