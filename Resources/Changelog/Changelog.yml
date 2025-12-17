@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Quantum-cross
-  changes:
-  - message: Fixed pinpointer arrow not being centered properly.
-    type: Fix
-  id: 8809
-  time: '2025-07-25T19:46:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38657
 - author: PJB3005
   changes:
   - message: Made most plushie sounds quieter, and made plushies slower to use.
@@ -3918,3 +3911,12 @@
   id: 9309
   time: '2025-12-17T19:33:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35071
+- author: Centronias
+  changes:
+  - message: Borgs with rechargable ballistic weapons (e.g. Syndicate Assault Borgs)
+      no longer lose their entire magazine upon being EMP'd. The EMP still disables
+      the ammo recharge for its effective duration.
+    type: Tweak
+  id: 9310
+  time: '2025-12-17T23:04:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38537
