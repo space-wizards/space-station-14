@@ -1,10 +1,14 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Wieldable;
+using Content.Shared.Wieldable.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -15,7 +19,7 @@ public abstract partial class SharedGunSystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-
+    [Dependency] private readonly SharedWieldableSystem _wieldable = default!;
 
     protected virtual void InitializeBallistic()
     {
@@ -28,6 +32,8 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, GetVerbsEvent<Verb>>(OnBallisticVerb);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, InteractUsingEvent>(OnBallisticInteractUsing);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractUsingEvent>(OnBallisticAfterInteractUsing);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, SmartEquipWithItemAttemptEvent>(OnSmartEquipWithItemAttempt);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
     }
@@ -62,28 +68,70 @@ public abstract partial class SharedGunSystem
         DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
     }
 
-    private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
+    private void OnBallisticAfterInteract(Entity<BallisticAmmoProviderComponent> ent, ref AfterInteractEvent args)
     {
         if (args.Handled ||
-            !component.MayTransfer ||
-            !Timing.IsFirstTimePredicted ||
+            !ent.Comp.MayTransfer ||
             args.Target == null ||
             args.Used == args.Target ||
             Deleted(args.Target) ||
             !TryComp<BallisticAmmoProviderComponent>(args.Target, out var targetComponent) ||
             targetComponent.Whitelist == null)
-        {
             return;
-        }
 
         args.Handled = true;
 
-        // Continuous loading
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.FillDelay, new AmmoFillDoAfterEvent(), used: uid, target: args.Target, eventTarget: uid)
+        ReloadDoAfter(ent, args.User, args.Target.Value);
+    }
+
+    private void OnBallisticAfterInteractUsing(Entity<BallisticAmmoProviderComponent> ent, ref AfterInteractUsingEvent args)
+    {
+        if (args.Handled
+            || !HasComp<BallisticAmmoProviderComponent>(args.Used)
+            || args.Target == null
+            || args.Used == args.Target
+            || Deleted(args.Target)
+            || ent.Comp.ReloadFromClothing == false)
+            return;
+
+        args.Handled = true;
+
+        if (!TryComp<ClothingComponent>(args.Target, out var clothing)
+            || clothing.InSlot == null
+            || clothing.InSlotFlag == SlotFlags.POCKET)
+            return;
+
+        ReloadDoAfter(ent, args.User, args.Used);
+    }
+
+    private void OnSmartEquipWithItemAttempt(Entity<BallisticAmmoProviderComponent> ent, ref SmartEquipWithItemAttemptEvent args)
+    {
+        if (ent.Comp.ReloadFromClothing == false
+            || !HasComp<BallisticAmmoProviderComponent>(args.HeldItem)
+            || !TryComp<ClothingComponent>(ent.Owner, out var clothing)
+            || clothing.InSlot == null
+            || clothing.InSlotFlag == SlotFlags.POCKET)
+            return;
+
+        ReloadDoAfter(ent, args.User, args.HeldItem);
+    }
+
+    private void ReloadDoAfter(Entity<BallisticAmmoProviderComponent> used, EntityUid user, EntityUid target)
+    {
+         if (TryComp<WieldableComponent>(target, out var targetComponent))
+         {
+             // If the user is wielding their weapon, unwield it to reload.
+             if (targetComponent.Wielded)
+                 _wieldable.TryUnwield(target, targetComponent, user);
+         }
+
+         // Continuous loading
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, used.Comp.FillDelay, new AmmoFillDoAfterEvent(), used: used.Owner, target: target, eventTarget: used.Owner)
         {
             BreakOnMove = true,
             BreakOnDamage = false,
             NeedHand = true,
+            RequireUnwielded = true,
         });
     }
 
