@@ -1,20 +1,21 @@
 - type: entity
-  id: Girder
+  abstract: true
   parent: BaseStructureDynamic
-  name: girder
-  description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
+  id: BaseGirder
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
   components:
-  - type: Sprite
-    sprite: Structures/Girders/girder.rsi
-  - type: Icon
-    sprite: Structures/Girders/girder.rsi
-    state: full
-  - type: IconSmooth
-    key: walls
-    base: girder
+  - type: InteractionOutline
   - type: Transform
     anchored: true
     noRot: false
+  - type: PlacementReplacement
+    key: walls
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -28,13 +29,24 @@
         - MachineMask
         layer:
         - GlassAirlockLayer
-  - type: InteractionOutline
+
+- type: entity
+  id: Girder
+  parent: BaseGirder
+  name: girder
+  description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
+  components:
+  - type: Sprite
+    sprite: Structures/Girders/girder.rsi
+  - type: Icon
+    sprite: Structures/Girders/girder.rsi
+    state: full
+  - type: IconSmooth
+    key: walls
+    base: girder
   - type: Construction
     graph: Girder
     node: girder
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -62,7 +74,7 @@
 
 - type: entity
   id: ReinforcedGirder
-  parent: Girder
+  parent: BaseGirder
   name: reinforced girder
   description: A large structural assembly made out of metal and plasteel; It requires a layer of plasteel before it can be considered a reinforced wall.
   components:
@@ -79,38 +91,38 @@
     node: reinforcedGirder
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              SheetSteel1:
-                min: 1
-                max: 1
-              SheetPlasteel1:
-                min: 1
-                max: 1
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+          SheetPlasteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
   - type: StaticPrice
     price: 130
 
 - type: entity
-  parent: BaseStructureDynamic
   id: ClockworkGirder
+  parent: BaseGirder
   name: wall gear
   description: A large gear with mounting brackets for additional plating; This could be made into a wall with more brass plating.
   components:
@@ -120,53 +132,33 @@
   - type: Construction
     graph: ClockworkGirder
     node: clockGirder
-  - type: StaticPrice
-    price: 75
   - type: Destructible
     thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-          - !type:SpawnEntitiesBehavior
-            spawn:
-              SheetBrass1:
-                min: 1
-                max: 2
-              PartRodMetal1:
-                min: 1
-                max: 2
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-          - !type:PlaySoundBehavior
-            sound:
-              collection: MetalBreak
-  - type: Transform
-    anchored: true
-    noRot: false
-  - type: Physics
-    bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 60
-        mask:
-        - MachineMask
-        layer:
-        - GlassAirlockLayer
-  - type: InteractionOutline
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: StructuralMetallic
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetBrass1:
+            min: 1
+            max: 2
+          PartRodMetal1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: StaticPrice
+    price: 75
