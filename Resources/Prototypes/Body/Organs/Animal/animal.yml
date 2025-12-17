@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseAnimalOrganUnGibbable
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: BaseAnimalOrganUnGibbable
   components:
   - type: Organ
   - type: Edible
@@ -24,15 +24,15 @@
       - Meat
 
 - type: entity
-  id: BaseAnimalOrgan
   parent: BaseAnimalOrganUnGibbable
+  id: BaseAnimalOrgan
   abstract: true
   components:
   - type: Gibbable
 
 - type: entity
-  id: OrganAnimalLungs
   parent: BaseAnimalOrgan
+  id: OrganAnimalLungs
   name: animal lungs
   categories: [ HideSpawnMenu ]
   components:
@@ -65,8 +65,8 @@
     heldPrefix: lungs
 
 - type: entity
-  id: OrganAnimalStomach
   parent: BaseAnimalOrgan
+  id: OrganAnimalStomach
   name: animal stomach
   categories: [ HideSpawnMenu ]
   components:
@@ -94,8 +94,8 @@
     heldPrefix: stomach
 
 - type: entity
-  id: OrganMouseStomach
   parent: OrganAnimalStomach
+  id: OrganMouseStomach
   categories: [ HideSpawnMenu ]
   components:
   - type: SolutionContainerManager
@@ -112,8 +112,26 @@
     heldPrefix: stomach
 
 - type: entity
-  id: OrganAnimalLiver
+  parent: OrganAnimalStomach
+  id: OrganTinyAnimalStomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 1
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
+  - type: Item
+    size: Small
+    heldPrefix: stomach
+
+- type: entity
   parent: BaseAnimalOrgan
+  id: OrganAnimalLiver
   name: animal liver
   categories: [ HideSpawnMenu ]
   components:
@@ -130,8 +148,8 @@
     heldPrefix: liver
 
 - type: entity
-  id: OrganAnimalHeart
   parent: BaseAnimalOrgan
+  id: OrganAnimalHeart
   name: animal heart
   categories: [ HideSpawnMenu ]
   components:
@@ -150,8 +168,8 @@
     heldPrefix: heart
 
 - type: entity
-  id: OrganAnimalKidneys
   parent: BaseAnimalOrgan
+  id: OrganAnimalKidneys
   name: animal kidneys
   categories: [ HideSpawnMenu ]
   components:
