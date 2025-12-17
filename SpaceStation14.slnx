@@ -41,6 +41,15 @@
   <Project Path="Content.Tools/Content.Tools.csproj" />
   <Project Path="Content.YAMLLinter/Content.YAMLLinter.csproj" />
   <Project Path="Pow3r/Pow3r.csproj" />
+  <Folder Name="/RobustToolbox/.github/workflows/">
+    <File Path="RobustToolbox/.github/workflows/benchmarks.yml" />
+    <File Path="RobustToolbox/.github/workflows/build-all-configurations.yml" />
+    <File Path="RobustToolbox/.github/workflows/build-docfx.yml" />
+    <File Path="RobustToolbox/.github/workflows/build-test.yml" />
+    <File Path="RobustToolbox/.github/workflows/codeql-analysis.yml" />
+    <File Path="RobustToolbox/.github/workflows/publish-client.yml" />
+    <File Path="RobustToolbox/.github/workflows/test-content.yml" />
+  </Folder>
   <Folder Name="/RobustToolbox/Imports/">
     <File Path="RobustToolbox/Imports/Benchmarks.props" />
     <File Path="RobustToolbox/Imports/Client.props" />
@@ -49,6 +58,7 @@
     <File Path="RobustToolbox/Imports/Server.props" />
     <File Path="RobustToolbox/Imports/Shared.props" />
     <File Path="RobustToolbox/Imports/Testing.props" />
+    <File Path="RobustToolbox/Imports/WebView.props" />
   </Folder>
   <Folder Name="/RobustToolbox/MSBuild/">
     <File Path="RobustToolbox/MSBuild/Robust.Analyzers.targets" />
