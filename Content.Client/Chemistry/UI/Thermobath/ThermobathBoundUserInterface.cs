@@ -28,7 +28,6 @@ public sealed class ThermobathBoundUserInterface : BoundUserInterface, IBuiPreTi
         base.Open();
 
         _window = this.CreateWindow<ThermobathMenu>();
-        _window.OpenCentered();
         _window.SetInfoFromEntity(EntMan, Owner);
 
         _window.OnPowerChanged += powered => SendPredictedMessage(new ThermobathPowerChangedMessage(powered));
