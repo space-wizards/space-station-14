@@ -1,21 +1,14 @@
-using Content.Shared.Power.EntitySystems;
-
 namespace Content.Shared.Power.Components;
 
 /// <summary>
-/// <para>Generic component for giving entities "idle" and "working" power states.</para>
-///
-/// <para>Entities with this component simply tell the associated <see cref="PowerStateSystem"/>
-/// that they would like to change their working state, with the system just changing the power draw.
-/// Intended to cut down on boilerplate for simple machines.</para>
-///
+/// Generic component for giving entities "idle" and "working" power states.
+/// </summary>
 /// <remarks><para>Entities that have more complex power draw
 /// (ex. a thermomachine whose heating power is directly tied to its power consumption)
 /// should just directly set their load on the <see cref="SharedApcPowerReceiverComponent"/>.</para>
 ///
 /// <para>This is also applicable if you would like to add
 /// more complex power behavior that is tied to a generic component.</para></remarks>
-/// </summary>
 [RegisterComponent]
 public sealed partial class PowerStateComponent : Component
 {

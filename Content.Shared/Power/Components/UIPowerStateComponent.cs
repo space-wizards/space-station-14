@@ -5,7 +5,7 @@ namespace Content.Shared.Power.Components;
 /// a UI on the machine is open. Requires <see cref="PowerStateComponent"/>.
 /// </summary>
 [RegisterComponent]
-public sealed partial class UiPowerStateComponent : Component
+public sealed partial class UIPowerStateComponent : Component
 {
     /// <summary>
     /// List of UI keys that will trigger the working state.
