@@ -90,15 +90,11 @@ public sealed partial class SpriteDirectionLayeringSystem : EntitySystem
                 {
                     if (_sprite.LayerMapTryGet((entity.Owner, sprite), enumkey, out var index, false))
                         linkedList.AddLast(index);
-                    else
-                        Log.Warning($"Attempted to add the layer map {enumkey.ToString()} to a layer order override for entity {entity.Owner.ToString()}, but the sprite does not have that layer map!");
                 }
                 else if (parsedKey is string stringkey)
                 {
                     if (_sprite.LayerMapTryGet((entity.Owner, sprite), stringkey, out var index, false))
                         linkedList.AddLast(index);
-                    else
-                        Log.Warning($"Attempted to add the layer map {stringkey} to a layer order override for entity {entity.Owner.ToString()}, but the sprite does not have that layer map!");
                 }
             }
 
