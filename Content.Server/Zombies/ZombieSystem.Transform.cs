@@ -193,7 +193,7 @@ public sealed partial class ZombieSystem
             zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
             zombiecomp.BeforeZombifiedEyeColor = huApComp.EyeColor;
             zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
-            if (TryComp<BloodstreamComponent>(target, out var stream) && stream.BloodReagents is { } reagents)
+            if (TryComp<BloodstreamComponent>(target, out var stream) && stream.BloodReferenceSolution is { } reagents)
                 zombiecomp.BeforeZombifiedBloodReagents = reagents.Clone();
 
             _humanoidAppearance.SetSkinColor(target, zombiecomp.SkinColor, verify: false, humanoid: huApComp);
