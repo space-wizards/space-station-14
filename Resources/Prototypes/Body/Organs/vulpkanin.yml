@@ -1,0 +1,23 @@
+- type: entity
+  id: OrganVulpkaninStomach
+  parent: OrganAnimalStomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Fruit
+      - Meat
+      - Pill
+      - Crayon
+      - Paper
+      - ReptilianFood           # Include this to be safe?
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
