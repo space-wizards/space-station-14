@@ -248,6 +248,7 @@
   - type: Storage
     whitelist:
       tags:
+      - PlantAnalyzer
       - PlantSampleTaker
       - BotanyShovel
       - BotanyHoe
@@ -268,6 +269,10 @@
         whitelist:
           tags:
           - BotanyHatchet
+      hydro:
+        whitelist:
+          tags:
+          - PlantAnalyzer
       hoe:
         whitelist:
           tags:
