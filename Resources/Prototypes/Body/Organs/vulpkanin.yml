@@ -11,7 +11,6 @@
       - Pill
       - Crayon
       - Paper
-      - ReptilianFood           # Include this to be safe?
   - type: SolutionContainerManager
     solutions:
       stomach:

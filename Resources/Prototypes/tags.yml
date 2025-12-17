@@ -1189,7 +1189,7 @@
   id: RemoteSignaller # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
-  id: ReptilianFood # SpecialDigestible: OrganReptilianStomach, OrganVulpkaninStomach
+  id: ReptilianFood # SpecialDigestible: OrganReptilianStomach
 
 - type: Tag
   id: RifleStock # ConstructionGraph: ImprovisedShotgunGraph
