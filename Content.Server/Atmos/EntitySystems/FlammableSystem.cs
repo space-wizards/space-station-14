@@ -221,8 +221,8 @@ namespace Content.Server.Atmos.EntitySystems
             var mass2 = 1f;
             if (_physicsQuery.TryComp(uid, out var physics) && _physicsQuery.TryComp(otherUid, out var otherPhys))
             {
-                mass1 = physics.Mass + 0.1f;   // Plus 0.1 to avoid possible div/0
-                mass2 = otherPhys.Mass + 0.1f;
+                mass1 = physics.Mass;
+                mass2 = otherPhys.Mass;
             }
 
             // Get the average of both entity's firestacks * mass
