@@ -187,7 +187,7 @@
     Piercing: 0.8
     Cold: 0.8
     Heat: 0.2
-    Holy: 1.5
+    Holy: 3
   flatReductions:
     Heat: 3
 
@@ -225,7 +225,9 @@
     Poison: 0.0
     Radiation: 0.0
 
-# immune to everything except physical and heat damage; vulnerable to holy damage because they're undead, but not as vulnerable as a ghost or demon would be
+# Immune to everything except brute and heat damage.
+# Also vulnerable to holy damage because they're undead (BiologicalMetaphysical damageContainer), but not as vulnerable as a spirit or demon would be.
+# If we get non-Holy metaphysical damage types in the future, this set might need to be adjusted to provide immunity to them (depends on what exactly the new types are).
 - type: damageModifierSet
   id: Skeleton
   coefficients:
@@ -238,7 +240,6 @@
     Asphyxiation: 0.0
     Bloodloss: 0.0
     Cellular: 0.0
-    Holy: 0.5
   flatReductions:
     Blunt: 5
 
@@ -293,7 +294,7 @@
     Radiation: 0.0
     Shock: 0.8
     Bloodloss: 0.4
-    Holy: 1
+    Holy: 2
 
 - type: damageModifierSet
   id: Cockroach
@@ -331,7 +332,7 @@
 - type: damageModifierSet
   id: ManifestedSpirit
   coefficients:
-    Holy: 2
+    Holy: 4
 
 # Vulps get more heat damage because fur
 - type: damageModifierSet

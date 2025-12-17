@@ -18,7 +18,7 @@
     gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
     damageContainer: BiologicalMetaphysical # Allows them to take Holy damage
-    damageModifierSet: Skeleton # If we get non-Holy metaphysical damage types in the future, the Skeleton set might need to be adjusted to provide immunity to them (depends on what exactly the new types are)
+    damageModifierSet: Skeleton
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:

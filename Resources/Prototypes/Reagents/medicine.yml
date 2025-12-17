@@ -1178,7 +1178,7 @@
         ignoreResistances: false
         damage:
           types:
-            Holy: 0.5
+            Holy: 0.25
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1
