@@ -1131,8 +1131,6 @@
     yield: 2
     potency: 20
     growthStages: 3
-    yield: 2
-    potency: 20
   - type: BasicGrowth
     waterConsumption: 0.4
   - type: AtmosphericGrowth

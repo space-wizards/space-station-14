@@ -32,12 +32,11 @@ public sealed class SeedExtractorSystem : EntitySystem
         if (produce.PlantProtoId == null)
             return;
 
-        var protoId = produce.PlantProtoId;
         ComponentRegistry? snapshot = null;
         if (produce.PlantData != null)
             snapshot = produce.PlantData;
 
-        if (snapshot != null && _botany.TryGetPlantComponent<PlantTraitsComponent>(snapshot, protoId, out var traits) && traits.Seedless)
+        if (_botany.TryGetPlantComponent<PlantTraitsComponent>(snapshot, produce.PlantProtoId, out var traits) && traits.Seedless)
         {
             _popup.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
                 args.User, PopupType.MediumCaution);
@@ -55,10 +54,7 @@ public sealed class SeedExtractorSystem : EntitySystem
 
         for (var i = 0; i < amount; i++)
         {
-            if (snapshot == null)
-                _botany.SpawnSeedPacketFromSnapshot(null, protoId.Value, coords, args.User);
-            else
-                _botany.SpawnSeedPacketFromSnapshot(snapshot, protoId.Value, coords, args.User);
+            _botany.SpawnSeedPacketFromSnapshot(snapshot, produce.PlantProtoId.Value, coords, args.User);
         }
     }
 }
