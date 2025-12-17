@@ -51,6 +51,18 @@
 
 # modules
 
+## engi xenoborg modules
+
+- type: latheRecipe
+  parent: BaseXenoborgModulesRecipe
+  id: XenoborgModuleDoorControlRecipe
+  result: XenoborgModuleDoorControl
+  materials:
+    Steel: 1500
+    Glass: 1500
+
+## heavy xenoborg modules
+
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleTileGunRecipe
@@ -64,10 +76,14 @@
   id: XenoborgModuleHeavyLaserRecipe
   result: XenoborgModuleHeavyLaser
 
+## scout xenoborg modules
+
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
   id: XenoborgModuleEnergySwordRecipe
   result: XenoborgModuleEnergySword
+
+## stealth xenoborg modules
 
 - type: latheRecipe
   parent: BaseXenoborgModulesRecipe
