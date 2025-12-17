@@ -296,9 +296,9 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     private void OnMetabolismExclusion(Entity<BloodstreamComponent> ent, ref MetabolismExclusionEvent args)
     {
         // Adding all blood reagents for filtering blood in metabolizer
-        foreach (var (reagentId, _) in ent.Comp.BloodReferenceSolution)
+        foreach (var (reagent, _) in ent.Comp.BloodReferenceSolution)
         {
-            args.ReagentList.Add(reagentId.Prototype);
+            args.Reagents.Add(reagent);
         }
     }
 
@@ -424,8 +424,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             if (error > 0)
             {
                 error = FixedPoint2.Min(error, adjustedAmount);
-                var reagentToAdd = new ReagentId(referenceReagent.Prototype, GetEntityBloodData(ent));
-                bloodSolution.AddReagent(reagentToAdd, error);
+                bloodSolution.AddReagent(referenceReagent, error);
             }
             else if (error < 0)
             {
@@ -561,25 +560,34 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
         var solution = ent.Comp.BloodReferenceSolution.Clone();
         solution.ScaleSolution(currentVolume / solution.Volume);
-        solution.SetReagentData(GetEntityBloodData(ent));
         SolutionContainer.AddSolution(ent.Comp.BloodSolution.Value, solution);
     }
 
     /// <summary>
     /// Get the reagent data for blood that a specific entity should have.
     /// </summary>
-    public List<ReagentData> GetEntityBloodData(EntityUid uid)
+    public List<ReagentData> GetEntityBloodData(Entity<BloodstreamComponent?> entity)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return [];
+
+        return entity.Comp.BloodData ?? NewEntityBloodData((entity, entity.Comp));
+    }
+
+    /// <summary>
+    /// Gets new blood data for this entity and caches it in <see cref="BloodstreamComponent.BloodData"/>
+    /// </summary>
+    protected List<ReagentData> NewEntityBloodData(Entity<BloodstreamComponent> entity)
     {
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
 
-        if (TryComp<DnaComponent>(uid, out var donorComp) && donorComp.DNA != null)
+        if (TryComp<DnaComponent>(entity, out var donorComp) && donorComp.DNA != null)
             dnaData.DNA = donorComp.DNA;
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
 
         bloodData.Add(dnaData);
-
         return bloodData;
     }
 }

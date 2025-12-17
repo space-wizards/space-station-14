@@ -1,3 +1,6 @@
+using Content.Shared.Chemistry.Reagent;
+
+
 namespace Content.Shared.Body.Events;
 
 /// <summary>
@@ -5,4 +8,7 @@ namespace Content.Shared.Body.Events;
 /// blood like reagents for metabolism to skip.
 /// </summary>
 [ByRefEvent]
-public readonly record struct MetabolismExclusionEvent(List<string> ReagentList);
+public readonly record struct MetabolismExclusionEvent()
+{
+    public readonly List<ReagentId> Reagents = new();
+}
