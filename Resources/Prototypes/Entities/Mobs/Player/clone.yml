@@ -145,7 +145,6 @@
 # for plant clones
 - type: cloningSettings
   id: PlantClone
-  name: Plant Clone
   components:
   - Plant
   - PlantChemicals
@@ -162,6 +161,5 @@
 - type: cloningSettings
   id: PlantLifecycleClone
   parent: PlantClone
-  name: Plant Lifecycle Clone
   components:
   - PlantHolder
