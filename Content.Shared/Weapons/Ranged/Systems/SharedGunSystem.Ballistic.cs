@@ -384,14 +384,13 @@ public abstract partial class SharedGunSystem
     {
         var ammo = entity.Comp1;
         var refiller = entity.Comp2;
-        if (!refiller.AutoRefill ||
-            Timing.CurTime < refiller.NextAutoRefill)
+        if (Timing.CurTime < refiller.NextAutoRefill)
             return;
 
         refiller.NextAutoRefill += refiller.AutoRefillRate;
         DirtyField(entity, refiller, nameof(BallisticAmmoSelfRefillerComponent.NextAutoRefill));
 
-        if (IsFull(entity))
+        if (!refiller.AutoRefill || IsFull(entity))
             return;
 
         if (refiller.AmmoProto is not { } refillerAmmoProto)
