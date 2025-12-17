@@ -75,7 +75,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                 continue;
 
             // Blood level regulation. Must be alive.
-            TryRegulateBloodReagents(uid, bloodstream.BloodRefreshAmount);
+            TryRegulateBloodLevel(uid, bloodstream.BloodRefreshAmount);
 
             // Removes blood from the bloodstream based on bleed amount (bleed rate)
             // as well as stop their bleeding to a certain extent.
@@ -297,12 +297,17 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     {
         // Adding all blood reagents for filtering blood in metabolizer
         foreach (var (reagentId, _) in ent.Comp.BloodReferenceSolution)
+        {
             args.ReagentList.Add(reagentId.Prototype);
+        }
     }
 
     /// <summary>
-    /// Returns the current blood level as a percentage (between 0 and 1).
+    /// This returns the minimum amount of *usable* blood.
+    /// For multi reagent bloodstreams, if you have 100 of Reagent Y need 100, and 50 of Reagent X and need 100,
+    /// this will return 0.5f
     /// </summary>
+    /// <returns>Returns the current blood level as a value from 0 to <see cref="BloodstreamComponent.MaxVolumeFactor"/></returns>
     public float GetBloodLevel(Entity<BloodstreamComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp)
@@ -312,16 +317,15 @@ public abstract class SharedBloodstreamSystem : EntitySystem
             return 0.0f;
         }
 
-        float totalBloodLevel = 1.0f;
+        var totalBloodLevel = FixedPoint2.New(entity.Comp.MaxVolumeFactor); // Can't go above max volume factor...
 
         foreach (var (reagentId, quantity) in entity.Comp.BloodReferenceSolution.Contents)
         {
-            float refFraction = (float)quantity / (float)entity.Comp.BloodReferenceSolution.Volume;
-            var refReagentVolume = (float)entity.Comp.BloodReferenceSolution.Volume * refFraction;
-            totalBloodLevel *= (float)bloodSolution.GetTotalPrototypeQuantity(reagentId.Prototype) / refReagentVolume;
+            // Ideally we use a different calculation for blood pressure, this just defines how much *usable* blood you have!
+            totalBloodLevel = FixedPoint2.Min(totalBloodLevel, bloodSolution.GetTotalPrototypeQuantity(reagentId.Prototype) / quantity);
         }
 
-        return totalBloodLevel;
+        return (float)totalBloodLevel;
     }
 
     /// <summary>
@@ -357,7 +361,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     /// <returns>
     /// Solution of removed chemicals or null if none were removed.
     /// </returns>
-    public Solution? FlushChemicals(Entity<BloodstreamComponent?> ent, ProtoId<ReagentPrototype>? excludedReagentID, FixedPoint2 quantity)
+    public Solution? FlushChemicals(Entity<BloodstreamComponent?> ent, FixedPoint2 quantity, ProtoId<ReagentPrototype>? excludedReagentId = null )
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
             || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
@@ -368,84 +372,69 @@ public abstract class SharedBloodstreamSystem : EntitySystem
         for (var i = bloodSolution.Contents.Count - 1; i >= 0; i--)
         {
             var (reagentId, _) = bloodSolution.Contents[i];
-            if (!ent.Comp.BloodReferenceSolution.ContainsPrototype(reagentId.Prototype) && reagentId.Prototype != excludedReagentID)
-            {
-                var reagentFlushAmount = SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
-                flushedSolution.AddReagent(reagentId, reagentFlushAmount);
-            }
+            if (ent.Comp.BloodReferenceSolution.ContainsPrototype(reagentId.Prototype) || reagentId.Prototype == excludedReagentId)
+                continue;
+
+            var reagentFlushAmount = SolutionContainer.RemoveReagent(ent.Comp.BloodSolution.Value, reagentId, quantity);
+            flushedSolution.AddReagent(reagentId, reagentFlushAmount);
         }
 
-        if (flushedSolution.Volume == 0)
-            return null;
-
-        return flushedSolution;
+        return flushedSolution.Volume == 0 ? null : flushedSolution;
     }
 
     /// <summary>
-    ///  Attempts to modify the blood level of this entity directly.
+    /// A simple helper that tries to move blood volume up or down by a specified amount.
+    /// Blood will not go over normal volume for this entity's bloodstream.
     /// </summary>
     public bool TryModifyBloodLevel(Entity<BloodstreamComponent?> ent, FixedPoint2 amount)
     {
-        float direction = 1f; // TODO: set this to float.PositiveInfinity after saline no longer overfills
+        var reference = 1f;
 
         if (amount < 0)
         {
-            direction = 0f;
+            reference = 0f;
             amount *= -1;
         }
 
-        return TryRegulateBloodReagents(ent, amount, direction);
+        return TryRegulateBloodLevel(ent, amount, reference);
     }
 
     /// <summary>
-    /// Regulates blood reagents individuall towards <see cref="BloodstreamComponent.BloodReferenceSolution"/>'s 
-    /// quantities at a set rate.
-    /// Reference quantity can be overriden to 0.0 to always drain or 
-    /// to <see cref="float.PositiveInfinity"/> to fill up to container's brim.
+    /// Attempts to bring an entity's blood level to a modified equilibrium volume.
     /// </summary>
-    /// <remarks>
-    /// Rate must be absolute value.
-    /// </remarks>
-    public bool TryRegulateBloodReagents(Entity<BloodstreamComponent?> ent, FixedPoint2 rate, float referenceFactor = 1f)
+    /// <param name="ent">Entity whose bloodstream we're modifying.</param>
+    /// <param name="amount">The absolute maximum amount of blood we can add or remove.</param>
+    /// <param name="referenceFactor">The modifier for an entity's blood equilibrium, try to hit an entity's default blood volume multiplied by this value.</param>
+    /// <remarks>This CANNOT go above maximum blood volume!</remarks>
+    /// <returns>False if we were unable to regulate blood level. This may return true even if blood level doesn't change!</returns>
+    public bool TryRegulateBloodLevel(Entity<BloodstreamComponent?> ent, FixedPoint2 amount, float referenceFactor = 1f)
     {
         if (!Resolve(ent, ref ent.Comp, logMissing: false)
-            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution))
+            || !SolutionContainer.ResolveSolution(ent.Owner, ent.Comp.BloodSolutionName, ref ent.Comp.BloodSolution, out var bloodSolution)
+            || amount == 0)
             return false;
 
-        referenceFactor = MathF.Min(referenceFactor, ent.Comp.MaxVolumeFactor);
+        referenceFactor = Math.Clamp(referenceFactor, 0f, ent.Comp.MaxVolumeFactor);
 
         foreach (var (referenceReagent, referenceQuantity) in ent.Comp.BloodReferenceSolution)
         {
-            var actualQuantity = bloodSolution.GetTotalPrototypeQuantity(referenceReagent.Prototype);
-            var error = referenceQuantity * referenceFactor - actualQuantity;
+            var error = referenceQuantity * referenceFactor - bloodSolution.GetTotalPrototypeQuantity(referenceReagent.Prototype);
+            var adjustedAmount = amount * referenceQuantity / ent.Comp.BloodReferenceSolution.Volume;
 
-            float referenceFraction = 1f;
-            if (FixedPoint2.Abs(error) > rate)
-                referenceFraction = (float)referenceQuantity / (float)ent.Comp.BloodReferenceSolution.Volume;
-
-            if (error >= 0)
+            if (error > 0)
             {
-                error = FixedPoint2.Min(error, rate * referenceFraction);
-                ReagentId reagentToAdd = new ReagentId(referenceReagent.Prototype, GetEntityBloodData(ent));
+                error = FixedPoint2.Min(error, adjustedAmount);
+                var reagentToAdd = new ReagentId(referenceReagent.Prototype, GetEntityBloodData(ent));
                 bloodSolution.AddReagent(reagentToAdd, error);
             }
-            else
+            else if (error < 0)
             {
-                error *= -1;
-                error = FixedPoint2.Min(error, rate * referenceFraction);
-                for (int i = bloodSolution.Contents.Count - 1; i >= 0; i--)
-                {
-                    var (reagentId, _) = bloodSolution.Contents[i];
-                    if (reagentId.Prototype == referenceReagent.Prototype)
-                    {
-                        error -= bloodSolution.RemoveReagent(reagentId, error);
-
-                        if (error <= 0)
-                            break;
-                    }
-                }
+                // invert the error since we're removing reagents...
+                error = FixedPoint2.Min( -error, adjustedAmount);
+                bloodSolution.RemoveReagent(referenceReagent, error);
             }
         }
+
         return true;
     }
 

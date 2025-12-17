@@ -110,7 +110,7 @@ public sealed class VomitSystem : EntitySystem
             // Flushes small portion of the chemicals removed from the bloodstream stream
             if (_solutionContainer.ResolveSolution(uid, bloodStream.BloodSolutionName, ref bloodStream.BloodSolution))
             {
-                var vomitChemstreamAmount = _bloodstream.FlushChemicals((uid, bloodStream), null, vomitAmount);
+                var vomitChemstreamAmount = _bloodstream.FlushChemicals((uid, bloodStream), vomitAmount);
 
                 if (vomitChemstreamAmount != null)
                 {
