@@ -5,12 +5,16 @@
   suffix: Empty
   description: A spray bottle with an unscrewable top.
   components:
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: spray
-    ignoreEmpty: true
+    destroyOnEmpty: false
+    utensil: None
+    transferAmount: 10
     useSound:
       path: /Audio/Effects/spray3.ogg
-    transferAmount: 10
+      params:
+        variation: 0.2
   - type: Tag
     tags:
     - Spray
@@ -42,6 +46,7 @@
     solution: spray
   - type: ExaminableSolution
     solution: spray
+    exactVolume: true
 
 - type: entity
   name: mega spray bottle
@@ -83,11 +88,10 @@
           Quantity: 100
 
 - type: entity
-  name: space cleaner
   description: BLAM!-brand non-foaming space cleaner!
   id: SprayBottleSpaceCleaner
   parent: SprayBottle
-  suffix: ""
+  suffix: Space Cleaner
   components:
   - type: SolutionContainerManager
     solutions:
@@ -96,9 +100,27 @@
         reagents:
         - ReagentId: SpaceCleaner
           Quantity: 100
+  - type: Label
+    currentLabel: space cleaner
   - type: Tag
     tags:
       - Spray
+
+- type: entity
+  parent: MegaSprayBottle
+  id: MegaSprayBottleSpaceCleaner
+  description: BLAM!-brand non-foaming space cleaner, now in a bigger package for those huge blood puddles!
+  suffix: Space Cleaner
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 250
+        reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 250
+  - type: Label
+    currentLabel: space cleaner
 
 - type: entity
   parent: SprayBottle
@@ -189,3 +211,17 @@
         mask:
         - FullTileMask
         - Opaque
+
+- type: entity
+  parent: Vapor
+  id: FlowerVapor
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/extinguisherSpray.rsi
+    layers:
+    - state: extinguish
+      map: [ "enum.VaporVisualLayers.Base" ]
+  - type: VaporVisuals
+    animationTime: 0.8
+    animationState: extinguish

@@ -1,0 +1,16 @@
+- type: paintableGroup
+  cost: 2
+  id: Canisters
+  defaultStyle: storage
+  styles:
+    air: AirCanister
+    ammonia: AmmoniaCanister
+    carbon-dioxide: CarbonDioxideCanister
+    frezon: FrezonCanister
+    nitrogen: NitrogenCanister
+    nitrous-oxide: NitrousOxideCanister
+    oxygen: OxygenCanister
+    plasma: PlasmaCanister
+    storage: StorageCanister
+    tritium: TritiumCanister
+    water-vapor: WaterVaporCanister

@@ -31,14 +31,14 @@ public sealed partial class ExplosionSystem
 
         foreach (var tileRef in _map.GetAllTiles(ev.EntityUid, grid))
         {
-            if (IsEdge(grid, tileRef.GridIndices, out var dir))
+            if (IsEdge((ev.EntityUid, grid), tileRef.GridIndices, out var dir))
                 edges.Add(tileRef.GridIndices, dir);
         }
     }
 
     private void OnGridRemoved(GridRemovalEvent ev)
     {
-        _airtightMap.Remove(ev.EntityUid);
+        OnAirtightGridRemoved(ev.EntityUid);
         _gridEdges.Remove(ev.EntityUid);
 
         // this should be a small enough set that iterating all of them is fine
@@ -102,7 +102,7 @@ public sealed partial class ExplosionSystem
                 continue;
             }
 
-            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+            var xforms = GetEntityQuery<TransformComponent>();
             var xform = xforms.GetComponent(gridToTransform);
             var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = _transformSystem.GetWorldPositionRotationMatrixWithInv(xform, xforms);
 
@@ -233,14 +233,14 @@ public sealed partial class ExplosionSystem
     /// </summary>
     private void OnTileChanged(ref TileChangedEvent ev)
     {
+        if (!TryComp(ev.Entity, out MapGridComponent? grid))
+            return;
+
         foreach (var change in ev.Changes)
         {
             // only need to update the grid-edge map if a tile was added or removed from the grid.
             if (!change.NewTile.IsEmpty && !change.OldTile.IsEmpty)
-                return;
-
-            if (!TryComp(ev.Entity, out MapGridComponent? grid))
-                return;
+                continue;
 
             if (!_gridEdges.TryGetValue(ev.Entity, out var edges))
             {
@@ -258,14 +258,14 @@ public sealed partial class ExplosionSystem
                 {
                     var neighbourIndex = change.GridIndices + NeighbourVectors[i];
 
-                    if (_mapSystem.TryGetTileRef(ev.Entity, grid, neighbourIndex, out var neighbourTile) && !neighbourTile.Tile.IsEmpty)
+                    if (_map.TryGetTileRef(ev.Entity, grid, neighbourIndex, out var neighbourTile) && !neighbourTile.Tile.IsEmpty)
                     {
                         var oppositeDirection = (NeighborFlag)(1 << ((i + 4) % 8));
                         edges[neighbourIndex] = edges.GetValueOrDefault(neighbourIndex) | oppositeDirection;
                     }
                 }
 
-                return;
+                continue;
             }
 
             // the tile is not empty space, but was previously. So update directly adjacent neighbours, which may no longer
@@ -290,7 +290,7 @@ public sealed partial class ExplosionSystem
             }
 
             // finally check if the new tile is itself an edge tile
-            if (IsEdge(grid, change.GridIndices, out var spaceDir))
+            if (IsEdge((ev.Entity, grid), change.GridIndices, out var spaceDir))
                 edges.Add(change.GridIndices, spaceDir);
         }
     }
@@ -302,12 +302,12 @@ public sealed partial class ExplosionSystem
     ///     Optionally ignore a specific Vector2i. Used by <see cref="OnTileChanged"/> when we already know that a
     ///     given tile is not space. This avoids unnecessary TryGetTileRef calls.
     /// </remarks>
-    private bool IsEdge(MapGridComponent grid, Vector2i index, out NeighborFlag spaceDirections)
+    private bool IsEdge(Entity<MapGridComponent> grid, Vector2i index, out NeighborFlag spaceDirections)
     {
         spaceDirections = NeighborFlag.Invalid;
         for (var i = 0; i < NeighbourVectors.Length; i++)
         {
-            if (!grid.TryGetTileRef(index + NeighbourVectors[i], out var neighborTile) || neighborTile.Tile.IsEmpty)
+            if (!_map.TryGetTileRef(grid, grid.Comp, index + NeighbourVectors[i], out var neighborTile) || neighborTile.Tile.IsEmpty)
                 spaceDirections |= (NeighborFlag) (1 << i);
         }
 

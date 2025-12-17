@@ -10,7 +10,6 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
     [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly LightBehaviorSystem _lightBehavior = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
     {
@@ -54,37 +53,37 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
                 comp.PlayingStream = _audioSystem.PlayPvs(
                     comp.LoopedSound, uid)?.Entity;
 
-                if (_sprite.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out var layerIdx, true))
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out var layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateLit))
-                        _sprite.LayerSetRsiState((uid, args.Sprite), layerIdx, comp.IconStateLit);
+                        SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIdx, comp.IconStateLit);
                     if (!string.IsNullOrWhiteSpace(comp.SpriteShaderLit))
                         args.Sprite.LayerSetShader(layerIdx, comp.SpriteShaderLit);
                     else
                         args.Sprite.LayerSetShader(layerIdx, null, null);
                     if (comp.GlowColorLit.HasValue)
-                        _sprite.LayerSetColor((uid, args.Sprite), layerIdx, comp.GlowColorLit.Value);
-                    _sprite.LayerSetVisible((uid, args.Sprite), layerIdx, true);
+                        SpriteSystem.LayerSetColor((uid, args.Sprite), layerIdx, comp.GlowColorLit.Value);
+                    SpriteSystem.LayerSetVisible((uid, args.Sprite), layerIdx, true);
                 }
 
                 if (comp.GlowColorLit.HasValue)
-                    _sprite.LayerSetColor((uid, args.Sprite), ExpendableLightVisualLayers.Glow, comp.GlowColorLit.Value);
-                _sprite.LayerSetVisible((uid, args.Sprite), ExpendableLightVisualLayers.Glow, true);
+                    SpriteSystem.LayerSetColor((uid, args.Sprite), ExpendableLightVisualLayers.Glow, comp.GlowColorLit.Value);
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), ExpendableLightVisualLayers.Glow, true);
 
                 break;
             case ExpendableLightState.Dead:
                 comp.PlayingStream = _audioSystem.Stop(comp.PlayingStream);
-                if (_sprite.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out layerIdx, true))
+                if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))
-                        _sprite.LayerSetRsiState((uid, args.Sprite), layerIdx, comp.IconStateSpent);
+                        SpriteSystem.LayerSetRsiState((uid, args.Sprite), layerIdx, comp.IconStateSpent);
                     if (!string.IsNullOrWhiteSpace(comp.SpriteShaderSpent))
                         args.Sprite.LayerSetShader(layerIdx, comp.SpriteShaderSpent);
                     else
                         args.Sprite.LayerSetShader(layerIdx, null, null);
                 }
 
-                _sprite.LayerSetVisible((uid, args.Sprite), ExpendableLightVisualLayers.Glow, false);
+                SpriteSystem.LayerSetVisible((uid, args.Sprite), ExpendableLightVisualLayers.Glow, false);
                 break;
         }
     }

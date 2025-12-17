@@ -19,6 +19,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - ConstructionMaterial
 
 - type: entity
   parent: PartBase
@@ -78,9 +81,6 @@
   name: metal rod
   suffix: 10
   components:
-  - type: Tag
-    tags:
-    - RodMetal1
   - type: Sprite
     state: rods
   - type: Stack
@@ -92,46 +92,7 @@
   name: metal rod
   suffix: Single
   components:
-  - type: Tag
-    tags:
-    - RodMetal1
   - type: Sprite
     state: rods
   - type: Stack
     count: 1
-
-- type: entity
-  parent: PartRodMetal
-  id: PartRodMetalLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
-
-- type: entity
-  parent: FloorTileItemSteel
-  id: FloorTileItemSteelLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
-
-- type: entity
-  parent: FloorTileItemWhite
-  id: FloorTileItemWhiteLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0
-
-- type: entity
-  parent: FloorTileItemDark
-  id: FloorTileItemDarkLingering0
-  suffix: Lingering, 0
-  components:
-  - type: Stack
-    lingering: true
-    count: 0

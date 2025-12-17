@@ -5,8 +5,8 @@
   description: Throw it at the floor and listen to it POP!
   components:
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: snappop
+    sprite: Objects/Fun/snap_pops.rsi
+    state: icon
   - type: Item
     size: Tiny
   - type: Damageable
@@ -33,6 +33,9 @@
     maxIntensity: 0.01
     intensitySlope: 1
     totalIntensity: 0.01
+  - type: Construction
+    graph: SnapPopExplosiveGraph
+    node: snapPop
 
 - type: entity
   parent: BaseStorageItem
@@ -43,16 +46,17 @@
   - type: Item
     size: Normal
   - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: spbox
+    sprite: Objects/Fun/snap_pops.rsi
+    state: box
   - type: Storage
     grid:
     - 0,0,4,3
     areaInsert: true
     maxItemSize: Tiny
-  - type: StorageFill
-    contents:
-      - id: SnapPop
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: SnapPop
         amount: 5
   - type: Dumpable
 

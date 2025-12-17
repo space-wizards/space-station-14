@@ -11,6 +11,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly IOverlayManager _overlayMgr = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private StationAiOverlay? _overlay;
 
@@ -80,10 +81,10 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
         if (args.Sprite == null)
             return;
 
-        if (_appearance.TryGetData<PrototypeLayerData>(entity.Owner, StationAiVisualState.Key, out var layerData, args.Component))
-            args.Sprite.LayerSetData(StationAiVisualState.Key, layerData);
+        if (_appearance.TryGetData<PrototypeLayerData>(entity.Owner, StationAiVisualLayers.Icon, out var layerData, args.Component))
+            _sprite.LayerSetData((entity.Owner, args.Sprite), StationAiVisualLayers.Icon, layerData);
 
-        args.Sprite.LayerSetVisible(StationAiVisualState.Key, layerData != null);
+        _sprite.LayerSetVisible((entity.Owner, args.Sprite), StationAiVisualLayers.Icon, layerData != null);
     }
 
     public override void Shutdown()
