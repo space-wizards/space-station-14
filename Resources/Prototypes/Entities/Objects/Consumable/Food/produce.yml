@@ -2417,7 +2417,7 @@
   - type: Extractable
     grindableSolutionName: food
   - type: Seed
-    seedId: bungo
+    plantProtoId: BungoPlants
   - type: SpaceGarbage
   - type: BadFood
 
@@ -2720,7 +2720,7 @@
   - type: Extractable
     grindableSolutionName: food
   - type: Seed
-    seedId: cherry
+    plantProtoId: CherryPlants
   - type: SpaceGarbage
   - type: BadFood
 
