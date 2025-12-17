@@ -1,9 +1,11 @@
+using System.Linq;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Events;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.Disposal.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -25,6 +27,7 @@ using Content.Shared.Throwing;
 using Content.Shared.UserInterface;
 using Content.Shared.Wires;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
@@ -52,11 +55,13 @@ public abstract partial class SharedBorgSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -238,10 +243,15 @@ public abstract partial class SharedBorgSystem : EntitySystem
         if (chassis.Comp.BrainEntity == null && brain != null &&
             _whitelist.IsWhitelistPassOrNull(chassis.Comp.BrainWhitelist, used))
         {
-            if (TryComp<ActorComponent>(used, out var actor) && !CanPlayerBeBorged(actor.PlayerSession))
+            if (TryComp<ActorComponent>(used, out var actor) && !CanPlayerBeBorged(actor.PlayerSession, out var reason))
             {
                 // Don't use PopupClient because CanPlayerBeBorged is not predicted.
                 _popup.PopupEntity(Loc.GetString("borg-player-not-allowed"), used, args.User);
+                // Tells the rejected player whether they are banned or just failed playtime requirements
+                _popup.PopupEntity(reason, used, used, PopupType.LargeCaution);
+
+                // container is null because the brain wasn't actually inserted yet, so it does not need to be ejected
+                Yeet(used, chassis, null);
                 return;
             }
 
@@ -259,6 +269,41 @@ public abstract partial class SharedBorgSystem : EntitySystem
                 $"{args.User} installed module {used} into borg {chassis.Owner}");
             args.Handled = true;
         }
+    }
+
+    /// <summary>
+    /// Distances the brain from the chassis in an appropriately dignified manner
+    /// </summary>
+    private void Yeet(EntityUid brain, EntityUid chassis, EntityUid? container)
+    {
+        // Audio
+        var sound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_two.ogg");
+        var param = sound.Params.WithVolume(-8f).WithMaxDistance(4);
+        _audio.PlayPvs(sound, chassis, param);
+
+        // Eject/drop the brain
+        if (container is not null)
+            _container.RemoveEntity(container.Value, brain);
+        _transform.AttachToGridOrMap(brain);
+
+        // We will launch it from the chassis' position even if it was held at the time, as if it was briefly inserted
+        var xform = Transform(chassis);
+        _transform.SetCoordinates(brain, xform.Coordinates);
+        var vector = _random.NextVector2() * 5;
+
+        // Geeet dunked on
+        var disposals = new HashSet<Entity<DisposalUnitComponent>>();
+        _lookup.GetEntitiesInRange(xform.Coordinates, 5f, disposals);
+        if (disposals.Count > 0 && xform.GridUid is not null)
+        {
+            var vTarget = Transform(disposals.First()).Coordinates.Position;
+            var vDiff = vTarget - xform.Coordinates.Position;
+            var rot = _transform.GetWorldRotation(xform.GridUid.Value);
+            vector = rot.RotateVec(vDiff);
+        }
+
+        // Actually throw the brain
+        _throwing.TryThrow(brain, vector, 5f, doSpin: true);
     }
 
     // Make the borg slower without power.
@@ -329,12 +374,14 @@ public abstract partial class SharedBorgSystem : EntitySystem
             !_player.TryGetSessionById(mind.UserId, out var session))
             return;
 
-        if (!CanPlayerBeBorged(session))
+        if (!CanPlayerBeBorged(session, out _))
         {
             // Don't use PopupClient because MindAddedMessage and CanPlayerBeBorged are not predicted.
             _popup.PopupEntity(Loc.GetString("borg-player-not-allowed-eject"), brain);
-            _container.RemoveEntity(borg, brain);
-            _throwing.TryThrow(brain, _random.NextVector2() * 5, 5f);
+
+            //TODO message for the player, too? Though tbh this codepath is really unlikely to happen
+
+            Yeet(brain, brain.Owner, borg);
             return;
         }
 
