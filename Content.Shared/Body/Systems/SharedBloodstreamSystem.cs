@@ -569,20 +569,20 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     public List<ReagentData> GetEntityBloodData(Entity<BloodstreamComponent?> entity)
     {
         if (!Resolve(entity, ref entity.Comp))
-            return [];
+            return NewEntityBloodData(entity);
 
-        return entity.Comp.BloodData ?? NewEntityBloodData((entity, entity.Comp));
+        return entity.Comp.BloodData ?? NewEntityBloodData(entity);
     }
 
     /// <summary>
     /// Gets new blood data for this entity and caches it in <see cref="BloodstreamComponent.BloodData"/>
     /// </summary>
-    protected List<ReagentData> NewEntityBloodData(Entity<BloodstreamComponent> entity)
+    protected List<ReagentData> NewEntityBloodData(EntityUid uid)
     {
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
 
-        if (TryComp<DnaComponent>(entity, out var donorComp) && donorComp.DNA != null)
+        if (TryComp<DnaComponent>(uid, out var donorComp) && donorComp.DNA != null)
             dnaData.DNA = donorComp.DNA;
         else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
