@@ -8,6 +8,9 @@ injector-toggle-verb-text = Toggle Injector Mode
 
 ## Entity
 
+injector-component-inject-mode-name = Inject
+injector-component-draw-mode-name = Draw
+injector-component-dynamic-mode-name = Dynamic
 injector-component-mode-changed-text = Now {$mode}
 injector-component-inject-success-message = You inject {$amount}u into {THE($target)}!
 injector-component-inject-success-message-self = You inject {$amount}u into yourself!

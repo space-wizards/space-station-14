@@ -61,7 +61,7 @@ public sealed class InjectorStatusControl : Control
             _label.SetMarkup(Loc.GetString("injector-volume-transfer-label",
                 ("currentVolume", solution.Volume),
                 ("totalVolume", solution.MaxVolume),
-                ("modeString", activeMode.Name),
+                ("modeString", Loc.GetString(activeMode.Name)),
                 ("transferVolume", _parent.Comp.CurrentTransferAmount.Value)));
         }
         else
@@ -69,7 +69,7 @@ public sealed class InjectorStatusControl : Control
             _label.SetMarkup(Loc.GetString("injector-volume-label",
                 ("currentVolume", solution.Volume),
                 ("totalVolume", solution.MaxVolume),
-                ("modeString", activeMode.Name)));
+                ("modeString", Loc.GetString(activeMode.Name))));
         }
     }
 }

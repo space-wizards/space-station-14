@@ -665,7 +665,9 @@ public sealed partial class InjectorSystem : EntitySystem
             if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var newMode))
                 return;
 
-            _popup.PopupClient(Loc.GetString("injector-component-mode-changed-text", ("mode", newMode.Name)), user, user);
+            var modeName = Loc.GetString(newMode.Name);
+            var message = Loc.GetString("injector-component-mode-changed-text", ("mode", modeName));
+            _popup.PopupClient(message, user, user);
             Dirty(injector);
         }
         else

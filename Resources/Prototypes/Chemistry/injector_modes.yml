@@ -2,7 +2,7 @@
 - type: injectorMode
   abstract: true
   id: BaseInjectMode
-  name: Inject
+  name: injector-component-inject-mode-name
   behavior: Inject
   popupUserAttempt: injector-component-needle-injecting-user
   popupTargetAttempt: injector-component-needle-injecting-target
@@ -10,7 +10,7 @@
 - type: injectorMode
   abstract: true
   id: BaseDrawMode
-  name: Draw
+  name: injector-component-draw-mode-name
   behavior: Draw
   popupUserAttempt: injector-component-needle-drawing-user
   popupTargetAttempt: injector-component-needle-drawing-target
@@ -18,7 +18,7 @@
 - type: injectorMode
   abstract: true
   id: BaseDynamicMode
-  name: Dynamic
+  name: injector-component-dynamic-mode-name
   behavior: Dynamic
   popupUserAttempt: injector-component-needle-injecting-user
   popupTargetAttempt: injector-component-needle-injecting-target
@@ -31,6 +31,13 @@
   - 5
   - 10
   - 15
+
+- type: injectorMode
+  abstract: true
+  id: BaseCryostasisSyringeMode
+  transferAmounts:
+  - 5
+  - 10
 
 - type: injectorMode
   abstract: true
@@ -57,6 +64,14 @@
 - type: injectorMode
   parent: [ BaseBluespaceSyringeMode, BaseDrawMode ]
   id: BluespaceSyringeDrawMode
+
+- type: injectorMode
+  parent: [ BaseCryostasisSyringeMode, BaseInjectMode ]
+  id: CryostasisSyringeInjectMode
+
+- type: injectorMode
+  parent: [ BaseCryostasisSyringeMode, BaseDrawMode ]
+  id: CryostasisSyringeDrawMode
 
 ## Dropper
 - type: injectorMode
