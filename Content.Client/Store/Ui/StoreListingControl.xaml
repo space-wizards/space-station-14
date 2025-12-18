@@ -1,24 +1,28 @@
 <Control xmlns="https://spacestation14.io">
-    <BoxContainer Margin="8,8,8,8" Orientation="Vertical">
+    <BoxContainer Margin="8,0,8,8" Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Name="StoreItemName" HorizontalExpand="True" />
-            <Label Name="DiscountSubText"
-                   HorizontalAlignment="Right"/>
-            <Button
-                Name="StoreItemBuyButton"
-                MinWidth="64"
-                HorizontalAlignment="Right"
-                Access="Public" />
         </BoxContainer>
-        <PanelContainer StyleClasses="HighDivider" />
+        <PanelContainer StyleClasses="HighDivider" Margin="0,1,0,2"/>
         <BoxContainer HorizontalExpand="True" Orientation="Horizontal">
-            <TextureRect
-                Name="StoreItemTexture"
-                Margin="0,0,4,0"
-                MinSize="48 48"
-                Stretch="KeepAspectCentered" />
-            <Control MinWidth="5"/>
-            <RichTextLabel Name="StoreItemDescription" />
+            <BoxContainer Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,4,0">
+                <TextureRect
+                    Name="StoreItemTexture"
+                    Margin="0,0,4,0"
+                    MinSize="48 48"
+                    Stretch="KeepAspectCentered" />
+                <Button
+                    Name="StoreItemBuyButton"
+                    MinWidth="48"
+                    MaxHeight="48"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0,4,0,0"
+                    Access="Public" />
+                <Label Name="DiscountSubText"
+                       HorizontalAlignment="Center"/>
+            </BoxContainer>
+            <RichTextLabel Name="StoreItemDescription" VerticalAlignment="Top"/>
         </BoxContainer>
     </BoxContainer>
 </Control>

@@ -17,8 +17,8 @@
     requiredLegs: 2
     gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Skeleton
+    damageContainer: BiologicalMetaphysical # Allows them to take Holy damage
+    damageModifierSet: Skeleton # If we get non-Holy metaphysical damage types in the future, the Skeleton set might need to be adjusted to provide immunity to them (depends on what exactly the new types are)
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -73,7 +73,7 @@
     - reagents: [ Water, SpaceCleaner ]
       methods: [ Touch ]
       effects:
-      - !type:WashCreamPieReaction
+      - !type:WashCreamPie
     - reagents: [ Milk, MilkGoat, MilkSoy, MilkSpoiled ]
       # add new types of milk to reagents as they appear, oat milk isn't on the list
       # because turns out oat milk has 1/30th the amount of calcium in it compared to the rest
@@ -81,11 +81,11 @@
       methods: [ Touch ]
       effects: # TODO: when magic is around - make a milk transformation to a skeleton monster
       - !type:HealthChange
-        scaleByQuantity: true
         damage:
-          groups:
-            Burn: -2 # healing obviously up to discussion
-            Brute: -1.5 # these groups are the only 2 possible ways to damage a skeleton
+          groups: # these groups are the only 3 possible ways to damage a skeleton. numerical values obviously up to discussion
+            Burn: -1
+            Brute: -0.75
+            Metaphysical: -2 # Gameplay: skeletons need some way to heal holy damage. Lore: milk is an unholy liquid that shuns the light of god. (/j)
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -102,6 +102,7 @@
   - type: FireVisuals
     alternateState: Standing
   - type: FlashImmunity
+    showInExamine: false
   - type: Inventory
     femaleDisplacements:
       jumpsuit:
@@ -109,6 +110,24 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: Instrument
+    program: 13 # Xylophone. Woodblock is 115 (another good option)
+  - type: ActivatableUI
+    blockSpectators: true # otherwise they can play client-side music
+    inHandsOnly: false
+    singleUser: true
+    requiresComplex: true
+    verbOnly: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
 
 - type: entity
   parent: BaseSpeciesDummy

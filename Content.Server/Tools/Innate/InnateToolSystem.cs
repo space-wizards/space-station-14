@@ -90,9 +90,9 @@ public sealed class InnateToolSystem : EntitySystem
 
             if (TryComp<HandsComponent>(uid, out var hands))
             {
-                foreach (var hand in hands.Hands)
+                foreach (var hand in hands.Hands.Keys)
                 {
-                    _sharedHandsSystem.TryDrop(uid, hand.Value, checkActionBlocker: false, handsComp: hands);
+                    _sharedHandsSystem.TryDrop((uid, hands), hand, checkActionBlocker: false);
                 }
             }
         }

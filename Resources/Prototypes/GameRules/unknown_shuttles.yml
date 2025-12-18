@@ -49,7 +49,7 @@
     weight: 10 # 10 default
     reoccurrenceDelay: 30
     duration: 1
-    maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
+    maxOccurrences: 1
   - type: RuleGrids
   - type: LoadMapRule
 
@@ -58,9 +58,9 @@
   id: UnknownShuttleCargoLost
   components:
   - type: StationEvent
-    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
+    maxOccurrences: 2
   - type: LoadMapRule
-    preloadedGrid: ShuttleCargoLost
+    gridPath: /Maps/Shuttles/ShuttleEvent/lost_cargo.yml
 
 - type: entity
   parent: BaseUnknownShuttleRule
@@ -68,9 +68,9 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming
-    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
+    maxOccurrences: 2
   - type: LoadMapRule
-    preloadedGrid: TravelingCuisine
+    gridPath: /Maps/Shuttles/ShuttleEvent/traveling_china_cuisine.yml
 
 - type: entity
   parent: BaseUnknownShuttleRule
@@ -78,9 +78,9 @@
   components:
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming
-    maxOccurrences: 3 # should be the same as [copies] in shuttle_incoming_event.yml
+    maxOccurrences: 3
   - type: LoadMapRule
-    preloadedGrid: DisasterEvacPod
+    gridPath: /Maps/Shuttles/ShuttleEvent/disaster_evacpod.yml
 
 # The power of 3 clowns proved too strong for the players and may need to be 1984'ed. Replace this with a more engaging clown shuttle.
 - type: entity
@@ -91,7 +91,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
     weight: 2
   - type: LoadMapRule
-    preloadedGrid: Honki
+    gridPath: /Maps/Shuttles/ShuttleEvent/honki.yml
 
 - type: entity
   parent: BaseUnknownShuttleRule
@@ -100,9 +100,9 @@
   - type: StationEvent
     startAnnouncement: null # It should be silent.
     weight: 5 # lower because weird freelance roles
-    maxOccurrences: 2 # should be the same as [copies] in shuttle_incoming_event.yml
+    maxOccurrences: 2
   - type: LoadMapRule
-    preloadedGrid: SyndieEvacPod
+    gridPath: /Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml
 
 - type: entity
   id: UnknownShuttleNTQuark
@@ -114,7 +114,7 @@
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
     minimumPlayers: 25
   - type: LoadMapRule
-    preloadedGrid: NTQuark
+    gridPath: /Maps/Shuttles/ShuttleEvent/quark.yml
 
 - type: entity
   id: UnknownShuttleCruiser
@@ -124,7 +124,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
     weight: 2 # Its just a big ship, so it needs to be rarer to be interesting.
   - type: LoadMapRule
-    preloadedGrid: Cruiser
+    gridPath: /Maps/Shuttles/ShuttleEvent/cruiser.yml
 
 - type: entity
   id: UnknownShuttleCryptid
@@ -133,7 +133,7 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
-    preloadedGrid: Cryptid
+    gridPath: /Maps/Shuttles/ShuttleEvent/cryptid.yml
 
 - type: entity
   id: UnknownShuttleEternal
@@ -142,7 +142,7 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
-    preloadedGrid: Eternal
+    gridPath: /Maps/Shuttles/ShuttleEvent/eternal.yml
 
 - type: entity
   id: UnknownShuttleFlatline
@@ -151,7 +151,7 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
-    preloadedGrid: Flatline
+    gridPath: /Maps/Shuttles/ShuttleEvent/flatline.yml
 
 - type: entity
   id: UnknownShuttleGym
@@ -161,7 +161,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
     weight: 5 # Its just a big ship, so it needs to be rarer to be interesting.
   - type: LoadMapRule
-    preloadedGrid: Gym
+    gridPath: /Maps/Shuttles/ShuttleEvent/gym.yml
 
 - type: entity
   id: UnknownShuttleNTIncorporation
@@ -172,7 +172,7 @@
     weight: 2 # Its just a big ship, so it needs to be rarer to be interesting.
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly. (5-6)
   - type: LoadMapRule
-    preloadedGrid: NTIncorporation
+    gridPath: /Maps/Shuttles/ShuttleEvent/incorporation.yml
 
 - type: entity
   id: UnknownShuttleInstigator
@@ -183,7 +183,7 @@
     weight: 1 #  lower because antags.
     earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly (3) and because antags
   - type: LoadMapRule
-    preloadedGrid: Instigator
+    gridPath: /Maps/Shuttles/ShuttleEvent/instigator.yml
 
 - type: entity
   id: UnknownShuttleJoe
@@ -192,7 +192,7 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
-    preloadedGrid: Joe
+    gridPath: /Maps/Shuttles/ShuttleEvent/joe.yml
 
 - type: entity
   id: UnknownShuttleLambordeere
@@ -201,7 +201,7 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
-    preloadedGrid: Lambordeere
+    gridPath: /Maps/Shuttles/ShuttleEvent/lambordeere.yml
 
 - type: entity
   id: UnknownShuttleManOWar
@@ -212,7 +212,7 @@
     weight: 1 # lower because antags
     earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
   - type: LoadMapRule
-    preloadedGrid: ManOWar
+    gridPath: /Maps/Shuttles/ShuttleEvent/manowar.yml
 
 - type: entity
   id: UnknownShuttleMeatZone
@@ -221,7 +221,7 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
-    preloadedGrid: Meatzone
+    gridPath: /Maps/Shuttles/ShuttleEvent/meatzone.yml
 
 - type: entity
   id: UnknownShuttleMicroshuttle
@@ -232,7 +232,7 @@
     weight: 11 # this is higher because its just a little generic personal shuttle
     maxOccurrences: 4
   - type: LoadMapRule
-    preloadedGrid: Microshuttle
+    gridPath: /Maps/Shuttles/ShuttleEvent/microshuttle.yml
 
 - type: entity
   id: UnknownShuttleSpacebus
@@ -241,5 +241,5 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
-    preloadedGrid: Spacebus
+    gridPath: /Maps/Shuttles/ShuttleEvent/spacebus.yml
 

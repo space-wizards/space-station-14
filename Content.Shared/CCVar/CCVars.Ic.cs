@@ -11,10 +11,34 @@ public sealed partial class CCVars
         CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    ///     Allows flavor text (character descriptions)
+    ///     Sets the maximum IC name length.
+    /// </summary>
+    public static readonly CVarDef<int> MaxNameLength =
+        CVarDef.Create("ic.name_length", 32, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Sets the maximum name length for a loadout name (e.g. cyborg name).
+    /// </summary>
+    public static readonly CVarDef<int> MaxLoadoutNameLength =
+        CVarDef.Create("ic.loadout_name_length", 32, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Allows flavor text (character descriptions).
     /// </summary>
     public static readonly CVarDef<bool> FlavorText =
         CVarDef.Create("ic.flavor_text", false, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Sets the maximum length for flavor text (character descriptions).
+    /// </summary>
+    public static readonly CVarDef<int> MaxFlavorTextLength =
+        CVarDef.Create("ic.flavor_text_length", 512, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Sets the maximum character length of a job on an ID.
+    /// </summary>
+    public static readonly CVarDef<int> MaxIdJobLength =
+        CVarDef.Create("ic.id_job_length", 30, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Adds a period at the end of a sentence if the sentence ends in a letter.
@@ -40,6 +64,13 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> ICRandomSpeciesWeights =
         CVarDef.Create("ic.random_species_weights", "SpeciesWeights", CVar.SERVER);
+
+    /// <summary>
+    ///     The list of species that will NOT be given to new account joins when they are assigned a random character.
+    ///     This only affects the first time a character is made for an account, nothing else.
+    /// </summary>
+    public static readonly CVarDef<string> ICNewAccountSpeciesBlacklist =
+        CVarDef.Create("ic.blacklist_species_new_account", "Diona,Vulpkanin,Vox,SlimePerson", CVar.SERVER);
 
     /// <summary>
     ///     Control displaying SSD indicators near players
