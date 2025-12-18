@@ -3,10 +3,10 @@ using Content.Server.Audio;
 using Content.Server.Power.Components;
 using Content.Shared.Database;
 using Content.Shared.Power;
+using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Power.EntitySystems;
 
