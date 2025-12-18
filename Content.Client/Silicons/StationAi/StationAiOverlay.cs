@@ -1,11 +1,9 @@
 using System.Numerics;
-using System.Linq;
 using Content.Client.Pinpointer.UI;
 using Content.Client.Graphics;
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Collections;
 using Robust.Shared.Enums;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -31,16 +29,20 @@ public sealed class StationAiOverlay : Overlay
     private readonly NavMapControl _navMap = new();
 
     private readonly OverlayResourceCache<CachedResources> _resources = new();
-    private Dictionary<Color, Color> _sRGBLookUp = new();
+    private readonly Dictionary<Color, Color> _sRgbLookUp = new();
+    private static readonly RenderTargetFormatParameters RenderTargetFormatParameters = new(RenderTargetColorFormat.Rgba8Srgb);
 
-    private float _updateRate = 1f / 30f;
+    private static readonly List<Vector2> TileLinesToDraw = [];
+    private static readonly List<Vector2> TileRectsToDraw = [];
+
+    private const float UpdateRate = 1f / 30f;
     private float _accumulator;
 
     public StationAiOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _navMap.WallColor = new(102, 164, 217);
-        _navMap.TileColor = new(30, 57, 67);
+        _navMap.WallColor = new Color(102, 164, 217);
+        _navMap.TileColor = new Color(30, 57, 67);
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -51,9 +53,9 @@ public sealed class StationAiOverlay : Overlay
         {
             res.StaticTexture?.Dispose();
             res.StencilTexture?.Dispose();
-            res.StencilTexture = _clyde.CreateRenderTarget(args.Viewport.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "station-ai-stencil");
+            res.StencilTexture = _clyde.CreateRenderTarget(args.Viewport.Size, RenderTargetFormatParameters, name: "station-ai-stencil");
             res.StaticTexture = _clyde.CreateRenderTarget(args.Viewport.Size,
-                new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb),
+                RenderTargetFormatParameters,
                 name: "station-ai-static");
         }
 
@@ -78,7 +80,7 @@ public sealed class StationAiOverlay : Overlay
             _navMap.AiFrameUpdate((float) _timing.FrameTime.TotalSeconds, gridUid);
             if (_accumulator <= 0f)
             {
-                _accumulator = MathF.Max(0f, _accumulator + _updateRate);
+                _accumulator = MathF.Max(0f, _accumulator + UpdateRate);
                 _visibleTiles.Clear();
                 _entManager.System<StationAiVisionSystem>().GetView((gridUid, broadphase, grid), worldBounds, _visibleTiles);
             }
@@ -87,7 +89,8 @@ public sealed class StationAiOverlay : Overlay
             var matty =  Matrix3x2.Multiply(gridMatrix, invMatrix);
 
             // Draw visible tiles to stencil
-            worldHandle.RenderInRenderTarget(res.StencilTexture!, () =>
+            worldHandle.RenderInRenderTarget(res.StencilTexture!,
+                () =>
             {
                 worldHandle.SetTransform(matty);
 
@@ -105,14 +108,15 @@ public sealed class StationAiOverlay : Overlay
             {
                 worldHandle.SetTransform(matty);
 
-                DrawNavMap(worldHandle, grid);
+                DrawNavMap(worldHandle);
             },
             Color.Black);
         }
         // Not on a grid
         else
         {
-            worldHandle.RenderInRenderTarget(res.StencilTexture!, () =>
+            worldHandle.RenderInRenderTarget(res.StencilTexture!,
+                () =>
             {
             },
             Color.Transparent);
@@ -122,7 +126,8 @@ public sealed class StationAiOverlay : Overlay
             {
                 worldHandle.SetTransform(Matrix3x2.Identity);
                 worldHandle.DrawRect(worldBounds, Color.Black);
-            }, Color.Black);
+            },
+            Color.Black);
         }
 
         // Use the lighting as a mask
@@ -157,66 +162,68 @@ public sealed class StationAiOverlay : Overlay
         }
     }
 
-    private void DrawNavMap(DrawingHandleWorld handle, MapGridComponent grid)
+    private void DrawNavMap(DrawingHandleWorld handle)
     {
-        if (!_sRGBLookUp.TryGetValue(_navMap.WallColor, out var wallsRGB))
+        if (!_sRgbLookUp.TryGetValue(_navMap.WallColor, out var wallsRgb))
         {
-            wallsRGB = Color.ToSrgb(_navMap.WallColor);
-            _sRGBLookUp[_navMap.WallColor] = wallsRGB;
+            wallsRgb = Color.ToSrgb(_navMap.WallColor);
+            _sRgbLookUp[_navMap.WallColor] = wallsRgb;
         }
 
         // Draw floor tiles
-        if (_navMap.TilePolygons.Any())
+        if (_navMap.TilePolygons.Count != 0)
         {
             foreach (var (polygonVerts, polygonColor) in _navMap.TilePolygons)
             {
-                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, polygonVerts[..polygonVerts.Length], polygonColor);
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, polygonVerts.AsSpan()[..], polygonColor);
             }
         }
 
         // Draw map lines
-        if (_navMap.TileLines.Any())
+        if (_navMap.TileLines.Count != 0)
         {
-            var lines = new ValueList<Vector2>(_navMap.TileLines.Count * 2);
+            TileLinesToDraw.Clear();
+            TileLinesToDraw.EnsureCapacity(_navMap.TileLines.Count * 2);
 
             foreach (var (o, t) in _navMap.TileLines)
             {
-                var origin = new Vector2(o.X, -o.Y);
-                var terminus = new Vector2(t.X, -t.Y);
+                var origin = o with { Y = -o.Y };
+                var terminus = t with { Y = -t.Y };
 
-                lines.Add(origin);
-                lines.Add(terminus);
+                TileLinesToDraw.Add(origin);
+                TileLinesToDraw.Add(terminus);
             }
 
-            if (lines.Count > 0)
-                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, lines.Span, wallsRGB);
+            if (TileLinesToDraw.Count > 0)
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, TileLinesToDraw, wallsRgb);
         }
 
         // Draw map rects
-        if (_navMap.TileRects.Any())
+        if (_navMap.TileRects.Count != 0)
         {
-            var rects = new ValueList<Vector2>(_navMap.TileRects.Count * 8);
+            TileRectsToDraw.Clear();
+            TileRectsToDraw.EnsureCapacity(_navMap.TileRects.Count * 8);
 
             foreach (var (lt, rb) in _navMap.TileRects)
             {
-                var leftTop = new Vector2(lt.X, -lt.Y);
-                var rightBottom = new Vector2(rb.X, -rb.Y);
+                var leftTop = lt with { Y = -lt.Y };
+                var rightBottom = rb with { Y = -rb.Y };
 
                 var rightTop = new Vector2(rightBottom.X, leftTop.Y);
                 var leftBottom = new Vector2(leftTop.X, rightBottom.Y);
 
-                rects.Add(leftTop);
-                rects.Add(rightTop);
-                rects.Add(rightTop);
-                rects.Add(rightBottom);
-                rects.Add(rightBottom);
-                rects.Add(leftBottom);
-                rects.Add(leftBottom);
-                rects.Add(leftTop);
+                TileRectsToDraw.Add(leftTop);
+                TileRectsToDraw.Add(rightTop);
+                TileRectsToDraw.Add(rightTop);
+                TileRectsToDraw.Add(rightBottom);
+                TileRectsToDraw.Add(rightBottom);
+                TileRectsToDraw.Add(leftBottom);
+                TileRectsToDraw.Add(leftBottom);
+                TileRectsToDraw.Add(leftTop);
             }
 
-            if (rects.Count > 0)
-                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, rects.Span, wallsRGB);
+            if (TileRectsToDraw.Count > 0)
+                handle.DrawPrimitives(DrawPrimitiveTopology.LineList, TileRectsToDraw, wallsRgb);
         }
     }
 }
