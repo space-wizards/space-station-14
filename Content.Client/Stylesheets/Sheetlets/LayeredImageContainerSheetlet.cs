@@ -63,7 +63,7 @@ public sealed class LayeredImageContainerSheetlet : Sheetlet<NanotrasenStyleshee
             E<LayeredImageContainer>().Class(LayeredImageContainer.StyleClassBrightAngleRect)
                 .ParentOf(E<PanelContainer>().Identifier("Background2"))
                 .Prop(PanelContainer.StylePropertyPanel, borderTex)
-                .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#000000ff")),
+                .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#00000040")),
         ];
     }
 }

@@ -7,7 +7,7 @@
    viewBox="0 0 6.3499998 6.3499999"
    version="1.1"
    id="svg1055"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
    sodipodi:docname="geometric_panel_border.svg"
    inkscape:export-filename="geometric_panel_border.svg.96dpi.png"
    inkscape:export-xdpi="96"
@@ -29,16 +29,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="32"
-     inkscape:cx="6.140625"
+     inkscape:cx="6.15625"
      inkscape:cy="12.15625"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:pagecheckerboard="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1057"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-width="1916"
+     inkscape:window-height="1052"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
      inkscape:window-maximized="1"
      units="px"
      inkscape:snap-page="true"
@@ -55,7 +55,10 @@
        empcolor="#3f3fff"
        empopacity="0.75686275"
        enabled="true"
-       dotted="false" />
+       dotted="false"
+       spacingy="1"
+       spacingx="1"
+       units="px" />
     <sodipodi:guide
        position="0.26458333,2.6458333"
        orientation="1,0"
@@ -136,7 +139,7 @@
      transform="translate(-79.848503,-133.93878)">
     <path
        id="rect1684"
-       style="opacity:1;fill:#000000;fill-opacity:0.25;fill-rule:nonzero;stroke:none;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.247312;paint-order:normal"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.247312;paint-order:normal"
        d="m 83.55267,133.93878 2.645833,2.64583 v 3.70417 h -3.704167 l -2.645833,-2.64583 v -3.70417 z m -2.910417,3.37476 2.18149,2.18149 2.58101,0 v -2.58101 l -2.18149,-2.18149 -2.58101,0 z"
        sodipodi:nodetypes="cccccccccccccc"
        inkscape:label="rect1684" />
