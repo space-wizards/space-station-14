@@ -31,6 +31,7 @@
       cocoon_victim: !type:Container
   - type: CocoonContainer
     absorbPercentage: 0.3
+  - type: RequireProjectileTarget
   - type: Damageable
     damageContainer: Biological
   - type: Destructible
