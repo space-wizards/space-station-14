@@ -1,19 +1,27 @@
 using Content.Shared.Light.Components;
+using Content.Shared.Light.EntitySystems;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Light.Visualizers;
+namespace Content.Client.Light.EntitySystems;
 
-public sealed class LightBulbSystem : VisualizerSystem<LightBulbComponent>
+public sealed class LightBulbSystem : SharedLightBulbSystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
-    protected override void OnAppearanceChange(EntityUid uid, LightBulbComponent comp, ref AppearanceChangeEvent args)
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<LightBulbComponent, AppearanceChangeEvent>(OnAppearanceChange);
+    }
+
+    private void OnAppearanceChange(EntityUid uid, LightBulbComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
         // update sprite state
-        if (AppearanceSystem.TryGetData<LightBulbState>(uid, LightBulbVisuals.State, out var state, args.Component))
+        if (_appearance.TryGetData<LightBulbState>(uid, LightBulbVisuals.State, out var state, args.Component))
         {
             switch (state)
             {
@@ -30,7 +38,7 @@ public sealed class LightBulbSystem : VisualizerSystem<LightBulbComponent>
         }
 
         // also update sprites color
-        if (AppearanceSystem.TryGetData<Color>(uid, LightBulbVisuals.Color, out var color, args.Component))
+        if (_appearance.TryGetData<Color>(uid, LightBulbVisuals.Color, out var color, args.Component))
         {
             _sprite.SetColor((uid, args.Sprite), color);
         }

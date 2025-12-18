@@ -19,7 +19,7 @@ public sealed partial class DungeonJob
             if (reservedTiles.Contains(tile))
                 continue;
 
-            var blocked = _anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask);
+            var blocked = _anchorable.TileFree((_gridUid, _grid), tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask);
 
             if (blocked)
                 continue;
@@ -42,7 +42,7 @@ public sealed partial class DungeonJob
                 if (random.Prob(gen.Chance))
                 {
                     var coords = _maps.GridTileToLocal(_gridUid, _grid, tile);
-                    var protos = contentsTable.Table.GetSpawns(random, _entManager, _prototype);
+                    var protos = _entTable.GetSpawns(contentsTable, random);
                     _entManager.SpawnEntitiesAttachedTo(coords, protos);
                 }
 

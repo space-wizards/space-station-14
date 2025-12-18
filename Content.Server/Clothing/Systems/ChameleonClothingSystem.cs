@@ -1,6 +1,7 @@
-using Content.Server.IdentityManagement;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Emp;
+using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
@@ -41,7 +42,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     /// <summary>
     ///     Change chameleon items name, description and sprite to mimic other entity prototype.
     /// </summary>
-    public void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
+    public override void SetSelectedPrototype(EntityUid uid, string? protoId, bool forceUpdate = false,
         ChameleonClothingComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
@@ -63,6 +64,27 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         UpdateVisuals(uid, component);
         UpdateUi(uid, component);
         Dirty(uid, component);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        // Randomize EMP-affected clothing
+        var query = EntityQueryEnumerator<EmpDisabledComponent, ChameleonClothingComponent>();
+        while (query.MoveNext(out var uid, out _, out var chameleon))
+        {
+            if (!chameleon.EmpContinuous)
+                continue;
+
+            if (Timing.CurTime < chameleon.NextEmpChange)
+                continue;
+
+            // randomly pick cloth element from available and apply it
+            var pick = GetRandomValidPrototype(chameleon.Slot, chameleon.RequireTag);
+            SetSelectedPrototype(uid, pick, component: chameleon);
+
+            chameleon.NextEmpChange += TimeSpan.FromSeconds(1f / chameleon.EmpChangeIntensity);
+        }
     }
 
     private void UpdateIdentityBlocker(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)

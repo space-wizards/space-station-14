@@ -17,6 +17,7 @@
         nodeGroupID: MVPower
   - type: Construction
     graph: ParticleAcceleratorPowerBox
+  - type: MultipartMachinePart
 
 - type: entity
   parent: ParticleAcceleratorUnfinishedBase
@@ -29,3 +30,4 @@
     sprite: Structures/Power/Generation/PA/power_box.rsi
   - type: Construction
     graph: ParticleAcceleratorPowerBox
+  - type: MultipartMachinePart

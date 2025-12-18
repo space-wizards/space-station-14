@@ -47,7 +47,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
         {
             return;
         }
-        if (!EntityManager.TryGetComponent<NanoTaskPrintedComponent>(args.Used, out var printed))
+        if (!TryComp<NanoTaskPrintedComponent>(args.Used, out var printed))
         {
             return;
         }
@@ -55,7 +55,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
         {
             program.Tasks.Add(new(program.Counter++, printed.Task));
             args.Handled = true;
-            EntityManager.DeleteEntity(args.Used);
+            Del(args.Used);
             UpdateUiState(new Entity<NanoTaskCartridgeComponent>(uid.Value, program), ent.Owner);
         }
     }

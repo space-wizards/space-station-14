@@ -237,6 +237,8 @@
     layers:
     - state: crypt_red
     - state: synd_label
+  - type: StaticPrice
+    price: 500 # 1000 for 2
 
 - type: entity
   parent: [ EncryptionKey, BaseSiliconScienceContraband ]
@@ -267,6 +269,8 @@
     layers:
     - state: crypt_red
     - state: ai_label
+  - type: StaticPrice
+    price: 1000
 
 - type: entity
   parent: EncryptionKey

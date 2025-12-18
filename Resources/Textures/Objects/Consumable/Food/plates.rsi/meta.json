@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa. Muffin-tin sprite modified from the original tin sprite by RumiTiger",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa. Muffin-tin sprite modified from the original tin sprite by RumiTiger. Plate inhand by Orsoniks.",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,22 @@
   "states": [
     {
       "name": "plate"
+    },
+    {
+      "name": "plate-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "plate-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "plate-plastic-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "plate-plastic-inhand-left",
+      "directions": 4
     },
     {
       "name": "plate-trash"
