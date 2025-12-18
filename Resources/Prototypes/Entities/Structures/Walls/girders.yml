@@ -31,8 +31,8 @@
         - GlassAirlockLayer
 
 - type: entity
-  id: Girder
   parent: BaseGirder
+  id: Girder
   name: girder
   description: A large structural assembly made out of metal; It requires a layer of metal before it can be considered a wall.
   components:
@@ -73,8 +73,8 @@
     price: 30
 
 - type: entity
-  id: ReinforcedGirder
   parent: BaseGirder
+  id: ReinforcedGirder
   name: reinforced girder
   description: A large structural assembly made out of metal and plasteel; It requires a layer of plasteel before it can be considered a reinforced wall.
   components:
