@@ -1,9 +1,11 @@
-﻿namespace Content.Shared.Power.Components;
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.Power.Components;
 
 /// <summary>
 /// Component for a powered machine that slowly powers on and off over a period of time.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PowerChargeComponent : Component
 {
     /// <summary>
@@ -33,7 +35,7 @@ public sealed partial class PowerChargeComponent : Component
     /// <summary>
     /// Is the machine intact?
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Intact = true;
 
     /// <summary>

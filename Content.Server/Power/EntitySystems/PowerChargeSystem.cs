@@ -45,7 +45,10 @@ public sealed class PowerChargeSystem : SharedPowerChargeSystem
         if (!TryComp<ApcPowerReceiverComponent>(uid, out var apcPowerReceiver))
             return;
 
-        UpdateUI((uid, component, apcPowerReceiver), component.ChargeRate);
+        // UpdateUI is unable to tell what state the machine is in
+        var chargeRate = component.SwitchedOn ? component.ChargeRate : -component.ChargeRate;
+
+        UpdateUI((uid, component, apcPowerReceiver), chargeRate);
     }
 
     private void OnSwitchGenerator(EntityUid uid, PowerChargeComponent component, SwitchChargingMachineMessage args)
