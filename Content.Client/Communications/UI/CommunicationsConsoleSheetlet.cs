@@ -9,13 +9,10 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.UserInterface.Controls;
 
 [CommonSheetlet]
-public sealed class CommunicationsConsoleSheetlet : Sheetlet<NanotrasenStylesheet>
+public sealed class CommunicationsConsoleSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, IButtonConfig, IIconConfig
 {
-    public override StyleRule[] GetRules(NanotrasenStylesheet sheet, object config)
+    public override StyleRule[] GetRules(T sheet, object config)
     {
-        IIconConfig iconCfg = sheet;
-        IButtonConfig buttonCfg = sheet;
-
         var lcdFontLarge = ResCache.GetFont("/Fonts/7SegmentDisplayDigits.ttf", 20);
 
         return [
@@ -23,12 +20,9 @@ public sealed class CommunicationsConsoleSheetlet : Sheetlet<NanotrasenStyleshee
                 .Prop("font-color", sheet.NegativePalette.Text)
                 .Prop("font", lcdFontLarge),
 
-            // TODO.eoin:
-            //      Template this class to depend on interfaces, rather than Nanotrasen
-
             /// Large red texture button
             E<TextureButton>().Identifier("TemptingRedButton")
-                .Prop(TextureButton.StylePropertyTexture, sheet.GetTextureOr(buttonCfg.RoundedButtonPath, NanotrasenStylesheet.TextureRoot))
+                .Prop(TextureButton.StylePropertyTexture, sheet.GetTextureOr(sheet.RoundedButtonPath, NanotrasenStylesheet.TextureRoot))
                 .Prop(Control.StylePropertyModulateSelf, sheet.NegativePalette.Element),
 
             E<TextureButton>().Identifier("TemptingRedButton")

@@ -24,7 +24,7 @@
         <Label StyleClasses="StatusFieldTitle" Align="Center" VAlign="Top"
             VerticalExpand="True" VerticalAlignment="Top"
             Text="{Loc 'comms-console-station-broadcast-header'}" />
-        <SpriteView Name="BroadcastEntityDisplay" Scale="4 4" />
+        <SpriteView Name="BroadcastEntityDisplay" Scale="8 8" />
         <LineEdit Name="ScreenMessageInput" Margin="6 0 6 0"
             PlaceHolder="{Loc 'comms-console-menu-broadcast-placeholder'}" />
         <Button Name="BroadcastButton" HorizontalExpand="True" Margin="6"

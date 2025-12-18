@@ -1,5 +1,6 @@
 <Control xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <controls:StripeBack
         HasTopEdge="False" HasBottomEdge="False" StyleClasses="status-warning" >
 
@@ -25,19 +26,31 @@
                 <GridContainer Columns="7" HorizontalExpand="True" Margin="0 8 0 0">
                     <!-- Row 1: the buttons themselves -->
                     <Control HorizontalExpand="True" />
-                    <controls:LayeredImageContainer StyleClasses="PanelMount">
+                    <controls:LayeredImageContainer>
+                        <Control.StyleClasses>
+                            <sys:String>PanelMount</sys:String>
+                            <sys:String>PanelDark</sys:String>
+                        </Control.StyleClasses>
                         <TextureButton Name="EmergencyShuttleCallButton"
                             StyleIdentifier="TemptingRedButton" MinSize="60 60"
                             ToolTip="{Loc 'comms-console-menu-call-shuttle'}" />
                     </controls:LayeredImageContainer>
                     <Control HorizontalExpand="True" />
-                    <controls:LayeredImageContainer StyleClasses="PanelMount"
+                    <controls:LayeredImageContainer
                         VerticalAlignment="Center">
+                        <Control.StyleClasses>
+                            <sys:String>PanelMount</sys:String>
+                            <sys:String>PanelDark</sys:String>
+                        </Control.StyleClasses>
                         <Label Name="CountdownLabel" StyleClasses="LabelLCDBig"
                             ReservesSpace="True" Margin="6"/>
                     </controls:LayeredImageContainer>
                     <Control HorizontalExpand="True" />
-                    <controls:LayeredImageContainer StyleClasses="PanelMount">
+                    <controls:LayeredImageContainer>
+                        <Control.StyleClasses>
+                            <sys:String>PanelMount</sys:String>
+                            <sys:String>PanelDark</sys:String>
+                        </Control.StyleClasses>
                         <TextureButton Name="EmergencyShuttleRecallButton"
                             StyleIdentifier="TemptingRedButton" MinSize="60 60"
                             ToolTip="{Loc 'comms-console-menu-recall-shuttle'}" />

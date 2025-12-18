@@ -102,14 +102,14 @@ public sealed partial class MessagingControls : TabContainer
             }
             else
             {
-                AnnounceButton.Disabled = !_canRadioAnnounce;
-                AnnounceButton.ToolTip = null;
+                AnnounceButton.Disabled = false;
+                AnnounceButton.ToolTip = _loc.GetString("comms-console-menu-announcement-button-tooltip");
             }
         }
         else
         {
             AnnounceButton.Disabled = true;
-            AnnounceButton.ToolTip = null; //<TODO.eoin Probably should have a tooltip!
+            AnnounceButton.ToolTip = _loc.GetString("comms-console-message-cannot-send");
         }
 
         BroadcastButton.Disabled = !_canScreenBroadcast;

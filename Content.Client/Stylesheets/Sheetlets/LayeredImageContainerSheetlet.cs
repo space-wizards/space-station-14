@@ -35,7 +35,6 @@ public sealed class LayeredImageContainerSheetlet : Sheetlet<NanotrasenStyleshee
             PatchMarginRight = 24,
             PatchMarginBottom = 24
         };
-        // TODO: Remove color from panelMount, additional style
 
         var borderTex = sheet.GetTexture(panelCfg.GeometricPanelBorderPath).IntoPatch(StyleBox.Margin.All, 10);
 
@@ -46,13 +45,15 @@ public sealed class LayeredImageContainerSheetlet : Sheetlet<NanotrasenStyleshee
 
             E<LayeredImageContainer>().Class(LayeredImageContainer.StyleClassPanelMount)
                 .ParentOf(E<PanelContainer>().Identifier("Foreground1"))
-                .Prop(PanelContainer.StylePropertyPanel, panelMountBaseStyleBox)
-                .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
+                .Prop(PanelContainer.StylePropertyPanel, panelMountBaseStyleBox),
 
             E<LayeredImageContainer>().Class(LayeredImageContainer.StyleClassPanelMount)
                 .ParentOf(E<PanelContainer>().Identifier("Foreground2"))
                 .Prop(PanelContainer.StylePropertyPanel, panelMountHighlightStyleBox),
 
+            E<LayeredImageContainer>().Class(StyleClass.PanelDark)
+                .ParentOf(E<PanelContainer>().Identifier("Foreground1"))
+                .Prop(Control.StylePropertyModulateSelf, sheet.SecondaryPalette.BackgroundDark),
 
             /// Bright AngleRect with a subtle outline
             E<LayeredImageContainer>().Class(LayeredImageContainer.StyleClassBrightAngleRect)

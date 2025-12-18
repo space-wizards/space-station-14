@@ -25,6 +25,7 @@ comms-console-broadcast-tab-title = Screen
 comms-console-permission-denied = Permission denied
 comms-console-shuttle-unavailable = Shuttle is currently unavailable
 comms-console-message-too-long = Message is too long
+comms-console-message-cannot-send = Communications temporarily disabled
 
 # Placeholder values
 comms-console-announcement-sent-by = Sent by
