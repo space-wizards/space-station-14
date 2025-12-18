@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
+  parent: BaseItem
   id: BaseSpeedLoaderCap
   name: "cap gun loader"
-  parent: BaseItem
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -30,9 +30,10 @@
         ents: []
 
 - type: entity
+  parent: BaseSpeedLoaderCap
   id: SpeedLoaderCap
   name: "cap gun loader"
-  parent: BaseSpeedLoaderCap
+  description: Designed to quickly load up to six cartridges into an empty cap gun.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeCap
