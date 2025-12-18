@@ -21,18 +21,22 @@ public sealed partial class CryoPodWindow : FancyWindow
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public event Action? OnEjectPressed;
-    public event Action? OnInjectPressed;
+    public event Action<FixedPoint2>? OnInjectPressed;
 
     public CryoPodWindow()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
         EjectButton.OnPressed += _ => OnEjectPressed?.Invoke();
-        InjectButton.OnPressed += _ => OnInjectPressed?.Invoke();
+        Inject1.OnPressed += _ => OnInjectPressed?.Invoke(1);
+        Inject5.OnPressed += _ => OnInjectPressed?.Invoke(5);
+        Inject10.OnPressed += _ => OnInjectPressed?.Invoke(10);
+        Inject20.OnPressed += _ => OnInjectPressed?.Invoke(20);
     }
 
     public void Populate(CryoPodUserMessage msg)
     {
+        HealthAnalyzer.InvalidateMeasure(); // Workaround for layouting bug.
         InvalidateMeasure();
 
         // Loading screen
@@ -95,20 +99,28 @@ public sealed partial class CryoPodWindow : FancyWindow
             HealthAnalyzer.Populate(msg.Health);
 
         // Reagents
-        bool hasBeaker = (msg.Beaker != null);
-        NoBeakerText.Visible = !hasBeaker;
-        ChemicalsInfo.Visible = hasBeaker;
-
         float? lowestTempRequirement = null;
         ReagentId? lowestTempReagent = null;
+        var totalBeakerCapacity = msg.BeakerCapacity ?? 0;
         var availableQuantity = new FixedPoint2();
         var injectingQuantity = new FixedPoint2();
+        bool hasBeaker = (msg.Beaker != null);
+
+        ChemicalsChart.Clear();
 
         if (hasBeaker)
         {
             foreach (var (reagent, quantity) in msg.Beaker!)
             {
                 availableQuantity += quantity;
+
+                var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+                ChemicalsChart.AddEntry(
+                    reagentProto.LocalizedName,
+                    (float)quantity,
+                    reagentProto.SubstanceColor,
+                    tooltip: $"{quantity}u {reagentProto.LocalizedName}"
+                );
 
                 var temp = TryFindMaxTemperatureRequirement(reagent);
                 if (lowestTempRequirement == null
@@ -126,11 +138,26 @@ public sealed partial class CryoPodWindow : FancyWindow
             {
                 injectingQuantity += quantity;
             }
+
+            var injectingText = (injectingQuantity > 1 ? $"{injectingQuantity}u" : "");
+            ChemicalsChart.AddEntry(
+                injectingText,
+                (float)injectingQuantity,
+                Color.MediumSpringGreen,
+                tooltip: $"Injecting {injectingQuantity}u"
+            );
         }
 
-        AvailableQuantity.Text = $"{availableQuantity:F1}u";
-        InjectingQuantity.Text = $"{injectingQuantity:F1}u";
-        InjectButton.Disabled = (!hasPatient || availableQuantity < 0.1f);
+        ChemicalsChart.AddEmptySpace((float)(totalBeakerCapacity - availableQuantity - injectingQuantity));
+
+        bool isBeakerEmpty = (injectingQuantity + availableQuantity == 0);
+        NoBeakerText.Visible = !hasBeaker;
+        EmptyBeakerText.Visible = (hasBeaker && isBeakerEmpty);
+        ChemicalsChart.Visible = (hasBeaker && !isBeakerEmpty);
+        Inject1.Disabled = (!hasPatient || availableQuantity < 0.1f);
+        Inject5.Disabled = (!hasPatient || availableQuantity <= 1);
+        Inject10.Disabled = (!hasPatient || availableQuantity <= 5);
+        Inject20.Disabled = (!hasPatient || availableQuantity <= 10);
 
         // Temperature warning
         bool showsTemperatureWarning =
@@ -189,15 +216,18 @@ public sealed partial class CryoPodWindow : FancyWindow
 
     protected override Vector2 MeasureOverride(Vector2 availableSize)
     {
-        // Here we make sure that the DesiredSize of the tabs is initialized to a reasonable size, but we invalidate
-        // it again afterwards so that it will still be calculated the normal way.
+        const float antiJiggleSlackSpace = 80;
+        var oldSize = DesiredSize;
+        // Note that Content is inside of a ScrollContainer, so by default its DesiredSize is ignored.
         Content.Measure(availableSize);
         Content.InvalidateMeasure();
-
-        // Note that Content is inside of a ScrollContainer, so by default its DesiredSize is ignored. We instead want
-        // the window size to be the content size, but clamped between Min & MaxSize (the ScrollContainer is there to
-        // make it work nicely when it's clamped by MaxSize).
         // We add extra space for FancyWindow decorations.
-        return Content.DesiredSize + new Vector2(10, 50);
+        var newSize = Content.DesiredSize + new Vector2(10, 50);
+
+        // Reduce how often the height of the window jiggles
+        if (newSize.Y < oldSize.Y && newSize.Y + antiJiggleSlackSpace > oldSize.Y)
+            newSize.Y = oldSize.Y;
+
+        return newSize;
     }
 }

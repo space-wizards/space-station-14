@@ -128,7 +128,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                 TryEjectBody(cryoPod.Owner, msg.Actor, cryoPod.Comp);
                 break;
             case CryoPodUiMessage.MessageType.Inject:
-                TryInject(cryoPod);
+                TryInject(cryoPod, msg.Quantity.GetValueOrDefault());
                 break;
         }
     }
@@ -154,7 +154,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         UpdateUi(cryoPod);
     }
 
-    private void TryInject(Entity<CryoPodComponent> cryoPod)
+    private void TryInject(Entity<CryoPodComponent> cryoPod, FixedPoint2 transferAmount)
     {
         var patient = cryoPod.Comp.BodyContainer.ContainedEntity;
         if (patient == null)
@@ -184,7 +184,6 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         if (injectionSolution.AvailableVolume < 1)
             return;
 
-        var transferAmount = FixedPoint2.New(5);
         var amountToTransfer = FixedPoint2.Min(transferAmount, injectionSolution.AvailableVolume);
         var solution = _solutionContainer.SplitSolution(beakerSolution.Value, amountToTransfer);
         _solutionContainer.TryAddSolution(injectionSolutionComp.Value, solution);
@@ -239,7 +238,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
         var patient = entity.Comp.BodyContainer.ContainedEntity;
         var gasMix = _gasAnalyzerSystem.GenerateGasMixEntry("Cryo pod", air.Air);
-        var beaker = GetBeakerReagents(entity);
+        var (beakerCapacity, beaker) = GetBeakerInfo(entity);
         var injecting = GetInjectingReagents(entity);
         var health = _healthAnalyzerSystem.GetHealthAnalyzerUiState(patient);
         health.ScanMode = true;
@@ -247,14 +246,14 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         _uiSystem.ServerSendUiMessage(
             entity.Owner,
             CryoPodUiKey.Key,
-            new CryoPodUserMessage(gasMix, health, beaker, injecting)
+            new CryoPodUserMessage(gasMix, health, beakerCapacity, beaker, injecting)
         );
     }
 
-    private List<ReagentQuantity>? GetBeakerReagents(Entity<CryoPodComponent> entity)
+    private (FixedPoint2? capacity, List<ReagentQuantity>? reagents) GetBeakerInfo(Entity<CryoPodComponent> entity)
     {
         if (!_itemSlotsQuery.TryComp(entity, out var itemSlotsComponent))
-            return null;
+            return (null, null);
 
         var beaker = _itemSlots.GetItemOrNull(
             entity.Owner,
@@ -270,11 +269,14 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
                     (beaker.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
                     out var containerSolution,
                     out _))
-            return null;
+            return (null, null);
 
-        return containerSolution.Value.Comp.Solution.Contents
+        var capacity = containerSolution.Value.Comp.Solution.MaxVolume;
+        var reagents = containerSolution.Value.Comp.Solution.Contents
             .Select(reagent => new ReagentQuantity(reagent.Reagent, reagent.Quantity))
             .ToList();
+
+        return (capacity, reagents);
     }
 
     private List<ReagentQuantity>? GetInjectingReagents(Entity<CryoPodComponent> entity)

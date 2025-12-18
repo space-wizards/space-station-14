@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Cryogenics;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -32,9 +33,9 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
         SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.Eject));
     }
 
-    private void InjectPressed()
+    private void InjectPressed(FixedPoint2 transferAmount)
     {
-        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.Inject));
+        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.Inject, transferAmount));
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)

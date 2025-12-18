@@ -130,17 +130,20 @@ public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
 {
     public GasAnalyzerComponent.GasMixEntry GasMix;
     public HealthAnalyzerUiState Health;
+    public FixedPoint2? BeakerCapacity;
     public List<ReagentQuantity>? Beaker;
     public List<ReagentQuantity>? Injecting;
 
     public CryoPodUserMessage(
         GasAnalyzerComponent.GasMixEntry gasMix,
         HealthAnalyzerUiState health,
+        FixedPoint2? beakerCapacity,
         List<ReagentQuantity>? beaker,
         List<ReagentQuantity>? injecting)
     {
         GasMix = gasMix;
         Health = health;
+        BeakerCapacity = beakerCapacity;
         Beaker = beaker;
         Injecting = injecting;
     }
@@ -152,9 +155,11 @@ public sealed class CryoPodUiMessage : BoundUserInterfaceMessage
     public enum MessageType { Eject, Inject }
 
     public readonly MessageType Type;
+    public readonly FixedPoint2? Quantity; // For Inject
 
-    public CryoPodUiMessage(MessageType type)
+    public CryoPodUiMessage(MessageType type, FixedPoint2? quantity = null)
     {
         Type = type;
+        Quantity = quantity;
     }
 }
