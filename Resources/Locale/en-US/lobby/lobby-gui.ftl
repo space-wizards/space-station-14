@@ -6,3 +6,6 @@ ui-lobby-observe-button = Observe
 ui-lobby-ready-up-button = Ready Up
 ui-lobby-online-players-block = Online Players
 ui-lobby-server-info-block = Server Info
+
+ui-lobby-lock-priorities-checkbox-tooltip = Allow dragging and dropping of job priorities directly.
+ui-lobby-lock-priorities-checkbox-label = Allow dragging

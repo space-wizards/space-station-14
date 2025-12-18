@@ -161,35 +161,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// </summary>
     public void ReloadCharacterSetup()
     {
-        RefreshLobbyPreview();
+        PreviewPanel?.Refresh();
         var (characterGui, profileEditor) = EnsureGui();
         characterGui.ReloadCharacterPickers();
         profileEditor.SetProfile(
             (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter,
             _preferencesManager.Preferences?.SelectedCharacterIndex);
-    }
-
-    /// <summary>
-    /// Refreshes the character preview in the lobby chat.
-    /// </summary>
-    private void RefreshLobbyPreview()
-    {
-        if (PreviewPanel == null)
-            return;
-
-        // Get selected character, load it, then set it
-        var character = _preferencesManager.Preferences?.SelectedCharacter;
-
-        if (character is not HumanoidCharacterProfile humanoid)
-        {
-            PreviewPanel.SetSprite(EntityUid.Invalid);
-            PreviewPanel.SetSummaryText(string.Empty);
-            return;
-        }
-
-        var dummy = LoadProfileEntity(humanoid, null, true);
-        PreviewPanel.SetSprite(dummy);
-        PreviewPanel.SetSummaryText(humanoid.Summary);
     }
 
     private void RefreshProfileEditor()
