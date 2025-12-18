@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Admiral-Obvious-001
-  changes:
-  - message: Several advanced chemicals now act slower, but with raised OD thresholds
-      and lowered OD damage. The healing per unit remains largely the same.
-    type: Tweak
-  - message: Bicaradine no longer makes razorium when mixed with advanced brute chems.
-      Advanced brute chems still mix and create razorium when combined.
-    type: Tweak
-  id: 8818
-  time: '2025-07-29T18:52:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38811
 - author: aada
   changes:
   - message: Lipolicide now continues to poison at 0 hunger.
@@ -3918,3 +3907,10 @@
   id: 9317
   time: '2025-12-18T21:08:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33157
+- author: Fildrance
+  changes:
+  - message: reroll feature for RnD research console
+    type: Add
+  id: 9318
+  time: '2025-12-18T21:22:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32931
