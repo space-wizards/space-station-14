@@ -1,5 +1,4 @@
 using Content.Shared.Materials;
-using Content.Shared.Stacks;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Materials;
@@ -7,7 +6,6 @@ namespace Content.Client.Materials;
 public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public override void Initialize()
@@ -40,28 +38,6 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         {
             _sprite.LayerSetVisible((uid, args.Sprite), layer, false);
         }
-    }
-
-    public override bool TryInsertMaterialEntity(EntityUid user,
-        EntityUid toInsert,
-        EntityUid receiver,
-        MaterialStorageComponent? storage = null,
-        MaterialComponent? material = null,
-        PhysicalCompositionComponent? composition = null,
-        bool trySplitStacks = false)
-    {
-        TryComp<StackComponent>(toInsert, out var stack);
-        var count = stack?.Count ?? 1; // get the original stack size
-
-        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition, trySplitStacks))
-            return false;
-
-        var amountUsed = count - stack?.Count ?? 1;
-
-        if (amountUsed == 0) // count was not changed, so stack.use was not called, so full entity
-            _transform.DetachEntity(toInsert, Transform(toInsert));
-
-        return true;
     }
 }
 

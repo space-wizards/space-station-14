@@ -3,7 +3,6 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
-using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
@@ -89,34 +88,24 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     }
 
     public override bool TryInsertMaterialEntity(EntityUid user,
-        EntityUid toInsert,
-        EntityUid receiver,
-        MaterialStorageComponent? storage = null,
-        MaterialComponent? material = null,
-        PhysicalCompositionComponent? composition = null,
-        bool trySplitStacks = false)
+        Entity<MaterialComponent?, PhysicalCompositionComponent?> toInsert,
+        Entity<MaterialStorageComponent?> receiver)
     {
-        if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition, false))
-            return false;
-        if (!SharedPowerReceiverSystem.IsPowered(receiver))
-            return false;
-
         TryComp<StackComponent>(toInsert, out var stack);
         var count = stack?.Count ?? 1;
 
-        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition, trySplitStacks))
+        if (!Resolve(receiver, ref receiver.Comp))
+            return false;
+
+        if (!base.TryInsertMaterialEntity(user, toInsert, receiver))
         {
             _popup.PopupEntity(Loc.GetString("machine-insert-fail", ("machine", receiver)), receiver, user);
             return false;
         }
-        var amountUsed = count - stack?.Count ?? 1;
-        if (amountUsed == 0) //count was not changed, so stack.use was not called, so full entity
-        {
-            amountUsed = count;
-            QueueDel(toInsert);
-        }
 
-        _audio.PlayPvs(storage.InsertingSound, receiver);
+        var amountUsed = count - stack?.Count ?? 1;
+
+        _audio.PlayPvs(receiver.Comp.InsertingSound, receiver);
         _popup.PopupEntity(Loc.GetString("machine-insert-item-amount",
                 ("user", user),
                 ("machine", receiver),

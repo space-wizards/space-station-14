@@ -2,13 +2,13 @@ using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Stacks;
-using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Research.Components;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.Materials;
 
@@ -23,7 +23,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedStackSystem _sharedStackSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _sharedPowerReceiverSystem = default!;
 
     /// <summary>
     /// Default volume for a sheet if the material's entity prototype has no material composition.
@@ -333,20 +333,19 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// Tries to insert an entity into the material storage.
     /// </summary>
     public virtual bool TryInsertMaterialEntity(EntityUid user,
-        EntityUid toInsert,
-        EntityUid receiver,
-        MaterialStorageComponent? storage = null,
-        MaterialComponent? material = null,
-        PhysicalCompositionComponent? composition = null,
-        bool trySplitStacks = false)
+        Entity<MaterialComponent?, PhysicalCompositionComponent?> toInsert,
+        Entity<MaterialStorageComponent?> receiver)
     {
-        if (!Resolve(receiver, ref storage))
+        if (!Resolve(receiver, ref receiver.Comp))
             return false;
 
-        if (!Resolve(toInsert, ref material, ref composition, false))
+        if (!_sharedPowerReceiverSystem.IsPowered(receiver.Owner))
             return false;
 
-        if (_whitelistSystem.IsWhitelistFail(storage.Whitelist, toInsert))
+        if (!Resolve(toInsert, ref toInsert.Comp1, ref toInsert.Comp2, false))
+            return false;
+
+        if (_whitelistSystem.IsWhitelistFail(receiver.Comp.Whitelist, toInsert))
             return false;
 
         if (HasComp<UnremoveableComponent>(toInsert))
@@ -355,39 +354,25 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         // Material Whitelist checked implicitly by CanChangeMaterialAmount();
 
         // test if the whole stack fits
-        var multiplier = _sharedStackSystem.GetCount(toInsert);
+        var multiplier = _sharedStackSystem.GetCount(toInsert.Owner);
         var totalVolume = 0;
         var partialStack = false;
-        foreach (var (mat, vol) in composition.MaterialComposition)
+
+        // check if we need to consider splitting stacks
+        foreach (var (mat, vol) in toInsert.Comp2.MaterialComposition)
         {
-            if (!CanChangeMaterialAmount(receiver, mat, vol * multiplier, storage))
-                if (trySplitStacks is true)
-                {
-                    partialStack = true;
-                    break;
-                }
-                else
-                {
-                    return false;
-                }
+            if (!CanChangeMaterialAmount(receiver, mat, vol * multiplier, receiver.Comp)){
+                partialStack = true;
+                break;
+            }
             totalVolume += vol * multiplier;
         }
 
-        if (!CanTakeVolume(receiver, totalVolume, storage, localOnly: true))
-            if (trySplitStacks is true)
-            {
-                partialStack = true;
-            }
-            else
-            {
-                return false;
-            }
-
-        if (partialStack && storage.StorageLimit is not null) // try and calculate the maximum possible stack that would fit
+        if (partialStack && receiver.Comp.StorageLimit is not null) // try and calculate the maximum possible stack that would fit
         {
-            var availableVolume = storage.StorageLimit.Value - GetTotalMaterialAmount(receiver, storage);
+            var availableVolume = receiver.Comp.StorageLimit.Value - GetTotalMaterialAmount(receiver, receiver.Comp);
             var volumePerSheet = 0;
-            foreach (var vol in composition.MaterialComposition.Values)
+            foreach (var vol in toInsert.Comp2.MaterialComposition.Values)
             {
                 volumePerSheet += vol;
             }
@@ -397,27 +382,24 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
                 return false; // 0 sheets fit, don't do anything
         }
 
-        foreach (var (mat, vol) in composition.MaterialComposition)
+        foreach (var (mat, vol) in toInsert.Comp2.MaterialComposition)
         {
-            TryChangeMaterialAmount(receiver, mat, vol * multiplier, storage);
+            TryChangeMaterialAmount(receiver, mat, vol * multiplier, receiver.Comp);
         }
 
-        if (partialStack)
-        {
-            _sharedStackSystem.TryUse(toInsert, multiplier);
-        }
+        _sharedStackSystem.TryUse(toInsert.Owner, multiplier);
 
         var insertingComp = EnsureComp<InsertingMaterialStorageComponent>(receiver);
-        insertingComp.EndTime = _timing.CurTime + storage.InsertionTime;
-        if (!storage.IgnoreColor)
+        insertingComp.EndTime = _timing.CurTime + receiver.Comp.InsertionTime;
+        if (!receiver.Comp.IgnoreColor)
         {
-            _prototype.TryIndex<MaterialPrototype>(composition.MaterialComposition.Keys.First(), out var lastMat);
+            _prototype.TryIndex<MaterialPrototype>(toInsert.Comp2.MaterialComposition.Keys.First(), out var lastMat);
             insertingComp.MaterialColor = lastMat?.Color;
         }
         _appearance.SetData(receiver, MaterialStorageVisuals.Inserting, true);
         Dirty(receiver, insertingComp);
 
-        var ev = new MaterialEntityInsertedEvent(material);
+        var ev = new MaterialEntityInsertedEvent(toInsert.Comp1);
         RaiseLocalEvent(receiver, ref ev);
         return true;
     }
@@ -442,7 +424,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     {
         if (args.Handled || !component.InsertOnInteract)
             return;
-        args.Handled = TryInsertMaterialEntity(args.User, args.Used, uid, component, null, null, true);
+        args.Handled = TryInsertMaterialEntity(args.User, args.Used, uid);
     }
 
     private void OnDatabaseModified(Entity<MaterialStorageComponent> ent, ref TechnologyDatabaseModifiedEvent args)
