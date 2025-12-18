@@ -13,6 +13,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Content.Shared.Sliceable;
 using Content.Shared.Storage;
+using Content.Shared.Tools.Components;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -169,14 +170,14 @@ public sealed class CargoTest
             var sliceableEntityProtos = protoManager.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
                 .Where(p => !pair.IsTestPrototype(p))
-                .Where(p => p.TryGetComponent<SliceableComponent>(out _, componentFactory))
+                .Where(p => p.TryGetComponent<ToolRefinableComponent>(out _, componentFactory))
                 .Select(p => p.ID)
                 .ToList();
 
             foreach (var proto in sliceableEntityProtos)
             {
                 var ent = entManager.SpawnEntity(proto, coord);
-                var sliceable = entManager.GetComponent<SliceableComponent>(ent);
+                var sliceable = entManager.GetComponent<ToolRefinableComponent>(ent);
 
                 // Check each bounty
                 foreach (var bounty in bounties)
@@ -190,7 +191,7 @@ public sealed class CargoTest
 
                         // Spawn a slice
 
-                        var sliceCountByProtoId = EntitySpawnCollection.GetSpawns(sliceable.Slices)
+                        var sliceCountByProtoId = EntitySpawnCollection.GetSpawns(sliceable.RefineResult)
                                                                     .GroupBy(x => x)
                                                                     .ToDictionary(x => x.Key, x => x.Count());
 

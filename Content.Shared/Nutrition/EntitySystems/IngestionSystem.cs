@@ -18,8 +18,8 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Content.Shared.Sliceable;
 using Content.Shared.Tools.EntitySystems;
+using Content.Shared.Tools.Systems;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
@@ -88,7 +88,7 @@ public sealed partial class IngestionSystem : EntitySystem
 
         // Misc
         SubscribeLocalEvent<EdibleComponent, AttemptShakeEvent>(OnAttemptShake);
-        SubscribeLocalEvent<EdibleComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
+        SubscribeLocalEvent<EdibleComponent, BeforeToolRefineFinishedEvent>(OnBeforeFullySliced);
 
         InitializeBlockers();
         InitializeUtensils();
@@ -516,7 +516,7 @@ public sealed partial class IngestionSystem : EntitySystem
         SpawnTrash(entity, args.User);
     }
 
-    private void OnBeforeFullySliced(Entity<EdibleComponent> entity, ref BeforeFullySlicedEvent args)
+    private void OnBeforeFullySliced(Entity<EdibleComponent> entity, ref BeforeToolRefineFinishedEvent args)
     {
         SpawnTrash(entity, args.User);
     }

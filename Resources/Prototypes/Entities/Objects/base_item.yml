@@ -170,3 +170,26 @@
         cell_slot:
           name: power-cell-slot-component-slot-name-default
           startingItem: PowerCellHigh
+
+- type: entity
+  id: SlicingRefinableBase
+  abstract: true
+  components:
+    - type: ToolRefinable
+      qualityNeeded: Slicing
+      verbText: slice-verb-name
+      verbDefaultTooltip: slice-verb-message-default
+      toolMissingQualityMessage: slice-verb-message-tool
+      startRefinePopupType: small
+      popupForUser: slice-butchered-success
+      popupForOther: slice-butchered-success-others
+      verbIcon: Interface/VerbIcons/cutlery.svg.192dpi.png
+      sound: !type:SoundPathSpecifier
+        path: /Audio/Items/Culinary/chop.ogg
+
+- type: entity
+  id: SlicingRefinableFoodBase
+  parent: SlicingRefinableBase
+  abstract: true
+  components:
+    - type: ToolRefinableSolution

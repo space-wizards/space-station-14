@@ -8,6 +8,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Sliceable;
 using Content.Shared.Throwing;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Trigger.Components;
 using Content.Shared.Trigger.Systems;
 using JetBrains.Annotations;
@@ -32,7 +33,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<CreamPieComponent, SliceEvent>(OnSlice);
+            SubscribeLocalEvent<CreamPieComponent, BeforeToolRefineFinishedEvent>(OnSlice);
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
@@ -60,7 +61,7 @@ namespace Content.Server.Nutrition.EntitySystems
         // However, the refactor to IngestionSystem caused the event to not be reached,
         // because eating is blocked if an item is inside the food.
 
-        private void OnSlice(Entity<CreamPieComponent> entity, ref SliceEvent args)
+        private void OnSlice(Entity<CreamPieComponent> entity, ref BeforeToolRefineFinishedEvent args)
         {
             ActivatePayload(entity);
         }
