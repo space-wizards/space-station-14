@@ -6,8 +6,13 @@ namespace Content.Shared.Damage.Events;
 /// Raised whenever the <see cref="StaminaComponent.CritThreshold"/> needs to be refreshed.
 /// </summary>
 [ByRefEvent]
-public record struct RefreshStaminaCritThresholdEvent()
+public record struct RefreshStaminaCritThresholdEvent
 {
     public float ThresholdValue = 100f;
     public float Modifier = 1f;
+
+    public RefreshStaminaCritThresholdEvent(float thresholdValue)
+    {
+        ThresholdValue = thresholdValue;
+    }
 }

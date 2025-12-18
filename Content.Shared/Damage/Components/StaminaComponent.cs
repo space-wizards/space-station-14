@@ -41,7 +41,7 @@ public sealed partial class StaminaComponent : Component
     /// <summary>
     /// The base stamina the entity requires to enter stam crit. Should rarely if ever be modified outside of yaml.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float BaseCritThreshold = 100f;
 
     /// <summary>
