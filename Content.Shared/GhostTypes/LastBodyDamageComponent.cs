@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -15,7 +16,7 @@ public sealed partial class LastBodyDamageComponent : Component
     /// Dictionary DamageGroupPrototype proto ids to how much damage was received from that damage type.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<string, FixedPoint2>? DamagePerGroup;
+    public Dictionary<ProtoId<DamageGroupPrototype>, FixedPoint2>? DamagePerGroup;
 
     /// <summary>
     /// Collection of possible damage types, stored by the StoreDamageTakenOnMind.
