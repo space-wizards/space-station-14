@@ -32,7 +32,7 @@ public sealed class StripebackSheetlet<T> : Sheetlet<T> where T : PalettedStyles
         [
             E<StripeBack>()
                 .Prop(StripeBack.StylePropertyBackground, stripeBack),
-            E<StripeBack>().Class("StripeWarning")
+            E<StripeBack>().Class(StyleClass.StatusWarning)
                 .Prop(StripeBack.StylePropertyBackground, stripeBackWarning),
         ];
     }

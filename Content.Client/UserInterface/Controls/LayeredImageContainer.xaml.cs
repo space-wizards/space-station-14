@@ -20,6 +20,12 @@ namespace Content.Client.UserInterface.Controls;
 [GenerateTypedNameReferences]
 public partial class LayeredImageContainer : Container
 {
+    // Adds a raised border with rounded corners around a UI element
+    public const string StyleClassPanelMount = "PanelMount";
+
+    // Bright AngleRect with a subtle outline
+    public const string StyleClassBrightAngleRect = "BrightAngleRectOutline";
+
     // The least amount of margin that a child needs to have to avoid drawing under
     // undesirable parts of the images. Children can add additional margins if desired
     public const string StylePropertyMinimumContentMargin = "MinimumContentMargin";

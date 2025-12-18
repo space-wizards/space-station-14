@@ -1,15 +1,15 @@
 <Control xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
     <controls:StripeBack
-        HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning" >
+        HasTopEdge="False" HasBottomEdge="False" StyleClasses="status-warning" >
 
-        <TextureRect StyleClasses="ScrewHead" TextureScale="0.25 0.25"
+        <TextureRect StyleIdentifier="ScrewHead" TextureScale="0.25 0.25"
             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4"/>
-        <TextureRect StyleClasses="ScrewHead" TextureScale="0.25 0.25"
+        <TextureRect StyleIdentifier="ScrewHead" TextureScale="0.25 0.25"
             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"/>
-        <TextureRect StyleClasses="ScrewHead" TextureScale="0.25 0.25"
+        <TextureRect StyleIdentifier="ScrewHead" TextureScale="0.25 0.25"
             HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4"/>
-        <TextureRect StyleClasses="ScrewHead" TextureScale="0.25 0.25"
+        <TextureRect StyleIdentifier="ScrewHead" TextureScale="0.25 0.25"
             HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4"/>
 
         <!-- Controls for calling, recalling and displaying info for the emergency shuttle -->
@@ -27,7 +27,7 @@
                     <Control HorizontalExpand="True" />
                     <controls:LayeredImageContainer StyleClasses="PanelMount">
                         <TextureButton Name="EmergencyShuttleCallButton"
-                            StyleClasses="TemptingRedButton" MinSize="60 60"
+                            StyleIdentifier="TemptingRedButton" MinSize="60 60"
                             ToolTip="{Loc 'comms-console-menu-call-shuttle'}" />
                     </controls:LayeredImageContainer>
                     <Control HorizontalExpand="True" />
@@ -39,7 +39,7 @@
                     <Control HorizontalExpand="True" />
                     <controls:LayeredImageContainer StyleClasses="PanelMount">
                         <TextureButton Name="EmergencyShuttleRecallButton"
-                            StyleClasses="TemptingRedButton" MinSize="60 60"
+                            StyleIdentifier="TemptingRedButton" MinSize="60 60"
                             ToolTip="{Loc 'comms-console-menu-recall-shuttle'}" />
                     </controls:LayeredImageContainer>
                     <Control HorizontalExpand="True" />

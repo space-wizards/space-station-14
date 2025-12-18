@@ -6,15 +6,15 @@
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
         <controls:LayeredImageContainer StyleClasses="BrightAngleRectOutline" VerticalExpand="True">
             <BoxContainer Orientation="Vertical" Margin="12 8 12 12" VerticalExpand="True">
-                <TextureButton Name="CloseButton" StyleClasses="CrossButtonDark" HorizontalAlignment="Right" Margin="0 0 0 6"/>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'comms-console-menu-title'}"
+                        StyleClasses="FancyWindowTitle" HorizontalExpand="True"/>
+                    <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"
+                        Modulate="#646464" VerticalAlignment="Center" Margin="0 0 0 6"/>
+                </BoxContainer>
                 <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                    <PanelContainer StyleClasses="WindowHeadingBackground">
-                        <Label Text="{Loc 'comms-console-menu-title'}" StyleClasses="FancyWindowTitle" />
-                    </PanelContainer>
-                    <PanelContainer StyleClasses="windowPanel" VerticalExpand="True">
+                    <PanelContainer StyleClasses="PanelDark" VerticalExpand="True">
                         <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                            <PanelContainer StyleClasses="LowDivider" />
-
                             <widgets:MessagingControls Name="MessagingControls" VerticalExpand="True" />
 
                             <controls:HSpacer Spacing="20" />

@@ -39,3 +39,10 @@ comms-console-announcement-title-wizard = Wizard
 
 # Flavor text for alert levels
 comms-console-level-green-flavour-label = Work is to proceed as normal
+comms-console-level-blue-flavour-label = Record suspicious activity with form NT-4772-b
+comms-console-level-violet-flavour-label = Maintain social distancing
+comms-console-level-yellow-flavour-label = Prepare to hold your breath
+comms-console-level-red-flavour-label = Remain vigilant
+comms-console-level-gamma-flavour-label = Suggest extreme caution
+comms-console-level-delta-flavour-label = Good luck
+comms-console-level-epsilon-flavour-label = You're fired
