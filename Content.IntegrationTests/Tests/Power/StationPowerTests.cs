@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Maps;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
+using Content.Shared.Maps;
 using Content.Shared.Power.Components;
 using Content.Shared.NodeContainer;
 using Robust.Server.GameObjects;
@@ -21,7 +21,6 @@ public sealed class StationPowerTests
 
     private static readonly string[] GameMaps =
     [
-        "Amber",
         "Bagel",
         "Box",
         "Elkridge",
@@ -30,6 +29,8 @@ public sealed class StationPowerTests
         "Oasis",
         "Packed",
         "Plasma",
+        "Relic",
+        "Snowball",
         "Reach",
         "Exo",
     ];

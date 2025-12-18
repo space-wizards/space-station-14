@@ -74,8 +74,9 @@ public sealed partial class ActivatableUISystem
             return;
 
         // Check if we have the appropriate drawrate / userate to even open it.
-        if (!_cell.HasActivatableCharge(uid, user: args.User, predicted: true) ||
-            !_cell.HasDrawCharge(uid, user: args.User, predicted: true))
+        // Don't pass in the user for the popup if silent.
+        if (!_cell.HasActivatableCharge(uid, user: args.Silent ? null : args.User, predicted: true) ||
+            !_cell.HasDrawCharge(uid, user: args.Silent ? null : args.User, predicted: true))
         {
             args.Cancel();
         }

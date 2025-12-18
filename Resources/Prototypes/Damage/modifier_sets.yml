@@ -159,7 +159,7 @@
   id: Card
   coefficients:
     Slash: 2.0
-    Piercing: 0.1 # Holes easily poked through, but do little to structural integrity 
+    Piercing: 0.1 # Holes easily poked through, but do little to structural integrity
     Heat: 3.0
 
 - type: damageModifierSet
@@ -225,7 +225,7 @@
     Poison: 0.0
     Radiation: 0.0
 
-# immune to everything except physical and heat damage
+# immune to everything except physical and heat damage; vulnerable to holy damage because they're undead, but not as vulnerable as a ghost or demon would be
 - type: damageModifierSet
   id: Skeleton
   coefficients:
@@ -238,6 +238,7 @@
     Asphyxiation: 0.0
     Bloodloss: 0.0
     Cellular: 0.0
+    Holy: 0.5
   flatReductions:
     Blunt: 5
 

@@ -114,21 +114,11 @@
 
 - type: entity
   parent: BaseSMES
-  id: DebugSMES
-  suffix: DEBUG, Empty
-
-- type: entity
-  parent: BaseSMES
   id: DebugSMESRecharging
   suffix: DEBUG, AutoRecharge
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-
-- type: entity
-  parent: BaseSubstation
-  id: DebugSubstation
-  suffix: DEBUG, Empty
 
 - type: entity
   parent: BaseSubstation
@@ -140,21 +130,11 @@
 
 - type: entity
   parent: BaseSubstationWall
-  id: DebugSubstationWall
-  suffix: DEBUG, Empty
-
-- type: entity
-  parent: BaseSubstationWall
   id: DebugSubstationWallRecharging
   suffix: DEBUG, AutoRecharge
   components:
   - type: BatterySelfRecharger
     autoRechargeRate: 50000
-
-- type: entity
-  parent: BaseAPC
-  id: DebugAPC
-  suffix: DEBUG, Empty
 
 - type: entity
   parent: BaseAPC
