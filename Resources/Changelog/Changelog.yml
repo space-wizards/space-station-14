@@ -1,65 +1,4 @@
 ﻿Entries:
-- author: Lokachop
-  changes:
-  - message: The engineering & chief engineer's hardsuit now properly glow in the
-      dark
-    type: Fix
-  id: 8804
-  time: '2025-07-24T03:04:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39153
-- author: K-Dynamic
-  changes:
-  - message: Cold slowdowns are now less impactful.
-    type: Tweak
-  id: 8805
-  time: '2025-07-24T09:44:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36316
-- author: B-Kirill
-  changes:
-  - message: The AI eye now has a postscript with the name of AI itself.
-    type: Add
-  id: 8806
-  time: '2025-07-24T11:24:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39177
-- author: SlamBamActionman
-  changes:
-  - message: Potassium-water explosion damage scaling has been tweaked to be less
-      potent.
-    type: Tweak
-  id: 8807
-  time: '2025-07-25T16:04:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37924
-- author: SlamBamActionman
-  changes:
-  - message: Chemistry foam and smoke reactions now trigger after regular mix reactions.
-    type: Tweak
-  - message: Foam, smoke and explosion reactions no longer transfer the reagents'
-      energies to the container.
-    type: Tweak
-  id: 8808
-  time: '2025-07-25T16:33:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/37915
-- author: Quantum-cross
-  changes:
-  - message: Fixed pinpointer arrow not being centered properly.
-    type: Fix
-  id: 8809
-  time: '2025-07-25T19:46:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38657
-- author: PJB3005
-  changes:
-  - message: Made most plushie sounds quieter, and made plushies slower to use.
-    type: Tweak
-  id: 8811
-  time: '2025-07-28T07:11:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39250
-- author: EmoGarbage404
-  changes:
-  - message: Fixed being unable to fold certain clothing while worn.
-    type: Fix
-  id: 8812
-  time: '2025-07-28T10:19:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39257
 - author: lzk228
   changes:
   - message: Janibelt can hold the golden plunger now.
@@ -3922,3 +3861,62 @@
   id: 9304
   time: '2025-12-16T03:32:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41473
+- author: Pangogie
+  changes:
+  - message: Killer tomatoes now have a 3x3 grid size.
+    type: Tweak
+  id: 9305
+  time: '2025-12-16T07:23:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35866
+- author: alexalexmax
+  changes:
+  - message: Getting stunned or killed while buckled/crawling will drop any held items.
+    type: Tweak
+  id: 9306
+  time: '2025-12-16T18:45:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41566
+- author: slarticodefast
+  changes:
+  - message: Fixed the station AI's battery alert not updating.
+    type: Fix
+  id: 9307
+  time: '2025-12-16T19:00:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41879
+- author: kontakt
+  changes:
+  - message: Flammable items no longer have bonus mass.
+    type: Fix
+  id: 9308
+  time: '2025-12-17T08:37:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41803
+- author: nkokic
+  changes:
+  - message: Bloodstream and Chemstream have been merged. Injected chemicals can now
+      react with your blood.
+    type: Tweak
+  id: 9309
+  time: '2025-12-17T19:33:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35071
+- author: Centronias
+  changes:
+  - message: Borgs with rechargable ballistic weapons (e.g. Syndicate Assault Borgs)
+      no longer lose their entire magazine upon being EMP'd. The EMP still disables
+      the ammo recharge for its effective duration.
+    type: Tweak
+  id: 9310
+  time: '2025-12-17T23:04:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/38537
+- author: NoreUhh
+  changes:
+  - message: Fixed Vulpkanin stomachs being smaller than other species.
+    type: Fix
+  id: 9311
+  time: '2025-12-18T00:53:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41893
+- author: Samuka
+  changes:
+  - message: Renamed some xenoborg modules
+    type: Tweak
+  id: 9312
+  time: '2025-12-18T02:29:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41625
