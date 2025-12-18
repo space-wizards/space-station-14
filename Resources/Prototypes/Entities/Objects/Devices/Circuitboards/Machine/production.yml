@@ -1365,6 +1365,9 @@
         Manipulator: 1
         Steel: 3
         Cable: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
   id: SmartFridgeCircuitboard
   name: SmartFridge machine board
   description: A machine printed circuit board for a SmartFridge.
