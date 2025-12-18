@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -251,7 +252,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
                 _popup.PopupEntity(reason, used, used, PopupType.LargeCaution);
 
                 // container is null because the brain wasn't actually inserted yet, so it does not need to be ejected
-                Yeet(used, chassis, null);
+                YeetBrain(used, chassis, null);
                 return;
             }
 
@@ -274,7 +275,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     /// <summary>
     /// Distances the brain from the chassis in an appropriately dignified manner
     /// </summary>
-    private void Yeet(EntityUid brain, EntityUid chassis, EntityUid? container)
+    private void YeetBrain(EntityUid brain, EntityUid chassis, EntityUid? container)
     {
         // Audio
         var sound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_two.ogg");
@@ -289,21 +290,36 @@ public abstract partial class SharedBorgSystem : EntitySystem
         // We will launch it from the chassis' position even if it was held at the time, as if it was briefly inserted
         var xform = Transform(chassis);
         _transform.SetCoordinates(brain, xform.Coordinates);
-        var vector = _random.NextVector2() * 5;
 
-        // Geeet dunked on
-        var disposals = new HashSet<Entity<DisposalUnitComponent>>();
-        _lookup.GetEntitiesInRange(xform.Coordinates, 5f, disposals);
-        if (disposals.Count > 0 && xform.GridUid is not null)
-        {
-            var vTarget = Transform(disposals.First()).Coordinates.Position;
-            var vDiff = vTarget - xform.Coordinates.Position;
-            var rot = _transform.GetWorldRotation(xform.GridUid.Value);
-            vector = rot.RotateVec(vDiff);
-        }
+        var randomVector = _random.NextVector2() * 5;
+        var target = GetYeetTarget(xform) ?? randomVector;
 
         // Actually throw the brain
-        _throwing.TryThrow(brain, vector, 5f, doSpin: true);
+        _throwing.TryThrow(brain, target, 5f, doSpin: true);
+    }
+
+    /// <summary>
+    /// Attempt to find specific targets to throw the brain at
+    /// </summary>
+    private Vector2? GetYeetTarget(TransformComponent origin)
+    {
+        // Disposals
+        var disposals = new HashSet<Entity<DisposalUnitComponent>>();
+        _lookup.GetEntitiesInRange(origin.Coordinates, 5f, disposals);
+        if (disposals.Count > 0 && origin.GridUid is not null)
+        {
+            // calculate vector to alternate target
+            var vTarget = Transform(disposals.First()).Coordinates.Position;
+            var vDiff = vTarget - origin.Coordinates.Position;
+            var rot = _transform.GetWorldRotation(origin.GridUid.Value);
+            // Geeet dunked on.
+            var vector = rot.RotateVec(vDiff);
+            return vector;
+        }
+
+        // TODO Other targets? Maybe throw it at a random nearby person?
+
+        return null;
     }
 
     // Make the borg slower without power.
@@ -381,7 +397,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
             //TODO message for the player, too? Though tbh this codepath is really unlikely to happen
 
-            Yeet(brain, brain.Owner, borg);
+            YeetBrain(brain, brain.Owner, borg);
             return;
         }
 
