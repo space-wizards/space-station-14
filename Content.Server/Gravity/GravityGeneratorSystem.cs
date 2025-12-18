@@ -1,6 +1,6 @@
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Gravity;
+using Content.Shared.Power;
 
 namespace Content.Server.Gravity;
 
