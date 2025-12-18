@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
 
-
 namespace Content.Shared.Body.Events;
 
 /// <summary>
@@ -10,5 +9,5 @@ namespace Content.Shared.Body.Events;
 [ByRefEvent]
 public readonly record struct MetabolismExclusionEvent()
 {
-    public readonly List<ReagentId> Reagents = new();
+    public readonly List<ReagentId> Reagents = [];
 }
