@@ -2,10 +2,8 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components;
 
@@ -15,7 +13,7 @@ namespace Content.Shared.Chemistry.Components;
 /// <remarks>
 /// Can optionally support both
 /// injection and drawing or just injection. Can inject/draw reagents from solution
-/// containers, and can directly inject into a mobs bloodstream.
+/// containers, and can directly inject into a mob's bloodstream.
 /// </remarks>
 /// <seealso cref="InjectorSystem"/>
 /// <seealso cref="InjectorBehavior"/>
@@ -43,17 +41,18 @@ public sealed partial class InjectorComponent : Component
     [DataField, AutoNetworkedField]
     public FixedPoint2? CurrentTransferAmount = FixedPoint2.New(5);
 
+
     /// <summary>
-    /// The active <see cref="InjectorModePrototype"/>, defining the behavior of the injector.
+    /// The mode that this injector starts with on MapInit.
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
-    public InjectorModePrototype ActiveMode;
+    public ProtoId<InjectorModePrototype> ActiveModeProtoId;
 
     /// <summary>
     /// The possible <see cref="InjectorModePrototype"/> that it can switch between.
     /// </summary>
     [DataField(required: true)]
-    public List<InjectorModePrototype> AllowedModes;
+    public List<ProtoId<InjectorModePrototype>> AllowedModes;
 
     /// <summary>
     /// Whether the injector is able to draw from or inject from mobs.
@@ -83,15 +82,15 @@ public sealed partial class InjectorComponent : Component
 
     #region Arguments for injection doafter
 
-    /// <inheritdoc cref=DoAfterArgs.NeedHand>
+    /// <inheritdoc cref="DoAfterArgs.NeedHand"/>
     [DataField]
     public bool NeedHand = true;
 
-    /// <inheritdoc cref=DoAfterArgs.BreakOnHandChange>
+    /// <inheritdoc cref="DoAfterArgs.BreakOnHandChange">
     [DataField]
     public bool BreakOnHandChange = true;
 
-    /// <inheritdoc cref=DoAfterArgs.MovementThreshold>
+    /// <inheritdoc cref="DoAfterArgs.MovementThreshold">
     [DataField]
     public float MovementThreshold = 0.1f;
 

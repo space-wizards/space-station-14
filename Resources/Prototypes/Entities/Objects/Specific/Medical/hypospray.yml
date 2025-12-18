@@ -6,7 +6,7 @@
   - type: Injector
     solutionName: hypospray
     ignoreClosed: false
-    activeMode: HyposprayDynamicMode
+    activeModeProtoId: HyposprayDynamicMode
     allowedModes:
     - HyposprayDynamicMode
     - HyposprayInjectMode
@@ -147,7 +147,7 @@
   - type: Injector
     solutionName: pen
     currentTransferAmount: null
-    activeMode: HyposprayInjectMode
+    activeModeProtoId: HyposprayInjectMode
     allowedModes:
     - HyposprayInjectMode
   - type: Appearance
@@ -622,7 +622,7 @@
     exactVolume: true
   - type: Injector
     solutionName: hypospray
-    activeMode: HypopenDynamicMode
+    activeModeProtoId: HypopenDynamicMode
     allowedModes:
     - HyposprayInjectMode
     - HypopenDynamicMode

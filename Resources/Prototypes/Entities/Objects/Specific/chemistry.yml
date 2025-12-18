@@ -291,7 +291,7 @@
   - type: Injector
     ignoreMobs: true
     ignoreClosed: false
-    activeMode: DropperDrawMode
+    activeModeProtoId: DropperDrawMode
     allowedModes:
     - DropperDrawMode
     - DropperInjectMode
@@ -367,7 +367,7 @@
       injector:
         maxVol: 15
   - type: Injector
-    activeMode: SyringeDrawMode
+    activeModeProtoId: SyringeDrawMode
     allowedModes:
     - SyringeDrawMode
     - SyringeInjectMode
@@ -467,7 +467,7 @@
   id: PrefilledSyringe
   components:
   - type: Injector
-    activeMode: InjectMode
+    activeModeProtoId: SyringeInjectMode
 
 - type: entity
   id: SyringeBluespace
@@ -490,7 +490,7 @@
       injector:
         maxVol: 100
   - type: Injector
-    activeMode: BluespaceSyringeDrawMode
+    activeModeProtoId: BluespaceSyringeDrawMode
     allowedModes:
     - BluespaceSyringeInjectMode
     - BluespaceSyringeDrawMode
@@ -524,7 +524,7 @@
         maxVol: 10
         canReact: false
   - type: Injector
-    activeMode: DrawMode
+    activeModeProtoId: DrawMode
     allowedModes:
     - DrawMode
     - InjectMode

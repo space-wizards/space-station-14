@@ -78,8 +78,11 @@ public abstract partial class SharedPuddleSystem
                 // Injectors should not be hardcoded here.
                 if (TryComp<InjectorComponent>(entity, out var injectorComp))
                 {
-                    injectorComp.ActiveMode.Behavior = InjectorBehavior.Draw;
-                    Dirty(entity, injectorComp);
+                    if (_prototypeManager.Resolve(injectorComp.ActiveModeProtoId, out var activeMode))
+                    {
+                        activeMode.Behavior = InjectorBehavior.Draw;
+                        Dirty(entity, injectorComp);
+                    }
                 }
             };
         }

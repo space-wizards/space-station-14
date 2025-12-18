@@ -1,5 +1,5 @@
 ﻿## Abstracts
-- type: InjectorMode
+- type: injectorMode
   abstract: true
   id: BaseInjectMode
   name: Inject
@@ -7,7 +7,7 @@
   popupUserAttempt: injector-component-needle-injecting-user
   popupTargetAttempt: injector-component-needle-injecting-target
 
-- type: InjectorMode
+- type: injectorMode
   abstract: true
   id: BaseDrawMode
   name: Draw
@@ -15,7 +15,7 @@
   popupUserAttempt: injector-component-needle-drawing-user
   popupTargetAttempt: injector-component-needle-drawing-target
 
-- type: InjectorMode
+- type: injectorMode
   abstract: true
   id: BaseDynamicMode
   name: Dynamic
@@ -24,7 +24,7 @@
   popupTargetAttempt: injector-component-needle-injecting-target
 
 ## Syringes
-- type: InjectorMode
+- type: injectorMode
   abstract: true
   id: BaseSyringeMode
   transferAmounts:
@@ -32,7 +32,7 @@
   - 10
   - 15
 
-- type: InjectorMode
+- type: injectorMode
   abstract: true
   id: BaseBluespaceSyringeMode
   mobTime: 2.5
@@ -42,24 +42,24 @@
   - 15
   - 50
 
-- type: InjectorMode
+- type: injectorMode
   parent: [ BaseSyringeMode, BaseInjectMode ]
   id: SyringeInjectMode
 
-- type: InjectorMode
+- type: injectorMode
   parent: [ BaseSyringeMode, BaseDrawMode ]
   id: SyringeDrawMode
 
-- type: InjectorMode
+- type: injectorMode
   parent: [ BaseBluespaceSyringeMode, BaseInjectMode ]
   id: BluespaceSyringeInjectMode
 
-- type: InjectorMode
+- type: injectorMode
   parent: [ BaseBluespaceSyringeMode, BaseDrawMode ]
   id: BluespaceSyringeDrawMode
 
 ## Dropper
-- type: InjectorMode
+- type: injectorMode
   abstract: true
   id: BaseDropperMode
   transferAmounts:
@@ -69,33 +69,35 @@
   - 4
   - 5
 
-- type: InjectorMode
+- type: injectorMode
   parent: [ BaseDropperMode, BaseInjectMode ]
   id: DropperInjectMode
 
-- type: InjectorMode
+- type: injectorMode
   parent: [ BaseDropperMode, BaseDrawMode ]
   id: DropperDrawMode
 
 ## Hyposprays
-- type: InjectorMode
+- type: injectorMode
   id: HyposprayBaseMode
   abstract: true
   injectSound: /Audio/Items/hypospray.ogg
   injectPopupTarget: injector-component-feel-prick-message
   injectOnUse: true
+  mobTime: 0
+  delayPerVolume: 0
   transferAmounts:
   - 5
 
-- type: InjectorMode
+- type: injectorMode
   parent: [ HyposprayBaseMode, BaseInjectMode ]
   id: HyposprayInjectMode
 
-- type: InjectorMode
+- type: injectorMode
   parent: [ HyposprayBaseMode, BaseDynamicMode ]
   id: HyposprayDynamicMode
 
-- type: InjectorMode
+- type: injectorMode
   parent: HyposprayDynamicMode
   id: HypopenDynamicMode
   containerDrawTime: 0.75
