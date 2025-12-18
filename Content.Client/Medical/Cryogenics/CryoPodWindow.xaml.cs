@@ -158,6 +158,8 @@ public sealed partial class CryoPodWindow : FancyWindow
         Inject5.Disabled = (!hasPatient || availableQuantity <= 1);
         Inject10.Disabled = (!hasPatient || availableQuantity <= 5);
         Inject20.Disabled = (!hasPatient || availableQuantity <= 10);
+        ChemicalsRuler.TotalNotches = (int)totalBeakerCapacity;
+        ChemicalsRuler2.TotalNotches = (int)totalBeakerCapacity;
 
         // Temperature warning
         bool showsTemperatureWarning =
