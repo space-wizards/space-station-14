@@ -59,6 +59,19 @@ public sealed partial class ResearchSystem
         UpdateTechnologyCards(serverEnt.Value);
         SyncClientWithServer(uid);
         UpdateConsoleInterface(uid);
+
+        if (!_emag.CheckFlag(uid, EmagType.Interaction))
+        {
+            var getIdentityEvent = new TryGetIdentityShortInfoEvent(uid, act);
+            RaiseLocalEvent(getIdentityEvent);
+
+            var message = Loc.GetString(
+                "research-console-rediscover-technology-radio-broadcast",
+                ("amount", rediscoverCost),
+                ("approver", getIdentityEvent.Title ?? string.Empty)
+            );
+            _radio.SendRadioMessage(uid, message, console.AnnouncementChannel, uid, escapeMarkup: false);
+        }
     }
 
     private void OnConsoleUnlock(EntityUid uid, ResearchConsoleComponent component, ConsoleUnlockTechnologyMessage args)
@@ -108,7 +121,7 @@ public sealed partial class ResearchSystem
         if (!Resolve(uid, ref component, ref clientComponent, false))
             return;
 
-        
+
         var points = 0;
         var nextRediscover = TimeSpan.MaxValue;
         var rediscoverCost = 0;
