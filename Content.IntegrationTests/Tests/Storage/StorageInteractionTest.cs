@@ -81,7 +81,7 @@ public sealed class StorageInteractionTest : InteractionTest
     {
         var uid = ToClient(target);
         var hotbar = GetWidget<HotbarGui>();
-        var storageContainer  = GetControlFromField<Control>(nameof(HotbarGui.StorageContainer), hotbar);
+        var storageContainer  = GetControlFromField<Control>(nameof(HotbarGui.SingleStorageContainer), hotbar);
         return GetControlFromChildren<ItemGridPiece>(c => c.Entity == uid, storageContainer);
     }
 }

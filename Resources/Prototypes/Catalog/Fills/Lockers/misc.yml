@@ -30,7 +30,7 @@
     - id: MedkitOxygenFilled
       prob: 0.2
     - id: WeaponFlareGun
-      prob: 0.05
+      prob: 0.1
     - id: BoxMRE
       prob: 0.1
 
@@ -54,6 +54,22 @@
       entity_storage: !type:NestedSelector
         tableId: FillLockerEmergencyStandard
 
+- type: entityTable
+  id: FillLockerEmergencyN2Standard
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskBreath
+    - id: ClothingOuterSuitEmergency
+    - id: BoxMRE
+      prob: 0.1
+    - id: ToolboxEmergencyFilled
+      prob: 0.05
+    - !type:GroupSelector
+      children:
+      - id: EmergencyNitrogenTankFilled
+        weight: 4
+      - id: NitrogenTankFilled
+
 - type: entity
   id: ClosetEmergencyN2FilledRandom
   parent: ClosetEmergencyN2
@@ -61,14 +77,18 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: ClothingMaskBreath
-        - id: ClothingOuterSuitEmergency
-        - !type:GroupSelector
-          children:
-          - id: EmergencyNitrogenTankFilled
-          - id: NitrogenTankFilled
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyN2Standard
+
+- type: entity
+  parent: ClosetWallEmergencyN2
+  id: ClosetWallEmergencyN2FilledRandom
+  suffix: Filled, Random
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyN2Standard
 
 - type: entityTable
   id: FillLockerFireStandard
@@ -127,6 +147,7 @@
     - id: BalloonSyn
     - id: WeaponSniperMosin
       weight: 2
+    - id: ClothingHandsKnuckleDustersSyndicate
 
 - type: entityTable
   id: MaintenanceLockerLoot
@@ -159,6 +180,9 @@
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       prob: 0.05
+    # Recursive
+    - id: ClosetMaintenanceFilledRandom
+      prob: 0.01
 
 - type: entity
   id: ClosetMaintenanceFilledRandom
@@ -179,3 +203,83 @@
     containers:
       entity_storage: !type:NestedSelector
         tableId: MaintenanceLockerLoot
+
+# Intended to very occasionally be useful for prisoners, so mostly functional items instead of fluff
+
+- type: entityTable
+  id: ToiletCisternCommonToolsTable
+  table: !type:GroupSelector
+    children:
+    - id: Screwdriver
+    - id: Wrench
+    - id: Wirecutter
+    - id: Welder
+    - id: ClothingMaskGas
+    - id: PowerCellSmall
+    - id: RadioHandheld
+    - id: Syringe
+    - id: CableApcStack
+    - id: Lighter
+
+- type: entityTable
+  id: ToiletCisternRareToolsTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingHandsGlovesColorYellow
+    - id: DrinkSpaceLube
+    - id: WelderIndustrial
+    - id: ClothingHeadHatWeldingMaskFlame
+    - id: PowerCellMedium
+    - id: DoubleEmergencyOxygenTankFilled
+    - id: DoubleEmergencyNitrogenTankFilled
+
+- type: entityTable
+  id: ToiletCisternUtilityTable
+  table: !type:GroupSelector
+    children:
+    - id: Brutepack
+    - id: Ointment
+    - id: Gauze
+    - id: ChemistryBottleUnstableMutagen
+
+- type: entityTable
+  id: ToiletCisternWeaponsTable
+  table: !type:GroupSelector
+    children:
+    - id: SurvivalKnife
+    - id: ScalpelShiv
+    - id: Shiv
+    - id: SawImprov
+    - id: HydroponicsToolHatchet
+    - id: ClothingHandsKnuckleDusters
+    - id: WeaponFlareGun
+
+- type: entityTable
+  id: ToiletCisternSyndicateTable
+  table: !type:GroupSelector
+    children:
+    - id: CyberPen
+    - id: CigPackSyndicate
+    - id: SoapSyndie
+    - id: SyndicatePersonalAI
+    - id: UplinkLighterBox
+
+- type: entityTable
+  id: ToiletCisternLoot
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      weight: 25
+      tableId: ToiletCisternCommonToolsTable
+    - !type:NestedSelector
+      weight: 8
+      tableId: ToiletCisternRareToolsTable
+    - !type:NestedSelector
+      weight: 5
+      tableId: ToiletCisternUtilityTable
+    - !type:NestedSelector
+      weight: 3
+      tableId: ToiletCisternWeaponsTable
+    - !type:NestedSelector
+      weight: 1
+      tableId: ToiletCisternSyndicateTable

@@ -10,31 +10,33 @@
       radiatingBehaviourId: radiating
     - type: LightBehaviour
       behaviours:
-        - !type:FadeBehaviour
-          id: radiating
-          maxDuration: 2.0
-          startValue: 3.0
-          endValue: 2.0
-          isLooped: true
-          reverseWhenFinished: true
-        - !type:PulseBehaviour
-          id: blinking
-          interpolate: Nearest
-          maxDuration: 1.0
-          minValue: 0.1
-          maxValue: 2.0
-          isLooped: true
+      - !type:FadeBehaviour
+        id: radiating
+        maxDuration: 2.0
+        startValue: 3.0
+        endValue: 2.0
+        isLooped: true
+        reverseWhenFinished: true
+      - !type:PulseBehaviour
+        id: blinking
+        interpolate: Nearest
+        maxDuration: 1.0
+        startValue: 0.1
+        endValue: 2.0
+        isLooped: true
     - type: Sprite
       sprite: Objects/Tools/lantern.rsi
       layers:
-        - state: lantern
-        - state: lantern-on
-          shader: unshaded
-          visible: false
-          map: [ "light" ]
+      - state: lantern
+      - state: lantern-on
+        shader: unshaded
+        visible: false
+        map: [ "light" ]
     - type: Item
       sprite: Objects/Tools/lantern.rsi
       heldPrefix: off
+    - type: UseDelay
+      delay: 1
     - type: PointLight
       enabled: false
       radius: 3
@@ -42,7 +44,9 @@
       color: "#FFC458"
       netsync: false
     - type: Appearance
-    - type: ToggleableLightVisuals
+    - type: ToggleableVisuals
+      spriteLayer: light
+    - type: ItemTogglePointLight
     - type: PowerCellSlot
       cellSlotId: cell_slot
     - type: ItemSlots
@@ -60,7 +64,7 @@
       equippedPrefix: off
       quickEquip: false
       slots:
-        - Belt
+      - Belt
     - type: Tag
       tags:
       - Flashlight
@@ -74,21 +78,22 @@
       sprite: Objects/Tools/lantern.rsi
       layers:
       - state: lantern
-        map: [ "enum.FlashVisuals.BaseLayer" ]
+        map: [ "enum.FlashVisualLayers.BaseLayer" ]
       - state: lantern-on
         shader: unshaded
         visible: false
         map: [ "light" ]
       - state: flashing
-        map: [ "enum.FlashVisuals.LightLayer" ]
+        map: [ "enum.FlashVisualLayers.LightLayer" ]
         visible: false
     - type: PointLight
       radius: 5
       energy: 10
     - type: Flash
+      flashOnMelee: false
+      flashOnUse: false
     - type: LimitedCharges
       maxCharges: 15
-      charges: 15
     - type: MeleeWeapon
       damage:
         types:
@@ -97,9 +102,9 @@
     - type: GenericVisualizer
       visuals:
         enum.FlashVisuals.Burnt:
-          enum.FlashVisuals.BaseLayer:
+          enum.FlashVisualLayers.BaseLayer:
             True: {state: burnt}
         enum.FlashVisuals.Flashing:
-          enum.FlashVisuals.LightLayer:
+          enum.FlashVisualLayers.LightLayer:
             True: {visible: true}
             False: {visible: false}

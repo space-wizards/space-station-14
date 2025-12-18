@@ -1,8 +1,12 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: HappyHonkDispenserInventory
   startingInventory:
     HappyHonk: 10
     HappyHonkMime: 4
-  emaggedInventory:
+  contrabandInventory:
+    ToyFigurineClown: 1
+    ToyFigurineMime: 1
+    ToyFigurineNukie: 1
     HappyHonkCluwne: 1
+  emaggedInventory:
     HappyHonkNukie: 1

@@ -34,13 +34,16 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      80: Dead
   - type: Stamina
     critThreshold: 150
   - type: MovementAlwaysTouching
   - type: Bloodstream
     bloodMaxVolume: 300
-    bloodReagent: Cryoxadone
+    bloodReagents:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 1
   - type: CombatMode
   - type: Temperature
     heatDamageThreshold: 500
@@ -162,11 +165,16 @@
   - type: Vocal
     sounds:
       Unsexed: Kangaroo
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepBounce
   - type: ReplacementAccent
     accent: kangaroo
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
 
 - type: entity
   id: MobKangarooSpaceSalvage
@@ -193,7 +201,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Dead
+      45: Dead
   - type: Stamina
     critThreshold: 150
   - type: DamageStateVisuals
@@ -212,7 +220,10 @@
       prob: 0.5
   - type: Bloodstream
     bloodMaxVolume: 250
-    bloodReagent: Cryoxadone
+    bloodReagents:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 1
   - type: Fixtures
     fixtures:
       fix1:
@@ -294,7 +305,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        100: Dead
+        45: Dead
     - type: Stamina
       critThreshold: 150
     - type: DamageStateVisuals
@@ -315,7 +326,10 @@
           prob: 0.3
     - type: Bloodstream
       bloodMaxVolume: 200
-      bloodReagent: Cryoxadone
+      bloodReagents:
+        reagents:
+        - ReagentId: Cryoxadone
+          Quantity: 1
     - type: Fixtures
       fixtures:
         fix1:
@@ -354,7 +368,7 @@
       interactFailureString: petting-failure-generic
     - type: PointLight
       radius: 1.1
-      energy: 1.5
+      energy: 2.7
       color: "#4faffb"
     - type: Stealth
       enabledOnDeath: false
@@ -385,6 +399,8 @@
     name: ghost-role-information-snail-name
     description: ghost-role-information-snail-description
     rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgentHarmless
   - type: GhostTakeoverAvailable
   - type: Emoting
   - type: Sprite
@@ -399,6 +415,7 @@
     factions:
       - Mouse
   - type: HTN
+    constantlyReplan: false
     rootTask:
       task: MouseCompound
   - type: Physics
@@ -426,6 +443,15 @@
       0: Alive
       10: Critical
       20: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 40
+      behaviors:
+      - !type:GibBehavior
+        recursive: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
@@ -437,7 +463,7 @@
         Base: dead
       Dead:
         Base: dead
-  - type: Food
+  - type: Edible
   - type: Thirst
     startingThirst: 25  # spawn with Okay thirst state
     thresholds:
@@ -448,7 +474,6 @@
       Dead: 0
     baseDecayRate: 0.04
   - type: Hunger
-    currentHunger: 25   # spawn with Okay hunger state
     thresholds:
       Overfed: 35
       Okay: 25
@@ -478,7 +503,10 @@
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
     bloodMaxVolume: 30
-    bloodReagent: Cryoxadone
+    bloodReagents:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 1
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
@@ -496,7 +524,6 @@
       methods: [Touch, Ingestion, Injection]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
         damage:
           types:
             Caustic: 1
@@ -511,10 +538,13 @@
   id: MobSnailInstantDeath
   suffix: Smite
   components:
+  - type: GhostRole
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: MobStateActions
     actions:
       Alive:
-      - ActionSmite
+      - ActionSmiteNoReq
       Critical:
       - ActionCritSuccumb
       - ActionCritFakeDeath

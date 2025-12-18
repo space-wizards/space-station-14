@@ -35,7 +35,6 @@ whitelist-manual = You are not whitelisted on this server.
 whitelist-blacklisted = You are blacklisted from this server.
 whitelist-always-deny = You are not allowed to join this server.
 whitelist-fail-prefix = Not whitelisted: {$msg}
-whitelist-misconfigured = The server is misconfigured and is not accepting players. Please contact the server owner and try again later.
 
 cmd-blacklistadd-desc = Adds the player with the given username to the server blacklist.
 cmd-blacklistadd-help = Usage: blacklistadd <username>
@@ -55,3 +54,11 @@ baby-jail-account-denied = This server is a newbie server, intended for new play
 baby-jail-account-denied-reason = This server is a newbie server, intended for new players and those who want to help them. New connections by accounts that are too old or are not on a whitelist are not accepted. Check out some other servers and see everything Space Station 14 has to offer. Have fun! Reason: "{$reason}"
 baby-jail-account-reason-account = Your Space Station 14 account is too old. It must be younger than {$minutes} minutes
 baby-jail-account-reason-overall = Your overall playtime on the server must be younger than {$minutes} $minutes
+
+generic-misconfigured = The server is misconfigured and is not accepting players. Please contact the server owner and try again later.
+
+ipintel-server-ratelimited = This server uses an auditing system with external verification, but the server has reached its maximum verification limit with the external service. Please contact the administration team of the server to inform them and for further assistance, or try again later.
+ipintel-unknown = This server uses an auditing system with external verification, but an error was encountered while verifying your connection. Please contact the administration team of the server to inform them and for further assistance, or try again later.
+ipintel-suspicious = You seem to be attempting to connect using a datacenter, proxy, VPN or otherwise suspicious connection. For administrative reasons, we do not allow these connections to play. If you have a VPN or similar enabled, please turn it off and attempt to reconnect or contact the administration team of the server for assistance on how to continue if you believe this is false or require using these services to play.
+
+hwid-required = Your client has refused to send a hardware id. Please contact the administration team for further assistance.

@@ -5,12 +5,19 @@
   parent: SuitStorageBase
   suffix: EVA
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitEVA
-        - id: ClothingHeadHelmetEVA
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageEVA
+
+- type: entityTable
+  id: FillSuitStorageEVA
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitEVA
+    - id: ClothingHeadHelmetEVA
+    - id: ClothingMaskBreath
 
 #Basic EVA (Big Ass Helmet)
 - type: entity
@@ -18,12 +25,19 @@
   parent: SuitStorageBase
   suffix: EVA, Large Helmet
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitEVA
-        - id: ClothingHeadHelmetEVALarge
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageEVAAlternate
+
+- type: entityTable
+  id: FillSuitStorageEVAAlternate
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitEVA
+    - id: ClothingHeadHelmetEVALarge
+    - id: ClothingMaskBreath
 
 #Emergency EVA
 - type: entity
@@ -31,11 +45,18 @@
   parent: SuitStorageBase
   suffix: Emergency EVA
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterSuitEmergency
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageEVAEmergency
+
+- type: entityTable
+  id: FillSuitStorageEVAEmergency
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingOuterSuitEmergency
+    - id: ClothingMaskBreath
 
 #Prisoner EVA
 - type: entity
@@ -43,12 +64,19 @@
   parent: SuitStorageBase
   suffix: Prisoner EVA
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitEVAPrisoner
-        - id: ClothingHeadHelmetEVALarge
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageEVAPrisoner
+
+- type: entityTable
+  id: FillSuitStorageEVAPrisoner
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitEVAPrisoner
+    - id: ClothingHeadHelmetEVALarge
+    - id: ClothingMaskBreath
 
 #Syndicate EVA
 - type: entity
@@ -56,12 +84,19 @@
   parent: SuitStorageBase
   suffix: Syndicate EVA
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitSyndicate
-        - id: ClothingHeadHelmetSyndicate
-        - id: ClothingMaskGasSyndicate
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageEVASyndicate
+
+- type: entityTable
+  id: FillSuitStorageEVASyndicate
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingOuterEVASuitSyndicate
+    - id: ClothingHeadHelmetSyndicate
+    - id: ClothingMaskGasSyndicate
 
 #Pirate EVA
 - type: entity
@@ -69,11 +104,18 @@
   parent: SuitStorageBase
   suffix: Pirate EVA
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitPirateEVA
-        - id: ClothingMaskGas
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageEVAPirate
+
+- type: entityTable
+  id: FillSuitStorageEVAPirate
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitPirateEVA
+    - id: ClothingMaskGas
 
 #NTSRA Voidsuit
 - type: entity
@@ -81,38 +123,31 @@
   parent: SuitStorageBase
   suffix: Ancient EVA
   components:
-  - type: StorageFill
-    contents:
-        - id: JetpackVoidFilled
-        - id: ClothingOuterHardsuitAncientEVA
-        - id: ClothingHeadHelmetAncient
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageEVANTSRA
+
+- type: entityTable
+  id: FillSuitStorageEVANTSRA
+  table: !type:AllSelector
+    children:
+    - id: JetpackVoidFilled
+    - id: ClothingOuterHardsuitAncientEVA
+    - id: ClothingHeadHelmetAncient
+    - id: ClothingMaskBreath
 
 #HARDSUITS
-#Basic hardsuit
-- type: entity
-  id: SuitStorageBasic
-  parent: SuitStorageBase
-  suffix: Basic Hardsuit
-  components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitBasic
-        - id: ClothingMaskBreath
-
 #Engineering hardsuit
 - type: entity
   id: SuitStorageEngi
   parent: SuitStorageBase
   suffix: Station Engineer
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingShoesBootsMag
-        - id: ClothingOuterHardsuitEngineering
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillEngineerHardsuit
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -122,11 +157,10 @@
   parent: SuitStorageBase
   suffix: Atmospheric Technician
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitAtmos
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillAtmosphericsHardsuit
   - type: AccessReader
     access: [["Atmospherics"]]
 
@@ -136,13 +170,20 @@
   parent: SuitStorageBase
   suffix: Security
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitSecurity
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageSecurity
   - type: AccessReader
     access: [["Security"]]
+
+- type: entityTable
+  id: FillSuitStorageSecurity
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitSecurity
+    - id: ClothingMaskBreath
 
 #CE's hardsuit
 - type: entity
@@ -202,11 +243,10 @@
   parent: SuitStorageBase
   suffix: Warden
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitWarden
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerWardenHarduit
   - type: AccessReader
     access: [["Armory"]]
 
@@ -242,12 +282,19 @@
   parent: SuitStorageBase
   suffix: Syndicate Hardsuit
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitSyndie
-        - id: ClothingShoesBootsMagSyndie
-        - id: ClothingMaskGasSyndicate
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageSyndie
+
+- type: entityTable
+  id: FillSuitStorageSyndie
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitSyndie
+    - id: ClothingShoesBootsMagSyndie
+    - id: ClothingMaskGasSyndicate
 
 #Pirate Captain's hardsuit
 - type: entity
@@ -255,11 +302,18 @@
   parent: SuitStorageBase
   suffix: Pirate Captain
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitPirateCap
-        - id: ClothingMaskGas
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStoragePirateCap
+
+- type: entityTable
+  id: FillSuitStoragePirateCap
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitPirateCap
+    - id: ClothingMaskGas
 
 #Wizard
 - type: entity
@@ -267,8 +321,17 @@
   parent: SuitStorageBase
   suffix: Wizard
   components:
-  - type: StorageFill
-    contents:
-        - id: OxygenTankFilled
-        - id: ClothingOuterHardsuitWizard
-        - id: ClothingMaskBreath
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillSuitStorageWizard
+
+- type: entityTable
+  id: FillSuitStorageWizard
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingMaskBreath
+    # TODO: Gone until reworked to have no space protection
+    #- id: ClothingOuterHardsuitWizard
+    #- id: JetpackVoidFilled

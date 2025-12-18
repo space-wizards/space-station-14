@@ -4,6 +4,10 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Reactive
+    groups:
+      Extinguish: [ Touch ]
+  - type: ExtinguishableSetCollisionWake
   - type: Smokable
   - type: Sprite
   - type: Appearance
@@ -70,8 +74,8 @@
   components:
   - type: Vape
     damage:
-      groups:
-        Burn: 2
+      types:
+        Heat: 2
   - type: SolutionContainerManager
     solutions:
       smokable:

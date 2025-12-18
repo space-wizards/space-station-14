@@ -1,13 +1,11 @@
-using Content.Server.Atmos.Components;
-using Content.Server.Atmos.EntitySystems;
 using Content.Shared.StepTrigger.Systems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 
 namespace Content.Server.Tiles;
 
 public sealed class TileEntityEffectSystem : EntitySystem
 {
+    [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
 
     public override void Initialize()
     {
@@ -24,9 +22,6 @@ public sealed class TileEntityEffectSystem : EntitySystem
     {
         var otherUid = args.Tripper;
 
-        foreach (var effect in ent.Comp.Effects)
-        {
-            effect.Effect(new EntityEffectBaseArgs(otherUid, EntityManager));
-        }
+        _entityEffects.ApplyEffects(otherUid, ent.Comp.Effects.ToArray(), user: otherUid);
     }
 }

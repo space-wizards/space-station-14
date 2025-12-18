@@ -1,4 +1,4 @@
-﻿- type: vendingMachineInventory
+- type: vendingMachineInventory
   id: HotDrinksMachineInventory
   startingInventory:
     DrinkHotCoffee: 5
@@ -6,5 +6,6 @@
     DrinkTeacup: 5
     DrinkGreenTea: 5
     DrinkHotCoco: 5
-  emaggedInventory:
+  contrabandInventory:
+    DrinkTeapot: 2
     DrinkNothing: 2

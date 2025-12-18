@@ -1,0 +1,125 @@
+- type: entity
+  parent: [AirSensorBase, GasBinaryBase]
+  id: GasPipeSensor
+  name: gas pipe sensor
+  description: Reports on the status of the gas in the attached pipe network.
+  placement:
+    mode: AlignAtmosPipeLayers
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+    drawdepth: BelowFloor
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      state: pipeStraight
+    - map: ["base"]
+      state: base
+    - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      state: lights
+      shader: unshaded
+  - type: AtmosPipeLayers
+    spriteRsiPaths:
+      Primary: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+      Secondary: Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
+      Tertiary: Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
+    alternativePrototypes:
+      Primary: GasPipeSensor
+      Secondary: GasPipeSensorAlt1
+      Tertiary: GasPipeSensorAlt2
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { state: blank }
+          True: { state: lights }
+  - type: AtmosMonitor
+    monitorsPipeNet: true
+  - type: GasPipeSensor
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasPipeSensor
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Construction
+    graph: GasPipeSensor
+    node: sensor
+  - type: NodeContainer
+    nodes:
+      monitored:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+  - type: Tag
+    tags:
+    - AirSensor
+    - Unstackable
+  - type: GuideHelp
+    guides:
+    - AtmosphericNetworkMonitor
+    - DeviceMonitoringAndControl
+
+- type: entity
+  parent: GasPipeSensor
+  id: GasPipeSensorDistribution
+  suffix: Distribution
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-distribution-loop
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorDistribution
+      Secondary: GasPipeSensorDistributionAlt1
+      Tertiary: GasPipeSensorDistributionAlt2
+
+- type: entity
+  parent: GasPipeSensor
+  id: GasPipeSensorWaste
+  suffix: Waste
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-waste-loop
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorWaste
+      Secondary: GasPipeSensorWasteAlt1
+      Tertiary: GasPipeSensorWasteAlt2
+
+- type: entity
+  parent: GasPipeSensor
+  id: GasPipeSensorMixedAir
+  suffix: Mixed air
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-mixed-air
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorMixedAir
+      Secondary: GasPipeSensorMixedAirAlt1
+      Tertiary: GasPipeSensorMixedAirAlt2
+
+- type: entity
+  parent: GasPipeSensor
+  id: GasPipeSensorTEGHot
+  suffix: TEG hot
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-teg-hot-loop
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorTEGHot
+      Secondary: GasPipeSensorTEGHotAlt1
+      Tertiary: GasPipeSensorTEGHotAlt2
+
+- type: entity
+  parent: GasPipeSensor
+  id: GasPipeSensorTEGCold
+  suffix: TEG cold
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-teg-cold-loop
+  - type: AtmosPipeLayers
+    alternativePrototypes:
+      Primary: GasPipeSensorTEGCold
+      Secondary: GasPipeSensorTEGColdAlt1
+      Tertiary: GasPipeSensorTEGColdAlt2

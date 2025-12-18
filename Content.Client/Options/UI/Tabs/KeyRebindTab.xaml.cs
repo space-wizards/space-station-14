@@ -130,8 +130,7 @@ namespace Content.Client.Options.UI.Tabs
                 KeybindsContainer.AddChild(new Label
                 {
                     Text = Loc.GetString(headerContents),
-                    FontColorOverride = StyleNano.NanoGold,
-                    StyleClasses = { StyleNano.StyleClassLabelKeyText }
+                    StyleClasses = { StyleClass.LabelKeyText }
                 });
             }
 
@@ -162,6 +161,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.Walk);
             AddCheckBox("ui-options-hotkey-toggle-walk", _cfg.GetCVar(CCVars.ToggleWalk), HandleToggleWalk);
             InitToggleWalk();
+            AddButton(ContentKeyFunctions.ToggleKnockdown);
 
             AddHeader("ui-options-header-camera");
             AddButton(EngineKeyFunctions.CameraRotateLeft);
@@ -181,6 +181,7 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(ContentKeyFunctions.Drop);
             AddButton(ContentKeyFunctions.ExamineEntity);
             AddButton(ContentKeyFunctions.SwapHands);
+            AddButton(ContentKeyFunctions.SwapHandsReverse);
             AddButton(ContentKeyFunctions.MoveStoredItem);
             AddButton(ContentKeyFunctions.RotateStoredItem);
             AddButton(ContentKeyFunctions.SaveItemLocation);
@@ -188,6 +189,9 @@ namespace Content.Client.Options.UI.Tabs
             AddHeader("ui-options-header-interaction-adv");
             AddButton(ContentKeyFunctions.SmartEquipBackpack);
             AddButton(ContentKeyFunctions.SmartEquipBelt);
+            AddButton(ContentKeyFunctions.SmartEquipPocket1);
+            AddButton(ContentKeyFunctions.SmartEquipPocket2);
+            AddButton(ContentKeyFunctions.SmartEquipSuitStorage);
             AddButton(ContentKeyFunctions.OpenBackpack);
             AddButton(ContentKeyFunctions.OpenBelt);
             AddButton(ContentKeyFunctions.ThrowItemInHand);
@@ -264,6 +268,53 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.ShowDebugMonitors);
             AddButton(EngineKeyFunctions.HideUI);
             AddButton(ContentKeyFunctions.InspectEntity);
+            AddButton(ContentKeyFunctions.InspectServerComponent);
+            AddButton(ContentKeyFunctions.InspectClientComponent);
+
+            AddHeader("ui-options-header-text-cursor");
+            AddButton(EngineKeyFunctions.TextCursorLeft);
+            AddButton(EngineKeyFunctions.TextCursorRight);
+            AddButton(EngineKeyFunctions.TextCursorUp);
+            AddButton(EngineKeyFunctions.TextCursorDown);
+            AddButton(EngineKeyFunctions.TextCursorWordLeft);
+            AddButton(EngineKeyFunctions.TextCursorWordRight);
+            AddButton(EngineKeyFunctions.TextCursorBegin);
+            AddButton(EngineKeyFunctions.TextCursorEnd);
+
+            AddHeader("ui-options-header-text-cursor-select");
+            AddButton(EngineKeyFunctions.TextCursorSelect);
+            AddButton(EngineKeyFunctions.TextCursorSelectLeft);
+            AddButton(EngineKeyFunctions.TextCursorSelectRight);
+            AddButton(EngineKeyFunctions.TextCursorSelectUp);
+            AddButton(EngineKeyFunctions.TextCursorSelectDown);
+            AddButton(EngineKeyFunctions.TextCursorSelectWordLeft);
+            AddButton(EngineKeyFunctions.TextCursorSelectWordRight);
+            AddButton(EngineKeyFunctions.TextCursorSelectBegin);
+            AddButton(EngineKeyFunctions.TextCursorSelectEnd);
+
+            AddHeader("ui-options-header-text-edit");
+            AddButton(EngineKeyFunctions.TextBackspace);
+            AddButton(EngineKeyFunctions.TextDelete);
+            AddButton(EngineKeyFunctions.TextWordBackspace);
+            AddButton(EngineKeyFunctions.TextWordDelete);
+            AddButton(EngineKeyFunctions.TextNewline);
+            AddButton(EngineKeyFunctions.TextSubmit);
+            AddButton(EngineKeyFunctions.MultilineTextSubmit);
+            AddButton(EngineKeyFunctions.TextSelectAll);
+            AddButton(EngineKeyFunctions.TextCopy);
+            AddButton(EngineKeyFunctions.TextCut);
+            AddButton(EngineKeyFunctions.TextPaste);
+
+            AddHeader("ui-options-header-text-chat");
+            AddButton(EngineKeyFunctions.TextHistoryPrev);
+            AddButton(EngineKeyFunctions.TextHistoryNext);
+            AddButton(EngineKeyFunctions.TextReleaseFocus);
+            AddButton(EngineKeyFunctions.TextScrollToBottom);
+
+            AddHeader("ui-options-header-text-other");
+            AddButton(EngineKeyFunctions.TextTabComplete);
+            AddButton(EngineKeyFunctions.TextCompleteNext);
+            AddButton(EngineKeyFunctions.TextCompletePrev);
 
             foreach (var control in _keyControls.Values)
             {
@@ -478,9 +529,9 @@ namespace Content.Client.Options.UI.Tabs
                     HorizontalAlignment = HAlignment.Left
                 };
 
-                BindButton1 = new BindButton(parent, this, StyleBase.ButtonOpenRight);
-                BindButton2 = new BindButton(parent, this, StyleBase.ButtonOpenLeft);
-                ResetButton = new Button { Text = Loc.GetString("ui-options-bind-reset"), StyleClasses = { StyleBase.ButtonCaution } };
+                BindButton1 = new BindButton(parent, this, StyleClass.ButtonOpenRight);
+                BindButton2 = new BindButton(parent, this, StyleClass.ButtonOpenLeft);
+                ResetButton = new Button { Text = Loc.GetString("ui-options-bind-reset"), StyleClasses = { StyleClass.Negative } };
 
                 var hBox = new BoxContainer
                 {

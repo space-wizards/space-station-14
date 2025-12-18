@@ -7,6 +7,8 @@
     snap:
     - Wall
   components:
+  - type: TileEmission
+    color: "#974988"
   - type: StepTrigger
     requiredTriggeredSpeed: 0
     intersectRatio: 0.1
@@ -15,7 +17,7 @@
       - Catwalk
   - type: TileEntityEffect
     effects:
-    - !type:FlammableReaction
+    - !type:Flammable
       multiplier: 3.75
       multiplierOnExisting: 0.75
     - !type:Ignite

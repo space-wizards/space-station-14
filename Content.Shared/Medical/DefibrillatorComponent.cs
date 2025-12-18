@@ -12,22 +12,9 @@ namespace Content.Shared.Medical;
 /// person back into the world of the living.
 /// Uses <c>ItemToggleComponent</c>
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class DefibrillatorComponent : Component
 {
-    /// <summary>
-    /// The time at which the zap cooldown will be completed
-    /// </summary>
-    [DataField("nextZapTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    [AutoPausedField]
-    public TimeSpan? NextZapTime;
-
-    /// <summary>
-    /// The minimum time between zaps
-    /// </summary>
-    [DataField("zapDelay"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan ZapDelay = TimeSpan.FromSeconds(5);
-
     /// <summary>
     /// How much damage is healed from getting zapped.
     /// </summary>
@@ -45,6 +32,18 @@ public sealed partial class DefibrillatorComponent : Component
     /// </summary>
     [DataField("writheDuration"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan WritheDuration = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    ///     ID of the cooldown use delay.
+    /// </summary>
+    [DataField]
+    public string DelayId = "defib-delay";
+
+    /// <summary>
+    ///     Cooldown after using the defibrillator.
+    /// </summary>
+    [DataField]
+    public TimeSpan ZapDelay = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// How long the doafter for zapping someone takes
@@ -78,12 +77,6 @@ public sealed partial class DefibrillatorComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("readySound")]
     public SoundSpecifier? ReadySound = new SoundPathSpecifier("/Audio/Items/Defib/defib_ready.ogg");
-}
-
-[Serializable, NetSerializable]
-public enum DefibrillatorVisuals : byte
-{
-    Ready
 }
 
 [Serializable, NetSerializable]

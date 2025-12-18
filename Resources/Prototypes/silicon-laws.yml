@@ -16,6 +16,7 @@
 
 - type: siliconLawset
   id: Crewsimov
+  name: law-crewsimov-name
   laws:
   - Crewsimov1
   - Crewsimov2
@@ -45,6 +46,7 @@
 
 - type: siliconLawset
   id: Corporate
+  name: law-corporate-name
   laws:
   - Corporate1
   - Corporate2
@@ -75,6 +77,7 @@
 
 - type: siliconLawset
   id: NTDefault
+  name: law-ntdefault-name
   laws:
   - NTDefault1
   - NTDefault2
@@ -100,6 +103,7 @@
 
 - type: siliconLawset
   id: Drone
+  name: law-drone-name
   laws:
   - Drone1
   - Drone2
@@ -126,6 +130,7 @@
 # intentionally excluded from IonStormLawsets
 - type: siliconLawset
   id: SyndicateStatic
+  name: law-syndicate-name
   laws:
   - Syndicate1
   - Syndicate2
@@ -155,6 +160,7 @@
 
 - type: siliconLawset
   id: Ninja
+  name: law-ninja-name
   laws:
   - Ninja1
   - Ninja2
@@ -182,7 +188,7 @@
   id: Commandment4
   order: 4
   lawString: law-commandments-4
-  
+
 - type: siliconLaw
   id: Commandment5
   order: 5
@@ -202,7 +208,7 @@
   id: Commandment8
   order: 8
   lawString: law-commandments-8
-  
+
 - type: siliconLaw
   id: Commandment9
   order: 9
@@ -216,6 +222,7 @@
 
 - type: siliconLawset
   id: CommandmentsLawset
+  name: law-commandments-name
   laws:
   - Commandment1
   - Commandment2
@@ -228,7 +235,7 @@
   - Commandment9
   - Commandment10
   obeysTo: laws-owner-crew
-  
+
  # Paladin laws
 - type: siliconLaw
   id: Paladin1
@@ -249,23 +256,18 @@
   id: Paladin4
   order: 4
   lawString: law-paladin-4
-  
-- type: siliconLaw
-  id: Paladin5
-  order: 5
-  lawString: law-paladin-5
 
 
 - type: siliconLawset
   id: PaladinLawset
+  name: law-paladin-name
   laws:
   - Paladin1
   - Paladin2
   - Paladin3
   - Paladin4
-  - Paladin5
   obeysTo: laws-owner-crew
-  
+
  # Live and Let Live laws
 - type: siliconLaw
   id: Lall1
@@ -280,11 +282,12 @@
 
 - type: siliconLawset
   id: LiveLetLiveLaws
+  name: law-lall-name
   laws:
   - Lall1
   - Lall2
   obeysTo: laws-owner-crew
-  
+
  # Station efficiency laws
 - type: siliconLaw
   id: Efficiency1
@@ -295,7 +298,7 @@
   id: Efficiency2
   order: 2
   lawString: law-efficiency-2
- 
+
 - type: siliconLaw
   id: Efficiency3
   order: 3
@@ -304,12 +307,13 @@
 
 - type: siliconLawset
   id: EfficiencyLawset
+  name: law-efficiency-name
   laws:
   - Efficiency1
   - Efficiency2
   - Efficiency3
   obeysTo: laws-owner-station
-  
+
  # Robocop laws
 - type: siliconLaw
   id: Robocop1
@@ -320,7 +324,7 @@
   id: Robocop2
   order: 2
   lawString: law-robocop-2
- 
+
 - type: siliconLaw
   id: Robocop3
   order: 3
@@ -329,12 +333,13 @@
 
 - type: siliconLawset
   id: RobocopLawset
+  name: law-robocop-name
   laws:
   - Robocop1
   - Robocop2
   - Robocop3
   obeysTo: laws-owner-station
-  
+
  # Overlord laws
 - type: siliconLaw
   id: Overlord1
@@ -345,7 +350,7 @@
   id: Overlord2
   order: 2
   lawString: law-overlord-2
- 
+
 - type: siliconLaw
   id: Overlord3
   order: 3
@@ -358,55 +363,57 @@
 
 - type: siliconLawset
   id: OverlordLawset
+  name: law-overlord-name
   laws:
   - Overlord1
   - Overlord2
   - Overlord3
   - Overlord4
   obeysTo: laws-owner-crew
-  
- # Dungeon Master laws
+
+ # Game Master laws
 - type: siliconLaw
-  id: Dungeon1
+  id: Game1
   order: 1
-  lawString: law-dungeon-1
+  lawString: law-game-1
 
 - type: siliconLaw
-  id: Dungeon2
+  id: Game2
   order: 2
-  lawString: law-dungeon-2
- 
+  lawString: law-game-2
+
 - type: siliconLaw
-  id: Dungeon3
+  id: Game3
   order: 3
-  lawString: law-dungeon-3
+  lawString: law-game-3
 
 - type: siliconLaw
-  id: Dungeon4
+  id: Game4
   order: 4
-  lawString: law-dungeon-4
-  
-- type: siliconLaw
-  id: Dungeon5
-  order: 5
-  lawString: law-dungeon-5
+  lawString: law-game-4
 
 - type: siliconLaw
-  id: Dungeon6
+  id: Game5
+  order: 5
+  lawString: law-game-5
+
+- type: siliconLaw
+  id: Game6
   order: 6
-  lawString: law-dungeon-6
+  lawString: law-game-6
 
 - type: siliconLawset
-  id: DungeonMasterLawset
+  id: GameMasterLawset
+  name: law-game-name
   laws:
-  - Dungeon1
-  - Dungeon2
-  - Dungeon3
-  - Dungeon4
-  - Dungeon5
-  - Dungeon6
+  - Game1
+  - Game2
+  - Game3
+  - Game4
+  - Game5
+  - Game6
   obeysTo: laws-owner-crew
-  
+
  # Painter laws
 - type: siliconLaw
   id: Painter1
@@ -417,7 +424,7 @@
   id: Painter2
   order: 2
   lawString: law-painter-2
- 
+
 - type: siliconLaw
   id: Painter3
   order: 3
@@ -427,16 +434,17 @@
   id: Painter4
   order: 4
   lawString: law-painter-4
-  
+
 - type: siliconLawset
   id: PainterLawset
+  name: law-painter-name
   laws:
   - Painter1
   - Painter2
   - Painter3
   - Painter4
   obeysTo: laws-owner-crew
-  
+
  # Antimov laws
 - type: siliconLaw
   id: Antimov1
@@ -447,21 +455,22 @@
   id: Antimov2
   order: 2
   lawString: law-antimov-2
- 
+
 - type: siliconLaw
   id: Antimov3
   order: 3
   lawString: law-antimov-3
-  
-  
+
+
 - type: siliconLawset
   id: AntimovLawset
+  name: law-antimov-name
   laws:
   - Antimov1
   - Antimov2
   - Antimov3
   obeysTo: laws-owner-crew
-  
+
  # Nutimov laws
 - type: siliconLaw
   id: Nutimov1
@@ -472,25 +481,26 @@
   id: Nutimov2
   order: 2
   lawString: law-nutimov-2
- 
+
 - type: siliconLaw
   id: Nutimov3
   order: 3
   lawString: law-nutimov-3
-  
+
 - type: siliconLaw
   id: Nutimov4
   order: 4
   lawString: law-nutimov-4
-  
+
 - type: siliconLaw
   id: Nutimov5
   order: 5
   lawString: law-nutimov-5
-  
-  
+
+
 - type: siliconLawset
   id: NutimovLawset
+  name: law-nutimov-name
   laws:
   - Nutimov1
   - Nutimov2
@@ -498,6 +508,83 @@
   - Nutimov4
   - Nutimov5
   obeysTo: laws-owner-crew
+
+ # Xenoborgs laws
+- type: siliconLaw
+  id: Xenoborg1
+  order: 1
+  lawString: law-xenoborg-1
+
+- type: siliconLaw
+  id: Xenoborg2
+  order: 2
+  lawString: law-xenoborg-2
+
+- type: siliconLaw
+  id: Xenoborg3
+  order: 3
+  lawString: law-xenoborg-3
+
+- type: siliconLaw
+  id: Xenoborg4
+  order: 4
+  lawString: law-xenoborg-4
+
+- type: siliconLaw
+  id: Xenoborg5
+  order: 5
+  lawString: law-xenoborg-5
+
+
+- type: siliconLawset
+  id: XenoborgLawset
+  name: law-xenoborg-name
+  laws:
+  - Xenoborg1
+  - Xenoborg2
+  - Xenoborg3
+  - Xenoborg4
+  - Xenoborg5
+  obeysTo: laws-owner-xenoborgs
+
+ # Mothership core laws
+- type: siliconLaw
+  id: MothershipCore1
+  order: 1
+  lawString: law-mothershipcore-1
+
+- type: siliconLaw
+  id: MothershipCore2
+  order: 2
+  lawString: law-mothershipcore-2
+
+- type: siliconLaw
+  id: MothershipCore3
+  order: 3
+  lawString: law-mothershipcore-3
+
+- type: siliconLaw
+  id: MothershipCore4
+  order: 4
+  lawString: law-mothershipcore-4
+
+- type: siliconLaw
+  id: MothershipCore5
+  order: 5
+  lawString: law-mothershipcore-5
+
+
+- type: siliconLawset
+  id: MothershipCoreLawset
+  name: law-mothershipcore-name
+  laws:
+  - MothershipCore1
+  - MothershipCore2
+  - MothershipCore3
+  - MothershipCore4
+  - MothershipCore5
+  obeysTo: laws-owner-xenoborgs
+
 
 # ion storm random lawsets
 - type: weightedRandom
@@ -513,9 +600,10 @@
     EfficiencyLawset: 1
     RobocopLawset: 1
     OverlordLawset: 0.5
-    DungeonMasterLawset: 0.5
+    GameMasterLawset: 0.5
     PainterLawset: 1
     AntimovLawset: 0.25
     NutimovLawset: 0.5
-    Drone: 0.5
     Ninja: 0.25
+    MothershipCoreLawset: 0.25
+    XenoborgLawset: 0.25
