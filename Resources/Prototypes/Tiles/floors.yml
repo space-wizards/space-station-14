@@ -8,20 +8,20 @@
   heatCapacity: 10000
   baseTurf: Plating
   baseWhitelist:
-    - PlatingBrass
-    - FloorAsteroidIronsand
-    - FloorAsteroidSand
-    - FloorAsteroidSandBorderless
-    - FloorAsteroidIronsandBorderless
-    - FloorAsteroidSandRedBorderless
-    - PlatingAsteroid
-    - PlatingSnow
-    - FloorPlanetDirt
-    - FloorDesert
-    - FloorLowDesert
-    - FloorPlanetGrass
-    - FloorSnow
-    - FloorDirt
+  - PlatingBrass
+  - FloorAsteroidIronsand
+  - FloorAsteroidSand
+  - FloorAsteroidSandBorderless
+  - FloorAsteroidIronsandBorderless
+  - FloorAsteroidSandRedBorderless
+  - PlatingAsteroid
+  - PlatingSnow
+  - FloorPlanetDirt
+  - FloorDesert
+  - FloorLowDesert
+  - FloorPlanetGrass
+  - FloorSnow
+  - FloorDirt
 
 - type: tile
   id: FloorSteel
