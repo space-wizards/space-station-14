@@ -2,6 +2,4 @@
 
 namespace Content.Client.Power.EntitySystems;
 
-public sealed class PowerChargeSystem : SharedPowerChargeSystem
-{
-}
+public sealed class PowerChargeSystem : SharedPowerChargeSystem;
