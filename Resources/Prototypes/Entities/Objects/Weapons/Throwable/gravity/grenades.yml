@@ -13,6 +13,11 @@
   #   - ignition
   #   queueDelays:
   #   - 0.7
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Grenades/Supermatter/beep.ogg
+      params:
+        volume: -5
   - type: TimerTrigger
     keysIn:
     - trigger
@@ -20,11 +25,6 @@
     delay: 3.6 # 6 beeps
     beepInterval: 0.6
     beepSound:
-      path: /Audio/Effects/Grenades/Supermatter/beep.ogg
-      params:
-        volume: -5
-  - type: TimerTriggerVisuals
-    primingSound:
       path: /Audio/Effects/Grenades/Supermatter/beep.ogg
       params:
         volume: -5
@@ -73,7 +73,7 @@
     proto: SinguloDelamination
 
 - type: entity
-  parent: [ BaseGravGrenade, BaseSyndicateContraband ]
+  parent: [ BaseGravGrenade, BaseSyndicateContraband, VolatileGrenadeBase ]
   id: SupermatterGrenade
   name: supermatter gravgrenade
   description: Grenade that simulates the power of a singularity, pulling things in a heap.
