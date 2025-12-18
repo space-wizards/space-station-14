@@ -1,7 +1,4 @@
-﻿
-[assembly: Parallelizable(ParallelScope.Children)]
-
-namespace Content.IntegrationTests;
+﻿namespace Content.IntegrationTests;
 
 [SetUpFixture]
 public sealed class PoolManagerTestEventHandler

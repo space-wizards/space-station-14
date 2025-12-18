@@ -39,4 +39,6 @@ namespace Content.Shared.Shuttles.Components
 
         public override bool SendOnlyToOwner => true;
     }
+
+    public sealed partial class StopPilotingAlertEvent : BaseAlertEvent;
 }

@@ -9,6 +9,8 @@ namespace Content.Client.Singularity
 {
     public sealed class SingularityOverlay : Overlay, IEntityEventSubscriber
     {
+        private static readonly ProtoId<ShaderPrototype> Shader = "Singularity";
+
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         private SharedTransformSystem? _xformSystem = null;
@@ -29,7 +31,7 @@ namespace Content.Client.Singularity
         public SingularityOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("Singularity").Instance().Duplicate();
+            _shader = _prototypeManager.Index(Shader).Instance().Duplicate();
             _shader.SetParameter("maxDistance", MaxDistance * EyeManager.PixelsPerMeter);
             _entMan.EventBus.SubscribeEvent<PixelToMapEvent>(EventSource.Local, this, OnProjectFromScreenToMap);
             ZIndex = 101; // Should be drawn after the placement overlay so admins placing items near the singularity can tell where they're going.
@@ -100,6 +102,8 @@ namespace Content.Client.Singularity
         /// </summary>
         private void OnProjectFromScreenToMap(ref PixelToMapEvent args)
         {   // Mostly copypasta from the singularity shader.
+            if (args.Viewport.Eye == null)
+                return;
             var maxDistance = MaxDistance * EyeManager.PixelsPerMeter;
             var finalCoords = args.VisiblePosition;
 
@@ -112,10 +116,11 @@ namespace Content.Client.Singularity
                 // and in local space 'Y' is measured in pixels from the top of the viewport.
                 // As a minor optimization the locations of the singularities are transformed into fragment space in BeforeDraw so the shader doesn't need to.
                 // We need to undo that here or this will transform the cursor position as if the singularities were mirrored vertically relative to the center of the viewport.
+
                 var localPosition = _positions[i];
                 localPosition.Y = args.Viewport.Size.Y - localPosition.Y;
                 var delta = args.VisiblePosition - localPosition;
-                var distance = (delta / args.Viewport.RenderScale).Length();
+                var distance = (delta / (args.Viewport.RenderScale * args.Viewport.Eye.Scale)).Length();
 
                 var deformation = _intensities[i] / MathF.Pow(distance, _falloffPowers[i]);
 

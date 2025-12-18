@@ -9,6 +9,10 @@ device-frequency-prototype-name-fax = Fax
 device-frequency-prototype-name-basic-device = Basic Devices
 device-frequency-prototype-name-cyborg-control = Cyborg Control
 device-frequency-prototype-name-robotics-console = Robotics Console
+device-frequency-prototype-name-turret = Sentry Turret
+device-frequency-prototype-name-turret-control = Sentry Turret Control
+device-frequency-prototype-name-xenoborg = Xenoborg
+device-frequency-prototype-name-mothership = Mothership
 
 ## camera frequencies
 device-frequency-prototype-name-surveillance-camera-test = Subnet Test
@@ -32,8 +36,9 @@ device-address-prefix-heater = HTR-
 device-address-prefix-freezer = FZR-
 device-address-prefix-volume-pump = VPP-
 device-address-prefix-smes = SMS-
+device-address-prefix-turret = TRT-
 
-#PDAs and terminals
+# PDAs and terminals
 device-address-prefix-console = CLS-
 device-address-prefix-fire-alarm = FIR-
 device-address-prefix-air-alarm = AIR-
@@ -42,7 +47,7 @@ device-address-prefix-sensor-monitor = MON-
 
 device-address-examine-message = The device's address is {$address}.
 
-#Device net ID names
+# Device net ID names
 device-net-id-private = Private
 device-net-id-wired = Wired
 device-net-id-wireless = Wireless

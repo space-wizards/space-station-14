@@ -1,24 +1,33 @@
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Chemistry.UI
 {
     [UsedImplicitly]
     public sealed class TransferAmountBoundUserInterface : BoundUserInterface
     {
+        private IEntityManager _entManager;
+        private EntityUid _owner;
         [ViewVariables]
         private TransferAmountWindow? _window;
 
         public TransferAmountBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+          _owner = owner;
+          _entManager = IoCManager.Resolve<IEntityManager>();
         }
 
         protected override void Open()
         {
             base.Open();
-            _window = new TransferAmountWindow();
+            _window = this.CreateWindow<TransferAmountWindow>();
+
+            if (_entManager.TryGetComponent<SolutionTransferComponent>(_owner, out var comp))
+                _window.SetBounds(comp.MinimumTransferAmount.Int(), comp.MaximumTransferAmount.Int());
 
             _window.ApplyButton.OnPressed += _ =>
             {
@@ -28,15 +37,6 @@ namespace Content.Client.Chemistry.UI
                     _window.Close();
                 }
             };
-            _window.OnClose += Close;
-            _window.OpenCentered();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing) return;
-            _window?.Dispose();
         }
     }
 }

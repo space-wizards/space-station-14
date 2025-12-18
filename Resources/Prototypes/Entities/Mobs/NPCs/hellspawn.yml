@@ -12,6 +12,9 @@
     makeSentient: true
     name: ghost-role-information-hellspawn-name
     description: ghost-role-information-hellspawn-description
+    rules: ghost-role-information-antagonist-rules
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: RotationVisuals
@@ -27,7 +30,7 @@
   - type: Body
     prototype: Animal
   - type: Damageable
-    damageContainer: Biological
+    damageContainer: BiologicalMetaphysical
     damageModifierSet: HellSpawn
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
@@ -55,7 +58,6 @@
   - type: Perishable
   - type: Reflect
     reflectProb: 0.7
-    innate: true
     reflects:
       - Energy
   - type: Fixtures

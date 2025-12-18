@@ -124,7 +124,7 @@ public partial class SharedBodySystem
     /// </summary>
     public bool RemoveOrgan(EntityUid organId, OrganComponent? organ = null)
     {
-        if (!Containers.TryGetContainingContainer(organId, out var container))
+        if (!Containers.TryGetContainingContainer((organId, null, null), out var container))
             return false;
 
         var parent = container.Owner;
@@ -158,26 +158,24 @@ public partial class SharedBodySystem
     }
 
     /// <summary>
-    ///     Returns a list of ValueTuples of <see cref="T"/> and OrganComponent on each organ
-    ///     in the given body.
+    /// Returns a list of Entity<<see cref="T"/>, <see cref="OrganComponent"/>>
+    /// for each organ of the body
     /// </summary>
-    /// <param name="uid">The body entity id to check on.</param>
-    /// <param name="body">The body to check for organs on.</param>
-    /// <typeparam name="T">The component to check for.</typeparam>
-    public List<(T Comp, OrganComponent Organ)> GetBodyOrganComponents<T>(
-        EntityUid uid,
-        BodyComponent? body = null)
+    /// <typeparam name="T">The component that we want to return</typeparam>
+    /// <param name="entity">The body to check the organs of</param>
+    public List<Entity<T, OrganComponent>> GetBodyOrganEntityComps<T>(
+        Entity<BodyComponent?> entity)
         where T : IComponent
     {
-        if (!Resolve(uid, ref body))
-            return new List<(T Comp, OrganComponent Organ)>();
+        if (!Resolve(entity, ref entity.Comp))
+            return new List<Entity<T, OrganComponent>>();
 
         var query = GetEntityQuery<T>();
-        var list = new List<(T Comp, OrganComponent Organ)>(3);
-        foreach (var organ in GetBodyOrgans(uid, body))
+        var list = new List<Entity<T, OrganComponent>>(3);
+        foreach (var organ in GetBodyOrgans(entity.Owner, entity.Comp))
         {
             if (query.TryGetComponent(organ.Id, out var comp))
-                list.Add((comp, organ.Component));
+                list.Add((organ.Id, comp, organ.Component));
         }
 
         return list;
@@ -192,19 +190,18 @@ public partial class SharedBodySystem
     /// <param name="body">The body to check for organs on.</param>
     /// <typeparam name="T">The component to check for.</typeparam>
     /// <returns>Whether any were found.</returns>
-    public bool TryGetBodyOrganComponents<T>(
-        EntityUid uid,
-        [NotNullWhen(true)] out List<(T Comp, OrganComponent Organ)>? comps,
-        BodyComponent? body = null)
+    public bool TryGetBodyOrganEntityComps<T>(
+        Entity<BodyComponent?> entity,
+        [NotNullWhen(true)] out List<Entity<T, OrganComponent>>? comps)
         where T : IComponent
     {
-        if (!Resolve(uid, ref body))
+        if (!Resolve(entity.Owner, ref entity.Comp))
         {
             comps = null;
             return false;
         }
 
-        comps = GetBodyOrganComponents<T>(uid, body);
+        comps = GetBodyOrganEntityComps<T>(entity);
 
         if (comps.Count != 0)
             return true;

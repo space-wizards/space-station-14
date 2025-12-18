@@ -36,13 +36,13 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 80
+            damage: 140
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
         - trigger:
             !type:DamageTrigger
-            damage: 40 #This is probably enough damage before it breaks
+            damage: 100 #This is probably enough damage before it breaks
           behaviors:
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
@@ -58,24 +58,36 @@
                   min: 2
                   max: 2
     - type: StaticPrice
-      price: 50
+      price: 100
 
 #Security Shields
 
 - type: entity
   name: riot shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseSecurityContraband ]
   id: RiotShield
   description: A large tower shield. Good for controlling crowds.
   components:
     - type: StaticPrice
       price: 90
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+        flatReductions:
+          Blunt: 1
+          Slash: 1
 
 - type: entity
-  name: riot laser shield
-  parent: BaseShield
+  name: laser shield
+  parent: [ BaseShield, BaseSecurityContraband ]
   id: RiotLaserShield
-  description: A riot shield built for withstanding lasers, but not much else.
+  description: A shield built for withstanding lasers, but not much else.
   components:
     - type: Sprite
       state: riot_laser-icon
@@ -84,18 +96,18 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Heat: 0.8
+          Heat: 0.7
       activeBlockModifier:
         coefficients:
-          Heat: 0.7
+          Heat: 0.5
         flatReductions:
-          Heat: 2
+          Heat: 1
 
 - type: entity
-  name: riot bullet shield
-  parent: BaseShield
+  name: ballistic shield
+  parent: [ BaseShield, BaseSecurityContraband ]
   id: RiotBulletShield
-  description: A ballistic riot shield built for withstanding bullets, but not much else.
+  description: A shield built for protecting against ballistics, but not much else.
   components:
     - type: Sprite
       state: riot_bullet-icon
@@ -104,15 +116,12 @@
     - type: Blocking
       passiveBlockModifier:
         coefficients:
-          Blunt: 0.8
-          Piercing: 0.8
+          Piercing: 0.7
       activeBlockModifier:
         coefficients:
-          Blunt: 0.7
-          Piercing: 0.7
+          Piercing: 0.5
         flatReductions:
-          Blunt: 1.5
-          Piercing: 1.5
+          Piercing: 1
 
 #Craftable shields
 
@@ -170,6 +179,58 @@
                   max: 5
     - type: StaticPrice
       price: 150
+
+- type: entity
+  name: cardboard shield
+  parent: BaseShield
+  id: CardShield
+  description: A shield made of cardboard. Won't protect you from much.
+  components:
+    - type: Sprite
+      state: cardshield-icon
+    - type: Item
+      heldPrefix: cardshield
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 1
+          Slash: 2
+          Piercing: 0.6
+          Heat: 3
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.9
+          Slash: 1.8
+          Piercing: 0.5
+          Heat: 2.5
+        flatReductions:
+          Blunt: 0.5
+    - type: Construction
+      graph: CardShield
+      node: cardShield
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 25
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 10 #Very very weak shield
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound: /Audio/Items/Toys/ToyFall2.ogg
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialCardboard:
+              min: 2
+              max: 4
+    - type: StaticPrice
+      price: 20
 
 - type: entity
   name: makeshift shield
@@ -311,9 +372,9 @@
 
 - type: entity
   name: mirror shield
-  parent: BaseShield
+  parent: [ BaseShield, BaseMagicalContraband ]
   id: MirrorShield
-  description: Glows an eerie red. You hear the Geometer whispering...
+  description: Eerily glows red... you hear the geometer whispering
   components:
     - type: Sprite
       state: mirror-icon
@@ -321,7 +382,6 @@
       heldPrefix: mirror
     - type: Reflect
       reflectProb: 0.95
-      innate: true
       reflects:
         - Energy
     - type: Blocking #Mirror shield reflects heat/laser, but is relatively weak to everything else.
@@ -360,7 +420,7 @@
 
 - type: entity
   name: energy shield
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: EnergyShield
   description: Exotic energy shield, when folded, can even fit in your pocket.
   components:
@@ -374,8 +434,10 @@
         path: /Audio/Weapons/ebladehum.ogg
     - type: ItemToggleSize
       activatedSize: Huge
-    - type: ItemToggleDisarmMalus
-      activatedDisarmMalus: 0.6
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
     - type: Sprite
       sprite: Objects/Weapons/Melee/e_shield.rsi
       layers:
@@ -391,7 +453,7 @@
       heldPrefix: eshield
     - type: UseDelay
       delay: 0.5
-    - type: ToggleableLightVisuals
+    - type: ToggleableVisuals
       spriteLayer: shield
       inhandVisuals:
         left:
@@ -406,10 +468,9 @@
       radius: 1.5
       energy: 2
       color: blue
+    - type: ItemTogglePointLight
     - type: Reflect
-      enabled: false
       reflectProb: 0.95
-      innate: true
       reflects:
         - Energy
     - type: Blocking
@@ -485,8 +546,10 @@
         path: /Audio/Weapons/telescopicoff.ogg
         params:
           volume: -5
-    - type: ItemToggleDisarmMalus
-      activatedDisarmMalus: 0.6
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
     - type: ItemToggleSize
       activatedSize: Huge
     - type: Sprite
@@ -502,7 +565,7 @@
       heldPrefix: teleriot
     - type: UseDelay
       delay: 0.5
-    - type: ToggleableLightVisuals
+    - type: ToggleableVisuals
       spriteLayer: shield
       inhandVisuals:
         left:
@@ -536,4 +599,4 @@
                   min: 2
                   max: 2
     - type: StaticPrice
-      price: 250
+      price: 150

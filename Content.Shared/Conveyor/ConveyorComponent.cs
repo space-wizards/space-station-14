@@ -39,9 +39,6 @@ public sealed partial class ConveyorComponent : Component
 
     [DataField]
     public ProtoId<SinkPortPrototype> OffPort = "Off";
-
-    [ViewVariables]
-    public readonly HashSet<EntityUid> Intersecting = new();
 }
 
 [Serializable, NetSerializable]

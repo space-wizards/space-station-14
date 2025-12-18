@@ -1,3 +1,5 @@
+using Content.Shared.Cargo.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using System.Text;
 namespace Content.Shared.Cargo
@@ -48,11 +50,17 @@ namespace Content.Shared.Cargo
         // public int RequesterId;
         [DataField]
         public string Reason { get; private set; }
-        public  bool Approved => Approver is not null;
+        public  bool Approved;
         [DataField]
         public string? Approver;
 
-        public CargoOrderData(int orderId, string productId, string productName, int price, int amount, string requester, string reason)
+        /// <summary>
+        /// Which account to deduct funds from when ordering
+        /// </summary>
+        [DataField]
+        public ProtoId<CargoAccountPrototype> Account;
+
+        public CargoOrderData(int orderId, string productId, string productName, int price, int amount, string requester, string reason, ProtoId<CargoAccountPrototype> account)
         {
             OrderId = orderId;
             ProductId = productId;
@@ -61,6 +69,12 @@ namespace Content.Shared.Cargo
             OrderQuantity = amount;
             Requester = requester;
             Reason = reason;
+            Account = account;
+        }
+
+        public void SetApproverData(string? approver)
+        {
+            Approver = approver;
         }
 
         public void SetApproverData(string? fullName, string? jobTitle)

@@ -2,6 +2,8 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Clickable;
 using Content.Client.UserInterface;
+using Content.Client.Viewport;
+using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Robust.Client.ComponentTrees;
 using Robust.Client.GameObjects;
@@ -12,12 +14,15 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.Graphics;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using YamlDotNet.Serialization.TypeInspectors;
 
 namespace Content.Client.Gameplay
 {
@@ -37,6 +42,7 @@ namespace Content.Client.Gameplay
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IViewVariablesManager _vvm = default!;
         [Dependency] private readonly IConsoleHost _conHost = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
         private ClickableEntityComparer _comparer = default!;
 
@@ -80,6 +86,8 @@ namespace Content.Client.Gameplay
             _comparer = new ClickableEntityComparer();
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.InspectEntity, new PointerInputCmdHandler(HandleInspect, outsidePrediction: true))
+                .Bind(ContentKeyFunctions.InspectServerComponent, new PointerInputCmdHandler(HandleInspectServerComponent, outsidePrediction: true))
+                .Bind(ContentKeyFunctions.InspectClientComponent, new PointerInputCmdHandler(HandleInspectClientComponent, outsidePrediction: true))
                 .Register<GameplayStateBase>();
         }
 
@@ -96,19 +104,57 @@ namespace Content.Client.Gameplay
             return true;
         }
 
+        private bool HandleInspectServerComponent(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            var component = _configurationManager.GetCVar(CCVars.DebugQuickInspect);
+            if (_entityManager.TryGetNetEntity(uid, out var net))
+                _conHost.ExecuteCommand($"vv /entity/{net.Value.Id}/{component}");
+            return true;
+        }
+
+        private bool HandleInspectClientComponent(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            var component = _configurationManager.GetCVar(CCVars.DebugQuickInspect);
+            _conHost.ExecuteCommand($"vv /c/entity/{uid}/{component}");
+            return true;
+        }
+
         public EntityUid? GetClickedEntity(MapCoordinates coordinates)
         {
-            var first = GetClickableEntities(coordinates).FirstOrDefault();
+            return GetClickedEntity(coordinates, _eyeManager.CurrentEye);
+        }
+
+        public EntityUid? GetClickedEntity(MapCoordinates coordinates, IEye? eye)
+        {
+            if (eye == null)
+                return null;
+
+            var first = GetClickableEntities(coordinates, eye).FirstOrDefault();
             return first.IsValid() ? first : null;
         }
 
-        public IEnumerable<EntityUid> GetClickableEntities(EntityCoordinates coordinates)
+        public IEnumerable<EntityUid> GetClickableEntities(EntityCoordinates coordinates, bool excludeFaded = true)
         {
-            return GetClickableEntities(coordinates.ToMap(_entityManager, _entitySystemManager.GetEntitySystem<SharedTransformSystem>()));
+            var transformSystem = _entitySystemManager.GetEntitySystem<SharedTransformSystem>();
+            return GetClickableEntities(transformSystem.ToMapCoordinates(coordinates), excludeFaded);
         }
 
-        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates)
+        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates, bool excludeFaded = true)
         {
+            return GetClickableEntities(coordinates, _eyeManager.CurrentEye, excludeFaded);
+        }
+
+        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates, IEye? eye, bool excludeFaded = true)
+        {
+            /*
+             * TODO:
+             * 1. Stuff like MeleeWeaponSystem need an easy way to hook into viewport specific entities / entities under mouse
+             * 2. Cleanup the mess around InteractionOutlineSystem + below the keybind click detection.
+             */
+
+            if (eye == null)
+                return Array.Empty<EntityUid>();
+
             // Find all the entities intersecting our click
             var spriteTree = _entityManager.EntitySysManager.GetEntitySystem<SpriteTreeSystem>();
             var entities = spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, new Vector2(1, 1)));
@@ -116,15 +162,12 @@ namespace Content.Client.Gameplay
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(EntityUid, int, uint, float)>(entities.Count);
             var clickQuery = _entityManager.GetEntityQuery<ClickableComponent>();
-            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
-
-            // TODO: Smelly
-            var eye = _eyeManager.CurrentEye;
+            var clickables = _entityManager.System<ClickableSystem>();
 
             foreach (var entity in entities)
             {
                 if (clickQuery.TryGetComponent(entity.Uid, out var component) &&
-                    component.CheckClick(entity.Component, entity.Transform, xformQuery, coordinates.Position, eye,  out var drawDepthClicked, out var renderOrder, out var bottom))
+                    clickables.CheckClick((entity.Uid, component, entity.Component, entity.Transform), coordinates.Position, eye, excludeFaded, out var drawDepthClicked, out var renderOrder, out var bottom))
                 {
                     foundEntities.Add((entity.Uid, drawDepthClicked, renderOrder, bottom));
                 }
@@ -184,14 +227,28 @@ namespace Content.Client.Gameplay
 
             EntityCoordinates coordinates = default;
             EntityUid? entityToClick = null;
-            if (args.Viewport is IViewportControl vp)
+            if (args.Viewport is IViewportControl vp && kArgs.PointerLocation.IsValid)
             {
                 var mousePosWorld = vp.PixelToMap(kArgs.PointerLocation.Position);
-                entityToClick = GetClickedEntity(mousePosWorld);
 
-                coordinates = _mapManager.TryFindGridAt(mousePosWorld, out _, out var grid) ?
-                    grid.MapToGrid(mousePosWorld) :
-                    EntityCoordinates.FromMap(_mapManager, mousePosWorld);
+                if (vp is ScalingViewport svp)
+                {
+                    entityToClick = GetClickedEntity(mousePosWorld, svp.Eye);
+                }
+                else
+                {
+                    entityToClick = GetClickedEntity(mousePosWorld);
+                }
+                var transformSystem = _entitySystemManager.GetEntitySystem<SharedTransformSystem>();
+                var mapSystem = _entitySystemManager.GetEntitySystem<MapSystem>();
+
+                coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var uid, out _) ?
+                    mapSystem.MapToGrid(uid, mousePosWorld) :
+                    transformSystem.ToCoordinates(mousePosWorld);
+            }
+            else
+            {
+                coordinates = EntityCoordinates.Invalid;
             }
 
             var message = new ClientFullInputCmdMessage(_timing.CurTick, _timing.TickFraction, funcId)

@@ -1,6 +1,5 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Humanoid.Markings;
 
@@ -8,13 +7,23 @@ namespace Content.Shared.Humanoid.Markings;
 [Serializable, NetSerializable]
 public sealed partial class MarkingPoints
 {
-    [DataField("points", required: true)]
+    [DataField(required: true)]
     public int Points = 0;
-    [DataField("required", required: true)]
-    public bool Required = false;
+
+    [DataField(required: true)]
+    public bool Required;
+
+    /// <summary>
+    ///     If the user of this marking point set is only allowed to
+    ///     use whitelisted markings, and not globally usable markings.
+    ///     Only used for validation and profile construction. Ignored anywhere else.
+    /// </summary>
+    [DataField]
+    public bool OnlyWhitelisted;
+
     // Default markings for this layer.
-    [DataField("defaultMarkings", customTypeSerializer:typeof(PrototypeIdListSerializer<MarkingPrototype>))]
-    public List<string> DefaultMarkings = new();
+    [DataField]
+    public List<ProtoId<MarkingPrototype>> DefaultMarkings = new();
 
     public static Dictionary<MarkingCategories, MarkingPoints> CloneMarkingPointDictionary(Dictionary<MarkingCategories, MarkingPoints> self)
     {
@@ -26,6 +35,7 @@ public sealed partial class MarkingPoints
             {
                 Points = points.Points,
                 Required = points.Required,
+                OnlyWhitelisted = points.OnlyWhitelisted,
                 DefaultMarkings = points.DefaultMarkings
             };
         }
@@ -34,18 +44,19 @@ public sealed partial class MarkingPoints
     }
 }
 
-[Prototype("markingPoints")]
+[Prototype]
 public sealed partial class MarkingPointsPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     If the user of this marking point set is only allowed to
     ///     use whitelisted markings, and not globally usable markings.
     ///     Only used for validation and profile construction. Ignored anywhere else.
     /// </summary>
-    [DataField("onlyWhitelisted")] public bool OnlyWhitelisted;
+    [DataField]
+    public bool OnlyWhitelisted;
 
-    [DataField("points", required: true)]
+    [DataField(required: true)]
     public Dictionary<MarkingCategories, MarkingPoints> Points { get; private set; } = default!;
 }

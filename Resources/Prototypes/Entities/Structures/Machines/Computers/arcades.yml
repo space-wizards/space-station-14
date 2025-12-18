@@ -10,7 +10,7 @@
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.8
-    energy: 1.6
+    energy: 3.0
     color: "#3db83b"
   - type: LitOnPowered
   - type: Sprite
@@ -36,6 +36,9 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
+  - type: SpookySpeaker
+    messageSet: SpookySpeakerMessagesGeneric
+    speakChance: 0.2
   - type: Anchorable
   - type: Pullable
   - type: StaticPrice
@@ -72,29 +75,33 @@
     rewardMinAmount: 0
     rewardMaxAmount: 0
     possibleRewards:
-    - ToyMouse
-    - ToyAi
-    - ToyNuke
-    - ToyGriffin
-    - ToyHonk
-    - ToyIan
-    - ToyMarauder
-    - ToyMauler
-    - ToyGygax
-    - ToyOdysseus
-    - ToyOwlman
-    - ToyDeathRipley
-    - ToyPhazon
-    - ToyFireRipley
-    - ToyReticence
-    - ToyRipley
-    - ToySeraph
-    - ToyDurand
-    - ToySkeleton
+    - Basketball
+    - BalloonNT
+    - BalloonCorgi
+    - BoxDonkSoftBox
+    - BoxCartridgeCap
+    - BeachBall
+    - CandyBucket
+    - CrayonBox
+    - ClothingHeadHatCowboyRed
     - FoamCrossbow
-    - RevolverCapGun
+    - FoamBlade
+    - FoamCutlass
+    - Football
+    - GlowstickGreen
+    - GlowstickBlue
+    - GlowstickYellow
+    - GlowstickPurple
+    - GlowstickRed
+    - HarmonicaInstrument
+    - OcarinaInstrument
+    - RecorderInstrument
+    - GunpetInstrument
+    - BirdToyInstrument
+    - MysteryFigureBox
     - PlushieHampter
     - PlushieLizard
+    - PlushieRainbowLizard
     - PlushieAtmosian
     - PlushieSpaceLizard
     - PlushieNuke
@@ -106,29 +113,48 @@
     - PlushieNar
     - PlushieSnake
     - PlushieArachind
-    - Basketball
-    - Football
-    - PlushieRouny
-    - PlushieBee
-    - PlushieSlime
-    - BalloonNT
-    - BalloonCorgi
-    - ToySword
-    - CrayonBox
-    - BoxDonkSoftBox
-    - BoxCartridgeCap
-    - HarmonicaInstrument
-    - OcarinaInstrument
-    - RecorderInstrument
-    - GunpetInstrument
-    - BirdToyInstrument
-    - PlushieXeno
-    - BeachBall
     - PlushieMoth
+    - PlushieVulp
     - PlushieHampter
     - PlushiePenguin
     - PlushieHuman
-    - ClothingHeadHatCowboyRed
+    - PlushieRouny
+    - PlushieBee
+    - PlushieSlime
+    - PlushieGhost
+    - PlushieDiona
+    - PlushieSharkBlue
+    - PlushieVox
+    - PlushieXeno
+    - PlasticBanana
+    - RevolverCapGun
+    - SnapPopBox
+    - TennisBall
+    - ToyMouse
+    - ToyAi
+    - ToyNuke
+    - ToyFigurineGriffin
+    - ToyHonk
+    - ToyIan
+    - ToyMarauder
+    - ToyMauler
+    - ToyGygax
+    - ToyOdysseus
+    - ToyFigurineOwlman
+    - ToyDeathRipley
+    - ToyPhazon
+    - ToyFireRipley
+    - ToyReticence
+    - ToyRipley
+    - ToySeraph
+    - ToyDurand
+    - ToyFigurineSkeleton
+    - ToySword
+    - ToyAmongPequeno
+    - ToyRubberDuck
+    - ToyHammer
+    - WeaponWaterPistol
+    - WhoopieCushion
     - Whistle
   - type: WiresPanel
   - type: Wires
@@ -137,6 +163,7 @@
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
       enum.SpaceVillainArcadeUiKey.Key:
@@ -145,10 +172,12 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
-  - type: Advertise
-    pack: SpaceVillainAds
-    minimumWait: 60 # Arcades are noisy
-    maximumWait: 240
+  - type: Vocalizer
+    minVocalizeInterval: 1m # Arcades are noisy
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: DatasetVocalizer
+    dataset: SpaceVillainAds
   - type: SpeakOnUIClosed
     pack: SpaceVillainGoodbyes
 
@@ -181,6 +210,7 @@
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
   - type: ActivatableUIRequiresPower
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
       enum.BlockGameUiKey.Key:
@@ -189,9 +219,11 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
-  - type: Advertise
-    pack: BlockGameAds
-    minimumWait: 60 # Arcades are noisy
-    maximumWait: 240
+  - type: Vocalizer
+    minVocalizeInterval: 1m # Arcades are noisy
+    maxVocalizeInterval: 4m
+    hideChat: true
+  - type: DatasetVocalizer
+    dataset: BlockGameAds
   - type: SpeakOnUIClosed
     pack: BlockGameGoodbyes

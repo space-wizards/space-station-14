@@ -9,9 +9,10 @@
   - type: Storage
     grid:
     - 0,0,5,3
-  - type: Tag
-    tags:
-    - Briefcase
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
 
 - type: entity
   parent: BriefcaseBase

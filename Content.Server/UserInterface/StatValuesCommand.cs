@@ -4,12 +4,14 @@ using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
 using Content.Server.EUI;
 using Content.Server.Item;
+using Content.Server.Power.Components;
 using Content.Shared.Administration;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Item;
-using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Wieldable.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
@@ -19,7 +21,6 @@ namespace Content.Server.UserInterface;
 public sealed class StatValuesCommand : IConsoleCommand
 {
     [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
@@ -56,6 +57,9 @@ public sealed class StatValuesCommand : IConsoleCommand
             case "itemsize":
                 message = GetItem();
                 break;
+            case "drawrate":
+                message = GetDrawRateMessage();
+                break;
             default:
                 shell.WriteError(Loc.GetString("stat-values-invalid", ("arg", args[0])));
                 return;
@@ -70,7 +74,7 @@ public sealed class StatValuesCommand : IConsoleCommand
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromOptions(new[] { "cargosell", "lathesell", "melee" });
+            return CompletionResult.FromOptions(new[] { "cargosell", "lathesell", "melee", "itemsize", "drawrate" });
         }
 
         return CompletionResult.Empty;
@@ -168,10 +172,13 @@ public sealed class StatValuesCommand : IConsoleCommand
         return state;
     }
 
+    private static readonly ProtoId<DamageTypePrototype> StructuralDamageType = "Structural";
+
     private StatValuesEuiMessage GetMelee()
     {
         var values = new List<string[]>();
-        var meleeName = _factory.GetComponentName(typeof(MeleeWeaponComponent));
+        var meleeName = _entManager.ComponentFactory.GetComponentName<MeleeWeaponComponent>();
+        var increaseDamageName = _entManager.ComponentFactory.GetComponentName<IncreaseDamageOnWieldComponent>();
 
         foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
         {
@@ -184,26 +191,45 @@ public sealed class StatValuesCommand : IConsoleCommand
 
             var comp = (MeleeWeaponComponent) meleeComp.Component;
 
-            // TODO: Wielded damage
             // TODO: Esword damage
+
+            var structuralDamage = comp.Damage.DamageDict.GetValueOrDefault(StructuralDamageType);
+            var baseDamage = comp.Damage.GetTotal() - comp.Damage.DamageDict.GetValueOrDefault(StructuralDamageType);
+
+            var wieldedStructuralDamage = "-";
+            var wieldedDamage = "-";
+            if (proto.Components.TryGetValue(increaseDamageName, out var increaseDamageComp))
+            {
+                var comp2 = (IncreaseDamageOnWieldComponent) increaseDamageComp.Component;
+
+                wieldedStructuralDamage = (structuralDamage + comp2.BonusDamage.DamageDict.GetValueOrDefault(StructuralDamageType)).ToString();
+                wieldedDamage = (baseDamage + comp2.BonusDamage.GetTotal() - comp2.BonusDamage.DamageDict.GetValueOrDefault(StructuralDamageType)).ToString();
+            }
 
             values.Add(new[]
             {
                 proto.ID,
-                (comp.Damage.GetTotal() * comp.AttackRate).ToString(),
-                comp.AttackRate.ToString(CultureInfo.CurrentCulture),
-                comp.Damage.GetTotal().ToString(),
-                comp.Range.ToString(CultureInfo.CurrentCulture),
+                baseDamage.ToString(),
+                wieldedDamage,
+                comp.AttackRate.ToString("0.00", CultureInfo.CurrentCulture),
+                (comp.AttackRate * baseDamage).Float().ToString("0.00", CultureInfo.CurrentCulture),
+                structuralDamage.ToString(),
+                wieldedStructuralDamage,
             });
         }
 
-        var state = new StatValuesEuiMessage()
+        var state = new StatValuesEuiMessage
         {
-            Title = "Cargo sell prices",
-            Headers = new List<string>()
+            Title = Loc.GetString("stat-melee-values"),
+            Headers = new List<string>
             {
-                "ID",
-                "Price",
+                Loc.GetString("stat-melee-id"),
+                Loc.GetString("stat-melee-base-damage"),
+                Loc.GetString("stat-melee-wield-damage"),
+                Loc.GetString("stat-melee-attack-rate"),
+                Loc.GetString("stat-melee-dps"),
+                Loc.GetString("stat-melee-structural-damage"),
+                Loc.GetString("stat-melee-structural-wield-damage"),
             },
             Values = values,
         };
@@ -220,13 +246,13 @@ public sealed class StatValuesCommand : IConsoleCommand
         {
             var cost = 0.0;
 
-            foreach (var (material, count) in proto.RequiredMaterials)
+            foreach (var (material, count) in proto.Materials)
             {
-                var materialPrice = _proto.Index<MaterialPrototype>(material).Price;
+                var materialPrice = _proto.Index(material).Price;
                 cost += materialPrice * count;
             }
 
-            var sell = priceSystem.GetEstimatedPrice(_proto.Index<EntityPrototype>(proto.Result));
+            var sell = priceSystem.GetLatheRecipePrice(proto);
 
             values.Add(new[]
             {
@@ -244,6 +270,46 @@ public sealed class StatValuesCommand : IConsoleCommand
                 Loc.GetString("stat-lathe-id"),
                 Loc.GetString("stat-lathe-cost"),
                 Loc.GetString("stat-lathe-sell"),
+            },
+            Values = values,
+        };
+
+        return state;
+    }
+
+    private StatValuesEuiMessage GetDrawRateMessage()
+    {
+        var values = new List<string[]>();
+        var powerName = _entManager.ComponentFactory.GetComponentName<ApcPowerReceiverComponent>();
+
+        foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (proto.Abstract ||
+                !proto.Components.TryGetValue(powerName,
+                    out var powerConsumer))
+            {
+                continue;
+            }
+
+            var comp = (ApcPowerReceiverComponent) powerConsumer.Component;
+
+            if (comp.Load == 0)
+                continue;
+
+            values.Add(new[]
+            {
+                proto.ID,
+                comp.Load.ToString(CultureInfo.InvariantCulture),
+            });
+        }
+
+        var state = new StatValuesEuiMessage
+        {
+            Title = Loc.GetString("stat-drawrate-values"),
+            Headers = new List<string>
+            {
+                Loc.GetString("stat-drawrate-id"),
+                Loc.GetString("stat-drawrate-rate"),
             },
             Values = values,
         };

@@ -48,13 +48,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
-            var mapId = MapId.Nullspace;
-            var coords = MapCoordinates.Nullspace;
-            await server.WaitAssertion(() =>
-            {
-                mapId = mapManager.CreateMap();
-                coords = new MapCoordinates(Vector2.Zero, mapId);
-            });
+            var map = await pair.CreateTestMap();
+            var mapId = map.MapId;
+            var coords = map.MapCoords;
 
             await server.WaitIdleAsync();
             EntityUid user = default;
@@ -119,13 +115,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
-            var mapId = MapId.Nullspace;
-            var coords = MapCoordinates.Nullspace;
-            await server.WaitAssertion(() =>
-            {
-                mapId = mapManager.CreateMap();
-                coords = new MapCoordinates(Vector2.Zero, mapId);
-            });
+            var map = await pair.CreateTestMap();
+            var mapId = map.MapId;
+            var coords = map.MapCoords;
 
             await server.WaitIdleAsync();
             EntityUid user = default;
@@ -190,13 +182,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
-            var mapId = MapId.Nullspace;
-            var coords = MapCoordinates.Nullspace;
-            await server.WaitAssertion(() =>
-            {
-                mapId = mapManager.CreateMap();
-                coords = new MapCoordinates(Vector2.Zero, mapId);
-            });
+            var map = await pair.CreateTestMap();
+            var mapId = map.MapId;
+            var coords = map.MapCoords;
 
             await server.WaitIdleAsync();
             EntityUid user = default;
@@ -261,13 +249,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var sysMan = server.ResolveDependency<IEntitySystemManager>();
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
 
-            var mapId = MapId.Nullspace;
-            var coords = MapCoordinates.Nullspace;
-            await server.WaitAssertion(() =>
-            {
-                mapId = mapManager.CreateMap();
-                coords = new MapCoordinates(Vector2.Zero, mapId);
-            });
+            var map = await pair.CreateTestMap();
+            var mapId = map.MapId;
+            var coords = map.MapCoords;
 
             await server.WaitIdleAsync();
             EntityUid user = default;
@@ -331,13 +315,9 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             var handSys = sysMan.GetEntitySystem<SharedHandsSystem>();
             var conSystem = sysMan.GetEntitySystem<SharedContainerSystem>();
 
-            var mapId = MapId.Nullspace;
-            var coords = MapCoordinates.Nullspace;
-            await server.WaitAssertion(() =>
-            {
-                mapId = mapManager.CreateMap();
-                coords = new MapCoordinates(Vector2.Zero, mapId);
-            });
+            var map = await pair.CreateTestMap();
+            var mapId = map.MapId;
+            var coords = map.MapCoords;
 
             await server.WaitIdleAsync();
             EntityUid user = default;

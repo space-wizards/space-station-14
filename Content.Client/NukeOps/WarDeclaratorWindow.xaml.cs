@@ -11,7 +11,8 @@ namespace Content.Client.NukeOps;
 [GenerateTypedNameReferences]
 public sealed partial class WarDeclaratorWindow : FancyWindow
 {
-    private readonly IGameTiming _gameTiming;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
     public event Action<string>? OnActivated;
 
@@ -19,15 +20,14 @@ public sealed partial class WarDeclaratorWindow : FancyWindow
     private TimeSpan _shuttleDisabledTime;
     private WarConditionStatus _status;
 
-    public WarDeclaratorWindow(IGameTiming gameTiming, ILocalizationManager localizationManager)
+    public WarDeclaratorWindow()
     {
         RobustXamlLoader.Load(this);
-
-        _gameTiming = gameTiming;
+        IoCManager.InjectDependencies(this);
 
         WarButton.OnPressed += (_) => OnActivated?.Invoke(Rope.Collapse(MessageEdit.TextRope));
 
-        MessageEdit.Placeholder = new Rope.Leaf(localizationManager.GetString("war-declarator-message-placeholder"));
+        MessageEdit.Placeholder = new Rope.Leaf(_localizationManager.GetString("war-declarator-message-placeholder"));
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -58,38 +58,38 @@ public sealed partial class WarDeclaratorWindow : FancyWindow
                 WarButton.Disabled = true;
                 StatusLabel.Text = Loc.GetString("war-declarator-boost-declared");
                 UpdateTimer();
-                StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateLow);
+                StatusLabel.SetOnlyStyleClass(StyleClass.Highlight);
                 break;
             case WarConditionStatus.YesWar:
                 WarButton.Text = Loc.GetString("war-declarator-ui-war-button");
                 StatusLabel.Text = Loc.GetString("war-declarator-boost-possible");
                 UpdateTimer();
-                StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
+                StatusLabel.SetOnlyStyleClass(StyleClass.Positive);
                 break;
             case WarConditionStatus.NoWarSmallCrew:
                 StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
                 InfoLabel.Text = Loc.GetString("war-declarator-conditions-small-crew");
-                StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+                StatusLabel.SetOnlyStyleClass(StyleClass.Negative);
                 break;
             case WarConditionStatus.NoWarShuttleDeparted:
                 StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
                 InfoLabel.Text = Loc.GetString("war-declarator-conditions-left-outpost");
-                StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+                StatusLabel.SetOnlyStyleClass(StyleClass.Negative);
                 break;
             case WarConditionStatus.NoWarTimeout:
                 StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
                 InfoLabel.Text = Loc.GetString("war-declarator-conditions-time-out");
-                StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+                StatusLabel.SetOnlyStyleClass(StyleClass.Negative);
                 break;
             case WarConditionStatus.NoWarUnknown:
                 StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
                 InfoLabel.Text = Loc.GetString("war-declarator-conditions-unknown");
-                StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+                StatusLabel.SetOnlyStyleClass(StyleClass.Negative);
                 break;
             default:
                 StatusLabel.Text = Loc.GetString("war-declarator-boost-impossible");
                 InfoLabel.Text = Loc.GetString("war-declarator-conditions-unknown");
-                StatusLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateNone);
+                StatusLabel.SetOnlyStyleClass(StyleClass.Negative);
                 break;
         }
     }

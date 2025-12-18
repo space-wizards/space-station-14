@@ -19,7 +19,7 @@
         - id: Poison
         - id: Narcotic
         - id: Alcohol
-          rateModifier: 0.25
+          rateModifier: 2.5
     - type: SolutionContainerManager
       solutions:
         stomach:
@@ -33,8 +33,11 @@
           reagents:
           - ReagentId: Slime
             Quantity: 10
+    - type: Item
+      size: Small
+      heldPrefix: brain
 
-      
+
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan
@@ -70,3 +73,6 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Item
+    size: Small
+    heldPrefix: lungs

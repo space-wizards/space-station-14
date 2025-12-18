@@ -79,6 +79,9 @@ namespace Content.Server.Kitchen.Components
 
         public Container Storage = default!;
 
+        [DataField]
+        public string ContainerId = "microwave_entity_container";
+
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public int Capacity = 10;
 
@@ -107,17 +110,5 @@ namespace Content.Server.Kitchen.Components
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         public bool CanMicrowaveIdsSafely = true;
-    }
-
-    public sealed class BeingMicrowavedEvent : HandledEntityEventArgs
-    {
-        public EntityUid Microwave;
-        public EntityUid? User;
-
-        public BeingMicrowavedEvent(EntityUid microwave, EntityUid? user)
-        {
-            Microwave = microwave;
-            User = user;
-        }
     }
 }

@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobLibrarian
-      time: 3600 # 1 hour of being the biggest nerd on the station
+      time: 1h # for being the biggest nerd on the station
 
 - type: loadoutEffectGroup
   id: JensenTimer
@@ -15,42 +15,30 @@
     requirement:
       !type:DepartmentTimeRequirement
       department: Cargo
-      time: 36000 #10 hours of being a space trucker
+      time: 10h # 10 hours of being a space trucker
 
 # Basic options
 # Glasses
 - type: loadout
   id: Glasses
-  equipment: Glasses
-
-- type: startingGear
-  id: Glasses
   equipment:
     eyes: ClothingEyesGlasses
 
 # Special options
-# Jamjar    
+# Jamjar
 - type: loadout
   id: GlassesJamjar
-  equipment: GlassesJamjar
   effects:
   - !type:GroupLoadoutEffect
     proto: JamjarTimer
-
-- type: startingGear
-  id: GlassesJamjar
   equipment:
     eyes: ClothingEyesGlassesJamjar
 
 # Jensen
 - type: loadout
   id: GlassesJensen
-  equipment: GlassesJensen
   effects:
   - !type:GroupLoadoutEffect
     proto: JensenTimer
-
-- type: startingGear
-  id: GlassesJensen
   equipment:
     eyes: ClothingEyesGlassesJensen

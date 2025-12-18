@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "by Ko4erga (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "unlit"
+    },
+    {
+      "name": "building",
+      "delays": [
+        [
+          0.042,
+          0.042,
+          0.042,
+          0.042,
+          0.042,
+          0.042,
+          0.042,
+          0.042,
+          0.042,
+          0.042,
+          0.042,
+          0.042
+        ]
+      ]
+    }
+  ]
+}

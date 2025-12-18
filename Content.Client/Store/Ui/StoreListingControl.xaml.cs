@@ -17,11 +17,12 @@ public sealed partial class StoreListingControl : Control
     [Dependency] private readonly IGameTiming _timing = default!;
     private readonly ClientGameTicker _ticker;
 
-    private readonly ListingData _data;
+    private readonly ListingDataWithCostModifiers _data;
 
     private readonly bool _hasBalance;
     private readonly string _price;
-    public StoreListingControl(ListingData data, string price, bool hasBalance, Texture? texture = null)
+    private readonly string _discount;
+    public StoreListingControl(ListingDataWithCostModifiers data, string price, string discount, bool hasBalance, Texture? texture = null)
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
@@ -31,6 +32,7 @@ public sealed partial class StoreListingControl : Control
         _data = data;
         _hasBalance = hasBalance;
         _price = price;
+        _discount = discount;
 
         StoreItemName.Text = ListingLocalisationHelpers.GetLocalisedNameOrEntityName(_data, _prototype);
         StoreItemDescription.SetMessage(ListingLocalisationHelpers.GetLocalisedDescriptionOrEntityDescription(_data, _prototype));
@@ -63,6 +65,7 @@ public sealed partial class StoreListingControl : Control
         }
         else
         {
+            DiscountSubText.Text = _discount;
             StoreItemBuyButton.Text = _price;
         }
     }

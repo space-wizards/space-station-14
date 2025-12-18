@@ -9,7 +9,6 @@
   - type: SmokeVisuals
   - type: Transform
     anchored: true
-  - type: Clickable
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -36,7 +35,7 @@
   parent: BaseFoam
   id: Smoke
   name: smoke
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Occluder
   - type: Sprite
@@ -50,9 +49,41 @@
 
 - type: entity
   parent: BaseFoam
+  id: TearGasSmoke
+  name: tear gas
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: TearGasSmoke
+  id: TearGasSmokeWhite
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    state: chemsmoke_white
+
+- type: entity
+  parent: Smoke
+  id: WizardSmoke
+  name: smoke
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Smoke
+    spreadAmount: 5
+
+- type: entity
+  parent: BaseFoam
   id: Foam
   name: foam
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     color: "#ffffffcc"
@@ -70,7 +101,6 @@
       state: foam-west
   - type: SmoothEdge
   - type: IconSmooth
-    key: walls
     mode: NoSprite
   - type: FoamVisuals
     animationTime: 0.6
@@ -84,7 +114,7 @@
 - type: entity
   id: MetalFoam
   name: metal foam
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: Foam
   components:
   - type: Sprite
@@ -101,6 +131,8 @@
       state: m_foam-north
     - map: [ "enum.EdgeLayer.West" ]
       state: m_foam-west
+  - type: EdgeSpreader
+    id: MetalFoam
   - type: FoamVisuals
     animationTime: 0.6
     animationState: m_foam-dissolve
@@ -108,7 +140,7 @@
 - type: entity
   id: IronMetalFoam
   name: iron metal foam
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: MetalFoam
   components:
   - type: SpawnOnDespawn
@@ -117,7 +149,7 @@
 - type: entity
   id: AluminiumMetalFoam
   name: aluminium metal foam
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: MetalFoam
   components:
   - type: SpawnOnDespawn
@@ -135,7 +167,7 @@
   - type: RCDDeconstructable
     cost: 2
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -159,14 +191,21 @@
   - type: Transform
     anchored: true
   - type: Airtight
+  - type: ReplaceFloorOnSpawn
+    replaceableTiles:
+    - Plating
+    - Lattice
+    - TrainLattice
+    replacementTiles:
+    - FloorMetalFoam
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 12
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -196,7 +235,7 @@
 - type: entity
   id: FoamedAluminiumMetal
   name: foamed aluminium metal
-  description: "For sealing hull breaches."
+  description: "Leftover sparse foam from an aluminum foam grenade. Easily destroyed."
   parent: BaseFoamedMetal
   components:
   - type: Sprite
@@ -214,3 +253,27 @@
       state: metal_foam-north
     - map: [ "enum.EdgeLayer.West" ]
       state: metal_foam-west
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1 # Intentionally very weak to encourage speedy repair, think of it as thin webbing
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: ReactionFlash
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    enabled: true
+    radius: 2
+    energy: 8
+  - type: LightFade
+    duration: 0.5
+  - type: TimedDespawn
+    lifetime: 0.5

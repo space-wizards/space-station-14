@@ -123,6 +123,12 @@ namespace Content.Client.Popups
                 PopupMessage(message, type, coordinates, null, true);
         }
 
+        public override void PopupPredictedCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupCoordinates(message, coordinates, recipient.Value, type);
+        }
+
         private void PopupCursorInternal(string? message, PopupType type, bool recordReplay)
         {
             if (message == null)
@@ -148,7 +154,12 @@ namespace Content.Client.Popups
         }
 
         public override void PopupCursor(string? message, PopupType type = PopupType.Small)
-            => PopupCursorInternal(message, type, true);
+        {
+            if (!_timing.IsFirstTimePredicted)
+                return;
+
+            PopupCursorInternal(message, type, true);
+        }
 
         public override void PopupCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
         {
@@ -160,6 +171,16 @@ namespace Content.Client.Popups
         {
             if (_playerManager.LocalEntity == recipient)
                 PopupCursor(message, type);
+        }
+
+        public override void PopupPredictedCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            PopupCursor(message, recipient, type);
+        }
+
+        public override void PopupPredictedCursor(string? message, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            PopupCursor(message, recipient, type);
         }
 
         public override void PopupCoordinates(string? message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
@@ -221,6 +242,12 @@ namespace Content.Client.Popups
         }
 
         public override void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
+        {
+            if (recipient != null && _timing.IsFirstTimePredicted)
+                PopupEntity(message, uid, recipient.Value, type);
+        }
+
+        public override void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
         {
             if (recipient != null && _timing.IsFirstTimePredicted)
                 PopupEntity(message, uid, recipient.Value, type);

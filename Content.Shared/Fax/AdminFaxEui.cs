@@ -56,8 +56,9 @@ public static class AdminFaxEuiMsg
         public string Content { get; }
         public string StampState { get; }
         public Color StampColor { get; }
+        public bool Locked { get; }
 
-        public Send(NetEntity target, string title, string from, string content, string stamp, Color stampColor)
+        public Send(NetEntity target, string title, string from, string content, string stamp, Color stampColor, bool locked)
         {
             Target = target;
             Title = title;
@@ -65,6 +66,7 @@ public static class AdminFaxEuiMsg
             Content = content;
             StampState = stamp;
             StampColor = stampColor;
+            Locked = locked;
         }
     }
 }

@@ -318,7 +318,7 @@
 - type: entity
   parent: BookBase
   id: BookIanMountain
-  name: the adventures of ian and renault - A mountain expedition
+  name: the adventures of ian and renault - a mountain expedition
   description: The book is in new condition. The cover is a stunning mountain landscape with Ian and Renault in the foreground, looking out over the vista of the surrounding peaks and valleys. The title is written in bold, block letters at the top, with the subtitle, "A Mountain Expedition," written underneath.
   components:
     - type: Sprite
@@ -358,7 +358,9 @@
   parent: BookBase
   id: BookIanArctic
   name: the adventures of ian and renault - an arctic journey of courage and friendship
-  description: The book looks new and adventurous, with a picture of Ian and Renault standing in front of an icy landscape with snowflakes falling all around them. The title, "The Adventures of Ian and Renault," is written in bold letters at the top, with a subtitle that reads, "An Arctic Journey of Courage and Friendship."
+  description: |
+    The book looks new and adventurous, with a picture of Ian and Renault standing in front of an icy landscape with snowflakes falling all around them. The title, "The Adventures of Ian and Renault," is written in bold letters at the top, with a subtitle that reads, "An Arctic Journey of Courage and Friendship."
+    2nd Edition.
   components:
     - type: Sprite
       sprite: Objects/Misc/books.rsi

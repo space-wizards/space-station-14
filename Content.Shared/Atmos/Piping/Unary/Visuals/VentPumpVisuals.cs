@@ -15,5 +15,6 @@ namespace Content.Shared.Atmos.Visuals
         In,
         Out,
         Welded,
+        Lockout,
     }
 }

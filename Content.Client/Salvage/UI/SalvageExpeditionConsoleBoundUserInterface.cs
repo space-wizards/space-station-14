@@ -20,27 +20,22 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
+    private readonly ISawmill _sawmill;
 
     public SalvageExpeditionConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
+        _sawmill = _logManager.GetSawmill("salvage.expedition.console");
     }
 
     protected override void Open()
     {
         base.Open();
-        _window = new OfferingWindow();
+        _window = this.CreateWindowCenteredLeft<OfferingWindow>();
         _window.Title = Loc.GetString("salvage-expedition-window-title");
-        _window.OnClose += Close;
-        _window?.OpenCenteredLeft();
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        _window?.Dispose();
-        _window = null;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -95,9 +90,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             offering.AddContent(new Label
             {
                 Text = difficultyProto.RecommendedPlayers.ToString(),
-                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
 
             // Details
@@ -110,11 +105,20 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
             offering.AddContent(new Label
             {
-                Text = faction,
-                FontColorOverride = StyleNano.NanoGold,
+                Text = string.IsNullOrWhiteSpace(Loc.GetString(_protoManager.Index<SalvageFactionPrototype>(faction).Description))
+                        ? LogAndReturnDefaultFactionDescription(faction)
+                        : Loc.GetString(_protoManager.Index<SalvageFactionPrototype>(faction).Description),
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
+
+            string LogAndReturnDefaultFactionDescription(string faction)
+            {
+                _sawmill.Error($"Description is null or white space for SalvageFactionPrototype: {faction}");
+                return Loc.GetString(_protoManager.Index<SalvageFactionPrototype>(faction).ID);
+            }
+
 
             // Duration
             offering.AddContent(new Label
@@ -125,9 +129,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             offering.AddContent(new Label
             {
                 Text = mission.Duration.ToString(),
-                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
 
             // Biome
@@ -140,11 +144,19 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
             offering.AddContent(new Label
             {
-                Text = Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).ID),
-                FontColorOverride = StyleNano.NanoGold,
+                Text = string.IsNullOrWhiteSpace(Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).Description))
+                        ? LogAndReturnDefaultBiomDescription(biome)
+                        : Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).Description),
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
+
+            string LogAndReturnDefaultBiomDescription(string biome)
+            {
+                _sawmill.Error($"Description is null or white space for SalvageBiomeModPrototype: {biome}");
+                return Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).ID);
+            }
 
             // Modifiers
             offering.AddContent(new Label
@@ -157,9 +169,9 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             offering.AddContent(new Label
             {
                 Text = string.Join("\n", mods.Select(o => "- " + o)).TrimEnd(),
-                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
+                StyleClasses = { StyleClass.LabelKeyText },
             });
 
             offering.ClaimPressed += args =>

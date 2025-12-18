@@ -1,6 +1,7 @@
 using Content.Shared.Lathe;
 using Content.Shared.Research.Components;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Lathe.UI
 {
@@ -17,9 +18,8 @@ namespace Content.Client.Lathe.UI
         {
             base.Open();
 
-            _menu = new LatheMenu(this);
-            _menu.OnClose += Close;
-
+            _menu = this.CreateWindowCenteredRight<LatheMenu>();
+            _menu.SetEntity(Owner);
 
             _menu.OnServerListButtonPressed += _ =>
             {
@@ -30,8 +30,10 @@ namespace Content.Client.Lathe.UI
             {
                 SendMessage(new LatheQueueRecipeMessage(recipe, amount));
             };
-
-            _menu.OpenCenteredRight();
+            _menu.QueueDeleteAction += index => SendMessage(new LatheDeleteRequestMessage(index));
+            _menu.QueueMoveUpAction += index => SendMessage(new LatheMoveRequestMessage(index, -1));
+            _menu.QueueMoveDownAction += index => SendMessage(new LatheMoveRequestMessage(index, 1));
+            _menu.DeleteFabricatingAction += () => SendMessage(new LatheAbortFabricationMessage());
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -49,14 +51,6 @@ namespace Content.Client.Lathe.UI
                     _menu?.SetQueueInfo(msg.CurrentlyProducing);
                     break;
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-            _menu?.Dispose();
         }
     }
 }

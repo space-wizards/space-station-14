@@ -1,80 +1,91 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:ui="clr-namespace:Content.Client.Xenoarchaeology.Ui"
     Title="{Loc 'analysis-console-menu-title'}"
-    MinSize="620 280"
-    SetSize="620 280">
+    MinSize="700 350"
+    SetSize="980 550">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
-        <BoxContainer Margin="10 10 10 10" MinWidth="150" Orientation="Vertical"
-            VerticalExpand="True" SizeFlagsStretchRatio="1">
-            <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                <Button Name="ServerSelectionButton"
-                    Text="{Loc 'analysis-console-server-list-button'}"></Button>
-                <BoxContainer MinHeight="5"></BoxContainer>
-                <Button Name="ScanButton"
-                    Text="{Loc 'analysis-console-scan-button'}"
-                    ToolTip="{Loc 'analysis-console-scan-tooltip-info'}">
-                </Button>
-                <BoxContainer MinHeight="5"></BoxContainer>
-                <Button Name="PrintButton"
-                    Text="{Loc 'analysis-console-print-button'}"
-                    ToolTip="{Loc 'analysis-console-print-tooltip-info'}">
-                </Button>
-                <BoxContainer MinHeight="5"></BoxContainer>
-                <BoxContainer Orientation="Horizontal">
-                    <Button Name="UpBiasButton"
-                        Text="{Loc 'analysis-console-bias-up'}"
-                        ToolTip="{Loc 'analysis-console-bias-button-info-up'}"
-                        HorizontalExpand="True"
-                        StyleClasses="OpenRight">
-                    </Button>
-                    <Button Name="DownBiasButton"
-                        Text="{Loc 'analysis-console-bias-down'}"
-                        ToolTip="{Loc 'analysis-console-bias-button-info-down'}"
-                        HorizontalExpand="True"
-                        StyleClasses="OpenLeft">
-                    </Button>
+        <BoxContainer Margin="10 10 10 10" MaxWidth="240" SetWidth="240" Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True">
+            <PanelContainer Name="BackPanel" HorizontalAlignment="Center">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxTexture Modulate="#1B1B1E" PatchMarginBottom="10" PatchMarginLeft="10" PatchMarginRight="10" PatchMarginTop="10"/>
+                </PanelContainer.PanelOverride>
+                <BoxContainer HorizontalExpand="True" VerticalExpand="True" MinSize="128 128">
+                    <SpriteView Name="ArtifactView" Scale="4 4" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalExpand="True" VerticalExpand="True"/>
                 </BoxContainer>
-                <BoxContainer MinHeight="15"></BoxContainer>
-                <Button Name="ExtractButton"
-                    Text="{Loc 'analysis-console-extract-button'}"
-                    ToolTip="{Loc 'analysis-console-extract-button-info'}">
-                </Button>
+            </PanelContainer>
+            <customControls:HSeparator StyleClasses="HighDivider" Margin="0 15 0 10"/>
+            <BoxContainer Name="ExtractContainer" Orientation="Vertical" VerticalExpand="True" Visible="False">
+                <PanelContainer HorizontalExpand="True" VerticalExpand="True" RectClipContent="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
+                    </PanelContainer.PanelOverride>
+                    <BoxContainer Margin="10 10 10 5" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                        <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
+                            <BoxContainer HorizontalExpand="True" VerticalExpand="True">
+                                <RichTextLabel Name="ExtractionResearchLabel" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            </BoxContainer>
+                        </ScrollContainer>
+                        <Control MinHeight="5"/>
+                        <RichTextLabel Name="ExtractionSumLabel" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                    </BoxContainer>
+                </PanelContainer>
             </BoxContainer>
-            <BoxContainer Orientation="Vertical">
-                <Label Name="ProgressLabel"></Label>
-                <ProgressBar
-                    Name="ProgressBar"
-                    MinValue="0"
-                    MaxValue="1"
-                    SetHeight="20">
-                </ProgressBar>
+            <BoxContainer Name="NodeViewContainer" Orientation="Vertical" VerticalExpand="True">
+                <ScrollContainer HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
+                    <BoxContainer Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True">
+                        <Label Name="NoneSelectedLabel" Text="{Loc 'analysis-console-no-node'}" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalExpand="True" Visible="False"/>
+                        <BoxContainer Name="InfoContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+                            <BoxContainer HorizontalExpand="True">
+                                <RichTextLabel Name="IDLabel" HorizontalExpand="True" Text="{Loc 'analysis-console-info-id'}"/>
+                                <RichTextLabel Name="IDValueLabel" HorizontalAlignment="Right"/>
+                            </BoxContainer>
+                            <BoxContainer HorizontalExpand="True">
+                                <RichTextLabel Name="ClassLabel" HorizontalExpand="True" Text="{Loc 'analysis-console-info-class'}"/>
+                                <RichTextLabel Name="ClassValueLabel" HorizontalAlignment="Right"/>
+                            </BoxContainer>
+                            <BoxContainer HorizontalExpand="True">
+                                <RichTextLabel Name="LockedLabel" HorizontalExpand="True" Text="{Loc 'analysis-console-info-locked'}"/>
+                                <RichTextLabel Name="LockedValueLabel" HorizontalAlignment="Right"/>
+                            </BoxContainer>
+                            <BoxContainer HorizontalExpand="True">
+                                <RichTextLabel Name="DurabilityLabel" HorizontalExpand="True" Text="{Loc 'analysis-console-info-durability'}"/>
+                                <RichTextLabel Name="DurabilityValueLabel" HorizontalAlignment="Right"/>
+                            </BoxContainer>
+                            <Control MinHeight="20"/>
+                            <RichTextLabel Name="EffectLabel" Text="{Loc 'analysis-console-info-effect'}"/>
+                            <RichTextLabel Name="EffectValueLabel" HorizontalExpand="True"/>
+                            <RichTextLabel Name="TriggerLabel" Text="{Loc 'analysis-console-info-trigger'}"/>
+                            <RichTextLabel Name="TriggerValueLabel" HorizontalExpand="True"/>
+                        </BoxContainer>
+                    </BoxContainer>
+                </ScrollContainer>
+                <Control MinHeight="5"/>
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Button Name="ServerButton" Text="{Loc 'analysis-console-server-list-button'}" StyleClasses="OpenRight" HorizontalExpand="True" MinHeight="35"/>
+                    <Button Name="ExtractButton" Text="{Loc 'analysis-console-extract-button'}" StyleClasses="OpenLeft" HorizontalExpand="True" MinHeight="35"/>
+                </BoxContainer>
             </BoxContainer>
         </BoxContainer>
         <customControls:VSeparator StyleClasses="LowDivider" />
-        <PanelContainer Margin="10 10 10 10" HorizontalExpand="True" SizeFlagsStretchRatio="3">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
-            </PanelContainer.PanelOverride>
-            <BoxContainer Margin="10 10 10 10" Orientation="Horizontal">
-                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
-                    <BoxContainer VerticalExpand="True">
-                        <RichTextLabel Name="Information"> </RichTextLabel>
-                    </BoxContainer>
+        <BoxContainer HorizontalExpand="True" VerticalExpand="True">
+            <PanelContainer Margin="10 10 10 10" HorizontalExpand="True" RectClipContent="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
+                </PanelContainer.PanelOverride>
+                <BoxContainer Margin="10 10 10 10" Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+                    <ui:XenoArtifactGraphControl Name="GraphControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Label Name="NoArtiLabel"
+                               Text="{Loc 'analysis-console-info-no-artifact'}"
+                               HorizontalExpand="True"
+                               VerticalExpand="True"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                    </ui:XenoArtifactGraphControl>
                 </BoxContainer>
-                <BoxContainer VerticalExpand="False" Orientation="Vertical" MaxSize="64 64">
-                    <SpriteView
-                        Name="ArtifactDisplay"
-                        OverrideDirection="South"
-                        VerticalExpand="False"
-                        SetSize="64 64"
-                        MaxSize="64 64"
-                        Scale="2 2">
-                    </SpriteView>
-                </BoxContainer>
-                <BoxContainer VerticalExpand="True"></BoxContainer>
-            </BoxContainer>
-        </PanelContainer>
+            </PanelContainer>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

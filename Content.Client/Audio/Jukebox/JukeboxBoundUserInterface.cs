@@ -1,8 +1,7 @@
 using Content.Shared.Audio.Jukebox;
 using Robust.Client.Audio;
-using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Audio.Components;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Audio.Jukebox;
@@ -23,9 +22,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
     {
         base.Open();
 
-        _menu = new JukeboxMenu();
-        _menu.OnClose += Close;
-        _menu.OpenCentered();
+        _menu = this.CreateWindow<JukeboxMenu>();
 
         _menu.OnPlayPressed += args =>
         {
@@ -61,7 +58,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
         _menu.SetAudioStream(jukebox.AudioStream);
 
-        if (_protoManager.TryIndex(jukebox.SelectedSongId, out var songProto))
+        if (_protoManager.Resolve(jukebox.SelectedSongId, out var songProto))
         {
             var length = EntMan.System<AudioSystem>().GetAudioLength(songProto.Path.Path.ToString());
             _menu.SetSelectedSong(songProto.Name, (float) length.TotalSeconds);
@@ -99,20 +96,6 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         }
 
         SendMessage(new JukeboxSetTimeMessage(sentTime));
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
-
-        if (_menu == null)
-            return;
-
-        _menu.OnClose -= Close;
-        _menu.Dispose();
-        _menu = null;
     }
 }
 

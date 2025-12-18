@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.FixedPoint;
 using Content.Shared.Points;
 using JetBrains.Annotations;
@@ -25,7 +25,7 @@ public sealed class PointSystem : SharedPointSystem
 
     private void OnStartup(EntityUid uid, PointManagerComponent component, ComponentStartup args)
     {
-        _pvsOverride.AddGlobalOverride(GetNetEntity(uid));
+        _pvsOverride.AddGlobalOverride(uid);
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public sealed class PointSystem : SharedPointSystem
             if (!_player.TryGetPlayerData(id, out var data))
                 continue;
 
-            msg.AddMarkup(Loc.GetString("point-scoreboard-list",
+            msg.AddMarkupOrThrow(Loc.GetString("point-scoreboard-list",
                 ("place", place),
                 ("name", data.UserName),
                 ("points", points.Int())));

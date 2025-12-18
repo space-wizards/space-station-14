@@ -3,17 +3,14 @@
   id: BaseFlag
   abstract: true
   components:
-  - type: WallMount
-    arc: 360
   - type: Sprite
-    drawdepth: WallTops
     sprite: Structures/Wallmounts/flags.rsi
 
 - type: entity
   parent: BaseFlag
   id: BlankFlag
   name: blank flag
-  description: "Some piece of white cloth. Definitely not the flag of France."
+  description: Some piece of white cloth. Definitely not the flag of France.
   components:
   - type: Sprite
     state: blank_flag
@@ -22,7 +19,7 @@
   parent: BaseFlag
   id: NTFlag
   name: Nanotrasen flag
-  description: "Glory to NT! Wait, they really made a flag for a corporation?"
+  description: Glory to NT! Wait, they really made a flag for a corporation?
   components:
   - type: Sprite
     state: NT_flag
@@ -31,25 +28,25 @@
   parent: BaseFlag
   id: SyndieFlag
   name: syndicate flag
-  description: "Smells bloody. Death to NT!"
+  description: Smells bloody. Death to NT!
   components:
   - type: Sprite
     state: syndie_flag
-    
+
 - type: entity
   parent: BaseFlag
   id: LGBTQFlag
   name: LGBTQ flag
-  description: "Be gay do crime flag"
+  description: "\"Be gay do crime\" flag."
   components:
   - type: Sprite
     state: lgbtq_flag
-    
+
 - type: entity
   parent: BaseFlag
   id: PirateFlag
   name: pirate flag
-  description: "Raise the jolly roger, scallywags!"
+  description: Raise the jolly roger, scallywags!
   components:
   - type: Sprite
     state: pirate_flag

@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Alert;
@@ -7,8 +8,17 @@ namespace Content.Shared.Alert;
 /// An alert popup with associated icon, tooltip, and other data.
 /// </summary>
 [Prototype]
-public sealed partial class AlertPrototype : IPrototype
+public sealed partial class AlertPrototype : IPrototype, IInheritingPrototype
 {
+    /// <inheritdoc />
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<AlertPrototype>))]
+    public string[]? Parents { get; private set; }
+
+    /// <inheritdoc />
+    [NeverPushInheritance]
+    [AbstractDataField]
+    public bool Abstract { get; private set; }
+
     /// <summary>
     /// Type of alert, no 2 alert prototypes should have the same one.
     /// </summary>
@@ -76,11 +86,17 @@ public sealed partial class AlertPrototype : IPrototype
     public bool SupportsSeverity => MaxSeverity != -1;
 
     /// <summary>
-    /// Defines what to do when the alert is clicked.
-    /// This will always be null on clientside.
+    /// If true, this alert is being handled by the client and will not be overwritten when handling server -> client states.
     /// </summary>
-    [DataField(serverOnly: true)]
-    public IAlertClick? OnClick { get; private set; }
+    [DataField]
+    public bool ClientHandled = false;
+
+    /// <summary>
+    /// Event raised on the user when they click on this alert.
+    /// Can be null.
+    /// </summary>
+    [DataField]
+    public BaseAlertEvent? ClickEvent;
 
     /// <param name="severity">severity level, if supported by this alert</param>
     /// <returns>the icon path to the texture for the provided severity level</returns>
@@ -112,5 +128,19 @@ public sealed partial class AlertPrototype : IPrototype
         }
 
         return Icons[severity.Value - _minSeverity];
+    }
+}
+
+[ImplicitDataDefinitionForInheritors]
+public abstract partial class BaseAlertEvent : HandledEntityEventArgs
+{
+    public EntityUid User;
+
+    public ProtoId<AlertPrototype> AlertId;
+
+    protected BaseAlertEvent(EntityUid user, ProtoId<AlertPrototype> alertId)
+    {
+        User = user;
+        AlertId = alertId;
     }
 }

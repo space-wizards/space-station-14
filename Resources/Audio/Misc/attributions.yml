@@ -5,8 +5,13 @@
 
 - files: ["ninja_greeting.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Taken from TG station."
-  source: "https://github.com/tgstation/tgstation/blob/b02b93ce2ab891164511a973493cdf951b4120f7/sound/effects/ninja_greeting.ogg"
+  copyright: "Created by Chillyconmor"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
+
+- files: ["nparadox_clone_greeting.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by ps3moira"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
 
 - files: ["thief_greeting.ogg"]
   license: "CC-BY-NC-4.0"
@@ -28,15 +33,20 @@
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/blob/2f63c779cb43543cfde76fa7ddaeacfde185fded/sound/effects/ratvar_reveal.ogg"
 
+- files: ["cryo_warning.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/blob/00cf2da5f785c110b9930077b3202f1a4638e1fd/sound/machines/cryo_warning.ogg"
+
 - files: ["epsilon.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Made by dj-34 (https://github.com/dj-34)"
   source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg"
 
-- files: ["siren.ogg"]
-  license: "CC-BY-SA-3.0"
-  copyright: "Taken from Parsdise SS13"
-  source: "https://github.com/ParadiseSS13/Paradise/blob/master/sound/effects/new_siren.ogg"
+- files: ["gamma.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Bhijin & Myr for Space Station 14"
+  source: "https://github.com/space-wizards/space-station-14"
 
 - files: ["redalert.ogg"]
   license: "CC-BY-SA-3.0"
@@ -47,3 +57,18 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from Citadel Station 13"
   source: "https://github.com/Skyrat-SS13/Skyrat13/commit/2d4f2d1b489590b559e4073f41b126cef56f4c50"
+
+- files: ["woosh.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from SciFiSounds via freesound.org, edit by august-sun(GitHub)/augustsun(Discord)"
+  source: "https://freesound.org/people/SciFiSounds/sounds/529925/"
+
+- files: ["stickystretch.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from sdroliasnick via freesound.org, edit by august-sun(GitHub)/augustsun(Discord)"
+  source: "https://freesound.org/people/sdroliasnick/sounds/731262/"
+
+- files: ["boing.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from stevielematt via freesound.org, edit by august-sun(GitHub)/augustsun(Discord)"
+  source: "https://freesound.org/people/stevielematt/sounds/538066/"

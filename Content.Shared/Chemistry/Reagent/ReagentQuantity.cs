@@ -8,16 +8,16 @@ namespace Content.Shared.Chemistry.Reagent;
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
-public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
+public partial struct ReagentQuantity : IEquatable<ReagentQuantity>, IRobustCloneable<ReagentQuantity>
 {
-    [DataField("Quantity", required:true)]
+    [DataField("Quantity", required: true)]
     public FixedPoint2 Quantity { get; private set; }
 
     [IncludeDataField]
     [ViewVariables]
     public ReagentId Reagent { get; private set; }
 
-    public ReagentQuantity(string reagentId, FixedPoint2 quantity, ReagentData? data)
+    public ReagentQuantity(string reagentId, FixedPoint2 quantity, List<ReagentData>? data = null)
         : this(new ReagentId(reagentId, data), quantity)
     {
     }
@@ -26,6 +26,28 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
     {
         Reagent = reagent;
         Quantity = quantity;
+    }
+
+    public ReagentQuantity(ReagentQuantity reagentQuantity)
+    {
+        Quantity = reagentQuantity.Quantity;
+        if (reagentQuantity.Reagent.Data is not { } data)
+        {
+            Reagent = new ReagentId(reagentQuantity.Reagent.Prototype, null);
+            return;
+        }
+
+        List<ReagentData> copy = new(data.Count);
+        foreach (var item in data)
+        {
+            copy.Add(item.Clone());
+        }
+        Reagent = new ReagentId(reagentQuantity.Reagent.Prototype, copy);
+    }
+
+    public readonly ReagentQuantity Clone()
+    {
+        return new ReagentQuantity(this);
     }
 
     public ReagentQuantity() : this(default, default)
@@ -37,7 +59,7 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
         return Reagent.ToString(Quantity);
     }
 
-    public void Deconstruct(out string prototype, out FixedPoint2 quantity, out ReagentData? data)
+    public void Deconstruct(out string prototype, out FixedPoint2 quantity, out List<ReagentData>? data)
     {
         prototype = Reagent.Prototype;
         quantity = Quantity;
@@ -52,7 +74,7 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
 
     public bool Equals(ReagentQuantity other)
     {
-        return Quantity != other.Quantity && Reagent.Equals(other.Reagent);
+        return Quantity == other.Quantity && Reagent.Equals(other.Reagent);
     }
 
     public override bool Equals(object? obj)

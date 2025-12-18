@@ -281,6 +281,8 @@
     canRestock:
     - NanoMedInventory
     - NanoMedPlusInventory
+    - NanoMedCivilianInventory
+    - NanoMedCivilianWallInventory
   - type: Sprite
     layers:
     - state: base
@@ -336,6 +338,7 @@
     - SpaceUpInventory
     - SodaInventory
     - DrGibbInventory
+    - SmiteInventory 
   - type: Sprite
     layers:
     - state: base
@@ -460,7 +463,7 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockHappyHonk
   name: Happy Honk restock box
-  description: place this box full of fun into the restock slot on the Happy Honk Dispenser to begin.
+  description: Place this box full of fun into the restock slot on the Happy Honk Dispenser to begin.
   components:
   - type: VendingMachineRestock
     canRestock:

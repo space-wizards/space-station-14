@@ -16,15 +16,17 @@ namespace Content.Client.Labels.UI
         // TODO LineEdit Make this a bool on the LineEdit control
 
         private string _label = string.Empty;
+        private string _initialLabel = string.Empty;
 
         public HandLabelerWindow()
         {
             RobustXamlLoader.Load(this);
 
-            LabelLineEdit.OnTextEntered += e =>
+            LabelLineEdit.OnTextChanged += e =>
             {
                 _label = e.Text;
                 OnLabelChanged?.Invoke(_label);
+                UpdateButtons();
             };
 
             LabelLineEdit.OnFocusEnter += _ => _focused = true;
@@ -33,6 +35,17 @@ namespace Content.Client.Labels.UI
                 _focused = false;
                 LabelLineEdit.Text = _label;
             };
+            ResetLabelButton.OnPressed += _ => LabelLineEdit.SetText(_initialLabel, true);
+            ClearLabelButton.OnPressed += _ => LabelLineEdit.SetText("", true);
+        }
+
+        protected override void Opened()
+        {
+            base.Opened();
+
+            // Give the editor keyboard focus, since that's the only
+            // thing the user will want to be doing with this UI
+            LabelLineEdit.GrabKeyboardFocus();
         }
 
         public void SetCurrentLabel(string label)
@@ -42,7 +55,30 @@ namespace Content.Client.Labels.UI
 
             _label = label;
             if (!_focused)
+            {
                 LabelLineEdit.Text = label;
+                UpdateButtons();
+            }
+        }
+
+        public void SetInitialLabelState()
+        {
+            LabelLineEdit.Text = _label;
+            LabelLineEdit.CursorPosition = _label.Length;
+            LabelLineEdit.SelectionStart = 0;
+            _initialLabel = _label;
+            UpdateButtons();
+        }
+
+        public void UpdateButtons()
+        {
+            ResetLabelButton.Disabled = (LabelLineEdit.Text == _initialLabel);
+            ClearLabelButton.Disabled = (LabelLineEdit.Text == "");
+        }
+
+        public void SetMaxLabelLength(int maxLength)
+        {
+            LabelLineEdit.IsValid = s => s.Length <= maxLength;
         }
     }
 }

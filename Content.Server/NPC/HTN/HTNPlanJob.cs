@@ -56,15 +56,20 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         // hence we'll store it here.
         var appliedStates = new List<Dictionary<string, object>?>();
 
-        var tasksToProcess = new Queue<HTNTask>();
+        var tasksToProcess = new Stack<HTNTask>();
         var finalPlan = new List<HTNPrimitiveTask>();
-        tasksToProcess.Enqueue(_rootTask);
+        tasksToProcess.Push(_rootTask);
 
         // How many primitive tasks we've added since last record.
         var primitiveCount = 0;
 
-        while (tasksToProcess.TryDequeue(out var currentTask))
+        int tasksProcessed = 0;
+
+        while (tasksToProcess.TryPop(out var currentTask))
         {
+            if (tasksProcessed++ > _rootTask.MaximumTasks)
+                throw new Exception("HTN Planner exceeded maximum tasks");
+
             switch (currentTask)
             {
                 case HTNCompoundTask compound:
@@ -156,13 +161,13 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     /// <summary>
     /// Goes through each compound task branch and tries to find an appropriate one.
     /// </summary>
-    private bool TryFindSatisfiedMethod(HTNCompoundTask compoundId, Queue<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
+    private bool TryFindSatisfiedMethod(HTNCompoundTask compoundId, Stack<HTNTask> tasksToProcess, NPCBlackboard blackboard, ref int mtrIndex)
     {
         var compound = _protoManager.Index<HTNCompoundPrototype>(compoundId.Task);
 
-        for (var i = mtrIndex; i < compound.Branches.Count; i++)
+        for (; mtrIndex < compound.Branches.Count; mtrIndex++)
         {
-            var branch = compound.Branches[i];
+            var branch = compound.Branches[mtrIndex];
             var isValid = true;
 
             foreach (var con in branch.Preconditions)
@@ -177,9 +182,9 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             if (!isValid)
                 continue;
 
-            foreach (var task in branch.Tasks)
+            foreach (var task in branch.Tasks.AsEnumerable().Reverse())
             {
-                tasksToProcess.Enqueue(task);
+                tasksToProcess.Push(task);
             }
 
             return true;
@@ -193,7 +198,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     /// </summary>
     private void RestoreTolastDecomposedTask(
         Stack<DecompositionState> decompHistory,
-        Queue<HTNTask> tasksToProcess,
+        Stack<HTNTask> tasksToProcess,
         List<Dictionary<string, object>?> appliedStates,
         List<HTNPrimitiveTask> finalPlan,
         ref int primitiveCount,
@@ -218,7 +223,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
 
         primitiveCount = lastDecomp.PrimitiveCount;
         blackboard = lastDecomp.Blackboard;
-        tasksToProcess.Enqueue(lastDecomp.CompoundTask);
+        tasksToProcess.Push(lastDecomp.CompoundTask);
     }
 
     /// <summary>

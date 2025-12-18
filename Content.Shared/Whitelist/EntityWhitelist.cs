@@ -2,6 +2,8 @@ using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.Whitelist;
 
@@ -10,6 +12,9 @@ namespace Content.Shared.Whitelist;
 ///     Does not whitelist by prototypes, since that is undesirable; you're better off just adding a tag to all
 ///     entity prototypes that need to be whitelisted, and checking for that.
 /// </summary>
+/// <remarks>
+///     Do not add more conditions like itemsize to the whitelist, this should stay as lightweight as possible!
+/// </remarks>
 /// <code>
 /// whitelist:
 ///   tags:
@@ -29,8 +34,8 @@ public sealed partial class EntityWhitelist
     /// <summary>
     ///     Component names that are allowed in the whitelist.
     /// </summary>
-    [DataField] public string[]? Components;
-    // TODO yaml validation
+    [DataField(customTypeSerializer:typeof(CustomArraySerializer<string, ComponentNameSerializer>))]
+    public string[]? Components;
 
     /// <summary>
     ///     Item sizes that are allowed in the whitelist.

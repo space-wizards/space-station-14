@@ -1,0 +1,43 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                      Title="{Loc 'borg-select-type-menu-title'}"
+                      SetSize="550 300">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+            <!-- Left pane: selection of borg type -->
+            <BoxContainer Orientation="Vertical" MinWidth="200" Margin="2 0">
+                <Label Text="{Loc 'borg-select-type-menu-available'}" StyleClasses="LabelHeading" />
+                <ScrollContainer HScrollEnabled="False" VerticalExpand="True">
+                    <BoxContainer Name="SelectionsContainer" Orientation="Vertical" />
+                </ScrollContainer>
+            </BoxContainer>
+
+            <customControls:VSeparator />
+
+            <!-- Right pane: information about selected borg module, confirm button. -->
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="2 0">
+                <Label Text="{Loc 'borg-select-type-menu-information'}" StyleClasses="LabelHeading" />
+                <Control VerticalExpand="True">
+                    <controls:Placeholder Name="InfoPlaceholder" PlaceholderText="{Loc 'borg-select-type-menu-select-type'}" />
+                    <BoxContainer Name="InfoContents" Orientation="Vertical" Visible="False">
+                        <BoxContainer Orientation="Horizontal" Margin="0 0 0 4">
+                            <EntityPrototypeView Name="ChassisView" Scale="2,2" />
+                            <Label Name="NameLabel" HorizontalExpand="True" />
+                        </BoxContainer>
+
+                        <RichTextLabel Name="DescriptionLabel" VerticalExpand="True" VerticalAlignment="Top" />
+                    </BoxContainer>
+                </Control>
+                <controls:ConfirmButton Name="ConfirmTypeButton" Text="{Loc 'borg-select-type-menu-confirm'}"
+                                        Disabled="True" HorizontalAlignment="Right"
+                                        MinWidth="200" />
+            </BoxContainer>
+        </BoxContainer>
+
+        <controls:StripeBack Margin="0 0 0 4">
+            <Label Text="{Loc 'borg-select-type-menu-bottom-text'}" HorizontalAlignment="Center" StyleClasses="LabelSubText" Margin="4 4 0 4"/>
+        </controls:StripeBack>
+    </BoxContainer>
+
+</controls:FancyWindow>

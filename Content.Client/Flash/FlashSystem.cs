@@ -1,6 +1,5 @@
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
-using Content.Shared.StatusEffect;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
@@ -22,7 +21,6 @@ public sealed class FlashSystem : SharedFlashSystem
         SubscribeLocalEvent<FlashedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<FlashedComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<FlashedComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
-        SubscribeLocalEvent<FlashedComponent, StatusEffectAddedEvent>(OnStatusAdded);
 
         _overlay = new();
     }
@@ -34,8 +32,8 @@ public sealed class FlashSystem : SharedFlashSystem
 
     private void OnPlayerDetached(EntityUid uid, FlashedComponent component, LocalPlayerDetachedEvent args)
     {
-        _overlay.PercentComplete = 1.0f;
         _overlay.ScreenshotTexture = null;
+        _overlay.RequestScreenTexture = false;
         _overlayMan.RemoveOverlay(_overlay);
     }
 
@@ -43,6 +41,7 @@ public sealed class FlashSystem : SharedFlashSystem
     {
         if (_player.LocalEntity == uid)
         {
+            _overlay.RequestScreenTexture = true;
             _overlayMan.AddOverlay(_overlay);
         }
     }
@@ -51,17 +50,9 @@ public sealed class FlashSystem : SharedFlashSystem
     {
         if (_player.LocalEntity == uid)
         {
-            _overlay.PercentComplete = 1.0f;
             _overlay.ScreenshotTexture = null;
+            _overlay.RequestScreenTexture = false;
             _overlayMan.RemoveOverlay(_overlay);
-        }
-    }
-
-    private void OnStatusAdded(EntityUid uid, FlashedComponent component, StatusEffectAddedEvent args)
-    {
-        if (_player.LocalEntity == uid && args.Key == FlashedKey)
-        {
-            _overlay.ReceiveFlash();
         }
     }
 }

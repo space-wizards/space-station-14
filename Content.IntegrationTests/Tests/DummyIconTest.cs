@@ -16,17 +16,18 @@ namespace Content.IntegrationTests.Tests
             var client = pair.Client;
             var prototypeManager = client.ResolveDependency<IPrototypeManager>();
             var resourceCache = client.ResolveDependency<IResourceCache>();
+            var spriteSys = client.System<SpriteSystem>();
 
             await client.WaitAssertion(() =>
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.NoSpawn || proto.Abstract || pair.IsTestPrototype(proto) || !proto.Components.ContainsKey("Sprite"))
+                    if (proto.HideSpawnMenu || proto.Abstract || pair.IsTestPrototype(proto) || !proto.Components.ContainsKey("Sprite"))
                         continue;
 
                     Assert.DoesNotThrow(() =>
                     {
-                        var _ = SpriteComponent.GetPrototypeTextures(proto, resourceCache).ToList();
+                        var _ = spriteSys.GetPrototypeTextures(proto).ToList();
                     }, "Prototype {0} threw an exception when getting its textures.",
                         proto.ID);
                 }

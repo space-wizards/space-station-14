@@ -1,9 +1,8 @@
+using System.Numerics;
 using Content.Shared.Physics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics.Joints;
 
 namespace Content.Client.Physics;
 
@@ -16,8 +15,6 @@ public sealed class JointVisualsOverlay : Overlay
 
     private IEntityManager _entManager;
 
-    private HashSet<Joint> _drawn = new();
-
     public JointVisualsOverlay(IEntityManager entManager)
     {
         _entManager = entManager;
@@ -25,13 +22,14 @@ public sealed class JointVisualsOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        _drawn.Clear();
         var worldHandle = args.WorldHandle;
 
         var spriteSystem = _entManager.System<SpriteSystem>();
         var xformSystem = _entManager.System<SharedTransformSystem>();
         var joints = _entManager.EntityQueryEnumerator<JointVisualsComponent, TransformComponent>();
         var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+
+        args.DrawingHandle.SetTransform(Matrix3x2.Identity);
 
         while (joints.MoveNext(out var visuals, out var xform))
         {
@@ -47,7 +45,7 @@ public sealed class JointVisualsOverlay : Overlay
                 continue;
 
             var texture = spriteSystem.Frame0(visuals.Sprite);
-            var width = texture.Width / (float) EyeManager.PixelsPerMeter;
+            var width = texture.Width / (float)EyeManager.PixelsPerMeter;
 
             var coordsA = xform.Coordinates;
             var coordsB = otherXform.Coordinates;
@@ -58,9 +56,9 @@ public sealed class JointVisualsOverlay : Overlay
             coordsA = coordsA.Offset(rotA.RotateVec(visuals.OffsetA));
             coordsB = coordsB.Offset(rotB.RotateVec(visuals.OffsetB));
 
-            var posA = coordsA.ToMapPos(_entManager, xformSystem);
-            var posB = coordsB.ToMapPos(_entManager, xformSystem);
-            var diff = (posB - posA);
+            var posA = xformSystem.ToMapCoordinates(coordsA).Position;
+            var posB = xformSystem.ToMapCoordinates(coordsB).Position;
+            var diff = posB - posA;
             var length = diff.Length();
 
             var midPoint = diff / 2f + posA;

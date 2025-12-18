@@ -1,27 +1,15 @@
 # Back
 - type: loadout
   id: SalvageSpecialistBackpack
-  equipment: SalvageSpecialistBackpack
-
-- type: startingGear
-  id: SalvageSpecialistBackpack
   equipment:
     back: ClothingBackpackSalvage
 
 - type: loadout
   id: SalvageSpecialistSatchel
-  equipment: SalvageSpecialistSatchel
-
-- type: startingGear
-  id: SalvageSpecialistSatchel
   equipment:
     back: ClothingBackpackSatchelSalvage
 
 - type: loadout
-  id: SalvageSpecialistDuffel
-  equipment: SalvageSpecialistDuffel
-
-- type: startingGear
   id: SalvageSpecialistDuffel
   equipment:
     back: ClothingBackpackDuffelSalvage
@@ -29,19 +17,11 @@
 # OuterClothing
 - type: loadout
   id: SalvageSpecialistWintercoat
-  equipment: SalvageSpecialistWintercoat
-
-- type: startingGear
-  id: SalvageSpecialistWintercoat
   equipment:
     outerClothing: ClothingOuterWinterMiner
 
 # Shoes
 - type: loadout
-  id: SalvageBoots
-  equipment: SalvageBoots
-
-- type: startingGear
   id: SalvageBoots
   equipment:
     shoes: ClothingShoesBootsSalvage

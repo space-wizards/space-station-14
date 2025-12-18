@@ -47,6 +47,12 @@
   kind: source
   path: "/Textures/Shaders/rainbow.swsl"
 
+# sin city effect: everything is greyscale, except red
+- type: shader
+  id: Noir
+  kind: source
+  path: "/Textures/Shaders/noir.swsl"
+
 - type: shader
   id: CameraStatic
   kind: source
@@ -56,6 +62,11 @@
   id: Drunk
   kind: source
   path: "/Textures/Shaders/drunk.swsl"
+
+- type: shader
+  id: Drowsiness
+  kind: source
+  path: "/Textures/Shaders/radial_blur.swsl"
 
 - type: shader
   id: Texture
@@ -99,3 +110,8 @@
   id: Cataracts
   kind: source
   path: "/Textures/Shaders/cataracts.swsl"
+
+- type: shader
+  id: Hologram
+  kind: source
+  path: "/Textures/Shaders/hologram.swsl"

@@ -1,6 +1,5 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
@@ -17,15 +16,15 @@ public sealed partial class SalvageAirMod : IPrototype, IBiomeSpecificMod
 
     /// <inheritdoc/>
     [DataField("desc")]
-    public string Description { get; private set; } = string.Empty;
+    public LocId Description { get; private set; } = string.Empty;
 
     /// <inheritdoc/>
     [DataField("cost")]
     public float Cost { get; private set; } = 0f;
 
     /// <inheritdoc/>
-    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeModPrototype>))]
-    public List<string>? Biomes { get; private set; } = null;
+    [DataField]
+    public List<ProtoId<SalvageBiomeModPrototype>>? Biomes { get; private set; } = null;
 
     /// <summary>
     /// Set to true if this planet will have no atmosphere.

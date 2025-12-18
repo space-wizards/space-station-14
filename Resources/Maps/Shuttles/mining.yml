@@ -564,22 +564,37 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,3.5
       parent: 181
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 128
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -5.5,-3.5
       parent: 181
   - uid: 129
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -5.5,-2.5
       parent: 181
   - uid: 130
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -5.5,-1.5
+      parent: 181
+  - uid: 131
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 1.5,2.5
+      parent: 181
+  - uid: 133
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 1.5,1.5
       parent: 181
 - proto: BlastDoorExterior1
   entities:
@@ -588,25 +603,16 @@ entities:
     - type: Transform
       pos: -5.5,-2.5
       parent: 181
-    - type: DeviceLinkSink
-      links:
-      - 100
   - uid: 47
     components:
     - type: Transform
       pos: -5.5,-3.5
       parent: 181
-    - type: DeviceLinkSink
-      links:
-      - 100
   - uid: 69
     components:
     - type: Transform
       pos: -5.5,-1.5
       parent: 181
-    - type: DeviceLinkSink
-      links:
-      - 100
 - proto: BorgModuleMining
   entities:
   - uid: 94
@@ -911,8 +917,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,-4.5
       parent: 181
-    - type: AtmosDevice
-      joinedGrid: 181
 - proto: GasVentPump
   entities:
   - uid: 26
@@ -921,8 +925,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,-4.5
       parent: 181
-    - type: AtmosDevice
-      joinedGrid: 181
 - proto: GeneratorBasic
   entities:
   - uid: 40

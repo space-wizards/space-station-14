@@ -29,9 +29,11 @@ namespace Content.Shared.Decals
             IDependencyCollection dependencies, SerializationHookContext hookCtx, ISerializationContext? context = null,
             ISerializationManager.InstantiationDelegate<DecalGridChunkCollection>? _ = default)
         {
-            node.TryGetValue(new ValueDataNode("version"), out var versionNode);
+            node.TryGetValue("version", out var versionNode);
             var version = ((ValueDataNode?) versionNode)?.AsInt() ?? 1;
             Dictionary<Vector2i, DecalChunk> dictionary;
+            uint nextIndex = 0;
+            var ids = new HashSet<uint>();
 
             // TODO: Dump this when we don't need support anymore.
             if (version > 1)
@@ -47,56 +49,42 @@ namespace Content.Shared.Decals
 
                     foreach (var (decalUidNode, decalData) in deckNodes)
                     {
-                        var dUid = serializationManager.Read<uint>(decalUidNode, hookCtx, context);
+                        var dUid = uint.Parse(decalUidNode, CultureInfo.InvariantCulture);
                         var coords = serializationManager.Read<Vector2>(decalData, hookCtx, context);
 
                         var chunkOrigin = SharedMapSystem.GetChunkIndices(coords, SharedDecalSystem.ChunkSize);
                         var chunk = dictionary.GetOrNew(chunkOrigin);
                         var decal = new Decal(coords, data.Id, data.Color, data.Angle, data.ZIndex, data.Cleanable);
-                        chunk.Decals.Add(dUid, decal);
+
+                        nextIndex = Math.Max(nextIndex, dUid);
+
+                        // Re-used ID somehow
+                        // This will bump all IDs by up to 1 but will ensure the map is still readable.
+                        if (!ids.Add(dUid))
+                        {
+                            dUid = nextIndex++;
+                            ids.Add(dUid);
+                        }
+
+                        chunk.Decals[dUid] = decal;
                     }
                 }
             }
             else
             {
                 dictionary = serializationManager.Read<Dictionary<Vector2i, DecalChunk>>(node, hookCtx, context, notNullableOverride: true);
-            }
 
-            var uids = new SortedSet<uint>();
-            var uidChunkMap = new Dictionary<uint, Vector2i>();
-            var allIndices = dictionary.Keys.ToList();
-            allIndices.Sort((x, y) => x.X == y.X ? x.Y.CompareTo(y.Y) : x.X.CompareTo(y.X));
-
-            foreach (var indices in allIndices)
-            {
-                var decals = dictionary[indices];
-                var decalUids = decals.Decals.Keys.ToList();
-                decalUids.Sort();
-
-                foreach (var uid in decalUids)
+                foreach (var decals in dictionary.Values)
                 {
-                    uids.Add(uid);
-                    uidChunkMap[uid] = indices;
+                    foreach (var uid in decals.Decals.Keys)
+                    {
+                        nextIndex = Math.Max(uid, nextIndex);
+                    }
                 }
             }
 
-            var uidMap = new Dictionary<uint, uint>();
-            uint nextIndex = 0;
-            foreach (var uid in uids)
-            {
-                uidMap[uid] = nextIndex++;
-            }
-
-            var newDict = new Dictionary<Vector2i, DecalChunk>();
-            foreach (var (oldUid, newUid) in uidMap)
-            {
-                var indices = uidChunkMap[oldUid];
-                if(!newDict.ContainsKey(indices))
-                    newDict[indices] = new();
-                newDict[indices].Decals[newUid] = dictionary[indices].Decals[oldUid];
-            }
-
-            return new DecalGridChunkCollection(newDict) { NextDecalId = nextIndex };
+            nextIndex++;
+            return new DecalGridChunkCollection(dictionary) { NextDecalId = nextIndex };
         }
 
         public DataNode Write(ISerializationManager serializationManager,
@@ -109,8 +97,6 @@ namespace Content.Shared.Decals
 
             var allData = new MappingDataNode();
             // Want consistent chunk + decal ordering so diffs aren't mangled
-            var chunks = new List<Vector2i>(value.ChunkCollection.Keys);
-            chunks.Sort((x, y) => x.X == y.X ? x.Y.CompareTo(y.Y) : x.X.CompareTo(y.X));
             var nodes = new SequenceDataNode();
 
             // Assuming decal indices stay consistent:
@@ -122,9 +108,6 @@ namespace Content.Shared.Decals
             // Build all of the decal lookups first.
             foreach (var chunk in value.ChunkCollection.Values)
             {
-                var sortedDecals = new List<uint>(chunk.Decals.Keys);
-                sortedDecals.Sort();
-
                 foreach (var (uid, decal) in chunk.Decals)
                 {
                     var data = new DecalData(decal);
@@ -149,7 +132,7 @@ namespace Content.Shared.Decals
                 {
                     var decal = decalLookup[uid];
                     // Inline coordinates
-                    decks.Add(serializationManager.WriteValue(uid, alwaysWrite, context), serializationManager.WriteValue(decal.Coordinates, alwaysWrite, context));
+                    decks.Add(uid.ToString(), serializationManager.WriteValue(decal.Coordinates, alwaysWrite, context));
                 }
 
                 lookupNode.Add("decals", decks);

@@ -1,6 +1,6 @@
 - type: entity
   id: TetherEntity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Physics
     bodyType: Dynamic

@@ -1,6 +1,6 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:pllax="clr-namespace:Content.Client.Parallax">
-    <pllax:ParallaxControl />
+    <pllax:ParallaxControl SpeedX="20"/>
     <PanelContainer Name="Background"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">

@@ -1,4 +1,4 @@
-﻿- type: cargoBounty
+- type: cargoBounty
   id: BountyArtifact
   reward: 2500
   description: bounty-description-artifact
@@ -7,7 +7,7 @@
     amount: 1
     whitelist:
       components:
-      - Artifact
+      - XenoArtifact
 
 - type: cargoBounty
   id: BountyBaseballBat
@@ -110,7 +110,7 @@
 
 - type: cargoBounty
   id: BountyCrayon
-  reward: 4000
+  reward: 1500
   description: bounty-description-crayon
   entries:
   - name: bounty-item-crayon
@@ -145,7 +145,7 @@
 
 - type: cargoBounty
   id: BountyFigurine
-  reward: 8000
+  reward: 3500
   description: bounty-description-figurine
   entries:
   - name: bounty-item-figurine
@@ -202,14 +202,16 @@
 
 - type: cargoBounty
   id: BountyKnife
-  reward: 6000
+  reward: 2000
   description: bounty-description-knife
   entries:
   - name: bounty-item-knife
     amount: 5
     whitelist:
       components:
-        - Sharp
+      - Sharp
+      tags:
+      - UtilityKnife # required because retracted utility knives are not Sharp
 
 - type: cargoBounty
   id: BountyLemon
@@ -293,7 +295,7 @@
 
 - type: cargoBounty
   id: BountyPercussion
-  reward: 15000
+  reward: 2500
   description: bounty-description-percussion
   entries:
   - name: bounty-item-percussion
@@ -500,6 +502,11 @@
     whitelist:
       components:
       - TemperatureProtection
+      tags:
+      - Scarf
+    blacklist:
+      components:
+      - ToggleableClothing
 
 - type: cargoBounty
   id: BountyBattery
@@ -512,10 +519,11 @@
     whitelist:
       components:
       - Battery
+      - PredictedBattery
 
 - type: cargoBounty
   id: BountyLaserGun
-  reward: 28500
+  reward: 9600
   description: bounty-description-lasergun
   idPrefix: IV
   entries:
@@ -523,7 +531,10 @@
     amount: 6
     whitelist:
       components:
-      - HitscanBatteryAmmoProvider
+      - BatteryAmmoProvider
+    blacklist:
+      components:
+      - PowerCell
 
 - type: cargoBounty
   id: BountyFood
@@ -556,6 +567,8 @@
       - Cake
       - Pie
       - Bread
+      - Pistachios
+      - Creamsicle
 
 - type: cargoBounty
   id: BountyVegetable
@@ -587,11 +600,10 @@
 
 - type: cargoBounty
   id: BountyRollerskates
-  reward: 6500
+  reward: 900
   description: bounty-description-rollerskates
   entries:
   - name: bounty-item-rollerskates
-    amount: 2
     whitelist:
       components:
       - Skates
@@ -687,7 +699,7 @@
 - type: cargoBounty
   id: BountyCardboardBox
   reward: 1500
-  description: bounty-description-cardobard-box
+  description: bounty-description-cardboard-box
   entries:
   - name: bounty-item-cardboard-box
     amount: 12
@@ -697,7 +709,7 @@
 
 - type: cargoBounty
   id: BountyWine
-  reward: 3000
+  reward: 1500
   description: bounty-description-wine
   entries:
   - name: bounty-item-wine
@@ -728,3 +740,24 @@
       tags:
       - MicrowaveMachineBoard
 
+- type: cargoBounty
+  id: BountyFlashes
+  reward: 5500
+  description: bounty-description-flashes
+  entries:
+  - name: bounty-item-flash
+    amount: 6
+    whitelist:
+      components:
+      - Flash
+
+- type: cargoBounty
+  id: BountyRing
+  reward: 12500
+  description: bounty-description-ring
+  entries:
+  - name: bounty-item-ring
+    amount: 2
+    whitelist:
+      tags:
+      - Ring

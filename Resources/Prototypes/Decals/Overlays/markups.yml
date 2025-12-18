@@ -1,0 +1,39 @@
+﻿- type: decal
+  id: MarkupSquare
+  tags: ["overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/markups.rsi
+    state: square
+
+- type: decal
+  id: MarkupRectangle1x2
+  tags: ["overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/markups.rsi
+    state: rectangle1x2
+
+- type: decal
+  id: MarkupRectangle1x2Center
+  tags: ["overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/markups.rsi
+    state: rectangle1x2center
+
+- type: decal
+  id: MarkupSquareQuater
+  tags: ["overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/markups.rsi
+    state: squareQuater
+
+- type: decal
+  id: MarkupSquareQuaterCenter
+  tags: ["overlay"]
+  defaultCustomColor: true
+  sprite:
+    sprite: Decals/Overlays/markups.rsi
+    state: squareQuaterCenter

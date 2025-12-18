@@ -3,6 +3,8 @@ materials-glass = glass
 materials-reinforced-glass = reinforced glass
 materials-plasma-glass = plasma glass
 materials-reinforced-plasma-glass = reinforced plasma glass
+materials-uranium-glass = uranium glass
+materials-reinforced-uranium-glass = reinforced uranium glass
 
 # Metals
 materials-steel = steel
@@ -25,7 +27,9 @@ materials-meat = meat
 materials-web = silk
 materials-bones = bone
 materials-coal = coal
+materials-diamond = diamond
 materials-gunpowder = gunpowder
+materials-cotton = cotton
 
 # Ores
 materials-raw-iron = raw iron
@@ -36,3 +40,4 @@ materials-raw-plasma = raw plasma
 materials-raw-uranium = raw uranium
 materials-raw-bananium = raw bananium
 materials-raw-salt = raw salt
+materials-raw-diamond = raw diamond

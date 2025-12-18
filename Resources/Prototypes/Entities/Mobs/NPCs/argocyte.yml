@@ -18,7 +18,10 @@
   - type: ReplacementAccent
     accent: xeno
   - type: Bloodstream
-    bloodReagent: FerrochromicAcid
+    bloodReagents:
+      reagents:
+      - ReagentId: FerrochromicAcid
+        Quantity: 1
     bloodMaxVolume: 75 #we don't want the map to become pools of blood
     bloodlossDamage:
       types:
@@ -74,6 +77,10 @@
     thresholds:
       0: Alive
       30: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 1
   - type: MovementSpeedModifier
     baseSprintSpeed : 3.5
     baseWalkSpeed : 3
@@ -104,6 +111,10 @@
     thresholds:
       0: Alive
       30: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 1
   - type: Fixtures
     fixtures:
       fix1:
@@ -140,6 +151,10 @@
     thresholds:
       0: Alive
       30: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 1
   - type: Fixtures
     fixtures:
       fix1:
@@ -176,6 +191,10 @@
     thresholds:
       0: Alive
       60: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 2
   - type: MovementSpeedModifier
     baseSprintSpeed : 5
 
@@ -198,6 +217,10 @@
     thresholds:
       0: Alive
       100: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 2
   - type: MovementSpeedModifier
     baseSprintSpeed : 4
     baseWalkSpeed : 3.5
@@ -221,6 +244,10 @@
     thresholds:
       0: Alive
       100: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 2
   - type: MeleeWeapon
     damage:
       types:
@@ -246,6 +273,10 @@
     thresholds:
       0: Alive
       100: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 2
   - type: MeleeWeapon
     damage:
       types:
@@ -274,6 +305,10 @@
     thresholds:
       0: Alive
       150: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 2
   - type: MeleeWeapon
     damage:
       types:
@@ -301,6 +336,10 @@
     thresholds:
       0: Alive
       150: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 2
   - type: MeleeWeapon
     damage:
       types:
@@ -330,6 +369,10 @@
     thresholds:
       0: Alive
       300: Dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatXeno
+      amount: 3
   - type: MeleeWeapon
     damage:
       types:
@@ -356,6 +399,11 @@
         Base: founder
       Dead:
         Base: founder_dead
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatXeno
+      amount: 5
   - type: Fixtures
     fixtures:
       fix1:
@@ -397,6 +445,11 @@
         Base: leviathing
       Dead:
         Base: leviathing_dead
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatXeno
+      amount: 10
   - type: Fixtures
     fixtures:
       fix1:

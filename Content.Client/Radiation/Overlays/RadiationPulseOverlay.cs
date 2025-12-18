@@ -13,6 +13,8 @@ namespace Content.Client.Radiation.Overlays
 {
     public sealed class RadiationPulseOverlay : Overlay
     {
+        private static readonly ProtoId<ShaderPrototype> RadiationShader = "Radiation";
+
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -29,7 +31,7 @@ namespace Content.Client.Radiation.Overlays
         public RadiationPulseOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _baseShader = _prototypeManager.Index<ShaderPrototype>("Radiation").Instance().Duplicate();
+            _baseShader = _prototypeManager.Index(RadiationShader).Instance().Duplicate();
         }
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -59,7 +61,7 @@ namespace Content.Client.Radiation.Overlays
                 shd?.SetParameter("positionInput", tempCoords);
                 shd?.SetParameter("range", instance.Range);
                 var life = (_gameTiming.RealTime - instance.Start).TotalSeconds / instance.Duration;
-                shd?.SetParameter("life", (float) life);
+                shd?.SetParameter("life", (float)life);
 
                 // There's probably a very good reason not to do this.
                 // Oh well!
@@ -116,7 +118,9 @@ namespace Content.Client.Radiation.Overlays
                     var shaderInstance = _pulses[pulseEntity];
                     shaderInstance.instance.CurrentMapCoords = _transform.GetMapCoordinates(pulseEntity);
                     shaderInstance.instance.Range = pulse.VisualRange;
-                } else {
+                }
+                else
+                {
                     _pulses[pulseEntity].shd.Dispose();
                     _pulses.Remove(pulseEntity);
                 }
@@ -129,7 +133,7 @@ namespace Content.Client.Radiation.Overlays
             var transformComponent = _entityManager.GetComponent<TransformComponent>(pulseEntity);
             var transformSystem = _entityManager.System<SharedTransformSystem>();
             return transformComponent.MapID == currentEyeLoc.MapId
-                && transformComponent.Coordinates.InRange(_entityManager, transformSystem, EntityCoordinates.FromMap(transformComponent.ParentUid, currentEyeLoc, transformSystem, _entityManager), MaxDist);
+                && transformSystem.InRange(transformComponent.Coordinates, transformSystem.ToCoordinates(transformComponent.ParentUid, currentEyeLoc), MaxDist);
         }
 
         private sealed record RadiationShaderInstance(MapCoordinates CurrentMapCoords, float Range, TimeSpan Start, float Duration)

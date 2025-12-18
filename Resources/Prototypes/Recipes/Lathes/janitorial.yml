@@ -104,3 +104,11 @@
   materials:
     Steel: 250
     Glass: 1000
+
+- type: latheRecipe
+  id: WireBrush
+  result: WireBrush
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 100

@@ -39,6 +39,12 @@ wires-board-name-mech = Mech
 wires-board-name-fatextractor = FatExtractor
 wires-board-name-flatpacker = Flatpacker
 wires-board-name-spaceheater = Space Heater
+wires-board-name-jukebox = Jukebox
+wires-board-name-computer = Computer
+wires-board-name-holopad = Holopad
+wires-board-name-barsign = Bar Sign
+wires-board-name-weapon-energy-turret = Sentry turret
+wires-board-name-turret-controls = Sentry turret control panel
 
 # names that get displayed in the wire hacking hud & admin logs.
 
@@ -66,3 +72,4 @@ wire-name-bomb-boom = BOOM
 wire-name-bomb-bolt = BOLT
 wire-name-speech = SPKR
 wire-name-listen = MIC
+wire-name-log = LOG

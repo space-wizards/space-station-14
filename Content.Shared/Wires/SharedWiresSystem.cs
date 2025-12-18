@@ -20,12 +20,18 @@ public abstract class SharedWiresSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<WiresPanelComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<WiresPanelComponent, WirePanelDoAfterEvent>(OnPanelDoAfter);
         SubscribeLocalEvent<WiresPanelComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WiresPanelComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenActivatableUI);
         SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, PanelChangedEvent>(OnActivatableUIPanelChanged);
+    }
+
+    private void OnStartup(Entity<WiresPanelComponent> ent, ref ComponentStartup args)
+    {
+        UpdateAppearance(ent, ent);
     }
 
     private void OnPanelDoAfter(EntityUid uid, WiresPanelComponent panel, WirePanelDoAfterEvent args)
@@ -124,10 +130,19 @@ public abstract class SharedWiresSystem : EntitySystem
         return !attempt.Cancelled;
     }
 
-    public bool IsPanelOpen(Entity<WiresPanelComponent?> entity)
+    public bool IsPanelOpen(Entity<WiresPanelComponent?> entity, EntityUid? tool = null)
     {
         if (!Resolve(entity, ref entity.Comp, false))
             return true;
+
+        if (tool != null)
+        {
+            var ev = new PanelOverrideEvent();
+            RaiseLocalEvent(tool.Value, ref ev);
+
+            if (ev.Allowed)
+                return true;
+        }
 
         // Listen, i don't know what the fuck this component does. it's stapled on shit for airlocks
         // but it looks like an almost direct duplication of WiresPanelComponent except with a shittier API.
@@ -154,4 +169,13 @@ public abstract class SharedWiresSystem : EntitySystem
 
         _activatableUI.CloseAll(uid);
     }
+}
+
+/// <summary>
+/// Raised directed on a tool to try and override panel visibility.
+/// </summary>
+[ByRefEvent]
+public record struct PanelOverrideEvent()
+{
+    public bool Allowed = true;
 }

@@ -13,7 +13,7 @@
     - state: spike
       map: ["base"]
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -50,10 +50,14 @@
       enum.KitchenSpikeVisuals.Status:
         base:
           Empty: { state: spike }
-          Bloody: { state: spikebloody }
+          Bloody: { state: spikebloody } # TODO: Add sprites for different species.
   - type: Construction
     graph: MeatSpike
     node: MeatSpike
   - type: GuideHelp
     guides:
     - Chef
+    - FoodRecipes
+  - type: ContainerContainer
+    containers:
+      body: !type:ContainerSlot

@@ -33,12 +33,6 @@ public sealed class ContentPlayerData
     public EntityUid? Mind { get; set; }
 
     /// <summary>
-    ///     If true, the player is an admin and they explicitly de-adminned mid-game,
-    ///     so they should not regain admin if they reconnect.
-    /// </summary>
-    public bool ExplicitlyDeadminned { get; set; }
-
-    /// <summary>
     /// If true, the admin will not show up in adminwho except to admins with the <see cref="AdminFlags.Stealth"/> flag.
     /// </summary>
     public bool Stealthed { get; set; }

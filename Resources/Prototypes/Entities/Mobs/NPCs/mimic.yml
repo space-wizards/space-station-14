@@ -1,5 +1,5 @@
 - type: entity
-  name: Mimic
+  name: mimic
   id: MobMimic
   parent: [ SimpleMobBase, MobCombat ]
   description: Surprise. # When this gets a proper write this should use the object's actual description >:)
@@ -40,3 +40,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 1
     baseSprintSpeed : 1
+  - type: Butcherable
+    spawned:
+    - id: DrinkChangelingStingCan
+      amount: 1

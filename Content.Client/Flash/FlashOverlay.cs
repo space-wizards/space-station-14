@@ -1,38 +1,43 @@
+using Content.Shared.CCVar;
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
 using Content.Shared.StatusEffect;
-using Content.Client.Viewport;
 using Robust.Client.Graphics;
-using Robust.Client.State;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Flash
 {
     public sealed class FlashOverlay : Overlay
     {
+        private static readonly ProtoId<ShaderPrototype> FlashedEffectShader = "FlashedEffect";
+
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClyde _displayManager = default!;
-        [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
-       private readonly StatusEffectsSystem _statusSys;
+        private readonly SharedFlashSystem _flash;
+        private readonly StatusEffectsSystem _statusSys;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
-        public float PercentComplete = 0.0f;
+        private bool _reducedMotion;
+        public float PercentComplete;
         public Texture? ScreenshotTexture;
 
         public FlashOverlay()
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
+            _shader = _prototypeManager.Index(FlashedEffectShader).InstanceUnique();
+            _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
+
+            _configManager.OnValueChanged(CCVars.ReducedMotion, (b) => { _reducedMotion = b; }, invokeImmediately: true);
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -46,28 +51,14 @@ namespace Content.Client.Flash
                 || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
                 return;
 
-            if (!_statusSys.TryGetTime(playerEntity.Value, SharedFlashSystem.FlashedKey, out var time, status))
+            if (!_statusSys.TryGetTime(playerEntity.Value, _flash.FlashedKey, out var time, status))
                 return;
 
             var curTime = _timing.CurTime;
-            var lastsFor = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
-            var timeDone = (float) (curTime - time.Value.Item1).TotalSeconds;
+            var lastsFor = (float)(time.Value.Item2 - time.Value.Item1).TotalSeconds;
+            var timeDone = (float)(curTime - time.Value.Item1).TotalSeconds;
 
             PercentComplete = timeDone / lastsFor;
-        }
-
-        public void ReceiveFlash()
-        {
-            if (_stateManager.CurrentState is IMainViewportState state)
-            {
-                // take a screenshot
-                // note that the callback takes a while and ScreenshotTexture will be null the first few Draws
-                state.Viewport.Viewport.Screenshot(image =>
-                {
-                    var rgba32Image = image.CloneAs<Rgba32>(SixLabors.ImageSharp.Configuration.Default);
-                    ScreenshotTexture = _displayManager.LoadTextureFromImage(rgba32Image);
-                });
-            }
         }
 
         protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -82,21 +73,37 @@ namespace Content.Client.Flash
 
         protected override void Draw(in OverlayDrawArgs args)
         {
+            if (RequestScreenTexture && ScreenTexture != null)
+            {
+                ScreenshotTexture = ScreenTexture;
+                RequestScreenTexture = false; // we only need the first frame, so we can stop the request now for performance reasons
+            }
             if (ScreenshotTexture == null)
                 return;
 
             var worldHandle = args.WorldHandle;
-            _shader.SetParameter("percentComplete", PercentComplete);
-            worldHandle.UseShader(_shader);
-            worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
-            worldHandle.UseShader(null);
+            if (_reducedMotion)
+            {
+                // TODO: This is a very simple placeholder.
+                // Replace it with a proper shader once we come up with something good.
+                // Turns out making an effect that is supposed to be a bright, sudden, and disorienting flash 
+                // not do any of that while also being equivalent in terms of game balance is hard.
+                var alpha = 1 - MathF.Pow(PercentComplete, 8f); // similar falloff curve to the flash shader
+                worldHandle.DrawRect(args.WorldBounds, new Color(0f, 0f, 0f, alpha));
+            }
+            else
+            {
+                _shader.SetParameter("percentComplete", PercentComplete);
+                worldHandle.UseShader(_shader);
+                worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
+                worldHandle.UseShader(null);
+            }
         }
 
         protected override void DisposeBehavior()
         {
             base.DisposeBehavior();
             ScreenshotTexture = null;
-            PercentComplete = 1.0f;
         }
     }
 }

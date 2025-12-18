@@ -10,7 +10,7 @@
       amount: 5
       catalyst: true
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodCheese
 
 - type: reaction
@@ -25,7 +25,7 @@
       amount: 5
       catalyst: true
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodChevre
 
 - type: reaction
@@ -39,7 +39,7 @@
     Water:
       amount: 10
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodDough
 
 - type: reaction
@@ -55,7 +55,7 @@
     Egg:
       amount: 6
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodDoughCornmeal
 
 - type: reaction
@@ -69,8 +69,24 @@
     Water:
       amount: 10
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodDoughTortilla
+
+- type: reaction
+  id: CreateDoughCotton
+  impact: Low
+  quantized: true
+  conserveEnergy: false
+  reactants:
+    Fiber:
+      amount: 10
+    Flour:
+      amount: 5
+    Water:
+      amount: 10
+  effects:
+  - !type:SpawnEntity
+    entity: FoodDoughCotton
 
 - type: reaction
   id: CreateCakeBatter
@@ -84,8 +100,10 @@
       amount: 12
     Sugar:
       amount: 5
+    Milk:
+      amount: 5
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodCakeBatter
 
 - type: reaction
@@ -95,12 +113,12 @@
   conserveEnergy: false
   reactants:
     Milk:
-      amount: 30
+      amount: 15
     TableSalt:
       amount: 5
       catalyst: true
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodButter
 
 - type: reaction
@@ -116,7 +134,7 @@
     TableSalt:
       amount: 5
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodDoughPie
 
 # TG has a cake recipe that uses soy milk instead of eggs.
@@ -135,7 +153,7 @@
     Sugar:
       amount: 5
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodCakeBatter
 
 - type: reaction
@@ -150,7 +168,7 @@
       amount: 5
       catalyst: true
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodTofu
 
 - type: reaction
@@ -166,7 +184,7 @@
     Egg:
       amount: 6
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodMeatMeatball
 
 - type: reaction
@@ -182,7 +200,7 @@
     Sugar:
       amount: 2
   effects:
-    - !type:CreateEntityReactionEffect
+    - !type:SpawnEntity
       entity: FoodSnackChocolateBar
 
 # Condiments
@@ -265,6 +283,18 @@
       amount: 1
   products:
     Hotsauce: 3
+
+- type: reaction
+  id: CookingColdsauce
+  reactants:
+    JuiceTomato:
+      amount: 1
+    TableSalt:
+      amount: 1
+    FrostOil:
+      amount: 1
+  products:
+    Coldsauce: 3
 
 - type: reaction
   id: CookingVinegar
@@ -415,3 +445,14 @@
     Carbon: 1
     Water: 1
     Nitrogen: 2
+
+- type: reaction
+  id: ReduceMilk #makes Cream renewable
+  minTemp: 320
+  requiredMixerCategories:
+  - Shake
+  reactants:
+   Milk:
+    amount: 2
+  products:
+   Cream: 1

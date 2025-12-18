@@ -47,7 +47,7 @@ public sealed class AntagPreferenceTest
         Assert.That(sys.IsEntityValid(client.AttachedEntity, def), Is.True);
 
         // By default, traitor/antag preferences are disabled, so the pool should be empty.
-        var sessions = new List<ICommonSession>{pair.Player!};
+        var sessions = new List<ICommonSession> { pair.Player! };
         var pool = sys.GetPlayerPool(rule, sessions, def);
         Assert.That(pool.Count, Is.EqualTo(0));
 

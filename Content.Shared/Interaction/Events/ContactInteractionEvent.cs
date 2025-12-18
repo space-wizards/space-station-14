@@ -8,7 +8,7 @@ namespace Content.Shared.Interaction.Events;
 /// </remarks>
 public sealed class ContactInteractionEvent : HandledEntityEventArgs
 {
-    public readonly EntityUid Other;
+    public EntityUid Other;
 
     public ContactInteractionEvent(EntityUid other)
     {

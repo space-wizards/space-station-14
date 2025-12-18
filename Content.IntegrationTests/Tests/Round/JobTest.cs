@@ -18,14 +18,14 @@ namespace Content.IntegrationTests.Tests.Round;
 [TestFixture]
 public sealed class JobTest
 {
-    private static ProtoId<JobPrototype> _passenger = "Passenger";
-    private static ProtoId<JobPrototype> _engineer = "StationEngineer";
-    private static ProtoId<JobPrototype> _captain = "Captain";
+    private static readonly ProtoId<JobPrototype> Passenger = "Passenger";
+    private static readonly ProtoId<JobPrototype> Engineer = "StationEngineer";
+    private static readonly ProtoId<JobPrototype> Captain = "Captain";
 
     private static string _map = "JobTestMap";
 
     [TestPrototypes]
-    public static string JobTestMap = @$"
+    private static readonly string JobTestMap = @$"
 - type: gameMap
   id: {_map}
   mapName: {_map}
@@ -39,12 +39,12 @@ public sealed class JobTest
           mapNameTemplate: ""Empty""
         - type: StationJobs
           availableJobs:
-            {_passenger}: [ -1, -1 ]
-            {_engineer}: [ -1, -1 ]
-            {_captain}: [ 1, 1 ]
+            {Passenger}: [ -1, -1 ]
+            {Engineer}: [ -1, -1 ]
+            {Captain}: [ 1, 1 ]
 ";
 
-    public void AssertJob(TestPair pair, ProtoId<JobPrototype> job, NetUserId? user = null, bool isAntag = false)
+    private void AssertJob(TestPair pair, ProtoId<JobPrototype> job, NetUserId? user = null, bool isAntag = false)
     {
         var jobSys = pair.Server.System<SharedJobSystem>();
         var mindSys = pair.Server.System<MindSystem>();
@@ -92,7 +92,7 @@ public sealed class JobTest
         await pair.Server.WaitPost(() => ticker.StartRound());
         await pair.RunTicksSync(10);
 
-        AssertJob(pair, _passenger);
+        AssertJob(pair, Passenger);
 
         await pair.Server.WaitPost(() => ticker.RestartRound());
         await pair.CleanReturnAsync();
@@ -116,21 +116,21 @@ public sealed class JobTest
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
         Assert.That(pair.Client.AttachedEntity, Is.Null);
 
-        await pair.SetJobPriorities((_passenger, JobPriority.Medium), (_engineer, JobPriority.High));
+        await pair.SetJobPriorities((Passenger, JobPriority.Medium), (Engineer, JobPriority.High));
         ticker.ToggleReadyAll(true);
         await pair.Server.WaitPost(() => ticker.StartRound());
         await pair.RunTicksSync(10);
 
-        AssertJob(pair, _engineer);
+        AssertJob(pair, Engineer);
 
         await pair.Server.WaitPost(() => ticker.RestartRound());
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
-        await pair.SetJobPriorities((_passenger, JobPriority.High), (_engineer, JobPriority.Medium));
+        await pair.SetJobPriorities((Passenger, JobPriority.High), (Engineer, JobPriority.Medium));
         ticker.ToggleReadyAll(true);
         await pair.Server.WaitPost(() => ticker.StartRound());
         await pair.RunTicksSync(10);
 
-        AssertJob(pair, _passenger);
+        AssertJob(pair, Passenger);
 
         await pair.Server.WaitPost(() => ticker.RestartRound());
         await pair.CleanReturnAsync();
@@ -155,18 +155,18 @@ public sealed class JobTest
         Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
         Assert.That(pair.Client.AttachedEntity, Is.Null);
 
-        var captain = pair.Server.ProtoMan.Index(_captain);
-        var engineer = pair.Server.ProtoMan.Index(_engineer);
-        var passenger = pair.Server.ProtoMan.Index(_passenger);
+        var captain = pair.Server.ProtoMan.Index(Captain);
+        var engineer = pair.Server.ProtoMan.Index(Engineer);
+        var passenger = pair.Server.ProtoMan.Index(Passenger);
         Assert.That(captain.Weight, Is.GreaterThan(engineer.Weight));
         Assert.That(engineer.Weight, Is.EqualTo(passenger.Weight));
 
-        await pair.SetJobPriorities((_passenger, JobPriority.Medium), (_engineer, JobPriority.High), (_captain, JobPriority.Low));
+        await pair.SetJobPriorities((Passenger, JobPriority.Medium), (Engineer, JobPriority.High), (Captain, JobPriority.Low));
         ticker.ToggleReadyAll(true);
         await pair.Server.WaitPost(() => ticker.StartRound());
         await pair.RunTicksSync(10);
 
-        AssertJob(pair, _captain);
+        AssertJob(pair, Captain);
 
         await pair.Server.WaitPost(() => ticker.RestartRound());
         await pair.CleanReturnAsync();
@@ -197,22 +197,22 @@ public sealed class JobTest
         var captain = engineers[3];
         engineers.RemoveAt(3);
 
-        await pair.SetJobPriorities(captain, (_captain, JobPriority.High), (_engineer, JobPriority.Medium));
+        await pair.SetJobPriorities(captain, (Captain, JobPriority.High), (Engineer, JobPriority.Medium));
         foreach (var engi in engineers)
         {
-            await pair.SetJobPriorities(engi, (_captain, JobPriority.Medium), (_engineer, JobPriority.High));
+            await pair.SetJobPriorities(engi, (Captain, JobPriority.Medium), (Engineer, JobPriority.High));
         }
 
         ticker.ToggleReadyAll(true);
         await pair.Server.WaitPost(() => ticker.StartRound());
         await pair.RunTicksSync(10);
 
-        AssertJob(pair, _captain, captain);
+        AssertJob(pair, Captain, captain);
         Assert.Multiple(() =>
         {
             foreach (var engi in engineers)
             {
-                AssertJob(pair, _engineer, engi);
+                AssertJob(pair, Engineer, engi);
             }
         });
 

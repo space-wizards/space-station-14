@@ -10,6 +10,9 @@
       setup:
         !type:TabletopEmptySetup
         boardPrototype: Crowbar
+    - type: Tag
+      tags:
+        - TabletopBoard
 
 - type: entity
   id: BaseTabletopPiece # Board piece
@@ -20,15 +23,12 @@
   - type: Sprite
     noRot: true
   - type: Appearance
-  - type: Tag
-    tags:
-      - TabletopPiece
 
 - type: entity
   id: BaseBoardTabletop
   name: baseboard
   abstract: true
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Tag
     tags:

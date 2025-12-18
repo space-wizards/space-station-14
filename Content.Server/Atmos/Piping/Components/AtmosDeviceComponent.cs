@@ -67,15 +67,3 @@ public readonly struct AtmosDeviceUpdateEvent(float dt, Entity<GridAtmosphereCom
     /// </summary>
     public readonly Entity<MapAtmosphereComponent?>? Map = map;
 }
-
-/// <summary>
-///     Raised directed on an atmos device when it is enabled.
-/// </summary>
-[ByRefEvent]
-public record struct AtmosDeviceEnabledEvent;
-
-/// <summary>
-///     Raised directed on an atmos device when it is enabled.
-/// </summary>
-[ByRefEvent]
-public record struct AtmosDeviceDisabledEvent;

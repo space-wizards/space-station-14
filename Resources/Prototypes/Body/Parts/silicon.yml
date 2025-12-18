@@ -24,85 +24,121 @@
       Steel: 25
   - type: GuideHelp
     guides:
-      - Cyborgs
+    - Cyborgs
+    - Robotics
 
 - type: entity
-  id: BaseBorgArmLeft
+  id: LeftArmBorg
   parent: PartSilicon
-  name: left cyborg arm
-  abstract: true
+  name: cyborg left arm
   components:
   - type: BodyPart
     partType: Hand
     symmetry: Left
+  - type: Sprite
+    state: borg_l_arm
+  - type: Icon
+    state: borg_l_arm
   - type: Tag
     tags:
     - Trash
     - BorgArm
+    - BorgLArm
+  - type: Item
+    heldPrefix: borg-arm
 
 - type: entity
-  id: BaseBorgArmRight
+  id: RightArmBorg
   parent: PartSilicon
-  name: right cyborg arm
-  abstract: true
+  name: cyborg right arm
   components:
   - type: BodyPart
     partType: Hand
     symmetry: Right
+  - type: Sprite
+    state: borg_r_arm
+  - type: Icon
+    state: borg_r_arm
   - type: Tag
     tags:
     - Trash
     - BorgArm
+    - BorgRArm
+  - type: Item
+    heldPrefix: borg-arm
 
 - type: entity
-  id: BaseBorgLegLeft
+  id: LeftLegBorg
   parent: PartSilicon
-  name: left cyborg leg
-  abstract: true
+  name: cyborg left leg
   components:
   - type: BodyPart
     partType: Leg
     symmetry: Left
+  - type: Sprite
+    state: borg_l_leg
+  - type: Icon
+    state: borg_l_leg
   - type: Tag
     tags:
     - Trash
     - BorgLeg
+    - BorgLLeg
+  - type: Item
+    heldPrefix: borg-leg
 
 - type: entity
-  id: BaseBorgLegRight
+  id: RightLegBorg
   parent: PartSilicon
-  name: right cyborg leg
-  abstract: true
+  name: cyborg right leg
   components:
   - type: BodyPart
     partType: Leg
     symmetry: Right
+  - type: Sprite
+    state: borg_r_leg
+  - type: Icon
+    state: borg_r_leg
   - type: Tag
     tags:
     - Trash
     - BorgLeg
+    - BorgRLeg
+  - type: Item
+    heldPrefix: borg-leg
 
 - type: entity
-  id: BaseBorgHead
+  id: LightHeadBorg
   parent: PartSilicon
   name: cyborg head
-  abstract: true
   components:
   - type: BodyPart
     partType: Head
+  - type: Sprite
+    state: borg_head
+  - type: Icon
+    state: borg_head
   - type: Tag
     tags:
     - Trash
     - BorgHead
+  - type: Item
+    heldPrefix: borg-head
 
 - type: entity
-  id: BaseBorgTorso
+  id: TorsoBorg
   parent: PartSilicon
   name: cyborg torso
-  abstract: true
   components:
   - type: BodyPart
     partType: Torso
+  - type: Sprite
+    state: borg_chest
+  - type: Icon
+    state: borg_chest
   - type: Tag
     tags:
     - Trash
+    - BorgTorso
+  - type: Item
+    heldPrefix: borg-chest

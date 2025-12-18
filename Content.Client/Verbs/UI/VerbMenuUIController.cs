@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Gameplay;
+using Content.Client.Mapping;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
 using Robust.Client.Player;
@@ -22,7 +23,9 @@ namespace Content.Client.Verbs.UI
     ///     open a verb menu for a given entity, add verbs to it, and add server-verbs when the server response is
     ///     received.
     /// </remarks>
-    public sealed class VerbMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
+    public sealed class VerbMenuUIController : UIController,
+        IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>,
+        IOnStateEntered<MappingState>, IOnStateExited<MappingState>
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ContextMenuUIController _context = default!;
@@ -48,6 +51,22 @@ namespace Content.Client.Verbs.UI
         }
 
         public void OnStateExited(GameplayState state)
+        {
+            _context.OnContextKeyEvent -= OnKeyBindDown;
+            _context.OnContextClosed -= Close;
+            if (_verbSystem != null)
+                _verbSystem.OnVerbsResponse -= HandleVerbsResponse;
+            Close();
+        }
+
+        public void OnStateEntered(MappingState state)
+        {
+            _context.OnContextKeyEvent += OnKeyBindDown;
+            _context.OnContextClosed += Close;
+            _verbSystem.OnVerbsResponse += HandleVerbsResponse;
+        }
+
+        public void OnStateExited(MappingState state)
         {
             _context.OnContextKeyEvent -= OnKeyBindDown;
             _context.OnContextClosed -= Close;
@@ -90,7 +109,7 @@ namespace Content.Client.Verbs.UI
             Close();
 
             var menu = popup ?? _context.RootMenu;
-            menu.MenuBody.DisposeAllChildren();
+            menu.MenuBody.RemoveAllChildren();
 
             CurrentTarget = target;
             CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, out ExtraCategories, force);
@@ -188,7 +207,7 @@ namespace Content.Client.Verbs.UI
         /// </summary>
         public void AddServerVerbs(List<Verb>? verbs, ContextMenuPopup popup)
         {
-            popup.MenuBody.DisposeAllChildren();
+            popup.MenuBody.RemoveAllChildren();
 
             // Verbs may be null if the server does not think we can see the target entity. This **should** not happen.
             if (verbs == null)
@@ -254,7 +273,7 @@ namespace Content.Client.Verbs.UI
 
             if (verbElement.SubMenu == null)
             {
-                var popupElement = new ConfirmationMenuElement(verb, "Confirm");
+                var popupElement = new ConfirmationMenuElement(verb, Loc.GetString("generic-confirm"));
                 verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
                 _context.AddElement(verbElement.SubMenu, popupElement);
             }

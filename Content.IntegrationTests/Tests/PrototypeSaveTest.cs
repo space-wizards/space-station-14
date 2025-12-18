@@ -35,11 +35,11 @@ public sealed class PrototypeSaveTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        var mapManager = server.ResolveDependency<IMapManager>();
         var entityMan = server.ResolveDependency<IEntityManager>();
         var prototypeMan = server.ResolveDependency<IPrototypeManager>();
         var seriMan = server.ResolveDependency<ISerializationManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
+        var mapSystem = server.System<SharedMapSystem>();
 
         var prototypes = new List<EntityPrototype>();
         EntityUid uid;
@@ -77,7 +77,7 @@ public sealed class PrototypeSaveTest
 
         await server.WaitAssertion(() =>
         {
-            Assert.That(!mapManager.IsMapInitialized(mapId));
+            Assert.That(!mapSystem.IsInitialized(mapId));
             var testLocation = grid.Owner.ToCoordinates();
 
             Assert.Multiple(() =>
@@ -184,7 +184,7 @@ public sealed class PrototypeSaveTest
             IDependencyCollection dependencies, bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            if (WritingComponent != "Transform" && (Prototype?.NoSpawn == false))
+            if (WritingComponent != "Transform" && Prototype?.HideSpawnMenu == false)
             {
                 // Maybe this will be necessary in the future, but at the moment it just indicates that there is some
                 // issue, like a non-nullable entityUid data-field. If a component MUST have an entity uid to work with,

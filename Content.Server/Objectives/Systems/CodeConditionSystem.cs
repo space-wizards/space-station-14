@@ -36,20 +36,6 @@ public sealed class CodeConditionSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns true if a mob's objective with a certain prototype is completed.
-    /// </summary>
-    public bool IsCompleted(Entity<MindContainerComponent?> mob, string prototype)
-    {
-        if (_mind.GetMind(mob, mob.Comp) is not {} mindId)
-            return false;
-
-        if (!_mind.TryFindObjective(mindId, prototype, out var obj))
-            return false;
-
-        return IsCompleted(obj.Value);
-    }
-
-    /// <summary>
     /// Sets an objective's completed field.
     /// </summary>
     public void SetCompleted(Entity<CodeConditionComponent?> ent, bool completed = true)

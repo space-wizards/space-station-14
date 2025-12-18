@@ -1,4 +1,4 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
@@ -33,7 +33,7 @@ public sealed partial class MinSolution : IGraphCondition
 
     public bool Condition(EntityUid uid, IEntityManager entMan)
     {
-        var containerSys = entMan.System<SolutionContainerSystem>();
+        var containerSys = entMan.System<SharedSolutionContainerSystem>();
         if (!containerSys.TryGetSolution(uid, Solution, out _, out var solution))
             return false;
 
@@ -46,7 +46,7 @@ public sealed partial class MinSolution : IGraphCondition
         var entMan = IoCManager.Resolve<IEntityManager>();
         var uid = args.Examined;
 
-        var containerSys = entMan.System<SolutionContainerSystem>();
+        var containerSys = entMan.System<SharedSolutionContainerSystem>();
         if (!containerSys.TryGetSolution(uid, Solution, out _, out var solution))
             return false;
 

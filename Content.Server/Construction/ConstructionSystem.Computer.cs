@@ -1,6 +1,7 @@
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Computer;
+using Content.Shared.Power;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Construction;
@@ -59,7 +60,7 @@ public sealed partial class ConstructionSystem
         if (container.ContainedEntities.Count != 0)
             return;
 
-        var board = EntityManager.SpawnEntity(component.BoardPrototype, Transform(ent).Coordinates);
+        var board = Spawn(component.BoardPrototype, Transform(ent).Coordinates);
 
         if (!_container.Insert(board, container))
             Log.Warning($"Couldn't insert board {board} to computer {ent}!");

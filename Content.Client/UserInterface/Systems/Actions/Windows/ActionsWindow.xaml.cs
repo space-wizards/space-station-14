@@ -8,6 +8,8 @@ namespace Content.Client.UserInterface.Systems.Actions.Windows;
 [GenerateTypedNameReferences]
 public sealed partial class ActionsWindow : DefaultWindow
 {
+    public const string StyleClassActionSearchBox = "actionSearchBox";
+
     public MultiselectOptionButton<Filters> FilterButton { get; private set; }
 
     /// <summary>
@@ -26,7 +28,7 @@ public sealed partial class ActionsWindow : DefaultWindow
 
         foreach (var filter in Enum.GetValues<Filters>())
         {
-            FilterButton.AddItem(filter.ToString(), filter);
+            FilterButton.AddItem(Loc.GetString($"ui-actionmenu-{filter.ToString().ToLower()}"), filter);
         }
     }
 

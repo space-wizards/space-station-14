@@ -3,6 +3,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using Content.Shared.Localizations;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -28,14 +29,8 @@ namespace Content.Client.Atmos.UI
 
             var atmosSystem = EntMan.System<AtmosphereSystem>();
 
-            _window = new GasFilterWindow(atmosSystem.Gases);
-
-            if (State != null)
-                UpdateState(State);
-
-            _window.OpenCentered();
-
-            _window.OnClose += Close;
+            _window = this.CreateWindow<GasFilterWindow>();
+            _window.PopulateGasList(atmosSystem.Gases);
 
             _window.ToggleStatusButtonPressed += OnToggleStatusButtonPressed;
             _window.FilterTransferRateChanged += OnFilterTransferRatePressed;
@@ -57,14 +52,18 @@ namespace Content.Client.Atmos.UI
 
         private void OnSelectGasPressed()
         {
-            if (_window is null) return;
+            if (_window is null)
+                return;
+
             if (_window.SelectedGas is null)
             {
                 SendMessage(new GasFilterSelectGasMessage(null));
             }
             else
             {
-                if (!int.TryParse(_window.SelectedGas, out var gas)) return;
+                if (!Enum.TryParse<Gas>(_window.SelectedGas, out var gas))
+                    return;
+
                 SendMessage(new GasFilterSelectGasMessage(gas));
             }
         }
