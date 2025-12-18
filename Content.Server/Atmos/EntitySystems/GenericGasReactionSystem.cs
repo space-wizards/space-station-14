@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos.Reactions;
 using Content.Shared.Atmos;
@@ -56,7 +57,8 @@ public sealed class GenericGasReactionSystem : EntitySystem
             float rate = 1f; // rate of this reaction
             foreach (var (reactant, num) in reaction.Reactants)
             {
-                float concentration = mix.GetMoles(reactant)/nTotal;
+                Debug.Assert(mix.Volume > Atmospherics.GasMinVolumeForReactions);
+                float concentration = mix.GetMoles(reactant)/mix.Volume;
                 rate *= MathF.Pow(concentration, num);
             }
 
@@ -64,7 +66,7 @@ public sealed class GenericGasReactionSystem : EntitySystem
             float catalystEnergy = 0;
             foreach (var (catalyst, dE) in reaction.Catalysts)
             {
-                float concentration = mix.GetMoles(catalyst)/nTotal;
+                float concentration = mix.GetMoles(catalyst)/mix.Volume;
                 catalystEnergy += dE * concentration;
             }
 

@@ -111,6 +111,12 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float GasMinMoles = 0.00000005f;
 
+        /// <summary>
+        /// Minimum volume that a <see cref="GasMixture"/> must have to perform reactions.
+        /// Prevents div/0 issues.
+        /// </summary>
+        public const float GasMinVolumeForReactions = 0.0001f;
+
         public const float OpenHeatTransferCoefficient = 0.4f;
 
         /// <summary>
