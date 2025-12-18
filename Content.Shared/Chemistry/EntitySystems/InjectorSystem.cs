@@ -581,29 +581,17 @@ public sealed partial class InjectorSystem : EntitySystem
     private void DrawFromBlood(Entity<InjectorComponent> injector, Entity<BloodstreamComponent> target,
         Entity<SolutionComponent> injectorSolution, FixedPoint2 transferAmount, EntityUid user)
     {
-        var drawAmount = (float)transferAmount;
-
-        if (_solutionContainer.ResolveSolution(target.Owner, target.Comp.ChemicalSolutionName,
-                ref target.Comp.ChemicalSolution))
-        {
-            var chemTemp = _solutionContainer.SplitSolution(target.Comp.ChemicalSolution.Value, drawAmount * 0.15f);
-            _solutionContainer.TryAddSolution(injectorSolution, chemTemp);
-            drawAmount -= (float)chemTemp.Volume;
-        }
-
         if (_solutionContainer.ResolveSolution(target.Owner, target.Comp.BloodSolutionName,
                 ref target.Comp.BloodSolution))
         {
-            var bloodTemp = _solutionContainer.SplitSolution(target.Comp.BloodSolution.Value, drawAmount);
+            var bloodTemp = _solutionContainer.SplitSolution(target.Comp.BloodSolution.Value, transferAmount);
             _solutionContainer.TryAddSolution(injectorSolution, bloodTemp);
         }
 
         LocId msg = target.Owner == user ? "injector-component-draw-success-message-self" : "injector-component-draw-success-message";
         var targetIdentity = Identity.Entity(target, EntityManager);
-        _popup.PopupClient(
-            Loc.GetString(msg, ("amount", transferAmount), ("target", targetIdentity)),
-            target,
-            user);
+        var finalMessage = Loc.GetString(msg, ("amount", transferAmount), ("target", targetIdentity));
+        _popup.PopupClient(finalMessage, target, user);
 
         AfterDraw(injector, user, target);
     }
