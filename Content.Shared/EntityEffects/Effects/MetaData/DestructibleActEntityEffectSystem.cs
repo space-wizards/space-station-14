@@ -12,7 +12,7 @@ public sealed partial class DestructibleActEntityEffectSystem : EntityEffectSyst
     protected override void Effect(Entity<MetaDataComponent> entity, ref EntityEffectEvent<DestructibleAct> args)
     {
         if ((args.Effect.Acts & ThresholdActs.Breakage) != 0)
-            _destructible.BreakEntity(entity);
+            _destructible.BreakEntity(entity, args.User);
 
         if ((args.Effect.Acts & ThresholdActs.Destruction) != 0)
             _destructible.DestroyEntity(entity.AsNullable());
