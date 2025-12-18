@@ -355,7 +355,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         // Material Whitelist checked implicitly by CanChangeMaterialAmount();
 
         // test if the whole stack fits
-        var multiplier = TryComp<StackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
+        var multiplier = _sharedStackSystem.GetCount(toInsert);
         var totalVolume = 0;
         var partialStack = false;
         foreach (var (mat, vol) in composition.MaterialComposition)

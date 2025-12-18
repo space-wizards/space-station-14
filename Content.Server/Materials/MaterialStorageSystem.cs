@@ -98,7 +98,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
     {
         if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition, false))
             return false;
-        if (TryComp<ApcPowerReceiverComponent>(receiver, out var power) && !power.Powered)
+        if (!SharedPowerReceiverSystem.IsPowered(receiver))
             return false;
 
         TryComp<StackComponent>(toInsert, out var stack);
