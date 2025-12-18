@@ -242,10 +242,6 @@
     damage:
       types:
         Piercing: 5
-  - type: Tag
-    tags:
-      - ClockworkGlassShard
-      - Trash
   - type: Extractable
     grindableSolutionName: shardcglass
   - type: SolutionContainerManager
