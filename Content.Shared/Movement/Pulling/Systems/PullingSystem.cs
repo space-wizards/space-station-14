@@ -68,8 +68,9 @@ public sealed class PullingSystem : EntitySystem
         SubscribeLocalEvent<PullableComponent, EntGotInsertedIntoContainerMessage>(OnPullableContainerInsert);
         SubscribeLocalEvent<PullableComponent, ModifyUncuffDurationEvent>(OnModifyUncuffDuration);
         SubscribeLocalEvent<PullableComponent, StopBeingPulledAlertEvent>(OnStopBeingPulledAlert);
+        SubscribeLocalEvent<PullableComponent, GetInteractingEntitiesEvent>(OnGetInteractingEntities);
 
-        SubscribeLocalEvent<PullerComponent, UpdateMobStateEvent>(OnStateChanged, after: [typeof(MobThresholdSystem)]);
+        SubscribeLocalEvent<PullerComponent, MobStateChangedEvent>(OnStateChanged, after: [typeof(MobThresholdSystem)]);
         SubscribeLocalEvent<PullerComponent, AfterAutoHandleStateEvent>(OnAfterState);
         SubscribeLocalEvent<PullerComponent, EntGotInsertedIntoContainerMessage>(OnPullerContainerInsert);
         SubscribeLocalEvent<PullerComponent, EntityUnpausedEvent>(OnPullerUnpaused);
@@ -135,12 +136,12 @@ public sealed class PullingSystem : EntitySystem
         }
     }
 
-    private void OnStateChanged(EntityUid uid, PullerComponent component, ref UpdateMobStateEvent args)
+    private void OnStateChanged(EntityUid uid, PullerComponent component, ref MobStateChangedEvent args)
     {
         if (component.Pulling == null)
             return;
 
-        if (args.State == MobState.Critical || args.State == MobState.Dead)
+        if (args.NewMobState == MobState.Critical || args.NewMobState == MobState.Dead)
         {
             TryStopPull(component.Pulling);
         }
@@ -156,6 +157,12 @@ public sealed class PullingSystem : EntitySystem
     private void OnGotBuckled(Entity<PullableComponent> ent, ref BuckledEvent args)
     {
         StopPulling(ent.AsNullable());
+    }
+
+    private void OnGetInteractingEntities(Entity<PullableComponent> ent, ref GetInteractingEntitiesEvent args)
+    {
+        if (ent.Comp.Puller != null)
+            args.InteractingEntities.Add(ent.Comp.Puller.Value);
     }
 
     private void OnAfterState(Entity<PullerComponent> ent, ref AfterAutoHandleStateEvent args)
