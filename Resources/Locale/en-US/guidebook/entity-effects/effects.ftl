@@ -523,4 +523,4 @@ entity-effect-guidebook-plant-resurrect =
     { $chance ->
         [1] Revives
         *[other] revive
-    } a plant from a dead state
+    } a plant from a dead state at the cost of becoming seedless
