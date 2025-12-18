@@ -36,9 +36,9 @@ public partial class SharedStaminaSystem
             return;
 
         var ev = new RefreshStaminaCritThresholdEvent();
-        ev.ThresholdValue = entity.Comp.CritThreshold;
+        ev.ThresholdValue = entity.Comp.BaseCritThreshold;
         RaiseLocalEvent(entity, ref ev);
 
-        entity.Comp.ModifiedCritThreshold = ev.ThresholdValue * ev.Modifier;
+        entity.Comp.CritThreshold = ev.ThresholdValue * ev.Modifier;
     }
 }

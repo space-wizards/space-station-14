@@ -100,7 +100,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
     private void OnStartup(Entity<StaminaComponent> entity, ref ComponentStartup args)
     {
         // Set the base threshold here since ModifiedCritThreshold can't be modified via yaml.
-        entity.Comp.ModifiedCritThreshold = entity.Comp.CritThreshold;
+        entity.Comp.CritThreshold = entity.Comp.BaseCritThreshold;
 
         UpdateStaminaVisuals(entity);
     }
@@ -118,7 +118,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
     private void OnRejuvenate(Entity<StaminaComponent> entity, ref RejuvenateEvent args)
     {
-        if (entity.Comp.StaminaDamage >= entity.Comp.ModifiedCritThreshold)
+        if (entity.Comp.StaminaDamage >= entity.Comp.CritThreshold)
         {
             ExitStamCrit(entity, entity.Comp);
         }
@@ -139,7 +139,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         if (component.Critical)
             return;
 
-        var damage = args.PushProbability * component.ModifiedCritThreshold;
+        var damage = args.PushProbability * component.CritThreshold;
         TakeStaminaDamage(uid, damage, component, source: args.Source);
 
         args.PopupPrefix = "disarm-action-shove-";
@@ -239,7 +239,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         if (!Resolve(uid, ref component, false) || component.Deleted)
             return;
 
-        var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.ModifiedCritThreshold - component.StaminaDamage), component.CritThreshold, 7);
+        var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.CritThreshold - component.StaminaDamage), component.BaseCritThreshold, 7);
         _alerts.ShowAlert(uid, component.StaminaAlert, (short) severity);
     }
 
@@ -254,7 +254,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         var oldStam = component.StaminaDamage;
 
-        if (oldStam + value >= component.ModifiedCritThreshold || component.Critical)
+        if (oldStam + value >= component.CritThreshold || component.Critical)
             return false;
 
         TakeStaminaDamage(uid, value, component, source, with, visual: visual);
@@ -309,14 +309,14 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
         if (!component.Critical)
         {
-            if (component.StaminaDamage >= component.ModifiedCritThreshold)
+            if (component.StaminaDamage >= component.CritThreshold)
             {
                 EnterStamCrit(uid, component);
             }
         }
         else
         {
-            if (component.StaminaDamage < component.ModifiedCritThreshold)
+            if (component.StaminaDamage < component.CritThreshold)
             {
                 ExitStamCrit(uid, component);
             }
@@ -395,7 +395,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         }
 
         component.Critical = true;
-        component.StaminaDamage = component.ModifiedCritThreshold;
+        component.StaminaDamage = component.CritThreshold;
 
         if (StunSystem.TryUpdateParalyzeDuration(uid, component.StunTime))
             StunSystem.TrySeeingStars(uid);
@@ -445,7 +445,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
         {
             var key = thres.Key.Float();
 
-            if ((ent.Comp.StaminaDamage / ent.Comp.ModifiedCritThreshold) >= key && key > closest && closest < 1f)
+            if ((ent.Comp.StaminaDamage / ent.Comp.CritThreshold) >= key && key > closest && closest < 1f)
                 closest = thres.Key;
         }
 
