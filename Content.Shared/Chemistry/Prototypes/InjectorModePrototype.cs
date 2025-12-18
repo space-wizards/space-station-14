@@ -53,47 +53,19 @@ public sealed partial class InjectorModePrototype : IPrototype, IInheritingProto
     [DataField]
     public TimeSpan ContainerDrawTime = TimeSpan.Zero;
 
-    /// <summary>
-    /// The flat seconds added from <see cref="DelayPerVolume"/> if the target is downed.
-    /// Downed counts as crouching, buckled on a bed or critical.
-    /// </summary>
-    /// <remarks>
-    /// If you want to make an injection instant on downed targets, remember about the <see cref="DelayPerVolume"/>.
-    /// The value needs to be negative to remove time, positive to add time.
-    /// </remarks>
-    [DataField]
-    public TimeSpan FlatDownedModifier;
 
     /// <summary>
     /// The number to divide <see cref="DelayPerVolume"/> if the target is downed.
     /// Downed counts as crouching, buckled on a bed or critical.
     /// </summary>
-    /// <remarks>
-    /// If you want to make an injection instant on downed targets, use <see cref="FlatDownedModifier"/>.
-    /// DO NOT PUT A ZERO HERE! Use 1 to make it irrelevant.
-    /// </remarks>
     [DataField]
-    public float DownedModifier = 2f;
+    public float DownedModifier = 0.5f;
 
     /// <summary>
-    /// The flat seconds added from <see cref="DelayPerVolume"/> if the target is the user.
+    /// The number to multiply <see cref="DelayPerVolume"/> if the target is the user.
     /// </summary>
-    /// <remarks>
-    /// If you want to make an injection instant on the user, remember about the <see cref="DelayPerVolume"/>.
-    /// The value needs to be negative to remove time, positive to add time.
-    /// </remarks>
     [DataField]
-    public TimeSpan FlatSelfModifier;
-
-    /// <summary>
-    /// The number to divide <see cref="DelayPerVolume"/> if the target is the user.
-    /// </summary>
-    /// <remarks>
-    /// If you want to make an injection instant on the user, use <see cref="FlatSelfModifier"/>.
-    /// DO NOT PUT A ZERO HERE! Use 1 to make it irrelevant.
-    /// </remarks>
-    [DataField]
-    public float SelfModifier = 2f;
+    public float SelfModifier = 0.5f;
 
     /// <summary>
     /// This delay will increase the DoAfter time for each Xu above <see cref="IgnoreDelayForVolume"/>.

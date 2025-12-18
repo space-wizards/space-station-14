@@ -151,9 +151,6 @@ public sealed partial class InjectorSystem : EntitySystem
                     // we want to sort by size, not alphabetically by the verb text.
                     Priority = priority
                 };
-
-                priority -= 1;
-
                 args.Verbs.Add(verb);
             }
         }
@@ -284,16 +281,10 @@ public sealed partial class InjectorSystem : EntitySystem
 
         // Check if the target is either the user or downed.
         if (user == target) // Self-injections take priority.
-        {
-            doAfterTime += activeMode.FlatSelfModifier;
-            doAfterTime /= activeMode.SelfModifier;
-        }
+            doAfterTime *= activeMode.SelfModifier;
         // Technically, both can be true, but that is probably a balance nightmare.
         else if (_standingState.IsDown(target))
-        {
-            doAfterTime += activeMode.FlatDownedModifier;
-            doAfterTime /= activeMode.DownedModifier;
-        }
+            doAfterTime *= activeMode.DownedModifier;
 
         return true;
     }
@@ -428,7 +419,8 @@ public sealed partial class InjectorSystem : EntitySystem
                 injector.Comp.SolutionName,
                 ref injector.Comp.Solution,
                 out var injectorSolution) || injectorSolution.Volume == 0)
-        { // If empty, show a popup.
+        {
+            // If empty, show a popup.
             _popup.PopupClient(Loc.GetString("injector-component-empty-message", ("injector", injector)), user, user);
             return false;
         }
@@ -451,8 +443,9 @@ public sealed partial class InjectorSystem : EntitySystem
         var ev = new TargetBeforeInjectEvent(user, injector, target, null);
         RaiseLocalEvent(target, ref ev);
 
+        // Jugsuit blocking Hyposprays when
         if (ev.Cancelled)
-        { // Jugsuit blocking Hyposprays when
+        {
             var userMessage = Loc.GetString("injector-component-blocked-user");
             var otherMessage = Loc.GetString("injector-component-blocked-other", ("target", target), ("user", user));
             _popup.PopupPredicted(userMessage, otherMessage, target, user, PopupType.SmallCaution);
@@ -601,8 +594,8 @@ public sealed partial class InjectorSystem : EntitySystem
         // Leave some DNA from the injectee on it
         _forensics.TransferDna(injector, target);
         // Reset the delay, if present.
-        if (TryComp<UseDelayComponent>(injector, out var delay))
-            _useDelay.TryResetDelay((injector, delay));
+
+        _useDelay.TryResetDelay(injector);
 
         // Automatically set syringe to draw after completely draining it.
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution)
