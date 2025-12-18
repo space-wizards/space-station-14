@@ -50,6 +50,10 @@ public sealed class GenericGasReactionSystem : EntitySystem
         if (nTotal < Atmospherics.GasMinMoles)
             return ReactionResult.NoReaction;
 
+        // Guard against volume div/0.
+        // Realistically, GasMixtures should never have this low of a volume.
+        Debug.Assert(mix.Volume > Atmospherics.GasMinVolumeForReactions);
+
         foreach (var reaction in reactions)
         {
             // Check if this is a generic YAML reaction (has reactants)
@@ -61,7 +65,6 @@ public sealed class GenericGasReactionSystem : EntitySystem
             var rate = 1f; // rate of this reaction
             foreach (var (reactant, num) in reaction.Reactants)
             {
-                Debug.Assert(mix.Volume > Atmospherics.GasMinVolumeForReactions);
                 var concentration = mix.GetMoles(reactant) / mix.Volume;
                 rate *= MathF.Pow(concentration, num);
             }
