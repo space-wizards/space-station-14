@@ -1,9 +1,6 @@
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos.Reactions;
 using Content.Shared.Atmos;
-using JetBrains.Annotations;
-using System.Collections;
-using System.Linq;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -98,9 +95,8 @@ public sealed class GenericGasReactionSystem : EntitySystem
                 _atmosphere.AddHeat(mix, reaction.Enthalpy/_atmosphere.HeatScale * rate);
                 if (reaction.Enthalpy > 0)
                 {
-                    mix.ReactionResults[GasReaction.Fire] += rate;
-                    var location = holder as TileAtmosphere;
-                    if (location != null)
+                    mix.ReactionResults[(byte)GasReaction.Fire] += rate;
+                    if (holder is TileAtmosphere location)
                     {
                         if (mix.Temperature > Atmospherics.FireMinimumTemperatureToExist)
                         {
