@@ -1,8 +1,8 @@
 ﻿- type: entity
-  name: jaunt
   parent: [Incorporeal, BaseMob]
   id: BaseMobJaunt
-  description: Faint traces of a humanoid figure linger here
+  name: jaunt
+  description: A faint image of a humanoid figure.
   suffix: Ethereal
   components:
   - type: ContentEye
@@ -21,7 +21,6 @@
 
 # Should be slow, for balance
 - type: entity
-  name: jaunt
   parent: BaseMobJaunt
   id: EtherealJaunt
   suffix: Wizard
