@@ -37,7 +37,7 @@ public sealed partial class SpeakOperator : HTNOperator
     /// Define what key is used for storing the cooldown
     /// </summary>
     [DataField]
-    public string CooldownID = String.Empty;
+    public string CooldownID = string.Empty;
 
     public override void Initialize(IEntitySystemManager sysManager)
     {

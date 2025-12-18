@@ -21,7 +21,7 @@ public sealed partial class TargetInRangePrecondition : HTNPrecondition
     }
 
     [DataField("invert")]
-    public bool Invert = false;
+    public bool Invert;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
