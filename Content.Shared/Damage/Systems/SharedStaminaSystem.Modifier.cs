@@ -32,7 +32,7 @@ public partial class SharedStaminaSystem
 
     public void RefreshStaminaCritThreshold(Entity<StaminaComponent?> entity)
     {
-        if (!TryComp(entity, out entity.Comp))
+        if (!Resolve(entity, ref entity.Comp))
             return;
 
         var ev = new RefreshStaminaCritThresholdEvent(entity.Comp.BaseCritThreshold);
