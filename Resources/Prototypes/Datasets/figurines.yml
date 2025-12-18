@@ -44,7 +44,7 @@
   id: FigurinesBoxer
   values:
     prefix: figurines-boxer-
-    count: 5
+    count: 6
 
 - type: localizedDataset
   id: FigurinesCaptain
@@ -191,6 +191,12 @@
     count: 9
 
 - type: localizedDataset
+  id: FigurinesAI
+  values:
+    prefix: figurines-AI-
+    count: 7
+
+- type: localizedDataset
   id: FigurinesNukie
   values:
     prefix: figurines-nukie-
@@ -285,3 +291,9 @@
   values:
     prefix: figurines-griffin-
     count: 5
+
+- type: localizedDataset
+  id: FigurinesMechGeneric
+  values:
+    prefix: figurines-mech-generic-
+    count: 4
