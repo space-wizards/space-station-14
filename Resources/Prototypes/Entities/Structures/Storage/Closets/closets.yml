@@ -60,7 +60,7 @@
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: fire
-    stateDoorOpen: fire_open
+    stateDoorOpen: fire_open #I wanted to add fire_door_glow unshaded with a second shaded one over it to achieve a dim-glowing effect like with high-vis, but I don't think I can do that with EntityStorageVisuals
     stateDoorClosed: fire_door
 
 # EOD closet
