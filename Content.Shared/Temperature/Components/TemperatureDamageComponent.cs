@@ -58,7 +58,7 @@ public sealed partial class TemperatureDamageComponent : Component
     /// </summary>
     /// <remarks>
     /// Okay it genuinely reaches this basically immediately for a plasma fire.
-    /// </summary>
+    /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 DamageCap = FixedPoint2.New(8);
 
@@ -66,7 +66,7 @@ public sealed partial class TemperatureDamageComponent : Component
     /// Used to keep track of when damage starts/stops. Useful for logs.
     /// </summary>
     [DataField]
-    public bool TakingDamage = false;
+    public bool TakingDamage;
 
     /// <summary>
     /// The id of the alert thrown when the entity is too hot.

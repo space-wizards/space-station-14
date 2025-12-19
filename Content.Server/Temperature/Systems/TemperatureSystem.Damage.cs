@@ -25,13 +25,13 @@ public sealed partial class TemperatureSystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private EntityQuery<TemperatureDamageComponent> _tempDamageQuery;
-    private EntityQuery<ContainerTemperatureDamageThresholdsComponent> _containerTemperatureQuery;
+    private EntityQuery<ContainerTemperatureComponent> _containerTemperatureQuery;
     private EntityQuery<ThermalRegulatorComponent> _thermalRegulatorQuery;
 
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.
     ///     This is done because both AtmosExposed and Flammable call ChangeHeat in the same tick, meaning
-    ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
+    ///     that we need some mechanism to ensure it doesn't double-dip on damage for both calls.
     /// </summary>
     public HashSet<Entity<TemperatureDamageComponent>> ShouldUpdateDamage = new();
 
@@ -52,10 +52,6 @@ public sealed partial class TemperatureSystem
 
     private void InitializeDamage()
     {
-        base.Initialize();
-
-        UpdatesAfter.Add(typeof(TemperatureSystem));
-
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
 
         SubscribeLocalEvent<TemperatureDamageComponent, OnTemperatureChangeEvent>(EnqueueDamage);
@@ -63,13 +59,11 @@ public sealed partial class TemperatureSystem
 
         // Allows overriding thresholds based on the parent's thresholds.
         SubscribeLocalEvent<TemperatureDamageComponent, EntParentChangedMessage>(OnParentChange);
-        SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentStartup>(
-            OnParentThresholdStartup);
-        SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentShutdown>(
-            OnParentThresholdShutdown);
+        SubscribeLocalEvent<ContainerTemperatureComponent, ComponentStartup>(OnParentThresholdStartup);
+        SubscribeLocalEvent<ContainerTemperatureComponent, ComponentShutdown>(OnParentThresholdShutdown);
 
         _tempDamageQuery = GetEntityQuery<TemperatureDamageComponent>();
-        _containerTemperatureQuery = GetEntityQuery<ContainerTemperatureDamageThresholdsComponent>();
+        _containerTemperatureQuery = GetEntityQuery<ContainerTemperatureComponent>();
         _thermalRegulatorQuery = GetEntityQuery<ThermalRegulatorComponent>();
     }
 
@@ -209,20 +203,20 @@ public sealed partial class TemperatureSystem
             RecursiveThresholdUpdate((entity, entity.Comp, xform));
     }
 
-    private void OnParentThresholdStartup(Entity<ContainerTemperatureDamageThresholdsComponent> entity, ref ComponentStartup args)
+    private void OnParentThresholdStartup(Entity<ContainerTemperatureComponent> entity, ref ComponentStartup args)
     {
         RecursiveThresholdUpdate(entity.Owner);
     }
 
-    private void OnParentThresholdShutdown(Entity<ContainerTemperatureDamageThresholdsComponent> entity, ref ComponentShutdown args)
+    private void OnParentThresholdShutdown(Entity<ContainerTemperatureComponent> entity, ref ComponentShutdown args)
     {
         RecursiveThresholdUpdate(entity.Owner);
     }
 
     /// <summary>
-    /// Recalculate and apply parent thresholds for the root entity and all its descendant.
+    /// Recalculate and apply parent thresholds for the root entity and all its children.
     /// </summary>
-    /// <param name="root"></param>
+    /// <param name="root">The root entity we're currently updating</param>
     private void RecursiveThresholdUpdate(Entity<TemperatureDamageComponent?, TransformComponent?> root)
     {
         RecalculateAndApplyParentThresholds(root);
@@ -238,7 +232,7 @@ public sealed partial class TemperatureSystem
     /// <summary>
     /// Recalculate parent thresholds and apply them on the uid temperature component.
     /// </summary>
-    /// <param name="entity"></param>
+    /// <param name="entity">The entity whose temperature damage thresholds we're updating</param>
     private void RecalculateAndApplyParentThresholds(Entity<TemperatureDamageComponent?> entity)
     {
         if (!_tempDamageQuery.Resolve(entity, ref entity.Comp))
@@ -253,7 +247,7 @@ public sealed partial class TemperatureSystem
     /// Recalculate Parent Heat/Cold DamageThreshold by recursively checking each ancestor and fetching the
     /// maximum HeatDamageThreshold and the minimum ColdDamageThreshold if any exists (aka the best value for each).
     /// </summary>
-    /// <param name="initialParentUid"></param>
+    /// <param name="initialParentUid">parent we start with</param>
     private (float?, float?) RecalculateParentThresholds(EntityUid initialParentUid)
     {
         // Recursively check parents for the best threshold available

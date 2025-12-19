@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.Temperature.Components;
 
 [RegisterComponent]
-public sealed partial class ContainerTemperatureDamageThresholdsComponent: Component
+public sealed partial class ContainerTemperatureComponent: Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float? HeatDamageThreshold;
