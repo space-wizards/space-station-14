@@ -8,19 +8,19 @@ using Content.Client.Items;
 namespace Content.Client.Power.EntitySystems;
 
 /// <summary>
-/// Wires up item status logic for <see cref="PredictedBatteryComponent"/> and <see cref="BatteryStatusControl"/>.
+/// Wires up item status logic for <see cref="BatteryComponent"/> and <see cref="BatteryStatusControl"/>.
 /// Shows battery charge information when examining items with batteries.
 /// </summary>
 public sealed class BatteryItemStatusSystem : EntitySystem
 {
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        Subs.ItemStatus<PredictedBatteryComponent>(entity =>
+        Subs.ItemStatus<BatteryComponent>(entity =>
             new BatteryStatusControl(entity.Owner, EntityManager, _battery, _powerCell));
         Subs.ItemStatus<PowerCellSlotComponent>(entity =>
             new BatteryStatusControl(entity.Owner, EntityManager, _battery, _powerCell));

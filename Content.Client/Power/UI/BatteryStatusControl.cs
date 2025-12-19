@@ -20,14 +20,14 @@ public sealed class BatteryStatusControl : PollingItemStatusControl<BatteryStatu
 {
     private readonly EntityUid _parent;
     private readonly IEntityManager _entityManager;
-    private readonly PredictedBatterySystem _battery;
+    private readonly SharedBatterySystem _battery;
     private readonly PowerCellSystem _powerCell;
     private readonly RichTextLabel _label;
 
     public BatteryStatusControl(
         EntityUid parent,
         IEntityManager entityManager,
-        PredictedBatterySystem battery,
+        SharedBatterySystem battery,
         PowerCellSystem powerCell)
     {
         _parent = parent;
