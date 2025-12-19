@@ -27,7 +27,7 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNotRespondingPopup(args.User);
             _adminLogger.Add(LogType.Action,
-                $"{args.User} was unable to change bolt status on {ent} to [{args.Bolted}] using the Station AI radial it was unpowered.");
+                $"{args.User} was unable to change bolt status on {ent} to [{args.Bolted}] using the Station AI radial because it was unpowered.");
             return;
         }
 
@@ -61,7 +61,7 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNotRespondingPopup(args.User);
             _adminLogger.Add(LogType.Action,
-                $"{args.User} was unable to change emergency access status on {ent} to [{args.EmergencyAccess}] using the Station AI radial it was unpowered.");
+                $"{args.User} was unable to change emergency access status on {ent} to [{args.EmergencyAccess}] using the Station AI radial because it was unpowered.");
             return;
         }
 
