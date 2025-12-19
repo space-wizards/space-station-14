@@ -273,7 +273,7 @@ public sealed partial class SleepingSystem : EntitySystem
     {
         if (args.NewMobState == MobState.Dead)
         {
-            Wake((ent, ent.Comp));
+            RemCompDeferred<SleepingComponent>(ent);
             return;
         }
 
