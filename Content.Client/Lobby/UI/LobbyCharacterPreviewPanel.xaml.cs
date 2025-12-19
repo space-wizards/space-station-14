@@ -103,8 +103,8 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         var spriteView = new SpriteView
         {
             OverrideDirection = Direction.South,
-            Scale = new Vector2(4f, 4f),
-            MaxSize = new Vector2(112, 112),
+            Scale = new Vector2(3f, 3f),
+            MaxSize = new Vector2(96, 96),
             Stretch = SpriteView.StretchMode.Fill,
         };
         spriteView.SetEntity(uid);
