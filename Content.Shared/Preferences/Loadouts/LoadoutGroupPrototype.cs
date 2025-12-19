@@ -13,8 +13,8 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     public string ID { get; private set; } = string.Empty;
 
     /// <inheritdoc />
-    [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<LoadoutGroupPrototype>))]
-    public string[]? Parents { get; }
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<LoadoutGroupPrototype>))]
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
@@ -32,7 +32,7 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     /// </summary>
     [DataField]
     public int MinLimit = 1;
-    
+
     /// <summary>
     /// Number of loadouts that are selected by default.
     /// </summary>

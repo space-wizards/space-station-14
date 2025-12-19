@@ -68,7 +68,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     private readonly ProtoId<JobPrototype> _stationAiJob = "StationAi";
     private readonly EntProtoId _stationAiBrain = "StationAiBrain";
 
-    private readonly ProtoId<AlertPrototype> _batteryAlert = "BorgBattery";
+    private readonly ProtoId<AlertPrototype> _batteryAlert = "AiBattery";
     private readonly ProtoId<AlertPrototype> _damageAlert = "BorgHealth";
 
     public override void Initialize()
@@ -125,7 +125,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         // into an AI core that has a full battery and full integrity.
         if (TryComp<BatteryComponent>(ent, out var battery))
         {
-            _battery.SetCharge(ent, battery.MaxCharge);
+            _battery.SetCharge((ent, battery), battery.MaxCharge);
         }
 
         _damageable.ClearAllDamage(ent.Owner);
