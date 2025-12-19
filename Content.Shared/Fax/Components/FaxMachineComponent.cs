@@ -13,28 +13,24 @@ public sealed partial class FaxMachineComponent : Component
     /// <summary>
     /// Name with which the fax will be visible to others on the network
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("name")]
     public string FaxName { get; set; } = "Unknown";
 
     /// <summary>
     /// Sprite to use when inserting an object.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public string InsertingState = "inserting";
 
     /// <summary>
     /// Device address of fax in network to which data will be send
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("destinationAddress")]
     public string? DestinationFaxAddress { get; set; }
 
     /// <summary>
     /// Name of fax in network to which data will be send
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("destinationName")]
     public string? DestinationFaxName { get; set; }
 
@@ -48,21 +44,18 @@ public sealed partial class FaxMachineComponent : Component
     /// Is fax machine should respond to pings in network
     /// This will make it visible to others on the network
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool ResponsePings { get; set; } = true;
 
     /// <summary>
     /// Should admins be notified on message receive
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool NotifyAdmins { get; set; } = false;
 
     /// <summary>
     /// Should that fax receive nuke codes send by admins. Probably should be captain fax only
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool ReceiveNukeCodes { get; set; } = false;
 
