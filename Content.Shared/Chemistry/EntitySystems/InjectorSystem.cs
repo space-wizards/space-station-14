@@ -18,6 +18,7 @@ using Content.Shared.Standing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
+using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 
@@ -239,14 +240,14 @@ public sealed partial class InjectorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Get the DoAfter Time for Containers.
+    /// Get the DoAfter Time for Mobs.
     /// </summary>
     /// <param name="injector">The injector that is interacting with the mob.</param>
     /// <param name="user">The user using the injector.</param>
     /// <param name="target">The target mob.</param>
     /// <param name="doAfterTime">The duration of the resulting doAfter.</param>
     /// <param name="amount">The amount of the reagents transferred.</param>
-    /// <returns></returns>
+    /// <returns>True if successful, false if not.</returns>
     private bool GetMobsDoAfterTime(Entity<InjectorComponent> injector, EntityUid user, EntityUid target, out TimeSpan doAfterTime, out FixedPoint2 amount)
     {
         doAfterTime = TimeSpan.Zero;
@@ -306,7 +307,7 @@ public sealed partial class InjectorSystem : EntitySystem
     }
 
     /// <summary>
-    /// Get the DoAfter Time for Containers.
+    /// Get the DoAfter Time for Containers and check if it is possible.
     /// </summary>
     /// <param name="injector">The injector that is interacting with the container.</param>
     /// <param name="user">The user using the injector.</param>
@@ -349,6 +350,14 @@ public sealed partial class InjectorSystem : EntitySystem
     #endregion Container Interaction
 
     #region Injecting/Drawing
+    /// <summary>
+    /// Depending on the <see cref="InjectorBehavior"/>, this will deal with the result of the DoAfter and draw/inject accordingly.
+    /// </summary>
+    /// <param name="injector">The injector used.</param>
+    /// <param name="user">The entity using the injector.</param>
+    /// <param name="target">The entity targeted by the user.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException">The injector has a different <see cref="InjectorBehavior"/>.</exception>
     private bool TryUseInjector(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
     {
         if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
@@ -409,6 +418,15 @@ public sealed partial class InjectorSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Attempt to inject the solution of the injector into the target.
+    /// </summary>
+    /// <param name="injector">The injector used.</param>
+    /// <param name="user">The entity using the injector.</param>
+    /// <param name="target">The entity targeted by the user.</param>
+    /// <param name="targetSolution">The solution of the target.</param>
+    /// <param name="asRefill">Whether or not the solution is refillable or injectable.</param>
+    /// <returns></returns>
     private bool TryInject(Entity<InjectorComponent> injector, EntityUid user, EntityUid target, Entity<SolutionComponent> targetSolution, bool asRefill)
     {
         if (!_solutionContainer.ResolveSolution(injector.Owner,
@@ -502,6 +520,14 @@ public sealed partial class InjectorSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Attempt to draw reagents from a container.
+    /// </summary>
+    /// <param name="injector">The injector used.</param>
+    /// <param name="user">The entity using the injector.</param>
+    /// <param name="target">The entity targeted by the user.</param>
+    /// <param name="targetSolution">The solution of the target.</param>
+    /// <returns></returns>
     private bool TryDraw(Entity<InjectorComponent> injector, EntityUid user, Entity<BloodstreamComponent?> target, Entity<SolutionComponent> targetSolution)
     {
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution) || solution.AvailableVolume == 0)
@@ -536,7 +562,7 @@ public sealed partial class InjectorSystem : EntitySystem
         // We have some snowflaked behavior for streams.
         if (target.Comp != null)
         {
-            DrawFromBlood(injector, (target.Owner, target.Comp), injector.Comp.Solution.Value, realTransferAmount, user);
+            DrawFromBlood(injector, user, (target.Owner, target.Comp), injector.Comp.Solution.Value, realTransferAmount);
             return true;
         }
 
@@ -562,11 +588,19 @@ public sealed partial class InjectorSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Attempt to draw blood from a mob.
+    /// </summary>
+    /// <param name="injector">The injector used.</param>
+    /// <param name="user">The entity using the injector.</param>
+    /// <param name="target">The entity targeted by the user.</param>
+    /// <param name="injectorSolution">The solution of the injector.</param>
+    /// <param name="transferAmount">The amount of blood to draw.</param>
     private void DrawFromBlood(Entity<InjectorComponent> injector,
+        EntityUid user,
         Entity<BloodstreamComponent> target,
         Entity<SolutionComponent> injectorSolution,
-        FixedPoint2 transferAmount,
-        EntityUid user)
+        FixedPoint2 transferAmount)
     {
         if (_solutionContainer.ResolveSolution(target.Owner, target.Comp.BloodSolutionName, ref target.Comp.BloodSolution))
         {
@@ -582,6 +616,12 @@ public sealed partial class InjectorSystem : EntitySystem
         AfterDraw(injector, user, target);
     }
 
+    /// <summary>
+    /// This handles logic like DNA and Delays after injection.
+    /// </summary>
+    /// <param name="injector">The injector used.</param>
+    /// <param name="user">The entity using the injector.</param>
+    /// <param name="target">The entity targeted by the user.</param>
     private void AfterInject(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
     {
         // Leave some DNA from the injectee on it
@@ -610,6 +650,12 @@ public sealed partial class InjectorSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// This handles logic like DNA after drawing.
+    /// </summary>
+    /// <param name="injector">The injector used.</param>
+    /// <param name="user">The entity using the injector.</param>
+    /// <param name="target">The entity targeted by the user.</param>
     private void AfterDraw(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
     {
         // Leave some DNA from the drawee on it
@@ -638,8 +684,9 @@ public sealed partial class InjectorSystem : EntitySystem
 
     #region Mode Toggling
     /// <summary>
-    /// Toggle the injector between draw/inject state if applicable.
+    /// Toggle the injector between modes if applicable.
     /// </summary>
+    [PublicAPI]
     public void ToggleMode(Entity<InjectorComponent> injector, EntityUid user, InjectorModePrototype? mode = null)
     {
         if (mode != null)

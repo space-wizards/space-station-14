@@ -55,14 +55,14 @@ public sealed partial class InjectorModePrototype : IPrototype, IInheritingProto
 
 
     /// <summary>
-    /// The number to divide <see cref="DelayPerVolume"/> if the target is downed.
+    /// The number to multiply <see cref="MobTime"/> and <see cref="DelayPerVolume"/> if the target is the downed.
     /// Downed counts as crouching, buckled on a bed or critical.
     /// </summary>
     [DataField]
     public float DownedModifier = 0.5f;
 
     /// <summary>
-    /// The number to multiply <see cref="DelayPerVolume"/> if the target is the user.
+    /// The number to multiply <see cref="MobTime"/> and <see cref="DelayPerVolume"/> if the target is the user.
     /// </summary>
     [DataField]
     public float SelfModifier = 0.5f;

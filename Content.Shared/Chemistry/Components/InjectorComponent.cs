@@ -18,7 +18,7 @@ namespace Content.Shared.Chemistry.Components;
 /// </remarks>
 /// <seealso cref="InjectorSystem"/>
 /// <seealso cref="InjectorBehavior"/>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(InjectorSystem))]
 public sealed partial class InjectorComponent : Component
 {
     /// <summary>
