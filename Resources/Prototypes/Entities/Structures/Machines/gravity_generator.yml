@@ -41,8 +41,8 @@
         layer:
         - WallLayer
   - type: Repairable
-    fuelCost: 10
-    doAfterDelay: 5
+    fuelCost: 15
+    doAfterDelay: 10
   - type: Destructible
     thresholds:
     - trigger:
@@ -79,6 +79,14 @@
     color: "#a8ffd9"
   - type: StaticPrice
     price: 5000
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+    totalIntensity: 300
+    intensitySlope: 5
+    canCreateVacuum: false
+    deleteAfterExplosion: false
+    repeatable: true
 
 - type: entity
   id: GravityGeneratorMini
