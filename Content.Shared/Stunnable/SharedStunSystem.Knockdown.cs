@@ -7,7 +7,6 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Movement.Events;
