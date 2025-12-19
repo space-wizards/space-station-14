@@ -4,7 +4,6 @@ using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GameTicking.Events;
-using Content.Server.Kitchen.Components;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -33,6 +32,7 @@ namespace Content.Server.Nuke;
 public sealed class NukeSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AlertLevelSystem _alertLevel = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosions = default!;
@@ -50,7 +50,6 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -111,7 +110,7 @@ public sealed class NukeSystem : EntitySystem
         code.Code = GenerateRandomNumberString(_globalCodeLength);
 
         var query = EntityQueryEnumerator<NukeComponent>();
-        while (query.MoveNext(out var uid, out var nuke))
+        while (query.MoveNext(out _, out var nuke))
         {
             nuke.Code = code.Code;
         }
@@ -627,8 +626,7 @@ public sealed class NukeSystem : EntitySystem
     /// <summary>
     ///     Force bomb to explode immediately
     /// </summary>
-    public void ActivateBomb(EntityUid uid, NukeComponent? component = null,
-        TransformComponent? transform = null)
+    public void ActivateBomb(EntityUid uid, NukeComponent? component = null, TransformComponent? transform = null)
     {
         if (!Resolve(uid, ref component, ref transform))
             return;
