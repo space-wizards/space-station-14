@@ -38,7 +38,7 @@
   - type: Temperature
     currentTemperature: 310.15
     specificHeat: 42
-  - type: TemperatureDamageThresholds
+  - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: 285
   # Good eatin', you monster.

@@ -11,7 +11,7 @@ namespace Content.Shared.Temperature.Components;
 /// Also handles alerts about being too hot or too cold.
 /// </summary>
 [RegisterComponent]
-public sealed partial class TemperatureDamageThresholdsComponent : Component
+public sealed partial class TemperatureDamageComponent : Component
 {
     /// <summary>
     /// The temperature above which the entity will start taking damage from being too hot.
@@ -26,13 +26,13 @@ public sealed partial class TemperatureDamageThresholdsComponent : Component
     public float ColdDamageThreshold = 260f;
 
     /// <summary>
-    /// Overrides HeatDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
+    /// Overrides HeatDamageThreshold if the entity's within a parent with the ContainerTemperatureDamageThresholdsComponent component.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float? ParentHeatDamageThreshold;
 
     /// <summary>
-    /// Overrides ColdDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
+    /// Overrides ColdDamageThreshold if the entity's within a parent with the ContainerTemperatureDamageThresholdsComponent component.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float? ParentColdDamageThreshold;

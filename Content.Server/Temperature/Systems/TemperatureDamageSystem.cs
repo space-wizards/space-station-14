@@ -29,7 +29,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
     ///     This is done because both AtmosExposed and Flammable call ChangeHeat in the same tick, meaning
     ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
     /// </summary>
-    public HashSet<Entity<TemperatureDamageThresholdsComponent>> ShouldUpdateDamage = new();
+    public HashSet<Entity<TemperatureDamageComponent>> ShouldUpdateDamage = new();
     public static readonly ProtoId<AlertCategoryPrototype> TemperatureAlertCategory = "Temperature";
 
     public override void Initialize()
@@ -40,11 +40,11 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
 
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
 
-        SubscribeLocalEvent<TemperatureDamageThresholdsComponent, OnTemperatureChangeEvent>(EnqueueDamage);
-        SubscribeLocalEvent<TemperatureDamageThresholdsComponent, EntityUnpausedEvent>(OnUnpaused);
+        SubscribeLocalEvent<TemperatureDamageComponent, OnTemperatureChangeEvent>(EnqueueDamage);
+        SubscribeLocalEvent<TemperatureDamageComponent, EntityUnpausedEvent>(OnUnpaused);
 
         // Allows overriding thresholds based on the parent's thresholds.
-        SubscribeLocalEvent<TemperatureDamageThresholdsComponent, EntParentChangedMessage>(OnParentChange);
+        SubscribeLocalEvent<TemperatureDamageComponent, EntParentChangedMessage>(OnParentChange);
         SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentStartup>(
             OnParentThresholdStartup);
         SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentShutdown>(
@@ -72,7 +72,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
         ShouldUpdateDamage.Clear();
     }
 
-    private void ChangeDamage(EntityUid uid, TemperatureDamageThresholdsComponent thresholds, TimeSpan deltaTime)
+    private void ChangeDamage(EntityUid uid, TemperatureDamageComponent thresholds, TimeSpan deltaTime)
     {
         thresholds.LastUpdate = _gameTiming.CurTime;
 
@@ -128,7 +128,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
         float threshold;
         float idealTemp;
 
-        if (!TryComp<TemperatureDamageThresholdsComponent>(uid, out var thresholds))
+        if (!TryComp<TemperatureDamageComponent>(uid, out var thresholds))
         {
             _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
             return;
@@ -179,21 +179,21 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
         }
     }
 
-    private void EnqueueDamage(Entity<TemperatureDamageThresholdsComponent> ent, ref OnTemperatureChangeEvent args)
+    private void EnqueueDamage(Entity<TemperatureDamageComponent> ent, ref OnTemperatureChangeEvent args)
     {
         if (ShouldUpdateDamage.Add(ent) && !ent.Comp.TakingDamage)
             ent.Comp.LastUpdate = _gameTiming.CurTime;
     }
 
-    private void OnUnpaused(Entity<TemperatureDamageThresholdsComponent> ent, ref EntityUnpausedEvent args)
+    private void OnUnpaused(Entity<TemperatureDamageComponent> ent, ref EntityUnpausedEvent args)
     {
         ent.Comp.LastUpdate += args.PausedTime;
     }
 
-    private void OnParentChange(EntityUid uid, TemperatureDamageThresholdsComponent component,
+    private void OnParentChange(EntityUid uid, TemperatureDamageComponent component,
         ref EntParentChangedMessage args)
     {
-        var thresholdsQuery = GetEntityQuery<TemperatureDamageThresholdsComponent>();
+        var thresholdsQuery = GetEntityQuery<TemperatureDamageComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
         var containerThresholdsQuery = GetEntityQuery<ContainerTemperatureDamageThresholdsComponent>();
         // We only need to update thresholds if the thresholds changed for the entity's ancestors.
@@ -211,14 +211,14 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
     private void OnParentThresholdStartup(EntityUid uid, ContainerTemperatureDamageThresholdsComponent component,
         ComponentStartup args)
     {
-        RecursiveThresholdUpdate(uid, GetEntityQuery<TemperatureDamageThresholdsComponent>(), GetEntityQuery<TransformComponent>(),
+        RecursiveThresholdUpdate(uid, GetEntityQuery<TemperatureDamageComponent>(), GetEntityQuery<TransformComponent>(),
             GetEntityQuery<ContainerTemperatureDamageThresholdsComponent>());
     }
 
     private void OnParentThresholdShutdown(EntityUid uid, ContainerTemperatureDamageThresholdsComponent component,
         ComponentShutdown args)
     {
-        RecursiveThresholdUpdate(uid, GetEntityQuery<TemperatureDamageThresholdsComponent>(), GetEntityQuery<TransformComponent>(),
+        RecursiveThresholdUpdate(uid, GetEntityQuery<TemperatureDamageComponent>(), GetEntityQuery<TransformComponent>(),
             GetEntityQuery<ContainerTemperatureDamageThresholdsComponent>());
     }
 
@@ -229,7 +229,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
     /// <param name="thresholdsQuery"></param>
     /// <param name="transformQuery"></param>
     /// <param name="containerThresholdsQuery"></param>
-    private void RecursiveThresholdUpdate(EntityUid root, EntityQuery<TemperatureDamageThresholdsComponent> thresholdsQuery,
+    private void RecursiveThresholdUpdate(EntityUid root, EntityQuery<TemperatureDamageComponent> thresholdsQuery,
         EntityQuery<TransformComponent> transformQuery,
         EntityQuery<ContainerTemperatureDamageThresholdsComponent> containerThresholdsQuery)
     {
@@ -250,7 +250,7 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
     /// <param name="transformQuery"></param>
     /// <param name="containerThresholdsQuery"></param>
     private void RecalculateAndApplyParentThresholds(EntityUid uid,
-        EntityQuery<TemperatureDamageThresholdsComponent> thresholdsQuery, EntityQuery<TransformComponent> transformQuery,
+        EntityQuery<TemperatureDamageComponent> thresholdsQuery, EntityQuery<TransformComponent> transformQuery,
         EntityQuery<ContainerTemperatureDamageThresholdsComponent> containerThresholdsQuery)
     {
         if (!thresholdsQuery.TryGetComponent(uid, out var thresholds))

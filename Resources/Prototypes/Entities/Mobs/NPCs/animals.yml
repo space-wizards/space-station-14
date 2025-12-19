@@ -1612,7 +1612,7 @@
   - type: Temperature
     currentTemperature: 310.15
     specificHeat: 42
-  - type: TemperatureDamageThresholds
+  - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: 285
   - type: Sprite
@@ -2371,7 +2371,7 @@
   - type: Temperature
     currentTemperature: 310.15
     specificHeat: 46
-  - type: TemperatureDamageThresholds
+  - type: TemperatureDamage
     heatDamageThreshold: 335
     coldDamageThreshold: 230
     coldDamage:
@@ -3059,7 +3059,7 @@
   - type: Temperature
     currentTemperature: 310.15
     specificHeat: 42
-  - type: TemperatureDamageThresholds
+  - type: TemperatureDamage
     heatDamageThreshold: 4000 #They come from hell, so..
     coldDamageThreshold: 260
     coldDamage:
@@ -3259,7 +3259,7 @@
       Dead:
         Base: spacecat_dead
   - type: Temperature
-  - type: TemperatureDamageThresholds
+  - type: TemperatureDamage
     heatDamageThreshold: 423
     coldDamageThreshold: 0
   - type: Tag

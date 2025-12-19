@@ -108,7 +108,7 @@
     proto: alien
   - type: Temperature
     currentTemperature: 310.15
-  - type: TemperatureDamageThresholds
+  - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: -150
   - type: Tag
@@ -526,7 +526,7 @@
     proto: alien
   - type: Temperature
     currentTemperature: 310.15
-  - type: TemperatureDamageThresholds
+  - type: TemperatureDamage
     heatDamageThreshold: 360
     coldDamageThreshold: -150
   - type: NoSlip

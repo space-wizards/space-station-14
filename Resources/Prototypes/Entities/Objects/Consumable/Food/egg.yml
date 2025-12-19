@@ -61,7 +61,7 @@
   # all below are for egg cooking/exploding
   - type: AtmosExposed
   - type: Temperature
-  - type: TemperatureDamageThresholds
+  - type: TemperatureDamage
   - type: InternalTemperature
     # ~1mm shell and ~1cm of albumen
     thickness: 0.011
@@ -135,4 +135,4 @@
   - type: Temperature
     # preserve temperature from the boiling step
     currentTemperature: 344
-  - type: TemperatureDamageThresholds
+  - type: TemperatureDamage
