@@ -1,43 +1,47 @@
 - type: entity
-  id: CrateScienceBiosuit
   parent: CrateScienceSecure
+  id: CrateScienceBiosuit
   name: scientist bio suit crate
   description: Contains 2 biohazard suits to ensure that no disease will distract you from doing science. Requires Science access to open.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterBioScientist
-        amount: 2
-      - id: ClothingHeadHatHoodBioScientist
-        amount: 2
-      - id: ClothingMaskSterile
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: FillBiohazardGearScience
+          rolls: 2
+        - id: ClothingMaskSterile
+          amount: 2
 
 - type: entity
-  id: CrateCrewMonitoring
   parent: CrateScienceSecure
+  id: CrateCrewMonitoring
   name: crew monitoring crate
   description: Contains a flatpack of a crew monitoring server and a few crew monitoring computers. Requires Science access to open.
   components:
-  - type: StorageFill
-    contents:
-    - id: CrewMonitoringServerFlatpack
-    - id: CrewMonitoringComputerFlatpack
-      amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: CrewMonitoringServerFlatpack
+        - id: CrewMonitoringComputerFlatpack
+          amount: 3
 
 - type: entity
-  id: CrateStationAiCore
   parent: CrateScienceSecure
+  id: CrateStationAiCore
   name: station AI core crate
   description: Contains the components for constructing a station AI core. Positronic brain not included. Requires Science access to open.
   components:
-  - type: StorageFill
-    contents:
-    - id: StationAiCoreElectronics
-    - id: Intellicard
-    - id: SheetPlasteel1
-      amount: 4
-    - id: CableApcStack1
-      amount: 1
-    - id: SheetRGlass1
-      amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: StationAiCoreElectronics
+        - id: Intellicard
+        - id: SheetPlasteel1
+          amount: 4
+        - id: CableApcStack1
+        - id: SheetRGlass1
+          amount: 2

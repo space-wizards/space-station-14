@@ -36,11 +36,13 @@
       0: Alive
       80: Dead
   - type: Stamina
-    critThreshold: 150
+    baseCritThreshold: 150
   - type: MovementAlwaysTouching
   - type: Bloodstream
-    bloodMaxVolume: 300
-    bloodReagent: Cryoxadone
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 300
   - type: CombatMode
   - type: Temperature
     heatDamageThreshold: 500
@@ -155,7 +157,7 @@
       Dead:
         Base: kangaroo-space-dead
   - type: Stamina
-    critThreshold: 180
+    baseCritThreshold: 180
   - type: Inventory
     speciesId: kangaroo
     templateId: spacekangaroo
@@ -200,7 +202,7 @@
       0: Alive
       45: Dead
   - type: Stamina
-    critThreshold: 150
+    baseCritThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:
@@ -216,8 +218,10 @@
       amount: 1
       prob: 0.5
   - type: Bloodstream
-    bloodMaxVolume: 250
-    bloodReagent: Cryoxadone
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 250
   - type: Fixtures
     fixtures:
       fix1:
@@ -301,7 +305,7 @@
         0: Alive
         45: Dead
     - type: Stamina
-      critThreshold: 150
+      baseCritThreshold: 150
     - type: DamageStateVisuals
       states:
         Alive:
@@ -319,8 +323,10 @@
           amount: 1
           prob: 0.3
     - type: Bloodstream
-      bloodMaxVolume: 200
-      bloodReagent: Cryoxadone
+      bloodReferenceSolution:
+        reagents:
+        - ReagentId: Cryoxadone
+          Quantity: 200
     - type: Fixtures
       fixtures:
         fix1:
@@ -359,7 +365,7 @@
       interactFailureString: petting-failure-generic
     - type: PointLight
       radius: 1.1
-      energy: 1.5
+      energy: 2.7
       color: "#4faffb"
     - type: Stealth
       enabledOnDeath: false
@@ -493,8 +499,10 @@
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
-    bloodMaxVolume: 30
-    bloodReagent: Cryoxadone
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Cryoxadone
+        Quantity: 30
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
@@ -512,7 +520,6 @@
       methods: [Touch, Ingestion, Injection]
       effects:
       - !type:HealthChange
-        scaling: true
         damage:
           types:
             Caustic: 1
