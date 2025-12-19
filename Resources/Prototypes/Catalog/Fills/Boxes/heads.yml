@@ -15,8 +15,6 @@
   id: BoxCECircuitboards
   name: engineering circuit tote
   components:
-  - type: Label
-    currentLabel: chief engineer
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
@@ -99,8 +97,6 @@
   id: BoxQMStamps
   name: quartermaster's stamp box
   components:
-  - type: Label
-    currentLabel: quartermaster
   - type: EntityTableContainerFill
     containers:
       storagebase: !type:AllSelector
