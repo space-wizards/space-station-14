@@ -76,13 +76,11 @@ public abstract partial class SharedPuddleSystem
 
                 // TODO: Make this an event subscription once spilling puddles is predicted.
                 // Injectors should not be hardcoded here.
-                if (TryComp<InjectorComponent>(entity, out var injectorComp))
+                if (TryComp<InjectorComponent>(entity, out var injectorComp)
+                    && _prototypeManager.Resolve(injectorComp.ActiveModeProtoId, out var activeMode))
                 {
-                    if (_prototypeManager.Resolve(injectorComp.ActiveModeProtoId, out var activeMode))
-                    {
-                        activeMode.Behavior = InjectorBehavior.Draw;
-                        Dirty(entity, injectorComp);
-                    }
+                    activeMode.Behavior = InjectorBehavior.Draw;
+                    Dirty(entity, injectorComp);
                 }
             };
         }

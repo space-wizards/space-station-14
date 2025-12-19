@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Prototypes;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -78,7 +79,7 @@ public sealed partial class InjectorComponent : Component
     /// A null ReagentWhitelist indicates all reagents are allowed.
     /// </summary>
     [DataField]
-    public List<ProtoId<ReagentPrototype>>? ReagentWhitelist = null;
+    public List<ProtoId<ReagentPrototype>>? ReagentWhitelist;
 
     #region Arguments for injection doafter
 
@@ -86,11 +87,11 @@ public sealed partial class InjectorComponent : Component
     [DataField]
     public bool NeedHand = true;
 
-    /// <inheritdoc cref="DoAfterArgs.BreakOnHandChange">
+    /// <inheritdoc cref="DoAfterArgs.BreakOnHandChange"/>
     [DataField]
     public bool BreakOnHandChange = true;
 
-    /// <inheritdoc cref="DoAfterArgs.MovementThreshold">
+    /// <inheritdoc cref="DoAfterArgs.MovementThreshold"/>
     [DataField]
     public float MovementThreshold = 0.1f;
 

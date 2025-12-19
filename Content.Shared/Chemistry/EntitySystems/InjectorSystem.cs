@@ -11,7 +11,6 @@ using Content.Shared.Forensics.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -169,8 +168,6 @@ public sealed partial class InjectorSystem : EntitySystem
             Priority = priority,
         };
 
-        priority -= 1;
-
         args.Verbs.Add(toggleModeVerb);
     }
     #endregion Events Handling
@@ -250,8 +247,7 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <param name="doAfterTime">The duration of the resulting doAfter.</param>
     /// <param name="amount">The amount of the reagents transferred.</param>
     /// <returns></returns>
-    private bool GetMobsDoAfterTime(Entity<InjectorComponent> injector, EntityUid user, EntityUid target,
-        out TimeSpan doAfterTime, out FixedPoint2 amount)
+    private bool GetMobsDoAfterTime(Entity<InjectorComponent> injector, EntityUid user, EntityUid target, out TimeSpan doAfterTime, out FixedPoint2 amount)
     {
         doAfterTime = TimeSpan.Zero;
         amount = FixedPoint2.Zero;
@@ -393,13 +389,14 @@ public sealed partial class InjectorSystem : EntitySystem
             }
             case InjectorBehavior.Dynamic:
             {
-                if (HasComp<BloodstreamComponent>(target) // If it's a mob, inject. We're using injectableSolution so I don't have to code a sole method for injecting into bloodstreams.
+                // If it's a mob, inject. We're using injectableSolution so I don't have to code a sole method for injecting into bloodstreams.
+                if (HasComp<BloodstreamComponent>(target)
                     && _solutionContainer.TryGetInjectableSolution(target, out var injectableSolution, out _))
                 {
                     return TryInject(injector, user, target, injectableSolution.Value, false);
                 }
 
-                // Draw from an object (food, beaker, etc)
+                // Draw from an object (food, beaker, etc.)
                 if (isOpenOrIgnored && _solutionContainer.TryGetDrawableSolution(target, out var drawableSolution, out _))
                     return TryDraw(injector, user, target, drawableSolution.Value);
                 break;
@@ -412,8 +409,7 @@ public sealed partial class InjectorSystem : EntitySystem
         return false;
     }
 
-    private bool TryInject(Entity<InjectorComponent> injector, EntityUid user, EntityUid target,
-        Entity<SolutionComponent> targetSolution, bool asRefill)
+    private bool TryInject(Entity<InjectorComponent> injector, EntityUid user, EntityUid target, Entity<SolutionComponent> targetSolution, bool asRefill)
     {
         if (!_solutionContainer.ResolveSolution(injector.Owner,
                 injector.Comp.SolutionName,
@@ -432,7 +428,8 @@ public sealed partial class InjectorSystem : EntitySystem
         RaiseLocalEvent(user, selfEv);
 
         if (selfEv.Cancelled)
-        { // Clowns will now also fumble Syringes.
+        {
+            // Clowns will now also fumble Syringes.
             if (selfEv.OverrideMessage != null)
                 _popup.PopupPredicted(selfEv.OverrideMessage, user, user);
             return true;
@@ -440,7 +437,7 @@ public sealed partial class InjectorSystem : EntitySystem
 
         target = selfEv.TargetGettingInjected;
 
-        var ev = new TargetBeforeInjectEvent(user, injector, target, null);
+        var ev = new TargetBeforeInjectEvent(user, injector, target);
         RaiseLocalEvent(target, ref ev);
 
         // Jugsuit blocking Hyposprays when
@@ -488,11 +485,7 @@ public sealed partial class InjectorSystem : EntitySystem
         else if (ev.OverrideMessage != null)
             msgSuccess = ev.OverrideMessage;
 
-        _popup.PopupClient(
-            Loc.GetString(msgSuccess,
-                ("amount", removedSolution.Volume),
-                ("target", Identity.Entity(target, EntityManager))),
-            target, user);
+        _popup.PopupClient(Loc.GetString(msgSuccess, ("amount", removedSolution.Volume), ("target", Identity.Entity(target, EntityManager))), target, user);
 
         // it is IMPERATIVE that when an injector is instant, that it has a pop-up.
         if (activeMode.InjectPopupTarget != null && target != user)
@@ -509,11 +502,9 @@ public sealed partial class InjectorSystem : EntitySystem
         return true;
     }
 
-    private bool TryDraw(Entity<InjectorComponent> injector, EntityUid user, Entity<BloodstreamComponent?> target,
-        Entity<SolutionComponent> targetSolution)
+    private bool TryDraw(Entity<InjectorComponent> injector, EntityUid user, Entity<BloodstreamComponent?> target, Entity<SolutionComponent> targetSolution)
     {
-        if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution,
-                out var solution) || solution.AvailableVolume == 0)
+        if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution) || solution.AvailableVolume == 0)
         {
             _popup.PopupClient("injector-component-cannot-toggle-draw-message", user, user);
             return false;
@@ -571,11 +562,13 @@ public sealed partial class InjectorSystem : EntitySystem
         return true;
     }
 
-    private void DrawFromBlood(Entity<InjectorComponent> injector, Entity<BloodstreamComponent> target,
-        Entity<SolutionComponent> injectorSolution, FixedPoint2 transferAmount, EntityUid user)
+    private void DrawFromBlood(Entity<InjectorComponent> injector,
+        Entity<BloodstreamComponent> target,
+        Entity<SolutionComponent> injectorSolution,
+        FixedPoint2 transferAmount,
+        EntityUid user)
     {
-        if (_solutionContainer.ResolveSolution(target.Owner, target.Comp.BloodSolutionName,
-                ref target.Comp.BloodSolution))
+        if (_solutionContainer.ResolveSolution(target.Owner, target.Comp.BloodSolutionName, ref target.Comp.BloodSolution))
         {
             var bloodTemp = _solutionContainer.SplitSolution(target.Comp.BloodSolution.Value, transferAmount);
             _solutionContainer.TryAddSolution(injectorSolution, bloodTemp);
