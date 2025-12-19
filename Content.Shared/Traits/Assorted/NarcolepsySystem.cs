@@ -53,7 +53,7 @@ public sealed class NarcolepsySystem : EntitySystem
                 continue;
 
             // TODO: Replace with RandomPredicted once the engine PR is merged
-            var seed = SharedRandomExtensions.HashCodeCombine(new() { (int)_timing.CurTick.Value, GetNetEntity(uid).Id });
+            var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(uid).Id);
             var rand = new System.Random(seed);
 
             var duration = narcolepsy.MinDurationOfIncident + (narcolepsy.MaxDurationOfIncident - narcolepsy.MinDurationOfIncident) * rand.NextDouble();

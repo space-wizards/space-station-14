@@ -335,8 +335,8 @@ public abstract class SharedInjectorSystem : EntitySystem
         EntityUid user)
     {
         // Get transfer amount. May be smaller than _transferAmount if not enough room
-        if (!SolutionContainer.ResolveSolution(target.Owner, target.Comp.ChemicalSolutionName,
-                ref target.Comp.ChemicalSolution, out var chemSolution))
+        if (!SolutionContainer.ResolveSolution(target.Owner, target.Comp.BloodSolutionName,
+                ref target.Comp.BloodSolution, out var bloodSolution))
         {
             LocId msg = target.Owner == user ? "injector-component-cannot-inject-message-self" : "injector-component-cannot-inject-message";
             _popup.PopupClient(
@@ -346,7 +346,7 @@ public abstract class SharedInjectorSystem : EntitySystem
             return false;
         }
 
-        var realTransferAmount = FixedPoint2.Min(injector.Comp.CurrentTransferAmount, chemSolution.AvailableVolume);
+        var realTransferAmount = FixedPoint2.Min(injector.Comp.CurrentTransferAmount, bloodSolution.AvailableVolume);
         if (realTransferAmount <= 0)
         {
             LocId msg = target.Owner == user ? "injector-component-cannot-inject-message-self" : "injector-component-cannot-inject-message";
@@ -358,9 +358,9 @@ public abstract class SharedInjectorSystem : EntitySystem
         }
 
         // Move units from attackSolution to targetSolution
-        var removedSolution = SolutionContainer.SplitSolution(target.Comp.ChemicalSolution.Value, realTransferAmount);
+        var removedSolution = SolutionContainer.SplitSolution(target.Comp.BloodSolution.Value, realTransferAmount);
 
-        _blood.TryAddToChemicals(target.AsNullable(), removedSolution);
+        _blood.TryAddToBloodstream(target.AsNullable(), removedSolution);
 
         _reactiveSystem.DoEntityReaction(target, removedSolution, ReactionMethod.Injection);
 
@@ -438,20 +438,10 @@ public abstract class SharedInjectorSystem : EntitySystem
     private void DrawFromBlood(Entity<InjectorComponent> injector, Entity<BloodstreamComponent> target,
         Entity<SolutionComponent> injectorSolution, FixedPoint2 transferAmount, EntityUid user)
     {
-        var drawAmount = (float)transferAmount;
-
-        if (SolutionContainer.ResolveSolution(target.Owner, target.Comp.ChemicalSolutionName,
-                ref target.Comp.ChemicalSolution))
-        {
-            var chemTemp = SolutionContainer.SplitSolution(target.Comp.ChemicalSolution.Value, drawAmount * 0.15f);
-            SolutionContainer.TryAddSolution(injectorSolution, chemTemp);
-            drawAmount -= (float)chemTemp.Volume;
-        }
-
         if (SolutionContainer.ResolveSolution(target.Owner, target.Comp.BloodSolutionName,
                 ref target.Comp.BloodSolution))
         {
-            var bloodTemp = SolutionContainer.SplitSolution(target.Comp.BloodSolution.Value, drawAmount);
+            var bloodTemp = SolutionContainer.SplitSolution(target.Comp.BloodSolution.Value, transferAmount);
             SolutionContainer.TryAddSolution(injectorSolution, bloodTemp);
         }
 

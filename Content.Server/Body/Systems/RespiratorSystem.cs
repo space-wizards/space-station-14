@@ -12,13 +12,13 @@ using Content.Shared.Chat;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.EntityConditions;
 using Content.Shared.EntityConditions.Conditions.Body;
 using Content.Shared.EntityEffects;
-using Content.Shared.EntityEffects.Effects;
 using Content.Shared.EntityEffects.Effects.Body;
+using Content.Shared.EntityEffects.Effects.Damage;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -367,7 +367,7 @@ public sealed class RespiratorSystem : EntitySystem
         if (ent.Comp.SuffocationCycles == 2)
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} started suffocating");
 
-        _damageableSys.TryChangeDamage(ent, ent.Comp.Damage, interruptsDoAfters: false);
+        _damageableSys.ChangeDamage(ent.Owner, ent.Comp.Damage, interruptsDoAfters: false, ignoreResistances: true);
 
         if (ent.Comp.SuffocationCycles < ent.Comp.SuffocationCycleThreshold)
             return;
@@ -381,7 +381,7 @@ public sealed class RespiratorSystem : EntitySystem
         if (ent.Comp.SuffocationCycles >= 2)
             _adminLogger.Add(LogType.Asphyxiation, $"{ToPrettyString(ent):entity} stopped suffocating");
 
-        _damageableSys.TryChangeDamage(ent, ent.Comp.DamageRecovery);
+        _damageableSys.ChangeDamage(ent.Owner, ent.Comp.DamageRecovery);
 
         var ev = new StopSuffocatingEvent();
         RaiseLocalEvent(ent, ref ev);
