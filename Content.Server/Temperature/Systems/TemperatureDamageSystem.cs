@@ -5,6 +5,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
+using Content.Shared.Rounding;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Prototypes;
@@ -30,7 +31,21 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
     ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
     /// </summary>
     public HashSet<Entity<TemperatureDamageComponent>> ShouldUpdateDamage = new();
+
+    /// <summary>
+    ///
+    /// </summary>
     public static readonly ProtoId<AlertCategoryPrototype> TemperatureAlertCategory = "Temperature";
+
+    /// <summary>
+    /// The maximum severity applicable to temperature alerts.
+    /// </summary>
+    public static readonly short MaxTemperatureAlertSeverity = 3;
+
+    /// <summary>
+    /// On a scale of 0. to 1. where 0. is the ideal temperature and 1. is a temperature damage threshold this is the point where the component starts raising temperature alerts.
+    /// </summary>
+    public static readonly float MinAlertTemperatureScale = 0.33f;
 
     public override void Initialize()
     {
@@ -156,27 +171,15 @@ public sealed partial class TemperatureDamageSystem : EntitySystem
             threshold = thresholds.HeatDamageThreshold;
         }
 
-        // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
+        // Calculates a scale where 0.0 is the ideal temperature and 1.0 is where temperature damage begins
         // The cold and hot scales will differ in their range if the ideal temperature is not exactly halfway between the thresholds
-        var tempScale = (args.CurrentTemperature - threshold) / (idealTemp - threshold);
-        switch (tempScale)
-        {
-            case <= 0f:
-                _alerts.ShowAlert(uid, type, 3);
-                break;
+        var tempScale = (args.CurrentTemperature - idealTemp) / (threshold - idealTemp);
+        var alertLevel = (short)ContentHelpers.RoundToLevels(tempScale - MinAlertTemperatureScale, 1.00f - MinAlertTemperatureScale, MaxTemperatureAlertSeverity + 1);
 
-            case <= 0.4f:
-                _alerts.ShowAlert(uid, type, 2);
-                break;
-
-            case <= 0.66f:
-                _alerts.ShowAlert(uid, type, 1);
-                break;
-
-            case > 0.66f:
-                _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
-                break;
-        }
+        if (alertLevel > 0)
+            _alerts.ShowAlert(uid, type, alertLevel);
+        else
+            _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
     }
 
     private void EnqueueDamage(Entity<TemperatureDamageComponent> ent, ref OnTemperatureChangeEvent args)
