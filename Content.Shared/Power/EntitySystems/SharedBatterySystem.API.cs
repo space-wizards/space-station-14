@@ -144,7 +144,7 @@ public abstract partial class SharedBatterySystem
 
         var charge = GetCharge(ent);
 
-        if (charge == ent.Comp.MaxCharge)
+        if (MathHelper.CloseTo(charge, ent.Comp.MaxCharge))
             newState = BatteryState.Full;
         else if (charge == 0f)
             newState = BatteryState.Empty;
@@ -219,7 +219,6 @@ public abstract partial class SharedBatterySystem
 
         return (int)(ent.Comp.MaxCharge / cost);
     }
-
 
     /// <summary>
     /// Refreshes the battery's current charge rate by raising a <see cref="RefreshChargeRateEvent"/>.
