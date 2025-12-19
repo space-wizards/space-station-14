@@ -1,58 +1,4 @@
 ﻿Entries:
-- author: SuperGDPWYL
-  changes:
-  - message: The Warden now starts with a network configurator in their locker.
-    type: Add
-  id: 8814
-  time: '2025-07-28T16:09:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39254
-- author: TrixxedHeart
-  changes:
-  - message: Several strange sprite issues with Vox have been fixed, most notably
-      jumpsuits and many neck items overlapping the face, as well as a layering issue
-      where their tank would appear over their hair.
-    type: Fix
-  id: 8815
-  time: '2025-07-28T21:28:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39219
-- author: K-Dynamic
-  changes:
-  - message: Quartermaster job and ID icons are now based on Cargo Technicians.
-    type: Tweak
-  id: 8816
-  time: '2025-07-29T07:34:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39259
-- author: Alkheemist
-  changes:
-  - message: Protected Grids can now again have their hull and tiles repaired (Evac,
-      ATS, etc)
-    type: Fix
-  - message: Protected Grids can no longer be expanded outside of their original size.
-    type: Fix
-  id: 8817
-  time: '2025-07-29T12:01:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39271
-- author: Admiral-Obvious-001
-  changes:
-  - message: Several advanced chemicals now act slower, but with raised OD thresholds
-      and lowered OD damage. The healing per unit remains largely the same.
-    type: Tweak
-  - message: Bicaradine no longer makes razorium when mixed with advanced brute chems.
-      Advanced brute chems still mix and create razorium when combined.
-    type: Tweak
-  id: 8818
-  time: '2025-07-29T18:52:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38811
-- author: aada
-  changes:
-  - message: Lipolicide now continues to poison at 0 hunger.
-    type: Fix
-  - message: Tricordrazine now also heals at exactly 50 damage instead of needing
-      to be below 50. Similar thresholds on other reagents tweaked the same.
-    type: Tweak
-  id: 8819
-  time: '2025-07-30T06:44:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36289
 - author: Disp-Dev
   changes:
   - message: A new recipe has been added, moth-edible cotton cakes.
@@ -3920,3 +3866,54 @@
   id: 9313
   time: '2025-12-18T09:25:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41891
+- author: Hitlinemoss
+  changes:
+  - message: The wizard's grimoire now has a proper description.
+    type: Tweak
+  id: 9314
+  time: '2025-12-18T19:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41900
+- author: SlamBamActionman
+  changes:
+  - message: Hyperzine now provides a 1.5x max stamina modifier for its duration.
+    type: Tweak
+  id: 9315
+  time: '2025-12-18T19:53:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41902
+- author: Unkn0wnGh0st333
+  changes:
+  - message: Syndicate Wall Lockers and Secure Crates have been added! Mappers Rejoice!
+    type: Add
+  - message: Armory lockers have changed name to Blood-Red Lockers and locked variants
+      are now actually locked behind syndicate access.
+    type: Tweak
+  id: 9316
+  time: '2025-12-18T20:55:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33251
+- author: Empoleon4444
+  changes:
+  - message: Changed Ghost Role Raffles to be shorter overall
+    type: Tweak
+  id: 9317
+  time: '2025-12-18T21:08:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33157
+- author: Fildrance
+  changes:
+  - message: reroll feature for RnD research console
+    type: Add
+  id: 9318
+  time: '2025-12-18T21:22:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32931
+- author: Hitlinemoss
+  changes:
+  - message: Small cardboard boxes have been added (2x2 instead of 3x3), and can be
+      made in the crafting menu for 1 cardboard each.
+    type: Add
+  - message: Cardboard boxes now require 2 cardboard to make (from 1).
+    type: Tweak
+  - message: The names and descriptions of stamp boxes and circuit totes have been
+      adjusted.
+    type: Tweak
+  id: 9319
+  time: '2025-12-19T07:04:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41335
