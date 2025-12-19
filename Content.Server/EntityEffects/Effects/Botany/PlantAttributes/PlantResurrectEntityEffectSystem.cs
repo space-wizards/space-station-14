@@ -20,7 +20,8 @@ public sealed partial class PlantResurrectEntityEffectSystem : EntityEffectSyste
         if (entity.Comp.Health <= 0) //so that it doesn't immediately die again
         {
             entity.Comp.Health = 1;
-            entity.Comp.Seed.Seedless = true; // revival makes plant sterile
+            if (args.Effect.ReviveSeedless)
+                entity.Comp.Seed.Seedless = true; // revival makes plant sterile
         }
         _plantHolder.CheckHealth(entity, entity.Comp);
         entity.Comp.UpdateSpriteAfterUpdate = true;
