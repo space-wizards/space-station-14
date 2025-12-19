@@ -235,7 +235,7 @@ public sealed partial class TemperatureSystem
     /// <param name="entity">The entity whose temperature damage thresholds we're updating</param>
     private void RecalculateAndApplyParentThresholds(Entity<TemperatureDamageComponent?> entity)
     {
-        if (!_tempDamageQuery.Resolve(entity, ref entity.Comp))
+        if (!_tempDamageQuery.Resolve(entity, ref entity.Comp, logMissing: false))
             return;
 
         var newThresholds = RecalculateParentThresholds(Transform(entity).ParentUid);
