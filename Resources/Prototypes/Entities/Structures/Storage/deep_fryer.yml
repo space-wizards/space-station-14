@@ -2,7 +2,7 @@
   id: DeepFryer
   parent: BaseMachinePowered
   name: deep fryer
-  description: The great greasy enabler of all things fast food. Somehow, using this never seems to end well...
+  description: The great greasy enabler of all things fast food. With a little Oil, anything can be fried...
   placement:
     mode: SnapgridCenter
   components:
