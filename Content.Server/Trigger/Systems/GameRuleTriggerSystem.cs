@@ -6,10 +6,7 @@ using Content.Shared.Trigger.Components.Effects;
 
 namespace Content.Server.Trigger.Systems;
 
-/// <summary>
-/// Trigger system for game rules.
-/// </summary>
-public sealed class GameRuleTriggerSystem : EntitySystem
+public sealed class AddGameRuleOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
