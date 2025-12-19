@@ -1150,7 +1150,6 @@
         maxAmount: 5
         maxRange: 5
       spawns:
-      - PresentRandomUnsafe
       - PresentRandom
       - PresentRandomCoal
       - PresentRandomCash
