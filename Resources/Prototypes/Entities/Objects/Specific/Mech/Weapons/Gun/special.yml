@@ -7,7 +7,7 @@
   components:
   - type: Sprite
     state: mecha_mousetrapmrtr
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 300
     startingCharge: 300
   - type: Gun
@@ -38,7 +38,7 @@
   components:
   - type: Sprite
     state: mecha_bananamrtr
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 300
     startingCharge: 300
   - type: Gun

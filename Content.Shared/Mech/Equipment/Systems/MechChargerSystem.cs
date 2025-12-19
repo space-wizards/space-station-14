@@ -12,7 +12,7 @@ namespace Content.Shared.Mech.Equipment.Systems;
 /// </summary>
 public sealed class MechChargerSystem : EntitySystem
 {
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -49,7 +49,7 @@ public sealed class MechChargerSystem : EntitySystem
                 if (_whitelist.IsWhitelistFail(charger.Whitelist, equipment))
                     continue;
 
-                if (!TryComp<PredictedBatteryComponent>(equipment, out var equipmentBattery))
+                if (!TryComp<BatteryComponent>(equipment, out var equipmentBattery))
                     continue;
 
                 var equipmentCharge = _battery.GetCharge((equipment, equipmentBattery));

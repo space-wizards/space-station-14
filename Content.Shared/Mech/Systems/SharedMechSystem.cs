@@ -65,7 +65,7 @@ public abstract partial class SharedMechSystem : EntitySystem
     [Dependency] private readonly MechLockSystem _mechLock = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _material = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;

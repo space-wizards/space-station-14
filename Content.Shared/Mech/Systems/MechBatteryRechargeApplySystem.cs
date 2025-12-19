@@ -1,6 +1,7 @@
 using Content.Shared.Power.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.Mech.Components;
+using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.Mech.Systems;
 
@@ -11,12 +12,13 @@ namespace Content.Shared.Mech.Systems;
 public sealed partial class MechBatteryRechargeApplySystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
 
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<MechComponent, MechEnergyAccumulatorComponent>();
-        while (query.MoveNext(out var mechUid, out var mech, out var acc))
+        while (query.MoveNext(out var mechUid, out var _, out var acc))
         {
             if (!_powerCell.TryGetBatteryFromSlot(mechUid, out var mechBattery))
             {
@@ -28,12 +30,11 @@ public sealed partial class MechBatteryRechargeApplySystem : EntitySystem
             acc.PendingRechargeRate = 0f;
 
             var self = EnsureComp<BatterySelfRechargerComponent>(mechBattery.Value);
-            var newAuto = total > 0f;
-            var newRate = newAuto ? total : 0f;
-            if (self.AutoRecharge != newAuto || !MathHelper.CloseTo(self.AutoRechargeRate, newRate))
+            if (!MathHelper.CloseTo(self.AutoRechargeRate, total))
             {
-                self.AutoRecharge = newAuto;
-                self.AutoRechargeRate = newRate;
+                self.AutoRechargeRate = total;
+                Dirty(mechBattery.Value, self);
+                _battery.RefreshChargeRate((mechBattery.Value, mechBattery.Value));
             }
         }
     }

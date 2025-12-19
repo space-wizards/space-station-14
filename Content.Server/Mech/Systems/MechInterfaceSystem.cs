@@ -25,7 +25,7 @@ namespace Content.Server.Mech.Systems;
 public sealed class MechInterfaceSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = null!;
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = null!;
     [Dependency] private readonly MechLockSystem _mechLock = null!;
     [Dependency] private readonly ContainerSystem _container = null!;

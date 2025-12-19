@@ -8,7 +8,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_pulse
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 500
     startingCharge: 500
   - type: Gun
@@ -34,7 +34,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_laser
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 250
     startingCharge: 250
   - type: Gun
@@ -60,7 +60,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_laser
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 250
     startingCharge: 250
   - type: Gun
@@ -86,7 +86,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_laser
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 250
     startingCharge: 250
   - type: Gun
@@ -112,7 +112,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_wholegen
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 250
     startingCharge: 250
   - type: Gun
@@ -142,7 +142,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_disabler
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 15
     startingCharge: 15
   - type: Gun
@@ -168,7 +168,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_taser
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 500
     startingCharge: 500
   - type: Gun
@@ -194,7 +194,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_scatter
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 125
     startingCharge: 125
   - type: Gun
@@ -220,7 +220,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_carbine
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 250
     startingCharge: 250
   - type: Gun
@@ -246,7 +246,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_uac2
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 200
     startingCharge: 200
   - type: Gun
@@ -272,7 +272,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_missilerack_six
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 150
     startingCharge: 150
   - type: Gun
@@ -298,7 +298,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_missilerack
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 800
     startingCharge: 800
   - type: Gun
@@ -324,7 +324,7 @@
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_grenadelnchr
-  - type: PredictedBattery
+  - type: Battery
     maxCharge: 300
     startingCharge: 300
   - type: Gun

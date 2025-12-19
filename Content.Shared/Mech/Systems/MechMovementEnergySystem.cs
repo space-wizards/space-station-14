@@ -16,7 +16,7 @@ public sealed class MechMovementEnergySystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedMechSystem _mech = default!;
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
 
     private readonly HashSet<EntityUid> _activeMechs = [];
