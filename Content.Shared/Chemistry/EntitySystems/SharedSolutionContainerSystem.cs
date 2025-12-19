@@ -12,6 +12,9 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Localizations;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -61,14 +64,15 @@ public partial record struct SolutionAccessAttemptEvent(string SolutionName)
 [UsedImplicitly]
 public abstract partial class SharedSolutionContainerSystem : EntitySystem
 {
-    [Robust.Shared.IoC.Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedHandsSystem Hands = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
-    [Robust.Shared.IoC.Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected readonly ChemicalReactionSystem ChemicalReactionSystem = default!;
+    [Dependency] protected readonly ExamineSystemShared ExamineSystem = default!;
+    [Dependency] protected readonly OpenableSystem Openable = default!;
+    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] protected readonly SharedHandsSystem Hands = default!;
+    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+    [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
+    [Dependency] protected readonly INetManager NetManager = default!;
 
     public override void Initialize()
     {
@@ -584,7 +588,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     ///     Adds a solution to the container, if it can fully fit.
     /// </summary>
     /// <param name="targetUid">entity holding targetSolution</param>
-    ///  <param name="targetSolution">entity holding targetSolution</param>
+    /// <param name="targetSolution">entity holding targetSolution</param>
     /// <param name="toAdd">solution being added</param>
     /// <returns>If the solution could be added.</returns>
     public bool TryAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
@@ -602,40 +606,44 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Adds as much of a solution to a container as can fit.
+    ///     Adds as much of a solution to a container as can fit and updates the container.
     /// </summary>
     /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
     /// <param name="targetSolution">The solution being added to.</param>
-    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
+    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/>. This solution is not modified.</param>
     /// <returns>The quantity of the solution actually added.</returns>
     public FixedPoint2 AddSolution(Entity<SolutionComponent> soln, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
+        var solution = soln.Comp.Solution;
 
         if (toAdd.Volume == FixedPoint2.Zero)
             return FixedPoint2.Zero;
 
         var quantity = FixedPoint2.Max(FixedPoint2.Zero, FixedPoint2.Min(toAdd.Volume, solution.AvailableVolume));
         if (quantity < toAdd.Volume)
-            TryTransferSolution(soln, toAdd, quantity);
+        {
+            // TODO: This should be made into a function that directly transfers reagents.
+            // Currently this is quite inefficient.
+            solution.AddSolution(toAdd.Clone().SplitSolution(quantity), PrototypeManager);
+        }
         else
-            ForceAddSolution(soln, toAdd);
+            solution.AddSolution(toAdd, PrototypeManager);
 
+        UpdateChemicals(soln);
         return quantity;
     }
 
     /// <summary>
     ///     Adds a solution to a container and updates the container.
+    ///     This can exceed the maximum volume of the solution added to.
     /// </summary>
     /// <param name="targetUid">The entity containing <paramref cref="targetSolution"/></param>
     /// <param name="targetSolution">The solution being added to.</param>
-    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/></param>
+    /// <param name="toAdd">The solution being added to <paramref cref="targetSolution"/>. This solution is not modified.</param>
     /// <returns>Whether any reagents were added to the solution.</returns>
     public bool ForceAddSolution(Entity<SolutionComponent> soln, Solution toAdd)
     {
-        var (uid, comp) = soln;
-        var solution = comp.Solution;
+        var solution = soln.Comp.Solution;
 
         if (toAdd.Volume == FixedPoint2.Zero)
             return false;
@@ -703,6 +711,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     // Thermal energy and temperature management.
+    // TODO: ENERGY CONSERVATION!!! Nuke this once we have HeatContainers and use methods which properly conserve energy and model heat transfer correctly!
 
     #region Thermal Energy and Temperature
 
@@ -759,6 +768,26 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         UpdateChemicals(soln);
     }
 
+    /// <summary>
+    /// Same as <see cref="AddThermalEnergy"/> but clamps the value between two temperature values.
+    /// </summary>
+    /// <param name="soln">Solution we're adjusting the energy of</param>
+    /// <param name="thermalEnergy">Thermal energy we're adding or removing</param>
+    /// <param name="min">Min desired temperature</param>
+    /// <param name="max">Max desired temperature</param>
+    public void AddThermalEnergyClamped(Entity<SolutionComponent> soln, float thermalEnergy, float min, float max)
+    {
+        var solution = soln.Comp.Solution;
+
+        if (thermalEnergy == 0.0f)
+            return;
+
+        var heatCap = solution.GetHeatCapacity(PrototypeManager);
+        var deltaT = thermalEnergy / heatCap;
+        solution.Temperature = Math.Clamp(solution.Temperature + deltaT, min, max);
+        UpdateChemicals(soln);
+    }
+
     #endregion Thermal Energy and Temperature
 
     #region Event Handlers
@@ -791,52 +820,55 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Shift click examine.
+    /// </summary>
     private void OnExamineSolution(Entity<ExaminableSolutionComponent> entity, ref ExaminedEvent args)
     {
-        if (!TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
-        {
+        if (!args.IsInDetailsRange ||
+            !CanSeeHiddenSolution(entity, args.Examiner) ||
+            !TryGetSolution(entity.Owner, entity.Comp.Solution, out _, out var solution))
             return;
-        }
-
-        if (!CanSeeHiddenSolution(entity, args.Examiner))
-            return;
-
-        var primaryReagent = solution.GetPrimaryReagentId();
-
-        if (string.IsNullOrEmpty(primaryReagent?.Prototype))
-        {
-            args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
-            return;
-        }
-
-        if (!PrototypeManager.TryIndex(primaryReagent.Value.Prototype, out ReagentPrototype? primary))
-        {
-            Log.Error($"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
-            return;
-        }
-
-        var colorHex = solution.GetColor(PrototypeManager)
-            .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
-        var messageString = "shared-solution-container-component-on-examine-main-text";
 
         using (args.PushGroup(nameof(ExaminableSolutionComponent)))
         {
-            args.PushMarkup(Loc.GetString(messageString,
-                ("color", colorHex),
-                ("wordedAmount", Loc.GetString(solution.Contents.Count == 1
-                    ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
-                    : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-                ("desc", primary.LocalizedPhysicalDescription)));
 
-            var reagentPrototypes = solution.GetReagentPrototypes(PrototypeManager);
+            var primaryReagent = solution.GetPrimaryReagentId();
+
+            // If there's no primary reagent, assume the solution is empty and exit early
+            if (string.IsNullOrEmpty(primaryReagent?.Prototype) ||
+                !PrototypeManager.Resolve<ReagentPrototype>(primaryReagent.Value.Prototype, out var primary))
+            {
+                args.PushMarkup(Loc.GetString(entity.Comp.LocVolume, ("fillLevel", ExaminedVolumeDisplay.Empty)));
+                return;
+            }
+
+            // Push amount of reagent
+
+            args.PushMarkup(Loc.GetString(entity.Comp.LocVolume,
+                                ("fillLevel", ExaminedVolume(entity, solution, args.Examiner)),
+                                ("current", solution.Volume),
+                                ("max", solution.MaxVolume)));
+
+            // Push the physical description of the primary reagent
+
+            var colorHex = solution.GetColor(PrototypeManager)
+                .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
+
+            args.PushMarkup(Loc.GetString(entity.Comp.LocPhysicalQuality,
+                                        ("color", colorHex),
+                                        ("desc", primary.LocalizedPhysicalDescription),
+                                        ("chemCount", solution.Contents.Count)));
+
+            // Push the recognizable reagents
 
             // Sort the reagents by amount, descending then alphabetically
-            var sortedReagentPrototypes = reagentPrototypes
+            var sortedReagentPrototypes = solution.GetReagentPrototypes(PrototypeManager)
                 .OrderByDescending(pair => pair.Value.Value)
                 .ThenBy(pair => pair.Key.LocalizedName);
 
-            // Add descriptions of immediately recognizable reagents, like water or beer
-            var recognized = new List<ReagentPrototype>();
+            // Collect recognizable reagents, like water or beer
+            var recognized = new List<string>();
             foreach (var keyValuePair in sortedReagentPrototypes)
             {
                 var proto = keyValuePair.Key;
@@ -845,41 +877,58 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
                     continue;
                 }
 
-                recognized.Add(proto);
+                recognized.Add(Loc.GetString("examinable-solution-recognized",
+                                            ("color", proto.SubstanceColor.ToHexNoAlpha()),
+                                            ("chemical", proto.LocalizedName)));
             }
 
-            // Skip if there's nothing recognizable
             if (recognized.Count == 0)
                 return;
 
-            var msg = new StringBuilder();
-            foreach (var reagent in recognized)
-            {
-                string part;
-                if (reagent == recognized[0])
-                {
-                    part = "examinable-solution-recognized-first";
-                }
-                else if (reagent == recognized[^1])
-                {
-                    // this loc specifically  requires space to be appended, fluent doesnt support whitespace
-                    msg.Append(' ');
-                    part = "examinable-solution-recognized-last";
-                }
-                else
-                {
-                    part = "examinable-solution-recognized-next";
-                }
+            var msg = ContentLocalizationManager.FormatList(recognized);
 
-                msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
-                    ("chemical", reagent.LocalizedName)));
-            }
-
-            args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals",
-                ("recognizedString", msg.ToString())));
+            // Finally push the full message
+            args.PushMarkup(Loc.GetString(entity.Comp.LocRecognizableReagents,
+                ("recognizedString", msg)));
         }
     }
 
+    /// <returns>An enum for how to display the solution.</returns>
+    public ExaminedVolumeDisplay ExaminedVolume(Entity<ExaminableSolutionComponent> ent, Solution sol, EntityUid? examiner = null)
+    {
+        // Exact measurement
+        if (ent.Comp.ExactVolume)
+            return ExaminedVolumeDisplay.Exact;
+
+        // General approximation
+        return (int)PercentFull(sol) switch
+        {
+            100 => ExaminedVolumeDisplay.Full,
+            > 66 => ExaminedVolumeDisplay.MostlyFull,
+            > 33 => HalfEmptyOrHalfFull(examiner),
+            > 0 => ExaminedVolumeDisplay.MostlyEmpty,
+            _ => ExaminedVolumeDisplay.Empty,
+        };
+    }
+
+    // Some spessmen see half full, some see half empty, but always the same one.
+    private ExaminedVolumeDisplay HalfEmptyOrHalfFull(EntityUid? examiner = null)
+    {
+        // Optimistic when un-observed
+        if (examiner == null)
+            return ExaminedVolumeDisplay.HalfFull;
+
+        var meta = MetaData(examiner.Value);
+        if (meta.EntityName.Length > 0 &&
+            string.Compare(meta.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+            return ExaminedVolumeDisplay.HalfFull;
+
+        return ExaminedVolumeDisplay.HalfEmpty;
+    }
+
+    /// <summary>
+    ///     Full reagent scan, such as with chemical analysis goggles.
+    /// </summary>
     private void OnSolutionExaminableVerb(Entity<ExaminableSolutionComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
         if (!args.CanInteract || !args.CanAccess)
@@ -953,15 +1002,18 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Check if examinable solution requires you to hold the item in hand.
+    ///     Check if an examinable solution is hidden by something.
     /// </summary>
     private bool CanSeeHiddenSolution(Entity<ExaminableSolutionComponent> entity, EntityUid examiner)
     {
         // If not held-only then it's always visible.
-        if (!entity.Comp.HeldOnly)
-            return true;
+        if (entity.Comp.HeldOnly && !Hands.IsHolding(examiner, entity, out _))
+            return false;
 
-        return Hands.IsHolding(examiner, entity, out _);
+        if (!entity.Comp.ExaminableWhileClosed && Openable.IsClosed(entity.Owner, predicted: true))
+            return false;
+
+        return true;
     }
 
     private void OnMapInit(Entity<SolutionContainerManagerComponent> entity, ref MapInitEvent args)
@@ -996,7 +1048,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     public bool EnsureSolution(
         Entity<MetaDataComponent?> entity,
         string name,
-        [NotNullWhen(true)]out Solution? solution,
+        [NotNullWhen(true)] out Solution? solution,
         FixedPoint2 maxVol = default)
     {
         return EnsureSolution(entity, name, maxVol, null, out _, out solution);
@@ -1006,7 +1058,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         Entity<MetaDataComponent?> entity,
         string name,
         out bool existed,
-        [NotNullWhen(true)]out Solution? solution,
+        [NotNullWhen(true)] out Solution? solution,
         FixedPoint2 maxVol = default)
     {
         return EnsureSolution(entity, name, maxVol, null, out existed, out solution);
@@ -1165,7 +1217,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         var relation = new ContainedSolutionComponent() { Container = container.Owner, ContainerName = name };
         AddComp(uid, relation);
 
-        MetaDataSys.SetEntityName(uid, $"solution - {name}");
+        MetaDataSys.SetEntityName(uid, $"solution - {name}", raiseEvents: false);
         ContainerSystem.Insert(uid, container, force: true);
 
         return (uid, solution, relation);
@@ -1188,13 +1240,13 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         }
         else
         {
-            dissolvedSol.RemoveReagent(reagent,amtChange);
+            dissolvedSol.RemoveReagent(reagent, amtChange);
         }
         UpdateChemicals(dissolvedSolution);
     }
 
     public FixedPoint2 GetReagentQuantityFromConcentration(Entity<SolutionComponent> dissolvedSolution,
-        FixedPoint2 volume,float concentration)
+        FixedPoint2 volume, float concentration)
     {
         var dissolvedSol = dissolvedSolution.Comp.Solution;
         if (volume == 0

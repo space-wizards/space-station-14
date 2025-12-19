@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Mailcart_base sprite made by noahrb (Github) for SS14; Package_1 through Package_8 sprites made by Emisse (Github) for SS14... and all the fans.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "mailcart_base"
+    },
+    {
+      "name": "package_1"
+    },
+    {
+      "name": "package_2"
+    },
+    {
+      "name": "package_3"
+    },
+    {
+      "name": "package_4"
+    },
+    {
+      "name": "package_5"
+    },
+    {
+      "name": "package_6"
+    },
+    {
+      "name": "package_7"
+    },
+    {
+      "name": "package_8"
+    }
+  ]
+}

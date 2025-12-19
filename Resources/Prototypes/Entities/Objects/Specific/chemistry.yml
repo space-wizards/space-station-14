@@ -35,6 +35,7 @@
     solution: beaker
   - type: ExaminableSolution
     solution: beaker
+    exactVolume: true
   - type: DrawableSolution
     solution: beaker
   - type: InjectableSolution
@@ -47,8 +48,11 @@
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: beaker
+    destroyOnEmpty: false
+    utensil: None
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -96,64 +100,6 @@
 
 - type: entity
   parent: BaseItem
-  id: BorgBeaker
-  name: integrated beaker
-  description: An internal compartment installed into a cyborg. Rated for 50 units of any liquid.
-  components:
-  # 3 morbillion components are to avoid inheriting breakable since borgs can't replace beakers.
-  - type: Tag
-    tags:
-    - GlassBeaker
-  - type: Sprite
-    sprite: Objects/Specific/Chemistry/beaker.rsi
-    layers:
-      - state: beaker
-      - state: beaker1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: Item
-    sprite: Objects/Specific/Chemistry/beaker.rsi
-  - type: MeleeWeapon
-    soundNoDamage:
-      path: "/Audio/Effects/Fluids/splat.ogg"
-    damage:
-      types:
-        Blunt: 0
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 50
-  - type: MixableSolution
-    solution: beaker
-  - type: FitsInDispenser
-    solution: beaker
-  - type: RefillableSolution
-    solution: beaker
-  - type: DrainableSolution
-    solution: beaker
-  - type: ExaminableSolution
-    solution: beaker
-  - type: DrawableSolution
-    solution: beaker
-  - type: InjectableSolution
-    solution: beaker
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-  - type: SolutionItemStatus
-    solution: beaker
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-  - type: Drink
-    solution: beaker
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: beaker
-
-- type: entity
-  parent: BaseItem
   id: BaseBeakerMetallic
   abstract: true
   components:
@@ -189,6 +135,7 @@
     solution: beaker
   - type: ExaminableSolution
     solution: beaker
+    exactVolume: true
   - type: DrawableSolution
     solution: beaker
   - type: InjectableSolution
@@ -201,8 +148,11 @@
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
-  - type: Drink
+  - type: Edible
+    edible: Drink
     solution: beaker
+    destroyOnEmpty: false
+    utensil: Spoon
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -246,6 +196,96 @@
         maxVol: 50
         reagents:
         - ReagentId: Cryoxadone
+          Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSmallArith
+  suffix: arithrazine
+  components:
+  - type: Label
+    currentLabel: reagent-name-arithrazine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Arithrazine
+          Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSmallSigy
+  suffix: sigynate
+  components:
+  - type: Label
+    currentLabel: reagent-name-sigynate
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Sigynate
+          Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSmallPhal
+  suffix: phalanximine
+  components:
+  - type: Label
+    currentLabel: reagent-name-phalanximine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Phalanximine
+          Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSmallDiph
+  suffix: diphenhydramine
+  components:
+  - type: Label
+    currentLabel: reagent-name-diphenhydramine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Diphenhydramine
+          Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSmallBruiz
+  suffix: bruizine
+  components:
+  - type: Label
+    currentLabel: reagent-name-bruizine
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Bruizine
+          Quantity: 50
+
+- type: entity
+  parent: Beaker
+  id: BeakerSmallLace
+  suffix: lacerinol
+  components:
+  - type: Label
+    currentLabel: reagent-name-lacerinol
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        reagents:
+        - ReagentId: Lacerinol
           Quantity: 50
 
 - type: entity
@@ -342,12 +382,16 @@
     injectOnly: false
     ignoreMobs: true
     ignoreClosed: false
-    minTransferAmount: 1
-    maxTransferAmount: 5
-    transferAmount: 1
-    toggleState: 1 # draw
+    transferAmounts:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    currentTransferAmount: 1
   - type: ExaminableSolution
     solution: dropper
+    exactVolume: true
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -418,8 +462,13 @@
         maxVol: 15
   - type: Injector
     injectOnly: false
+    transferAmounts:
+    - 5
+    - 10
+    - 15
   - type: ExaminableSolution
     solution: injector
+    exactVolume: true
   - type: Spillable
     solution: injector
   - type: TrashOnSolutionEmpty
@@ -439,8 +488,7 @@
   id: Syringe
   components:
   - type: Injector
-    transferAmount: 15
-    toggleState: Draw
+    currentTransferAmount: 15
   - type: Tag
     tags:
     - Syringe
@@ -464,9 +512,13 @@
       injector:
         maxVol: 5
   - type: Injector
-    minTransferAmount: 1
-    maxTransferAmount: 5
-    transferAmount: 5
+    transferAmounts:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    currentTransferAmount: 5
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe
@@ -515,6 +567,7 @@
     - SyringeGunAmmo
 
 - type: entity
+  abstract: true
   parent: BaseSyringe
   id: PrefilledSyringe
   components:
@@ -575,14 +628,14 @@
         canReact: false
   - type: Injector
     injectOnly: false
-    minTransferAmount: 5
-    maxTransferAmount: 10
-    transferAmount: 10
+    transferAmounts:
+    - 5
+    - 10
+    currentTransferAmount: 10
   - type: Tag
     tags:
     - Syringe
     - Trash
-
 
 - type: entity
   name: pill
@@ -597,12 +650,11 @@
     size: Tiny
     sprite: Objects/Specific/Chemistry/pills.rsi
   - type: Pill
-  - type: Food
+  - type: Edible
     delay: 0.6
     forceFeedDelay: 2
     transferAmount: null
-    eatMessage: food-swallow
-    useSound: /Audio/Items/pill.ogg
+    edible: Pill
   - type: BadFood
   - type: FlavorProfile
     ignoreReagents: []

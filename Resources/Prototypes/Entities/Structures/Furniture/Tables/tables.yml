@@ -301,6 +301,61 @@
       collection: FootstepTile
 
 - type: entity
+  id: TableCard
+  parent: TableBase
+  name: cardboard table
+  description: Cardboard sheets wrapped around a metal table frame.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/card.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/card.rsi
+  - type: GlassTable #they named it that cause 'it would never be used elsewhere' or something, smh
+    climberDamage:
+      types:
+        Blunt: 6
+    tableDamage:
+      types:
+        Blunt: 15
+    tableMassLimit: 40
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Card
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 45 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound: /Audio//Weapons/pierce.ogg
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio//Weapons/pierce.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard:
+            min: 1
+            max: 2
+      - !type:ChangeConstructionNodeBehavior
+        node: TableFrame
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: cardtable
+  - type: Construction
+    graph: Table
+    node: TableCard
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepTile
+
+- type: entity
   id: TableReinforcedGlass
   parent: TableBase
   name: reinforced glass table
@@ -702,6 +757,21 @@
     key: fancytableblue
 
 - type: entity
+  id: TableFancySkyBlue
+  parent: TableFancyBase
+  suffix: SkyBlue
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/Fancy/skyblue.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/Fancy/skyblue.rsi
+  - type: Construction
+    graph: Table
+    node: TableFancySkyBlue
+  - type: IconSmooth
+    key: fancytableskyblue
+
+- type: entity
   id: TableFancyCyan
   parent: TableFancyBase
   suffix: Cyan
@@ -830,9 +900,6 @@
   description: PUT ON THEM CODERSOCKS!!
   suffix: DEBUG
   components:
-  - type: Tag
-    tags:
-      - Debug
   - type: Sprite
     sprite: Structures/Furniture/Tables/debug.rsi
   - type: Icon

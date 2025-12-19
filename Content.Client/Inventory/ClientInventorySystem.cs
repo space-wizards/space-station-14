@@ -21,7 +21,6 @@ namespace Content.Client.Inventory
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
 
@@ -113,6 +112,13 @@ namespace Content.Client.Inventory
         private void OnPlayerAttached(EntityUid uid, InventorySlotsComponent component, LocalPlayerAttachedEvent args)
         {
             OnLinkInventorySlots?.Invoke(uid, component);
+        }
+
+        protected override void OnInit(Entity<InventoryComponent> ent, ref ComponentInit args)
+        {
+            base.OnInit(ent, ref args);
+
+            _clothingVisualsSystem.InitClothing(ent.Owner, ent.Comp);
         }
 
         public override void Shutdown()
@@ -261,7 +267,6 @@ namespace Content.Client.Inventory
                     TryAddSlotData((ent.Owner, inventorySlots), (SlotData)slot);
             }
 
-            _clothingVisualsSystem.InitClothing(ent, ent.Comp);
             if (ent.Owner == _playerManager.LocalEntity)
                 ReloadInventory(inventorySlots);
         }

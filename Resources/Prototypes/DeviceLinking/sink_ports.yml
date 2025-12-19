@@ -45,8 +45,8 @@
 
 - type: sinkPort
   id: Trigger
-  name: signal-port-name-trigger
-  description: signal-port-description-trigger
+  name: signal-port-name-trigger-receiver
+  description: signal-port-description-trigger-receiver
 
 - type: sinkPort
   id: Timer
@@ -108,6 +108,11 @@
   name: signal-port-name-logic-enable
   description: signal-port-description-logic-enable
 
+- type: sinkPort
+  id: RandomGateInput
+  name: signal-port-name-logic-random-input
+  description: signal-port-description-logic-random-input
+  
 - type: sinkPort
   id: SetParticleDelta
   name: signal-port-name-set-particle-delta

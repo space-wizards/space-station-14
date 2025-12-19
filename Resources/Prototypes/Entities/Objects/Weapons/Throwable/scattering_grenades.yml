@@ -10,15 +10,9 @@
       cluster-payload: !type:Container
   - type: Damageable
     damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TriggerBehavior
   - type: ScatteringGrenade
-  - type: OnUseTimerTrigger
+  - type: TriggerOnUse
+  - type: TimerTrigger
     delay: 3
   - type: Tag
     tags:
@@ -35,7 +29,7 @@
         friction: 0.2
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseSecurityContraband]
+  parent: [FragileGrenadeBase, ScatteringGrenadeBase, BaseSecurityContraband]
   id: ClusterBang
   name: clusterbang
   description: Can be used only with flashbangs. Explodes several times.
@@ -55,7 +49,7 @@
 - type: entity
   parent: ClusterBang
   id: ClusterBangFull
-  name: ClusterBang
+  name: clusterbang
   description: Launches three flashbangs after the timer runs out.
   suffix: Full
   components:
@@ -81,11 +75,14 @@
           Primed: { state: primed }
           Unprimed: { state: icon }
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Machines/door_lock_off.ogg"
+    positional: true
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
+  parent: [VolatileGrenadeBase, ScatteringGrenadeBase, BaseSyndicateContraband]
   id: ClusterGrenade
   name: clustergrenade
   description: Why use one grenade when you can use three at once!
@@ -98,7 +95,7 @@
   - type: ScatteringGrenade
     fillPrototype: ExGrenade
     distance: 4
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -106,13 +103,16 @@
     initialBeepDelay: 0
     beepInterval: 0.5
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Machines/door_lock_off.ogg"
+    positional: true
   - type: StaticPrice
     price: 2500
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
+  parent: [FragileGrenadeBase, ScatteringGrenadeBase, BaseSyndicateContraband]
   id: ClusterBananaPeel
   name: cluster banana peel
   description: Splits into 6 explosive banana peels after throwing, guaranteed fun!
@@ -130,8 +130,11 @@
       types:
         Blunt: 10
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Items/bikehorn.ogg"
+    positional: true
 
 - type: entity
   parent: [SoapSyndie, ScatteringGrenadeBase, BaseSyndicateContraband]
@@ -155,13 +158,16 @@
       types:
         Blunt: 10
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
+    positional: true
   - type: StaticPrice
     price: 1000
 
 - type: entity
-  parent: ScatteringGrenadeBase
+  parent: [FragileGrenadeBase, ScatteringGrenadeBase]
   id: GrenadeFoamDart
   name: foam dart grenade
   description: Releases a bothersome spray of foam darts that cause severe welching.
@@ -177,7 +183,7 @@
     fillPrototype: BulletFoam
     capacity: 30
     velocity: 30
-  - type: OnUseTimerTrigger
+  - type: TimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
@@ -185,5 +191,8 @@
     initialBeepDelay: 0
     beepInterval: 2
   - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+    positional: true
