@@ -10,7 +10,7 @@ using Content.Shared.Temperature.Systems;
 
 namespace Content.Server.Temperature.Systems;
 
-public sealed class TemperatureSystem : SharedTemperatureSystem
+public sealed partial class TemperatureSystem : SharedTemperatureSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
@@ -25,6 +25,8 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
         SubscribeLocalEvent<ChangeTemperatureOnCollideComponent, ProjectileHitEvent>(ChangeTemperatureOnCollide);
+
+        InitializeDamage();
     }
 
     public override void Update(float frameTime)
@@ -53,22 +55,24 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
             comp.Temperature += degrees;
             ForceChangeTemperature(uid, temp.CurrentTemperature - degrees, temp);
         }
+
+        UpdateDamage();
     }
 
     public void ForceChangeTemperature(EntityUid uid, float temp, TemperatureComponent? temperature = null)
     {
-        if (!Resolve(uid, ref temperature))
+        if (!TemperatureQuery.Resolve(uid, ref temperature))
             return;
 
-        float lastTemp = temperature.CurrentTemperature;
-        float delta = temperature.CurrentTemperature - temp;
+        var lastTemp = temperature.CurrentTemperature;
+        var delta = temperature.CurrentTemperature - temp;
         temperature.CurrentTemperature = temp;
         RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta), broadcast: true);
     }
 
     public override void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false, TemperatureComponent? temperature = null)
     {
-        if (!Resolve(uid, ref temperature, false))
+        if (!TemperatureQuery.Resolve(uid, ref temperature, false))
             return;
 
         if (!ignoreHeatResistance)
@@ -100,12 +104,12 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
         ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
     }
 
-    private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
+    private void OnInit(Entity<InternalTemperatureComponent> entity, ref MapInitEvent args)
     {
-        if (!TryComp<TemperatureComponent>(uid, out var temp))
+        if (!TemperatureQuery.TryComp(entity, out var temp))
             return;
 
-        comp.Temperature = temp.CurrentTemperature;
+        entity.Comp.Temperature = temp.CurrentTemperature;
     }
 
     private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)
