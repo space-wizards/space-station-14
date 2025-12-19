@@ -2,8 +2,6 @@
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    xmlns:style="clr-namespace:Content.Client.Stylesheets"
     xmlns:ui="clr-namespace:Content.Client.Lobby.UI">
     <BoxContainer Name="VBox" Orientation="Vertical">
 
@@ -49,31 +47,19 @@
                 <ui:DraggableJobTarget Name="NeverBox" Priority="Never" />
 
                 <!-- Vertical rule -->
-                <PanelContainer MinSize="2 0">
-                    <PanelContainer.PanelOverride>
-                        <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
-                    </PanelContainer.PanelOverride>
-                </PanelContainer>
+                <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
                 <!-- Jobs with "Low" priority -->
                 <ui:DraggableJobTarget Name="LowBox" Priority="Low" />
 
                 <!-- Vertical rule -->
-                <PanelContainer MinSize="2 0">
-                    <PanelContainer.PanelOverride>
-                        <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
-                    </PanelContainer.PanelOverride>
-                </PanelContainer>
+                <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
                 <!-- Jobs with "Medium" priority -->
                 <ui:DraggableJobTarget Name="MediumBox" Priority="Medium" />
 
                 <!-- Vertical rule -->
-                <PanelContainer MinSize="2 0">
-                    <PanelContainer.PanelOverride>
-                        <graphics:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
-                    </PanelContainer.PanelOverride>
-                </PanelContainer>
+                <PanelContainer MinSize="2 0" StyleClasses="HighDivider"/>
 
                 <!-- THE job with "HIGH" priority -->
                 <ui:DraggableJobTarget Name="HighBox" Priority="High" />
