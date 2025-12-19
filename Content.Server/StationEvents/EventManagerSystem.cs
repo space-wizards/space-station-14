@@ -99,8 +99,8 @@ public sealed class EventManagerSystem : EntitySystem
 
         var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
 
-        if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
-            return false;
+        //if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
+            //return false;
 
         foreach (var eventid in selectedEvents)
         {

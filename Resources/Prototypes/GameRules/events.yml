@@ -564,9 +564,9 @@
   id: LoneOpsSpawn
   components:
   - type: StationEvent
-    earliestStart: 35
+    earliestStart: 1
     weight: 5.5
-    minimumPlayers: 20
+    minimumPlayers: 0
     duration: null # LoneOpsSpawn needs an infinite duration so that it inherits the NukeOpsRule things of an actually appropriate end screen (not always "Neutral outcome!") and... ending the game if the station is nuked.
   - type: RuleGrids
   - type: LoadMapRule
