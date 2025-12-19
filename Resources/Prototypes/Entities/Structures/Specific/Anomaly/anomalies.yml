@@ -1162,6 +1162,11 @@
         maxRange: 6
       spawns:
       - PresentRandomInsane
+      - PresentRandom
+      - PresentRandomCoal
+      - PresentRandomCash
+      - ClothingHeadHatSantahat
+      - FoodCakeChristmasSlice
   - type: ProjectileAnomaly
     projectilePrototype: DrinkLemonLimeCranberryCan
     minProjectiles: 1
