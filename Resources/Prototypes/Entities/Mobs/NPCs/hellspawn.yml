@@ -81,8 +81,8 @@
     thresholds:
       0: Alive
       450: Dead
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: ArtifactFragment
       amount: 4
   - type: MeleeWeapon

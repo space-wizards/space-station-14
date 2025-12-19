@@ -31,8 +31,8 @@
   parent: ClothingShoesBase
   id: ClothingShoesBaseButcherable
   components:
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialCloth1
       amount: 1
   - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering

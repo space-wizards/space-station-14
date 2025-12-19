@@ -76,8 +76,8 @@
   - type: Sprite
     layers:
     - state: margherita
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaMargheritaSlice
       amount: 8
 
@@ -113,8 +113,8 @@
   - type: Sprite
     layers:
     - state: meat
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaMeatSlice
       amount: 8
   - type: Tag
@@ -160,8 +160,8 @@
   - type: Sprite
     layers:
     - state: mushroom
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaMushroomSlice
       amount: 8
 
@@ -200,8 +200,8 @@
   - type: Sprite
     layers:
     - state: vegetable
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaVegetableSlice
       amount: 8
   - type: SolutionContainerManager
@@ -262,8 +262,8 @@
   - type: Sprite
     layers:
     - state: donkpocket
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaDonkpocketSlice
       amount: 8
   - type: SolutionContainerManager
@@ -330,8 +330,8 @@
   - type: Sprite
     layers:
     - state: dank
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaDankSlice
       amount: 8
   - type: SolutionContainerManager
@@ -387,8 +387,8 @@
   - type: Sprite
     layers:
     - state: sassysage
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaSassysageSlice
       amount: 8
   - type: Tag
@@ -436,8 +436,8 @@
   - type: Sprite
     layers:
     - state: pineapple
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaPineappleSlice
       amount: 8
   - type: Tag
@@ -487,8 +487,8 @@
   - type: Sprite
     layers:
     - state: arnold
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaArnoldSlice
       amount: 8
   - type: SolutionContainerManager
@@ -547,7 +547,7 @@
     - Slice
 # Tastes like crust, tomato, cheese, pepperoni, 9 millimeter bullets.
 
-#TODO: Make this do poison damage and make cut pizza slices eventually rot into this.
+#TODO: Make this do poison damage and make cut pizza refineResult: eventually rot into this.
 - type: entity
   name: slice of moldy pizza
   parent: FoodPizzaSliceBase
@@ -596,8 +596,8 @@
   - type: Sprite
     layers:
     - state: uranium-pizza
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaUraniumSlice
       amount: 8
   - type: Tag
@@ -673,8 +673,8 @@
     - state: cotton-pizza
   - type: Edible
     requiresSpecialDigestion: true
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaCottonSlice
       amount: 8
   - type: Tag
@@ -738,8 +738,8 @@
   - type: Sprite
     layers:
     - state: worldpeas
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPizzaWorldpeasSlice
       amount: 8
   - type: SolutionContainerManager

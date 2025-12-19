@@ -510,7 +510,7 @@
     FoodMeatXenoCutlet: 2
     FoodCheeseSlice: 2
 
-#Slices Only
+#refineResult: Only
 
 - type: microwaveMealRecipe
   id: RecipeBaguette

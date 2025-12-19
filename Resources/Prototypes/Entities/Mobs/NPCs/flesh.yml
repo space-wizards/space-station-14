@@ -43,8 +43,8 @@
   - type: Stamina
     critThreshold: 50
     animationThreshold: 25
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
   - type: Bloodstream
     bloodMaxVolume: 100
@@ -241,8 +241,8 @@
   - type: Stamina
     critThreshold: 50
     animationThreshold: 25
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat
   - type: Bloodstream
     bloodMaxVolume: 100

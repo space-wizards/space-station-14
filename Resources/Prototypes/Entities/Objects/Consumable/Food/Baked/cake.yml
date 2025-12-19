@@ -78,8 +78,8 @@
     - state: plain
     - state: alpha-filling
       color: blue
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeBlueberrySlice
       amount: 5
   - type: Tag
@@ -145,8 +145,8 @@
           Quantity: 5
   - type: Item
     heldPrefix: plain
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakePlainSlice
       amount: 5
 
@@ -180,8 +180,8 @@
   components:
   - type: Sprite
     state: carrot
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeCarrotSlice
       amount: 5
   - type: SolutionContainerManager
@@ -259,8 +259,8 @@
   components:
   - type: Sprite
     state: brain
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeBrainSlice
       amount: 5
   - type: Tag
@@ -315,8 +315,8 @@
   components:
   - type: Sprite
     state: cheese
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeCheeseSlice
       amount: 5
   - type: Item
@@ -361,8 +361,8 @@
     - state: plain
     - state: alpha-filling
       color: "#ff9900"
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeOrangeSlice
       amount: 5
   - type: Tag
@@ -418,8 +418,8 @@
     - state: plain
     - state: alpha-filling
       color: "#00ff00"
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeLimeSlice
       amount: 5
   - type: Tag
@@ -475,8 +475,8 @@
     - state: plain
     - state: alpha-filling
       color: "#ffff00"
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeLemonSlice
       amount: 5
   - type: Tag
@@ -533,8 +533,8 @@
     flavors:
       - lemoon
       - berry
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeLemoonSlice
       amount: 5
   - type: SolutionContainerManager
@@ -606,8 +606,8 @@
     layers:
     - state: alpha
       color: "#ba672e"
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeChocolateSlice
       amount: 5
   - type: SolutionContainerManager
@@ -671,8 +671,8 @@
     - state: plain
     - state: alpha-filling
       color: "#ff4300"
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeAppleSlice
       amount: 5
   - type: Tag
@@ -727,8 +727,8 @@
   components:
   - type: Sprite
     state: slime
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeSlimeSlice
       amount: 5
   - type: Tag
@@ -783,8 +783,8 @@
   components:
   - type: Sprite
     state: pumpkinspice
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakePumpkinSlice
       amount: 5
   - type: SolutionContainerManager
@@ -853,8 +853,8 @@
   components:
   - type: Sprite
     state: christmas
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeChristmasSlice
       amount: 5
   - type: Tag
@@ -900,8 +900,8 @@
   components:
   - type: Sprite
     state: birthday
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeBirthdaySlice
       amount: 5
   - type: Item
@@ -927,8 +927,8 @@
   components:
   - type: Sprite
     state: vanilla
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeVanillaSlice
       amount: 5
   - type: SolutionContainerManager #TODO Sprinkles
@@ -982,8 +982,8 @@
   components:
   - type: Sprite
     state: clown
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeClownSlice
       amount: 5
   - type: SolutionContainerManager #TODO Sprinkles
@@ -1031,8 +1031,8 @@
   components:
   - type: Sprite
     state: trumpet
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeSpacemanSlice
       amount: 5
   - type: SolutionContainerManager
@@ -1171,8 +1171,8 @@
   components:
   - type: Sprite
     state: suppermatter
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeSuppermatterSlice
       amount: 8
   - type: SolutionContainerManager
@@ -1235,8 +1235,8 @@
   components:
   - type: Sprite
     state: cotton
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeCottonSlice
       amount: 5
   - type: Tag
@@ -1310,8 +1310,8 @@
           Quantity: 10
         - ReagentId: Milk
           Quantity: 10
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCakeBerryDelightSlice
       amount: 5
   - type: Tag

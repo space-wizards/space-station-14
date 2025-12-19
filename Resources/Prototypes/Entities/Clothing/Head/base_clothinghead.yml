@@ -30,8 +30,8 @@
   parent: ClothingHeadBase
   id: ClothingHeadBaseButcherable
   components:
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialCloth1
   - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
     materialComposition:

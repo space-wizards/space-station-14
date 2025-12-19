@@ -801,7 +801,7 @@
   - Slice
 
 - type: foodSequenceElement
-  id: WatermelonSliceSkewer
+  id: WatermelonrefineResult:kewer
   name: food-sequence-content-watermelon
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
@@ -833,7 +833,7 @@
   - Slice
 
 - type: foodSequenceElement
-  id: HolymelonSliceSkewer
+  id: HolymelonrefineResult:kewer
   name: food-sequence-content-holymelon
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi

@@ -330,8 +330,8 @@
   parent: BedsheetBase
   name: white bedsheet
   components:
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: ClothingOuterGhostSheet #ghostly! 👻👻👻
   - type: Sprite
     state: sheetwhite

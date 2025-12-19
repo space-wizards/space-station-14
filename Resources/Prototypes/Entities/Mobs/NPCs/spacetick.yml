@@ -61,8 +61,8 @@
         Base: alive
       Dead:
         Base: dead
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatXeno
   - type: Bloodstream
     bloodMaxVolume: 50

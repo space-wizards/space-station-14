@@ -93,8 +93,8 @@
       groups:
         - id: Medicine
         - id: Poison
-    - type: Sliceable
-      slices:
+    - type: ToolRefinable
+      refineResult:
       - id: MaterialBananium1
         amount: 2
       - id: WeaponBehonkerLaser

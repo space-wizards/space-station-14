@@ -310,8 +310,8 @@
       - state: inhand-right
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: ClothingHandsGlovesFingerless
   - type: Fiber
     fiberColor: fibers-black
@@ -329,8 +329,8 @@
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: ClothingHandsGlovesFingerlessInsulated
   - type: Insulated
   - type: Fiber

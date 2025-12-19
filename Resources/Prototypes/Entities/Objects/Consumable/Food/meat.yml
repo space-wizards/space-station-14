@@ -98,8 +98,8 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatCutlet
       amount: 3
   - type: InternalTemperature
@@ -133,8 +133,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatCutlet
       amount: 3
   - type: Item
@@ -233,8 +233,8 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatBearCutlet
       amount: 3
   - type: Construction
@@ -267,8 +267,8 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatPenguinCutlet
       amount: 3
   - type: Construction
@@ -299,8 +299,8 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatChickenCutlet
       amount: 3
   - type: InternalTemperature
@@ -333,8 +333,8 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatDuckCutlet
       amount: 3
   - type: Construction
@@ -462,8 +462,8 @@
       reagents:
       - ReagentId: Ichor
         Quantity: 10
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatDragonCutlet
       amount: 3
   - type: Construction
@@ -494,8 +494,8 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 3
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatCutlet
       amount: 3
   - type: Item
@@ -522,8 +522,8 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatLizardCutlet
       amount: 3
   - type: Construction
@@ -597,8 +597,8 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSpiderCutlet
       amount: 3
   - type: Item
@@ -713,8 +713,8 @@
         reagents:
         - ReagentId: SulfuricAcid
           Quantity: 20
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatXenoCutlet
       amount: 3
   - type: Item
@@ -770,8 +770,8 @@
   components:
   - type: Sprite
     state: tomato
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatTomatoCutlet
       amount: 3
   - type: StaticPrice
@@ -799,8 +799,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/salami.rsi
     state: salami
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSalamiSlice
   - type: MeleeWeapon
     wideAnimationRotation: 100
@@ -831,8 +831,8 @@
     - Meat
   - type: Sprite
     state: clown
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSalamiSlice
 
 - type: entity
@@ -955,8 +955,8 @@
           Quantity: 90
         - ReagentId: Fat
           Quantity: 90
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeat #That's... So much meat
       amount: 10
     sliceTime: 5
@@ -1037,8 +1037,8 @@
           Quantity: 10
         - ReagentId: Protein
           Quantity: 5
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatCutletCooked
       amount: 3
   - type: Construction
@@ -1122,8 +1122,8 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatBearCutletCooked
       amount: 3
   - type: Construction
@@ -1158,8 +1158,8 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatPenguinCutletCooked
       amount: 3
   - type: Construction
@@ -1200,8 +1200,8 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatChickenCutletCooked
       amount: 3
   - type: Construction
@@ -1299,8 +1299,8 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatDuckCutletCooked
       amount: 3
   - type: Construction
@@ -1458,8 +1458,8 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatLizardCutletCooked
       amount: 3
   - type: Construction
@@ -1639,8 +1639,8 @@
           Quantity: 100
         - ReagentId: Protein
           Quantity: 50
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatCooked
       amount: 10
     sliceTime: 5
@@ -1681,8 +1681,8 @@
           Quantity: 6
         - ReagentId: Protein
           Quantity: 6
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatDragonCutletCooked
       amount: 3
   - type: Construction

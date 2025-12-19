@@ -53,8 +53,8 @@
         Dead:
           Base: dead
           BaseUnshaded: dead_mouth
-    - type: Sliceable
-      slices:
+    - type: ToolRefinable
+      refineResult:
       - id: FoodMeatFish
         amount: 2
       - id: MaterialToothSpaceCarp1
@@ -250,8 +250,8 @@
         types:
           Slash: 10
           Bloodloss: 5
-    - type: Sliceable
-      slices:
+    - type: ToolRefinable
+      refineResult:
       - id: FoodMeatFish
         amount: 4
       - id: MaterialToothSharkminnow1

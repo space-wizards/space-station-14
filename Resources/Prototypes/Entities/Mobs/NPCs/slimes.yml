@@ -36,8 +36,8 @@
     tags:
     - FootstepSound
     - DoorBumpOpener
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatSlime
       amount: 2
   - type: Respirator

@@ -288,8 +288,8 @@
       - dough
   - type: Sprite
     state: dough
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodDoughSlice
       amount: 3
   - type: Construction
@@ -361,8 +361,8 @@
       - dough
   - type: Sprite
     state: cornmealdough
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodDoughCornmealSlice
       amount: 3
 
@@ -398,8 +398,8 @@
       - dough
   - type: Sprite
     state: tortilladough
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodDoughTortillaSlice
       amount: 3
 
@@ -456,8 +456,8 @@
     - cotton
   - type: Sprite
     state: cotton-dough
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodDoughCottonSlice
       amount: 3
   - type: Construction
@@ -581,8 +581,8 @@
   - type: Construction
     graph: Pizza
     node: flat
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCroissantRaw
       amount: 3
 
@@ -601,8 +601,8 @@
   - type: Construction
     graph: CottonPizza
     node: flat
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCroissantRawCotton
       amount: 3
 
@@ -674,8 +674,8 @@
         reagents:
         - ReagentId: Butter
           Quantity: 15
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodButterSlice
       amount: 3
 
@@ -734,8 +734,8 @@
       - cheesy
   - type: Sprite
     state: cheesewheel
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodCheeseSlice
       amount: 4
 
@@ -789,8 +789,8 @@
       - creamy
   - type: Sprite
     state: chevrelog
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodChevreSlice
       amount: 3
   - type: SolutionContainerManager
@@ -852,8 +852,8 @@
           Quantity: 9
         - ReagentId: Nutriment
           Quantity: 6
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodTofuSlice
       amount: 3
 

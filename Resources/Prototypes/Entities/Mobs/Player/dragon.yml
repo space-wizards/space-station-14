@@ -114,8 +114,8 @@
     groups:
     - id: Medicine
     - id: Poison
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatDragon
       amount: 2
   - type: InteractionPopup
@@ -221,8 +221,8 @@
       0: Alive
       200: Dead
   # less meat spawned since it's a lot easier to kill
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodMeatDragon
   - type: MeleeWeapon
     damage:

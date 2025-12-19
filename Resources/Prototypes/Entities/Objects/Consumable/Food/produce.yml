@@ -148,8 +148,8 @@
   - type: SolutionContainerManager
   - type: Produce
     seedId: papercane
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: SheetPaper1
       amount: 2
 
@@ -206,10 +206,10 @@
         Blunt: 10
   - type: Produce
     seedId: towercap
-  - type: Sliceable
+  - type: ToolRefinable
     toolQuality: Sawing
     solutionToSplit: null
-    slices:
+    refineResult:
     - id: MaterialWoodPlank1
       amount: 2
 
@@ -230,10 +230,10 @@
         Blunt: 12
   - type: Produce
     seedId: steelcap
-  - type: Sliceable
+  - type: ToolRefinable
     solutionToSplit: null
     toolQuality: Sawing
-    slices:
+    refineResult:
     - id: SheetSteel1
 
 - type: entity
@@ -860,8 +860,8 @@
       reagents:
       - ReagentId: JuicePineapple
         Quantity: 10
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPineappleSlice
       amount: 5
   - type: Tag
@@ -1306,8 +1306,8 @@
     heldPrefix: produce
   - type: Produce
     seedId: onion
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodOnionSlice
       amount: 5
   - type: Tag
@@ -1340,8 +1340,8 @@
     heldPrefix: produce
   - type: Produce
     seedId: onionred
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodOnionRedSlice
       amount: 5
   - type: Tag
@@ -1371,7 +1371,7 @@
     - Vegetable
     - Mushroom
 
-# Slices
+# refineResult:
 
 - type: entity
   parent: FoodInjectableBase
@@ -2166,8 +2166,8 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodWatermelonSlice
       amount: 5
     - id: ClothingHeadHatWatermelon
@@ -2213,7 +2213,7 @@
     entries:
       Burger: WatermelonSliceBurger
       Taco: WatermelonSlice
-      Skewer: WatermelonSliceSkewer
+      Skewer: WatermelonrefineResult:kewer
 
 - type: entity
   name: holymelon
@@ -2268,8 +2268,8 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodHolymelonSlice
       amount: 5
     - id: ClothingHeadHatHolyWatermelon
@@ -2316,7 +2316,7 @@
     entries:
       Burger: HolymelonSliceBurger
       Taco: HolymelonSlice
-      Skewer: HolymelonSliceSkewer
+      Skewer: HolymelonrefineResult:kewer
 
 - type: entity
   name: grapes
@@ -2564,8 +2564,8 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: CarvedPumpkin
     - id: PumpkinSeeds
   - type: Tag
@@ -2643,8 +2643,8 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialCotton1
       amount: 2
   - type: Produce
@@ -2678,8 +2678,8 @@
           Quantity: 5
         - ReagentId: Phlogiston
           Quantity: 5
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialPyrotton1
       amount: 2
   - type: Produce

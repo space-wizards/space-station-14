@@ -65,7 +65,7 @@
 
 - type: entity
   name: apple pie
-  parent: FoodPieBase
+  parent: [FoodPieBase, SlicingRefinableFoodBase]
   id: FoodPieApple
   description: A pie containing sweet, sweet love... or apple.
   components:
@@ -77,8 +77,8 @@
     layers:
     - state: tin
     - state: apple
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPieAppleSlice
       amount: 4
   - type: Tag
@@ -121,8 +121,8 @@
     layers:
     - state: tin
     - state: baklava
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPieBaklavaSlice
       amount: 4
 
@@ -178,8 +178,8 @@
     tags:
     - Fruit
     - Pie
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPieBananaCreamSlice
       amount: 4
 
@@ -218,8 +218,8 @@
     - state: tin
       color: pink
     - state: berryclafoutis
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPieClafoutisSlice
       amount: 4
   - type: Tag
@@ -261,8 +261,8 @@
     layers:
     - state: tin
     - state: cherry
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPieCherrySlice
       amount: 4
   - type: Tag
@@ -303,8 +303,8 @@
     layers:
     - state: tin
     - state: meat
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPieMeatSlice
       amount: 4
   - type: Tag
@@ -346,8 +346,8 @@
     layers:
     - state: tin
     - state: pumpkin
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPiePumpkinSlice
       amount: 4
   - type: Tag
@@ -384,8 +384,8 @@
     layers:
     - state: tin
     - state: xeno
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPieXenoSlice
       amount: 4
   - type: Tag
@@ -427,8 +427,8 @@
     layers:
     - state: tin
     - state: frosty
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodPieFrostySlice
       amount: 4
 
@@ -460,8 +460,8 @@
     state: mime
   - type: Item
     heldPrefix: mime
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: FoodTartMimeSlice
       amount: 4
 

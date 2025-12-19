@@ -1194,8 +1194,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/web.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/web.rsi
-  - type: Sliceable
-    slices:
+  - type: ToolRefinable
+    refineResult:
     - id: MaterialWebSilk1
       amount: 8
   - type: FlavorProfile
