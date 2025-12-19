@@ -144,7 +144,7 @@ public abstract partial class SharedBatterySystem
 
         var charge = GetCharge(ent);
 
-        if (MathHelper.CloseTo(charge, ent.Comp.MaxCharge))
+        if (charge >= ent.Comp.MaxCharge)
             newState = BatteryState.Full;
         else if (charge == 0f)
             newState = BatteryState.Empty;
