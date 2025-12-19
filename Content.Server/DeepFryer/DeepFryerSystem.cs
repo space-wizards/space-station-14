@@ -1,3 +1,4 @@
+using Content.Server.Access.Components;
 using Content.Server.Ghost;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
@@ -99,11 +100,6 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
             EntityStorage.CloseStorage(ent.Owner);
             Standing.Down(victim, false);
             EntityStorage.Insert(victim, ent.Owner);
-        }
-        else
-        {
-            EntityStorage.CloseStorage(ent.Owner);
-            Del(victim);
         }
         args.Handled = true;
     }

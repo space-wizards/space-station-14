@@ -1,4 +1,6 @@
+using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Atmos.Rotting;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -27,6 +29,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
 using Content.Shared.Throwing;
+using Content.Shared.Traits.Assorted;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -149,16 +152,14 @@ public abstract class SharedDeepFryerSystem : EntitySystem
             for (var i = ent.Comp2.Contents.ContainedEntities.Count - 1; i >= 0; i--)
             {
                 var item = ent.Comp2.Contents.ContainedEntities[i];
-                //The real nuke disk is simply too powerful to be ruined by frying it
-                /*if (!HasComp<NukeDiskComponent>(item))
-                {
-                    var components = AllComps(item);
-                    foreach (var comp in components)
-                    {
-                        if (comp.GetType() != typeof(DeepFryerComponent))
-                        {
-                        }
-                    }*/
+
+                // Fried mobs can no longer be defibrillated, but no longer rot
+                var unrev = AddComp<UnrevivableComponent>(item);
+                unrev.Analyzable = false;
+                unrev.Cloneable = true;
+                unrev.ReasonMessage = "defibrillator-unrevivable-fried";
+                RemComp<RottingComponent>(item);
+
                 EnsureComp<BeenFriedComponent>(item);
                 if(_net.IsServer) // can't predict without the user
                     _audio.PlayPvs(ent.Comp1.DeepFrySound, ent.Owner);

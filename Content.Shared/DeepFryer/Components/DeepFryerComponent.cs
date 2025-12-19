@@ -21,7 +21,7 @@ public sealed partial class DeepFryerComponent : Component
     public string SolutionName = "fryer";
 
     /// <summary>
-    /// The uninterrupted time it takes to deep fry non-mob entities.
+    /// The uninterrupted time it takes to deep fry.
     /// </summary>
     [DataField, AutoNetworkedField]
     public TimeSpan CookTime = TimeSpan.FromSeconds(10);
