@@ -59,12 +59,11 @@ public sealed class WeedPestGrowthSystem : EntitySystem
     {
         var (uid, component) = ent;
 
-        if (_plantTray.HasPlant(ent.AsNullable()))
+        if (_plantTray.TryGetPlant(ent.AsNullable(), out var plant))
         {
-            var plantUid = component.PlantEntity!.Value;
-            if (!TryComp(plantUid, out PlantTraitsComponent? traits)
-                || !TryComp(plantUid, out WeedPestGrowthComponent? weed)
-                || !TryComp(plantUid, out PlantHolderComponent? holder))
+            if (!TryComp(plant, out PlantTraitsComponent? traits)
+                || !TryComp(plant, out WeedPestGrowthComponent? weed)
+                || !TryComp(plant, out PlantHolderComponent? holder))
                 return;
 
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.

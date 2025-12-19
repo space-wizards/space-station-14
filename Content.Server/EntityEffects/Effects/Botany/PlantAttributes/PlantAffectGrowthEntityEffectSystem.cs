@@ -16,10 +16,9 @@ public sealed partial class PlantAffectGrowthEntityEffectSystem : EntityEffectSy
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAffectGrowth> args)
     {
-        if (!_plantTray.HasPlant(entity.AsNullable()))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
             return;
 
-        var plantUid = entity.Comp.PlantEntity!.Value;
-        _plantGrowth.AffectGrowth(plantUid, (int)args.Effect.Amount);
+        _plantGrowth.AffectGrowth(plant.Value, (int)args.Effect.Amount);
     }
 }

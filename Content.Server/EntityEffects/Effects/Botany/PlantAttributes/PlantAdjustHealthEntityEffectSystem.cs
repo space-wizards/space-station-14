@@ -16,17 +16,16 @@ public sealed partial class PlantAdjustHealthEntityEffectSystem : EntityEffectSy
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustHealth> args)
     {
-        if (!_plantTray.HasPlant(entity.AsNullable()))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
             return;
 
-        var plantUid = entity.Comp.PlantEntity!.Value;
-        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
+        if (!TryComp<PlantHolderComponent>(plant, out var plantHolder))
             return;
 
         if (plantHolder.Dead)
             return;
 
         plantHolder.Health += args.Effect.Amount;
-        _plantHolder.CheckHealth(plantUid);
+        _plantHolder.CheckHealth((plant.Value, null));
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
@@ -575,12 +576,14 @@ public sealed class PlantTraySystem : EntitySystem
     /// Checks if the tray contains a plant entity.
     /// </summary>
     [PublicAPI]
-    public bool HasPlant(Entity<PlantTrayComponent?> ent)
+    public bool TryGetPlant(Entity<PlantTrayComponent?> ent, [NotNullWhen(true)] out EntityUid? plant)
     {
+        plant = null;
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return false;
 
-        if (ent.Comp.PlantEntity == null || Deleted(ent.Comp.PlantEntity))
+        plant = ent.Comp.PlantEntity;
+        if (plant == null || Deleted(plant))
             return false;
 
         return true;
@@ -595,10 +598,10 @@ public sealed class PlantTraySystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return false;
 
-        if (!HasPlant(ent.Owner))
+        if (!TryGetPlant(ent.Owner, out var plant))
             return false;
 
-        if (!TryComp<PlantHolderComponent>(ent.Comp.PlantEntity!.Value, out var holder))
+        if (!TryComp<PlantHolderComponent>(plant, out var holder))
             return false;
 
         if (holder.Dead)

@@ -15,10 +15,10 @@ public sealed partial class PlantMutateHarvestEntityEffectSystem : EntityEffectS
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateHarvest> args)
     {
-        if (!_plantTray.HasPlant(entity.AsNullable()))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
             return;
 
-        var harvest = EnsureComp<PlantHarvestComponent>(entity.Comp.PlantEntity!.Value);
+        var harvest = EnsureComp<PlantHarvestComponent>(plant.Value);
         switch (harvest.HarvestRepeat)
         {
             case HarvestType.NoRepeat:

@@ -15,11 +15,10 @@ public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSy
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantPhalanximine> args)
     {
-        if (!_plantTray.HasPlant(entity.AsNullable()))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
             return;
 
-        var plantUid = entity.Comp.PlantEntity!.Value;
-        if (TryComp<PlantTraitsComponent>(plantUid, out var traits))
+        if (TryComp<PlantTraitsComponent>(plant, out var traits))
             traits.Viable = true;
     }
 }

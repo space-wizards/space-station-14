@@ -15,11 +15,10 @@ public sealed partial class PlantAdjustPestsEntityEffectSystem : EntityEffectSys
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustPests> args)
     {
-        if (!_plantTray.HasPlant(entity.AsNullable()))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
             return;
 
-        var plantUid = entity.Comp.PlantEntity!.Value;
-        if (TryComp<PlantHolderComponent>(plantUid, out var plantHolder) && plantHolder.Dead)
+        if (TryComp<PlantHolderComponent>(plant, out var plantHolder) && plantHolder.Dead)
             return;
 
         entity.Comp.PestLevel += args.Effect.Amount;

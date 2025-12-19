@@ -18,7 +18,7 @@ public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffe
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateExudeGases> args)
     {
-        if (!_plantTray.HasPlant(entity.AsNullable()))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out _))
             return;
 
         var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Comp.PlantEntity!.Value);
@@ -46,7 +46,7 @@ public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEf
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateConsumeGases> args)
     {
-        if (!_plantTray.HasPlant(entity.AsNullable()))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out _))
             return;
 
         var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Comp.PlantEntity!.Value);

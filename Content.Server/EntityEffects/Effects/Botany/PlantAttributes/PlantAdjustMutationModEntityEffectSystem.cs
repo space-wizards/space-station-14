@@ -15,11 +15,10 @@ public sealed partial class PlantAdjustMutationModEntityEffectSystem : EntityEff
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustMutationMod> args)
     {
-        if (!_plantTray.HasPlant(entity.AsNullable()))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
             return;
 
-        var plantUid = entity.Comp.PlantEntity!.Value;
-        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
+        if (!TryComp<PlantHolderComponent>(plant, out var plantHolder))
             return;
 
         if (plantHolder.Dead)

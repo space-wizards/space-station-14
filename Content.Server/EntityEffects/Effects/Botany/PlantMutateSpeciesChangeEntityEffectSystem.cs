@@ -19,15 +19,13 @@ public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityE
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateSpeciesChange> args)
     {
-        if (!_plantTray.HasPlant(entity.AsNullable()))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
             return;
 
-        var oldPlantUid = entity.Comp.PlantEntity!.Value;
-
-        if (!TryComp<PlantDataComponent>(oldPlantUid, out var oldPlantData) || oldPlantData.MutationPrototypes.Count == 0)
+        if (!TryComp<PlantDataComponent>(plant, out var oldPlantData) || oldPlantData.MutationPrototypes.Count == 0)
             return;
 
         var newPlantEnt = _random.Pick(oldPlantData.MutationPrototypes);
-        _mutation.SpeciesChange(oldPlantUid, newPlantEnt, entity.AsNullable());
+        _mutation.SpeciesChange(plant.Value, newPlantEnt, entity.AsNullable());
     }
 }
