@@ -1,60 +1,7 @@
 - type: entity
-  abstract: true
-  parent: BaseItem
-  id: GrenadeBase
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Grenades/grenade.rsi
-    layers:
-    - state: icon
-      map: ["enum.TriggerVisualLayers.Base"]
-  - type: Item
-    size: Small
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - Belt
-  - type: TriggerOnUse
-  - type: TimerTrigger
-    delay: 3
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TriggerBehavior
-        keyOut: timer # explode immediately
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-  - type: Appearance
-  - type: AnimationPlayer
-  - type: GenericVisualizer
-    visuals:
-      enum.Trigger.TriggerVisuals.VisualState:
-        enum.ConstructionVisuals.Layer:
-          Primed: { state: primed }
-          Unprimed: { state: icon }
-  - type: Tag
-    tags:
-    - HandGrenade
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape: !type:PhysShapeCircle
-          radius: 0.2
-        density: 20 # derived from base_item
-        mask:
-        - ItemMask
-        restitution: 0.3
-        friction: 0.2
-
-- type: entity
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
-  parent: [GrenadeBase, BaseSyndicateContraband]
+  parent: [VolatileGrenadeBase, GrenadeBase, BaseSyndicateContraband]
   id: ExGrenade
   components:
   - type: ExplodeOnTrigger
@@ -77,7 +24,7 @@
 - type: entity
   name: flashbang
   description: Eeeeeeeeeeeeeeeeeeeeee.
-  parent: [ GrenadeBase, BaseSecurityContraband ]
+  parent: [ FragileGrenadeBase, GrenadeBase, BaseSecurityContraband ]
   id: GrenadeFlashBang
   components:
   - type: Sprite
@@ -91,6 +38,7 @@
     - timer
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
+    positional: true
   - type: DeleteOnTrigger
     keysIn:
     - timer
@@ -131,28 +79,13 @@
 - type: entity
   name: syndicate minibomb
   description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
-  parent: [GrenadeBase, BaseSyndicateContraband]
+  parent: [VolatileGrenadeBase, GrenadeBase, BaseSyndicateContraband]
   id: SyndieMiniBomb
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.1
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TimerStartBehavior
-    - trigger:
-        !type:DamageTrigger
-        damage: 45
-      behaviors:
-      - !type:TriggerBehavior
-        keyOut: timer # immediately explode
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: TimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
@@ -187,6 +120,8 @@
     totalIntensity: 400
     intensitySlope: 30
     maxIntensity: 125
+    deleteAfterExplosion: false
+    repeatable: true
     canCreateVacuum: true
   - type: TimerTrigger
     delay: 4.5
@@ -199,7 +134,7 @@
 
 
 - type: entity
-  parent: [ GrenadeBase, BaseSyndicateContraband ]
+  parent: [ FragileGrenadeBase, GrenadeBase, BaseSyndicateContraband ]
   id: SingularityGrenade
   name: singularity grenade
   description: Grenade that simulates the power of a singularity, pulling things in a heap.
@@ -260,6 +195,7 @@
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
             volume: 5
+        positional: true
         keysIn:
         - stageTwo
       - type: DeleteOnTrigger
@@ -412,7 +348,7 @@
 - type: entity
   name: EMP grenade
   description: A grenade designed to wreak havoc on electronic systems.
-  parent: [GrenadeBase, BaseSyndicateContraband]
+  parent: [FragileGrenadeBase, GrenadeBase, BaseSyndicateContraband]
   id: EmpGrenade
   components:
   - type: Sprite
@@ -461,123 +397,6 @@
   - type: StaticPrice
     price: 10000
 
-- type: entity
-  parent: [ GrenadeBase, BaseSecurityContraband ]
-  id: SmokeGrenade
-  name: smoke grenade
-  description: A tactical grenade that releases a large, long-lasting cloud of smoke when used.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Grenades/smoke.rsi
-  - type: SmokeOnTrigger
-    keysIn:
-    - timer
-    duration: 30
-    spreadAmount: 50
-  - type: EmitSoundOnTrigger
-    keysIn:
-    - timer
-    sound: /Audio/Items/smoke_grenade_smoke.ogg
-  - type: DeleteOnTrigger
-    keysIn:
-    - timer
-  - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Items/smoke_grenade_prime.ogg
-
-- type: entity
-  parent: [ BaseCivilianContraband, SmokeGrenade ]
-  id: CleanerGrenade
-  name: cleanade
-  description: Special grenade for janitors, releasing large cloud of space cleaner foam.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Grenades/janitor.rsi
-  - type: SmokeOnTrigger
-    keysIn:
-    - timer
-    duration: 15
-    spreadAmount: 50
-    smokePrototype: Foam
-    solution:
-      reagents:
-      - ReagentId: SpaceCleaner
-        Quantity: 30
-
-- type: entity
-  parent: SmokeGrenade
-  id: TearGasGrenade
-  name: tear gas grenade
-  description: A riot control tear gas grenade. Causes irritation, pain and makes you cry your eyes out.
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Grenades/tear_gas.rsi
-  - type: SmokeOnTrigger
-    keysIn:
-    - timer
-    duration: 10
-    spreadAmount: 30
-    smokePrototype: TearGasSmokeWhite
-    solution:
-      reagents:
-      - ReagentId: TearGas
-        Quantity: 20
-
-- type: entity
-  parent: [ BaseEngineeringContraband, SmokeGrenade ]
-  id: MetalFoamGrenade
-  name: metal foam grenade
-  description: An emergency tool used for patching hull breaches with special quick-set metal foam. Almost as good as real floors!
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Grenades/metalfoam.rsi
-  - type: TimerTrigger
-    delay: 5
-  - type: SmokeOnTrigger
-    keysIn:
-    - timer
-    duration: 10
-    spreadAmount: 20
-    smokePrototype: AluminiumMetalFoam
-  - type: StaticPrice
-    price: 350
-
-- type: entity
-  parent: [ BaseEngineeringContraband, GrenadeBase ] # Prevent inheriting DeleteOnTrigger from SmokeGrenade
-  id: AirGrenade
-  name: air grenade
-  description: A special solid state chemical grenade used for quickly releasing standard air into a spaced area. Fills up to 30 tiles!
-  components:
-  - type: Sprite
-    sprite: Objects/Weapons/Grenades/airboom.rsi
-  - type: EmitSoundOnTrigger
-    keysIn:
-    - timer
-    sound: /Audio/Items/smoke_grenade_smoke.ogg
-  - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Items/smoke_grenade_prime.ogg
-  - type: TimerTrigger
-    delay: 3
-  - type: ReleaseGasOnTrigger
-    keysIn:
-    - timer
-    removeFraction: 0.25
-    air:
-      volume: 1000
-      moles: # Target is 3117.84 mols total for filling 30 tiles (goal is 101.325 kPa @ 20C)
-      - 654.7464 # oxygen
-      - 2463.0936 # nitrogen
-      temperature: 293.15
-  - type: StaticPrice
-    price: 350
-  - type: GenericVisualizer
-    visuals:
-      enum.ReleaseGasOnTriggerVisuals.Key:
-        enabled:
-          True: { state: active }
-          False: { state: spent }
-
 # Non-explosive "dummy" grenades to use as a distraction.
 
 - type: entity
@@ -601,6 +420,7 @@
     - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
+    positional: true
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
@@ -621,6 +441,7 @@
     - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
+    positional: true
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
@@ -628,4 +449,4 @@
       params:
         volume: 12
   - type: StaticPrice
-    price: 1000
+    price: 50
