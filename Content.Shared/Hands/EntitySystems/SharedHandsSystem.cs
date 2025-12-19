@@ -418,6 +418,9 @@ public abstract partial class SharedHandsSystem
         return GetHeldItem(ent, handId) == null;
     }
 
+    /// <summary>
+    /// Counts the number of hands on this entity.
+    /// </summary>
     public int GetHandCount(Entity<HandsComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -426,6 +429,9 @@ public abstract partial class SharedHandsSystem
         return ent.Comp.Hands.Count;
     }
 
+    /// <summary>
+    /// Counts the number of hands that are empty.
+    /// </summary>
     public int CountFreeHands(Entity<HandsComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp, false))
@@ -441,11 +447,19 @@ public abstract partial class SharedHandsSystem
         return free;
     }
 
-    public int CountFreeableHands(Entity<HandsComponent> hands)
+    /// <summary>
+    /// Counts the number of hands that are empty or can be emptied by dropping an item.
+    /// Unremoveable items will cause a hand to not be freeable.
+    /// </summary>
+    /// <param name="except">The hand this entity is in will be ignored when counting.</param>
+    public int CountFreeableHands(Entity<HandsComponent> hands, EntityUid? except = null)
     {
         var freeable = 0;
         foreach (var name in hands.Comp.Hands.Keys)
         {
+            if (except != null && GetHeldItem(hands.AsNullable(), name) == except)
+                continue;
+
             if (HandIsEmpty(hands.AsNullable(), name) || CanDropHeld(hands, name))
                 freeable++;
         }

@@ -5,11 +5,11 @@
     weight: 0.5
     reagents:
     - Omnizine
-    - Nocturine
-    - Lexorin
+    - Impedrezene
+    - Fresium
+    - HeartbreakerToxin
     - Honk
     - BuzzochloricBees
-    - Stimulants
   - quantity: 5
     weight: 1
     reagents:
@@ -31,6 +31,9 @@
     - ChangelingSting
     - CogChamp
     - JuiceThatMakesYouWeh
+    - TearGas
+    - Lipolicide
+    - Benzene
   - quantity: 5
     weight: 2
     reagents:
@@ -57,6 +60,8 @@
     - Cola
     - Diphenhydramine
     - Iron
+    - Bleach
+    - Mannitol
   - quantity: 10
     weight: 3
     reagents:
@@ -78,7 +83,7 @@
     - Ash
     - SodiumCarbonate
     - SpaceDrugs
-    - MuteToxin
+    - SpaceGlue
     - JuiceBerryPoison
     - Pilk
     - Posca
@@ -91,6 +96,9 @@
     - Potassium
     - Fluorine
     - Aluminium
+    - Wine
+    - Coffee
+    - Beer
   - quantity: 10
     weight: 3.5
     reagents:
@@ -113,3 +121,23 @@
     - TableSalt
     - Chlorine
     - Mercury
+
+- type: weightedRandomFillSolution
+  id: EvilRandomFillSolution
+  fills:
+  - quantity: 0.1 # Common but low quantity
+    weight: 20
+    reagents:
+    - Vestine
+  - quantity: 0.5 # High quantity but uncommon
+    weight: 10
+    reagents:
+    - Stimulants
+    - MuteToxin
+  - quantity: 0.5 # High quantity but very rare
+    weight: 1
+    reagents:
+    - Tazinide
+    - Lead
+    - Nocturine
+    - Lexorin

@@ -207,7 +207,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: [ClothingHandsBase, BaseToggleClothing, BaseMajorContraband]
+  parent: [ClothingHandsBase, BaseToggleClothing, BaseHighlyIllegalContraband]
   id: ClothingHandsGlovesSpaceNinja
   name: space ninja gloves
   description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
@@ -241,6 +241,7 @@
     - components:
       - type: BatteryDrainer
       - type: StunProvider
+        cooldown: 10
         noPowerPopup: ninja-no-power
         whitelist:
           components:
@@ -618,7 +619,7 @@
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
   - type: LandAtCursor # it deals stamina damage when thrown
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 1000
     startingCharge: 1000
   - type: GuideHelp

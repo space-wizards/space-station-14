@@ -25,20 +25,16 @@
     solution: food
   - type: DrainableSolution
     solution: food
-  - type: Drink
+  - type: Edible
+    edible: Food # usually contains powders like flour or condiments like ketchup
     solution: food
-    useSound:
-      collection: eating
+    utensil: Spoon
   - type: Damageable
     damageContainer: Inorganic
   - type: Spillable
     solution: food
   - type: TrashOnSolutionEmpty
     solution: food
-  - type: Tag
-    tags:
-      - Ingredient
-
 - type: entity
   abstract: true
   parent: ReagentContainerBase
@@ -224,6 +220,8 @@
         reagents:
         - ReagentId: OilOlive
           Quantity: 20
+  - type: Edible
+    edible: Drink # slurping sounds!
 
 - type: entity
   parent: ReagentPacketBase
@@ -276,9 +274,6 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
-  - type: Tag
-    tags:
-      - Ingredient
 
 - type: entity
   parent: FoodBakingBase
@@ -466,7 +461,6 @@
     node: start
   - type: Tag
     tags:
-    - Ingredient
     - ClothMade
   - type: SolutionContainerManager
     solutions:
@@ -538,7 +532,6 @@
   - type: Tag
     tags:
      - ClothMade
-     - Ingredient
 
 - type: entity
   name: raw pastry base
@@ -932,9 +925,6 @@
       reagents:
       - ReagentId: CocoaPowder
         Quantity: 2
-  - type: Tag
-    tags:
-      - Ingredient
 
 - type: entity
   parent: FoodBakingBase

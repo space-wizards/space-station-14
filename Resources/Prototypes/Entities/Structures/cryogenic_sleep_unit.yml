@@ -23,6 +23,7 @@
   - type: AccessReader
     breakOnAccessBreaker: false
     access: [["Cryogenics"]]
+    examinationText: access-reader-examination-functionality-restricted
   - type: InteractionOutline
   - type: Cryostorage
   - type: Fixtures
