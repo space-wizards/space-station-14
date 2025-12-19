@@ -27,7 +27,7 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNotRespondingPopup(args.User);
             _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(args.User)} was unable to change bolt status on {ToPrettyString(ent)} to [{args.Bolted}] using the Station AI radial it was unpowered.");
+                $"{args.User} was unable to change bolt status on {ent} to [{args.Bolted}] using the Station AI radial it was unpowered.");
             return;
         }
 
@@ -35,7 +35,7 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNoAccessPopup(args.User);
             _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(args.User)} was unable to change bolt status on {ToPrettyString(ent)} to [{args.Bolted}] using the Station AI radial because they had no access.");
+                $"{args.User} was unable to change bolt status on {ent} to [{args.Bolted}] using the Station AI radial because they had no access.");
             return;
         }
 
@@ -43,12 +43,12 @@ public abstract partial class SharedStationAiSystem
         if (!setResult)
         {
             _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(args.User)} was unable to change bolt status on {ToPrettyString(ent)} to [{args.Bolted}] using the Station AI radial.");
+                $"{args.User} was unable to change bolt status on {ent} to [{args.Bolted}] using the Station AI radial.");
             ShowDeviceNotRespondingPopup(args.User);
         }
         else
         {
-            _adminLogger.Add(LogType.Action, $"{ToPrettyString(args.User)} set bolt status on {ToPrettyString(ent)} to [{args.Bolted}] using the Station AI radial.");
+            _adminLogger.Add(LogType.Action, $"{args.User} set bolt status on {ent} to [{args.Bolted}] using the Station AI radial.");
         }
     }
 
@@ -61,7 +61,7 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNotRespondingPopup(args.User);
             _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(args.User)} was unable to change emergency access status on {ToPrettyString(ent)} to [{args.EmergencyAccess}] using the Station AI radial it was unpowered.");
+                $"{args.User} was unable to change emergency access status on {ent} to [{args.EmergencyAccess}] using the Station AI radial it was unpowered.");
             return;
         }
 
@@ -69,12 +69,12 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNoAccessPopup(args.User);
             _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(args.User)} was unable to change emergency access status on {ToPrettyString(ent)} to [{args.EmergencyAccess}] using the Station AI radial because they had no access.");
+                $"{args.User} was unable to change emergency access status on {ent} to [{args.EmergencyAccess}] using the Station AI radial because they had no access.");
             return;
         }
 
         _airlocks.SetEmergencyAccess((ent, component), args.EmergencyAccess, args.User, predicted: true);
-        _adminLogger.Add(LogType.Action, $"{ToPrettyString(args.User)} set emergency access status on {ToPrettyString(ent)} to [{args.EmergencyAccess}] using the Station AI radial.");
+        _adminLogger.Add(LogType.Action, $"{args.User} set emergency access status on {ent} to [{args.EmergencyAccess}] using the Station AI radial.");
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNotRespondingPopup(args.User);
             _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(args.User)} was unable to change electrified status on {ToPrettyString(ent)} to [{args.Electrified}] using the Station AI radial because it was unpowered.");
+                $"{args.User} was unable to change electrified status on {ent} to [{args.Electrified}] using the Station AI radial because it was unpowered.");
             return;
         }
 
@@ -94,11 +94,11 @@ public abstract partial class SharedStationAiSystem
         {
             ShowDeviceNoAccessPopup(args.User);
             _adminLogger.Add(LogType.Action,
-                $"{ToPrettyString(args.User)} was unable to change electrified status on {ToPrettyString(ent)} to [{args.Electrified}] using the Station AI radial because they had no access.");
+                $"{args.User} was unable to change electrified status on {ent} to [{args.Electrified}] using the Station AI radial because they had no access.");
             return;
         }
 
-        _adminLogger.Add(LogType.Action, $"{ToPrettyString(args.User)} set electrified status on {ToPrettyString(ent)} to [{args.Electrified}] using the Station AI radial.");
+        _adminLogger.Add(LogType.Action, $"{args.User} set electrified status on {ent} to [{args.Electrified}] using the Station AI radial.");
         _electrify.SetElectrified((ent, component), args.Electrified);
         var soundToPlay = component.Enabled
             ? component.AirlockElectrifyDisabled
