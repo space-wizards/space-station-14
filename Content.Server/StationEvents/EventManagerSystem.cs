@@ -25,29 +25,21 @@ public sealed class EventManagerSystem : EntitySystem
     public bool EventsEnabled { get; private set; }
     private void SetEnabled(bool value) => EventsEnabled = value;
 
+    public Dictionary<EntityPrototype, StationEventComponent>? AllEventCache;
+
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
         Subs.CVar(_configurationManager, CCVars.EventsEnabled, SetEnabled, true);
     }
 
-    /// <summary>
-    /// Randomly runs a valid event.
-    /// </summary>
-    [Obsolete("use overload taking EnityTableSelector instead or risk unexpected results")]
-    public void RunRandomEvent()
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
     {
-        var randomEvent = PickRandomEvent();
-
-        if (randomEvent == null)
-        {
-            var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
-            Log.Error(errStr);
-            return;
-        }
-
-        GameTicker.AddGameRule(randomEvent);
+        if (args.WasModified<EntityPrototype>())
+            AllEventCache = GetAllEvents();
     }
 
     /// <summary>
@@ -55,17 +47,14 @@ public sealed class EventManagerSystem : EntitySystem
     /// </summary>
     public void RunRandomEvent(EntityTableSelector limitedEventsTable)
     {
-        var availableEvents = AvailableEvents(); // handles the player counts and individual event restrictions.
-                                                 // Putting this here only makes any sense in the context of the toolshed commands in BasicStationEventScheduler. Kill me.
-
-        if (!TryBuildLimitedEvents(limitedEventsTable, availableEvents, out var limitedEvents))
+        if (!TryBuildLimitedEvents(limitedEventsTable, out var limitedEvents))
         {
             Log.Warning("Provided event table could not build dict!");
             return;
         }
 
-        var randomLimitedEvent = FindEvent(limitedEvents); // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
-        if (randomLimitedEvent == null)
+        // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
+        if (FindEvent(limitedEvents) is not { } randomLimitedEvent)
         {
             Log.Warning("The selected random event is null!");
             return;
@@ -85,22 +74,17 @@ public sealed class EventManagerSystem : EntitySystem
     /// </summary>
     public bool TryBuildLimitedEvents(
         EntityTableSelector limitedEventsTable,
-        Dictionary<EntityPrototype, StationEventComponent> availableEvents,
         out Dictionary<EntityPrototype, StationEventComponent> limitedEvents
         )
     {
         limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
 
-        if (availableEvents.Count == 0)
-        {
-            Log.Warning("No events were available to run!");
-            return false;
-        }
+        var playerCount = _playerManager.PlayerCount;
+
+        // playerCount does a lock so we'll just keep the variable here
+        var currentTime = GameTicker.RoundDuration();
 
         var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
-
-        //if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
-            //return false;
 
         foreach (var eventid in selectedEvents)
         {
@@ -119,7 +103,7 @@ public sealed class EventManagerSystem : EntitySystem
             if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
                 continue;
 
-            if (!availableEvents.ContainsKey(eventproto))
+            if (!CanRun(eventproto, stationEvent, playerCount, currentTime))
                 continue;
 
             limitedEvents.Add(eventproto, stationEvent);
@@ -207,7 +191,19 @@ public sealed class EventManagerSystem : EntitySystem
         return result;
     }
 
+    /// <summary>
+    /// Returns all events prototypes which exist. Prioritizes the cache.
+    /// </summary>
+    /// <returns>All event prototypes, and their event component.</returns>
     public Dictionary<EntityPrototype, StationEventComponent> AllEvents()
+    {
+        return AllEventCache ?? GetAllEvents();
+    }
+
+    /// <summary>
+    /// Gets all event prototypes that exist. Private because you should be using the cache!
+    /// </summary>
+    private Dictionary<EntityPrototype, StationEventComponent> GetAllEvents()
     {
         var allEvents = new Dictionary<EntityPrototype, StationEventComponent>();
         foreach (var prototype in _prototype.EnumeratePrototypes<EntityPrototype>())

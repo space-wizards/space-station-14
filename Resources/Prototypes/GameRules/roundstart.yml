@@ -508,11 +508,11 @@
   parent: BaseGameRule                  # we can remerge this with the other schedulers, but it will silently fail due to that limitation without a separate scheduler to balance atm.
   components:
   - type: BasicStationEventScheduler
-    minimumTimeUntilFirstEvent: 10 # 45 mins #shows up like half way through shift.
-    maximumSpanUntilFirstEvent: 10 # At longest takes an hour to show up.
+    minimumTimeUntilFirstEvent: 2700 # 45 mins #shows up like half way through shift.
+    maximumSpanUntilFirstEvent: 900 # At longest takes an hour to show up.
     minMaxEventTiming:
-      min: 10 # 20 mins
-      max: 10 # 120 mins # you probably arent getting a second visitor shuttle in one round, but it is possible.
+      min: 1200 # 20 mins
+      max: 7200 # 120 mins # you probably arent getting a second visitor shuttle in one round, but it is possible.
     scheduledGameRules: !type:NestedSelector
       prob: 0.05 # Only 1 in 20 rounds...
       tableId: SpaceTrafficControlTable

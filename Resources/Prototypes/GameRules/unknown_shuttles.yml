@@ -6,7 +6,7 @@
     children:
     - id: LoneOpsSpawn
     - id: UnknownShuttleManOWar
-    - id: UnknownShuttleInstigator # One fear. this makes it approximately  1/620 round occurance...
+    - id: UnknownShuttleInstigator
 
 # Shuttle Game Rules
 
@@ -43,8 +43,8 @@
   components:
   - type: StationEvent
     startAnnouncement: null #dont nark on antags
-    weight: 1 #  lower because antags.
-    earliestStart: 1 # late to hopefully have enough ghosts to fill all roles quickly (3) and because antags
+    weight: 0.1 #  approximately 1/1000 on the random hostile shuttle table. Golden Legendary!
+    earliestStart: 45 # matches the gamerule it's associated with.
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/instigator.yml
 
@@ -55,6 +55,6 @@
   - type: StationEvent
     startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
     weight: 1 # lower because antags
-    earliestStart: 1 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
+    earliestStart: 45 # matches the gamerule it's associated with.
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/manowar.yml
