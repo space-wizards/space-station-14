@@ -12,17 +12,15 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class PlantAdjustMutationLevelEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAdjustMutationLevel>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustMutationLevel> args)
     {
-        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
-            return;
-
-        var plantUid = entity.Comp.PlantEntity.Value;
-        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
+        if (_plantTray.TryGetPlant(entity.AsNullable(), out var plantUid)
+            || !TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
             return;
 
         plantHolder.MutationLevel += args.Effect.Amount * plantHolder.MutationMod;
-        _plantHolder.CheckHealth(plantUid);
+        _plantHolder.CheckHealth(plantUid.Value);
     }
 }

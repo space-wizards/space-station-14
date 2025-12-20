@@ -43,10 +43,8 @@ public sealed class HarvestSystem : EntitySystem
         var (trayUid, tray) = args.Tray;
 
         if (!TryComp<PlantHolderComponent>(plantUid, out var holder)
-            || !TryComp<PlantComponent>(plantUid, out var plant))
-            return;
-
-        if (holder.Dead)
+            || !TryComp<PlantComponent>(plantUid, out var plant)
+            || holder.Dead)
             return;
 
         // Check if plant is ready for harvest.

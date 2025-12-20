@@ -17,11 +17,9 @@ public sealed partial class PlantRestoreSeedsEntityEffectSystem : EntityEffectSy
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantRestoreSeeds> args)
     {
-        if (!_plantTray.HasPlantAlive(entity.AsNullable()))
-            return;
-
-        var plantUid = entity.Comp.PlantEntity!.Value;
-        if (!TryComp<PlantTraitsComponent>(plantUid, out var traits) || !traits.Seedless)
+        if (!_plantTray.TryGetAlivePlant(entity.AsNullable(), out var plantUid, out _)
+            || !TryComp<PlantTraitsComponent>(plantUid, out var traits)
+            || !traits.Seedless)
             return;
 
         _popup.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), entity);

@@ -18,13 +18,11 @@ public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSy
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantDestroySeeds> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
-            return;
-
-        if (!TryComp<PlantHolderComponent>(plant, out var plantHolder) || plantHolder.Dead)
-            return;
-
-        if (!TryComp<PlantTraitsComponent>(plant, out var traits) || traits.Seedless)
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant)
+            || !TryComp<PlantHolderComponent>(plant, out var plantHolder)
+            || plantHolder.Dead
+            || !TryComp<PlantTraitsComponent>(plant, out var traits)
+            || traits.Seedless)
             return;
 
         _popup.PopupEntity(

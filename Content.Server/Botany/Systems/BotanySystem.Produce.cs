@@ -42,10 +42,8 @@ public sealed partial class BotanySystem
 
     public void OnProduceExamined(EntityUid uid, ProduceComponent comp, ExaminedEvent args)
     {
-        if (comp.PlantData == null)
-            return;
-
-        if (!TryGetPlantComponent<PlantComponent>(comp.PlantData, comp.PlantProtoId, out var plant))
+        if (comp.PlantData == null
+            || !TryGetPlantComponent<PlantComponent>(comp.PlantData, comp.PlantProtoId, out var plant))
             return;
 
         using (args.PushGroup(nameof(ProduceComponent)))

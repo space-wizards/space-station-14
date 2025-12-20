@@ -16,13 +16,10 @@ public sealed partial class PlantAdjustPotencyEntityEffectSystem : EntityEffectS
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustPotency> args)
     {
-        if (!_plantTray.HasPlantAlive(entity.AsNullable()))
+        if (!_plantTray.TryGetAlivePlant(entity.AsNullable(), out var plantUid, out _)
+            || !TryComp<PlantComponent>(plantUid, out var plant))
             return;
 
-        var plantUid = entity.Comp.PlantEntity!.Value;
-        if (!TryComp<PlantComponent>(plantUid, out var plant))
-            return;
-
-        _plant.AdjustPotency((plantUid, plant), args.Effect.Amount);
+        _plant.AdjustPotency((plantUid.Value, plant), args.Effect.Amount);
     }
 }

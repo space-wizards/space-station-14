@@ -17,12 +17,10 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
-            return;
-
-        if (!TryComp<PlantHolderComponent>(plant, out var plantHolder) ||
-            !TryComp<PlantComponent>(plant, out var plantComp) ||
-            !TryComp<PlantHarvestComponent>(plant, out var harvest))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant)
+            || !TryComp<PlantHolderComponent>(plant, out var plantHolder)
+            || !TryComp<PlantComponent>(plant, out var plantComp)
+            || !TryComp<PlantHarvestComponent>(plant, out var harvest))
             return;
 
         var deviation = plantHolder.Age > plantComp.Maturation

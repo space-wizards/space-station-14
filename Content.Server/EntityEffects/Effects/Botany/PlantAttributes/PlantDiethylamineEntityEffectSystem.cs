@@ -17,11 +17,8 @@ public sealed partial class PlantDiethylamineEntityEffectSystem : EntityEffectSy
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantDiethylamine> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
-            return;
-
-
-        if (!TryComp<PlantComponent>(plant, out var plantComponent))
+        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant)
+            || !TryComp<PlantComponent>(plant, out var plantComponent))
             return;
 
         if (_random.Prob(0.1f))

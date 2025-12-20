@@ -37,7 +37,7 @@ public sealed class AtmosphericGrowthSystem : EntitySystem
     private void OnPlantGrow(Entity<AtmosphericGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
         var (plantUid, component) = ent;
-        var (_, tray) = args.Tray;
+        var tray = args.Tray.Comp;
 
         if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;

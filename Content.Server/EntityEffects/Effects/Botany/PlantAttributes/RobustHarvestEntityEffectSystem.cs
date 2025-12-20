@@ -18,11 +18,9 @@ public sealed partial class RobustHarvestEntityEffectSystem : EntityEffectSystem
 
     protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<RobustHarvest> args)
     {
-        if (!_plantTray.HasPlantAlive(entity.AsNullable()))
-            return;
-
-        var plantUid = entity.Comp.PlantEntity!.Value;
-        if (!TryComp<PlantComponent>(plantUid, out var plant) || !TryComp<PlantTraitsComponent>(plantUid, out var traits))
+        if (!_plantTray.TryGetAlivePlant(entity.AsNullable(), out var plantUid, out _)
+            || !TryComp<PlantComponent>(plantUid, out var plant)
+            || !TryComp<PlantTraitsComponent>(plantUid, out var traits))
             return;
 
         if (plant.Potency < args.Effect.PotencyLimit)

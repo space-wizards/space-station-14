@@ -593,15 +593,21 @@ public sealed class PlantTraySystem : EntitySystem
     /// Checks if the tray contains a living plant entity.
     /// </summary>
     [PublicAPI]
-    public bool HasPlantAlive(Entity<PlantTrayComponent?> ent)
+    public bool TryGetAlivePlant(
+        Entity<PlantTrayComponent?> ent,
+        [NotNullWhen(true)] out EntityUid? plant,
+        [NotNullWhen(true)] out PlantHolderComponent? holder
+    )
     {
+        plant = null;
+        holder = null;
         if (!Resolve(ent.Owner, ref ent.Comp))
             return false;
 
-        if (!TryGetPlant(ent.Owner, out var plant))
+        if (!TryGetPlant(ent.Owner, out plant))
             return false;
 
-        if (!TryComp<PlantHolderComponent>(plant, out var holder))
+        if (!TryComp(plant, out holder))
             return false;
 
         if (holder.Dead)
