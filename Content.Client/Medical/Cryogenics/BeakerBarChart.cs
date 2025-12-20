@@ -106,6 +106,37 @@ public sealed class BeakerBarChart : Control
         });
     }
 
+    private IEnumerable<(Entry, float xMin, float xMax)> EntryRanges(float? pixelWidth = null)
+    {
+        pixelWidth ??= PixelWidth;
+        var unitWidth = pixelWidth.Value / Capacity;
+        var xStart = 0f;
+
+        foreach (var entry in _entries)
+        {
+            var xEnd = MathF.Min(xStart + entry.Amount * unitWidth, pixelWidth.Value);
+
+            yield return (entry, xStart, xEnd);
+
+            xStart = xEnd;
+        }
+    }
+
+    private bool TryFindEntry(float x, [NotNullWhen(true)] out Entry? entry)
+    {
+        foreach (var (currentEntry, xMin, xMax) in EntryRanges())
+        {
+            if (xMin <= x && x < xMax)
+            {
+                entry = currentEntry;
+                return true;
+            }
+        }
+
+        entry = null;
+        return false;
+    }
+
     protected override void FrameUpdate(FrameEventArgs args)
     {
         // Tween the amounts to their target amounts.
@@ -144,22 +175,6 @@ public sealed class BeakerBarChart : Control
         HideTooltip();
     }
 
-    private IEnumerable<(Entry, float xMin, float xMax)> EntryRanges(float? pixelWidth = null)
-    {
-        pixelWidth ??= PixelWidth;
-        var unitWidth = pixelWidth.Value / Capacity;
-        var xStart = 0f;
-
-        foreach (var entry in _entries)
-        {
-            var xEnd = MathF.Min(xStart + entry.Amount * unitWidth, pixelWidth.Value);
-
-            yield return (entry, xStart, xEnd);
-
-            xStart = xEnd;
-        }
-    }
-
     protected override void Draw(DrawingHandleScreen handle)
     {
         handle.DrawRect(PixelSizeBox, BackgroundColor);
@@ -188,6 +203,16 @@ public sealed class BeakerBarChart : Control
         _hasBeenDrawn = true;
     }
 
+    protected override Vector2 ArrangeOverride(Vector2 finalSize)
+    {
+        foreach (var (entry, xMin, xMax) in EntryRanges(finalSize.X))
+        {
+            entry.Label.ArrangePixel(new((int)xMin, 0, (int)xMax, (int)finalSize.Y));
+        }
+
+        return finalSize;
+    }
+
     private Control? SupplyTooltip(Control sender)
     {
         var globalMousePos = UserInterfaceManager.MousePositionScaled.Position;
@@ -202,30 +227,5 @@ public sealed class BeakerBarChart : Control
         var tooltip = new Tooltip();
         tooltip.SetMessage(msg);
         return tooltip;
-    }
-
-    private bool TryFindEntry(float x, [NotNullWhen(true)] out Entry? entry)
-    {
-        foreach (var (currentEntry, xMin, xMax) in EntryRanges())
-        {
-            if (xMin <= x && x < xMax)
-            {
-                entry = currentEntry;
-                return true;
-            }
-        }
-
-        entry = null;
-        return false;
-    }
-
-    protected override Vector2 ArrangeOverride(Vector2 finalSize)
-    {
-        foreach (var (entry, xMin, xMax) in EntryRanges(finalSize.X))
-        {
-            entry.Label.ArrangePixel(new((int)xMin, 0, (int)xMax, (int)finalSize.Y));
-        }
-
-        return finalSize;
     }
 }
