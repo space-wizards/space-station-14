@@ -474,10 +474,8 @@
 
 - type: entityTable
   id: SpaceTrafficControlTable
-  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
-    children:
-      - !type:NestedSelector
-        tableId: UnknownShuttlesHostileTable
+  table: !type:NestedSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    tableId: UnknownShuttlesHostileTable
 
 - type: entity
   id: BasicStationEventScheduler

@@ -72,6 +72,18 @@ public sealed class EventManagerSystem : EntitySystem
     }
 
     /// <inheritdoc cref="TryBuildLimitedEvents(IEnumerable{EntProtoId},out Dictionary{EntityPrototype,StationEventComponent},TimeSpan?,int?)"/>
+    public bool TryListLimitedEvents(
+        EntityTableSelector limitedEventsTable,
+        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
+        TimeSpan? currentTime = null,
+        int? playerCount = null)
+    {
+        var selectedEvents = _entityTable.ListSpawns(limitedEventsTable);
+
+        return TryBuildLimitedEvents(selectedEvents, out limitedEvents, currentTime, playerCount);
+    }
+
+    /// <inheritdoc cref="TryBuildLimitedEvents(IEnumerable{EntProtoId},out Dictionary{EntityPrototype,StationEventComponent},TimeSpan?,int?)"/>
     public bool TryBuildLimitedEvents(
         EntityTableSelector limitedEventsTable,
         out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,

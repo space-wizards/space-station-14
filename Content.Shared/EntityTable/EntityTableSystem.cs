@@ -26,6 +26,16 @@ public sealed class EntityTableSystem : EntitySystem
         ctx ??= new EntityTableContext();
         return table.GetSpawns(rand, EntityManager, _prototypeManager, ctx);
     }
+
+    public IEnumerable<EntProtoId> ListSpawns(EntityTableSelector? table, System.Random? rand = null, EntityTableContext? ctx = null)
+    {
+        if (table == null)
+            return new List<EntProtoId>();
+
+        rand ??= _random.GetRandom();
+        ctx ??= new EntityTableContext();
+        return table.ListSpawns(rand, EntityManager, _prototypeManager, ctx);
+    }
 }
 
 /// <summary>
