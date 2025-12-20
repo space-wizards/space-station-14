@@ -59,6 +59,3 @@
 - type: statusEffect
   id: Adrenaline
   alert: Adrenaline
-
-- type: statusEffect
-  id: ModifiedThresholds
