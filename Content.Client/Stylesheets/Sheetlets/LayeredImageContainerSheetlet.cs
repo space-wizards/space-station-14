@@ -38,6 +38,12 @@ public sealed class LayeredImageContainerSheetlet : Sheetlet<NanotrasenStyleshee
 
         var borderTex = sheet.GetTexture(panelCfg.GeometricPanelBorderPath).IntoPatch(StyleBox.Margin.All, 10);
 
+        var stripePanel = new StyleBoxTexture {
+            Texture = ResCache.GetTexture("/Textures/Interface/Nano/stripebackAlpha.svg.96dpi.png"),
+            Mode = StyleBoxTexture.StretchMode.Tile,
+            Modulate = Palettes.Amber.Element
+        };
+
         return [
             // Adds a raised border with rounded corners around a UI element
             E<LayeredImageContainer>().Class(LayeredImageContainer.StyleClassPanelMount)
@@ -50,6 +56,14 @@ public sealed class LayeredImageContainerSheetlet : Sheetlet<NanotrasenStyleshee
             E<LayeredImageContainer>().Class(LayeredImageContainer.StyleClassPanelMount)
                 .ParentOf(E<PanelContainer>().Identifier("Foreground2"))
                 .Prop(PanelContainer.StylePropertyPanel, panelMountHighlightStyleBox),
+
+            E<LayeredImageContainer>().Class(LayeredImageContainer.StyleClassWarningStripes)
+                .ParentOf(E<PanelContainer>().Identifier("Background1"))
+                .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.Black)),
+
+            E<LayeredImageContainer>().Class(LayeredImageContainer.StyleClassWarningStripes)
+                .ParentOf(E<PanelContainer>().Identifier("Background2"))
+                .Prop(PanelContainer.StylePropertyPanel, stripePanel),
 
             E<LayeredImageContainer>().Class(StyleClass.PanelDark)
                 .ParentOf(E<PanelContainer>().Identifier("Foreground1"))

@@ -24,6 +24,9 @@ public partial class LayeredImageContainer : Container
     // Adds a raised border with rounded corners around a UI element
     public const string StyleClassPanelMount = "PanelMount";
 
+    // Yellow and black warning stripes
+    public const string StyleClassWarningStripes = "WarningStripes";
+
     // Bright AngleRect with a subtle outline
     public const string StyleClassBrightAngleRect = "BrightAngleRectOutline";
 

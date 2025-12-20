@@ -1,8 +1,7 @@
 <Control xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    <controls:StripeBack
-        HasTopEdge="False" HasBottomEdge="False" StyleClasses="status-warning" >
+    <controls:LayeredImageContainer StyleClasses="WarningStripes" >
 
         <TextureRect StyleIdentifier="ScrewHead" TextureScale="0.25 0.25"
             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4"/>
@@ -69,5 +68,5 @@
                 </GridContainer>
             </BoxContainer>
         </PanelContainer>
-    </controls:StripeBack>
+    </controls:LayeredImageContainer>
 </Control>
