@@ -41,78 +41,13 @@
                 </BoxContainer>
             </BoxContainer>
 
-            <!-- Atmos info -->
-            <BoxContainer Orientation="Horizontal"
-                          SeparationOverride="20"
-                          Margin="0 12 0 8">
-                <!-- Pressure -->
-                <BoxContainer Orientation="Vertical">
-                    <Label Text="{Loc 'gas-analyzer-window-pressure-text'}"
-                           StyleClasses="LabelSubText"/>
-                    <Label Name="Pressure"/>
-                </BoxContainer>
-
-                <!-- Temperature -->
-                <BoxContainer Orientation="Vertical">
-                    <Label Text="{Loc 'gas-analyzer-window-temperature-text'}"
-                           StyleClasses="LabelSubText"/>
-                    <Label Name="Temperature"/>
-                </BoxContainer>
-            </BoxContainer>
-            <GridContainer Name="AtmosInfo"
-                           Columns="2"
-                           HSeparationOverride="0"
-                           VSeparationOverride="8">
-            </GridContainer>
-
-            <controls:SplitBar Name="GasMixChart"
-                               MinHeight="8"
-                               MaxHeight="8"
-                               Margin="0 -4 0 0"/>
-
             <!-- Status -->
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True"
                           Align="Center"
                           Margin="0 18 0 18"
-                          SeparationOverride="3">
-
-                <!-- Status checklist -->
-                <BoxContainer Orientation="Vertical">
-
-                    <BoxContainer Orientation="Horizontal"
-                                  SeparationOverride="8">
-                        <Label Text="{Loc 'cryo-pod-window-status'}"/>
-                        <Label Name="StatusLabel"
-                               Text="{Loc 'cryo-pod-window-status-not-ready'}"
-                               FontColorOverride="Orange"/>
-                    </BoxContainer>
-
-
-                    <GridContainer Columns="2"
-                                   HSeparationOverride="0"
-                                   VSeparationOverride="6"
-                                   Margin="6 3 0 0">
-                        <Label Text="⋄"
-                               StyleClasses="LabelSubText"/>
-                        <Label Name="PressureCheck"
-                               Text="{Loc 'cryo-pod-window-checklist-pressure'}"
-                               StyleClasses="LabelSubText"/>
-                        <Label Text="⋄"
-                               StyleClasses="LabelSubText"/>
-                        <Label Name="ChemicalsCheck"
-                               Text="{Loc 'cryo-pod-window-checklist-chemicals'}"
-                               StyleClasses="LabelSubText"
-                               FontColorOverride="Orange"/>
-                        <Label Text="⋄"
-                               StyleClasses="LabelSubText"/>
-                        <Label Name="TemperatureCheck"
-                               Text="{Loc 'cryo-pod-window-checklist-temperature'}"
-                               StyleClasses="LabelSubText"/>
-                    </GridContainer>
-
-                </BoxContainer>
+                          SeparationOverride="20">
 
                 <!-- Ejection error (if the pod is locked) -->
                 <RichTextLabel Name="EjectError"
@@ -157,7 +92,66 @@
                     </BoxContainer>
                 </PanelContainer>
 
+                <!-- Status checklist -->
+                <BoxContainer Orientation="Vertical">
+
+                    <BoxContainer Orientation="Horizontal"
+                                  SeparationOverride="8">
+                        <Label Text="{Loc 'cryo-pod-window-status'}"/>
+                        <Label Name="StatusLabel"
+                               Text="{Loc 'cryo-pod-window-status-not-ready'}"
+                               FontColorOverride="Orange"/>
+                    </BoxContainer>
+
+                    <GridContainer Columns="2"
+                                   HSeparationOverride="0"
+                                   VSeparationOverride="6"
+                                   Margin="6 3 0 0">
+                        <Label Text="⋄"
+                               StyleClasses="LabelSubText"/>
+                        <Label Name="PressureCheck"
+                               Text="{Loc 'cryo-pod-window-checklist-pressure'}"
+                               StyleClasses="LabelSubText"/>
+                        <Label Text="⋄"
+                               StyleClasses="LabelSubText"/>
+                        <Label Name="ChemicalsCheck"
+                               Text="{Loc 'cryo-pod-window-checklist-chemicals'}"
+                               StyleClasses="LabelSubText"
+                               FontColorOverride="Orange"/>
+                        <Label Text="⋄"
+                               StyleClasses="LabelSubText"/>
+                        <Label Name="TemperatureCheck"
+                               Text="{Loc 'cryo-pod-window-checklist-temperature'}"
+                               StyleClasses="LabelSubText"/>
+                    </GridContainer>
+
+                </BoxContainer>
+
             </BoxContainer>
+
+            <!-- Atmos info -->
+            <BoxContainer Orientation="Horizontal"
+                          SeparationOverride="20"
+                          Margin="0 0 0 4">
+                <!-- Pressure -->
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'gas-analyzer-window-pressure-text'}"
+                           StyleClasses="LabelSubText"/>
+                    <Label Name="Pressure"/>
+                </BoxContainer>
+
+                <!-- Temperature -->
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'gas-analyzer-window-temperature-text'}"
+                           StyleClasses="LabelSubText"/>
+                    <Label Name="Temperature"/>
+                </BoxContainer>
+            </BoxContainer>
+
+            <controls:SplitBar Name="GasMixChart"
+                               MinHeight="8"
+                               MaxHeight="8"
+                               Margin="0 0 0 14"/>
 
             <!-- Reagents -->
             <Control HorizontalExpand="True"
