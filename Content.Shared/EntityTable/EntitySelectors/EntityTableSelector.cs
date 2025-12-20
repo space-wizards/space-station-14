@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.EntityTable.Conditions;
 using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
@@ -83,14 +84,11 @@ public abstract partial class EntityTableSelector
         return success;
     }
 
-    public IEnumerable<(EntProtoId spawn, double)> ListSpawns(IEntityManager entMan,
+    public IEnumerable<(EntProtoId spawn, double prob)> ListSpawns(IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx)
     {
-        foreach (var (spawn, prob) in ListSpawnsImplementation(entMan, proto, ctx))
-        {
-            yield return (spawn, prob * Prob);
-        }
+        return ListSpawnsImplementation(entMan, proto, ctx);
     }
 
     protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
