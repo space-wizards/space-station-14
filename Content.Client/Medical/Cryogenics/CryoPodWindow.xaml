@@ -33,9 +33,9 @@
                              SetSize="32 32"/>
                 <BoxContainer Orientation="Vertical"
                               SeparationOverride="-4">
-                    <Label Text="Nanotrasen CMX-229"
+                    <Label Text="{Loc 'cryo-pod-window-product-name'}"
                            StyleClasses="FontLarge"/>
-                    <Label Text="Cryogenic medical unit"
+                    <Label Text="{Loc 'cryo-pod-window-product-subtitle'}"
                            StyleClasses="LabelSubText"/>
 
                 </BoxContainer>
@@ -83,9 +83,9 @@
 
                     <BoxContainer Orientation="Horizontal"
                                   SeparationOverride="8">
-                        <Label Text="Unit status:"/>
+                        <Label Text="{Loc 'cryo-pod-window-status'}"/>
                         <Label Name="StatusLabel"
-                               Text="Not ready"
+                               Text="{Loc 'cryo-pod-window-status-not-ready'}"
                                FontColorOverride="Orange"/>
                     </BoxContainer>
 
@@ -97,18 +97,18 @@
                         <Label Text="⋄"
                                StyleClasses="LabelSubText"/>
                         <Label Name="PressureCheck"
-                               Text="Pressurized"
+                               Text="{Loc 'cryo-pod-window-checklist-pressure'}"
                                StyleClasses="LabelSubText"/>
                         <Label Text="⋄"
                                StyleClasses="LabelSubText"/>
                         <Label Name="ChemicalsCheck"
-                               Text="Chemicals available — NO"
+                               Text="{Loc 'cryo-pod-window-checklist-chemicals'}"
                                StyleClasses="LabelSubText"
                                FontColorOverride="Orange"/>
                         <Label Text="⋄"
                                StyleClasses="LabelSubText"/>
                         <Label Name="TemperatureCheck"
-                               Text="Cryogenic temperature"
+                               Text="{Loc 'cryo-pod-window-checklist-temperature'}"
                                StyleClasses="LabelSubText"/>
                     </GridContainer>
 
@@ -168,7 +168,7 @@
                        VerticalExpand="True"
                        VAlign="Center"/>
                 <Label Name="EmptyBeakerText"
-                       Text="Empty beaker"
+                       Text="{Loc 'cryo-pod-window-chems-empty-beaker'}"
                        FontColorOverride="Gray"
                        VerticalExpand="True"
                        VAlign="Center"/>
@@ -186,32 +186,32 @@
                           Margin="-2 2 -2 0">
                 <BoxContainer Orientation="Horizontal">
                     <Button Name="Inject1"
-                            Text="1u"
+                            Text="{Loc 'cryo-pod-window-inject-1u'}"
                             Disabled="True"
                             HorizontalExpand="True"
                             StyleClasses="OpenBoth"/>
                     <Button Name="Inject5"
-                            Text="5u"
+                            Text="{Loc 'cryo-pod-window-inject-5u'}"
                             Disabled="True"
                             HorizontalExpand="True"
                             StyleClasses="OpenBoth"/>
                     <Button Name="Inject10"
-                            Text="10u"
+                            Text="{Loc 'cryo-pod-window-inject-10u'}"
                             Disabled="True"
                             HorizontalExpand="True"
                             StyleClasses="OpenBoth"/>
                     <Button Name="Inject20"
-                            Text="20u"
+                            Text="{Loc 'cryo-pod-window-inject-20u'}"
                             Disabled="True"
                             HorizontalExpand="True"
                             StyleClasses="OpenBoth"/>
                     <Button Name="EjectBeakerButton"
-                            Text="Eject"
+                            Text="{Loc 'cryo-pod-window-eject-beaker'}"
                             Disabled="True"
                             StyleClasses="OpenBoth"/>
                 </BoxContainer>
                 <Button Name="EjectPatientButton"
-                        Text="{Loc 'cryo-pod-window-eject-button'}"
+                        Text="{Loc 'cryo-pod-window-eject-patient'}"
                         Disabled="True"
                         HorizontalExpand="True"
                         StyleClasses="OpenRight"/>
@@ -226,7 +226,7 @@
 
             <!-- This label is used to deal with a stray hline at the end of the health analyzer UI -->
             <Label Name="NoDamageText"
-                   Text="No damage detected"
+                   Text="{Loc 'cryo-pod-window-health-no-damage'}"
                    FontColorOverride="DeepSkyBlue"/>
             <Control VerticalExpand="True"/>
 

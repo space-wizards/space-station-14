@@ -147,7 +147,8 @@ public sealed partial class CryoPodWindow : FancyWindow
                 injectingText,
                 (float)injectingQuantity,
                 Color.MediumSpringGreen,
-                tooltip: $"Injecting {injectingQuantity}u"
+                tooltip: Loc.GetString("cryo-pod-window-chems-injecting-tooltip",
+                                       ("quantity", injectingQuantity))
             );
         }
 
@@ -186,18 +187,19 @@ public sealed partial class CryoPodWindow : FancyWindow
                 && (lowestTempRequirement != null || msg.GasMix.Temperature < fallbackTemperatureRequirement));
         bool hasChemicals = (hasBeaker && !isBeakerEmpty);
 
-        UpdateChecklistItem(PressureCheck, "Pressurized", hasCorrectPressure);
-        UpdateChecklistItem(ChemicalsCheck, "Chemicals available", hasChemicals);
-        UpdateChecklistItem(TemperatureCheck, "Cryogenic temperature", hasTemperatureCheck);
+        UpdateChecklistItem(PressureCheck, Loc.GetString("cryo-pod-window-checklist-pressure"), hasCorrectPressure);
+        UpdateChecklistItem(ChemicalsCheck, Loc.GetString("cryo-pod-window-checklist-chemicals"), hasChemicals);
+        UpdateChecklistItem(TemperatureCheck, Loc.GetString("cryo-pod-window-checklist-temperature"), hasTemperatureCheck);
 
         bool isReady = (hasCorrectPressure && hasChemicals && hasTemperatureCheck);
-        StatusLabel.Text = (isReady ? "Nominal" : "OFF-NOMINAL");
+        StatusLabel.Text = (isReady ? Loc.GetString("cryo-pod-window-status-nominal")
+                                    : Loc.GetString("cryo-pod-window-status-not-ready"));
         StatusLabel.FontColorOverride = (isReady ? Color.DeepSkyBlue : Color.Orange);
     }
 
     void UpdateChecklistItem(Label label, string text, bool isOkay)
     {
-        label.Text = (isOkay ? text : $"{text} — NO");
+        label.Text = (isOkay ? text : Loc.GetString("cryo-pod-window-checklist-fail", ("item", text)));
         label.FontColorOverride = (isOkay ? null : Color.Orange);
     }
 
