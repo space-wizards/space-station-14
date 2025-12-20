@@ -12,21 +12,23 @@
   id: TritiumFire
   priority: -1
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
-  minimumRequirements: # In this case, same as minimum mole count.
-    Oxygen: 0.01
-    Tritium: 0.01
-  effects:
-    - !type:TritiumFireReaction {}
+  enthalpy: 284000
+  reactants:
+    Tritium: 2
+    Oxygen: 1
+  products:
+    WaterVapor: 2
 
 - type: gasReaction
   id: FrezonCoolant
   priority: 1
   minimumTemperature: 23.15
-  minimumRequirements:
-    Nitrogen: 0.01
-    Frezon: 0.01
-  effects:
-  - !type:FrezonCoolantReaction {}
+  enthalpy: -600000
+  reactants:
+    Frezon: 1
+    Nitrogen: 5
+  products:
+    NitrousOxide: 6
 
 - type: gasReaction
   id: FrezonProduction
