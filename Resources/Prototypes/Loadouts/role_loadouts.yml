@@ -55,6 +55,7 @@
   - Trinkets
   - PassengerJobTrinkets
   - GroupSpeciesBreathTool
+  - ChiefEngineerHead
 
 - type: roleLoadout
   id: JobBartender
@@ -395,6 +396,21 @@
 
 - type: roleLoadout
   id: JobSecurityOfficer
+  groups:
+  - SecurityHead
+  - SecurityJumpsuit
+  - SecurityBackpack
+  - SecurityOuterClothing
+  - SecurityShoes
+  - SecurityPDA
+  - SecurityBelt
+  - SurvivalSecurity
+  - Trinkets
+  - SecurityJobTrinkets
+  - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
+  id: JobMercenary
   groups:
   - SecurityHead
   - SecurityJumpsuit

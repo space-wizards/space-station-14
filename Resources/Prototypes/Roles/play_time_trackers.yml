@@ -8,6 +8,9 @@
   id: JobAtmosphericTechnician
 
 - type: playTimeTracker
+  id: JobMercenary
+
+- type: playTimeTracker
   id: JobBartender
 
 - type: playTimeTracker # Used as a tracker for all borgs and midround borging.

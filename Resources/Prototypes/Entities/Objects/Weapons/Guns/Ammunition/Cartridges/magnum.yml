@@ -28,6 +28,15 @@
 
 - type: entity
   parent: BaseCartridgeMagnum
+  id: CartridgeGodKillerMagnum
+  name: cartridge (.45 GOD KILLER)
+  description: Do not miss.
+  components:
+  - type: CartridgeAmmo
+    proto: BulletGodKillerMagnum
+
+- type: entity
+  parent: BaseCartridgeMagnum
   id: CartridgeMagnumPractice
   name: cartridge (.45 magnum practice)
   description: Heavy magnum cartridge mostly used by revolvers. Practice ammunition fires a chalk projectile that stings a little, but otherwise causes no lasting damage.

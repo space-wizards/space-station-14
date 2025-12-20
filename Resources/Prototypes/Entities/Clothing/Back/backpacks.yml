@@ -214,7 +214,7 @@
     sprite: Clothing/Back/Backpacks/ertleader.rsi
   - type: Storage
     grid:
-    - 0,0,8,3
+    - 0,0,10,5
   - type: ExplosionResistance
     damageCoefficient: 0.1
 

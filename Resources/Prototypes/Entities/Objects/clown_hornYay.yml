@@ -1,0 +1,23 @@
+- type: entity
+  name: TheClownHornOfGod
+  parent: BaseItem
+  id: ClownHorn
+  description: It goes honk honk! AND IT WILL DESTROY ALL CCSC MEMBERS
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/bikehorn.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    soundHit:
+      collection: BikeHorn
+      params:
+        variation: 0.125
+    damage:
+      types:
+        Blunt: 99999

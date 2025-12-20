@@ -10,6 +10,18 @@
         Piercing: 35
 
 - type: entity
+  parent: BaseBullet
+  id: BulletGodKillerMagnum
+  categories: [ HideSpawnMenu ]
+  name: bullet (.45 GOD KILLER)
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 9999
+        Heat: 99
+
+- type: entity
   parent: BaseBulletPractice
   id: BulletMagnumPractice
   categories: [ HideSpawnMenu ]

@@ -140,3 +140,14 @@
   - Reporter
   - Psychologist
   primary: false
+
+- type: department
+  id: External
+  name: department-External
+  description: department-Specific-description
+  color: "#9FED58"
+  weight: 10
+  roles:
+  - Mercenary
+  
+  primary: false
