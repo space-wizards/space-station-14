@@ -16,7 +16,7 @@
                   Orientation="Horizontal"
                   Visible="False"
                   Margin="10"
-                  SeparationOverride="8">
+                  SeparationOverride="16">
         <BoxContainer Name="CryoSection"
                       VerticalExpand="True"
                       Orientation="Vertical"
@@ -75,7 +75,44 @@
                           HorizontalExpand="True"
                           VerticalExpand="True"
                           Align="Center"
-                          Margin="0 18 0 18">
+                          Margin="0 18 0 18"
+                          SeparationOverride="3">
+
+                <!-- Status checklist -->
+                <BoxContainer Orientation="Vertical">
+
+                    <BoxContainer Orientation="Horizontal"
+                                  SeparationOverride="8">
+                        <Label Text="Unit status:"/>
+                        <Label Name="StatusLabel"
+                               Text="Not ready"
+                               FontColorOverride="Orange"/>
+                    </BoxContainer>
+
+
+                    <GridContainer Columns="2"
+                                   HSeparationOverride="0"
+                                   VSeparationOverride="6"
+                                   Margin="6 3 0 0">
+                        <Label Text="⋄"
+                               StyleClasses="LabelSubText"/>
+                        <Label Name="PressureCheck"
+                               Text="Pressurized"
+                               StyleClasses="LabelSubText"/>
+                        <Label Text="⋄"
+                               StyleClasses="LabelSubText"/>
+                        <Label Name="ChemicalsCheck"
+                               Text="Chemicals available — NO"
+                               StyleClasses="LabelSubText"
+                               FontColorOverride="Orange"/>
+                        <Label Text="⋄"
+                               StyleClasses="LabelSubText"/>
+                        <Label Name="TemperatureCheck"
+                               Text="Cryogenic temperature"
+                               StyleClasses="LabelSubText"/>
+                    </GridContainer>
+
+                </BoxContainer>
 
                 <!-- Ejection error (if the pod is locked) -->
                 <RichTextLabel Name="EjectError"
