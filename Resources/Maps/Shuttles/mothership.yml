@@ -4,7 +4,7 @@ meta:
   engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 12/20/2025 12:39:46
+  time: 12/20/2025 12:50:17
   entityCount: 581
 maps: []
 grids:
@@ -2915,6 +2915,8 @@ entities:
           - Off
   - uid: 328
     components:
+    - type: MetaData
+      name: blast door
     - type: Transform
       pos: 1.5,-4.5
       parent: 1
