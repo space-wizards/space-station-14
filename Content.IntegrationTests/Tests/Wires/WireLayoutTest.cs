@@ -1,6 +1,7 @@
 ﻿using Content.Server.Doors;
 using Content.Server.Power;
 using Content.Server.Wires;
+using Content.Shared.Wires;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
