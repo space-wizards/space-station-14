@@ -50,6 +50,7 @@ public sealed class BeakerBarChart : Control
 
     public BeakerBarChart()
     {
+        MouseFilter = MouseFilterMode.Pass;
         TooltipSupplier = SupplyTooltip;
     }
 
@@ -136,6 +137,11 @@ public sealed class BeakerBarChart : Control
         }
 
         _entries.RemoveAll(entry => entry.Amount == 0 && entry.TargetAmount == 0);
+    }
+
+    protected override void MouseMove(GUIMouseMoveEventArgs args)
+    {
+        HideTooltip();
     }
 
     private IEnumerable<(Entry, float xMin, float xMax)> EntryRanges(float? pixelWidth = null)
