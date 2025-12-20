@@ -219,3 +219,23 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 120
+
+- type: reagent
+  id: Citadelium
+  name: reagent-name-citadelium
+  desc: reagent-desc-citadelium
+  group: Biological
+  flavor: tingly
+  physicalDesc: reagent-physical-desc-refreshing
+  color: "#bf1365"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -4
+      - !type:GenericStatusEffect
+        key: Adrenaline
+        component: ModifiedThresholds
+        time: 120

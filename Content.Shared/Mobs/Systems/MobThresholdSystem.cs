@@ -26,6 +26,9 @@ public sealed class MobThresholdSystem : EntitySystem
         SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<MobThresholdsComponent, UpdateMobStateEvent>(OnUpdateMobState);
         SubscribeLocalEvent<MobThresholdsComponent, MobStateChangedEvent>(OnThresholdsMobState);
+
+        SubscribeLocalEvent<ModifiedModThresholdsComponent, ComponentInit>(OnThresholdModified);
+        SubscribeLocalEvent<ModifiedModThresholdsComponent, ComponentShutdown>(OnThresholdModifiedRemoved);
     }
 
     private void OnGetState(EntityUid uid, MobThresholdsComponent component, ref ComponentGetState args)
@@ -474,6 +477,27 @@ public sealed class MobThresholdSystem : EntitySystem
     private void OnThresholdsMobState(Entity<MobThresholdsComponent> ent, ref MobStateChangedEvent args)
     {
         UpdateAllEffects((ent, ent, null, null), args.NewMobState);
+    }
+
+    #endregion
+    #region Modified Thresholds
+    private void OnThresholdModified(Entity<ModifiedModThresholdsComponent> ent, ref ComponentInit args)
+    {
+        if (!TryComp<MobThresholdsComponent>(ent, out var thresholdsComponent))
+            return;
+
+        ent.Comp.OldThresholds = thresholdsComponent.Thresholds;
+        thresholdsComponent.Thresholds = ent.Comp.OldThresholds;
+        VerifyThresholds(ent);
+    }
+
+    private void OnThresholdModifiedRemoved(Entity<ModifiedModThresholdsComponent> ent, ref ComponentShutdown args)
+    {
+        if (!TryComp<MobThresholdsComponent>(ent, out var thresholdsComponent))
+            return;
+
+        thresholdsComponent.Thresholds = ent.Comp.OldThresholds;
+        VerifyThresholds(ent);
     }
 
     #endregion
