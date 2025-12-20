@@ -187,7 +187,7 @@ namespace Content.Server.StationEvents
                 yield break;
 
             var timemins = time * 60;
-            var theoryTime = TimeSpan.Zero + TimeSpan.FromSeconds(timemins); // TODO: PASS THIS!!!
+            var theoryTime = TimeSpan.Zero + TimeSpan.FromSeconds(timemins);
             if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules,
                     out var untimedEvents,
                     currentTime: theoryTime,
