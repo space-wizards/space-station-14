@@ -69,11 +69,29 @@ public sealed class EventManagerSystem : EntitySystem
         GameTicker.AddGameRule(randomLimitedEvent);
     }
 
-    /// <summary>
-    /// Returns true if the provided EntityTableSelector gives at least one prototype with a StationEvent comp.
-    /// </summary>
+    /// <inheritdoc cref="TryBuildLimitedEvents(IEnumerable{EntProtoId},out Dictionary{EntityPrototype,StationEventComponent},TimeSpan?,int?)"/>
     public bool TryBuildLimitedEvents(
         EntityTableSelector limitedEventsTable,
+        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
+        TimeSpan? currentTime = null,
+        int? playerCount = null)
+    {
+        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
+
+        return TryBuildLimitedEvents(selectedEvents, out limitedEvents, currentTime, playerCount);
+    }
+
+    /// <summary>
+    /// Builds a dictionary of valid event prototypes from a list of <see cref="EntProtoId"/>.
+    /// Dictionary output consists of the valid prototype as the key, and the <see cref="StationEventComponent"/> as the value.
+    /// </summary>
+    /// <param name="selectedEvents">List of events we're selecting from.</param>
+    /// <param name="limitedEvents">Dictionary we're outputting.</param>
+    /// <param name="currentTime">Optional override for station time.</param>
+    /// <param name="playerCount">Optional override for playerCount.</param>
+    /// <returns>Returns true if the provided EntProtoId list has at least one prototype with a StationEventComp that can successfully run!</returns>
+    public bool TryBuildLimitedEvents(
+        IEnumerable<EntProtoId> selectedEvents,
         out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
         TimeSpan? currentTime = null,
         int? playerCount = null)
@@ -84,8 +102,6 @@ public sealed class EventManagerSystem : EntitySystem
 
         // playerCount does a lock so we'll just keep the variable here
         currentTime ??= GameTicker.RoundDuration();
-
-        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
 
         foreach (var eventid in selectedEvents)
         {
