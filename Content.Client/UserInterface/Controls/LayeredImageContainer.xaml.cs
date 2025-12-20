@@ -18,6 +18,7 @@ namespace Content.Client.UserInterface.Controls;
 /// modulation.
 /// </summary>
 [GenerateTypedNameReferences]
+[Virtual]
 public partial class LayeredImageContainer : Container
 {
     // Adds a raised border with rounded corners around a UI element
