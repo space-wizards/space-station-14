@@ -391,7 +391,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to bring an entity's blood level to a modified equilibrium volume. Entity must be alive.
+    /// Attempts to bring an entity's blood level to a modified equilibrium volume.
     /// </summary>
     /// <param name="ent">Entity whose bloodstream we're modifying.</param>
     /// <param name="amount">The absolute maximum amount of blood we can add or remove.</param>
