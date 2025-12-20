@@ -215,20 +215,16 @@ public sealed partial class CryoPodWindow : FancyWindow
         EjectError.Visible = isVisible;
     }
 
-    // protected override Vector2 MeasureOverride(Vector2 availableSize)
-    // {
-    //     const float antiJiggleSlackSpace = 80;
-    //     var oldSize = DesiredSize;
-    //     // Note that Content is inside of a ScrollContainer, so by default its DesiredSize is ignored.
-    //     Content.Measure(availableSize);
-    //     Content.InvalidateMeasure();
-    //     // We add extra space for FancyWindow decorations.
-    //     var newSize = Content.DesiredSize + new Vector2(10, 50);
-    //
-    //     // Reduce how often the height of the window jiggles
-    //     if (newSize.Y < oldSize.Y && newSize.Y + antiJiggleSlackSpace > oldSize.Y)
-    //         newSize.Y = oldSize.Y;
-    //
-    //     return newSize;
-    // }
+    protected override Vector2 MeasureOverride(Vector2 availableSize)
+    {
+        const float antiJiggleSlackSpace = 80;
+        var oldSize = DesiredSize;
+        var newSize = base.MeasureOverride(availableSize);
+
+        // Reduce how often the height of the window jiggles
+        if (newSize.Y < oldSize.Y && newSize.Y + antiJiggleSlackSpace > oldSize.Y)
+            newSize.Y = oldSize.Y;
+
+        return newSize;
+    }
 }
