@@ -145,7 +145,11 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
     private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
     {
-        ClearInjectionBuffer(cryoPod);
+        if (args.Container.ID == CryoPodComponent.BodyContainerName)
+        {
+            ClearInjectionBuffer(cryoPod);
+        }
+
         UpdateUi(cryoPod);
     }
 
