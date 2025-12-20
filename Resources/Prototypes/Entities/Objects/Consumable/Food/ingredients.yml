@@ -255,8 +255,9 @@
           True: {state: "oliveoil_open"} # open
           False: {state: "oliveoil"} # closed
   - type: Sprite
-    state: oliveoil
-    map: ["enum.OpenableVisuals.Layer"]
+    layers:
+    - state: oliveoil
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -281,8 +282,9 @@
           True: {state: "mayo_open"} # open
           False: {state: "mayo"} # closed
   - type: Sprite
-    state: mayo
-    map: ["enum.OpenableVisuals.Layer"]
+    layers:
+    - state: mayo
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
