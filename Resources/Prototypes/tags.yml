@@ -575,6 +575,9 @@
   id: FirelockElectronics # ConstructionGraph: Firelock
 
 - type: Tag
+  id: FishParcelShape # Entities with this tag will create a fish-shaped parcel when wrapped
+
+- type: Tag
   id: Flare # Storage whitelist: BaseClothingBeltEngineering
 
 - type: Tag
@@ -786,6 +789,9 @@
 
 - type: Tag
   id: HudSecurity # ConstructionGraph: HudMedSec, GlassesSecHUD
+
+- type: Tag
+  id: HumanoidParcelShape # Entities with this tag will create a humanoid-shaped parcel when wrapped
 
 ## I ##
 
@@ -1574,6 +1580,9 @@
 
 - type: Tag
   id: XenoborgModuleStealth # Cyborg module category for evil stealth xenoborg
+
+- type: Tag
+  id: XenoParcelShape # Entities with this tag will create a praetorian-shaped parcel when wrapped with admeme wrapping paper.
 
 ## Y ##
 ## Z ##

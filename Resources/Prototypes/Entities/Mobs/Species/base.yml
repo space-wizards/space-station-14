@@ -175,9 +175,6 @@
     factions:
     - NanoTrasen
   - type: CreamPied
-  - type: ParcelWrapOverride
-    parcelPrototype: WrappedParcelHumanoid
-    wrapDelay: 5
   - type: Stripping
   - type: UserInterface
     interfaces:
@@ -209,6 +206,7 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
+    - HumanoidParcelShape
 
 - type: entity
   save: false

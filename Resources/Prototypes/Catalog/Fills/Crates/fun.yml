@@ -479,3 +479,14 @@
         - id: ClothingHeadHatHardhatYellow
         - id: ClothingNeckMantleQM
         - id: ClothingHeadsetCargo
+
+- type: entity
+  id: CrateFunGiftWrap
+  parent: CrateGenericSteel
+  name: gift wrap crate
+  description: Give the gift of giving. Contains three rolls of gift wrap.
+  components:
+  - type: StorageFill
+    contents:
+    - id: GiftWrap
+      amount: 3

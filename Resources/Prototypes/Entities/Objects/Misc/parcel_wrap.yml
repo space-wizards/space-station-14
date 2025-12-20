@@ -18,7 +18,8 @@
     whitelist:
       components:
       - Item
-      - ParcelWrapOverride
+      tags:
+      - HumanoidParcelShape
     blacklist:
       components:
       - NukeDisk # Don't try to hide the disk.
@@ -28,6 +29,13 @@
       - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be wrapped or not.
   - type: LimitedCharges
     maxCharges: 30
+  - type: ParcelWrapOverride
+    overrides:
+    - protoToUse: WrappedParcelHumanoid
+      wrapDelay: 5.0
+      whitelist:
+        tags:
+        - HumanoidParcelShape
 
 - type: entity
   parent: ParcelWrap
@@ -173,3 +181,208 @@
     - ParcelWrapBlacklist # No exponential wrapper trash-splosions.
     - Recyclable
   - type: SpaceGarbage
+
+- type: entity
+  parent: BaseItem
+  id: GiftWrap
+  name: gift wrap
+  description: Festive red wrapping paper, perfect for wrapping gifts for a friend!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/ParcelWrap/parcel_wrap.rsi
+    state: red
+  - type: ParcelWrap
+    parcelPrototype: WrappedPresent
+    wrapDelay: 1.0
+    wrapSound:
+      path: /Audio/Items/Handcuffs/rope_start.ogg
+      params:
+        volume: -5
+        variation: 0.05
+    whitelist:
+      components:
+      - Item
+      tags:
+      - HumanoidParcelShape
+      - FishParcelShape
+    blacklist:
+      components:
+      - NukeDisk # Don't try to hide the disk.
+      - WrappedParcel # No wrapping wrapped things.
+      tags:
+      - ParcelWrapBlacklist
+      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be wrapped or not.
+    wrappedItemsMaintainSize: false
+    wrappedItemsMaintainShape: false
+    fallbackItemSize: Small
+    maximumItemSize: Small
+  - type: LimitedCharges
+    maxCharges: 30
+  - type: ParcelWrapOverride
+    overrides:
+    - protoToUse: WrappedPresentHumanoid
+      wrapDelay: 5.0
+      whitelist:
+        tags:
+        - HumanoidParcelShape
+    - protoToUse: WrappedPresentFish
+      wrapDelay: 1.0
+      whitelist:
+        tags:
+        - FishParcelShape
+
+- type: entity
+  parent: GiftWrap
+  id: GiftWrapAdmeme
+  name: bluespace gift wrap
+  description: Festive red wrapping paper, capable of wrapping things that were never meant to be wrapped.
+  components:
+  - type: ParcelWrap
+    whitelist: null
+    blacklist: null
+    canSelfUnwrap: false
+    maximumItemSize: Ginormous
+  - type: ParcelWrapOverride
+    overrides:
+    - protoToUse: WrappedPresentXeno  # Admins are allowed to gift wrap praetorians, as a treat
+      wrapDelay: 5.0
+      whitelist:
+        tags:
+        - XenoParcelShape
+    - protoToUse: WrappedPresentHumanoid
+      wrapDelay: 5.0
+      whitelist:
+        tags:
+        - HumanoidParcelShape
+    - protoToUse: WrappedPresentFish
+      wrapDelay: 1.0
+      whitelist:
+        tags:
+        - FishParcelShape
+
+- type: entity
+  id: WrappedPresent
+  parent: [BaseItem, BaseWrappedParcel]
+  suffix: Hand Wrapped
+  name: present
+  description: A little box with incredible surprises inside.
+  components:
+  - type: WrappedParcel
+    unwrapDelay: 0.5
+    unwrapSound:
+      path: /Audio/Effects/unwrap.ogg
+    unwrapTrash: PresentTrash
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+  - type: Sprite
+    sprite: Objects/Decoration/present.rsi
+    layers:
+    - state: present
+    - state: paper
+      visible: false
+      sprite: Objects/Misc/ParcelWrap/paper_labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
+
+- type: entity
+  parent: BaseWrappedParcel
+  id: WrappedPresentHumanoid
+  name: present
+  suffix: Hand Wrapped, Humanoid
+  description: I hope it's a bicycle!
+  components:
+  - type: Physics
+    fixedRotation: false
+  - type: Sprite
+    sprite: Objects/Decoration/present.rsi
+    state: human
+    noRot: true
+    drawdepth: Mobs
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 185
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: WrappedParcel
+    unwrapDelay: 0.5
+    unwrapSound:
+      path: /Audio/Effects/unwrap.ogg
+    unwrapTrash: PresentTrash
+
+- type: entity
+  parent: [BaseItem, BaseWrappedParcel]
+  id: WrappedPresentFish
+  name: present
+  suffix: Hand Wrapped, Fish
+  description: There's something fishy going on here.
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/present.rsi
+    state: fish
+  - type: Item
+    sprite: Objects/Decoration/present.rsi
+    heldPrefix: fish
+    storedRotation: -90
+  - type: WrappedParcel
+    unwrapDelay: 0.5
+    unwrapSound:
+      path: /Audio/Effects/unwrap.ogg
+    unwrapTrash: PresentTrash
+  - type: MeleeWeapon # Gift wrap cannot contain the rage
+    damage:
+      types:
+        Blunt: 0
+    wideAnimationRotation: 90
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+  - type: PacifyingContainer # Alright, maybe it can contain the rage
+
+- type: entity
+  parent: BaseWrappedParcel
+  id: WrappedPresentXeno
+  name: present
+  suffix: Hand Wrapped, Xeno, Admeme
+  description: Is this a joke to you?
+  components:
+  - type: Physics
+    fixedRotation: true
+  - type: Sprite
+    sprite: Objects/Decoration/xenopresent.rsi # Had to make a separate rsi because it's a different sprite size
+    state: xeno
+    noRot: true
+  - type: WrappedParcel
+    unwrapDelay: 3 # That's a lotta wrapping paper
+    unwrapSound:
+      path: /Audio/Effects/unwrap.ogg
+    unwrapTrash: PresentTrash
+  - type: PacifyingContainer
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 400
+        mask:
+        - MobMask
+        layer:
+        - MobLayer

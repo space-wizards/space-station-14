@@ -8,6 +8,9 @@
     sprite: Objects/Decoration/present.rsi
     layers:
       - state: present
+  - type: Tag
+    tags:
+    - ParcelWrapBlacklist
 
 - type: entity
   id: Present

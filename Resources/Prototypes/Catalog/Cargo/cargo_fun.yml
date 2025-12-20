@@ -377,3 +377,13 @@
   cost: 1000
   category: cargoproduct-category-name-fun
   group: market
+
+- type: cargoProduct
+  id: FunGiftWrap
+  icon:
+    sprite: Objects/Misc/ParcelWrap/parcel_wrap.rsi
+    state: red
+  product: CrateFunGiftWrap
+  cost: 500
+  category: cargoproduct-category-name-fun
+  group: market
