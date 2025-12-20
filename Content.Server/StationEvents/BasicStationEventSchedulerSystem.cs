@@ -132,7 +132,10 @@ namespace Content.Server.StationEvents
                     // sim an event
                     curTime += TimeSpan.FromSeconds(compMinMax.Next(_random));
 
-                    if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, out var selectedEvents))
+                    if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules,
+                            out var selectedEvents,
+                            currentTime: curTime,
+                            playerCount: playerCount))
                     {
                         continue; // doesnt break because maybe the time is preventing events being available.
                     }
@@ -185,7 +188,10 @@ namespace Content.Server.StationEvents
 
             var timemins = time * 60;
             var theoryTime = TimeSpan.Zero + TimeSpan.FromSeconds(timemins); // TODO: PASS THIS!!!
-            if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, out var untimedEvents))
+            if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules,
+                    out var untimedEvents,
+                    currentTime: theoryTime,
+                    playerCount: playerCount))
                 yield break;
 
             var events = untimedEvents.Where(pair => pair.Value.EarliestStart <= timemins).ToList();

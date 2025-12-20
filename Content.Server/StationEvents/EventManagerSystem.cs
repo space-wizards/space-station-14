@@ -74,15 +74,16 @@ public sealed class EventManagerSystem : EntitySystem
     /// </summary>
     public bool TryBuildLimitedEvents(
         EntityTableSelector limitedEventsTable,
-        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents
-        )
+        out Dictionary<EntityPrototype, StationEventComponent> limitedEvents,
+        TimeSpan? currentTime = null,
+        int? playerCount = null)
     {
         limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
 
-        var playerCount = _playerManager.PlayerCount;
+        playerCount ??= _playerManager.PlayerCount;
 
         // playerCount does a lock so we'll just keep the variable here
-        var currentTime = GameTicker.RoundDuration();
+        currentTime ??= GameTicker.RoundDuration();
 
         var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
 
@@ -103,7 +104,7 @@ public sealed class EventManagerSystem : EntitySystem
             if (!eventproto.TryGetComponent<StationEventComponent>(out var stationEvent, EntityManager.ComponentFactory))
                 continue;
 
-            if (!CanRun(eventproto, stationEvent, playerCount, currentTime))
+            if (!CanRun(eventproto, stationEvent, playerCount.Value, currentTime.Value))
                 continue;
 
             limitedEvents.Add(eventproto, stationEvent);
