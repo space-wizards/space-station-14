@@ -235,7 +235,7 @@
         damage:
           groups:
             Brute: -4
-      - !type:GenericStatusEffect
-        key: Adrenaline
-        component: ModifiedThresholds
-        time: 120
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSafeCritHumanoid
+        time: 5
+        type: Update

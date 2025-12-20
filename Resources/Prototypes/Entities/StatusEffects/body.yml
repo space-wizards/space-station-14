@@ -62,3 +62,15 @@
   parent: [ PainNumbnessTraitStatusEffect, MobStatusEffectDebuff ]
   id: StatusEffectPainNumbness
   name: pain numbness
+
+- type: entity
+  parent: BloodstreamStatusEffectBase
+  id: StatusEffectSafeCritHumanoid
+  name: safe crit
+  components:
+  - type: ModifiedMobThresholdsStatusEffect
+    newThresholds:
+      0: Alive
+      150: Critical
+      200: Dead
+

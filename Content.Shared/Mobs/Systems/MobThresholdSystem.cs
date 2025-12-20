@@ -7,6 +7,7 @@ using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Events;
+using Content.Shared.StatusEffectNew;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Mobs.Systems;
@@ -27,8 +28,8 @@ public sealed class MobThresholdSystem : EntitySystem
         SubscribeLocalEvent<MobThresholdsComponent, UpdateMobStateEvent>(OnUpdateMobState);
         SubscribeLocalEvent<MobThresholdsComponent, MobStateChangedEvent>(OnThresholdsMobState);
 
-        SubscribeLocalEvent<ModifiedModThresholdsComponent, ComponentInit>(OnThresholdModified);
-        SubscribeLocalEvent<ModifiedModThresholdsComponent, ComponentShutdown>(OnThresholdModifiedRemoved);
+        SubscribeLocalEvent<ModifiedMobThresholdsStatusEffectComponent, StatusEffectAppliedEvent>(OnThresholdModified);
+        SubscribeLocalEvent<ModifiedMobThresholdsStatusEffectComponent, StatusEffectRemovedEvent>(OnThresholdModifiedRemoved);
     }
 
     private void OnGetState(EntityUid uid, MobThresholdsComponent component, ref ComponentGetState args)
@@ -481,23 +482,23 @@ public sealed class MobThresholdSystem : EntitySystem
 
     #endregion
     #region Modified Thresholds
-    private void OnThresholdModified(Entity<ModifiedModThresholdsComponent> ent, ref ComponentInit args)
+    private void OnThresholdModified(Entity<ModifiedMobThresholdsStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
     {
-        if (!TryComp<MobThresholdsComponent>(ent, out var thresholdsComponent))
+        if (!TryComp<MobThresholdsComponent>(args.Target, out var thresholdsComponent))
             return;
 
         ent.Comp.OldThresholds = thresholdsComponent.Thresholds;
-        thresholdsComponent.Thresholds = ent.Comp.OldThresholds;
-        VerifyThresholds(ent);
+        thresholdsComponent.Thresholds = ent.Comp.NewThresholds;
+        VerifyThresholds(args.Target);
     }
 
-    private void OnThresholdModifiedRemoved(Entity<ModifiedModThresholdsComponent> ent, ref ComponentShutdown args)
+    private void OnThresholdModifiedRemoved(Entity<ModifiedMobThresholdsStatusEffectComponent> ent, ref StatusEffectRemovedEvent args)
     {
-        if (!TryComp<MobThresholdsComponent>(ent, out var thresholdsComponent))
+        if (!TryComp<MobThresholdsComponent>(args.Target, out var thresholdsComponent))
             return;
 
         thresholdsComponent.Thresholds = ent.Comp.OldThresholds;
-        VerifyThresholds(ent);
+        VerifyThresholds(args.Target);
     }
 
     #endregion

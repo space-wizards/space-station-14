@@ -131,6 +131,7 @@
     - Flashed
     - RadiationProtection
     - Adrenaline
+    - StatusEffectSafeCritHumanoid
   - type: Body
     prototype: Human
     requiredLegs: 2
