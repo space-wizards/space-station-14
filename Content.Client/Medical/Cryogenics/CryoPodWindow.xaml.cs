@@ -118,7 +118,8 @@ public sealed partial class CryoPodWindow : FancyWindow
                 availableQuantity += quantity;
 
                 var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-                ChemicalsChart.AddEntry(
+                ChemicalsChart.SetEntry(
+                    reagent.Prototype,
                     reagentProto.LocalizedName,
                     (float)quantity,
                     reagentProto.SubstanceColor,
@@ -143,7 +144,8 @@ public sealed partial class CryoPodWindow : FancyWindow
             }
 
             var injectingText = (injectingQuantity > 1 ? $"{injectingQuantity}u" : "");
-            ChemicalsChart.AddEntry(
+            ChemicalsChart.SetEntry(
+                "injecting",
                 injectingText,
                 (float)injectingQuantity,
                 Color.MediumSpringGreen,
@@ -152,19 +154,16 @@ public sealed partial class CryoPodWindow : FancyWindow
             );
         }
 
-        ChemicalsChart.AddEmptySpace((float)(totalBeakerCapacity - availableQuantity - injectingQuantity));
-
         bool isBeakerEmpty = (injectingQuantity + availableQuantity == 0);
-        NoBeakerText.Visible = !hasBeaker;
-        EmptyBeakerText.Visible = (hasBeaker && isBeakerEmpty);
-        ChemicalsChart.Visible = (hasBeaker && !isBeakerEmpty);
+        bool isChemicalsChartVisible = (hasBeaker || injectingQuantity != 0);
+        NoBeakerText.Visible = !isChemicalsChartVisible;
+        ChemicalsChart.Visible = isChemicalsChartVisible;
         Inject1.Disabled = (!hasPatient || availableQuantity < 0.1f);
         Inject5.Disabled = (!hasPatient || availableQuantity <= 1);
         Inject10.Disabled = (!hasPatient || availableQuantity <= 5);
         Inject20.Disabled = (!hasPatient || availableQuantity <= 10);
         EjectBeakerButton.Disabled = !hasBeaker;
-        ChemicalsRuler.TotalNotches = (int)totalBeakerCapacity;
-        ChemicalsRuler2.TotalNotches = (int)totalBeakerCapacity;
+        ChemicalsChart.Capacity = (totalBeakerCapacity < 1 ? 50 : (int)totalBeakerCapacity);
 
         // Temperature warning
         bool hasCorrectTemperature = (lowestTempRequirement == null || lowestTempRequirement > msg.GasMix.Temperature);

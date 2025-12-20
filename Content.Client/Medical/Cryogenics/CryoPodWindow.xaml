@@ -167,16 +167,7 @@
                        FontColorOverride="Gray"
                        VerticalExpand="True"
                        VAlign="Center"/>
-                <Label Name="EmptyBeakerText"
-                       Text="{Loc 'cryo-pod-window-chems-empty-beaker'}"
-                       FontColorOverride="Gray"
-                       VerticalExpand="True"
-                       VAlign="Center"/>
-                <cryogenics:Ruler Name="ChemicalsRuler"
-                                  HorizontalExpand="True"
-                                  VerticalExpand="True"/>
-                <controls:LabelledSplitBar Name="ChemicalsChart"/>
-                <cryogenics:Ruler Name="ChemicalsRuler2"
+                <cryogenics:BeakerBarChart Name="ChemicalsChart"
                                   HorizontalExpand="True"
                                   VerticalExpand="True"/>
             </Control>
