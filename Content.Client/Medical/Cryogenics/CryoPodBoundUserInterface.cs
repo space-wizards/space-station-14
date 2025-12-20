@@ -19,18 +19,24 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
         base.Open();
         _window = this.CreateWindowCenteredLeft<CryoPodWindow>();
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-        _window.OnEjectPressed += EjectPressed;
+        _window.OnEjectPatientPressed += EjectPatientPressed;
+        _window.OnEjectBeakerPressed += EjectBeakerPressed;
         _window.OnInjectPressed += InjectPressed;
     }
 
-    private void EjectPressed()
+    private void EjectPatientPressed()
     {
         bool isLocked =
             EntMan.TryGetComponent<CryoPodComponent>(Owner, out var cryoComp)
             && cryoComp.Locked;
 
         _window?.SetEjectErrorVisible(isLocked);
-        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.Eject));
+        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.EjectPatient));
+    }
+
+    private void EjectBeakerPressed()
+    {
+        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.EjectBeaker));
     }
 
     private void InjectPressed(FixedPoint2 transferAmount)

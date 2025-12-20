@@ -16,6 +16,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Medical.Cryogenics;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -35,6 +36,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
     private EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
@@ -124,8 +126,11 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
     {
         switch (msg.Type)
         {
-            case CryoPodUiMessage.MessageType.Eject:
+            case CryoPodUiMessage.MessageType.EjectPatient:
                 TryEjectBody(cryoPod.Owner, msg.Actor, cryoPod.Comp);
+                break;
+            case CryoPodUiMessage.MessageType.EjectBeaker:
+                TryEjectBeaker(cryoPod, msg.Actor);
                 break;
             case CryoPodUiMessage.MessageType.Inject:
                 TryInject(cryoPod, msg.Quantity.GetValueOrDefault());
@@ -151,6 +156,18 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
         _uiSystem.CloseUi(cryoPod.Owner, CryoPodUiKey.Key, args.Entity);
         ClearInjectionBuffer(cryoPod);
+        UpdateUi(cryoPod);
+    }
+
+    private void TryEjectBeaker(Entity<CryoPodComponent> cryoPod, EntityUid? user)
+    {
+        if (_itemSlots.TryEject(cryoPod.Owner, cryoPod.Comp.SolutionContainerName, user, out var beaker)
+            && user != null)
+        {
+            // Eject the beaker to the user's hands if possible.
+            _hands.PickupOrDrop(user.Value, beaker.Value);
+        }
+
         UpdateUi(cryoPod);
     }
 

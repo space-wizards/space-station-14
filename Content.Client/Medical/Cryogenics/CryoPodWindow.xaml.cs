@@ -21,14 +21,16 @@ public sealed partial class CryoPodWindow : FancyWindow
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public event Action? OnEjectPressed;
+    public event Action? OnEjectPatientPressed;
+    public event Action? OnEjectBeakerPressed;
     public event Action<FixedPoint2>? OnInjectPressed;
 
     public CryoPodWindow()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
-        EjectButton.OnPressed += _ => OnEjectPressed?.Invoke();
+        EjectPatientButton.OnPressed += _ => OnEjectPatientPressed?.Invoke();
+        EjectBeakerButton.OnPressed += _ => OnEjectBeakerPressed?.Invoke();
         Inject1.OnPressed += _ => OnInjectPressed?.Invoke(1);
         Inject5.OnPressed += _ => OnInjectPressed?.Invoke(5);
         Inject10.OnPressed += _ => OnInjectPressed?.Invoke(10);
@@ -94,7 +96,7 @@ public sealed partial class CryoPodWindow : FancyWindow
 
         NoDamageText.Visible = (hasPatient && !hasDamage);
         HealthSection.Visible = hasPatient;
-        EjectButton.Disabled = !hasPatient;
+        EjectPatientButton.Disabled = !hasPatient;
 
         if (hasPatient)
             HealthAnalyzer.Populate(msg.Health);
@@ -159,6 +161,7 @@ public sealed partial class CryoPodWindow : FancyWindow
         Inject5.Disabled = (!hasPatient || availableQuantity <= 1);
         Inject10.Disabled = (!hasPatient || availableQuantity <= 5);
         Inject20.Disabled = (!hasPatient || availableQuantity <= 10);
+        EjectBeakerButton.Disabled = !hasBeaker;
         ChemicalsRuler.TotalNotches = (int)totalBeakerCapacity;
         ChemicalsRuler2.TotalNotches = (int)totalBeakerCapacity;
 

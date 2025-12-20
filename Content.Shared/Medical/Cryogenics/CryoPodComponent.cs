@@ -152,7 +152,7 @@ public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class CryoPodUiMessage : BoundUserInterfaceMessage
 {
-    public enum MessageType { Eject, Inject }
+    public enum MessageType { EjectPatient, EjectBeaker, Inject }
 
     public readonly MessageType Type;
     public readonly FixedPoint2? Quantity; // For Inject

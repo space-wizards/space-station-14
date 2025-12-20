@@ -205,8 +205,12 @@
                             Disabled="True"
                             HorizontalExpand="True"
                             StyleClasses="OpenBoth"/>
+                    <Button Name="EjectBeakerButton"
+                            Text="Eject"
+                            Disabled="True"
+                            StyleClasses="OpenBoth"/>
                 </BoxContainer>
-                <Button Name="EjectButton"
+                <Button Name="EjectPatientButton"
                         Text="{Loc 'cryo-pod-window-eject-button'}"
                         Disabled="True"
                         HorizontalExpand="True"
