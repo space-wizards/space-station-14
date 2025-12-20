@@ -25,7 +25,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly PredictedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
