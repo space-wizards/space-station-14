@@ -77,4 +77,4 @@
     newThresholds:
       0: Alive
       125: Critical
-      150: Dead
+      130: Dead

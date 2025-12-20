@@ -221,21 +221,30 @@
         time: 120
 
 - type: reagent
+  id: SpaceSalt
+  name: reagent-name-space-salt
+  desc: reagent-desc-space-salt
+  group: Biological
+  flavor: salty
+  physicalDesc: reagent-physical-desc-cloudy
+  color: "#b9bf95"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+
+- type: reagent
   id: Citadelium
   name: reagent-name-citadelium
   desc: reagent-desc-citadelium
   group: Biological
-  flavor: tingly
-  physicalDesc: reagent-physical-desc-refreshing
-  color: "#bf1365"
+  flavor: chalky
+  physicalDesc: reagent-physical-desc-bubbling
+  color: "#ff0000"
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
-        damage:
-          groups:
-            Brute: -4
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSafeCritHumanoid
-        time: 5
+        time: 3
         type: Update

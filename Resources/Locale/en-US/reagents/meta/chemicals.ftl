@@ -36,3 +36,9 @@ reagent-desc-rororium = A strange substance which fills the cores of the hivelor
 
 reagent-name-lye = lye
 reagent-desc-lye = A translucent, orange, alkaline solution used in traditional soap production.
+
+reagent-name-space-salt = space salt
+reagent-desc-space-salt = Strange oraque solution that was formed in ore veins from deep space.
+
+reagent-name-citadelium = citadelium
+reagent-desc-citadelium = Mixture-Painkiller based on space salt that allows humanoids be of sound mind a little bit longer before they go in crit.

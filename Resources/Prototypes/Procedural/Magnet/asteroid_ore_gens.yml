@@ -4,11 +4,11 @@
     OreIron: 1.0
     OreQuartz: 1.0
     OreCoal: 0.33
-    OreSalt: 0.25
     OreGold: 0.25
     OreSilver: 0.25
     OrePlasma: 0.20
     OreUranium: 0.20
+    OreSalt: 0.20
     OreArtifactFragment: 0.10
     OreBananium: 0.10
 
@@ -41,8 +41,8 @@
   replacement: AsteroidRock
   entity: AsteroidRockSalt
   count: 3
-  minGroupSize: 5
-  maxGroupSize: 7
+  minGroupSize: 2
+  maxGroupSize: 4
 
 - type: oreDunGen
   id: OreGold

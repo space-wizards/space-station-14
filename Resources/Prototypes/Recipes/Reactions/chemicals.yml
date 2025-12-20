@@ -542,3 +542,15 @@
       amount: 1
   products:
     Lye: 2
+
+- type: reaction
+  id: Citadelium
+  reactants:
+    SpaceSalt:
+      amount: 1
+    Bicaridine:
+      amount: 1
+    PwrGame:
+      amount: 1
+  products:
+    Citadelium: 3
