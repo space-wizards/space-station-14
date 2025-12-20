@@ -144,7 +144,7 @@ public sealed partial class PowerWireAction : BaseWireAction
         // if this is actively pulsed,
         // and there's not already an electrification cancel occurring,
         // we need to start that timer immediately
-        if (!WiresSystem.HasActiveWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel)
+        if (!WiresSystem.HasData(wire.Owner, PowerWireActionKey.ElectrifiedCancel)
             && activePulse
             && IsPowered(wire.Owner)
             && !allCut)

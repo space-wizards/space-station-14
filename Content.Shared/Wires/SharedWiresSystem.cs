@@ -77,21 +77,21 @@ public abstract class SharedWiresSystem : EntitySystem
 
     private void OnStartup(Entity<WiresPanelComponent> ent, ref ComponentStartup args)
     {
-        UpdateAppearance(ent, ent);
+        UpdateAppearance(ent);
     }
 
-    private void OnPanelDoAfter(EntityUid uid, WiresPanelComponent panel, WirePanelDoAfterEvent args)
+    private void OnPanelDoAfter(Entity<WiresPanelComponent> ent, ref WirePanelDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (!TogglePanel(uid, panel, !panel.Open, args.User))
+        if (!TogglePanel(ent, !ent.Comp.Open, args.User))
             return;
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(uid):target}'s maintenance panel {(panel.Open ? "open" : "closed")}");
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(ent):target}'s maintenance panel {(ent.Comp.Open ? "open" : "closed")}");
 
-        var sound = panel.Open ? panel.ScrewdriverOpenSound : panel.ScrewdriverCloseSound;
-        _audio.PlayPredicted(sound, uid, args.User);
+        var sound = ent.Comp.Open ? ent.Comp.ScrewdriverOpenSound : ent.Comp.ScrewdriverCloseSound;
+        _audio.PlayPredicted(sound, ent.Owner, args.User);
         args.Handled = true;
     }
 
@@ -119,21 +119,21 @@ public abstract class SharedWiresSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnExamine(EntityUid uid, WiresPanelComponent component, ExaminedEvent args)
+    private void OnExamine(Entity<WiresPanelComponent> ent, ref ExaminedEvent args)
     {
         using (args.PushGroup(nameof(WiresPanelComponent)))
         {
-            if (!component.Open)
+            if (!ent.Comp.Open)
             {
-                if (!string.IsNullOrEmpty(component.ExamineTextClosed))
-                    args.PushMarkup(Loc.GetString(component.ExamineTextClosed));
+                if (!string.IsNullOrEmpty(ent.Comp.ExamineTextClosed))
+                    args.PushMarkup(Loc.GetString(ent.Comp.ExamineTextClosed));
             }
             else
             {
-                if (!string.IsNullOrEmpty(component.ExamineTextOpen))
-                    args.PushMarkup(Loc.GetString(component.ExamineTextOpen));
+                if (!string.IsNullOrEmpty(ent.Comp.ExamineTextOpen))
+                    args.PushMarkup(Loc.GetString(ent.Comp.ExamineTextOpen));
 
-                if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+                if (TryComp<WiresPanelSecurityComponent>(ent.Owner, out var wiresPanelSecurity) &&
                     wiresPanelSecurity.Examine != null)
                 {
                     args.PushMarkup(Loc.GetString(wiresPanelSecurity.Examine));
@@ -142,30 +142,30 @@ public abstract class SharedWiresSystem : EntitySystem
         }
     }
 
-    public void ChangePanelVisibility(EntityUid uid, WiresPanelComponent component, bool visible)
+    public void ChangePanelVisibility(Entity<WiresPanelComponent> ent, bool visible)
     {
-        component.Visible = visible;
-        UpdateAppearance(uid, component);
-        Dirty(uid, component);
+        ent.Comp.Visible = visible;
+        UpdateAppearance(ent);
+        Dirty(ent);
     }
 
-    protected void UpdateAppearance(EntityUid uid, WiresPanelComponent panel)
+    protected void UpdateAppearance(Entity<WiresPanelComponent> ent)
     {
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-            _appearance.SetData(uid, WiresVisuals.MaintenancePanelState, panel.Open && panel.Visible, appearance);
+        if (TryComp<AppearanceComponent>(ent.Owner, out var appearance))
+            _appearance.SetData(ent.Owner, WiresVisuals.MaintenancePanelState, ent.Comp.Open && ent.Comp.Visible, appearance);
     }
 
-    public bool TogglePanel(EntityUid uid, WiresPanelComponent component, bool open, EntityUid? user = null)
+    public bool TogglePanel(Entity<WiresPanelComponent> ent, bool open, EntityUid? user = null)
     {
-        if (!CanTogglePanel((uid, component), user))
+        if (!CanTogglePanel(ent, user))
             return false;
 
-        component.Open = open;
-        UpdateAppearance(uid, component);
-        Dirty(uid, component);
+        ent.Comp.Open = open;
+        UpdateAppearance(ent);
+        Dirty(ent.Owner, ent.Comp);
 
-        var ev = new PanelChangedEvent(component.Open);
-        RaiseLocalEvent(uid, ref ev);
+        var ev = new PanelChangedEvent(ent.Comp.Open);
+        RaiseLocalEvent(ent.Owner, ref ev);
         return true;
     }
 
@@ -176,9 +176,9 @@ public abstract class SharedWiresSystem : EntitySystem
         return !attempt.Cancelled;
     }
 
-    public bool IsPanelOpen(Entity<WiresPanelComponent?> entity, EntityUid? tool = null)
+    public bool IsPanelOpen(Entity<WiresPanelComponent?> ent, EntityUid? tool = null)
     {
-        if (!Resolve(entity, ref entity.Comp, false))
+        if (!Resolve(ent, ref ent.Comp, false))
             return true;
 
         if (tool != null)
@@ -192,35 +192,35 @@ public abstract class SharedWiresSystem : EntitySystem
 
         // Listen, i don't know what the fuck this component does. it's stapled on shit for airlocks
         // but it looks like an almost direct duplication of WiresPanelComponent except with a shittier API.
-        if (TryComp<WiresPanelSecurityComponent>(entity, out var wiresPanelSecurity) &&
+        if (TryComp<WiresPanelSecurityComponent>(ent, out var wiresPanelSecurity) &&
             !wiresPanelSecurity.WiresAccessible)
             return false;
 
-        return entity.Comp.Open;
+        return ent.Comp.Open;
     }
 
-    private void OnAttemptOpenActivatableUI(EntityUid uid, ActivatableUIRequiresPanelComponent component, ActivatableUIOpenAttemptEvent args)
+    private void OnAttemptOpenActivatableUI(Entity<ActivatableUIRequiresPanelComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
-        if (args.Cancelled || !TryComp<WiresPanelComponent>(uid, out var wires))
+        if (args.Cancelled || !TryComp<WiresPanelComponent>(ent, out var wires))
             return;
 
-        if (component.RequireOpen != wires.Open)
+        if (ent.Comp.RequireOpen != wires.Open)
             args.Cancel();
     }
 
-    private void OnActivatableUIPanelChanged(EntityUid uid, ActivatableUIRequiresPanelComponent component, ref PanelChangedEvent args)
+    private void OnActivatableUIPanelChanged(Entity<ActivatableUIRequiresPanelComponent> ent, ref PanelChangedEvent args)
     {
-        if (args.Open == component.RequireOpen)
+        if (args.Open == ent.Comp.RequireOpen)
             return;
 
-        _activatableUI.CloseAll(uid);
+        _activatableUI.CloseAll(ent.Owner);
     }
 
     #region DoAfters
-    private void OnTimedWire(EntityUid uid, WiresComponent component, TimedWireEvent args)
+    private void OnTimedWire(Entity<WiresComponent> ent, ref TimedWireEvent args)
     {
         args.Delegate(args.Wire);
-        UpdateUserInterface(uid);
+        UpdateUserInterface(ent.Owner);
     }
 
     /// <summary>
@@ -237,14 +237,6 @@ public abstract class SharedWiresSystem : EntitySystem
 
         action.Cancelled = true;
         return true;
-    }
-
-    /// <summary>
-    ///     Checks whether a timed wire action is already in progress for this entity.
-    /// </summary>
-    public bool HasActiveWireAction(EntityUid owner, object key)
-    {
-        return _activeWireActions.TryGetValue(owner, out var actions) && actions.ContainsKey(key);
     }
 
     /// <summary>
@@ -376,28 +368,28 @@ public abstract class SharedWiresSystem : EntitySystem
     #endregion
 
     #region Event Handling
-    private void OnWiresPowered(EntityUid uid, WiresComponent component, ref PowerChangedEvent args)
+    private void OnWiresPowered(Entity<WiresComponent> ent, ref PowerChangedEvent args)
     {
-        UpdateUserInterface(uid);
-        foreach (var wire in component.WiresList)
+        UpdateUserInterface(ent.Owner);
+        foreach (var wire in ent.Comp.WiresList)
         {
             wire.Action?.Update(wire);
         }
     }
 
-    private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
+    private void OnWiresActionMessage(Entity<WiresComponent> ent, ref WiresActionMessage args)
     {
         var player = args.Actor;
 
         if (!TryComp(player, out HandsComponent? handsComponent))
         {
-            _popup.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), uid, player);
+            _popup.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-no-hands"), ent.Owner, player);
             return;
         }
 
-        if (!_interaction.InRangeUnobstructed(player, uid))
+        if (!_interaction.InRangeUnobstructed(player, ent.Owner))
         {
-            _popup.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), uid, player);
+            _popup.PopupEntity(Loc.GetString("wires-component-ui-on-receive-message-cannot-reach"), ent.Owner, player);
             return;
         }
 
@@ -407,27 +399,27 @@ public abstract class SharedWiresSystem : EntitySystem
         if (!TryComp(heldEntity, out ToolComponent? tool))
             return;
 
-        TryDoWireAction(uid, player, heldEntity.Value, args.Id, args.Action, component, tool);
+        TryDoWireAction(ent.AsNullable(), player, heldEntity.Value, args.Id, args.Action, tool);
     }
 
-    private void OnDoAfter(EntityUid uid, WiresComponent component, WireDoAfterEvent args)
+    private void OnDoAfter(Entity<WiresComponent> ent, ref WireDoAfterEvent args)
     {
         if (args.Cancelled)
         {
-            component.WiresQueue.Remove(args.Id);
-            Dirty(uid, component);
+            ent.Comp.WiresQueue.Remove(args.Id);
+            Dirty(ent);
             return;
         }
 
         if (args.Handled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        UpdateWires(args.Args.Target.Value, args.Args.User, args.Args.Used.Value, args.Id, args.Action, component);
+        UpdateWires((args.Args.Target.Value, ent.Comp), args.Args.User, args.Args.Used.Value, args.Id, args.Action);
 
         args.Handled = true;
     }
 
-    private void OnInteractUsing(EntityUid uid, WiresComponent component, InteractUsingEvent args)
+    private void OnInteractUsing(Entity<WiresComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -435,7 +427,7 @@ public abstract class SharedWiresSystem : EntitySystem
         if (!TryComp<ToolComponent>(args.Used, out var tool))
             return;
 
-        if (!IsPanelOpen(uid))
+        if (!IsPanelOpen(ent.Owner))
             return;
 
         if (_tool.HasQuality(args.Used, CuttingQuality, tool) ||
@@ -443,7 +435,7 @@ public abstract class SharedWiresSystem : EntitySystem
         {
             if (TryComp(args.User, out ActorComponent? actor))
             {
-                _uiSystem.OpenUi(uid, WiresUiKey.Key, actor.PlayerSession);
+                _uiSystem.OpenUi(ent.Owner, WiresUiKey.Key, actor.PlayerSession);
                 args.Handled = true;
             }
         }
@@ -459,13 +451,13 @@ public abstract class SharedWiresSystem : EntitySystem
     #endregion
 
     #region Entity API
-    protected void UpdateUserInterface(EntityUid uid, WiresComponent? wires = null, UserInterfaceComponent? ui = null)
+    protected void UpdateUserInterface(Entity<WiresComponent?> ent, UserInterfaceComponent? ui = null)
     {
-        if (!Resolve(uid, ref wires, ref ui, false)) // logging this means that we get a bunch of errors
+        if (!Resolve(ent, ref ent.Comp, ref ui, false)) // logging this means that we get a bunch of errors
             return;
 
         var clientList = new List<ClientWire>();
-        foreach (var entry in wires.WiresList)
+        foreach (var entry in ent.Comp.WiresList)
         {
             clientList.Add(new ClientWire(entry.Id, entry.IsCut, entry.Color,
                 entry.Letter));
@@ -473,12 +465,12 @@ public abstract class SharedWiresSystem : EntitySystem
             var statusData = entry.Action?.GetStatusLightData(entry);
             if (statusData != null && entry.Action?.StatusKey != null)
             {
-                wires.Statuses[entry.Action.StatusKey] = (entry.OriginalPosition, statusData);
+                ent.Comp.Statuses[entry.Action.StatusKey] = (entry.OriginalPosition, statusData);
             }
         }
 
         var statuses = new List<(int position, object key, object value)>();
-        foreach (var (key, value) in wires.Statuses)
+        foreach (var (key, value) in ent.Comp.Statuses)
         {
             var valueCast = ((int position, StatusLightData? value))value;
             statuses.Add((valueCast.position, key, valueCast.value!));
@@ -486,12 +478,12 @@ public abstract class SharedWiresSystem : EntitySystem
 
         statuses.Sort((a, b) => a.position.CompareTo(b.position));
 
-        _uiSystem.SetUiState((uid, ui), WiresUiKey.Key, new WiresBoundUserInterfaceState(
+        _uiSystem.SetUiState((ent.Owner, ui), WiresUiKey.Key, new WiresBoundUserInterfaceState(
             [.. clientList],
             statuses.Select(p => new StatusEntry(p.key, p.value)).ToArray(),
-            Loc.GetString(wires.BoardName),
-            wires.SerialNumber,
-            wires.WireSeed));
+            Loc.GetString(ent.Comp.BoardName),
+            ent.Comp.SerialNumber,
+            ent.Comp.WireSeed));
     }
 
     public void OpenUserInterface(EntityUid uid, ICommonSession player)
@@ -503,13 +495,13 @@ public abstract class SharedWiresSystem : EntitySystem
     ///     Tries to get a wire on this entity by its integer id.
     /// </summary>
     /// <returns>The wire if found, otherwise null</returns>
-    public Wire? TryGetWire(EntityUid uid, int id, WiresComponent? wires = null)
+    public Wire? TryGetWire(Entity<WiresComponent?> ent, int id)
     {
-        if (!Resolve(uid, ref wires))
+        if (!Resolve(ent, ref ent.Comp))
             return null;
 
-        return id >= 0 && id < wires.WiresList.Count
-            ? wires.WiresList[id]
+        return id >= 0 && id < ent.Comp.WiresList.Count
+            ? ent.Comp.WiresList[id]
             : null;
     }
 
@@ -544,16 +536,16 @@ public abstract class SharedWiresSystem : EntitySystem
         }
     }
 
-    private void TryDoWireAction(EntityUid target, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
+    private void TryDoWireAction(Entity<WiresComponent?> ent, EntityUid user, EntityUid toolEntity, int id, WiresAction action, ToolComponent? tool = null)
     {
-        if (!Resolve(target, ref wires)
+        if (!Resolve(ent, ref ent.Comp, false)
             || !Resolve(toolEntity, ref tool))
             return;
 
-        if (wires.WiresQueue.Contains(id))
+        if (ent.Comp.WiresQueue.Contains(id))
             return;
 
-        var wire = TryGetWire(target, id, wires);
+        var wire = TryGetWire(ent, id);
 
         if (wire == null)
             return;
@@ -604,12 +596,12 @@ public abstract class SharedWiresSystem : EntitySystem
                 break;
         }
 
-        wires.WiresQueue.Add(id);
-        Dirty(target, wires);
+        ent.Comp.WiresQueue.Add(id);
+        Dirty(ent);
 
         if (_toolTime > 0f)
         {
-            var args = new DoAfterArgs(EntityManager, user, _toolTime, new WireDoAfterEvent(action, id), target, target: target, used: toolEntity)
+            var args = new DoAfterArgs(EntityManager, user, _toolTime, new WireDoAfterEvent(action, id), ent.Owner, target: ent.Owner, used: toolEntity)
             {
                 NeedHand = true,
                 BreakOnDamage = true,
@@ -620,31 +612,31 @@ public abstract class SharedWiresSystem : EntitySystem
         }
         else
         {
-            UpdateWires(target, user, toolEntity, id, action, wires);
+            UpdateWires(ent, user, toolEntity, id, action);
         }
     }
 
-    private void UpdateWires(EntityUid used, EntityUid user, EntityUid toolEntity, int id, WiresAction action, WiresComponent? wires = null, ToolComponent? tool = null)
+    private void UpdateWires(Entity<WiresComponent?> ent, EntityUid user, EntityUid toolEntity, int id, WiresAction action, ToolComponent? tool = null)
     {
-        if (!Resolve(used, ref wires))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!wires.WiresQueue.Contains(id))
+        if (!ent.Comp.WiresQueue.Contains(id))
             return;
 
         if (!Resolve(toolEntity, ref tool))
         {
-            wires.WiresQueue.Remove(id);
-            Dirty(used, wires);
+            ent.Comp.WiresQueue.Remove(id);
+            Dirty(ent);
             return;
         }
 
-        var wire = TryGetWire(used, id, wires);
+        var wire = TryGetWire(ent, id);
 
         if (wire == null)
         {
-            wires.WiresQueue.Remove(id);
-            Dirty(used, wires);
+            ent.Comp.WiresQueue.Remove(id);
+            Dirty(ent);
             return;
         }
 
@@ -669,7 +661,7 @@ public abstract class SharedWiresSystem : EntitySystem
                     wire.IsCut = true;
                 }
 
-                UpdateUserInterface(used);
+                UpdateUserInterface(ent.Owner);
                 break;
             case WiresAction.Mend:
                 if (!_tool.HasQuality(toolEntity, CuttingQuality, tool))
@@ -690,7 +682,7 @@ public abstract class SharedWiresSystem : EntitySystem
                     wire.IsCut = false;
                 }
 
-                UpdateUserInterface(used);
+                UpdateUserInterface(ent.Owner);
                 break;
             case WiresAction.Pulse:
                 if (!_tool.HasQuality(toolEntity, PulsingQuality, tool))
@@ -707,18 +699,18 @@ public abstract class SharedWiresSystem : EntitySystem
 
                 wire.Action?.Pulse(user, wire);
 
-                UpdateUserInterface(used);
-                _audio.PlayPredicted(wires.PulseSound, used, used);
+                UpdateUserInterface(ent.Owner);
+                _audio.PlayPredicted(ent.Comp.PulseSound, ent.Owner, ent.Owner);
                 break;
         }
 
         wire.Action?.Update(wire);
-        wires.WiresQueue.Remove(id);
-        Dirty(used, wires);
+        ent.Comp.WiresQueue.Remove(id);
+        Dirty(ent);
     }
 
     /// <summary>
-    ///     Tries to get the stateful data stored in this entity's WiresComponent.
+    ///     Tries to get the stateful data stored in this entity's <see cref="WiresComponent"/>.
     /// </summary>
     /// <param name="identifier">The key that stores the data in the WiresComponent.</param>
     public bool TryGetData<T>(EntityUid uid, object identifier, [NotNullWhen(true)] out T? data, WiresComponent? wires = null)
@@ -744,12 +736,12 @@ public abstract class SharedWiresSystem : EntitySystem
     /// </summary>
     /// <param name="identifier">The key that stores the data in the WiresComponent.</param>
     /// <param name="data">The data to store using the given identifier.</param>
-    public void SetData(EntityUid uid, object identifier, object data, WiresComponent? wires = null)
+    public void SetData(Entity<WiresComponent?> ent, object identifier, object data)
     {
-        if (!Resolve(uid, ref wires))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (wires.StateData.TryGetValue(identifier, out var storedMessage))
+        if (ent.Comp.StateData.TryGetValue(identifier, out var storedMessage))
         {
             if (storedMessage == data)
             {
@@ -757,31 +749,31 @@ public abstract class SharedWiresSystem : EntitySystem
             }
         }
 
-        wires.StateData[identifier] = data;
-        UpdateUserInterface(uid, wires);
+        ent.Comp.StateData[identifier] = data;
+        UpdateUserInterface(ent.Owner);
     }
 
     /// <summary>
-    ///     If this entity has data stored via this key in the WiresComponent it has
+    ///     If this entity has data stored via this key in the WiresComponent it has.
     /// </summary>
-    public bool HasData(EntityUid uid, object identifier, WiresComponent? wires = null)
+    public bool HasData(Entity<WiresComponent?> ent, object identifier)
     {
-        if (!Resolve(uid, ref wires))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        return wires.StateData.ContainsKey(identifier);
+        return ent.Comp.StateData.ContainsKey(identifier);
     }
 
     /// <summary>
-    ///     Removes data from this entity stored in the given key from the entity's WiresComponent.
+    ///     Removes data from this entity stored in the given key from the entity's <see cref="WiresComponent"/>.
     /// </summary>
     /// <param name="identifier">The key that stores the data in the WiresComponent.</param>
-    public void RemoveData(EntityUid uid, object identifier, WiresComponent? wires = null)
+    public void RemoveData(Entity<WiresComponent?> ent, object identifier)
     {
-        if (!Resolve(uid, ref wires))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
-        wires.StateData.Remove(identifier);
+        ent.Comp.StateData.Remove(identifier);
     }
     #endregion
 

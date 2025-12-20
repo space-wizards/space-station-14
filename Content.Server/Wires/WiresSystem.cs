@@ -19,44 +19,44 @@ public sealed partial class WiresSystem : SharedWiresSystem
         SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<WiresComponent> ent, ref MapInitEvent args)
     {
-        if (!string.IsNullOrEmpty(component.LayoutId))
-            SetOrCreateWireLayout(uid, component);
+        if (!string.IsNullOrEmpty(ent.Comp.LayoutId))
+            SetOrCreateWireLayout(ent.AsNullable());
 
-        if (component.SerialNumber == null)
-            GenerateSerialNumber(uid, component);
+        if (ent.Comp.SerialNumber == null)
+            GenerateSerialNumber(ent.AsNullable());
 
-        if (component.WireSeed == 0)
-            component.WireSeed = _random.Next(1, int.MaxValue);
+        if (ent.Comp.WireSeed == 0)
+            ent.Comp.WireSeed = _random.Next(1, int.MaxValue);
 
         // Update the construction graph to make sure that it starts on the node specified by WiresPanelSecurityComponent
-        if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+        if (TryComp<WiresPanelSecurityComponent>(ent.Owner, out var wiresPanelSecurity) &&
             !string.IsNullOrEmpty(wiresPanelSecurity.SecurityLevel) &&
-            TryComp<ConstructionComponent>(uid, out var construction))
+            TryComp<ConstructionComponent>(ent.Owner, out var construction))
         {
-            _construction.ChangeNode(uid, null, wiresPanelSecurity.SecurityLevel, true, construction);
+            _construction.ChangeNode(ent.Owner, null, wiresPanelSecurity.SecurityLevel, true, construction);
         }
 
-        UpdateUserInterface(uid);
+        UpdateUserInterface(ent.Owner);
     }
 
-    private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
+    private void SetOrCreateWireLayout(Entity<WiresComponent?> ent)
     {
-        if (!Resolve(uid, ref wires))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
         WireLayout? layout = null;
         List<Wire>? wireSet = null;
-        if (!wires.AlwaysRandomize)
+        if (!ent.Comp.AlwaysRandomize)
         {
-            TryGetLayout(wires.LayoutId, out layout);
+            TryGetLayout(ent.Comp.LayoutId, out layout);
         }
 
         List<IWireAction> wireActions = [];
         var dummyWires = 0;
 
-        if (!_protoMan.Resolve(wires.LayoutId, out var layoutPrototype))
+        if (!_protoMan.Resolve(ent.Comp.LayoutId, out var layoutPrototype))
         {
             return;
         }
@@ -70,7 +70,7 @@ public sealed partial class WiresSystem : SharedWiresSystem
 
         // does the prototype have a parent (and are the wires empty?) if so, we just create
         // a new layout based on that
-        foreach (var parentLayout in _protoMan.EnumerateParents<WireLayoutPrototype>(wires.LayoutId))
+        foreach (var parentLayout in _protoMan.EnumerateParents<WireLayoutPrototype>(ent.Comp.LayoutId))
         {
             if (parentLayout.Wires != null)
             {
@@ -87,7 +87,7 @@ public sealed partial class WiresSystem : SharedWiresSystem
                 wire.Initialize();
             }
 
-            wireSet = CreateWireSet(uid, layout, wireActions, dummyWires);
+            wireSet = CreateWireSet(ent.Owner, layout, wireActions, dummyWires);
         }
 
         if (wireSet == null || wireSet.Count == 0)
@@ -95,7 +95,7 @@ public sealed partial class WiresSystem : SharedWiresSystem
             return;
         }
 
-        wires.WiresList.AddRange(wireSet);
+        ent.Comp.WiresList.AddRange(wireSet);
 
         var types = new Dictionary<object, int>();
 
@@ -103,11 +103,11 @@ public sealed partial class WiresSystem : SharedWiresSystem
         {
             for (var i = 0; i < wireSet.Count; i++)
             {
-                wires.WiresList[layout.Specifications[i].Position] = wireSet[i];
+                ent.Comp.WiresList[layout.Specifications[i].Position] = wireSet[i];
             }
 
             var id = 0;
-            foreach (var wire in wires.WiresList)
+            foreach (var wire in ent.Comp.WiresList)
             {
                 wire.Id = id++;
                 if (wire.Action == null)
@@ -154,20 +154,20 @@ public sealed partial class WiresSystem : SharedWiresSystem
                 }
 
                 data.Add(id, new WireLayout.WireData(d.Letter, d.Color, i));
-                wires.WiresList[i] = wireSet[id];
+                ent.Comp.WiresList[i] = wireSet[id];
             }
 
-            if (!wires.AlwaysRandomize && !string.IsNullOrEmpty(wires.LayoutId))
+            if (!ent.Comp.AlwaysRandomize && !string.IsNullOrEmpty(ent.Comp.LayoutId))
             {
-                AddLayout(wires.LayoutId, new WireLayout(data));
-                Dirty(uid, wires);
+                AddLayout(ent.Comp.LayoutId, new WireLayout(data));
+                Dirty(ent);
             }
         }
     }
 
-    private void GenerateSerialNumber(EntityUid uid, WiresComponent? wires = null)
+    private void GenerateSerialNumber(Entity<WiresComponent?> ent)
     {
-        if (!Resolve(uid, ref wires))
+        if (!Resolve(ent, ref ent.Comp))
             return;
 
         Span<char> data = stackalloc char[9];
@@ -196,9 +196,9 @@ public sealed partial class WiresSystem : SharedWiresSystem
             data[i] = (char)_random.Next(0x30, 0x3A);
         }
 
-        wires.SerialNumber = new string(data);
-        Dirty(uid, wires);
-        UpdateUserInterface(uid);
+        ent.Comp.SerialNumber = new string(data);
+        Dirty(ent);
+        UpdateUserInterface(ent.Owner);
     }
 
     private List<Wire>? CreateWireSet(EntityUid uid, WireLayout? layout, List<IWireAction> wires, int dummyWires)

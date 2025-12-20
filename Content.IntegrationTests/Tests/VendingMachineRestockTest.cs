@@ -239,7 +239,7 @@ namespace Content.IntegrationTests.Tests
 
                 var systemWires = entitySystemManager.GetEntitySystem<WiresSystem>();
                 // Open the panel.
-                systemWires.TogglePanel(machine, machineWiresPanel, true);
+                systemWires.TogglePanel((machine, machineWiresPanel), true);
 
                 Assert.Multiple(() =>
                 {

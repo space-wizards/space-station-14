@@ -45,7 +45,7 @@ public sealed partial class ListenWireAction : BaseToggleWireAction
             return StatusLightState.On;
         else
         {
-            if (TimeoutKey != null && _wires.HasActiveWireAction(wire.Owner, TimeoutKey))
+            if (TimeoutKey != null && _wires.HasData(wire.Owner, TimeoutKey))
                 return StatusLightState.BlinkingSlow;
             return StatusLightState.Off;
         }
