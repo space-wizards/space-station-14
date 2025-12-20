@@ -34,7 +34,7 @@ public sealed partial class WireLayoutPrototype : IPrototype, IInheritingPrototy
     /// <summary>
     ///     All the valid IWireActions currently in this layout.
     /// </summary>
-    [DataField]
+    [DataField(serverOnly: true)]
     [NeverPushInheritance]
     public List<IWireAction>? Wires { get; private set; }
 }
