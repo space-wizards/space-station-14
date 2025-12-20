@@ -48,7 +48,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly PredictedBatterySystem _predictedBattery = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;
@@ -60,7 +59,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
     private EntityQuery<ApcPowerReceiverComponent> _powerReceiverQuery;
     private EntityQuery<MobStateComponent> _mobQuery;
     private EntityQuery<BatteryComponent> _batteryQuery;
-    private EntityQuery<PredictedBatteryComponent> _predictedBatteryQuery;
     private HashSet<EntityUid> _entSet = new();
 
     private string[] _burntDecals = [];
@@ -85,7 +83,6 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         _powerReceiverQuery = GetEntityQuery<ApcPowerReceiverComponent>();
         _mobQuery = GetEntityQuery<MobStateComponent>();
         _batteryQuery = GetEntityQuery<BatteryComponent>();
-        _predictedBatteryQuery = GetEntityQuery<PredictedBatteryComponent>();
 
         SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);

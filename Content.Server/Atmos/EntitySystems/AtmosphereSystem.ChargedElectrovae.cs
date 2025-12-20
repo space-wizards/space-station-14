@@ -5,7 +5,6 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Database;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
-using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
@@ -19,7 +18,6 @@ public sealed partial class AtmosphereSystem
     private void InitializeChargedElectrovae()
     {
         SubscribeLocalEvent<BatteryComponent, ComponentShutdown>(OnBatteryShutdown);
-        SubscribeLocalEvent<PredictedBatteryComponent, ComponentShutdown>(OnPredictedBatteryShutdown);
         SubscribeLocalEvent<ChargedElectrovaeAffectedComponent, ComponentShutdown>(OnChargedElectrovaeAffectedShutdown);
         SubscribeLocalEvent<ChargedElectrovaeAffectedComponent, RefreshChargeRateEvent>(OnRefreshChargeRate);
     }
@@ -29,15 +27,6 @@ public sealed partial class AtmosphereSystem
     /// Ensures the ChargedElectrovaeAffectedComponent is also removed to prevent stale data.
     /// </summary>
     private void OnBatteryShutdown(Entity<BatteryComponent> ent, ref ComponentShutdown args)
-    {
-        RemCompDeferred<ChargedElectrovaeAffectedComponent>(ent);
-    }
-
-    /// <summary>
-    /// Handles cleanup when a predicted battery component is removed.
-    /// Ensures the ChargedElectrovaeAffectedComponent is also removed to prevent stale data.
-    /// </summary>
-    private void OnPredictedBatteryShutdown(Entity<PredictedBatteryComponent> ent, ref ComponentShutdown args)
     {
         RemCompDeferred<ChargedElectrovaeAffectedComponent>(ent);
     }
@@ -153,7 +142,7 @@ public sealed partial class AtmosphereSystem
             EnsureComp<ChargedElectrovaeAffectedComponent>(entity);
 
             // Handle batteries - expand capacity and trigger charge rate refresh
-            if (_batteryQuery.HasComponent(entity) || _predictedBatteryQuery.HasComponent(entity))
+            if (_batteryQuery.HasComponent(entity))
             {
                 ProcessBattery(entity, tile.ChargedEffect.Intensity, chargedMoles);
             }
@@ -225,7 +214,7 @@ public sealed partial class AtmosphereSystem
 
     /// <summary>
     /// Processes a battery in charged electrovae gas.
-    /// Expands battery capacity asymptotically and refreshes charge rate for predicted batteries.
+    /// Expands battery capacity asymptotically and refreshes charge rate for batteries.
     /// </summary>
     private void ProcessBattery(EntityUid uid, float intensity, float chargedMoles)
     {
@@ -244,11 +233,6 @@ public sealed partial class AtmosphereSystem
         if (_batteryQuery.TryGetComponent(uid, out var batteryComp) &&
             TryComp<ChargedElectrovaeAffectedComponent>(uid, out var affectedComp))
             ExpandBatteryCapacity((uid, batteryComp, affectedComp), chargedMoles);
-
-        // Trigger charge rate refresh for PredictedBatteryComponent
-        // The RefreshChargeRateEvent handler will add the appropriate charge rate
-        if (_predictedBatteryQuery.HasComponent(uid))
-            _predictedBattery.RefreshChargeRate(uid);
     }
 
     /// <summary>
