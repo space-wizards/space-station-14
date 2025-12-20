@@ -53,7 +53,9 @@ public sealed class EventManagerSystem : EntitySystem
             return;
         }
 
-        // this picks the event, It might be better to use the GetSpawns to do it, but that will be a major rebalancing fuck.
+        // This picks the event. Arguably we should be doing this with GetSpawns but that would be a massive amount of YAML slop.
+        // Or you'd need a new table prototype which inherits from EntityTables with its own logic for events.
+        // It's a ton of effort that only results in Events being able to use GroupSelectors so not worth it unless you're insane.
         if (FindEvent(limitedEvents) is not { } randomLimitedEvent)
         {
             Log.Warning("The selected random event is null!");
