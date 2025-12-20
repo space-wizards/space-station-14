@@ -171,48 +171,6 @@ public abstract class SharedWiresSystem : EntitySystem
     }
 }
 
-public sealed class Wire(EntityUid owner, bool isCut, WireColor color, WireLetter letter, int position, IWireAction? action)
-{
-    /// <summary>
-    /// The entity that registered the wire.
-    /// </summary>
-    public EntityUid Owner { get; } = owner;
-
-    /// <summary>
-    /// Whether the wire is cut.
-    /// </summary>
-    public bool IsCut { get; set; } = isCut;
-
-    /// <summary>
-    /// Used in client-server communication to identify a wire without telling the client what the wire does.
-    /// </summary>
-    [ViewVariables]
-    public int Id { get; set; }
-
-    /// <summary>
-    /// The original position of this wire in the prototype.
-    /// </summary>
-    [ViewVariables]
-    public int OriginalPosition { get; set; } = position;
-
-    /// <summary>
-    /// The color of the wire.
-    /// </summary>
-    [ViewVariables]
-    public WireColor Color { get; } = color;
-
-    /// <summary>
-    /// The greek letter shown below the wire.
-    /// </summary>
-    [ViewVariables]
-    public WireLetter Letter { get; } = letter;
-
-    /// <summary>
-    ///     The action that this wire performs when mended, cut or puled. This also determines the status lights that this wire adds.
-    /// </summary>
-    public IWireAction? Action { get; set; } = action;
-}
-
 /// <summary>
 /// Raised directed on a tool to try and override panel visibility.
 /// </summary>
