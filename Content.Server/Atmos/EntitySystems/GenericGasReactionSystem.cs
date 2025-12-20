@@ -52,7 +52,7 @@ public sealed class GenericGasReactionSystem : EntitySystem
 
         // Guard against volume div/0.
         // Realistically, GasMixtures should never have this low of a volume.
-        Debug.Assert(mix.Volume > Atmospherics.GasMinVolumeForReactions);
+        // Debug.Assert(mix.Volume > Atmospherics.GasMinVolumeForReactions);
 
         foreach (var reaction in reactions)
         {
@@ -65,7 +65,11 @@ public sealed class GenericGasReactionSystem : EntitySystem
             var rate = 1f; // rate of this reaction
             foreach (var (reactant, num) in reaction.Reactants)
             {
-                var concentration = mix.GetMoles(reactant) / mix.Volume;
+                // TODO ATMOS: nTotal is not truly correct here as reaction rate should be dependant on
+                // concentration, not the mole fraction. Using mix.Volume here is more accurate but causes nothing
+                // to react because the resulting concentrations are so low, which leads to an effectively zero rate.
+                // However for the sake of getting this Working:tm: we'll leave it as is for now.
+                var concentration = mix.GetMoles(reactant) / nTotal;
                 rate *= MathF.Pow(concentration, num);
             }
 
@@ -73,7 +77,7 @@ public sealed class GenericGasReactionSystem : EntitySystem
             float catalystEnergy = 0;
             foreach (var (catalyst, dE) in reaction.Catalysts)
             {
-                var concentration = mix.GetMoles(catalyst) / mix.Volume;
+                var concentration = mix.GetMoles(catalyst) / nTotal;
                 catalystEnergy += dE * concentration;
             }
 
