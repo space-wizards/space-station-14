@@ -68,9 +68,13 @@
   id: StatusEffectSafeCritHumanoid
   name: safe crit
   components:
+  - type: StatusEffect
+    whitelist:
+      components:
+      - MobState
+      - MobThresholds
   - type: ModifiedMobThresholdsStatusEffect
     newThresholds:
       0: Alive
-      150: Critical
-      200: Dead
-
+      125: Critical
+      150: Dead
