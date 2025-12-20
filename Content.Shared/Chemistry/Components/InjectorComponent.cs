@@ -16,8 +16,7 @@ namespace Content.Shared.Chemistry.Components;
 /// injection and drawing or just injection. Can inject/draw reagents from solution
 /// containers, and can directly inject into a mob's bloodstream.
 /// </remarks>
-/// <seealso cref="InjectorSystem"/>
-/// <seealso cref="InjectorBehavior"/>
+/// <seealso cref="InjectorModePrototype"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(InjectorSystem))]
 public sealed partial class InjectorComponent : Component
 {

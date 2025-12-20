@@ -10,6 +10,13 @@ namespace Content.Shared.Chemistry.Events;
 [Serializable, NetSerializable]
 public sealed partial class InjectorDoAfterEvent : SimpleDoAfterEvent;
 
+/// <summary>
+/// The base injection attempt event. It'll be raised on the user and target when attempting to inject the target.
+/// </summary>
+/// <param name="user">The user who is trying to inject the target.</param>
+/// <param name="usedInjector">The injector being used by the user.</param>
+/// <param name="target">The target who the user is trying to inject.</param>
+/// <param name="overrideMessage">The resulting message that gets displayed per popup.</param>
 public abstract partial class BeforeInjectTargetEvent(EntityUid user, EntityUid usedInjector, EntityUid target, string? overrideMessage = null)
     : CancellableEntityEventArgs, IInventoryRelayEvent
 {

@@ -24,6 +24,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
+/// <summary>
+/// This handles toggling injection modes, injections and drawings for all kinds of injectors.
+/// </summary>
+/// <seealso cref="InjectorComponent"/>
+/// <seealso cref="InjectorModePrototype"/>
 public sealed partial class InjectorSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -44,7 +49,7 @@ public sealed partial class InjectorSystem : EntitySystem
         SubscribeLocalEvent<InjectorComponent, AfterInteractEvent>(OnInjectorAfterInteract);
         SubscribeLocalEvent<InjectorComponent, InjectorDoAfterEvent>(OnInjectDoAfter);
         SubscribeLocalEvent<InjectorComponent, MeleeHitEvent>(OnAttack);
-        SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
+        SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
     }
 
     #region Events Handling
@@ -101,7 +106,16 @@ public sealed partial class InjectorSystem : EntitySystem
         TryMobsDoAfter(injector, args.User, args.HitEntities[0]);
     }
 
-    private void AddSetTransferVerbs(Entity<InjectorComponent> injector, ref GetVerbsEvent<AlternativeVerb> args)
+    /// <summary>
+    /// Give the user interaction verbs for their injector.
+    /// </summary>
+    /// <param name="injector"></param>
+    /// <param name="args"></param>
+    /// <remarks>
+    /// If they have multiple transferAmounts, they'll be able to switch between them via the verbs.
+    /// If they have multiple injector modes and don't toggle when used in hand, they can toggle the mode with the verbs too.
+    /// </remarks>
+    private void AddVerbs(Entity<InjectorComponent> injector, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null
             || !_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeMode))
@@ -155,7 +169,7 @@ public sealed partial class InjectorSystem : EntitySystem
             }
         }
 
-        // Allow switching between Dynamic and Inject mode to inject into containers.
+        // If the injector cannot toggle via using in hand, allow toggling via verb.
         if (!activeMode.InjectOnUse || injector.Comp.AllowedModes.Count <= 1)
             return;
 
@@ -247,7 +261,7 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <param name="target">The target mob.</param>
     /// <param name="doAfterTime">The duration of the resulting doAfter.</param>
     /// <param name="amount">The amount of the reagents transferred.</param>
-    /// <returns>True if successful, false if not.</returns>
+    /// <returns>True if calculating the time was successful, false if not.</returns>
     private bool GetMobsDoAfterTime(Entity<InjectorComponent> injector, EntityUid user, EntityUid target, out TimeSpan doAfterTime, out FixedPoint2 amount)
     {
         doAfterTime = TimeSpan.Zero;
@@ -313,7 +327,7 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <param name="user">The user using the injector.</param>
     /// <param name="target">The target container,</param>
     /// <param name="doAfterTime">The duration of the resulting DoAfter.</param>
-    /// <returns></returns>
+    /// <returns>True if calculating the time was successful, false if not.</returns>
     private bool GetContainerDoAfterTime(Entity<InjectorComponent> injector, EntityUid user, EntityUid target, out TimeSpan doAfterTime)
     {
         doAfterTime = TimeSpan.Zero;
@@ -356,7 +370,7 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <param name="injector">The injector used.</param>
     /// <param name="user">The entity using the injector.</param>
     /// <param name="target">The entity targeted by the user.</param>
-    /// <returns></returns>
+    /// <returns>True if the injection/drawing was successful, false if not.</returns>
     /// <exception cref="ArgumentOutOfRangeException">The injector has a different <see cref="InjectorBehavior"/>.</exception>
     private bool TryUseInjector(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
     {
@@ -426,7 +440,7 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <param name="target">The entity targeted by the user.</param>
     /// <param name="targetSolution">The solution of the target.</param>
     /// <param name="asRefill">Whether or not the solution is refillable or injectable.</param>
-    /// <returns></returns>
+    /// <returns>True if the injection was successful, false if not.</returns>
     private bool TryInject(Entity<InjectorComponent> injector, EntityUid user, EntityUid target, Entity<SolutionComponent> targetSolution, bool asRefill)
     {
         if (!_solutionContainer.ResolveSolution(injector.Owner,
@@ -527,7 +541,7 @@ public sealed partial class InjectorSystem : EntitySystem
     /// <param name="user">The entity using the injector.</param>
     /// <param name="target">The entity targeted by the user.</param>
     /// <param name="targetSolution">The solution of the target.</param>
-    /// <returns></returns>
+    /// <returns>True if the drawing was successful, false if not.</returns>
     private bool TryDraw(Entity<InjectorComponent> injector, EntityUid user, Entity<BloodstreamComponent?> target, Entity<SolutionComponent> targetSolution)
     {
         if (!_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution) || solution.AvailableVolume == 0)
@@ -684,57 +698,65 @@ public sealed partial class InjectorSystem : EntitySystem
 
     #region Mode Toggling
     /// <summary>
-    /// Toggle the injector between modes if applicable.
+    /// Toggle modes of the injector if possible.
     /// </summary>
+    /// <param name="injector">The injector whose mode is to be toggled.</param>
+    /// <param name="user">The user toggling the mode.</param>
+    /// <param name="mode">The desired mode.</param>
+    /// <remarks>This will still check if the injector can use that mode.</remarks>
     [PublicAPI]
-    public void ToggleMode(Entity<InjectorComponent> injector, EntityUid user, InjectorModePrototype? mode = null)
+    public void ToggleMode(Entity<InjectorComponent> injector, EntityUid user, InjectorModePrototype mode)
     {
-        if (mode != null)
+        var index = injector.Comp.AllowedModes.FindIndex(nextMode => mode == nextMode);
+
+        injector.Comp.ActiveModeProtoId = injector.Comp.AllowedModes[index];
+
+        if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var newMode))
+            return;
+
+        var modeName = Loc.GetString(newMode.Name);
+        var message = Loc.GetString("injector-component-mode-changed-text", ("mode", modeName));
+        _popup.PopupClient(message, user, user);
+        Dirty(injector);
+    }
+
+    /// <summary>
+    /// Toggle the mode of the injector to the next allowed mode.
+    /// </summary>
+    /// <param name="injector">The injector whose mode is to be toggled.</param>
+    /// <param name="user">The user toggling the mode.</param>
+    [PublicAPI]
+    public void ToggleMode(Entity<InjectorComponent> injector, EntityUid user)
+    {
+        if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeProto))
+            return;
+
+        string? errorMessage = null;
+
+        foreach (var allowedMode in injector.Comp.AllowedModes)
         {
-            var index = injector.Comp.AllowedModes.FindIndex(nextMode => mode == nextMode);
+            if (!_prototypeManager.Resolve(allowedMode, out var proto)
+                || proto.Behavior.HasFlag(activeProto.Behavior)
+                || !_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution))
+                continue;
 
-            injector.Comp.ActiveModeProtoId = injector.Comp.AllowedModes[index];
-
-            if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var newMode))
-                return;
-
-            var modeName = Loc.GetString(newMode.Name);
-            var message = Loc.GetString("injector-component-mode-changed-text", ("mode", modeName));
-            _popup.PopupClient(message, user, user);
-            Dirty(injector);
-        }
-        else
-        {
-            if (!_prototypeManager.Resolve(injector.Comp.ActiveModeProtoId, out var activeProto))
-                return;
-
-            string? errorMessage = null;
-
-            foreach (var allowedMode in injector.Comp.AllowedModes)
+            if (proto.Behavior.HasFlag(InjectorBehavior.Inject) && solution.Volume == 0)
             {
-                if (!_prototypeManager.Resolve(allowedMode, out var proto)
-                    || proto.Behavior.HasFlag(activeProto.Behavior)
-                    || !_solutionContainer.ResolveSolution(injector.Owner, injector.Comp.SolutionName, ref injector.Comp.Solution, out var solution))
-                    continue;
-
-                if (proto.Behavior.HasFlag(InjectorBehavior.Inject) && solution.Volume == 0)
-                {
-                    errorMessage = "injector-component-cannot-toggle-inject-message";
-                    continue;
-                }
-
-                if (proto.Behavior.HasFlag(InjectorBehavior.Draw) && solution.AvailableVolume == 0)
-                {
-                    errorMessage = "injector-component-cannot-toggle-draw-message";
-                    continue;
-                }
-
-                ToggleMode(injector, user, proto);
-                return;
+                errorMessage = "injector-component-cannot-toggle-inject-message";
+                continue;
             }
-            if (errorMessage != null)
-                _popup.PopupClient(Loc.GetString(errorMessage), user, user);
+
+            if (proto.Behavior.HasFlag(InjectorBehavior.Draw) && solution.AvailableVolume == 0)
+            {
+                errorMessage = "injector-component-cannot-toggle-draw-message";
+                continue;
+            }
+
+            ToggleMode(injector, user, proto);
+            return;
         }
+        if (errorMessage != null)
+            _popup.PopupClient(Loc.GetString(errorMessage), user, user);
     }
     #endregion Mode Toggling
 }

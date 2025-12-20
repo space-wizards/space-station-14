@@ -7,6 +7,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Chemistry.Prototypes;
 
+/// <summary>
+/// This defines the behavior of an injector.
+/// Every injector requires this and it defines how much an injector injects, what transferamounts they can switch between, etc.
+/// </summary>
 [Prototype]
 public sealed partial class InjectorModePrototype : IPrototype, IInheritingPrototype
 {
@@ -29,7 +33,7 @@ public sealed partial class InjectorModePrototype : IPrototype, IInheritingProto
     public LocId Name;
 
     /// <summary>
-    /// Whether using the injector via Y/Z will inject the user.
+    /// If true, it'll inject the user when used in hand (Default Key: Y/Z)
     /// </summary>
     [DataField]
     public bool InjectOnUse;
@@ -119,7 +123,7 @@ public sealed partial class InjectorModePrototype : IPrototype, IInheritingProto
 }
 
 /// <summary>
-/// Possible modes for an <see cref="InjectorComponent"/>.
+/// Possible modes for an <see cref="InjectorModePrototype"/>.
 /// </summary>
 [Serializable, NetSerializable, Flags]
 public enum InjectorBehavior
