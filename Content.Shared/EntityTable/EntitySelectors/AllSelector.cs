@@ -23,4 +23,15 @@ public sealed partial class AllSelector : EntityTableSelector
             }
         }
     }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        foreach (var child in Children)
+        {
+            foreach (var (spawn, prob) in child.ListSpawns(entMan, proto, ctx))
+            {
+                yield return (spawn, prob * Prob);
+            }
+        }
+    }
 }

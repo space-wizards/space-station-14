@@ -33,4 +33,15 @@ public sealed partial class GroupSelector : EntityTableSelector
 
         return pick.GetSpawns(rand, entMan, proto, ctx);
     }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        foreach (var child in Children)
+        {
+            foreach (var (ent, prob) in child.ListSpawns(entMan, proto, ctx))
+            {
+                yield return (ent, prob * Prob);
+            }
+        }
+    }
 }

@@ -18,4 +18,12 @@ public sealed partial class NestedSelector : EntityTableSelector
     {
         return proto.Index(TableId).Table.GetSpawns(rand, entMan, proto, ctx);
     }
+
+    protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
+    {
+        foreach (var (ent, prob) in proto.Index(TableId).Table.ListSpawns(entMan, proto, ctx))
+        {
+            yield return (ent, prob * Prob);
+        }
+    }
 }

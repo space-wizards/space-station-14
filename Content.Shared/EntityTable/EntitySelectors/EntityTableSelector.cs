@@ -83,8 +83,22 @@ public abstract partial class EntityTableSelector
         return success;
     }
 
+    public IEnumerable<(EntProtoId spawn, double)> ListSpawns(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx)
+    {
+        foreach (var (spawn, prob) in ListSpawnsImplementation(entMan, proto, ctx))
+        {
+            yield return (spawn, prob * Prob);
+        }
+    }
+
     protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx);
+
+    protected abstract IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan,
         IPrototypeManager proto,
         EntityTableContext ctx);
 }
