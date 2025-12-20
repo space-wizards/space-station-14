@@ -27,6 +27,7 @@ public sealed class EntityTableSystem : EntitySystem
         return table.GetSpawns(rand, EntityManager, _prototypeManager, ctx);
     }
 
+    // TODO: Have this method be much better for entity tables
     public IEnumerable<EntProtoId> ListSpawns(EntityTableSelector? table, System.Random? rand = null, EntityTableContext? ctx = null)
     {
         if (table == null)
