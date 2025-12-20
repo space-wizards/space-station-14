@@ -42,6 +42,9 @@ public sealed class BeakerBarChart : Control
     public float MediumNotchHeight = 0.25f;
     public float BigNotchHeight = 1f;
 
+    // We don't animate new entries until this control has been drawn at least once.
+    private bool _hasBeenDrawn = false;
+
     private readonly List<Entry> _entries = new();
 
 
@@ -95,7 +98,7 @@ public sealed class BeakerBarChart : Control
 
         _entries.Add(new Entry(uid, childLabel)
         {
-            Amount = 0,
+            Amount = (_hasBeenDrawn ? 0 : amount),
             TargetAmount = amount,
             Tooltip = tooltip,
             Color = color
@@ -135,14 +138,15 @@ public sealed class BeakerBarChart : Control
         _entries.RemoveAll(entry => entry.Amount == 0 && entry.TargetAmount == 0);
     }
 
-    private IEnumerable<(Entry, float xMin, float xMax)> EntryRanges()
+    private IEnumerable<(Entry, float xMin, float xMax)> EntryRanges(float? pixelWidth = null)
     {
-        var unitWidth = PixelWidth / Capacity;
+        pixelWidth ??= PixelWidth;
+        var unitWidth = pixelWidth.Value / Capacity;
         var xStart = 0f;
 
         foreach (var entry in _entries)
         {
-            var xEnd = MathF.Min(xStart + entry.Amount * unitWidth, PixelWidth);
+            var xEnd = MathF.Min(xStart + entry.Amount * unitWidth, pixelWidth.Value);
 
             yield return (entry, xStart, xEnd);
 
@@ -174,6 +178,8 @@ public sealed class BeakerBarChart : Control
             var end = new Vector2(x, PixelHeight - height);
             handle.DrawLine(start, end, NotchColor);
         }
+
+        _hasBeenDrawn = true;
     }
 
     private Control? SupplyTooltip(Control sender)
@@ -209,9 +215,9 @@ public sealed class BeakerBarChart : Control
 
     protected override Vector2 ArrangeOverride(Vector2 finalSize)
     {
-        foreach (var (entry, xMin, xMax) in EntryRanges())
+        foreach (var (entry, xMin, xMax) in EntryRanges(finalSize.X))
         {
-            entry.Label.ArrangePixel(new((int)xMin, 0, (int)xMax, PixelHeight));
+            entry.Label.ArrangePixel(new((int)xMin, 0, (int)xMax, (int)finalSize.Y));
         }
 
         return finalSize;
