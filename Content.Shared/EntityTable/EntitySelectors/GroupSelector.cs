@@ -42,9 +42,9 @@ public sealed partial class GroupSelector : EntityTableSelector
         foreach (var child in Children)
         {
             var weightMod = child.Weight / totalWeight;
-            foreach (var (ent, prob) in child.ListSpawns(entMan, proto, ctx))
+            foreach (var (ent, prob) in child.ListSpawns(entMan, proto, ctx, weightMod))
             {
-                yield return (ent, prob * Prob * weightMod);
+                yield return (ent, prob);
             }
         }
     }

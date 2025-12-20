@@ -30,6 +30,6 @@ public sealed partial class EntSelector : EntityTableSelector
 
     protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        yield return (Id, Prob);
+        yield return (Id, 1f);
     }
 }

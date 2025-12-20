@@ -35,4 +35,18 @@ public sealed partial class BinomialNumberSelector : NumberSelector
         return count;
         // get binomialed motherfucker
     }
+
+    public override float Odds()
+    {
+        if (Chance >= 1f)
+            return 1;
+
+        var prob = 1f;
+        for (var i = 0; i < Trials; i++)
+        {
+            prob *= (1 - Chance);
+        }
+
+        return 1 - prob;
+    }
 }

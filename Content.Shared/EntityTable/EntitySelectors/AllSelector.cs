@@ -27,14 +27,11 @@ public sealed partial class AllSelector : EntityTableSelector
 
     protected override IEnumerable<(EntProtoId spawn, double)> ListSpawnsImplementation(IEntityManager entMan, IPrototypeManager proto, EntityTableContext ctx)
     {
-        var totalweight = Children.Sum(x => x.Weight);
-
         foreach (var child in Children)
         {
-            var weightMod = child.Weight / totalweight;
             foreach (var (spawn, prob) in child.ListSpawns(entMan, proto, ctx))
             {
-                yield return (spawn, prob * Prob * weightMod);
+                yield return (spawn, prob);
             }
         }
     }
