@@ -4,7 +4,8 @@ namespace Content.Server.Speech.Components;
 public sealed partial class NegateAccentsComponent : Component
 {
     /// <summary>
-    /// Should accents be canceled? Defaults to true.
+    ///     Should accents be canceled? Defaults to true.
     /// </summary>
+    [DataField]
     public bool CancelAccent = true;
 }
