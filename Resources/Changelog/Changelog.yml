@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: Fixed board game areas sometimes overlapping with those of other board
-      games.
-    type: Fix
-  id: 8822
-  time: '2025-08-01T21:48:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39327
 - author: Krosus
   changes:
   - message: Fixed crash when loading saved character profiles
@@ -3922,3 +3914,11 @@
   id: 9321
   time: '2025-12-20T14:34:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40607
+- author: korczoczek
+  changes:
+  - message: Added opened sprite variants to olive oil, mayo and flour, cornmeal,
+      rice, sugar bags
+    type: Tweak
+  id: 9322
+  time: '2025-12-20T18:37:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41923
