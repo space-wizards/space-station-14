@@ -27,7 +27,7 @@ cryo-pod-window-eject-error = ERROR: Ejection mechanism failed. Contact a Nanotr
 
 cryo-pod-window-chems-no-beaker = No beaker inserted
 cryo-pod-window-chems-empty-beaker = Beaker is empty
-cryo-pod-window-chems-injecting-tooltip = Injecting {quantity}u
+cryo-pod-window-chems-injecting-tooltip = Injecting {$quantity}u
 cryo-pod-window-inject-1u = 1u
 cryo-pod-window-inject-5u = 5u
 cryo-pod-window-inject-10u = 10u
