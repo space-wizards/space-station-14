@@ -6,4 +6,12 @@ namespace Content.Server.Atmos.Components;
 /// leaves the gas or the gas dissipates.
 /// </summary>
 [RegisterComponent]
-public sealed partial class ChargedElectrovaeAffectedComponent : Component;
+public sealed partial class ChargedElectrovaeAffectedComponent : Component
+{
+    /// <summary>
+    /// Original battery max charge before capacity expansion.
+    /// Null if this entity doesn't have a battery or hasn't had its capacity expanded yet.
+    /// </summary>
+    [DataField]
+    public float? OriginalBatteryMaxCharge;
+}

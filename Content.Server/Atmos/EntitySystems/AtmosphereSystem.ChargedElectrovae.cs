@@ -15,9 +15,6 @@ public sealed partial class AtmosphereSystem
     // Note: Dependencies and queries are declared in the main AtmosphereSystem.cs file
     // This partial class just adds the charged electrovae processing logic
 
-    // Track original battery capacities for restoration
-    private readonly Dictionary<EntityUid, float> _originalBatteryCapacities = [];
-
     private void InitializeChargedElectrovae()
     {
         SubscribeLocalEvent<BatteryComponent, ComponentShutdown>(OnBatteryShutdown);
@@ -26,16 +23,28 @@ public sealed partial class AtmosphereSystem
         SubscribeLocalEvent<ChargedElectrovaeAffectedComponent, RefreshChargeRateEvent>(OnRefreshChargeRate);
     }
 
-    private void OnBatteryShutdown(EntityUid uid, BatteryComponent component, ComponentShutdown args)
+    /// <summary>
+    /// Handles cleanup when a battery component is removed.
+    /// Ensures the ChargedElectrovaeAffectedComponent is also removed to prevent stale data.
+    /// </summary>
+    private void OnBatteryShutdown(Entity<BatteryComponent> ent, ref ComponentShutdown args)
     {
-        _originalBatteryCapacities.Remove(uid);
+        RemCompDeferred<ChargedElectrovaeAffectedComponent>(ent);
     }
 
-    private void OnPredictedBatteryShutdown(EntityUid uid, PredictedBatteryComponent component, ComponentShutdown args)
+    /// <summary>
+    /// Handles cleanup when a predicted battery component is removed.
+    /// Ensures the ChargedElectrovaeAffectedComponent is also removed to prevent stale data.
+    /// </summary>
+    private void OnPredictedBatteryShutdown(Entity<PredictedBatteryComponent> ent, ref ComponentShutdown args)
     {
-        _originalBatteryCapacities.Remove(uid);
+        RemCompDeferred<ChargedElectrovaeAffectedComponent>(ent);
     }
 
+    /// <summary>
+    /// Handles charge rate refresh for batteries in charged electrovae gas.
+    /// Adds additional charge rate based on gas concentration and intensity.
+    /// </summary>
     private void OnRefreshChargeRate(Entity<ChargedElectrovaeAffectedComponent> ent, ref RefreshChargeRateEvent args)
     {
         // Check if entity is in charged electrovae gas
@@ -59,14 +68,18 @@ public sealed partial class AtmosphereSystem
         }
     }
 
-    private void OnChargedElectrovaeAffectedShutdown(EntityUid uid, ChargedElectrovaeAffectedComponent component, ComponentShutdown args)
+    /// <summary>
+    /// Handles cleanup when an entity is no longer affected by charged electrovae gas.
+    /// Restores battery capacity and power requirements to their original states.
+    /// </summary>
+    private void OnChargedElectrovaeAffectedShutdown(Entity<ChargedElectrovaeAffectedComponent> ent, ref ComponentShutdown args)
     {
         // Restore battery capacity if this entity had it expanded
-        if (_batteryQuery.TryGetComponent(uid, out var battery))
-            RestoreBatteryCapacity(uid, battery);
+        if (_batteryQuery.TryGetComponent(ent, out var battery))
+            RestoreBatteryCapacity((ent, battery, ent.Comp));
 
         // Restore power requirements if this entity had them bypassed
-        if (_powerReceiverQuery.TryGetComponent(uid, out var receiver))
+        if (_powerReceiverQuery.TryGetComponent(ent, out var receiver))
         {
             if (!receiver.NeedsPower)
                 receiver.NeedsPower = true;
@@ -139,7 +152,7 @@ public sealed partial class AtmosphereSystem
             EnsureComp<ChargedElectrovaeAffectedComponent>(entity);
 
             // Handle batteries - expand capacity and trigger charge rate refresh
-            if (_batteryQuery.HasComponent(entity) || HasComp<PredictedBatteryComponent>(entity))
+            if (_batteryQuery.HasComponent(entity) || _predictedBatteryQuery.HasComponent(entity))
             {
                 ProcessBattery(entity, tile.ChargedEffect.Intensity, chargedMoles);
             }
@@ -210,7 +223,8 @@ public sealed partial class AtmosphereSystem
     }
 
     /// <summary>
-    /// Processes a battery in charged electrovae gas - expands capacity and refreshes charge rate
+    /// Processes a battery in charged electrovae gas.
+    /// Expands battery capacity asymptotically and refreshes charge rate for predicted batteries.
     /// </summary>
     private void ProcessBattery(EntityUid uid, float intensity, float chargedMoles)
     {
@@ -219,54 +233,61 @@ public sealed partial class AtmosphereSystem
         if (intensity < minimumIntensityToCharge)
         {
             // Restore original max charge if we had expanded it
-            if (_batteryQuery.TryGetComponent(uid, out var battery))
-                RestoreBatteryCapacity(uid, battery);
+            if (_batteryQuery.TryGetComponent(uid, out var battery) &&
+                TryComp<ChargedElectrovaeAffectedComponent>(uid, out var affected))
+                RestoreBatteryCapacity((uid, battery, affected));
             return;
         }
 
         // Expand battery capacity based on charged moles
-        if (_batteryQuery.TryGetComponent(uid, out var batteryComp))
-            ExpandBatteryCapacity(uid, batteryComp, chargedMoles);
+        if (_batteryQuery.TryGetComponent(uid, out var batteryComp) &&
+            TryComp<ChargedElectrovaeAffectedComponent>(uid, out var affectedComp))
+            ExpandBatteryCapacity((uid, batteryComp, affectedComp), chargedMoles);
 
         // Trigger charge rate refresh for PredictedBatteryComponent
         // The RefreshChargeRateEvent handler will add the appropriate charge rate
-        if (HasComp<PredictedBatteryComponent>(uid))
+        if (_predictedBatteryQuery.HasComponent(uid))
             _predictedBattery.RefreshChargeRate(uid);
     }
 
     /// <summary>
-    /// Expands battery capacity based on charged electrovae gas concentration
-    /// Asymptotically approaches 2x capacity
+    /// Expands battery capacity based on charged electrovae gas concentration.
+    /// Uses an asymptotic exponential curve that approaches 2x capacity at high concentrations.
+    /// Formula: multiplier = 1 + (1 - e^(-moles/20))
+    /// At 20 moles: 1.63x, 40 moles: 1.86x, 80 moles: 1.98x, 200 moles: 1.9999x
     /// </summary>
-    private void ExpandBatteryCapacity(EntityUid uid, BatteryComponent battery, float chargedMoles)
+    private void ExpandBatteryCapacity(
+        Entity<BatteryComponent, ChargedElectrovaeAffectedComponent> ent,
+        float chargedMoles)
     {
         const float expansionDecayConstant = 20f; // Controls how quickly we approach 2x capacity
 
-        if (!_originalBatteryCapacities.TryGetValue(uid, out var originalMaxCharge))
+        if (ent.Comp2.OriginalBatteryMaxCharge == null)
         {
-            originalMaxCharge = battery.MaxCharge;
-            _originalBatteryCapacities[uid] = originalMaxCharge;
+            ent.Comp2.OriginalBatteryMaxCharge = ent.Comp1.MaxCharge;
 
             _adminLog.Add(LogType.AtmosPowerChanged, LogImpact.Low,
-                $"Battery {ToPrettyString(uid)} capacity expanded by charged electrovae from {originalMaxCharge:F0}W to potentially 2x");
+                $"Battery {ToPrettyString(ent)} capacity expanded by charged electrovae from {ent.Comp1.MaxCharge:F0}W to potentially 2x");
         }
 
         // Calculate expansion multiplier using asymptotic curve
-        // 20 moles = 1.63x, 40 moles = 1.86x, 80 moles = 1.98x, 200 moles = 1.9999x
         var expansionMultiplier = 1f + (1f - MathF.Exp(-chargedMoles / expansionDecayConstant));
 
-        var newMaxCharge = originalMaxCharge * expansionMultiplier;
-        _battery.SetMaxCharge((uid, battery), newMaxCharge);
+        var newMaxCharge = ent.Comp2.OriginalBatteryMaxCharge.Value * expansionMultiplier;
+        _battery.SetMaxCharge((ent.Owner, ent.Comp1), newMaxCharge);
     }
 
     /// <summary>
-    /// Restores battery capacity to its original value.
+    /// Restores battery capacity to its original value before charged electrovae expansion.
+    /// Clears the stored original capacity after restoration.
     /// </summary>
-    private void RestoreBatteryCapacity(EntityUid uid, BatteryComponent battery)
+    private void RestoreBatteryCapacity(
+        Entity<BatteryComponent, ChargedElectrovaeAffectedComponent> ent)
     {
-        if (_originalBatteryCapacities.Remove(uid, out var originalMaxCharge))
+        if (ent.Comp2.OriginalBatteryMaxCharge != null)
         {
-            _battery.SetMaxCharge((uid, battery), originalMaxCharge);
+            _battery.SetMaxCharge((ent.Owner, ent.Comp1), ent.Comp2.OriginalBatteryMaxCharge.Value);
+            ent.Comp2.OriginalBatteryMaxCharge = null;
         }
     }
 
