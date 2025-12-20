@@ -102,7 +102,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
                     _status.TryRemoveStatusEffect(uid, Bloodloss);
                 }
             }
-            else if (bloodstream.BleedAmount > 0)
+            else
             {
                 TickBleed((uid, bloodstream));
             }
@@ -433,7 +433,7 @@ public abstract class SharedBloodstreamSystem : EntitySystem
     {
         // Removes blood from the bloodstream based on bleed amount (bleed rate)
         // as well as stop their bleeding to a certain extent.
-        if (!(entity.Comp.BleedAmount > 0))
+        if (entity.Comp.BleedAmount <= 0)
             return;
 
         var ev = new BleedModifierEvent(entity.Comp.BleedAmount, entity.Comp.BleedReductionAmount);
