@@ -168,16 +168,13 @@ public sealed class EventManagerSystem : EntitySystem
     /// <param name="currentTimeOverride">Override for round time, if using this to simulate events rather than in an actual round.</param>
     /// <returns></returns>
     public Dictionary<EntityPrototype, StationEventComponent> AvailableEvents(
-        bool ignoreEarliestStart = false,
         int? playerCountOverride = null,
         TimeSpan? currentTimeOverride = null)
     {
         var playerCount = playerCountOverride ?? _playerManager.PlayerCount;
 
         // playerCount does a lock so we'll just keep the variable here
-        var currentTime = currentTimeOverride ?? (!ignoreEarliestStart
-            ? GameTicker.RoundDuration()
-            : TimeSpan.Zero);
+        var currentTime = currentTimeOverride ?? GameTicker.RoundDuration();
 
         var result = new Dictionary<EntityPrototype, StationEventComponent>();
 
