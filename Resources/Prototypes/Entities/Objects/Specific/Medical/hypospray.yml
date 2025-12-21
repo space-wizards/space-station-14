@@ -99,6 +99,38 @@
     delay: 0.5
 
 - type: entity
+  name: jet injector
+  parent: BaseHypospray
+  description: A sterile injector for convenient and sterile administration of drugs to patients.
+  id: JetInjector
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/jetinjector.rsi
+    layers:
+    - state: jetinjector_base
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: jetinjector_filled1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Item
+    sprite: Objects/Specific/Medical/jetinjector.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 15
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: jetinjector_filled
+    solutionName: hypospray
+  - type: Injector
+    solutionName: hypospray
+    currentTransferAmount: null # Inject everything on injection.
+    activeModeProtoId: JetInjectorDynamicMode
+    allowedModes:
+    - JetInjectorDynamicMode
+    - JetInjectorInjectMode
+
+- type: entity
   parent: SyndiHypo
   id: AdminHypo
   name: experimental hypospray
@@ -672,31 +704,3 @@
         reagents:
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 60
-
-- type: entity
-  name: jet injector
-  parent: BaseHypospray
-  description: A sterile injector for convenient administration of drugs to patients.
-  id: JetInjector
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Medical/jetinjector.rsi
-    layers:
-    - state: jetinjector_base
-      map: [ "enum.SolutionContainerLayers.Base" ]
-    - state: jetinjector_filled1
-      map: [ "enum.SolutionContainerLayers.Fill" ]
-      visible: false
-  - type: Item
-    sprite: Objects/Specific/Medical/jetinjector.rsi
-  - type: SolutionContainerManager
-    solutions:
-      hypospray:
-        maxVol: 15
-  - type: StaticPrice
-    price: 250
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 3
-    fillBaseName: jetinjector_filled
-    solutionName: hypospray

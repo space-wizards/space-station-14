@@ -43,6 +43,7 @@
   abstract: true
   id: BaseBluespaceSyringeMode
   mobTime: 2.5
+  delayPerVolume: 0.05
   transferAmounts:
   - 5
   - 10
@@ -116,3 +117,21 @@
   parent: HyposprayDynamicMode
   id: HypopenDynamicMode
   containerDrawTime: 0.75
+
+- type: injectorMode
+  abstract: true
+  parent: HyposprayBaseMode
+  id: BaseJetInjectorMode
+  mobTime: 2.5
+  delayPerVolume: 0.05
+  popupUserAttempt: injector-component-spray-injecting-user
+  popupTargetAttempt: injector-component-spray-injecting-target
+
+
+- type: injectorMode
+  parent: [ BaseJetInjectorMode, BaseInjectMode ]
+  id: JetInjectorInjectMode
+
+- type: injectorMode
+  parent: [ BaseJetInjectorMode, BaseDynamicMode ]
+  id: JetInjectorDynamicMode
