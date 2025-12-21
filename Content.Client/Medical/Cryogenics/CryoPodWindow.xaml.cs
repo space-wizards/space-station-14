@@ -56,7 +56,7 @@ public sealed partial class CryoPodWindow : FancyWindow
         LowPressureWarning.Visible = showsPressureWarning;
         Pressure.Text = Loc.GetString("gas-analyzer-window-pressure-val-text",
                                       ("pressure", $"{msg.GasMix.Pressure:0.00}"));
-        Temperature.Text = Loc.GetString("gas-analyzer-window-not-available");
+        Temperature.Text = Loc.GetString("generic-not-available-shorthand");
 
         if (hasGas)
         {
