@@ -39,9 +39,6 @@ public sealed partial class CryoPodWindow : FancyWindow
 
     public void Populate(CryoPodUserMessage msg)
     {
-        HealthAnalyzer.InvalidateMeasure(); // Workaround for layouting bug.
-        InvalidateMeasure();
-
         // Loading screen
         if (LoadingPlaceHolder.Visible)
         {
