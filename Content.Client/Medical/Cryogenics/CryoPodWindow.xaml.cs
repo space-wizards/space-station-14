@@ -192,7 +192,7 @@ public sealed partial class CryoPodWindow : FancyWindow
         StatusLabel.FontColorOverride = (isReady ? Color.DeepSkyBlue : Color.Orange);
     }
 
-    void UpdateChecklistItem(Label label, string text, bool isOkay)
+    private void UpdateChecklistItem(Label label, string text, bool isOkay)
     {
         label.Text = (isOkay ? text : Loc.GetString("cryo-pod-window-checklist-fail", ("item", text)));
         label.FontColorOverride = (isOkay ? null : Color.Orange);
