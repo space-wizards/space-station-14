@@ -20,6 +20,9 @@
 			"name": "jetinjector_filled3"
 		},
         {
+            "name": "jetinjector_filled4"
+        },
+        {
             "name": "inhand-left",
             "directions": 4
         },
