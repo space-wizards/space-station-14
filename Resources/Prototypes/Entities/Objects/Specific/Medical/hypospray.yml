@@ -10,6 +10,7 @@
     allowedModes:
     - HyposprayDynamicMode
     - HyposprayInjectMode
+  - type: Appearance
 
 - type: entity
   parent: [BaseHypospray, BaseGrandTheftContraband]
@@ -45,7 +46,6 @@
     - HighRiskItem
   - type: StealTarget
     stealGroup: Hypospray
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: hypo_fill
@@ -84,7 +84,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
-    state: borghypo
+    layers:
+    - state: borghypo
+      map: [ "enum.SolutionContainerLayers.Base" ]
+    - state: borghypo_fill1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: SolutionContainerManager
@@ -95,6 +100,10 @@
     solution: hypospray
   - type: ExaminableSolution
     solution: hypospray
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: borghypo_fill
+    solutionName: hypospray
   - type: UseDelay
     delay: 0.5
 
@@ -210,7 +219,6 @@
     activeModeProtoId: HyposprayInjectMode
     allowedModes:
     - HyposprayInjectMode
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false
@@ -531,7 +539,6 @@
     layers:
     - state: hypovolemic
       map: [ "enum.SolutionContainerLayers.Fill" ]
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     changeColor: false

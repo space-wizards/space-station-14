@@ -281,6 +281,13 @@ public sealed partial class InjectorSystem : EntitySystem
         }
         else
         {
+            // Check if we have anything to inject.
+            if (injectorSolution.Volume == 0)
+            {
+                _popup.PopupClient(Loc.GetString("injector-component-empty-message", ("injector", injector)), target, user);
+                return false;
+            }
+
             // additional delay is based on actual volume left to inject in syringe when smaller than transfer amount
             // If CurrentTransferAmount is null, it'll want to inject its entire contents, e.g., epipens.
             amount = injector.Comp.CurrentTransferAmount ?? injectorSolution.Volume;
@@ -348,7 +355,7 @@ public sealed partial class InjectorSystem : EntitySystem
 
         if (!_solutionContainer.TryGetDrawableSolution(target, out _, out var drawableSol))
         {
-            _popup.PopupClient(Loc.GetString("injector-component-cannot-transfer-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
+            _popup.PopupClient(Loc.GetString("injector-component-cannot-draw-message", ("target", Identity.Entity(target, EntityManager))), injector, user);
             return false;
         }
 
@@ -510,7 +517,7 @@ public sealed partial class InjectorSystem : EntitySystem
         else
             _solutionContainer.Refill(target, targetSolution, removedSolution);
 
-        LocId msgSuccess = target == user ? "injector-component-transfer-success-message-self" : "injector-component-transfer-success-message";
+        LocId msgSuccess = target == user ? "injector-component-inject-success-message-self" : "injector-component-inject-success-message";
 
         if (selfEv.OverrideMessage != null)
             msgSuccess = selfEv.OverrideMessage;
