@@ -43,6 +43,7 @@
   abstract: true
   id: BaseBluespaceSyringeMode
   mobTime: 2.5
+  delayPerVolume: 0.05
   transferAmounts:
   - 5
   - 10
