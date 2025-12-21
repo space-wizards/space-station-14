@@ -1,10 +1,8 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Numerics;
-using Content.Client.Stylesheets;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
@@ -18,6 +16,11 @@ namespace Content.Client.Lobby.UI;
 /// </summary>
 public sealed class DraggableJobTarget : Control
 {
+    /// <summary>
+    /// Style pseudoclass for when something droppable is being held over the control.
+    /// </summary>
+    public const string StylePseudoClassActive = "active";
+
     /// <summary>
     /// A cached ordered list of jobs. This will be the sorted order of the job icons.
     /// </summary>
@@ -36,7 +39,7 @@ public sealed class DraggableJobTarget : Control
     /// <summary>
     /// This panel is what becomes visible when you are dragging an icon over the target
     /// </summary>
-    private readonly PanelContainer? _backgroundPanel;
+    private readonly PanelContainer _backgroundPanel;
 
     /// <summary>
     /// This is the main container that holds the job icons. This is a <see cref="GridContainer"/> unless
@@ -66,8 +69,7 @@ public sealed class DraggableJobTarget : Control
     public DraggableJobTarget()
     {
         // Add the panel used to highlight the target when hovered
-        var panelStyle = new StyleBoxFlat { BackgroundColor = StyleNano.NanoGold };
-        _backgroundPanel = new PanelContainer { Visible = false, PanelOverride = panelStyle };
+        _backgroundPanel = new PanelContainer();
         AddChild(_backgroundPanel);
 
         // Add the main content box
@@ -223,6 +225,26 @@ public sealed class DraggableJobTarget : Control
     }
 
     /// <summary>
+    /// Helper function with a workaround for child control styles not updating. Once RT
+    /// has https://github.com/space-wizards/RobustToolbox/pull/6264 or similar, this can
+    /// be removed, and calls to it replaced with calls to AddStylePseudoClass or
+    /// RemoveStylePseudoClass
+    /// </summary>
+    /// <param name="active"></param>
+    private void SetActive(bool active)
+    {
+        if (HasStylePseudoClass(StylePseudoClassActive) == active)
+            return;
+
+        if (active)
+            AddStylePseudoClass(StylePseudoClassActive);
+        else
+            RemoveStylePseudoClass(StylePseudoClassActive);
+
+        _backgroundPanel.RemoveStyleClass("dummy");
+    }
+
+    /// <summary>
     /// Check if an icon is hovering above the target on a drag end and handle it if it is.
     /// </summary>
     private void HandleMouseUp(Vector2 pos, ref DraggableJobIcon icon)
@@ -231,8 +253,7 @@ public sealed class DraggableJobTarget : Control
             return;
 
         AddJobIcon(icon);
-        if (_backgroundPanel is not null)
-            _backgroundPanel.Visible = false;
+        SetActive(false);
     }
 
     /// <summary>
@@ -241,8 +262,7 @@ public sealed class DraggableJobTarget : Control
     private void HandleMouseMove(Vector2 pos, DraggableJobIcon icon)
     {
         var contained = GlobalRect.Contains(pos);
-        if (_backgroundPanel is not null)
-            _backgroundPanel.Visible = contained;
+        SetActive(contained);
         if(contained)
             icon.SetScale(Priority);
     }
