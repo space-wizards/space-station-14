@@ -1,3 +1,5 @@
+# See https://www.desmos.com/calculator/db9t8ophwm for a calculator that may help you visualize these values.
+
 # In a low-energy state plasma will burn to simple CO2 and water just like any hydrocarbon.
 - type: gasReaction
   id: PlasmaFireLowEnergy

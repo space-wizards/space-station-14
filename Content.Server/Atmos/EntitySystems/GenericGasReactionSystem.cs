@@ -16,6 +16,8 @@ public sealed class GenericGasReactionSystem : EntitySystem
     ///
     /// This means that most reactions scale exponentially above the MinimumTemperatureRequirement.
     /// </summary>
+    /// <remarks>See this basic calculator (https://www.desmos.com/calculator/db9t8ophwm) for a visualization of how
+    /// changing the parameters affects the curve.</remarks>
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     private float ReactionRate(GasReactionPrototype reaction, GasMixture mix, float dE)
     {
