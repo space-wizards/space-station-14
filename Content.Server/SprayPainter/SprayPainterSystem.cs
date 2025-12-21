@@ -92,7 +92,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
                 return;
             }
 
-            var decals = _decals.GetDecalsInRange(grid, position.Position, validDelegate: IsDecalRemovable);
+            var decals = _decals.GetDecalsInRange(grid, position.Position, validDelegate: IsDecalValid);
             if (decals.Count <= 0)
             {
                 _popup.PopupEntity(Loc.GetString("spray-painter-interact-nothing-to-remove"), args.User, args.User);
@@ -113,10 +113,9 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     }
 
     /// <summary>
-    /// Handles drawing decals when a spray painter is used to interact with the floor.
-    /// Spray painter must have decal painting enabled and enough charges of paint to paint on the floor.
+    /// Returns whether <paramref name="decal"/> is valid to interact with when a spray painter is used to interact with the floor.
     /// </summary>
-    private bool IsDecalRemovable(Decal decal)
+    private bool IsDecalValid(Decal decal)
     {
         if (!Proto.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
             return false;
@@ -204,7 +203,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (!args.ClickLocation.IsValid(EntityManager) || _transform.GetGrid(args.ClickLocation) is not { } grid)
             return;
 
-        var decals = _decals.GetDecalsInRange(grid, args.ClickLocation.Position);
+        var decals = _decals.GetDecalsInRange(grid, args.ClickLocation.Position, validDelegate: IsDecalValid);
         if (decals.Count == 0)
         {
             _popup.PopupEntity(Loc.GetString("spray-painter-interact-no-color-pick"), args.User, args.User);
