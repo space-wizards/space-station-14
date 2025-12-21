@@ -15,7 +15,7 @@ using Content.Shared.SprayPainter;
 using Content.Shared.SprayPainter.Components;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.SprayPainter;
 
@@ -48,7 +48,16 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     /// </summary>
     private void OnFloorAfterInteract(Entity<SprayPainterComponent> ent, ref AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach || args.Target != null)
+        if (args.Handled || args.Target != null)
+            return;
+
+        if (ent.Comp.ColorPickerEnabled)
+        {
+            PickColor(ent, ref args);
+            return;
+        }
+
+        if (!args.CanReach)
             return;
 
         // Includes both off and all other don't cares
@@ -188,5 +197,27 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         };
 
         args.Handled = DoAfter.TryStartDoAfter(doAfterEventArgs);
+    }
+
+    private void PickColor(Entity<SprayPainterComponent> ent, ref AfterInteractEvent args)
+    {
+        if (!args.ClickLocation.IsValid(EntityManager) || _transform.GetGrid(args.ClickLocation) is not { } grid)
+            return;
+
+        var decals = _decals.GetDecalsInRange(grid, args.ClickLocation.Position);
+        if (decals.Count == 0)
+        {
+            _popup.PopupEntity(Loc.GetString("spray-painter-interact-no-color-pick"), args.User, args.User);
+            return;
+        }
+
+        // Get the decal at the click location with the highest `ZIndex`. (If there's multiple stacked it'll be the visible one)
+        var topmostDecal = decals.Aggregate((d1, d2) => d1.Decal.ZIndex > d2.Decal.ZIndex ? d1 : d2).Decal;
+
+        _popup.PopupEntity(Loc.GetString("spray-painter-interact-color-picked", ("id", topmostDecal.Id)), args.User, args.User);
+
+        ent.Comp.SelectedDecalColor = topmostDecal.Color;
+        ent.Comp.ColorPickerEnabled = false;
+        Dirty(ent);
     }
 }
