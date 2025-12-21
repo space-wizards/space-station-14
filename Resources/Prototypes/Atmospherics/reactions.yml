@@ -1,13 +1,33 @@
+# In a low-energy state plasma will burn to simple CO2 and water just like any hydrocarbon.
 - type: gasReaction
   id: PlasmaFire
   priority: -2
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
-  minimumRequirements: # In this case, same as minimum mole count.
-    Oxygen: 0.01
-    Plasma: 0.01
-  effects:
-    - !type:PlasmaFireReaction {}
+  enthalpy: 160000 # Atmospherics.FirePlasmaEnergyReleased (J/mol)
+  reactants:
+    Plasma: 1
+    Oxygen: 1
+  products:
+    CarbonDioxide: 1
+    WaterVapor: 1
+  catalysts:
+    Tritium: 5
+    # When tritium is present, the reaction shifts more towards the fusion reaction.
+    # This increases activation energy and makes the low-energy reaction rate low.
 
+# Takeover reaction - when hot enough, plasma and oxygen will fuse to tritium.
+- type: gasReaction
+  id: PlasmaFire
+  priority: -3
+  minimumTemperature: 900
+  enthalpy: 160000
+  reactants:
+    Plasma: 3
+    Oxygen: 3
+  products:
+    Tritium: 3
+
+# Tritium burns much hotter.
 - type: gasReaction
   id: TritiumFire
   priority: -1
@@ -19,6 +39,7 @@
   products:
     WaterVapor: 2
 
+# Frezon will decompose in an endothermic reaction with nitrogen.
 - type: gasReaction
   id: FrezonCoolant
   priority: 1
@@ -30,16 +51,23 @@
   products:
     NitrousOxide: 6
 
+# Frezon is made at room temperature, however the reaction is exothermic.
+# Nitrogen can be used to reduce the activation temperature, however this will also
+# cause a FrezonCoolant reaction if not managed.
+# Frezon production is exothermic - if the reaction gets out of control, it can flash
+# the tritium used.
 - type: gasReaction
   id: FrezonProduction
   priority: 2
-  maximumTemperature: 73.15 # Cold tritium fire, basically.
-  minimumRequirements:
-    Oxygen: 0.01
-    Nitrogen: 0.01
-    Tritium: 0.01
-  effects:
-  - !type:FrezonProductionReaction {}
+  minimumTemperature: 293.15
+  enthalpy: 25000
+  reactants:
+    Tritium: 1
+    Oxygen: 8
+  products:
+    Frezon: 9
+  catalysts:
+    Nitrogen: -2
 
 - type: gasReaction
   id: AmmoniaOxygenReaction

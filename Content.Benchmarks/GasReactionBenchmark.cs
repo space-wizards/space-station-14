@@ -30,8 +30,6 @@ public class GasReactionBenchmark
     private EntityUid _testGrid = default!;
     private TileAtmosphere _testTile = default!;
     // Reaction instances
-    private PlasmaFireReaction _plasmaFireReaction = default!;
-    private FrezonProductionReaction _frezonProductionReaction = default!;
     private WaterVaporReaction _waterVaporReaction = default!;
     // Gas mixtures for each reaction type
     private GasMixture _plasmaFireMixture = default!;
@@ -59,8 +57,6 @@ public class GasReactionBenchmark
             var entMan = server.ResolveDependency<IEntityManager>();
             _atmosphereSystem = entMan.System<AtmosphereSystem>();
 
-            _plasmaFireReaction = new PlasmaFireReaction();
-            _frezonProductionReaction = new FrezonProductionReaction();
             _waterVaporReaction = new WaterVaporReaction();
 
             SetupGasMixtures();
@@ -143,32 +139,6 @@ public class GasReactionBenchmark
     private static GasMixture CloneMixture(GasMixture original)
     {
         return new GasMixture(original);
-    }
-
-    [Benchmark]
-    public async Task PlasmaFireReaction()
-    {
-        await _pair.Server.WaitPost(() =>
-        {
-            for (var i = 0; i < Iterations; i++)
-            {
-                var mixture = CloneMixture(_plasmaFireMixture);
-                _plasmaFireReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
-            }
-        });
-    }
-
-    [Benchmark]
-    public async Task FrezonProductionReaction()
-    {
-        await _pair.Server.WaitPost(() =>
-        {
-            for (var i = 0; i < Iterations; i++)
-            {
-                var mixture = CloneMixture(_frezonProductionMixture);
-                _frezonProductionReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
-            }
-        });
     }
 
     [Benchmark]
