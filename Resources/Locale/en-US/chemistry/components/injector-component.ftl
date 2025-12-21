@@ -12,12 +12,12 @@ injector-component-inject-mode-name = Inject
 injector-component-draw-mode-name = Draw
 injector-component-dynamic-mode-name = Dynamic
 injector-component-mode-changed-text = Now {$mode}
-injector-component-inject-success-message = You inject {$amount}u into {THE($target)}!
-injector-component-inject-success-message-self = You inject {$amount}u into yourself!
 injector-component-transfer-success-message = You transfer {$amount}u into {THE($target)}.
 injector-component-transfer-success-message-self = You transfer {$amount}u into yourself.
+injector-component-inject-success-message = You inject {$amount}u into {THE($target)}!
+injector-component-inject-success-message-self = You inject {$amount}u into yourself!
 injector-component-draw-success-message = You draw {$amount}u from {THE($target)}.
-injector-component-draw-success-message-self = You draw {$amount}u from youself.
+injector-component-draw-success-message-self = You draw {$amount}u from yourself.
 
 ## Fail Messages
 
@@ -33,10 +33,10 @@ injector-component-blocked-user = Protective gear blocked your injection!
 injector-component-blocked-other = {CAPITALIZE(THE(POSS-ADJ($target)))} armor blocked {THE($user)}'s injection!
 injector-component-cannot-transfer-message = You aren't able to transfer into {THE($target)}!
 injector-component-cannot-transfer-message-self = You aren't able to transfer into yourself!
-injector-component-cannot-draw-message = You aren't able to draw from {THE($target)}!
-injector-component-cannot-draw-message-self = You aren't able to draw from yourself!
 injector-component-cannot-inject-message = You aren't able to inject into {THE($target)}!
 injector-component-cannot-inject-message-self = You aren't able to inject into yourself!
+injector-component-cannot-draw-message = You aren't able to draw from {THE($target)}!
+injector-component-cannot-draw-message-self = You aren't able to draw from yourself!
 injector-component-ignore-mobs = This injector can only interact with containers!
 
 ## mob-inject doafter messages
