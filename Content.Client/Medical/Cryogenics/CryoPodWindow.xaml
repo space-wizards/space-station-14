@@ -26,7 +26,7 @@
             <!-- Flavor text -->
             <BoxContainer Orientation="Horizontal"
                           SeparationOverride="10"
-                          Margin="8 0 0 0">
+                          Margin="8 0 0 8">
                 <TextureRect StyleClasses="NTLogoDark"
                              VerticalExpand="True"
                              Stretch="KeepAspectCentered"
@@ -41,12 +41,38 @@
                 </BoxContainer>
             </BoxContainer>
 
-            <!-- Status -->
+            <!-- Atmos info -->
+            <BoxContainer Orientation="Horizontal"
+                          SeparationOverride="20"
+                          Margin="0 0 0 4">
+                <!-- Pressure -->
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'gas-analyzer-window-pressure-text'}"
+                           StyleClasses="LabelSubText"/>
+                    <Label Name="Pressure"/>
+                </BoxContainer>
+
+                <!-- Temperature -->
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'gas-analyzer-window-temperature-text'}"
+                           StyleClasses="LabelSubText"/>
+                    <Label Name="Temperature"/>
+                </BoxContainer>
+            </BoxContainer>
+
+            <!-- Gas mix -->
+            <Control Margin="0 0 0 22">
+                <controls:SplitBar Name="GasMixChart"
+                                   MinHeight="8"
+                                   MaxHeight="8"/>
+            </Control>
+
+            <!-- Warnings & status -->
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True"
                           Align="Center"
-                          Margin="0 18 0 18"
+                          Margin="0 0 0 14"
                           SeparationOverride="20">
 
                 <!-- Ejection error (if the pod is locked) -->
@@ -128,30 +154,6 @@
                 </BoxContainer>
 
             </BoxContainer>
-
-            <!-- Atmos info -->
-            <BoxContainer Orientation="Horizontal"
-                          SeparationOverride="20"
-                          Margin="0 0 0 4">
-                <!-- Pressure -->
-                <BoxContainer Orientation="Vertical">
-                    <Label Text="{Loc 'gas-analyzer-window-pressure-text'}"
-                           StyleClasses="LabelSubText"/>
-                    <Label Name="Pressure"/>
-                </BoxContainer>
-
-                <!-- Temperature -->
-                <BoxContainer Orientation="Vertical">
-                    <Label Text="{Loc 'gas-analyzer-window-temperature-text'}"
-                           StyleClasses="LabelSubText"/>
-                    <Label Name="Temperature"/>
-                </BoxContainer>
-            </BoxContainer>
-
-            <controls:SplitBar Name="GasMixChart"
-                               MinHeight="8"
-                               MaxHeight="8"
-                               Margin="0 0 0 14"/>
 
             <!-- Reagents -->
             <Control HorizontalExpand="True"
