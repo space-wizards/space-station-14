@@ -62,6 +62,11 @@ public sealed class GenericGasReactionSystem : EntitySystem
             if (reaction.Reactants.Count == 0)
                 continue;
 
+            // TODO ATMOS PLAYTEST: Determine if people like the realistic reaction rate behavior
+            // where reactions still occur (albeit very slowly) below the minimum temperature requirement.
+            // if (mix.Temperature < reaction.MinimumTemperatureRequirement)
+            //     continue;
+
             // Add concentration-dependent reaction rate
             // For 1A + 2B -> 3C, the concentration-dependence is [A]^1 * [B]^2
             var rate = 1f; // rate of this reaction
