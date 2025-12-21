@@ -197,8 +197,9 @@ public abstract partial class SharedBorgSystem : EntitySystem
         // Unpredicted because the event is raised on the server.
         _popup.PopupEntity(Loc.GetString("borg-mind-added", ("name", Identity.Name(chassis.Owner, EntityManager))), chassis.Owner);
 
-        if (CanActivate(chassis))
-            SetActive(chassis, true);
+        TryActivate(chassis);
+
+        _access.SetAccessEnabled(chassis.Owner, true); // Needs a player so that scientists can't drag around an empty borg for free AA.
         _appearance.SetData(chassis.Owner, BorgVisuals.HasPlayer, true);
     }
 
@@ -211,6 +212,8 @@ public abstract partial class SharedBorgSystem : EntitySystem
         // Turn off the light so that the no-player visuals can be seen.
         if (TryComp<HandheldLightComponent>(chassis.Owner, out var light))
             _handheldLight.TurnOff((chassis.Owner, light), makeNoise: false); // Already plays a sound when toggling the borg off.
+
+        _access.SetAccessEnabled(chassis.Owner, false); // Needs a player so that scientists can't drag around an empty borg for free AA.
         _appearance.SetData(chassis.Owner, BorgVisuals.HasPlayer, false);
     }
 
@@ -285,14 +288,9 @@ public abstract partial class SharedBorgSystem : EntitySystem
     private void OnMobStateChanged(Entity<BorgChassisComponent> chassis, ref MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Alive)
-        {
-            if (CanActivate(chassis))
-                SetActive(chassis, true, user: args.Origin);
-        }
+            TryActivate(chassis, args.Origin);
         else
-        {
             SetActive(chassis, false, user: args.Origin);
-        }
     }
 
     private void OnBeingGibbed(Entity<BorgChassisComponent> chassis, ref BeingGibbedEvent args)
@@ -357,8 +355,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     // Raised when a power cell is inserted.
     private void OnPowerCellChanged(Entity<BorgChassisComponent> chassis, ref PowerCellChangedEvent args)
     {
-        if (CanActivate(chassis))
-            SetActive(chassis, true);
+        TryActivate(chassis);
     }
 
     public override void Update(float frameTime)
@@ -374,8 +371,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
             Dirty(uid, borgChassis);
 
             // If we aren't drawing and suddenly get enough power to draw again, reenable.
-            if (CanActivate((uid, borgChassis)))
-                SetActive((uid, borgChassis), true);
+            TryActivate((uid, borgChassis));
         }
     }
 }
