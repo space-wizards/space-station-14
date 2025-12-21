@@ -61,16 +61,11 @@ public abstract partial class SharedBorgSystem
         if (_timing.ApplyingState)
             return; // The changes are already networked with the same game state
 
-        Log.Debug("Checking container.");
-
         if (args.Container.ID != ent.Comp.BrainSlotId)
             return;
 
-        Log.Debug("Checking mind.");
-
         if (_mind.TryGetMind(ent, out var mindId, out var mindComp))
         {
-            Log.Debug("Transferring.");
             _mind.TransferTo(mindId, args.Entity, true, mind: mindComp);
 
             if (_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
