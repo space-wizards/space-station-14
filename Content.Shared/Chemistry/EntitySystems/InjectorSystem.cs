@@ -284,7 +284,7 @@ public sealed partial class InjectorSystem : EntitySystem
             // Check if we have anything to inject.
             if (injectorSolution.Volume == 0)
             {
-                _popup.PopupClient(Loc.GetString("injector-component-cannot-toggle-inject-message"), target, user);
+                _popup.PopupClient(Loc.GetString("injector-component-empty-message", ("injector", injector)), target, user);
                 return false;
             }
 
