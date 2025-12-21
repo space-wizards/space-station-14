@@ -1,6 +1,6 @@
 # In a low-energy state plasma will burn to simple CO2 and water just like any hydrocarbon.
 - type: gasReaction
-  id: PlasmaFire
+  id: PlasmaFireLowEnergy
   priority: -2
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
   enthalpy: 160000 # Atmospherics.FirePlasmaEnergyReleased (J/mol)
@@ -17,8 +17,8 @@
 
 # Takeover reaction - when hot enough, plasma and oxygen will fuse to tritium.
 - type: gasReaction
-  id: PlasmaFire
-  priority: -3
+  id: PlasmaFireHighEnergy
+  priority: -1
   minimumTemperature: 900
   enthalpy: 160000
   reactants:
@@ -30,7 +30,7 @@
 # Tritium burns much hotter.
 - type: gasReaction
   id: TritiumFire
-  priority: -1
+  priority: 0
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
   enthalpy: 284000
   reactants:
