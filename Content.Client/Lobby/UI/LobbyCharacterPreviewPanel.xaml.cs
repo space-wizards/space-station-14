@@ -313,7 +313,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         content.RemoveAllChildren();
 
         var title = new Label();
-        title.AddStyleClass("LabelHeading");
         title.Text = job.LocalizedName;
         title.HorizontalAlignment = HAlignment.Center;
 

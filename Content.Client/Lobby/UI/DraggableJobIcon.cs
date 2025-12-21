@@ -99,6 +99,7 @@ public sealed class DraggableJobIcon : TextureRect
         VerticalAlignment = VAlignment.Center;
         HorizontalAlignment = HAlignment.Center;
         MouseFilter = MouseFilterMode.Pass;
+        TooltipDelay = 0;
 
         // Add a little sugar to suppress the tooltip while dragging the icon
         if(tooltipSupplier is not null)
