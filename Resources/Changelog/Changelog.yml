@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Krosus
-  changes:
-  - message: Fixed crash when loading saved character profiles
-    type: Fix
-  id: 8823
-  time: '2025-08-02T15:14:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39333
 - author: FairlySadPanda
   changes:
   - message: A new cake, berry delight, that is made with a cake base, berries and
@@ -3922,3 +3915,19 @@
   id: 9322
   time: '2025-12-20T18:37:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41923
+- author: SirWarock
+  changes:
+  - message: Hyposprays and Hypopens now start in their dynamic mode. It functions
+      exactly as the previous Inject/Draw mode.
+    type: Tweak
+  - message: The Gorlex Hypospray is now syndicate contraband.
+    type: Tweak
+  - message: Injectors now inject twice as quick into targets that are lying down
+      for any reason, most notably being buckled on a medical bed or being critical.
+      Before, only critical patients had this luxury.
+    type: Tweak
+  - message: Clumsy now affects syringes when you're self-injecting.
+    type: Tweak
+  id: 9323
+  time: '2025-12-21T00:10:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41833
