@@ -73,17 +73,14 @@
   id: LotteryJunkEntityTable
   table: !type:GroupSelector
     children:
+    - !type:NestedSelector
+      tableId: AllBananaPeelsTable
+      weight: 4
     - id: CigaretteSpent
     - id: FoodBowlBigTrash
     - id: FoodFrozenPopsicleTrash
     - id: FoodCornTrash
-    - id: TrashBananaPeel
-    - id: TrashBananaPeelExplosive
-      weight: 0.01
     - id: FoodTinBeansTrash
-    - id: TrashBakedBananaPeel
-    - id: TrashMimanaPeel
-    - id: TrashBananiumPeel
 
 - type: entityTable
   id: LotteryCanistersEntityTable
@@ -124,13 +121,10 @@
     - id: WeaponShotgunHandmade
     - id: WeaponFlareGun
     - id: Bola
-    - id: ToySword
     - id: Shovel
-    - id: WeaponWaterPistol
-    - id: WeaponWaterBlaster
     - id: WeaponTurretXeno
-    - id: WeaponRifleFoam
-      weight: 3
+    - !type:NestedSelector
+      tableId: AllToyWeaponsTable
 
 - type: entityTable
   id: LotteryClothingEntityTable

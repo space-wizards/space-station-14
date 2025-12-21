@@ -233,7 +233,7 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
 
         if (solutionToInject.Volume > 0)
         {
-            _bloodstream.TryAddToChemicals((patient.Value, bloodstream), solutionToInject);
+            _bloodstream.TryAddToBloodstream((patient.Value, bloodstream), solutionToInject);
             _reactive.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
         }
     }
