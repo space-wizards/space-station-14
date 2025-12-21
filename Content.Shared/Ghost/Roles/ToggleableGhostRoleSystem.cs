@@ -49,10 +49,18 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
 
         UpdateAppearance(ent.Owner, ToggleableGhostRoleStatus.Searching);
 
-        var ghostRole = EnsureComp<GhostRoleComponent>(ent.Owner);
-        EnsureComp<GhostTakeoverAvailableComponent>(ent.Owner);
+        ActivateGhostRole(ent.AsNullable());
+    }
 
-        // GhostRoleComponent inherits custom settings from the ToggleableGhostRoleComponent.
+    public void ActivateGhostRole(Entity<ToggleableGhostRoleComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        var ghostRole = EnsureComp<GhostRoleComponent>(ent);
+        EnsureComp<GhostTakeoverAvailableComponent>(ent);
+
+        // GhostRoleComponent inherits custom settings from the <see cref="ToggleableGhostRoleComponent"/>.
         ghostRole.RoleName = Loc.GetString(ent.Comp.RoleName);
         ghostRole.RoleDescription = Loc.GetString(ent.Comp.RoleDescription);
         ghostRole.RoleRules = Loc.GetString(ent.Comp.RoleRules);
