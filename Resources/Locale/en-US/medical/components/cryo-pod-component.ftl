@@ -6,12 +6,12 @@ cryo-pod-empty-beaker = It is empty!
 # Shown when a normal ejection through the eject verb is attempted on a locked pod.
 cryo-pod-locked = The ejection mechanism is unresponsive!
 
-cryo-pod-window-product-name = Nanotrasen CMX-229
-cryo-pod-window-product-subtitle = Cryogenic medical unit
+cryo-pod-window-product-name = Nanotrasen CRPX-229
+cryo-pod-window-product-subtitle = Cryogenic Restoration Pod
 cryo-pod-window-loading = Loading
 cryo-pod-window-atmos-pressure = Pressure
 cryo-pod-window-atmos-temperature = Temperature
-cryo-pod-window-status = Unit status:
+cryo-pod-window-status = Pod status:
 cryo-pod-window-status-nominal = Nominal
 cryo-pod-window-status-not-ready = NOT READY
 cryo-pod-window-checklist-pressure = Pressurized
