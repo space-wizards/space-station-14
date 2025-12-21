@@ -20,11 +20,11 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/hypospray.rsi
     layers:
-      - state: hypo
-        map: ["enum.SolutionContainerLayers.Base"]
-      - state: hypo_fill1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: hypo
+      map: ["enum.SolutionContainerLayers.Base"]
+    - state: hypo_fill1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: SolutionContainerManager
