@@ -116,5 +116,4 @@
 - type: injectorMode
   parent: HyposprayDynamicMode
   id: HypopenDynamicMode
-  mobTime: 5
   containerDrawTime: 0.75
