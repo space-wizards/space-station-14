@@ -20,6 +20,7 @@
     tags:
     - WhitelistChameleon
     - WeldingMask
+    - CorgiWearable
   - type: HideLayerClothing
     slots:
     - Snout
@@ -39,6 +40,7 @@
     - HamsterWearable
     - WhitelistChameleon
     - WeldingMask
+    - CorgiWearable
 
 - type: entity
   parent: WeldingMaskBase

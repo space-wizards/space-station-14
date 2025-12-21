@@ -15,6 +15,9 @@
     graph: Blindfold
     node: blindfold
   - type: FlashImmunity
+  - type: Tag
+    tags:
+    - CorgiWearable 
 
 - type: entity
   parent: ClothingHeadEyeBaseFlippable
