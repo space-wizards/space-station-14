@@ -87,7 +87,7 @@
     layers:
     - state: borghypo
       map: [ "enum.SolutionContainerLayers.Base" ]
-    - state: borghypo_fill
+    - state: borghypo_fill1
       map: [ "enum.SolutionContainerLayers.Fill" ]
       visible: false
   - type: Item
