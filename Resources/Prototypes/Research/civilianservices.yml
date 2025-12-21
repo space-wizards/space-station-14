@@ -131,7 +131,7 @@
   cost: 5000
   recipeUnlocks:
   - BorgModuleAdvancedChemical
-  - JetInjector
+  - AdvancedJetInjector
 
 - type: technology
   id: AdvancedCleaning

@@ -1571,6 +1571,14 @@
   - EmergencyOxygenMedical
   - LoadoutSpeciesVoxNitrogen
 
+- type: loadoutGroup
+  id: MedicalInjector
+  name: loadout-group-medical-injector
+  minLimit: 1
+  loadouts:
+  - MedicalJetInjector
+  - MedicalSyringe
+
 # Wildcards
 - type: loadoutGroup
   id: ReporterJumpsuit

@@ -203,6 +203,7 @@ loadout-group-paramedic-outerclothing = Paramedic outer clothing
 loadout-group-paramedic-shoes = Paramedic shoes
 
 loadout-group-medical-glasses = Medical glasses
+loadout-group-medical-injector = Hypodermic tool
 
 # Wildcards
 loadout-group-reporter-jumpsuit = Reporter jumpsuit
