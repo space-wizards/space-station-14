@@ -5,36 +5,36 @@
   id: PlasmaFireLowEnergy
   priority: -2
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
-  enthalpy: 160000 # Atmospherics.FirePlasmaEnergyReleased (J/mol)
+  enthalpy: 1600000 # Atmospherics.FirePlasmaEnergyReleased (J/mol)
   reactants:
     Plasma: 1
-    Oxygen: 1
+    Oxygen: 9
   products:
-    CarbonDioxide: 1
-    WaterVapor: 1
+    CarbonDioxide: 5
+    WaterVapor: 5
   catalysts:
-    Tritium: 5
-    # When tritium is present, the reaction shifts more towards the fusion reaction.
-    # This increases activation energy and makes the low-energy reaction rate low.
+    Tritium: 10
+    # When tritium is present, the activation energy increases
+    # which shifts the reaction over to PlasmaFireHighEnergy.
 
 # Takeover reaction - when hot enough, plasma and oxygen will fuse to tritium.
 - type: gasReaction
   id: PlasmaFireHighEnergy
   priority: -1
   minimumTemperature: 900
-  enthalpy: 160000
+  enthalpy: 1600000
   reactants:
-    Plasma: 3
-    Oxygen: 3
+    Plasma: 1
+    Oxygen: 9
   products:
-    Tritium: 3
+    Tritium: 10
 
 # Tritium burns much hotter.
 - type: gasReaction
   id: TritiumFire
   priority: 0
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist
-  enthalpy: 284000
+  enthalpy: 2840000
   reactants:
     Tritium: 2
     Oxygen: 1
@@ -65,11 +65,11 @@
   enthalpy: 25000
   reactants:
     Tritium: 1
-    Oxygen: 8
+    Nitrogen: 8
   products:
     Frezon: 9
   catalysts:
-    Nitrogen: -2
+    Oxygen: -2
 
 - type: gasReaction
   id: AmmoniaOxygenReaction
