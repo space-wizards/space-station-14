@@ -287,6 +287,7 @@ public sealed partial class InjectorSystem : EntitySystem
                 _popup.PopupClient(Loc.GetString("injector-component-cannot-toggle-inject-message"), target, user);
                 return false;
             }
+
             // additional delay is based on actual volume left to inject in syringe when smaller than transfer amount
             // If CurrentTransferAmount is null, it'll want to inject its entire contents, e.g., epipens.
             amount = injector.Comp.CurrentTransferAmount ?? injectorSolution.Volume;
