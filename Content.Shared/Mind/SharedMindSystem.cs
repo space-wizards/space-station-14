@@ -721,20 +721,16 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// <summary>
     /// Get all minds on the same Map as the Refrence
     /// </summary>>
-    public HashSet<Entity<MindComponent>> GetAliveHumansOnMap(EntityUid? map)
+    public IEnumerable<Entity<MindComponent>> GetAliveHumansOnMap(EntityUid map)
     {
-        var allAliveHumanoids = GetAliveHumans();
-        var outminds = new HashSet<Entity<MindComponent>>();
-        foreach(var candidateMind in allAliveHumanoids)
+        foreach (var candidateMind in GetAliveHumans())
         {
-            if(candidateMind.Comp.CurrentEntity is not {} candidateEntity ||
+            if (candidateMind.Comp.CurrentEntity is not {} candidateEntity ||
                _transform.GetMap(candidateEntity) != map)
             {
-
-                outminds.Add(candidateMind);
+                yield return candidateMind;
             }
         }
-        return outminds;
     }
 }
 
