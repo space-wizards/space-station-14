@@ -1,5 +1,3 @@
-using Content.Server.Kitchen.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.EntitySystems;
@@ -20,15 +18,15 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using System.Linq;
-using Content.Server.Construction.Completions;
 using Content.Server.Jittering;
 using Content.Shared.Jittering;
+using Content.Shared.Kitchen.EntitySystems;
 using Content.Shared.Power;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class ReagentGrinderSystem : EntitySystem
+    internal sealed class ReagentGrinderSystem : SharedReagentGrinderSystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainersSystem = default!;
@@ -66,6 +64,8 @@ namespace Content.Server.Kitchen.EntitySystems
         private void OnToggleAutoModeMessage(Entity<ReagentGrinderComponent> entity, ref ReagentGrinderToggleAutoModeMessage message)
         {
             entity.Comp.AutoMode = (GrinderAutoMode) (((byte) entity.Comp.AutoMode + 1) % Enum.GetValues(typeof(GrinderAutoMode)).Length);
+
+            Dirty(entity);
 
             UpdateUiState(entity);
         }
@@ -316,30 +316,6 @@ namespace Content.Server.Kitchen.EntitySystems
         private void ClickSound(Entity<ReagentGrinderComponent> reagentGrinder)
         {
             _audioSystem.PlayPvs(reagentGrinder.Comp.ClickSound, reagentGrinder.Owner, AudioParams.Default.WithVolume(-2f));
-        }
-
-        private Solution? GetGrindSolution(EntityUid uid)
-        {
-            if (TryComp<ExtractableComponent>(uid, out var extractable)
-                && extractable.GrindableSolution is not null
-                && _solutionContainersSystem.TryGetSolution(uid, extractable.GrindableSolution, out _, out var solution))
-            {
-                return solution;
-            }
-            else
-                return null;
-        }
-
-        private bool CanGrind(EntityUid uid)
-        {
-            var solutionName = CompOrNull<ExtractableComponent>(uid)?.GrindableSolution;
-
-            return solutionName is not null && _solutionContainersSystem.TryGetSolution(uid, solutionName, out _, out _);
-        }
-
-        private bool CanJuice(EntityUid uid)
-        {
-            return CompOrNull<ExtractableComponent>(uid)?.JuiceSolution is not null;
         }
     }
 }
