@@ -8,7 +8,7 @@ import os
 import psycopg2
 from uuid import UUID
 
-LATEST_DB_MIGRATION = "20230725193102_AdminNotesImprovementsForeignKeys"
+LATEST_DB_MIGRATION = "20250314222016_ConstructionFavorites"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -36,10 +36,12 @@ def main():
     dump_admin_messages(cur, user_id, arg_output)
     dump_admin_notes(cur, user_id, arg_output)
     dump_admin_watchlists(cur, user_id, arg_output)
+    dump_blacklist(cur, user_id, arg_output)
     dump_connection_log(cur, user_id, arg_output)
     dump_play_time(cur, user_id, arg_output)
     dump_player(cur, user_id, arg_output)
     dump_preference(cur, user_id, arg_output)
+    dump_role_whitelists(cur, user_id, arg_output)
     dump_server_ban(cur, user_id, arg_output)
     dump_server_ban_exemption(cur, user_id, arg_output)
     dump_server_role_ban(cur, user_id, arg_output)
@@ -257,7 +259,29 @@ FROM (
                 (SELECT COALESCE(json_agg(to_jsonb(trait_subq) - 'profile_id'), '[]') FROM (
                     SELECT * FROM trait WHERE trait.profile_id = profile.profile_id
                 ) trait_subq)
-                as traits
+                as traits,
+                (SELECT COALESCE(json_agg(to_jsonb(role_loadout_subq) - 'profile_id'), '[]') FROM (
+                    SELECT
+                        *,
+                        (SELECT COALESCE(json_agg(to_jsonb(loadout_group_subq) - 'profile_role_loadout_id'), '[]') FROM (
+                            SELECT
+                                *,
+                                (SELECT COALESCE(json_agg(to_jsonb(loadout_subq) - 'profile_loadout_group_id'), '[]') FROM (
+                                    SELECT * FROM profile_loadout WHERE profile_loadout.profile_loadout_group_id = profile_loadout_group.profile_loadout_group_id
+                                ) loadout_subq)
+                                as loadouts
+                            FROM
+                                profile_loadout_group
+                            WHERE
+                                profile_loadout_group.profile_role_loadout_id = profile_role_loadout.profile_role_loadout_id
+                        ) loadout_group_subq)
+                        as loadout_groups
+                    FROM
+                        profile_role_loadout
+                    WHERE
+                        profile_role_loadout.profile_id = profile.profile_id
+                ) role_loadout_subq)
+                as role_loadouts
             FROM
                 profile
             WHERE
@@ -392,6 +416,49 @@ FROM (
     json_data = cur.fetchall()[0][0]
 
     with open(os.path.join(outdir, "whitelist.json"), "w", encoding="utf-8") as f:
+        f.write(json_data)
+
+
+def dump_blacklist(cur: "psycopg2.cursor", user_id: str, outdir: str):
+    print("Dumping blacklist...")
+
+    cur.execute("""
+SELECT
+    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+FROM (
+    SELECT
+        *
+    FROM
+        blacklist
+    WHERE
+        user_id = %s
+) as data
+""", (user_id,))
+
+    json_data = cur.fetchall()[0][0]
+
+    with open(os.path.join(outdir, "blacklist.json"), "w", encoding="utf-8") as f:
+        f.write(json_data)
+
+def dump_role_whitelists(cur: "psycopg2.cursor", user_id: str, outdir: str):
+    print("Dumping role_whitelists...")
+
+    cur.execute("""
+SELECT
+    COALESCE(json_agg(to_json(data)), '[]') #>> '{}'
+FROM (
+    SELECT
+        *
+    FROM
+        role_whitelists
+    WHERE
+        player_user_id = %s
+) as data
+""", (user_id,))
+
+    json_data = cur.fetchall()[0][0]
+
+    with open(os.path.join(outdir, "role_whitelists.json"), "w", encoding="utf-8") as f:
         f.write(json_data)
 
 

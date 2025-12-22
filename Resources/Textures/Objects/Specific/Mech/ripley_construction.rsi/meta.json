@@ -1,101 +1,101 @@
 {
-  "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
-  "license" : "CC-BY-SA-3.0",
-  "version": 1,
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "ripley_chassis"
+    "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, edited by TiniestShark (Github)",
+    "license" : "CC-BY-SA-3.0",
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "ripley_harness"
-    },
-    {
-      "name": "ripley_harness+o"
-    },
-    {
-      "name": "ripley_r_arm"
-    },
-    {
-      "name": "ripley_r_arm+o"
-    },
-    {
-      "name": "ripley_l_arm"
-    },
-    {
-      "name": "ripley_l_arm+o"
-    },
-    {
-      "name": "ripley_r_leg"
-    },
-    {
-      "name": "ripley_r_leg+o"
-    },
-    {
-      "name": "ripley_l_leg"
-    },
-    {
-      "name": "ripley_l_leg+o"
-    },
-    {
-      "name": "ripley0"
-    },
-    {
-      "name": "ripley1"
-    },
-    {
-      "name": "ripley2"
-    },
-    {
-      "name": "ripley3"
-    },
-    {
-      "name": "ripley4"
-    },
-    {
-      "name": "ripley5"
-    },
-    {
-      "name": "ripley6"
-    },
-    {
-      "name": "ripley7"
-    },
-    {
-      "name": "ripley8"
-    },
-    {
-      "name": "ripley9"
-    },
-    {
-      "name": "ripley10"
-    },
-    {
-      "name": "ripley11"
-    },
-    {
-      "name": "ripley12"
-    },
-    {
-      "name": "ripley13"
-    },
-    {
-      "name": "ripley14"
-    },
-    {
-      "name": "ripley15"
-    },
-    {
-      "name": "ripley16"
-    },
-    {
-      "name": "ripley17"
-    },
-    {
-      "name": "ripley18"
-    }
-  ]
+    "states": [
+        {
+            "name": "ripley_chassis"
+        },
+        {
+            "name": "ripley_harness"
+        },
+        {
+            "name": "ripley_harness+o"
+        },
+        {
+            "name": "ripley_r_arm"
+        },
+        {
+            "name": "ripley_r_arm+o"
+        },
+        {
+            "name": "ripley_l_arm"
+        },
+        {
+            "name": "ripley_l_arm+o"
+        },
+        {
+            "name": "ripley_r_leg"
+        },
+        {
+            "name": "ripley_r_leg+o"
+        },
+        {
+            "name": "ripley_l_leg"
+        },
+        {
+            "name": "ripley_l_leg+o"
+        },
+        {
+            "name": "ripley0"
+        },
+        {
+            "name": "ripley1"
+        },
+        {
+            "name": "ripley2"
+        },
+        {
+            "name": "ripley3"
+        },
+        {
+            "name": "ripley4"
+        },
+        {
+            "name": "ripley5"
+        },
+        {
+            "name": "ripley6"
+        },
+        {
+            "name": "ripley7"
+        },
+        {
+            "name": "ripley8"
+        },
+        {
+            "name": "ripley9"
+        },
+        {
+            "name": "ripley10"
+        },
+        {
+            "name": "ripley11"
+        },
+        {
+            "name": "ripley12"
+        },
+        {
+            "name": "ripley13"
+        },
+        {
+            "name": "ripley14"
+        },
+        {
+            "name": "ripley15"
+        },
+        {
+            "name": "ripley16"
+        },
+        {
+            "name": "ripley17"
+        },
+        {
+            "name": "ripley18"
+        }
+    ]
 }

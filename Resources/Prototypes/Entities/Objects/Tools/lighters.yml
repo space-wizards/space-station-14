@@ -556,7 +556,7 @@
     sprite: Objects/Tools/Lighters/honkco.rsi
   - type: Item
     sprite: Objects/Tools/Lighters/honkco.rsi
-  - type: ComponentToggler
+  - type: ComponentToggler # This is super cursed and ends up deleting the fixtures when toggled off
     components:
     - type: Slippery
     - type: StepTrigger

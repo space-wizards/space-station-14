@@ -7,6 +7,8 @@
   - type: Sprite
     sprite: Objects/Devices/igniter.rsi
     state: icon
+  - type: Item
+    storedRotation: -90
   - type: IgnitionSource
     temperature: 800
   - type: IgniteOnTrigger

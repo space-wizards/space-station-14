@@ -281,6 +281,14 @@ binds:
   type: State
   key: v
   mod1: Alt
+- function: InspectServerComponent
+  type: State
+  key: b
+  mod1: Alt
+- function: InspectClientComponent
+  type: State
+  key: c
+  mod1: Alt
 - function: MouseMiddle
   type: State
   key: MouseMiddle

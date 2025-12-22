@@ -268,6 +268,8 @@ namespace Content.Client.Options.UI.Tabs
             AddButton(EngineKeyFunctions.ShowDebugMonitors);
             AddButton(EngineKeyFunctions.HideUI);
             AddButton(ContentKeyFunctions.InspectEntity);
+            AddButton(ContentKeyFunctions.InspectServerComponent);
+            AddButton(ContentKeyFunctions.InspectClientComponent);
 
             AddHeader("ui-options-header-text-cursor");
             AddButton(EngineKeyFunctions.TextCursorLeft);

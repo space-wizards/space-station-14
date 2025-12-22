@@ -1,21 +1,37 @@
 
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tips;
 
+/// <summary>
+/// Networked event that makes a client show a message on their screen using tippy or another protoype.
+/// </summary>
 [Serializable, NetSerializable]
-public sealed class TippyEvent : EntityEventArgs
+public sealed class TippyEvent(string msg, EntProtoId? proto, float speakTime, float slideTime, float waddleInterval) : EntityEventArgs
 {
-    public TippyEvent(string msg)
-    {
-        Msg = msg;
-    }
+    /// <summary>
+    /// The text to show in the speech bubble.
+    /// </summary>
+    public string Msg = msg;
 
-    public string Msg;
-    public string? Proto;
+    /// <summary>
+    /// The entity to show. Defaults to tippy.
+    /// </summary>
+    public EntProtoId? Proto = proto;
 
-    // TODO: Why are these defaults even here, have the caller specify. This get overriden only most of the time.
-    public float SpeakTime = 5;
-    public float SlideTime = 3;
-    public float WaddleInterval = 0.5f;
+    /// <summary>
+    /// The time the speech bubble is shown, in seconds.
+    /// </summary>
+    public float SpeakTime = speakTime;
+
+    /// <summary>
+    /// The time the entity takes to walk onto the screen, in seconds.
+    /// </summary>
+    public float SlideTime = slideTime;
+
+    /// <summary>
+    /// The time between waddle animation steps, in seconds.
+    /// </summary>
+    public float WaddleInterval = waddleInterval;
 }

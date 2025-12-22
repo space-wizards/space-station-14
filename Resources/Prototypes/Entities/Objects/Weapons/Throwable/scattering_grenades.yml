@@ -10,14 +10,6 @@
       cluster-payload: !type:Container
   - type: Damageable
     damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TriggerBehavior
-        keyOut: timer # explode immediately
   - type: ScatteringGrenade
   - type: TriggerOnUse
   - type: TimerTrigger
@@ -37,7 +29,7 @@
         friction: 0.2
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseSecurityContraband]
+  parent: [FragileGrenadeBase, ScatteringGrenadeBase, BaseSecurityContraband]
   id: ClusterBang
   name: clusterbang
   description: Can be used only with flashbangs. Explodes several times.
@@ -57,7 +49,7 @@
 - type: entity
   parent: ClusterBang
   id: ClusterBangFull
-  name: ClusterBang
+  name: clusterbang
   description: Launches three flashbangs after the timer runs out.
   suffix: Full
   components:
@@ -90,7 +82,7 @@
     positional: true
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
+  parent: [VolatileGrenadeBase, ScatteringGrenadeBase, BaseSyndicateContraband]
   id: ClusterGrenade
   name: clustergrenade
   description: Why use one grenade when you can use three at once!
@@ -120,7 +112,7 @@
     price: 2500
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
+  parent: [FragileGrenadeBase, ScatteringGrenadeBase, BaseSyndicateContraband]
   id: ClusterBananaPeel
   name: cluster banana peel
   description: Splits into 6 explosive banana peels after throwing, guaranteed fun!
@@ -175,7 +167,7 @@
     price: 1000
 
 - type: entity
-  parent: ScatteringGrenadeBase
+  parent: [FragileGrenadeBase, ScatteringGrenadeBase]
   id: GrenadeFoamDart
   name: foam dart grenade
   description: Releases a bothersome spray of foam darts that cause severe welching.

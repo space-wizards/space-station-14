@@ -111,7 +111,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
                 && !chemsSolution.HasOverlapAtLeast(containerSolution.Value.Comp.Solution, cryoPod.BeakerTransferAmount * 2)) // Offbrand
             {
                 var solutionToInject = _solutionContainer.SplitSolution(containerSolution.Value, cryoPod.BeakerTransferAmount);
-                _bloodstream.TryAddToChemicals((patient.Value, bloodstream), solutionToInject);
+                _bloodstream.TryAddToBloodstream((patient.Value, bloodstream), solutionToInject);
                 _reactive.DoEntityReaction(patient.Value, solutionToInject, ReactionMethod.Injection);
             }
         }

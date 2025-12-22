@@ -494,7 +494,6 @@ entities:
       parent: 1
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
-      autoRecharge: True
 - proto: BasaltOne
   entities:
   - uid: 353

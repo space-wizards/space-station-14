@@ -36,12 +36,6 @@
 /Pow3r/ @PJB3005
 /Content.Server/Power/Pow3r/ @PJB3005
 
-
-# Sloth
-/Content.*/Audio @metalgearsloth
-/Content.*/Movement @metalgearsloth
-/Content.*/NPC @metalgearsloth
-/Content.*/Shuttles @metalgearsloth
-/Content.*/Weapons @metalgearsloth
-
 /Content.Server/Discord/ @Simyon264
+
+/Content.*/Atmos/** @ArtisticRoomba

@@ -1,122 +1,134 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Frezon canister modified from tgstation, the rest are taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8581a636acfc1517611a680b7711a74fc7ef335",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "black"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Frezon canister modified from tgstation, the rest are taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8581a636acfc1517611a680b7711a74fc7ef335. Paper Sprites by Vermidia.",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "black-1"
-    },
-    {
-      "name": "blue"
-    },
-    {
-      "name": "blue-1"
-    },
-    {
-      "name": "can-connector"
-    },
-    {
-      "name": "locked"
-    },
-    {
-      "name": "unlocked"
-    },
-    {
-      "name": "can-o0",
-      "delays": [
-        [
-          0.2,
-          0.2
-        ]
-      ]
-    },
-    {
-      "name": "can-o1"
-    },
-    {
-      "name": "can-o2"
-    },
-    {
-      "name": "can-o3"
-    },
-    {
-      "name": "can-oa1"
-    },
-    {
-      "name": "can-open"
-    },
-    {
-      "name": "grey"
-    },
-    {
-      "name": "grey-1"
-    },
-    {
-      "name": "orange"
-    },
-    {
-      "name": "orange-1"
-    },
-    {
-      "name": "red"
-    },
-    {
-      "name": "red-1"
-    },
-    {
-      "name": "redws"
-    },
-    {
-      "name": "redws-1"
-    },
-    {
-      "name": "yellow"
-    },
-    {
-      "name": "yellow-1"
-    },
-    {
-      "name": "green"
-    },
-    {
-      "name": "green-1"
-    },
-    {
-      "name": "greenys"
-    },
-    {
-      "name": "greenys-1"
-    },
-    {
-      "name": "darkblue"
-    },
-    {
-      "name": "darkblue-1"
-    },
-    {
-      "name": "frezon"
-    },
-    {
-      "name": "frezon-1"
-    },
-    {
-      "name": "water_vapor"
-    },
-    {
-      "name": "water_vapor-1"
-    },
-    {
-      "name": "scrubber-connector"
-    },
-    {
-      "name": "scrubber-open"
-    }
-  ]
+    "states": [
+        {
+            "name": "black"
+        },
+        {
+            "name": "black-1"
+        },
+        {
+            "name": "blue"
+        },
+        {
+            "name": "blue-1"
+        },
+        {
+            "name": "can-connector"
+        },
+        {
+            "name": "locked"
+        },
+        {
+            "name": "unlocked"
+        },
+        {
+            "name": "can-o0",
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "can-o1"
+        },
+        {
+            "name": "can-o2"
+        },
+        {
+            "name": "can-o3"
+        },
+        {
+            "name": "can-oa1"
+        },
+        {
+            "name": "can-open"
+        },
+        {
+            "name": "grey"
+        },
+        {
+            "name": "grey-1"
+        },
+        {
+            "name": "orange"
+        },
+        {
+            "name": "orange-1"
+        },
+        {
+            "name": "red"
+        },
+        {
+            "name": "red-1"
+        },
+        {
+            "name": "redws"
+        },
+        {
+            "name": "redws-1"
+        },
+        {
+            "name": "yellow"
+        },
+        {
+            "name": "yellow-1"
+        },
+        {
+            "name": "green"
+        },
+        {
+            "name": "green-1"
+        },
+        {
+            "name": "greenys"
+        },
+        {
+            "name": "greenys-1"
+        },
+        {
+            "name": "darkblue"
+        },
+        {
+            "name": "darkblue-1"
+        },
+        {
+            "name": "frezon"
+        },
+        {
+            "name": "frezon-1"
+        },
+        {
+            "name": "water_vapor"
+        },
+        {
+            "name": "water_vapor-1"
+        },
+        {
+            "name": "scrubber-connector"
+        },
+        {
+            "name": "scrubber-open"
+        },
+        {
+            "name": "bounty"
+        },
+        {
+            "name": "captains_paper"
+        },
+        {
+            "name": "invoice"
+        },
+        {
+            "name": "paper"
+        }
+    ]
 }

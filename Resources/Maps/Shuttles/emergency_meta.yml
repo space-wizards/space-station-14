@@ -2593,9 +2593,6 @@ entities:
     - type: Transform
       pos: 6.5,-7.5
       parent: 1
-    - type: PowerCellDraw
-      canUse: True
-      canDraw: True
     - type: Physics
       canCollide: False
     - type: ContainerContainer

@@ -533,15 +533,18 @@
 # Syndicate
 - type: entity
   id: LockerSyndicatePersonal
-  name: armory closet
+  name: blood-red locker
   parent: LockerBaseSecure
-  description: It's a personal storage unit for operative gear.
+  description: It's a personal storage unit with a blood-red design.
+  suffix: "Locked"
   components:
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: syndicate
     stateDoorOpen: syndicate_open
     stateDoorClosed: syndicate_door
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
 
 # Bluespace
 - type: entity

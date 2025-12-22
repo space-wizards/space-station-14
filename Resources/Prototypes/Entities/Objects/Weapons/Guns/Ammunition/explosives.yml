@@ -1,9 +1,9 @@
 # Rockets
 
 - type: entity
+  parent: [BaseItem, BaseMajorContraband]
   id: CartridgeRocket
   name: PG-7VL grenade
-  parent: [BaseItem, BaseMajorContraband]
   description: A 1.5 warhead designed for the RPG-7 launcher. Has tubular shape.
   components:
   - type: Tag
@@ -21,9 +21,9 @@
     price: 20
 
 - type: entity
+  parent: [BaseItem, BaseMajorContraband]
   id: CartridgeRocketSlow
   name: PG-7VL grenade "Snail-Rocket"
-  parent: [BaseItem, BaseMajorContraband]
   description: A 1.5 warhead designed for the RPG-7 launcher. It's unusually slow.
   components:
     - type: Tag
@@ -43,10 +43,10 @@
 # Grenades
 
 - type: entity
+  abstract: true
+  parent: [BaseItem, BaseMajorContraband]
   id: BaseGrenade
   name: base grenade
-  parent: [BaseItem, BaseMajorContraband]
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -56,9 +56,9 @@
   - type: Sprite
 
 - type: entity
+  parent: BaseGrenade
   id: GrenadeBaton
   name: baton grenade
-  parent: BaseGrenade
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeBaton
@@ -73,9 +73,9 @@
     suffix: false
 
 - type: entity
+  parent: BaseGrenade
   id: GrenadeBlast
   name: blast grenade
-  parent: BaseGrenade
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeBlast
@@ -90,9 +90,9 @@
     suffix: false
 
 - type: entity
+  parent: BaseGrenade
   id: GrenadeFlash
   name: flash grenade
-  parent: BaseGrenade
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFlash
@@ -107,9 +107,9 @@
     suffix: false
 
 - type: entity
+  parent: BaseGrenade
   id: GrenadeFrag
   name: frag grenade
-  parent: BaseGrenade
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeFrag
@@ -141,9 +141,9 @@
     suffix: false
 
 - type: entity
+  parent: BaseGrenade
   id: GrenadeEMP
   name: EMP grenade
-  parent: BaseGrenade
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeEMP
@@ -160,10 +160,10 @@
 # Cannon Balls
 
 - type: entity
+  abstract: true
+  parent: [BaseItem, BaseMajorContraband]
   id: BaseCannonBall
   name: base cannon ball
-  parent: [BaseItem, BaseMajorContraband]
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -173,10 +173,10 @@
   - type: Sprite
 
 - type: entity
+  parent: BaseCannonBall
   id: CannonBall
   name: cannonball
   suffix: Pirate
-  parent: BaseCannonBall
   components:
   - type: CartridgeAmmo
     proto: BulletCannonBall
@@ -186,10 +186,10 @@
     state: ball
 
 - type: entity
+  parent: BaseCannonBall
   id: CannonBallGrapeshot
   name: grapeshot
   suffix: Pirate
-  parent: BaseCannonBall
   components:
   - type: CartridgeAmmo
     proto: PelletGrapeshotSpread
@@ -199,10 +199,10 @@
     state: grapeshot
 
 - type: entity
+  parent: BaseCannonBall
   id: CannonBallGlassshot
   name: glassshot
   suffix: Pirate
-  parent: BaseCannonBall
   components:
   - type: CartridgeAmmo
     proto: PelletGlassSpread

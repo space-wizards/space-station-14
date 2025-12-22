@@ -25,8 +25,8 @@
 - type: entity
   parent: [BaseWizardObjective, BaseFreeObjective]
   id: WizardDemonstrateObjective
-  name: Show off
-  description: Give the station a good demonstration of your powers!
+  name: Cause chaos
+  description: Teach those station welps to never disrespect a Wizard again!
   components:
   - type: Objective
     icon:

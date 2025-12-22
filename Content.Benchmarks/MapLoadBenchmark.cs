@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
-using Content.Server.Maps;
+using Content.Shared.Maps;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.EntitySerialization.Systems;

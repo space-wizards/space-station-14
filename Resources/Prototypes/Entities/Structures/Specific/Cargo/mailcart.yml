@@ -1,0 +1,94 @@
+# Mailcart
+- type: entity
+  name: mail cart
+  id: MailCart
+  parent: [BaseStructureDynamic, StructureWheeled]
+  description: Deliver packages with style and efficiency.
+  components:
+    - type: Sprite
+      noRot: true
+      sprite: Objects/Specific/Cargo/mailcart.rsi
+      layers:
+        - state: mailcart_base
+    - type: InteractionOutline
+    - type: Storage
+      grid:
+      - 0,0,15,7
+      quickInsert: true
+      maxItemSize: Huge
+      whitelist:
+        components:
+        - Delivery
+        tags:
+        - Paper
+        - Document
+        - BoxCardboard
+        - Folder
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.18,-0.2,0.18,0.2"
+          density: 60
+          mask:
+          - FullTileMask
+          layer:
+          - LargeMobLayer
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger: !type:DamageTrigger
+            damage: 400
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+        - trigger: !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:EmptyAllContainersBehaviour
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: MetalBreak
+    - type: ItemMapper
+      mapLayers:
+        package_1:
+          minCount: 1
+          whitelist: &PackageWhitelist
+            tags:
+              - PackageDelivery
+        package_2:
+          minCount: 2
+          whitelist: *PackageWhitelist
+        package_3:
+          minCount: 3
+          whitelist: *PackageWhitelist
+        package_4:
+          minCount: 4
+          whitelist: *PackageWhitelist
+        package_5:
+          minCount: 5
+          whitelist: *PackageWhitelist
+        package_6:
+          minCount: 6
+          whitelist: *PackageWhitelist
+        package_7:
+          minCount: 7
+          whitelist: *PackageWhitelist
+        package_8:
+          minCount: 8
+          whitelist: *PackageWhitelist
+      sprite: Objects/Specific/Cargo/mailcart.rsi
+    - type: Appearance
+    - type: UserInterface
+      interfaces:
+        enum.StorageUiKey.Key:
+          type: StorageBoundUserInterface
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          ents: []
