@@ -143,7 +143,7 @@
   parent: JetInjector
   id: AdvancedJetInjector
   name: advanced jet injector
-  description: A pristine, fashionable, high quality injector. Allows for a rapid and sterile injection of drugs to patients, with a slightly larger capacity.
+  description: A pristine, fashionable, high quality injector. Allows for a faster injection, with a slightly larger capacity.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/advanced_jetinjector.rsi

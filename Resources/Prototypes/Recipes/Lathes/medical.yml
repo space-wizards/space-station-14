@@ -271,8 +271,8 @@
   - Tools
   completetime: 5
   materials:
-    Steel: 300
-    ReinforcedGlass: 400
+    Steel: 500
+    Glass: 500
     Plastic: 250
-    Gold: 50 # A bit of gold for the gold ornaments on it!
     Silver: 400
+    Gold: 50 # A bit of gold for the gold ornaments on it!
