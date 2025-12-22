@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: The air alarm window scrubber controller now has buttons to select and
-      deselect all gases.
-    type: Add
-  id: 8828
-  time: '2025-08-05T00:34:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39296
 - author: perryprog
   changes:
   - message: Players no longer have the ability to cycle a timer in the verb menu
@@ -3931,3 +3923,11 @@
   id: 9327
   time: '2025-12-22T17:11:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41279
+- author: whatston3, Crude Oil
+  changes:
+  - message: FTL Arrival visualization displays properly again when arriving at a
+      dock
+    type: Fix
+  id: 9328
+  time: '2025-12-22T21:15:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41951
