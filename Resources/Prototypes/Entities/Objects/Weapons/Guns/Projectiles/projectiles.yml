@@ -860,7 +860,6 @@
     layers:
       - state: grenade
   - type: Projectile
-    deleteOnCollide: false
     damage:
       types:
         Blunt: 1

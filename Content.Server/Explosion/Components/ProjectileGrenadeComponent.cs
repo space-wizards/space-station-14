@@ -1,4 +1,5 @@
 ﻿using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
@@ -35,13 +36,19 @@ public sealed partial class ProjectileGrenadeComponent : Component
     public bool RandomAngle = false;
 
     /// <summary>
-    /// The minimum speed the projectiles may come out at
+    /// The base velocity the projectiles come out at.
+    /// </summary>
+    [DataField]
+    public float BaseVelocity = SharedGunSystem.ProjectileSpeed;
+
+    /// <summary>
+    /// The minimum added speed the projectiles may come out at, to vary the spread.
     /// </summary>
     [DataField]
     public float MinVelocity = 2f;
 
     /// <summary>
-    /// The maximum speed the projectiles may come out at
+    /// The maximum added speed the projectiles may come out at, to vary the spread.
     /// </summary>
     [DataField]
     public float MaxVelocity = 6f;
