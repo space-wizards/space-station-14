@@ -31,6 +31,7 @@ public sealed partial class JukeboxMenu : FancyWindow
     public event Action<ProtoId<JukeboxPrototype>>? OnSongSelected;
     public event Action<float>? SetTime;
 
+    private List<JukeboxPrototype> availableTracks = new();
     private EntityUid? _audio;
 
     private float _lockTimer;
@@ -40,6 +41,11 @@ public sealed partial class JukeboxMenu : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _audioSystem = _entManager.System<AudioSystem>();
+
+        SearchBar.OnTextChanged += _ =>
+        {
+            Populate();
+        };
 
         MusicList.OnItemSelected += args =>
         {
@@ -84,15 +90,32 @@ public sealed partial class JukeboxMenu : FancyWindow
     /// <summary>
     /// Re-populates the list of jukebox prototypes available.
     /// </summary>
-    public void Populate(IEnumerable<JukeboxPrototype> jukeboxProtos)
+    public void Populate()
     {
         MusicList.Clear();
 
-        foreach (var entry in jukeboxProtos)
+        foreach (var entry in availableTracks)
         {
-            MusicList.AddItem(entry.Name, metadata: entry.ID);
+            if (SearchBar.Text.Trim().Length != 0)
+            {
+                if (entry.Name.ToLowerInvariant().Contains(SearchBar.Text.Trim().ToLowerInvariant()))
+                    MusicList.AddItem(entry.Name, metadata: entry.ID);
+            } else {
+                MusicList.AddItem(entry.Name, metadata: entry.ID);
+            }
         }
     }
+
+    public void UpdateAvailableTracks(IEnumerable<JukeboxPrototype> jukeboxProtos)
+    {
+        availableTracks = new();
+
+        foreach (var entry in jukeboxProtos)
+        {
+            availableTracks.Add(entry);
+        }
+    }
+
 
     public void SetPlayPauseButton(bool playing, bool force = false)
     {

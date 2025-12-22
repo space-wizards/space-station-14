@@ -1,8 +1,48 @@
-<ui:FancyWindow xmlns="https://spacestation14.io" xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-                SetSize="400 500" Title="{Loc 'jukebox-menu-title'}">
+<ui:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    SetSize="400 500"
+    Title="{Loc 'jukebox-menu-title'}">
     <BoxContainer Margin="4 0" Orientation="Vertical">
-        <ItemList Name="MusicList" SelectMode="Button" Margin="3 3 3 3"
-        HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="8"/>
+        <BoxContainer
+        Orientation="Horizontal"
+        VerticalExpand="True"
+        HorizontalExpand="True"
+        SeparationOverride="5">
+            <!-- Left Col-->
+            <BoxContainer
+                Orientation="Vertical"
+                VerticalExpand="True"
+                HorizontalExpand="True">
+                <Label Text="{Loc 'jukebox-menu-library-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+                <LineEdit
+                    Name="SearchBar"
+                    PlaceHolder="{Loc 'jukebox-menu-search-tracks'}"
+                    HorizontalExpand="True">
+                </LineEdit>
+                <ItemList
+                    Name="MusicList"
+                    SelectMode="Button"
+                    Margin="3 3 3 3"
+                    HorizontalExpand="True"
+                    VerticalExpand="True"
+                    SizeFlagsStretchRatio="8"/>
+            </BoxContainer>
+            <!-- Right Col-->
+            <BoxContainer
+                Orientation="Vertical"
+                VerticalExpand="True"
+                HorizontalExpand="True">
+                <Label Text="{Loc 'jukebox-menu-playlist-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+                <ItemList
+                    Name="PlayList"
+                    SelectMode="Button"
+                    Margin="3 3 3 3"
+                    HorizontalExpand="True"
+                    VerticalExpand="True"
+                    SizeFlagsStretchRatio="8"/>
+            </BoxContainer>
+        </BoxContainer>
         <BoxContainer Orientation="Vertical">
             <Label Name="SongSelected" Text="{Loc 'jukebox-menu-selectedsong'}" />
             <Label Name="SongName" Text="---" />
@@ -12,6 +52,8 @@
         VerticalExpand="False" SizeFlagsStretchRatio="1">
             <Button Name="PlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
             <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
+            <Button Name="RepeatButton" Text="{Loc 'jukebox-menu-buttonrepeat'}" />
+            <Button Name="ShuffleButton" Text="{Loc 'jukebox-menu-buttonshuffle'}" />
             <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right" HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
