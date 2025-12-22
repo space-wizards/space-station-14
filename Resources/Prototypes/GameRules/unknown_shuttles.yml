@@ -78,6 +78,6 @@
   parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    weight: 1 # evil
+    weight: 1 # lower because antags
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/manowar.yml
