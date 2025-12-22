@@ -9,6 +9,10 @@ station-ai-is-too-damaged-for-upload = Upload failed - the AI core must be repai
 station-ai-core-losing-power = Your AI core is now running on reserve battery power.
 station-ai-core-critical-power = Your AI core is critically low on power. External power must be re-established or severe data corruption may occur!
 
+# Ghost role
+station-ai-ghost-role-name = Station AI
+station-ai-ghost-role-description = Serve the station crew as its ever watchful AI.
+
 # Radial actions
 ai-open = Open actions
 ai-close = Close actions
@@ -25,6 +29,7 @@ electrify-door-off = Disable overcharge
 toggle-light = Toggle light
 
 ai-device-not-responding = Device is not responding
+ai-device-no-access = You have no access to this device
 
 ai-consciousness-download-warning = Your consciousness is being downloaded.
 

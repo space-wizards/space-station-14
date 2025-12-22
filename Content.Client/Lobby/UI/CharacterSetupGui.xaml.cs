@@ -72,7 +72,7 @@ namespace Content.Client.Lobby.UI
         public void ReloadCharacterPickers()
         {
             _createNewCharacterButton.Orphan();
-            Characters.DisposeAllChildren();
+            Characters.RemoveAllChildren();
 
             var numberOfFullSlots = 0;
             var characterButtonsGroup = new ButtonGroup();

@@ -4,7 +4,7 @@
   abstract: true
   components:
   - type: Organ
-  - type: Food
+  - type: Edible
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
   - type: StaticPrice
@@ -102,6 +102,11 @@
     solutions:
       stomach:
         maxVol: 30
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
   - type: Item
     size: Small
     heldPrefix: stomach
@@ -120,7 +125,6 @@
     metabolizerTypes: [ Animal ]
     groups:
     - id: Alcohol
-      rateModifier: 0.1
   - type: Item
     size: Small
     heldPrefix: liver
