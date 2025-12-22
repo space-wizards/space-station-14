@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Client.Graphics;
 using Content.Shared.CCVar;
 using Content.Shared.Maps;
 using Robust.Client.Graphics;
@@ -27,11 +28,7 @@ public sealed class AmbientOcclusionOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
-    private IRenderTexture? _aoTarget;
-    private IRenderTexture? _aoBlurBuffer;
-
-    // Couldn't figure out a way to avoid this so if you can then please do.
-    private IRenderTexture? _aoStencilTarget;
+    private readonly OverlayResourceCache<CachedResources> _resources = new ();
 
     public AmbientOcclusionOverlay()
     {
@@ -69,30 +66,32 @@ public sealed class AmbientOcclusionOverlay : Overlay
         var turfSystem = _entManager.System<TurfSystem>();
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
 
-        if (_aoTarget?.Texture.Size != target.Size)
+        var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
+
+        if (res.AOTarget?.Texture.Size != target.Size)
         {
-            _aoTarget?.Dispose();
-            _aoTarget = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-target");
+            res.AOTarget?.Dispose();
+            res.AOTarget = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-target");
         }
 
-        if (_aoBlurBuffer?.Texture.Size != target.Size)
+        if (res.AOBlurBuffer?.Texture.Size != target.Size)
         {
-            _aoBlurBuffer?.Dispose();
-            _aoBlurBuffer = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-blur-target");
+            res.AOBlurBuffer?.Dispose();
+            res.AOBlurBuffer = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-blur-target");
         }
 
-        if (_aoStencilTarget?.Texture.Size != target.Size)
+        if (res.AOStencilTarget?.Texture.Size != target.Size)
         {
-            _aoStencilTarget?.Dispose();
-            _aoStencilTarget = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-stencil-target");
+            res.AOStencilTarget?.Dispose();
+            res.AOStencilTarget = _clyde.CreateRenderTarget(target.Size, new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "ambient-occlusion-stencil-target");
         }
 
         // Draw the texture data to the texture.
-        args.WorldHandle.RenderInRenderTarget(_aoTarget,
+        args.WorldHandle.RenderInRenderTarget(res.AOTarget,
             () =>
             {
                 worldHandle.UseShader(_proto.Index(UnshadedShader).Instance());
-                var invMatrix = _aoTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
+                var invMatrix = res.AOTarget.GetWorldToLocalMatrix(viewport.Eye!, scale);
 
                 foreach (var entry in query.QueryAabb(mapId, worldBounds))
                 {
@@ -106,11 +105,11 @@ public sealed class AmbientOcclusionOverlay : Overlay
                 }
             }, Color.Transparent);
 
-        _clyde.BlurRenderTarget(viewport, _aoTarget, _aoBlurBuffer, viewport.Eye!, 14f);
+        _clyde.BlurRenderTarget(viewport, res.AOTarget, res.AOBlurBuffer, viewport.Eye!, 14f);
 
         // Need to do stencilling after blur as it will nuke it.
         // Draw stencil for the grid so we don't draw in space.
-        args.WorldHandle.RenderInRenderTarget(_aoStencilTarget,
+        args.WorldHandle.RenderInRenderTarget(res.AOStencilTarget,
             () =>
             {
                 // Don't want lighting affecting it.
@@ -136,13 +135,36 @@ public sealed class AmbientOcclusionOverlay : Overlay
 
         // Draw the stencil texture to depth buffer.
         worldHandle.UseShader(_proto.Index(StencilMaskShader).Instance());
-        worldHandle.DrawTextureRect(_aoStencilTarget!.Texture, worldBounds);
+        worldHandle.DrawTextureRect(res.AOStencilTarget!.Texture, worldBounds);
 
         // Draw the Blurred AO texture finally.
         worldHandle.UseShader(_proto.Index(StencilEqualDrawShader).Instance());
-        worldHandle.DrawTextureRect(_aoTarget!.Texture, worldBounds, color);
+        worldHandle.DrawTextureRect(res.AOTarget!.Texture, worldBounds, color);
 
         args.WorldHandle.SetTransform(Matrix3x2.Identity);
         args.WorldHandle.UseShader(null);
+    }
+
+    protected override void DisposeBehavior()
+    {
+        _resources.Dispose();
+
+        base.DisposeBehavior();
+    }
+
+    private sealed class CachedResources : IDisposable
+    {
+        public IRenderTexture? AOTarget;
+        public IRenderTexture? AOBlurBuffer;
+
+        // Couldn't figure out a way to avoid this so if you can then please do.
+        public IRenderTexture? AOStencilTarget;
+
+        public void Dispose()
+        {
+            AOTarget?.Dispose();
+            AOBlurBuffer?.Dispose();
+            AOStencilTarget?.Dispose();
+        }
     }
 }

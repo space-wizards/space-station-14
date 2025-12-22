@@ -135,7 +135,7 @@
     slots: [Belt]
   - type: Prayable
   - type: StaticPrice
-    price: 1000
+    price: 100 # reduced price due to heisentests
   - type: PointLight
     radius: 1.2
     energy: 2.2
@@ -158,6 +158,8 @@
     sprite: Objects/Fun/bananiumhorn.rsi
     slots: [Belt]
     quickEquip: false
+  - type: UseDelay
+    delay: 3
   - type: EmitSoundOnUse
     sound:
       collection: BananiumHorn

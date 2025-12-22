@@ -26,9 +26,12 @@ ingestion-verb-drink = Drink
 # Edible Component
 
 edible-nom = Nom. {$flavors}
+edible-nom-other = Nom.
 edible-slurp = Slurp. {$flavors}
+edible-slurp-other = Slurp.
 edible-swallow = You swallow { THE($food) }
 edible-gulp = Gulp. {$flavors}
+edible-gulp-other = Gulp.
 
 edible-has-used-storage = You cannot {$verb} { THE($food) } with an item stored inside.
 
