@@ -130,4 +130,4 @@
   - type: Tag
     tags:
       - HighSecDoor
-      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
+      # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
