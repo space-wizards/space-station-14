@@ -26,35 +26,42 @@
   - type: RuleGrids
   - type: LoadMapRule
 
+- type: entity
+  abstract: true
+  parent: BaseUnknownShuttleRule
+  id: BaseUnknownShuttleHostileRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null
+    startAudio: null
+    weight: 1 # Evil
+    reoccurrenceDelay: 30
+    duration: 1
+    maxOccurrences: 1
+
 # The power of 3 clowns proved too strong for the players and may need to be 1984'ed. Replace this with a more engaging clown shuttle.
 - type: entity
   parent: BaseUnknownShuttleRule
   id: UnknownShuttleHonki
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
     weight: 2
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/honki.yml
 
 - type: entity
   id: UnknownShuttleInstigator
-  parent: BaseUnknownShuttleRule
+  parent: BaseUnknownShuttleHostileRule
   components:
   - type: StationEvent
-    startAnnouncement: null #dont nark on antags
     weight: 0.1 #  approximately 1/1000 on the random hostile shuttle table. Golden Legendary!
-    earliestStart: 45 # matches the gamerule it's associated with.
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/instigator.yml
 
 - type: entity
   id: UnknownShuttleManOWar
-  parent: BaseUnknownShuttleRule
+  parent: BaseUnknownShuttleHostileRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
-    weight: 1 # lower because antags
-    earliestStart: 45 # matches the gamerule it's associated with.
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/manowar.yml
