@@ -37,7 +37,6 @@
   - type: CombatMode
   - type: Physics
     ignorePaused: true
-    bodyType: Kinematic
   - type: Access
     groups:
     - AllAccess
