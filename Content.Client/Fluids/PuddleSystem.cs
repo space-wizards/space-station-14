@@ -80,6 +80,17 @@ public sealed class PuddleSystem : SharedPuddleSystem
         return false;
     }
 
+    public override bool TrySplashSpillAt(EntityUid entity,
+        EntityCoordinates coordinates,
+        Solution spilled,
+        out EntityUid puddleUid,
+        bool sound = true,
+        EntityUid? user = null)
+    {
+        puddleUid = EntityUid.Invalid;
+        return false;
+    }
+
     /// <inheritdoc/>
     public override bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true)
     {

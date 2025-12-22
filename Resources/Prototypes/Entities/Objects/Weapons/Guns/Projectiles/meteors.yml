@@ -46,23 +46,6 @@
   - type: TileFrictionModifier
     modifier: 0
 
-- type: entity
-  abstract: true
-  parent: BaseMeteor
-  id: BaseSolutionsMeteor
-  name: meteor
-  suffix: Meteor
-  description: You prefer them when they're burning up in the atmosphere.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      meteor:
-        maxVol: 1000
-  - type: Spillable
-    solution: meteor
-  - type: Explosive
-    totalIntensity: 25
-
 
 - type: entity
   parent: BaseMeteor
@@ -210,20 +193,23 @@
         spawnAfter: 0.5
 
 - type: entity
-  parent: BaseSolutionsMeteor
+  parent: BaseMeteor
   id: MeteorUrist
   name: Urist McMeteor
   description: As a successful member of society with a stable unflinching psyche and limitless drive, natural affinity for finance and domination, you have been selected, no, you have been effortlessly guided by divine (biological) trauma towards this moment. The gates of destiny fling open, and once again you're left standing on pulsating nothingness. A strobing headache of the soul.
+  suffix: Meteor
   components:
   - type: Sprite
     state: human_pixel
   - type: SolutionContainerManager
     solutions:
-      meteor:
+      blood:
         maxVol: 1000
         reagents:
         - ReagentId: Blood
           Quantity: 1000
+  - type: Explosive
+    totalIntensity: 25
   - type: Destructible
     thresholds:
     - trigger:
@@ -238,6 +224,7 @@
           params:
             volume: 10
       - !type:SpillBehavior
+        solution: blood
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeatHuman:
@@ -247,16 +234,19 @@
 
 # Cow Meteor
 - type: entity
-  parent: BaseSolutionsMeteor
+  parent: BaseMeteor
   id: MeteorCow
   name: Cosmic cow
   description: Moo-ving at relativistic speeds!
+  suffix: Meteor
   components:
   - type: Sprite
     state: cow_pixel
+  - type: Explosive
+    totalIntensity: 25
   - type: SolutionContainerManager
     solutions:
-      meteor:
+      milk:
         maxVol: 500
         reagents:
         - ReagentId: Milk
@@ -273,6 +263,7 @@
         sound:
           path: /Audio/Animals/cow_moo.ogg
       - !type:SpillBehavior
+        solution: milk
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeat:
@@ -285,16 +276,19 @@
 
 # Clown Meteor
 - type: entity
-  parent: BaseSolutionsMeteor
+  parent: BaseMeteor
   id: MeteorClown
   name: Honksteroid
   description: The final honkening!
+  suffix: Meteor
   components:
   - type: Sprite
     state: clown_pixel
+  - type: Explosive
+    totalIntensity: 25
   - type: SolutionContainerManager
     solutions:
-      meteor:
+      laughter:
         maxVol: 500
         reagents:
         - ReagentId: Laughter
@@ -311,6 +305,7 @@
         sound:
           path: /Audio/Items/bikehorn.ogg
       - !type:SpillBehavior
+        solution: laughter
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMeatClown:
@@ -326,7 +321,7 @@
 
 # Potato Meteor
 - type: entity
-  parent: BaseSolutionsMeteor
+  parent: BaseMeteor
   id: MeteorPotato
   name: Space potato
   description: A starchy threat from the depths of the space. Contains 200% of your daily sodium intake!
@@ -337,7 +332,7 @@
     totalIntensity: 25
   - type: SolutionContainerManager
     solutions:
-      meteor:
+      ketchup:
         maxVol: 100
         reagents:
         - ReagentId: Ketchup
@@ -351,6 +346,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:SpillBehavior
+        solution: ketchup
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodMealFries:

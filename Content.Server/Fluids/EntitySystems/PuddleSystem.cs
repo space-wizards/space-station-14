@@ -382,10 +382,22 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (!Resolve(entity, ref entity.Comp))
             return false;
 
-        if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var soln, out var solution))
+        if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var solution))
             return false;
 
-        spilled = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
+        spilled = solution.Value.Comp.Solution;
+
+        return TrySplashSpillAt(entity, coordinates, spilled, out puddleUid, sound, user);
+    }
+
+    public override bool TrySplashSpillAt(EntityUid entity,
+        EntityCoordinates coordinates,
+        Solution spilled,
+        out EntityUid puddleUid,
+        bool sound = true,
+        EntityUid? user = null)
+    {
+        puddleUid = EntityUid.Invalid;
 
         if (spilled.Volume == 0)
             return false;
@@ -407,7 +419,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             if (user != null)
             {
                 AdminLogger.Add(LogType.Landed,
-                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(entity):entity} which splashed a solution {SharedSolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
+                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(entity):entity} which splashed a solution {SharedSolutionContainerSystem.ToPrettyString(spilled):solution} onto {ToPrettyString(owner):target}");
             }
 
             targets.Add(owner);
