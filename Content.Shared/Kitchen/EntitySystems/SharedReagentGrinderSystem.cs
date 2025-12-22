@@ -52,7 +52,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
         SubscribeLocalEvent<ReagentGrinderComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
         SubscribeLocalEvent<ReagentGrinderComponent, EntRemovedFromContainerMessage>(OnContainerModified);
-        SubscribeLocalEvent<ReagentGrinderComponent, ContainerIsRemovingAttemptEvent>(OnEntRemoveAttempt);
+        SubscribeLocalEvent<ActiveReagentGrinderComponent, ContainerIsRemovingAttemptEvent>(OnEntRemoveAttempt);
 
         SubscribeLocalEvent<ReagentGrinderComponent, ReagentGrinderToggleAutoModeMessage>(OnToggleAutoModeMessage);
         SubscribeLocalEvent<ReagentGrinderComponent, ReagentGrinderStartMessage>(OnStartMessage);
@@ -101,17 +101,18 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         RemComp<JitteringComponent>(ent);
     }
 
-    private void OnEntRemoveAttempt(Entity<ReagentGrinderComponent> entity, ref ContainerIsRemovingAttemptEvent args)
+    private void OnEntRemoveAttempt(Entity<ActiveReagentGrinderComponent> entity, ref ContainerIsRemovingAttemptEvent args)
     {
-        if (HasComp<ActiveReagentGrinderComponent>(entity))
+        if (!_timing.ApplyingState)
+            return;
+
+        if (args.Container.ID == ReagentGrinderComponent.BeakerSlotId
+            || args.Container.ID == ReagentGrinderComponent.InputContainerId)
             args.Cancel();
     }
 
     private void OnContainerModified(EntityUid uid, ReagentGrinderComponent reagentGrinder, ContainerModifiedMessage args)
     {
-        if (_timing.ApplyingState)
-            return;
-
         if (args.Container.ID != ReagentGrinderComponent.BeakerSlotId
             && args.Container.ID != ReagentGrinderComponent.InputContainerId)
             return;
