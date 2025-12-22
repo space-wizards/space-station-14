@@ -31,8 +31,14 @@
   meltingPoint: -101.5
   boilingPoint: -34.04
   plantMetabolism:
-    - !type:PlantMutateSpeciesChange
-      amount: 1
+    - !type:PlantAdjustWater
+      amount: -0.5
+    - !type:PlantAdjustToxins
+      amount: 15
+    - !type:PlantAdjustWeeds
+      amount: -3
+    - !type:PlantAdjustHealth
+      amount: -1
   metabolisms:
     Poison:
       effects:
