@@ -16,9 +16,6 @@
   id: BaseUnknownShuttleRule
   components:
   - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
     weight: 10 # 10 default
     reoccurrenceDelay: 30
     duration: 1
@@ -29,19 +26,16 @@
 - type: entity
   abstract: true
   parent: BaseUnknownShuttleRule
-  id: BaseUnknownShuttleHostileRule
+  id: BaseUnknownShuttleAnnouncedRule
   components:
   - type: StationEvent
-    startAnnouncement: null
-    startAudio: null
-    weight: 1 # Evil
-    reoccurrenceDelay: 30
-    duration: 1
-    maxOccurrences: 1
+    startAnnouncement: station-event-unknown-shuttle-incoming
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
 
 # The power of 3 clowns proved too strong for the players and may need to be 1984'ed. Replace this with a more engaging clown shuttle.
 - type: entity
-  parent: BaseUnknownShuttleRule
+  parent: BaseUnknownShuttleAnnouncedRule
   id: UnknownShuttleHonki
   components:
   - type: StationEvent
@@ -50,8 +44,29 @@
     gridPath: /Maps/Shuttles/ShuttleEvent/honki.yml
 
 - type: entity
+  parent: BaseUnknownShuttleRule
+  id: UnknownShuttleSyndieEvacPod
+  components:
+  - type: StationEvent
+    weight: 5 # lower because weird freelance roles
+    maxOccurrences: 2
+  - type: LoadMapRule
+    gridPath: /Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml
+
+- type: entity
+  id: UnknownShuttleNTQuark
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    weight: .5 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
+    earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
+    minimumPlayers: 25
+  - type: LoadMapRule
+    gridPath: /Maps/Shuttles/ShuttleEvent/quark.yml
+
+- type: entity
   id: UnknownShuttleInstigator
-  parent: BaseUnknownShuttleHostileRule
+  parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
     weight: 0.1 #  approximately 1/1000 on the random hostile shuttle table. Golden Legendary!
@@ -60,8 +75,9 @@
 
 - type: entity
   id: UnknownShuttleManOWar
-  parent: BaseUnknownShuttleHostileRule
+  parent: BaseUnknownShuttleRule
   components:
   - type: StationEvent
+    weight: 1 # evil
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/ShuttleEvent/manowar.yml
