@@ -107,8 +107,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
                 && _solutionContainer.TryGetFitsInDispenser((container.Value, fitsInDispenserComponent, solutionContainerManagerComponent),
                     out var containerSolution, out _)
                 && _bloodstreamQuery.TryComp(patient, out var bloodstream)
-                && _solutionContainer.ResolveSolution(patient.Value, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution, out var chemsSolution) // Offbrand
-                && !chemsSolution.HasOverlapAtLeast(containerSolution.Value.Comp.Solution, cryoPod.BeakerTransferAmount * 2)) // Offbrand
+                && _solutionContainer.ResolveSolution(patient.Value, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution, out var bloodSolution) // Offbrand
+                && !bloodSolution.HasOverlapAtLeast(containerSolution.Value.Comp.Solution, cryoPod.BeakerTransferAmount * 2)) // Offbrand
             {
                 var solutionToInject = _solutionContainer.SplitSolution(containerSolution.Value, cryoPod.BeakerTransferAmount);
                 _bloodstream.TryAddToBloodstream((patient.Value, bloodstream), solutionToInject);

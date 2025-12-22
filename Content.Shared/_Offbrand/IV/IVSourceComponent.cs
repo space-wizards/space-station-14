@@ -17,10 +17,7 @@ public sealed partial class IVSourceComponent : Component
     public string SlotName = "iv_bag_slot";
 
     [DataField]
-    public FixedPoint2 BloodTransferRate = 5;
-
-    [DataField]
-    public FixedPoint2 OtherTransferRate = 0.5;
+    public FixedPoint2 TransferRate = 2;
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextUpdate = TimeSpan.Zero;

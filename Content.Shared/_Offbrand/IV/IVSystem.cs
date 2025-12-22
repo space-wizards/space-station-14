@@ -114,30 +114,16 @@ public sealed class IVSystem : EntitySystem
         if (!_solutionContainer.TryGetDrawableSolution(contained, out var solutionEntity, out var solution))
             return;
 
-        if (!_solutionContainer.ResolveSolution(target.Owner, target.Comp2.ChemicalSolutionName, ref target.Comp2.ChemicalSolution, out var chemsSolution))
-            return;
-
         if (!_solutionContainer.ResolveSolution(target.Owner, target.Comp2.BloodSolutionName, ref target.Comp2.BloodSolution, out var bloodSolution))
             return;
 
-        var bloodTransferAmount = FixedPoint2.Min(source.Comp.BloodTransferRate, bloodSolution.AvailableVolume);
-        var chemsTransferAmount = FixedPoint2.Min(source.Comp.OtherTransferRate, chemsSolution.AvailableVolume);
+        var bloodTransferAmount = FixedPoint2.Min(source.Comp.TransferRate, bloodSolution.AvailableVolume);
 
         if (bloodTransferAmount > 0)
         {
-            var taken = solution.SplitSolutionWithOnly(bloodTransferAmount, target.Comp2.BloodReagent);
+            var taken = solution.SplitSolution(bloodTransferAmount);
 
-            _bloodstream.TryModifyBloodLevel((target.Owner, target.Comp2), taken.Volume);
-        }
-
-        if (chemsTransferAmount > 0)
-        {
-            var medicineSolution = solution.SplitSolutionWithout(chemsTransferAmount, target.Comp2.BloodReagent);
-
-            if (!chemsSolution.HasOverlapAtLeast(medicineSolution, source.Comp.OtherTransferRate * 2))
-            {
-                _bloodstream.TryAddToChemicals((target.Owner, target.Comp2), medicineSolution);
-            }
+            _bloodstream.TryAddToBloodstream((target.Owner, target.Comp2), taken);
         }
 
         _solutionContainer.UpdateChemicals(solutionEntity.Value);
