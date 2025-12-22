@@ -5,6 +5,8 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Stacks;
 
@@ -15,38 +17,36 @@ internal sealed class HandheldGrinderSystem : EntitySystem
     [Dependency] private readonly SharedReagentGrinderSystem _reagentGrinder = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedStackSystem _stackSystem = default!;
+    [Dependency] private readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private readonly SharedDestructibleSystem _destructibleSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HandheldGrinderComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<HandheldGrinderComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<HandheldGrinderComponent, UseInHandEvent>(OnInteractUsing);
     }
 
-    private void OnMapInit(Entity<HandheldGrinderComponent> ent, ref MapInitEvent args)
-    {
-        if (!_solution.EnsureSolution(ent.Owner, ent.Comp.SolutionName, out var outputSolution))
-            return;
-
-        outputSolution.MaxVolume = ent.Comp.SolutionSize;
-    }
-
-    private void OnInteractUsing(Entity<HandheldGrinderComponent> ent, ref InteractUsingEvent args)
+    private void OnInteractUsing(Entity<HandheldGrinderComponent> ent, ref UseInHandEvent args)
     {
         Log.Debug("Checking handled.");
         if (args.Handled)
             return;
 
+        if (_slots.GetItemOrNull(ent, ent.Comp.ItemSlotName) is not { } item)
+            return;
+
         Log.Debug("Checking grind.");
-        if (ent.Comp.Program == GrinderProgram.Grind && !_reagentGrinder.CanGrind(args.Used))
+        if (ent.Comp.Program == GrinderProgram.Grind && !_reagentGrinder.CanGrind(item))
             return;
 
         Log.Debug("Checking juice");
-        if (ent.Comp.Program == GrinderProgram.Juice && !_reagentGrinder.CanJuice(args.Used))
+        if (ent.Comp.Program == GrinderProgram.Juice && !_reagentGrinder.CanJuice(item))
             return;
 
-        var obtainedSolution = _reagentGrinder.GetGrinderSolution(args.Used, ent.Comp.Program);
+        args.Handled = true;
+
+        var obtainedSolution = _reagentGrinder.GetGrinderSolution(item, ent.Comp.Program);
 
         Log.Debug("Checking obtained solution.");
         if (obtainedSolution is null)
@@ -56,13 +56,17 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         if (!_solution.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out var outputSolutionEnt, out _))
             return;
 
-        if (TryComp<StackComponent>(args.Used, out var stack))
+        if (TryComp<StackComponent>(item, out var stack))
         {
             Log.Debug("Removing from stack");
-            _stackSystem.ReduceCount((args.Used, stack), 1);
+            _stackSystem.ReduceCount((item, stack), 1);
+            _solution.TryAddSolution(outputSolutionEnt.Value, obtainedSolution);
         }
-
-        Log.Debug("Adding solution.");
-        _solution.TryAddSolution(outputSolutionEnt.Value, obtainedSolution);
+        else
+        {
+            Log.Debug("Removing non-stack");
+            _solution.TryAddSolution(outputSolutionEnt.Value, obtainedSolution);
+            _destructibleSystem.DestroyEntity(item);
+        }
     }
 }

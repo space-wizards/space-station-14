@@ -23,5 +23,8 @@ public sealed partial class HandheldGrinderComponent : Component
     public string SolutionName = "grinderOutput";
 
     [DataField, AutoNetworkedField]
+    public string ItemSlotName = "grinderInput";
+
+    [DataField, AutoNetworkedField]
     public float SolutionSize = 15f;
 }
