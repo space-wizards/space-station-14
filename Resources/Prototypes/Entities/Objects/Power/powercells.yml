@@ -31,7 +31,6 @@
     tags:
       - PowerCell
       - PowerCellAll
-  - type: Appearance
   - type: PowerCellVisuals
   - type: Riggable
   - type: Appearance

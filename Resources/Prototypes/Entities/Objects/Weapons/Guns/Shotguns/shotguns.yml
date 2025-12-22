@@ -331,6 +331,9 @@
     sprite: Objects/Weapons/Guns/Shotguns/hushpup.rsi
     shape:
     - 0,0,3,0 # smaller than BaseShotgun by 1 tile
+  - type: Tag
+    tags:
+    - Shotgun
   - type: BallisticAmmoProvider
     capacity: 4
   - type: GunRequiresWield
