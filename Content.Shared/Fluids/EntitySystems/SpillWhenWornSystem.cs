@@ -21,7 +21,13 @@ public sealed class SpillWhenWornSystem : EntitySystem
 
     private void OnGotEquipped(Entity<SpillWhenWornComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        _puddle.TrySplashSpillAt(ent.Owner, Transform(args.Wearer).Coordinates, out _, out _);
+        if (_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.Solution, out var soln, out var solution)
+            && solution.Volume > 0)
+        {
+            // Spill all solution on the player
+            var drainedSolution = _solutionContainer.Drain(ent.Owner, soln.Value, solution.Volume);
+            _puddle.TrySplashSpillAt(ent.Owner, Transform(args.Wearer).Coordinates, drainedSolution, out _);
+        }
 
         // Flag as worn after draining, otherwise we'll block ourself from accessing!
         ent.Comp.IsWorn = true;
