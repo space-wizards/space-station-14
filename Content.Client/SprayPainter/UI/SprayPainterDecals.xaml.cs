@@ -155,7 +155,7 @@ public sealed partial class SprayPainterDecals : Control
     public void SetSelectedDecal(string name)
     {
         _selectedDecal = name;
-        SelectedDecalName.Text = $"{name}";
+        SelectedDecalName.Text = name;
 
         if (_sprite is null)
             return;
