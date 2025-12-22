@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Disp-Dev
-  changes:
-  - message: A new recipe has been added, moth-edible cotton cakes.
-    type: Add
-  id: 8820
-  time: '2025-07-30T22:51:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39222
 - author: spanky-spanky
   changes:
   - message: The wizard now spawns in a den instead of a shuttle.
@@ -3917,3 +3910,14 @@
   id: 9319
   time: '2025-12-19T07:04:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41335
+- author: SirWarock
+  changes:
+  - message: Shields are now examinable for their damage - You'll see how much dawg
+      it got left in it on a glance!
+    type: Add
+  - message: Shields are now repairable with a welder - Some shields are excluded,
+      notably the Energy Shield.
+    type: Add
+  id: 9320
+  time: '2025-12-20T01:50:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41326
