@@ -1,8 +1,9 @@
 using Content.Shared.Kitchen;
-using Content.Server.Kitchen.EntitySystems;
+using Content.Shared.Kitchen.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Kitchen.Components
+namespace Content.Shared.Kitchen.Components
 {
     /// <summary>
     /// The combo reagent grinder/juicer. The reason why grinding and juicing are seperate is simple,
@@ -10,16 +11,17 @@ namespace Content.Server.Kitchen.Components
     /// converting something into its single juice form. E.g, grind an apple and get the nutriment and sugar
     /// it contained, juice an apple and get "apple juice".
     /// </summary>
-    [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [Access(typeof(SharedReagentGrinderSystem))]
     public sealed partial class ReagentGrinderComponent : Component
     {
-        [DataField]
+        [DataField, AutoNetworkedField]
         public int StorageMaxEntities = 6;
 
-        [DataField]
+        [DataField, AutoNetworkedField]
         public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5); // Roughly matches the grind/juice sounds.
 
-        [DataField]
+        [DataField, AutoNetworkedField]
         public float WorkTimeMultiplier = 1;
 
         [DataField]
@@ -31,22 +33,23 @@ namespace Content.Server.Kitchen.Components
         [DataField]
         public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
 
-        [DataField]
+        [DataField, AutoNetworkedField]
         public GrinderAutoMode AutoMode = GrinderAutoMode.Off;
 
         public EntityUid? AudioStream;
     }
 
-    [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [Access(typeof(SharedReagentGrinderSystem))]
     public sealed partial class ActiveReagentGrinderComponent : Component
     {
         /// <summary>
         /// Remaining time until the grinder finishes grinding/juicing.
         /// </summary>
-        [ViewVariables]
+        [DataField, AutoNetworkedField]
         public TimeSpan EndTime;
 
-        [ViewVariables]
+        [DataField, AutoNetworkedField]
         public GrinderProgram Program;
     }
 }
