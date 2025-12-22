@@ -67,6 +67,19 @@ public sealed class GenericGasReactionSystem : EntitySystem
             // if (mix.Temperature < reaction.MinimumTemperatureRequirement)
             //     continue;
 
+            // Set up stoichiometry vector. If there are 3 gases A, B, and C, then A + B -> C results in a stoichiometry
+            // vector of [-1, -1, 1].
+            float[] S = new float[Atmospherics.AdjustedNumberOfGases];
+            foreach (var (reactant, num) in reaction.Reactants)
+            {
+                S[(int)reactant] = -num;
+            }
+
+            foreach (var (product, num) in reaction.Products)
+            {
+                S[(int)product] = num;
+            }
+
             // Add concentration-dependent reaction rate
             // For 1A + 2B -> 3C, the concentration-dependence is [A]^1 * [B]^2
             var rate = 1f; // rate of this reaction
@@ -95,18 +108,42 @@ public sealed class GenericGasReactionSystem : EntitySystem
             if (rate <= 0)
                 continue;
 
+            float[] dC = new float[Atmospherics.AdjustedNumberOfGases]; // change in concentration
+
             // Go through and remove all the reactants
             // If any of the reactants were zero, then the code above would have already set
             // rate to zero, so we don't have to check that again here.
             foreach (var (reactant, num) in reaction.Reactants)
             {
-                mix.AdjustMoles(reactant, -num * rate);
+                dC[(int)reactant] = -num * rate;
             }
 
             // Go through and add products
             foreach (var (product, num) in reaction.Products)
             {
-                mix.AdjustMoles(product, num * rate);
+                dC[(int)product] = num * rate;
+            }
+
+            // Check for conservation of mass. If we have A + B -> C, then we need to check that d/dt[A] + d/dt[B] =
+            // -d/dt[C], i.e. d/dt[A] + d/dt[B] + d/dt[C] = 0 (under some epsilon). This epsilon is computed
+            // automatically from a "relative tolerance" (reltol) constant.
+            float residualMoles = 0;
+            for (int i = 0; i < dC.Length; i++) {
+                residualMoles += dC[i] * Math.Abs(S[i]);
+            }
+            const float reltol = 1e-1f;
+            float Nreltol = mix.TotalMoles * reltol;
+            if (residualMoles > Nreltol)
+            {
+                Logger.ErrorS("GenericGasReaction", $"{reaction} did not converge, residual {residualMoles} > {Nreltol}");
+                // TODO: print mix, temp, and dC
+                return ReactionResult.StopReactions;
+            }
+
+            // Go adjust moles
+            for (int i = 0; i < dC.Length; i++)
+            {
+                mix.AdjustMoles(i, dC[i]); // TODO: fancier SIMD/numerics helper method
             }
 
             // Add heat from the reaction
