@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed rotate verbs being delayed when used, and your right click UI bounce
-      when they appear after a short delay.
-    type: Fix
-  id: 8825
-  time: '2025-08-03T00:34:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38165
 - author: alexalexmax
   changes:
   - message: Updated the syndicate throwing knives uplink entry to include the fact
@@ -3935,3 +3927,11 @@
   id: 9324
   time: '2025-12-21T20:33:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41932
+- author: SlamBamActionman
+  changes:
+  - message: 'EXPERIMENTAL: Changed the name of the "LOOC" chat channel to "Help"
+      to reflect its primary usage.'
+    type: Tweak
+  id: 9325
+  time: '2025-12-22T00:46:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41933
