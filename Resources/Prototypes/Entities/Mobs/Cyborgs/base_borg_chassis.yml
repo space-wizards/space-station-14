@@ -103,7 +103,9 @@
     - Science
   - type: ZombieImmune
   - type: Repairable
-    doAfterDelay: 10
+    damageValue: -10 # 10 seconds to repair from crit
+    doAfterDelay: 1
+    fuelCost: 0.5
     allowSelfRepair: false
   - type: BorgChassis
   - type: LockingWhitelist
@@ -453,8 +455,6 @@
     - Mothership
     - Xenoborg
     - Binary
-  - type: Repairable
-    doAfterDelay: 13 # 25% more HP, so 30% more time to heal
   - type: BorgChassis
     maxModules: 0
     hasMindState: robot_e
@@ -521,7 +521,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: PointLight
-    color: "#0033ff"
+    color: "#3010ff"
+    energy: 7
   - type: GuideHelp
     guides:
     - Cyborgs
