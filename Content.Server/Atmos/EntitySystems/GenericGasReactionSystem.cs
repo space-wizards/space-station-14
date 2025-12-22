@@ -43,6 +43,7 @@ public sealed class GenericGasReactionSystem : EntitySystem
     /// <summary>
     ///     Run all of the reactions given on the given gas mixture located in the given container.
     /// </summary>
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public ReactionResult ReactAll(IEnumerable<GasReactionPrototype> reactions,
         GasMixture mix,
         IGasMixtureHolder? holder)
@@ -56,6 +57,11 @@ public sealed class GenericGasReactionSystem : EntitySystem
         // Realistically, GasMixtures should never have this low of a volume.
         // Debug.Assert(mix.Volume > Atmospherics.GasMinVolumeForReactions);
 
+        // Set up stoichiometry vector. If there are 3 gases A, B, and C, then A + B -> C results in a stoichiometry
+        // vector of [-1, -1, 1].
+        Span<float> S = stackalloc float[Atmospherics.AdjustedNumberOfGases];
+        Span<float> dC = stackalloc float[Atmospherics.AdjustedNumberOfGases]; // change in concentration
+
         foreach (var reaction in reactions)
         {
             // Check if this is a generic YAML reaction (has reactants)
@@ -67,9 +73,6 @@ public sealed class GenericGasReactionSystem : EntitySystem
             // if (mix.Temperature < reaction.MinimumTemperatureRequirement)
             //     continue;
 
-            // Set up stoichiometry vector. If there are 3 gases A, B, and C, then A + B -> C results in a stoichiometry
-            // vector of [-1, -1, 1].
-            float[] S = new float[Atmospherics.AdjustedNumberOfGases];
             foreach (var (reactant, num) in reaction.Reactants)
             {
                 S[(int)reactant] = -num;
@@ -108,8 +111,6 @@ public sealed class GenericGasReactionSystem : EntitySystem
             if (rate <= 0)
                 continue;
 
-            float[] dC = new float[Atmospherics.AdjustedNumberOfGases]; // change in concentration
-
             // Go through and remove all the reactants
             // If any of the reactants were zero, then the code above would have already set
             // rate to zero, so we don't have to check that again here.
@@ -128,20 +129,21 @@ public sealed class GenericGasReactionSystem : EntitySystem
             // -d/dt[C], i.e. d/dt[A] + d/dt[B] + d/dt[C] = 0 (under some epsilon). This epsilon is computed
             // automatically from a "relative tolerance" (reltol) constant.
             float residualMoles = 0;
-            for (int i = 0; i < dC.Length; i++) {
+            for (var i = 0; i < dC.Length; i++)
+            {
                 residualMoles += dC[i] * Math.Abs(S[i]);
             }
             const float reltol = 1e-1f;
-            float Nreltol = mix.TotalMoles * reltol;
+            var Nreltol = mix.TotalMoles * reltol;
             if (residualMoles > Nreltol)
             {
-                Logger.ErrorS("GenericGasReaction", $"{reaction} did not converge, residual {residualMoles} > {Nreltol}");
+                Log.Error("GenericGasReaction", $"{reaction} did not converge, residual {residualMoles} > {Nreltol}");
                 // TODO: print mix, temp, and dC
                 return ReactionResult.StopReactions;
             }
 
             // Go adjust moles
-            for (int i = 0; i < dC.Length; i++)
+            for (var i = 0; i < dC.Length; i++)
             {
                 mix.AdjustMoles(i, dC[i]); // TODO: fancier SIMD/numerics helper method
             }
