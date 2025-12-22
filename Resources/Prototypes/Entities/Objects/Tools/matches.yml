@@ -91,9 +91,10 @@
   - type: Storage
     grid:
     - 0,0,2,1
-  - type: StorageFill
-    contents:
-      - id: Matchstick
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: Matchstick
         amount: 6
   - type: ItemCounter
     count:
@@ -122,9 +123,10 @@
   - type: Storage
     grid:
     - 0,0,11,1
-  - type: StorageFill
-    contents:
-      - id: GorlexMatchstick
+  - type: EntityTableContainerFill
+    containers:
+      storagebase:
+        id: GorlexMatchstick
         amount: 24
   - type: Matchbox
 
