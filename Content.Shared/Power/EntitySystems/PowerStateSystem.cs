@@ -27,7 +27,7 @@ public sealed class PowerStateSystem : EntitySystem
     {
         SharedApcPowerReceiverComponent? apcComp = null;
         DebugTools.Assert(_powerReceiverSystem.ResolveApc(ent.Owner, ref apcComp),
-            $"Entity {MetaData(ent).EntityPrototype} has a PowerStateComponent but not the required SharedApcPowerReceiverComponent.");
+            $"Entity {ToPrettyString(ent)} has a PowerStateComponent but not the required SharedApcPowerReceiverComponent.");
         SetWorkingState(ent.Owner, ent.Comp.IsWorking);
     }
 
