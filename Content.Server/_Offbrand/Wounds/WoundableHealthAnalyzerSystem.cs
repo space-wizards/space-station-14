@@ -24,13 +24,17 @@ public sealed class WoundableHealthAnalyzerSystem : SharedWoundableHealthAnalyze
         if (!TryComp<BloodstreamComponent>(uid, out var bloodstream))
             return null;
 
-        if (!_solutionContainer.ResolveSolution(uid, bloodstream.ChemicalSolutionName, ref bloodstream.ChemicalSolution))
+        if (!_solutionContainer.ResolveSolution(uid, bloodstream.BloodSolutionName, ref bloodstream.BloodSolution))
             return null;
 
         var ret = new Dictionary<ProtoId<ReagentPrototype>, (FixedPoint2 InBloodstream, FixedPoint2 Metabolites)>();
+        var reference = bloodstream.BloodReferenceSolution;
 
-        foreach (var (reagentId, quantity) in bloodstream.ChemicalSolution.Value.Comp.Solution.Contents)
+        foreach (var (reagentId, quantity) in bloodstream.BloodSolution.Value.Comp.Solution.Contents)
         {
+            if (reference.ContainsPrototype(reagentId.Prototype))
+                continue;
+
             ProtoId<ReagentPrototype> reagent = reagentId.Prototype;
 
             if (_prototype.Index(reagent).Group != MedicineGroup)
@@ -47,7 +51,7 @@ public sealed class WoundableHealthAnalyzerSystem : SharedWoundableHealthAnalyze
 
         foreach (var metabolizer in _body.GetBodyOrganEntityComps<MetabolizerComponent>(uid))
         {
-            if (metabolizer.Comp1.SolutionName != bloodstream.ChemicalSolutionName)
+            if (metabolizer.Comp1.SolutionName != bloodstream.BloodSolutionName)
                 continue;
 
             foreach (var (reagent, quantity) in metabolizer.Comp1.Metabolites)

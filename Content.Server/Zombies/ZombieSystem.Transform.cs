@@ -270,7 +270,7 @@ public sealed partial class ZombieSystem
         _bloodstream.SetBloodLossThreshold(target, 0f);
         //Give them zombie blood
         _bloodstream.ChangeBloodReagents(target, zombiecomp.NewBloodReagents);
-        _bloodstream.FlushChemicals(target, null, 100); // Offbrand
+        _bloodstream.FlushChemicals(target, 100); // Offbrand
 
         //This is specifically here to combat insuls, because frying zombies on grilles is funny as shit.
         _inventory.TryUnequip(target, "gloves", true, true);
