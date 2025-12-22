@@ -1,8 +1,8 @@
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationAi;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Threading;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -18,6 +18,7 @@ public sealed class StationAiVisionSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
 
     private SeedJob _seedJob;
     private ViewJob _job;
@@ -56,6 +57,7 @@ public sealed class StationAiVisionSystem : EntitySystem
             EntManager = EntityManager,
             Maps = _maps,
             System = this,
+            VisibleTiles = _singleTiles,
         };
     }
 
@@ -80,6 +82,12 @@ public sealed class StationAiVisionSystem : EntitySystem
         foreach (var seed in _seeds)
         {
             if (!seed.Comp.Enabled)
+                continue;
+
+            if (seed.Comp.NeedsPower && !_power.IsPowered(seed.Owner))
+                continue;
+
+            if (seed.Comp.NeedsAnchoring && !Transform(seed.Owner).Anchored)
                 continue;
 
             _job.Data.Add(seed);
@@ -161,6 +169,12 @@ public sealed class StationAiVisionSystem : EntitySystem
         foreach (var seed in _seeds)
         {
             if (!seed.Comp.Enabled)
+                continue;
+
+            if (seed.Comp.NeedsPower && !_power.IsPowered(seed.Owner))
+                continue;
+
+            if (seed.Comp.NeedsAnchoring && !Transform(seed.Owner).Anchored)
                 continue;
 
             _job.Data.Add(seed);
@@ -278,7 +292,7 @@ public sealed class StationAiVisionSystem : EntitySystem
     /// </summary>
     private record struct SeedJob() : IRobustJob
     {
-        public StationAiVisionSystem System;
+        public required StationAiVisionSystem System;
 
         public Entity<MapGridComponent> Grid;
         public Box2 ExpandedBounds;
@@ -293,14 +307,14 @@ public sealed class StationAiVisionSystem : EntitySystem
     {
         public int BatchSize => 1;
 
-        public IEntityManager EntManager;
-        public SharedMapSystem Maps;
-        public StationAiVisionSystem System;
+        public required IEntityManager EntManager;
+        public required SharedMapSystem Maps;
+        public required StationAiVisionSystem System;
 
         public Entity<MapGridComponent> Grid;
         public List<Entity<StationAiVisionComponent>> Data = new();
 
-        public HashSet<Vector2i> VisibleTiles;
+        public required HashSet<Vector2i> VisibleTiles;
 
         public readonly List<Dictionary<Vector2i, int>> Vis1 = new();
         public readonly List<Dictionary<Vector2i, int>> Vis2 = new();

@@ -11,11 +11,11 @@ public sealed class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
 
     protected override void Open()
     {
+        base.Open();
+
         _menu = new AtmosAlertsComputerWindow(this, Owner);
         _menu.OpenCentered();
         _menu.OnClose += Close;
-
-        EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -23,9 +23,6 @@ public sealed class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
 
         var castState = (AtmosAlertsComputerBoundInterfaceState) state;
-
-        if (castState == null)
-            return;
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
         _menu?.UpdateUI(xform?.Coordinates, castState.AirAlarms, castState.FireAlarms, castState.FocusData);

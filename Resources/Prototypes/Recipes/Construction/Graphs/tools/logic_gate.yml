@@ -40,19 +40,24 @@
         icon:
           sprite: Objects/Tools/multitool.rsi
           state: icon
-        name: a multitool
+        name: construction-graph-tag-multitool
       - material: Cable
         amount: 2
         doAfter: 1
     - to: memory_cell
       steps:
-      - tag: CapacitorStockPart
-        icon:
-          sprite: Objects/Misc/stock_parts.rsi
-          state: capacitor
-        name: a capacitor
+      - material: Manipulator
+        amount: 2
       - material: Cable
         amount: 2
+        doAfter: 1
+    - to: random_gate
+      steps:
+      - material: MetalRod
+        amount: 1
+        doAfter: 1
+      - material: Cable
+        amount: 1
         doAfter: 1
   - node: logic_gate
     entity: LogicGateOr
@@ -101,7 +106,21 @@
         doAfter: 2
       completed:
       - !type:SpawnPrototype
-        prototype: CapacitorStockPart
+        prototype: MicroManipulatorStockPart
       - !type:SpawnPrototype
         prototype: CableApcStack1
         amount: 2
+  - node: random_gate
+    entity: RandomGate
+    edges:
+    - to: empty
+      steps:
+      - tool: Prying
+        doAfter: 2
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 1
+      - !type:SpawnPrototype
+        prototype: PartRodMetal1
+        amount: 1

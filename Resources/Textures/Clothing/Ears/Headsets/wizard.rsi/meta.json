@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprite recoloured from Freelance Headsets by Entvari (Github). Sprite modified by PursuitInAshes (Github) for SS14, original sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon_alt"
+        },
+        {
+            "name": "equipped-EARS",
+            "directions": 4
+        },
+        {
+            "name": "alt-equipped-EARS",
+            "directions": 4
+        }
+    ]
+}

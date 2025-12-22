@@ -1,9 +1,12 @@
-﻿- type: entity
+- type: entity
   id: WeaponSprayNozzle
   parent: BaseItem
   name: spray nozzle
   description: A high-powered spray nozzle used in conjunction with a backpack-mounted water tank.
   components:
+  - type: Tag
+    tags:
+    - SprayNozzle
   - type: Sprite
     sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
     state: icon
@@ -18,9 +21,18 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+  - type: Absorbent
+    pickupAmount: 35
+    solutionName: tank
+    useAbsorberSolution: false
+    pickupSound:
+      path: /Audio/Effects/Fluids/vacuum-cleaner-fast.ogg
   - type: Appearance
   - type: ClothingSlotAmmoProvider
+  - type: SlotBasedConnectedContainer
     targetSlot: BACK
-    providerWhitelist:
+    containerWhitelist:
       tags:
       - NozzleBackTank
+  - type: UseDelay
+    delay: 1.0

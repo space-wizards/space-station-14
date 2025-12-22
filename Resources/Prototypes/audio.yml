@@ -270,7 +270,7 @@
     - !type:NearbyAccessRule
       access:
         - Engineering
-      range: 3
+      range: 2.5
 
 - type: rules
   id: NearMaintenance
@@ -320,7 +320,7 @@
       components:
         - type: Morgue
       range: 3
-      
+
 - type: rules
   id: NearSpookyFog
   rules:

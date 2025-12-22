@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 [Access(typeof(SharedGunSystem))]
 public sealed partial class GunComponent : Component
 {
@@ -212,7 +212,7 @@ public sealed partial class GunComponent : Component
     /// The base value for how fast the projectile moves.
     /// </summary>
     [DataField]
-    public float ProjectileSpeed = 25f;
+    public float ProjectileSpeed = SharedGunSystem.ProjectileSpeed;
 
     /// <summary>
     /// How fast the projectile moves.

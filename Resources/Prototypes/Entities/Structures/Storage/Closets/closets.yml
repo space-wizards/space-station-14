@@ -1,4 +1,4 @@
-﻿# Tool closet
+# Tool closet
 - type: entity
   id: ClosetTool
   name: tool closet
@@ -82,7 +82,7 @@
   name: janitorial bomb suit closet
   parent: ClosetSteelBase
   description: It's a storage unit for janitorial explosion-protective suits.
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -104,6 +104,17 @@
     stateBaseClosed: bio
     stateDoorOpen: bio_open
     stateDoorClosed: bio_door
+
+# Science Variant
+- type: entity
+  id: ClosetL3Science
+  parent: ClosetL3
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: bio_sci
+    stateDoorOpen: bio_sci_open
+    stateDoorClosed: bio_sci_door
 
 # Virology variant
 - type: entity
@@ -153,9 +164,9 @@
 # Syndicate
 - type: entity
   id: LockerSyndicate
-  name: armory closet
+  name: blood-red closet
   parent: ClosetSteelBase
-  description: It's a storage unit.
+  description: It's a storage unit with a blood-red design.
   components:
   - type: Appearance
   - type: EntityStorageVisuals
@@ -171,6 +182,7 @@
   parent: ClosetMaintenance
   description: It's a storage unit... right?
   components:
+    - type: ArrivalsBlacklist
     - type: BluespaceLocker
       pickLinksFromSameMap: true
       minBluespaceLinks: 1
@@ -189,6 +201,7 @@
   parent: ClosetMaintenance
   description: It's a storage unit... right?
   components:
+    - type: ArrivalsBlacklist
     - type: BluespaceLocker
       pickLinksFromSameMap: true
       minBluespaceLinks: 1

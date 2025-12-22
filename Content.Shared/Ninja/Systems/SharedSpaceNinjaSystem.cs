@@ -1,4 +1,3 @@
-using Content.Shared.Clothing.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
@@ -63,7 +62,7 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
     /// </summary>
     public void BindKatana(Entity<SpaceNinjaComponent?> ent, EntityUid katana)
     {
-        if (!NinjaQuery.Resolve(ent, ref ent.Comp) || ent.Comp.Katana != null)
+        if (!NinjaQuery.Resolve(ent, ref ent.Comp, false) || ent.Comp.Katana != null)
             return;
 
         ent.Comp.Katana = katana;

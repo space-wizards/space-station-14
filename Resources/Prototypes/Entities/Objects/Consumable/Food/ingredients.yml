@@ -25,20 +25,16 @@
     solution: food
   - type: DrainableSolution
     solution: food
-  - type: Drink
+  - type: Edible
+    edible: Food # usually contains powders like flour or condiments like ketchup
     solution: food
-    useSound:
-      collection: eating
+    utensil: Spoon
   - type: Damageable
     damageContainer: Inorganic
   - type: Spillable
     solution: food
   - type: TrashOnSolutionEmpty
     solution: food
-  - type: Tag
-    tags:
-      - Ingredient
-
 - type: entity
   abstract: true
   parent: ReagentContainerBase
@@ -88,8 +84,17 @@
   name: flour bag
   description: A big bag of flour. Good for baking!
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "flour-big_open"} # open
+          False: {state: "flour-big"} # closed
   - type: Sprite
-    state: flour-big
+    layers:
+    - state: flour-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -120,8 +125,17 @@
   name: cornmeal bag
   description: A big bag of cornmeal. Good for cooking!
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "cornmeal-big_open"} # open
+          False: {state: "cornmeal-big"} # closed
   - type: Sprite
-    state: cornmeal-big
+    layers:
+    - state: cornmeal-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -151,8 +165,17 @@
   name: rice bag
   description: A big bag of rice. Good for cooking!
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "rice-big_open"} # open
+          False: {state: "rice-big"} # closed
   - type: Sprite
-    state: rice-big
+    layers:
+    - state: rice-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -182,8 +205,17 @@
   name: sugar bag
   description: A big bag of tasty spacey sugar.
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "sugar-big_open"} # open
+          False: {state: "sugar-big"} # closed
   - type: Sprite
-    state: sugar-big
+    layers:
+    - state: sugar-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -215,8 +247,17 @@
   name: olive oil
   description: Olive oil. From space olives presumably.
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "oliveoil_open"} # open
+          False: {state: "oliveoil"} # closed
   - type: Sprite
-    state: oliveoil
+    layers:
+    - state: oliveoil
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -224,6 +265,8 @@
         reagents:
         - ReagentId: OilOlive
           Quantity: 20
+  - type: Edible
+    edible: Drink # slurping sounds!
 
 - type: entity
   parent: ReagentPacketBase
@@ -231,8 +274,17 @@
   name: mayonnaise
   description: Bottle of mayonnaise.
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "mayo_open"} # open
+          False: {state: "mayo"} # closed
   - type: Sprite
-    state: mayo
+    layers:
+    - state: mayo
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -276,16 +328,15 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
-  - type: Tag
-    tags:
-      - Ingredient
 
 - type: entity
-  name: dough
   parent: FoodBakingBase
   id: FoodDough
+  name: dough
   description: A piece of dough.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - dough
@@ -299,11 +350,13 @@
     node: start
 
 - type: entity
-  name: dough slice
   parent: FoodBakingBase
   id: FoodDoughSlice
+  name: dough slice
   description: A slice of dough. Can be cooked into a bun.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - dough
@@ -315,13 +368,22 @@
   - type: Construction
     graph: DoughRope
     node: start
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
-  name: dough rope
   parent: FoodBakingBase
   id: FoodDoughRope
+  name: dough rope
   description: A thin noodle of dough. Can be cooked into a bagel.
   components:
+  - type: Item
+    storedRotation: -45
   - type: FlavorProfile
     flavors:
       - dough
@@ -330,13 +392,22 @@
   - type: Construction
     graph: DoughRope
     node: rolled
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
-  name: cornmeal dough
   parent: FoodBakingBase
   id: FoodDoughCornmeal
+  name: cornmeal dough
   description: A piece of cornmeal dough.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - chalky
@@ -348,11 +419,13 @@
     slice: FoodDoughCornmealSlice
 
 - type: entity
-  name: cornmeal dough slice
   parent: FoodBakingBase
   id: FoodDoughCornmealSlice
+  name: cornmeal dough slice
   description: A slice of cornmeal dough.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - chalky
@@ -364,11 +437,13 @@
     - Slice
 
 - type: entity
-  name: tortilla dough
   parent: FoodBakingBase
   id: FoodDoughTortilla
+  name: tortilla dough
   description: A piece of tortilla dough.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - chalky
@@ -380,11 +455,13 @@
     slice: FoodDoughTortillaSlice
 
 - type: entity
-  name: tortilla dough slice
   parent: FoodBakingBase
   id: FoodDoughTortillaSlice
+  name: tortilla dough slice
   description: A slice of tortilla dough.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - chalky
@@ -399,11 +476,13 @@
     - Slice
 
 - type: entity
-  name: flattened tortilla dough
   parent: FoodBakingBase
   id: FoodDoughTortillaFlat
+  name: flattened tortilla dough
   description: A flattened slice of tortilla dough, cook this to get a taco shell.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - chalky
@@ -415,26 +494,27 @@
     node: flat
 
 - type: entity
-  name: cotton dough
   parent: FoodBakingBase
   id: FoodDoughCotton
+  name: cotton dough
   description: A piece of fabric dough.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
     - dough
     - cotton
   - type: Sprite
     state: cotton-dough
-  # - type: SliceableFood # TODO add it
-  #   count: 3
-  #   slice: FoodDoughCottonSlice
+  - type: SliceableFood
+    count: 3
+    slice: FoodDoughCottonSlice
   - type: Construction
     graph: CottonPizza
     node: start
   - type: Tag
     tags:
-    - Ingredient
     - ClothMade
   - type: SolutionContainerManager
     solutions:
@@ -445,6 +525,67 @@
           Quantity: 5
         - ReagentId: Fiber
           Quantity: 10
+
+- type: entity
+  parent: FoodBakingBase
+  id: FoodDoughCottonSlice
+  name: cotton dough slice
+  description: A slice of cotton dough.
+  components:
+  - type: Item
+    size: Tiny
+  - type: FlavorProfile
+    flavors:
+    - dough
+    - cotton
+  - type: Sprite
+    state: cotton-dough-slice
+  - type: Tag
+    tags:
+    - Slice
+    - ClothMade
+  - type: Construction
+    graph: DoughRopeCotton
+    node: start
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1.5
+        - ReagentId: Fiber
+          Quantity: 3.5
+
+- type: entity
+  parent: FoodBakingBase
+  id: FoodDoughCottonRope
+  name: cotton dough rope
+  description: A thin noodle of cotton dough. Can be cooked into a cotton bagel.
+  components:
+  - type: Item
+    storedRotation: -45
+  - type: FlavorProfile
+    flavors:
+    - dough
+    - cotton
+  - type: Sprite
+    state: cotton-dough-rope
+  - type: Construction
+    graph: DoughRopeCotton
+    node: rolled
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1.5
+        - ReagentId: Fiber
+          Quantity: 3.5
+  - type: Tag
+    tags:
+     - ClothMade
 
 - type: entity
   name: raw pastry base
@@ -465,20 +606,26 @@
     state: dough-pastry-baked
 
 - type: entity
-  name: pie dough
   parent: FoodBakingBase
   id: FoodDoughPie
+  name: pie dough
   description: Cook it to get a pie.
   components:
+  - type: Item
+    size: Normal
   - type: Sprite
     state: dough-pie
 
 - type: entity
-  name: flat dough
   parent: FoodBakingBase
   id: FoodDoughFlat
+  name: flat dough
   description: A flattened dough.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,1
   - type: Sprite
     state: dough-flat
   - type: Construction
@@ -489,32 +636,45 @@
     slice: FoodCroissantRaw
 
 - type: entity
-  name: flat cotton dough
   parent: FoodBakingBase
   id: FoodDoughCottonFlat
+  name: flat cotton dough
   description: A flattened cotton dough.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,1
   - type: Sprite
     state: cotton-dough-flat
   - type: Construction
     graph: CottonPizza
     node: flat
+  - type: SliceableFood
+    count: 3
+    slice: FoodCroissantRawCotton
 
 - type: entity
-  name: pizza bread
   parent: FoodBakingBase
   id: FoodDoughPizzaBaked
+  name: pizza bread
   description: Add ingredients to make a pizza.
   components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,2,1
   - type: Sprite
     state: pizzabread
 
 - type: entity
-  name: cake batter
   parent: FoodBakingBase
   id: FoodCakeBatter
+  name: cake batter
   description: Cook it to get a cake.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - sweetdough
@@ -522,11 +682,14 @@
     state: cakebatter
 
 - type: entity
-  name: stick of butter
   parent: FoodBakingBase
   id: FoodButter
+  name: stick of butter
   description: A stick of delicious, golden, fatty goodness.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
   - type: Sprite
     state: butter
   - type: Slippery
@@ -564,11 +727,13 @@
     slice: FoodButterSlice
 
 - type: entity
-  name: butter slice
   parent: FoodBakingBase
   id: FoodButterSlice
+  name: butter slice
   description: A pat of delicious, golden, fatty goodness.
   components:
+  - type: Item
+    size: Tiny
   - type: Sprite
     state: butter-slice
   - type: SolutionContainerManager
@@ -621,9 +786,9 @@
     slice: FoodCheeseSlice
 
 - type: entity
-  name: cheese wedge
   parent: FoodBakingBase
   id: FoodCheeseSlice
+  name: cheese wedge
   description: A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far.
   components:
   - type: FlavorProfile
@@ -645,13 +810,25 @@
     entries:
       Taco: CheeseTaco
       Burger: CheeseBurger
+  - type: Item
+    size: Tiny
+    storedOffset: 0,-3
+    inhandVisuals:
+      left:
+      - state: cheesewedge-inhand-left
+      right:
+      - state: cheesewedge-inhand-right
 
 - type: entity
-  name: chèvre log
   parent: FoodBakingBase
   id: FoodChevre
+  name: chèvre log
   description: A soft log of creamy Chèvre.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
   - type: FlavorProfile
     flavors:
       - nutty
@@ -672,11 +849,13 @@
           Quantity: 0.6
 
 - type: entity
-  name: chèvre disk
   parent: FoodBakingBase
   id: FoodChevreSlice
+  name: chèvre disk
   description: A small disk of creamy Chèvre. An ideal adornment for French side dishes.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - nutty
@@ -697,11 +876,13 @@
     - Slice
 
 - type: entity
-  name: tofu
   parent: FoodBakingBase
   id: FoodTofu
+  name: tofu
   description: Solid white block with a subtle flavor.
   components:
+  - type: Item
+    size: Normal
   - type: FlavorProfile
     flavors:
       - tofu
@@ -710,7 +891,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 18
         reagents:
         - ReagentId: Protein
           Quantity: 9
@@ -721,11 +902,13 @@
     slice: FoodTofuSlice
 
 - type: entity
-  name: tofu slice
   parent: FoodBakingBase
   id: FoodTofuSlice
+  name: tofu slice
   description: A slice of tofu. Ingredient of various vegetarian dishes.
   components:
+  - type: Item
+    size: Tiny
   - type: FlavorProfile
     flavors:
       - tofu
@@ -758,7 +941,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 8
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
@@ -796,16 +979,18 @@
       reagents:
       - ReagentId: CocoaPowder
         Quantity: 2
-  - type: Tag
-    tags:
-      - Ingredient
 
 - type: entity
-  name: raw croissant
   parent: FoodBakingBase
   id: FoodCroissantRaw
+  name: raw croissant
   description: Buttery, flaky goodness waiting to happen.
   components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-4
   - type: FlavorProfile
     flavors:
       - dough
@@ -818,3 +1003,21 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+
+- type: entity
+  parent: FoodCroissantRaw
+  id: FoodCroissantRawCotton
+  name: raw cotton croissant
+  description: Buttery, flaky, fibery goodness waiting to happen.
+  components:
+  - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-4
+  - type: FlavorProfile
+    flavors:
+    - dough
+    - cotton
+  - type: Sprite
+    state: croissant-raw-cotton

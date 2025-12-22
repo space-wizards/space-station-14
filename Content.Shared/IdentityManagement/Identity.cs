@@ -13,7 +13,13 @@ public static class Identity
     /// <summary>
     ///     Returns the name that should be used for this entity for identity purposes.
     /// </summary>
-    public static string Name(EntityUid uid, IEntityManager ent, EntityUid? viewer=null)
+    /// <remarks>
+    /// This will return the true identity of the entity if called before the
+    /// identity component has been initialized — this may occur for example if
+    /// the client raises an event in response to an entity entering PVS for
+    /// the first time.
+    /// </remarks>
+    public static string Name(EntityUid uid, IEntityManager ent, EntityUid? viewer = null)
     {
         if (!uid.IsValid())
             return string.Empty;
@@ -27,7 +33,7 @@ public static class Identity
         if (!ent.TryGetComponent<IdentityComponent>(uid, out var identity))
             return uidName;
 
-        var ident = identity.IdentityEntitySlot.ContainedEntity;
+        var ident = identity.IdentityEntitySlot?.ContainedEntity;
         if (ident is null)
             return uidName;
 
@@ -49,12 +55,19 @@ public static class Identity
     ///     This is an extension method because of its simplicity, and if it was any harder to call it might not
     ///     be used enough for loc.
     /// </summary>
-    public static EntityUid Entity(EntityUid uid, IEntityManager ent)
+    /// <param name="viewer">
+    ///     If this entity can see through identities, this method will always return the actual target entity.
+    /// </param>
+    /// <inheritdoc cref="Name" path="remarks" />
+    public static EntityUid Entity(EntityUid uid, IEntityManager ent, EntityUid? viewer = null)
     {
         if (!ent.TryGetComponent<IdentityComponent>(uid, out var identity))
             return uid;
 
-        return identity.IdentityEntitySlot.ContainedEntity ?? uid;
+        if (viewer != null && CanSeeThroughIdentity(uid, viewer.Value, ent))
+            return uid;
+
+        return identity.IdentityEntitySlot?.ContainedEntity ?? uid;
     }
 
     public static bool CanSeeThroughIdentity(EntityUid uid, EntityUid viewer, IEntityManager ent)

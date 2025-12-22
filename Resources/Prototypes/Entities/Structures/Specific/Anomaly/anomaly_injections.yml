@@ -351,3 +351,32 @@
       - MobSpawnCrabSilver
       - MobSpawnCrabIron
       - MobSpawnCrabQuartz
+
+- type: entity
+  parent: AnomalyInjectionBase
+  id: AnomalyInjectionSanta
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    color: "#db8127"
+  - type: EntitySpawnAnomaly
+    entries:
+    - settings:
+        spawnOnPulse: true
+        minAmount: 1
+        maxAmount: 3
+        maxRange: 5
+      spawns:
+      - PresentRandomUnsafe
+      - PresentRandom
+      - PresentRandomCoal
+      - PresentRandomCash
+      - ClothingHeadHatSantahat
+      - FoodCakeChristmasSlice
+    - settings:
+        spawnOnSuperCritical: true
+        minAmount: 5
+        maxAmount: 10
+        maxRange: 6
+      spawns:
+      - PresentRandomInsane

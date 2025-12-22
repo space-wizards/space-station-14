@@ -30,12 +30,16 @@
   - type: Tag
     tags:
       - PowerCell
-  - type: Appearance
-  - type: PowerCellVisuals
   - type: Riggable
-  - type: HitscanBatteryAmmoProvider
-    proto: RedLightLaser
-    fireCost: 50
+  - type: Appearance
+  - type: BatteryVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerCellVisualLayers.Unshaded:
+          Full: {visible: true, state: o2}
+          Neither: {visible: true, state: o1}
+          Empty: {visible: false}
 
 - type: entity
   name: potato battery
@@ -93,6 +97,16 @@
   - type: Battery
     maxCharge: 360
     startingCharge: 0
+
+- type: entity
+  parent: PowerCellSmall
+  id: PowerCellSmallNuclear
+  name: small-capacity nuclear power cell
+  description: A self rechargeable power cell, designed for fast recharge rate at the expense of capacity.
+  components:
+  - type: BatterySelfRecharger
+    autoRechargeRate: 36 # 10 seconds to recharge
+    autoRechargePauseTime: 30
 
 - type: entity
   name: medium-capacity power cell
@@ -166,7 +180,7 @@
 
 - type: entity
   name: hyper-capacity power cell
-  description: A rechargeable standardized power cell. This one looks like a rare and powerful prototype.
+  description: A rechargeable standardized power cell. This iteration pushes the upper limits of portable power storage, boasting 66% more capacity than its predecessor.
   id: PowerCellHyper
   suffix: Full
   parent: BasePowerCell
@@ -217,7 +231,6 @@
     maxCharge: 720
     startingCharge: 720
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 12 # takes 1 minute to charge itself back to full
 
 - type: entity
@@ -253,7 +266,6 @@
       maxCharge: 1200
       startingCharge: 1200
     - type: BatterySelfRecharger
-      autoRecharge: true
       autoRechargeRate: 40
 
 # Power cage (big heavy power cell for big devices)
@@ -278,9 +290,6 @@
   - type: Tag
     tags:
       - PowerCage
-  - type: HitscanBatteryAmmoProvider
-    proto: RedShuttleLaser
-    fireCost: 150
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8

@@ -169,6 +169,10 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-7.5
       parent: 2
+    - type: DeviceList
+      devices:
+      - 144
+      - 95
 - proto: AirCanister
   entities:
   - uid: 147
@@ -647,6 +651,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,-6.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 145
 - proto: GasVentScrubber
   entities:
   - uid: 144
@@ -655,6 +662,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,-0.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 145
 - proto: GeneratorBasic15kW
   entities:
   - uid: 96

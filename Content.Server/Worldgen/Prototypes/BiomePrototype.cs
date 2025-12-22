@@ -13,13 +13,13 @@ namespace Content.Server.Worldgen.Prototypes;
 public sealed partial class BiomePrototype : IPrototype, IInheritingPrototype
 {
     /// <inheritdoc />
-    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
-    public string[]? Parents { get; }
+    [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<BiomePrototype>))]
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 
     /// <inheritdoc />
     [IdDataField]
@@ -42,7 +42,7 @@ public sealed partial class BiomePrototype : IPrototype, IInheritingPrototype
     /// </summary>
     [DataField("chunkComponents")]
     [AlwaysPushInheritance]
-    public ComponentRegistry ChunkComponents { get; } = new();
+    public ComponentRegistry ChunkComponents = new();
 
     //TODO: Get someone to make this a method on componentregistry that does it Correctly.
     /// <summary>

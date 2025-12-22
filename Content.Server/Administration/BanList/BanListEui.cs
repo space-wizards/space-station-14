@@ -54,7 +54,7 @@ public sealed class BanListEui : BaseEui
 
     private async Task LoadBans(NetUserId userId)
     {
-        foreach (var ban in await _db.GetServerBansAsync(null, userId, null))
+        foreach (var ban in await _db.GetServerBansAsync(null, userId, null, null))
         {
             SharedServerUnban? unban = null;
             if (ban.Unban is { } unbanDef)
@@ -74,7 +74,7 @@ public sealed class BanListEui : BaseEui
                     ? (address.address.ToString(), address.cidrMask)
                     : null;
 
-                hwid = ban.HWId == null ? null : Convert.ToBase64String(ban.HWId.Value.AsSpan());
+                hwid = ban.HWId?.ToString();
             }
 
             Bans.Add(new SharedServerBan(
@@ -95,7 +95,7 @@ public sealed class BanListEui : BaseEui
 
     private async Task LoadRoleBans(NetUserId userId)
     {
-        foreach (var ban in await _db.GetServerRoleBansAsync(null, userId, null))
+        foreach (var ban in await _db.GetServerRoleBansAsync(null, userId, null, null))
         {
             SharedServerUnban? unban = null;
             if (ban.Unban is { } unbanDef)
@@ -115,7 +115,7 @@ public sealed class BanListEui : BaseEui
                     ? (address.address.ToString(), address.cidrMask)
                     : null;
 
-                hwid = ban.HWId == null ? null : Convert.ToBase64String(ban.HWId.Value.AsSpan());
+                hwid = ban.HWId?.ToString();
             }
             RoleBans.Add(new SharedServerRoleBan(
                 ban.Id,

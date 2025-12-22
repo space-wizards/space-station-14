@@ -31,9 +31,7 @@
     baseSprintSpeed: 4
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Effects/Footsteps/slime1.ogg
-      params:
-        volume: 3
+      collection: FootstepSlime
   - type: Tag
     tags:
     - FootstepSound
@@ -55,7 +53,10 @@
     damageContainer: Biological
     damageModifierSet: Slime
   - type: Bloodstream
-    bloodReagent: Slime
+    bloodReferenceSolution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 150
     bloodlossDamage:
       types:
         Bloodloss:
@@ -76,15 +77,14 @@
     - reagents: [ Water, SpaceCleaner ]
       methods: [ Touch ]
       effects:
-      - !type:WashCreamPieReaction
+      - !type:WashCreamPie
     - reagents: [ Water ]
       methods: [ Touch ]
       effects:
       - !type:HealthChange
-        scaleByQuantity: true
         damage:
           types:
-            Heat: 0.15
+            Heat: 0.05 #Same as slime species
       - !type:PopupMessage
         type: Local
         messages: [ "slime-hurt-by-water-popup" ]
@@ -167,6 +167,8 @@
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
 
@@ -205,6 +207,8 @@
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short
 
@@ -228,8 +232,7 @@
         types:
           Blunt: 6
           Structural: 4
-          Caustic: 1
-          Cellular: 3
+          Caustic: 4
 
 - type: entity
   name: yellow slime
@@ -243,5 +246,7 @@
     - type: GhostRole
       description: ghost-role-information-angry-slimes-description
       rules: ghost-role-information-angry-slimes-rules
+      mindRoles:
+      - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: short

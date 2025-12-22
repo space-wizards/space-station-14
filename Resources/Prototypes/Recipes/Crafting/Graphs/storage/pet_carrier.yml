@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: PetCarrier
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: petCarrier
+      steps:
+      - material: Plastic
+        amount: 5
+        doAfter: 7
+      - material: MetalRod
+        amount: 4
+        doAfter: 3
+  - node: petCarrier
+    entity: PetCarrier

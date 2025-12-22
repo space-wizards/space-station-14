@@ -1,13 +1,13 @@
 using System.Numerics;
-using Content.Server.Body.Components;
 using Content.Server.Botany.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
+using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
-using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Construction.Components;
 using Content.Shared.Database;
@@ -17,9 +17,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Jittering;
+using Content.Shared.Materials;
 using Content.Shared.Medical;
 using Content.Shared.Mind;
-using Content.Shared.Materials;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -45,6 +45,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly PuddleSystem _puddleSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -54,8 +55,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
 
-        [ValidatePrototypeId<MaterialPrototype>]
-        public const string BiomassPrototype = "Biomass";
+        public static readonly ProtoId<MaterialPrototype> BiomassPrototype = "Biomass";
 
         public override void Update(float frameTime)
         {
@@ -69,10 +69,8 @@ namespace Content.Server.Medical.BiomassReclaimer
 
                 if (reclaimer.RandomMessTimer <= 0)
                 {
-                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagent is not null)
+                    if (_robustRandom.Prob(0.2f) && reclaimer.BloodReagents is { } blood)
                     {
-                        Solution blood = new();
-                        blood.AddReagent(reclaimer.BloodReagent, 50);
                         _puddleSystem.TrySpillAt(uid, blood, out _);
                     }
                     if (_robustRandom.Prob(0.03f) && reclaimer.SpawnedEntities.Count > 0)
@@ -93,7 +91,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 reclaimer.CurrentExpectedYield = reclaimer.CurrentExpectedYield - actualYield; // store non-integer leftovers
                 _material.SpawnMultipleFromMaterial(actualYield, BiomassPrototype, Transform(uid).Coordinates);
 
-                reclaimer.BloodReagent = null;
+                reclaimer.BloodReagents = null;
                 reclaimer.SpawnedEntities.Clear();
                 RemCompDeferred<ActiveBiomassReclaimerComponent>(uid);
             }
@@ -182,7 +180,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                 _throwing.TryThrow(args.Climber, direction, 0.5f);
                 return;
             }
-            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.Instigator):player} used a biomass reclaimer to gib {ToPrettyString(args.Climber):target} in {ToPrettyString(reclaimer):reclaimer}");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Instigator):player} used a biomass reclaimer to gib {ToPrettyString(args.Climber):target} in {ToPrettyString(reclaimer):reclaimer}");
 
             StartProcessing(args.Climber, reclaimer);
         }
@@ -195,7 +193,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (args.Args.Used == null || args.Args.Target == null || !HasComp<BiomassReclaimerComponent>(args.Args.Target.Value))
                 return;
 
-            _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Args.Target.Value):target} in {ToPrettyString(reclaimer):reclaimer}");
+            _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Args.Target.Value):target} in {ToPrettyString(reclaimer):reclaimer}");
             StartProcessing(args.Args.Used.Value, reclaimer);
 
             args.Handled = true;
@@ -209,9 +207,11 @@ namespace Content.Server.Medical.BiomassReclaimer
             var component = ent.Comp;
             AddComp<ActiveBiomassReclaimerComponent>(ent);
 
-            if (TryComp<BloodstreamComponent>(toProcess, out var stream))
+            if (TryComp<BloodstreamComponent>(toProcess, out var stream) &&
+                _solution.ResolveSolution(toProcess, stream.BloodSolutionName, ref stream.BloodSolution, out var solution))
             {
-                component.BloodReagent = stream.BloodReagent;
+                component.BloodReagents = solution.Clone();
+                component.BloodReagents.ScaleSolution(50 / component.BloodReagents.Volume);
             }
             if (TryComp<ButcherableComponent>(toProcess, out var butcherableComponent))
             {

@@ -1,10 +1,11 @@
 - type: entity
   id: ClosetBase
-  parent: BaseStructureDynamic
+  parent: [ BaseStructureDynamic, BasePaperLabelableVisualized ]
   name: closet
   description: A standard-issue Nanotrasen storage unit.
   abstract: true
   components:
+  - type: Animateable
   - type: ResistLocker
   - type: Transform
     noRot: true
@@ -19,18 +20,11 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: MovedByPressure
-  - type: PaperLabel
-    labelSlot:
-      insertVerbText: Attach Label
-      ejectVerbText: Remove Label
-      whitelist:
-        components:
-        - Paper
-      blacklist:
-        tags:
-        - Book
-  - type: ItemSlots
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -66,13 +60,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 100
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -86,6 +80,21 @@
           SheetSteel1:
             min: 1
             max: 1
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.StorageVisuals.Open:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
   - type: Appearance
   - type: EntityStorageVisuals
     stateBaseClosed: generic
@@ -104,26 +113,21 @@
     node: done
     containers:
     - entity_storage
+  - type: Paintable
+    group: Closet
 
 #Wall Closet
 - type: entity
+  parent: BaseWallmountMetallic
   id: BaseWallCloset
-  placement:
-    mode: SnapgridCenter
   abstract: true
   name: wall closet
   description: A standard-issue Nanotrasen storage unit, now on walls.
   components:
-  - type: InteractionOutline
-  - type: Clickable
   - type: ResistLocker
   - type: Weldable
-  - type: WallMount
-    arc: 175
   - type: StaticPrice
     price: 75
-  - type: Transform
-    noRot: false
   - type: Sprite
     drawdepth: WallMountedItems
     noRot: false
@@ -148,20 +152,17 @@
     containers:
       entity_storage: !type:Container
         ents: []
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
+        damage: 100
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 50
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -175,11 +176,18 @@
           SheetSteel1:
             min: 1
             max: 1
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
   - type: Construction
     graph: ClosetWall
     node: done
     containers:
     - entity_storage
+  - type: Paintable
+    group: WallCloset
 
 #Wall locker
 - type: entity
@@ -203,6 +211,8 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Paintable
+    group: WallLocker
 
 #Base suit storage unit
 #I am terribly sorry for duplicating the closet almost-wholesale, but the game malds at me if I don't so here we are.
@@ -291,7 +301,7 @@
             max: 1
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBase: base
+    # stateBase: base  // This field does not exist. this is probably a bug. TODO
     stateDoorOpen: base
     stateDoorClosed: door
   - type: LockVisuals
