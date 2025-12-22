@@ -5,11 +5,11 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Power.Components;
 
 /// <summary>
-/// Marker component that makes an entity with <see cref="PredictedBatteryComponent"/> update its appearance data for use with visualizers.
+/// Marker component that makes an entity with <see cref="BatteryComponent"/> update its appearance data for use with visualizers.
 /// Also works with an entity with <see cref="PowerCellSlotComponent"/> and will relay the state of the inserted powercell.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class PredictedBatteryVisualsComponent : Component;
+public sealed partial class BatteryVisualsComponent : Component;
 
 /// <summary>
 /// Keys for the appearance data.
@@ -37,15 +37,15 @@ public enum BatteryVisuals : byte
 public enum BatteryChargingState : byte
 {
     /// <summary>
-    /// PredictedBatteryComponent.ChargeRate &gt; 0
+    /// BatteryComponent.ChargeRate &gt; 0
     /// </summary>
     Charging,
     /// <summary>
-    /// PredictedBatteryComponent.ChargeRate &lt; 0
+    /// BatteryComponent.ChargeRate &lt; 0
     /// </summary>
     Decharging,
     /// <summary>
-    /// PredictedBatteryComponent.ChargeRate == 0
+    /// BatteryComponent.ChargeRate == 0
     /// </summary>
     Constant,
 }
