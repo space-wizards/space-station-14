@@ -35,11 +35,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
     private EntityUid? _previewDummy;
 
     /// <summary>
-    /// Action invoked when the player's job priorities have been updated.
-    /// </summary>
-    public event Action? PrioritiesUpdated;
-
-    /// <summary>
     /// Just a helper function to grab the appropriate <see cref="DraggableJobTarget"/> control corresponding to the
     /// job priority
     /// </summary>
@@ -275,7 +270,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
 
         var updatedProfile = humanoid.WithJobPriorities(GetJobPriorities());
         _preferences.UpdateCharacter(updatedProfile, prefs.SelectedCharacterIndex);
-        PrioritiesUpdated?.Invoke();
     }
 
     /// <summary>
