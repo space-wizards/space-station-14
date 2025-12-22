@@ -385,7 +385,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var soln, out var solution))
             return false;
 
-        spilled = _solutionContainerSystem.Drain(entity.Owner, soln.Value, solution.Volume);
+        spilled = _solutionContainerSystem.SplitSolution(soln.Value, solution.Volume);
 
         if (spilled.Volume == 0)
             return false;

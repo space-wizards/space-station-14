@@ -11,12 +11,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 public sealed partial class SpillBehavior : IThresholdBehavior
 {
     /// <summary>
-    /// Optional fallback solution name if SpillableComponent is not present.
-    /// </summary>
-    [DataField]
-    public string? Solution;
-
-    /// <summary>
     /// When triggered, spills the entity's solution onto the ground.
     /// Will first try to use the solution from a SpillableComponent if present,
     /// otherwise falls back to the solution specified in the behavior's data fields.
