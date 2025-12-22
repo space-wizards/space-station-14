@@ -9,15 +9,15 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// Entity effect that adjusts the mutation mod of a plant.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantAdjustMutationModEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAdjustMutationMod>
+public sealed partial class PlantAdjustMutationModEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAdjustMutationMod>
 {
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustMutationMod> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAdjustMutationMod> args)
     {
-        if (!_plantTray.TryGetAlivePlant(entity.AsNullable(), out var plant, out var plantHolder))
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        plantHolder.MutationMod += args.Effect.Amount;
+        _plantHolder.AdjustsMutationMod(entity.Owner, args.Effect.Amount);
     }
 }

@@ -9,17 +9,15 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// Entity effect that adjusts the health of a plant.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantAdjustHealthEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAdjustHealth>
+public sealed partial class PlantAdjustHealthEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAdjustHealth>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustHealth> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAdjustHealth> args)
     {
-        if (!_plantTray.TryGetAlivePlant(entity.AsNullable(), out var plant, out var plantHolder))
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        plantHolder.Health += args.Effect.Amount;
-        _plantHolder.CheckHealth((plant.Value, null));
+        _plantHolder.AdjustsHealth(entity.Owner, args.Effect.Amount);
     }
 }

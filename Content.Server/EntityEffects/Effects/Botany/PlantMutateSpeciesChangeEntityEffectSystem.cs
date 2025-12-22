@@ -11,20 +11,20 @@ namespace Content.Server.EntityEffects.Effects.Botany;
 /// of the current plant's <see cref="PlantDataComponent.MutationPrototypes"/>.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantMutateSpeciesChange>
+public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateSpeciesChange>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
     [Dependency] private readonly MutationSystem _mutation = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateSpeciesChange> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateSpeciesChange> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant)
-            ||!TryComp<PlantDataComponent>(plant, out var oldPlantData)
+        if (!TryComp<PlantDataComponent>(entity, out var oldPlantData)
             || oldPlantData.MutationPrototypes.Count == 0)
             return;
 
         var newPlantEnt = _random.Pick(oldPlantData.MutationPrototypes);
-        _mutation.SpeciesChange(plant.Value, newPlantEnt, entity.AsNullable());
+        _plant.TryGetTray(entity.AsNullable(), out var trayEnt);
+        _mutation.SpeciesChange(entity.Owner, newPlantEnt, trayEnt);
     }
 }

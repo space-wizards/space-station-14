@@ -21,10 +21,11 @@ namespace Content.Server.Botany.Systems;
 /// </summary>
 public sealed class HarvestSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
     [Dependency] private readonly PlantTraySystem _tray = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
@@ -40,7 +41,6 @@ public sealed class HarvestSystem : EntitySystem
     private void OnPlantGrow(Entity<PlantHarvestComponent> ent, ref OnPlantGrowEvent args)
     {
         var (plantUid, component) = ent;
-        var (trayUid, tray) = args.Tray;
 
         if (!TryComp<PlantHolderComponent>(plantUid, out var holder)
             || !TryComp<PlantComponent>(plantUid, out var plant)
@@ -53,8 +53,8 @@ public sealed class HarvestSystem : EntitySystem
         {
             component.ReadyForHarvest = true;
             component.LastHarvest = holder.Age;
-            tray.UpdateSpriteAfterUpdate = true;
-            TryAutoHarvest(ent, args.Tray, trayUid);
+            _plant.UpdateSprite(plantUid);
+            TryAutoHarvest(ent, (plantUid, plant), plantUid);
         }
     }
 
@@ -64,9 +64,8 @@ public sealed class HarvestSystem : EntitySystem
             return;
 
         var (plantUid, harvest) = ent;
-        var trayUid = Transform(plantUid).ParentUid;
 
-        if (!TryComp<PlantTrayComponent>(trayUid, out var tray)
+        if (!TryComp<PlantComponent>(plantUid, out var plant)
             || !TryComp<PlantHolderComponent>(plantUid, out var holder)
             || !TryComp<PlantTraitsComponent>(plantUid, out var traits))
             return;
@@ -81,7 +80,7 @@ public sealed class HarvestSystem : EntitySystem
             return;
         }
 
-        TryHandleHarvest((plantUid, harvest), (trayUid, tray), args.User);
+        TryHandleHarvest((plantUid, harvest), (plantUid, plant), args.User);
         args.Handled = true;
     }
 
@@ -91,14 +90,19 @@ public sealed class HarvestSystem : EntitySystem
             return;
 
         var (plantUid, harvest) = ent;
-        var trayUid = Transform(plantUid).ParentUid;
 
-        if (!TryComp<PlantTrayComponent>(trayUid, out var tray)
+        if (!TryComp<PlantComponent>(plantUid, out var plant)
             || !TryComp<PlantHolderComponent>(plantUid, out var holder)
             || !TryComp<PlantTraitsComponent>(plantUid, out var traits))
             return;
 
-        if (!harvest.ReadyForHarvest || holder.Dead)
+        if (holder.Dead)
+        {
+            _plant.RemovePlant(plantUid);
+            return;
+        }
+
+        if (!harvest.ReadyForHarvest)
             return;
 
         if (traits.Ligneous)
@@ -107,52 +111,45 @@ public sealed class HarvestSystem : EntitySystem
             return;
         }
 
-        TryHandleHarvest((plantUid, harvest), (trayUid, tray), args.User);
+        TryHandleHarvest((plantUid, harvest), (plantUid, plant), args.User);
         args.Handled = true;
     }
 
-    private void TryHandleHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantTrayComponent> trayEnt, EntityUid user)
+    private void TryHandleHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
     {
         if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
-            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(trayEnt.Owner).Coordinates}.");
+            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(plantEnt.Owner).Coordinates}.");
 
-        DoHarvest(ent, trayEnt, user);
+        DoHarvest(ent, plantEnt, user);
     }
 
-    private void TryAutoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantTrayComponent> trayEnt, EntityUid user)
+    private void TryAutoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
     {
         if (ent.Comp.HarvestRepeat != HarvestType.SelfHarvest)
             return;
 
         if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
-            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(trayEnt.Owner).Coordinates}.");
+            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(plantEnt.Owner).Coordinates}.");
 
-        DoHarvest(ent, trayEnt, user);
+        DoHarvest(ent, plantEnt, user);
     }
 
     /// <summary>
     /// Harvests the plant and produces the produce.
     /// </summary>
     /// <param name="ent">The plant harvest component.</param>
-    /// <param name="trayEnt">The plant tray component.</param>
+    /// <param name="plantEnt">The plant component.</param>
     /// <param name="user">The user who is harvesting the plant.</param>
     [PublicAPI]
-    public void DoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantTrayComponent> trayEnt, EntityUid user)
+    public void DoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
     {
         var (plantUid, harvest) = ent;
-        var (trayUid, _) = trayEnt;
 
         if (!TryComp<PlantComponent>(plantUid, out var plant)
             || !TryComp<PlantDataComponent>(plantUid, out var plantData)
             || !TryComp<PlantTraitsComponent>(plantUid, out var traits)
             || !TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
-
-        if (holder.Dead)
-        {
-            _tray.RemovePlant(trayUid);
-            return;
-        }
 
         if (!harvest.ReadyForHarvest || plantData.ProductPrototypes.Count == 0 || plant.Yield == 0)
             return;
@@ -167,7 +164,7 @@ public sealed class HarvestSystem : EntitySystem
             totalYield = Math.Max(1, totalYield);
         }
 
-        var position = Transform(trayUid).Coordinates;
+        var position = Transform(plantUid).Coordinates;
         for (var i = 0; i < totalYield; i++)
         {
             var product = _random.Pick(plantData.ProductPrototypes);
@@ -185,11 +182,13 @@ public sealed class HarvestSystem : EntitySystem
         harvest.LastHarvest = holder.Age;
 
         if (traits.CanScream)
-            _audio.PlayPvs(new SoundCollectionSpecifier("PlantScreams"), trayUid);
+            _audio.PlayPvs(new SoundCollectionSpecifier("PlantScreams"), plantUid);
 
         if (harvest.HarvestRepeat == HarvestType.NoRepeat)
-            _tray.RemovePlant(trayUid);
+            _plant.RemovePlant(plantEnt.AsNullable());
 
-        _tray.UpdateSprite(trayEnt.AsNullable());
+        _plant.UpdateSprite(plantEnt.AsNullable());
+        if (_plant.TryGetTray(plantEnt.AsNullable(), out var trayEnt))
+            _tray.UpdateWarnings(trayEnt);
     }
 }

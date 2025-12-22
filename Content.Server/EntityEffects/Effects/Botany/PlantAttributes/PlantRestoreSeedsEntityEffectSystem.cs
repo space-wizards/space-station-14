@@ -10,15 +10,17 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// Entity effect that restores ability to get seeds from plant seed maker.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantRestoreSeedsEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantRestoreSeeds>
+public sealed partial class PlantRestoreSeedsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantRestoreSeeds>
 {
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantRestoreSeeds> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantRestoreSeeds> args)
     {
-        if (!_plantTray.TryGetAlivePlant(entity.AsNullable(), out var plantUid, out _)
-            || !TryComp<PlantTraitsComponent>(plantUid, out var traits)
+        if (_plantHolder.IsDead(entity.Owner))
+            return;
+
+        if (!TryComp<PlantTraitsComponent>(entity, out var traits)
             || !traits.Seedless)
             return;
 

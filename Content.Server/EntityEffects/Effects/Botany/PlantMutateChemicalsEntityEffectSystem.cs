@@ -12,18 +12,14 @@ namespace Content.Server.EntityEffects.Effects.Botany;
 /// Entity effect that mutates the chemicals of a plant.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantMutateChemicals>
+public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateChemicals>
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
-            return;
-
-        var chemicals = EnsureComp<PlantChemicalsComponent>(plant.Value).Chemicals;
+        var chemicals = EnsureComp<PlantChemicalsComponent>(entity.Owner).Chemicals;
         var randomChems = _proto.Index(args.Effect.RandomPickBotanyReagent).Fills;
 
         // Add a random amount of a random chemical to this set of chemicals.
@@ -31,10 +27,10 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
         var chemicalId = _random.Pick(pick.Reagents);
         var amount = _random.NextFloat(0.1f, (float)pick.Quantity);
         var seedChemQuantity = new PlantChemQuantity();
-        if (chemicals.ContainsKey(chemicalId))
+        if (chemicals.TryGetValue(chemicalId, out var value))
         {
-            seedChemQuantity.Min = chemicals[chemicalId].Min;
-            seedChemQuantity.Max = chemicals[chemicalId].Max + amount;
+            seedChemQuantity.Min = value.Min;
+            seedChemQuantity.Max = value.Max + amount;
         }
         else
         {

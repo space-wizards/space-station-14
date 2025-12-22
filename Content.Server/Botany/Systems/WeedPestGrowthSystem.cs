@@ -12,12 +12,14 @@ namespace Content.Server.Botany.Systems;
 public sealed class WeedPestGrowthSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MutationSystem _mutation = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<WeedPestGrowthComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
         SubscribeLocalEvent<WeedPestGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<PlantTrayComponent, OnPlantGrowEvent>(OnTrayUpdate);
     }
@@ -34,22 +36,17 @@ public sealed class WeedPestGrowthSystem : EntitySystem
     private void OnPlantGrow(Entity<WeedPestGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
         var (plantUid, component) = ent;
-        var (_, tray) = args.Tray;
 
-        if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
+        if (args.Tray.Comp == null)
             return;
 
         // Weed growth.
         if (_random.Prob(component.WeedGrowthChance))
-        {
-            tray.WeedLevel += component.WeedGrowthAmount;
-            if (tray.DrawWarnings)
-                tray.UpdateSpriteAfterUpdate = true;
-        }
+            args.Tray.Comp.WeedLevel += component.WeedGrowthAmount;
 
         // Pest damage.
         if (_random.Prob(component.PestDamageChance))
-            holder.Health -= component.PestDamageAmount;
+            _plantHolder.AdjustsHealth(plantUid, -component.PestDamageAmount);
     }
 
     /// <summary>
@@ -76,7 +73,7 @@ public sealed class WeedPestGrowthSystem : EntitySystem
                     chance = 0.01f;
 
                 if (_random.Prob(chance))
-                    component.WeedLevel += 1 + component.WeedCoefficient * component.TraySpeedMultiplier;
+                    component.WeedLevel += 1 + component.WeedCoefficient;
             }
 
             // Handle kudzu transformation.
@@ -93,11 +90,8 @@ public sealed class WeedPestGrowthSystem : EntitySystem
             if (component is { WaterLevel: > 10, NutritionLevel: > 5 })
             {
                 if (_random.Prob(0.05f))
-                    component.WeedLevel += 1 + component.WeedCoefficient * component.TraySpeedMultiplier;
+                    component.WeedLevel += 1 + component.WeedCoefficient;
             }
         }
-
-        if (component.DrawWarnings)
-            component.UpdateSpriteAfterUpdate = true;
     }
 }

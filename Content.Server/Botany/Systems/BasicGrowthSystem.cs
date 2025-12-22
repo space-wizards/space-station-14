@@ -13,8 +13,9 @@ public sealed class BasicGrowthSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
     [Dependency] private readonly MutationSystem _mutation = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
 
     public override void Initialize()
     {
@@ -34,88 +35,58 @@ public sealed class BasicGrowthSystem : EntitySystem
     private void OnPlantGrow(Entity<BasicGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
         var (plantUid, component) = ent;
-        var (_, tray) = args.Tray;
+
+        if (args.Tray == null || args.Tray.Comp == null)
+            return;
+
+        var tray = args.Tray.Comp;
 
         if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
 
-        // Check if the plant is viable.
-        if (TryComp<PlantTraitsComponent>(plantUid, out var traits) && !traits.Viable)
-        {
-            holder.Health -= _random.Next(5, 10) * tray.TraySpeedMultiplier;
-            if (tray.DrawWarnings)
-                tray.UpdateSpriteAfterUpdate = true;
-
-            return;
-        }
-
         // Advance plant age here.
         if (holder.SkipAging > 0)
-        {
             holder.SkipAging--;
-        }
-        else
-        {
-            if (_random.Prob(0.8f))
-                holder.Age += (int)(1 * tray.TraySpeedMultiplier);
-
-            tray.UpdateSpriteAfterUpdate = true;
-        }
-
-        if (holder.Age < 0) // Revert back to seed packet!
-        {
-            // will put it in the trays hands if it has any, please do not try doing this.
-            _botany.SpawnSeedPacketFromPlant(plantUid, Transform(args.Tray.Owner).Coordinates, args.Tray.Owner);
-            _plantTray.RemovePlant(args.Tray.AsNullable());
-            tray.ForceUpdate = true;
-            _plantTray.Update(args.Tray.AsNullable());
-            return;
-        }
+        else if (_random.Prob(0.8f))
+            _plantHolder.AdjustsAge(plantUid, 1);
 
         if (component.WaterConsumption > 0 && tray.WaterLevel > 0 && _random.Prob(0.75f))
         {
             tray.WaterLevel -= MathF.Max(0f,
-                component.WaterConsumption * tray.TrayConsumptionMultiplier * tray.TraySpeedMultiplier);
-
-            if (tray.DrawWarnings)
-                tray.UpdateSpriteAfterUpdate = true;
+                component.WaterConsumption * tray.TrayConsumptionMultiplier);
         }
 
         if (component.NutrientConsumption > 0 && tray.NutritionLevel > 0 && _random.Prob(0.75f))
         {
             tray.NutritionLevel -= MathF.Max(0f,
-                component.NutrientConsumption * tray.TrayConsumptionMultiplier * tray.TraySpeedMultiplier);
+                component.NutrientConsumption * tray.TrayConsumptionMultiplier);
 
-            if (tray.DrawWarnings)
-                tray.UpdateSpriteAfterUpdate = true;
+            _plant.UpdateSprite(plantUid);
         }
 
-        var healthMod = _random.Next(1, 3) * tray.TraySpeedMultiplier;
+        var healthMod = _random.Next(1, 3);
         if (holder.SkipAging < 10)
         {
             // Make sure the plant is not thirsty.
             if (tray.WaterLevel > 10)
             {
-                holder.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
+                _plantHolder.AdjustsHealth(plantUid, Convert.ToInt32(_random.Prob(0.35f)) * healthMod);
             }
             else
             {
                 AffectGrowth((plantUid, holder), -1);
-                holder.Health -= healthMod;
+                _plantHolder.AdjustsHealth(plantUid, -healthMod);
             }
 
             if (tray.NutritionLevel > 5)
             {
-                holder.Health += Convert.ToInt32(_random.Prob(0.35f)) * healthMod;
+                _plantHolder.AdjustsHealth(plantUid, Convert.ToInt32(_random.Prob(0.35f)) * healthMod);
             }
             else
             {
                 AffectGrowth((plantUid, holder), -1);
-                holder.Health -= healthMod;
+                _plantHolder.AdjustsHealth(plantUid, -healthMod);
             }
-
-            if (tray.DrawWarnings)
-                tray.UpdateSpriteAfterUpdate = true;
         }
     }
 
@@ -158,4 +129,4 @@ public sealed class BasicGrowthSystem : EntitySystem
 /// Event of plant growing ticking.
 /// </summary>
 [ByRefEvent]
-public readonly record struct OnPlantGrowEvent(Entity<PlantTrayComponent> Tray);
+public readonly record struct OnPlantGrowEvent(Entity<PlantTrayComponent?> Tray);

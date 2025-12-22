@@ -1,5 +1,5 @@
-using System.Linq;
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 using Robust.Shared.Random;
@@ -10,20 +10,21 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// This system mutates an inputted stat for a PlantHolder, only works for floats, integers, and bools.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantChangeStat>
+public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantChangeStat>
 {
     // TODO: This is awful. I do not have the strength to refactor this. I want it gone.
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantChangeStat> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantChangeStat> args)
     {
-        if (entity.Comp.PlantEntity == null || Deleted(entity.Comp.PlantEntity))
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
         var targetValue = args.Effect.TargetValue;
 
         // Scan live plant growth components and mutate the first matching field.
-        foreach (var growthComp in EntityManager.GetComponents<Component>(entity.Comp.PlantEntity.Value))
+        foreach (var growthComp in EntityManager.GetComponents<Component>(entity.Owner))
         {
             var componentType = growthComp.GetType();
             var field = componentType.GetField(targetValue);

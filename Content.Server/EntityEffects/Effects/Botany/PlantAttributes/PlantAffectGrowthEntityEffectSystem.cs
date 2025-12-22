@@ -9,16 +9,16 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// Entity effect that increments plant age / growth cycle.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantAffectGrowthEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAffectGrowth>
+public sealed partial class PlantAffectGrowthEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAffectGrowth>
 {
     [Dependency] private readonly BasicGrowthSystem _plantGrowth = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAffectGrowth> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAffectGrowth> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant))
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        _plantGrowth.AffectGrowth(plant.Value, (int)args.Effect.Amount);
+        _plantGrowth.AffectGrowth(entity.Owner, (int)args.Effect.Amount);
     }
 }

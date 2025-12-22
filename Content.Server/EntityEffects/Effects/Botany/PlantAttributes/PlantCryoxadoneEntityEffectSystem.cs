@@ -10,17 +10,19 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// Entity effect that reverts aging of plant.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantCryoxadone>
+public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantCryoxadone>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant)
-            || !TryComp<PlantHolderComponent>(plant, out var plantHolder)
-            || !TryComp<PlantComponent>(plant, out var plantComp)
-            || !TryComp<PlantHarvestComponent>(plant, out var harvest))
+        if (_plantHolder.IsDead(entity.Owner))
+            return;
+
+        if (!TryComp<PlantHolderComponent>(entity, out var plantHolder)
+            || !TryComp<PlantComponent>(entity, out var plantComp)
+            || !TryComp<PlantHarvestComponent>(entity, out var harvest))
             return;
 
         var deviation = plantHolder.Age > plantComp.Maturation
@@ -29,7 +31,7 @@ public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSyst
 
         plantHolder.Age -= deviation;
         plantHolder.SkipAging++;
-        entity.Comp.ForceUpdate = true;
+        plantHolder.ForceUpdate = true;
         harvest.LastHarvest = plantHolder.Age;
     }
 }

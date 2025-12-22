@@ -14,6 +14,7 @@ public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly MutationSystem _mutation = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     public override void Initialize()
     {
@@ -33,7 +34,6 @@ public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
     private void OnPlantGrow(Entity<ConsumeExudeGasGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
         var (plantUid, component) = ent;
-        var (_, tray) = args.Tray;
 
         if (!TryComp<PlantComponent>(plantUid, out var plant)
             || !TryComp<PlantHolderComponent>(plantUid, out var holder))
@@ -42,26 +42,22 @@ public sealed class ConsumeExudeGasGrowthSystem : EntitySystem
         var environment = _atmosphere.GetContainingMixture(plantUid, true, true) ?? GasMixture.SpaceGas;
 
         // Consume Gasses.
-        tray.MissingGas = 0;
+        holder.MissingGas = 0;
         if (component.ConsumeGasses.Count > 0)
         {
             foreach (var (gas, amount) in component.ConsumeGasses)
             {
                 if (environment.GetMoles(gas) < amount)
                 {
-                    tray.MissingGas++;
+                    holder.MissingGas++;
                     continue;
                 }
 
                 environment.AdjustMoles(gas, -amount);
             }
 
-            if (tray.MissingGas > 0)
-            {
-                holder.Health -= tray.MissingGas * tray.TraySpeedMultiplier;
-                if (tray.DrawWarnings)
-                    tray.UpdateSpriteAfterUpdate = true;
-            }
+            if (holder.MissingGas > 0)
+                _plantHolder.AdjustsHealth(plantUid, -holder.MissingGas);
         }
 
         // Exude Gasses.

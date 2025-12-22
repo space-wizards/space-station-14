@@ -10,21 +10,23 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// Entity effect that enhances plant longevity and endurance.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantDiethylamineEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantDiethylamine>
+public sealed partial class PlantDiethylamineEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantDiethylamine>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantDiethylamine> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantDiethylamine> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out var plant)
-            || !TryComp<PlantComponent>(plant, out var plantComponent))
+        if (_plantHolder.IsDead(entity.Owner))
+            return;
+
+        if (!TryComp<PlantComponent>(entity, out var plant))
             return;
 
         if (_random.Prob(0.1f))
-            plantComponent.Lifespan++;
+            plant.Lifespan++;
 
         if (_random.Prob(0.1f))
-            plantComponent.Endurance++;
+            plant.Endurance++;
     }
 }

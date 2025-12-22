@@ -1,5 +1,4 @@
 using Content.Server.Botany.Components;
-using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
@@ -11,17 +10,13 @@ namespace Content.Server.EntityEffects.Effects.Botany;
 /// Plant mutation entity effect that forces plant to exude gas while living.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantMutateExudeGases>
+public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateExudeGases>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateExudeGases> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateExudeGases> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out _))
-            return;
-
-        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Comp.PlantEntity!.Value);
+        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Owner);
         var gasses = gasComponent.ExudeGasses;
 
         // Add a random amount of a random gas to this gas dictionary.
@@ -39,17 +34,13 @@ public sealed partial class PlantMutateExudeGasesEntityEffectSystem : EntityEffe
 /// Plant mutation entity effect that forces plant to consume gas while living.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantMutateConsumeGases>
+public sealed partial class PlantMutateConsumeGasesEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateConsumeGases>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantMutateConsumeGases> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateConsumeGases> args)
     {
-        if (!_plantTray.TryGetPlant(entity.AsNullable(), out _))
-            return;
-
-        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Comp.PlantEntity!.Value);
+        var gasComponent = EnsureComp<ConsumeExudeGasGrowthComponent>(entity.Owner);
         var gasses = gasComponent.ConsumeGasses;
 
         // Add a random amount of a random gas to this gas dictionary.

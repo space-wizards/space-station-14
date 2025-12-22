@@ -9,18 +9,15 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// Entity effect that adjusts the mutation level of a plant.
 /// </summary>
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
-public sealed partial class PlantAdjustMutationLevelEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAdjustMutationLevel>
+public sealed partial class PlantAdjustMutationLevelEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAdjustMutationLevel>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
-    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
-    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustMutationLevel> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAdjustMutationLevel> args)
     {
-        if (_plantTray.TryGetPlant(entity.AsNullable(), out var plantUid)
-            || !TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        plantHolder.MutationLevel += args.Effect.Amount * plantHolder.MutationMod;
-        _plantHolder.CheckHealth(plantUid.Value);
+        _plantHolder.AdjustsMutationLevel(entity.Owner, args.Effect.Amount);
     }
 }

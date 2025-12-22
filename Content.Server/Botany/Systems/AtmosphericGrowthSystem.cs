@@ -14,8 +14,9 @@ public sealed class AtmosphericGrowthSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly MutationSystem _mutation = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MutationSystem _mutation = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     public override void Initialize()
     {
@@ -37,7 +38,6 @@ public sealed class AtmosphericGrowthSystem : EntitySystem
     private void OnPlantGrow(Entity<AtmosphericGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
         var (plantUid, component) = ent;
-        var tray = args.Tray.Comp;
 
         if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
@@ -45,27 +45,23 @@ public sealed class AtmosphericGrowthSystem : EntitySystem
         var environment = _atmosphere.GetContainingMixture(plantUid, true, true) ?? GasMixture.SpaceGas;
         if (MathF.Abs(environment.Temperature - component.IdealHeat) > component.HeatTolerance)
         {
-            holder.Health -= _random.Next(1, 3);
-            tray.ImproperHeat = true;
-            if (tray.DrawWarnings)
-                tray.UpdateSpriteAfterUpdate = true;
+            _plantHolder.AdjustsHealth(plantUid, -_random.Next(1, 3));
+            holder.ImproperHeat = true;
         }
         else
         {
-            tray.ImproperHeat = false;
+            holder.ImproperHeat = false;
         }
 
         var pressure = environment.Pressure;
         if (pressure < component.LowPressureTolerance || pressure > component.HighPressureTolerance)
         {
-            holder.Health -= _random.Next(1, 3);
-            tray.ImproperPressure = true;
-            if (tray.DrawWarnings)
-                tray.UpdateSpriteAfterUpdate = true;
+            _plantHolder.AdjustsHealth(plantUid, -_random.Next(1, 3));
+            holder.ImproperPressure = true;
         }
         else
         {
-            tray.ImproperPressure = false;
+            holder.ImproperPressure = false;
         }
     }
 }
