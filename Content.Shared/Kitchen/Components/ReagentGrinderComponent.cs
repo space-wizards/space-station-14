@@ -1,7 +1,9 @@
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Kitchen.Components
 {
@@ -11,7 +13,7 @@ namespace Content.Shared.Kitchen.Components
     /// converting something into its single juice form. E.g, grind an apple and get the nutriment and sugar
     /// it contained, juice an apple and get "apple juice".
     /// </summary>
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
     [Access(typeof(SharedReagentGrinderSystem))]
     public sealed partial class ReagentGrinderComponent : Component
     {
@@ -36,20 +38,32 @@ namespace Content.Shared.Kitchen.Components
         [DataField, AutoNetworkedField]
         public GrinderAutoMode AutoMode = GrinderAutoMode.Off;
 
+        /// <summary>
+        /// The time the grinder will finish grinding/juicing.
+        /// </summary>
+        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+        [AutoNetworkedField, AutoPausedField]
+        public TimeSpan? EndTime;
+
+        /// <summary>
+        /// The currently active program.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public GrinderProgram? Program;
+
+        public static string BeakerSlotId = "beakerSlot";
+
+        public static string InputContainerId = "inputContainer";
+
+        /// <summary>
+        /// The cached container for the internal storage.
+        /// </summary>
+        [ViewVariables]
+        public Container InputContainer = default!;
+
         public EntityUid? AudioStream;
     }
 
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-    [Access(typeof(SharedReagentGrinderSystem))]
-    public sealed partial class ActiveReagentGrinderComponent : Component
-    {
-        /// <summary>
-        /// Remaining time until the grinder finishes grinding/juicing.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public TimeSpan EndTime;
-
-        [DataField, AutoNetworkedField]
-        public GrinderProgram Program;
-    }
+    [RegisterComponent, NetworkedComponent]
+    public sealed partial class ActiveReagentGrinderComponent : Component;
 }
