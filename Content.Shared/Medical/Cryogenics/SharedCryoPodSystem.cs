@@ -42,7 +42,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
@@ -255,8 +255,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (!Resolve(uid, ref appearance))
             return;
 
-        _appearance.SetData(uid, CryoPodVisuals.ContainsEntity, cryoPod.BodyContainer?.ContainedEntity == null, appearance);
-        _appearance.SetData(uid, CryoPodVisuals.IsOn, cryoPodEnabled, appearance);
+        Appearance.SetData(uid, CryoPodVisuals.ContainsEntity, cryoPod.BodyContainer?.ContainedEntity == null, appearance);
+        Appearance.SetData(uid, CryoPodVisuals.IsOn, cryoPodEnabled, appearance);
     }
 
     public bool InsertBody(EntityUid uid, EntityUid target, CryoPodComponent cryoPodComponent)
