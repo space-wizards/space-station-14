@@ -27,36 +27,10 @@ public sealed partial class SpillBehavior : IThresholdBehavior
     /// <param name="cause">Optional entity that caused this behavior to trigger</param>
     public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
     {
-        var solutionContainerSystem = system.EntityManager.System<SharedSolutionContainerSystem>();
         var spillableSystem = system.EntityManager.System<PuddleSystem>();
         var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 
-        // Try to get solution from either SpillableComponent or the fallback Solution
-        string? solutionName = null;
-
-        if (system.EntityManager.TryGetComponent(owner, out SpillableComponent? spillableComponent))
-        {
-            solutionName = spillableComponent.SolutionName;
-        }
-        else if (Solution != null)
-        {
-            solutionName = Solution;
-        }
-
-        // If no solution name was found, return early
-        if (solutionName == null ||
-            !solutionContainerSystem.TryGetSolution(owner, solutionName, out var solutionEnt, out var solution))
-        {
-            return;
-        }
-
-        // If entity is drainable, drain the solution. Otherwise just split it.
-        // Both methods ensure the solution is properly removed.
-        var targetSolution = system.EntityManager.HasComponent<DrainableSolutionComponent>(owner)
-            ? solutionContainerSystem.Drain((owner, system.EntityManager.GetComponent<DrainableSolutionComponent>(owner)), solutionEnt.Value, solution.Volume)
-            : solution.SplitSolution(solution.Volume);
-
         // Spill the solution that was drained/split
-        spillableSystem.TrySplashSpillAt(owner, coordinates, targetSolution, out _, false, cause);
+        spillableSystem.TrySplashSpillAt(owner, coordinates, out _, out _, false, cause);
     }
 }

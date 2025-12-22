@@ -124,10 +124,10 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     /// <remarks>
     /// On the client, this will always set <paramref name="puddleUid"/> to <see cref="EntityUid.Invalid"> and return false.
     /// </remarks>
-    public abstract bool TrySplashSpillAt(EntityUid uid,
+    public abstract bool TrySplashSpillAt(Entity<SpillableComponent?> entity,
         EntityCoordinates coordinates,
-        Solution solution,
         out EntityUid puddleUid,
+        out Solution spilled,
         bool sound = true,
         EntityUid? user = null);
 
