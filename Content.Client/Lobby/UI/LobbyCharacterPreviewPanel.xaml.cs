@@ -151,7 +151,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
             }
 
             icon.OnPriorityChanged += SendUpdatedPriorities;
-            icon.OnPriorityChanged += BalanceColumns;
+            icon.OnPriorityChanged += Refresh;
 
             GetTargetControl(prio).AddJobIcon(icon, preOrdered: true);
         }
