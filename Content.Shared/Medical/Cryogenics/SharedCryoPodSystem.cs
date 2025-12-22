@@ -35,24 +35,24 @@ namespace Content.Shared.Medical.Cryogenics;
 
 public abstract partial class SharedCryoPodSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly StandingStateSystem _standingState = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedPointLightSystem _light = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ClimbSystem _climb = default!;
+    [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] private readonly StandingStateSystem _standingState = default!;
 
     private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
     private EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
@@ -75,6 +75,9 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         SubscribeLocalEvent<CryoPodComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<CryoPodComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
+        SubscribeLocalEvent<CryoPodComponent, CryoPodUiMessage>(OnUiMessage);
+        SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
+        SubscribeLocalEvent<CryoPodComponent, EntInsertedIntoContainerMessage>(OnBodyInserted);
 
         _bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
         _itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
@@ -82,13 +85,15 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         _solutionContainerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
 
         InitializeInsideCryoPod();
+
+        Subs.BuiEvents<CryoPodComponent>(CryoPodUiKey.Key, subs => { subs.Event<BoundUIOpenedEvent>(OnBoundUiOpened); });
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        var curTime = _timing.CurTime;
+        var curTime = Timing.CurTime;
         var query = EntityQueryEnumerator<ActiveCryoPodComponent, CryoPodComponent>();
 
         while (query.MoveNext(out var uid, out _, out var cryoPod))
@@ -193,13 +198,13 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         if (args.Powered)
         {
             EnsureComp<ActiveCryoPodComponent>(ent);
-            ent.Comp.NextInjectionTime = _timing.CurTime + ent.Comp.BeakerTransferTime;
+            ent.Comp.NextInjectionTime = Timing.CurTime + ent.Comp.BeakerTransferTime;
             Dirty(ent);
         }
         else
         {
             RemComp<ActiveCryoPodComponent>(ent);
-            _ui.CloseUi(ent.Owner, HealthAnalyzerUiKey.Key);
+            UI.CloseUi(ent.Owner, HealthAnalyzerUiKey.Key);
         }
 
         UpdateAppearance(ent.Owner, ent.Comp);
@@ -462,6 +467,52 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         Dirty(uid, cryoPodComponent);
         args.Handled = true;
     }
+
+    private void OnUiMessage(Entity<CryoPodComponent> cryoPod, ref CryoPodUiMessage msg)
+    {
+        switch (msg.Type)
+        {
+            case CryoPodUiMessage.MessageType.EjectPatient:
+                TryEjectBody(cryoPod.Owner, msg.Actor, cryoPod.Comp);
+                break;
+            case CryoPodUiMessage.MessageType.EjectBeaker:
+                TryEjectBeaker(cryoPod, msg.Actor);
+                break;
+            case CryoPodUiMessage.MessageType.Inject:
+                TryInject(cryoPod, msg.Quantity.GetValueOrDefault());
+                break;
+        }
+
+        UpdateUi(cryoPod);
+    }
+
+    private void OnBoundUiOpened(Entity<CryoPodComponent> cryoPod, ref BoundUIOpenedEvent args)
+    {
+        UpdateUi(cryoPod);
+    }
+
+    private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID == CryoPodComponent.BodyContainerName)
+        {
+            ClearInjectionBuffer(cryoPod);
+        }
+
+        UpdateUi(cryoPod);
+    }
+
+    private void OnBodyInserted(Entity<CryoPodComponent> cryoPod, ref EntInsertedIntoContainerMessage args)
+    {
+        if (args.Container.ID == CryoPodComponent.BodyContainerName)
+        {
+            UI.CloseUi(cryoPod.Owner, CryoPodUiKey.Key, args.Entity);
+            ClearInjectionBuffer(cryoPod);
+        }
+
+        UpdateUi(cryoPod);
+    }
+
+    protected abstract void UpdateUi(Entity<CryoPodComponent> cryoPod);
 
     [Serializable, NetSerializable]
     public sealed partial class CryoPodPryFinished : SimpleDoAfterEvent;

@@ -64,6 +64,11 @@ public sealed class CryoPodSystem : SharedCryoPodSystem
             _sprite.LayerSetVisible((uid, args.Sprite), CryoPodVisualLayers.Cover, true);
         }
     }
+
+    protected override void UpdateUi(Entity<CryoPodComponent> cryoPod)
+    {
+        // Atmos and health scanner aren't predicted currently...
+    }
 }
 
 public enum CryoPodVisualLayers : byte
