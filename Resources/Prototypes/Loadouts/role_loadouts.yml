@@ -463,7 +463,6 @@
   - MedicalDoctorOuterClothing
   - MedicalShoes
   - MedicalDoctorPDA
-  - MedicalInjector
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
@@ -476,7 +475,6 @@
   - GroupTankHarness
   - MedicalInternJumpsuit
   - MedicalBackpack
-  - MedicalInjector
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
@@ -509,7 +507,6 @@
   - MedicalBackpack
   - ParamedicOuterClothing
   - ParamedicShoes
-  - MedicalInjector
   - MedicalEyewear
   - SurvivalMedical
   - Trinkets
