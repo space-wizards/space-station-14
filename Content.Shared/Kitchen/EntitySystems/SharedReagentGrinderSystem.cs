@@ -274,13 +274,12 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         Dirty(ent);
         UpdateUiState(ent);
 
+        // Can't cancel predicted audio.
         ent.Comp.AudioStream = _audioSystem.PlayPvs(sound, ent,
             AudioParams.Default.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))?.Entity; //slightly higher pitched
+
         if (_net.IsServer)
         {
-            // Can't cancel predicted audio.
-            ent.Comp.AudioStream = _audioSystem.PlayPvs(sound, ent,
-                AudioParams.Default.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))?.Entity; //slightly higher pitched
             _userInterfaceSystem.ServerSendUiMessage(ent.Owner, ReagentGrinderUiKey.Key, new ReagentGrinderWorkStartedMessage(program));
         }
     }
