@@ -90,12 +90,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var item in inputContainer.ContainedEntities.ToList())
                 {
-                    var solution = active.Program switch
-                    {
-                        GrinderProgram.Grind => GetGrindSolution(item),
-                        GrinderProgram.Juice => CompOrNull<ExtractableComponent>(item)?.JuiceSolution,
-                        _ => null,
-                    };
+                    var solution = GetGrinderSolution(item, active.Program);
 
                     if (solution is null)
                         continue;
