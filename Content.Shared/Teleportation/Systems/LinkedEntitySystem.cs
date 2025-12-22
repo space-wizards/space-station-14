@@ -43,7 +43,7 @@ public sealed class LinkedEntitySystem : EntitySystem
     /// <param name="second">The second entity to link</param>
     /// <param name="deleteOnEmptyLinks">Whether both entities should now delete once their links are removed</param>
     /// <returns>Whether linking was successful (e.g. they weren't already linked)</returns>
-    public bool TryLink(EntityUid first, EntityUid second, bool deleteOnEmptyLinks=false)
+    public bool TryLink(EntityUid first, EntityUid second, bool deleteOnEmptyLinks = false)
     {
         var firstLink = EnsureComp<LinkedEntityComponent>(first);
         var secondLink = EnsureComp<LinkedEntityComponent>(second);
@@ -70,18 +70,22 @@ public sealed class LinkedEntitySystem : EntitySystem
     /// Does a one-way link from source to target.
     /// </summary>
     /// <param name="deleteOnEmptyLinks">Whether both entities should now delete once their links are removed</param>
-    public bool OneWayLink(EntityUid source, EntityUid target, bool deleteOnEmptyLinks=false)
+    public bool OneWayLink(EntityUid source, EntityUid target, bool deleteOnEmptyLinks = false)
     {
         var firstLink = EnsureComp<LinkedEntityComponent>(source);
         firstLink.DeleteOnEmptyLinks = deleteOnEmptyLinks;
 
+        if (!firstLink.LinkedEntities.Add(target))
+            return false;
+
         _appearance.SetData(source, LinkedEntityVisuals.HasAnyLinks, true);
 
         Dirty(source, firstLink);
+
         var ev = new EntityLinkedEvent(target);
         RaiseLocalEvent(source, ref ev);
 
-        return firstLink.LinkedEntities.Add(target);
+        return true;
     }
 
     /// <summary>
@@ -93,8 +97,7 @@ public sealed class LinkedEntitySystem : EntitySystem
     /// <param name="firstLink">Resolve comp</param>
     /// <param name="secondLink">Resolve comp</param>
     /// <returns>Whether unlinking was successful (e.g. they both were actually linked to one another)</returns>
-    public bool TryUnlink(EntityUid first, EntityUid second,
-        LinkedEntityComponent? firstLink = null, LinkedEntityComponent? secondLink = null)
+    public bool TryUnlink(EntityUid first, EntityUid second, LinkedEntityComponent? firstLink = null, LinkedEntityComponent? secondLink = null)
     {
         if (!Resolve(first, ref firstLink))
             return false;
@@ -147,7 +150,6 @@ public sealed class LinkedEntitySystem : EntitySystem
 
     #endregion
 }
-
 
 /// <summary>
 /// Called on LinkedEntityComponent when other entity are linked to it.

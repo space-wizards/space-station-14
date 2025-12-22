@@ -34,8 +34,8 @@ public sealed class PortalSystem : SharedPortalSystem
         var xformA = Transform(ent);
         var xformB = Transform(args.Other);
 
-        _pathfinding.TryCreatePortal(xformA.Coordinates, xformB.Coordinates, out var newHandle);
-        ent.Comp.NavPortalHandles.Add(args.Other, newHandle);
+        if (_pathfinding.TryCreatePortal(xformA.Coordinates, xformB.Coordinates, out var newHandle))
+            ent.Comp.NavPortalHandles.Add(args.Other, newHandle);
     }
 
     private void OnUnlinked(Entity<PortalComponent> ent, ref EntityUnlinkedEvent args)
