@@ -145,6 +145,7 @@ public sealed class DraggableJobTarget : Control
                 // This is the size of one high priority icon
                 // Just makes sure it doesn't change size when you take it out
                 MinWidth = 64,
+                MinHeight = 64,
             };
         }
 
