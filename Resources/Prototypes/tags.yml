@@ -787,6 +787,9 @@
 - type: Tag
   id: HudSecurity # ConstructionGraph: HudMedSec, GlassesSecHUD
 
+- type: Tag
+  id: Hypospray # ItemMapper: ClothingBeltMedical
+
 ## I ##
 
 - type: Tag

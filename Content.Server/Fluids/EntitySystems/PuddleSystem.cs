@@ -369,16 +369,37 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
     // TODO: This can be predicted once https://github.com/space-wizards/RobustToolbox/pull/5849 is merged
     /// <inheritdoc/>
-    public override bool TrySplashSpillAt(EntityUid uid,
+    public override bool TrySplashSpillAt(Entity<SpillableComponent?> entity,
         EntityCoordinates coordinates,
-        Solution solution,
+        out EntityUid puddleUid,
+        out Solution spilled,
+        bool sound = true,
+        EntityUid? user = null)
+    {
+        puddleUid = EntityUid.Invalid;
+        spilled = new Solution();
+
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
+        if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.SolutionName, out var solution))
+            return false;
+
+        spilled = solution.Value.Comp.Solution;
+
+        return TrySplashSpillAt(entity, coordinates, spilled, out puddleUid, sound, user);
+    }
+
+    public override bool TrySplashSpillAt(EntityUid entity,
+        EntityCoordinates coordinates,
+        Solution spilled,
         out EntityUid puddleUid,
         bool sound = true,
         EntityUid? user = null)
     {
         puddleUid = EntityUid.Invalid;
 
-        if (solution.Volume == 0)
+        if (spilled.Volume == 0)
             return false;
 
         var targets = new List<EntityUid>();
@@ -392,26 +413,28 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             var owner = ent.Owner;
 
             // between 5 and 30%
-            var splitAmount = solution.Volume * _random.NextFloat(0.05f, 0.30f);
-            var splitSolution = solution.SplitSolution(splitAmount);
+            var splitAmount = spilled.Volume * _random.NextFloat(0.05f, 0.30f);
+            var splitSolution = spilled.SplitSolution(splitAmount);
 
             if (user != null)
             {
                 AdminLogger.Add(LogType.Landed,
-                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SharedSolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
+                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(entity):entity} which splashed a solution {SharedSolutionContainerSystem.ToPrettyString(spilled):solution} onto {ToPrettyString(owner):target}");
             }
 
             targets.Add(owner);
             Reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
-            Popups.PopupEntity(
-                Loc.GetString("spill-land-spilled-on-other", ("spillable", uid),
-                    ("target", Identity.Entity(owner, EntityManager))), owner, PopupType.SmallCaution);
+            Popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other",
+                    ("spillable", entity),
+                    ("target", Identity.Entity(owner, EntityManager))),
+                owner,
+                PopupType.SmallCaution);
         }
 
-        _color.RaiseEffect(solution.GetColor(_prototypeManager), targets,
-            Filter.Pvs(uid, entityManager: EntityManager));
+        _color.RaiseEffect(spilled.GetColor(_prototypeManager), targets,
+            Filter.Pvs(entity, entityManager: EntityManager));
 
-        return TrySpillAt(coordinates, solution, out puddleUid, sound);
+        return TrySpillAt(coordinates, spilled, out puddleUid, sound);
     }
 
     /// <inheritdoc/>

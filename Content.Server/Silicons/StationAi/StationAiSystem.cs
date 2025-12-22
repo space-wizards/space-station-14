@@ -2,6 +2,8 @@ using Content.Server.Chat.Systems;
 using Content.Server.Construction;
 using Content.Server.Destructible;
 using Content.Server.Ghost;
+using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Power.Components;
 using Content.Server.Roles;
@@ -47,6 +49,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
+    [Dependency] private readonly ToggleableGhostRoleSystem _ghostrole = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
@@ -97,14 +100,30 @@ public sealed class StationAiSystem : SharedStationAiSystem
         }
 
         var brain = container.ContainedEntities[0];
+        var hasMind = _mind.TryGetMind(brain, out var mindId, out var mind);
 
-        if (_mind.TryGetMind(brain, out var mindId, out var mind))
+        if (hasMind || HasComp<GhostRoleComponent>(brain))
         {
-            // Found an existing mind to transfer into the AI core
             var aiBrain = Spawn(_stationAiBrain, Transform(ent.Owner).Coordinates);
-            _roles.MindAddJobRole(mindId, mind, false, _stationAiJob);
-            _mind.TransferTo(mindId, aiBrain);
 
+            if (hasMind)
+            {
+                // Found an existing mind to transfer into the AI core
+                _roles.MindAddJobRole(mindId, mind, false, _stationAiJob);
+                _mind.TransferTo(mindId, aiBrain);
+            }
+            else
+            {
+                // If the brain had a ghost role attached, activate the station AI ghost role
+                _ghostrole.ActivateGhostRole(aiBrain);
+
+                // Set the new AI brain to the 'rebooting' state
+                if (TryComp<StationAiCustomizationComponent>(aiBrain, out var customization))
+                    SetStationAiState((aiBrain, customization), StationAiState.Rebooting);
+                
+            }
+
+            // Delete the new AI brain if it cannot be inserted into the core
             if (!TryComp<StationAiHolderComponent>(ent, out var targetHolder) ||
                 !_slots.TryInsert(ent, targetHolder.Slot, aiBrain, null))
             {

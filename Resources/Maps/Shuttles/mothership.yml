@@ -4,8 +4,8 @@ meta:
   engineVersion: 268.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/22/2025 23:34:12
-  entityCount: 585
+  time: 12/20/2025 12:50:17
+  entityCount: 581
 maps: []
 grids:
 - 1
@@ -159,6 +159,7 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+    - type: ExplosionAirtightGrid
 - proto: AirlockGlassShuttleXenoborgLocked
   entities:
   - uid: 107
@@ -194,7 +195,7 @@ entities:
     - type: Transform
       pos: -5.5,0.5
       parent: 1
-  - uid: 338
+  - uid: 248
     components:
     - type: Transform
       pos: 0.5,-2.5
@@ -1007,15 +1008,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: -10.5,-0.5
       parent: 1
-- proto: BlastDoorXenoborg
+- proto: BlastDoorXenoborgOpen
   entities:
-  - uid: 370
+  - uid: 5
     components:
     - type: Transform
       pos: 0.5,-5.5
       parent: 1
-- proto: BlastDoorXenoborgOpen
-  entities:
   - uid: 94
     components:
     - type: Transform
@@ -2002,61 +2001,31 @@ entities:
   - uid: 243
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 0.5,-8.5
       parent: 1
   - uid: 244
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 0.5,-7.5
       parent: 1
   - uid: 245
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 0.5,-6.5
       parent: 1
   - uid: 247
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 0.5,-4.5
-      parent: 1
-  - uid: 248
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-3.5
-      parent: 1
-  - uid: 249
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-2.5
       parent: 1
   - uid: 250
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-1.5
+      pos: 0.5,-9.5
       parent: 1
   - uid: 251
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-0.5
-      parent: 1
-  - uid: 455
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-9.5
-      parent: 1
-  - uid: 456
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
       pos: 0.5,-10.5
       parent: 1
 - proto: CrateGenericSteel
@@ -2886,41 +2855,15 @@ entities:
       parent: 1
 - proto: TwoWayLever
   entities:
-  - uid: 5
+  - uid: 249
     components:
+    - type: MetaData
+      name: conveyor
     - type: Transform
-      pos: 0.5,1.5
+      pos: -0.5,-4.5
       parent: 1
     - type: DeviceLinkSource
       linkedPorts:
-        251:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
-        250:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
-        249:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
-        248:
-        - - Left
-          - Reverse
-        - - Right
-          - Forward
-        - - Middle
-          - Off
         247:
         - - Left
           - Reverse
@@ -2956,14 +2899,14 @@ entities:
           - Forward
         - - Middle
           - Off
-        455:
+        251:
         - - Left
           - Reverse
         - - Right
           - Forward
         - - Middle
           - Off
-        456:
+        250:
         - - Left
           - Reverse
         - - Right
@@ -2972,20 +2915,24 @@ entities:
           - Off
   - uid: 328
     components:
+    - type: MetaData
+      name: blast door
     - type: Transform
       pos: 1.5,-4.5
       parent: 1
     - type: DeviceLinkSource
       linkedPorts:
-        370:
+        5:
         - - Left
           - Open
         - - Right
           - Open
         - - Middle
           - Close
-  - uid: 453
+  - uid: 338
     components:
+    - type: MetaData
+      name: blast doors
     - type: Transform
       pos: -8.5,1.5
       parent: 1
@@ -2993,81 +2940,81 @@ entities:
       linkedPorts:
         445:
         - - Left
-          - Toggle
+          - Open
         - - Right
-          - Toggle
+          - Open
         - - Middle
-          - Toggle
+          - Close
         444:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
         443:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
         442:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
         452:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
         451:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
         450:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
         449:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
         448:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
         447:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
         446:
-        - - Middle
-          - Toggle
-        - - Right
-          - Toggle
         - - Left
-          - Toggle
+          - Open
+        - - Right
+          - Open
+        - - Middle
+          - Close
 - proto: WallXenoborg
   entities:
   - uid: 2

@@ -11,7 +11,7 @@ import time
 from pathlib import Path
 from typing import List
 
-SOLUTION_PATH = Path("..") / "SpaceStation14.sln"
+SOLUTION_PATH = Path("..") / "SpaceStation14.slnx"
 # If this doesn't match the saved version we overwrite them all.
 CURRENT_HOOKS_VERSION = "4"
 QUIET = len(sys.argv) == 2 and sys.argv[1] == "--quiet"

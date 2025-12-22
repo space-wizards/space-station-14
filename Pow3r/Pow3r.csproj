@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>$(TargetFramework)</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <Nullable>disable</Nullable>
     </PropertyGroup>
+
+    <Import Project="../MSBuild/Content.props" />
 
     <ItemGroup>
       <PackageReference Include="ImGui.NET" />
@@ -14,9 +16,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Content.Server\Content.Server.csproj" />
-      <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj" />
-      <ProjectReference Include="..\RobustToolbox\Robust.UnitTesting\Robust.UnitTesting.csproj" />
     </ItemGroup>
 
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
+
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
+  <Import Project="..\RobustToolbox\Imports\Testing.props" />
 </Project>
