@@ -9,12 +9,14 @@ using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.SmartFridge;
 
-public sealed class SmartFridgeSystem : EntitySystem
+public abstract class SharedSmartFridgeSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
@@ -30,6 +32,9 @@ public sealed class SmartFridgeSystem : EntitySystem
 
         SubscribeLocalEvent<SmartFridgeComponent, InteractUsingEvent>(OnInteractUsing, after: [typeof(AnchorableSystem)]);
         SubscribeLocalEvent<SmartFridgeComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
+
+        SubscribeLocalEvent<SmartFridgeComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<SmartFridgeComponent, ComponentHandleState>(OnHandleState);
 
         SubscribeLocalEvent<SmartFridgeComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerb);
         SubscribeLocalEvent<SmartFridgeComponent, GetDumpableVerbEvent>(OnGetDumpableVerb);
@@ -64,10 +69,11 @@ public sealed class SmartFridgeSystem : EntitySystem
 
             ent.Comp.ContainedEntries.TryAdd(key, new());
             var entries = ent.Comp.ContainedEntries[key];
-            if (!entries.Contains(GetNetEntity(used)))
-                entries.Add(GetNetEntity(used));
+            if (!entries.Contains(used))
+                entries.Add(used);
 
             Dirty(ent);
+            UpdateUI(ent);
         }
 
         if (anyInserted && playSound)
@@ -92,10 +98,11 @@ public sealed class SmartFridgeSystem : EntitySystem
 
         if (ent.Comp.ContainedEntries.TryGetValue(key, out var contained))
         {
-            contained.Remove(GetNetEntity(args.Entity));
+            contained.Remove(args.Entity);
         }
 
         Dirty(ent);
+        UpdateUI(ent);
     }
 
     private bool Allowed(Entity<SmartFridgeComponent> machine, EntityUid user)
@@ -125,12 +132,13 @@ public sealed class SmartFridgeSystem : EntitySystem
 
         foreach (var item in contained)
         {
-            if (!_container.TryRemoveFromContainer(GetEntity(item)))
+            if (!_container.TryRemoveFromContainer(item))
                 continue;
 
             _audio.PlayPredicted(ent.Comp.SoundVend, ent, args.Actor);
             contained.Remove(item);
             Dirty(ent);
+            UpdateUI(ent);
             return;
         }
 
@@ -173,5 +181,58 @@ public sealed class SmartFridgeSystem : EntitySystem
         args.PlaySound = true;
 
         DoInsert(ent, args.User, args.DumpQueue, false);
+    }
+
+    private void OnGetState(Entity<SmartFridgeComponent> ent, ref ComponentGetState args)
+    {
+        var state = new SmartFridgeComponentState();
+        state.Entries = ent.Comp.Entries;
+        state.ContainedEntries = new(ent.Comp.ContainedEntries.Count);
+
+        foreach (var (key, value) in ent.Comp.ContainedEntries)
+        {
+            var set = new HashSet<NetEntity>(value.Count);
+            foreach (var entity in value)
+            {
+                set.Add(GetNetEntity(entity));
+            }
+            state.ContainedEntries[key] = set;
+        }
+
+        args.State = state;
+    }
+
+    private void OnHandleState(Entity<SmartFridgeComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not SmartFridgeComponentState state)
+            return;
+
+        ent.Comp.Entries = state.Entries;
+        ent.Comp.ContainedEntries = new(state.ContainedEntries.Count);
+
+        foreach (var (key, value) in state.ContainedEntries)
+        {
+            var set = new HashSet<EntityUid>(value.Count);
+            foreach (var entity in value)
+            {
+                if (TryGetEntity(entity, out var uid))
+                    set.Add(uid.Value);
+            }
+            ent.Comp.ContainedEntries[key] = set;
+        }
+
+        UpdateUI(ent);
+    }
+
+    protected virtual void UpdateUI(Entity<SmartFridgeComponent> ent)
+    {
+
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class SmartFridgeComponentState : ComponentState
+    {
+        public List<SmartFridgeEntry> Entries = default!;
+        public Dictionary<SmartFridgeEntry, HashSet<NetEntity>> ContainedEntries = default!;
     }
 }

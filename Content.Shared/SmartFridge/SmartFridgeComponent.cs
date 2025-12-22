@@ -8,8 +8,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SmartFridge;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
-[Access(typeof(SmartFridgeSystem))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedSmartFridgeSystem))]
 public sealed partial class SmartFridgeComponent : Component
 {
     /// <summary>
@@ -39,15 +39,15 @@ public sealed partial class SmartFridgeComponent : Component
     /// <summary>
     /// A list of entries to display in the UI
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public List<SmartFridgeEntry> Entries = new();
 
     /// <summary>
     /// A mapping of smart fridge entries to the actual contained contents
     /// </summary>
-    [DataField, AutoNetworkedField]
-    [Access(typeof(SmartFridgeSystem), Other = AccessPermissions.ReadExecute)]
-    public Dictionary<SmartFridgeEntry, HashSet<NetEntity>> ContainedEntries = new();
+    [DataField]
+    [Access(typeof(SharedSmartFridgeSystem), Other = AccessPermissions.ReadExecute)]
+    public Dictionary<SmartFridgeEntry, HashSet<EntityUid>> ContainedEntries = new();
 
     /// <summary>
     /// The flavour text displayed at the bottom of the SmartFridge's UI
@@ -75,8 +75,8 @@ public sealed partial class SmartFridgeComponent : Component
     public SoundSpecifier SoundDeny = new SoundCollectionSpecifier("VendingDeny");
 }
 
-[Serializable, NetSerializable, DataRecord]
-public record struct SmartFridgeEntry
+[Serializable, NetSerializable, DataDefinition, DataRecord]
+public partial record struct SmartFridgeEntry
 {
     public string Name;
 
