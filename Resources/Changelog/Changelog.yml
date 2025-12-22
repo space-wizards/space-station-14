@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda
-  changes:
-  - message: A new cake, berry delight, that is made with a cake base, berries and
-      milk.
-    type: Add
-  id: 8824
-  time: '2025-08-02T18:35:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38881
-- author: DrSmugleaf
-  changes:
-  - message: Fixed rotate verbs being delayed when used, and your right click UI bounce
-      when they appear after a short delay.
-    type: Fix
-  id: 8825
-  time: '2025-08-03T00:34:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38165
-- author: alexalexmax
-  changes:
-  - message: Updated the syndicate throwing knives uplink entry to include the fact
-      that they ignore armor.
-    type: Tweak
-  id: 8826
-  time: '2025-08-04T19:19:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39374
 - author: TrixxedHeart
   changes:
   - message: Added canes to the trinkets loadout tab.
@@ -3931,3 +3907,30 @@
   id: 9323
   time: '2025-12-21T00:10:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41833
+- author: SirWarock
+  changes:
+  - message: Medical Cyborg Hyposprays now finally have a fillsprite!
+    type: Add
+  - message: Fixed Gorlex Hyposprays not showing their fill sprites!
+    type: Fix
+  - message: Bluespace syringes are now slightly faster when injecting large amounts,
+      usually twice as fast as normal syringes.
+    type: Tweak
+  id: 9324
+  time: '2025-12-21T20:33:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41932
+- author: SlamBamActionman
+  changes:
+  - message: 'EXPERIMENTAL: Changed the name of the "LOOC" chat channel to "Help"
+      to reflect its primary usage.'
+    type: Tweak
+  id: 9325
+  time: '2025-12-22T00:46:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41933
+- author: MilonPL
+  changes:
+  - message: Fixed beaker solutions duplicating whenever it's thrown.
+    type: Fix
+  id: 9326
+  time: '2025-12-22T08:12:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33231
