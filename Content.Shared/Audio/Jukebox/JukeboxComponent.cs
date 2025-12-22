@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -8,11 +9,35 @@ namespace Content.Shared.Audio.Jukebox;
 [Access(typeof(SharedJukeboxSystem))]
 public sealed partial class JukeboxComponent : Component
 {
+    /// <summary>
+    /// The currently playing song.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<JukeboxPrototype>? SelectedSongId;
 
+    /// <summary>
+    /// The audiostream
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? AudioStream;
+
+    /// <summary>
+    /// The queue of queued songs.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Queue<ProtoId<JukeboxPrototype>>? Playlist;
+
+    /// <summary>
+    /// Whether or not a played song should be removed from the queue or readded to the bottom.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool RepeatTracks;
+
+    /// <summary>
+    /// Whether or not the queue should be sampled randomly or in order.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShuffleTracks;
 
     /// <summary>
     /// RSI state for the jukebox being on.
@@ -47,6 +72,18 @@ public sealed class JukeboxPauseMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
 public sealed class JukeboxStopMessage : BoundUserInterfaceMessage;
+
+[Serializable, NetSerializable]
+public sealed class JukeboxRepeatMessage(bool repeat) : BoundUserInterfaceMessage
+{
+    public bool Repeat { get; } = repeat;
+}
+
+[Serializable, NetSerializable]
+public sealed class JukeboxShuffleMessage(bool shuffle) : BoundUserInterfaceMessage
+{
+    public bool Shuffle { get; } = shuffle;
+}
 
 [Serializable, NetSerializable]
 public sealed class JukeboxSelectedMessage(ProtoId<JukeboxPrototype> songId) : BoundUserInterfaceMessage

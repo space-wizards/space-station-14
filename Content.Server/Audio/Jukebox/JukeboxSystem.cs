@@ -96,6 +96,16 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         Dirty(entity);
     }
 
+    private void OnJukeboxRepeat(Entity<JukeboxComponent> entity, ref JukeboxRepeatMessage args)
+    {
+        entity.Comp.RepeatTracks = args.Repeat;
+    }
+
+    private void OnJukeboxShuffle(Entity<JukeboxComponent> entity, ref JukeboxShuffleMessage args)
+    {
+        entity.Comp.ShuffleTracks = args.Shuffle;
+    }
+
     private void OnJukeboxSelected(EntityUid uid, JukeboxComponent component, JukeboxSelectedMessage args)
     {
         if (!Audio.IsPlaying(component.AudioStream))
