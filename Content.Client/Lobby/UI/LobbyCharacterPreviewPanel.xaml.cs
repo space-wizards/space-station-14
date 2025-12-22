@@ -145,7 +145,7 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
 
             var prio = priorities.GetValueOrDefault(job, JobPriority.Never);
 
-            var icon = new DraggableJobIcon(job, () => PriorityLock.Pressed, _ => CreateJobTooltip(job));
+            var icon = new DraggableJobIcon(job, _ => CreateJobTooltip(job));
 
             var jobIcon = _prototypeManager.Index(job.Icon);
             icon.Texture = _sprite.Frame0(jobIcon.Icon);

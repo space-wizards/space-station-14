@@ -13,28 +13,15 @@
         <!-- This is the main bit, only shows once we have preferences from the server -->
         <BoxContainer Name="Loaded" Orientation="Vertical"
                       Visible="False">
-            <!-- TODO: move or remove preview, probably, and reword summary accordingly -->
-            <BoxContainer Orientation="Horizontal" Align="Center">
-                <Control HorizontalAlignment="Stretch" HorizontalExpand="True" />
-                <Label Name="Summary" Margin="3 3" />
-                <Control HorizontalAlignment="Stretch" HorizontalExpand="True" />
+            <!-- Character summary text, character setup button, and character preview -->
+            <BoxContainer Orientation="Horizontal" Align="Center" Margin="0 0 0 8">
+                <BoxContainer Orientation="Vertical" Align="Center" Margin="0 0 30 0">
+                    <Label Name="Summary" Margin="0 0 0 25" />
+                    <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
+                            HorizontalAlignment="Center"/>
+                </BoxContainer>
                 <BoxContainer Name="ViewBox" />
-                <Control HorizontalAlignment="Stretch" HorizontalExpand="True" />
             </BoxContainer>
-
-            <!-- Character setup button and the checkbox for locking/unlocking priority icons -->
-            <BoxContainer Orientation="Horizontal" Align="Center" Margin="0 3">
-                <Control HorizontalAlignment="Stretch" HorizontalExpand="True" />
-                <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
-                        HorizontalAlignment="Center"
-                        Margin="0 5 0 0"/>
-                <Control HorizontalAlignment="Stretch" HorizontalExpand="True" />
-                <CheckBox Name="PriorityLock" Text="{Loc 'ui-lobby-lock-priorities-checkbox-label'}"
-                          HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center"
-                          ToolTip="{Loc 'ui-lobby-lock-priorities-checkbox-tooltip'}"/>
-                <Control HorizontalAlignment="Stretch" HorizontalExpand="True" />
-            </BoxContainer>
-
 
             <!-- Where we show ALL the jobs, separated into priorities -->
             <BoxContainer Name="JobGrid"
