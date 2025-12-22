@@ -1,69 +1,100 @@
-using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Kitchen.Components
+namespace Content.Shared.Kitchen.Components;
+
+/// <summary>
+/// The combo reagent grinder/juicer. The reason why grinding and juicing are seperate is simple,
+/// think of grinding as a utility to break an object down into its reagents. Think of juicing as
+/// converting something into its single juice form. E.g, grind an apple and get the nutriment and sugar
+/// it contained, juice an apple and get "apple juice".
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(SharedReagentGrinderSystem))]
+public sealed partial class ReagentGrinderComponent : Component
 {
     /// <summary>
-    /// The combo reagent grinder/juicer. The reason why grinding and juicing are seperate is simple,
-    /// think of grinding as a utility to break an object down into its reagents. Think of juicing as
-    /// converting something into its single juice form. E.g, grind an apple and get the nutriment and sugar
-    /// it contained, juice an apple and get "apple juice".
+    /// The container slot id for the beaker
     /// </summary>
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-    [Access(typeof(SharedReagentGrinderSystem))]
-    public sealed partial class ReagentGrinderComponent : Component
-    {
-        [DataField, AutoNetworkedField]
-        public int StorageMaxEntities = 6;
+    public static string BeakerSlotId = "beakerSlot";
 
-        [DataField, AutoNetworkedField]
-        public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5); // Roughly matches the grind/juice sounds.
+    /// <summary>
+    /// The container id for the internal storage.
+    /// </summary>
+    public static string InputContainerId = "inputContainer";
 
-        [DataField, AutoNetworkedField]
-        public float WorkTimeMultiplier = 1;
+    /// <summary>
+    /// The cached container for the internal storage.
+    /// </summary>
+    [ViewVariables]
+    public Container InputContainer = default!;
 
-        [DataField]
-        public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+    /// <summary>
+    /// The amount of entities that fit into the container.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public int StorageMaxEntities = 6;
 
-        [DataField]
-        public SoundSpecifier GrindSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
+    /// <summary>
+    /// The time grinding or juicing takes.
+    /// Roughly matches the grind/juice sounds.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5);
 
-        [DataField]
-        public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
+    /// <summary>
+    /// Multiplier for WorkTimer, that pitches the audio accordingly.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float WorkTimeMultiplier = 1;
 
-        [DataField, AutoNetworkedField]
-        public GrinderAutoMode AutoMode = GrinderAutoMode.Off;
+    /// <summary>
+    /// Sound played when pressing a button on the UI.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg", AudioParams.Default.WithVolume(-2f));
 
-        /// <summary>
-        /// The time the grinder will finish grinding/juicing.
-        /// </summary>
-        [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-        [AutoNetworkedField, AutoPausedField]
-        public TimeSpan? EndTime;
+    /// <summary>
+    /// Sound played when grinding.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier GrindSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
 
-        /// <summary>
-        /// The currently active program.
-        /// </summary>
-        [DataField, AutoNetworkedField]
-        public GrinderProgram? Program;
+    /// <summary>
+    /// Sound played when juicing.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
 
-        public static string BeakerSlotId = "beakerSlot";
+    /// <summary>
+    /// Grind automatically when inserting items?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public GrinderAutoMode AutoMode = GrinderAutoMode.Off;
 
-        public static string InputContainerId = "inputContainer";
+    /// <summary>
+    /// The sound currently being played.
+    /// </summary>
+    [DataField]
+    public EntityUid? AudioStream;
 
-        /// <summary>
-        /// The cached container for the internal storage.
-        /// </summary>
-        [ViewVariables]
-        public Container InputContainer = default!;
+    /// <summary>
+    /// The time the grinder will finish grinding/juicing.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField, AutoPausedField]
+    public TimeSpan? EndTime;
 
-        public EntityUid? AudioStream;
-    }
-
-    [RegisterComponent, NetworkedComponent]
-    public sealed partial class ActiveReagentGrinderComponent : Component;
+    /// <summary>
+    /// The currently active program.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public GrinderProgram? Program;
 }
+
+[RegisterComponent, NetworkedComponent]
+public sealed partial class ActiveReagentGrinderComponent : Component;
+

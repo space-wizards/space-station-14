@@ -85,6 +85,10 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     private void OnGrinderStartup(Entity<ReagentGrinderComponent> ent, ref ComponentStartup args)
     {
         ent.Comp.InputContainer = _containerSystem.EnsureContainer<Container>(ent.Owner, ReagentGrinderComponent.InputContainerId);
+
+        // We update the appearance here in case the reagent grinder already starts with a beaker.
+        var beaker = _itemSlotsSystem.GetItemOrNull(ent, ReagentGrinderComponent.BeakerSlotId);
+        _appearanceSystem.SetData(ent, ReagentGrinderVisualState.BeakerAttached, beaker.HasValue);
     }
 
     private void OnActiveGrinderStart(Entity<ActiveReagentGrinderComponent> ent, ref ComponentStartup args)
@@ -105,6 +109,9 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
     private void OnContainerModified(EntityUid uid, ReagentGrinderComponent reagentGrinder, ContainerModifiedMessage args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         if (args.Container.ID != ReagentGrinderComponent.BeakerSlotId
             && args.Container.ID != ReagentGrinderComponent.InputContainerId)
             return;
@@ -124,14 +131,13 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     private void OnInteractUsing(Entity<ReagentGrinderComponent> ent, ref InteractUsingEvent args)
     {
         var heldEnt = args.Used;
-        var inputContainer = _containerSystem.EnsureContainer<Container>(ent.Owner, ReagentGrinderComponent.InputContainerId);
 
         if (!HasComp<ExtractableComponent>(heldEnt))
         {
             if (!HasComp<FitsInDispenserComponent>(heldEnt))
             {
                 // This is ugly but we can't use whitelistFailPopup because there are 2 containers with different whitelists.
-                _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), ent.Owner, args.User);
+                _popupSystem.PopupClient(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), ent.Owner, args.User);
             }
 
             // Entity did NOT pass the whitelist for grind/juice.
@@ -145,10 +151,10 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
         // Cap the chamber. Don't want someone putting in 500 entities and ejecting them all at once.
         // Maybe I should have done that for the microwave too?
-        if (inputContainer.ContainedEntities.Count >= ent.Comp.StorageMaxEntities)
+        if (ent.Comp.InputContainer.ContainedEntities.Count >= ent.Comp.StorageMaxEntities)
             return;
 
-        if (!_containerSystem.Insert(heldEnt, inputContainer))
+        if (!_containerSystem.Insert(heldEnt, ent.Comp.InputContainer))
             return;
 
         args.Handled = true;
@@ -160,6 +166,9 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         if (!Resolve(uid, ref grinderComp))
             return;
 
+        // While we have the cached reference in ReagentGrinderComponent, we have to EnsureContainer here again.
+        // This is because UpdateUiState is ran before the component can properly initialize, causing a null reference exception.
+        // TODO: Fix this when getting rid of BUI states.
         var inputContainer = _containerSystem.EnsureContainer<Container>(uid, ReagentGrinderComponent.InputContainerId);
         var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, ReagentGrinderComponent.BeakerSlotId);
         Solution? containerSolution = null;
@@ -203,7 +212,8 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         if (HasComp<ActiveReagentGrinderComponent>(ent) || inputContainer.ContainedEntities.Count <= 0)
             return;
 
-        ClickSound(ent);
+        _audioSystem.PlayPvs(ent.Comp.ClickSound, ent.Owner);
+
         foreach (var toEject in inputContainer.ContainedEntities.ToList())
         {
             _containerSystem.Remove(toEject, inputContainer);
@@ -223,8 +233,9 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         if (_containerSystem.Remove(entity, inputContainer))
         {
             _randomHelper.RandomOffset(ent, 0.4f);
-            ClickSound(ent);
-            UpdateUiState(entity);
+            _audioSystem.PlayPvs(ent.Comp.ClickSound, ent.Owner);
+
+            UpdateUiState(ent);
         }
     }
 
@@ -266,11 +277,6 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
             _userInterfaceSystem.ServerSendUiMessage(uid, ReagentGrinderUiKey.Key, new ReagentGrinderWorkStartedMessage(program));
 
         Dirty(uid, reagentGrinder);
-    }
-
-    private void ClickSound(Entity<ReagentGrinderComponent> reagentGrinder)
-    {
-        _audioSystem.PlayPvs(reagentGrinder.Comp.ClickSound, reagentGrinder.Owner, AudioParams.Default.WithVolume(-2f));
     }
 
     /// <summary>
@@ -331,6 +337,9 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
 
             _solutionContainersSystem.TryAddSolution(beakerSolutionEntity.Value, solution);
         }
+
+        if (_net.IsServer)
+            _userInterfaceSystem.ServerSendUiMessage(ent.Owner, ReagentGrinderUiKey.Key, new ReagentGrinderWorkCompleteMessage());
 
         UpdateUiState(ent);
     }

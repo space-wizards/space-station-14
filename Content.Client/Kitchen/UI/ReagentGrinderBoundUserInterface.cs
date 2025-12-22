@@ -1,5 +1,6 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Kitchen;
+using Content.Shared.Kitchen.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -66,7 +67,7 @@ namespace Content.Client.Kitchen.UI
 
         public void EjectBeaker()
         {
-            SendMessage(new ItemSlotButtonPressedEvent(SharedReagentGrinder.BeakerSlotId));
+            SendMessage(new ItemSlotButtonPressedEvent(ReagentGrinderComponent.BeakerSlotId));
         }
 
         public void EjectChamberContent(EntityUid uid)
