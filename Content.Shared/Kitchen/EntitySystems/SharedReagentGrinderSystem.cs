@@ -121,10 +121,10 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         var beaker = _itemSlotsSystem.GetItemOrNull(uid, ReagentGrinderComponent.BeakerSlotId);
         _appearanceSystem.SetData(uid, ReagentGrinderVisualState.BeakerAttached, beaker.HasValue);
 
-        if (reagentGrinder.AutoMode != GrinderAutoMode.Off && !HasComp<ActiveReagentGrinderComponent>(uid) && _power.IsPowered(uid))
+        if (reagentGrinder.AutoMode != GrinderAutoMode.Off)
         {
             var program = reagentGrinder.AutoMode == GrinderAutoMode.Grind ? GrinderProgram.Grind : GrinderProgram.Juice;
-            StartGrinder(uid, reagentGrinder, program);
+            StartGrinder((uid, reagentGrinder), program);
         }
     }
 
@@ -197,12 +197,9 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         _userInterfaceSystem.SetUiState(uid, ReagentGrinderUiKey.Key, state);
     }
 
-    private void OnStartMessage(Entity<ReagentGrinderComponent> entity, ref ReagentGrinderStartMessage message)
+    private void OnStartMessage(Entity<ReagentGrinderComponent> ent, ref ReagentGrinderStartMessage message)
     {
-        if (!_power.IsPowered(entity.Owner) || HasComp<ActiveReagentGrinderComponent>(entity))
-            return;
-
-        StartGrinder(entity.Owner, entity.Comp, message.Program);
+        StartGrinder(ent, message.Program);
     }
 
     private void OnEjectChamberAllMessage(Entity<ReagentGrinderComponent> ent, ref ReagentGrinderEjectChamberAllMessage message)
@@ -242,41 +239,50 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     /// <summary>
     /// The wzhzhzh of the grinder. Processes the contents of the grinder and puts the output in the beaker.
     /// </summary>
-    /// <param name="uid">The grinder itself</param>
-    /// <param name="reagentGrinder"></param>
+    /// <param name="ent">The grinder itself</param>
     /// <param name="program">Which program, such as grind or juice</param>
-    private void StartGrinder(EntityUid uid, ReagentGrinderComponent reagentGrinder, GrinderProgram program)
+    private void StartGrinder(Entity<ReagentGrinderComponent> ent, GrinderProgram program)
     {
-        var inputContainer = _containerSystem.EnsureContainer<Container>(uid, ReagentGrinderComponent.InputContainerId);
-        var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, ReagentGrinderComponent.BeakerSlotId);
+        if (HasComp<ActiveReagentGrinderComponent>(ent))
+            return;
+
+        if (!_power.IsPowered(ent.Owner))
+            return;
+
+        var beaker = _itemSlotsSystem.GetItemOrNull(ent, ReagentGrinderComponent.BeakerSlotId);
 
         // Do we have anything to grind/juice and a container to put the reagents in?
-        if (inputContainer.ContainedEntities.Count <= 0 || !HasComp<FitsInDispenserComponent>(outputContainer))
+        if (ent.Comp.InputContainer.Count <= 0 || !HasComp<FitsInDispenserComponent>(beaker))
             return;
 
         SoundSpecifier? sound;
         switch (program)
         {
-            case GrinderProgram.Grind when inputContainer.ContainedEntities.All(CanGrind):
-                sound = reagentGrinder.GrindSound;
+            case GrinderProgram.Grind when ent.Comp.InputContainer.ContainedEntities.All(CanGrind):
+                sound = ent.Comp.GrindSound;
                 break;
-            case GrinderProgram.Juice when inputContainer.ContainedEntities.All(CanJuice):
-                sound = reagentGrinder.JuiceSound;
+            case GrinderProgram.Juice when ent.Comp.InputContainer.ContainedEntities.All(CanJuice):
+                sound = ent.Comp.JuiceSound;
                 break;
             default:
                 return;
         }
 
-        EnsureComp<ActiveReagentGrinderComponent>(uid);
-        reagentGrinder.EndTime = _timing.CurTime + reagentGrinder.WorkTime * reagentGrinder.WorkTimeMultiplier;
-        reagentGrinder.Program = program;
+        EnsureComp<ActiveReagentGrinderComponent>(ent);
+        ent.Comp.EndTime = _timing.CurTime + ent.Comp.WorkTime * ent.Comp.WorkTimeMultiplier;
+        ent.Comp.Program = program;
+        Dirty(ent);
+        UpdateUiState(ent);
 
-        reagentGrinder.AudioStream = _audioSystem.PlayPvs(sound, uid,
-            AudioParams.Default.WithPitchScale(1 / reagentGrinder.WorkTimeMultiplier))?.Entity; //slightly higher pitched
+        ent.Comp.AudioStream = _audioSystem.PlayPvs(sound, ent,
+            AudioParams.Default.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))?.Entity; //slightly higher pitched
         if (_net.IsServer)
-            _userInterfaceSystem.ServerSendUiMessage(uid, ReagentGrinderUiKey.Key, new ReagentGrinderWorkStartedMessage(program));
-
-        Dirty(uid, reagentGrinder);
+        {
+            // Can't cancel predicted audio.
+            ent.Comp.AudioStream = _audioSystem.PlayPvs(sound, ent,
+                AudioParams.Default.WithPitchScale(1 / ent.Comp.WorkTimeMultiplier))?.Entity; //slightly higher pitched
+            _userInterfaceSystem.ServerSendUiMessage(ent.Owner, ReagentGrinderUiKey.Key, new ReagentGrinderWorkStartedMessage(program));
+        }
     }
 
     /// <summary>
