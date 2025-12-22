@@ -76,6 +76,9 @@
           False: { visible: False }
   - type: Machine
     board: ElectrolysisUnitMachineCircuitboard
+  - type: PowerState
+    idlePowerDraw: 0
+    workingPowerDraw: 1000 # for a lab-grade machine
 
 - type: entity
   id: MachineCentrifuge
@@ -123,3 +126,6 @@
             - CentrifugeCompatible
   - type: Machine
     board: CentrifugeMachineCircuitboard
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 500

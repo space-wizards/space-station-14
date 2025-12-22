@@ -1,5 +1,6 @@
 using Content.Shared.Power.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Power.EntitySystems;
 
@@ -24,6 +25,9 @@ public sealed class PowerStateSystem : EntitySystem
 
     private void OnComponentStartup(Entity<PowerStateComponent> ent, ref ComponentStartup args)
     {
+        SharedApcPowerReceiverComponent? apcComp = null;
+        DebugTools.Assert(_powerReceiverSystem.ResolveApc(ent.Owner, ref apcComp),
+            $"Entity {MetaData(ent).EntityPrototype} has a PowerStateComponent but not the required SharedApcPowerReceiverComponent.");
         SetWorkingState(ent.Owner, ent.Comp.IsWorking);
     }
 
@@ -35,7 +39,10 @@ public sealed class PowerStateSystem : EntitySystem
     [PublicAPI]
     public void SetWorkingState(Entity<PowerStateComponent?> ent, bool working)
     {
-        if (!_powerStateQuery.Resolve(ent, ref ent.Comp))
+        // Sometimes systems calling this API handle generic objects that can or can't consume power,
+        // so to reduce boilerplate we don't log an error. Any entity that *should* have an ApcPowerRecieverComponent
+        // will log an error in tests if someone tries to add an entity that doesn't have one.
+        if (!_powerStateQuery.Resolve(ent, ref ent.Comp, false))
             return;
 
         _powerReceiverSystem.SetLoad(ent.Owner, working ? ent.Comp.WorkingPowerDraw : ent.Comp.IdlePowerDraw);

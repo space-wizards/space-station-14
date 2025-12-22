@@ -18,6 +18,10 @@
   - type: Computer
   - type: ApcPowerReceiver
     powerLoad: 200
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 500
+  - type: UIPowerState
   - type: ExtensionCableReceiver
   - type: ActivatableUIRequiresPower
   - type: Sprite
