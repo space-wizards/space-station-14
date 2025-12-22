@@ -721,7 +721,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// <summary>
     /// Get all minds on the same Map as the Refrence
     /// </summary>>
-    public IEnumerable<Entity<MindComponent>> GetAliveHumansOnMap(EntityUid map)
+    public IEnumerable<Entity<MindComponent>> TryGetAliveHumansOnMap(EntityUid? map)
     {
         foreach (var candidateMind in GetAliveHumans())
         {
