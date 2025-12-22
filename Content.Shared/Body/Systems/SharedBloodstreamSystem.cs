@@ -432,12 +432,14 @@ public abstract class SharedBloodstreamSystem : EntitySystem
 
     public void TickBleed(Entity<BloodstreamComponent> entity)
     {
+        var bleedLevel = EffectiveBleedLevel(entity); // Offbrand
+
         // Removes blood from the bloodstream based on bleed amount (bleed rate)
         // as well as stop their bleeding to a certain extent.
-        if (entity.Comp.BleedAmount <= 0)
+        if (bleedLevel <= 0) // Offbrand
             return;
 
-        var ev = new BleedModifierEvent(entity.Comp.BleedAmount, entity.Comp.BleedReductionAmount);
+        var ev = new BleedModifierEvent(bleedLevel, entity.Comp.BleedReductionAmount); // Offbrand
         RaiseLocalEvent(entity, ref ev);
 
         // Blood is removed from the bloodstream at a 1-1 rate with the bleed amount
