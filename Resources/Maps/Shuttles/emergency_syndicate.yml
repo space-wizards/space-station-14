@@ -3274,8 +3274,6 @@ entities:
       pos: -6.5,-14.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: Fixtures
       fixtures: {}
   - uid: 634
