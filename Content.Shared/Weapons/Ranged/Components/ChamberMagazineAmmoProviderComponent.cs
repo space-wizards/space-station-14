@@ -28,12 +28,12 @@ public sealed partial class ChamberMagazineAmmoProviderComponent : MagazineAmmoP
     [DataField, AutoNetworkedField]
     public bool CanRack = true;
 
-    [DataField, AutoNetworkedField]
+    [DataField("soundBoltClosed"), AutoNetworkedField]
     public SoundSpecifier? BoltClosedSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg");
 
-    [DataField, AutoNetworkedField]
+    [DataField("soundBoltOpened"), AutoNetworkedField]
     public SoundSpecifier? BoltOpenedSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg");
 
-    [DataField, AutoNetworkedField]
+    [DataField("soundRack"), AutoNetworkedField]
     public SoundSpecifier? RackSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/ltrifle_cock.ogg");
 }
