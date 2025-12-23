@@ -16,6 +16,9 @@
         - Impassable
   - type: ApcPowerReceiver
     powerLoad: 300
+  - type: PowerState
+    idlePowerDraw: 5
+    workingPowerDraw: 300
   - type: StationAiVision
     range: 1
     needsAnchoring: true

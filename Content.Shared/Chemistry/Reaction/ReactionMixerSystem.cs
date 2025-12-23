@@ -35,16 +35,12 @@ public sealed partial class ReactionMixerSystem : EntitySystem
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.TimeToMix, new ReactionMixDoAfterEvent(), ent, args.Target.Value, ent);
 
-        if (_doAfter.TryStartDoAfter(doAfterArgs))
-            _powerState.SetWorkingState(ent.Owner, true);
-
+        _doAfter.TryStartDoAfter(doAfterArgs);
         args.Handled = true;
     }
 
     private void OnDoAfter(Entity<ReactionMixerComponent> ent, ref ReactionMixDoAfterEvent args)
     {
-        _powerState.SetWorkingState(ent.Owner, true);
-
         if (args.Target == null)
             return;
 
