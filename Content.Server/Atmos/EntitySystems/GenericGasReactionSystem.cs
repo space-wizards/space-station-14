@@ -8,6 +8,13 @@ namespace Content.Server.Atmos.EntitySystems;
 
 public sealed class GenericGasReactionSystem : EntitySystem
 {
+    // Extremely high temperatures cause numerical instability with exp(-Ea/RT), so cap it.
+    const float MaxTemperature = 1500f;
+
+    // Convergence relative tolerance criteria. Reducing this causes the solver to reject solutions
+    // that don't conserve reltol * TotalMoles mass and fall back to the backup solver.
+    const float reltol = 1e-1f;
+
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
     /// <summary>
@@ -37,8 +44,6 @@ public sealed class GenericGasReactionSystem : EntitySystem
         if (temp < Atmospherics.TCMB)
             return 0;
 
-        // Extremely high temperatures cause numerical instability with exp(-Ea/RT), so cap it.
-        const float MaxTemperature = 1500f;
         return A * MathF.Exp(-Ea / (Atmospherics.R * Math.Min(temp, MaxTemperature)));
     }
 
@@ -135,7 +140,6 @@ public sealed class GenericGasReactionSystem : EntitySystem
             {
                 residualMoles += dC[i] * Math.Abs(S[i]);
             }
-            const float reltol = 1e-1f;
             var Nreltol = mix.TotalMoles * reltol;
             if (residualMoles > Nreltol)
             {
