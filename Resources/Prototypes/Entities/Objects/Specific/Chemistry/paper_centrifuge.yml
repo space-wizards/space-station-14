@@ -1,0 +1,52 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseHandheldMixer
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      mixer:
+        maxVol: 10
+  - type: MixableSolution
+    solution: mixer
+  - type: RefillableSolution
+    solution: mixer
+  - type: DrainableSolution
+    solution: mixer
+  - type: ExaminableSolution
+    solution: mixer
+    exactVolume: true
+  - type: DrawableSolution
+    solution: mixer
+  - type: InjectableSolution
+    solution: mixer
+  - type: Spillable
+    solution: mixer
+  - type: SolutionTransfer
+  - type: SolutionItemStatus
+    solution: mixer
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: fill-
+  - type: DnaSubstanceTrace
+  - type: ReactionMixer
+
+- type: entity
+  parent: BaseHandheldMixer
+  id: HandheldMixerPaperCentrifuge
+  name: paper centrifuge
+  description: Yes, it exists.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    layers:
+    - state: beaker
+  - type: ReactionMixer
+    reactionTypes:
+    - Centrifuge
+    mixerType: Handheld
+    mixMessage: null
+    timeToMix: 10
+    mixingSound: !type:SoundPathSpecifier
+      path: /Audio/Machines/spinning.ogg
