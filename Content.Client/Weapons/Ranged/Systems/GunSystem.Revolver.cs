@@ -19,7 +19,7 @@ public sealed partial class GunSystem
         if (args.Container.ID != RevolverContainer)
             return;
 
-        // <See MagazineAmmoProvider>
+        // <See ChamberMagazineAmmoProvider>
         if (!IsClientSide(args.Entity))
             return;
 
