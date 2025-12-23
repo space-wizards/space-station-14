@@ -1,10 +1,13 @@
 using Content.Server.Administration.Logs;
+using Content.Server.AlertLevel;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
+using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Nuke;
 using Content.Shared.NukeOps;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
@@ -19,11 +22,13 @@ namespace Content.Server.NukeOps;
 public sealed class WarDeclaratorSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
     public override void Initialize()
@@ -32,6 +37,25 @@ public sealed class WarDeclaratorSystem : EntitySystem
 
         SubscribeLocalEvent<WarDeclaratorComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenUI);
         SubscribeLocalEvent<WarDeclaratorComponent, WarDeclaratorActivateMessage>(OnActivated);
+    }
+
+    // To change the alert level after declaring war
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<WarDeclaratorComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if(comp.CurrentStatus == WarConditionStatus.WarReady)
+            {
+                if (comp.SetAlertlevel == null)
+                    continue;
+
+                if (_gameTiming.CurTime < comp.AlertlevelTime)
+                    continue;
+
+                SetAlertlevel(comp.SetAlertlevel);
+            }
+        }
     }
 
     private void OnMapInit(Entity<WarDeclaratorComponent> ent, ref MapInitEvent args)
@@ -76,9 +100,29 @@ public sealed class WarDeclaratorSystem : EntitySystem
             var title = Loc.GetString(ent.Comp.SenderTitle);
             _chat.DispatchGlobalAnnouncement(ent.Comp.Message, title, true, ent.Comp.Sound, ent.Comp.Color);
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(args.Actor):player} has declared war with this text: {ent.Comp.Message}");
+
+            // Setting the time to change the alert level
+            if (ent.Comp.SetAlertlevel != null)
+            {
+                ent.Comp.AlertlevelTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.AlertlevelDelay);
+            }
         }
 
         UpdateUI(ent, ev.Status);
+    }
+
+    private void SetAlertlevel(string level)
+    {
+        var query = EntityQueryEnumerator<NukeDiskComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            var station = _stationSystem.GetOwningStation(uid);
+
+            if (station == null)
+                return;
+
+            _alertLevelSystem.SetLevel(station.Value, level, true, true, true, true);
+        }
     }
 
     private void UpdateUI(Entity<WarDeclaratorComponent> ent, WarConditionStatus? status = null)
