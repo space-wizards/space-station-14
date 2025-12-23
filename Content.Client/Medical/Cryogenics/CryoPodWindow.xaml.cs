@@ -102,10 +102,15 @@ public sealed partial class CryoPodWindow : FancyWindow
         ReagentId? lowestTempReagent = null;
         var totalBeakerCapacity = msg.BeakerCapacity ?? 0;
         var availableQuantity = new FixedPoint2();
-        var injectingQuantity = new FixedPoint2();
+        var injectingQuantity =
+            msg.Injecting?.Aggregate(new FixedPoint2(), (sum, r) => sum + r.Quantity)
+            ?? new FixedPoint2(); // Either the sum of the reagent quantities in `msg.Injecting` or zero.
         bool hasBeaker = (msg.Beaker != null);
 
         ChemicalsChart.Clear();
+        ChemicalsChart.Capacity = (totalBeakerCapacity < 1 ? 50 : (int)totalBeakerCapacity);
+
+        var chartMaxChemsQuantity = ChemicalsChart.Capacity - injectingQuantity; // Ensure space for injection buffer
 
         if (hasBeaker)
         {
@@ -113,11 +118,16 @@ public sealed partial class CryoPodWindow : FancyWindow
             {
                 availableQuantity += quantity;
 
+                // Make sure we don't add too many chemicals to the chart, so that there's still enough space to
+                // visualize the injection buffer.
+                var chemsQuantityOvershoot = FixedPoint2.Max(0, availableQuantity - chartMaxChemsQuantity);
+                var chartQuantity = FixedPoint2.Max(0, quantity - chemsQuantityOvershoot);
+
                 var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
                 ChemicalsChart.SetEntry(
                     reagent.Prototype,
                     reagentProto.LocalizedName,
-                    (float)quantity,
+                    (float)chartQuantity,
                     reagentProto.SubstanceColor,
                     tooltip: $"{quantity}u {reagentProto.LocalizedName}"
                 );
@@ -132,13 +142,8 @@ public sealed partial class CryoPodWindow : FancyWindow
             }
         }
 
-        if (msg.Injecting != null)
+        if (injectingQuantity != 0)
         {
-            foreach (var (_, quantity) in msg.Injecting!)
-            {
-                injectingQuantity += quantity;
-            }
-
             var injectingText = (injectingQuantity > 1 ? $"{injectingQuantity}u" : "");
             ChemicalsChart.SetEntry(
                 "injecting",
@@ -159,7 +164,6 @@ public sealed partial class CryoPodWindow : FancyWindow
         Inject10.Disabled = (!hasPatient || availableQuantity <= 5);
         Inject20.Disabled = (!hasPatient || availableQuantity <= 10);
         EjectBeakerButton.Disabled = !hasBeaker;
-        ChemicalsChart.Capacity = (totalBeakerCapacity < 1 ? 50 : (int)totalBeakerCapacity);
 
         // Temperature warning
         bool hasCorrectTemperature = (lowestTempRequirement == null || lowestTempRequirement > msg.GasMix.Temperature);
