@@ -22,7 +22,7 @@
     group: null
   - type: Tag
     tags:
-      - External
+    - External
       # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
   - type: Construction
     graph: Airlock
@@ -52,7 +52,7 @@
         - GlassAirlockLayer
   - type: Tag
     tags:
-      - GlassExternal
+    - GlassExternal
       # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
   - type: Construction
     graph: Airlock
