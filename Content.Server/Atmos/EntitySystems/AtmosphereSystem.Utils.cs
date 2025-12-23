@@ -185,9 +185,9 @@ public partial class AtmosphereSystem
     private void NotifyDeviceTileChanged(Entity<GridAtmosphereComponent, MapGridComponent> ent, Vector2i tile)
     {
         var inTile = _mapSystem.GetAnchoredEntities(ent.Owner, ent.Comp2, tile);
+        var ev = new AtmosDeviceTileChangedEvent();
         foreach (var uid in inTile)
         {
-            var ev = new AtmosDeviceTileChangedEvent();
             RaiseLocalEvent(uid, ref ev);
         }
     }
