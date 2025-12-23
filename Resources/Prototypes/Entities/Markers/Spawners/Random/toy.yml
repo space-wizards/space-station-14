@@ -283,7 +283,7 @@
       - id: BoxCartridgeCap
 
 # A group of items with fun or unique properties. Highly varied (some are more fun than others)
-- type: entityTable # size 3x3  # price 100
+- type: entityTable # size 2x2  # price 100
   id: AllMiscToysTable
   table: !type:GroupSelector
     children:
