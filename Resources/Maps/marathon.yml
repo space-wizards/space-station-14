@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 267.3.0
+  engineVersion: 269.0.1
   forkId: ""
   forkVersion: ""
-  time: 11/07/2025 10:28:48
-  entityCount: 23873
+  time: 12/23/2025 18:18:29
+  entityCount: 23874
 maps:
 - 5350
 grids:
@@ -7578,6 +7578,7 @@ entities:
     - type: SpreaderGrid
     - type: GridPathfinding
     - type: ImplicitRoof
+    - type: ExplosionAirtightGrid
   - uid: 5350
     components:
     - type: MetaData
@@ -11783,7 +11784,7 @@ entities:
       pos: 34.5,45.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -47753.46
+      secondsUntilStateChange: -47816.008
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -66034,13 +66035,6 @@ entities:
       parent: 30
     - type: FaxMachine
       name: Captain
-- proto: FigureSpawner
-  entities:
-  - uid: 20789
-    components:
-    - type: Transform
-      pos: -75.5,-63.5
-      parent: 30
 - proto: filingCabinet
   entities:
   - uid: 6899
@@ -107915,6 +107909,13 @@ entities:
     - type: Transform
       pos: 17.5,-9.5
       parent: 30
+- proto: MechFigurineSpawner50
+  entities:
+  - uid: 20789
+    components:
+    - type: Transform
+      pos: -75.5,-63.5
+      parent: 30
 - proto: MedicalBed
   entities:
   - uid: 7422
@@ -108431,6 +108432,16 @@ entities:
     - type: Transform
       pos: 18.5,-16.5
       parent: 30
+- proto: NoticeBoard
+  entities:
+  - uid: 23874
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -4.5,-30.5
+      parent: 30
+    - type: Fixtures
+      fixtures: {}
 - proto: NTDefaultCircuitBoard
   entities:
   - uid: 21650
@@ -109641,6 +109652,13 @@ entities:
     components:
     - type: Transform
       pos: 40.559143,-53.538166
+      parent: 30
+- proto: PlushieSpawner50
+  entities:
+  - uid: 15146
+    components:
+    - type: Transform
+      pos: 13.5,6.5
       parent: 30
 - proto: PlushieVox
   entities:
@@ -125292,7 +125310,7 @@ entities:
     - type: Transform
       pos: 19.53292,7.7526426
       parent: 30
-- proto: SpacemenFigureSpawner
+- proto: SpacemenFigurineSpawner90
   entities:
   - uid: 20790
     components:
@@ -132030,13 +132048,6 @@ entities:
     components:
     - type: Transform
       pos: -25.44764,39.398945
-      parent: 30
-- proto: ToySpawner
-  entities:
-  - uid: 15146
-    components:
-    - type: Transform
-      pos: 13.5,6.5
       parent: 30
 - proto: TrashBag
   entities:

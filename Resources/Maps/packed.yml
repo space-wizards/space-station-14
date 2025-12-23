@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 268.0.0
+  engineVersion: 269.0.1
   forkId: ""
   forkVersion: ""
-  time: 12/01/2025 20:40:27
-  entityCount: 16060
+  time: 12/23/2025 18:25:44
+  entityCount: 16061
 maps:
 - 126
 grids:
@@ -7123,6 +7123,7 @@ entities:
     - type: RadiationGridResistance
     - type: SpreaderGrid
     - type: ImplicitRoof
+    - type: ExplosionAirtightGrid
   - uid: 126
     components:
     - type: MetaData
@@ -43989,7 +43990,7 @@ entities:
       pos: 59.5,39.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -19835.2
+      secondsUntilStateChange: -19913.645
       state: Closing
 - proto: CurtainsWhiteOpen
   entities:
@@ -49845,7 +49846,7 @@ entities:
       pos: 26.5,37.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67128.984
+      secondsUntilStateChange: -67207.43
       state: Closing
   - uid: 9362
     components:
@@ -72826,7 +72827,7 @@ entities:
       pos: 12.5,12.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5300.9326
+      secondsUntilStateChange: -5379.3774
       state: Closing
   - uid: 5750
     components:
@@ -75010,6 +75011,16 @@ entities:
     - type: Transform
       pos: 44.5,-37.5
       parent: 2
+- proto: NoticeBoard
+  entities:
+  - uid: 16061
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 28.5,-22.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: NTDefaultCircuitBoard
   entities:
   - uid: 14281
@@ -75924,6 +75935,13 @@ entities:
     components:
     - type: Transform
       pos: -3.4634295,-18.46823
+      parent: 2
+- proto: PlushieSpawner50
+  entities:
+  - uid: 8652
+    components:
+    - type: Transform
+      pos: 84.5,12.5
       parent: 2
 - proto: PortableFlasher
   entities:
@@ -90680,13 +90698,6 @@ entities:
     components:
     - type: Transform
       pos: 12.5,12.5
-      parent: 2
-- proto: ToySpawner
-  entities:
-  - uid: 8652
-    components:
-    - type: Transform
-      pos: 84.5,12.5
       parent: 2
 - proto: TrashBag
   entities:

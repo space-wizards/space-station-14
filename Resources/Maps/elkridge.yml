@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 268.0.0
+  engineVersion: 269.0.1
   forkId: ""
   forkVersion: ""
-  time: 12/07/2025 22:51:59
-  entityCount: 18708
+  time: 12/23/2025 18:08:14
+  entityCount: 18709
 maps:
 - 1
 grids:
@@ -53014,8 +53014,8 @@ entities:
     - type: Transform
       parent: 15428
     - type: Clothing
-      inSlotFlag: HEAD
       inSlot: head
+      inSlotFlag: HEAD
     - type: Physics
       canCollide: False
 - proto: ClothingHeadHatBlacksoft
@@ -53317,8 +53317,8 @@ entities:
     - type: Transform
       parent: 15428
     - type: Clothing
-      inSlotFlag: NECK
       inSlot: neck
+      inSlotFlag: NECK
     - type: Physics
       canCollide: False
 - proto: ClothingNeckCloakTrans
@@ -92643,6 +92643,13 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 18709
+    components:
+    - type: Transform
+      pos: 22.5,-4.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
 - proto: NTDefaultCircuitBoard
   entities:
   - uid: 1594
@@ -104025,7 +104032,7 @@ entities:
     - type: Transform
       pos: 28.5,-30.5
       parent: 2
-- proto: SpacemenFigureSpawner
+- proto: SpacemenFigurineSpawner90
   entities:
   - uid: 3089
     components:

@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 268.0.0
+  engineVersion: 269.0.1
   forkId: ""
   forkVersion: ""
-  time: 11/24/2025 22:34:01
-  entityCount: 26479
+  time: 12/23/2025 18:28:02
+  entityCount: 26480
 maps:
 - 1
 grids:
@@ -10247,6 +10247,7 @@ entities:
       id: Plasma
     - type: ImplicitRoof
     - type: NavMap
+    - type: ExplosionAirtightGrid
 - proto: AccordionInstrument
   entities:
   - uid: 25884
@@ -14967,7 +14968,7 @@ entities:
       pos: -131.5,-45.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -64391.965
+      secondsUntilStateChange: -64483.9
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -130236,6 +130237,14 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 16798
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -113.5,-8.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
   - uid: 22362
     components:
     - type: Transform
@@ -131754,6 +131763,23 @@ entities:
     components:
     - type: Transform
       pos: -107.48633,-20.615337
+      parent: 2
+- proto: PlushieSpawner50
+  entities:
+  - uid: 14357
+    components:
+    - type: Transform
+      pos: -21.5,11.5
+      parent: 2
+  - uid: 14359
+    components:
+    - type: Transform
+      pos: -20.5,11.5
+      parent: 2
+  - uid: 24648
+    components:
+    - type: Transform
+      pos: -19.5,11.5
       parent: 2
 - proto: PortableFlasher
   entities:
@@ -146294,7 +146320,7 @@ entities:
     - type: Transform
       pos: -107.5,-2.5
       parent: 2
-- proto: SpacemenFigureSpawner
+- proto: SpacemenFigurineSpawner90
   entities:
   - uid: 26079
     components:
@@ -153020,23 +153046,6 @@ entities:
     components:
     - type: Transform
       pos: -42.5,-1.5
-      parent: 2
-- proto: ToySpawner
-  entities:
-  - uid: 14357
-    components:
-    - type: Transform
-      pos: -21.5,11.5
-      parent: 2
-  - uid: 14359
-    components:
-    - type: Transform
-      pos: -20.5,11.5
-      parent: 2
-  - uid: 24648
-    components:
-    - type: Transform
-      pos: -19.5,11.5
       parent: 2
 - proto: TrainingBomb
   entities:
@@ -171053,7 +171062,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -264498.72
+      secondsUntilStateChange: -264590.66
       state: Opening
     - type: Airlock
       autoClose: False
