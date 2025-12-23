@@ -5,7 +5,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Power.EntitySystems;
 
 namespace Content.Shared.Chemistry.Reaction;
 
@@ -14,7 +13,6 @@ public sealed partial class ReactionMixerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly PowerStateSystem _powerState = default!;
 
     public override void Initialize()
     {
