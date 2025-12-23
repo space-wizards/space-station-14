@@ -14,7 +14,8 @@ public partial class SystemStylesheet : CommonStylesheet
 {
     public override string StylesheetName => "System";
 
-    public override NotoFontFamilyStack BaseFont { get; } // TODO: NotoFontFamilyStack is temporary
+    public override NotoFontFamilyStack BaseFont { get; } // TODO NotoFontFamilyStack is temporary, to be replaced with FontFamilyStack
+                                                          //      waiting on engine support for font properties before proper implementation of font stacks
 
     public override Dictionary<Type, ResPath[]> Roots => new()
     {

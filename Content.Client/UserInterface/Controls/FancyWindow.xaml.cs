@@ -72,14 +72,11 @@ namespace Content.Client.UserInterface.Controls
         /// <returns>The stylesheet, if any</returns>
         public string? ApplyStylesheetFrom(EntityUid owner)
         {
-            // ReSharper disable once InvertIf
-            if (_entMan.TryGetComponent<StylesheetComponent>(owner, out var stylesheet))
-            {
-                Stylesheet = stylesheet.Stylesheet;
-                return stylesheet.Stylesheet;
-            }
+            if (!_entMan.TryGetComponent<StylesheetComponent>(owner, out var stylesheet))
+                return null;
 
-            return null;
+            Stylesheet = stylesheet.Stylesheet;
+            return stylesheet.Stylesheet;
         }
 
         private List<ProtoId<GuideEntryPrototype>>? _helpGuidebookIds;
