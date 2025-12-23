@@ -45,3 +45,12 @@ public sealed class VoiceMaskChangeVerbMessage : BoundUserInterfaceMessage
         Verb = verb;
     }
 }
+
+/// <summary>
+///     Toggle the effects of the voice mask.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class VoiceMaskToggle : BoundUserInterfaceMessage
+{
+    public VoiceMaskToggle() { }
+}

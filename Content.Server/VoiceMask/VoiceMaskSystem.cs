@@ -45,6 +45,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, LockToggledEvent>(OnLockToggled);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVerbMessage>(OnChangeVerb);
+        SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskToggle>(OnToggle);
         SubscribeLocalEvent<VoiceMaskComponent, ClothingGotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
 
@@ -63,8 +64,13 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void OnSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<SeeIdentityAttemptEvent> args)
     {
-        if (entity.Comp.OverrideIdentity)
-            args.Event.NameOverride = GetCurrentVoiceName(entity);
+        if (!entity.Comp.OverrideIdentity || !entity.Comp.Active)
+        {
+            args.Event.NameOverride = null;
+            return;
+        }
+
+        args.Event.NameOverride = GetCurrentVoiceName(entity);
     }
 
     private void OnImplantImplantedEvent(Entity<VoiceMaskComponent> entity, ref ImplantImplantedEvent ev)
@@ -117,6 +123,18 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
         UpdateUI(entity);
     }
+
+    private void OnToggle(Entity<VoiceMaskComponent> entity, ref VoiceMaskToggle args)
+    {
+        _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-toggle"), entity, args.Actor);
+        entity.Comp.Active = !entity.Comp.Active;
+
+        var negateAccentsEvent = new NegateAccentsEvent(entity, entity.Comp.Active);
+        RaiseLocalEvent(entity, negateAccentsEvent);
+
+        // Update identity because of possible name override
+        _identity.QueueIdentityUpdate(args.Actor);
+    }
     #endregion
 
     #region UI
@@ -157,6 +175,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void TransformVoice(Entity<VoiceMaskComponent> entity, TransformSpeakerNameEvent args)
     {
+        if (!entity.Comp.Active)
+            return;
         args.VoiceName = GetCurrentVoiceName(entity);
         args.SpeechVerb = entity.Comp.VoiceMaskSpeechVerb ?? args.SpeechVerb;
     }

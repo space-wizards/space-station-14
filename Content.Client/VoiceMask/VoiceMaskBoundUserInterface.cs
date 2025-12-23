@@ -26,11 +26,17 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
 
         _window.OnNameChange += OnNameSelected;
         _window.OnVerbChange += verb => SendMessage(new VoiceMaskChangeVerbMessage(verb));
+        _window.OnToggle += OnToggle;
     }
 
     private void OnNameSelected(string name)
     {
         SendMessage(new VoiceMaskChangeNameMessage(name));
+    }
+
+    private void OnToggle()
+    {
+        SendMessage(new VoiceMaskToggle());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

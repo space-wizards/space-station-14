@@ -43,5 +43,11 @@ public sealed partial class VoiceMaskComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? ActionEntity;
+
+    /// <summary>
+    ///     If user's voice is getting changed when they speak.
+    /// </summary>
+    [DataField]
+    public bool Active = true;
 }
 

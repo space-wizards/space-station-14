@@ -12,6 +12,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
 {
     public Action<string>? OnNameChange;
     public Action<string?>? OnVerbChange;
+    public Action? OnToggle;
 
     private List<(string, string)> _verbs = new();
 
@@ -30,6 +31,11 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
         {
             OnVerbChange?.Invoke((string?) args.Button.GetItemMetadata(args.Id));
             SpeechVerbSelector.SelectId(args.Id);
+        };
+
+        ToggleButton.OnPressed += args =>
+        {
+            OnToggle?.Invoke();
         };
     }
 
