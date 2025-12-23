@@ -45,6 +45,12 @@ public sealed class BeakerBarChart : Control
     // We don't animate new entries until this control has been drawn at least once.
     private bool _hasBeenDrawn = false;
 
+    // This is used to keep the segments of the chart in the same order as the SetEntry calls.
+    // For example: In update 1 we might get cryox, alox, bic (in that order), and in update 2 we get alox, cryox, bic.
+    // To keep the order of the entries the same as the order of the SetEntry calls, we let the old cryox entry
+    // disappear and create a new cryox entry behind the alox entry.
+    private int _nextUpdateableEntry = 0;
+
     private readonly List<Entry> _entries = new();
 
 
@@ -60,6 +66,8 @@ public sealed class BeakerBarChart : Control
         {
             entry.TargetAmount = 0;
         }
+
+        _nextUpdateableEntry = 0;
     }
 
     /// <summary>
@@ -73,15 +81,17 @@ public sealed class BeakerBarChart : Control
         Color? textColor = null,
         string? tooltip = null)
     {
-        var found = _entries.Find(entry => entry.Uid == uid);
-        if (found != null)
+        // If we can find an old entry we're allowed to update, update that one.
+        if (TryFindUpdateableEntry(uid, out var index))
         {
-            found.TargetAmount = amount;
-            found.Tooltip = tooltip;
-            found.Label.Text = label;
+            _entries[index].TargetAmount = amount;
+            _entries[index].Tooltip = tooltip;
+            _entries[index].Label.Text = label;
+            _nextUpdateableEntry = index + 1;
             return;
         }
 
+        // Otherwise create a new entry.
         if (amount <= 0)
             return;
 
@@ -97,13 +107,33 @@ public sealed class BeakerBarChart : Control
         };
         AddChild(childLabel);
 
-        _entries.Add(new Entry(uid, childLabel)
+        _entries.Insert(
+            _nextUpdateableEntry,
+            new Entry(uid, childLabel)
+            {
+                WidthFraction = (_hasBeenDrawn ? 0 : amount / Capacity),
+                TargetAmount = amount,
+                Tooltip = tooltip,
+                Color = color
+            }
+        );
+
+        _nextUpdateableEntry += 1;
+    }
+
+    private bool TryFindUpdateableEntry(string uid, out int index)
+    {
+        for (int i = _nextUpdateableEntry; i < _entries.Count; i++)
         {
-            WidthFraction = (_hasBeenDrawn ? 0 : amount / Capacity),
-            TargetAmount = amount,
-            Tooltip = tooltip,
-            Color = color
-        });
+            if (_entries[i].Uid == uid)
+            {
+                index = i;
+                return true;
+            }
+        }
+
+        index = -1;
+        return false;
     }
 
     private IEnumerable<(Entry, float xMin, float xMax)> EntryRanges(float? pixelWidth = null)
