@@ -48,6 +48,7 @@
   - type: Appearance
   - type: HandheldGrinder
 
+# Mortars
 - type: entity
   parent: BaseHandheldGrinder
   id: MortarAndPestle
@@ -78,6 +79,7 @@
   - type: HandheldGrinder
     doAfterDuration: 5
 
+# Juicers
 - type: entity
   parent: BaseHandheldGrinder
   id: HandheldJuicer
@@ -85,12 +87,13 @@
   description: Used for juicing small amounts of objects.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    sprite: Objects/Specific/Kitchen/handheld_juicer.rsi
     layers:
-    - state: full
+    - state: juicer_base
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
+    - state: cap
   - type: HandheldGrinder
     program: Juice
 
@@ -101,11 +104,12 @@
   description: Used for juicing small amounts of objects. Inferior version made out of wood.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    sprite: Objects/Specific/Kitchen/handheld_juicer.rsi
     layers:
-    - state: makeshift
+    - state: makeshift_base
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
+    - state: cap
   - type: HandheldGrinder
     doAfterDuration: 5
