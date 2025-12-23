@@ -45,7 +45,7 @@ public sealed class WarDeclaratorSystem : EntitySystem
         var query = EntityQueryEnumerator<WarDeclaratorComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if(comp.CurrentStatus == WarConditionStatus.WarReady)
+            if (comp.CurrentStatus == WarConditionStatus.WarReady)
             {
                 if (comp.SetAlertlevel == null)
                     continue;
