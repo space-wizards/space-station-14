@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client.Hands.Systems;
+using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -72,7 +73,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
         var handEntity = _hands.GetActiveHandEntity();
         var isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
         var isGunBolted = true;
-        if (_entMan.TryGetComponent(handEntity, out ChamberMagazineAmmoProviderComponent? chamber))
+        if (_entMan.TryGetComponent(handEntity, out MagazineAmmoProviderComponent? chamber))
             isGunBolted = chamber.BoltClosed ?? true;
 
 

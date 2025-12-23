@@ -6,32 +6,32 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    protected override void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates)
+    protected override void Cycle(Entity<BallisticAmmoProviderComponent> ent, MapCoordinates coordinates)
     {
-        EntityUid? ent = null;
+        EntityUid? ammoEnt = null;
 
         // TODO: Combine with TakeAmmo
-        if (component.Entities.Count > 0)
+        if (ent.Comp.Entities.Count > 0)
         {
-            var existing = component.Entities[^1];
-            component.Entities.RemoveAt(component.Entities.Count - 1);
-            DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
+            var existing = ent.Comp.Entities[^1];
+            ent.Comp.Entities.RemoveAt(ent.Comp.Entities.Count - 1);
+            DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
 
-            Containers.Remove(existing, component.Container);
+            Containers.Remove(existing, ent.Comp.Container);
             EnsureShootable(existing);
         }
-        else if (component.UnspawnedCount > 0)
+        else if (ent.Comp.UnspawnedCount > 0)
         {
-            component.UnspawnedCount--;
-            DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.UnspawnedCount));
-            ent = Spawn(component.Proto, coordinates);
-            EnsureShootable(ent.Value);
+            ent.Comp.UnspawnedCount--;
+            DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.UnspawnedCount));
+            ammoEnt = Spawn(ent.Comp.Proto, coordinates);
+            EnsureShootable(ammoEnt.Value);
         }
 
-        if (ent != null)
-            EjectCartridge(ent.Value);
+        if (ammoEnt != null)
+            EjectCartridge(ammoEnt.Value);
 
         var cycledEvent = new GunCycledEvent();
-        RaiseLocalEvent(uid, ref cycledEvent);
+        RaiseLocalEvent(ent, ref cycledEvent);
     }
 }

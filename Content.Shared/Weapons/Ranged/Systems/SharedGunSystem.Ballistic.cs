@@ -32,34 +32,34 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
     }
 
-    private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)
+    private void OnBallisticUse(Entity<BallisticAmmoProviderComponent> ent, ref UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
-        ManualCycle(uid, component, TransformSystem.GetMapCoordinates(uid), args.User);
+        ManualCycle(ent, TransformSystem.GetMapCoordinates(ent), args.User);
         args.Handled = true;
     }
 
-    private void OnBallisticInteractUsing(EntityUid uid, BallisticAmmoProviderComponent component, InteractUsingEvent args)
+    private void OnBallisticInteractUsing(Entity<BallisticAmmoProviderComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
-        if (_whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Used))
+        if (_whitelistSystem.IsWhitelistFailOrNull(ent.Comp.Whitelist, args.Used))
             return;
 
-        if (GetBallisticShots(component) >= component.Capacity)
+        if (GetBallisticShots(ent.Comp) >= ent.Comp.Capacity)
             return;
 
-        component.Entities.Add(args.Used);
-        Containers.Insert(args.Used, component.Container);
+        ent.Comp.Entities.Add(args.Used);
+        Containers.Insert(args.Used, ent.Comp.Container);
         // Not predicted so
-        Audio.PlayPredicted(component.SoundInsert, uid, args.User);
+        Audio.PlayPredicted(ent.Comp.SoundInsert, ent, args.User);
         args.Handled = true;
-        UpdateBallisticAppearance(uid, component);
+        UpdateBallisticAppearance(ent);
         UpdateAmmoCount(args.Target);
-        DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
+        DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
     }
 
     private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
@@ -171,7 +171,7 @@ public abstract partial class SharedGunSystem
             {
                 Text = Loc.GetString("gun-ballistic-cycle"),
                 Disabled = GetBallisticShots(component) == 0,
-                Act = () => ManualCycle(uid, component, TransformSystem.GetMapCoordinates(uid), args.User),
+                Act = () => ManualCycle((uid, component), TransformSystem.GetMapCoordinates(uid), args.User),
             });
 
         }
@@ -185,51 +185,51 @@ public abstract partial class SharedGunSystem
         args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", GetBallisticShots(component))));
     }
 
-    private void ManualCycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null, GunComponent? gunComp = null)
+    private void ManualCycle(Entity<BallisticAmmoProviderComponent> ent, MapCoordinates coordinates, EntityUid? user = null, GunComponent? gunComp = null)
     {
-        if (!component.Cycleable)
+        if (!ent.Comp.Cycleable)
             return;
 
         // Reset shotting for cycling
-        if (Resolve(uid, ref gunComp, false) &&
+        if (Resolve(ent, ref gunComp, false) &&
             gunComp is { FireRateModified: > 0f } &&
-            !Paused(uid))
+            !Paused(ent))
         {
             gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRateModified);
-            DirtyField(uid, gunComp, nameof(GunComponent.NextFire));
+            DirtyField(ent, gunComp, nameof(GunComponent.NextFire));
         }
 
-        Audio.PlayPredicted(component.SoundRack, uid, user);
+        Audio.PlayPredicted(ent.Comp.SoundRack, ent, user);
 
-        var shots = GetBallisticShots(component);
-        Cycle(uid, component, coordinates);
+        var shots = GetBallisticShots(ent.Comp);
+        Cycle(ent, coordinates);
 
         var text = Loc.GetString(shots == 0 ? "gun-ballistic-cycled-empty" : "gun-ballistic-cycled");
 
-        Popup(text, uid, user);
-        UpdateBallisticAppearance(uid, component);
-        UpdateAmmoCount(uid);
+        Popup(text, ent, user);
+        UpdateBallisticAppearance(ent);
+        UpdateAmmoCount(ent);
     }
 
-    protected abstract void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates);
+    protected abstract void Cycle(Entity<BallisticAmmoProviderComponent> ent, MapCoordinates coordinates);
 
-    private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
+    private void OnBallisticInit(Entity<BallisticAmmoProviderComponent> ent, ref ComponentInit args)
     {
-        component.Container = Containers.EnsureContainer<Container>(uid, "ballistic-ammo");
+        ent.Comp.Container = Containers.EnsureContainer<Container>(ent, "ballistic-ammo");
         // TODO: This is called twice though we need to support loading appearance data (and we need to call it on MapInit
         // to ensure it's correct).
-        UpdateBallisticAppearance(uid, component);
+        UpdateBallisticAppearance(ent);
     }
 
-    private void OnBallisticMapInit(EntityUid uid, BallisticAmmoProviderComponent component, MapInitEvent args)
+    private void OnBallisticMapInit(Entity<BallisticAmmoProviderComponent> ent, ref MapInitEvent args)
     {
         // TODO this should be part of the prototype, not set on map init.
         // Alternatively, just track spawned count, instead of unspawned count.
-        if (component.Proto != null)
+        if (ent.Comp.Proto != null)
         {
-            component.UnspawnedCount = Math.Max(0, component.Capacity - component.Container.ContainedEntities.Count);
-            UpdateBallisticAppearance(uid, component);
-            DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.UnspawnedCount));
+            ent.Comp.UnspawnedCount = Math.Max(0, ent.Comp.Capacity - ent.Comp.Container.ContainedEntities.Count);
+            UpdateBallisticAppearance(ent);
+            DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.UnspawnedCount));
         }
     }
 
@@ -238,31 +238,31 @@ public abstract partial class SharedGunSystem
         return component.Entities.Count + component.UnspawnedCount;
     }
 
-    private void OnBallisticTakeAmmo(EntityUid uid, BallisticAmmoProviderComponent component, TakeAmmoEvent args)
+    private void OnBallisticTakeAmmo(Entity<BallisticAmmoProviderComponent> ent, ref TakeAmmoEvent args)
     {
         for (var i = 0; i < args.Shots; i++)
         {
-            EntityUid entity;
+            EntityUid ammoEnt;
 
-            if (component.Entities.Count > 0)
+            if (ent.Comp.Entities.Count > 0)
             {
-                entity = component.Entities[^1];
+                ammoEnt = ent.Comp.Entities[^1];
 
-                args.Ammo.Add((entity, EnsureShootable(entity)));
-                component.Entities.RemoveAt(component.Entities.Count - 1);
-                DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
-                Containers.Remove(entity, component.Container);
+                args.Ammo.Add((ammoEnt, EnsureShootable(ammoEnt)));
+                ent.Comp.Entities.RemoveAt(ent.Comp.Entities.Count - 1);
+                DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.Entities));
+                Containers.Remove(ammoEnt, ent.Comp.Container);
             }
-            else if (component.UnspawnedCount > 0)
+            else if (ent.Comp.UnspawnedCount > 0)
             {
-                component.UnspawnedCount--;
-                DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.UnspawnedCount));
-                entity = Spawn(component.Proto, args.Coordinates);
-                args.Ammo.Add((entity, EnsureShootable(entity)));
+                ent.Comp.UnspawnedCount--;
+                DirtyField(ent.AsNullable(), nameof(BallisticAmmoProviderComponent.UnspawnedCount));
+                ammoEnt = Spawn(ent.Comp.Proto, args.Coordinates);
+                args.Ammo.Add((ammoEnt, EnsureShootable(ammoEnt)));
             }
         }
 
-        UpdateBallisticAppearance(uid, component);
+        UpdateBallisticAppearance(ent);
     }
 
     private void OnBallisticAmmoCount(EntityUid uid, BallisticAmmoProviderComponent component, ref GetAmmoCountEvent args)
@@ -271,13 +271,13 @@ public abstract partial class SharedGunSystem
         args.Capacity = component.Capacity;
     }
 
-    public void UpdateBallisticAppearance(EntityUid uid, BallisticAmmoProviderComponent component)
+    public void UpdateBallisticAppearance(Entity<BallisticAmmoProviderComponent> ent)
     {
-        if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(uid, out var appearance))
+        if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
-        Appearance.SetData(uid, AmmoVisuals.AmmoCount, GetBallisticShots(component), appearance);
-        Appearance.SetData(uid, AmmoVisuals.AmmoMax, component.Capacity, appearance);
+        Appearance.SetData(ent, AmmoVisuals.AmmoCount, GetBallisticShots(ent.Comp), appearance);
+        Appearance.SetData(ent, AmmoVisuals.AmmoMax, ent.Comp.Capacity, appearance);
     }
 
     public void SetBallisticUnspawned(Entity<BallisticAmmoProviderComponent> entity, int count)
@@ -286,7 +286,7 @@ public abstract partial class SharedGunSystem
             return;
 
         entity.Comp.UnspawnedCount = count;
-        UpdateBallisticAppearance(entity.Owner, entity.Comp);
+        UpdateBallisticAppearance(entity);
         UpdateAmmoCount(entity.Owner);
         Dirty(entity);
     }
