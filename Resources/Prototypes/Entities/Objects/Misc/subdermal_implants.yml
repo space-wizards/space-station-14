@@ -250,6 +250,7 @@
     implantAction: ActionChangeVoiceMaskImplant
   - type: VoiceMask
     overrideIdentity: true
+  - type: NegateAccents
   - type: UserInterface
     interfaces:
       enum.VoiceMaskUIKey.Key:
