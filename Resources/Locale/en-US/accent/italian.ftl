@@ -112,7 +112,7 @@ accent-italian-words-35 = traitor
 accent-italian-words-replace-35 = mafioso
 
 accent-italian-words-36 = traitors
-accent-italian-words-replace-36 = mafioso
+accent-italian-words-replace-36 = mafiosi
 
 accent-italian-words-37 = use
 accent-italian-words-replace-37 = use-a
