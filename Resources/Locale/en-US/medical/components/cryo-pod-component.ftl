@@ -22,8 +22,10 @@ cryo-pod-window-checklist-fail = {$item} — NO
 cryo-pod-window-warning-header = WARNING
 cryo-pod-window-low-pressure-warning = Dangerously low pressure. Gas pressure must be approximately 100 kPa for safe operation.
 cryo-pod-window-high-temperature-warning = Temperature too high. {CAPITALIZE($reagent)} requires a temperature below {$temperature} K.
+
+cryo-pod-window-error-header = ERROR
 # Shown when the eject button is pressed on a locked pod.
-cryo-pod-window-eject-error = ERROR: Ejection mechanism failed. Contact a Nanotrasen-certified engineer for support.
+cryo-pod-window-eject-error = Ejection mechanism failed. Contact a Nanotrasen-certified engineer for support.
 
 cryo-pod-window-chems-no-beaker = No beaker inserted
 cryo-pod-window-chems-empty-beaker = Beaker is empty

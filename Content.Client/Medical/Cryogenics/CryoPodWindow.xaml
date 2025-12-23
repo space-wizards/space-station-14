@@ -76,11 +76,21 @@
                           SeparationOverride="20">
 
                 <!-- Ejection error (if the pod is locked) -->
-                <RichTextLabel Name="EjectError"
-                               Visible="False"
-                               Text="{Loc 'cryo-pod-window-eject-error'}"
-                               HorizontalAlignment="Center"
-                               MaxWidth="260"/>
+                <PanelContainer Name="EjectError"
+                                Visible="False"
+                                HorizontalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="orange"/>
+                    </PanelContainer.PanelOverride>
+
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="6">
+                        <Label Text="{Loc 'cryo-pod-window-error-header'}"
+                               FontColorOverride="orange"
+                               Align="Center"/>
+                        <RichTextLabel Text="{Loc 'cryo-pod-window-eject-error'}"/>
+                    </BoxContainer>
+                </PanelContainer>
 
                 <!-- Pressure warning -->
                 <PanelContainer Name="LowPressureWarning"
