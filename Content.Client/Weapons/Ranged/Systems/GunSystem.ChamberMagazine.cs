@@ -13,12 +13,12 @@ public sealed partial class GunSystem
     protected override void InitializeChamberMagazine()
     {
         base.InitializeChamberMagazine();
-        SubscribeLocalEvent<MagazineAmmoProviderComponent, AmmoCounterControlEvent>(OnChamberMagazineCounter);
-        SubscribeLocalEvent<MagazineAmmoProviderComponent, UpdateAmmoCounterEvent>(OnChamberMagazineAmmoUpdate);
-        SubscribeLocalEvent<MagazineAmmoProviderComponent, AppearanceChangeEvent>(OnChamberMagazineAppearance);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, AmmoCounterControlEvent>(OnChamberMagazineCounter);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, UpdateAmmoCounterEvent>(OnChamberMagazineAmmoUpdate);
+        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, AppearanceChangeEvent>(OnChamberMagazineAppearance);
     }
 
-    private void OnChamberMagazineAppearance(Entity<MagazineAmmoProviderComponent> ent, ref AppearanceChangeEvent args)
+    private void OnChamberMagazineAppearance(Entity<ChamberMagazineAmmoProviderComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null ||
             !_sprite.LayerMapTryGet((ent, args.Sprite), GunVisualLayers.Base, out var boltLayer, false) ||
@@ -55,12 +55,12 @@ public sealed partial class GunSystem
         // to avoid 6-7 additional entity spawns.
     }
 
-    private void OnChamberMagazineCounter(Entity<MagazineAmmoProviderComponent> ent, ref AmmoCounterControlEvent args)
+    private void OnChamberMagazineCounter(Entity<ChamberMagazineAmmoProviderComponent> ent, ref AmmoCounterControlEvent args)
     {
         args.Control = new ChamberMagazineStatusControl();
     }
 
-    private void OnChamberMagazineAmmoUpdate(Entity<MagazineAmmoProviderComponent> ent, ref UpdateAmmoCounterEvent args)
+    private void OnChamberMagazineAmmoUpdate(Entity<ChamberMagazineAmmoProviderComponent> ent, ref UpdateAmmoCounterEvent args)
     {
         if (args.Control is not ChamberMagazineStatusControl control) return;
 

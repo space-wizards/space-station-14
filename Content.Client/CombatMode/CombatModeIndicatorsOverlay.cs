@@ -73,7 +73,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
         var handEntity = _hands.GetActiveHandEntity();
         var isHandGunItem = _entMan.HasComponent<GunComponent>(handEntity);
         var isGunBolted = true;
-        if (_entMan.TryGetComponent(handEntity, out MagazineAmmoProviderComponent? chamber))
+        if (_entMan.TryGetComponent(handEntity, out ChamberMagazineAmmoProviderComponent? chamber))
             isGunBolted = chamber.BoltClosed ?? true;
 
 
