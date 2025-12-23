@@ -37,7 +37,9 @@ public sealed class GenericGasReactionSystem : EntitySystem
         if (temp < Atmospherics.TCMB)
             return 0;
 
-        return A * MathF.Exp(-Ea / (Atmospherics.R * temp));
+        // Extremely high temperatures cause numerical instability with exp(-Ea/RT), so cap it.
+        const float MaxTemperature = 1500f;
+        return A * MathF.Exp(-Ea / (Atmospherics.R * Math.Min(temp, MaxTemperature)));
     }
 
     /// <summary>
@@ -137,16 +139,42 @@ public sealed class GenericGasReactionSystem : EntitySystem
             var Nreltol = mix.TotalMoles * reltol;
             if (residualMoles > Nreltol)
             {
-                Log.Error($"GenericGasReaction {reaction.ID} did not converge to a safe solution, residual {residualMoles} > {Nreltol}, mix {mix.ToPrettyString()} " +
-                          $"Stopping reaction to prevent heat death.");
-                // TODO print dC
-                return ReactionResult.StopReactions;
-            }
+                Log.Error($"GenericGasReaction {reaction.ID} did not converge to a safe solution, residual {residualMoles} > {Nreltol}, mix {mix.ToPrettyString()}." +
+                          $" Falling back to extent of reaction method.");
 
-            // Go adjust moles
-            for (var i = 0; i < dC.Length; i++)
+                // Reaction has diverged. Switch over to applying a different method via the Extent of Reaction.
+                // See https://en.wikipedia.org/wiki/Extent_of_reaction
+                // Limit by whichever reactant would run out first.
+                var dXiMax = float.MaxValue;
+                foreach (var (reactant, num) in reaction.Reactants)
+                {
+                    var available = mix.GetMoles(reactant);
+                    Debug.Assert(num > 0);
+                    dXiMax = MathF.Min(dXiMax, available / num);
+                }
+
+                // Determine the actual extent of reaction.
+                var dXi = MathF.Min(rate, dXiMax);
+                if (dXi <= 0f)
+                    continue;
+
+                foreach (var (reactant, num) in reaction.Reactants)
+                {
+                    mix.AdjustMoles(reactant, -num * dXi);
+                }
+
+                // Go through and add products
+                foreach (var (product, num) in reaction.Products)
+                {
+                    mix.AdjustMoles(product, num * dXi);
+                }
+            }
+            else
             {
-                mix.AdjustMoles(i, dC[i]); // TODO: fancier SIMD/numerics helper method
+                for (var i = 0; i < dC.Length; i++)
+                {
+                    mix.AdjustMoles(i, dC[i]); // TODO: fancier SIMD/numerics helper method
+                }
             }
 
             // Add heat from the reaction
