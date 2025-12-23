@@ -8,6 +8,7 @@ namespace Content.Shared.Eye.Blinking;
 /// A component that handles automatic eye blinking for entities with the <see cref="HumanoidVisualLayers.Eyes"/> layer.
 /// Logic is handled by <see cref="EyeBlinkingSystem"/>.
 /// </summary>
+
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class EyeBlinkingComponent : Component
@@ -28,7 +29,7 @@ public sealed partial class EyeBlinkingComponent : Component
     /// The timestamp at which the entity will open their eyes after blinking.
     /// </summary>
     [DataField, AutoPausedField]
-    public TimeSpan NextOpenEyeTime;
+    public TimeSpan NextOpenEyesTime;
 
     /// <summary>
     /// The minimum interval between blinks, in seconds.
@@ -84,19 +85,4 @@ public sealed partial class EyeBlinkingComponent : Component
     public TimeSpan MaxAsyncBlink = TimeSpan.FromSeconds(0.1f);
     [DataField]
     public TimeSpan MaxAsyncOpenBlink = TimeSpan.FromSeconds(0.05f);
-
-    public Dictionary<int, EyelidState> Eyelids;
-}
-
-[DataDefinition]
-public partial struct EyelidState
-{
-    [DataField]
-    public bool IsClosed;
-
-    [DataField, AutoPausedField]
-    public TimeSpan ScheduledCloseTime;
-
-    [DataField, AutoPausedField]
-    public TimeSpan ScheduledOpenTime;
 }

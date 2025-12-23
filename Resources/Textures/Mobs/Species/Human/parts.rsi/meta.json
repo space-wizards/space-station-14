@@ -57,6 +57,10 @@
     {
       "name": "torso_m",
       "directions": 4
+    },
+    {
+      "name": "eyelids",
+      "directions": 4
     }
   ]
 }

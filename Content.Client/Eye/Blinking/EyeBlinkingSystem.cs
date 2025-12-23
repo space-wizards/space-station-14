@@ -1,8 +1,10 @@
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Linq;
@@ -43,12 +45,25 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void InitEyeBlinking(Entity<EyeBlinkingComponent> ent)
     {
-        if (!HasComp<SpriteComponent>(ent.Owner))
+        if (!TryComp<SpriteComponent>(ent.Owner, out var comp))
             return;
 
         // Check if the entity has an Eyelids layer. If not, we can't do anything visually.
-        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var eyelids, false))
-            return;
+        //if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var eyelids, false))
+        //    return;
+
+        var clientComp = EntityManager.EnsureComponent<EyeBlinkingClientComponent>(ent.Owner);
+
+        foreach (var layer in comp.AllLayers)
+        {
+            Logger.Info($"Layer: {layer.RsiState.Name} {layer.RsiState.Name?.Contains("eyelids") == true}");
+        }
+
+        var allEyelids = comp.AllLayers.Where(layer => layer.RsiState.Name?.Contains("eyelids") == true);
+        foreach (var layer in allEyelids)
+        {
+            clientComp.Eyelids.Add(new EyelidState(layer));
+        }
 
         // Attempt to sync the eyelids' RSI and state with the Eyes layer for a consistent look.
         // NOTE: This logic needs to be expanded to support other mobs that use randomized colors or sprites (e.g., Scurrets).
@@ -61,11 +76,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         // Apply the initial eye state (open or closed).
         if (!(_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
         {
-            ChangeEyeState(ent, false);
+            //ChangeEyeState(ent, false);
             return;
         }
 
-        ChangeEyeState(ent, eyeClosed);
+        //ChangeEyeState(ent, eyeClosed);
     }
 
     private void OnApperanceChangeEventHandler(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
@@ -76,7 +91,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if ((eyeClosed == false && ent.Comp.BlinkInProgress == false) ||
             eyeClosed)
         {
-            ChangeEyeState(ent, eyeClosed);
+            //ChangeEyeState(ent, eyeClosed);
             return;
         }
     }
@@ -130,8 +145,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!ent.Owner.IsValid())
             return;
 
-        ResetBlink(ent);
-
         if (ent.Comp.Enabled == false)
             return;
 
@@ -140,6 +153,19 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         if (ent.Comp.BlinkInProgress)
             return;
+
+        if (TryComp<EyeBlinkingClientComponent>(ent.Owner, out var clientComp))
+        {
+            if (clientComp.Eyelids.Count == 0)
+            {
+                Logger.Info($"Blink aborted for {ent.Owner} - no eyelids found.");
+                return;
+            }
+        }
+        else
+        {
+            return;
+        }
 
         ent.Comp.BlinkInProgress = true;
 
@@ -150,44 +176,57 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         var maxDuration = ent.Comp.MaxBlinkDuration;
         var blinkDuration = minDuration + (_random.NextDouble() * (maxDuration - minDuration));
 
-        var layerIndices = ent.Comp.Eyelids.Keys.ToList();
+        var eyelidStates = clientComp.Eyelids;
 
-        foreach (var layerIndex in layerIndices)
+        foreach (var eyelidState in eyelidStates)
         {
-            var state = ent.Comp.Eyelids[layerIndex];
+            var sheduleCloseTime = curTime + _random.NextDouble() * ent.Comp.MaxAsyncBlink + clientComp.PausedOffset;
+            var sheduleOpenTime = sheduleCloseTime + blinkDuration + _random.NextDouble() * ent.Comp.MaxAsyncOpenBlink + clientComp.PausedOffset;
 
-            var sheduleCloseTime = curTime + _random.NextDouble() * ent.Comp.MaxAsyncBlink;
-            var sheduleOpenTime = sheduleCloseTime + blinkDuration + _random.NextDouble() * ent.Comp.MaxAsyncOpenBlink;
-
-            state.ScheduledCloseTime = sheduleCloseTime;
-            state.ScheduledOpenTime = sheduleOpenTime;
-
-            ent.Comp.Eyelids[layerIndex] = state;
+            eyelidState.ScheduledCloseTime = sheduleCloseTime;
+            eyelidState.ScheduledOpenTime = sheduleOpenTime;
 
             if (sheduleOpenTime > maxOpenTime) maxOpenTime = sheduleOpenTime;
         }
 
+        ent.Comp.NextOpenEyesTime = maxOpenTime;
 
-        ent.Comp.NextOpenEyeTime = maxOpenTime;
-
-        ChangeEyeState(ent, true);
+        ResetBlink(ent);
     }
 
-    private void OpenEye(Entity<EyeBlinkingComponent> ent)
+    private void CloseEye(Entity<EyeBlinkingComponent> ent, EyelidState state)
     {
-        if (!ent.Owner.IsValid())
-            return;
+        Logger.Info($"CloseEye for {ent.Owner} {_timing.CurTime}");
+        var layer = state.Layer;
+        state.IsClosed = true;
+        state.IsCompleteBlink = false;
 
-        ent.Comp.BlinkInProgress = false;
+        var blinkColor = Color.Transparent;
 
-        if (ent.Comp.Enabled == false)
-            return;
+        if (ent.Comp.EyelidsColor == null && TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
+        {
+            var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
+            blinkColor = new Color(
+                humanoid.SkinColor.R * blinkFade,
+                humanoid.SkinColor.G * blinkFade,
+                humanoid.SkinColor.B * blinkFade);
+        }
+        else if (ent.Comp.EyelidsColor != null)
+        {
+            blinkColor = ent.Comp.EyelidsColor.Value;
+        }
 
+        layer.Color = blinkColor;
+    }
 
-        if (_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed && eyeClosed)
-            return;
+    private void OpenEye(Entity<EyeBlinkingComponent> ent, EyelidState state)
+    {
+        Logger.Info($"OpenEye for {ent.Owner} {_timing.CurTime}");
 
-        ChangeEyeState(ent, false);
+        var layer = state.Layer;
+        state.IsClosed = false;
+        state.IsCompleteBlink = true;
+        layer.Color = Color.Transparent;
     }
 
     /// <summary>
@@ -204,7 +243,8 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         var maxInterval = ent.Comp.MaxBlinkInterval;
         var randomSeconds = minInterval + (_random.NextDouble() * (maxInterval - minInterval));
 
-        ent.Comp.NextBlinkingTime = _timing.CurTime + randomSeconds;
+        ent.Comp.NextBlinkingTime = ent.Comp.NextOpenEyesTime + randomSeconds;
+        Logger.Info($"ResetBlink for {ent.Owner} NextBlinkingTime: {ent.Comp.NextBlinkingTime}");
     }
 
     public override void Update(float frameTime)
@@ -213,18 +253,33 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         var curTime = _timing.CurTime;
 
-        var query = EntityQueryEnumerator<EyeBlinkingComponent>();
+        var query = EntityQueryEnumerator<EyeBlinkingComponent, EyeBlinkingClientComponent>();
 
-        while (query.MoveNext(out var uid, out var comp) && comp.Enabled)
+        while (query.MoveNext(out var uid, out var comp, out var clientComp) && comp.Enabled)
         {
             if (comp.BlinkInProgress)
             {
-                if (curTime >= comp.NextOpenEyeTime)
+                foreach (var eyelidState in clientComp.Eyelids)
                 {
-                    OpenEye((uid, comp));
+                    //Logger.Info($"Close Eye for entity = {!eyelidState.IsClosed && curTime >= eyelidState.ScheduledCloseTime && curTime < eyelidState.ScheduledOpenTime}; Open eye for entity: {eyelidState.IsClosed && curTime >= eyelidState.ScheduledOpenTime}");
+                    if (!eyelidState.IsClosed && curTime >= eyelidState.ScheduledCloseTime && eyelidState.IsCompleteBlink == false)
+                    {
+                        CloseEye((uid, comp), eyelidState);
+                    }
+                    else if (eyelidState.IsClosed && curTime >= eyelidState.ScheduledOpenTime)
+                    {
+                        OpenEye((uid, comp), eyelidState);
+                    }
                 }
-                continue;
+                if (clientComp.Eyelids.All(e => e.IsCompleteBlink))
+                {
+                    clientComp.Eyelids.ForEach(e => e.IsCompleteBlink = false);
+                    comp.BlinkInProgress = false;
+                    ResetBlink((uid, comp));
+                    continue;
+                }
             }
+
             if (comp.NextBlinkingTime > curTime)
                 continue;
 

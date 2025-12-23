@@ -21,8 +21,6 @@ public abstract partial class SharedEyeBlinkingSystem : EntitySystem
 
     private void OnCloningEventHandler(Entity<EyeBlinkingComponent> ent, ref CloningEvent args)
     {
-        Logger.Info("CloningEvent!");
-
         var ev = new UpdateEyelidsAfterCloningEvent(GetNetEntity(ent.Owner));
         RaiseNetworkEvent(ev);
     }
