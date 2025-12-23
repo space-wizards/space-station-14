@@ -253,47 +253,6 @@
     defaultText: station-beacon-security-checkpoint
 
 - type: entity
-  parent: DefaultStationBeaconSecurity
-  id: DefaultStationBeaconGorlexBarracks
-  suffix: Gorlex Barracks
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-gorlex
-
-- type: entity
-  parent: DefaultStationBeaconSecurity
-  id: DefaultStationBeaconGorlexOffice
-  suffix: Gorlex Office
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-gorlex-office
-
-- type: entity
-  parent: DefaultStationBeaconSecurity
-  id: DefaultStationBeaconGorlexBreak
-  suffix: Gorlex Breakroom
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-gorlex-breakroom
-
-- type: entity
-  parent: DefaultStationBeaconSecurity
-  id: DefaultStationBeaconGorlexHos
-  suffix: Gorlex Command
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-gorlex-hos
-
-
-- type: entity
-  parent: DefaultStationBeaconSecurity
-  id: DefaultStationBeaconCybersunLegal
-  suffix: Cybersun Legal Dept
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-cybersun-legal
-
-- type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconMedical
   suffix: Medical
@@ -367,30 +326,6 @@
     defaultText: station-beacon-clinic
 
 - type: entity
-  parent: DefaultStationBeaconMedical
-  id: DefaultStationBeaconParamedics
-  suffix: Paramedics
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-paramedic
-
-- type: entity
-  parent: DefaultStationBeaconMedical
-  id: DefaultStationBeaconInterdyne
-  suffix: Interdyne Triage
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-interdyne
-
-- type: entity
-  parent: DefaultStationBeaconMedical
-  id: DefaultStationBeaconInterdyneFront
-  suffix: Interdyne Reception
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-interdyne-front
-
-- type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconScience
   suffix: Science
@@ -448,14 +383,6 @@
     defaultText: station-beacon-anomaly-gen
 
 - type: entity
-  parent: DefaultStationBeaconScience
-  id: DefaultStationBeaconCybersun
-  suffix: Cybersun R&D
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-cybersun-rd
-
-- type: entity
   parent: DefaultStationBeacon
   id: DefaultStationBeaconSupply
   suffix: Supply
@@ -495,22 +422,6 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-salvage
-
-- type: entity
-  parent: DefaultStationBeaconSupply
-  id: DefaultStationBeaconDonk
-  suffix: DONK Co. Shipping
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-donk
-
-- type: entity
-  parent: DefaultStationBeaconSupply
-  id: DefaultStationBeaconDonkFront
-  suffix: DONK co. Front
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-donk-front
 
 - type: entity
   parent: DefaultStationBeacon
@@ -675,14 +586,6 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-tech-vault
-
-- type: entity
-  parent: DefaultStationBeaconEngineering
-  id: DefaultStationBeaconShipyard
-  suffix: Shipyard
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-shipyard
 
 - type: entity
   parent: DefaultStationBeacon

@@ -28,7 +28,6 @@ station-beacon-morgue = Morgue
 station-beacon-surgery = Surgery
 station-beacon-psychology = Psychology
 station-beacon-clinic = Clinic
-station-beacon-paramedic = Paramedics
 
 station-beacon-science = Science
 station-beacon-research-and-development = Research
@@ -100,14 +99,3 @@ station-beacon-escape-pod-W = Escape Pod W
 station-beacon-escape-pod-NW = Escape Pod NW
 station-beacon-vox = Vox Break Room
 
-station-beacon-gorlex = Gorlex Barracks
-station-beacon-gorlex-office = Gorlex Office
-station-beacon-gorlex-breakroom = Gorlex Breakroom
-station-beacon-gorlex-hos = Gorlex Command
-station-beacon-cybersun-legal =Cybersun Legal Dept
-station-beacon-interdyne = Interdyne Triage
-station-beacon-interdyne-front = Interdyne Reception
-station-beacon-cybersun-rd = Cybersun R&D
-station-beacon-donk = DONK Co. Shipping
-station-beacon-donk-front = DONK Co. front
-station-beacon-shipyard = Shipyard
