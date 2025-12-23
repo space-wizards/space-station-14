@@ -2,3 +2,8 @@
   license: "CC-BY-4.0"
   copyright: "Taken from FM Synthesis on freesound.org"
   source: "https://freesound.org/people/FreqMan/sounds/32683/"
+
+- files: ["paper_centrifuge.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Taken from temawas on freesound. Cut, and looped three times. Converted to .ogg"
+  source: "https://freesound.org/people/temawas/sounds/179248/

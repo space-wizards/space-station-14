@@ -36,7 +36,7 @@
   parent: BaseHandheldMixer
   id: HandheldMixerPaperCentrifuge
   name: paper centrifuge
-  description: Yes, it exists.
+  description: A small portable makeshift centrifuge. Works by rotating the paper sheets when its cords are pulled.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker.rsi
@@ -49,4 +49,4 @@
     mixMessage: null
     timeToMix: 10
     mixingSound: !type:SoundPathSpecifier
-      path: /Audio/Machines/spinning.ogg
+      path: /Audio/Items/Medical/paper_centrifuge.ogg
