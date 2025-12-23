@@ -719,9 +719,6 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WoodDestroy
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
