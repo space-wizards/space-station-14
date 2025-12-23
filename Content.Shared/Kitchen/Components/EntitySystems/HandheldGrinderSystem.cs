@@ -120,13 +120,13 @@ internal sealed class HandheldGrinderSystem : EntitySystem
         reason = null;
         if (ent.Comp.Program == GrinderProgram.Grind && !_reagentGrinder.CanGrind(item))
         {
-            reason = $"You cannot grind {item}!";
+            reason = Loc.GetString("handheld-grinder-cannot-grind", ("item", item));
             return false;
         }
 
         if (ent.Comp.Program == GrinderProgram.Juice && !_reagentGrinder.CanJuice(item))
         {
-            reason = $"You cannot juice {item}!";
+            reason = Loc.GetString("handheld-grinder-cannot-juice", ("item", item));
             return false;
         }
 

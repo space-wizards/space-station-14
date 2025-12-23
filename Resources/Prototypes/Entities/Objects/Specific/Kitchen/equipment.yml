@@ -13,6 +13,8 @@
   - type: ItemSlots
     slots:
       grinderInput:
+        insertSound: /Audio/Items/bottle_close1.ogg
+        ejectSound: /Audio/Items/bottle_close1.ogg
         whitelist:
           components:
           - Extractable
@@ -72,12 +74,15 @@
   - type: Sprite
     sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
     layers:
-    - state: makeshift
+    - state: makeshift_full
     - map: ["enum.SolutionContainerLayers.Fill"]
       state: fill-1
       visible: false
   - type: HandheldGrinder
     doAfterDuration: 5
+  - type: Construction
+    graph: MakeshiftMortarAndPestle
+    node: mortarAndPestle
 
 # Juicers
 - type: entity
@@ -95,6 +100,8 @@
       visible: false
     - state: cap
   - type: HandheldGrinder
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Items/Culinary/juicer_juicing.ogg # Pasta mixing sound. Close enough.
     program: Juice
 
 - type: entity
@@ -113,3 +120,39 @@
     - state: cap
   - type: HandheldGrinder
     doAfterDuration: 5
+  - type: Construction
+    graph: MakeshiftJuicer
+    node: juicer
+
+# Construction
+- type: entity
+  name: incomplete mortar and pestle
+  parent: BaseItem
+  id: IncompleteMortarAndPestle
+  description: A few planks of wood stuck together.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    layers:
+    - state: makeshift_base
+  - type: Item
+    size: Normal
+  - type: Construction
+    graph: MakeshiftMortarAndPestle
+    node: incompleteMortarAndPestle
+
+- type: entity
+  name: incomplete handheld juicer
+  parent: BaseItem
+  id: IncompleteHandheldJuicer
+  description: A some wood and plastic stuck together.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/handheld_juicer.rsi
+    layers:
+    - state: makeshift_base
+  - type: Item
+    size: Normal
+  - type: Construction
+    graph: MakeshiftJuicer
+    node: incompleteJuicer

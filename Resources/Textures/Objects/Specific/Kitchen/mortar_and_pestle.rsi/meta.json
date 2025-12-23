@@ -11,7 +11,7 @@
             "name": "full"
         },
         {
-            "name": "makeshift"
+            "name": "makeshift_full"
         },
         {
             "name": "fill-1"
@@ -27,6 +27,9 @@
         },
         {
             "name": "mortar_base"
+        },
+        {
+            "name": "makeshift_base"
         },
         {
             "name": "pestle"
