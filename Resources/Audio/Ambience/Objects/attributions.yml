@@ -13,6 +13,11 @@
   copyright: "Taken from source and clipped"
   source: "https://freesound.org/people/derjuli/sounds/448133/"
 
+- files: ["deep_fryer_ambience.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by urnsenfuns, edited and converted by DigitalThaumaturge (github)."
+  source: "https://freesound.org/people/ursenfuns/sounds/440587/"
+
 - files: ["gas_pump.ogg"]
   license: "CC0-1.0"
   copyright: "Taken from source"

@@ -82,8 +82,8 @@ public sealed partial class DeepFryerComponent : Component
     public TimeSpan ActiveUntil = TimeSpan.Zero;
 
     [DataField]
-    public SoundSpecifier DeepFryStartSound = new SoundPathSpecifier("/Audio/Items/Lighters/lighter1.ogg");
+    public SoundSpecifier DeepFryStartSound = new SoundPathSpecifier("/Audio/Machines/deep_fryer_initial.ogg");
 
     [DataField]
-    public SoundSpecifier DeepFrySound = new SoundPathSpecifier("/Audio/Effects/burning.ogg");
+    public SoundSpecifier DeepFrySound = new SoundPathSpecifier("/Audio/Machines/deep_fryer_done.ogg");
 }

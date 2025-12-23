@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: AutolatheMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: autolathe machine board
@@ -1061,6 +1061,24 @@
         Manipulator: 1
         Glass: 2
         Cable: 2
+
+- type: entity
+  id: DeepFryerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: deep fryer machine board
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: DeepFryer
+      stackRequirements:
+        Manipulator: 2
+        Steel: 4
+        Cable: 2
+      tagRequirements:
+        GlassBeaker:
+          amount: 1
+          defaultPrototype: Beaker
 
 - type: entity
   id: FatExtractorMachineCircuitboard

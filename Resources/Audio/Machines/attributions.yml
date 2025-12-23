@@ -13,6 +13,16 @@
   copyright: "Created by Duasun, converted to OGG by EmoGarbage404 (github)."
   source: "https://freesound.org/people/Duasun/sounds/712127/"
 
+- files: ["deep_fryer_done.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by applauseav, edited and converted by DigitalThaumaturge (github)."
+  source: "https://freesound.org/people/applauseav/sounds/239639/"
+
+- files: ["deep_fryer_initial.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by urnsenfuns, edited and converted by DigitalThaumaturge (github)."
+  source: "https://freesound.org/people/ursenfuns/sounds/440587/"
+
 - files: ["spinning.ogg"]
   license: "CC0-1.0"
   copyright: "Created by MrLindstrom, modified and converted to OGG by EmoGarbage404 (github)."

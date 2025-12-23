@@ -17,6 +17,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Morgue;
 using Content.Shared.Morgue.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Nuke;
@@ -91,6 +92,7 @@ public abstract class SharedDeepFryerSystem : EntitySystem
     private void OnOpen(Entity<ActiveFryingDeepFryerComponent> ent, ref StorageAfterOpenEvent args)
     {
         RemComp<ActiveFryingDeepFryerComponent>(ent);
+        //_appearance.SetData(ent, DeepFryerVisualState.HasMob, false);
     }
 
     /// <summary>
@@ -120,6 +122,7 @@ public abstract class SharedDeepFryerSystem : EntitySystem
                 }
                 _stunSystem.TryAddStunDuration(args.Climber, TimeSpan.FromSeconds(10));
                 EntityStorage.Insert(args.Climber, fryer.Owner);
+                //_appearance.SetData(fryer.Owner, DeepFryerVisualState.HasMob, true);
                 _adminLogger.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(args.Instigator):player} started deep frying {ToPrettyString(args.Climber):target} in {ToPrettyString(fryer):fryer}.");
             }
         }
@@ -159,6 +162,7 @@ public abstract class SharedDeepFryerSystem : EntitySystem
                 unrev.Cloneable = true;
                 unrev.ReasonMessage = "defibrillator-unrevivable-fried";
                 RemComp<RottingComponent>(item);
+                RemComp<PerishableComponent>(item);
 
                 EnsureComp<BeenFriedComponent>(item);
                 if(_net.IsServer) // can't predict without the user
@@ -239,6 +243,7 @@ public abstract class SharedDeepFryerSystem : EntitySystem
                         {
                             if (soln.Comp.Solution.CanAddSolution(usedSolution))
                             {
+                                // Removing reactions so the sound stops playing on top of itself over and over
                                 _reactiveSystem.DoEntityReaction(storage.Contents.ContainedEntities[0], usedSolution, ReactionMethod.Injection);
                                 _solutionContainer.TryAddSolution(soln, usedSolution);
                             }

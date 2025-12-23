@@ -10,6 +10,8 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Construction.Components;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DeepFryer;
 using Content.Shared.DeepFryer.Components;
@@ -40,6 +42,7 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -47,7 +50,7 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
 
         SubscribeLocalEvent<ActiveFryingDeepFryerComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ActiveFryingDeepFryerComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<DeepFryerComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
+        //SubscribeLocalEvent<DeepFryerComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
         SubscribeLocalEvent<DeepFryerComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
@@ -64,7 +67,6 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
     private void OnPowerChanged(EntityUid uid, DeepFryerComponent component, ref PowerChangedEvent args)
     {
         // Power only counts for heating the vat solution
-        //if (args.Powered && TryComp<EntityStorageComponent>(uid, out var storage) && !storage.Open && storage.Contents.Count > 0)
         if (args.Powered)
             EnsureComp<ActiveHeatingDeepFryerComponent>(uid);
         else
@@ -72,7 +74,7 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
     }
 
     // Honestly not sure when this comes into play. Maybe if you try to ghost while inside?
-    private void OnSuicideByEnvironment(Entity<DeepFryerComponent> ent, ref SuicideByEnvironmentEvent args)
+    /*private void OnSuicideByEnvironment(Entity<DeepFryerComponent> ent, ref SuicideByEnvironmentEvent args)
     {
         if (args.Handled)
             return;
@@ -102,7 +104,7 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
             EntityStorage.Insert(victim, ent.Owner);
         }
         args.Handled = true;
-    }
+    }*/
 
     /// <summary>
     /// Adds temperature to every item in the deep fryer based on vat solution temperature
@@ -136,8 +138,8 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DeepFryerComponent>();
-        while (query.MoveNext(out var uid, out var fryer))
+        var query = EntityQueryEnumerator<DeepFryerComponent, ActiveHeatingDeepFryerComponent>();
+        while (query.MoveNext(out var uid, out var fryer, out _))
         {
             AddTemperature(uid, fryer, frameTime);
         }
