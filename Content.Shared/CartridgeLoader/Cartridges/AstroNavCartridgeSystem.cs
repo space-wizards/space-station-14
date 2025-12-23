@@ -1,8 +1,6 @@
-using Content.Shared.CartridgeLoader;
-using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.GPS.Components;
 
-namespace Content.Server.CartridgeLoader.Cartridges;
+namespace Content.Shared.CartridgeLoader.Cartridges;
 
 public sealed class AstroNavCartridgeSystem : EntitySystem
 {
@@ -24,7 +22,7 @@ public sealed class AstroNavCartridgeSystem : EntitySystem
     private void OnCartridgeRemoved(Entity<AstroNavCartridgeComponent> ent, ref CartridgeRemovedEvent args)
     {
         // only remove when the program itself is removed
-        if (!_cartridgeLoaderSystem.HasProgram<AstroNavCartridgeComponent>(args.Loader))
+        if (!_cartridgeLoaderSystem.HasProgram<AstroNavCartridgeComponent>(args.Loader.AsNullable()))
         {
             RemComp<HandheldGPSComponent>(args.Loader);
         }

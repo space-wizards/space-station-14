@@ -1,11 +1,13 @@
-namespace Content.Server.CartridgeLoader.Cartridges;
+using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.CartridgeLoader.Cartridges;
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class NotekeeperCartridgeComponent : Component
 {
     /// <summary>
     /// The list of notes that got written down
     /// </summary>
-    [DataField("notes")]
+    [DataField, AutoNetworkedField]
     public List<string> Notes = new();
 }
