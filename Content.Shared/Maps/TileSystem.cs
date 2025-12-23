@@ -4,10 +4,12 @@ using Content.Shared.CCVar;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Maps;
@@ -23,11 +25,39 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly SharedDecalSystem _decal = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    public const int ChunkSize = 16;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<GridInitializeEvent>(OnGridStartup);
+        SubscribeLocalEvent<TileHistoryComponent, ComponentGetState>(OnGetState);
+    }
+
+    private void OnGetState(EntityUid uid, TileHistoryComponent component, ref ComponentGetState args)
+    {
+        // Should this be a full component state or a delta-state?
+        if (args.FromTick <= component.CreationTick || args.FromTick <= component.ForceTick)
+        {
+            var fullHistory = new Dictionary<Vector2i, TileHistoryChunk>(component.ChunkHistory.Count);
+            foreach (var (key, value) in component.ChunkHistory)
+            {
+                fullHistory[key] = new TileHistoryChunk(value);
+            }
+            args.State = new TileHistoryState(fullHistory);
+            return;
+        }
+
+        var data = new Dictionary<Vector2i, TileHistoryChunk>();
+        foreach (var (index, chunk) in component.ChunkHistory)
+        {
+            if (chunk.LastModified >= args.FromTick)
+                data[index] = new TileHistoryChunk(chunk);
+        }
+
+        args.State = new TileHistoryDeltaState(data, new(component.ChunkHistory.Keys));
     }
 
     /// <summary>
@@ -144,11 +174,21 @@ public sealed class TileSystem : EntitySystem
         //Get or add the history component on the grid
         var history = EnsureComp<TileHistoryComponent>(grid);
 
+        var chunkIndices = SharedMapSystem.GetChunkIndices(key, ChunkSize);
+        if (!history.ChunkHistory.TryGetValue(chunkIndices, out var chunk))
+        {
+            chunk = new TileHistoryChunk();
+            history.ChunkHistory[chunkIndices] = chunk;
+        }
+
+        chunk.LastModified = _timing.CurTick;
+        Dirty(grid, history);
+
         //Create stack if needed
-        if (!history.TileHistory.TryGetValue(key, out var stack))
+        if (!chunk.History.TryGetValue(key, out var stack))
         {
             stack = new List<ProtoId<ContentTileDefinition>>();
-            history.TileHistory[key] = stack;
+            chunk.History[key] = stack;
         }
 
         //Push current tile to the stack, if not empty
@@ -195,16 +235,28 @@ public sealed class TileSystem : EntitySystem
         var historyComp = EnsureComp<TileHistoryComponent>(gridUid);
         ProtoId<ContentTileDefinition> previousTileId;
 
+        var chunkIndices = SharedMapSystem.GetChunkIndices(indices, ChunkSize);
+
         //Pop from stack if we have history
-        if (historyComp.TileHistory.TryGetValue(indices, out var stack) && stack.Count > 0)
+        if (historyComp.ChunkHistory.TryGetValue(chunkIndices, out var chunk) &&
+            chunk.History.TryGetValue(indices, out var stack) && stack.Count > 0)
         {
+            chunk.LastModified = _timing.CurTick;
+            Dirty(gridUid, historyComp);
+
             previousTileId = stack.Last();
             stack.RemoveAt(stack.Count - 1);
 
             //Clean up empty stacks to avoid memory buildup
             if (stack.Count == 0)
             {
-                historyComp.TileHistory.Remove(indices);
+                chunk.History.Remove(indices);
+            }
+
+            // Clean up empty chunks
+            if (chunk.History.Count == 0)
+            {
+                historyComp.ChunkHistory.Remove(chunkIndices);
             }
         }
         else

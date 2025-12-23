@@ -519,12 +519,16 @@ public sealed partial class ExplosionSystem
 
             ContentTileDefinition? newDef = null;
 
-            if (history != null && history.TileHistory.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
+            var chunkIndices = SharedMapSystem.GetChunkIndices(tileRef.GridIndices, TileSystem.ChunkSize);
+            if (history != null && history.ChunkHistory.TryGetValue(chunkIndices, out var chunk) &&
+                chunk.History.TryGetValue(tileRef.GridIndices, out var stack) && stack.Count > 0)
             {
                 var newId = stack[^1];
                 stack.RemoveAt(stack.Count - 1);
                 if (stack.Count == 0)
-                    history.TileHistory.Remove(tileRef.GridIndices);
+                    chunk.History.Remove(tileRef.GridIndices);
+
+                Dirty(tileRef.GridUid, history);
 
                 newDef = (ContentTileDefinition) _tileDefinitionManager[newId.Id];
             }
