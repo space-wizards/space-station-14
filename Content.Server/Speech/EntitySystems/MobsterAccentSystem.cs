@@ -33,7 +33,9 @@ public sealed class MobsterAccentSystem : EntitySystem
         // Then prefix/suffix funnyies
 
         // direct word replacements
-        var msg = _replacement.ApplyReplacements(message, "mobster");
+        var msg = message;
+
+        msg = _replacement.ApplyReplacements(msg, "mobster");
 
         // thinking -> thinkin'
         // king -> king
