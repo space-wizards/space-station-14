@@ -76,6 +76,8 @@
           False: { visible: False }
   - type: Machine
     board: ElectrolysisUnitMachineCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 0
   - type: PowerState
     idlePowerDraw: 0
     workingPowerDraw: 1000 # for a lab-grade machine
@@ -126,6 +128,8 @@
             - CentrifugeCompatible
   - type: Machine
     board: CentrifugeMachineCircuitboard
+  - type: ApcPowerReceiver
+    powerLoad: 0
   - type: PowerState
-    idlePowerDraw: 5
+    idlePowerDraw: 0
     workingPowerDraw: 500

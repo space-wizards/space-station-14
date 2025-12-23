@@ -49,6 +49,8 @@
     price: 800
   - type: ResearchClient
   - type: TechnologyDatabase
+  - type: ApcPowerReceiver
+    powerLoad: 150
   - type: PowerState
     idlePowerDraw: 150
     workingPowerDraw: 1000
