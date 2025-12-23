@@ -22,7 +22,7 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
-    [Dependency] private readonly PowerStateSystem _powerState = default!;
+    [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

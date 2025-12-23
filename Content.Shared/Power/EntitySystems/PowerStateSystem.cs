@@ -1,6 +1,5 @@
 using Content.Shared.Power.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Power.EntitySystems;
 
@@ -8,7 +7,7 @@ namespace Content.Shared.Power.EntitySystems;
 /// Generic system that handles entities with <see cref="PowerStateComponent"/>.
 /// Used for simple machines that only need to switch between "idle" and "working" power states.
 /// </summary>
-public sealed class PowerStateSystem : EntitySystem
+public abstract class SharedPowerStateSystem : EntitySystem
 {
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiverSystem = default!;
 
@@ -18,17 +17,7 @@ public sealed class PowerStateSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PowerStateComponent, ComponentStartup>(OnComponentStartup);
-
         _powerStateQuery = GetEntityQuery<PowerStateComponent>();
-    }
-
-    private void OnComponentStartup(Entity<PowerStateComponent> ent, ref ComponentStartup args)
-    {
-        SharedApcPowerReceiverComponent? apcComp = null;
-        DebugTools.Assert(_powerReceiverSystem.ResolveApc(ent.Owner, ref apcComp),
-            $"Entity {ToPrettyString(ent)} has a PowerStateComponent but not the required SharedApcPowerReceiverComponent.");
-        SetWorkingState(ent.Owner, ent.Comp.IsWorking);
     }
 
     /// <summary>

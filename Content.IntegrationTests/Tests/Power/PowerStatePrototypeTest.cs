@@ -7,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Power;
 
-[TestFixture, TestOf(typeof(PowerStateSystem))]
+[TestFixture, TestOf(typeof(SharedPowerStateSystem))]
 public sealed class PowerStatePrototypeTest
 {
     /// <summary>
