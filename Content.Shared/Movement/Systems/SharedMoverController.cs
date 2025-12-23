@@ -20,6 +20,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -102,6 +103,8 @@ public abstract partial class SharedMoverController : VirtualController
 
         SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
         SubscribeLocalEvent<InputMoverComponent, ComponentStartup>(OnMoverStartup);
+        SubscribeLocalEvent<InputMoverComponent, PhysicsBodyTypeChangedEvent>(OnPhysicsBodyChanged);
+        SubscribeLocalEvent<InputMoverComponent, UpdateCanMoveEvent>(OnCanMove);
 
         InitializeInput();
         InitializeRelay();
@@ -206,6 +209,21 @@ public abstract partial class SharedMoverController : VirtualController
             UsedMobMovement[uid] = false;
             return;
         }
+
+        /*
+         * This assert is here because any entity using inputs to move should be a Kinematic Controller.
+         * Kinematic Controllers are not built to use the entirety of the Physics engine by intention and
+         * setting an input mover to Dynamic will cause the Physics engine to occasionally throw asserts.
+         * In addition, SharedMoverController applies its own forms of fake impulses and friction outside
+         * Physics simulation, which will cause issues for Dynamic bodies (Such as Friction being applied twice).
+         * Kinematic bodies have even less Physics options and as such aren't suitable for a player, especially
+         * when we move to Box2D v3 where there will be more support for players updating outside of simulation.
+         * Lastly, static bodies can't move so they shouldn't be updated. If a static body makes it here we're
+         * doing unnecessary calculations.
+         * Only a Kinematic Controller should be making it to this point.
+         */
+        DebugTools.Assert(physicsComponent.BodyType == BodyType.KinematicController,
+            $"Input mover: {ToPrettyString(uid)} in HandleMobMovement is not the correct BodyType, BodyType found: {physicsComponent.BodyType}, expected: KinematicController.");
 
         // If the body is in air but isn't weightless then it can't move
         var weightless = _gravity.IsWeightless(uid);
@@ -344,8 +362,7 @@ public abstract partial class SharedMoverController : VirtualController
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
                 TryGetSound(weightless, uid, mover, mobMover, xform, out var sound, tileDef: tileDef))
             {
-                var soundModifier = mover.Sprinting ? InputMoverComponent.SprintingSoundModifier
-                    : InputMoverComponent.WalkingSoundModifier;
+                var soundModifier = mover.Sprinting ? InputMoverComponent.SprintingSoundModifier : InputMoverComponent.WalkingSoundModifier;
 
                 var audioParams = sound.Params
                     .WithVolume(sound.Params.Volume + soundModifier)
@@ -641,5 +658,17 @@ public abstract partial class SharedMoverController : VirtualController
             args.Modifier *= ent.Comp.BaseWeightlessFriction;
         else
             args.Modifier *= ent.Comp.BaseFriction;
+    }
+
+    private void OnPhysicsBodyChanged(Entity<InputMoverComponent> entity, ref PhysicsBodyTypeChangedEvent args)
+    {
+        _blocker.UpdateCanMove(entity);
+    }
+
+    private void OnCanMove(Entity<InputMoverComponent> entity, ref UpdateCanMoveEvent args)
+    {
+        // If we don't have a physics component, or have a static body type then we can't move.
+        if (!PhysicsQuery.TryComp(entity, out var body) || body.BodyType == BodyType.Static)
+            args.Cancel();
     }
 }
