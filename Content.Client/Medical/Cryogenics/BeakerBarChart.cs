@@ -16,7 +16,7 @@ public sealed class BeakerBarChart : Control
 {
     private sealed class Entry
     {
-        public float Amount;
+        public float WidthFraction;  // This entry's width as a fraction of the chart's total width (between 0 and 1)
         public float TargetAmount;
         public string Uid; // This UID is used to track entries between frames, for animation.
         public string? Tooltip;
@@ -99,7 +99,7 @@ public sealed class BeakerBarChart : Control
 
         _entries.Add(new Entry(uid, childLabel)
         {
-            Amount = (_hasBeenDrawn ? 0 : amount),
+            WidthFraction = (_hasBeenDrawn ? 0 : amount / Capacity),
             TargetAmount = amount,
             Tooltip = tooltip,
             Color = color
@@ -108,13 +108,13 @@ public sealed class BeakerBarChart : Control
 
     private IEnumerable<(Entry, float xMin, float xMax)> EntryRanges(float? pixelWidth = null)
     {
-        pixelWidth ??= PixelWidth;
-        var unitWidth = pixelWidth.Value / Capacity;
+        float chartWidth = pixelWidth ?? PixelWidth;
         var xStart = 0f;
 
         foreach (var entry in _entries)
         {
-            var xEnd = MathF.Min(xStart + entry.Amount * unitWidth, pixelWidth.Value);
+            var entryWidth = entry.WidthFraction * chartWidth;
+            var xEnd = MathF.Min(xStart + entryWidth, chartWidth);
 
             yield return (entry, xStart, xEnd);
 
@@ -140,19 +140,26 @@ public sealed class BeakerBarChart : Control
     protected override void FrameUpdate(FrameEventArgs args)
     {
         // Tween the amounts to their target amounts.
+        const float tweenInverseHalfLife = 8;  // Half life of tween is 1/n
         bool hasChanged = false;
 
         foreach (var entry in _entries)
         {
-            if (entry.Amount == entry.TargetAmount)
+            var targetWidthFraction = entry.TargetAmount / Capacity;
+
+            if (entry.WidthFraction == targetWidthFraction)
                 continue;
 
             // Tween with lerp abuse interpolation
-            entry.Amount = MathHelper.Lerp(entry.Amount, entry.TargetAmount, MathHelper.Clamp01(8 * args.DeltaSeconds));
+            entry.WidthFraction = MathHelper.Lerp(
+                entry.WidthFraction,
+                targetWidthFraction,
+                MathHelper.Clamp01(tweenInverseHalfLife * args.DeltaSeconds)
+            );
             hasChanged = true;
 
-            if (MathF.Abs(entry.Amount - entry.TargetAmount) < 0.001f)
-                entry.Amount = entry.TargetAmount;
+            if (MathF.Abs(entry.WidthFraction - targetWidthFraction) < 0.0001f)
+                entry.WidthFraction = targetWidthFraction;
         }
 
         if (!hasChanged)
@@ -163,11 +170,11 @@ public sealed class BeakerBarChart : Control
         // Remove old entries whose animations have finished.
         foreach (var entry in _entries)
         {
-            if (entry.Amount == 0 && entry.TargetAmount == 0)
+            if (entry.WidthFraction == 0 && entry.TargetAmount == 0)
                 RemoveChild(entry.Label);
         }
 
-        _entries.RemoveAll(entry => entry.Amount == 0 && entry.TargetAmount == 0);
+        _entries.RemoveAll(entry => entry.WidthFraction == 0 && entry.TargetAmount == 0);
     }
 
     protected override void MouseMove(GUIMouseMoveEventArgs args)
