@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-4.0",
-    "copyright": "Created by TheShuEd (Github) | Small tweaks to liq states, makeshift by ScarKy0 (Github)",
+    "copyright": "Created by TheShuEd (Github), edited into a juicer by ScarKy0(GitHub)",
     "states": [
         {
             "name": "full"
