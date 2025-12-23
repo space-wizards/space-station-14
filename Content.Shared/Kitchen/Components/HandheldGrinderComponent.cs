@@ -11,7 +11,7 @@ namespace Content.Shared.Kitchen.Components;
 public sealed partial class HandheldGrinderComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(3.5f);
+    public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(4f);
 
     /// <summary>
     /// The sound to play when the doAfter starts.

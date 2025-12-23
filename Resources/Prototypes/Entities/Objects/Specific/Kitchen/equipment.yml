@@ -79,7 +79,7 @@
       state: fill-1
       visible: false
   - type: HandheldGrinder
-    doAfterDuration: 5
+    doAfterDuration: 6
   - type: Construction
     graph: MakeshiftMortarAndPestle
     node: mortarAndPestle
@@ -119,7 +119,7 @@
       visible: false
     - state: cap
   - type: HandheldGrinder
-    doAfterDuration: 5
+    doAfterDuration: 6
   - type: Construction
     graph: MakeshiftJuicer
     node: juicer
