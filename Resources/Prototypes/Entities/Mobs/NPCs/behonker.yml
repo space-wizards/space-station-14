@@ -19,7 +19,7 @@
     - type: HTN
       rootTask:
         task: SimpleRangedHostileCompound
-    - type: HitscanBatteryAmmoProvider
+    - type: BatteryAmmoProvider
       proto: RedLaser
       fireCost: 62.5
     - type: Battery
@@ -114,9 +114,10 @@
     - type: Input
       context: "human"
     - type: Bloodstream
-      bloodMaxVolume: 300
-      bloodReagent: Laughter
-
+      bloodReferenceSolution:
+        reagents:
+        - ReagentId: Laughter
+          Quantity: 300
 - type: entity
   name: behonker
   parent: BaseMobBehonker
