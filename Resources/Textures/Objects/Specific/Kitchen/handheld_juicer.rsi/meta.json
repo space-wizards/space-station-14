@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-4.0",
+    "copyright": "Created by TheShuEd (Github) | Small tweaks to liq states, makeshift by ScarKy0 (Github)",
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "makeshift"
+        },
+        {
+            "name": "fill-1"
+        },
+        {
+            "name": "fill-2"
+        },
+        {
+            "name": "fill-3"
+        },
+        {
+            "name": "fill-4"
+        },
+        {
+            "name": "mortar_base"
+        },
+        {
+            "name": "pestle"
+        }
+    ]
+}

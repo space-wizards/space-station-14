@@ -1,16 +1,8 @@
 - type: entity
+  abstract: true
   parent: BaseItem
-  id: MortarAndPestle
-  name: mortar and pestle
-  description: Used for grinding small amounts of objects.
+  id: BaseHandheldGrinder
   components:
-  - type: Sprite
-    sprite: Objects/Consumable/Food/bowl.rsi
-    layers:
-    - state: bowl
-    - map: ["enum.SolutionContainerLayers.Fill"]
-      state: fill-1
-      visible: false
   - type: SolutionContainerManager
     solutions:
       grinderOutput:
@@ -41,6 +33,11 @@
   - type: ExaminableSolution
     solution: grinderOutput
     exactVolume: true
+  - type: SolutionItemStatus
+    solution: grinderOutput
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: fill-
   - type: DnaSubstanceTrace
   - type: Damageable
     damageContainer: Inorganic
@@ -50,3 +47,65 @@
     size: Normal
   - type: Appearance
   - type: HandheldGrinder
+
+- type: entity
+  parent: BaseHandheldGrinder
+  id: MortarAndPestle
+  name: mortar and pestle
+  description: Used for grinding small amounts of objects.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    layers:
+    - state: full
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+
+- type: entity
+  parent: BaseHandheldGrinder
+  id: MortarAndPestleMakeshift
+  name: makeshift mortar and pestle
+  description: Used for grinding small amounts of objects. Inferior version made out of wood.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    layers:
+    - state: makeshift
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: HandheldGrinder
+    doAfterDuration: 5
+
+- type: entity
+  parent: BaseHandheldGrinder
+  id: HandheldJuicer
+  name: handheld juicer
+  description: Used for juicing small amounts of objects.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    layers:
+    - state: full
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: HandheldGrinder
+    program: Juice
+
+- type: entity
+  parent: HandheldJuicer
+  id: HandheldJuicerMakeshift
+  name: makeshift juicer
+  description: Used for juicing small amounts of objects. Inferior version made out of wood.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/mortar_and_pestle.rsi
+    layers:
+    - state: makeshift
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: HandheldGrinder
+    doAfterDuration: 5

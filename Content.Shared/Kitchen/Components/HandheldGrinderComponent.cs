@@ -11,20 +11,33 @@ namespace Content.Shared.Kitchen.Components;
 public sealed partial class HandheldGrinderComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(8);
+    public TimeSpan DoAfterDuration = TimeSpan.FromSeconds(3f);
 
+    /// <summary>
+    /// The sound to play when the doAfter starts.
+    /// </summary>
     [DataField]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Culinary/mortar_grinding.ogg");
 
+    /// <summary>
+    /// The grinder program to use.
+    /// Decides whether this one will Juice or Grind the objects.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public GrinderProgram Program = GrinderProgram.Grind;
 
+    /// <summary>
+    /// The solution into which the output reagents will go.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public string SolutionName = "grinderOutput";
 
+    /// <summary>
+    /// The item slot into which the input items will go.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public string ItemSlotName = "grinderInput";
 
-    [DataField, AutoNetworkedField]
-    public float SolutionSize = 15f;
+    // Used to cancel the sound.
+    public EntityUid? AudioStream;
 }
