@@ -30,12 +30,11 @@ public sealed partial class NeedToRackBoltPrecondition : HTNPrecondition
             return false;
 
         var gunSystem = _entManager.System<SharedGunSystem>();
-
         var chamberEntity = gunSystem.GetChamberEntity(heldEntity.Value);
-        bool hasRoundInChamber = chamberEntity != null;
+        bool hasRoundInChamber = chamberEntity is not null;
 
-        return chamberMagazine.BoltClosed == false
-                || chamberMagazine.BoltClosed == true && !hasRoundInChamber
-                || chamberMagazine.BoltClosed == null && !hasRoundInChamber;
+        return chamberMagazine.BoltClosed == false ||
+               chamberMagazine.BoltClosed == true && !hasRoundInChamber ||
+               chamberMagazine.BoltClosed == null && !hasRoundInChamber;
     }
 }

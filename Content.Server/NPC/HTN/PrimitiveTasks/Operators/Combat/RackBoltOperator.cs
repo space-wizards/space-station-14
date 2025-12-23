@@ -31,7 +31,7 @@ public sealed partial class RackBoltOperator : HTNOperator
         {
             gunSystem.UseChambered(gunUid.Value, chamberMagazine, owner);
         }
-        else if (chamberMagazine.BoltClosed != null)
+        else if (chamberMagazine.BoltClosed is not null)
         {
             gunSystem.ToggleBolt(gunUid.Value, chamberMagazine, owner);
         }

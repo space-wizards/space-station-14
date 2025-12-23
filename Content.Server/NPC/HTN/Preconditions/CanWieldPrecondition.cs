@@ -27,6 +27,7 @@ public sealed partial class CanWieldPrecondition : HTNPrecondition
             return false;
 
         var wieldableSystem = _entManager.System<SharedWieldableSystem>();
+
         return wieldableSystem.CanWield(heldEntity.Value, wieldable, owner, quiet: true);
     }
 }
