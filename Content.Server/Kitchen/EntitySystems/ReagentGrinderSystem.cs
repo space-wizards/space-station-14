@@ -43,7 +43,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly SharedDestructibleSystem _destructible = default!;
         [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
         [Dependency] private readonly JitteringSystem _jitter = default!;
-        [Dependency] private readonly Power.EntitySystems.PowerStateSystem _powerState = default!;
+        [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
 
         public override void Initialize()
         {
