@@ -70,16 +70,6 @@
     # once it would say bloated, turn into the rotten prototype
     stage: 1
 
-# bruh
-- type: Tag
-  id: Raw
-
-- type: Tag
-  id: Cooked
-
-- type: Tag
-  id: Cutlet
-
 # Raw
 
 - type: entity
