@@ -28,20 +28,10 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class MaterialArbitrageTest
 {
-    // These recipes are currently broken and need fixing. You should not be adding to these sets.
-    private readonly HashSet<string> _destructionArbitrageIgnore =
-    [
-        "BaseChemistryEmptyVial", "DrinkShotGlass", "SodiumLightTube", "DrinkGlassCoupeShaped",
-        "LedLightBulb", "ExteriorLightTube", "LightTube", "DrinkGlass", "DimLightBulb", "LightBulb", "LedLightTube",
-        "ChemistryEmptyBottle01", "WarmLightBulb",
-    ];
-
-    private readonly HashSet<string> _compositionArbitrageIgnore =
-    [
-        "FoodPlateSmall", "AirTank", "FoodPlateTin", "FoodPlateMuffinTin", "WeaponCapacitorRechargerCircuitboard",
-        "WeaponCapacitorRechargerCircuitboard", "BorgChargerCircuitboard", "BorgChargerCircuitboard", "FoodPlate",
-        "CellRechargerCircuitboard", "CellRechargerCircuitboard",
-    ];
+    // These sets are for selectively excluding recipes from arbitrage.
+    // You should NOT be adding to these. They exist here for downstreams and potential future issues.
+    private readonly HashSet<string> _destructionArbitrageIgnore = [];
+    private readonly HashSet<string> _compositionArbitrageIgnore = [];
 
     [Test]
     public async Task NoMaterialArbitrage()
@@ -469,7 +459,8 @@ public sealed class MaterialArbitrageTest
                 await server.WaitPost(() =>
                 {
                     var ent = entManager.SpawnEntity(id, testMap.GridCoords);
-                    stackSys.SetCount(ent, 1);
+                    if (entManager.TryGetComponent<StackComponent>(ent, out var stackComp))
+                        stackSys.SetCount((ent, stackComp), 1);
                     priceCache[id] = price = pricing.GetPrice(ent, false);
                     entManager.DeleteEntity(ent);
                 });

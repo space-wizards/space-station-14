@@ -1,11 +1,11 @@
-#HUMANOID FIGURINES
+# When adding new figurines, also add them to id: AllFigurinesTable
 
 - type: entity
+  abstract: true
   parent: BaseItem
   id: BaseFigurine
   name: figurine
   description: A small miniature.
-  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Fun/figurines.rsi
@@ -33,6 +33,8 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
+
+#HUMANOID FIGURINES
 
 - type: entity
   parent: BaseFigurine
@@ -452,7 +454,82 @@
   - type: SpeakOnTrigger
     pack: FigurinesWizard
 
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineGriffin
+  name: griffin figure
+  description: A figurine depicting 'The Griffin', criminal mastermind.
+  components:
+  - type: Sprite
+    state: griffin
+  - type: SpeakOnTrigger
+    pack: FigurinesGriffin
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineOwlman
+  name: owlman figure
+  description: A figurine depicting 'Owlman', the defender of justice.
+  components:
+  - type: Sprite
+    state: owlman
+  - type: SpeakOnTrigger
+    pack: FigurinesOwlman
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineSkeleton
+  name: skeleton figure
+  description: A figurine depicting a spooky scary skeleton.
+  components:
+  - type: Sprite
+    state: skeleton
+  - type: SpeakOnTrigger
+    pack: FigurinesSkeleton
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineThief
+  name: thief figure
+  description: A figurine depicting a kleptomaniac that hides in the shadows.
+  components:
+  - type: Sprite
+    state: thief
+  - type: SpeakOnTrigger
+    pack: FigurinesThief
+
 #Nonhuman Figurines
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyNuke
+  name: nuke toy
+  description: A plastic model of a Nuclear Fission Explosive. No uranium included... probably.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toy_nuke.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toy_nuke.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.12"
+  - type: Tag
+    tags:
+    - Figurine
+    - Payload
+  - type: UseDelay
+    delay: 180.0
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Machines/Nuke/nuke_alarm.ogg
+      params:
+        volume: -5
+        maxDistance: 10
 
 - type: entity
   parent: BaseFigurine
@@ -473,8 +550,8 @@
   components:
   - type: Sprite
     state: queen
-  # - type: SpeakOnTrigger # TODO add something
-  #   pack: FigurinesQueen
+  - type: SpeakOnTrigger
+    pack: FigurinesQueen
 
 - type: entity
   parent: BaseFigurine
@@ -531,41 +608,23 @@
   - type: SpeakOnTrigger
     pack: FigurinesHamlet
 
-#TODO: Convert these to the new figurine sprite template and rename their sprite name.
-#Yes, these are humanoids, but they need to be updated first.
-
 - type: entity
   parent: BaseFigurine
-  id: ToyGriffin
-  name: griffin figure
-  description: An action figure modeled after 'The Griffin', criminal mastermind.
+  id: ToyAi
+  name: AI toy
+  description: A scaled-down toy AI core.
   components:
   - type: Sprite
-    state: griffinprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyOwlman
-  name: owl figure
-  description: An action figure modeled after 'The Owl', defender of justice.
-  components:
-  - type: Sprite
-    state: owlprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToySkeleton
-  name: skeleton figure
-  description: Spooked ya!
-  components:
-  - type: Sprite
-    state: skeletonprize
-
-- type: entity
-  parent: BaseFigurine
-  id: ToyFigurineThief
-  name: thief character figure
-  description: Hiding in the shadows...
-  components:
-  - type: Sprite
-    state: thiefcharacter
+    sprite: Objects/Fun/AI.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/AI.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.06"
+  - type: SpeakOnTrigger
+    pack: FigurinesAI

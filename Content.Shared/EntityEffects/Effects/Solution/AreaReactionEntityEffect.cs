@@ -33,7 +33,5 @@ public sealed partial class AreaReactionEffect : EntityEffectBase<AreaReactionEf
             ("duration", Duration)
         );
 
-    public override bool ShouldLog => true;
-
-    public override LogImpact LogImpact => LogImpact.High;
+    public override LogImpact? Impact => LogImpact.High;
 }
