@@ -295,7 +295,7 @@ public sealed class SpreaderSystem : EntitySystem
     /// This function activates all spreaders that are adjacent to a given entity. This also activates other spreaders
     /// on the same tile as the current entity (for thin airtight entities like windoors).
     /// </summary>
-    public void ActivateSpreadableNeighbors(EntityUid uid, (EntityUid Grid, Vector2i Tile)? position = null)
+    public void ActivateSpreadableNeighbors(EntityUid origin, (EntityUid Grid, Vector2i Tile)? position = null)
     {
         Vector2i tile;
         EntityUid gridUid;
@@ -303,7 +303,7 @@ public sealed class SpreaderSystem : EntitySystem
 
         if (position == null)
         {
-            var transform = Transform(uid);
+            var transform = Transform(origin);
             if (!TryComp(transform.GridUid, out gridComp) || TerminatingOrDeleted(transform.GridUid.Value))
                 return;
 
@@ -321,7 +321,7 @@ public sealed class SpreaderSystem : EntitySystem
         while (anchored.MoveNext(out var entity))
         {
             // Don't re-activate the terminating entity
-            if (entity == uid)
+            if (entity == origin)
                 continue;
             DebugTools.Assert(Transform(entity.Value).Anchored);
 
