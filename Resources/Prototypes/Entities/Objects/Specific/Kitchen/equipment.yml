@@ -1,0 +1,52 @@
+- type: entity
+  parent: BaseItem
+  id: MortarAndPestle
+  name: mortar and pestle
+  description: Used for grinding small amounts of objects.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl
+    - map: ["enum.SolutionContainerLayers.Fill"]
+      state: fill-1
+      visible: false
+  - type: SolutionContainerManager
+    solutions:
+      grinderOutput:
+        maxVol: 20
+  - type: ContainerContainer
+    containers:
+      grinderInput: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      grinderInput:
+        whitelist:
+          components:
+          - Extractable
+  - type: SolutionTransfer
+  - type: DrawableSolution
+    solution: grinderOutput
+  - type: RefillableSolution
+    solution: grinderOutput
+  - type: DrainableSolution
+    solution: grinderOutput
+  - type: Edible
+    edible: Drink
+    solution: grinderOutput
+    destroyOnEmpty: false
+    utensil: Spoon
+  - type: MixableSolution
+    solution: grinderOutput
+  - type: ExaminableSolution
+    solution: grinderOutput
+    exactVolume: true
+  - type: DnaSubstanceTrace
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Spillable
+    solution: grinderOutput
+  - type: Item
+    size: Normal
+  - type: Appearance
+  - type: HandheldGrinder

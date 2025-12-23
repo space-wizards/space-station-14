@@ -68,44 +68,6 @@
     - Trash
 
 - type: entity
-  parent: ReagentContainerBase
-  id: FoodBowlBigGrinder
-  name: mortar and pestle
-  description: Used for grinding small amounts of objects.
-  components:
-  - type: Item
-    shape:
-    - 0,0,1,0
-    storedOffset: 0,-3
-  - type: SolutionContainerManager
-    solutions:
-      grinderOutput:
-        maxVol: 15
-  - type: ContainerContainer
-    containers:
-      grinderInput: !type:ContainerSlot
-  - type: Sprite
-    sprite: Objects/Consumable/Food/bowl.rsi
-    layers:
-    - state: bowl
-    - map: ["enum.SolutionContainerLayers.Fill"]
-      state: fill-1
-      visible: false
-  - type: Appearance
-  - type: SolutionTransfer
-  - type: Tag
-    tags:
-    - Trash
-  - type: ItemSlots
-    slots:
-      grinderInput:
-        whitelist:
-          components:
-          - Extractable
-  - type: HandheldGrinder
-
-
-- type: entity
   parent: BaseItem
   id: FoodBowlBigTrash
   name: broken bowl
