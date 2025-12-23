@@ -14,7 +14,6 @@ namespace Content.Server.EntityEffects.Effects.Botany;
 public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateSpeciesChange>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PlantSystem _plant = default!;
     [Dependency] private readonly MutationSystem _mutation = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateSpeciesChange> args)
@@ -24,7 +23,6 @@ public sealed partial class PlantMutateSpeciesChangeEntityEffectSystem : EntityE
             return;
 
         var newPlantEnt = _random.Pick(oldPlantData.MutationPrototypes);
-        _plant.TryGetTray(entity.AsNullable(), out var trayEnt);
-        _mutation.SpeciesChange(entity.Owner, newPlantEnt, trayEnt);
+        _mutation.SpeciesChange(entity.Owner, newPlantEnt);
     }
 }

@@ -5,10 +5,8 @@ using Content.Server.Botany.Events;
 using Content.Server.Popups;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
-using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Random;
 using Content.Shared.Tag;
@@ -54,7 +52,7 @@ public sealed class PlantSystem : EntitySystem
 
     private void OnMapInit(Entity<PlantComponent> ent, ref MapInitEvent args)
     {
-        _tray.PlantingPlant(ent.Owner, ent.AsNullable());
+        PlantingPlant(ent.AsNullable());
     }
 
     private void OnCrossPollinate(Entity<PlantComponent> ent, ref PlantCrossPollinateEvent args)
@@ -352,33 +350,59 @@ public sealed class PlantSystem : EntitySystem
             || !TryComp<PlantHarvestComponent>(uid, out var harvest))
             return;
 
-        if (!TryComp<AppearanceComponent>(uid, out var app))
+        if (!TryComp<AppearanceComponent>(uid, out var plantApp))
             return;
 
-        _appearance.SetData(uid, PlantVisuals.PlantRsi, plantData.PlantRsi.ToString(), app);
+        _appearance.SetData(uid, PlantVisuals.PlantRsi, plantData.PlantRsi.ToString(), plantApp);
 
         if (plantHolder.Dead)
         {
-            _appearance.SetData(uid, PlantVisuals.PlantState, "dead", app);
+            _appearance.SetData(uid, PlantVisuals.PlantState, "dead", plantApp);
         }
         else if (harvest.ReadyForHarvest)
         {
-            _appearance.SetData(uid, PlantVisuals.PlantState, "harvest", app);
+            _appearance.SetData(uid, PlantVisuals.PlantState, "harvest", plantApp);
         }
         else
         {
             if (plantHolder.Age < component.Maturation)
             {
                 var growthStage = Math.Max(1, (int)(plantHolder.Age * component.GrowthStages / component.Maturation));
-                _appearance.SetData(uid, PlantVisuals.PlantState, $"stage-{growthStage}", app);
+                _appearance.SetData(uid, PlantVisuals.PlantState, $"stage-{growthStage}", plantApp);
             }
             else
             {
-                _appearance.SetData(uid, PlantVisuals.PlantState, $"stage-{component.GrowthStages}", app);
+                _appearance.SetData(uid, PlantVisuals.PlantState, $"stage-{component.GrowthStages}", plantApp);
             }
         }
 
         if (TryGetTray(uid, out var trayEnt))
             _tray.UpdateWarnings(trayEnt);
+    }
+
+    /// <summary>
+    /// Planting a plant.
+    /// </summary>
+    [PublicAPI]
+    public void PlantingPlant(Entity<PlantComponent?> plantEnt)
+    {
+        var (plantUid, plantComp) = plantEnt;
+
+        if (!Resolve(plantUid, ref plantComp, false))
+            return;
+
+        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
+            return;
+
+        plantHolder.Health = plantComp.Endurance;
+        plantHolder.LastCycle = _gameTiming.CurTime;
+
+        if (TryComp<PlantHarvestComponent>(plantUid, out var harvest))
+        {
+            harvest.ReadyForHarvest = false;
+            harvest.LastHarvest = 0;
+        }
+
+        UpdateSprite(plantEnt.AsNullable());
     }
 }

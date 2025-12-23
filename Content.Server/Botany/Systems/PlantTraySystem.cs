@@ -52,19 +52,9 @@ public sealed class PlantTraySystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<PlantTrayComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PlantTrayComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantTrayComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantTrayComponent, SolutionTransferredEvent>(OnSolutionTransferred);
-    }
-
-    private void OnMapInit(Entity<PlantTrayComponent> ent, ref MapInitEvent args)
-    {
-        if (!TryComp<AppearanceComponent>(ent, out var app))
-            return;
-
-        // Tray should never render plant sprite.
-        _appearance.SetData(ent.Owner, PlantVisuals.PlantState, string.Empty, app);
     }
 
     private void OnExamine(Entity<PlantTrayComponent> ent, ref ExaminedEvent args)
@@ -139,7 +129,7 @@ public sealed class PlantTraySystem : EntitySystem
                     args.User,
                     PopupType.Medium);
 
-                PlantingPlant(uid, plantUid);
+                PlantingPlantInTray(uid, plantUid);
 
                 if (TryComp<PlantHolderComponent>(tray.PlantEntity!.Value, out var plantHolder)
                     && seeds.HealthOverride != null)
@@ -367,34 +357,17 @@ public sealed class PlantTraySystem : EntitySystem
     /// Planting a plant in a tray.
     /// </summary>
     [PublicAPI]
-    public void PlantingPlant(Entity<PlantTrayComponent?> trayEnt, Entity<PlantComponent?> plantEnt)
+    public void PlantingPlantInTray(Entity<PlantTrayComponent?> trayEnt, EntityUid plantUid)
     {
         var (trayUid, trayComp) = trayEnt;
-        var (plantUid, plantComp) = plantEnt;
 
-        if (!Resolve(plantUid, ref plantComp, false))
+        if (!Resolve(trayUid, ref trayComp, false))
             return;
 
-        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
-            return;
-
-        plantHolder.Health = plantComp.Endurance;
-
-        if (TryComp<PlantHarvestComponent>(plantUid, out var harvest))
-        {
-            harvest.ReadyForHarvest = false;
-            harvest.LastHarvest = 0;
-        }
-        plantHolder.LastCycle = _gameTiming.CurTime;
-
-        if (Resolve(trayUid, ref trayComp, false))
-        {
-            _transform.SetCoordinates(plantUid, Transform(trayUid).Coordinates);
-            _transform.SetParent(plantUid, trayUid);
-            trayComp.PlantEntity = plantUid;
-        }
-
-        _plant.UpdateSprite(plantEnt.AsNullable());
+        _plant.PlantingPlant(plantUid);
+        _transform.SetCoordinates(plantUid, Transform(trayUid).Coordinates);
+        _transform.SetParent(plantUid, trayUid);
+        trayComp.PlantEntity = plantUid;
     }
 
     /// <summary>
