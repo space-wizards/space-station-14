@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Luxeator
-  changes:
-  - message: Fixed error upon exploding buckled mobs (and other near instantaneous
-      changes)
-    type: Fix
-  id: 8830
-  time: '2025-08-05T23:15:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39410
 - author: ScarKy0, beck-thompson
   changes:
   - message: Various canines will now sometimes clumsily spill things they drink.
@@ -3932,3 +3924,12 @@
   id: 9329
   time: '2025-12-23T08:12:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41585
+- author: imatsoup
+  changes:
+  - message: The donk co. microwave is now considered Syndicate contraband.
+    type: Tweak
+  - message: The donk co. microwave circuitboard is now considered Syndicate contraband.
+    type: Tweak
+  id: 9330
+  time: '2025-12-23T10:01:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41960
