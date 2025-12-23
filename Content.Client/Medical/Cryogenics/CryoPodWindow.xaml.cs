@@ -191,8 +191,11 @@ public sealed partial class CryoPodWindow : FancyWindow
         UpdateChecklistItem(TemperatureCheck, Loc.GetString("cryo-pod-window-checklist-temperature"), hasTemperatureCheck);
 
         bool isReady = (hasCorrectPressure && hasChemicals && hasTemperatureCheck);
-        StatusLabel.Text = (isReady ? Loc.GetString("cryo-pod-window-status-nominal")
-                                    : Loc.GetString("cryo-pod-window-status-not-ready"));
+        bool isCooling = (lowestTempRequirement != null && hasPatient
+                          && msg.Health.Temperature > lowestTempRequirement);
+        StatusLabel.Text = (!isReady  ? Loc.GetString("cryo-pod-window-status-not-ready") :
+                            isCooling ? Loc.GetString("cryo-pod-window-status-cooling") :
+                                        Loc.GetString("cryo-pod-window-status-nominal"));
         StatusLabel.FontColorOverride = (isReady ? Color.DeepSkyBlue : Color.Orange);
     }
 

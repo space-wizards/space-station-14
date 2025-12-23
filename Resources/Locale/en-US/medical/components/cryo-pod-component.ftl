@@ -14,6 +14,7 @@ cryo-pod-window-atmos-temperature = Temperature
 cryo-pod-window-status = Pod status:
 cryo-pod-window-status-nominal = Nominal
 cryo-pod-window-status-not-ready = NOT READY
+cryo-pod-window-status-cooling = Cooling patient...
 cryo-pod-window-checklist-pressure = Pressurized
 cryo-pod-window-checklist-chemicals = Chemicals available
 cryo-pod-window-checklist-temperature = Cryogenic temperature
