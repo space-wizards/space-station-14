@@ -35,7 +35,7 @@ public sealed partial class ElectrovaeChargeReaction : IGasReactionEffect
         // Expose the tile to charged electrovae - AtmosphereSystem will handle the rest
         const float intensityDivisor = 2f;
         var intensity = Math.Min(mixture.GetMoles(Gas.ChargedElectrovae) / intensityDivisor, 1f);
-        atmosphereSystem.ChargedElectrovaeExpose(tileAtmos, tileAtmos.GridIndex, intensity);
+        atmosphereSystem.ChargedElectrovaeExpose(tileAtmos.GridIndex, tileAtmos, intensity);
 
         // Consume some heat energy during the charging process
         const float energyPerMole = 5000f; // 5kJ per mole

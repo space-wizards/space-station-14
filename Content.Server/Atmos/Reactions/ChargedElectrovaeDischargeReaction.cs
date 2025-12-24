@@ -22,7 +22,7 @@ public sealed partial class ChargedElectrovaeDischargeReaction : IGasReactionEff
             return ReactionResult.NoReaction;
 
         var intensity = Math.Min(initialCE / intensityDivisor, 1f);
-        atmosphereSystem.ChargedElectrovaeExpose(tileAtmos, tileAtmos.GridIndex, intensity);
+        atmosphereSystem.ChargedElectrovaeExpose(tileAtmos.GridIndex, tileAtmos, intensity);
 
         // Slowly discharge: ChargedElectrovae -> Electrovae
         var dischargeAmount = Math.Min(initialCE * dischargeRate, initialCE);

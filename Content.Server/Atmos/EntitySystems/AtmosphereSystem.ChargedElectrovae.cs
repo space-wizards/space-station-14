@@ -65,24 +65,21 @@ public sealed partial class AtmosphereSystem
     private void OnChargedElectrovaeAffectedShutdown(Entity<ChargedElectrovaeAffectedComponent> ent, ref ComponentShutdown args)
     {
         // Restore battery capacity if this entity had it expanded
-        if (_batteryQuery.TryGetComponent(ent, out var battery))
+        if (_batteryQuery.TryComp(ent, out var battery))
             RestoreBatteryCapacity((ent, battery, ent.Comp));
 
         // Restore power requirements if this entity had them bypassed
-        if (_powerReceiverQuery.TryGetComponent(ent, out var receiver))
-        {
-            if (!receiver.NeedsPower)
-                receiver.NeedsPower = true;
-        }
+        if (_powerReceiverQuery.TryComp(ent, out var receiver))
+            receiver.NeedsPower = true;
     }
 
-    public void ChargedElectrovaeExpose(TileAtmosphere tile, EntityUid gridUid, float intensity)
+    public void ChargedElectrovaeExpose(Entity<GridAtmosphereComponent?> ent, TileAtmosphere tile, float intensity)
     {
-        if (!_atmosQuery.TryGetComponent(gridUid, out var atmosphere))
+        if (!_atmosQuery.Resolve(ent, ref ent.Comp))
             return;
 
         if (!tile.ChargedEffect.Active)
-            atmosphere.ChargedElectrovaeTiles.Add(tile);
+            ent.Comp.ChargedElectrovaeTiles.Add(tile);
 
         tile.ChargedEffect.Active = true;
         tile.ChargedEffect.Intensity = Math.Clamp(intensity, 0f, 1f);
@@ -92,6 +89,7 @@ public sealed partial class AtmosphereSystem
     /// Processes charged electrovae effects on a tile
     /// This follows the same pattern as hotspot processing
     /// </summary>
+    // TODO ATMOS: Deduplicate generic hotspot processing logic
     private void ProcessChargedElectrovae(
         Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
         TileAtmosphere tile)
@@ -139,12 +137,12 @@ public sealed partial class AtmosphereSystem
         foreach (var entity in _entSet)
         {
             // Mark entity as affected by charged electrovae
-            EnsureComp<ChargedElectrovaeAffectedComponent>(entity);
+            var electrovaeAffectedComp = EnsureComp<ChargedElectrovaeAffectedComponent>(entity);
 
             // Handle batteries - expand capacity and trigger charge rate refresh
             if (_batteryQuery.HasComponent(entity))
             {
-                ProcessBattery(entity, tile.ChargedEffect.Intensity, chargedMoles);
+                ProcessBattery((entity, electrovaeAffectedComp), tile.ChargedEffect.Intensity, chargedMoles);
             }
 
             // Power machines directly (bypass normal power requirement)
@@ -216,23 +214,22 @@ public sealed partial class AtmosphereSystem
     /// Processes a battery in charged electrovae gas.
     /// Expands battery capacity asymptotically and refreshes charge rate for batteries.
     /// </summary>
-    private void ProcessBattery(EntityUid uid, float intensity, float chargedMoles)
+    private void ProcessBattery(Entity<ChargedElectrovaeAffectedComponent?> ent, float intensity, float chargedMoles)
     {
         const float minimumIntensityToCharge = 0.1f;
 
-        if (intensity < minimumIntensityToCharge)
-        {
-            // Restore original max charge if we had expanded it
-            if (_batteryQuery.TryGetComponent(uid, out var battery) &&
-                TryComp<ChargedElectrovaeAffectedComponent>(uid, out var affected))
-                RestoreBatteryCapacity((uid, battery, affected));
+        if (!_batteryQuery.TryComp(ent, out var batteryComp) ||
+            !_chargedElectrovaeQuery.Resolve(ent, ref ent.Comp))
             return;
-        }
 
-        // Expand battery capacity based on charged moles
-        if (_batteryQuery.TryGetComponent(uid, out var batteryComp) &&
-            TryComp<ChargedElectrovaeAffectedComponent>(uid, out var affectedComp))
-            ExpandBatteryCapacity((uid, batteryComp, affectedComp), chargedMoles);
+        if (intensity > minimumIntensityToCharge)
+        {
+            ExpandBatteryCapacity((ent, batteryComp, ent.Comp), chargedMoles);
+        }
+        else
+        {
+            RestoreBatteryCapacity((ent, batteryComp, ent.Comp));
+        }
     }
 
     /// <summary>
@@ -251,7 +248,8 @@ public sealed partial class AtmosphereSystem
         {
             ent.Comp2.OriginalBatteryMaxCharge = ent.Comp1.MaxCharge;
 
-            _adminLog.Add(LogType.AtmosPowerChanged, LogImpact.Low,
+            _adminLog.Add(LogType.AtmosPowerChanged,
+                LogImpact.Low,
                 $"Battery {ToPrettyString(ent)} capacity expanded by charged electrovae from {ent.Comp1.MaxCharge:F0}W to potentially 2x");
         }
 
