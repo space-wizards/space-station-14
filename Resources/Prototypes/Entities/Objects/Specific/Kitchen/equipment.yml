@@ -45,8 +45,6 @@
     damageContainer: Inorganic
   - type: Spillable
     solution: grinderOutput
-  - type: Item
-    size: Normal
   - type: Appearance
   - type: HandheldGrinder
 
