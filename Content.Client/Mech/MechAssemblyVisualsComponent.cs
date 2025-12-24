@@ -10,6 +10,6 @@ public sealed partial class MechAssemblyVisualsComponent : Component
     /// The prefix that is followed by the number which
     /// denotes the current state to use.
     /// </summary>
-    [DataField("statePrefix", required: true)]
+    [DataField(required: true)]
     public string StatePrefix = string.Empty;
 }

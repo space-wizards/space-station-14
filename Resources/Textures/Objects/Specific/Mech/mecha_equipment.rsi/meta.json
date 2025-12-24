@@ -1,7 +1,7 @@
 {
-  "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, Clamp/Honker Inhands by TiniestShark (Github)",
-  "license" : "CC-BY-SA-3.0",
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, Clamp Inhands by TiniestShark (Github), Mech ChainSword by NULL882 (GitHub)",
   "size": {
     "x": 32,
     "y": 32
@@ -12,17 +12,6 @@
     },
     {
       "name": "mecha_bananamrtr"
-    },
-    {
-      "name": "mecha_honker"
-    },
-    {
-      "name": "inhand-left-honk",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right-honk",
-      "directions": 4
     },
     {
       "name": "mecha_mime"
@@ -53,9 +42,6 @@
     },
     {
       "name": "mecha_missilerack"
-    },
-    {
-      "name": "mecha_teleport"
     },
     {
       "name": "mecha_exting"
@@ -109,50 +95,7 @@
       "name": "mecha_rcd"
     },
     {
-      "name": "repair_droid_a",
-      "delays": [
-        [
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "repair_droid"
-    },
-    {
-      "name": "mecha_abooster_ccw"
-    },
-    {
-      "name": "mecha_abooster_proj"
-    },
-    {
-      "name": "tesla"
-    },
-    {
       "name": "mecha_ion"
-    },
-    {
-      "name": "mecha_analyzer"
     },
     {
       "name": "mecha_medigun"
@@ -164,16 +107,25 @@
       "name": "mecha_weapon_bay"
     },
     {
-      "name": "ripleyupgrade"
-    },
-    {
       "name": "mecha_missilerack_six"
     },
     {
-      "name": "thrusters"
+      "name": "mecha_kineticgun"
     },
     {
-      "name": "mecha_kineticgun"
+      "name": "mecha_syringegun"
+    },
+    {
+      "name": "paddy_claw"
+    },
+    {
+      "name": "mecha_chainsword",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }
