@@ -1,12 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Content.Server.Administration.Components;
 using Content.Server.Cargo.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Hands.Systems;
-using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Station.Systems;
 using Content.Server.Weapons.Ranged.Systems;
@@ -14,10 +11,11 @@ using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Administration.Components;
+using Content.Shared.Administration.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Construction.Components;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
@@ -25,6 +23,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Stacks;
 using Content.Shared.Station.Components;
 using Content.Shared.Verbs;
@@ -51,7 +50,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly AdminTestArenaSystem _adminTestArenaSystem = default!;
     [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
     [Dependency] private readonly JointSystem _jointSystem = default!;
-    [Dependency] private readonly BatterySystem _batterySystem = default!;
+    [Dependency] private readonly SharedBatterySystem _batterySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly GunSystem _gun = default!;
 
@@ -169,7 +168,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/fill_battery.png")),
                 Act = () =>
                 {
-                    _batterySystem.SetCharge(args.Target, battery.MaxCharge, battery);
+                    _batterySystem.SetCharge((args.Target, battery), battery.MaxCharge);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-refill-battery-description"),
@@ -184,7 +183,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/drain_battery.png")),
                 Act = () =>
                 {
-                    _batterySystem.SetCharge(args.Target, 0, battery);
+                    _batterySystem.SetCharge((args.Target, battery), 0);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-drain-battery-description"),
@@ -200,9 +199,10 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var recharger = EnsureComp<BatterySelfRechargerComponent>(args.Target);
-                    recharger.AutoRecharge = true;
                     recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
-                    recharger.AutoRechargePause = false; // No delay.
+                    recharger.AutoRechargePauseTime = TimeSpan.Zero; // No delay.
+                    Dirty(args.Target, recharger);
+                    _batterySystem.RefreshChargeRate((args.Target, battery));
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-infinite-battery-object-description"),
@@ -413,7 +413,7 @@ public sealed partial class AdminVerbSystem
                     // Unbounded intentionally.
                     _quickDialog.OpenDialog(player, Loc.GetString("admin-verbs-adjust-stack"), Loc.GetString("admin-verbs-dialog-adjust-stack-amount", ("max", _stackSystem.GetMaxCount(stack))), (int newAmount) =>
                     {
-                        _stackSystem.SetCount(args.Target, newAmount, stack);
+                        _stackSystem.SetCount((args.Target, stack), newAmount);
                     });
                 },
                 Impact = LogImpact.Medium,
@@ -429,7 +429,7 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/fill-stack.png")),
                 Act = () =>
                 {
-                    _stackSystem.SetCount(args.Target, _stackSystem.GetMaxCount(stack), stack);
+                    _stackSystem.SetCount((args.Target, stack), _stackSystem.GetMaxCount(stack));
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-fill-stack-description"),
@@ -553,7 +553,7 @@ public sealed partial class AdminVerbSystem
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
-                        _batterySystem.SetCharge(ent, battery.MaxCharge, battery);
+                        _batterySystem.SetCharge((ent, battery), battery.MaxCharge);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -574,7 +574,7 @@ public sealed partial class AdminVerbSystem
                         if (!HasComp<StationInfiniteBatteryTargetComponent>(ent))
                             continue;
                         var battery = EnsureComp<BatteryComponent>(ent);
-                        _batterySystem.SetCharge(ent, 0, battery);
+                        _batterySystem.SetCharge((ent, battery), 0);
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -599,9 +599,8 @@ public sealed partial class AdminVerbSystem
                         var recharger = EnsureComp<BatterySelfRechargerComponent>(ent);
                         var battery = EnsureComp<BatteryComponent>(ent);
 
-                        recharger.AutoRecharge = true;
                         recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
-                        recharger.AutoRechargePause = false; // No delay.
+                        recharger.AutoRechargePauseTime = TimeSpan.Zero; // No delay.
                     }
                 },
                 Impact = LogImpact.Extreme,

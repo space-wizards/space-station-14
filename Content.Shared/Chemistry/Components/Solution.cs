@@ -167,7 +167,12 @@ namespace Content.Shared.Chemistry.Components
 
         public Solution(Solution solution)
         {
-            Contents = solution.Contents.ShallowClone();
+            Contents = new(solution.Contents.Count);
+            foreach (var item in solution.Contents)
+            {
+                Contents.Add(item.Clone());
+            }
+
             Volume = solution.Volume;
             MaxVolume = solution.MaxVolume;
             Temperature = solution.Temperature;
@@ -302,7 +307,7 @@ namespace Content.Shared.Chemistry.Components
         /// If you only want the volume of a single reagent, use <see cref="GetReagentQuantity"/>
         /// </summary>
         [Pure]
-        public FixedPoint2 GetTotalPrototypeQuantity(params string[] prototypes)
+        public FixedPoint2 GetTotalPrototypeQuantity(params ProtoId<ReagentPrototype>[] prototypes)
         {
             var total = FixedPoint2.Zero;
             foreach (var (reagent, quantity) in Contents)
@@ -314,7 +319,7 @@ namespace Content.Shared.Chemistry.Components
             return total;
         }
 
-        public FixedPoint2 GetTotalPrototypeQuantity(string id)
+        public FixedPoint2 GetTotalPrototypeQuantity(ProtoId<ReagentPrototype> id)
         {
             var total = FixedPoint2.Zero;
             foreach (var (reagent, quantity) in Contents)
@@ -472,6 +477,37 @@ namespace Content.Shared.Chemistry.Components
 
             _heatCapacityDirty = true;
             ValidateSolution();
+        }
+
+        /// <summary>
+        ///     Scales the amount of solution.
+        /// </summary>
+        /// <param name="scale">The scalar to modify the solution by.</param>
+        public void ScaleSolution(FixedPoint2 scale)
+        {
+            ScaleSolution(scale.Float());
+        }
+
+        /// <summary>
+        ///     Scales the amount of solution to a given target.
+        /// </summary>
+        /// <param name="target">The volume the solutions should have after scaling.</param>
+        public void ScaleTo(FixedPoint2 target)
+        {
+            if (Volume == FixedPoint2.Zero || Volume == target)
+                return;
+
+            if (target == FixedPoint2.Zero)
+            {
+                RemoveAllSolution();
+                return;
+            }
+
+            var nearestIntScale = (int)Math.Ceiling(target.Float() / Volume.Float());
+            ScaleSolution(nearestIntScale);
+
+            var overflow = Volume - target;
+            RemoveSolution(overflow);
         }
 
         /// <summary>
@@ -645,7 +681,7 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         /// Splits a solution with only the specified reagent prototypes.
         /// </summary>
-        public Solution SplitSolutionWithOnly(FixedPoint2 toTake, params string[] includedPrototypes)
+        public Solution SplitSolutionWithOnly(FixedPoint2 toTake, params ProtoId<ReagentPrototype>[] includedPrototypes)
         {
             // First remove the non-included prototypes
             List<ReagentQuantity> excluded = new();
@@ -844,7 +880,7 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        public Color GetColorWithout(IPrototypeManager? protoMan, params string[] without)
+        public Color GetColorWithout(IPrototypeManager? protoMan, params ProtoId<ReagentPrototype>[] without)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -887,7 +923,7 @@ namespace Content.Shared.Chemistry.Components
             return GetColorWithout(protoMan);
         }
 
-        public Color GetColorWithOnly(IPrototypeManager? protoMan, params string[] included)
+        public Color GetColorWithOnly(IPrototypeManager? protoMan, params ProtoId<ReagentPrototype>[] included)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -964,6 +1000,16 @@ namespace Content.Shared.Chemistry.Components
                 dict[proto] = quantity + dict.GetValueOrDefault(proto);
             }
             return dict;
+        }
+
+        public void SetReagentData(List<ReagentData>? data)
+        {
+            for (var i = 0; i < Contents.Count; i++)
+            {
+                var old = Contents[i];
+                Contents[i] = new ReagentQuantity(new ReagentId(old.Reagent.Prototype, data), old.Quantity);
+            }
+            ValidateSolution();
         }
     }
 }
