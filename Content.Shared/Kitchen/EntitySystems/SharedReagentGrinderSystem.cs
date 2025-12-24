@@ -18,17 +18,18 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     /// <returns>The solution received, or null if none.</returns>
     public Solution? GetGrinderSolution(EntityUid uid, GrinderProgram program)
     {
-        if (TryComp<ExtractableComponent>(uid, out var extractable)
-            && program == GrinderProgram.Grind
-            && extractable.GrindableSolution is not null
-            && _solutionContainersSystem.TryGetSolution(uid, extractable.GrindableSolution, out _, out var solution))
+        switch (program)
         {
-            return solution;
-        }
-
-        if (program == GrinderProgram.Juice)
-        {
-            return CompOrNull<ExtractableComponent>(uid)?.JuiceSolution;
+            case GrinderProgram.Grind:
+                if (TryComp<ExtractableComponent>(uid, out var extractable)
+                    && extractable.GrindableSolution is not null
+                    && _solutionContainersSystem.TryGetSolution(uid, extractable.GrindableSolution, out _, out var solution))
+                {
+                    return solution;
+                }
+                break;
+            case GrinderProgram.Juice:
+                return CompOrNull<ExtractableComponent>(uid)?.JuiceSolution;
         }
 
         return null;
