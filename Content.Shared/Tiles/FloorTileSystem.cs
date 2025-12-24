@@ -184,7 +184,7 @@ public sealed class FloorTileSystem : EntitySystem
             return true;
 
         // Check whitelist match
-        if (tileDef.BaseWhitelist != null && tileDef.BaseWhitelist.Contains(currentTurfId))
+        if (tileDef.BaseWhitelist.Any() && tileDef.BaseWhitelist.Contains(currentTurfId))
             return true;
 
         return false;
@@ -195,10 +195,12 @@ public sealed class FloorTileSystem : EntitySystem
     {
         _adminLogger.Add(LogType.Tile, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
+        var tileDef = (ContentTileDefinition) _tileDefinitionManager[tileId];
         var random = new System.Random((int)_timing.CurTick.Value);
-        var variant = _tile.PickVariant((ContentTileDefinition)_tileDefinitionManager[tileId], random);
+        var variant = _tile.PickVariant(tileDef, random);
+
         var tileRef = _map.GetTileRef(gridUid, mapGrid, location.Offset(new Vector2(offset, offset)));
-        _tile.ReplaceTile(tileRef, (ContentTileDefinition)_tileDefinitionManager[tileId], gridUid, mapGrid);
+        _tile.ReplaceTile(tileRef, tileDef, gridUid, mapGrid, variant: variant);
 
         _audio.PlayPredicted(placeSound, location, user);
     }

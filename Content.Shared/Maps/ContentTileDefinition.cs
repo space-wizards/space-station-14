@@ -48,7 +48,7 @@ namespace Content.Shared.Maps
         /// On what tiles this tile can be placed.
         /// </summary>
         [DataField]
-        public List<ProtoId<ContentTileDefinition>>? BaseWhitelist { get; private set; } = new();
+        public List<ProtoId<ContentTileDefinition>> BaseWhitelist { get; private set; } = new();
 
         [DataField]
         public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();

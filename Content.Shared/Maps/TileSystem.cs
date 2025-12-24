@@ -162,7 +162,7 @@ public sealed class TileSystem : EntitySystem
         return ReplaceTile(tileref, replacementTile, tileref.GridUid, grid);
     }
 
-    public bool ReplaceTile(TileRef tileref, ContentTileDefinition replacementTile, EntityUid grid, MapGridComponent? component = null)
+    public bool ReplaceTile(TileRef tileref, ContentTileDefinition replacementTile, EntityUid grid, MapGridComponent? component = null, byte? variant = null)
     {
         DebugTools.Assert(tileref.GridUid == grid);
 
@@ -170,42 +170,48 @@ public sealed class TileSystem : EntitySystem
             return false;
 
         var key = tileref.GridIndices;
+        var currentTileDef = (ContentTileDefinition) _tileDefinitionManager[tileref.Tile.TypeId];
 
-        //Get or add the history component on the grid
+        // If the tile we're placing has a baseTurf that matches the tile we're replacing, we don't need to create a history
+        // unless the tile already has a history.
         var history = EnsureComp<TileHistoryComponent>(grid);
-
         var chunkIndices = SharedMapSystem.GetChunkIndices(key, ChunkSize);
-        if (!history.ChunkHistory.TryGetValue(chunkIndices, out var chunk))
+        history.ChunkHistory.TryGetValue(chunkIndices, out var chunk);
+        var historyExists = chunk != null && chunk.History.ContainsKey(key);
+
+        if (replacementTile.BaseTurf != currentTileDef.ID || historyExists)
         {
-            chunk = new TileHistoryChunk();
-            history.ChunkHistory[chunkIndices] = chunk;
+            if (chunk == null)
+            {
+                chunk = new TileHistoryChunk();
+                history.ChunkHistory[chunkIndices] = chunk;
+            }
+
+            chunk.LastModified = _timing.CurTick;
+            Dirty(grid, history);
+
+            //Create stack if needed
+            if (!chunk.History.TryGetValue(key, out var stack))
+            {
+                stack = new List<ProtoId<ContentTileDefinition>>();
+                chunk.History[key] = stack;
+            }
+
+            //Push current tile to the stack, if not empty
+            if (!tileref.Tile.IsEmpty)
+            {
+                stack.Add(currentTileDef.ID);
+            }
         }
 
-        chunk.LastModified = _timing.CurTick;
-        Dirty(grid, history);
-
-        //Create stack if needed
-        if (!chunk.History.TryGetValue(key, out var stack))
-        {
-            stack = new List<ProtoId<ContentTileDefinition>>();
-            chunk.History[key] = stack;
-        }
-
-        //Push current tile to the stack, if not empty
-        if (!tileref.Tile.IsEmpty)
-        {
-            var currentTileDef = (ContentTileDefinition)_tileDefinitionManager[tileref.Tile.TypeId];
-            stack.Add(currentTileDef.ID);
-        }
-
-        var variant = PickVariant(replacementTile);
+        variant ??= PickVariant(replacementTile);
         var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
             _decal.RemoveDecal(tileref.GridUid, id);
         }
 
-        _maps.SetTile(grid, component, tileref.GridIndices, new Tile(replacementTile.TileId, 0, variant));
+        _maps.SetTile(grid, component, tileref.GridIndices, new Tile(replacementTile.TileId, 0, variant.Value));
         return true;
     }
 
