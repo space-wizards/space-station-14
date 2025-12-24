@@ -24,7 +24,7 @@ public sealed class AddMolsToMixtureTest
         var ex = Assert.Throws<ArgumentOutOfRangeException>(() =>
             AtmosphereSystem.AddMolsToMixture(mixture, wrongLength));
 
-        Assert.That(ex!.ParamName, Is.EqualTo("mixture"));
+        Assert.That(ex!.ParamName, Is.EqualTo("Length"));
     }
 
     /// <summary>
@@ -38,16 +38,16 @@ public sealed class AddMolsToMixtureTest
         mixture.SetMoles(Gas.Nitrogen, 2f);
 
         var add = new float[Atmospherics.AdjustedNumberOfGases];
-        add[(int) Gas.Oxygen] = 3f;
-        add[(int) Gas.Nitrogen] = 4f;
+        add[(int)Gas.Oxygen] = 3f;
+        add[(int)Gas.Nitrogen] = 4f;
 
         AtmosphereSystem.AddMolsToMixture(mixture, add);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
             Assert.That(mixture.GetMoles(Gas.Oxygen), Is.EqualTo(4f));
             Assert.That(mixture.GetMoles(Gas.Nitrogen), Is.EqualTo(6f));
-        });
+        }
     }
 
     /// <summary>
@@ -61,16 +61,15 @@ public sealed class AddMolsToMixtureTest
         mixture.SetMoles(Gas.Nitrogen, 2f);
 
         var add = new float[Atmospherics.AdjustedNumberOfGases];
-        add[(int) Gas.Oxygen] = -2f; // would go to -1 without clamping
-        add[(int) Gas.Nitrogen] = -1f; // should become 1
+        add[(int)Gas.Oxygen] = -2f; // would go to -1 without clamping
+        add[(int)Gas.Nitrogen] = -1f; // should become 1
 
         AtmosphereSystem.AddMolsToMixture(mixture, add);
 
-        Assert.Multiple(() =>
+        using (Assert.EnterMultipleScope())
         {
-            Assert.That(mixture.GetMoles(Gas.Oxygen), Is.EqualTo(0f));
+            Assert.That(mixture.GetMoles(Gas.Oxygen), Is.Zero);
             Assert.That(mixture.GetMoles(Gas.Nitrogen), Is.EqualTo(1f));
-        });
+        }
     }
 }
-
