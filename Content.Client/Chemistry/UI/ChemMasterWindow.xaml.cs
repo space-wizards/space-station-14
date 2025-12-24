@@ -10,6 +10,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Abilities.Mime;
 using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -150,26 +151,17 @@ namespace Content.Client.Chemistry.UI
             // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
 
-            BufferCurrentVolume.Text = $" {(castState.DrawSource switch
+            switch (castState.DrawSource)
             {
-                ChemMasterDrawSource.Internal => castState.BufferCurrentVolume,
-                ChemMasterDrawSource.External => castState.InputContainerInfo?.CurrentVolume,
-                _ => throw new("Unreachable"),
-            })?.Int() ?? 0}u";
-
-            DrawSource.Text = Loc.GetString(castState.DrawSource switch
-            {
-                ChemMasterDrawSource.External => "chem-master-output-beaker-draw",
-                ChemMasterDrawSource.Internal => "chem-master-output-buffer-draw",
-                _ => throw new("Unreachable"),
-            });
-
-            DrawSource.Text = castState.DrawSource switch
-            {
-                ChemMasterDrawSource.External => Loc.GetString("chem-master-output-beaker-draw"),
-                ChemMasterDrawSource.Internal => Loc.GetString("chem-master-output-buffer-draw"),
-                _ => Loc.GetString("chem-master-no-source"),
-            };
+                case ChemMasterDrawSource.Internal:
+                    SetBufferText(castState.BufferCurrentVolume, "chem-master-output-beaker-draw");
+                    break;
+                case ChemMasterDrawSource.External:
+                    SetBufferText(castState.InputContainerInfo?.CurrentVolume, "chem-master-output-buffer-draw");
+                    break;
+                default:
+                    throw new("Unreachable");
+            }
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
             OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
@@ -189,8 +181,8 @@ namespace Content.Client.Chemistry.UI
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
             var outputVolume = castState.DrawSource switch
             {
-                (ChemMasterDrawSource.Internal) => castState.BufferCurrentVolume?.Int() ?? 0,
-                (ChemMasterDrawSource.External) => castState.InputContainerInfo?.CurrentVolume.Int() ?? 0,
+                ChemMasterDrawSource.Internal => castState.BufferCurrentVolume?.Int() ?? 0,
+                ChemMasterDrawSource.External => castState.InputContainerInfo?.CurrentVolume.Int() ?? 0,
                 _ => 0,
             };
 
@@ -449,6 +441,12 @@ namespace Content.Client.Chemistry.UI
         {
             get => LabelLineEdit.Text;
             set => LabelLineEdit.Text = value;
+        }
+
+        private void SetBufferText(FixedPoint2? volume, string text)
+        {
+            BufferCurrentVolume.Text = $" {volume}u";
+            DrawSource.Text = Loc.GetString(text);
         }
     }
 
