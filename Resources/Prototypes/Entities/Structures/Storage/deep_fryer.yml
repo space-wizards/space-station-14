@@ -62,7 +62,7 @@
   - type: Transform
     anchored: true
   - type: Climbable
-    delay: 1
+    delay: 1.5
   - type: AmbientSound
     enabled: false
     volume: 7

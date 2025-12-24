@@ -1,8 +1,5 @@
-using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.DeepFryer.Components;
@@ -19,12 +16,6 @@ public sealed partial class DeepFryerComponent : Component
     /// </summary>
     [DataField]
     public string SolutionName = "fryer";
-
-    /// <summary>
-    /// The uninterrupted time it takes to deep fry.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan CookTime = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// How much heat is added per second to the vat solution. Should start at zero so fryer isn't automatically "on" when map loads
@@ -72,7 +63,19 @@ public sealed partial class DeepFryerComponent : Component
     /// Extra damage applied by deep fryer when heating. Not currently used.
     /// </summary>
     [DataField]
-    public float HeatingDamage = 2.0f;
+    public float HeatingDamage = 3.0f;
+
+    /// <summary>
+    /// The time the deep fryer has to stay closed to deep fry an object.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan ObjectCookTime = TimeSpan.FromSeconds(10);
+
+    /// <summary>
+    /// The time the deep fryer has to stay closed to deep fry a mob. If this completes and the mob is also dead, they are deep fried.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan MobCookTime = TimeSpan.FromSeconds(20);
 
     /// <summary>
     /// The timestamp at which deep frying is finished.

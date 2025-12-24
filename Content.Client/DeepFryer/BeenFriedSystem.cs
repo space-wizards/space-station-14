@@ -1,6 +1,4 @@
-using Content.Client.Interactable.Components;
 using Content.Shared.DeepFryer;
-using Content.Shared.Stealth.Components;
 using Content.Shared.DeepFryer.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -22,28 +20,28 @@ public sealed class BeenFriedSystem : SharedBeenFriedSystem
 
         _shader = _protoMan.Index(Shader).InstanceUnique();
 
-        SubscribeLocalEvent<BeenFriedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<BeenFriedComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<BeenFriedComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void SetShader(EntityUid uid, bool enabled, BeenFriedComponent? component = null, SpriteComponent? sprite = null)
+    private void SetShader(Entity<BeenFriedComponent?, SpriteComponent?> ent, bool enabled)
     {
-        if (!Resolve(uid, ref component, ref sprite, false))
+        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2, false))
             return;
 
-        sprite.PostShader = enabled ? _shader : null;
-        sprite.GetScreenTexture = enabled;
-        sprite.RaiseShaderEvent = enabled;
+        ent.Comp2.PostShader = enabled ? _shader : null;
+        ent.Comp2.GetScreenTexture = enabled;
+        ent.Comp2.RaiseShaderEvent = enabled;
     }
 
-    private void OnStartup(EntityUid uid, BeenFriedComponent component, ComponentStartup args)
+    private void OnStartup(Entity<BeenFriedComponent> ent, ref ComponentStartup args)
     {
-        SetShader(uid, true, component);
+        SetShader(ent.AsNullable(), true);
     }
 
-    private void OnShutdown(EntityUid uid, BeenFriedComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<BeenFriedComponent> ent, ref ComponentShutdown args)
     {
-        if (!Terminating(uid))
-            SetShader(uid, false, component);
+        if (!Terminating(ent.Owner))
+            SetShader(ent.AsNullable(), false);
     }
 }

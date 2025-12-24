@@ -10,7 +10,6 @@ using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Slippery;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
-using Content.Shared.Throwing;
 using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -19,7 +18,6 @@ namespace Content.Shared.DeepFryer;
 
 public abstract class SharedBeenFriedSystem : EntitySystem
 {
-    [Dependency] private readonly NameModifierSystem _nameMod = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -27,7 +25,7 @@ public abstract class SharedBeenFriedSystem : EntitySystem
         SubscribeLocalEvent<BeenFriedComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<BeenFriedComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         SubscribeLocalEvent<BeenFriedComponent, FlavorProfileModificationEvent>(OnFlavorProfileModifiers);
-        // Cancel pretty much any use for this except for ingestion and storage
+        // Cancel pretty much every use for this except for ingestion and storage
         SubscribeLocalEvent<BeenFriedComponent, GettingUsedAttemptEvent>(CancelUse);
         SubscribeLocalEvent<BeenFriedComponent, ToolUseAttemptEvent>(CancelToolUse);
         SubscribeLocalEvent<BeenFriedComponent, AttemptMeleeEvent>(CancelMelee);
@@ -55,7 +53,7 @@ public abstract class SharedBeenFriedSystem : EntitySystem
         args.Flavors.Add("fried");
     }
 
-    // Note: Currently, this also cancels storage into backpacks via placement on the icon. Grid placement still works. IDK how to fix that.
+    // Note: Currently, this also cancels storage into backpacks via placement on the icon. Opening the backpack and placing it still works. Not exactly sure how to fix that...
     private void CancelUse(Entity<BeenFriedComponent> ent, ref GettingUsedAttemptEvent args)
     {
         // If it isn't for eating, storing, or nuking something, it no longer works

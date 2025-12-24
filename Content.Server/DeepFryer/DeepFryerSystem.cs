@@ -1,48 +1,32 @@
-using Content.Server.Access.Components;
-using Content.Server.Ghost;
-using Content.Server.Kitchen.Components;
-using Content.Server.Power.Components;
+//using Content.Server.Ghost;
 using Content.Server.Temperature.Systems;
-using Content.Shared.Administration.Logs;
+//using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Climbing.Events;
-using Content.Shared.Construction.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
-using Content.Shared.Database;
 using Content.Shared.DeepFryer;
 using Content.Shared.DeepFryer.Components;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Movement.Components;
-using Content.Shared.Popups;
+using Content.Shared.FixedPoint;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Power;
 using Content.Shared.Storage.Components;
 using Content.Shared.Temperature.Components;
-using Content.Shared.Throwing;
-using JetBrains.FormatRipper.Elf;
-using NetCord;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
-using Robust.Shared.Timing;
-using System.Numerics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.DeepFryer;
 public sealed class DeepFryerSystem : SharedDeepFryerSystem
 {
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    //[Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    //[Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly TemperatureSystem _temperature = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -54,26 +38,26 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
         SubscribeLocalEvent<DeepFryerComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
-    private void OnInit(EntityUid uid, ActiveFryingDeepFryerComponent component, ComponentInit args)
+    private void OnInit(Entity<ActiveFryingDeepFryerComponent> ent, ref ComponentInit args)
     {
-        _ambientSoundSystem.SetAmbience(uid, true);
+        _ambientSoundSystem.SetAmbience(ent.Owner, true);
     }
 
-    private void OnShutdown(EntityUid uid, ActiveFryingDeepFryerComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<ActiveFryingDeepFryerComponent> ent, ref ComponentShutdown args)
     {
-        _ambientSoundSystem.SetAmbience(uid, false);
+        _ambientSoundSystem.SetAmbience(ent.Owner, false);
     }
 
-    private void OnPowerChanged(EntityUid uid, DeepFryerComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<DeepFryerComponent> ent, ref PowerChangedEvent args)
     {
         // Power only counts for heating the vat solution
         if (args.Powered)
-            EnsureComp<ActiveHeatingDeepFryerComponent>(uid);
+            EnsureComp<ActiveHeatingDeepFryerComponent>(ent.Owner);
         else
-            RemComp<ActiveHeatingDeepFryerComponent>(uid);
+            RemComp<ActiveHeatingDeepFryerComponent>(ent.Owner);
     }
 
-    // Honestly not sure when this comes into play. Maybe if you try to ghost while inside?
+    // Crematorium had this, but I have no idea how to make it work.
     /*private void OnSuicideByEnvironment(Entity<DeepFryerComponent> ent, ref SuicideByEnvironmentEvent args)
     {
         if (args.Handled)
@@ -109,10 +93,13 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
     /// <summary>
     /// Adds temperature to every item in the deep fryer based on vat solution temperature
     /// </summary>
-    private void AddTemperature(EntityUid uid, DeepFryerComponent fryer, float time)
+    private void AddTemperature(Entity<DeepFryerComponent?> ent, float time)
     {
-        if (TryComp<EntityStorageComponent>(uid, out var storage)
-            && _solutionContainer.TryGetSolution(uid, fryer.SolutionName, out var deepFryerSoln, out var deepFryerSolution)
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (TryComp<EntityStorageComponent>(ent.Owner, out var storage)
+            && _solutionContainer.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out var deepFryerSoln, out var deepFryerSolution)
             && deepFryerSolution.Volume != 0)
         {
             foreach (var entity in storage.Contents.ContainedEntities)
@@ -125,10 +112,33 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
                 foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
                 {
                     var solution = soln.Comp.Solution;
-                    if (solution.Temperature > fryer.MaxHeat)
+                    if (solution.Temperature > ent.Comp.MaxHeat)
                         continue;
 
                     _solutionContainer.AddThermalEnergy(soln, deepFryerSolution.Temperature);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Adds heat damage to creatures in heating deep fryers
+    /// </summary>
+    private void AddHeatDamage(Entity<DeepFryerComponent?> ent, float time)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (TryComp<EntityStorageComponent>(ent.Owner, out var storage))
+        {
+            ProtoId<DamageTypePrototype> damageId = "Heat";
+            DamageTypePrototype heatProto = _prototypeManager.Index(damageId);
+            foreach (var entity in storage.Contents.ContainedEntities)
+            {
+                // Creatures only, so you can't burn the food to ash
+                if (TryComp<DamageableComponent>(entity, out var damageable) && HasComp<MobThresholdsComponent>(entity))
+                {
+                    _damageable.TryChangeDamage(entity, new DamageSpecifier(heatProto, FixedPoint2.New(ent.Comp.HeatingDamage * time)));
                 }
             }
         }
@@ -138,10 +148,15 @@ public sealed class DeepFryerSystem : SharedDeepFryerSystem
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DeepFryerComponent, ActiveHeatingDeepFryerComponent>();
-        while (query.MoveNext(out var uid, out var fryer, out _))
+        var query1 = EntityQueryEnumerator<DeepFryerComponent>();
+        while (query1.MoveNext(out var uid, out var fryer))
         {
-            AddTemperature(uid, fryer, frameTime);
+            AddTemperature(uid, frameTime);
+        }
+        var query2 = EntityQueryEnumerator<ActiveHeatingDeepFryerComponent, DeepFryerComponent>();
+        while (query2.MoveNext(out var uid, out _, out var fryer))
+        {
+            AddHeatDamage(uid, frameTime);
         }
     }
 }

@@ -17,13 +17,13 @@ public sealed class BeenFriedSystem : SharedBeenFriedSystem
         SubscribeLocalEvent<BeenFriedComponent, ComponentInit>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, BeenFriedComponent component, ComponentInit args)
+    private void OnInit(Entity<BeenFriedComponent> ent, ref ComponentInit args)
     {
-        _nameMod.RefreshNameModifiers(uid);
-        // ID cards brick outright
-        RemComp<AccessComponent>(uid);
-        RemComp<IdCardComponent>(uid);
-        RemComp<PresetIdCardComponent>(uid);
-        RemComp<AgentIDCardComponent>(uid);
+        _nameMod.RefreshNameModifiers(ent.Owner);
+        // ID cards are completely bricked when they are fried
+        RemComp<AccessComponent>(ent.Owner);
+        RemComp<IdCardComponent>(ent.Owner);
+        RemComp<PresetIdCardComponent>(ent.Owner);
+        RemComp<AgentIDCardComponent>(ent.Owner);
     }
 }
