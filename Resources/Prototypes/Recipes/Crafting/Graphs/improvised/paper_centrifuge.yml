@@ -1,0 +1,17 @@
+# Mortar
+- type: constructionGraph
+  id: MakeshiftCentrifuge
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: makeshiftCentrifuge
+          steps:
+            - material: MetalRod
+              amount: 2
+            - material: Cable
+              amount: 15
+              doAfter: 5
+
+    - node: makeshiftCentrifuge
+      entity: HandheldMixerPaperCentrifuge
