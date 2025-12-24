@@ -3,6 +3,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Dice;
@@ -12,6 +13,7 @@ public abstract class SharedDiceSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -72,9 +74,7 @@ public abstract class SharedDiceSystem : EntitySystem
 
     private void Roll(Entity<DiceComponent> entity, EntityUid? user = null)
     {
-        var rand = new System.Random((int)_timing.CurTick.Value);
-
-        var roll = rand.Next(1, entity.Comp.Sides + 1);
+        var roll = _random.Next(1, entity.Comp.Sides + 1);
         SetCurrentSide(entity, roll);
 
         var popupString = Loc.GetString("dice-component-on-roll-land",
