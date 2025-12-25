@@ -22,7 +22,7 @@ public sealed partial class VehicleComponent : Component
     public EntityUid? Operator;
 
     /// <summary>
-    /// Simple whitelist for determining who can operator this vehicle.
+    /// Simple whitelist for determining who can operate this vehicle.
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? OperatorWhitelist;
