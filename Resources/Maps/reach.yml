@@ -7753,7 +7753,7 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
-- proto: FaxMachineBase
+- proto: FaxMachineLongRange
   entities:
   - uid: 2496
     components:
