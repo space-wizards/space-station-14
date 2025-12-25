@@ -78888,6 +78888,16 @@ entities:
       fixtures: {}
 - proto: FaxMachineBase
   entities:
+  - uid: 3
+    components:
+    - type: MetaData
+      name: long range fax machine
+    - type: Transform
+      pos: -37.5,-39.5
+      parent: 2
+    - type: FaxMachine
+      name: CMO
+    - type: Label
   - uid: 1326
     components:
     - type: Transform
@@ -78909,6 +78919,8 @@ entities:
       name: Chemistry
   - uid: 5738
     components:
+    - type: MetaData
+      name: long range fax machine (Atmospherics)
     - type: Transform
       pos: -115.5,-6.5
       parent: 2
@@ -78918,16 +78930,47 @@ entities:
       currentLabel: Atmospherics
     - type: NameModifier
       baseName: long range fax machine
+  - uid: 6829
+    components:
+    - type: MetaData
+      name: long range fax machine (Bridge)
+    - type: Transform
+      pos: -68.5,7.5
+      parent: 2
+    - type: FaxMachine
+      name: Bridge
+    - type: Label
+      currentLabel: Bridge
+    - type: NameModifier
+      baseName: long range fax machine
   - uid: 10175
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -90.5,-17.5
       parent: 2
     - type: FaxMachine
       name: Warden
     - type: Label
+  - uid: 10749
+    components:
+    - type: Transform
+      pos: -51.5,-7.5
+      parent: 2
+    - type: FaxMachine
+      name: Head of Personnel
+  - uid: 17656
+    components:
+    - type: Transform
+      pos: -134.5,-46.5
+      parent: 2
+    - type: FaxMachine
+      name: Research Director
   - uid: 17807
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -90.5,-32.5
       parent: 2
@@ -78936,6 +78979,8 @@ entities:
     - type: Label
   - uid: 18776
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -116.5,-18.5
       parent: 2
@@ -78958,14 +79003,23 @@ entities:
       name: Medical
   - uid: 21752
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -141.5,-7.5
       parent: 2
     - type: FaxMachine
       name: TEG
     - type: Label
+  - uid: 22009
+    components:
+    - type: Transform
+      pos: -80.5,-31.5
+      parent: 2
   - uid: 22303
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -45.5,-24.5
       parent: 2
@@ -78974,6 +79028,8 @@ entities:
     - type: Label
   - uid: 22304
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -51.5,-33.5
       parent: 2
@@ -78982,6 +79038,8 @@ entities:
     - type: Label
   - uid: 22339
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -118.5,-40.5
       parent: 2
@@ -78990,6 +79048,8 @@ entities:
     - type: Label
   - uid: 22340
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -122.5,-49.5
       parent: 2
@@ -78998,6 +79058,8 @@ entities:
     - type: Label
   - uid: 22831
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -24.5,8.5
       parent: 2
@@ -79006,6 +79068,8 @@ entities:
     - type: Label
   - uid: 23251
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -17.5,-18.5
       parent: 2
@@ -79021,6 +79085,8 @@ entities:
       name: AI
   - uid: 23948
     components:
+    - type: MetaData
+      name: long range fax machine
     - type: Transform
       pos: -98.5,14.5
       parent: 2
@@ -79048,62 +79114,6 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Clown
-- proto: FaxMachineLongRange
-  entities:
-  - uid: 6829
-    components:
-    - type: MetaData
-      name: long range fax machine (Bridge)
-    - type: Transform
-      pos: -68.5,7.5
-      parent: 2
-    - type: FaxMachine
-      name: Bridge
-    - type: Label
-      currentLabel: Bridge
-    - type: NameModifier
-      baseName: long range fax machine
-  - uid: 10749
-    components:
-    - type: Transform
-      pos: -51.5,-7.5
-      parent: 2
-    - type: FaxMachine
-      name: Head of Personnel
-  - uid: 17656
-    components:
-    - type: Transform
-      pos: -134.5,-46.5
-      parent: 2
-    - type: FaxMachine
-      name: Research Director
-  - uid: 3
-    components:
-    - type: MetaData
-      name: long range fax machine
-    - type: Transform
-      pos: -37.5,-39.5
-      parent: 2
-    - type: FaxMachine
-      name: CMO
-    - type: Label
-  - uid: 22305
-    components:
-    - type: MetaData
-      name: captain long range fax machine
-    - type: Transform
-      pos: -62.5,-1.5
-      parent: 2
-    - type: FaxMachine
-      name: Boardroom
-    - type: Label
-  - uid: 22009
-    components:
-    - type: Transform
-      pos: -80.5,-31.5
-      parent: 2
-    - type: FaxMachine
-      name: Head of Security
 - proto: FaxMachineCaptain
   entities:
   - uid: 2865
@@ -79119,6 +79129,16 @@ entities:
       currentLabel: Captain
     - type: NameModifier
       baseName: captain long range fax machine
+  - uid: 22305
+    components:
+    - type: MetaData
+      name: captain long range fax machine
+    - type: Transform
+      pos: -62.5,-1.5
+      parent: 2
+    - type: FaxMachine
+      name: Boardroom
+    - type: Label
 - proto: filingCabinetDrawerRandom
   entities:
   - uid: 3001

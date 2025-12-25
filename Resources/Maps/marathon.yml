@@ -65933,6 +65933,13 @@ entities:
       fixtures: {}
 - proto: FaxMachineBase
   entities:
+  - uid: 5493
+    components:
+    - type: Transform
+      pos: 2.5,32.5
+      parent: 30
+    - type: FaxMachine
+      name: HoP
   - uid: 7387
     components:
     - type: Transform
@@ -65940,6 +65947,13 @@ entities:
       parent: 30
     - type: FaxMachine
       name: Medical
+  - uid: 7451
+    components:
+    - type: Transform
+      pos: -33.5,-17.5
+      parent: 30
+    - type: FaxMachine
+      name: CMO Office
   - uid: 7676
     components:
     - type: Transform
@@ -65969,6 +65983,13 @@ entities:
       parent: 30
     - type: FaxMachine
       name: Library
+  - uid: 20090
+    components:
+    - type: Transform
+      pos: -9.5,-35.5
+      parent: 30
+    - type: FaxMachine
+      name: CE Office
   - uid: 21701
     components:
     - type: Transform
@@ -65976,6 +65997,13 @@ entities:
       parent: 30
     - type: FaxMachine
       name: Science
+  - uid: 22274
+    components:
+    - type: Transform
+      pos: -5.5,43.5
+      parent: 30
+    - type: FaxMachine
+      name: Bridge
   - uid: 22276
     components:
     - type: Transform
@@ -66004,36 +66032,6 @@ entities:
       parent: 30
     - type: FaxMachine
       name: Psych
-- proto: FaxMachineLongRange
-  entities:
-  - uid: 7451
-    components:
-    - type: Transform
-      pos: -33.5,-17.5
-      parent: 30
-    - type: FaxMachine
-      name: CMO Office
-  - uid: 20090
-    components:
-    - type: Transform
-      pos: -9.5,-35.5
-      parent: 30
-    - type: FaxMachine
-      name: CE Office
-  - uid: 22274
-    components:
-    - type: Transform
-      pos: -5.5,43.5
-      parent: 30
-    - type: FaxMachine
-      name: Bridge
-  - uid: 5493
-    components:
-    - type: Transform
-      pos: 2.5,32.5
-      parent: 30
-    - type: FaxMachine
-      name: HoP
 - proto: FaxMachineCaptain
   entities:
   - uid: 22275

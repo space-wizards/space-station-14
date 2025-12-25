@@ -48326,6 +48326,13 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Brig
+  - uid: 2394
+    components:
+    - type: Transform
+      pos: 12.5,-33.5
+      parent: 2
+    - type: FaxMachine
+      name: CE Office
   - uid: 3109
     components:
     - type: Transform
@@ -48345,6 +48352,11 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Science
+  - uid: 6351
+    components:
+    - type: Transform
+      pos: 65.5,11.5
+      parent: 2
   - uid: 7668
     components:
     - type: Transform
@@ -48359,43 +48371,6 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Law Office
-  - uid: 11002
-    components:
-    - type: Transform
-      pos: 19.5,-26.5
-      parent: 2
-    - type: FaxMachine
-      name: Engineering
-  - uid: 14996
-    components:
-    - type: Transform
-      pos: 50.5,4.5
-      parent: 2
-    - type: FaxMachine
-      name: Medical
-  - uid: 9006
-    components:
-    - type: Transform
-      pos: 18.5,29.5
-      parent: 2
-    - type: FaxMachine
-      name: Court Room
-- proto: FaxMachineLongRange
-  entities:
-  - uid: 6351
-    components:
-    - type: Transform
-      pos: 65.5,11.5
-      parent: 2
-    - type: FaxMachine
-      name: RD Office
-  - uid: 11947
-    components:
-    - type: Transform
-      pos: 23.5,40.5
-      parent: 2
-    - type: FaxMachine
-      name: Conference Room
   - uid: 7946
     components:
     - type: Transform
@@ -48410,6 +48385,13 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Quartermaster
+  - uid: 9006
+    components:
+    - type: Transform
+      pos: 18.5,29.5
+      parent: 2
+    - type: FaxMachine
+      name: Court Room
   - uid: 10070
     components:
     - type: Transform
@@ -48424,13 +48406,27 @@ entities:
       parent: 2
     - type: FaxMachine
       name: HoP Office
-  - uid: 2394
+  - uid: 11002
     components:
     - type: Transform
-      pos: 12.5,-33.5
+      pos: 19.5,-26.5
       parent: 2
     - type: FaxMachine
-      name: CE Office
+      name: Engineering
+  - uid: 11947
+    components:
+    - type: Transform
+      pos: 23.5,40.5
+      parent: 2
+    - type: FaxMachine
+      name: Conference Room
+  - uid: 14996
+    components:
+    - type: Transform
+      pos: 50.5,4.5
+      parent: 2
+    - type: FaxMachine
+      name: Medical
 - proto: FaxMachineCaptain
   entities:
   - uid: 5329

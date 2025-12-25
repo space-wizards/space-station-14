@@ -52404,6 +52404,20 @@ entities:
       parent: 1
     - type: FaxMachine
       name: Service
+  - uid: 12846
+    components:
+    - type: Transform
+      pos: 35.5,60.5
+      parent: 1
+    - type: FaxMachine
+      name: Head of personnel
+  - uid: 14612
+    components:
+    - type: Transform
+      pos: 42.5,26.5
+      parent: 1
+    - type: FaxMachine
+      name: Head of security
   - uid: 14657
     components:
     - type: Transform
@@ -52425,6 +52439,13 @@ entities:
       parent: 1
     - type: FaxMachine
       name: Law office
+  - uid: 15026
+    components:
+    - type: Transform
+      pos: 13.5,51.5
+      parent: 1
+    - type: FaxMachine
+      name: Bridge
   - uid: 16103
     components:
     - type: Transform
@@ -52439,29 +52460,6 @@ entities:
       parent: 1
     - type: FaxMachine
       name: Courtroom
-- proto: FaxMachineLongRange
-  entities:
-  - uid: 12846
-    components:
-    - type: Transform
-      pos: 35.5,60.5
-      parent: 1
-    - type: FaxMachine
-      name: Head of personnel
-  - uid: 14612
-    components:
-    - type: Transform
-      pos: 42.5,26.5
-      parent: 1
-    - type: FaxMachine
-      name: Head of security
-  - uid: 15026
-    components:
-    - type: Transform
-      pos: 13.5,51.5
-      parent: 1
-    - type: FaxMachine
-      name: Bridge
 - proto: FaxMachineCaptain
   entities:
   - uid: 14881

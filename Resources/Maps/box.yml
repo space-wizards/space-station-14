@@ -87133,6 +87133,32 @@ entities:
       fixtures: {}
 - proto: FaxMachineBase
   entities:
+  - uid: 1866
+    components:
+    - type: Transform
+      pos: -2.5,-63.5
+      parent: 8364
+    - type: FaxMachine
+      name: CE Office
+  - uid: 2355
+    components:
+    - type: Transform
+      pos: 37.5,-38.5
+      parent: 8364
+    - type: FaxMachine
+      name: CMO Office
+  - uid: 5534
+    components:
+    - type: Transform
+      pos: -13.5,-13.5
+      parent: 8364
+    - type: FaxMachine
+      name: Conference Room
+  - uid: 5869
+    components:
+    - type: Transform
+      pos: -10.5,-21.5
+      parent: 8364
   - uid: 8859
     components:
     - type: Transform
@@ -87168,36 +87194,6 @@ entities:
       parent: 8364
     - type: FaxMachine
       name: Engineering
-  - uid: 21237
-    components:
-    - type: Transform
-      pos: -21.5,-15.5
-      parent: 8364
-    - type: FaxMachine
-      name: Mail Room
-  - uid: 21238
-    components:
-    - type: Transform
-      pos: 59.5,-2.5
-      parent: 8364
-    - type: FaxMachine
-      name: Library
-  - uid: 26057
-    components:
-    - type: Transform
-      pos: 33.5,-20.5
-      parent: 8364
-    - type: FaxMachine
-      name: Medical
-  - uid: 28536
-    components:
-    - type: Transform
-      pos: 4.5,42.5
-      parent: 8364
-    - type: FaxMachine
-      name: Security
-- proto: FaxMachineLongRange
-  entities:
   - uid: 17608
     components:
     - type: Transform
@@ -87212,6 +87208,20 @@ entities:
       parent: 8364
     - type: FaxMachine
       name: RD
+  - uid: 21237
+    components:
+    - type: Transform
+      pos: -21.5,-15.5
+      parent: 8364
+    - type: FaxMachine
+      name: Mail Room
+  - uid: 21238
+    components:
+    - type: Transform
+      pos: 59.5,-2.5
+      parent: 8364
+    - type: FaxMachine
+      name: Library
   - uid: 25829
     components:
     - type: Transform
@@ -87219,34 +87229,20 @@ entities:
       parent: 8364
     - type: FaxMachine
       name: Head of Security
-  - uid: 1866
+  - uid: 26057
     components:
     - type: Transform
-      pos: -2.5,-63.5
+      pos: 33.5,-20.5
       parent: 8364
     - type: FaxMachine
-      name: CE Office
-  - uid: 2355
+      name: Medical
+  - uid: 28536
     components:
     - type: Transform
-      pos: 37.5,-38.5
+      pos: 4.5,42.5
       parent: 8364
     - type: FaxMachine
-      name: CMO Office
-  - uid: 5534
-    components:
-    - type: Transform
-      pos: -13.5,-13.5
-      parent: 8364
-    - type: FaxMachine
-      name: Conference Room
-  - uid: 5869
-    components:
-    - type: Transform
-      pos: -10.5,-21.5
-      parent: 8364
-    - type: FaxMachine
-      name: HOP Office
+      name: Security
 - proto: FaxMachineCaptain
   entities:
   - uid: 21189
