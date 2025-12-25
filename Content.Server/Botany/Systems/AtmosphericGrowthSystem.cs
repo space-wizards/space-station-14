@@ -1,5 +1,6 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Events;
 using Content.Shared.Atmos;
 using Robust.Shared.Random;
 
@@ -12,27 +13,40 @@ namespace Content.Server.Botany.Systems;
 public sealed class AtmosphericGrowthSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MutationSystem _mutation = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<AtmosphericGrowthComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
         SubscribeLocalEvent<AtmosphericGrowthComponent, OnPlantGrowEvent>(OnPlantGrow);
+    }
+
+    private void OnCrossPollinate(Entity<AtmosphericGrowthComponent> ent, ref PlantCrossPollinateEvent args)
+    {
+        if (!_botany.TryGetPlantComponent<AtmosphericGrowthComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
+            return;
+
+        _mutation.CrossFloat(ref ent.Comp.IdealHeat, pollenData.IdealHeat);
+        _mutation.CrossFloat(ref ent.Comp.HeatTolerance, pollenData.HeatTolerance);
+        _mutation.CrossFloat(ref ent.Comp.LowPressureTolerance, pollenData.LowPressureTolerance);
+        _mutation.CrossFloat(ref ent.Comp.HighPressureTolerance, pollenData.HighPressureTolerance);
     }
 
     private void OnPlantGrow(Entity<AtmosphericGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (uid, component) = ent;
+        var (plantUid, component) = ent;
 
-        if (!TryComp(uid, out PlantHolderComponent? holder))
+        if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
 
-        var environment = _atmosphere.GetContainingMixture(uid, true, true) ?? GasMixture.SpaceGas;
+        var environment = _atmosphere.GetContainingMixture(plantUid, true, true) ?? GasMixture.SpaceGas;
         if (MathF.Abs(environment.Temperature - component.IdealHeat) > component.HeatTolerance)
         {
-            holder.Health -= _random.Next(1, 3);
+            _plantHolder.AdjustsHealth(plantUid, -_random.Next(1, 3));
             holder.ImproperHeat = true;
-            if (holder.DrawWarnings)
-                holder.UpdateSpriteAfterUpdate = true;
         }
         else
         {
@@ -42,10 +56,8 @@ public sealed class AtmosphericGrowthSystem : EntitySystem
         var pressure = environment.Pressure;
         if (pressure < component.LowPressureTolerance || pressure > component.HighPressureTolerance)
         {
-            holder.Health -= _random.Next(1, 3);
+            _plantHolder.AdjustsHealth(plantUid, -_random.Next(1, 3));
             holder.ImproperPressure = true;
-            if (holder.DrawWarnings)
-                holder.UpdateSpriteAfterUpdate = true;
         }
         else
         {

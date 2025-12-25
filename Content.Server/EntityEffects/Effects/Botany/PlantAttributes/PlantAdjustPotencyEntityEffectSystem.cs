@@ -8,18 +8,17 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// <summary>
 /// Entity effect that sets plant potency.
 /// </summary>
-public sealed partial class PlantAdjustPotencyEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustPotency>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantAdjustPotencyEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAdjustPotency>
 {
     [Dependency] private readonly PlantSystem _plant = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustPotency> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAdjustPotency> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead)
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        if (!TryComp<PlantComponent>(entity, out var plant))
-            return;
-
-        _plant.AdjustPotency((entity.Owner, plant), args.Effect.Amount);
+        _plant.AdjustPotency(entity.AsNullable(), args.Effect.Amount);
     }
 }

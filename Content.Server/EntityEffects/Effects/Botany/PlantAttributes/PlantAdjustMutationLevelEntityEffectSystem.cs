@@ -5,16 +5,19 @@ using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantAdjustMutationLevelEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustMutationLevel>
+/// <summary>
+/// Entity effect that adjusts the mutation level of a plant.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantAdjustMutationLevelEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAdjustMutationLevel>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustMutationLevel> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAdjustMutationLevel> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead)
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        entity.Comp.MutationLevel += args.Effect.Amount * entity.Comp.MutationMod;
-        _plantHolder.CheckHealth(entity, entity.Comp);
+        _plantHolder.AdjustsMutationLevel(entity.Owner, args.Effect.Amount);
     }
 }

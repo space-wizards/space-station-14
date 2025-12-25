@@ -149,7 +149,7 @@
   suffix: Flora
   components:
   - type: Seed
-    seedId: anomalyBerry
+    plantProtoId: AnomalyBerryPlants
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
   - type: PointLight
@@ -325,7 +325,7 @@
   suffix: Flora, Inert
   components:
   - type: Seed
-    seedId: anomalyBerry
+    plantProtoId: AnomalyBerryPlants
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/flora_core.rsi
   - type: PointLight

@@ -1,11 +1,13 @@
+using System.Linq;
+using JetBrains.Annotations;
 using Content.Server.Botany.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.EntityEffects;
 using Content.Shared.Random;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Linq;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Botany.Systems;
 
@@ -13,10 +15,14 @@ public sealed class MutationSystem : EntitySystem
 {
     private static readonly ProtoId<RandomPlantMutationListPrototype> RandomPlantMutations = "RandomPlantMutations";
 
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly BotanySystem _botany = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
     [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
+
     private RandomPlantMutationListPrototype _randomMutations = default!;
 
     public override void Initialize()
@@ -27,18 +33,22 @@ public sealed class MutationSystem : EntitySystem
     /// <summary>
     /// For each random mutation, see if it occurs on this plant this check.
     /// </summary>
-    public void CheckRandomMutations(EntityUid plantHolder, ref SeedData seed, float severity)
+    [PublicAPI]
+    public void CheckRandomMutations(Entity<PlantComponent?> plantEnt, float severity)
     {
+        if (!Resolve(plantEnt, ref plantEnt.Comp, false))
+            return;
+
         foreach (var mutation in _randomMutations.mutations)
         {
             if (Random(Math.Min(mutation.BaseOdds * severity, 1.0f)))
             {
                 if (mutation.AppliesToPlant)
-                    _entityEffects.TryApplyEffect(plantHolder, mutation.Effect);
+                    _entityEffects.TryApplyEffect(plantEnt, mutation.Effect);
 
                 // Stat adjustments do not persist by being an attached effect, they just change the stat.
-                if (mutation.Persists && !seed.Mutations.Any(m => m.Name == mutation.Name))
-                    seed.Mutations.Add(mutation);
+                if (mutation.Persists && !plantEnt.Comp.Mutations.Any(m => m.Name == mutation.Name))
+                    plantEnt.Comp.Mutations.Add(mutation);
             }
         }
     }
@@ -46,70 +56,66 @@ public sealed class MutationSystem : EntitySystem
     /// <summary>
     /// Checks all defined mutations against a seed to see which of them are applied.
     /// </summary>
-    public void MutateSeed(EntityUid plantHolder, ref SeedData seed, float severity)
+    [PublicAPI]
+    public void MutatePlant(Entity<PlantComponent?> plantEnt, float severity)
     {
-        if (!seed.Unique)
-        {
-            Log.Error($"Attempted to mutate a shared seed");
+        if (!Resolve(plantEnt, ref plantEnt.Comp, false))
             return;
-        }
 
-        CheckRandomMutations(plantHolder, ref seed, severity);
-        EnsureGrowthComponents(plantHolder, seed);
+        CheckRandomMutations(plantEnt, severity);
     }
 
     /// <summary>
-    /// Ensures that the plant has all the growth components specified in the seed data.
+    /// Replaces the current plant species with a new one from prototype,
+    /// preserving lifecycle state.
     /// </summary>
-    private void EnsureGrowthComponents(EntityUid plantHolder, SeedData seed)
+    [PublicAPI]
+    public void SpeciesChange(Entity<PlantDataComponent?> oldPlant, EntProtoId newPlantEnt)
     {
-        // Fill missing components in the seed with defaults.
-        seed.GrowthComponents.EnsureGrowthComponents();
+        if (!Resolve(oldPlant, ref oldPlant.Comp, false))
+            return;
 
-        foreach (var prop in GrowthComponentsHolder.ComponentGetters)
-        {
-            if (prop.GetValue(seed.GrowthComponents) is Component component && !EntityManager.HasComponent(plantHolder, component.GetType()))
-            {
-                var newComponent = _serializationManager.CreateCopy(component, notNullableOverride: true);
-                EntityManager.AddComponent(plantHolder, newComponent);
-            }
-        }
+        if (oldPlant.Comp.MutationPrototypes.Count == 0)
+            return;
+
+        // Clone state via snapshot and apply to new plant.
+        var snapshot = _botany.ClonePlantSnapshotData(oldPlant.Owner, cloneLifecycle: true);
+        var newPlantUid = Spawn(newPlantEnt, _transform.GetMapCoordinates(oldPlant.Owner), snapshot);
+
+        if (_plant.TryGetTray(oldPlant.Owner, out var trayEnt))
+            _plantTray.PlantingPlantInTray(trayEnt, newPlantUid);
+        else
+            _plant.PlantingPlant(newPlantUid);
+
+        QueueDel(oldPlant.Owner);
+        _plant.ForceUpdateByExternalCause(newPlantUid);
     }
 
-    public SeedData Cross(SeedData a, SeedData b)
+    [PublicAPI]
+    public void CrossMutations(ComponentRegistry pollenPlant, EntProtoId? pollenProtoId, EntityUid targetPlant)
     {
-        if (b.Immutable)
-            return b;
-
-        var result = b.Clone();
-
-        CrossChemicals(ref result.Chemicals, a.Chemicals);
-
-        if (BotanySystem.TryGetPlantTraits(a, out var sourceTraits) && BotanySystem.TryGetPlantTraits(result, out var resultTraits))
-        {
-            CrossBool(ref resultTraits.Seedless, sourceTraits.Seedless);
-            CrossBool(ref resultTraits.Ligneous, sourceTraits.Ligneous);
-            CrossBool(ref resultTraits.CanScream, sourceTraits.CanScream);
-            CrossBool(ref resultTraits.TurnIntoKudzu, sourceTraits.TurnIntoKudzu);
-        }
+        if (!_botany.TryGetPlantComponent<PlantComponent>(pollenPlant, pollenProtoId, out var pollenCore) ||
+            !TryComp<PlantComponent>(targetPlant, out var targetCore))
+            return;
 
         // LINQ Explanation
         // For the list of mutation effects on both plants, use a 50% chance to pick each one.
         // Union all of the chosen mutations into one list, and pick ones with a Distinct (unique) name.
-        result.Mutations = result.Mutations.Where(m => Random(0.5f)).Union(a.Mutations.Where(m => Random(0.5f))).DistinctBy(m => m.Name).ToList();
+        targetCore.Mutations = targetCore.Mutations.Where(m => Random(0.5f)).Union(pollenCore.Mutations.Where(m => Random(0.5f))).DistinctBy(m => m.Name).ToList();
 
         // Hybrids have a high chance of being seedless. Balances very
         // effective hybrid crossings.
-        if (a.Name != result.Name && Random(0.7f))
+        if (pollenProtoId != null
+            && pollenProtoId != MetaData(targetPlant).EntityPrototype?.ID
+            && Random(0.7f))
         {
-            if (BotanySystem.TryGetPlantTraits(result, out var traits))
+            if (TryComp<PlantTraitsComponent>(targetPlant, out var traits))
                 traits.Seedless = true;
         }
-
-        return result;
     }
 
-    private void CrossChemicals(ref Dictionary<string, SeedChemQuantity> val, Dictionary<string, SeedChemQuantity> other)
+    [PublicAPI]
+    public void CrossChemicals(ref Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> val, Dictionary<ProtoId<ReagentPrototype>, PlantChemQuantity> other)
     {
         // Go through chemicals from the pollen in swab
         foreach (var otherChem in other)
@@ -147,7 +153,8 @@ public sealed class MutationSystem : EntitySystem
         }
     }
 
-    private void CrossGasses(ref Dictionary<Gas, float> val, Dictionary<Gas, float> other)
+    [PublicAPI]
+    public void CrossGasses(ref Dictionary<Gas, float> val, Dictionary<Gas, float> other)
     {
         // Go through gasses from the pollen in swab
         foreach (var otherGas in other)
@@ -178,23 +185,27 @@ public sealed class MutationSystem : EntitySystem
             }
         }
     }
-    private void CrossFloat(ref float val, float other)
+
+    [PublicAPI]
+    public void CrossFloat(ref float val, float other)
     {
         val = Random(0.5f) ? val : other;
     }
 
-    private void CrossInt(ref int val, int other)
+    [PublicAPI]
+    public void CrossInt(ref int val, int other)
     {
         val = Random(0.5f) ? val : other;
     }
 
-    private void CrossBool(ref bool val, bool other)
+    [PublicAPI]
+    public void CrossBool(ref bool val, bool other)
     {
         val = Random(0.5f) ? val : other;
     }
 
     private bool Random(float p)
     {
-        return _robustRandom.Prob(p);
+        return _random.Prob(p);
     }
 }

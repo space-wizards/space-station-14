@@ -1,4 +1,5 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
@@ -7,14 +8,19 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// <summary>
 /// Entity effect that mutates plant to lose health with time.
 /// </summary>
-public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantPhalanximine>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantPhalanximine>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantPhalanximine> args)
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantPhalanximine> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        if (TryComp<PlantTraitsComponent>(entity, out var traits))
-            traits.Viable = true;
+        if (!TryComp<PlantTraitsComponent>(entity, out var traits))
+            return;
+
+        traits.Viable = true;
     }
 }

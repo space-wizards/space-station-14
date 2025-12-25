@@ -1,4 +1,5 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Events;
 
 namespace Content.Server.Botany.Systems;
 
@@ -8,16 +9,29 @@ namespace Content.Server.Botany.Systems;
 /// </summary>
 public sealed class ToxinsSystem : EntitySystem
 {
+    [Dependency] private readonly BotanySystem _botany = default!;
+    [Dependency] private readonly MutationSystem _mutation = default!;
+
     public override void Initialize()
     {
+        SubscribeLocalEvent<PlantToxinsComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
         SubscribeLocalEvent<PlantToxinsComponent, OnPlantGrowEvent>(OnPlantGrow);
+    }
+
+    private void OnCrossPollinate(Entity<PlantToxinsComponent> ent, ref PlantCrossPollinateEvent args)
+    {
+        if (!_botany.TryGetPlantComponent<PlantToxinsComponent>(args.PollenData, args.PollenProtoId, out var pollenData))
+            return;
+
+        _mutation.CrossFloat(ref ent.Comp.ToxinsTolerance, pollenData.ToxinsTolerance);
+        _mutation.CrossFloat(ref ent.Comp.ToxinUptakeDivisor, pollenData.ToxinUptakeDivisor);
     }
 
     private void OnPlantGrow(Entity<PlantToxinsComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (uid, component) = ent;
+        var (plantUid, component) = ent;
 
-        if (!TryComp(uid, out PlantHolderComponent? holder ))
+        if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
 
         if (holder.Toxins < 0)
@@ -30,8 +44,5 @@ public sealed class ToxinsSystem : EntitySystem
         // there is a possibility that it will remove more toxin than amount of damage it took on plant health (and killed it).
         // TODO: get min out of health left and toxin uptake - would work better, probably.
         holder.Toxins -= toxinUptake;
-
-        if (holder.DrawWarnings)
-            holder.UpdateSpriteAfterUpdate = true;
     }
 }

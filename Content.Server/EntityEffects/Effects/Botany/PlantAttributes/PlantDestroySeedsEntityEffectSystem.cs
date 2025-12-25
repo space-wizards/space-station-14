@@ -10,17 +10,19 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// <summary>
 /// Entity effect that removes ability to get seeds from plant using seed maker.
 /// </summary>
-public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantDestroySeeds>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantDestroySeeds>
 {
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantDestroySeeds> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantDestroySeeds> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead || entity.Comp.Seed.Immutable)
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        if (!TryComp<PlantTraitsComponent>(entity, out var traits) || traits.Seedless)
+        if (!TryComp<PlantTraitsComponent>(entity, out var traits)
+            || traits.Seedless)
             return;
 
         _popup.PopupEntity(

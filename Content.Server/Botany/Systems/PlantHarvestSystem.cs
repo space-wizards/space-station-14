@@ -1,7 +1,17 @@
+using JetBrains.Annotations;
 using Content.Server.Botany.Components;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Botany;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Kitchen.Components;
+using Content.Shared.Popups;
+using Content.Shared.Random;
+using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
 
@@ -11,9 +21,14 @@ namespace Content.Server.Botany.Systems;
 /// </summary>
 public sealed class HarvestSystem : EntitySystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
-    [Dependency] private readonly PlantHolderSystem _holder = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
+    [Dependency] private readonly PlantTraySystem _tray = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
@@ -25,14 +40,12 @@ public sealed class HarvestSystem : EntitySystem
 
     private void OnPlantGrow(Entity<PlantHarvestComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (uid, component) = ent;
+        var (plantUid, component) = ent;
 
-        if (!TryComp(uid, out PlantHolderComponent? holder)
-            || !TryComp(uid, out PlantComponent? plant))
+        if (!TryComp<PlantHolderComponent>(plantUid, out var holder)
+            || !TryComp<PlantComponent>(plantUid, out var plant)
+            || holder.Dead)
             return;
-
-        if (component is { ReadyForHarvest: true, HarvestRepeat: HarvestType.SelfHarvest })
-            AutoHarvest((ent, ent, holder));
 
         // Check if plant is ready for harvest.
         var timeLastHarvest = holder.Age - component.LastHarvest;
@@ -40,112 +53,142 @@ public sealed class HarvestSystem : EntitySystem
         {
             component.ReadyForHarvest = true;
             component.LastHarvest = holder.Age;
-            holder.UpdateSpriteAfterUpdate = true;
+            _plant.UpdateSprite(plantUid);
+            TryAutoHarvest(ent, (plantUid, plant), plantUid);
         }
     }
 
     private void OnInteractUsing(Entity<PlantHarvestComponent> ent, ref InteractUsingEvent args)
     {
-        var (uid, component) = ent;
-
-        if (!TryComp(uid, out PlantTraitsComponent? traits)
-            || !traits.Ligneous
-            || !TryComp(uid, out PlantHolderComponent? holder)
-            || holder.Seed == null)
+        if (args.Handled)
             return;
 
-        if (!component.ReadyForHarvest || holder.Dead || holder.Seed == null)
+        var (plantUid, harvest) = ent;
+
+        if (!TryComp<PlantComponent>(plantUid, out var plant)
+            || !TryComp<PlantHolderComponent>(plantUid, out var holder)
+            || !TryComp<PlantTraitsComponent>(plantUid, out var traits))
             return;
 
-        var canHarvestUsing = _botany.CanHarvest(holder.Seed, args.Used);
-        HandleInteraction((ent, ent, holder), args.User, !canHarvestUsing);
+        if (!harvest.ReadyForHarvest || holder.Dead || !traits.Ligneous)
+            return;
+
+        // ligneous requires sharp tool.
+        if (!HasComp<SharpComponent>(args.Used))
+        {
+            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
+            return;
+        }
+
+        TryHandleHarvest((plantUid, harvest), (plantUid, plant), args.User);
+        args.Handled = true;
     }
 
     private void OnInteractHand(Entity<PlantHarvestComponent> ent, ref InteractHandEvent args)
     {
-        if (!TryComp(ent, out PlantHolderComponent? holder)
-            || !TryComp(ent, out PlantTraitsComponent? traits))
+        if (args.Handled)
             return;
 
-        HandleInteraction((ent, ent, holder), args.User, traits.Ligneous);
-    }
+        var (plantUid, harvest) = ent;
 
-    private void HandleInteraction(
-        Entity<PlantHarvestComponent, PlantHolderComponent> ent,
-        EntityUid user,
-        bool missingRequiredTool
-    )
-    {
-        if (missingRequiredTool)
-        {
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
-            return;
-        }
-
-        var (_, harvest, holder) = ent;
-        if (!harvest.ReadyForHarvest || holder.Dead || holder.Seed == null)
-            return;
-
-        // Perform harvest.
-        DoHarvest(ent, user);
-    }
-
-    public void DoHarvest(Entity<PlantHarvestComponent> ent, EntityUid user)
-    {
-        var (uid, component) = ent;
-
-        if (!TryComp(uid, out PlantHolderComponent? holder)
-            || !TryComp(uid, out PlantTraitsComponent? traits))
+        if (!TryComp<PlantComponent>(plantUid, out var plant)
+            || !TryComp<PlantHolderComponent>(plantUid, out var holder)
+            || !TryComp<PlantTraitsComponent>(plantUid, out var traits))
             return;
 
         if (holder.Dead)
         {
-            // Remove dead plant.
-            _holder.RemovePlant(uid, holder);
-            AfterHarvest(ent);
+            _plant.RemovePlant(plantUid);
             return;
         }
 
-        if (!component.ReadyForHarvest)
+        if (!harvest.ReadyForHarvest)
             return;
 
-        // Spawn products.
-        if (holder.Seed != null)
-            _botany.Harvest(holder.Seed, user, ent);
+        if (traits.Ligneous)
+        {
+            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
+            return;
+        }
 
-        // Handle harvest type.
-        if (component.HarvestRepeat == HarvestType.NoRepeat)
-            _holder.RemovePlant(uid, holder);
-
-        AfterHarvest(ent, holder, traits);
+        TryHandleHarvest((plantUid, harvest), (plantUid, plant), args.User);
+        args.Handled = true;
     }
 
-    private void AfterHarvest(Entity<PlantHarvestComponent> ent, PlantHolderComponent? holder = null, PlantTraitsComponent? traits = null)
+    private void TryHandleHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
     {
-        var (uid, component) = ent;
-        if (!Resolve(uid, ref traits, ref holder))
+        if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
+            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(plantEnt.Owner).Coordinates}.");
+
+        DoHarvest(ent, plantEnt, user);
+    }
+
+    private void TryAutoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
+    {
+        if (ent.Comp.HarvestRepeat != HarvestType.SelfHarvest)
             return;
 
-        component.ReadyForHarvest = false;
-        component.LastHarvest = holder.Age;
+        if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
+            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(plantEnt.Owner).Coordinates}.");
 
-        // Play scream sound if applicable.
-        if (traits.CanScream && holder.Seed != null)
-            _audio.PlayPvs(holder.Seed.ScreamSound, uid);
-
-        // Update sprite.
-        _holder.UpdateSprite(uid, holder);
+        DoHarvest(ent, plantEnt, user);
     }
 
     /// <summary>
-    /// Auto-harvests a plant.
+    /// Harvests the plant and produces the produce.
     /// </summary>
-    public void AutoHarvest(Entity<PlantHarvestComponent, PlantHolderComponent> ent)
+    /// <param name="ent">The plant harvest component.</param>
+    /// <param name="plantEnt">The plant component.</param>
+    /// <param name="user">The user who is harvesting the plant.</param>
+    [PublicAPI]
+    public void DoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
     {
-        if (!ent.Comp1.ReadyForHarvest || ent.Comp2.Seed == null)
+        var (plantUid, harvest) = ent;
+
+        if (!TryComp<PlantComponent>(plantUid, out var plant)
+            || !TryComp<PlantDataComponent>(plantUid, out var plantData)
+            || !TryComp<PlantTraitsComponent>(plantUid, out var traits)
+            || !TryComp<PlantHolderComponent>(plantUid, out var holder))
             return;
 
-        _botany.AutoHarvest(ent.Comp2.Seed, Transform(ent.Owner).Coordinates, ent);
-        AfterHarvest(ent);
+        if (!harvest.ReadyForHarvest || plantData.ProductPrototypes.Count == 0 || plant.Yield == 0)
+            return;
+
+        var name = Loc.GetString(plantData.DisplayName);
+        _popup.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
+
+        var totalYield = 0;
+        if (plant.Yield >= 0)
+        {
+            totalYield = holder.YieldMod < 0 ? plant.Yield : plant.Yield * holder.YieldMod;
+            totalYield = Math.Max(1, totalYield);
+        }
+
+        var position = Transform(plantUid).Coordinates;
+        for (var i = 0; i < totalYield; i++)
+        {
+            var product = _random.Pick(plantData.ProductPrototypes);
+            var entity = Spawn(product, position);
+            _randomHelper.RandomOffset(entity, 0.25f);
+
+            var produce = EnsureComp<ProduceComponent>(entity);
+            produce.PlantProtoId = MetaData(plantUid).EntityPrototype!.ID;
+            produce.PlantData = _botany.ClonePlantSnapshotData(plantUid);
+            _botany.ProduceGrown(entity, produce);
+            _appearance.SetData(entity, ProduceVisuals.Potency, plant.Potency);
+        }
+
+        harvest.ReadyForHarvest = false;
+        harvest.LastHarvest = holder.Age;
+
+        if (traits.CanScream)
+            _audio.PlayPvs(new SoundCollectionSpecifier("PlantScreams"), plantUid);
+
+        if (harvest.HarvestRepeat == HarvestType.NoRepeat)
+            _plant.RemovePlant(plantEnt.AsNullable());
+
+        _plant.UpdateSprite(plantEnt.AsNullable());
+        if (_plant.TryGetTray(plantEnt.AsNullable(), out var trayEnt))
+            _tray.UpdateWarnings(trayEnt);
     }
 }

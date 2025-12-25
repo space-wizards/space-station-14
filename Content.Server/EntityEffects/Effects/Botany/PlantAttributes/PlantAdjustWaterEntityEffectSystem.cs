@@ -5,12 +5,16 @@ using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantAdjustWaterEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustWater>
+/// <summary>
+/// Entity effect that adjusts the water of a plant.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantAdjustWaterEntityEffectSystem : EntityEffectSystem<PlantTrayComponent, PlantAdjustWater>
 {
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantTraySystem _plantTray = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustWater> args)
+    protected override void Effect(Entity<PlantTrayComponent> entity, ref EntityEffectEvent<PlantAdjustWater> args)
     {
-        _plantHolder.AdjustWater(entity, args.Effect.Amount, entity.Comp);
+        _plantTray.AdjustWater(entity.AsNullable(), args.Effect.Amount);
     }
 }

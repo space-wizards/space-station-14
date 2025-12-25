@@ -1,3 +1,5 @@
+using Robust.Shared.Prototypes;
+
 namespace Content.Server.Botany.Components;
 
 /// <summary>
@@ -13,7 +15,14 @@ public sealed partial class BotanySwabComponent : Component
     public TimeSpan SwabDelay = TimeSpan.FromSeconds(2);
 
     /// <summary>
-    /// SeedData from the first plant that got swabbed.
+    /// Name of a base plant prototype for the stored pollen snapshot.
     /// </summary>
-    public SeedData? SeedData;
+    [DataField]
+    public EntProtoId? PlantProtoId;
+
+    /// <summary>
+    /// Serialized snapshot of plant components from the last swabbed plant.
+    /// </summary>
+    [DataField]
+    public ComponentRegistry? PlantData;
 }

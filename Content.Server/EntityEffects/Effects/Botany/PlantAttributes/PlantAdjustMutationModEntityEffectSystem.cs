@@ -1,16 +1,23 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantAdjustMutationModEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustMutationMod>
+/// <summary>
+/// Entity effect that adjusts the mutation mod of a plant.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantAdjustMutationModEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAdjustMutationMod>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustMutationMod> args)
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAdjustMutationMod> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead)
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        entity.Comp.MutationMod += args.Effect.Amount;
+        _plantHolder.AdjustsMutationMod(entity.Owner, args.Effect.Amount);
     }
 }

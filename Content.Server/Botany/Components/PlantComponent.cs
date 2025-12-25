@@ -1,12 +1,20 @@
+using Content.Shared.Random;
+
 namespace Content.Server.Botany.Components;
 
 /// <summary>
-/// Component for storing core plant data.
+/// Component for storing plant growth data.
 /// </summary>
 [RegisterComponent]
 [DataDefinition]
 public sealed partial class PlantComponent : Component
 {
+    /// <summary>
+    /// The mutation effects that have been applied to this plant.
+    /// </summary>
+    [DataField]
+    public List<RandomPlantMutation> Mutations = [];
+
     /// <summary>
     /// The plant's max health.
     /// </summary>

@@ -1,5 +1,5 @@
-using Content.Server.Botany;
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
 using Content.Shared.FixedPoint;
@@ -8,28 +8,29 @@ using Robust.Shared.Random;
 
 namespace Content.Server.EntityEffects.Effects.Botany;
 
-public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantMutateChemicals>
+/// <summary>
+/// Entity effect that mutates the chemicals of a plant.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateChemicals>
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateChemicals> args)
     {
-        if (entity.Comp.Seed == null)
-            return;
-
-        var chemicals = entity.Comp.Seed.Chemicals;
+        var chemicals = EnsureComp<PlantChemicalsComponent>(entity.Owner).Chemicals;
         var randomChems = _proto.Index(args.Effect.RandomPickBotanyReagent).Fills;
 
-        // Add a random amount of a random chemical to this set of chemicals
+        // Add a random amount of a random chemical to this set of chemicals.
         var pick = _random.Pick(randomChems);
         var chemicalId = _random.Pick(pick.Reagents);
         var amount = _random.NextFloat(0.1f, (float)pick.Quantity);
-        var seedChemQuantity = new SeedChemQuantity();
-        if (chemicals.ContainsKey(chemicalId))
+        var seedChemQuantity = new PlantChemQuantity();
+        if (chemicals.TryGetValue(chemicalId, out var value))
         {
-            seedChemQuantity.Min = chemicals[chemicalId].Min;
-            seedChemQuantity.Max = chemicals[chemicalId].Max + amount;
+            seedChemQuantity.Min = value.Min;
+            seedChemQuantity.Max = value.Max + amount;
         }
         else
         {
@@ -37,8 +38,9 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
             seedChemQuantity.Max = FixedPoint2.Zero + amount;
             seedChemQuantity.Inherent = false;
         }
+
         var potencyDivisor = 100f / seedChemQuantity.Max;
-        seedChemQuantity.PotencyDivisor = (float) potencyDivisor;
+        seedChemQuantity.PotencyDivisor = (float)potencyDivisor;
         chemicals[chemicalId] = seedChemQuantity;
     }
 }

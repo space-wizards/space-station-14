@@ -5,16 +5,19 @@ using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantAdjustHealthEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustHealth>
+/// <summary>
+/// Entity effect that adjusts the health of a plant.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantAdjustHealthEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAdjustHealth>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustHealth> args)
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAdjustHealth> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead)
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        entity.Comp.Health += args.Effect.Amount;
-        _plantHolder.CheckHealth(entity, entity.Comp);
+        _plantHolder.AdjustsHealth(entity.Owner, args.Effect.Amount);
     }
 }

@@ -1,16 +1,23 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany.PlantAttributes;
 
 namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
-public sealed partial class PlantAdjustPestsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantAdjustPests>
+/// <summary>
+/// Entity effect that adjusts the pests of a plant.
+/// </summary>
+/// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
+public sealed partial class PlantAdjustPestsEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAdjustPests>
 {
-    protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantAdjustPests> args)
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+
+    protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAdjustPests> args)
     {
-        if (entity.Comp.Seed == null || entity.Comp.Dead)
+        if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        entity.Comp.PestLevel += args.Effect.Amount;
+        _plantHolder.AdjustsPests(entity.Owner, args.Effect.Amount);
     }
 }

@@ -141,3 +141,25 @@
     state: preview
   - type: RandomCloneSpawner
     settings: BaseClone
+
+# for plant clones
+- type: cloningSettings
+  id: PlantClone
+  components:
+  - Plant
+  - PlantChemicals
+  - PlantHarvest
+  - PlantTraits
+  - BasicGrowth
+  - AtmosphericGrowth
+  - ConsumeExudeGasGrowth
+  - WeedPestGrowth
+  - UnviableGrowth
+  - PlantToxins
+
+# for plant lifecycle clones
+- type: cloningSettings
+  id: PlantLifecycleClone
+  parent: PlantClone
+  components:
+  - PlantHolder
