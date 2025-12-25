@@ -32362,6 +32362,8 @@ entities:
     - type: FaxMachine
       destinationAddress: Cargo
       name: Cargo
+- proto: FaxMachineLongRange
+  entities:
   - uid: 9687
     components:
     - type: Transform
