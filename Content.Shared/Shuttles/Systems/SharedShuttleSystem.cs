@@ -1,8 +1,10 @@
+using Content.Shared.CCVar;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
 using Content.Shared.Whitelist;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -14,6 +16,7 @@ namespace Content.Shared.Shuttles.Systems;
 
 public abstract partial class SharedShuttleSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] protected readonly FixtureSystem Fixtures = default!;
@@ -21,10 +24,6 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-
-    public const float FTLRange = 256f;
-    public const float FTLBufferRange = 8f;
-    public const float TileDensityMultiplier = 0.5f;
 
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
@@ -47,7 +46,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     {
         foreach (var fixture in args.NewFixtures)
         {
-            Physics.SetDensity(uid, fixture.Key, fixture.Value, TileDensityMultiplier, false, manager);
+            Physics.SetDensity(uid, fixture.Key, fixture.Value, _configManager.GetCVar(CCVars.TileDensityMultiplier), false, manager);
             Fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
         }
     }
@@ -171,7 +170,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         return HasComp<MapComponent>(coordinates.EntityId);
     }
 
-    public float GetFTLRange(EntityUid shuttleUid) => FTLRange;
+    public float GetFTLRange(EntityUid shuttleUid) => _configManager.GetCVar(CCVars.FTLRange);
 
     public float GetFTLBufferRange(EntityUid shuttleUid, MapGridComponent? grid = null)
     {
@@ -180,7 +179,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
         var localAABB = grid.LocalAABB;
         var maxExtent = localAABB.MaxDimension / 2f;
-        var range = maxExtent + FTLBufferRange;
+        var range = maxExtent + _configManager.GetCVar(CCVars.FTLBufferRange);
         return range;
     }
 
@@ -205,7 +204,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var targetPosition = mapCoordinates.Position;
 
         // Check range even if it's cross-map.
-        if ((targetPosition - ourPos).Length() > FTLRange)
+        if ((targetPosition - ourPos).Length() > _configManager.GetCVar(CCVars.FTLRange))
         {
             return false;
         }
@@ -227,7 +226,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         }
 
         var ourFTLBuffer = GetFTLBufferRange(shuttleUid);
-        var circle = new PhysShapeCircle(ourFTLBuffer + FTLBufferRange, targetPosition);
+        var circle = new PhysShapeCircle(ourFTLBuffer + _configManager.GetCVar(CCVars.FTLBufferRange), targetPosition);
 
         _mapManager.FindGridsIntersecting(mapCoordinates.MapId, circle, Robust.Shared.Physics.Transform.Empty,
             ref _grids, includeMap: false);

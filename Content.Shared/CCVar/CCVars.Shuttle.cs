@@ -7,6 +7,22 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     /// <summary>
+    ///     Maximum distance a shuttle can FTL.
+    /// </summary>
+    public static readonly CVarDef<float> FTLRange = CVarDef.Create("shuttle.ftl_range", 256f, CVar.REPLICATED);
+
+    /// <summary>
+    ///     Additional buffer distance added when checking if a spot is free for FTL arrival.
+    ///     Used to ensure shuttles don't collide with objects when arriving at their destination.
+    /// </summary>
+    public static readonly CVarDef<float> FTLBufferRange = CVarDef.Create("shuttle.ftl_buffer_range", 8f, CVar.REPLICATED);
+
+    /// <summary>
+    ///     Multiplier applied to tile density for physics calculations.
+    /// </summary>
+    public static readonly CVarDef<float> TileDensityMultiplier = CVarDef.Create("shuttle.tile_density_multiplier", 0.5f, CVar.REPLICATED);
+
+    /// <summary>
     ///     Delay for auto-orientation. Used for people arriving via arrivals.
     /// </summary>
     public static readonly CVarDef<double> AutoOrientDelay =

@@ -1,5 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Shuttles.Systems;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
 
@@ -11,6 +13,7 @@ namespace Content.Server.Atmos.EntitySystems;
 /// </summary>
 public sealed class AutomaticAtmosSystem : EntitySystem
 {
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
     public override void Initialize()
@@ -25,7 +28,7 @@ public sealed class AutomaticAtmosSystem : EntitySystem
             return;
 
         // We can't actually count how many tiles there are efficiently, so instead estimate with the mass.
-        if (ev.NewMass / ShuttleSystem.TileDensityMultiplier >= 7.0f)
+        if (ev.NewMass / _configManager.GetCVar(CCVars.TileDensityMultiplier) >= 7.0f)
         {
             AddComp<GridAtmosphereComponent>(ent);
             Log.Info($"Giving grid {ent} GridAtmosphereComponent.");
