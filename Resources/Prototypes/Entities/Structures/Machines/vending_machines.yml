@@ -2329,7 +2329,7 @@
     pack: DrugMachineGoodbyes
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/drugs.rsi
-    layers: # TODO Broken sprite
+    layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
