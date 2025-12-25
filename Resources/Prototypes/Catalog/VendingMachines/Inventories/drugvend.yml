@@ -1,0 +1,13 @@
+- type: vendingMachineInventory
+  id: DrugVendInventory
+  startingInventory:
+    Joint: 3
+    Blunt: 3
+    StrangePill: 5
+    SmokingPipeFilledCannabis: 2
+    GroundCannabis: 2
+    FoodBakedCannabisBrownie: 2
+  contrabandInventory:
+    JointRainbow: 2
+    BluntRainbow: 2
+    CannabisSeeds: 2
