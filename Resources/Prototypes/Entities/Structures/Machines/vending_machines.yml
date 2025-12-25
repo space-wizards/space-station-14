@@ -2334,8 +2334,6 @@
       map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-    - state: "buttons"
-      shader: unshaded
     - state: "screen"
       map: ["enum.VendingMachineVisualLayers.Screen"]
     - state: "panel"
