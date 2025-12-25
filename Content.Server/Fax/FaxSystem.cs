@@ -52,7 +52,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly FaxecuteSystem _faxecute = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly IEntityManager entManager = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     private static readonly ProtoId<ToolQualityPrototype> ScrewingQuality = "Screwing";
 
