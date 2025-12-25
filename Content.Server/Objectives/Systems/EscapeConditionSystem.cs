@@ -6,7 +6,7 @@ using Content.Shared.Objectives.Components;
 
 namespace Content.Server.Objectives.Systems;
 
-public sealed class EscapeShuttleConditionSystem : EntitySystem
+public sealed class EscapeConditionSystem : EntitySystem
 {
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
@@ -15,10 +15,10 @@ public sealed class EscapeShuttleConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EscapeShuttleConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
+        SubscribeLocalEvent<EscapeConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
-    private void OnGetProgress(EntityUid uid, EscapeShuttleConditionComponent comp, ref ObjectiveGetProgressEvent args)
+    private void OnGetProgress(EntityUid uid, EscapeConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
         args.Progress = GetProgress(args.MindId, args.Mind);
     }
@@ -32,9 +32,9 @@ public sealed class EscapeShuttleConditionSystem : EntitySystem
         // You're not escaping if you're restrained!
         // Granting 50% as to allow for partial completion of the objective.
         if (TryComp<CuffableComponent>(mind.OwnedEntity, out var cuffed) && cuffed.CuffedHandCount > 0)
-            return _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value, false) ? 0.5f : 0f;
+            return _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value, true) ? 0.5f : 0f;
 
         // Any emergency shuttle counts for this objective, but not pods.
-        return _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value, false) ? 1f : 0f;
+        return _emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value, true) ? 1f : 0f;
     }
 }
