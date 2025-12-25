@@ -3,7 +3,7 @@
 namespace Content.Shared.Botany;
 
 [Serializable, NetSerializable]
-public enum PlantHolderVisuals
+public enum PlantTrayVisuals
 {
     HealthLight,
     WaterLight,

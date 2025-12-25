@@ -45,23 +45,23 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PlantHolderVisuals.HealthLight:
+      enum.PlantTrayVisuals.HealthLight:
         health_alert:
           True: { visible: true }
           False: { visible: false }
-      enum.PlantHolderVisuals.WaterLight:
+      enum.PlantTrayVisuals.WaterLight:
         water_alert:
           True: { visible: true }
           False: { visible: false }
-      enum.PlantHolderVisuals.NutritionLight:
+      enum.PlantTrayVisuals.NutritionLight:
         nutri_alert:
           True: { visible: true }
           False: { visible: false }
-      enum.PlantHolderVisuals.AlertLight:
+      enum.PlantTrayVisuals.AlertLight:
         undefined_alert:
           True: { visible: true }
           False: { visible: false }
-      enum.PlantHolderVisuals.HarvestLight:
+      enum.PlantTrayVisuals.HarvestLight:
         harvest_alert:
           True: { visible: true }
           False: { visible: false }

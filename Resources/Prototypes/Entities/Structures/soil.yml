@@ -56,7 +56,7 @@
         reagent: Water
         solution: soil
   - type: Appearance
-  - type: PlantHolderVisuals
+  - type: PlantTrayVisuals
 
 - type: entity
   parent: hydroponicsSoil

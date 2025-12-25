@@ -126,24 +126,6 @@ public sealed partial class BotanySystem : EntitySystem
     }
 
     /// <summary>
-    /// Applies a component snapshot to a plant.
-    /// </summary>
-    /// <param name="plant">The plant to apply the snapshot to.</param>
-    /// <param name="snapshot">The component snapshot to apply.</param>
-    [PublicAPI]
-    public void ApplyPlantSnapshotData(EntityUid plant, ComponentRegistry snapshot)
-    {
-        foreach (var (_, entry) in snapshot)
-        {
-            if (entry.Component is not Component component)
-                continue;
-
-            var copied = _serialization.CreateCopy(component, notNullableOverride: true);
-            EntityManager.AddComponent(plant, copied, overwrite: true);
-        }
-    }
-
-    /// <summary>
     /// Spawns a seed packet that stores a component snapshot of <paramref name="sourcePlant"/>.
     /// </summary>
     [PublicAPI]

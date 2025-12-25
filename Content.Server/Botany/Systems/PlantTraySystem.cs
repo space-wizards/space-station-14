@@ -113,10 +113,7 @@ public sealed class PlantTraySystem : EntitySystem
             if (tray.PlantEntity == null || Deleted(tray.PlantEntity))
             {
                 args.Handled = true;
-                var plantUid = Spawn(seeds.PlantProtoId, Transform(uid).Coordinates);
-
-                if (seeds.PlantData != null)
-                    _botany.ApplyPlantSnapshotData(plantUid, seeds.PlantData);
+                var plantUid = Spawn(seeds.PlantProtoId, _transform.GetMapCoordinates(uid), seeds.PlantData);
 
                 if (!TryComp<PlantDataComponent>(plantUid, out var plantData))
                     return;
@@ -295,9 +292,9 @@ public sealed class PlantTraySystem : EntitySystem
 
         if (!TryGetPlant(ent, out var plantUid))
         {
-            _appearance.SetData(uid, PlantHolderVisuals.HealthLight, false, app);
-            _appearance.SetData(uid, PlantHolderVisuals.AlertLight, false, app);
-            _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, false, app);
+            _appearance.SetData(uid, PlantTrayVisuals.HealthLight, false, app);
+            _appearance.SetData(uid, PlantTrayVisuals.AlertLight, false, app);
+            _appearance.SetData(uid, PlantTrayVisuals.HarvestLight, false, app);
             return;
         }
 
@@ -307,15 +304,15 @@ public sealed class PlantTraySystem : EntitySystem
             return;
 
         // TODO: dehardcode those alert levels.
-        _appearance.SetData(uid, PlantHolderVisuals.HealthLight, plantHolder.Health <= plant.Endurance / 2f, app);
-        _appearance.SetData(uid, PlantHolderVisuals.WaterLight, component.WaterLevel <= 15, app);
-        _appearance.SetData(uid, PlantHolderVisuals.NutritionLight, component.NutritionLevel <= 8, app);
+        _appearance.SetData(uid, PlantTrayVisuals.HealthLight, plantHolder.Health <= plant.Endurance / 2f, app);
+        _appearance.SetData(uid, PlantTrayVisuals.WaterLight, component.WaterLevel <= 15, app);
+        _appearance.SetData(uid, PlantTrayVisuals.NutritionLight, component.NutritionLevel <= 8, app);
         _appearance.SetData(uid,
-            PlantHolderVisuals.AlertLight,
+            PlantTrayVisuals.AlertLight,
             component.WeedLevel >= 5 || plantHolder.PestLevel >= 5 || plantHolder.Toxins >= 40 || plantHolder.ImproperHeat
             || plantHolder.ImproperPressure || plantHolder.MissingGas > 0,
             app);
-        _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, harvest is { ReadyForHarvest: true }, app);
+        _appearance.SetData(uid, PlantTrayVisuals.HarvestLight, harvest is { ReadyForHarvest: true }, app);
     }
 
     /// <summary>

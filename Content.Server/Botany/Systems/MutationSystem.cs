@@ -79,22 +79,15 @@ public sealed class MutationSystem : EntitySystem
             return;
 
         // Clone state via snapshot and apply to new plant.
-        var newPlantUid = Spawn(newPlantEnt);
         var snapshot = _botany.ClonePlantSnapshotData(oldPlant.Owner, cloneLifecycle: true);
+        var newPlantUid = Spawn(newPlantEnt, _transform.GetMapCoordinates(oldPlant.Owner), snapshot);
 
         if (_plant.TryGetTray(oldPlant.Owner, out var trayEnt))
-        {
             _plantTray.PlantingPlantInTray(trayEnt, newPlantUid);
-        }
         else
-        {
-            _transform.SetCoordinates(newPlantUid, Transform(oldPlant.Owner).Coordinates);
             _plant.PlantingPlant(newPlantUid);
-        }
 
         QueueDel(oldPlant.Owner);
-
-        _botany.ApplyPlantSnapshotData(newPlantUid, snapshot);
         _plant.ForceUpdateByExternalCause(newPlantUid);
     }
 
