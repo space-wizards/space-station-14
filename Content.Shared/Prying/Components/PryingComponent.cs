@@ -1,5 +1,7 @@
+using Content.Shared.Alert;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Prying.Components;
 
@@ -18,6 +20,7 @@ public sealed partial class PryingComponent : Component
     /// </summary>
     [DataField]
     public bool Force;
+
     /// <summary>
     /// Modifier on the prying time.
     /// Lower values result in more time.
@@ -36,6 +39,12 @@ public sealed partial class PryingComponent : Component
     /// </summary>
     [DataField]
     public bool Enabled = true;
+
+    /// <summary>
+    /// What alert to show to an entity with this component.
+    /// </summary>
+    [DataField]
+    public ProtoId<AlertPrototype>? PryingAlertProtoId = "Prying";
 }
 
 /// <summary>
