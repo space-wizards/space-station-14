@@ -46,6 +46,16 @@
       color: PaleVioletRed
       emergencyLightColor: PaleVioletRed
       forceEnableEmergencyLights: true
+    martial_law:
+      announcement: alert-level-martial_law-announcement
+      selectable: false
+      sound:
+        path: /Audio/Misc/war_alert.ogg
+      disableSelection: true
+      color: Maroon
+      emergencyLightColor: Maroon
+      forceEnableEmergencyLights: true
+      shuttleTime: 1800  # Let's give the nuclear operatives time
     delta:
       announcement: alert-level-delta-announcement
       selectable: false

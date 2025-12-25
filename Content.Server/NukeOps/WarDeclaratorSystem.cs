@@ -31,6 +31,8 @@ public sealed class WarDeclaratorSystem : EntitySystem
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
+    private bool alertLevelChangedFlag = false;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<WarDeclaratorComponent, MapInitEvent>(OnMapInit);
@@ -47,6 +49,10 @@ public sealed class WarDeclaratorSystem : EntitySystem
         {
             if (comp.CurrentStatus == WarConditionStatus.WarReady)
             {
+
+                if (alertLevelChangedFlag)
+                    return;
+
                 if (comp.SetAlertlevel == null)
                     continue;
 
@@ -54,6 +60,8 @@ public sealed class WarDeclaratorSystem : EntitySystem
                     continue;
 
                 SetAlertlevel(comp.SetAlertlevel);
+
+                alertLevelChangedFlag = true;
             }
         }
     }

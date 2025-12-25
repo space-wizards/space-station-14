@@ -56,7 +56,7 @@ public sealed partial class WarDeclaratorComponent : Component
     /// Changes the alert level on all stations with the nuke disk
     /// if null, the alert level will not change.
     /// </summary>
-    public string? SetAlertlevel = "gamma";
+    public string? SetAlertlevel = "martial_law";
 
     /// <summary>
     /// How many seconds after the declaration of war, the alert level will change to gamma
