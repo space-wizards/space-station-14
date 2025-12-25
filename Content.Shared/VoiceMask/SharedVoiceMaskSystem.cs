@@ -13,11 +13,13 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
 {
     public readonly string Name;
     public readonly string? Verb;
+    public readonly bool Active;
 
-    public VoiceMaskBuiState(string name, string? verb)
+    public VoiceMaskBuiState(string name, string? verb, bool active)
     {
         Name = name;
         Verb = verb;
+        Active = active;
     }
 }
 
@@ -50,7 +52,6 @@ public sealed class VoiceMaskChangeVerbMessage : BoundUserInterfaceMessage
 ///     Toggle the effects of the voice mask.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class VoiceMaskToggle : BoundUserInterfaceMessage
+public sealed class VoiceMaskToggleMessage : BoundUserInterfaceMessage
 {
-    public VoiceMaskToggle() { }
 }

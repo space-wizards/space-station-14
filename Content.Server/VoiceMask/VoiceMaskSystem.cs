@@ -45,7 +45,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, LockToggledEvent>(OnLockToggled);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVerbMessage>(OnChangeVerb);
-        SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskToggle>(OnToggle);
+        SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskToggleMessage>(OnToggle);
         SubscribeLocalEvent<VoiceMaskComponent, ClothingGotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
         SubscribeLocalEvent<VoiceMaskComponent, TransformSpeechEvent>(OnTransformSpeech, before: [typeof(AccentSystem)]);
@@ -89,10 +89,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     private void OnSeeIdentityAttemptEvent(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<SeeIdentityAttemptEvent> args)
     {
         if (!entity.Comp.OverrideIdentity || !entity.Comp.Active)
-        {
-            args.Event.NameOverride = null;
             return;
-        }
 
         args.Event.NameOverride = GetCurrentVoiceName(entity);
     }
@@ -148,7 +145,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         UpdateUI(entity);
     }
 
-    private void OnToggle(Entity<VoiceMaskComponent> entity, ref VoiceMaskToggle args)
+    private void OnToggle(Entity<VoiceMaskComponent> entity, ref VoiceMaskToggleMessage args)
     {
         _popupSystem.PopupEntity(Loc.GetString("voice-mask-popup-toggle"), entity, args.Actor);
         entity.Comp.Active = !entity.Comp.Active;
@@ -184,7 +181,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     private void UpdateUI(Entity<VoiceMaskComponent> entity)
     {
         if (_uiSystem.HasUi(entity, VoiceMaskUIKey.Key))
-            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceMaskSpeechVerb));
+            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceMaskSpeechVerb, entity.Comp.Active));
     }
     #endregion
 
@@ -198,6 +195,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (!entity.Comp.Active)
             return;
+
         args.VoiceName = GetCurrentVoiceName(entity);
         args.SpeechVerb = entity.Comp.VoiceMaskSpeechVerb ?? args.SpeechVerb;
     }

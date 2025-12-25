@@ -33,10 +33,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
             SpeechVerbSelector.SelectId(args.Id);
         };
 
-        ToggleButton.OnPressed += args =>
-        {
-            OnToggle?.Invoke();
-        };
+        ToggleButton.OnPressed += args => OnToggle?.Invoke();
     }
 
     public void ReloadVerbs(IPrototypeManager proto)
@@ -70,10 +67,11 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
             SpeechVerbSelector.SelectId(id);
     }
 
-    public void UpdateState(string name, string? verb)
+    public void UpdateState(string name, string? verb, bool active)
     {
         NameSelector.Text = name;
         _verb = verb;
+        ToggleButton.Pressed = active;
 
         for (int id = 0; id < SpeechVerbSelector.ItemCount; id++)
         {

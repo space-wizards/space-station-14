@@ -36,7 +36,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
 
     private void OnToggle()
     {
-        SendMessage(new VoiceMaskToggle());
+        SendMessage(new VoiceMaskToggleMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -46,7 +46,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
             return;
         }
 
-        _window.UpdateState(cast.Name, cast.Verb);
+        _window.UpdateState(cast.Name, cast.Verb, cast.Active);
     }
 
     protected override void Dispose(bool disposing)

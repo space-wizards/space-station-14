@@ -13,7 +13,7 @@
             <OptionButton Name="SpeechVerbSelector" /> <!-- Populated in LoadVerbs -->
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" Margin="5">
-            <Button Name="ToggleButton" Text="{Loc 'voice-mask-name-change-toggle'}" />
+            <Button Name="ToggleButton" Text="{Loc 'voice-mask-name-change-toggle'}" HorizontalExpand="True" ToggleMode="True"/>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>
