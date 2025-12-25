@@ -2334,9 +2334,10 @@
       map: ["enum.VendingMachineVisualLayers.Base"]
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+    - state: "buttons"
+      shader: unshaded
     - state: "screen"
       map: ["enum.VendingMachineVisualLayers.Screen"]
-      shader: unshaded
     - state: "panel"
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: RgbLightController
