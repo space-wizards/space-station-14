@@ -15,5 +15,8 @@
         <BoxContainer Orientation="Horizontal" Margin="5">
             <Button Name="ToggleButton" Text="{Loc 'voice-mask-name-change-toggle'}" HorizontalExpand="True" ToggleMode="True"/>
         </BoxContainer>
+        <BoxContainer Orientation="Horizontal" Margin="5">
+            <Button Name="ToggleAccentButton" Text="{Loc 'voice-mask-name-change-accent-toggle'}" HorizontalExpand="True" ToggleMode="True"/>
+        </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

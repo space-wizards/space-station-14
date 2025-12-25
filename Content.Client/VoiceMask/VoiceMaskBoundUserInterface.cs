@@ -27,6 +27,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
         _window.OnNameChange += OnNameSelected;
         _window.OnVerbChange += verb => SendMessage(new VoiceMaskChangeVerbMessage(verb));
         _window.OnToggle += OnToggle;
+        _window.OnAccentToggle += OnAccentToggle;
     }
 
     private void OnNameSelected(string name)
@@ -39,6 +40,11 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
         SendMessage(new VoiceMaskToggleMessage());
     }
 
+    private void OnAccentToggle()
+    {
+        SendMessage(new VoiceMaskAccentToggleMessage());
+    }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         if (state is not VoiceMaskBuiState cast || _window == null)
@@ -46,7 +52,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
             return;
         }
 
-        _window.UpdateState(cast.Name, cast.Verb, cast.Active);
+        _window.UpdateState(cast.Name, cast.Verb, cast.Active, cast.AccentHide);
     }
 
     protected override void Dispose(bool disposing)
