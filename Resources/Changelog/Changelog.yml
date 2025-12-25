@@ -3627,13 +3627,6 @@
   id: 9294
   time: '2025-12-15T01:50:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41823
-- author: PJB3005
-  changes:
-  - message: Removed friendly & freelancer "unknown shuttle" events.
-    type: Remove
-  id: 9295
-  time: '2025-12-15T03:42:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/41860
 - author: Meara1179
   changes:
   - message: Added crowbar to the Medical Borg's Rescue module.
