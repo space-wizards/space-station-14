@@ -437,6 +437,27 @@
     prototypes: [ ERTSecurityGearArmedVanguard ]
     roleLoadout: [ RoleSurvivalMilitaryDouble ]
 
+- type: entity
+  parent: RandomHumanoidSpawnerERTSecurityEVA
+  id: RandomHumanoidSpawnerERTSecurityArmedShotgun
+  name: ERT security breacher
+  suffix: ERTRole, Armed, EVA
+  components:
+  - type: RandomHumanoidSpawner
+    settings: ERTSecurityArmedShotgun
+
+- type: randomHumanoidSettings
+  parent: ERTSecurityEVA
+  id: ERTSecurityArmedShotgun
+  components:
+  - type: RandomMetadata
+    nameSegments:
+    - NamesMilitaryLast
+    nameFormat: name-format-ert-pointman
+  - type: Loadout
+    prototypes: [ ERTSecurityGearArmedShotgun ]
+    roleLoadout: [ RoleSurvivalMilitaryDouble ]
+
 ## ERT Medic
 
 - type: entity

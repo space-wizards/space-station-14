@@ -421,6 +421,32 @@
     - MagazinePistol
     - EmergencyMedipen
 
+- type: startingGear
+  parent: ERTSecurityGearEVA
+  id: ERTSecurityGearArmedShotgun
+  equipment:
+    pocket2: WeaponDisabler
+    suitstorage: WeaponSubMachineGunWt550
+  storage:
+    back:
+    - SmokeGrenade
+    - BoxLethalshot
+    - BoxShotgunSlug
+    - BoxShotgunIncendiary
+    - MedkitCombatFilled # End of first line
+    - SmokeGrenade
+    - ExGrenade
+    - CableDetStack
+    - BoxDetonator
+    belt:
+    - Truncheon
+    - Handcuffs
+    - Handcuffs
+    - CrowbarRed
+    - WeaponPistolMk58
+    - MagazinePistol
+    - EmergencyMedipen
+
 - type: chameleonOutfit
   id: ERTSecurityChameleonOutfit
   job: ERTSecurity
