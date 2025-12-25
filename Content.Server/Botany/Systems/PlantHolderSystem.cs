@@ -22,7 +22,8 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!TryComp<PlantComponent>(ent.Owner, out var plant))
             return;
 
-        ent.Comp.Health += MathHelper.Clamp(amount, 0, plant.Endurance);
+        ent.Comp.Health += amount;
+        ent.Comp.Health = MathHelper.Clamp(ent.Comp.Health, 0, plant.Endurance);
         CheckHealth(ent);
         _plant.UpdateSprite(ent.Owner);
     }
