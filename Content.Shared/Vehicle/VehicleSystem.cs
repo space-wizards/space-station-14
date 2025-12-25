@@ -50,7 +50,7 @@ public sealed partial class VehicleSystem : EntitySystem
 
         if (ent.Comp.TransferDamageModifier is { } modifierSet)
         {
-            // Reduce damage to via the specified modifier, if provided.
+            // Reduce damage to the operator via the specified modifier, if provided.
             damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
         }
 
