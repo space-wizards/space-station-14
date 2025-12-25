@@ -48,7 +48,7 @@
   parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
   suffix: ""
   components:
-  - type: PredictedBatteryVisuals
+  - type: BatteryVisuals
   - type: PowerCellDraw
     drawRate: 1.2 #Calculated for 5 minutes on a small cell
   - type: ToggleCellDraw

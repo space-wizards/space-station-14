@@ -939,4 +939,28 @@
   id: 114
   time: '2025-12-09T06:54:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41806
+- author: Minemoder
+  changes:
+  - message: The Arrivals Shuttle had its powernet changed to not rely on generators
+      and become more tamper proof.
+    type: Tweak
+  id: 115
+  time: '2025-12-18T20:37:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41884
+- author: Spessmann
+  changes:
+  - message: On Snowball, salvage now has a eva tank dispenser.
+    type: Add
+  - message: On Snowball, chemistry now has a reagent grinder.
+    type: Add
+  id: 116
+  time: '2025-12-20T08:32:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41908
+- author: jessicamaybe
+  changes:
+  - message: Added botany equipment to the Marathon brig
+    type: Add
+  id: 117
+  time: '2025-12-24T00:43:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42028
 Order: 2
