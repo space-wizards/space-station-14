@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseMachinePowered
   id: FaxMachineBase
-  name: fax machine
-  description: Bureaucracy machine.
+  name: long range fax machine
+  description: Bluespace technologies on the application of bureaucracy.
   components:
   - type: Sprite
     sprite: Structures/Machines/fax_machine.rsi
@@ -72,37 +72,33 @@
     transmitFrequencyId: Fax
   - type: RequireProjectileTarget
 
-- type: entity
-  parent: FaxMachineBase
-  id: FaxMachineLongRange
-  name: long range fax machine
-  description: Bluespace technologies on the application of bureaucracy. It can connect to similar devices at extreme distances.
-  suffix: Crossmap
-  components:
-  - type: FaxMachine
-    isLongRange: true
-
 # Special
 - type: entity
-  parent: FaxMachineLongRange
+  parent: FaxMachineBase
   id: FaxMachineCentcom
   name: CentComm long range fax machine
   suffix: CentCom
   components:
   - type: Sprite
-    color: "#bfe3ff"
+    layers:
+      - state: icon
+        map: [ "base" ]
+        color: "#bfe3ff"
   - type: FaxMachine
     name: "Central Command"
     notifyAdmins: true
 
 - type: entity
-  parent: FaxMachineLongRange
+  parent: FaxMachineBase
   id: FaxMachineSyndie
   name: syndicate long range fax machine
   suffix: Syndicate
   components:
   - type: Sprite
-    color: "#a3a3a3"
+    layers:
+      - state: icon
+        map: [ "base" ]
+        color: "#a3a3a3"
   - type: FaxMachine
     name: "ERR*?*%!"
     responsePings: false
@@ -111,7 +107,7 @@
     emagType: Interaction
 
 - type: entity
-  parent: FaxMachineLongRange
+  parent: FaxMachineBase
   id: FaxMachineCaptain
   name: captain long range fax machine
   suffix: NukeCodes
