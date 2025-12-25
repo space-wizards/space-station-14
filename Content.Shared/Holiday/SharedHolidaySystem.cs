@@ -49,18 +49,6 @@ public abstract class SharedHolidaySystem : EntitySystem
         Dirty(ent.Value);
     }
 
-    private void OnComponentInit(Entity<CurrentHolidaySingletonComponent> entity, ref ComponentInit args)
-    {
-        DebugTools.Assert(_cachedEntity == null);
-
-        _cachedEntity = entity;
-    }
-
-    private void OnComponentShutdown(Entity<CurrentHolidaySingletonComponent> entity, ref ComponentShutdown args)
-    {
-        _cachedEntity = null;
-    }
-
     /// <summary>
     /// Sets an enum key for the first list of holidays found.
     /// </summary>
@@ -128,6 +116,13 @@ public abstract class SharedHolidaySystem : EntitySystem
         if (_cachedEntity != null)
             return _cachedEntity;
 
+        // Try to find the singleton if it wasn't cached for some reason (save/load)
+        var query = EntityQueryEnumerator<CurrentHolidaySingletonComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            return (uid, comp);
+        }
+
         // Client can't create the singleton, so it needs to wait for server
         if (_netMan.IsClient)
             return null;
@@ -145,6 +140,18 @@ public abstract class SharedHolidaySystem : EntitySystem
         RefreshCurrentHolidays(announce: false);
 
         return (uid, comp);
+    }
+
+    private void OnComponentInit(Entity<CurrentHolidaySingletonComponent> entity, ref ComponentInit args)
+    {
+        DebugTools.Assert(_cachedEntity == null);
+
+        _cachedEntity = entity;
+    }
+
+    private void OnComponentShutdown(Entity<CurrentHolidaySingletonComponent> entity, ref ComponentShutdown args)
+    {
+        _cachedEntity = null;
     }
 
     #endregion

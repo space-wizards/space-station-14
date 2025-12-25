@@ -20,6 +20,8 @@ public sealed class HolidaySystem : SharedHolidaySystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
     }
 
+    #region Internal
+
     /// <summary>
     /// At round start, create the current holidays list and run holiday specific code.
     /// </summary>
@@ -31,30 +33,6 @@ public sealed class HolidaySystem : SharedHolidaySystem
         RefreshCurrentHolidays();
         DoCelebrate();
     }
-
-    #region Public API
-
-    /// <inheritdoc />
-    [PublicAPI]
-    public override void RefreshCurrentHolidays(bool announce = true)
-    {
-        SetActiveHolidays(DateTime.Now);
-
-        if (announce)
-            DoGreet();
-    }
-
-    /// <inheritdoc />
-    [PublicAPI]
-    public override void RefreshCurrentHolidays(DateTime date, bool announce = true)
-    {
-        base.RefreshCurrentHolidays(date, announce);
-
-        if (announce)
-            DoGreet();
-    }
-
-    #endregion
 
     /// <summary>
     /// Send a chat message to the server announcing the holidays.
@@ -85,4 +63,29 @@ public sealed class HolidaySystem : SharedHolidaySystem
             holiday.Celebrate();
         }
     }
+
+    #endregion
+    #region Public API
+
+    /// <inheritdoc />
+    [PublicAPI]
+    public override void RefreshCurrentHolidays(bool announce = true)
+    {
+        SetActiveHolidays(DateTime.Now);
+
+        if (announce)
+            DoGreet();
+    }
+
+    /// <inheritdoc />
+    [PublicAPI]
+    public override void RefreshCurrentHolidays(DateTime date, bool announce = true)
+    {
+        base.RefreshCurrentHolidays(date, announce);
+
+        if (announce)
+            DoGreet();
+    }
+
+    #endregion
 }
