@@ -62,7 +62,6 @@ public sealed partial class FaxMachineComponent : Component
     /// <summary>
     /// Should fax connect to other maps faxes
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool IsLongRange { get; set; } = false;
 
