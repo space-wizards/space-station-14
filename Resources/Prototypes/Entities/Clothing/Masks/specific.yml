@@ -26,7 +26,6 @@
   suffix: Voice Mask, Chameleon
   components:
     - type: VoiceMask
-    - type: NegateAccents
     - type: UIRequiresLock
       userInterfaceKeys:
         - enum.ChameleonUiKey.Key
