@@ -654,7 +654,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
         // check if target is on an emergency shuttle
         var xform = Transform(target);
 
-        if (HasComp<EmergencyShuttleComponent>(xform.GridUid))
+        if (HasComp<EmergencyShuttleComponent>(xform.GridUid) || HasComp<EscapePodComponent>(xform.GridUid))
             return true;
 
         return false;
