@@ -56135,13 +56135,6 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Library
-  - uid: 2290
-    components:
-    - type: Transform
-      pos: 13.5,-15.5
-      parent: 2
-    - type: FaxMachine
-      name: CMO's Office
   - uid: 3646
     components:
     - type: Transform
@@ -56156,6 +56149,36 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Medical
+  - uid: 7176
+    components:
+    - type: Transform
+      pos: 53.5,-54.5
+      parent: 2
+    - type: FaxMachine
+      name: Lawyer
+  - uid: 8381
+    components:
+    - type: Transform
+      pos: 64.5,-45.5
+      parent: 2
+    - type: FaxMachine
+      name: Security
+  - uid: 16282
+    components:
+    - type: Transform
+      pos: 35.5,-73.5
+      parent: 2
+    - type: FaxMachine
+      name: Atmospherics
+  - uid: 17834
+    components:
+    - type: Transform
+      pos: 23.5,-89.5
+      parent: 2
+    - type: FaxMachine
+      name: Cargo
+- proto: FaxMachineLongRange
+  entities:
   - uid: 5867
     components:
     - type: Transform
@@ -56177,20 +56200,6 @@ entities:
       parent: 2
     - type: FaxMachine
       name: QM's Office
-  - uid: 7176
-    components:
-    - type: Transform
-      pos: 53.5,-54.5
-      parent: 2
-    - type: FaxMachine
-      name: Lawyer
-  - uid: 8381
-    components:
-    - type: Transform
-      pos: 64.5,-45.5
-      parent: 2
-    - type: FaxMachine
-      name: Security
   - uid: 10231
     components:
     - type: Transform
@@ -56198,13 +56207,6 @@ entities:
       parent: 2
     - type: FaxMachine
       name: RD's Office
-  - uid: 16282
-    components:
-    - type: Transform
-      pos: 35.5,-73.5
-      parent: 2
-    - type: FaxMachine
-      name: Atmospherics
   - uid: 17691
     components:
     - type: Transform
@@ -56219,13 +56221,13 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Bridge
-  - uid: 17834
+  - uid: 2290
     components:
     - type: Transform
-      pos: 23.5,-89.5
+      pos: 13.5,-15.5
       parent: 2
     - type: FaxMachine
-      name: Cargo
+      name: CMO's Office
 - proto: FaxMachineCaptain
   entities:
   - uid: 3831

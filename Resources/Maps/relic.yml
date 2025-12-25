@@ -23832,13 +23832,6 @@ entities:
       parent: 2
 - proto: FaxMachineBase
   entities:
-  - uid: 8293
-    components:
-    - type: Transform
-      pos: 60.5,31.5
-      parent: 2
-    - type: FaxMachine
-      name: Bridge
   - uid: 11365
     components:
     - type: Transform
@@ -23846,6 +23839,15 @@ entities:
       parent: 3564
     - type: FaxMachine
       name: Warden's Office
+- proto: FaxMachineLongRange
+  entities:
+  - uid: 8293
+    components:
+    - type: Transform
+      pos: 60.5,31.5
+      parent: 2
+    - type: FaxMachine
+      name: Bridge
 - proto: FaxMachineCaptain
   entities:
   - uid: 7336
