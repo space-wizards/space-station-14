@@ -552,11 +552,11 @@
     Oxygen:
       amount: 1
   effects:
-    - !type:Emp
-      rangeModifier: 0.2
-      maxRange: 10
-      energyConsumption: 10000
-      duration: 12
+  - !type:Emp
+    rangeModifier: 0.2
+    maxRange: 10
+    energyConsumption: 10000
+    duration: 12
 
 - type: reaction
   id: ChargedElectrovaeRelease
@@ -566,5 +566,5 @@
     Water:
       amount: 1
   effects:
-    - !type:CreateGas
-      gas: ChargedElectrovae
+  - !type:CreateGas
+    gas: ChargedElectrovae
