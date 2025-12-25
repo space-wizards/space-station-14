@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.Components;
@@ -30,6 +31,7 @@ public sealed class AirtightTest : AtmosTest
     // - Airtightmap entity rotation
     // - Airtightmap entity movement
     // - Public methods
+    // - Deduplication
 
     #region Component and Helper Assertions
 
@@ -58,6 +60,35 @@ public sealed class AirtightTest : AtmosTest
         {
             Assert.That(airtightComp.AirBlockedDirection, Is.EqualTo(AtmosDirection.All));
             Assert.That(airtightComp.LastPosition, Is.EqualTo((RelevantAtmos.Owner, Vector2i.Zero)));
+        }
+    }
+
+    [Test]
+    [TestCase(AtmosDirection.North)]
+    [TestCase(AtmosDirection.South)]
+    [TestCase(AtmosDirection.East)]
+    [TestCase(AtmosDirection.West)]
+    public async Task MultiTile_Component_InitDataCorrect(AtmosDirection direction)
+    {
+        // Ensure grid/atmos is initialized.
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+
+        var offsetVec = Vector2i.Zero.Offset(direction);
+        await Server.WaitPost(delegate
+        {
+            var coords = new EntityCoordinates(RelevantAtmos.Owner, offsetVec);
+            _targetWall = SEntMan.SpawnAtPosition(_wallProto, coords);
+        });
+
+        SEntMan.TryGetComponent<AirtightComponent>(_targetWall, out var airtightComp);
+        Assert.That(airtightComp, Is.Not.Null, "Expected spawned wall entity to have AirtightComponent.");
+
+        // The data on the component itself should reflect full blockage.
+        // It should also hold the proper last position.
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(airtightComp.AirBlockedDirection, Is.EqualTo(AtmosDirection.All));
+            Assert.That(airtightComp.LastPosition, Is.EqualTo((RelevantAtmos.Owner, offsetVec)));
         }
     }
 
@@ -113,6 +144,31 @@ public sealed class AirtightTest : AtmosTest
     {
         // Ensure grid/atmos is initialized.
         SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+
+        // Space should be blank before spawn.
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(
+                SAtmos.IsTileAirBlockedCached(RelevantAtmos, Vector2i.Zero),
+                Is.False,
+                "Expected cached AirtightData to be unblocked before spawning an airtight entity.");
+
+            var tile = RelevantAtmos.Comp.Tiles[Vector2i.Zero];
+            Assert.That(tile.AdjacentBits,
+                Is.EqualTo(AtmosDirection.All),
+                "Expected tile to be completely unblocked before spawning an airtight entity.");
+
+            Assert.That(tile.AirtightData.BlockedDirections,
+                Is.EqualTo(AtmosDirection.Invalid),
+                "Expected AirtightData to reflect non-airtight state before spawning an airtight entity.");
+
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection)(1 << i);
+                var curTile = tile.AdjacentTiles[i];
+                Assert.That(curTile, Is.Not.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
+            }
+        }
 
         await Server.WaitPost(delegate
         {
@@ -301,7 +357,158 @@ public sealed class AirtightTest : AtmosTest
      Tests for asserting multi-tile airtightness state on both reconstructed and cached data.
      These tests spawn multiple entities and check that the center unblocked entity
      properly reflects partial airtightness states.
+
+     Note that reconstruction won't save you in the case where you're surrounded by airtight entities,
+     as those don't show up in the reconstruction. Thus, only cached data tests are done here.
      */
+
+    /// <summary>
+    /// Tests that the cached airtight map reflects properly when airtight entities are spawned
+    /// along the cardinal directions.
+    /// </summary>
+    /// <param name="atmosDirection">The direction to spawn the airtight entity in.</param>
+    [Test]
+    [TestCase(AtmosDirection.North)]
+    [TestCase(AtmosDirection.South)]
+    [TestCase(AtmosDirection.East)]
+    [TestCase(AtmosDirection.West)]
+    public async Task MultiTile_Spawn_CacheUpdatesOnAtmosTick(AtmosDirection atmosDirection)
+    {
+        // Ensure grid/atmos is initialized.
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+
+        // Tile should be completely unblocked.
+        using (Assert.EnterMultipleScope())
+        {
+            var tile = RelevantAtmos.Comp.Tiles[Vector2i.Zero];
+            Assert.That(tile.AdjacentBits,
+                Is.EqualTo(AtmosDirection.All),
+                "Expected tile to be completely unblocked before spawning an airtight entity.");
+
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection)(1 << i);
+                var curTile = tile.AdjacentTiles[i];
+                Assert.That(curTile, Is.Not.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
+            }
+        }
+
+        await Server.WaitPost(delegate
+        {
+            var offsetVec = Vector2i.Zero.Offset(atmosDirection);
+            var coords = new EntityCoordinates(RelevantAtmos.Owner, offsetVec);
+            _targetWall = SEntMan.SpawnAtPosition(_wallProto, coords);
+        });
+
+        using (Assert.EnterMultipleScope())
+        {
+            var tile = RelevantAtmos.Comp.Tiles[Vector2i.Zero];
+            Assert.That(tile.AdjacentBits,
+                Is.EqualTo(AtmosDirection.All),
+                "Expected tile to still show non-airtight state before an atmos tick.");
+
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection)(1 << i);
+                var curTile = tile.AdjacentTiles[i];
+                Assert.That(curTile, Is.Not.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
+            }
+        }
+
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+
+        using (Assert.EnterMultipleScope())
+        {
+            var tile = RelevantAtmos.Comp.Tiles[Vector2i.Zero];
+            Assert.That(tile.AdjacentBits,
+                Is.EqualTo(AtmosDirection.All & ~atmosDirection),
+                "Expected tile to reflect airtight state after atmos tick.");
+
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection)(1 << i);
+                var curTile = tile.AdjacentTiles[i];
+                if (direction == atmosDirection)
+                {
+                    Assert.That(curTile, Is.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
+                }
+                else
+                {
+                    Assert.That(curTile, Is.Not.Null, $"Center tile holds unexpected reference to adjacent tile in direction {direction}.");
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Tests that the cached airtight map reflects properly when an airtight entity is deleted
+    /// along a cardinal direction.
+    /// </summary>
+    /// <param name="atmosDirection">The direction the airtight entity is spawned and then deleted in.</param>
+    [Test]
+    [TestCase(AtmosDirection.North)]
+    [TestCase(AtmosDirection.South)]
+    [TestCase(AtmosDirection.East)]
+    [TestCase(AtmosDirection.West)]
+    public async Task MultiTile_Delete_CacheUpdatesOnAtmosTick(AtmosDirection atmosDirection)
+    {
+        // Ensure grid/atmos is initialized.
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+
+        await Server.WaitPost(delegate
+        {
+            var offsetVec = Vector2i.Zero.Offset(atmosDirection);
+            var coords = new EntityCoordinates(RelevantAtmos.Owner, offsetVec);
+            _targetWall = SEntMan.SpawnAtPosition(_wallProto, coords);
+        });
+
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+
+        await Server.WaitPost(delegate
+        {
+            SEntMan.DeleteEntity(_targetWall);
+        });
+
+        using (Assert.EnterMultipleScope())
+        {
+            var tile = RelevantAtmos.Comp.Tiles[Vector2i.Zero];
+            Assert.That(tile.AdjacentBits,
+                Is.EqualTo(AtmosDirection.All & ~atmosDirection),
+                "Expected tile to remain stale immediately after deletion before an atmos tick.");
+
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection)(1 << i);
+                var curTile = tile.AdjacentTiles[i];
+                if (direction == atmosDirection)
+                {
+                    Assert.That(curTile, Is.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
+                }
+                else
+                {
+                    Assert.That(curTile, Is.Not.Null, $"Center tile holds unexpected reference to adjacent tile in direction {direction}.");
+                }
+            }
+        }
+
+        // Tick to update cache after deletion.
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+
+        using (Assert.EnterMultipleScope())
+        {
+            var tile = RelevantAtmos.Comp.Tiles[Vector2i.Zero];
+            Assert.That(tile.AdjacentBits,
+                Is.EqualTo(AtmosDirection.All),
+                "Expected tile to reflect non-airtight state after deletion after atmos tick.");
+
+            for (var i = 0; i < Atmospherics.Directions; i++)
+            {
+                var direction = (AtmosDirection)(1 << i);
+                var curTile = tile.AdjacentTiles[i];
+                Assert.That(curTile, Is.Not.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
+            }
+        }
+    }
 
     #endregion
 }
