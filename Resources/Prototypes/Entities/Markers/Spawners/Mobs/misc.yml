@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobGingerbreadAI
   name: gingerbread man Spawner
   suffix: Ghostrole

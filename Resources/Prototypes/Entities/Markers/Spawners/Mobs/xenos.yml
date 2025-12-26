@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoBurrower
   name: Xeno Spawner
   suffix: Burrower
@@ -15,7 +16,8 @@
     - MobXeno
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoDrone
   name: Xeno Spawner
   suffix: Drone
@@ -31,7 +33,8 @@
     - MobXenoDrone
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoPraetorian
   name: Xeno Spawner
   suffix: Praetorian
@@ -47,7 +50,8 @@
     - MobXenoPraetorian
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoQueen
   name: Xeno Spawner
   suffix: Queen
@@ -63,7 +67,8 @@
     - MobXenoQueen
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoRavager
   name: Xeno Spawner
   suffix: Ravager
@@ -79,7 +84,8 @@
     - MobXenoRavager
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoRunner
   name: Xeno Spawner
   suffix: Runner
@@ -95,7 +101,8 @@
     - MobXenoRunner
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoSpitter
   name: Xeno Spawner
   suffix: Spitter
@@ -111,7 +118,8 @@
     - MobXenoSpitter
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoLonePraetorian
   name: Xeno Spawner
   suffix: Lone Praetorian, Exo Station

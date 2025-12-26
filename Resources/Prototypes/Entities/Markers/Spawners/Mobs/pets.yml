@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobAlexander
   name: Alexander Spawner
   suffix: Chef Pet
@@ -13,7 +14,8 @@
     - MobAlexander
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobBandito
   name: Bandito Spawner
   suffix: RD Pet
@@ -27,7 +29,8 @@
     - MobBandito
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobCat
   name: Random Cat Spawner
   suffix: CMO Pet
@@ -44,7 +47,8 @@
     - MobBingus
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobCatBingus
   name: Bingus Spawner
   suffix: CMO Pet
@@ -58,7 +62,8 @@
     - MobBingus
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobCatException
   name: Exception Spawner
   suffix: CMO Pet
@@ -72,7 +77,8 @@
     - MobCatException
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobCatFloppa
   name: Floppa Spawner
   suffix: CMO Pet
@@ -86,7 +92,8 @@
     - MobCatFloppa
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobCatRuntime
   name: Runtime Spawner
   suffix: CMO Pet
@@ -100,7 +107,8 @@
     - MobCatRuntime
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobCorgi
   name: Corgi Spawner
   suffix: HoP Pet
@@ -117,7 +125,8 @@
     - MobCorgiIanPup
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobCorgiMouse
   name: Dev Mouse Spawner
   suffix: Dev Map Pet, Admeme
@@ -131,7 +140,8 @@
     - MobCorgiMouse
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobCrabAtmos
   name: Tropico Spawner
   suffix: Atmos Pet
@@ -145,7 +155,8 @@
     - MobCrabAtmos
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobFoxRenault
   name: Fox Renault Spawner
   suffix: Captain Pet
@@ -159,7 +170,8 @@
     - MobFoxRenault
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobMcGriff
   name:  McGriff Spawner
   suffix: Warden Pet
@@ -173,7 +185,8 @@
     - MobMcGriff
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobHamsterHamlet
   name: Hamster Hamlet Spawner
   suffix: Bridge Pet (crate)
@@ -189,7 +202,8 @@
     - CrateNPCHamlet
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobKangarooWillow
   name: Willow Spawner
   suffix: Boxer Pet
@@ -204,7 +218,8 @@
     - MobKangarooWillow
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobMonkeyPunpun
   name: Pun Pun Spawner
   suffix: Bartender Pet
@@ -219,7 +234,8 @@
     - MobMonkeyPunpun
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobPollyParrot
   name: Polly the parrot Spawner
   suffix: CE Pet
@@ -234,7 +250,8 @@
     - MobPollyParrot
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobPossumMorty
   name: Possum Morty Spawner
   suffix: Morgue Pet
@@ -248,7 +265,8 @@
     - MobPossumMortyOld
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobRaccoonMorticia
   name: Raccoon Morticia Spawner
   suffix: QM Pet
@@ -262,7 +280,8 @@
     - MobRaccoonMorticia
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobShiva
   name: Shiva Spawner
   suffix: Security Pet
@@ -277,7 +296,8 @@
     - MobSpiderShiva
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobSlothPaperwork
   name: Sloth Paperwork Spawner
   suffix: Librarian Pet
@@ -291,7 +311,8 @@
     - MobPaperwork
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobSmile
   name: Smile Spawner
   suffix: Science Pet
@@ -305,7 +326,8 @@
     - MobSlimesPet
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobWalter
   name: Walter Spawner
   suffix: Chemistry Pet

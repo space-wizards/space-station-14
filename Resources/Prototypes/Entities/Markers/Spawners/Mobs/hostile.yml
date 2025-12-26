@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnClownSpider
   name: clown spider spawner
   components:
@@ -13,7 +14,8 @@
     - MobClownSpider
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobBear
   name: Space Bear Spawner
   components:
@@ -27,7 +29,8 @@
     - MobBearSpace
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobBehonker
   name: behonker Spawner
   components:
@@ -44,7 +47,8 @@
     - MobBehonkerGrav
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobBoxingKangaroo
   name: Boxing Kangaroo Spawner
   suffix: Hostile
@@ -59,7 +63,8 @@
     - MobBoxingKangaroo
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobHellspawn
   name: Hellspawn Spawner
   components:
@@ -73,7 +78,8 @@
     - MobHellspawn
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobKangaroo
   name: Space Kangaroo Spawner
   components:
@@ -87,7 +93,8 @@
     - MobKangarooSpace
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobLuminousEntity
   name: luminous entity spawner
   components:
@@ -101,7 +108,8 @@
     - MobLuminousEntity
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobLuminousObject
   name: luminous object spawner
   components:
@@ -115,7 +123,8 @@
     - MobLuminousObject
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobLuminousPerson
   name: luminous person spawner
   components:
@@ -129,7 +138,8 @@
     - MobLuminousPerson
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobOreCrab
   name: ore crab spawner
   components:
@@ -149,7 +159,8 @@
     - MobSpawnCrabBananium
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobPurpleSnake
   name: Purple Snake Spawner
   components:
@@ -163,7 +174,8 @@
     - MobPurpleSnake
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobSmallPurpleSnake
   name: Small Purple Snake Spawner
   components:
@@ -177,7 +189,8 @@
     - MobSmallPurpleSnake
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobSpaceCobra
   name: Space Cobra Spawner
   components:
@@ -191,7 +204,8 @@
     - MobCobraSpace
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobSpaceSpider
   name: Space Spider Spawner
   components:
@@ -205,7 +219,8 @@
     - MobSpiderSpace
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobWatcherIcewing
   name: Watcher Icewing Spawner
   components:
@@ -221,7 +236,8 @@
     - MobWatcherIcewing
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobWatcherLavaland
   name: Watcher Lavaland Spawner
   components:
@@ -237,7 +253,8 @@
     - MobWatcherLavaland
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobWatcherMagmawing
   name: Watcher Magmawing Spawner
   components:
@@ -253,7 +270,8 @@
     - MobWatcherMagmawing
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobWatcherPride
   name: Watcher Pride Spawner
   components:

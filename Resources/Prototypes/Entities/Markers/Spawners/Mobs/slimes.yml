@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobAdultSlimesBlue
   name: Slimes Spawner Blue
   components:
@@ -12,7 +13,8 @@
     - MobAdultSlimesBlue
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobAdultSlimesBlueAngry
   name: Slimes Spawner Blue Angry
   components:
@@ -25,7 +27,8 @@
     - MobAdultSlimesBlueAngry
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobAdultSlimesGreen
   name: Slimes Spawner Green
   components:
@@ -38,7 +41,8 @@
     - MobAdultSlimesGreen
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobAdultSlimesGreenAngry
   name: Slimes Spawner Green Angry
   components:
@@ -51,7 +55,8 @@
     - MobAdultSlimesGreenAngry
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobAdultSlimesYellow
   name: Slimes Spawner Yellow
   components:
@@ -64,7 +69,8 @@
     - MobAdultSlimesYellow
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobAdultSlimesYellowAngry
   name: Slimes Spawner Yellow Angry
   components:
