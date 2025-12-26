@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent:
+  - Clothing
   id: ClothingShoesBase
   components:
   - type: Clothing
@@ -28,7 +29,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingShoesBase
+  parent:
+  - ClothingShoesBase
   id: ClothingShoesBaseButcherable
   components:
   - type: Butcherable
@@ -43,7 +45,9 @@
 # stuff common to all military boots
 - type: entity
   abstract: true
-  parent: [ClothingShoesBase, ClothingSlotBase]
+  parent:
+  - ClothingShoesBase
+  - ClothingSlotBase
   id: ClothingShoesMilitaryBase
   components:
   - type: Matchbox
@@ -69,7 +73,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesBaseWinterBoots
   description: Fluffy boots to help survive even the coldest of winters.
   components:

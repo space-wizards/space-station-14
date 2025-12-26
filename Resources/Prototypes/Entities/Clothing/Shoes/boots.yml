@@ -1,5 +1,6 @@
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesBootsWork
   name: workboots
   description: Engineering lace-up work boots for the especially blue-collar.
@@ -11,7 +12,9 @@
   - type: Matchbox
 
 - type: entity
-  parent: [ClothingShoesMilitaryBase, BaseSecurityContraband]
+  parent:
+  - ClothingShoesMilitaryBase
+  - BaseSecurityContraband
   id: ClothingShoesBootsJack
   name: jackboots
   description: Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -24,7 +27,8 @@
     modifier: 0.5
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesBootsSalvage
   name: salvage boots
   description: Steel-toed salvage boots for salvaging in hazardous environments.
@@ -36,7 +40,8 @@
   - type: Matchbox
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesBootsPerformer
   name: performer's boots
   description: These boots provide great traction for when you're up on stage.
@@ -47,7 +52,9 @@
     sprite: Clothing/Shoes/Boots/performer.rsi
 
 - type: entity
-  parent: [ClothingShoesMilitaryBase, BaseSecurityContraband]
+  parent:
+  - ClothingShoesMilitaryBase
+  - BaseSecurityContraband
   id: ClothingShoesBootsCombat
   name: combat boots
   description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
@@ -58,7 +65,8 @@
     sprite: Clothing/Shoes/Boots/combatboots.rsi
 
 - type: entity
-  parent: ClothingShoesMilitaryBase
+  parent:
+  - ClothingShoesMilitaryBase
   id: ClothingShoesHighheelBoots
   name: high-heeled boots
   description: Snazy boots for when you want to be stylish, yet prepared.
@@ -79,7 +87,8 @@
         variation: 0.09
 
 - type: entity
-  parent: [ ClothingShoesMilitaryBase ]
+  parent:
+  - ClothingShoesMilitaryBase
   id: ClothingShoesBootsMerc
   name: mercenary boots
   description: Boots that have gone through many conflicts and that have proven their combat reliability.
@@ -90,7 +99,8 @@
     sprite: Clothing/Shoes/Boots/mercboots.rsi
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesBootsLaceup
   name: laceup shoes
   description: The height of fashion, and they're pre-polished!
@@ -101,7 +111,8 @@
     sprite: Clothing/Shoes/Boots/laceups.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent:
+  - ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinter
   name: winter boots
   components:
@@ -111,7 +122,8 @@
     sprite: Clothing/Shoes/Boots/winterboots.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent:
+  - ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterCargo
   name: cargo winter boots
   components:
@@ -121,7 +133,8 @@
     sprite: Clothing/Shoes/Boots/winterbootscargo.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent:
+  - ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterEngi
   name: engineering winter boots
   components:
@@ -131,7 +144,8 @@
     sprite: Clothing/Shoes/Boots/winterbootsengi.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent:
+  - ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterMed
   name: medical winter boots
   components:
@@ -141,7 +155,8 @@
     sprite: Clothing/Shoes/Boots/winterbootsmed.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent:
+  - ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterSci
   name: science winter boots
   components:
@@ -151,7 +166,10 @@
     sprite: Clothing/Shoes/Boots/winterbootssci.rsi
 
 - type: entity
-  parent: [ClothingShoesBaseWinterBoots, ClothingShoesMilitaryBase, BaseSecurityContraband]
+  parent:
+  - ClothingShoesBaseWinterBoots
+  - ClothingShoesMilitaryBase
+  - BaseSecurityContraband
   id: ClothingShoesBootsWinterSec
   name: security winter boots
   components:
@@ -161,7 +179,9 @@
     sprite: Clothing/Shoes/Boots/winterbootssec.rsi
 
 - type: entity
-  parent: [ClothingShoesBaseWinterBoots, BaseSyndicateContraband]
+  parent:
+  - ClothingShoesBaseWinterBoots
+  - BaseSyndicateContraband
   id: ClothingShoesBootsWinterSyndicate
   name: syndicate's winter boots
   description: Durable heavy boots, looks like merch from "Syndieland".
@@ -172,7 +192,8 @@
     sprite: Clothing/Shoes/Boots/winterbootssyndicate.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent:
+  - ClothingShoesBaseWinterBoots
   id: ClothingShoesBootsWinterWeb
   name: web winter boots
   description: Boots made out of dense webbing to help survive even the coldest of winters.
@@ -202,7 +223,8 @@
     node: boots
 
 - type: entity
-  parent: ClothingShoesMilitaryBase
+  parent:
+  - ClothingShoesMilitaryBase
   id: ClothingShoesBootsCowboyBrown
   name: brown cowboy boots
   description: They got spurs that jingle and/or jangle.
@@ -219,7 +241,8 @@
         volume: -6
 
 - type: entity
-  parent: ClothingShoesBootsCowboyBrown
+  parent:
+  - ClothingShoesBootsCowboyBrown
   id: ClothingShoesBootsCowboyBlack
   name: black cowboy boots
   components:
@@ -229,7 +252,8 @@
     sprite: Clothing/Shoes/Boots/cowboybootsblack.rsi
 
 - type: entity
-  parent: ClothingShoesBootsCowboyBrown
+  parent:
+  - ClothingShoesBootsCowboyBrown
   id: ClothingShoesBootsCowboyWhite
   name: white cowboy boots
   components:
@@ -239,7 +263,8 @@
     sprite: Clothing/Shoes/Boots/cowboybootswhite.rsi
 
 - type: entity
-  parent: ClothingShoesBootsCowboyBrown
+  parent:
+  - ClothingShoesBootsCowboyBrown
   id: ClothingShoesBootsCowboyFancy
   name: fancy cowboy boots
   components:

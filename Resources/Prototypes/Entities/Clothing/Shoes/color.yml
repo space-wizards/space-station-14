@@ -2,7 +2,8 @@
 
 # Black Shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesColorBlack
   name: black shoes
   description: Stylish black shoes.
@@ -33,7 +34,8 @@
 
 # White Shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesColorWhite
   name: white shoes
   description: Don't take them off at your office Christmas party.
@@ -62,7 +64,8 @@
 
 # Blue Shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesColorBlue
   name: blue shoes
   description: Stylish blue shoes.
@@ -93,7 +96,8 @@
 
 # Brown Shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesColorBrown
   name: brown shoes
   description: A pair of brown shoes.
@@ -124,7 +128,8 @@
 
 # Green Shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesColorGreen
   name: green shoes
   description: Stylish green shoes.
@@ -155,7 +160,8 @@
 
 # Orange Shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesColorOrange
   name: orange shoes
   description: Stylish orange shoes.
@@ -186,7 +192,8 @@
 
 # Red Shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesColorRed
   name: red shoes
   description: Stylish red shoes.
@@ -217,7 +224,8 @@
 
 # Yellow Shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesColorYellow
   name: yellow shoes
   description: Stylish yellow shoes.
@@ -248,7 +256,8 @@
 
 # Purple Shoes
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesColorPurple
   name: purple shoes
   description: Stylish purple shoes.

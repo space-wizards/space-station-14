@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ClothingShoesBase, BaseToggleClothing]
+  parent:
+  - ClothingShoesBase
+  - BaseToggleClothing
   id: ClothingShoesBootsMagBase
   name: magboots
   description: Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
@@ -40,11 +42,14 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase]
+  parent:
+  - ClothingShoesBootsMagBase
   id: ClothingShoesBootsMag
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase, BaseGrandTheftContraband]
+  parent:
+  - ClothingShoesBootsMagBase
+  - BaseGrandTheftContraband
   id: ClothingShoesBootsMagAdv
   name: advanced magboots
   description: State-of-the-art magnetic boots that do not slow down their wearer.
@@ -67,7 +72,8 @@
     stealGroup: ClothingShoesBootsMagAdv
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase]
+  parent:
+  - ClothingShoesBootsMagBase
   id: ClothingShoesBootsMagSci
   components:
   - type: Sprite
@@ -76,7 +82,8 @@
     sprite: Clothing/Shoes/Boots/magboots-science.rsi
 
 - type: entity
-  parent: ClothingShoesBootsMagBase
+  parent:
+  - ClothingShoesBootsMagBase
   id: ClothingShoesBootsMagBlinding
   name: magboots of blinding speed
   description: These would look fetching on a fetcher like you.
@@ -88,7 +95,10 @@
     price: 3000
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase, BaseJetpack, BaseSyndicateContraband]
+  parent:
+  - ClothingShoesBootsMagBase
+  - BaseJetpack
+  - BaseSyndicateContraband
   id: ClothingShoesBootsMagSyndie
   name: blood-red magboots
   description: Reverse-engineered from ERT magboots, they have a heavy magnetic pull and integrated thrusters. It can hold 0.75 L of gas.
@@ -117,7 +127,9 @@
     price: 1500
 
 - type: entity
-  parent: [BaseCentcommContraband, ClothingShoesBootsMagSyndie]
+  parent:
+  - BaseCentcommContraband
+  - ClothingShoesBootsMagSyndie
   id: ClothingShoesBootsMagERT
   name: ERT magboots
   description: Upgraded magnetic boots utilized by Nanotrasen's Emergency Response Teams, they have a heavy magnetic pull and integrated thrusters. It can hold 0.75 L of gas.
@@ -128,7 +140,8 @@
     sprite: Clothing/Shoes/Boots/magboots-ert.rsi
 
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionToggleMagboots
   name: Toggle Magboots
   description: Toggles the magboots on and off.

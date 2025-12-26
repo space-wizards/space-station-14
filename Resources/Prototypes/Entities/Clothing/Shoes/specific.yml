@@ -1,5 +1,6 @@
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesChef
   name: chef shoes
   description: Sturdy shoes that minimize injury from falling objects or knives.
@@ -12,7 +13,9 @@
 # stuff common to all clown & jester shoes
 - type: entity
   abstract: true
-  parent: [ClothingShoesBaseButcherable, ClothingSlotBase]
+  parent:
+  - ClothingShoesBaseButcherable
+  - ClothingSlotBase
   id: ClothingShoesClownBase
   components:
   - type: ItemSlots
@@ -28,7 +31,8 @@
           - Sharp
 
 - type: entity
-  parent: ClothingShoesClownBase
+  parent:
+  - ClothingShoesClownBase
   id: ClothingShoesClown
   name: clown shoes
   description: "The prankster's standard-issue clowning shoes. Damn they're huge!"
@@ -49,7 +53,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingShoesClown
+  parent:
+  - ClothingShoesClown
   id: ClothingShoesClownBanana
   name: banana clown shoes
   description: "When humor and footwear combine into new levels of absurdity."
@@ -72,7 +77,8 @@
     acceleration: 5
 
 - type: entity
-  parent: ClothingShoesClownBase
+  parent:
+  - ClothingShoesClownBase
   id: ClothingShoesBling
   name: bling clown shoes
   description: Made of refined bananium and shined with the pulp of a fresh banana peel. These make a flashy statement.
@@ -94,7 +100,8 @@
     netsync: false
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesCult
   name: cult shoes
   description: A pair of boots worn by the followers of Nar'Sie.
@@ -105,7 +112,9 @@
     sprite: Clothing/Shoes/Specific/cult.rsi
 
 - type: entity
-  parent: [ ClothingShoesBase, BaseJanitorContraband ]
+  parent:
+  - ClothingShoesBase
+  - BaseJanitorContraband
   id: ClothingShoesGaloshes
   name: galoshes
   description: Specialised non-slip rubber boots, designed to reduce janitorial workplace accidents; a tider's treasure.
@@ -122,7 +131,9 @@
     maxContactWalkSlowdown: 0.7
 
 - type: entity
-  parent: [ClothingShoesBaseButcherable, BaseHighlyIllegalContraband]
+  parent:
+  - ClothingShoesBaseButcherable
+  - BaseHighlyIllegalContraband
   id: ClothingShoesSpaceNinja
   name: space ninja shoes
   description: A pair of nano-enhanced boots with built-in magnetic suction cups.
@@ -141,7 +152,8 @@
     footstepSoundCollection: null
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesSwat
   name: swat shoes
   description: When you want to turn up the heat.
@@ -152,7 +164,8 @@
     sprite: Clothing/Shoes/Specific/swat.rsi
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesWizard
   name: wizard shoes
   description: A pair of magic shoes.
@@ -163,7 +176,9 @@
     sprite: Clothing/Shoes/Specific/wizard.rsi
 
 - type: entity
-  parent: [ClothingShoesBase, BaseChameleon]
+  parent:
+  - ClothingShoesBase
+  - BaseChameleon
   id: ClothingShoesChameleon
   name: black shoes
   suffix: Chameleon
@@ -201,7 +216,8 @@
       default: ClothingShoesColorBlack
 
 - type: entity
-  parent: ClothingShoesChameleon
+  parent:
+  - ClothingShoesChameleon
   id: ClothingShoesChameleonNoSlips
   name: black shoes #actual name and description in uplink_catalog.yml
   suffix: No-slip, Chameleon
@@ -210,7 +226,8 @@
   - type: NoSlip
 
 - type: entity
-  parent: ClothingShoesClown
+  parent:
+  - ClothingShoesClown
   id: ClothingShoesJester
   name: jester shoes
   description: A court jester's shoes, updated with modern squeaking technology.
@@ -226,7 +243,8 @@
           variation: 0.07
 
 - type: entity
-  parent: ClothingShoesClown
+  parent:
+  - ClothingShoesClown
   id: ClothingShoesCluwne
   name: cluwne shoes
   suffix: Unremoveable
@@ -239,7 +257,8 @@
   - type: Unremoveable
 
 - type: entity
-  parent: ClothingShoesClown
+  parent:
+  - ClothingShoesClown
   id: ClothingShoesClownLarge
   name: large clown shoes
   description: "When you need to stand out in a room full of clowns!"
@@ -261,7 +280,8 @@
     sprintModifier: 0.8
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent:
+  - ClothingShoesBaseButcherable
   id: ClothingShoesSkates
   name: roller skates
   description: "Get your skates on!"
