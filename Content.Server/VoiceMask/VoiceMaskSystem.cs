@@ -56,9 +56,12 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
     }
 
+    /// <summary>
+    ///     Hides accent if the voice mask is on and the option to block accents is on
+    /// </summary>
     private void TransformSpeech(Entity<VoiceMaskComponent> entity, TransformSpeechEvent args)
     {
-        if (entity.Comp.AccentHide)
+        if (entity.Comp.AccentHide && entity.Comp.Active)
             args.Cancel();
     }
 
