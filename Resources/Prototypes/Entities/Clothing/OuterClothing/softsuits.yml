@@ -1,6 +1,7 @@
 #Basic EVA
 - type: entity
-  parent: ClothingOuterEVASuitBase
+  parent:
+  - ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitEVA
   name: EVA suit
   description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies.
@@ -18,7 +19,9 @@
 
 #Syndicate EVA
 - type: entity
-  parent: [ ClothingOuterEVASuitBase, BaseSyndicateContraband ]
+  parent:
+  - ClothingOuterEVASuitBase
+  - BaseSyndicateContraband
   id: ClothingOuterEVASuitSyndicate
   name: syndicate EVA suit
   description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
@@ -37,7 +40,8 @@
 
 #Emergency EVA
 - type: entity
-  parent: ClothingOuterEVASuitBase
+  parent:
+  - ClothingOuterEVASuitBase
   id: ClothingOuterSuitEmergency
   name: emergency EVA suit
   description: An emergency EVA suit with a built-in helmet. It's horribly slow and lacking in temperature protection, but enough to buy you time from the harsh vacuum of space.
@@ -68,7 +72,8 @@
 
 #Prisoner EVA
 - type: entity
-  parent: ClothingOuterEVASuitBase
+  parent:
+  - ClothingOuterEVASuitBase
   id:  ClothingOuterHardsuitEVAPrisoner
   name: prisoner EVA suit
   description: An emergency EVA suit meant for prisoners. It's horribly slow and lacking in temperature protection, but enough to buy you time from the harsh vacuum of space.
@@ -92,7 +97,8 @@
 
 #NTSRA Voidsuit / Ancient Voidsuit
 - type: entity
-  parent: ClothingOuterEVASuitBase
+  parent:
+  - ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitAncientEVA
   name: NTSRA voidsuit #Nanotrasen Space Research Association
   description: An ancient space suit, designed by the NTSRA branch of CentComm. It is very finely crafted, allowing for greater mobility than most modern space suits.
@@ -108,7 +114,9 @@
 
 #Paramedic Voidsuit
 - type: entity
-  parent: [ClothingOuterEVASuitBase, BaseMedicalContraband] #Despite "Voidsuits are light hardsuits", since it parents of EVA Suits, it goes with the other softsuits
+  parent:
+  - ClothingOuterEVASuitBase #Despite "Voidsuits are light hardsuits", since it parents of EVA Suits, it goes with the other softsuits
+  - BaseMedicalContraband
   id: ClothingOuterHardsuitVoidParamed
   name: paramedic void suit
   description: A void suit made for paramedics.

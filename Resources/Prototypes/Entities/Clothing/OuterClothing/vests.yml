@@ -2,7 +2,8 @@
 
 #Hazard vest
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent:
+  - ClothingOuterStorageBase
   id: ClothingOuterVestHazard
   name: hi-viz vest
   description: A high-visibility vest used in work zones.
@@ -40,7 +41,8 @@
 
 #(Bartender) vest
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterVest
   name: vest
   description: A thick vest with a rubbery, water-resistant shell.
@@ -52,7 +54,9 @@
 
 #Tank Harness
 - type: entity
-  parent: [ClothingOuterBase, AllowSuitStorageClothingGasTanks]
+  parent:
+  - ClothingOuterBase
+  - AllowSuitStorageClothingGasTanks
   id: ClothingOuterVestTank
   name: tank harness
   description: A simple harness that can hold a gas tank.

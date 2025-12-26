@@ -1,5 +1,6 @@
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent:
+  - ClothingOuterStorageBase
   id: ClothingOuterApron
   name: apron
   description: A fancy apron for a stylish person.
@@ -14,7 +15,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent:
+  - ClothingOuterStorageBase
   id: ClothingOuterApronBar
   suffix: Bartender
   name: apron
@@ -30,7 +32,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent:
+  - ClothingOuterStorageBase
   id: ClothingOuterApronBotanist
   name: apron
   suffix: Botanical
@@ -46,7 +49,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent:
+  - ClothingOuterStorageBase
   id: ClothingOuterApronChef
   name: apron
   suffix: Chef
@@ -62,7 +66,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingOuterStorageBase
+  parent:
+  - ClothingOuterStorageBase
   id: ClothingOuterJacketChef
   name: chef jacket
   description: An apron-jacket used by a high class chef.
@@ -73,7 +78,8 @@
     sprite: Clothing/OuterClothing/Misc/chef.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterHoodieBlack
   name: black hoodie
   description: Oh my God, it's a black hoodie!
@@ -84,7 +90,8 @@
     sprite: Clothing/OuterClothing/Misc/black_hoodie.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterHoodieGrey
   name: grey hoodie
   description: A grey hoodie.
@@ -95,7 +102,8 @@
     sprite: Clothing/OuterClothing/Misc/grey_hoodie.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterCardborg
   name: cardborg costume
   description: An ordinary cardboard box with holes cut in the sides.
@@ -111,7 +119,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingOuterBaseToggleable
+  parent:
+  - ClothingOuterBaseToggleable
   id: ClothingOuterHoodieChaplain
   name: chaplain's hoodie
   description: Black and strict chaplain hoodie.
@@ -124,7 +133,8 @@
     clothingPrototype: ClothingHeadHatHoodChaplainHood
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterPonchoClassic
   name: classic poncho
   description: A warm and comfy classic poncho.
@@ -137,7 +147,8 @@
     accent: SpanishAccent
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterRobesCult
   name: cult robes
   description: There's no cult without classic red/crimson cult robes.
@@ -148,7 +159,8 @@
     sprite: Clothing/OuterClothing/Misc/cultrobes.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterRobesJudge
   name: judge robes
   description: This robe commands authority.
@@ -159,7 +171,8 @@
     sprite: Clothing/OuterClothing/Misc/judge.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterPoncho
   name: poncho
   description: A warm and comfy poncho.
@@ -172,7 +185,8 @@
     accent: SpanishAccent
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterSanta
   name: santa suit
   description: Ho ho ho!
@@ -184,14 +198,18 @@
 
 - type: entity
   abstract: true
-  parent: [ ClothingOuterBase, AllowSuitStorageClothingGasTanks, BaseMagicalContraband ]
+  parent:
+  - ClothingOuterBase
+  - AllowSuitStorageClothingGasTanks
+  - BaseMagicalContraband
   id: ClothingOuterWizardBase
   components:
   - type: WizardClothes
 
 # Is this wizard wearing a fanny pack???
 - type: entity
-  parent: ClothingOuterWizardBase
+  parent:
+  - ClothingOuterWizardBase
   id: ClothingOuterWizardViolet
   name: violet wizard robes
   description: A bizarre gem-encrusted violet robe that radiates magical energies.
@@ -206,7 +224,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingOuterWizardBase
+  parent:
+  - ClothingOuterWizardBase
   id: ClothingOuterWizard
   name: wizard robes
   description: A bizarre gem-encrusted blue robe that radiates magical energies.
@@ -221,7 +240,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingOuterWizardBase
+  parent:
+  - ClothingOuterWizardBase
   id: ClothingOuterWizardRed
   name: red wizard robes
   description: Strange-looking, red, hat-wear that most certainly belongs to a real magic user.
@@ -236,7 +256,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterSkub
   name: skub suit
   description: 'Skub is crudely written on the outside of this cylindrical suit.'
@@ -247,7 +268,8 @@
     sprite: Clothing/OuterClothing/Misc/skubbody.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterPlagueSuit
   name: plague doctor suit
   description: A bad omen.
@@ -258,7 +280,8 @@
     sprite: Clothing/OuterClothing/Misc/plaguedoctorsuit.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterNunRobe
   name: nun robe
   description: Maximum piety in this star system.
@@ -269,7 +292,8 @@
     sprite: Clothing/OuterClothing/Misc/nunrobe.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterGhostSheet
   name: ghost sheet
   description: Spooky!!!
@@ -284,7 +308,8 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterHospitalGown
   name: hospital gown
   description: Made from the wool of slaughtered baby lambs.  The cruelty makes it softer.
@@ -295,7 +320,8 @@
     sprite: Clothing/OuterClothing/Misc/hospitalgown.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterFlannelRed
   name: red flannel jacket
   description: An old fashioned red flannel jacket for space autumn.
@@ -331,7 +357,8 @@
     coolingCoefficient: 0.3
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterFlannelBlue
   name: blue flannel jacket
   description: An old fashioned blue flannel jacket for space autumn.
@@ -367,7 +394,8 @@
     coolingCoefficient: 0.3
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterFlannelGreen
   name: green flannel jacket
   description: An old fashioned green flannel jacket for space autumn.
@@ -403,7 +431,8 @@
     coolingCoefficient: 0.3
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterRedRacoon
   name: red racoon suit
   description: Fluffy suit of red racoon!

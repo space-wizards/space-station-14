@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent:
+  - Clothing
   id: ClothingOuterBase
   components:
   - type: Clothing
@@ -11,7 +12,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterBaseLarge
   components:
   - type: Item
@@ -26,7 +28,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterStorageBase
   components:
   - type: Storage
@@ -45,7 +48,9 @@
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterStorageBase, BaseFoldable]
+  parent:
+  - ClothingOuterStorageBase
+  - BaseFoldable
   id: ClothingOuterStorageFoldableBase
   components:
   - type: Appearance
@@ -66,7 +71,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterStorageFoldableBase
+  parent:
+  - ClothingOuterStorageFoldableBase
   id: ClothingOuterStorageFoldableBaseOpened
   suffix: opened
   components:
@@ -87,7 +93,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterStorageBase
+  parent:
+  - ClothingOuterStorageBase
   id: ClothingOuterStorageToggleableBase
   components:
   - type: ToggleableClothing
@@ -101,7 +108,10 @@
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing]
+  parent:
+  - ClothingOuterBase
+  - GeigerCounterClothing
+  - AllowSuitStorageClothing
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
@@ -151,7 +161,9 @@
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterBase, AllowSuitStorageClothing]
+  parent:
+  - ClothingOuterBase
+  - AllowSuitStorageClothing
   id: ClothingOuterEVASuitBase
   name: base EVA Suit
   components:
@@ -182,7 +194,8 @@
     - Tail
 
 - type: entity
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterBaseToggleable
   name: hoodie with hood
   abstract: True
@@ -198,7 +211,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingOuterBase
+  parent:
+  - ClothingOuterBase
   id: ClothingOuterBaseMedium
   components:
   - type: Item

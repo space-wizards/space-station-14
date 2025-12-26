@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothingGasTanks]
+  parent:
+  - ClothingOuterBaseLarge
+  - AllowSuitStorageClothingGasTanks
   id: ClothingOuterBioGeneral
   name: bio suit
   suffix: Generic
@@ -24,7 +26,8 @@
     sprintModifier: 0.95
 
 - type: entity
-  parent: ClothingOuterBioGeneral
+  parent:
+  - ClothingOuterBioGeneral
   id: ClothingOuterBioCmo
   name: bio suit
   suffix: CMO
@@ -36,7 +39,8 @@
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
 
 - type: entity
-  parent: ClothingOuterBioGeneral
+  parent:
+  - ClothingOuterBioGeneral
   id: ClothingOuterBioJanitor
   name: bio suit
   suffix: Janitor
@@ -52,7 +56,8 @@
         Caustic: 0.4
 
 - type: entity
-  parent: ClothingOuterBioGeneral
+  parent:
+  - ClothingOuterBioGeneral
   id: ClothingOuterBioScientist
   name: bio suit
   suffix: Science
@@ -64,7 +69,10 @@
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
 
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSecurityContraband]
+  parent:
+  - ClothingOuterBaseLarge
+  - AllowSuitStorageClothing
+  - BaseSecurityContraband
   id: ClothingOuterBioSecurity
   name: bio suit
   suffix: Security
@@ -88,7 +96,8 @@
     sprintModifier: 0.95
     
 - type: entity
-  parent: ClothingOuterBioGeneral
+  parent:
+  - ClothingOuterBioGeneral
   id: ClothingOuterBioVirology
   name: bio suit
   suffix: Virology

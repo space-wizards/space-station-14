@@ -3,7 +3,8 @@
 
 - type: entity
   name: wired apron
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: WiredApronBase
   description: An apron threaded with cabling. It looks incomplete.
   components:
@@ -19,7 +20,8 @@
 
 - type: entity
   name: steel-covered apron
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: SteelApronBase
   description: An apron with steel plating haphazardly affixed by spare cabling. In it's current state, it would fall apart immediately if worn.
   components:
@@ -35,7 +37,8 @@
 
 - type: entity
   name: welded steel apron
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: WeldedSteelApronBase
   description: An apron affixed with welded steel plating attached to spare cabling. The armor is no longer in danger of falling apart, but requires additional work to be worn securely.
   components:
@@ -51,7 +54,10 @@
 
 # The armor itself
 - type: entity
-  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseMajorContraband]
+  parent:
+  - ClothingOuterBaseLarge
+  - AllowSuitStorageClothing
+  - BaseMajorContraband
   id: ClothingOuterArmorScrap
   name: scrap armor
   description: A tider's gleaming plate mail. Bail up, or you're a dead man.
