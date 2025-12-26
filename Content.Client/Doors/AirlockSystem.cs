@@ -128,6 +128,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
                 _sprite.LayerSetAnimationTime((uid, args.Sprite), DoorVisualLayers.BaseUnlit, 0);
                 _sprite.LayerSetRsiState((uid, args.Sprite), WiresVisualLayers.MaintenancePanel, comp.OpenPanelSpriteState);
                 _sprite.LayerSetAnimationTime((uid, args.Sprite), WiresVisualLayers.MaintenancePanel, 0);
+                _sprite.LayerSetAutoAnimated((uid, args.Sprite), WiresVisualLayers.MaintenancePanel, true);
                 break;
         }
     }
