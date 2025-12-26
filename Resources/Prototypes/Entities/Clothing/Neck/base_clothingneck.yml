@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent:
+  - Clothing
   id: ClothingNeckBase
   components:
   - type: Item
@@ -36,7 +37,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingNeckBase
+  parent:
+  - ClothingNeckBase
   id: ClothingScarfBase
   components:
   - type: Tag
