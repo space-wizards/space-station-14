@@ -33,6 +33,10 @@
     - Wirecutter
     - Welder
     - Multitool
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
 
 - type: chameleonOutfit
   id: NinjaChameleonOutfit
