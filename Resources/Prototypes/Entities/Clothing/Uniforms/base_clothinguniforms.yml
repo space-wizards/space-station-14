@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent:
+  - Clothing
   id: UnsensoredClothingUniformBase
   components:
   - type: Sprite
@@ -34,7 +35,8 @@
 
 - type: entity
   abstract: true
-  parent: UnsensoredClothingUniformBase
+  parent:
+  - UnsensoredClothingUniformBase
   id: UnsensoredClothingUniformSkirtBase
   components:
   - type: Clothing
@@ -44,7 +46,8 @@
 
 - type: entity
   abstract: true
-  parent: UnsensoredClothingUniformBase
+  parent:
+  - UnsensoredClothingUniformBase
   id: ClothingUniformBase
   components:
   - type: SuitSensor
@@ -58,7 +61,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformSkirtBase
   components:
   - type: Clothing

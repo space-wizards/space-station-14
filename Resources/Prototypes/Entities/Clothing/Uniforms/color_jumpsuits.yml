@@ -1,6 +1,7 @@
 # White Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorWhite
   name: white jumpsuit
   description: A generic white jumpsuit with no rank markings.
@@ -27,7 +28,8 @@
 
 # Grey Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorGrey
   name: grey jumpsuit
   description: A tasteful grey jumpsuit that reminds you of the good old days.
@@ -58,7 +60,8 @@
 
 # Black Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorBlack
   name: black jumpsuit
   description: A generic black jumpsuit with no rank markings.
@@ -89,7 +92,8 @@
 
 # Blue Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorBlue
   name: blue jumpsuit
   description: A generic blue jumpsuit with no rank markings.
@@ -120,7 +124,8 @@
 
 # Dark Blue Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorDarkBlue
   name: dark blue jumpsuit
   description: A generic dark blue jumpsuit with no rank markings.
@@ -151,7 +156,8 @@
 
 # Teal Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorTeal
   name: teal jumpsuit
   description: A generic teal jumpsuit with no rank markings.
@@ -182,7 +188,8 @@
 
 # Green Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorGreen
   name: green jumpsuit
   description: A generic green jumpsuit with no rank markings.
@@ -213,7 +220,8 @@
 
  # Dark Green Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorDarkGreen
   name: dark green jumpsuit
   description: A generic dark green jumpsuit with no rank markings.
@@ -244,7 +252,8 @@
 
 # Orange Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorOrange
   name: orange jumpsuit
   description: Don't wear this near paranoid security officers.
@@ -275,7 +284,8 @@
 
 # Pink Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorPink
   name: pink jumpsuit
   description: Just looking at this makes you feel <i>fabulous</i>.
@@ -306,7 +316,8 @@
 
 # Red Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorRed
   name: red jumpsuit
   description: A generic red jumpsuit with no rank markings.
@@ -337,7 +348,8 @@
 
 # Yellow Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorYellow
   name: yellow jumpsuit
   description: A generic yellow jumpsuit with no rank markings.
@@ -368,7 +380,8 @@
 
 # Purple Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorPurple
   name: purple jumpsuit
   description: A generic light purple jumpsuit with no rank markings.
@@ -399,7 +412,8 @@
 
 # Light Brown Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorLightBrown
   name: light brown jumpsuit
   description: A generic light brown jumpsuit with no rank markings.
@@ -430,7 +444,8 @@
 
 # Brown Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorBrown
   name: brown jumpsuit
   description: A generic brown jumpsuit with no rank markings.
@@ -461,7 +476,8 @@
 
 # Maroon Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformJumpsuitColorMaroon
   name: maroon jumpsuit
   description: A generic maroon jumpsuit with no rank markings.
@@ -492,7 +508,8 @@
 
 # Rainbow Jumpsuit
 - type: entity
-  parent: ClothingUniformBase
+  parent:
+  - ClothingUniformBase
   id: ClothingUniformColorRainbow
   name: rainbow jumpsuit
   description: A multi-colored jumpsuit!

@@ -1,6 +1,7 @@
 # Black elegant dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtBlackElegantDress
   name: black elegant dress
   description: Elegant dress with a beautiful bow.
@@ -29,7 +30,8 @@
 
 # Red elegant dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtRedElegantDress
   name: red elegant dress
   description: Elegant dress with a beautiful bow.
@@ -58,7 +60,8 @@
 
 # Green elegant dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtGreenElegantDress
   name: green elegant dress
   description: Elegant dress with a beautiful bow.
@@ -87,7 +90,8 @@
 
 # Blue elegant dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtBlueElegantDress
   name: blue elegant dress
   description: Elegant dress with a beautiful bow.
@@ -116,7 +120,8 @@
 
 # Purple elegant dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPurpleElegantDress
   name: purple elegant dress
   description: Elegant dress with a beautiful bow.
@@ -145,7 +150,8 @@
 
 # Cyan striped dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtCyanStripedDress
   name: cyan striped dress
   description: Cute striped dress.
@@ -174,7 +180,8 @@
 
 # Red striped dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtRedStripedDress
   name: red striped dress
   description: Cute striped dress.
@@ -203,7 +210,8 @@
 
 # Green striped dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtGreenStripedDress
   name: green striped dress
   description: Cute striped dress.
@@ -233,7 +241,8 @@
 
 # Pink striped dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPinkStripedDress
   name: pink striped dress
   description: Cute striped dress.
@@ -262,7 +271,8 @@
 
 # Orange striped dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtOrangeStripedDress
   name: orange striped dress
   description: Cute striped dress.
@@ -291,7 +301,8 @@
 
 # Purple turtleneck dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtPurpleTurtleneckDress
   name: purple turtleneck dress
   description: Turtleneck dress with a unique design.
@@ -320,7 +331,8 @@
 
 # Red turtleneck dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtRedTurtleneckDress
   name: red turtleneck dress
   description: Turtleneck dress with a unique design.
@@ -349,7 +361,8 @@
 
 # Green turtleneck dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtGreenTurtleneckDress
   name: green turtleneck dress
   description: Turtleneck dress with a unique design.
@@ -378,7 +391,8 @@
 
 # Blue turtleneck dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtBlueTurtleneckDress
   name: blue turtleneck dress
   description: Turtleneck dress with a unique design.
@@ -407,7 +421,8 @@
 
 # Yellow turtleneck dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtYellowTurtleneckDress
   name: yellow turtleneck dress
   description: Turtleneck dress with a unique design.
@@ -436,7 +451,8 @@
 
 # Yellow old dress
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent:
+  - ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtYellowOldDress
   name: yellow old dress
   description: Classic western dress.
