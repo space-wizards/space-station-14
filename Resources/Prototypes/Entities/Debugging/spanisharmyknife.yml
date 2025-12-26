@@ -1,6 +1,7 @@
 - type: entity
   name: spanish army knife
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: ToolDebug
   description: The pain of using this is almost too great to bear.
   suffix: DEBUG

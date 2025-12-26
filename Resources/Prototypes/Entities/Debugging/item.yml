@@ -1,5 +1,6 @@
 ﻿- type: entity
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: DebugItemShapeWeird
   name: weirdly shaped item
   description: What is it...?

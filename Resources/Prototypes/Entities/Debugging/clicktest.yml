@@ -19,7 +19,8 @@
 - type: entity
   id: ClickTestRotatingCornerVisible
   name: ClickTestRotatingCornerVisible
-  parent: ClickTestBase
+  parent:
+  - ClickTestBase
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -29,7 +30,8 @@
 - type: entity
   id: ClickTestRotatingCornerVisibleNoRot
   name: ClickTestRotatingCornerVisibleNoRot
-  parent: ClickTestRotatingCornerVisible
+  parent:
+  - ClickTestRotatingCornerVisible
   components:
   - type: Sprite
     noRot: true
@@ -37,7 +39,8 @@
 - type: entity
   id: ClickTestRotatingCornerInvisible
   name: ClickTestRotatingCornerInvisible
-  parent: ClickTestBase
+  parent:
+  - ClickTestBase
   components:
   - type: Clickable
     bounds:
@@ -53,7 +56,8 @@
 - type: entity
   id: ClickTestRotatingCornerInvisibleNoRot
   name: ClickTestRotatingCornerInvisibleNoRot
-  parent: ClickTestRotatingCornerInvisible
+  parent:
+  - ClickTestRotatingCornerInvisible
   components:
     - type: Sprite
       noRot: true
@@ -62,7 +66,8 @@
 - type: entity
   id: ClickTestFixedCornerVisible
   name: ClickTestFixedCornerVisible
-  parent: ClickTestBase
+  parent:
+  - ClickTestBase
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -72,7 +77,8 @@
 - type: entity
   id: ClickTestFixedCornerInvisible
   name: ClickTestFixedCornerInvisible
-  parent: ClickTestBase
+  parent:
+  - ClickTestBase
   components:
   - type: Clickable
     bounds:

@@ -1,6 +1,7 @@
 - type: entity
   name: bang hitscan 1dmg
-  parent: BaseWeaponBatterySmall
+  parent:
+  - BaseWeaponBatterySmall
   id: WeaponHitscanDebug
   description: pew pew!
   suffix: DEBUG
@@ -23,7 +24,8 @@
 
 - type: entity
   name: bang hitscan gibber
-  parent: WeaponHitscanDebug
+  parent:
+  - WeaponHitscanDebug
   id: WeaponHitscanDebugGib
   components:
   - type: BatteryAmmoProvider
@@ -31,7 +33,8 @@
 
 - type: entity
   name: bang, ded
-  parent: BaseWeaponPistol
+  parent:
+  - BaseWeaponPistol
   id: WeaponPistolDebug
   description: ded
   suffix: DEBUG
@@ -72,7 +75,8 @@
 - type: entity
   id: MagazinePistolDebug
   name: bang, ded mag
-  parent: BaseMagazinePistol
+  parent:
+  - BaseMagazinePistol
   suffix: DEBUG
   components:
   - type: Tag
@@ -87,7 +91,8 @@
 - type: entity
   id: BulletDebug
   name: bang, ded bullet
-  parent: BaseBullet
+  parent:
+  - BaseBullet
   categories: [ Debug, HideSpawnMenu ]
   suffix: DEBUG
   components:
@@ -99,7 +104,8 @@
 - type: entity
   id: CartridgeDebug
   name: bang, ded cartridge
-  parent: BaseCartridgePistol
+  parent:
+  - BaseCartridgePistol
   suffix: DEBUG
   components:
   - type: Tag
@@ -110,7 +116,8 @@
 
 - type: entity
   name: bang stick gibber
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: MeleeDebugGib
   description: hit hard ye
   suffix: DEBUG
@@ -128,7 +135,8 @@
 
 - type: entity
   name: bang stick 100dmg
-  parent: MeleeDebugGib
+  parent:
+  - MeleeDebugGib
   id: MeleeDebug100
   components:
   - type: MeleeWeapon
@@ -138,7 +146,8 @@
 
 - type: entity
   name: bang stick 200dmg
-  parent: MeleeDebugGib
+  parent:
+  - MeleeDebugGib
   id: MeleeDebug200
   components:
   - type: MeleeWeapon
