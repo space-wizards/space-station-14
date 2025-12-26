@@ -3,7 +3,8 @@
 
 - type: entity
   abstract: true
-  parent: FoodInjectableBase
+  parent:
+  - FoodInjectableBase
   id: FoodBreadBase
   components:
   - type: Item
@@ -25,7 +26,8 @@
           Quantity: 20
 
 - type: entity
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadSliceBase
   abstract: true
   components:
@@ -50,7 +52,8 @@
 
 - type: entity
   name: volcanic loaf
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadVolcanic
   description: A dark loaf. Resembles pumice.
   components:
@@ -65,7 +68,8 @@
 
 - type: entity
   name: volcanic slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadVolcanicSlice
   description: A slice of dark loaf. Resembles pumice.
   components:
@@ -80,7 +84,8 @@
 
 - type: entity
   name: banana bread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadBanana
   description: A heavenly and filling treat.
   components:
@@ -101,7 +106,8 @@
 
 - type: entity
   name: banana bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadBananaSlice
   description: A slice of delicious banana bread.
   components:
@@ -119,7 +125,8 @@
     - Slice
 
 - type: entity
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadCotton
   name: cotton bread
   description: Bread, but for moff.
@@ -151,7 +158,8 @@
 
 - type: entity
   name: cotton bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadCottonSlice
   description: A slice of (maybe) delicious cotton bread.
   components:
@@ -181,7 +189,8 @@
 
 - type: entity
   name: cornbread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadCorn
   description: Some good down-home country-style, rootin'-tootin', revolver-shootin', dad-gum yeehaw cornbread.
   components:
@@ -205,7 +214,8 @@
 
 - type: entity
   name: cornbread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadCornSlice
   description: A slice of cornbread.
   components:
@@ -226,7 +236,8 @@
 
 - type: entity
   name: cream cheese bread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadCreamcheese
   description: Yum yum yum!
   components:
@@ -253,7 +264,8 @@
 
 - type: entity
   name: cream cheese bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadCreamcheeseSlice
   description: A slice of yum!
   components:
@@ -277,7 +289,8 @@
 
 - type: entity
   name: meat bread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadMeat
   description: The culinary base of every self-respecting eloquen/tg/entleman.
   components:
@@ -307,7 +320,8 @@
 
 - type: entity
   name: meat bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadMeatSlice
   description: A slice of delicious meatbread.
   components:
@@ -335,7 +349,8 @@
 
 - type: entity
   name: mimana bread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadMimana
   description: Best eaten in silence.
   components:
@@ -365,7 +380,8 @@
 
 - type: entity
   name: mimana bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadMimanaSlice
   description: A slice of silence!
   components:
@@ -392,7 +408,8 @@
 
 - type: entity
   name: bread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadPlain
   description: Some plain old earthen bread.
   components:
@@ -404,7 +421,8 @@
 
 - type: entity
   name: bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadPlainSlice
   description: A slice of home.
   components:
@@ -414,7 +432,8 @@
 
 - type: entity
   name: sausage bread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadSausage
   description: Dont think too much about it.
   components:
@@ -445,7 +464,8 @@
 
 - type: entity
   name: sausage bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadSausageSlice
   description: Dont think too much about it.
   components:
@@ -475,7 +495,8 @@
 
 - type: entity
   name: spider meat bread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadMeatSpider
   description: Reassuringly green meatloaf made from spider meat.
   components:
@@ -505,7 +526,8 @@
 
 - type: entity
   name: spider meat bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadMeatSpiderSlice
   description: A slice of meatloaf made from an animal that most likely still wants you dead.
   components:
@@ -533,7 +555,8 @@
 
 - type: entity
   name: tofu bread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadTofu
   description: Like meatbread but for vegetarians. Brag to your crewmates about how much better it is.
   components:
@@ -559,7 +582,8 @@
 
 - type: entity
   name: tofu bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadTofuSlice
   description: A slice of delicious tofu bread.
   components:
@@ -582,7 +606,8 @@
 
 - type: entity
   name: xeno meat bread
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadMeatXeno
   description: A fitting, and filling, end to xeno scum.
   components:
@@ -612,7 +637,8 @@
 
 - type: entity
   name: xeno meat bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadMeatXenoSlice
   description: A slice of xeno scum.
   components:
@@ -641,7 +667,8 @@
 # Other than bread/slices
 
 - type: entity
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadBaguette
   name: baguette
   description: Bon appétit!
@@ -685,7 +712,8 @@
 # Tastes like France.
 
 - type: entity
-  parent: FoodBreadBaguette
+  parent:
+  - FoodBreadBaguette
   id: FoodBreadBaguetteCotton
   name: cotton baguette
   description: Bon azzétit!
@@ -729,7 +757,8 @@
 
 - type: entity
   name: crostini
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadBaguetteSlice
   description: Bon ap-pétite!
   components:
@@ -750,7 +779,8 @@
           Quantity: 0.1
 
 - type: entity
-  parent: FoodBreadBaguetteSlice
+  parent:
+  - FoodBreadBaguetteSlice
   id: FoodBreadBaguetteCottonSlice
   name: cotton crostini
   description: Bon az-zétite!
@@ -782,7 +812,8 @@
 
 - type: entity
   name: buttered toast
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadButteredToast
   description: Crunchy.
   components:
@@ -805,7 +836,8 @@
 
 - type: entity
   name: french toast
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadFrenchToast
   description: A slice of bread soaked in a beaten egg mixture.
   components:
@@ -828,7 +860,8 @@
 
 - type: entity
   name: garlic bread
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadGarlicSlice
   description: Alas, it is limited.
   components:
@@ -852,7 +885,8 @@
 
 - type: entity
   name: jelly toast
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadJellySlice
   description: As if science are gonna give up their slimes for toast!
   components:
@@ -876,7 +910,8 @@
 
 - type: entity
   name: moldy bread slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadMoldySlice
   description: Entire stations have been ripped apart over arguing whether this is still good to eat.
   components:
@@ -899,7 +934,8 @@
 
 - type: entity
   name: two slice
-  parent: FoodBreadSliceBase
+  parent:
+  - FoodBreadSliceBase
   id: FoodBreadTwoSlice
   description: Classy.
   components:
@@ -922,7 +958,8 @@
 - type: entity
   name: bread dog
   id: MobBreadDog
-  parent: EdibleBase
+  parent:
+  - EdibleBase
   description: It's a bread. It's a dog. It's a... breaddog?
   components:
   - type: FlavorProfile
@@ -1003,7 +1040,8 @@
         Brute: 1
 
 - type: entity
-  parent: FoodBreadBase
+  parent:
+  - FoodBreadBase
   id: FoodBreadNutriBatard
   name: nutri-bâtard
   description: bon 'pétite!
@@ -1026,7 +1064,8 @@
     - bread
 
 - type: entity
-  parent: FoodBreadNutriBatard
+  parent:
+  - FoodBreadNutriBatard
   id: FoodBreadCottonNutriBatard
   name: cotton nutri-bâtard
   description: bon 'pétite!

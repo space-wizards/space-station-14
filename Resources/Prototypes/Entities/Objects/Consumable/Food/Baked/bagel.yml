@@ -3,7 +3,8 @@
 
 - type: entity
   abstract: true
-  parent: FoodInjectableBase
+  parent:
+  - FoodInjectableBase
   id: FoodBagelBase
   description: A delicious bagel.
   components:
@@ -24,12 +25,14 @@
           Quantity: 5
 
 - type: entity
-  parent: FoodBagelBase
+  parent:
+  - FoodBagelBase
   id: FoodBagel
   name: bagel
 
 - type: entity
-  parent: FoodBagelBase
+  parent:
+  - FoodBagelBase
   id: FoodBagelPoppy
   name: poppy seed bagel
   description: A delicious bagel topped with bicaridine-infused poppy seeds.
@@ -51,7 +54,8 @@
           Quantity: 5
 
 - type: entity
-  parent: FoodBagelBase
+  parent:
+  - FoodBagelBase
   id: FoodBagelCotton
   name: cotton bagel
   description: A delicious bagel made with cotton dough.

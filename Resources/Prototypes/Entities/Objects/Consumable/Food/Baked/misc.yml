@@ -2,7 +2,8 @@
 # Base
 
 - type: entity
-  parent: FoodInjectableBase
+  parent:
+  - FoodInjectableBase
   id: FoodBakedBase
   abstract: true
   components:
@@ -22,7 +23,8 @@
 
 - type: entity
   name: muffin
-  parent: FoodInjectableBase
+  parent:
+  - FoodInjectableBase
   id: FoodBakedMuffin
   description: A delicious and spongy little cake.
   components:
@@ -49,7 +51,8 @@
 
 - type: entity
   name: berry muffin
-  parent: FoodBakedMuffin
+  parent:
+  - FoodBakedMuffin
   id: FoodBakedMuffinBerry
   description: A delicious and spongy little cake, with berries.
   components:
@@ -72,7 +75,8 @@
 
 - type: entity
   name: cherry muffin
-  parent: FoodBakedMuffin
+  parent:
+  - FoodBakedMuffin
   id: FoodBakedMuffinCherry
   description: A sweet muffin with cherry bits.
   components:
@@ -95,7 +99,8 @@
 
 - type: entity
   name: bluecherry muffin
-  parent: FoodBakedMuffin
+  parent:
+  - FoodBakedMuffin
   id: FoodBakedMuffinBluecherry
   description: Blue cherries inside a delicious muffin.
   components:
@@ -107,7 +112,8 @@
 
 - type: entity
   name: chocolate muffin
-  parent: FoodBakedMuffin
+  parent:
+  - FoodBakedMuffin
   id: FoodBakedMuffinChocolate
   description: A delicious and spongy chocolate muffin.
   components:
@@ -127,7 +133,8 @@
 
 - type: entity
   name: banana muffin
-  parent: FoodBakedMuffin
+  parent:
+  - FoodBakedMuffin
   id: FoodBakedMuffinBanana
   description: A delicious and spongy banana muffin.
   components:
@@ -152,7 +159,8 @@
 
 - type: entity
   name: honey bun #TODO honey
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedBunHoney
   description: A sticky pastry bun glazed with honey.
   components:
@@ -161,7 +169,8 @@
 
 - type: entity
   name: hotcross bun
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedBunHotX
   description: A sticky pastry bun glazed with a distinct white cross.
   components:
@@ -170,7 +179,8 @@
 
 - type: entity
   name: meat bun
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedBunMeat
   description: Has the potential to not be dog.
   components:
@@ -190,7 +200,8 @@
 
 - type: entity
   name: cookie
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedCookie
   description: COOKIE!!!
   components:
@@ -199,7 +210,8 @@
 
 - type: entity
   name: oatmeal cookie
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedCookieOatmeal
   description: The best of both cookie and oat.
   components:
@@ -217,7 +229,8 @@
 
 - type: entity
   name: raisin cookie
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedCookieRaisin
   description: Why would you put raisins in a cookie?
   components:
@@ -238,7 +251,8 @@
 
 - type: entity
   name: sugar cookie
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedCookieSugar
   description: Just like your mom used to make.
   components:
@@ -249,7 +263,8 @@
 
 - type: entity
   name: chicken nugget
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedNugget
   description: A "chicken" nugget vaguely shaped into an object. # Should change depending on name.
   components:
@@ -287,7 +302,8 @@
 
 - type: entity
   name: pancake
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedPancake
   description: A fluffy pancake. The softer, superior relative of the waffle.
   components:
@@ -342,7 +358,8 @@
 
 - type: entity
   name: blueberry pancake
-  parent: FoodBakedPancake
+  parent:
+  - FoodBakedPancake
   id: FoodBakedPancakeBb
   description: A fluffy and delicious blueberry pancake.
   components:
@@ -395,7 +412,8 @@
 
 - type: entity
   name: chocolate chip pancake
-  parent: FoodBakedPancake
+  parent:
+  - FoodBakedPancake
   id: FoodBakedPancakeCc
   description: A fluffy and delicious chocolate chip pancake.
   components:
@@ -453,7 +471,8 @@
 
 - type: entity
   name: waffles
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedWaffle
   description: Mmm, waffles.
   components:
@@ -473,7 +492,8 @@
 
 - type: entity
   name: soy waffles
-  parent: FoodBakedWaffle
+  parent:
+  - FoodBakedWaffle
   id: FoodBakedWaffleSoy
   description: You feel healthier and - more feminine?
   components:
@@ -493,7 +513,8 @@
 
 - type: entity
   name: soylent waffles
-  parent: FoodBakedWaffle
+  parent:
+  - FoodBakedWaffle
   id: FoodBakedWaffleSoylent
   description: Not made of people. Honest. # Definitely people
   components:
@@ -513,7 +534,8 @@
 
 - type: entity
   name: roffle waffles
-  parent: FoodBakedWaffle
+  parent:
+  - FoodBakedWaffle
   id: FoodBakedWaffleRoffle
   description: Waffles from Roffle. Co.
   components:
@@ -535,7 +557,8 @@
 
 - type: entity
   name: poppy pretzel
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedPretzel
   description: It's all twisted up!
   components:
@@ -544,7 +567,8 @@
 
 - type: entity
   name: cannoli
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedCannoli
   description: A Sicilian treat that makes you into a wise guy.
   components:
@@ -562,7 +586,8 @@
 
 - type: entity
   name: dumplings
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedDumplings
   description: Average recipe for meat in doughs.
   components:
@@ -587,7 +612,8 @@
 
 - type: entity
   name: chèvre chaud
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedChevreChaud
   description: A disk of slightly melted chèvre flopped on top of a crostini, and toasted all-round.
   components:
@@ -611,7 +637,8 @@
 
 - type: entity
   name: cotton chèvre chaud
-  parent: FoodBakedChevreChaud
+  parent:
+  - FoodBakedChevreChaud
   id: FoodBakedChevreChaudCotton
   description: A disk of slightly melted chèvre flopped on top of a... cotton crostini, and toasted all-round.
   components:
@@ -642,7 +669,8 @@
           Quantity: 0.5
 
 - type: entity
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedBrownieBatch
   name: brownies
   description: A pan of brownies.
@@ -672,7 +700,8 @@
 
 - type: entity
   name: brownie
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedBrownie
   suffix: Fresh
   description: A fresh baked brownie.
@@ -698,7 +727,8 @@
     - Slice
 
 - type: entity
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedCannabisBrownieBatch
   name: special brownies
   description: A pan of "special" brownies.
@@ -730,7 +760,8 @@
     slice: FoodBakedCannabisBrownie
 
 - type: entity
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedCannabisBrownie
   name: special brownie
   description: A "special" brownie.
@@ -760,7 +791,8 @@
 
 - type: entity
   name: onion rings
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodOnionRings
   description: You can eat it or propose to your loved ones.
   components:
@@ -783,7 +815,8 @@
             Quantity: 1
 
 - type: entity
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedCroissant
   name: croissant
   description: Buttery, flaky goodness.
@@ -817,7 +850,8 @@
         Blunt: 0 # so the damage stats icon doesn't immediately give away the syndie ones
 
 - type: entity
-  parent: FoodBakedCroissant
+  parent:
+  - FoodBakedCroissant
   id: FoodBakedCroissantCotton
   name: cotton croissant
   description: Buttery, flaky, fibery goodness.
@@ -854,7 +888,8 @@
           Quantity: 1
 
 - type: entity
-  parent: FoodBakedBase
+  parent:
+  - FoodBakedBase
   id: FoodBakedGrilledCheeseSandwich
   name: grilled cheese sandwich
   description: Bread and cheese toasted with butter, perfect for a chilly day in space.
@@ -883,7 +918,8 @@
           Quantity: 3
 
 - type: entity
-  parent: FoodBakedGrilledCheeseSandwich
+  parent:
+  - FoodBakedGrilledCheeseSandwich
   id: FoodBakedGrilledCheeseSandwichCotton
   name: cotton grilled cheese sandwich
   description: Cotton bread slightly burnt in butter, with melted cheese. Moths find it difficult to resist this combination.

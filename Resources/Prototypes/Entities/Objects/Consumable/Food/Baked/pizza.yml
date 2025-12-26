@@ -3,7 +3,8 @@
 
 - type: entity
   abstract: true
-  parent: FoodInjectableBase
+  parent:
+  - FoodInjectableBase
   id: FoodPizzaBase
   components:
   - type: FlavorProfile
@@ -34,7 +35,8 @@
     - ReptilianFood
 
 - type: entity
-  parent: FoodInjectableBase # Not sliceable
+  parent:
+  - FoodInjectableBase # Not sliceable
   id: FoodPizzaSliceBase
   abstract: true
   components:
@@ -66,7 +68,8 @@
 
 - type: entity
   name: margherita pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaMargherita
   description: The flavor of Italy.
   components:
@@ -83,7 +86,8 @@
 
 - type: entity
   name: slice of margherita pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaMargheritaSlice
   description: A slice of Italy.
   components:
@@ -100,7 +104,8 @@
 
 - type: entity
   name: meat pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaMeat
   description: Greasy pizza with delicious meat.
   components:
@@ -122,7 +127,8 @@
 
 - type: entity
   name: slice of meat pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaMeatSlice
   description: A nutritious slice of meatpizza.
   components:
@@ -146,7 +152,8 @@
 
 - type: entity
   name: mushroom pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaMushroom
   description: Very special pizza.
   components:
@@ -163,7 +170,8 @@
 
 - type: entity
   name: slice of mushroom pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaMushroomSlice
   description: Maybe it is the last slice of pizza in your life.
   components:
@@ -181,7 +189,8 @@
 
 - type: entity
   name: vegetable pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaVegetable
   description: The station's vegetarians will thank you for making this.
   components:
@@ -212,7 +221,8 @@
 
 - type: entity
   name: slice of vegetable pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaVegetableSlice
   description: A slice of this is enough to satisfy even the pickiest station personnel.
   components:
@@ -246,7 +256,8 @@
 
 - type: entity
   name: donk-pocket pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaDonkpocket
   description: Who thought this would be a good idea?
   components:
@@ -277,7 +288,8 @@
 
 - type: entity
   name: slice of donk-pocket pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaDonkpocketSlice
   description: Smells like donk-pocket.
   components:
@@ -309,7 +321,8 @@
 
 - type: entity
   name: dank pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaDank
   description: The hippie's pizza of choice.
   components:
@@ -336,7 +349,8 @@
 
 - type: entity
   name: slice of dank pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaDankSlice
   description: So good, man...
   components:
@@ -364,7 +378,8 @@
 
 - type: entity
   name: sassysage pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaSassysage
   description: You can really smell the sassiness.
   components:
@@ -386,7 +401,8 @@
 
 - type: entity
   name: slice of sassysage pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaSassysageSlice
   description: Deliciously sassy.
   components:
@@ -410,7 +426,8 @@
 
 - type: entity
   name: Hawaiian pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaPineapple
   description: Makes people burst into tears. Tears of joy or sadness depends on the person's fondness for pineapple.
   components:
@@ -433,7 +450,8 @@
 
 - type: entity
   name: slice of Hawaiian pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaPineappleSlice
   description: A slice of joy/sin.
   components:
@@ -459,7 +477,8 @@
 #TODO: This is a meme pizza from /tg/. It has specially coded mechanics.
 - type: entity
   name: Arnold's pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaArnold
   description: Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni.
   components:
@@ -495,7 +514,8 @@
 
 - type: entity
   name: slice of Arnold's pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaArnoldSlice
   description: I come over, maybe I give you a pizza, maybe I break off your arm.
   components:
@@ -534,7 +554,8 @@
 #TODO: Make this do poison damage and make cut pizza slices eventually rot into this.
 - type: entity
   name: slice of moldy pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaMoldySlice
   description: Once a perfectly good slice of pizza pie, but now it lies here, rancid and bursting with spores.
   components:
@@ -567,7 +588,8 @@
 
 - type: entity
   name: spicy rock pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaUranium
   description: Spicy pizza covered in peppers and uranium.
   components:
@@ -603,7 +625,8 @@
 
 - type: entity
   name: slice of spicy rock pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaUraniumSlice
   description: A glowing slice of spicy rock pizza.
   components:
@@ -642,7 +665,8 @@
 
 - type: entity
   name: cotton pizza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaCotton
   description: Flat fabric cotton dough with cotton topping. Incredible.
   components:
@@ -675,7 +699,8 @@
 
 - type: entity
   name: slice of cotton pizza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaCottonSlice
   description: A slice of cotton pizza. Cotton included.
   components:
@@ -707,7 +732,8 @@
 
 - type: entity
   name: world peazza
-  parent: FoodPizzaBase
+  parent:
+  - FoodPizzaBase
   id: FoodPizzaWorldpeas
   description: Modern diplomacy in the shape of a disc.
   components:
@@ -734,7 +760,8 @@
 
 - type: entity
   name: slice of world peazza
-  parent: FoodPizzaSliceBase
+  parent:
+  - FoodPizzaSliceBase
   id: FoodPizzaWorldpeasSlice
   description: Dividing the world up is a small price to pay for harmony.
   components:
