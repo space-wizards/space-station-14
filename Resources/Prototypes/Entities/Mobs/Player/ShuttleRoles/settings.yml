@@ -7,7 +7,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorHead
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   components:
     - type: GhostRole
       name: ghost-role-information-command-name
@@ -18,7 +19,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorCaptain
-  parent: VisitorHead
+  parent:
+  - VisitorHead
   components:
     - type: GhostRole
       name: job-name-captain
@@ -29,7 +31,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorCE
-  parent: VisitorHead
+  parent:
+  - VisitorHead
   components:
     - type: GhostRole
       name: job-name-ce
@@ -40,7 +43,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorCMO
-  parent: VisitorHead
+  parent:
+  - VisitorHead
   components:
     - type: GhostRole
       name: job-name-cmo
@@ -51,7 +55,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorHOP
-  parent: VisitorHead
+  parent:
+  - VisitorHead
   components:
     - type: GhostRole
       name: job-name-hop
@@ -62,7 +67,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorHOS
-  parent: VisitorHead
+  parent:
+  - VisitorHead
   components:
     - type: GhostRole
       name: job-name-hos
@@ -73,7 +79,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorResearchDirector
-  parent: VisitorHead
+  parent:
+  - VisitorHead
   components:
     - type: GhostRole
       name: job-name-rd
@@ -84,7 +91,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorQM
-  parent: VisitorHead
+  parent:
+  - VisitorHead
   components:
     - type: GhostRole
       name: job-name-qm
@@ -98,7 +106,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorSecurity
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   components:
     - type: GhostRole
       name: ghost-role-information-security-name
@@ -109,7 +118,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorSecurityCadet
-  parent: VisitorSecurity
+  parent:
+  - VisitorSecurity
   components:
     - type: GhostRole
       name: job-name-cadet
@@ -119,7 +129,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorSecurityOfficer
-  parent: VisitorSecurity
+  parent:
+  - VisitorSecurity
   components:
     - type: GhostRole
       name: job-name-security
@@ -129,7 +140,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorDetective
-  parent: VisitorSecurity
+  parent:
+  - VisitorSecurity
   components:
     - type: GhostRole
       name: job-name-detective
@@ -139,7 +151,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorWarden
-  parent: VisitorSecurity
+  parent:
+  - VisitorSecurity
   components:
     - type: GhostRole
       name: job-name-warden
@@ -151,7 +164,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorCargonian
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: GhostRole
       name: ghost-role-information-cargo-name
@@ -162,7 +176,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorCargoTechnician
-  parent: VisitorCargonian
+  parent:
+  - VisitorCargonian
   components:
     - type: GhostRole
       name: job-name-cargotech
@@ -172,7 +187,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorSalvageSpecialist
-  parent: VisitorCargonian
+  parent:
+  - VisitorCargonian
   components:
     - type: GhostRole
       name: job-name-salvagespec
@@ -184,7 +200,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorEngineering
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: GhostRole
       name: ghost-role-information-engineering-name
@@ -195,7 +212,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorAtmosTech
-  parent: VisitorEngineering
+  parent:
+  - VisitorEngineering
   components:
     - type: GhostRole
       name: job-name-atmostech
@@ -205,7 +223,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorTechnicalAssistant
-  parent: VisitorEngineering
+  parent:
+  - VisitorEngineering
   components:
     - type: GhostRole
       name: job-name-technical-assistant
@@ -215,7 +234,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorEngineer
-  parent: VisitorEngineering
+  parent:
+  - VisitorEngineering
   components:
     - type: GhostRole
       name: job-name-engineer
@@ -227,7 +247,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorMedical
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: GhostRole
       name: ghost-role-information-medical-name
@@ -238,7 +259,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorMedicalIntern
-  parent: VisitorMedical
+  parent:
+  - VisitorMedical
   components:
     - type: GhostRole
       name: job-name-intern
@@ -248,7 +270,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorMedicalDoctor
-  parent: VisitorMedical
+  parent:
+  - VisitorMedical
   components:
     - type: GhostRole
       name: job-name-doctor
@@ -258,7 +281,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorParamedic
-  parent: VisitorMedical
+  parent:
+  - VisitorMedical
   components:
     - type: GhostRole
       name: job-name-paramedic
@@ -268,7 +292,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorVirologist
-  parent: VisitorMedical
+  parent:
+  - VisitorMedical
   components:
     - type: GhostRole
       name: ghost-role-information-medical-virologist-name
@@ -278,7 +303,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorGeneticist
-  parent: VisitorMedical
+  parent:
+  - VisitorMedical
   components:
     - type: GhostRole
       name: ghost-role-information-medical-geneticist-name
@@ -288,7 +314,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorPsychologist
-  parent: VisitorMedical
+  parent:
+  - VisitorMedical
   components:
     - type: GhostRole
       name: job-name-psychologist
@@ -298,7 +325,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorChemist
-  parent: VisitorMedical
+  parent:
+  - VisitorMedical
   components:
     - type: GhostRole
       name: job-name-chemist
@@ -308,7 +336,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorDentist
-  parent: VisitorMedical
+  parent:
+  - VisitorMedical
   components:
     - type: GhostRole
       name: ghost-role-information-medical-dentist-name
@@ -320,7 +349,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorScience
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: GhostRole
       name: ghost-role-information-science-name
@@ -331,7 +361,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorResearchAssistant
-  parent: VisitorScience
+  parent:
+  - VisitorScience
   components:
     - type: GhostRole
       name: job-name-research-assistant
@@ -341,7 +372,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorScientist
-  parent: VisitorScience
+  parent:
+  - VisitorScience
   components:
     - type: GhostRole
       name: job-name-scientist
@@ -353,7 +385,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorCivilian
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: GhostRole
       name: ghost-role-information-civilian-name
@@ -364,7 +397,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorBartender
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-bartender
@@ -374,7 +408,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorBotanist
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-botanist
@@ -384,7 +419,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorBoxer
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-boxer
@@ -394,7 +430,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorChaplain
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: BibleUser
     - type: GhostRole
@@ -405,7 +442,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorChef
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-chef
@@ -415,7 +453,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorClown
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   randomizeName: false
   components:
     - type: GhostRole
@@ -429,7 +468,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorJanitor
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-janitor
@@ -439,7 +479,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorLawyer
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-lawyer
@@ -449,7 +490,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorLawyerCentcom
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: ghost-role-information-civilian-centcom-lawyer-name
@@ -460,7 +502,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorLibrarian
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-librarian
@@ -470,7 +513,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorMusician
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-musician
@@ -480,7 +524,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorMusicianFancy
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-musician
@@ -490,7 +535,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorMusicianRelaxed
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-musician
@@ -500,7 +546,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorMime
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: MimePowers
     - type: GhostRole
@@ -511,7 +558,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorReporter
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-reporter
@@ -521,7 +569,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorServiceWorker
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-serviceworker
@@ -531,7 +580,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorZookeeper
-  parent: VisitorCivilian
+  parent:
+  - VisitorCivilian
   components:
     - type: GhostRole
       name: job-name-zookeeper
@@ -541,7 +591,8 @@
 
 - type: randomHumanoidSettings
   id: ClownTroupeBanana
-  parent: VisitorClown
+  parent:
+  - VisitorClown
   randomizeName: false
   components:
     - type: Loadout
@@ -560,7 +611,8 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimCaptain
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -581,7 +633,8 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimChiefEngineer
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -602,7 +655,8 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimCMO
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -623,7 +677,8 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimHeadOfPersonnel
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -644,7 +699,8 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimHeadOfSecurity
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -665,7 +721,8 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimResearchDirector
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -686,7 +743,8 @@
 
 - type: randomHumanoidSettings
   id: ChallengeVictimQuartermaster
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -744,7 +802,8 @@
 
 - type: randomHumanoidSettings
   id: SyndieSoldierTeamLeader
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: NpcFactionMember
       factions:
@@ -764,7 +823,8 @@
 
 - type: randomHumanoidSettings
   id: SyndieSoldier
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: NpcFactionMember
       factions:
@@ -784,7 +844,8 @@
 
 - type: randomHumanoidSettings
   id: SyndieVisitor
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: NpcFactionMember
       factions:
@@ -803,7 +864,8 @@
 
 - type: randomHumanoidSettings
   id: PirateScooner
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: NpcFactionMember
       factions:
@@ -822,7 +884,8 @@
 
 - type: randomHumanoidSettings
   id: PirateCaptainScooner
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: NpcFactionMember
       factions:
@@ -843,7 +906,8 @@
 
 - type: randomHumanoidSettings
   id: VisitorBlackmarketeer
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: GhostRole
       name: ghost-role-information-blackmarketeer-name
@@ -859,7 +923,8 @@
 
 - type: randomHumanoidSettings
   id: Cossack
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: RussianAccent
     - type: ScrambledAccent

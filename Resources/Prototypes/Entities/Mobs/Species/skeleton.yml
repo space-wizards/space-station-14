@@ -130,7 +130,8 @@
         type: StrippableBoundUserInterface
 
 - type: entity
-  parent: BaseSpeciesDummy
+  parent:
+  - BaseSpeciesDummy
   id: MobSkeletonPersonDummy
   categories: [ HideSpawnMenu ]
   components:

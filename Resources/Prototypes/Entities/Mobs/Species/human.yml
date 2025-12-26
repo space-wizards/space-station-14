@@ -1,6 +1,7 @@
 # Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
   id: BaseMobHuman
   name: Urist McHands
   abstract: true
@@ -30,7 +31,8 @@
 
 
 - type: entity
-  parent: BaseSpeciesDummy
+  parent:
+  - BaseSpeciesDummy
   id: MobHumanDummy
   categories: [ HideSpawnMenu ]
   components:

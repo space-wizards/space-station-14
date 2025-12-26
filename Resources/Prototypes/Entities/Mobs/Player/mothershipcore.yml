@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ BaseControllable, BaseStructure ]
+  parent:
+  - BaseControllable
+  - BaseStructure
   id: MothershipCore
   name: mothership core
   description: A sentient machine that can produce Xenoborgs. Without this the Xenoborgs are doomed.
@@ -238,7 +240,8 @@
   - type: RadarConsole
 
 - type: entity
-  parent: BaseAGhostAction
+  parent:
+  - BaseAGhostAction
   id: ActionXenoborgControlMonitor
   name: Xenoborgs Control Console
   description: View the Xenoborgs Control Console
@@ -252,7 +255,8 @@
     event: !type:ToggleIntrinsicUIEvent { key: enum.RoboticsConsoleUiKey.Key }
 
 - type: entity
-  parent: BaseAGhostAction
+  parent:
+  - BaseAGhostAction
   id: ActionXenoborgCameraMonitor
   name: Xenoborgs Camera Monitor
   description: View the Xenoborgs Camera Monitor

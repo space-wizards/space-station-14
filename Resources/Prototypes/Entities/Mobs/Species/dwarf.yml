@@ -1,7 +1,8 @@
 - type: entity
   save: false
   name: Urist McHands The Dwarf
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
   id: BaseMobDwarf
   abstract: true
   components:
@@ -63,7 +64,8 @@
             state: jumpsuit-female
 
 - type: entity
-  parent: BaseSpeciesDummy
+  parent:
+  - BaseSpeciesDummy
   id: MobDwarfDummy
   categories: [ HideSpawnMenu ]
   components:

@@ -1,7 +1,8 @@
 - type: entity
   save: false
   name: Urist McCookie
-  parent: BaseMobGingerbread
+  parent:
+  - BaseMobGingerbread
   id: MobGingerbread
   components:
     - type: Respirator
@@ -15,7 +16,9 @@
 - type: entity
   name: gingerbread man
   id: MobGingerbreadAI
-  parent: [ MobGingerbread, MobCombat]
+  parent:
+  - MobGingerbread
+  - MobCombat
   components:
   - type: GhostRole
     name: ghost-role-information-gingerbread-name
@@ -30,4 +33,3 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
-  

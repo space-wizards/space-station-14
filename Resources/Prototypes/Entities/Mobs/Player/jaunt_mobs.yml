@@ -1,6 +1,8 @@
 ﻿- type: entity
   name: jaunt
-  parent: [Incorporeal, BaseMob]
+  parent:
+  - Incorporeal
+  - BaseMob
   id: BaseMobJaunt
   description: Faint traces of a humanoid figure linger here
   suffix: Ethereal
@@ -22,7 +24,8 @@
 # Should be slow, for balance
 - type: entity
   name: jaunt
-  parent: BaseMobJaunt
+  parent:
+  - BaseMobJaunt
   id: EtherealJaunt
   suffix: Wizard
   components:
@@ -40,7 +43,9 @@
     baseWalkSpeed: 4
 
 - type: entity
-  parent: [Incorporeal, BaseMob]
+  parent:
+  - Incorporeal
+  - BaseMob
   id: DesynchronizedPocket
   name: desynchronized pocket
   description: A pocket in spacetime, keeping the user a fraction of a second in the future.

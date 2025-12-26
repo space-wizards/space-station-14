@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  parent:
+  - BaseXenoborgChassis
+  - BaseXenoborgTransponder
   id: XenoborgEngi
   name: engi xenoborg
   suffix: with brain
@@ -55,7 +57,9 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  parent:
+  - BaseXenoborgChassis
+  - BaseXenoborgTransponder
   id: XenoborgHeavy
   name: heavy xenoborg
   suffix: with brain
@@ -146,7 +150,9 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  parent:
+  - BaseXenoborgChassis
+  - BaseXenoborgTransponder
   id: XenoborgScout
   name: scout xenoborg
   suffix: with brain
@@ -200,7 +206,9 @@
         startingItem: PowerCellHigh
 
 - type: entity
-  parent: [ BaseXenoborgChassis, BaseXenoborgTransponder ]
+  parent:
+  - BaseXenoborgChassis
+  - BaseXenoborgTransponder
   id: XenoborgStealth
   name: stealth xenoborg
   suffix: with brain
@@ -256,7 +264,8 @@
 
 # xenoborgs empty
 - type: entity
-  parent: XenoborgEngi
+  parent:
+  - XenoborgEngi
   id: XenoborgEngiPrinted
   suffix: no brain
   components:
@@ -279,7 +288,8 @@
         startingItem: PowerCellHighPrinted
 
 - type: entity
-  parent: XenoborgHeavy
+  parent:
+  - XenoborgHeavy
   id: XenoborgHeavyPrinted
   suffix: no brain
   components:
@@ -299,7 +309,8 @@
         startingItem: PowerCellHighPrinted
 
 - type: entity
-  parent: XenoborgScout
+  parent:
+  - XenoborgScout
   id: XenoborgScoutPrinted
   suffix: no brain
   components:
@@ -319,7 +330,8 @@
         startingItem: PowerCellHighPrinted
 
 - type: entity
-  parent: XenoborgStealth
+  parent:
+  - XenoborgStealth
   id: XenoborgStealthPrinted
   suffix: no brain
   components:

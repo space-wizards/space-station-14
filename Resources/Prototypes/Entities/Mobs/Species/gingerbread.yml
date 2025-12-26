@@ -1,7 +1,8 @@
 - type: entity
   save: false
   name: Urist McCookie
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
   id: BaseMobGingerbread
   abstract: true
   components:
@@ -59,7 +60,8 @@
 
 
 - type: entity
-  parent: BaseSpeciesDummy
+  parent:
+  - BaseSpeciesDummy
   id: MobGingerbreadDummy
   categories: [ HideSpawnMenu ]
   components:

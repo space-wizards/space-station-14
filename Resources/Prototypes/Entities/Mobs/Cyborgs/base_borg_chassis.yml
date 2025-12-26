@@ -1,5 +1,7 @@
 - type: entity
-  parent: [BaseMob, StripableInventoryBase]
+  parent:
+  - BaseMob
+  - StripableInventoryBase
   id: BaseBorgChassisNotIonStormable
   name: cyborg
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
@@ -250,7 +252,8 @@
 
 - type: entity
   abstract: true
-  parent: BaseBorgChassisNotIonStormable
+  parent:
+  - BaseBorgChassisNotIonStormable
   id: BaseBorgChassis
   components:
   - type: IonStormTarget
@@ -287,7 +290,8 @@
 
 - type: entity
   abstract: true
-  parent: BaseBorgTransponder
+  parent:
+  - BaseBorgTransponder
   id: BaseXenoborgTransponder
   components:
   - type: DeviceNetwork
@@ -307,7 +311,9 @@
 
 - type: entity
   id: BaseBorgChassisNT
-  parent: [BaseBorgChassis, BaseBorgTransponder]
+  parent:
+  - BaseBorgChassis
+  - BaseBorgTransponder
   abstract: true
   components:
   - type: RandomMetadata
@@ -330,7 +336,8 @@
 
 - type: entity
   id: BaseBorgChassisSyndicate
-  parent: BaseBorgChassis
+  parent:
+  - BaseBorgChassis
   abstract: true
   components:
   - type: NpcFactionMember
@@ -367,7 +374,8 @@
 
 - type: entity
   id: BaseBorgChassisDerelict
-  parent: BaseBorgChassis
+  parent:
+  - BaseBorgChassis
   abstract: true
   components:
   - type: NpcFactionMember
@@ -386,7 +394,8 @@
 
 - type: entity
   id: BaseBorgChassisSyndicateDerelict #For assault borg and maybe others in time
-  parent: BaseBorgChassis # We don't want them to see Nukies or have syndi comms, their database is out of date
+  parent:
+  - BaseBorgChassis # We don't want them to see Nukies or have syndi comms, their database is out of date
   abstract: true
   components:
   - type: SiliconLawProvider
@@ -423,7 +432,8 @@
     color: "#dd200b"
 
 - type: entity
-  parent: BaseBorgChassisNotIonStormable
+  parent:
+  - BaseBorgChassisNotIonStormable
   id: BaseXenoborgChassis
   name: xenoborg
   description: A man-machine hybrid that aims to replicate itself. They love extracting brains to insert into fresh Xenoborg chassis to grow their army.

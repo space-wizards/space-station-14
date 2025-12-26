@@ -44,7 +44,8 @@
 - type: entity
   abstract: true
   save: false
-  parent: BaseControllable
+  parent:
+  - BaseControllable
   id: BaseMob
   components:
   - type: MobCollision
@@ -192,7 +193,8 @@
 
 # Used for mobs that require regular atmospheric conditions.
 - type: entity
-  parent: MobAtmosExposed
+  parent:
+  - MobAtmosExposed
   id: MobAtmosStandard
   abstract: true
   components:

@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ MobHuman, StorePresetChangeling ]
+  parent:
+  - MobHuman
+  - StorePresetChangeling
   id: MobLing
   name: Urist McLing
   suffix: Non-Antag

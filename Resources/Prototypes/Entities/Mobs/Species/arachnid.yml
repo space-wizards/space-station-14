@@ -1,7 +1,8 @@
 - type: entity
   save: false
   name: Urist McWebs
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
   id: BaseMobArachnid
   abstract: true
   components:
@@ -124,7 +125,8 @@
 
 
 - type: entity
-  parent: BaseSpeciesDummy
+  parent:
+  - BaseSpeciesDummy
   id: MobArachnidDummy
   categories: [ HideSpawnMenu ]
   components:

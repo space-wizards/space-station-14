@@ -13,7 +13,8 @@
       shader: unshaded
 
 - type: entity
-  parent: MobRatvarBase
+  parent:
+  - MobRatvarBase
   id: MobRatvarSpawn
   suffix: Spawn
   components:
@@ -27,7 +28,9 @@
     prototype: MobRatvar
 
 - type: entity
-  parent: [MobRatvarBase, BaseMob]
+  parent:
+  - MobRatvarBase
+  - BaseMob
   id: MobRatvar
   components:
   - type: AnnounceOnSpawn

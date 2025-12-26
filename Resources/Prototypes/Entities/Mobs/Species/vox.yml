@@ -1,5 +1,6 @@
 ﻿- type: entity
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
   id: BaseMobVox
   abstract: true
   components:
@@ -213,7 +214,8 @@
           state: hand_r
 
 - type: entity
-  parent: BaseSpeciesDummy
+  parent:
+  - BaseSpeciesDummy
   id: MobVoxDummy
   categories: [ HideSpawnMenu ]
   components:

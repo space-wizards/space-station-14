@@ -2,7 +2,8 @@
   save: false
   name: Urist McScales
   suffix: Urisst' Mzhand
-  parent: BaseMobReptilian
+  parent:
+  - BaseMobReptilian
   id: MobReptilian
 
 #Weh

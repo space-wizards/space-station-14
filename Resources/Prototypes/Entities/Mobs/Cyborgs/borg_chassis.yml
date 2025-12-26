@@ -1,6 +1,7 @@
 - type: entity
   id: BorgChassisSelectable
-  parent: BaseBorgChassisNT
+  parent:
+  - BaseBorgChassisNT
   components:
   - type: Sprite
     layers:
@@ -34,7 +35,8 @@
 
 - type: entity
   id: BorgChassisGeneric
-  parent: BorgChassisSelectable
+  parent:
+  - BorgChassisSelectable
   name: generic cyborg
   suffix: type picked
   components:
@@ -43,7 +45,8 @@
 
 - type: entity
   id: BorgChassisMining
-  parent: BorgChassisSelectable
+  parent:
+  - BorgChassisSelectable
   name: salvage cyborg
   components:
   - type: BorgSwitchableType
@@ -51,7 +54,8 @@
 
 - type: entity
   id: BorgChassisEngineer
-  parent: BorgChassisSelectable
+  parent:
+  - BorgChassisSelectable
   name: engineer cyborg
   components:
   - type: BorgSwitchableType
@@ -59,7 +63,8 @@
 
 - type: entity
   id: BorgChassisJanitor
-  parent: BorgChassisSelectable
+  parent:
+  - BorgChassisSelectable
   name: janitor cyborg
   components:
   - type: BorgSwitchableType
@@ -67,7 +72,8 @@
 
 - type: entity
   id: BorgChassisMedical
-  parent: BorgChassisSelectable
+  parent:
+  - BorgChassisSelectable
   name: medical cyborg
   components:
   - type: BorgSwitchableType
@@ -75,7 +81,8 @@
 
 - type: entity
   id: BorgChassisService
-  parent: BorgChassisSelectable
+  parent:
+  - BorgChassisSelectable
   name: service cyborg
   components:
   - type: BorgSwitchableType
@@ -83,7 +90,8 @@
 
 - type: entity
   id: BorgChassisSyndicateAssault
-  parent: BaseBorgChassisSyndicate
+  parent:
+  - BaseBorgChassisSyndicate
   name: syndicate assault cyborg
   description: A lean, mean killing machine with access to a variety of deadly modules.
   components:
@@ -115,7 +123,9 @@
 
 - type: entity
   id: BorgChassisSyndicateMedical
-  parent: [BaseBorgChassisSyndicate, ShowMedicalIcons]
+  parent:
+  - BaseBorgChassisSyndicate
+  - ShowMedicalIcons
   name: syndicate medical cyborg
   description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
   components:
@@ -154,7 +164,8 @@
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
-  parent: BaseBorgChassisSyndicate
+  parent:
+  - BaseBorgChassisSyndicate
   name: syndicate saboteur cyborg
   description: A streamlined engineering cyborg, equipped with covert modules. Its chameleon projector lets it disguise itself as a Nanotrasen cyborg.
   components:
@@ -190,7 +201,8 @@
 
 - type: entity
   id: BorgChassisDerelict
-  parent: BaseBorgChassisDerelict
+  parent:
+  - BaseBorgChassisDerelict
   name: derelict cyborg
   description: A man-machine hybrid that assists in station activity. This one is in a state of great disrepair.
   components:
@@ -221,7 +233,8 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
-  parent: BaseBorgChassisDerelict
+  parent:
+  - BaseBorgChassisDerelict
   id: EngineeringBorgChassisDerelict
   name: derelict engineer cyborg
   description: A man-machine hybrid that assists the engineering department. This one seems to have chunks of strange crystals pockmarking its surface.
@@ -251,7 +264,8 @@
     noMindState: engineer_e_r
 
 - type: entity
-  parent: BaseBorgChassisDerelict
+  parent:
+  - BaseBorgChassisDerelict
   id: JanitorBorgChassisDerelict
   name: derelict janitor cyborg
   description: A man-machine hybrid that assists the service department. It's a bigger mess than anything it can clean up.
@@ -285,7 +299,8 @@
     noMindState: janitor_e_r
 
 - type: entity
-  parent: BaseBorgChassisDerelict
+  parent:
+  - BaseBorgChassisDerelict
   id: MedicalBorgChassisDerelict
   name: derelict medical cyborg
   description: A man-machine hybrid that assists the medical department. This one's needles don't look very sanitary.
@@ -326,7 +341,8 @@
     - Biological
 
 - type: entity
-  parent: BaseBorgChassisDerelict
+  parent:
+  - BaseBorgChassisDerelict
   id: MiningBorgChassisDerelict
   name: derelict salvage cyborg
   description: A man-machine hybrid that assists the cargo department. This one has seen the wrong side of a gibtonite chunk.
@@ -360,7 +376,8 @@
     noMindState: miner_e_r
 
 - type: entity
-  parent: BaseBorgChassisSyndicateDerelict
+  parent:
+  - BaseBorgChassisSyndicateDerelict
   id: SyndicateAssaultBorgChassisDerelict
   name: derelict syndicate assault cyborg
   description: A lean, mean killing machine with access to a variety of deadly modules. This one is more rust-orange than blood-red.

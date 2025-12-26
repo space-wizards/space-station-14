@@ -1,7 +1,8 @@
 ﻿- type: entity
   abstract: true
   save: false
-  parent: [BaseMobSpeciesOrganic]
+  parent:
+  - BaseMobSpeciesOrganic
   id: BaseMobVulpkanin
   name: Urist McBark
   components:
@@ -172,7 +173,8 @@
             state: belt
 
 - type: entity
-  parent: [BaseSpeciesDummy]
+  parent:
+  - BaseSpeciesDummy
   id: MobVulpkaninDummy
   categories: [ HideSpawnMenu ]
   components:

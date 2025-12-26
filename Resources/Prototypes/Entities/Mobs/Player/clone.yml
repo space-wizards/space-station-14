@@ -77,7 +77,9 @@
 # a full clone with all traits and items, but no antag roles
 - type: cloningSettings
   id: BaseClone
-  parent: [Body, Special]
+  parent:
+  - Body
+  - Special
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit
@@ -88,7 +90,9 @@
 # for cloning pods
 - type: cloningSettings
   id: CloningPod
-  parent: [BaseClone, Antag]
+  parent:
+  - BaseClone
+  - Antag
   forceCloning: false
   copyEquipment: null
   copyInternalStorage: false
@@ -97,14 +101,17 @@
 # for paradox clones
 - type: cloningSettings
   id: ParadoxCloningSettings
-  parent: [BaseClone, Antag]
+  parent:
+  - BaseClone
+  - Antag
   components:
   - Forensics # This is so hugging data is copied to the clone, so you can't hug metagame them
 
 # changeling identity copying
 - type: cloningSettings
   id: ChangelingCloningSettings
-  parent: Body
+  parent:
+  - Body
   components:
   # These are already part of the base species prototype that is spawned for the clone,
   # that means we only need to copy them over when switching between species.

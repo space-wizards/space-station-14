@@ -1,6 +1,7 @@
 # Mob
 - type: entity
-  parent: BaseMob
+  parent:
+  - BaseMob
   id: MobParadox
   name: space-time paradox
   description: A big ball of wibbly wobbly, timey wimey stuff.
@@ -19,7 +20,8 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: MobParadox
+  parent:
+  - MobParadox
   id: MobParadoxTimed # visual effect when gibbing on round end
   components:
   - type: TimedDespawn

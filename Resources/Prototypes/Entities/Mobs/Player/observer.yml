@@ -71,7 +71,8 @@
 
 # proto for player ghosts specifically
 - type: entity
-  parent: MobObserverBase
+  parent:
+  - MobObserverBase
   id: MobObserver
   components:
   - type: Spectral
@@ -80,7 +81,8 @@
     - AllowGhostShownByEvent
 
 - type: entity
-  parent: BaseMentalAction
+  parent:
+  - BaseMentalAction
   id: ActionGhostBoo
   name: Boo!
   description: Scare your crew members because of boredom!
@@ -94,7 +96,8 @@
     event: !type:BooActionEvent
 
 - type: entity
-  parent: BaseMentalAction
+  parent:
+  - BaseMentalAction
   id: ActionToggleLighting
   name: Toggle Lighting
   description: Toggle light rendering to better observe dark areas.
@@ -106,7 +109,8 @@
     event: !type:ToggleLightingActionEvent
 
 - type: entity
-  parent: BaseMentalAction
+  parent:
+  - BaseMentalAction
   id: ActionToggleFov
   name: Toggle FoV
   description: Toggles field-of-view in order to see what players see.
@@ -118,7 +122,8 @@
     event: !type:ToggleFoVActionEvent
 
 - type: entity
-  parent: BaseMentalAction
+  parent:
+  - BaseMentalAction
   id: ActionToggleGhosts
   name: Toggle Ghosts
   description: Toggle the visibility of other ghosts.
@@ -130,7 +135,8 @@
     event: !type:ToggleGhostsActionEvent
 
 - type: entity
-  parent: BaseMentalAction
+  parent:
+  - BaseMentalAction
   id: ActionToggleGhostHearing
   name: Toggle Ghost Hearing
   description: Toggle between hearing all messages and hearing only radio & nearby messages.

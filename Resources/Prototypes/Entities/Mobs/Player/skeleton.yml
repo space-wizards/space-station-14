@@ -1,6 +1,7 @@
 - type: entity
   save: false
-  parent: BaseMobSkeletonPerson
+  parent:
+  - BaseMobSkeletonPerson
   id: MobSkeletonPerson
   components:
   - type: InteractionPopup
@@ -11,7 +12,8 @@
 
 - type: entity
   name: skeleton pirate
-  parent: MobSkeletonPerson
+  parent:
+  - MobSkeletonPerson
   id: MobSkeletonPirate
   components:
   - type: GhostRole
@@ -30,7 +32,8 @@
 
 - type: entity
   name: skeleton biker
-  parent: MobSkeletonPerson
+  parent:
+  - MobSkeletonPerson
   id: MobSkeletonBiker
   components:
   - type: GhostRole
@@ -47,7 +50,8 @@
   - type: RandomHumanoidAppearance
 
 - type: entity
-  parent: MobSkeletonPerson
+  parent:
+  - MobSkeletonPerson
   id: MobSkeletonCloset
   name: closet skeleton
   components:

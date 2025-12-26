@@ -283,7 +283,8 @@
 - type: entity
   save: false
   id: BaseSpeciesDummy
-  parent: InventoryBase
+  parent:
+  - InventoryBase
   abstract: true
   components:
   - type: Hands

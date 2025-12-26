@@ -1,7 +1,8 @@
 - type: entity
   save: false
   name: Urisst' Mzhand
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
   id: BaseMobReptilian
   abstract: true
   components:
@@ -102,7 +103,8 @@
             state: mask
 
 - type: entity
-  parent: BaseSpeciesDummy
+  parent:
+  - BaseSpeciesDummy
   id: MobReptilianDummy
   categories: [ HideSpawnMenu ]
   description: A dummy reptilian meant to be used in character setup.

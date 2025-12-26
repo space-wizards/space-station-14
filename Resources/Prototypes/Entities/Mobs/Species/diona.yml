@@ -1,7 +1,8 @@
 - type: entity
   save: false
   name: Urist McPlants
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
   id: BaseMobDiona
   abstract: true
   components:
@@ -116,7 +117,8 @@
   - type: Rootable
 
 - type: entity
-  parent: BaseSpeciesDummy
+  parent:
+  - BaseSpeciesDummy
   id: MobDionaDummy
   categories: [ HideSpawnMenu ]
   components:

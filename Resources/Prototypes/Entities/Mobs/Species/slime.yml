@@ -1,6 +1,7 @@
 - type: entity
   name: Urist McSlime
-  parent: BaseMobSpeciesOrganic
+  parent:
+  - BaseMobSpeciesOrganic
   id: BaseMobSlimePerson
   abstract: true
   components:
@@ -120,7 +121,8 @@
             state: jumpsuit-female
 
 - type: entity
-  parent: MobHumanDummy
+  parent:
+  - MobHumanDummy
   id: MobSlimePersonDummy
   categories: [ HideSpawnMenu ]
   components:

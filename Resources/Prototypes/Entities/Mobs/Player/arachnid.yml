@@ -1,7 +1,8 @@
 - type: entity
   save: false
   name: Urist McWeb
-  parent: BaseMobArachnid
+  parent:
+  - BaseMobArachnid
   id: MobArachnid
   components:
   - type: Respirator

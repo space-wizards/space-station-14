@@ -1,5 +1,6 @@
 - type: entity
-  parent: MobHuman
+  parent:
+  - MobHuman
   id: MobDebugCounter
   name: debug counter
   description: He can count
@@ -17,7 +18,8 @@
           0
 
 - type: entity
-  parent: MobHuman
+  parent:
+  - MobHuman
   id: MobDebugRandomCounter
   name: debug random counter
   description: He can randomize
@@ -35,7 +37,8 @@
           0
 
 - type: entity
-  parent: MobHuman
+  parent:
+  - MobHuman
   id: MobDebugRandomLess
   name: debug random less
   description: He can lessing

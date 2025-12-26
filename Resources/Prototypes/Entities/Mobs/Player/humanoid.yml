@@ -10,7 +10,8 @@
 
 - type: randomHumanoidSettings
   id: EventHumanoidMindShielded
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   components:
     - type: AutoImplant
       implants:
@@ -19,7 +20,8 @@
 
 - type: randomHumanoidSettings
   id: EventHumanoidCentcomm
-  parent: EventHumanoidMindShielded
+  parent:
+  - EventHumanoidMindShielded
   randomizeName: false
   components:
   - type: AutoImplant
@@ -47,7 +49,8 @@
 
 - type: randomHumanoidSettings
   id: DeathSquad
-  parent: EventHumanoidCentcomm
+  parent:
+  - EventHumanoidCentcomm
   components:
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
@@ -88,7 +91,8 @@
 
 - type: randomHumanoidSettings
   id: ERTLeader
-  parent: EventHumanoidCentcomm
+  parent:
+  - EventHumanoidCentcomm
   components:
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
@@ -108,7 +112,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
-  parent: RandomHumanoidSpawnerERTLeader
+  parent:
+  - RandomHumanoidSpawnerERTLeader
   name: ERT leader
   suffix: ERTRole, Armored EVA
   components:
@@ -120,7 +125,8 @@
 
 - type: randomHumanoidSettings
   id: ERTLeaderEVA
-  parent: ERTLeader
+  parent:
+  - ERTLeader
   components:
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
@@ -135,7 +141,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVALecter
-  parent: RandomHumanoidSpawnerERTLeaderEVA
+  parent:
+  - RandomHumanoidSpawnerERTLeaderEVA
   suffix: ERTRole, Lecter, EVA
   components:
     - type: RandomHumanoidSpawner
@@ -143,7 +150,8 @@
 
 - type: randomHumanoidSettings
   id: ERTLeaderEVALecter
-  parent: ERTLeaderEVA
+  parent:
+  - ERTLeaderEVA
   components:
     - type: GhostRole
       name: ghost-role-information-ert-leader-name
@@ -160,7 +168,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTChaplain
-  parent: RandomHumanoidSpawnerERTLeader
+  parent:
+  - RandomHumanoidSpawnerERTLeader
   name: ERT chaplain
   suffix: ERTRole, Basic
   components:
@@ -177,7 +186,8 @@
 
 - type: randomHumanoidSettings
   id: ERTChaplain
-  parent: ERTLeader
+  parent:
+  - ERTLeader
   components:
     - type: BibleUser
     - type: GhostRole
@@ -198,7 +208,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTChaplainEVA
-  parent: RandomHumanoidSpawnerERTChaplain
+  parent:
+  - RandomHumanoidSpawnerERTChaplain
   name: ERT chaplain
   suffix: ERTRole, Enviro EVA
   components:
@@ -210,7 +221,8 @@
 
 - type: randomHumanoidSettings
   id: ERTChaplainEVA
-  parent: ERTChaplain
+  parent:
+  - ERTChaplain
   components:
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
@@ -228,7 +240,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTJanitor
-  parent: RandomHumanoidSpawnerERTLeader
+  parent:
+  - RandomHumanoidSpawnerERTLeader
   name: ERT janitor
   suffix: ERTRole, Basic
   components:
@@ -245,7 +258,8 @@
 
 - type: randomHumanoidSettings
   id: ERTJanitor
-  parent: ERTLeader
+  parent:
+  - ERTLeader
   components:
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
@@ -265,7 +279,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTJanitorEVA
-  parent: RandomHumanoidSpawnerERTJanitor
+  parent:
+  - RandomHumanoidSpawnerERTJanitor
   name: ERT janitor
   suffix: ERTRole, Enviro EVA
   components:
@@ -277,7 +292,8 @@
 
 - type: randomHumanoidSettings
   id: ERTJanitorEVA
-  parent: ERTJanitor
+  parent:
+  - ERTJanitor
   components:
     - type: GhostRole
       name: ghost-role-information-ert-janitor-name
@@ -294,7 +310,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTEngineer
-  parent: RandomHumanoidSpawnerERTLeader
+  parent:
+  - RandomHumanoidSpawnerERTLeader
   name: ERT engineer
   suffix: ERTRole, Basic
   components:
@@ -311,7 +328,8 @@
 
 - type: randomHumanoidSettings
   id: ERTEngineer
-  parent: ERTLeader
+  parent:
+  - ERTLeader
   components:
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
@@ -331,7 +349,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTEngineerEVA
-  parent: RandomHumanoidSpawnerERTEngineer
+  parent:
+  - RandomHumanoidSpawnerERTEngineer
   name: ERT engineer
   suffix: ERTRole, Enviro EVA
   components:
@@ -343,7 +362,8 @@
 
 - type: randomHumanoidSettings
   id: ERTEngineerEVA
-  parent: ERTEngineer
+  parent:
+  - ERTEngineer
   components:
     - type: GhostRole
       name: ghost-role-information-ert-engineer-name
@@ -360,7 +380,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurity
-  parent: RandomHumanoidSpawnerERTLeader
+  parent:
+  - RandomHumanoidSpawnerERTLeader
   name: ERT security
   suffix: ERTRole, Basic
   components:
@@ -377,7 +398,8 @@
 
 - type: randomHumanoidSettings
   id: ERTSecurity
-  parent: ERTLeader
+  parent:
+  - ERTLeader
   components:
     - type: GhostRole
       name: ghost-role-information-ert-security-name
@@ -397,7 +419,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVA
-  parent: RandomHumanoidSpawnerERTSecurity
+  parent:
+  - RandomHumanoidSpawnerERTSecurity
   name: ERT security
   suffix: ERTRole, Armored EVA
   components:
@@ -409,7 +432,8 @@
 
 - type: randomHumanoidSettings
   id: ERTSecurityEVA
-  parent: ERTSecurity
+  parent:
+  - ERTSecurity
   components:
     - type: GhostRole
       name: ghost-role-information-ert-security-name
@@ -424,7 +448,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTSecurityEVALecter
-  parent: RandomHumanoidSpawnerERTSecurityEVA
+  parent:
+  - RandomHumanoidSpawnerERTSecurityEVA
   suffix: ERTRole, Lecter, EVA
   components:
     - type: RandomHumanoidSpawner
@@ -432,7 +457,8 @@
 
 - type: randomHumanoidSettings
   id: ERTSecurityEVALecter
-  parent: ERTSecurityEVA
+  parent:
+  - ERTSecurityEVA
   components:
     - type: GhostRole
       name: ghost-role-information-ert-security-name
@@ -449,7 +475,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTMedical
-  parent: RandomHumanoidSpawnerERTLeader
+  parent:
+  - RandomHumanoidSpawnerERTLeader
   name: ERT medic
   suffix: ERTRole, Basic
   components:
@@ -466,7 +493,8 @@
 
 - type: randomHumanoidSettings
   id: ERTMedical
-  parent: ERTLeader
+  parent:
+  - ERTLeader
   components:
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
@@ -486,7 +514,8 @@
 
 - type: entity
   id: RandomHumanoidSpawnerERTMedicalEVA
-  parent: RandomHumanoidSpawnerERTMedical
+  parent:
+  - RandomHumanoidSpawnerERTMedical
   name: ERT medic
   suffix: ERTRole, Armored EVA
   components:
@@ -498,7 +527,8 @@
 
 - type: randomHumanoidSettings
   id: ERTMedicalEVA
-  parent: ERTMedical
+  parent:
+  - ERTMedical
   components:
     - type: GhostRole
       name: ghost-role-information-ert-medical-name
@@ -526,7 +556,8 @@
 
 - type: randomHumanoidSettings
   id: CBURNAgent
-  parent: EventHumanoidCentcomm
+  parent:
+  - EventHumanoidCentcomm
   components:
     - type: Loadout
       prototypes: [CBURNGear]
@@ -558,7 +589,8 @@
 
 - type: randomHumanoidSettings
   id: CentcomOfficial
-  parent: EventHumanoidCentcomm
+  parent:
+  - EventHumanoidCentcomm
   components:
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
@@ -629,7 +661,8 @@
 
 - type: randomHumanoidSettings
   id: Cluwne
-  parent: EventHumanoid
+  parent:
+  - EventHumanoid
   randomizeName: false
   components:
     - type: GhostRole

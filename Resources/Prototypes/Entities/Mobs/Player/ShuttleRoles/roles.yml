@@ -451,7 +451,8 @@
 - type: entity
   id: RandomHumanoidClownTroupeBanana
   name: banana clown troupe
-  parent: RandomHumanoidVisitorClown
+  parent:
+  - RandomHumanoidVisitorClown
   components:
     - type: RandomHumanoidSpawner
       settings: ClownTroupeBanana
@@ -474,7 +475,8 @@
 
 - type: entity
   id: RandomHumanoidChallengeVictimCE
-  parent: RandomHumanoidChallengeVictimCaptain
+  parent:
+  - RandomHumanoidChallengeVictimCaptain
   name: disaster victim CE ghost role
   suffix: CHALLENGE
   # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -484,7 +486,8 @@
 
 - type: entity
   id: RandomHumanoidChallengeVictimCMO
-  parent: RandomHumanoidChallengeVictimCaptain
+  parent:
+  - RandomHumanoidChallengeVictimCaptain
   name: disaster victim CMO ghost role
   suffix: CHALLENGE
   # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -494,7 +497,8 @@
 
 - type: entity
   id: RandomHumanoidChallengeVictimHOP
-  parent: RandomHumanoidChallengeVictimCaptain
+  parent:
+  - RandomHumanoidChallengeVictimCaptain
   name: disaster victim HOP ghost role
   suffix: CHALLENGE
   # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -504,7 +508,8 @@
 
 - type: entity
   id: RandomHumanoidChallengeVictimHOS
-  parent: RandomHumanoidChallengeVictimCaptain
+  parent:
+  - RandomHumanoidChallengeVictimCaptain
   name: disaster victim HOS ghost role
   suffix: CHALLENGE
   # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -514,7 +519,8 @@
 
 - type: entity
   id: RandomHumanoidChallengeVictimRD
-  parent: RandomHumanoidChallengeVictimCaptain
+  parent:
+  - RandomHumanoidChallengeVictimCaptain
   name: disaster victim RD ghost role
   suffix: CHALLENGE
   # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -524,7 +530,8 @@
 
 - type: entity
   id: RandomHumanoidChallengeVictimQM
-  parent: RandomHumanoidChallengeVictimCaptain
+  parent:
+  - RandomHumanoidChallengeVictimCaptain
   name: disaster victim QM ghost role
   suffix: CHALLENGE
   # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
@@ -538,7 +545,8 @@
 
 - type: entity
   id: RandomHumanoidChallengeCargoTechnician
-  parent: RandomHumanoidChallengeVictimCaptain
+  parent:
+  - RandomHumanoidChallengeVictimCaptain
   name: disaster cargo technician ghost role
   suffix: CHALLENGE
   # This is supposed to be for challenge events. Its intentionally missing QOL gear to make interesting scenarios.
