@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Net.Sockets;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
