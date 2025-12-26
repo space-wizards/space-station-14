@@ -1,6 +1,8 @@
 - type: entity
   id: MobLivingLight
-  parent: [ BaseMob, MobCombat ]
+  parent:
+  - BaseMob
+  - MobCombat
   abstract: true
   name: luminous person
   description: A blinding figure of pure light, seemingly intangible.
@@ -104,7 +106,8 @@
 
 - type: entity
   id: MobLuminousPerson
-  parent: MobLivingLight
+  parent:
+  - MobLivingLight
   components:
   - type: MeleeWeapon
     damage:
@@ -116,7 +119,8 @@
 
 - type: entity
   id: MobLuminousObject
-  parent: MobLivingLight
+  parent:
+  - MobLivingLight
   name: luminous object
   description: A small glowing object that causes burns on the skin with its glow.
   components:
@@ -143,7 +147,8 @@
 
 - type: entity
   id: MobLuminousEntity
-  parent: MobLivingLight
+  parent:
+  - MobLivingLight
   name: luminous entity
   description: A blinding translucent entity, the bright eye seems dangerous and scalding.
   components:

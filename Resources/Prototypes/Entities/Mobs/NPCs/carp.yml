@@ -1,7 +1,10 @@
 - type: entity
   name: space carp
   id: BaseMobCarp
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent:
+  - SimpleSpaceMobBase
+  - FlyingMobBase
+  - MobCombat
   description: It's a space carp.
   abstract: true
   components:
@@ -88,7 +91,8 @@
         path: /Audio/Effects/bite.ogg
 
 - type: entity
-  parent: BaseMobCarp
+  parent:
+  - BaseMobCarp
   id: MobCarp
   components:
   - type: Sprite
@@ -107,7 +111,8 @@
 
 - type: entity
   name: magicarp
-  parent: BaseMobCarp
+  parent:
+  - BaseMobCarp
   id: MobCarpMagic
   description: Looks like some kind of fish. Might be magical.
   components:
@@ -118,7 +123,8 @@
 
 - type: entity
   name: holocarp
-  parent: BaseMobCarp
+  parent:
+  - BaseMobCarp
   id: MobCarpHolo
   description: Carp made out of holographic energies. Sadly for you, it is very much real.
   components:
@@ -140,7 +146,8 @@
       proto: robot
 
 - type: entity
-  parent: MobCarp
+  parent:
+  - MobCarp
   id: MobCarpRainbow
   name: rainbow carp
   description: Wow such a shiny fishie!
@@ -153,7 +160,8 @@
 
 - type: entity
   id: MobCarpSalvage
-  parent: MobCarp
+  parent:
+  - MobCarp
   suffix: "Salvage Ruleset"
   components:
     - type: SalvageMobRestrictions
@@ -166,7 +174,8 @@
   name: space carp
   id: MobCarpDragon
   suffix: DragonBrood
-  parent: MobCarp
+  parent:
+  - MobCarp
   components:
     - type: GhostRole
       allowMovement: true
@@ -189,7 +198,8 @@
       heatDamageThreshold: 1200
 - type: entity
   id: MobCarpDungeon
-  parent: MobCarp
+  parent:
+  - MobCarp
   suffix: Dungeon
   components:
   - type: MobThresholds
@@ -206,7 +216,8 @@
 
 - type: entity
   name: sharkminnow
-  parent: BaseMobCarp
+  parent:
+  - BaseMobCarp
   id: MobShark
   description: A dangerous shark from the blackness of endless space, who loves to drink blood.
   components:
@@ -260,7 +271,8 @@
 
 - type: entity
   id: MobSharkSalvage
-  parent: MobShark
+  parent:
+  - MobShark
   suffix: "Salvage Ruleset"
   components:
     - type: SalvageMobRestrictions

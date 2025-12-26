@@ -1,7 +1,8 @@
 - type: entity
   name: laser raptor
   id: MobLaserRaptor
-  parent: SimpleMobBase
+  parent:
+  - SimpleMobBase
   description: From the Viking age.
   components:
     - type: NpcFactionMember

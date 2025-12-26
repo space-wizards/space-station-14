@@ -1,7 +1,9 @@
 - type: entity
   id: BaseShadowMob
   abstract: true
-  parent: [ BaseMob, BaseShadow ]
+  parent:
+  - BaseMob
+  - BaseShadow
   components:
   - type: Sprite
     color: "#793a80dd"
@@ -36,10 +38,11 @@
     speedModifierThresholds:
       60: 0.7
       80: 0.5
-      
+
 - type: entity
   name: shadow cat
-  parent: BaseShadowMob
+  parent:
+  - BaseShadowMob
   id: MobCatShadow
   description: A lovely piece of darkness. Hope he doesn't bring you a curse.
   components:

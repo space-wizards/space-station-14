@@ -2,7 +2,8 @@
 - type: entity
   name: burrower
   id: MobXeno
-  parent: SimpleSpaceMobBase
+  parent:
+  - SimpleSpaceMobBase
   description: They mostly come at night. Mostly.
   components:
   - type: Insulated
@@ -124,7 +125,8 @@
 
 - type: entity
   name: praetorian
-  parent: MobXeno
+  parent:
+  - MobXeno
   id: MobXenoPraetorian
   components:
   - type: Sprite
@@ -157,7 +159,8 @@
 
 - type: entity
   name: drone
-  parent: MobXeno
+  parent:
+  - MobXeno
   id: MobXenoDrone
   components:
   - type: Sprite
@@ -194,7 +197,8 @@
 
 - type: entity
   name: queen
-  parent: MobXeno
+  parent:
+  - MobXeno
   id: MobXenoQueen
   components:
   - type: Sprite
@@ -233,7 +237,8 @@
 
 - type: entity
   name: ravager
-  parent: MobXeno
+  parent:
+  - MobXeno
   id: MobXenoRavager
   components:
   - type: Sprite
@@ -270,7 +275,8 @@
 
 - type: entity
   name: runner
-  parent: MobXeno
+  parent:
+  - MobXeno
   id: MobXenoRunner
   components:
   - type: Sprite
@@ -300,7 +306,8 @@
 
 - type: entity
   name: rouny
-  parent: MobXenoRunner
+  parent:
+  - MobXenoRunner
   id: MobXenoRouny
   components:
   - type: Sprite
@@ -315,7 +322,8 @@
 
 - type: entity
   name: spitter
-  parent: MobXeno
+  parent:
+  - MobXeno
   id: MobXenoSpitter
   components:
   - type: Sprite
@@ -362,7 +370,8 @@
 
 - type: entity
   name: space adder
-  parent: SimpleSpaceMobBase
+  parent:
+  - SimpleSpaceMobBase
   id: MobPurpleSnake
   description: A menacing purple snake from Kepler-283c.
   components:
@@ -432,7 +441,8 @@
 
 - type: entity
   name: space adder
-  parent: MobPurpleSnake
+  parent:
+  - MobPurpleSnake
   id: MobSmallPurpleSnake
   suffix: small
   description: A smaller version of the menacing purple snake from Kepler-283c.
@@ -463,7 +473,8 @@
 - type: entity
   name: '"Dale"'
   description: A praetorian left over from the station's initial security sweep. Has a pair of bloodied dog tags engraved with the name "Pvt. Dale" stuck in its maw.
-  parent: SimpleSpaceMobBase
+  parent:
+  - SimpleSpaceMobBase
   id: MobXenoLonePraetorianNoGhost
   components:
   - type: Insulated

@@ -1,6 +1,8 @@
 ﻿- type: entity
   save: false
-  parent: [ BaseSimpleMob, MobCombat ]
+  parent:
+  - BaseSimpleMob
+  - MobCombat
   id: BaseMobArgocyte
   suffix: AI
   description: A dangerous alien found on the wrong side of planets, known for their propensity for munching on ruins.
@@ -54,7 +56,8 @@
     group: GenericNumber
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteSlurva
   name: slurva
   description: A pathetic creature, incapable of doing much.
@@ -89,7 +92,8 @@
         Blunt: 3
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteBarrier
   name: barrier
   components:
@@ -131,7 +135,8 @@
         Blunt: 3
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteSkitter
   name: skitter
   description: A devious little alien... Make sure they don't run off with your rations!
@@ -171,7 +176,8 @@
         Slash: 3
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteSwiper
   name: swiper
   description: Where did that stack of steel go?
@@ -198,7 +204,8 @@
     baseSprintSpeed : 5
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteMolder
   name: molder
   components:
@@ -225,7 +232,8 @@
     baseWalkSpeed : 3.5
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocytePouncer
   name: pouncer
   components:
@@ -254,7 +262,8 @@
         Slash: 7.5
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteGlider
   name: glider
   components:
@@ -286,7 +295,8 @@
     baseWalkSpeed: 4.5
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteHarvester
   name: harvester
   components:
@@ -316,7 +326,8 @@
         Structural: 5
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteCrawler
   name: crawler
   description: Deadly, pack-animals that maul unsuspecting travelers.
@@ -350,7 +361,8 @@
     baseWalkSpeed: 5
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteEnforcer
   name: enforcer
   components:
@@ -383,7 +395,8 @@
     baseWalkSpeed: 3
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteFounder
   name: founder
   components:
@@ -429,7 +442,8 @@
     baseWalkSpeed: 3
 
 - type: entity
-  parent: BaseMobArgocyte
+  parent:
+  - BaseMobArgocyte
   id: MobArgocyteLeviathing
   name: leviathing
   components:

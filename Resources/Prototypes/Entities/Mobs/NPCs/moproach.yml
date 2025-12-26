@@ -1,6 +1,7 @@
 - type: entity
   name: moproach
-  parent: MobMothroach
+  parent:
+  - MobMothroach
   id: MobMoproach
   description: This little mothroach has mopshoes on its feet! How adorable!
   components:

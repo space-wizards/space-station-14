@@ -2,7 +2,8 @@
 - type: entity
   save: false
   abstract: true
-  parent: BaseMob
+  parent:
+  - BaseMob
   id: MobRobotic
   components:
   - type: Reactive
@@ -55,7 +56,8 @@
 - type: entity
   save: false
   abstract: true
-  parent: MobRobotic
+  parent:
+  - MobRobotic
   id: MobSiliconBase
   components:
   - type: NpcFactionMember
@@ -112,7 +114,8 @@
     speechSounds: Pai #couldn't decide if this should be borg or pai sounds so I flipped a coin.
 
 - type: entity
-  parent: MobSiliconBase
+  parent:
+  - MobSiliconBase
   id: MobFireBot
   name: firebot
   description: A little fire extinguishing bot. He looks rather anxious.
@@ -160,7 +163,8 @@
     dataset: FirebotAd
 
 - type: entity
-  parent: MobSiliconBase
+  parent:
+  - MobSiliconBase
   id: MobHonkBot
   name: honkbot
   description: Horrifying.
@@ -223,7 +227,8 @@
         variation: 0.125
 
 - type: entity
-  parent: MobHonkBot
+  parent:
+  - MobHonkBot
   id: MobJonkBot
   name: jonkbot
   description: Horrifying.
@@ -264,7 +269,8 @@
     canCreateVacuum: false
 
 - type: entity
-  parent: MobSiliconBase
+  parent:
+  - MobSiliconBase
   id: MobCleanBot
   name: cleanbot
   description: The creep of automation now threatening space janitors.
@@ -391,7 +397,8 @@
     templateId: head
 
 - type: entity
-  parent: MobSiliconBase
+  parent:
+  - MobSiliconBase
   id: MobSupplyBot
   name: supplybot
   description: Delivers cargo!
@@ -462,7 +469,9 @@
     needsHands: false
 
 - type: entity
-  parent: [ MobSiliconBase, MobCombat ]
+  parent:
+  - MobSiliconBase
+  - MobCombat
   id: MobHugBot
   name: hugbot
   description: Awww, who needs a hug?

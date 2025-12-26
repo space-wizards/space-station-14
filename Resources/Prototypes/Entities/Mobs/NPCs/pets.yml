@@ -3,7 +3,8 @@
 
 - type: entity
   name: Ian
-  parent: MobCorgi
+  parent:
+  - MobCorgi
   id: MobCorgiIan
   description: Favorite pet corgi.
   components:
@@ -53,7 +54,8 @@
 
 - type: entity
   name: Old Ian
-  parent: MobCorgiIan
+  parent:
+  - MobCorgiIan
   id: MobCorgiIanOld
   description: Still the favorite pet corgi. Love his wheels.
   components:
@@ -78,7 +80,8 @@
 
 - type: entity
   name: Lisa
-  parent: MobCorgiIan
+  parent:
+  - MobCorgiIan
   id: MobCorgiLisa
   description: Ian's favorite corgi.
   components:
@@ -115,7 +118,8 @@
 
 - type: entity
   name: real mouse
-  parent: MobCorgiIan
+  parent:
+  - MobCorgiIan
   id: MobCorgiMouse
   description: It's 100% a real hungry mouse.
   components:
@@ -138,7 +142,8 @@
 
 - type: entity
   name: Puppy Ian
-  parent: MobCorgiPuppy
+  parent:
+  - MobCorgiPuppy
   id: MobCorgiIanPup
   description: Favourite puppy corgi. Awww.
   components:
@@ -156,7 +161,8 @@
 
 - type: entity
   name: Runtime
-  parent: MobCat
+  parent:
+  - MobCat
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
@@ -180,7 +186,8 @@
 - type: entity
   name: Exception
   id: MobCatException
-  parent: MobCatCalico
+  parent:
+  - MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
   - type: NpcFactionMember
@@ -200,7 +207,8 @@
 - type: entity
   name: Floppa
   id: MobCatFloppa
-  parent: MobCatCaracal
+  parent:
+  - MobCatCaracal
   description: He out here.
   components:
   - type: Fixtures
@@ -226,7 +234,8 @@
 
 - type: entity
   name: Bandito
-  parent: MobFerret
+  parent:
+  - MobFerret
   id: MobBandito
   description: Just a silly little guy!
   components:
@@ -241,7 +250,9 @@
 
 - type: entity
   name: Bingus
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent:
+  - SimpleMobBase
+  - StripableInventoryBase
   id: MobBingus
   description: Bingus my beloved...
   components:
@@ -298,7 +309,9 @@
 
 - type: entity
   name: McGriff
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent:
+  - SimpleMobBase
+  - StripableInventoryBase
   id: MobMcGriff
   description: This dog can tell something smells around here, and that something is CRIME!
   components:
@@ -374,7 +387,8 @@
 
 - type: entity
   name: Paperwork
-  parent: MobSloth
+  parent:
+  - MobSloth
   id: MobPaperwork
   description: Took up a new job sorting books in the library after he got transferred from Space Station 13. He seems to be just as slow at this.
   components:
@@ -408,7 +422,9 @@
 
 - type: entity
   name: Walter
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent:
+  - SimpleMobBase
+  - StripableInventoryBase
   id: MobWalter
   description: He likes chems and treats. Walter.
   components:
@@ -471,7 +487,8 @@
 
 - type: entity
   name: Morty
-  parent: MobPossum
+  parent:
+  - MobPossum
   id: MobPossumMorty
   description: The station's resident Didelphis virginiana. A sensitive but resilient kind of guy.
   components:
@@ -495,7 +512,8 @@
 
 - type: entity
   name: Morty
-  parent: MobPossumMorty
+  parent:
+  - MobPossumMorty
   id: MobPossumMortyOld
   suffix: Old sprite
   components:
@@ -514,7 +532,8 @@
 
 - type: entity
   name: Poppy # the Safety Possum
-  parent: MobPossumMorty
+  parent:
+  - MobPossumMorty
   id: MobPossumPoppy
   description: It's an opossum, a small scavenging marsupial. It's wearing appropriate personal protective equipment.
   components:
@@ -537,7 +556,8 @@
 
 - type: entity
   name: Morticia
-  parent: MobRaccoon
+  parent:
+  - MobRaccoon
   id: MobRaccoonMorticia
   description: A powerful creature of the night. Her eyeshadow is always on point.
   components:
@@ -559,7 +579,8 @@
 
 - type: entity
   name: Alexander
-  parent: MobPig
+  parent:
+  - MobPig
   id: MobAlexander
   description: Chef's finest colleague.
   components:
@@ -581,7 +602,8 @@
 
 - type: entity
   name: Renault
-  parent: MobFox
+  parent:
+  - MobFox
   id: MobFoxRenault
   description: The captain's trustworthy fox.
   components:
@@ -611,7 +633,8 @@
 
 - type: entity
   name: Hamlet
-  parent: MobHamster
+  parent:
+  - MobHamster
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
@@ -663,7 +686,8 @@
     - sadness
 
 - type: entity
-  parent: MobHamsterHamlet
+  parent:
+  - MobHamsterHamlet
   id: MobHamsterHamletSlippery
   suffix: Slippery
   components:
@@ -680,7 +704,8 @@
 
 - type: entity
   name: Shiva
-  parent: MobGiantSpider
+  parent:
+  - MobGiantSpider
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
@@ -747,7 +772,8 @@
 
 - type: entity
   name: Willow
-  parent: MobKangaroo
+  parent:
+  - MobKangaroo
   id: MobKangarooWillow
   description: Willow the boxing kangaroo.
   components:
@@ -779,7 +805,9 @@
 - type: entity
   name: Smile
   id: MobSlimesPet
-  parent: [MobAdultSlimes, StripableInventoryBase]
+  parent:
+  - MobAdultSlimes
+  - StripableInventoryBase
   description: This masterpiece has gone through thousands of experiments. But it is the sweetest creature in the world. Smile Slime!
   components:
   - type: Sprite
@@ -859,7 +887,8 @@
 
 - type: entity
   name: Pun Pun
-  parent: MobMonkey
+  parent:
+  - MobMonkey
   id: MobMonkeyPunpun
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
@@ -894,7 +923,8 @@
 
 - type: entity
   name: Tropico
-  parent: MobCrab
+  parent:
+  - MobCrab
   id: MobCrabAtmos
   description: The noble and stalwart defender of Atmosia. Viva!
   components:
@@ -921,7 +951,8 @@
 
 - type: entity
   name: Polly the parrot
-  parent: MobParrotBase
+  parent:
+  - MobParrotBase
   id: MobPollyParrot
   description: An expert in quantum cracker theory
   components:

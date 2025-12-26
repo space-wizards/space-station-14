@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ SimpleMobBase, MobCombat ]
+  parent:
+  - SimpleMobBase
+  - MobCombat
   id: BaseMobFlesh
   name: aberrant flesh
   description: A shambling mass of flesh, animated through anomalous energy.
@@ -65,7 +67,8 @@
     accent: genericAggressive
 
 - type: entity
-  parent: BaseMobFlesh
+  parent:
+  - BaseMobFlesh
   id: MobFleshJared
   components:
   - type: Sprite
@@ -90,7 +93,8 @@
         Slash: 8
 
 - type: entity
-  parent: BaseMobFlesh
+  parent:
+  - BaseMobFlesh
   id: MobFleshGolem
   components:
   - type: Sprite
@@ -119,7 +123,8 @@
         Slash: 8
 
 - type: entity
-  parent: BaseMobFlesh
+  parent:
+  - BaseMobFlesh
   id: MobFleshClamp
   components:
   - type: Sprite
@@ -143,7 +148,8 @@
     baseSprintSpeed: 2.5
 
 - type: entity
-  parent: BaseMobFlesh
+  parent:
+  - BaseMobFlesh
   id: MobFleshLover
   components:
   - type: Sprite
@@ -167,7 +173,8 @@
     baseSprintSpeed: 2.5
 
 - type: entity
-  parent: BaseMobFlesh
+  parent:
+  - BaseMobFlesh
   id: MobAbomination
   name: abomination
   description: A rejected clone, in constant pain and seeking revenge.
@@ -205,7 +212,9 @@
         Blunt: 10
 
 - type: entity
-  parent: [ SimpleSpaceMobBase, MobCombat ]
+  parent:
+  - SimpleSpaceMobBase
+  - MobCombat
   id: BaseMobFleshSalvage #This one is immune to space!
   name: aberrant flesh
   suffix: "Salvage Ruleset"
@@ -268,7 +277,8 @@
   - type: SalvageMobRestrictions
 
 - type: entity
-  parent: BaseMobFleshSalvage
+  parent:
+  - BaseMobFleshSalvage
   id: MobFleshJaredSalvage
   components:
   - type: Sprite
@@ -293,7 +303,8 @@
         Slash: 8
 
 - type: entity
-  parent: BaseMobFleshSalvage
+  parent:
+  - BaseMobFleshSalvage
   id: MobFleshGolemSalvage
   components:
   - type: Sprite
@@ -322,7 +333,8 @@
         Slash: 8
 
 - type: entity
-  parent: BaseMobFleshSalvage
+  parent:
+  - BaseMobFleshSalvage
   id: MobFleshClampSalvage
   components:
   - type: Sprite
@@ -346,7 +358,8 @@
     baseSprintSpeed: 2.5
 
 - type: entity
-  parent: BaseMobFleshSalvage
+  parent:
+  - BaseMobFleshSalvage
   id: MobFleshLoverSalvage
   components:
   - type: Sprite

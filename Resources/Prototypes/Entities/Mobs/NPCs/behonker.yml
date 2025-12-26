@@ -1,6 +1,9 @@
 - type: entity
   name: behonker
-  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  parent:
+  - SimpleSpaceMobBase
+  - FlyingMobBase
+  - MobCombat
   id: BaseMobBehonker
   abstract: true
   description: A floating demon aspect of the honkmother.
@@ -120,7 +123,8 @@
           Quantity: 300
 - type: entity
   name: behonker
-  parent: BaseMobBehonker
+  parent:
+  - BaseMobBehonker
   id: MobBehonkerElectrical
   suffix: "Pyro"
   components:
@@ -135,7 +139,8 @@
 
 - type: entity
   name: behonker
-  parent: BaseMobBehonker
+  parent:
+  - BaseMobBehonker
   id: MobBehonkerPyro
   suffix: "Electrical"
   components:
@@ -144,7 +149,8 @@
 
 - type: entity
   name: behonker
-  parent: BaseMobBehonker
+  parent:
+  - BaseMobBehonker
   id: MobBehonkerGrav
   suffix: "Grav"
   components:
@@ -152,7 +158,8 @@
 
 - type: entity
   name: behonker
-  parent: BaseMobBehonker
+  parent:
+  - BaseMobBehonker
   id: MobBehonkerIce
   suffix: "Ice"
   components:

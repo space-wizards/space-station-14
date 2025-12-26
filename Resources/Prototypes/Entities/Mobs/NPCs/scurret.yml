@@ -4,7 +4,8 @@
 - type: entity
   name: scurret
   id: MobBaseScurret
-  parent: MobBaseAncestor
+  parent:
+  - MobBaseAncestor
   abstract: true
   components:
   # Custom names
@@ -160,7 +161,8 @@
   name: scurret
   description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce".
   id: MobScurret
-  parent: MobBaseScurret
+  parent:
+  - MobBaseScurret
   components:
   # The have a rich culture
   - type: RandomMetadata
@@ -188,7 +190,8 @@
 - type: entity
   name: Emotional Support Scurret
   id: MobBaseEmotionalSupportScurret
-  parent: MobBaseScurret
+  parent:
+  - MobBaseScurret
   abstract: true
   components:
     - type: Loadout
@@ -210,5 +213,7 @@
 - type: entity
   name: Emotional Support Scurret
   id: MobEmotionalSupportScurret
-  parent: [MobScurret, MobBaseEmotionalSupportScurret]
+  parent:
+  - MobScurret
+  - MobBaseEmotionalSupportScurret
   description: Commonly known as Wawa, from the wetlands of Planet Wawa, these critters make up the bulk of Arnold's Pizza's "loyal workforce". This one is here as a temp.

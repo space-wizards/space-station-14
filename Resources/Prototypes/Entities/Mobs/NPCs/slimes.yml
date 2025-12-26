@@ -1,7 +1,9 @@
 ﻿- type: entity
   name: basic slime
   id: BaseMobAdultSlimes
-  parent: [ SimpleMobBase, MobCombat ]
+  parent:
+  - SimpleMobBase
+  - MobCombat
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
@@ -116,7 +118,8 @@
 - type: entity
   name: basic slime
   id: MobAdultSlimes
-  parent: BaseMobAdultSlimes
+  parent:
+  - BaseMobAdultSlimes
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
@@ -146,7 +149,8 @@
 - type: entity
   name: blue slime
   id: MobAdultSlimesBlue
-  parent: MobAdultSlimes
+  parent:
+  - MobAdultSlimes
   components:
   - type: DamageStateVisuals
     states:
@@ -157,7 +161,8 @@
 
 - type: entity
   name: blue slime
-  parent: MobAdultSlimesBlue
+  parent:
+  - MobAdultSlimesBlue
   id: MobAdultSlimesBlueAngry
   suffix: Angry
   components:
@@ -174,7 +179,8 @@
 
 - type: entity
   name: green slime
-  parent: MobAdultSlimes
+  parent:
+  - MobAdultSlimes
   id: MobAdultSlimesGreen
   components:
     - type: Sprite
@@ -197,7 +203,8 @@
 
 - type: entity
   name: green slime
-  parent: MobAdultSlimesGreen
+  parent:
+  - MobAdultSlimesGreen
   id: MobAdultSlimesGreenAngry
   suffix: Angry
   components:
@@ -214,7 +221,8 @@
 
 - type: entity
   name: yellow slime
-  parent: MobAdultSlimes
+  parent:
+  - MobAdultSlimes
   id: MobAdultSlimesYellow
   components:
     - type: Sprite
@@ -236,7 +244,8 @@
 
 - type: entity
   name: yellow slime
-  parent: MobAdultSlimesYellow
+  parent:
+  - MobAdultSlimesYellow
   id: MobAdultSlimesYellowAngry
   suffix: Angry
   components:

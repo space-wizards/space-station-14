@@ -30,7 +30,9 @@
 
 - type: entity
   id: MobGoliath
-  parent: [ BaseMobAsteroid, MobBloodstream ]
+  parent:
+  - BaseMobAsteroid
+  - MobBloodstream
   name: goliath
   description: A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions.
   components:
@@ -97,7 +99,8 @@
       amount: 3
 
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionGoliathTentacle
   name: "[color=red]Tentacle Slam[/color]"
   description: Use your tentacles to grab and stun a target player!
@@ -171,7 +174,8 @@
 
 - type: entity
   id: EffectGoliathTentacleSpawn
-  parent: BaseEffectGoliathTentacleSpawn
+  parent:
+  - BaseEffectGoliathTentacleSpawn
   categories: [ HideSpawnMenu ]
   name: tentacle
   components:
@@ -182,7 +186,8 @@
 
 - type: entity
   id: EffectGoliathTentacleRetract
-  parent: BaseEffectGoliathTentacleSpawn
+  parent:
+  - BaseEffectGoliathTentacleSpawn
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -192,7 +197,9 @@
 
 - type: entity
   id: MobHivelord
-  parent: [ BaseMobAsteroid, FlyingMobBase ]
+  parent:
+  - BaseMobAsteroid
+  - FlyingMobBase
   name: hivelord
   description: A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original.
   components:
@@ -252,7 +259,9 @@
 
 - type: entity
   id: MobHivelordBrood
-  parent: [ BaseMobAsteroid, FlyingMobBase ]
+  parent:
+  - BaseMobAsteroid
+  - FlyingMobBase
   name: hivelord brood
   description: A fragment of the original hivelord, rallying behind its original. One isn't much of a threat, but...
   components:
@@ -305,7 +314,8 @@
 
 - type: entity
   id: FoodHivelordRemains
-  parent: FoodBase
+  parent:
+  - FoodBase
   name: hivelord remains
   description: All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating.
   components:
@@ -338,7 +348,8 @@
 
 - type: entity
   id: FoodHivelordRemainsInert
-  parent: BaseItem
+  parent:
+  - BaseItem
   name: inert hivelord remains
   description: All that remains of a hivelord... Now all is truly lost.
   components:
@@ -359,7 +370,9 @@
 
 - type: entity
   id: MobBasilisk
-  parent: [ BaseMobAsteroid, MobBloodstream ]
+  parent:
+  - BaseMobAsteroid
+  - MobBloodstream
   name: basilisk
   description: A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside.
   components:

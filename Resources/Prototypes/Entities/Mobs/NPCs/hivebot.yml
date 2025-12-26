@@ -1,6 +1,9 @@
 # Base hivebot
 - type: entity
-  parent: [ BaseSimpleMob, MobCombat, MobRobotic ]
+  parent:
+  - BaseSimpleMob
+  - MobCombat
+  - MobRobotic
   id: MobHivebot
   name: hivebot
   description: Agitating, mechanized pests.
@@ -71,7 +74,8 @@
     speechSounds: Borg
 
 - type: entity
-  parent: MobHivebot
+  parent:
+  - MobHivebot
   id: MobHivebotRanged
   name: hivebot
   suffix: Ranged
@@ -102,7 +106,8 @@
     baseSprintSpeed: 2
 
 - type: entity
-  parent: MobHivebotRanged
+  parent:
+  - MobHivebotRanged
   id: MobHivebotStrong
   name: strong hivebot
   description: Agitating, mechanized pests. This one looks much stronger then normal.

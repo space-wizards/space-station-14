@@ -1,7 +1,8 @@
 - type: entity
   name: basic
   id: MobSpaceBasic
-  parent: SimpleSpaceMobBase
+  parent:
+  - SimpleSpaceMobBase
   abstract: true
   description: It looks friendly. Why don't you give it a hug?
   components:
@@ -74,7 +75,8 @@
 - type: entity
   name: space bear
   id: MobBearSpace
-  parent: MobSpaceBasic
+  parent:
+  - MobSpaceBasic
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -116,7 +118,8 @@
 
 - type: entity
   id: MobBearSpaceSalvage
-  parent: MobBearSpace
+  parent:
+  - MobBearSpace
   suffix: "Salvage Ruleset"
   components:
   - type: SalvageMobRestrictions
@@ -124,7 +127,9 @@
 - type: entity
   name: space kangaroo
   id: MobKangarooSpace
-  parent: [MobSpaceBasic, StripableInventoryBase]
+  parent:
+  - MobSpaceBasic
+  - StripableInventoryBase
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: Sprite
@@ -178,7 +183,8 @@
 
 - type: entity
   id: MobKangarooSpaceSalvage
-  parent: MobKangarooSpace
+  parent:
+  - MobKangarooSpace
   suffix: "Salvage Ruleset"
   components:
   - type: SalvageMobRestrictions
@@ -186,7 +192,8 @@
 - type: entity
   name: space spider
   id: MobSpiderSpace
-  parent: MobSpaceBasic
+  parent:
+  - MobSpaceBasic
   description: It's so glowing, it looks dangerous.
   components:
   - type: Sprite
@@ -278,7 +285,8 @@
 
 - type: entity
   id: MobSpiderSpaceSalvage
-  parent: MobSpiderSpace
+  parent:
+  - MobSpiderSpace
   suffix: "Salvage Ruleset"
   components:
   - type: SalvageMobRestrictions
@@ -286,7 +294,8 @@
 - type: entity
   name: space cobra
   id: MobCobraSpace
-  parent: MobSpaceBasic
+  parent:
+  - MobSpaceBasic
   description: Long fangs and a glowing hood, and the alluring look begs to come closer.
   components:
     - type: Sprite
@@ -377,13 +386,15 @@
 
 - type: entity
   id: MobCobraSpaceSalvage
-  parent: MobCobraSpace
+  parent:
+  - MobCobraSpace
   suffix: "Salvage Ruleset"
   components:
     - type: SalvageMobRestrictions
 
 - type: entity
-  parent: SimpleSpaceMobBase
+  parent:
+  - SimpleSpaceMobBase
   id: MobSnail
   name: snail
   description: Revolting unless you're french.
@@ -532,7 +543,8 @@
         probability: 0.66
 
 - type: entity
-  parent: MobSnail
+  parent:
+  - MobSnail
   id: MobSnailInstantDeath
   suffix: Smite
   components:
@@ -551,7 +563,8 @@
   - type: MovementAlwaysTouching
 
 - type: entity
-  parent: MobSnail
+  parent:
+  - MobSnail
   id: MobSnailSpeed
   suffix: Speed
   components:
@@ -578,7 +591,8 @@
   - type: MovementAlwaysTouching
 
 - type: entity
-  parent: MobSnail
+  parent:
+  - MobSnail
   id: MobSnailMoth
   name: Snoth
   components:
