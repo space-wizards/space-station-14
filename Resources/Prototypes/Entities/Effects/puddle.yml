@@ -1,7 +1,8 @@
 # TODO: Fix - The idea is that blood and vomit is potentially not tile-bound versions of puddles(?)
 - type: entity
   id: PuddleTemporary
-  parent: Puddle
+  parent:
+  - Puddle
   abstract: true
   components:
   - type: Transform
@@ -10,12 +11,14 @@
 
 - type: entity
   id: PuddleSmear
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   suffix: Smear
 
 - type: entity
   id: PuddleVomit
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   suffix: Vomit
   components:
   - type: SolutionContainerManager
@@ -28,7 +31,8 @@
 
 - type: entity
   id: PuddleEgg
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   suffix: Egg
   components:
   - type: SolutionContainerManager
@@ -41,7 +45,8 @@
 
 - type: entity
   id: PuddleTomato
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   suffix: Tomato
   components:
   - type: SolutionContainerManager
@@ -53,7 +58,8 @@
           Quantity: 10
 
 - type: entity
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   id: PuddleBloodSmall
   suffix: Blood (5u)
   components:
@@ -66,7 +72,8 @@
           Quantity: 5
 
 - type: entity
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   id: PuddleBlood
   suffix: Blood (30u)
   components:
@@ -79,7 +86,8 @@
           Quantity: 30
 
 - type: entity
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   id: PuddleFluorosulfuricAcidSmall
   suffix: FluorosulfuricAcid (5u)
   components:
@@ -92,7 +100,8 @@
           Quantity: 5
 
 - type: entity
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   id: PuddleFluorosulfuricAcid
   suffix: FluorosulfuricAcid (15u)
   components:
@@ -106,7 +115,8 @@
 
 - type: entity
   id: PuddleWatermelon
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   suffix: Watermelon
   components:
   - type: SolutionContainerManager
@@ -119,7 +129,8 @@
 
 - type: entity
   id: PuddleFlour
-  parent: PuddleTemporary
+  parent:
+  - PuddleTemporary
   suffix: Flour
   components:
   - type: SolutionContainerManager

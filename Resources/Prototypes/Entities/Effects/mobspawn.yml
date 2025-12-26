@@ -29,7 +29,8 @@
 
 - type: entity
   id: MobSpawnCrabIron
-  parent: MobSpawnCrabQuartz
+  parent:
+  - MobSpawnCrabQuartz
   name: mobspawner ironcrab
   categories: [ HideSpawnMenu, Spawner ]
   components:
@@ -41,7 +42,8 @@
 
 - type: entity
   id: MobSpawnCrabCoal
-  parent: MobSpawnCrabQuartz
+  parent:
+  - MobSpawnCrabQuartz
   name: mobspawner coalcrab
   categories: [ HideSpawnMenu, Spawner ]
   components:
@@ -53,7 +55,8 @@
 
 - type: entity
   id: MobSpawnCrabSilver
-  parent: MobSpawnCrabQuartz
+  parent:
+  - MobSpawnCrabQuartz
   name: mobspawner silvercrab
   categories: [ HideSpawnMenu, Spawner ]
   components:
@@ -65,7 +68,8 @@
 
 - type: entity
   id: MobSpawnCrabGold
-  parent: MobSpawnCrabQuartz
+  parent:
+  - MobSpawnCrabQuartz
   name: mobspawner goldcrab
   categories: [ HideSpawnMenu, Spawner ]
   components:
@@ -77,7 +81,8 @@
 
 - type: entity
   id: MobSpawnCrabUranium
-  parent: MobSpawnCrabQuartz
+  parent:
+  - MobSpawnCrabQuartz
   name: mobspawner uraniumcrab
   categories: [ HideSpawnMenu, Spawner ]
   components:
@@ -89,7 +94,8 @@
 
 - type: entity
   id: MobSpawnCrabBananium
-  parent: MobSpawnCrabQuartz
+  parent:
+  - MobSpawnCrabQuartz
   name: mobspawner bananiumcrab
   categories: [ HideSpawnMenu, Spawner ]
   components:

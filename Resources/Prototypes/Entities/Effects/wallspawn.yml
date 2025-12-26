@@ -28,7 +28,8 @@
 
 - type: entity
   id: WallSpawnAsteroidUraniumCrab
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -36,7 +37,8 @@
 
 - type: entity
   id: WallSpawnAsteroidBananium
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -44,7 +46,8 @@
 
 - type: entity
   id: WallSpawnAsteroidBananiumCrab
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -52,7 +55,8 @@
 
 - type: entity
   id: WallSpawnAsteroidUranium
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -60,7 +64,8 @@
 
 - type: entity
   id: WallSpawnAsteroidQuartzCrab
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -68,7 +73,8 @@
 
 - type: entity
   id: WallSpawnAsteroidQuartz
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -76,7 +82,8 @@
 
 - type: entity
   id: WallSpawnAsteroidSilverCrab
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -84,7 +91,8 @@
 
 - type: entity
   id: WallSpawnAsteroidSilver
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -92,7 +100,8 @@
 
 - type: entity
   id: WallSpawnAsteroidGoldCrab
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -100,7 +109,8 @@
 
 - type: entity
   id: WallSpawnAsteroidGold
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -108,7 +118,8 @@
 
 - type: entity
   id: WallSpawnAsteroidIronCrab
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -116,7 +127,8 @@
 
 - type: entity
   id: WallSpawnAsteroidIron
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -124,7 +136,8 @@
 
 - type: entity
   id: WallSpawnAsteroidCoalCrab
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn
@@ -132,7 +145,8 @@
 
 - type: entity
   id: WallSpawnAsteroidCoal
-  parent: WallSpawnAsteroid
+  parent:
+  - WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
   components:
   - type: SpawnOnDespawn

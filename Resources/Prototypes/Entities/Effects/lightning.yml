@@ -32,7 +32,8 @@
 - type: entity
   name: lightning
   id: Lightning
-  parent: BaseLightning
+  parent:
+  - BaseLightning
   categories: [ HideSpawnMenu ]
   components:
     - type: Lightning
@@ -41,7 +42,8 @@
 - type: entity
   name: spooky lightning
   id: LightningRevenant
-  parent: BaseLightning
+  parent:
+  - BaseLightning
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
@@ -65,7 +67,8 @@
 - type: entity
   name: charged lightning
   id: ChargedLightning
-  parent: BaseLightning
+  parent:
+  - BaseLightning
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
@@ -84,7 +87,8 @@
 - type: entity
   name: lightning
   id: Spark
-  parent: BaseLightning
+  parent:
+  - BaseLightning
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -111,7 +115,8 @@
 - type: entity
   name: supercharged lightning
   id: SuperchargedLightning
-  parent: ChargedLightning
+  parent:
+  - ChargedLightning
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
@@ -137,7 +142,8 @@
 - type: entity
   name: hypercharged lightning
   id: HyperchargedLightning
-  parent: ChargedLightning
+  parent:
+  - ChargedLightning
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite

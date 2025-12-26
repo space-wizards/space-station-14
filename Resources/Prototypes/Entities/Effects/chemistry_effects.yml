@@ -32,7 +32,8 @@
         canReact: false
 
 - type: entity
-  parent: BaseFoam
+  parent:
+  - BaseFoam
   id: Smoke
   name: smoke
   categories: [ HideSpawnMenu ]
@@ -48,7 +49,8 @@
     - HideContextMenu
 
 - type: entity
-  parent: BaseFoam
+  parent:
+  - BaseFoam
   id: TearGasSmoke
   name: tear gas
   categories: [ HideSpawnMenu ]
@@ -63,7 +65,8 @@
     - HideContextMenu
 
 - type: entity
-  parent: TearGasSmoke
+  parent:
+  - TearGasSmoke
   id: TearGasSmokeWhite
   categories: [ HideSpawnMenu ]
   components:
@@ -71,7 +74,8 @@
     state: chemsmoke_white
 
 - type: entity
-  parent: Smoke
+  parent:
+  - Smoke
   id: WizardSmoke
   name: smoke
   categories: [ HideSpawnMenu ]
@@ -80,7 +84,8 @@
     spreadAmount: 5
 
 - type: entity
-  parent: BaseFoam
+  parent:
+  - BaseFoam
   id: Foam
   name: foam
   categories: [ HideSpawnMenu ]
@@ -115,7 +120,8 @@
   id: MetalFoam
   name: metal foam
   categories: [ HideSpawnMenu ]
-  parent: Foam
+  parent:
+  - Foam
   components:
   - type: Sprite
     color: "#ffffffcc"
@@ -141,7 +147,8 @@
   id: IronMetalFoam
   name: iron metal foam
   categories: [ HideSpawnMenu ]
-  parent: MetalFoam
+  parent:
+  - MetalFoam
   components:
   - type: SpawnOnDespawn
     prototype: FoamedIronMetal
@@ -150,7 +157,8 @@
   id: AluminiumMetalFoam
   name: aluminium metal foam
   categories: [ HideSpawnMenu ]
-  parent: MetalFoam
+  parent:
+  - MetalFoam
   components:
   - type: SpawnOnDespawn
     prototype: FoamedAluminiumMetal
@@ -214,7 +222,8 @@
   id: FoamedIronMetal
   name: foamed iron metal
   description: "For sealing hull breaches."
-  parent: BaseFoamedMetal
+  parent:
+  - BaseFoamedMetal
   components:
   - type: Sprite
     drawdepth: Effects
@@ -236,7 +245,8 @@
   id: FoamedAluminiumMetal
   name: foamed aluminium metal
   description: "Leftover sparse foam from an aluminum foam grenade. Easily destroyed."
-  parent: BaseFoamedMetal
+  parent:
+  - BaseFoamedMetal
   components:
   - type: Sprite
     drawdepth: Effects

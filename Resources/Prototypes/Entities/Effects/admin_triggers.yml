@@ -14,7 +14,8 @@
 - type: entity
   id: AdminInstantEffectEMP
   suffix: EMP
-  parent: AdminInstantEffectBase
+  parent:
+  - AdminInstantEffectBase
   components:
   - type: EmpOnTrigger
     range: 4
@@ -23,7 +24,8 @@
 - type: entity
   id: AdminInstantEffectBluespace
   suffix: BluespaceFlash
-  parent: AdminInstantEffectBase
+  parent:
+  - AdminInstantEffectBase
   components:
   - type: SpawnOnTrigger
     proto: EffectFlashBluespace
@@ -31,7 +33,8 @@
 - type: entity
   id: AdminInstantEffectFlash
   suffix: Flash
-  parent: AdminInstantEffectBase
+  parent:
+  - AdminInstantEffectBase
   components:
   - type: FlashOnTrigger
     range: 7
@@ -41,7 +44,8 @@
 - type: entity
   id: AdminInstantEffectSmoke3
   suffix: Smoke (03 sec)
-  parent: AdminInstantEffectBase
+  parent:
+  - AdminInstantEffectBase
   components:
   - type: SmokeOnTrigger
     duration: 3
@@ -55,7 +59,8 @@
 - type: entity
   id: AdminInstantEffectSmoke10
   suffix: Smoke (10 sec)
-  parent: AdminInstantEffectBase
+  parent:
+  - AdminInstantEffectBase
   components:
   - type: SmokeOnTrigger
     duration: 10
@@ -69,7 +74,8 @@
 - type: entity
   id: AdminInstantEffectSmoke30
   suffix: Smoke (30 sec)
-  parent: AdminInstantEffectBase
+  parent:
+  - AdminInstantEffectBase
   components:
   - type: SmokeOnTrigger
     duration: 30
@@ -83,7 +89,8 @@
 - type: entity
   id: AdminInstantEffectTearGas
   suffix: Tear Gas
-  parent: AdminInstantEffectBase
+  parent:
+  - AdminInstantEffectBase
   components:
   - type: SmokeOnTrigger
     duration: 10
@@ -96,7 +103,8 @@
 - type: entity
   id: AdminInstantEffectGravityWell
   suffix: Gravity Well
-  parent: AdminInstantEffectBase
+  parent:
+  - AdminInstantEffectBase
   components:
   - type: EmitSoundOnTrigger
     sound:

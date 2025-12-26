@@ -33,7 +33,8 @@
 
 - type: entity
   id: WeaponArcThrust
-  parent: WeaponArcStatic
+  parent:
+  - WeaponArcStatic
   categories: [ HideSpawnMenu ]
   components:
     - type: WeaponArcVisuals
@@ -41,7 +42,8 @@
 
 - type: entity
   id: WeaponArcSlash
-  parent: WeaponArcStatic
+  parent:
+  - WeaponArcStatic
   categories: [ HideSpawnMenu ]
   components:
     - type: WeaponArcVisuals
@@ -50,7 +52,8 @@
 
 - type: entity
   id: WeaponArcBite
-  parent: WeaponArcStatic
+  parent:
+  - WeaponArcStatic
   categories: [ HideSpawnMenu ]
   components:
     - type: WeaponArcVisuals
@@ -62,7 +65,8 @@
 
 - type: entity
   id: WeaponArcClaw
-  parent: WeaponArcStatic
+  parent:
+  - WeaponArcStatic
   categories: [ HideSpawnMenu ]
   components:
     - type: WeaponArcVisuals
@@ -74,7 +78,8 @@
 
 - type: entity
   id: WeaponArcDisarm
-  parent: WeaponArcAnimated
+  parent:
+  - WeaponArcAnimated
   categories: [ HideSpawnMenu ]
   components:
     - type: WeaponArcVisuals
@@ -86,7 +91,8 @@
 
 - type: entity
   id: WeaponArcFist
-  parent: WeaponArcStatic
+  parent:
+  - WeaponArcStatic
   categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
@@ -94,7 +100,8 @@
 
 - type: entity
   id: WeaponArcPunch
-  parent: WeaponArcStatic
+  parent:
+  - WeaponArcStatic
   categories: [ HideSpawnMenu ]
   components:
     - type: WeaponArcVisuals
@@ -106,7 +113,8 @@
 
 - type: entity
   id: WeaponArcKick
-  parent: WeaponArcStatic
+  parent:
+  - WeaponArcStatic
   categories: [ HideSpawnMenu ]
   components:
     - type: WeaponArcVisuals
@@ -118,7 +126,8 @@
 
 - type: entity
   id: WeaponArcSmash
-  parent: WeaponArcStatic
+  parent:
+  - WeaponArcStatic
   categories: [ HideSpawnMenu ]
   components:
     - type: WeaponArcVisuals

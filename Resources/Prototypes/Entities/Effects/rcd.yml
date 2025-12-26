@@ -15,17 +15,19 @@
     tags:
     - HideContextMenu
   - type: AnimationPlayer
-  
+
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDDeconstructPreview
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     state: deconstructPreview
-  
+
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDConstruct0
   categories: [ HideSpawnMenu ]
   components:
@@ -33,9 +35,10 @@
     state: construct0
   - type: TimedDespawn
     lifetime: 1.2
-    
+
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDConstruct1
   categories: [ HideSpawnMenu ]
   components:
@@ -43,9 +46,10 @@
     state: construct1
   - type: TimedDespawn
     lifetime: 2.2
-    
+
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDConstruct2
   categories: [ HideSpawnMenu ]
   components:
@@ -53,9 +57,10 @@
     state: construct2
   - type: TimedDespawn
     lifetime: 3.2
-    
+
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDConstruct3
   categories: [ HideSpawnMenu ]
   components:
@@ -63,9 +68,10 @@
     state: construct3
   - type: TimedDespawn
     lifetime: 4.2
-    
+
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDConstruct4
   categories: [ HideSpawnMenu ]
   components:
@@ -75,7 +81,8 @@
     lifetime: 5.2
 
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDDeconstruct2
   categories: [ HideSpawnMenu ]
   components:
@@ -83,9 +90,10 @@
     state: deconstruct2
   - type: TimedDespawn
     lifetime: 3.2
-    
+
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDDeconstruct4
   categories: [ HideSpawnMenu ]
   components:
@@ -95,7 +103,8 @@
     lifetime: 5.2
 
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDDeconstruct6
   categories: [ HideSpawnMenu ]
   components:
@@ -105,7 +114,8 @@
     lifetime: 7.2
 
 - type: entity
-  parent: EffectRCDBase
+  parent:
+  - EffectRCDBase
   id: EffectRCDDeconstruct8
   categories: [ HideSpawnMenu ]
   components:
