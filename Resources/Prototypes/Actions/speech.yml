@@ -1,5 +1,6 @@
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionConfigureMeleeSpeech
   name: Set Battlecry
   description: Set a custom battlecry for when you attack!

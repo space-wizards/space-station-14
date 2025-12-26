@@ -1,13 +1,15 @@
 - type: entity
   abstract: true
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: BaseMechAction
   components:
   - type: Action
     itemIconStyle: NoItem
 
 - type: entity
-  parent: BaseMechAction
+  parent:
+  - BaseMechAction
   id: ActionMechCycleEquipment
   name: Cycle
   description: Cycles currently selected equipment
@@ -21,7 +23,8 @@
     event: !type:MechToggleEquipmentEvent
 
 - type: entity
-  parent: BaseMechAction
+  parent:
+  - BaseMechAction
   id: ActionMechOpenUI
   name: Control Panel
   description: Opens the control panel for the mech
@@ -35,7 +38,8 @@
     event: !type:MechOpenUiEvent
 
 - type: entity
-  parent: BaseMechAction
+  parent:
+  - BaseMechAction
   id: ActionMechEject
   name: Eject
   description: Ejects the pilot from the mech

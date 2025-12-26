@@ -1,5 +1,6 @@
 - type: entity
-  parent: BaseMentalAction # allow reading laws when crit
+  parent:
+  - BaseMentalAction # allow reading laws when crit
   id: ActionViewLaws
   name: View Laws
   description: View the laws that you must follow.
@@ -14,7 +15,8 @@
     event: !type:ToggleLawsScreenEvent
 
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionSelectBorgType
   name: Select Cyborg Type
   components:

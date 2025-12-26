@@ -1,6 +1,7 @@
 # Actions
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionJumpToCore
   name: Jump to core
   description: Sends your eye back to the core.
@@ -15,7 +16,8 @@
     event: !type:JumpToCoreEvent
 
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionSurvCameraLights
   name: Toggle camera lights
   description: Enable surveillance camera lights near wherever you're viewing.
@@ -43,7 +45,8 @@
 
 
 - type: entity
-  parent: BaseMentalAction
+  parent:
+  - BaseMentalAction
   id: ActionAIViewLaws
   name: View Laws
   description: View the laws that you must follow.

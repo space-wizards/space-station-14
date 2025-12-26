@@ -1,5 +1,6 @@
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionRevertPolymorph
   name: Revert
   description: Revert back into your original form.
@@ -11,7 +12,8 @@
 
 - type: entity
   abstract: true
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: BaseActionPolymorph
   components:
   - type: Action
@@ -21,7 +23,8 @@
     event: !type:PolymorphActionEvent
 
 - type: entity
-  parent: BaseActionPolymorph
+  parent:
+  - BaseActionPolymorph
   id: ActionPolymorphWizardSpider
   name: Spider Polymorph
   description: Polymorphs you into a Spider.
@@ -35,7 +38,8 @@
       protoId: WizardSpider
 
 - type: entity
-  parent: BaseActionPolymorph
+  parent:
+  - BaseActionPolymorph
   id: ActionPolymorphWizardRod
   name: Rod Form
   description: CLANG!
@@ -49,7 +53,8 @@
       protoId: WizardRod
 
 - type: entity
-  parent: BaseActionPolymorph
+  parent:
+  - BaseActionPolymorph
   id: ActionPolymorphJaunt
   name: Ethereal Jaunt
   description: Melt into the Ethereal Plane for a quick getaway!
@@ -70,7 +75,8 @@
       3: ActionPolymorphJauntIII
 
 - type: entity
-  parent: ActionPolymorphJaunt
+  parent:
+  - ActionPolymorphJaunt
   id: ActionPolymorphJauntII
   name: Ethereal Jaunt II
   description: Melt into the Ethereal Plane for an even quicker getaway!
@@ -79,7 +85,8 @@
     useDelay: 25
 
 - type: entity
-  parent: ActionPolymorphJaunt
+  parent:
+  - ActionPolymorphJaunt
   id: ActionPolymorphJauntIII
   name: Ethereal Jaunt III
   description: Are you even tangible anymore?

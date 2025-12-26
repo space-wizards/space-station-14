@@ -1,5 +1,6 @@
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionRetractableItemArmBlade
   name: Arm Blade
   description: Shed your flesh and reform it into a fleshy blade.
@@ -44,7 +45,8 @@
     event: !type:ChangelingTransformActionEvent
 
 - type: entity
-  parent: ActionIntrinsicStore
+  parent:
+  - ActionIntrinsicStore
   id: ActionChangelingStore
   name: DNA Store
   description: Opens the ability store.

@@ -1,5 +1,6 @@
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionAnomalyPulse
   name: Anomaly pulse
   description: Release a pulse of energy of your abnormal nature

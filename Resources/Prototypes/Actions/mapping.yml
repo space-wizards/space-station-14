@@ -1,13 +1,15 @@
 - type: entity
   abstract: true
-  parent: BaseMentalAction
+  parent:
+  - BaseMentalAction
   id: BaseMappingAction
   components:
   - type: Action
     clientExclusive: true
 
 - type: entity
-  parent: BaseMappingAction
+  parent:
+  - BaseMappingAction
   id: BaseMappingDecalAction # not abstract but the event has to be set in code
   components:
   - type: TargetAction
@@ -17,7 +19,8 @@
     event: null # has to be set with SetEvent in DecalPlacementSystem
 
 - type: entity
-  parent: BaseMappingAction
+  parent:
+  - BaseMappingAction
   id: BaseMappingSpawnAction # not abstract but the event has to be set in code
   components:
   - type: Action
@@ -26,7 +29,8 @@
     event: null # has to be set with SetEvent in MappingSystem
 
 - type: entity
-  parent: BaseMappingAction
+  parent:
+  - BaseMappingAction
   id: ActionMappingEraser
   name: Erase Entity
   components:
@@ -38,7 +42,8 @@
 
 # these are used for mapping actions yml files
 - type: entity
-  parent: BaseMappingSpawnAction
+  parent:
+  - BaseMappingSpawnAction
   id: BaseMappingEntityAction # not abstract but the event has to be set in code
   components:
   - type: Action

@@ -1,5 +1,6 @@
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionSpiderWeb
   name: Spider Web
   description: Spawns a web that slows your prey down.
@@ -11,7 +12,8 @@
     event: !type:SpiderWebActionEvent
 
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionSericulture
   name: Weave silk
   description: Weave a bit of silk for use in arts and crafts.
