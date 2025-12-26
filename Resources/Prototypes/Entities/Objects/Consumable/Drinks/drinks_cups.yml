@@ -1,7 +1,8 @@
 # A cup is a small container used to hold liquids for drinking.[1]
 - type: entity
   abstract: true
-  parent: DrinkBase
+  parent:
+  - DrinkBase
   id: DrinkBaseCup
   components:
   - type: SolutionContainerManager
@@ -19,7 +20,10 @@
 # A mug is a type of cup.[2]
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPorcelain, DrinkBaseCup, DrinkVisualsFill ]
+  parent:
+  - DrinkBaseMaterialPorcelain
+  - DrinkBaseCup
+  - DrinkVisualsFill
   id: DrinkBaseMug
   name: mug
   description: A mug.
@@ -33,7 +37,9 @@
 ## Misc Cups
 
 - type: entity
-  parent: [DrinkBaseMaterialGold, DrinkBaseCup]
+  parent:
+  - DrinkBaseMaterialGold
+  - DrinkBaseCup
   id: DrinkGoldenCup
   name: golden cup
   description: A golden cup.
@@ -44,7 +50,8 @@
     price: 125
 
 - type: entity
-  parent: DrinkBaseMug # a teacup is basically a mug
+  parent:
+  - DrinkBaseMug # a teacup is basically a mug
   id: DrinkTeacupEmpty
   name: teacup
   description: A plain white porcelain teacup.
@@ -55,7 +62,10 @@
     maxFillLevels: 4
 
 - type: entity
-  parent: [ DrinkBaseMaterialGlass, DrinkBaseCup, DrinkVisualsFillOverlay ]
+  parent:
+  - DrinkBaseMaterialGlass
+  - DrinkBaseCup
+  - DrinkVisualsFillOverlay
   id: DrinkGlassCoupeShaped
   name: coupe glass
   description: A classic thin neck coupe glass, the icon of fragile labels on crates around the galaxy.
@@ -66,7 +76,11 @@
     inHandsMaxFillLevels: 1
 
 - type: entity
-  parent: [DrinkBaseMaterialCardboard, DrinkBaseCup, DrinkBaseEmptyTrash, DrinkVisualsFill]
+  parent:
+  - DrinkBaseMaterialCardboard
+  - DrinkBaseCup
+  - DrinkBaseEmptyTrash
+  - DrinkVisualsFill
   id: DrinkWaterCup
   name: water cup
   description: A paper water cup.
@@ -96,7 +110,8 @@
 
 # Mugs
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMug
   name: mug
   description: A plain white mug.
@@ -105,7 +120,8 @@
     sprite: Objects/Consumable/Drinks/mug.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMugBlack
   name: black mug
   description: A sleek black mug.
@@ -114,7 +130,8 @@
     sprite: Objects/Consumable/Drinks/mug_black.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMugBlue
   name: blue mug
   description: A blue and black mug.
@@ -123,7 +140,8 @@
     sprite: Objects/Consumable/Drinks/mug_blue.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMugGreen
   name: green mug
   description: A pale green and pink mug.
@@ -132,7 +150,8 @@
     sprite: Objects/Consumable/Drinks/mug_green.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMugDog
   name: funny dog mug
   description: It looks like a cartoon beagle.
@@ -141,7 +160,8 @@
     sprite: Objects/Consumable/Drinks/mug_dog.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMugHeart
   name: heart mug
   description: A white mug, it prominently features a red heart.
@@ -150,7 +170,9 @@
     sprite: Objects/Consumable/Drinks/mug_heart.rsi
 
 - type: entity
-  parent: [DrinkBaseMaterialMetal, DrinkBaseMug]
+  parent:
+  - DrinkBaseMaterialMetal
+  - DrinkBaseMug
   id: DrinkMugMetal
   name: metal mug
   description: A metal mug. You're not sure which metal.
@@ -159,7 +181,8 @@
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMugMoebius
   name: moebius mug
   description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
@@ -168,7 +191,8 @@
     sprite: Objects/Consumable/Drinks/mug_moebius.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMugOne
   name: "#1 mug"
   description: "A white mug, it prominently features a #1."
@@ -177,7 +201,8 @@
     sprite: Objects/Consumable/Drinks/mug_one.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMugRainbow
   name: rainbow mug
   description: A rainbow mug. The colors are almost as blinding as a welder.
@@ -186,7 +211,8 @@
     sprite: Objects/Consumable/Drinks/mug_rainbow.rsi
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkMugRed
   name: red mug
   description: A red and black mug.
@@ -197,7 +223,8 @@
 ## Filled
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkHotCoco
   name: hot chocolate
   suffix: Full
@@ -221,7 +248,8 @@
     solution: drink
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkHotCoffee
   name: coffee
   suffix: Full
@@ -245,7 +273,8 @@
     solution: drink
 
 - type: entity
-  parent: DrinkBaseMug
+  parent:
+  - DrinkBaseMug
   id: DrinkCafeLatte
   name: cafe latte
   suffix: Full
@@ -273,7 +302,8 @@
     solution: drink
 
 - type: entity
-  parent: DrinkTeacupEmpty
+  parent:
+  - DrinkTeacupEmpty
   id: DrinkTeacup
   name: tea
   components:
@@ -290,7 +320,8 @@
     solution: drink
 
 - type: entity
-  parent: DrinkTeacupEmpty
+  parent:
+  - DrinkTeacupEmpty
   id: DrinkGreenTea
   name: green tea
   components:
@@ -308,7 +339,9 @@
 
 # TODO this needs fill levels
 - type: entity
-  parent: [DrinkBaseMaterialPlastic, DrinkBaseCup]
+  parent:
+  - DrinkBaseMaterialPlastic
+  - DrinkBaseCup
   id: DrinkLean
   name: grape juice
   description: Damn, no fun allowed.

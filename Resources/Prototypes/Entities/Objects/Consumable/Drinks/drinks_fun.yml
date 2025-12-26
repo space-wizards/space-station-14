@@ -1,6 +1,10 @@
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAllFilled ]
+  parent:
+  - DrinkBaseMaterialPlastic
+  - DrinkBase
+  - DrinkBaseOpenable
+  - DrinkVisualsAllFilled
   id: BaseSqueezeBottle
   components:
   - type: Openable
@@ -24,7 +28,8 @@
     solution: drink
 
 - type: entity
-  parent: BaseSqueezeBottle
+  parent:
+  - BaseSqueezeBottle
   id: DrinkSpaceGlue
   name: space glue tube
   description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
@@ -41,7 +46,8 @@
   - type: Glue
 
 - type: entity
-  parent: BaseSqueezeBottle
+  parent:
+  - BaseSqueezeBottle
   id: DrinkSpaceLube
   name: space lube tube
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
@@ -59,7 +65,8 @@
 
 # Find your nearest clown and give them a gift :o)
 - type: entity
-  parent: BluespaceBeaker
+  parent:
+  - BluespaceBeaker
   id: BottomlessLube
   name: bottomless lube beaker
   suffix: DEBUG
@@ -80,7 +87,9 @@
         Quantity: 200
 
 - type: entity
-  parent: [DrinkBaseMaterialGlass, DrinkBase]
+  parent:
+  - DrinkBaseMaterialGlass
+  - DrinkBase
   id: DrinkJarWhat
   name: jar of something
   description: You can't really tell what this is.
@@ -138,7 +147,9 @@
     - FourteenLoko
 
 - type: entity
-  parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
+  parent:
+  - DrinkVisualsAllFilled
+  - DrinkBottleGlassSmallBaseFull
   id: DrinkMopwataBottleRandom
   name: delicious mopwata
   description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.

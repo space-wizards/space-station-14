@@ -4,7 +4,10 @@
 
 # Transformable container - normal glass
 - type: entity
-  parent: [DrinkBaseMaterialGlass, DrinkBaseCup, DrinkVisualsFillOverlay]
+  parent:
+  - DrinkBaseMaterialGlass
+  - DrinkBaseCup
+  - DrinkVisualsFillOverlay
   id: DrinkGlass
   name: metamorphic glass
   description: A metamorphic glass that automagically turns into a glass appropriate for the drink within. There's a sanded off patent number on the bottom.
@@ -24,7 +27,8 @@
   - type: TransformableContainer
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkJar
   name: jar
   description: The hipster's cup.
@@ -45,7 +49,8 @@
 # TODO IconComponent doesn't seem to work in spawn panel
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAbsintheGlass
   suffix: absinthe
   components:
@@ -61,7 +66,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAcidSpitGlass
   suffix: acid spit
   components:
@@ -77,7 +83,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAleGlass
   suffix: ale
   components:
@@ -93,7 +100,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAlienBrainHemorrhage
   suffix: alien brain hemorrhage
   components:
@@ -109,7 +117,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAlliesCocktail
   suffix: allies cocktail
   components:
@@ -125,7 +134,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAloe
   suffix: aloe
   components:
@@ -141,7 +151,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAmasecGlass
   suffix: amasec
   components:
@@ -157,7 +168,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAndalusia
   suffix: andalusia
   components:
@@ -173,7 +185,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAntifreeze
   suffix: antifreeze
   components:
@@ -189,7 +202,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkArnoldPalmer
   suffix: arnold palmer
   components:
@@ -205,7 +219,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkAtomicBombGlass
   suffix: atomic bomb
   components:
@@ -221,7 +236,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkB52Glass
   suffix: b-52
   components:
@@ -237,7 +253,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBahamaMama
   suffix: bahama mama
   components:
@@ -253,7 +270,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBananaHonkGlass
   suffix: banana honk
   components:
@@ -269,7 +287,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBarefootGlass
   suffix: barefoot
   components:
@@ -285,7 +304,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBeepskySmashGlass
   suffix: beepsky smash
   components:
@@ -301,7 +321,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBeerglass
   suffix: beer
   components:
@@ -317,7 +338,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBerryJuice
   suffix: berry juice
   components:
@@ -333,7 +355,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBlackRussianGlass
   suffix: black russian
   components:
@@ -349,7 +372,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBlueCuracaoGlass
   suffix: blue curacao
   components:
@@ -365,7 +389,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBloodyMaryGlass
   suffix: bloody mary
   components:
@@ -381,7 +406,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBlueHawaiianGlass
   suffix: blue hawaiian
   components:
@@ -397,7 +423,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBooger
   suffix: booger
   components:
@@ -413,7 +440,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBraveBullGlass
   suffix: brave bull
   components:
@@ -429,7 +457,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBronxGlass
   suffix: bronx
   components:
@@ -445,7 +474,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: BudgetInsulsDrinkGlass
   suffix: budget insuls
   components:
@@ -461,7 +491,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCarrotJuice
   suffix: carrot juice
   components:
@@ -477,7 +508,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkChocolateGlass
   suffix: chocolate
   components:
@@ -493,7 +525,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: RubberneckGlass
   suffix: rubberneck
   components:
@@ -509,7 +542,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCoconutRum
   suffix: coconut rum
   components:
@@ -525,7 +559,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCoconutWaterGlass
   suffix: coconut water
   components:
@@ -539,7 +574,8 @@
 #TODO  - type: Icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCoffee
   suffix: coffee
   components:
@@ -555,7 +591,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCognacGlass
   suffix: cognac
   components:
@@ -571,7 +608,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCosmopolitan
   suffix: cosmopolitan
   components:
@@ -587,7 +625,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCream
   suffix: cream
   components:
@@ -600,7 +639,8 @@
           Quantity: 30
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCrushDepthGlass
   suffix: crush depth
   components:
@@ -616,7 +656,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCubaLibreGlass
   suffix: cuba libre
   components:
@@ -632,7 +673,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkDarkandStormyGlass
   suffix: dark and stormy
   components:
@@ -648,7 +690,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkDeadRumGlass
   suffix: dead rum
   components:
@@ -664,7 +707,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkDemonsBlood
   suffix: demon's blood
   components:
@@ -680,7 +724,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkDevilsKiss
   suffix: devil's kiss
   components:
@@ -696,7 +741,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkDoctorsDelightGlass
   suffix: doctor's delight
   components:
@@ -712,7 +758,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkDriestMartiniGlass
   suffix: driest martini
   components:
@@ -728,7 +775,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkDrGibbGlass
   suffix: dr gibb
   components:
@@ -744,7 +792,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkEggnog
   suffix: eggnog
   components:
@@ -760,7 +809,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkElectricSharkGlass
   suffix: electric shark
   components:
@@ -776,7 +826,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkErikaSurprise
   suffix: erika surprise
   components:
@@ -792,7 +843,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkFourteenLokoGlass
   suffix: fourteen loko
   components:
@@ -808,7 +860,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGargleBlasterGlass
   suffix: pan-galactic gargle blaster
   components:
@@ -824,7 +877,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGinGlass
   suffix: gin
   components:
@@ -840,7 +894,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGinFizzGlass
   suffix: gin fizz
   components:
@@ -856,7 +911,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGinTonicglass
   suffix: gin and tonic
   components:
@@ -872,7 +928,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGildlagerGlass
   suffix: gildlager
   components:
@@ -888,7 +945,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGrapeJuice
   suffix: grape juice
   components:
@@ -904,7 +962,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGrapeSodaGlass
   suffix: grape soda
   components:
@@ -920,7 +979,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGreenTeaGlass
   suffix: green tea
   components:
@@ -936,7 +996,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGrenadineGlass
   suffix: grenadine
   components:
@@ -952,7 +1013,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGrogGlass
   suffix: grog
   components:
@@ -968,7 +1030,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkHippiesDelightGlass
   suffix: hippies' delight
   components:
@@ -984,7 +1047,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkHoochGlass
   suffix: hooch
   description: You've really hit rock bottom now... your liver packed its bags and left last night.
@@ -1001,7 +1065,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkIcedCoffeeGlass
   suffix: iced coffee
   components:
@@ -1017,7 +1082,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkIcedGreenTeaGlass
   suffix: iced green tea
   components:
@@ -1033,7 +1099,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkIcedTeaGlass
   suffix: iced tea
   components:
@@ -1049,7 +1116,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkIcedBeerGlass
   suffix: iced beer
   components:
@@ -1065,7 +1133,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkIceGlass
   suffix: ice
   components:
@@ -1081,7 +1150,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkIceCreamGlass
   suffix: ice cream
   components:
@@ -1097,7 +1167,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: IrishBoolGlass
   suffix: irish bool
   components:
@@ -1113,7 +1184,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkIrishSlammer
   suffix: grenade penguin
   components:
@@ -1129,7 +1201,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkIrishCoffeeGlass
   suffix: irish coffee
   components:
@@ -1145,7 +1218,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkIrishCreamGlass
   suffix: irish cream
   components:
@@ -1161,7 +1235,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCoffeeLiqueurGlass
   suffix: coffee liqueur
   components:
@@ -1177,7 +1252,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkJackRoseGlass
   suffix: jack rose
   components:
@@ -1193,7 +1269,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkJungleBirdGlass
   suffix: jungle bird
   components:
@@ -1209,7 +1286,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkKalimotxoGlass
   suffix: kalimotxo
   components:
@@ -1225,7 +1303,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkOrangeLimeSodaGlass
   suffix: citrus bikeshed
   components:
@@ -1241,7 +1320,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkLemonadeGlass
   suffix: lemonade
   components:
@@ -1257,7 +1337,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkLemonJuice
   suffix: lemon juice
   components:
@@ -1273,7 +1354,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkLemonLime
   suffix: lemon lime
   components:
@@ -1289,7 +1371,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkLimeJuice
   suffix: lime juice
   components:
@@ -1303,7 +1386,8 @@
 #TODO Icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkLongIslandIcedTeaGlass
   suffix: long island iced tea
   components:
@@ -1319,7 +1403,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkManhattanGlass
   suffix: manhattan
   components:
@@ -1335,7 +1420,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkManhattanProjectGlass
   suffix: manhattan project
   components:
@@ -1351,7 +1437,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkManlyDorfGlass
   suffix: manly dorf
   components:
@@ -1367,7 +1454,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMargaritaGlass
   suffix: margarita
   components:
@@ -1383,7 +1471,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMartiniGlass
   suffix: classic martini
   components:
@@ -1399,7 +1488,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMeadGlass
   suffix: mead
   components:
@@ -1415,7 +1505,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMilkshake
   suffix: milkshake
   components:
@@ -1424,7 +1515,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMojito
   suffix: mojito
   components:
@@ -1440,7 +1532,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMonkeyBusinessGlass
   suffix: monkey business
   components:
@@ -1456,7 +1549,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkNeurotoxinGlass
   suffix: neurotoxin
   components:
@@ -1472,7 +1566,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkNothing
   suffix: nothing
   components:
@@ -1488,7 +1583,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkNTCahors
   suffix: neotheology cahors whine
   components:
@@ -1504,7 +1600,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkNuclearColaGlass
   suffix: nuclear cola
   components:
@@ -1520,7 +1617,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkOrangeJuice
   suffix: orange juice
   components:
@@ -1536,7 +1634,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkPainkillerGlass
   suffix: painkiller
   components:
@@ -1552,7 +1651,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkPatronGlass
   suffix: patron
   components:
@@ -1568,7 +1668,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkPinaColadaGlass
   suffix: piña colada
   components:
@@ -1584,7 +1685,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkPoisonBerryJuice
   suffix: poison berry juice
   components:
@@ -1600,7 +1702,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkPoisonWineGlass
   suffix: poison wine
   components:
@@ -1616,7 +1719,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkPoscaGlass
   suffix: posca
   components:
@@ -1632,7 +1736,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkRadlerGlass
   suffix: radler
   components:
@@ -1648,7 +1753,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkRedMeadGlass
   suffix: red mead
   components:
@@ -1664,7 +1770,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkRewriter
   suffix: rewriter
   components:
@@ -1680,7 +1787,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkRootBeerGlass
   suffix: root beer
   components:
@@ -1696,7 +1804,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkRootBeerFloatGlass
   suffix: root beer float
   components:
@@ -1712,7 +1821,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkRumGlass
   suffix: rum
   components:
@@ -1728,7 +1838,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkRoyRogersGlass
   suffix: roy rogers
   components:
@@ -1744,7 +1855,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSakeGlass
   suffix: sake
   components:
@@ -1760,7 +1872,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSbitenGlass
   suffix: sbiten
   components:
@@ -1776,7 +1889,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkScrewdriverCocktailGlass
   suffix: screwdriver
   components:
@@ -1792,7 +1906,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCogChampBase
   suffix: cogchamp
   components:
@@ -1808,7 +1923,8 @@
       state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSuiDreamGlass
   suffix: sui dream
   components:
@@ -1824,7 +1940,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkEmeraldGlass
   suffix: melon liquor
   components:
@@ -1840,7 +1957,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMoonshineGlass
   suffix: moonshine
   components:
@@ -1856,7 +1974,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkGlassWhite
   suffix: milk
   components:
@@ -1872,7 +1991,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkShirleyTempleGlass
   suffix: shirley temple
   components:
@@ -1888,7 +2008,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSilencerGlass
   suffix: silencer
   components:
@@ -1904,7 +2025,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSingulo
   suffix: singulo
   components:
@@ -1920,7 +2042,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSolDryGlass
   suffix: sol dry
   components:
@@ -1936,7 +2059,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSnowWhite
   suffix: snow white
   components:
@@ -1952,7 +2076,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSoyLatte
   suffix: soy latte
   components:
@@ -1968,7 +2093,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSpaceUpGlass
   suffix: space-up
   components:
@@ -1984,7 +2110,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSpaceMountainWindGlass
   suffix: space mountain wind
   components:
@@ -2000,7 +2127,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkSyndicatebomb
   suffix: syndicate bomb
   components:
@@ -2016,7 +2144,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkTeaGlass
   suffix: tea
   components:
@@ -2032,7 +2161,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkTequilaGlass
   suffix: tequila
   components:
@@ -2048,7 +2178,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkTequilaSunriseGlass
   suffix: tequila sunrise
   components:
@@ -2064,7 +2195,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkTheMartinez
   suffix: the martinez
   components:
@@ -2080,7 +2212,8 @@
       state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkThreeMileIslandGlass
   suffix: three mile island
   components:
@@ -2096,7 +2229,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkTomatoJuice
   suffix: tomato juice
   components:
@@ -2109,7 +2243,8 @@
           Quantity: 30
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkTortugaGlass
   suffix: tortuga
   components:
@@ -2125,7 +2260,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkToxinsSpecialGlass
   suffix: toxins special
   components:
@@ -2141,7 +2277,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkVampiroGlass
   suffix: vampiro
   components:
@@ -2157,7 +2294,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkVermouthGlass
   suffix: vermouth
   components:
@@ -2173,7 +2311,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkVodkaGlass
   suffix: vodka
   components:
@@ -2189,7 +2328,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkVodkaMartiniGlass
   suffix: vodka martini
   components:
@@ -2205,7 +2345,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkVodkaRedBool
   suffix: vodka red bool
   components:
@@ -2221,7 +2362,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkVodkaTonicGlass
   suffix: vodka tonic
   components:
@@ -2237,7 +2379,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkWaterJug
   name: water jug
   description: Stay hydrated.
@@ -2254,7 +2397,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkWatermelonJuice
   suffix: watermelon juice
   components:
@@ -2270,7 +2414,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkWatermelonWakeup
   suffix: watermelon wakeup
   components:
@@ -2286,7 +2431,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkWhiskeyColaGlass
   suffix: whiskey cola
   components:
@@ -2302,7 +2448,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkWhiskeyGlass
   suffix: whiskey
   components:
@@ -2318,7 +2465,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkWhiskeySodaGlass
   suffix: whiskey soda
   components:
@@ -2334,7 +2482,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkWhiteRussianGlass
   suffix: white russian
   components:
@@ -2350,7 +2499,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkWineGlass
   suffix: wine
   components:
@@ -2366,7 +2516,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: XenoBasherGlass
   suffix: xeno basher
   components:
@@ -2382,7 +2533,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkCaipirinha
   suffix: caipirinha
   components:
@@ -2398,7 +2550,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkDaiquiri
   suffix: daiquiri
   components:
@@ -2414,7 +2567,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkDeathInTheAfternoon
   suffix: death in the afternoon
   components:
@@ -2430,7 +2584,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkEmpress75
   suffix: empress 75
   components:
@@ -2446,7 +2601,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkEspressoMartini
   suffix: espresso martini
   components:
@@ -2462,7 +2618,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMayojito
   suffix: mayojito
   components:
@@ -2478,7 +2635,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMimeosa
   suffix: mimeosa
   components:
@@ -2494,7 +2652,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMimosa
   suffix: mimosa
   components:
@@ -2510,7 +2669,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkMoscowMule
   suffix: moscow mule
   components:
@@ -2526,7 +2686,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkTheSunAlsoRises
   suffix: the sun also rises
   components:
@@ -2542,7 +2703,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkWhiskeySour
   suffix: whiskey sour
   components:
@@ -2558,7 +2720,8 @@
     state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBloodGlass
   suffix: blood
   components:
@@ -2574,7 +2737,8 @@
       state: icon
 
 - type: entity
-  parent: DrinkGlass
+  parent:
+  - DrinkGlass
   id: DrinkBacchusBlessing
   suffix: bacchus blessing
   description: You didn't think it was possible for a liquid to be so utterly revolting. Are you sure about this...?

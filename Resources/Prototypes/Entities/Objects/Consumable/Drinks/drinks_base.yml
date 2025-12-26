@@ -3,7 +3,8 @@
 # Inheritors are an easily and freely accessible solution like cups, teapots, cans, flasks, bottles, or beakers.
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: DrinkBase
   components:
   - type: Sprite
@@ -78,7 +79,8 @@
 # Pre-opened
 - type: entity
   abstract: true
-  parent: DrinkBaseOpenable
+  parent:
+  - DrinkBaseOpenable
   id: DrinkBaseOpenableOpen
   components:
   - type: Openable
@@ -136,7 +138,8 @@
 # Layered visualizer for an entity with fill levels, and an overlay over the fill levels
 - type: entity
   abstract: true
-  parent: DrinkVisualsFill
+  parent:
+  - DrinkVisualsFill
   id: DrinkVisualsFillOverlay
   components:
   - type: Sprite
@@ -152,7 +155,8 @@
 # Basic visualizer for an entity with fill levels, already filled
 - type: entity
   abstract: true
-  parent: DrinkVisualsFill
+  parent:
+  - DrinkVisualsFill
   id: DrinkVisualsFillFilled
   components:
   - type: Sprite
@@ -164,7 +168,9 @@
 # Visualizer for an openable entity with fill levels. Requires DrinkBaseOpenable
 - type: entity
   abstract: true
-  parent: [DrinkVisualsOpenable, DrinkVisualsFill]
+  parent:
+  - DrinkVisualsOpenable
+  - DrinkVisualsFill
   id: DrinkVisualsAll
   components:
   - type: GenericVisualizer
@@ -187,7 +193,8 @@
 # Visualizer for an openable entity with fill levels, already filled. Requires DrinkBaseOpenable
 - type: entity
   abstract: true
-  parent: DrinkVisualsAll
+  parent:
+  - DrinkVisualsAll
   id: DrinkVisualsAllFilled
   components:
   - type: Sprite

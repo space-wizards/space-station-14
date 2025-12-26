@@ -3,7 +3,8 @@
 # With cut-out
 
 - type: entity
-  parent: DrinkBaseCup
+  parent:
+  - DrinkBaseCup
   id: DrinkVisualizerTestCut
   name: solution container vis cut-out
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
@@ -31,7 +32,8 @@
 # Without (For food, non cut-out stuff)
 
 - type: entity
-  parent: DrinkBaseCup
+  parent:
+  - DrinkBaseCup
   id: DrinkVisualizerTestNot
   name: solution container vis cut-not
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.

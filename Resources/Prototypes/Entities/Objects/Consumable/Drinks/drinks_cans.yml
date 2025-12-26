@@ -1,7 +1,11 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_soda.yml
 - type: entity
   abstract: true
-  parent: [ DrinkBaseMaterialMetal, DrinkBase, DrinkBaseOpenable, DrinkVisualsOpenable ]
+  parent:
+  - DrinkBaseMaterialMetal
+  - DrinkBase
+  - DrinkBaseOpenable
+  - DrinkVisualsOpenable
   id: DrinkCanBaseFull
   suffix: Full
   components:
@@ -39,7 +43,8 @@
 ## Filled
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkColaCan
   name: Space Cola can
   description: A sweet, carbonated soft drink.
@@ -63,7 +68,9 @@
 
 # created when taking apart an ied
 - type: entity
-  parent: [ DrinkBaseOpenableOpen, DrinkColaCan ]
+  parent:
+  - DrinkBaseOpenableOpen
+  - DrinkColaCan
   id: DrinkColaCanEmpty
   suffix: Empty
   components:
@@ -79,7 +86,8 @@
     - Trash
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkIcedTeaCan
   name: iced tea can
   description: A refreshing can of iced tea.
@@ -98,7 +106,8 @@
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkLemonLimeCan
   name: Smite can
   description: You wanted ORANGE. It gave you Lemon-Lime.
@@ -117,7 +126,8 @@
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkLemonLimeCranberryCan
   name: Smite Cranberry can
   description: Y'all want a Smite Cranberry? Beloved by administrators everywhere. Drink in moderation. A limited run for the holidays!
@@ -169,7 +179,8 @@
         Cold: 2 # Refreshing
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkGrapeCan
   name: grape soda can
   description: Sweetened drink with a grape flavor and a deep purple color.
@@ -188,7 +199,8 @@
     sprite: Objects/Consumable/Drinks/purple_can.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkRootBeerCan
   name: root beer can
   description: Some of that tasty root beer goodness, now in a portable can!
@@ -211,7 +223,8 @@
     - DrinkCan
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkSodaWaterCan
   name: soda water can
   description: Soda water. Why not make a scotch and soda?
@@ -230,7 +243,8 @@
     sprite: Objects/Consumable/Drinks/sodawater.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkSpaceMountainWindCan
   name: Space Solar Wind can
   description: Blows right through you like a solar wind.
@@ -249,7 +263,8 @@
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkSpaceUpCan
   name: Space-Up can
   description: Tastes like a hull breach in your mouth.
@@ -268,7 +283,8 @@
     sprite: Objects/Consumable/Drinks/space-up.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkSolDryCan
   name: Sol Dry can
   description: Sweet ginger soda from outer space!
@@ -287,7 +303,8 @@
     sprite: Objects/Consumable/Drinks/sol_dry.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkStarkistCan
   name: Starkist can
   description: The taste of a star in liquid form. And, a bit of tuna...?
@@ -306,7 +323,8 @@
     sprite: Objects/Consumable/Drinks/starkist.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkTonicWaterCan
   name: tonic water can
   description: Quinine tastes funny, but at least it'll keep that Space Malaria away.
@@ -325,7 +343,8 @@
     sprite: Objects/Consumable/Drinks/tonic.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkFourteenLokoCan
   name: Fourteen Loko can
   description: The MBO has advised crew members that consumption of Fourteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
@@ -344,7 +363,8 @@
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkChangelingStingCan
   name: Changeling Sting can
   description: You take a tiny sip and feel a burning sensation...
@@ -363,7 +383,8 @@
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkDrGibbCan
   name: Dr. Gibb can
   description: A delicious blend of 42 different flavours.
@@ -382,7 +403,8 @@
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkNukieCan
   name: Blood-red Brew can
   description: A home-brewed drink made from the crazed minds at the Syndicate. Not recommended by doctors.
@@ -405,7 +427,8 @@
     sprite: Objects/Consumable/Drinks/robustnukie.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkEnergyDrinkCan
   name: Red Bool can
   description: A can of Red Bool, with enough caffeine to kill a horse.
@@ -424,7 +447,8 @@
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkShamblersJuiceCan
   name: Shambler's Juice can
   description: ~Shake me up some of that Shambler's Juice!~
@@ -443,7 +467,8 @@
     sprite: Objects/Consumable/Drinks/shamblersjuice.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkPwrGameCan
   name: PWR Game can
   description: The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
@@ -462,7 +487,8 @@
     sprite: Objects/Consumable/Drinks/pwrgame.rsi
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkBeerCan
   name: beer can
   description: Small joy, big taste, no worries!
@@ -485,7 +511,8 @@
     - DrinkCan
 
 - type: entity
-  parent: DrinkCanBaseFull
+  parent:
+  - DrinkCanBaseFull
   id: DrinkWineCan
   name: wine can
   description: Your way to forgetting all worries and having fun!

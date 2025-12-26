@@ -53,7 +53,8 @@
 # Porcelain (like glass but no shard)
 - type: entity
   abstract: true
-  parent: DrinkBaseMaterialGlass
+  parent:
+  - DrinkBaseMaterialGlass
   id: DrinkBaseMaterialPorcelain
   components:
   - type: Destructible
@@ -120,7 +121,8 @@
 # Strong plastic
 - type: entity
   abstract: true
-  parent: DrinkBaseMaterialPlastic
+  parent:
+  - DrinkBaseMaterialPlastic
   id: DrinkBaseMaterialStrongPlastic
   components:
   - type: Destructible
@@ -226,7 +228,8 @@
 # strong metal
 - type: entity
   abstract: true
-  parent: DrinkBaseMaterialMetal
+  parent:
+  - DrinkBaseMaterialMetal
   id: DrinkBaseMaterialStrongMetal
   components:
   - type: Damageable

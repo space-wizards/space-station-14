@@ -4,7 +4,9 @@
 # When used as the first parent, this empties a bottle's reagent and spawns it already opened
 - type: entity
   abstract: true
-  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  parent:
+  - DrinkBaseOpenableOpen
+  - DrinkBaseEmptyTrash
   id: DrinkBottleBaseEmpty
   components:
   - type: SolutionContainerManager
@@ -18,7 +20,9 @@
 
 - type: entity
   abstract: true
-  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  parent:
+  - DrinkBaseOpenableOpen
+  - DrinkBaseEmptyTrash
   id: DrinkBottleBaseSmallEmpty
   components:
   - type: SolutionContainerManager
@@ -32,7 +36,9 @@
 
 - type: entity
   abstract: true
-  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  parent:
+  - DrinkBaseOpenableOpen
+  - DrinkBaseEmptyTrash
   id: DrinkCartonBaseEmpty
   components:
   - type: SolutionContainerManager
@@ -42,7 +48,9 @@
 
 - type: entity
   abstract: true
-  parent: [ DrinkBaseOpenableOpen, DrinkBaseEmptyTrash ]
+  parent:
+  - DrinkBaseOpenableOpen
+  - DrinkBaseEmptyTrash
   id: DrinkCartonBaseLargeEmpty
   components:
   - type: SolutionContainerManager
@@ -53,11 +61,15 @@
 # Small bottles
 
 - type: entity
-  parent: [ DrinkBottleBaseSmallEmpty, DrinkAleBottleFull ]
+  parent:
+  - DrinkBottleBaseSmallEmpty
+  - DrinkAleBottleFull
   id: DrinkBottleAle
 
 - type: entity
-  parent: [ DrinkBottleBaseSmallEmpty, DrinkBeerBottleFull ]
+  parent:
+  - DrinkBottleBaseSmallEmpty
+  - DrinkBeerBottleFull
   id: DrinkBottleBeer
   components:
   - type: Tag
@@ -68,99 +80,143 @@
 # Large bottles
 
 - type: entity
-  parent: [ DrinkBottleBaseEmpty, DrinkAbsintheBottleFull ]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkAbsintheBottleFull
   id: DrinkBottleAbsinthe
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkBlueCuracaoBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkBlueCuracaoBottleFull
   id: DrinkBottleAlcoClear
 
 - type: entity
-  parent: [ DrinkBottleBaseEmpty, DrinkCognacBottleFull ]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkCognacBottleFull
   id: DrinkBottleCognac
 
 - type: entity
-  parent: [ DrinkBottleBaseEmpty, DrinkGinBottleFull ]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkGinBottleFull
   id: DrinkBottleGin
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkGildlagerBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkGildlagerBottleFull
   id: DrinkBottleGildlager
 
 - type: entity
   name: coffee liqueur bottle
-  parent: [DrinkBottleBaseEmpty, DrinkCoffeeLiqueurBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkCoffeeLiqueurBottleFull
   id: DrinkBottleCoffeeLiqueur
 
 # todo make a real cahors bottle
 - type: entity
   name: nt cahors bottle
-  parent: [DrinkBottleBaseEmpty, DrinkBottleGlassBaseFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkBottleGlassBaseFull
   id: DrinkBottleNTCahors
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ntcahors.rsi
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkPatronBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkPatronBottleFull
   id: DrinkBottlePatron
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkPoisonWinebottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkPoisonWinebottleFull
   id: DrinkBottlePoisonWine
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkRumBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkRumBottleFull
   id: DrinkBottleRum
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkTequilaBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkTequilaBottleFull
   id: DrinkBottleTequila
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkVermouthBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkVermouthBottleFull
   id: DrinkBottleVermouth
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkVodkaBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkVodkaBottleFull
   id: DrinkBottleVodka
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkWhiskeyBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkWhiskeyBottleFull
   id: DrinkBottleWhiskey
 
 - type: entity
-  parent: [DrinkBottleBaseEmpty, DrinkWineBottleFull]
+  parent:
+  - DrinkBottleBaseEmpty
+  - DrinkWineBottleFull
   id: DrinkBottleWine
 
 # Small cartons
 
 - type: entity
-  parent: [DrinkCartonBaseEmpty, DrinkJuiceLimeCarton]
+  parent:
+  - DrinkCartonBaseEmpty
+  - DrinkJuiceLimeCarton
   id: DrinkCartonLime
 
 - type: entity
-  parent: [DrinkCartonBaseEmpty, DrinkJuiceOrangeCarton]
+  parent:
+  - DrinkCartonBaseEmpty
+  - DrinkJuiceOrangeCarton
   id: DrinkCartonOrange
 
 - type: entity
-  parent: [DrinkCartonBaseEmpty, DrinkJuiceTomatoCarton]
+  parent:
+  - DrinkCartonBaseEmpty
+  - DrinkJuiceTomatoCarton
   id: DrinkCartonTomato
 
 - type: entity
-  parent: [DrinkCartonBaseEmpty, DrinkCreamCarton]
+  parent:
+  - DrinkCartonBaseEmpty
+  - DrinkCreamCarton
   id: DrinkCartonCream
 
 # Large cartons
 
 - type: entity
-  parent: [DrinkCartonBaseLargeEmpty, DrinkMilkCarton]
+  parent:
+  - DrinkCartonBaseLargeEmpty
+  - DrinkMilkCarton
   id: DrinkCartonMilk
 
 - type: entity
-  parent: [DrinkCartonBaseLargeEmpty, DrinkSoyMilkCarton]
+  parent:
+  - DrinkCartonBaseLargeEmpty
+  - DrinkSoyMilkCarton
   id: DrinkCartonSoyMilk
 
 - type: entity
-  parent: [DrinkCartonBaseLargeEmpty, DrinkOatMilkCarton]
+  parent:
+  - DrinkCartonBaseLargeEmpty
+  - DrinkOatMilkCarton
   id: DrinkCartonOatMilk
