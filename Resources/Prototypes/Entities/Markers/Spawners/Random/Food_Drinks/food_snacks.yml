@@ -2,7 +2,8 @@
   id: RandomSnacks
   name: random snack spawner
   #suffix: ""
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: AlignTileAny
   components:

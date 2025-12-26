@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: PottedPlantRandom
   name: random potted plant spawner
   components:
@@ -39,7 +40,8 @@
     chance: 1
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: PottedPlantRandomPlastic
   name: random plastic potted plant spawner
   components:

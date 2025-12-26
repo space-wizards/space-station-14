@@ -3,7 +3,8 @@
   id: RandomIngredient
   name: random ingredient spawner
   suffix: Non-Plant
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: PlaceFree
   components:

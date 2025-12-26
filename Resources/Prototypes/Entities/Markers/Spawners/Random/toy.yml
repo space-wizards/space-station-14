@@ -387,7 +387,8 @@
 ## Spawners ##
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: ToySpawner90
   name: Toy Spawner
   suffix: 90
@@ -403,7 +404,8 @@
       prob: 0.9
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: PlushieSpawner50
   name: Plushie Spawner
   suffix: 50
@@ -419,7 +421,8 @@
       prob: 0.5
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpacemenFigurineSpawner90
   name: Spacemen Minifigure Spawner
   suffix: 90
@@ -435,7 +438,8 @@
       prob: 0.9
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: MechFigurineSpawner50
   name: Mech Figurine Spawner
   suffix: 50
@@ -451,7 +455,8 @@
       prob: 0.5
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: ToyWeaponSpawner90
   name: Toy Weapon Spawner
   suffix: 90
@@ -467,7 +472,8 @@
       prob: 0.9
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: CapGunSpawner90
   name: Cap Gun Spawner
   suffix: 90
@@ -483,7 +489,8 @@
       prob: 0.9
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: MiscToySpawner90
   name: Miscellaneous Toy Spawner
   suffix: 90
@@ -499,7 +506,8 @@
       prob: 0.9
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: ToySoundMakerSpawner90
   name: Toy Sound Maker Spawner
   suffix: 90
@@ -515,7 +523,8 @@
       prob: 0.9
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: CrayonSpawner90
   name: Crayon Spawner
   suffix: 90

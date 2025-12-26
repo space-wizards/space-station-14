@@ -2,7 +2,8 @@
 - type: entity
   name: industrial fluff spawner
   id: LootSpawnerIndustrialFluff
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -36,7 +37,8 @@
   name: industrial loot spawner
   suffix: Tools + Materials
   id: LootSpawnerIndustrial
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

@@ -2,7 +2,8 @@
   id: RandomVending
   name: random vending machine spawner
   suffix: Any
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -52,7 +53,8 @@
   id: RandomVendingClothing
   name: random vending machine spawner
   suffix: Clothing
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:

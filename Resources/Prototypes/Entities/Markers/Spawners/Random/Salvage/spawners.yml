@@ -33,7 +33,8 @@
         tableId: MaintToolsTable
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerScrapCommon
   name: Salvage Scrap Spawner
   suffix: Common, 50%
@@ -50,7 +51,8 @@
       prob: 0.5
 
 - type: entity
-  parent: SalvageSpawnerScrapCommon
+  parent:
+  - SalvageSpawnerScrapCommon
   id: SalvageSpawnerScrapCommon75
   suffix: Common, 75%
   components:
@@ -94,7 +96,8 @@
         weight: 0.25
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerScrapValuable
   name: Salvage Scrap Spawner
   suffix: Valuable, 50%
@@ -111,7 +114,8 @@
       prob: 0.5
 
 - type: entity
-  parent: SalvageSpawnerScrapValuable
+  parent:
+  - SalvageSpawnerScrapValuable
   id: SalvageSpawnerScrapValuable75
   suffix: Valuable, 75%
   components:
@@ -170,7 +174,8 @@
       weight: 5
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerTreasure
   name: Salvage Treasure Spawner
   suffix: Common, 75%
@@ -239,7 +244,8 @@
       rolls: 1, 2
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerTreasureValuable
   name: Salvage Treasure Spawner
   suffix: Valuable, 75%
@@ -298,7 +304,8 @@
         tableId: MaintFluffTable
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerEquipment
   name: Salvage Equipment Spawner
   suffix: Common, 75%
@@ -363,7 +370,8 @@
         tableId: SyndieMaintLoot
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerEquipmentValuable
   name: Salvage Equipment Spawner
   suffix: Valuable, 75%
@@ -382,7 +390,8 @@
 - type: entity
   name: Salvage Canister Spawner
   id: SalvageCanisterSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -436,7 +445,8 @@
 
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerMobMagnet
   name: Salvage Magnet Mob Spawner
   suffix: 50%
@@ -452,7 +462,8 @@
       tableId: SalvageMagnetMobTable
 
 - type: entity
-  parent: SalvageSpawnerMobMagnet
+  parent:
+  - SalvageSpawnerMobMagnet
   id: SalvageSpawnerMobMagnet75
   suffix: 75%
   components:
@@ -462,7 +473,8 @@
       tableId: SalvageMagnetMobTable
 
 - type: entity
-  parent: SalvageSpawnerMobMagnet
+  parent:
+  - SalvageSpawnerMobMagnet
   id: SalvageSpawnerMobMagnet100
   suffix: 100%
   components:
@@ -472,7 +484,8 @@
       tableId: SalvageMagnetMobTable
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerStructuresVarious
   name: Space Debris Structure Spawner
   components:
@@ -508,7 +521,8 @@
         - id: Gyroscope
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerMobShark
   name: Salvage Sharkminnow Spawner
   components:
@@ -525,7 +539,8 @@
         amount: 3
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SalvageSpawnerMobMiningAsteroid
   name: Mining Asteroid Mob Spawner
   components:

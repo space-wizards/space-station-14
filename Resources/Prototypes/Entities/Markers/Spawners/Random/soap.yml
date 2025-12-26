@@ -32,7 +32,8 @@
       - id: SoapOmega
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: RandomSlip100
   name: random slip spawner
   components:
@@ -46,7 +47,8 @@
       tableId: SlipTable
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: RandomSoap
   name: random soap spawner
   components:

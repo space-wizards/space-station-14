@@ -1,7 +1,8 @@
 - type: entity
   id: ShadowKudzuLootSpawner
   name: shadow kudzu loot spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

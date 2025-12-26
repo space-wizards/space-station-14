@@ -1,7 +1,8 @@
 - type: entity
   name: Donkpocket Box Spawner
   id: DonkpocketBoxSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

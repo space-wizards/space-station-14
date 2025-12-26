@@ -1,7 +1,8 @@
 - type: entity
   id: RandomFloraTree
   name: random tree spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:

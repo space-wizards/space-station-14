@@ -1,7 +1,8 @@
 - type: entity
   name: random altar spawner
   id: AltarSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -22,7 +23,8 @@
 - type: entity
   name: random convert-altar spawner
   id: ConvertAltarSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -45,7 +47,8 @@
 - type: entity
   name: random cult-altar spawner
   id: CultAltarSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

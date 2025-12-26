@@ -1,5 +1,6 @@
 - type: entity
-  parent: DecalSpawnerBase
+  parent:
+  - DecalSpawnerBase
   id: DecalSpawnerFloraBase
   abstract: true
   components:
@@ -31,7 +32,8 @@
     - FloorGrass
 
 - type: entity
-  parent: DecalSpawnerFloraBase
+  parent:
+  - DecalSpawnerFloraBase
   id: DecalSpawnerGrassyRock
   suffix: Grassy Rock
   components:
@@ -52,7 +54,8 @@
     - Rock07
 
 - type: entity
-  parent: DecalSpawnerFloraBase
+  parent:
+  - DecalSpawnerFloraBase
   id: DecalSpawnerBasaltRock
   suffix: Basalt Rock
   components:
@@ -75,7 +78,8 @@
     - Basalt9
 
 - type: entity
-  parent: DecalSpawnerFloraBase
+  parent:
+  - DecalSpawnerFloraBase
   id: DecalSpawnerBushesAC
   suffix: Bushes (a-c)
   components:
@@ -100,7 +104,8 @@
 # I really don't want to add all the rest of the bushes right now, leaving this as an exercise for someone else.
 
 - type: entity
-  parent: DecalSpawnerFloraBase
+  parent:
+  - DecalSpawnerFloraBase
   id: DecalSpawnerFlowers
   suffix: Flowers
   components:
@@ -124,7 +129,8 @@
     - Flowersy4
 
 - type: entity
-  parent: DecalSpawnerFloraBase
+  parent:
+  - DecalSpawnerFloraBase
   id: DecalSpawnerGrassAB
   suffix: Grass (a-b)
   components:
@@ -148,7 +154,8 @@
     - Grassb5
 
 - type: entity
-  parent: DecalSpawnerFloraBase
+  parent:
+  - DecalSpawnerFloraBase
   id: DecalSpawnerGrassC
   suffix: Grass (c)
   components:
@@ -166,7 +173,8 @@
     - Grassc4
 
 - type: entity
-  parent: DecalSpawnerFloraBase
+  parent:
+  - DecalSpawnerFloraBase
   id: DecalSpawnerGrassDE
   suffix: Grass (d-e)
   components:

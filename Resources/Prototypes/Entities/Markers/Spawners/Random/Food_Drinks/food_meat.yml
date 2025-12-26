@@ -2,7 +2,8 @@
 - type: entity
   id: RandomMeat
   name: random meat spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: PlaceFree
   components:

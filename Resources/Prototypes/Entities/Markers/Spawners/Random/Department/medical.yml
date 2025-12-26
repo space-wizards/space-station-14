@@ -3,7 +3,8 @@
 - type: entity
   name: healing supplies spawner
   id: LootSpawnerMedicalMinor
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -28,7 +29,8 @@
 - type: entity
   name: medical loot spawner
   id: LootSpawnerMedicalClassy
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

@@ -2,7 +2,8 @@
   id: RandomDrinkGlass
   name: random drink spawner
   suffix: Glass
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: AlignTileAny
   components:

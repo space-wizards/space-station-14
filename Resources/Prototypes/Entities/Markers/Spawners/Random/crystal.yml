@@ -2,7 +2,8 @@
   name: Crystal Spawner
   suffix: 70%
   id: CrystalSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

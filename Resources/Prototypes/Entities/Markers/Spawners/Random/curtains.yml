@@ -1,7 +1,8 @@
 - type: entity
   name: random curtain spawner
   id: CurtainSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

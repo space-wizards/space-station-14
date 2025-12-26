@@ -140,7 +140,8 @@
 - type: entity
   id: RandomInstruments
   name: random instruments spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:

@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: RandomPainting
   name: random painting spawner
   components:

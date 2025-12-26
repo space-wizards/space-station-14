@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: RandomPosterAny
   name: random poster spawner
   components:
@@ -19,7 +20,8 @@
     rareChance: 0.05
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: RandomPosterContraband
   name: random contraband poster spawner
   components:
@@ -98,7 +100,8 @@
     chance: 1
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: RandomPosterLegit
   name: random legit poster spawner
   components:

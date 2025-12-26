@@ -1,7 +1,8 @@
 - type: entity
   name: Empty Crate Spawner
   id: CrateEmptySpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -160,7 +161,8 @@
   name: Filled Crate Spawner
   id: CrateFilledSpawner
   suffix: Low Value
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -176,7 +178,8 @@
 - type: entity
   name: random engineering crate spawner
   id: LootSpawnerRandomCrateEngineering
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -219,7 +222,8 @@
 - type: entity
   name: random security crate spawner
   id: LootSpawnerRandomCrateSecurity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -261,7 +265,8 @@
 - type: entity
   name: random lockbox spawner
   id: LootSpawnerRandomLockbox
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   suffix: 90%
   components:
   - type: Sprite

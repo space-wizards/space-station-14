@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: RandomCableHVSpawner
   name: HV power cable spawner
   suffix: 50%
@@ -17,7 +18,8 @@
     chance: 0.5
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: RandomCableMVSpawner
   name: MV power cable spawner
   suffix: 50%
@@ -41,7 +43,8 @@
     chance: 0.5
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: RandomCableApcExtensionSpawner
   name: LV power cable spawner
   suffix: 50%

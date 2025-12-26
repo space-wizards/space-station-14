@@ -1,7 +1,8 @@
 - type: entity
   id: RandomDrinkSoda
   name: random soda spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: AlignTileAny
   components:

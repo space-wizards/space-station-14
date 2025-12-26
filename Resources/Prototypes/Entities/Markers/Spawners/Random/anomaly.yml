@@ -1,7 +1,8 @@
 ﻿- type: entity
   id: RandomAnomalySpawner
   name: random anomaly spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -31,7 +32,8 @@
 - type: entity
   id: RandomRockAnomalySpawner
   name: random rock anomaly spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -53,7 +55,8 @@
 - type: entity
   id: RandomAnomalyInjectorSpawner
   name: random anomaly injector spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:

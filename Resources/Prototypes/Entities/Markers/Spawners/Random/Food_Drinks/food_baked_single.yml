@@ -2,7 +2,8 @@
   id: RandomFoodBakedSingle
   name: random baked food spawner
   suffix: Single Serving
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: AlignTileAny
   components:

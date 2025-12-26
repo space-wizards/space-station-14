@@ -3,7 +3,8 @@
 - type: entity
   name: science supplies spawner
   id: LootSpawnerScienceMinor
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   suffix: Minor, 80%
   components:
   - type: Sprite
@@ -76,7 +77,8 @@
 - type: entity
   name: science supplies spawner
   id: LootSpawnerScienceMajor
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   suffix: Major
   components:
   - type: Sprite
@@ -94,7 +96,8 @@
 - type: entity
   name: robotics board spawner
   id: LootSpawnerRoboticsBorgModule
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:

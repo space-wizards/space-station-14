@@ -2,7 +2,8 @@
   id: RandomFoodBakedWhole
   name: random baked food spawner
   suffix: Whole
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: AlignTileAny
   components:

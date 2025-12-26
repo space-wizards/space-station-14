@@ -1,5 +1,6 @@
 - type: entity
-  parent: DecalSpawnerBase
+  parent:
+  - DecalSpawnerBase
   id: DecalSpawnerDirtBase
   abstract: true
   components:
@@ -64,7 +65,8 @@
     deleteSpawnerAfterSpawn: true
 
 - type: entity
-  parent: DecalSpawnerDirtBase
+  parent:
+  - DecalSpawnerDirtBase
   id: DecalSpawnerDirtSingle
   suffix: Dirt, 0 Radius
   components:
@@ -74,7 +76,8 @@
     maxDecals: 1
 
 - type: entity
-  parent: DecalSpawnerDirtBase
+  parent:
+  - DecalSpawnerDirtBase
   id: DecalSpawnerDirtNear
   suffix: Dirt, 1.5 Radius
   components:
@@ -83,7 +86,8 @@
     maxDecals: 5
 
 - type: entity
-  parent: DecalSpawnerDirtBase
+  parent:
+  - DecalSpawnerDirtBase
   id: DecalSpawnerDirtWide
   suffix: Dirt, 3 Radius
   components:
@@ -93,7 +97,8 @@
     maxDecalsPerTile: 2
 
 - type: entity
-  parent: DecalSpawnerDirtBase
+  parent:
+  - DecalSpawnerDirtBase
   id: DecalSpawnerDirtMonospace
   suffix: Dirt, Monospace, 1 Radius
   components:
@@ -144,7 +149,8 @@
     - FloorReinforced
 
 - type: entity
-  parent: DecalSpawnerDirtMonospace
+  parent:
+  - DecalSpawnerDirtMonospace
   id: DecalSpawnerBurns
   suffix: Burns, 1 Radius
   components:

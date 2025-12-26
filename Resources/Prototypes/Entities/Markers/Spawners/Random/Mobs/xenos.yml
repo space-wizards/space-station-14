@@ -1,5 +1,6 @@
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoEasy
   name: Xeno Spawner
   suffix: Easy, Random
@@ -17,7 +18,8 @@
     - MobXenoRunner
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnMobXenoHard
   name: Xeno Spawner
   suffix: Hard, Random

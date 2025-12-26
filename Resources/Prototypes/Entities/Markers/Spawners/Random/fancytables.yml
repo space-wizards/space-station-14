@@ -1,7 +1,8 @@
 - type: entity
   name: random fancy table spawner
   id: FancyTableSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

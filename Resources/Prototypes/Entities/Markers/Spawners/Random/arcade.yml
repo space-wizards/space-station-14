@@ -1,7 +1,8 @@
 - type: entity
   id: RandomArcade
   name: random arcade spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:

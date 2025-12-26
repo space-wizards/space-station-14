@@ -3,7 +3,8 @@
   name: security loot spawner
   suffix: Gear, Simple
   id: LootSpawnerSecurityBasic
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -27,7 +28,8 @@
   name: security loot spawner
   suffix: Gear, Better
   id: LootSpawnerSecurity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -59,7 +61,8 @@
   name: armory loot spawner
   suffix: Guns, Armor
   id: LootSpawnerArmory
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -97,7 +100,8 @@
   name: armory loot spawner
   suffix: Guns
   id: LootSpawnerArmoryGunsOnly
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -124,7 +128,8 @@
   name: armory loot spawner
   suffix: Armor
   id: LootSpawnerArmoryArmorOnly
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

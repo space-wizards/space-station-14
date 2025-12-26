@@ -4,7 +4,8 @@
 - type: entity
   name: Salvage Material Crate Spawner
   id: SalvageMaterialCrateSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -42,7 +43,8 @@
 - type: entity
   name: salvage loot spawner
   id: SalvageLootSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -60,7 +62,8 @@
 - type: entity
   name: Salvage Mob Spawner
   id: SalvageMobSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   suffix: 25
   components:
     - type: Sprite
@@ -89,7 +92,8 @@
 - type: entity #I made this in case someone decided to make a terrifying space tick swarm for salvage. that someone may be me -EG404
   name: Salvage Space Tick Spawner
   id: SpaceTickSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   suffix: 100
   components:
     - type: Sprite
@@ -104,7 +108,8 @@
 - type: entity
   name: Salvage Space Bear Spawner
   id: SpawnMobBearSalvage
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -117,7 +122,8 @@
 
 - type: entity
   id: SalvageMobSpawner75
-  parent: SalvageMobSpawner
+  parent:
+  - SalvageMobSpawner
   suffix: 75
   components:
   - type: RandomSpawner
@@ -141,7 +147,8 @@
 - type: entity
   name: Salvage Space Kangaroo Spawner
   id: SpawnMobKangarooSalvage
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -155,7 +162,8 @@
 - type: entity
   name: Salvage Space Spider Spawner
   id: SpawnMobSpiderSalvage
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -169,7 +177,8 @@
 - type: entity
   name: Salvage Space Cobra Spawner
   id: SpawnMobCobraSalvage
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -183,7 +192,8 @@
 - type: entity
   name: Salvage Flesh Spawner
   id: SalvageFleshSpawner
-  parent: SalvageMobSpawner
+  parent:
+  - SalvageMobSpawner
   suffix: 100
   components:
     - type: Sprite

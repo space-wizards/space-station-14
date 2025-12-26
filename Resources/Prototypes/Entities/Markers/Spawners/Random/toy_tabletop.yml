@@ -20,7 +20,8 @@
 ## Spawners ##
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: BoardGameSpawner100
   name: Board Game Spawner
   suffix: 100
@@ -36,7 +37,8 @@
       tableId: AllBoardGamesTable
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: BattleMapSpawner100
   name: Battle Map Spawner
   suffix: 100

@@ -1,5 +1,6 @@
 - type: entity
-  parent: DecalSpawnerBase
+  parent:
+  - DecalSpawnerBase
   id: DecalSpawnerBloodSplatters
   suffix: Blood Splatters, Footprints
   components:
@@ -17,7 +18,8 @@
     deleteSpawnerAfterSpawn: true
 
 - type: entity
-  parent: DecalSpawnerBase
+  parent:
+  - DecalSpawnerBase
   id: DecalSpawnerGraffiti
   suffix: Graffiti
   components:

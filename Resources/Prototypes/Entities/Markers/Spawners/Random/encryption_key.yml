@@ -2,7 +2,8 @@
 - type: entity
   name: random encryption key spawner
   id: LootSpawnerEncryptionKey
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

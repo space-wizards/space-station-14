@@ -2,7 +2,8 @@
   id: RandomVendingSnacks
   name: random vending machine spawner
   suffix: Snacks
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:

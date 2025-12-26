@@ -1,7 +1,8 @@
 - type: entity
   name: Random Folder Spawner
   id: FolderSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: PlaceFree
   components:

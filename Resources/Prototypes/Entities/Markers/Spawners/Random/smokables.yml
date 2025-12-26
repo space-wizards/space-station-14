@@ -2,7 +2,8 @@
 - type: entity
   id: RandomSmokables
   name: random smokable spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: PlaceFree
   components:
@@ -20,7 +21,8 @@
 - type: entity
   id: RandomSoakedCigarette
   name: random soaked cigarette spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: PlaceFree
   components:

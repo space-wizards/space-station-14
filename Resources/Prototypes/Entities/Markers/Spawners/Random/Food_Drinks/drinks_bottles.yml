@@ -2,7 +2,8 @@
   id: RandomDrinkBottle
   name: random drink spawner
   suffix: Bottle
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   placement:
     mode: AlignTileAny
   components:

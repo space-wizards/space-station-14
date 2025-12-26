@@ -1,7 +1,8 @@
 - type: entity
   name: Random Grille Spawner
   id: GrilleSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

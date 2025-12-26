@@ -3,7 +3,8 @@
   name: materials spawner
   id: LootSpawnerMaterials
   suffix: Construction Materials
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -19,7 +20,8 @@
   name: materials spawner
   suffix: Supplementary Materials
   id: LootSpawnerMaterialsSupplementary
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -37,7 +39,8 @@
   name: high-value materials spawner
   suffix: Construction Materials
   id: LootSpawnerMaterialsHighValueConstruction
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -52,7 +55,8 @@
 - type: entity
   name: high-value materials spawner
   id: LootSpawnerMaterialsHighValue
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -70,7 +74,8 @@
 - type: entity
   name: surplus materials spawner
   id: LootSpawnerMaterialsSurplus
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -86,7 +91,8 @@
 - type: entity
   name: cable coil spawner
   id: LootSpawnerCableCoil
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:

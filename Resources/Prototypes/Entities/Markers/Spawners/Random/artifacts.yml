@@ -1,7 +1,8 @@
 ﻿- type: entity
   id: RandomArtifactSpawner
   name: random artifact spawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -18,7 +19,8 @@
 - type: entity
   id: RandomArtifactSpawner20
   name: random artifact spawner [20]
-  parent: RandomArtifactSpawner
+  parent:
+  - RandomArtifactSpawner
   components:
     - type: RandomSpawner
       chance: 0.2
