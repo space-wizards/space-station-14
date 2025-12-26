@@ -25,6 +25,11 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
+    public float BaseFTLRange = 256f;
+    public float BaseFTLBufferRange = 8f;
+
+    public const float TileDensityMultiplier = 0.5f;
+
     private EntityQuery<MapGridComponent> _gridQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -46,7 +51,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     {
         foreach (var fixture in args.NewFixtures)
         {
-            Physics.SetDensity(uid, fixture.Key, fixture.Value, _configManager.GetCVar(CCVars.TileDensityMultiplier), false, manager);
+            Physics.SetDensity(uid, fixture.Key, fixture.Value, TileDensityMultiplier, false, manager);
             Fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
         }
     }
@@ -170,7 +175,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         return HasComp<MapComponent>(coordinates.EntityId);
     }
 
-    public float GetFTLRange(EntityUid shuttleUid) => _configManager.GetCVar(CCVars.FTLRange);
+    public float GetFTLRange(EntityUid shuttleUid) => BaseFTLRange * _configManager.GetCVar(CCVars.ShuttleFTLRangeMultiplier);
 
     public float GetFTLBufferRange(EntityUid shuttleUid, MapGridComponent? grid = null)
     {
@@ -179,7 +184,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
         var localAABB = grid.LocalAABB;
         var maxExtent = localAABB.MaxDimension / 2f;
-        var range = maxExtent + _configManager.GetCVar(CCVars.FTLBufferRange);
+        var range = maxExtent + BaseFTLBufferRange * _configManager.GetCVar(CCVars.ShuttleFTLBufferRangeMultiplier);
         return range;
     }
 
@@ -204,7 +209,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var targetPosition = mapCoordinates.Position;
 
         // Check range even if it's cross-map.
-        if ((targetPosition - ourPos).Length() > _configManager.GetCVar(CCVars.FTLRange))
+        if ((targetPosition - ourPos).Length() > GetFTLRange(shuttleUid))
         {
             return false;
         }
@@ -226,7 +231,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         }
 
         var ourFTLBuffer = GetFTLBufferRange(shuttleUid);
-        var circle = new PhysShapeCircle(ourFTLBuffer + _configManager.GetCVar(CCVars.FTLBufferRange), targetPosition);
+        var circle = new PhysShapeCircle(ourFTLBuffer + BaseFTLBufferRange * _configManager.GetCVar(CCVars.ShuttleFTLBufferRangeMultiplier), targetPosition);
 
         _mapManager.FindGridsIntersecting(mapCoordinates.MapId, circle, Robust.Shared.Physics.Transform.Empty,
             ref _grids, includeMap: false);
