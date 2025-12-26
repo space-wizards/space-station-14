@@ -12,6 +12,7 @@ public sealed partial class ShuttleSystem
     {
         SubscribeLocalEvent<IFFConsoleComponent, AnchorStateChangedEvent>(OnIFFConsoleAnchor);
         SubscribeLocalEvent<IFFConsoleComponent, IFFShowIFFMessage>(OnIFFShow);
+        SubscribeLocalEvent<IFFConsoleComponent, MapInitEvent>(OnInitIFFConsole);
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
     }
 
@@ -63,6 +64,20 @@ public sealed partial class ShuttleSystem
             {
                 RemoveIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
             }
+        }
+    }
+
+    private void OnInitIFFConsole(EntityUid uid, IFFConsoleComponent component, MapInitEvent args)
+    {
+        if (!TryComp(uid, out TransformComponent? xform) || xform.GridUid == null)
+        {
+            return;
+        }
+
+        if (component.HideOnInit)
+        {
+            AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+            AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
         }
     }
 
