@@ -120,7 +120,5 @@ public sealed class TileConstructionTests : InteractionTest
         await AssertTile(PlatingBrass);
         AssertGridCount(1);
         await AssertEntityLookup((FloorItem, 1));
-
-
     }
 }
