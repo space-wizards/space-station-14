@@ -1,5 +1,6 @@
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesGar
   name: gar glasses
   description: Go beyond impossible and kick reason to the curb!
@@ -15,7 +16,8 @@
         Blunt: 7
 
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesGarOrange
   name: orange gar glasses
   description: Just who the hell do you think I am?!
@@ -34,7 +36,8 @@
         Blunt: 10
 
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesGarGiga
   name: giga gar glasses
   description: We evolve past the person we were a minute before. Little by little we advance with each turn. That's how a drill works!
@@ -53,7 +56,9 @@
         Blunt: 10
 
 - type: entity
-  parent: [ClothingEyesBase, BaseEngineeringContraband]
+  parent:
+  - ClothingEyesBase
+  - BaseEngineeringContraband
   id: ClothingEyesGlassesMeson
   name: engineering goggles #less confusion
   description: Green-tinted goggles using a proprietary polymer that provides protection from eye damage of all types.
@@ -71,7 +76,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlasses
   name: glasses
   description: A pair of spectacular spectacles with prescription lenses.
@@ -87,7 +93,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesJensen
   name: jensen glasses
   description: A pair of yellow tinted folding glasses. You never asked for these.
@@ -101,7 +108,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesJamjar
   name: jamjar glasses
   description: These retro glasses remind you of a simpler time.
@@ -117,7 +125,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesOutlawGlasses
   name: outlaw glasses
   description: A must for every self-respecting undercover agent.
@@ -132,7 +141,8 @@
     price: 500
 
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesCheapSunglasses
   name: cheap sunglasses
   description: A pair of black sunglasses. Doesn't block light well, more of an accessory than something useful.
@@ -150,7 +160,8 @@
     coverage: EYES
 
 - type: entity
-  parent: ClothingEyesGlassesCheapSunglasses
+  parent:
+  - ClothingEyesGlassesCheapSunglasses
   id: ClothingEyesGlassesSunglasses
   name: sun glasses
   description: A pair of black sunglasses.
@@ -166,7 +177,10 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent:
+  - ClothingEyesBase
+  - ShowSecurityIcons
+  - BaseSecurityContraband
   id: ClothingEyesGlassesSecurity
   name: security glasses
   description: Upgraded sunglasses that provide flash immunity and a security HUD.
@@ -194,7 +208,9 @@
     coverage: EYES
 
 - type: entity
-  parent: [ClothingEyesBase, BaseCommandContraband]
+  parent:
+  - ClothingEyesBase
+  - BaseCommandContraband
   id: ClothingEyesGlassesCommand
   name: administration glasses
   description: Upgraded sunglasses that provide flash immunity and show ID card status.
@@ -216,7 +232,8 @@
   - type: ShowJobIcons
 
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesMercenary
   name: mercenary glasses
   description: Glasses made for combat, to protect the eyes from bright blinding flashes.
@@ -233,7 +250,8 @@
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesThermal
   name: optical thermal scanner
   description: Thermals in the shape of glasses.
@@ -251,7 +269,8 @@
     coverage: EYES
 
 - type: entity
-  parent: ClothingEyesBase
+  parent:
+  - ClothingEyesBase
   id: ClothingEyesGlassesChemical
   name: chemical analysis goggles
   description: Goggles that can scan the chemical composition of a solution.
@@ -269,7 +288,9 @@
       - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingEyesBase, BaseHighlyIllegalContraband]
+  parent:
+  - ClothingEyesBase
+  - BaseHighlyIllegalContraband
   id: ClothingEyesVisorNinja
   name: ninja visor
   description: An advanced visor protecting a ninja's eyes from flashing lights.
@@ -281,7 +302,10 @@
   - type: FlashImmunity
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons, BaseSecurityContraband]
+  parent:
+  - ClothingEyesBase
+  - ShowSecurityIcons
+  - BaseSecurityContraband
   id: ClothingEyesGlassesNoir
   name: noir-tech glasses
   description: A pair of glasses that simulate what the world looked like before the invention of color.

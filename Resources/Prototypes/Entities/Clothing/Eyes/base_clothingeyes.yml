@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent:
+  - Clothing
   id: ClothingEyesBase
   components:
   - type: Sprite
@@ -12,7 +13,9 @@
     storedRotation: -90
 
 - type: entity
-  parent: [ClothingEyesBase, BaseFoldable]
+  parent:
+  - ClothingEyesBase
+  - BaseFoldable
   id: ClothingHeadEyeBaseFlippable
   abstract: true
   components:
@@ -33,7 +36,8 @@
       scale: -1,1
 
 - type: entity
-  parent: ClothingHeadEyeBaseFlippable
+  parent:
+  - ClothingHeadEyeBaseFlippable
   id: ClothingHeadEyeBaseFlipped
   suffix: flipped
   abstract: true
