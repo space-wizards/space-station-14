@@ -1,5 +1,7 @@
 ﻿- type: entity
-  parent: [ClothingHeadBase, BaseChameleon]
+  parent:
+  - ClothingHeadBase
+  - BaseChameleon
   id: ClothingHeadHatChameleon
   name: beret
   description: A beret, an artists favorite headwear.
@@ -17,7 +19,8 @@
       default: ClothingHeadHatBeret
 
 - type: entity
-  parent: ClothingHeadHatFedoraBrown
+  parent:
+  - ClothingHeadHatFedoraBrown
   id: ClothingHeadHatDetGadget
   name: go go hat
   description: A novel hat with a built in toolkit. Automatically stores and retrieves items at the say of a phrase!

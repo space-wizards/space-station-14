@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent:
+  - Clothing
   id: ClothingHeadBase
   components:
   - type: Clothing
@@ -27,7 +28,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadBaseButcherable
   components:
   - type: Butcherable
@@ -46,7 +48,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadLightBase
   name: base helmet with light
   categories: [ HideSpawnMenu ]
@@ -107,7 +110,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:

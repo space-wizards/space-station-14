@@ -1,5 +1,6 @@
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHardhatBase
   abstract: true
   components:
@@ -68,7 +69,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadHatHardhatBase
+  parent:
+  - ClothingHeadHatHardhatBase
   id: ClothingHeadHatHardhatBlue
   name: blue hard hat
   description: A hard hat, painted in blue, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
@@ -79,7 +81,8 @@
     sprite: Clothing/Head/Hardhats/blue.rsi
 
 - type: entity
-  parent: ClothingHeadHatHardhatBase
+  parent:
+  - ClothingHeadHatHardhatBase
   id: ClothingHeadHatHardhatOrange
   name: orange hard hat
   description: A hard hat, painted in orange, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
@@ -90,7 +93,8 @@
     sprite: Clothing/Head/Hardhats/orange.rsi
 
 - type: entity
-  parent: ClothingHeadHatHardhatBase
+  parent:
+  - ClothingHeadHatHardhatBase
   id: ClothingHeadHatHardhatRed
   name: red hard hat
   description: A hard hat, painted in red, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
@@ -101,7 +105,8 @@
     sprite: Clothing/Head/Hardhats/red.rsi
 
 - type: entity
-  parent: ClothingHeadHatHardhatBase
+  parent:
+  - ClothingHeadHatHardhatBase
   id: ClothingHeadHatHardhatWhite
   name: white hard hat
   description: A hard hat, painted in white, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
@@ -112,7 +117,8 @@
     sprite: Clothing/Head/Hardhats/white.rsi
 
 - type: entity
-  parent: ClothingHeadHatHardhatBase
+  parent:
+  - ClothingHeadHatHardhatBase
   id: ClothingHeadHatHardhatYellow
   name: yellow hard hat
   description: A hard hat, painted in yellow, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
@@ -123,7 +129,8 @@
     sprite: Clothing/Head/Hardhats/yellow.rsi
 
 - type: entity
-  parent: ClothingHeadHatHardhatBase
+  parent:
+  - ClothingHeadHatHardhatBase
   id: ClothingHeadHatHardhatYellowDark
   name: dark yellow hard hat
   description: A hard hat, painted in dark yellow, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
@@ -134,7 +141,8 @@
     sprite: Clothing/Head/Hardhats/dark_yellow.rsi
 
 - type: entity
-  parent: ClothingHeadHatHardhatBase
+  parent:
+  - ClothingHeadHatHardhatBase
   id: ClothingHeadHatHardhatArmored
   name: armored hard hat
   description: An armored hard hat. Provides the best of both worlds in both protection & utility - perfect for the engineer on the frontlines.

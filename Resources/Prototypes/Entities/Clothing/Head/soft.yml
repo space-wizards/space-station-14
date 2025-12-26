@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ClothingHeadBaseButcherable, BaseFoldable]
+  parent:
+  - ClothingHeadBaseButcherable
+  - BaseFoldable
   id: ClothingHeadHeadHatBaseFlippable
   abstract: true
   components:
@@ -20,7 +22,8 @@
       visible: false
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHeadHatBaseFlipped
   suffix: flipped
   abstract: true
@@ -41,7 +44,8 @@
       visible: true
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatBluesoft
   name: blue cap
   description: A blue baseball cap.
@@ -52,12 +56,15 @@
     sprite: Clothing/Head/Soft/bluesoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBluesoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatBluesoft
   id: ClothingHeadHatBluesoftFlipped
   name: blue cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCargosoft
   name: cargo cap
   description: A baseball cap colored to match cargo's uniforms.
@@ -74,7 +81,9 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCargosoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatCargosoft
   id: ClothingHeadHatCargosoftFlipped
   name: cargo cap
   components:
@@ -86,7 +95,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatQMsoft
   name: quartermaster's cap
   description: A baseball cap colored to match the Quartermaster's uniform.
@@ -97,12 +107,15 @@
     sprite: Clothing/Head/Soft/qmsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatQMsoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatQMsoft
   id: ClothingHeadHatQMsoftFlipped
   name: quartermaster's cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCommandSoft
   name: command cap
   description: A baseball cap in command's distinctive shade of blue.
@@ -113,12 +126,15 @@
     sprite: Clothing/Head/Soft/commandsoft.rsi
 
 - type: entity
-  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCommandSoft ]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatCommandSoft
   id: ClothingHeadHatCommandSoftFlipped
   name: command cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCorpsoft
   name: corporate cap
   description: A baseball cap in corporation colors.
@@ -129,12 +145,15 @@
     sprite: Clothing/Head/Soft/corpsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCorpsoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatCorpsoft
   id: ClothingHeadHatCorpsoftFlipped
   name: corporate cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatGreensoft
   name: green cap
   description: A green baseball cap.
@@ -145,12 +164,15 @@
     sprite: Clothing/Head/Soft/greensoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatGreensoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatGreensoft
   id: ClothingHeadHatGreensoftFlipped
   name: green cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatBlacksoft
   name: black cap
   description: A black baseball cap.
@@ -161,12 +183,15 @@
     sprite: Clothing/Head/Soft/blacksoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBlacksoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatBlacksoft
   id: ClothingHeadHatBlacksoftFlipped
   name: black cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatGreysoft
   name: grey cap
   description: A grey baseball cap.
@@ -177,12 +202,15 @@
     sprite: Clothing/Head/Soft/greysoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatGreysoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatGreysoft
   id: ClothingHeadHatGreysoftFlipped
   name: grey cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatMimesoft
   name: white cap
   description: A white baseball cap.
@@ -193,12 +221,15 @@
     sprite: Clothing/Head/Soft/mimesoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatMimesoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatMimesoft
   id: ClothingHeadHatMimesoftFlipped
   name: white cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatOrangesoft
   name: orange cap
   description: An orange baseball cap.
@@ -209,12 +240,15 @@
     sprite: Clothing/Head/Soft/orangesoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatOrangesoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatOrangesoft
   id: ClothingHeadHatOrangesoftFlipped
   name: orange cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatPurplesoft
   name: purple cap
   description: A purple baseball cap.
@@ -231,7 +265,9 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatPurplesoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatPurplesoft
   id: ClothingHeadHatPurplesoftFlipped
   name: purple cap
   components:
@@ -243,7 +279,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatRedsoft
   name: red cap
   description: A red baseball cap.
@@ -254,12 +291,15 @@
     sprite: Clothing/Head/Soft/redsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatRedsoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatRedsoft
   id: ClothingHeadHatRedsoftFlipped
   name: red cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatSecsoft
   name: security cap
   description: A baseball cap colored to match security's uniforms.
@@ -270,12 +310,15 @@
     sprite: Clothing/Head/Soft/secsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatSecsoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatSecsoft
   id: ClothingHeadHatSecsoftFlipped
   name: security cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatYellowsoft
   name: yellow cap
   description: A yellow baseball cap.
@@ -286,12 +329,15 @@
     sprite: Clothing/Head/Soft/yellowsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatYellowsoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatYellowsoft
   id: ClothingHeadHatYellowsoftFlipped
   name: yellow cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatBizarreSoft
   name: troublemaker's cap
   description: A truly.. bizarre accessory.
@@ -302,12 +348,15 @@
     sprite: Clothing/Head/Soft/bizarresoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBizarreSoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatBizarreSoft
   id: ClothingHeadHatBizarreSoftFlipped
   name: troublemaker's cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent:
+  - ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatParamedicsoft
   name: paramedic cap
   description: A blue baseball cap with a cross on the front.
@@ -324,7 +373,9 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatParamedicsoft]
+  parent:
+  - ClothingHeadHeadHatBaseFlipped
+  - ClothingHeadHatParamedicsoft
   id: ClothingHeadHatParamedicsoftFlipped
   name: paramedic cap
   components:

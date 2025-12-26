@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ClothingHeadBaseButcherable, BaseFoldable]
+  parent:
+  - ClothingHeadBaseButcherable
+  - BaseFoldable
   id: ClothingHeadBandBase
   abstract: true
   components:
@@ -32,51 +34,71 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandBlack]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandBlack
   id: ClothingHeadBandBlack
   name: black bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandBlue]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandBlue
   id: ClothingHeadBandBlue
   name: blue bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandBotany]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandBotany
   id: ClothingHeadBandBotany
   name: botany bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandGold]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandGold
   id: ClothingHeadBandGold
   name: gold bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandGreen]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandGreen
   id: ClothingHeadBandGreen
   name: green bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandGrey]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandGrey
   id: ClothingHeadBandGrey
   name: grey bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandRed]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandRed
   id: ClothingHeadBandRed
   name: red bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandSkull]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandSkull
   id: ClothingHeadBandSkull
   name: skull bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandMerc]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandMerc
   id: ClothingHeadBandMerc
   name: mercenary bandana
 
 - type: entity
-  parent: [ClothingHeadBandBase, ClothingMaskBandBrown]
+  parent:
+  - ClothingHeadBandBase
+  - ClothingMaskBandBrown
   id: ClothingHeadBandBrown
   name: brown bandana

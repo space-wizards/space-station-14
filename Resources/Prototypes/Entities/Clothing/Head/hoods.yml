@@ -1,5 +1,6 @@
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodBioGeneral
   name: bio hood
   suffix: Generic
@@ -27,7 +28,8 @@
       HeadSide: HEAD
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent:
+  - ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioCmo
   name: bio hood
   suffix: CMO
@@ -42,7 +44,8 @@
     zombificationResistanceCoefficient: 0.8
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent:
+  - ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioJanitor
   name: bio hood
   suffix: Janitor
@@ -55,7 +58,8 @@
     sprite: Clothing/Head/Hoods/Bio/janitor.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent:
+  - ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioScientist
   name: bio hood
   suffix: Science
@@ -68,7 +72,8 @@
     sprite: Clothing/Head/Hoods/Bio/scientist.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent:
+  - ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioSecurity
   name: bio hood
   suffix: Security
@@ -81,7 +86,8 @@
     sprite: Clothing/Head/Hoods/Bio/security.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent:
+  - ClothingHeadHatHoodBioGeneral
   id: ClothingHeadHatHoodBioVirology
   name: bio hood
   suffix: Virology
@@ -96,7 +102,8 @@
     zombificationResistanceCoefficient: 0.8
 
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodChaplainHood
   categories: [ HideSpawnMenu ]
   name: chaplain's hood
@@ -115,7 +122,8 @@
     - Hair
 
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodCulthood
   name: cult hood
   description: There's no cult without cult hoods.
@@ -132,7 +140,8 @@
     - Hair
 
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodNunHood
   name: nun hood
   description: Maximum piety in this star system.
@@ -150,7 +159,8 @@
     - Hair
 
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodRad
   name: radiation hood
   description: A hood of the hazmat suit, designed for protection from high radioactivity.
@@ -174,7 +184,8 @@
     - HeadSide
 
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodGoliathCloak
   name: goliath cloak hood
   description: A hood of a goliath cloak, it is made from the hide of resilient fauna from a distant planet.
@@ -191,7 +202,8 @@
     - Hair
 
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodIan
   categories: [ HideSpawnMenu ]
   name: ian hood
@@ -211,7 +223,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodCarp
   categories: [ HideSpawnMenu ]
   name: carp hood
@@ -226,7 +239,8 @@
     - Hair
 
 - type: entity
-  parent: ClothingHeadHatHoodCarp
+  parent:
+  - ClothingHeadHatHoodCarp
   id: ClothingHeadHelmetHardsuitCarp
   categories: [ HideSpawnMenu ]
   components:
@@ -243,7 +257,8 @@
     faction: Dragon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodMoth
   name: moth mask
   description: A mask in the form of a moths head is usually made of lightweight materials. It mimics the shape of a moths head with large eyes and long antennae. Such masks are often used in cosplay, or when shooting movies and videos.
@@ -265,7 +280,8 @@
 
 #Winter Coat Hoods
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterDefault
   categories: [ HideSpawnMenu ]
   name: default winter coat hood
@@ -276,7 +292,8 @@
     sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterBartender
   categories: [ HideSpawnMenu ]
   name: bartender winter coat hood
@@ -287,7 +304,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodbartender.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCaptain
   categories: [ HideSpawnMenu ]
   name: captain's winter coat hood
@@ -299,7 +317,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCargo
   categories: [ HideSpawnMenu ]
   name: cargo winter coat hood
@@ -310,7 +329,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcargo.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCE
   categories: [ HideSpawnMenu ]
   name: chief engineer's winter coat hood
@@ -321,7 +341,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodce.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCentcom
   categories: [ HideSpawnMenu ]
   name: CentComm winter coat hood
@@ -333,7 +354,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterChem
   categories: [ HideSpawnMenu ]
   name: chemist winter coat hood
@@ -344,7 +366,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodchemist.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterCMO
   categories: [ HideSpawnMenu ]
   name: chief medical officer's winter coat hood
@@ -355,7 +378,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterEngineer
   categories: [ HideSpawnMenu ]
   name: engineer winter coat hood
@@ -366,7 +390,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodengi.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHOP
   categories: [ HideSpawnMenu ]
   name: head of personnel's winter coat hood
@@ -377,7 +402,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhop.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHOS
   categories: [ HideSpawnMenu ]
   name: head of security's winter coat hood
@@ -388,7 +414,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhos.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterHydro
   categories: [ HideSpawnMenu ]
   name: hydroponics coat hood
@@ -399,7 +426,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhydro.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterJani
   categories: [ HideSpawnMenu ]
   name: janitor coat hood
@@ -410,7 +438,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodjani.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterMed
   categories: [ HideSpawnMenu ]
   name: medic coat hood
@@ -421,7 +450,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodmed.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterMime
   categories: [ HideSpawnMenu ]
   name: mime coat hood
@@ -432,7 +462,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodmime.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterMiner
   categories: [ HideSpawnMenu ]
   name: miner coat hood
@@ -443,7 +474,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodminer.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterPara
   categories: [ HideSpawnMenu ]
   name: paramedic coat hood
@@ -454,7 +486,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodpara.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterQM
   categories: [ HideSpawnMenu ]
   name: quartermaster's coat hood
@@ -465,7 +498,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodqm.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterRD
   categories: [ HideSpawnMenu ]
   name: research director's coat hood
@@ -476,7 +510,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodrd.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterRobo
   categories: [ HideSpawnMenu ]
   name: robotics coat hood
@@ -487,7 +522,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodrobo.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterSci
   categories: [ HideSpawnMenu ]
   name: scientist coat hood
@@ -498,7 +534,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsci.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterSec
   categories: [ HideSpawnMenu ]
   name: security coat hood
@@ -509,7 +546,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterSyndie
   categories: [ HideSpawnMenu ]
   name: syndicate coat hood
@@ -520,7 +558,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterWarden
   categories: [ HideSpawnMenu ]
   name: warden's coat hood
@@ -531,7 +570,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterWeb
   categories: [ HideSpawnMenu ]
   name: web coat hood
@@ -542,7 +582,8 @@
     sprite: Clothing/Head/Hoods/Coat/hoodweb.rsi
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorBlack
   categories: [ HideSpawnMenu ]
   name: black winter coat hood
@@ -562,7 +603,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorPurple
   categories: [ HideSpawnMenu ]
   name: purple winter coat hood
@@ -582,7 +624,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorRed
   categories: [ HideSpawnMenu ]
   name: red winter coat hood
@@ -602,7 +645,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorBlue
   categories: [ HideSpawnMenu ]
   name: blue winter coat hood
@@ -622,7 +666,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorBrown
   categories: [ HideSpawnMenu ]
   name: brown winter coat hood
@@ -642,7 +687,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorGray
   categories: [ HideSpawnMenu ]
   name: gray winter coat hood
@@ -662,7 +708,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorGreen
   categories: [ HideSpawnMenu ]
   name: green winter coat hood
@@ -682,7 +729,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorLightBrown
   categories: [ HideSpawnMenu ]
   name: light brown winter coat hood
@@ -702,7 +750,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorOrange
   categories: [ HideSpawnMenu ]
   name: orange winter coat hood
@@ -722,7 +771,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorWhite
   categories: [ HideSpawnMenu ]
   name: white winter coat hood
@@ -742,7 +792,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadHatHoodWinterBase
+  parent:
+  - ClothingHeadHatHoodWinterBase
   id: ClothingHeadHatHoodWinterColorYellow
   categories: [ HideSpawnMenu ]
   name: yellow winter coat hood
@@ -762,7 +813,8 @@
       - state: winterbits-equipped-HELMET
 
 - type: entity
-  parent: ClothingHeadBase
+  parent:
+  - ClothingHeadBase
   id: ClothingHeadHatHoodVoidCloak
   name: void cloak hood
   description: The hood of a void cloak. For those who have gone to the dark side of the force.
