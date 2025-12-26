@@ -4,7 +4,9 @@
 # trash prototypes use "trash" state
 - type: entity
   abstract: true
-  parent: [FoodBase, FoodOpenableBase]
+  parent:
+  - FoodBase
+  - FoodOpenableBase
   id: FoodTinBase
   name: tin
   description: A tin of something, sealed tight.
@@ -53,7 +55,8 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: FoodTinBaseTrash
   name: empty tin
   description: An empty tin. Could get a bit of metal from this.
@@ -76,7 +79,8 @@
 # Need something that you can open these tins with. I suggest a prying or cutting tool.
 
 - type: entity
-  parent: FoodTinBase
+  parent:
+  - FoodTinBase
   id: FoodTinPeaches
   name: tinned peaches
   description: Just a nice can of ripe peaches swimming in their own juices.
@@ -97,7 +101,8 @@
     - Fruit
 
 - type: entity
-  parent: FoodTinBaseTrash
+  parent:
+  - FoodTinBaseTrash
   id: FoodTinPeachesTrash
   name: tinned peaches
   components:
@@ -108,7 +113,8 @@
 
 # slightly run down texture and different name
 - type: entity
-  parent: FoodTinPeaches
+  parent:
+  - FoodTinPeaches
   id: FoodTinPeachesMaint
   name: maintenance peaches
   components:
@@ -120,7 +126,8 @@
 
 # only exists for backwards compatibility with a few maps, nothing else uses it
 - type: entity
-  parent: FoodTinPeachesMaint
+  parent:
+  - FoodTinPeachesMaint
   id: FoodTinPeachesMaintOpen
   suffix: Open
   components:
@@ -132,7 +139,8 @@
     opened: true
 
 - type: entity
-  parent: FoodTinBaseTrash
+  parent:
+  - FoodTinBaseTrash
   id: FoodTinPeachesMaintTrash
   name: maintenance peaches
   components:
@@ -142,7 +150,8 @@
     sprite: Objects/Consumable/Food/Tins/maint_peaches.rsi
 
 - type: entity
-  parent: FoodTinBase
+  parent:
+  - FoodTinBase
   id: FoodTinBeans
   name: tin of beans
   description: Musical fruit in a slightly less musical container.
@@ -161,7 +170,8 @@
     - FoodTinBeansTrash
 
 - type: entity
-  parent: FoodTinBaseTrash
+  parent:
+  - FoodTinBaseTrash
   id: FoodTinBeansTrash
   name: tin of beans
   components:
@@ -173,7 +183,8 @@
 # MRE can
 
 - type: entity
-  parent: FoodTinBase
+  parent:
+  - FoodTinBase
   id: FoodTinMRE
   name: tinned meat
   description: A standard issue tin of meat with a convenient pull tab.
@@ -200,7 +211,8 @@
     - Meat
 
 - type: entity
-  parent: FoodTinBaseTrash
+  parent:
+  - FoodTinBaseTrash
   id: FoodTinMRETrash
   name: tinned meat
   components:

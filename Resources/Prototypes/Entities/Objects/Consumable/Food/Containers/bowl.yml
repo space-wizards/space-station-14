@@ -1,7 +1,8 @@
 # Bowls
 
 - type: entity
-  parent: ReagentContainerBase
+  parent:
+  - ReagentContainerBase
   id: FoodBowlBig
   name: bowl
   description: A simple bowl, used for soups and salads.
@@ -68,7 +69,8 @@
     - Trash
 
 - type: entity
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: FoodBowlBigTrash
   name: broken bowl
   description: A simple bowl, broken and useless.
@@ -92,7 +94,8 @@
 
 - type: entity
   name: bowl
-  parent: FoodBowlBig
+  parent:
+  - FoodBowlBig
   id: FoodBowlFancy
   description: A fancy bowl, used for SPECIAL soups and salads.
   components:

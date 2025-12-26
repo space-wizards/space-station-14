@@ -1,7 +1,8 @@
 # TODO: Removes the icon components from all these when that gets fixed.
 
 - type: entity
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: BaseFoodCondiment
   abstract: true
   components:
@@ -24,7 +25,8 @@
 # Packets
 
 - type: entity
-  parent: BaseFoodCondiment
+  parent:
+  - BaseFoodCondiment
   id: BaseFoodCondimentPacket
   name: condiment packet
   abstract: true
@@ -78,7 +80,8 @@
     exactVolume: true
 
 - type: entity
-  parent: BaseFoodCondimentPacket
+  parent:
+  - BaseFoodCondimentPacket
   id: BaseFoodCondimentPacketDrink
   abstract: true
   components:
@@ -86,7 +89,8 @@
     edible: Drink # slurping sounds!
 
 - type: entity
-  parent: BaseFoodCondimentPacket
+  parent:
+  - BaseFoodCondimentPacket
   id: FoodCondimentPacketAstrotame
   name: Astrotame
   description: The sweetness of a thousand sugars but none of the calories.
@@ -114,7 +118,8 @@
     fillBaseName: packet-trans-
 
 - type: entity
-  parent: BaseFoodCondimentPacketDrink
+  parent:
+  - BaseFoodCondimentPacketDrink
   id: FoodCondimentPacketBbq
   name: BBQ sauce
   description: Hand wipes not included.
@@ -134,7 +139,8 @@
     fillBaseName: packet-trans-
 
 - type: entity
-  parent: BaseFoodCondimentPacketDrink
+  parent:
+  - BaseFoodCondimentPacketDrink
   id: FoodCondimentPacketCornoil
   name: corn oil
   description: Corn oil. A delicious oil used in cooking. Made from corn.
@@ -154,7 +160,8 @@
     fillBaseName: packet-trans-
 
 - type: entity
-  parent: BaseFoodCondimentPacketDrink
+  parent:
+  - BaseFoodCondimentPacketDrink
   id: FoodCondimentPacketColdsauce
   name: coldsauce
   description: Coldsauce. Leaves the tongue numb in its passage.
@@ -174,7 +181,8 @@
     fillBaseName: packet-trans-
 
 - type: entity
-  parent: BaseFoodCondimentPacketDrink
+  parent:
+  - BaseFoodCondimentPacketDrink
   id: FoodCondimentPacketHorseradish
   name: horseradish sauce
   description: A packet of smelly horseradish sauce.
@@ -194,7 +202,8 @@
     fillBaseName: packet-solid-
 
 - type: entity
-  parent: BaseFoodCondimentPacketDrink
+  parent:
+  - BaseFoodCondimentPacketDrink
   id: FoodCondimentPacketHotsauce
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
@@ -214,7 +223,8 @@
     fillBaseName: packet-trans-
 
 - type: entity
-  parent: BaseFoodCondimentPacketDrink
+  parent:
+  - BaseFoodCondimentPacketDrink
   id: FoodCondimentPacketKetchup
   name: ketchup
   description: You feel more American already.
@@ -234,7 +244,8 @@
     fillBaseName: packet-solid-
 
 - type: entity
-  parent: BaseFoodCondimentPacketDrink
+  parent:
+  - BaseFoodCondimentPacketDrink
   id: FoodCondimentPacketMustard
   name: mustard
   description: A condiment made from the ground-up seeds of the Mustard plant.
@@ -253,7 +264,8 @@
     fillBaseName: packet-solid-
 
 - type: entity
-  parent: BaseFoodCondimentPacket
+  parent:
+  - BaseFoodCondimentPacket
   id: FoodCondimentPacketPepper
   name: black pepper
   description: Often used to flavor food or make people sneeze.
@@ -272,7 +284,8 @@
     fillBaseName: packet-solid-
 
 - type: entity
-  parent: BaseFoodCondimentPacket
+  parent:
+  - BaseFoodCondimentPacket
   id: FoodCondimentPacketSalt
   name: salt
   description: Salt. From space oceans, presumably.
@@ -300,7 +313,8 @@
     fillBaseName: packet-solid-
 
 - type: entity
-  parent: BaseFoodCondimentPacketDrink
+  parent:
+  - BaseFoodCondimentPacketDrink
   id: FoodCondimentPacketSoy
   name: soy sauce
   description: A salty soy-based flavoring.
@@ -319,7 +333,8 @@
     fillBaseName: packet-solid-
 
 - type: entity
-  parent: BaseFoodCondimentPacket
+  parent:
+  - BaseFoodCondimentPacket
   id: FoodCondimentPacketSugar
   name: sugar
   description: Tasty spacey sugar!
@@ -340,7 +355,8 @@
 # Bottles
 
 - type: entity
-  parent: BaseFoodCondiment
+  parent:
+  - BaseFoodCondiment
   id: BaseFoodCondimentBottle
   abstract: true
   name: condiment bottle
@@ -384,7 +400,8 @@
       Glass: 50
 
 - type: entity
-  parent: BaseFoodCondimentBottle
+  parent:
+  - BaseFoodCondimentBottle
   id: FoodCondimentBottleColdsauce
   name: coldsauce bottle
   description: Leaves the tongue numb in its passage.
@@ -410,7 +427,8 @@
       - Coldsauce
 
 - type: entity
-  parent: BaseFoodCondimentBottle
+  parent:
+  - BaseFoodCondimentBottle
   id: FoodCondimentBottleEnzyme
   name: universal enzyme
   description: Used in cooking various dishes.
@@ -436,7 +454,8 @@
       - Enzyme
 
 - type: entity
-  parent: BaseFoodCondimentBottle
+  parent:
+  - BaseFoodCondimentBottle
   id: FoodCondimentBottleVinegar
   name: vinegar bottle
   description: Used in cooking to enhance flavor.
@@ -459,7 +478,8 @@
     state: bottle-vinegar
 
 - type: entity
-  parent: BaseFoodCondimentBottle
+  parent:
+  - BaseFoodCondimentBottle
   id: FoodCondimentBottleHotsauce
   name: hotsauce bottle
   description: You can almost TASTE the stomach ulcers now!
@@ -485,7 +505,8 @@
       - Hotsauce
 
 - type: entity
-  parent: BaseFoodCondimentBottle
+  parent:
+  - BaseFoodCondimentBottle
   id: FoodCondimentBottleKetchup
   name: ketchup bottle
   description: You feel more American already.
@@ -511,7 +532,8 @@
       - Ketchup
 
 - type: entity
-  parent: BaseFoodCondimentBottle
+  parent:
+  - BaseFoodCondimentBottle
   id: FoodCondimentBottleBBQ
   name: BBQ sauce bottle
   description: Hand wipes not included.
@@ -540,7 +562,8 @@
 # Shakers
 
 - type: entity
-  parent: BaseFoodCondiment # TODO: This should not inherit TrashOnSolutionEmpty, SpaceGarbage and the price of 0
+  parent:
+  - BaseFoodCondiment # TODO: This should not inherit TrashOnSolutionEmpty, SpaceGarbage and the price of 0
   id: BaseFoodShaker
   abstract: true
   name: empty shaker
@@ -585,7 +608,8 @@
     solution: food
 
 - type: entity
-  parent: BaseFoodShaker
+  parent:
+  - BaseFoodShaker
   id: FoodShakerSalt
   name: salt shaker
   description: Salt. From space oceans, presumably.
@@ -605,7 +629,8 @@
       - SaltShaker
 
 - type: entity
-  parent: BaseFoodShaker
+  parent:
+  - BaseFoodShaker
   id: FoodShakerPepper
   name: pepper shaker
   description: Often used to flavor food or make people sneeze.

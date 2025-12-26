@@ -8,7 +8,8 @@
 
 - type: entity
   name: large plate
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: FoodPlate
   description: A large plate, excellent for bread.
   components:
@@ -62,7 +63,8 @@
 
 - type: entity
   name: broken plate
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: FoodPlateTrash
   description: A broken plate. Useless.
   components:
@@ -82,7 +84,8 @@
 
 - type: entity
   name: small plate
-  parent: FoodPlate
+  parent:
+  - FoodPlate
   id: FoodPlateSmall
   description: A small plate. Delicate.
   components:
@@ -120,7 +123,8 @@
       Glass: 25
 
 - type: entity
-  parent: FoodPlateTrash
+  parent:
+  - FoodPlateTrash
   id: FoodPlateSmallTrash
   components:
   - type: Sprite
@@ -132,7 +136,8 @@
 # Plastic Plate
 
 - type: entity
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: FoodPlatePlastic
   name: large plastic plate
   description: A large blue plastic plate, excellent for a birthday cake.
@@ -154,7 +159,8 @@
     - Trash
 
 - type: entity
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: FoodPlateSmallPlastic
   name: small plastic plate
   description: A blue plastic plate, excellent for slices of birthday cake.
@@ -179,7 +185,8 @@
 
 - type: entity
   name: pie tin
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: FoodPlateTin
   description: A cheap foil tin for pies.
   components:
@@ -202,7 +209,8 @@
 # Muffin Tin
 
 - type: entity
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: FoodPlateMuffinTin
   name: muffin tin
   description: A cheap foil tin for muffins.
