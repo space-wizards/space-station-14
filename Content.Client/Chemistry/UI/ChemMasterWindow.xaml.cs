@@ -153,10 +153,10 @@ namespace Content.Client.Chemistry.UI
             switch (castState.DrawSource)
             {
                 case ChemMasterDrawSource.Internal:
-                    SetBufferText(castState.BufferCurrentVolume, "chem-master-output-beaker-draw");
+                    SetBufferText(castState.BufferCurrentVolume, "chem-master-output-buffer-draw");
                     break;
                 case ChemMasterDrawSource.External:
-                    SetBufferText(castState.InputContainerInfo?.CurrentVolume, "chem-master-output-buffer-draw");
+                    SetBufferText(castState.InputContainerInfo?.CurrentVolume, "chem-master-output-beaker-draw");
                     break;
                 default:
                     throw new("Unreachable");
@@ -444,7 +444,7 @@ namespace Content.Client.Chemistry.UI
 
         private void SetBufferText(FixedPoint2? volume, string text)
         {
-            BufferCurrentVolume.Text = $" {volume}u";
+            BufferCurrentVolume.Text = $" {volume ?? FixedPoint2.Zero}u";
             DrawSource.Text = Loc.GetString(text);
         }
     }
