@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: OrganDwarfHeart
-  parent: OrganHumanHeart
+  parent:
+  - OrganHumanHeart
   name: dwarf heart
   components:
   - type: Metabolizer
@@ -8,7 +9,8 @@
 
 - type: entity
   id: OrganDwarfLiver
-  parent: OrganHumanLiver
+  parent:
+  - OrganHumanLiver
   name: dwarf liver
   components:
   - type: Metabolizer
@@ -16,7 +18,8 @@
 
 - type: entity
   id: OrganDwarfStomach
-  parent: OrganHumanStomach
+  parent:
+  - OrganHumanStomach
   name: dwarf stomach
   components:
   - type: Sprite

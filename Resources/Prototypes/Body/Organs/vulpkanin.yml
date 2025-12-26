@@ -1,6 +1,7 @@
 - type: entity
   id: OrganVulpkaninStomach
-  parent: OrganAnimalStomach
+  parent:
+  - OrganAnimalStomach
   categories: [ HideSpawnMenu ]
   components:
   - type: SolutionContainerManager

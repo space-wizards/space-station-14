@@ -1,6 +1,7 @@
 - type: entity
   id: BaseHumanOrganUnGibbable
-  parent: BaseItem
+  parent:
+  - BaseItem
   abstract: true
   components:
   - type: Sprite
@@ -29,14 +30,16 @@
 
 - type: entity
   id: BaseHumanOrgan
-  parent: BaseHumanOrganUnGibbable
+  parent:
+  - BaseHumanOrganUnGibbable
   abstract: true
   components:
   - type: Gibbable
 
 - type: entity
   id: OrganHumanBrain
-  parent: BaseHumanOrganUnGibbable
+  parent:
+  - BaseHumanOrganUnGibbable
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
@@ -77,7 +80,8 @@
 
 - type: entity
   id: OrganHumanEyes
-  parent: BaseHumanOrgan
+  parent:
+  - BaseHumanOrgan
   name: eyes
   description: "I see you!"
   components:
@@ -91,7 +95,8 @@
 
 - type: entity
   id: OrganHumanTongue
-  parent: BaseHumanOrgan
+  parent:
+  - BaseHumanOrgan
   name: tongue
   description: "A fleshy muscle mostly used for lying."
   components:
@@ -100,7 +105,8 @@
 
 - type: entity
   id: OrganHumanAppendix
-  parent: BaseHumanOrgan
+  parent:
+  - BaseHumanOrgan
   name: appendix
   components:
   - type: Sprite
@@ -111,7 +117,8 @@
 
 - type: entity
   id: OrganHumanEars
-  parent: BaseHumanOrgan
+  parent:
+  - BaseHumanOrgan
   name: ears
   description: "There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible."
   components:
@@ -120,7 +127,8 @@
 
 - type: entity
   id: OrganHumanLungs
-  parent: BaseHumanOrgan
+  parent:
+  - BaseHumanOrgan
   name: lungs
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   components:
@@ -157,7 +165,8 @@
 
 - type: entity
   id: OrganHumanHeart
-  parent: BaseHumanOrgan
+  parent:
+  - BaseHumanOrgan
   name: heart
   description: "I feel bad for the heartless bastard who lost this."
   components:
@@ -179,7 +188,8 @@
 
 - type: entity
   id: OrganHumanStomach
-  parent: BaseHumanOrgan
+  parent:
+  - BaseHumanOrgan
   name: stomach
   description: "Gross. This is hard to stomach."
   components:
@@ -211,7 +221,8 @@
 
 - type: entity
   id: OrganHumanLiver
-  parent: BaseHumanOrgan
+  parent:
+  - BaseHumanOrgan
   name: liver
   description: "Pairing suggestion: chianti and fava beans."
   components:
@@ -228,7 +239,8 @@
 
 - type: entity
   id: OrganHumanKidneys
-  parent: BaseHumanOrgan
+  parent:
+  - BaseHumanOrgan
   name: kidneys
   description: "Filters toxins from the bloodstream."
   components:

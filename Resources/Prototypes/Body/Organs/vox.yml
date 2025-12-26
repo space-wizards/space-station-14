@@ -1,6 +1,7 @@
 - type: entity
   id: OrganVoxLungs
-  parent: OrganHumanLungs
+  parent:
+  - OrganHumanLungs
   description: "The blue, anaerobic lungs of a vox, they intake nitrogen to breathe. Any form of gaseous oxygen is lethally toxic if breathed in."
   suffix: "vox"
   components:
@@ -15,7 +16,8 @@
     heldPrefix: lungs
 
 - type: entity
-  parent: OrganHumanStomach
+  parent:
+  - OrganHumanStomach
   id: OrganVoxStomach
   name: stomach
   description: "A stomach that smells of ammonia."
@@ -32,7 +34,8 @@
     sprite: Mobs/Species/Vox/organs.rsi
 
 - type: entity
-  parent: OrganHumanLiver
+  parent:
+  - OrganHumanLiver
   id: OrganVoxLiver
   name: liver
   description: "Smells flammable."
@@ -43,7 +46,8 @@
     sprite: Mobs/Species/Vox/organs.rsi
 
 - type: entity
-  parent: OrganHumanHeart
+  parent:
+  - OrganHumanHeart
   id: OrganVoxHeart
   name: heart
   description: "The strange heart of a vox."
@@ -54,7 +58,8 @@
     sprite: Mobs/Species/Vox/organs.rsi
 
 - type: entity
-  parent: OrganHumanKidneys
+  parent:
+  - OrganHumanKidneys
   id: OrganVoxKidneys
   name: kidney
   description: "Smells flammable."
@@ -66,7 +71,8 @@
 
 - type: entity
   id: OrganVoxEyes
-  parent: OrganHumanEyes
+  parent:
+  - OrganHumanEyes
   name: eyes
   components:
   - type: Sprite
@@ -77,7 +83,8 @@
 
 - type: entity
   id: OrganVoxTongueA
-  parent: OrganHumanTongue
+  parent:
+  - OrganHumanTongue
   name: tongue
   description: "A fleshy muscle mostly used for screaming."
   components:
@@ -88,7 +95,8 @@
 
 - type: entity
   id: OrganVoxTongueB
-  parent: OrganHumanTongue
+  parent:
+  - OrganHumanTongue
   name: tongue
   description: "A fleshy muscle mostly used for screaming."
   components:

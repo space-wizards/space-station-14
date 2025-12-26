@@ -1,6 +1,7 @@
 - type: entity
   id: BaseAnimalOrganUnGibbable
-  parent: BaseItem
+  parent:
+  - BaseItem
   abstract: true
   components:
   - type: Organ
@@ -25,14 +26,16 @@
 
 - type: entity
   id: BaseAnimalOrgan
-  parent: BaseAnimalOrganUnGibbable
+  parent:
+  - BaseAnimalOrganUnGibbable
   abstract: true
   components:
   - type: Gibbable
 
 - type: entity
   id: OrganAnimalLungs
-  parent: BaseAnimalOrgan
+  parent:
+  - BaseAnimalOrgan
   name: animal lungs
   categories: [ HideSpawnMenu ]
   components:
@@ -66,7 +69,8 @@
 
 - type: entity
   id: OrganAnimalStomach
-  parent: BaseAnimalOrgan
+  parent:
+  - BaseAnimalOrgan
   name: animal stomach
   categories: [ HideSpawnMenu ]
   components:
@@ -95,7 +99,8 @@
 
 - type: entity
   id: OrganMouseStomach
-  parent: OrganAnimalStomach
+  parent:
+  - OrganAnimalStomach
   categories: [ HideSpawnMenu ]
   components:
   - type: SolutionContainerManager
@@ -113,7 +118,8 @@
 
 - type: entity
   id: OrganAnimalLiver
-  parent: BaseAnimalOrgan
+  parent:
+  - BaseAnimalOrgan
   name: animal liver
   categories: [ HideSpawnMenu ]
   components:
@@ -131,7 +137,8 @@
 
 - type: entity
   id: OrganAnimalHeart
-  parent: BaseAnimalOrgan
+  parent:
+  - BaseAnimalOrgan
   name: animal heart
   categories: [ HideSpawnMenu ]
   components:
@@ -151,7 +158,8 @@
 
 - type: entity
   id: OrganAnimalKidneys
-  parent: BaseAnimalOrgan
+  parent:
+  - BaseAnimalOrgan
   name: animal kidneys
   categories: [ HideSpawnMenu ]
   components:

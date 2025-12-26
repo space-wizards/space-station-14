@@ -1,6 +1,7 @@
 - type: entity
   id: BaseDionaOrgan
-  parent: BaseItem
+  parent:
+  - BaseItem
   abstract: true
   components:
   - type: Sprite
@@ -27,7 +28,9 @@
 
 - type: entity
   id: OrganDionaBrain
-  parent: [BaseDionaOrgan, OrganHumanBrain]
+  parent:
+  - BaseDionaOrgan
+  - OrganHumanBrain
   name: brain
   description: "The central hub of a diona's pseudo-neurological activity, its root-like tendrils search for its former body."
   components:
@@ -54,7 +57,8 @@
 
 - type: entity
   id: OrganDionaEyes
-  parent: BaseDionaOrgan
+  parent:
+  - BaseDionaOrgan
   name: eyes
   description: "I see you!"
   components:
@@ -65,7 +69,8 @@
 
 - type: entity
   id: OrganDionaStomach
-  parent: BaseDionaOrgan
+  parent:
+  - BaseDionaOrgan
   name: stomach
   description: "The diona's equivalent of a stomach, it reeks of asparagus and vinegar."
   components:
@@ -98,7 +103,8 @@
 
 - type: entity
   id: OrganDionaLungs
-  parent: BaseDionaOrgan
+  parent:
+  - BaseDionaOrgan
   name: lungs
   description: "A spongy mess of slimy, leaf-like structures. Capable of breathing both carbon dioxide and oxygen."
   components:
@@ -135,7 +141,8 @@
 # Organs that turn into nymphs on removal
 - type: entity
   id: OrganDionaBrainNymph
-  parent: OrganDionaBrain
+  parent:
+  - OrganDionaBrain
   categories: [ HideSpawnMenu ]
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
@@ -147,7 +154,8 @@
 
 - type: entity
   id: OrganDionaStomachNymph
-  parent: OrganDionaStomach
+  parent:
+  - OrganDionaStomach
   categories: [ HideSpawnMenu ]
   name: stomach
   description: "Gross. This is hard to stomach."
@@ -157,7 +165,8 @@
 
 - type: entity
   id: OrganDionaLungsNymph
-  parent: OrganDionaLungs
+  parent:
+  - OrganDionaLungs
   categories: [ HideSpawnMenu ]
   name: lungs
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
@@ -168,7 +177,8 @@
 # Nymphs that the organs will turn into
 - type: entity
   id: OrganDionaNymphBrain
-  parent: MobDionaNymph
+  parent:
+  - MobDionaNymph
   categories: [ HideSpawnMenu ]
   name: diona nymph
   suffix: Brain
@@ -180,7 +190,8 @@
 
 - type: entity
   id: OrganDionaNymphStomach
-  parent: MobDionaNymphAccent
+  parent:
+  - MobDionaNymphAccent
   categories: [ HideSpawnMenu ]
   name: diona nymph
   suffix: Stomach
@@ -192,7 +203,8 @@
 
 - type: entity
   id: OrganDionaNymphLungs
-  parent: MobDionaNymphAccent
+  parent:
+  - MobDionaNymphAccent
   categories: [ HideSpawnMenu ]
   name: diona nymph
   suffix: Lungs

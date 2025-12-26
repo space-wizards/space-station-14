@@ -1,6 +1,7 @@
 - type: entity
   id: OrganRatLungs
-  parent: OrganHumanLungs
+  parent:
+  - OrganHumanLungs
   suffix: "rat"
   components:
   - type: Metabolizer
@@ -8,7 +9,8 @@
 
 - type: entity
   id: OrganRatStomach
-  parent: OrganAnimalStomach
+  parent:
+  - OrganAnimalStomach
   suffix: "rat"
   components:
   - type: SolutionContainerManager
