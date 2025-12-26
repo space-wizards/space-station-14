@@ -4,7 +4,8 @@
 
 - type: entity
   id: PartAnimal
-  parent: BaseItem
+  parent:
+  - BaseItem
   name: "animal body part"
   abstract: true
   components:
@@ -35,7 +36,8 @@
 - type: entity
   id: HandsAnimal
   name: animal hands
-  parent: PartAnimal
+  parent:
+  - PartAnimal
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -49,7 +51,8 @@
 - type: entity
   id: LegsAnimal
   name: animal legs
-  parent: PartAnimal
+  parent:
+  - PartAnimal
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -63,7 +66,8 @@
 - type: entity
   id: FeetAnimal
   name: animal feet
-  parent: PartAnimal
+  parent:
+  - PartAnimal
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -76,7 +80,8 @@
 - type: entity
   id: TorsoAnimal
   name: animal torso
-  parent: PartAnimal
+  parent:
+  - PartAnimal
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -95,7 +100,8 @@
         Quantity: 20
 
 - type: entity
-  parent: PartAnimal
+  parent:
+  - PartAnimal
   id: LeftHandSmartCorgi
   name: corgi hand
   categories: [ HideSpawnMenu ]
@@ -108,7 +114,8 @@
     symmetry: Left
 
 - type: entity
-  parent: PartAnimal
+  parent:
+  - PartAnimal
   id: RightHandSmartCorgi
   name: corgi hand
   categories: [ HideSpawnMenu ]

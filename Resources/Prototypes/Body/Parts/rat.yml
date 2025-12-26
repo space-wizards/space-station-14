@@ -3,7 +3,8 @@
 - type: entity
   id: TorsoRat
   name: "animal torso"
-  parent: PartAnimal
+  parent:
+  - PartAnimal
   categories: [ HideSpawnMenu ]
   components:
   - type: BodyPart

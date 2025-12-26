@@ -1,7 +1,8 @@
 # TODO BODY: Part damage
 - type: entity
   id: PartSkeleton
-  parent: BaseItem
+  parent:
+  - BaseItem
   name: "skeleton body part"
   abstract: true
   components:
@@ -21,7 +22,8 @@
 - type: entity
   id: TorsoSkeleton
   name: "skeleton torso"
-  parent: PartSkeleton
+  parent:
+  - PartSkeleton
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -36,7 +38,9 @@
   id: HeadSkeleton
   name: "skull"
   description: Alas poor Yorick...
-  parent: [ PartSkeleton, BaseMob ]
+  parent:
+  - PartSkeleton
+  - BaseMob
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -76,7 +80,8 @@
 - type: entity
   id: LeftArmSkeleton
   name: "left skeleton arm"
-  parent: PartSkeleton
+  parent:
+  - PartSkeleton
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -91,7 +96,8 @@
 - type: entity
   id: RightArmSkeleton
   name: "right skeleton arm"
-  parent: PartSkeleton
+  parent:
+  - PartSkeleton
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -106,7 +112,8 @@
 - type: entity
   id: LeftHandSkeleton
   name: "left skeleton hand"
-  parent: PartSkeleton
+  parent:
+  - PartSkeleton
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -121,7 +128,8 @@
 - type: entity
   id: RightHandSkeleton
   name: "right skeleton hand"
-  parent: PartSkeleton
+  parent:
+  - PartSkeleton
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -136,7 +144,8 @@
 - type: entity
   id: LeftLegSkeleton
   name: "left skeleton leg"
-  parent: PartSkeleton
+  parent:
+  - PartSkeleton
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -152,7 +161,8 @@
 - type: entity
   id: RightLegSkeleton
   name: "right skeleton leg"
-  parent: PartSkeleton
+  parent:
+  - PartSkeleton
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -168,7 +178,8 @@
 - type: entity
   id: LeftFootSkeleton
   name: "left skeleton foot"
-  parent: PartSkeleton
+  parent:
+  - PartSkeleton
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi
@@ -183,7 +194,8 @@
 - type: entity
   id: RightFootSkeleton
   name: "right skeleton foot"
-  parent: PartSkeleton
+  parent:
+  - PartSkeleton
   components:
     - type: Sprite
       sprite: Mobs/Species/Skeleton/parts.rsi

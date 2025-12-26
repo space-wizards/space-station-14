@@ -2,7 +2,9 @@
 # TODO BODY: Part damage
 - type: entity
   abstract: true
-  parent: [ BaseItem, BasePart ]
+  parent:
+  - BaseItem
+  - BasePart
   id: PartVox
   name: "vox body part"
   components:
@@ -17,7 +19,9 @@
         Quantity: 10
 
 - type: entity
-  parent: [PartVox, BaseTorso]
+  parent:
+  - PartVox
+  - BaseTorso
   id: TorsoVox
   name: "vox torso"
   components:
@@ -32,7 +36,9 @@
         Quantity: 20
 
 - type: entity
-  parent: [ PartVox, BaseHead ]
+  parent:
+  - PartVox
+  - BaseHead
   id: HeadVox
   name: "vox head"
   components:
@@ -47,7 +53,9 @@
         Quantity: 10
 
 - type: entity
-  parent: [ PartVox, BaseLeftArm ]
+  parent:
+  - PartVox
+  - BaseLeftArm
   id: LeftArmVox
   name: "left vox arm"
   components:
@@ -55,7 +63,9 @@
     state: "l_arm"
 
 - type: entity
-  parent: [ PartVox, BaseRightArm ]
+  parent:
+  - PartVox
+  - BaseRightArm
   id: RightArmVox
   name: "right vox arm"
   components:
@@ -63,7 +73,9 @@
     state: "r_arm"
 
 - type: entity
-  parent: [ PartVox, BaseLeftHand ]
+  parent:
+  - PartVox
+  - BaseLeftHand
   id: LeftHandVox
   name: "left vox hand"
   components:
@@ -71,7 +83,9 @@
     state: "l_hand"
 
 - type: entity
-  parent: [ PartVox, BaseRightHand ]
+  parent:
+  - PartVox
+  - BaseRightHand
   id: RightHandVox
   name: "right vox hand"
   components:
@@ -79,7 +93,9 @@
     state: "r_hand"
 
 - type: entity
-  parent:  [ PartVox, BaseLeftLeg ]
+  parent:
+  - PartVox
+  - BaseLeftLeg
   id: LeftLegVox
   name: "left vox leg"
   components:
@@ -87,7 +103,9 @@
     state: "l_leg"
 
 - type: entity
-  parent:  [ PartVox, BaseRightLeg ]
+  parent:
+  - PartVox
+  - BaseRightLeg
   id: RightLegVox
   name: "right vox leg"
   components:
@@ -95,7 +113,9 @@
     state: "r_leg"
 
 - type: entity
-  parent: [ PartVox, BaseLeftFoot ]
+  parent:
+  - PartVox
+  - BaseLeftFoot
   id: LeftFootVox
   name: "left vox foot"
   components:
@@ -103,7 +123,9 @@
     state: "l_foot"
 
 - type: entity
-  parent: [ PartVox, BaseRightFoot ]
+  parent:
+  - PartVox
+  - BaseRightFoot
   id: RightFootVox
   name: "right vox foot"
   components:

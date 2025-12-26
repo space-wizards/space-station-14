@@ -1,7 +1,8 @@
 # Limbs that spawn when gibbed should get descriptions.
 - type: entity
   abstract: true
-  parent: [ BasePart ]
+  parent:
+  - BasePart
   id: PartVulpkanin
   name: vulpkanin body part
   components:
@@ -9,7 +10,9 @@
     sprite: Mobs/Species/Vulpkanin/parts.rsi
 
 - type: entity
-  parent: [ PartVulpkanin, BaseTorso ]
+  parent:
+  - PartVulpkanin
+  - BaseTorso
   id: TorsoVulpkanin
   name: vulpkanin torso
   components:
@@ -17,7 +20,9 @@
     state: torso_m
 
 - type: entity
-  parent: [ PartVulpkanin, BaseHead ]
+  parent:
+  - PartVulpkanin
+  - BaseHead
   id: HeadVulpkanin
   name: vulpkanin head
   components:
@@ -25,7 +30,9 @@
     state: head_m
 
 - type: entity
-  parent: [ PartVulpkanin, BaseLeftArm ]
+  parent:
+  - PartVulpkanin
+  - BaseLeftArm
   id: LeftArmVulpkanin
   name: left vulpkanin arm
   components:
@@ -33,7 +40,9 @@
     state: l_arm
 
 - type: entity
-  parent: [ PartVulpkanin, BaseRightArm ]
+  parent:
+  - PartVulpkanin
+  - BaseRightArm
   id: RightArmVulpkanin
   name: right vulpkanin arm
   components:
@@ -41,7 +50,9 @@
     state: r_arm
 
 - type: entity
-  parent: [ PartVulpkanin, BaseLeftHand ]
+  parent:
+  - PartVulpkanin
+  - BaseLeftHand
   id: LeftHandVulpkanin
   name: left vulpkanin hand
   components:
@@ -49,7 +60,9 @@
     state: l_hand
 
 - type: entity
-  parent: [ PartVulpkanin, BaseRightHand ]
+  parent:
+  - PartVulpkanin
+  - BaseRightHand
   id: RightHandVulpkanin
   name: right vulpkanin hand
   components:
@@ -57,7 +70,9 @@
     state: r_hand
 
 - type: entity
-  parent: [ PartVulpkanin, BaseLeftLeg ]
+  parent:
+  - PartVulpkanin
+  - BaseLeftLeg
   id: LeftLegVulpkanin
   name: left vulpkanin leg
   components:
@@ -65,7 +80,9 @@
     state: l_leg
 
 - type: entity
-  parent: [ PartVulpkanin, BaseRightLeg ]
+  parent:
+  - PartVulpkanin
+  - BaseRightLeg
   id: RightLegVulpkanin
   name: right vulpkanin leg
   components:
@@ -73,7 +90,9 @@
     state: r_leg
 
 - type: entity
-  parent: [ PartVulpkanin, BaseLeftFoot ]
+  parent:
+  - PartVulpkanin
+  - BaseLeftFoot
   id: LeftFootVulpkanin
   name: left vulpkanin foot
   components:
@@ -81,7 +100,9 @@
     state: l_foot
 
 - type: entity
-  parent: [ PartVulpkanin, BaseRightFoot ]
+  parent:
+  - PartVulpkanin
+  - BaseRightFoot
   id: RightFootVulpkanin
   name: right vulpkanin foot
   components:

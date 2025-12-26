@@ -1,14 +1,18 @@
 # TODO BODY: Part damage
 - type: entity
   id: PartSlime
-  parent: [BaseItem, BasePart]
+  parent:
+  - BaseItem
+  - BasePart
   name: "slime body part"
   abstract: true
 
 - type: entity
   id: TorsoSlime
   name: "slime torso"
-  parent: [PartSlime, BaseTorso]
+  parent:
+  - PartSlime
+  - BaseTorso
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
@@ -17,16 +21,20 @@
 - type: entity
   id: HeadSlime
   name: "slime head"
-  parent: [PartSlime, BaseHead]
+  parent:
+  - PartSlime
+  - BaseHead
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
       state: "head_m"
-  
+
 - type: entity
   id: LeftArmSlime
   name: "left slime arm"
-  parent: [PartSlime, BaseLeftArm]
+  parent:
+  - PartSlime
+  - BaseLeftArm
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
@@ -35,7 +43,9 @@
 - type: entity
   id: RightArmSlime
   name: "right slime arm"
-  parent: [PartSlime, BaseRightArm]
+  parent:
+  - PartSlime
+  - BaseRightArm
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
@@ -44,7 +54,9 @@
 - type: entity
   id: LeftHandSlime
   name: "left slime hand"
-  parent: [PartSlime, BaseLeftHand]
+  parent:
+  - PartSlime
+  - BaseLeftHand
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
@@ -53,7 +65,9 @@
 - type: entity
   id: RightHandSlime
   name: "right slime hand"
-  parent: [PartSlime, BaseRightHand]
+  parent:
+  - PartSlime
+  - BaseRightHand
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
@@ -62,7 +76,9 @@
 - type: entity
   id: LeftLegSlime
   name: "left slime leg"
-  parent: [PartSlime, BaseLeftLeg]
+  parent:
+  - PartSlime
+  - BaseLeftLeg
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
@@ -71,7 +87,9 @@
 - type: entity
   id: RightLegSlime
   name: "right slime leg"
-  parent: [PartSlime, BaseRightLeg]
+  parent:
+  - PartSlime
+  - BaseRightLeg
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
@@ -80,7 +98,9 @@
 - type: entity
   id: LeftFootSlime
   name: "left slime foot"
-  parent: [PartSlime, BaseLeftFoot]
+  parent:
+  - PartSlime
+  - BaseLeftFoot
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
@@ -89,7 +109,9 @@
 - type: entity
   id: RightFootSlime
   name: "right slime foot"
-  parent: [PartSlime, BaseRightFoot]
+  parent:
+  - PartSlime
+  - BaseRightFoot
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi

@@ -2,7 +2,8 @@
 # TODO BODY: Part damage
 - type: entity
   id: BasePart
-  parent: BaseItem
+  parent:
+  - BaseItem
   name: "body part"
   abstract: true
   components:
@@ -23,7 +24,8 @@
 - type: entity
   id: BaseTorso
   name: "torso"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
@@ -32,7 +34,8 @@
 - type: entity
   id: BaseHead
   name: "head"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
@@ -44,7 +47,8 @@
 - type: entity
   id: BaseLeftArm
   name: "left arm"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
@@ -54,7 +58,8 @@
 - type: entity
   id: BaseRightArm
   name: "right arm"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
@@ -64,7 +69,8 @@
 - type: entity
   id: BaseLeftHand
   name: "left hand"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
@@ -74,7 +80,8 @@
 - type: entity
   id: BaseRightHand
   name: "right hand"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
@@ -84,7 +91,8 @@
 - type: entity
   id: BaseLeftLeg
   name: "left leg"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
@@ -95,7 +103,8 @@
 - type: entity
   id: BaseRightLeg
   name: "right leg"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
@@ -106,7 +115,8 @@
 - type: entity
   id: BaseLeftFoot
   name: "left foot"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
@@ -116,7 +126,8 @@
 - type: entity
   id: BaseRightFoot
   name: "right foot"
-  parent: BasePart
+  parent:
+  - BasePart
   abstract: true
   components:
   - type: BodyPart
