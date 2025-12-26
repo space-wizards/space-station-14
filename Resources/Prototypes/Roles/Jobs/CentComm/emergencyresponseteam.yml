@@ -426,7 +426,7 @@
   id: ERTSecurityGearArmedShotgun
   equipment:
     pocket2: WeaponDisabler
-    suitstorage: WeaponSubMachineGunWt550
+    suitstorage: WeaponShotgunEnforcer
   storage:
     back:
     - SmokeGrenade
