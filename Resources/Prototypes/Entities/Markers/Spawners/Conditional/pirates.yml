@@ -1,6 +1,7 @@
 - type: entity
   id: SpawnPointPirates
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   name: Pirate spawn point
   components:
   - type: SpawnPoint

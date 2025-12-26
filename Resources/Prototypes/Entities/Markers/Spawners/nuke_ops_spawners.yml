@@ -140,7 +140,8 @@
 - type: entity
   name: nuke ops loot spawner
   id: NukeOpsLootSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -156,7 +157,8 @@
 - type: entity
   name: nuke ops weapon spawner
   id: NukeOpsWeaponSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -173,7 +175,8 @@
 - type: entity
   name: nuke ops brute medkit spawner
   id: NukeOpsMedkitBruteSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -189,7 +192,8 @@
 - type: entity
   name: nuke ops general medkit spawner
   id: NukeOpsMedkitSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -207,7 +211,8 @@
 - type: entity
   name: nuke ops grenade spawner
   id: NukeOpsGrenadeSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -226,7 +231,8 @@
 - type: entity
   name: nuke ops ammo spawner
   id: NukeOpsAmmoSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:

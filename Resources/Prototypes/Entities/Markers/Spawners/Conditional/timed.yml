@@ -1,7 +1,8 @@
 ﻿- type: entity
   name: AI Timed Spawner
   id: AITimedSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -22,7 +23,8 @@
 - type: entity
   name: Xeno AI Timed Spawner
   id: XenoAITimedSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -42,7 +44,8 @@
 - type: entity
   name: Mouse Timed Spawner
   id: MouseTimedSpawner
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
     - type: Sprite
       layers:
@@ -68,7 +71,8 @@
 - type: entity
   name: Cockroach Timed Spawner
   id: CockroachTimedSpawner
-  parent: MouseTimedSpawner
+  parent:
+  - MouseTimedSpawner
   components:
     - type: Sprite
       layers:

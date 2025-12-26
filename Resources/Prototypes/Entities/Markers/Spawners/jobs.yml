@@ -2,7 +2,8 @@
 
 - type: entity
   id: SpawnPointJobBase
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   abstract: true
   suffix: Job Spawn
   components:
@@ -14,7 +15,8 @@
 - type: entity
   name: observer spawn point
   id: SpawnPointObserver
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     sprite: Markers/jobs.rsi
@@ -29,7 +31,8 @@
 - type: entity
   name: latejoin spawn point
   id: SpawnPointLatejoin
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   components:
   - type: Sprite
     state: green
@@ -39,7 +42,8 @@
 - type: entity
   name: any job spawn point
   id: SpawnPointAnyJob # used for integration tests so we don't need to map every single job spawner on the test map
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   components:
   - type: Sprite
     state: green
@@ -51,7 +55,8 @@
 
 - type: entity
   id: SpawnPointQuartermaster
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: quartermaster
   components:
   - type: SpawnPoint
@@ -64,7 +69,8 @@
 
 - type: entity
   id: SpawnPointCargoTechnician
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: cargotechnician
   components:
   - type: SpawnPoint
@@ -76,7 +82,8 @@
 
 - type: entity
   id: SpawnPointSalvageSpecialist
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: salvagespecialist
   components:
   - type: SpawnPoint
@@ -90,7 +97,8 @@
 
 - type: entity
   id: SpawnPointPassenger
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: passenger
   components:
   - type: SpawnPoint
@@ -102,7 +110,8 @@
 
 - type: entity
   id: SpawnPointTechnicalAssistant
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: technical assistant
   components:
   - type: SpawnPoint
@@ -114,7 +123,8 @@
 
 - type: entity
   id: SpawnPointMedicalIntern
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: medical intern
   components:
   - type: SpawnPoint
@@ -126,7 +136,8 @@
 
 - type: entity
   id: SpawnPointSecurityCadet
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: security cadet
   components:
   - type: SpawnPoint
@@ -138,7 +149,8 @@
 
 - type: entity
   id: SpawnPointResearchAssistant
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: research assistant
   components:
   - type: SpawnPoint
@@ -150,7 +162,8 @@
 
 - type: entity
   id: SpawnPointServiceWorker
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: service worker
   components:
   - type: SpawnPoint
@@ -162,7 +175,8 @@
 
 - type: entity
   id: SpawnPointBartender
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: bartender
   components:
   - type: SpawnPoint
@@ -174,7 +188,8 @@
 
 - type: entity
   id: SpawnPointChef
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: chef
   components:
   - type: SpawnPoint
@@ -186,7 +201,8 @@
 
 - type: entity
   id: SpawnPointBotanist
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: botanist
   components:
   - type: SpawnPoint
@@ -198,7 +214,8 @@
 
 - type: entity
   id: SpawnPointClown
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: clown
   components:
   - type: SpawnPoint
@@ -210,7 +227,8 @@
 
 - type: entity
   id: SpawnPointMime
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: mime
   components:
   - type: SpawnPoint
@@ -222,7 +240,8 @@
 
 - type: entity
   id: SpawnPointChaplain
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: chaplain
   components:
   - type: SpawnPoint
@@ -234,7 +253,8 @@
 
 - type: entity
   id: SpawnPointLibrarian
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: librarian
   components:
   - type: SpawnPoint
@@ -246,7 +266,8 @@
 
 - type: entity
   id: SpawnPointLawyer
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: lawyer
   components:
   - type: SpawnPoint
@@ -258,7 +279,8 @@
 
 - type: entity
   id: SpawnPointJanitor
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: janitor
   components:
   - type: SpawnPoint
@@ -270,7 +292,8 @@
 
 - type: entity
   id: SpawnPointMusician
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: musician
   components:
   - type: SpawnPoint
@@ -282,7 +305,8 @@
 
 - type: entity
   id: SpawnPointBorg
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: cyborg
   components:
   - type: SpawnPoint
@@ -299,7 +323,8 @@
 
 - type: entity
   id: SpawnPointCaptain
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: captain
   components:
   - type: SpawnPoint
@@ -311,7 +336,8 @@
 
 - type: entity
   id: SpawnPointHeadOfPersonnel
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: headofpersonnel
   components:
   - type: SpawnPoint
@@ -325,7 +351,8 @@
 
 - type: entity
   id: SpawnPointChiefEngineer
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: chiefengineer
   components:
   - type: SpawnPoint
@@ -337,7 +364,8 @@
 
 - type: entity
   id: SpawnPointStationEngineer
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: stationengineer
   components:
   - type: SpawnPoint
@@ -349,7 +377,8 @@
 
 - type: entity
   id: SpawnPointAtmos
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: atmospherics
   components:
   - type: SpawnPoint
@@ -363,7 +392,8 @@
 
 - type: entity
   id: SpawnPointChiefMedicalOfficer
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: chiefmedicalofficer
   components:
   - type: SpawnPoint
@@ -375,7 +405,8 @@
 
 - type: entity
   id: SpawnPointMedicalDoctor
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: medicaldoctor
   components:
   - type: SpawnPoint
@@ -387,7 +418,8 @@
 
 - type: entity
   id: SpawnPointParamedic
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: paramedic
   components:
   - type: SpawnPoint
@@ -399,7 +431,8 @@
 
 - type: entity
   id: SpawnPointChemist
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: chemist
   components:
   - type: SpawnPoint
@@ -413,7 +446,8 @@
 
 - type: entity
   id: SpawnPointResearchDirector
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: researchdirector
   components:
   - type: SpawnPoint
@@ -425,7 +459,8 @@
 
 - type: entity
   id: SpawnPointScientist
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: scientist
   components:
   - type: SpawnPoint
@@ -439,7 +474,8 @@
 
 - type: entity
   id: SpawnPointHeadOfSecurity
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: headofsecurity
   components:
   - type: SpawnPoint
@@ -451,7 +487,8 @@
 
 - type: entity
   id: SpawnPointWarden
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: warden
   components:
   - type: SpawnPoint
@@ -463,7 +500,8 @@
 
 - type: entity
   id: SpawnPointSecurityOfficer
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: securityofficer
   components:
   - type: SpawnPoint
@@ -475,7 +513,8 @@
 
 - type: entity
   id: SpawnPointDetective
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: detective
   components:
   - type: SpawnPoint
@@ -487,7 +526,8 @@
 
 - type: entity
   id: SpawnPointBrigmedic
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: brigmedic
   components:
   - type: Sprite
@@ -499,7 +539,8 @@
 # ERT
 - type: entity
   id: SpawnPointERTLeader
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: ERTleader
   components:
   - type: SpawnPoint
@@ -511,7 +552,8 @@
 
 - type: entity
   id: SpawnPointERTChaplain
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: ERTchaplain
   components:
   - type: SpawnPoint
@@ -523,7 +565,8 @@
 
 - type: entity
   id: SpawnPointERTEngineer
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: ERTengineer
   components:
   - type: SpawnPoint
@@ -535,7 +578,8 @@
 
 - type: entity
   id: SpawnPointERTMedical
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: ERTmedical
   components:
   - type: SpawnPoint
@@ -547,7 +591,8 @@
 
 - type: entity
   id: SpawnPointERTSecurity
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: ERTsecurity
   components:
   - type: SpawnPoint
@@ -559,7 +604,8 @@
 
 - type: entity
   id: SpawnPointERTJanitor
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: ERTjanitor
   components:
   - type: SpawnPoint
@@ -573,7 +619,8 @@
 
 - type: entity
   id: SpawnPointReporter
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: reporter
   components:
   - type: SpawnPoint
@@ -585,7 +632,8 @@
 
 - type: entity
   id: SpawnPointPsychologist
-  parent: SpawnPointJobBase
+  parent:
+  - SpawnPointJobBase
   name: psychologist
   components:
   - type: SpawnPoint

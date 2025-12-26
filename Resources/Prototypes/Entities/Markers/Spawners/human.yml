@@ -1,7 +1,8 @@
 - type: entity
   name: syndicate footsoldier spawner
   id: SpawnMobSyndicateFootSoldier
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
 #God forgive me for what I'm about to do
   - type: Sprite
@@ -28,7 +29,8 @@
 - type: entity
   name: syndicate shuttle pilot spawner
   id: SpawnMobSyndicateFootsoldierPilot
-  parent: SpawnMobSyndicateFootSoldier
+  parent:
+  - SpawnMobSyndicateFootSoldier
   components:
   - type: ConditionalSpawner
     prototypes:

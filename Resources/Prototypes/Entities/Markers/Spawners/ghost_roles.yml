@@ -4,7 +4,8 @@
 
 - type: entity
   abstract: true
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: BaseAntagSpawner
   name: ghost role spawn point
   components:
@@ -17,7 +18,8 @@
   id: SpawnPointGhostRatKing
   name: ghost role spawn point
   suffix: rat king
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: GhostRole
     name: ghost-role-information-rat-king-name
@@ -40,7 +42,8 @@
   id: SpawnPointGhostRemilia
   name: ghost role spawn point
   suffix: Remilia
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: GhostRole
     name: ghost-role-information-remilia-name
@@ -63,7 +66,8 @@
   id: SpawnPointGhostCerberus
   name: ghost role spawn point
   suffix: cerberus
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: GhostRole
     name: ghost-role-information-cerberus-name
@@ -87,7 +91,8 @@
   id: SpawnPointGhostNukeOperative
   name: ghost role spawn point
   suffix: nukeops
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: GhostRole
     rules: ghost-role-information-rules-default-team-antagonist
@@ -106,7 +111,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseAntagSpawner
+  parent:
+  - BaseAntagSpawner
   id: SpawnPointLoneNukeOperative
   components:
   - type: GhostRole
@@ -124,7 +130,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointLoneNukeOperative
+  parent:
+  - SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsCommander
   components:
   - type: GhostRole
@@ -136,7 +143,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointLoneNukeOperative
+  parent:
+  - SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsMedic
   components:
   - type: GhostRole
@@ -148,7 +156,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointLoneNukeOperative
+  parent:
+  - SpawnPointLoneNukeOperative
   id: SpawnPointNukeopsOperative
   components:
   - type: GhostRole
@@ -160,7 +169,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseAntagSpawner
+  parent:
+  - BaseAntagSpawner
   id: SpawnPointGhostDragon
   components:
   - type: GhostRole
@@ -177,7 +187,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseAntagSpawner
+  parent:
+  - BaseAntagSpawner
   id: SpawnPointGhostSpaceNinja
   components:
   - type: GhostRole
@@ -197,7 +208,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseAntagSpawner
+  parent:
+  - BaseAntagSpawner
   id: SpawnPointGhostParadoxClone
   components:
   - type: GhostRole
@@ -217,7 +229,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointGhostDerelictCyborg
+  parent:
+  - SpawnPointGhostDerelictCyborg
   id: SpawnPointGhostDerelictEngineeringCyborg
   components:
   - type: GhostRole
@@ -229,7 +242,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseAntagSpawner
+  parent:
+  - BaseAntagSpawner
   id: SpawnPointGhostDerelictCyborg
   components:
   - type: GhostRole
@@ -249,7 +263,8 @@
 
 - type: entity
   categories: [ Spawner ]
-  parent: BaseAntagSpawner
+  parent:
+  - BaseAntagSpawner
   id: SpawnPointGhostRoleMothershipCore
   components:
   - type: Tag
@@ -271,7 +286,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseAntagSpawner
+  parent:
+  - BaseAntagSpawner
   id: SpawnPointGhostRoleXenoborg
   components:
   - type: Tag
@@ -293,7 +309,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointGhostDerelictCyborg
+  parent:
+  - SpawnPointGhostDerelictCyborg
   id: SpawnPointGhostDerelictJanitorCyborg
   components:
   - type: GhostRole
@@ -305,7 +322,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointGhostDerelictCyborg
+  parent:
+  - SpawnPointGhostDerelictCyborg
   id: SpawnPointGhostDerelictMedicalCyborg
   components:
   - type: GhostRole
@@ -317,7 +335,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointGhostDerelictCyborg
+  parent:
+  - SpawnPointGhostDerelictCyborg
   id: SpawnPointGhostDerelictMiningCyborg
   components:
   - type: GhostRole
@@ -329,7 +348,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: SpawnPointGhostDerelictCyborg
+  parent:
+  - SpawnPointGhostDerelictCyborg
   id: SpawnPointGhostDerelictSyndicateAssaultCyborg
   components:
   - type: GhostRole
@@ -341,7 +361,8 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
-  parent: BaseAntagSpawner
+  parent:
+  - BaseAntagSpawner
   id: SpawnPointGhostWizard
   name: ghost role spawn point
   suffix: wizard

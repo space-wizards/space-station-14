@@ -1,6 +1,7 @@
 - type: entity
   id: SpawnPointNukies
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   name: nukies
   components:
   - type: SpawnPoint

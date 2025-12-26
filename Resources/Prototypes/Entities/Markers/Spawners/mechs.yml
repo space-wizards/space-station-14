@@ -1,7 +1,8 @@
 - type: entity
   name: Ripley APLU Spawner
   id: SpawnMechRipley
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:
@@ -15,7 +16,8 @@
 - type: entity
   name: H.O.N.K. Spawner
   id: SpawnMechHonker
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   components:
   - type: Sprite
     layers:

@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: SpawnPointWizard
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   name: wizard
   components:
   - type: SpawnPoint

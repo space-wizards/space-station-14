@@ -1,6 +1,7 @@
 # Weapons
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnPointHeadOfSecurityWeapon
   name: head of security weapon spawner
   components:
@@ -19,7 +20,8 @@
       state: icon
 
 - type: entity
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   id: SpawnPointWardenWeapon
   name: warden weapon spawner
   components:

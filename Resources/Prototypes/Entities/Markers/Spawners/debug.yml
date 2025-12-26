@@ -1,7 +1,8 @@
 - type: entity
   name: Urist Spawner
   id: SpawnMobHuman
-  parent: MarkerBase
+  parent:
+  - MarkerBase
   suffix: DEBUG
   components:
   - type: Sprite
