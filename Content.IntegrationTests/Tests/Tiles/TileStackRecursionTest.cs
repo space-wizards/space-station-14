@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Tiles;
 
-public sealed class TileStacksTest
+public sealed class TileStackRecursionTest
 {
     //This is a magic value setting the hard limit on how much tiles can be stacked on top of each other.
     //Having it too high can result in "doomstacking" tiles - this messes with efficiency of explosions, deconstruction of tiles, and probably also results in memory problems.
@@ -35,8 +35,6 @@ public sealed class TileStacksTest
             nodes.Add((ctdef.ID, int.MaxValue));
             if (ctdef.BaseTurf != null)
                 edges.Add((ctdef.BaseTurf.Value, ctdef.ID));
-            if (ctdef.BaseWhitelist is null)
-                continue;
             Assert.That(ctdef.BaseWhitelist, Does.Not.Contain(ctdef.ID));
             edges.AddRange(ctdef.BaseWhitelist.Select(possibleTurf =>
                 (possibleTurf, new ProtoId<ContentTileDefinition>(ctdef.ID))));
