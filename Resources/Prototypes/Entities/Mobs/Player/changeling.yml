@@ -18,3 +18,5 @@
       enum.StoreUiKey.Key:
         type: StoreBoundUserInterface
         requireInputValidation: false
+      enum.ChangelingTransformUiKey.Key:
+        type: ChangelingTransformBoundUserInterface
