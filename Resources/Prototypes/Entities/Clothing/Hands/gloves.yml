@@ -1,5 +1,6 @@
 - type: entity
-  parent: ClothingHandsBase
+  parent:
+  - ClothingHandsBase
   id: ClothingHandsGlovesBoxingRed
   name: red boxing gloves
   description: Red gloves for competitive boxing.
@@ -31,7 +32,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHandsGlovesBoxingRed
+  parent:
+  - ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingBlue
   name: blue boxing gloves
   description: Blue gloves for competitive boxing.
@@ -47,7 +49,8 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsGlovesBoxingRed
+  parent:
+  - ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingGreen
   name: green boxing gloves
   description: Green gloves for competitive boxing.
@@ -63,7 +66,8 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsGlovesBoxingRed
+  parent:
+  - ClothingHandsGlovesBoxingRed
   id: ClothingHandsGlovesBoxingYellow
   name: yellow boxing gloves
   description: Yellow gloves for competitive boxing.
@@ -79,7 +83,8 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsGlovesBoxingBlue
+  parent:
+  - ClothingHandsGlovesBoxingBlue
   id: ClothingHandsGlovesBoxingRigged
   suffix: Rigged
   components:
@@ -94,7 +99,9 @@
     mustBeEquippedToUse: true
 
 - type: entity
-  parent: [ClothingHandsBase, BaseCommandContraband]
+  parent:
+  - ClothingHandsBase
+  - BaseCommandContraband
   id: ClothingHandsGlovesCaptain
   name: captain gloves
   description: Regal blue gloves, with a nice gold trim. Swanky.
@@ -110,7 +117,8 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent:
+  - ClothingHandsBase
   id: ClothingHandsGlovesHop
   name: papercut-proof gloves
   description: Perfect for dealing with paperwork and matters with bureaucracy.
@@ -130,7 +138,8 @@
 
 #### Medical
 - type: entity
-  parent: ClothingHandsButcherable
+  parent:
+  - ClothingHandsButcherable
   id: ClothingHandsGlovesLatex
   name: latex gloves
   description: Thin sterile latex gloves. Basic PPE for any doctor.
@@ -144,7 +153,8 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsButcherable
+  parent:
+  - ClothingHandsButcherable
   id: ClothingHandsGlovesNitrile
   name: nitrile gloves
   description: High-quality nitrile gloves. Expensive medical PPE.
@@ -158,7 +168,8 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsButcherable
+  parent:
+  - ClothingHandsButcherable
   id: ClothingHandsGlovesLeather
   name: botanist's leather gloves
   description: These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin. They're also quite warm.
@@ -178,7 +189,8 @@
         Caustic: 5
 
 - type: entity
-  parent: ClothingHandsBase
+  parent:
+  - ClothingHandsBase
   id: ClothingHandsGlovesPowerglove
   name: power gloves
   description: Now I'm playin' with power! Wait... they're turned off. #Use "Now I'm playin' with power! BAM!" for when they're turned on
@@ -192,7 +204,8 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsButcherable
+  parent:
+  - ClothingHandsButcherable
   id: ClothingHandsGlovesRobohands
   name: robohands gloves
   description: Beep boop borp!
@@ -207,7 +220,10 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: [ClothingHandsBase, BaseToggleClothing, BaseHighlyIllegalContraband]
+  parent:
+  - ClothingHandsBase
+  - BaseToggleClothing
+  - BaseHighlyIllegalContraband
   id: ClothingHandsGlovesSpaceNinja
   name: space ninja gloves
   description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
@@ -262,7 +278,9 @@
       - type: CriminalRecordsHacker
 
 - type: entity
-  parent: [ ClothingHandsGlovesColorBlack, BaseSecurityEngineeringContraband ]
+  parent:
+  - ClothingHandsGlovesColorBlack
+  - BaseSecurityEngineeringContraband
   id: ClothingHandsGlovesCombat
   name: combat gloves
   description: These tactical gloves are fireproof and shock resistant.
@@ -277,7 +295,8 @@
 
 # can't parent combat gloves since they are butcherable
 - type: entity
-  parent: ClothingHandsGlovesSyntheticBase
+  parent:
+  - ClothingHandsGlovesSyntheticBase
   id: ClothingHandsTacticalMaidGloves
   name: tactical maid gloves
   description: Tactical maid gloves, every self-respecting maid should be able to discreetly eliminate her goals.
@@ -291,7 +310,9 @@
     fiberColor: fibers-black
 
 - type: entity
-  parent: [ BaseSecurityCargoContraband, ClothingHandsGlovesCombat ]
+  parent:
+  - BaseSecurityCargoContraband
+  - ClothingHandsGlovesCombat
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves
   description: High-quality combat gloves to protect hands from mechanical damage during combat.
@@ -309,7 +330,8 @@
     fiberColor: fibers-olive
 
 - type: entity
-  parent: ClothingHandsButcherable
+  parent:
+  - ClothingHandsButcherable
   id: ClothingHandsGlovesFingerless
   name: fingerless gloves
   description: Plain black gloves without fingertips for the hard working.
@@ -327,7 +349,8 @@
         Heat: 0 # no protection
 
 - type: entity
-  parent: ClothingHandsBase
+  parent:
+  - ClothingHandsBase
   id: ClothingHandsGlovesFingerlessInsulated
   name: fingerless insulated gloves
   description: Insulated gloves resistant to shocks, or at least they used to.
@@ -345,7 +368,8 @@
         Heat: 0 # no protection
 
 - type: entity
-  parent: ClothingHandsButcherable
+  parent:
+  - ClothingHandsButcherable
   id: ClothingHandsGlovesMercFingerless
   name: mercenary fingerless gloves
   description: Gloves that may not protect you from finger burns, but will make you cooler.
@@ -365,7 +389,8 @@
 - type: entity
   # Intentionally named after regular gloves, they're meant to be sneaky.
   # This means they can also be butchered if you need to look un-sus before a very thorough search...
-  parent: ClothingHandsGlovesColorBlack
+  parent:
+  - ClothingHandsGlovesColorBlack
   id: ThievingGloves
   suffix: Thieving
   components:
@@ -376,7 +401,8 @@
     stealthy: true
 
 - type: entity
-  parent: ClothingHandsGlovesColorWhite
+  parent:
+  - ClothingHandsGlovesColorWhite
   id: ClothingHandsGlovesCluwne
   name: cluwne hands
   suffix: Unremoveable
@@ -385,7 +411,9 @@
   - type: Unremoveable
 
 - type: entity
-  parent: [ClothingHandsButcherable, BaseSyndicateContraband]
+  parent:
+  - ClothingHandsButcherable
+  - BaseSyndicateContraband
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star
   description: These gloves allow you to punch incredibly fast.
@@ -425,7 +453,9 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHandsBase, BaseSecurityContraband]
+  parent:
+  - ClothingHandsBase
+  - BaseSecurityContraband
   id: ClothingHandsGlovesForensic
   name: forensic gloves
   description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
@@ -441,7 +471,8 @@
 
 # TODO Make lubed items not slip in hands
 - type: entity
-  parent: ClothingHandsBase
+  parent:
+  - ClothingHandsBase
   id: ClothingHandsGlovesJanitor
   name: rubber gloves
   description: High-quality rubber gloves, squeaky to do some cleaning!
@@ -457,7 +488,9 @@
 
 #Knuckledusters
 - type: entity
-  parent: [ClothingHandsBase, BaseMinorContraband]
+  parent:
+  - ClothingHandsBase
+  - BaseMinorContraband
   id: ClothingHandsKnuckleDusters
   name: knuckle dusters
   description: "Cold plasteel knuckle dusters, makes your punches hit much harder."
@@ -484,7 +517,9 @@
     - Kangaroo
 
 - type: entity
-  parent: [ClothingHandsKnuckleDusters, BaseMinorContraband] #Craftable version of base knuckledusters
+  parent:
+  - ClothingHandsKnuckleDusters #Craftable version of base knuckledusters
+  - BaseMinorContraband
   id: ClothingHandsKnuckleDustersBrass
   name: brass knuckle dusters
   description: "Brass knuckle dusters, just like how they used to make em and still hit just as hard."
@@ -503,7 +538,9 @@
     - Kangaroo
 
 - type: entity
-  parent: [ClothingHandsBase, BaseGrandTheftContraband]
+  parent:
+  - ClothingHandsBase
+  - BaseGrandTheftContraband
   id: ClothingHandsKnuckleDustersQM
   name: QM's golden knuckle dusters
   description: "24karat gold infused with plasteel and branded with the Nanotrasen logo. A true symbol of the Quartermaster's might."
@@ -532,7 +569,9 @@
     stealGroup: ClothingHandsKnuckleDustersQM
 
 - type: entity
-  parent: [ClothingHandsBase, BaseSyndicateContraband]
+  parent:
+  - ClothingHandsBase
+  - BaseSyndicateContraband
   id: ClothingHandsKnuckleDustersSyndicate
   name: syndicate knuckle dusters
   description: "Plastitanium knuckle dusters branded with the blood-red S. A real man beats someone to death with these."
@@ -561,7 +600,10 @@
 
 - type: entity
   name: stun knuckle dusters
-  parent: [ClothingHandsBase, BaseToggleClothing, BaseSecurityContraband]
+  parent:
+  - ClothingHandsBase
+  - BaseToggleClothing
+  - BaseSecurityContraband
   id: ClothingHandsKnuckleDustersStun
   description: A pair of knuckle dusters combined with the tech of a stun baton. This makes beating tiders a whole lot easier.
   components:
@@ -628,7 +670,8 @@
     - Antagonists
 
 - type: entity #Admeme
-  parent: ClothingHandsKnuckleDusters
+  parent:
+  - ClothingHandsKnuckleDusters
   id: ClothingHandsKnuckleBoneCrushers
   name: bone crushers
   description: "Blessed by the Gods to break all those who don't obey."

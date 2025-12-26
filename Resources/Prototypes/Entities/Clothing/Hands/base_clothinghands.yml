@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent:
+  - Clothing
   id: ClothingHandsBase
   components:
   - type: Sprite
@@ -30,7 +31,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingHandsBase
+  parent:
+  - ClothingHandsBase
   id: ClothingHandsButcherable
   components:
   - type: Butcherable
@@ -50,7 +52,8 @@
 # gloves that cover the fingertips and have synthetic fibers
 - type: entity
   abstract: true
-  parent: ClothingHandsButcherable
+  parent:
+  - ClothingHandsButcherable
   id: ClothingHandsGlovesSyntheticBase
   components:
   - type: Fiber
@@ -59,7 +62,8 @@
 
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent:
+  - BaseItem
   id: RingBase
   components:
   - type: Clothing

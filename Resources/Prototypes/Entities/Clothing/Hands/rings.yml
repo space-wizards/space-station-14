@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ RingBase, GoldRingBase ]
+  parent:
+  - RingBase
+  - GoldRingBase
   id: GoldRing
   name: gold ring
   description: A precious ring.
@@ -10,7 +12,9 @@
         color: "#ffc833"
 
 - type: entity
-  parent: [ RingBase, SilverRingBase ]
+  parent:
+  - RingBase
+  - SilverRingBase
   id: SilverRing
   name: silver ring
   description: Looks slightly less valuable than a gold one.
@@ -20,7 +24,9 @@
       - state: ring
 
 - type: entity
-  parent: [ RingBase, GoldRingBase ]
+  parent:
+  - RingBase
+  - GoldRingBase
   id: GoldRingDiamond
   name: gold diamond ring
   description: Made from ethically mined space diamonds.
@@ -35,7 +41,9 @@
     price: 1500
 
 - type: entity
-  parent: [ RingBase, SilverRingBase ]
+  parent:
+  - RingBase
+  - SilverRingBase
   id: SilverRingDiamond
   name: silver diamond ring
   description: Made from ethically mined space diamonds.
@@ -49,7 +57,9 @@
     price: 1400
 
 - type: entity
-  parent: [ RingBase, GoldRingBase ]
+  parent:
+  - RingBase
+  - GoldRingBase
   id: GoldRingGem
   name: gold gem ring
   description: Shiny and valuable!
@@ -69,7 +79,9 @@
           gem: Rainbow
 
 - type: entity
-  parent: [ RingBase, SilverRingBase ]
+  parent:
+  - RingBase
+  - SilverRingBase
   id: SilverRingGem
   name: silver gem ring
   description: Shiny and not quite as valuable!
