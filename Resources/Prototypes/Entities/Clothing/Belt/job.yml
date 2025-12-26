@@ -2,7 +2,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingBeltStorageBase
+  parent:
+  - ClothingBeltStorageBase
   id: BaseClothingBeltEngineering
   components:
   - type: Storage
@@ -81,7 +82,8 @@
   - type: Appearance
 
 - type: entity
-  parent: BaseClothingBeltEngineering
+  parent:
+  - BaseClothingBeltEngineering
   id: ClothingBeltUtility
   name: utility belt
   description: Can hold various things.
@@ -96,7 +98,8 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: BaseClothingBeltEngineering
+  parent:
+  - BaseClothingBeltEngineering
   id: ClothingBeltChiefEngineer
   name: chief engineer's toolbelt
   description: Holds tools, looks snazzy.
@@ -112,7 +115,8 @@
     stealGroup: ChiefEngineerToolBelt
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent:
+  - ClothingBeltStorageBase
   id: ClothingBeltJanitor
   name: janibelt
   description: A belt used to hold most janitorial supplies.
@@ -158,7 +162,8 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent:
+  - ClothingBeltStorageBase
   id: ClothingBeltMedical
   name: medical belt
   description: Can hold various medical equipment.
@@ -224,7 +229,8 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltMedical
+  parent:
+  - ClothingBeltMedical
   id: ClothingBeltMedicalEMT
   name: EMT belt
   description: Perfect for holding various equipment for medical emergencies.
@@ -235,7 +241,8 @@
     sprite: Clothing/Belt/emt.rsi
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent:
+  - ClothingBeltStorageBase
   id: ClothingBeltPlant
   name: botanical belt
   description: A belt used to hold most hydroponics supplies. Suprisingly, not green.
@@ -286,7 +293,8 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent:
+  - ClothingBeltStorageBase
   id: ClothingBeltChef
   name: chef belt
   description: A belt used to hold kitchen knives and condiments for quick access.
@@ -363,7 +371,10 @@
   - type: Appearance
 
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSecurityContraband]
+  parent:
+  - ClothingBeltStorageBase
+  - ContentsExplosionResistanceBase
+  - BaseSecurityContraband
   id: ClothingBeltSecurity
   name: security belt
   description: Can hold security gear like handcuffs and flashes.

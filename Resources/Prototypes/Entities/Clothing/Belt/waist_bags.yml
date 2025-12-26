@@ -1,5 +1,6 @@
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent:
+  - ClothingBeltStorageBase
   id: ClothingBeltStorageWaistbag
   name: leather waist bag
   description: A leather waist bag meant for carrying small items.
@@ -14,7 +15,8 @@
 
 #Colorization on worn items doesn't work. If this ever gets fixed, you can duplicate this entry and change the color on the sprite to add color variants.
 #- type: entity
-#  parent: ClothingBeltStorageWaistbag
+#  parent:
+#  - ClothingBeltStorageWaistbag
 #  id: ClothingBeltWaistbagColorRed
 #  name: red waist bag
 #  description: A waist bag meant for carrying small items.

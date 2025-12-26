@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent:
+  - Clothing
   id: ClothingBeltBase
   components:
   - type: Sprite
@@ -20,7 +21,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingBeltBase
+  parent:
+  - ClothingBeltBase
   id: ClothingBeltStorageBase
   components:
   - type: Storage
@@ -41,7 +43,8 @@
 
 - type: entity
   abstract: true
-  parent: ClothingBeltBase
+  parent:
+  - ClothingBeltBase
   id: ClothingBeltAmmoProviderBase
   components:
   - type: BallisticAmmoProvider

@@ -1,7 +1,10 @@
 ## Belts that need/have visualizers
 
 - type: entity
-  parent: [ClothingBeltBase, ClothingSlotBase, BaseCommandContraband]
+  parent:
+  - ClothingBeltBase
+  - ClothingSlotBase
+  - BaseCommandContraband
   id: ClothingBeltSheath
   name: sabre sheath
   description: An ornate sheath designed to hold an officer's blade.
@@ -33,7 +36,8 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent:
+  - ClothingBeltStorageBase
   id: ClothingBeltQuiver
   name: quiver
   description: Can hold up to 15 arrows, and fits snug around your waist.
@@ -64,7 +68,9 @@
 ## Belts without visualizers
 
 - type: entity
-  parent: [ClothingBeltAmmoProviderBase, BaseSecurityBartenderContraband]
+  parent:
+  - ClothingBeltAmmoProviderBase
+  - BaseSecurityBartenderContraband
   id: ClothingBeltBandolier
   name: bandolier
   description: A bandolier for holding shotgun ammunition.
@@ -82,7 +88,9 @@
     capacity: 14
 
 - type: entity
-  parent: [ ClothingBeltStorageBase, BaseMagicalContraband ]
+  parent:
+  - ClothingBeltStorageBase
+  - BaseMagicalContraband
   id: ClothingBeltWand
   name: wand belt
   description: A belt designed to hold various rods of power. A veritable fanny pack of exotic magic.
@@ -102,7 +110,8 @@
 ## Holsters
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent:
+  - ClothingBeltStorageBase
   id: ClothingBeltHolster
   name: shoulder holster
   description: 'A holster to carry a handgun and ammo. WARNING: Badasses only.'
@@ -116,7 +125,9 @@
     - 0,0,3,1
 
 - type: entity
-  parent: [ClothingBeltStorageBase, BaseSyndicateContraband]
+  parent:
+  - ClothingBeltStorageBase
+  - BaseSyndicateContraband
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
   description: A deep shoulder holster capable of holding many types of ballistics.
@@ -142,7 +153,8 @@
 # Weirdly the only webbing with a storage whitelist and item mapper.
 # Might be worth making less common (armory only?) and removing the whitelist to eliminate the inconsistency.
 - type: entity
-  parent: ClothingBeltSecurity
+  parent:
+  - ClothingBeltSecurity
   id: ClothingBeltSecurityWebbing
   name: security carrier
   description: Unique and versatile chest rig, can hold security gear.
@@ -153,7 +165,9 @@
     sprite: Clothing/Belt/securitywebbing.rsi
 
 - type: entity
-  parent: [ ClothingBeltStorageBase, BaseSecurityCargoContraband ]
+  parent:
+  - ClothingBeltStorageBase
+  - BaseSecurityCargoContraband
   id: ClothingBeltMercWebbing
   name: mercenary webbing
   description: Ideal for storing everything from ammo to weapons and combat essentials.
@@ -164,7 +178,8 @@
     sprite: Clothing/Belt/mercwebbing.rsi
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent:
+  - ClothingBeltStorageBase
   id: ClothingBeltSalvageWebbing
   name: salvage rig
   description: Universal unloading system for work in space.
@@ -175,7 +190,10 @@
     sprite: Clothing/Belt/salvagewebbing.rsi
 
 - type: entity
-  parent: [ClothingBeltStorageBase, ContentsExplosionResistanceBase, BaseSyndicateContraband]
+  parent:
+  - ClothingBeltStorageBase
+  - ContentsExplosionResistanceBase
+  - BaseSyndicateContraband
   id: ClothingBeltMilitaryWebbing
   name: chest rig
   description: A set of tactical webbing worn by Syndicate boarding parties.
@@ -190,7 +208,8 @@
     price: 500
 
 - type: entity
-  parent: ClothingBeltMilitaryWebbing
+  parent:
+  - ClothingBeltMilitaryWebbing
   id: ClothingBeltMilitaryWebbingMed
   name: medical chest rig
   description: A set of tactical webbing worn by Gorlex Marauder medic operatives.
@@ -201,7 +220,8 @@
     sprite: Clothing/Belt/militarywebbingmed.rsi
 
 - type: entity
-  parent: ClothingBeltMilitaryWebbing
+  parent:
+  - ClothingBeltMilitaryWebbing
   id: ClothingBeltMilitaryWebbingERT
   name: ERT chest rig
   description: A set of tactical webbing worn by Emergency Response Team operatives.
