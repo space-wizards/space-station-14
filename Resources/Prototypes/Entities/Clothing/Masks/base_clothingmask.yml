@@ -1,6 +1,7 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent:
+  - Clothing
   id: ClothingMaskBase
   components:
   - type: Sprite
@@ -14,13 +15,15 @@
 
 - type: entity
   abstract: true
-  parent: ClothingMaskBase
+  parent:
+  - ClothingMaskBase
   id: ClothingMaskPullableBase
   components:
   - type: Mask
 
 - type: entity
-  parent: BaseAction
+  parent:
+  - BaseAction
   id: ActionToggleMask
   name: Toggle Mask
   description: Handy, but prevents insertion of pie into your pie hole.
@@ -33,7 +36,8 @@
 
 - type: entity
   id: ClothingMaskBaseButcherable
-  parent: ClothingMaskBase
+  parent:
+  - ClothingMaskBase
   abstract: true
   components:
   - type: Butcherable

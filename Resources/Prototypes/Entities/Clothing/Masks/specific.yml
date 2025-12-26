@@ -1,5 +1,7 @@
 - type: entity
-  parent: [ClothingMaskBase, BaseChameleon]
+  parent:
+  - ClothingMaskBase
+  - BaseChameleon
   id: ClothingMaskGasChameleon
   name: gas mask
   description: A face-covering mask that can be connected to an air supply.
@@ -21,7 +23,8 @@
       - Snout
 
 - type: entity
-  parent: ClothingMaskGasChameleon
+  parent:
+  - ClothingMaskGasChameleon
   id: ClothingMaskGasVoiceChameleon
   suffix: Voice Mask, Chameleon
   components:
@@ -43,7 +46,8 @@
           type: VoiceMaskBoundUserInterface
 
 - type: entity
-  parent: ClothingMaskBase
+  parent:
+  - ClothingMaskBase
   id: ClothingMaskGoldenCursed
   name: golden mask
   description: Previously used in strange pantomimes, after one of the actors went mad on stage these masks have avoided use. You swear its face contorts when you're not looking.
