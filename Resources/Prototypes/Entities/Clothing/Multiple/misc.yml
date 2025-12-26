@@ -1,5 +1,6 @@
 - type: entity
-  parent: Clothing
+  parent:
+  - Clothing
   id: ClothingMultipleHeadphones
   name: headphones
   description: Quality headphones from Drunk Masters, with good sound insulation.
