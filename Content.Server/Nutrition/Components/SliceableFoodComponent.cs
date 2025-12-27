@@ -33,5 +33,21 @@ public sealed partial class SliceableFoodComponent : Component
     /// all the pieces will be shifted in random directions.
     /// </summary>
     [DataField]
-    public float SpawnOffset = 0.5f;
+    public float SpawnOffset = 2f;
+
+    /// <summary>
+    /// For botany produe, should the number of slices be dependant on its potency (true), or static (false). If there is no potency found, defaults to false outcome.
+    /// </summary>
+    /// <remarks>
+    /// for most plants this won't be relevent, as potency will only effect reagent amount which is already accounted for as long as reagents are transferred.
+    /// would instead be relevent for stackable produce stuch as towercap or cotton
+    /// </remarks>
+    [DataField]
+    public bool PotencyEffectsCount = false;
+
+    /// <summary>
+    /// whether or not any sharp object can be used to cut this (true), or only a knife utensil (false)
+    /// </summary>
+    [DataField]
+    public bool AnySharp = false;
 }
