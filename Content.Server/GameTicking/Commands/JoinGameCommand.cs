@@ -18,8 +18,18 @@ namespace Content.Server.GameTicking.Commands
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
         [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+
+        private readonly ISawmill _sawmill;
 
         public override string Command => "joingame";
+
+        public JoinGameCommand()
+        {
+            IoCManager.InjectDependencies(this);
+
+            _sawmill = _logManager.GetSawmill("security");
+        }
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -38,7 +48,7 @@ namespace Content.Server.GameTicking.Commands
 
             if (_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
             {
-                Logger.InfoS("security", $"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
+                _sawmill.Info($"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
                 shell.WriteError(Loc.GetString("cmd-joingame-not-in-lobby", ("player", player.Name)));
                 return;
             }
