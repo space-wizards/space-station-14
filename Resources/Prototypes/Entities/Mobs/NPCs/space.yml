@@ -45,6 +45,7 @@
         Quantity: 300
   - type: CombatMode
   - type: Temperature
+  - type: TemperatureDamage
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: MeleeWeapon
@@ -512,6 +513,7 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
   - type: Temperature
+  - type: TemperatureDamage
     heatDamageThreshold: 500
     coldDamageThreshold: 0
   - type: Reactive
