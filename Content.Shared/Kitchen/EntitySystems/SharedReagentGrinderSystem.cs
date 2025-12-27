@@ -16,20 +16,22 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     /// <param name="uid">The entity which we check for solutions.</param>
     /// <param name="program">The grinder program.</param>
     /// <returns>The solution received, or null if none.</returns>
-    public Solution? GetGrinderSolution(EntityUid uid, GrinderProgram program)
+    public Solution? GetGrinderSolution(Entity<ExtractableComponent?> ent, GrinderProgram program)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return null;
+
         switch (program)
         {
             case GrinderProgram.Grind:
-                if (TryComp<ExtractableComponent>(uid, out var extractable)
-                    && extractable.GrindableSolution is not null
-                    && _solutionContainersSystem.TryGetSolution(uid, extractable.GrindableSolution, out _, out var solution))
+                if (ent.Comp.GrindableSolution is not null
+                    && _solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolution, out _, out var solution))
                 {
                     return solution;
                 }
                 break;
             case GrinderProgram.Juice:
-                return CompOrNull<ExtractableComponent>(uid)?.JuiceSolution;
+                return ent.Comp.JuiceSolution;
         }
 
         return null;
@@ -38,23 +40,29 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     /// <summary>
     /// Checks whether the entity can be ground using a ReagentGrinder.
     /// </summary>
-    /// <param name="uid">The entity to check.</param>
+    /// <param name="ent">The entity to check.</param>
     /// <returns>True if it can be ground, otherwise false.</returns>
-    public bool CanGrind(EntityUid uid)
+    public bool CanGrind(Entity<ExtractableComponent?> ent)
     {
-        var solutionName = CompOrNull<ExtractableComponent>(uid)?.GrindableSolution;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
 
-        return solutionName is not null && _solutionContainersSystem.TryGetSolution(uid, solutionName, out _, out _);
+        var solutionName = ent.Comp.GrindableSolution;
+
+        return solutionName is not null && _solutionContainersSystem.TryGetSolution(ent.Owner, solutionName, out _, out _);
     }
 
     /// <summary>
     /// Checks whether the entity can be juiced using a ReagentGrinder.
     /// </summary>
-    /// <param name="uid">The entity to check.</param>
+    /// <param name="ent">The entity to check.</param>
     /// <returns>True if it can be juiced, otherwise false.</returns>
-    public bool CanJuice(EntityUid uid)
+    public bool CanJuice(Entity<ExtractableComponent?> ent)
     {
-        return CompOrNull<ExtractableComponent>(uid)?.JuiceSolution is not null;
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.JuiceSolution is not null;
     }
 }
 
