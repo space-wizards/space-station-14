@@ -15,19 +15,19 @@ namespace Content.Shared.Temperature.HeatContainer;
 public partial struct HeatContainer : IRobustCloneable<HeatContainer>
 {
     /// <summary>
-    /// The heat capacity of this container.
+    /// The heat capacity of this container in Joules per Kelvin.
     /// This determines how much energy is required to change the temperature of the container.
-    /// Higher values mean the container can absorb or reject more heat energy
+    /// Higher values mean the container can absorb or release more heat energy
     /// without a significant change in temperature.
     /// </summary>
     [DataField]
-    public float HeatCapacity = 4f;
+    public float HeatCapacity = 4000f; // about 1kg of water
 
     /// <summary>
     /// The current temperature of the container in Kelvin.
     /// </summary>
     [DataField]
-    public float Temperature = Atmospherics.T20C;
+    public float Temperature = Atmospherics.T20C; // room temperature
 
     /// <summary>
     /// The current temperature of the container in Celsius.
@@ -42,6 +42,12 @@ public partial struct HeatContainer : IRobustCloneable<HeatContainer>
     /// </summary>
     [ViewVariables]
     public float InternalEnergy => Temperature * HeatCapacity;
+
+    public HeatContainer(float heatCapacity, float temperature)
+    {
+        HeatCapacity = heatCapacity;
+        Temperature = temperature;
+    }
 
     /// <summary>
     /// Copy constructor for implementing ICloneable.
