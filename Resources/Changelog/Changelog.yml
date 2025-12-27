@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Thinbug0
-  changes:
-  - message: New onion mutation, Bloonions! floating balloon-like onions.
-    type: Add
-  id: 8835
-  time: '2025-08-07T01:51:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33375
 - author: Kittygyat
   changes:
   - message: Made baseball bats 1x4 instead of 2x2
@@ -3944,3 +3937,12 @@
   id: 9335
   time: '2025-12-27T14:14:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42111
+- author: EchoOfNothing
+  changes:
+  - message: IFF controls are now merged into a single control.
+    type: Tweak
+  - message: Syndicate IFF console now has IFF turned off by default.
+    type: Tweak
+  id: 9336
+  time: '2025-12-27T14:32:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42104
