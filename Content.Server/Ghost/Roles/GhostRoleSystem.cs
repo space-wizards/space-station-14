@@ -788,6 +788,7 @@ public sealed class GhostRoleSystem : EntitySystem
         var mob = Spawn(component.Prototype, Transform(uid).Coordinates);
         _transform.AttachToGridOrMap(mob);
 
+        // If our spawner is in a container, make sure the spawned entity ends up in there too
         if (_containers.TryGetContainingContainer((component.Owner, null, null), out var container))
             _containers.Insert(mob, container);
 
