@@ -15,11 +15,12 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Players;
 using Content.Shared.Speech;
-
 using Content.Shared.Whitelist;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -36,11 +37,14 @@ public abstract partial class SharedMindSystem : EntitySystem
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
 
     private HashSet<Entity<MindComponent>> _pickingMinds = new();
+
+    private readonly EntProtoId _mindProto = "MindBase";
 
     public override void Initialize()
     {
@@ -64,6 +68,8 @@ public abstract partial class SharedMindSystem : EntitySystem
 
     private void OnMindStartup(EntityUid uid, MindComponent component, ComponentStartup args)
     {
+        component.MindRoleContainer = _container.EnsureContainer<Container>(uid, MindComponent.MindRoleContainerId);
+
         if (component.UserId == null)
             return;
 
@@ -223,7 +229,7 @@ public abstract partial class SharedMindSystem : EntitySystem
 
     public Entity<MindComponent> CreateMind(NetUserId? userId, string? name = null)
     {
-        var mindId = Spawn(null, MapCoordinates.Nullspace);
+        var mindId = Spawn(_mindProto, MapCoordinates.Nullspace);
         _metadata.SetEntityName(mindId, name == null ? "mind" : $"mind ({name})");
         var mind = EnsureComp<MindComponent>(mindId);
         mind.CharacterName = name;
@@ -605,15 +611,14 @@ public abstract partial class SharedMindSystem : EntitySystem
     }
 
     /// <summary>
-    ///     A string to represent the mind for logging
+    /// A string to represent the mind for logging.
     /// </summary>
-    public string MindOwnerLoggingString(MindComponent mind)
+    public MindStringRepresentation MindOwnerLoggingString(MindComponent mind)
     {
-        if (mind.OwnedEntity != null)
-            return ToPrettyString(mind.OwnedEntity.Value);
-        if (mind.UserId != null)
-            return mind.UserId.Value.ToString();
-        return "(originally " + mind.OriginalOwnerUserId + ")";
+        return new MindStringRepresentation(
+            ToPrettyString(mind.OwnedEntity),
+            mind.UserId != null,
+            mind.UserId ?? mind.OriginalOwnerUserId);
     }
 
     public string? GetCharacterName(NetUserId userId)
@@ -730,3 +735,16 @@ public record struct GetCharactedDeadIcEvent(bool? Dead);
 /// <param name="Unrevivable"></param>
 [ByRefEvent]
 public record struct GetCharacterUnrevivableIcEvent(bool? Unrevivable);
+
+public sealed record MindStringRepresentation(EntityStringRepresentation? OwnedEntity, bool PlayerPresent, NetUserId? Player) : IAdminLogsPlayerValue
+{
+    public override string ToString()
+    {
+        var str = OwnedEntity?.ToString() ?? "mind without entity";
+        if (Player != null)
+            str += $" ({(PlayerPresent ? "" : "originally ")} {Player})";
+        return str;
+    }
+
+    IEnumerable<NetUserId> IAdminLogsPlayerValue.Players => Player == null ? [] : [Player.Value];
+}

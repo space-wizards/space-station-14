@@ -24,6 +24,7 @@ public sealed partial class HTNComponent : NPCComponent
     /// </summary>
     [ViewVariables]
     public HTNPlan? Plan;
+    // TODO FULL GAME SAVE serialize this?
 
     /// <summary>
     /// How long to wait after having planned to try planning again.

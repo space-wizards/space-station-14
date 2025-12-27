@@ -98,9 +98,12 @@
   - FauxTileAstroGrass
   - FauxTileMowedAstroGrass
   - FauxTileJungleAstroGrass
+  - FauxTileDarkAstroGrass
+  - FauxTileLightAstroGrass
   - FauxTileAstroIce
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand
+  - FauxTileDesertAstroSand
 
 - type: technology
   id: BiochemicalStasis
@@ -128,6 +131,7 @@
   cost: 5000
   recipeUnlocks:
   - BorgModuleAdvancedChemical
+  - AdvancedJetInjector
 
 - type: technology
   id: AdvancedCleaning

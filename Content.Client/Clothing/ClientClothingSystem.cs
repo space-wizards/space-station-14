@@ -1,12 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Numerics;
 using Content.Client.DisplacementMap;
 using Content.Client.Inventory;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
-using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -14,7 +12,6 @@ using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Utility;
 using static Robust.Client.GameObjects.SpriteComponent;
@@ -177,6 +174,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         var layer = new PrototypeLayerData();
         layer.RsiPath = rsi.Path.ToString();
         layer.State = state;
+        layer.Scale = clothing.Scale;
         layers = new() { layer };
 
         return true;

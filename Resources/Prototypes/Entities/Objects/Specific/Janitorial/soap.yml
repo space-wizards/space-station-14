@@ -1,17 +1,16 @@
+# When adding new soaps, also add them to id: AllSoapsTable
+
 - type: entity
-  name: soap
-  id: Soap
+  abstract: true
   parent: BaseItem
-  description: A cheap bar of soap. Doesn't smell.
+  id: BaseSoap
+  name: soap
   components:
   - type: Tag
     tags:
     - Soap
   - type: Sprite
     sprite: Objects/Specific/Janitorial/soap.rsi
-    layers:
-    - state: soap-4
-      map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: soap-
@@ -62,19 +61,29 @@
     solution: soap
   - type: FlavorProfile
     flavors:
-      - clean
-  - type: Food
+    - clean
+  - type: Edible
     solution: soap
   - type: BadFood
   - type: CleansForensics
   - type: Residue
     residueAdjective: residue-slippery
+
+- type: entity
+  parent: BaseSoap
+  id: Soap
+  description: A cheap bar of soap. Doesn't smell.
+  components:
+  - type: Sprite
+    layers:
+    - state: soap-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Residue
     residueColor: residue-green
 
 - type: entity
-  name: soap
+  parent: BaseSoap
   id: SoapNT
-  parent: Soap
   description: A Nanotrasen brand bar of soap. Smells of plasma.
   components:
   - type: Sprite
@@ -93,13 +102,11 @@
         - ReagentId: SoapReagent
           Quantity: 100
   - type: Residue
-    residueAdjective: residue-slippery
     residueColor: residue-grey
 
 - type: entity
-  name: soap
+  parent: BaseSoap
   id: SoapDeluxe
-  parent: Soap
   description: A deluxe Waffle Co. brand bar of soap. Smells of strawberries.
   components:
   - type: Sprite
@@ -111,13 +118,11 @@
   - type: Item
     heldPrefix: deluxe
   - type: Residue
-    residueAdjective: residue-slippery
     residueColor: residue-brown
 
 - type: entity
-  name: soap
+  parent: [BaseSoap, BaseSyndicateContraband]
   id: SoapSyndie
-  parent: [Soap, BaseSyndicateContraband]
   description: An untrustworthy bar of soap. Smells of fear.
   components:
   - type: Sprite
@@ -140,21 +145,27 @@
   - type: CleansForensics
     cleanDelay: 8.0
   - type: Residue
-    residueAdjective: residue-slippery
     residueColor: residue-red
   - type: StaticPrice
     price: 500
 
 - type: entity
-  name: soaplet
+  parent: BaseSoap
   id: SoapletSyndie
-  categories: [ HideSpawnMenu ]
-  parent: Soap
+  name: soaplet
   description: A tiny piece of syndicate soap.
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     layers:
     - state: syndie-soaplet
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 10
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 10
   - type: Slippery
   - type: StepTrigger
     intersectRatio: 0.04
@@ -187,9 +198,8 @@
         volume: -8
 
 - type: entity
-  name: soap
+  parent: BaseSoap
   id: SoapHomemade
-  parent: Soap
   description: A homemade bar of soap. Smells of... well....
   components:
   - type: Sprite
@@ -198,8 +208,6 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: SolutionContainerVisuals
     fillBaseName: gibs-
-  - type: Slippery
-  - type: StepTrigger
   - type: Item
     heldPrefix: gibs
   - type: FlavorProfile
@@ -207,13 +215,12 @@
       - clean
       - meaty
   - type: Residue
-    residueAdjective: residue-slippery
     residueColor: residue-red
 
 - type: entity
-  name: omega soap
+  parent: BaseSoap
   id: SoapOmega
-  parent: Soap
+  name: omega soap
   description: The most advanced soap known to mankind. Smells of bluespace.
   components:
   - type: Sprite
@@ -237,27 +244,4 @@
         - ReagentId: SoapReagent
           Quantity: 240
   - type: Residue
-    residueAdjective: residue-slippery
     residueColor: residue-blue
-
-- type: entity
-  name: soap
-  id: SoapBorg # Intended for borg internals, not slippery or food, not a container for soap reagent
-  parent: BaseItem
-  description: A Nanotrasen brand bar of soap. Smells of plasma and machines.
-  components:
-  - type: Sprite
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    layers:
-    - state: nt-4
-  - type: Appearance
-  - type: Item
-    sprite: Objects/Specific/Janitorial/soap.rsi
-    storedRotation: -90
-  - type: CleansForensics
-  - type: Residue
-    residueAdjective: residue-slippery
-    residueColor: residue-grey
-  - type: Tag
-    tags:
-    - Soap

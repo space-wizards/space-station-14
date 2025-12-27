@@ -1,5 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Components;
+using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Hands.Components;
 using Robust.Shared.Prototypes;
