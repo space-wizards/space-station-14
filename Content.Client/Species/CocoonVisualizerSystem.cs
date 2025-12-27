@@ -38,7 +38,6 @@ public sealed class CocoonVisualizerSystem : EntitySystem
         { "MobFelinid", new Vector2(1.0f, 1.0f) },
         { "MobArachnid", new Vector2(1.1f, 1.0f) },
         { "MobGingerbread", new Vector2(1.0f, 1.0f) },
-        { "MobThaven", new Vector2(1.0f, 1.2f) },
     };
 
     /// <summary>
