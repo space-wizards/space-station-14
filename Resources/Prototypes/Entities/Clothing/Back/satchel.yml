@@ -176,7 +176,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/ninja.rsi
-  - type: Storage
+  - type: Storage # Backpack sounds are null due to silent ninja tech
     storageOpenSound: null
     storageInsertSound: null
 
