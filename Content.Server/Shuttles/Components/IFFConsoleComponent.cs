@@ -12,6 +12,9 @@ public sealed partial class IFFConsoleComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("allowedFlags")]
     public IFFFlags AllowedFlags = IFFFlags.HideLabel;
 
+    /// <summary>
+    /// IFF flags will be added to the grid on MapInitEvent, if set to true.
+    /// </summary>
     [DataField]
     public bool HideOnInit = false;
 }
