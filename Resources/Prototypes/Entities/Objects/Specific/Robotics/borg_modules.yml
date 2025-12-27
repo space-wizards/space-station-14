@@ -855,7 +855,6 @@
     - state: icon-diagnosis
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
     - item: BorgHealthAnalyzer
     - item: ClothingNeckStethoscope
   - type: BorgModuleIcon
@@ -872,7 +871,7 @@
     - state: icon-treatment
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
+    - item: BorgHealthAnalyzer
     - item: Gauze
       hand:
         emptyLabel: borg-slot-topicals-empty
@@ -915,7 +914,7 @@
     - state: icon-defib
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
+    - item: BorgHealthAnalyzer
     - item: DefibrillatorOneHandedUnpowered
     - item: Crowbar
     - item: BorgFireExtinguisher
@@ -935,7 +934,7 @@
     - state: icon-chem
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
+    - item: BorgHealthAnalyzer
     - item: AdvancedJetInjector
     - item: Syringe
     - item: BorgDropper
@@ -975,7 +974,7 @@
     - state: icon-chemist
   - type: ItemBorgModule
     hands:
-    - item: HandheldHealthAnalyzerUnpowered
+    - item: BorgHealthAnalyzer
     - item: BorgHypo
     - item: SyringeBluespace
     - item: BorgDropper
