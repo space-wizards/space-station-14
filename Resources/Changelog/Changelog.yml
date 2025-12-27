@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed inventory sprites flickering when hovering over the slot with an
-      item.
-    type: Fix
-  id: 8834
-  time: '2025-08-06T20:14:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39379
 - author: Thinbug0
   changes:
   - message: New onion mutation, Bloonions! floating balloon-like onions.
@@ -3945,3 +3937,10 @@
   id: 9334
   time: '2025-12-26T21:47:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/38481
+- author: SonarZeBat
+  changes:
+  - message: Xenoborgs gamemode minimum players changed from 40 to 30.
+    type: Tweak
+  id: 9335
+  time: '2025-12-27T14:14:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42111
