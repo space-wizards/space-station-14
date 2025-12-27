@@ -17,19 +17,12 @@ namespace Content.Server.GameTicking.Commands
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
-        [Dependency] private readonly StationJobsSystem _stationJobsSystem = default!;
+        [Dependency] private readonly StationJobsSystem _stationJobs = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
 
-        private readonly ISawmill _sawmill;
+        private ISawmill? _sawmill;
 
         public override string Command => "joingame";
-
-        public JoinGameCommand()
-        {
-            IoCManager.InjectDependencies(this);
-
-            _sawmill = _logManager.GetSawmill("security");
-        }
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -46,8 +39,10 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            if (_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) && status == PlayerGameStatus.JoinedGame)
+            if (_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
+                status == PlayerGameStatus.JoinedGame)
             {
+                _sawmill ??= _logManager.GetSawmill("security");
                 _sawmill.Info($"{player.Name} ({player.UserId}) attempted to latejoin while in-game.");
                 shell.WriteError(Loc.GetString("cmd-joingame-not-in-lobby", ("player", player.Name)));
                 return;
@@ -69,9 +64,10 @@ namespace Content.Server.GameTicking.Commands
 
                 var station = EntityManager.GetEntity(new NetEntity(sid));
                 var jobPrototype = _prototypeManager.Index<JobPrototype>(id);
-                if (_stationJobsSystem.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
+                if (_stationJobs.TryGetJobSlot(station, jobPrototype, out var slots) == false || slots == 0)
                 {
-                    shell.WriteLine(Loc.GetString("cmd-joingame-no-available-slots", ("job", jobPrototype.LocalizedName)));
+                    shell.WriteLine(Loc.GetString("cmd-joingame-no-available-slots",
+                        ("job", jobPrototype.LocalizedName)));
                     return;
                 }
 
