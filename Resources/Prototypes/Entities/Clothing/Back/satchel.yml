@@ -170,6 +170,22 @@
 
 - type: entity
   parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelNinja
+  name: spider clan satchel
+  description: A robust satchel for stashing your loot.
+  components:
+  - type: Contraband
+    severity: HighlyIllegal
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/ninja.rsi
+  - type: Storage
+    grid:
+    - 0,0,2,3
+    - 4,0,7,3
+    - 9,0,11,3
+
+- type: entity
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelHolding
   name: satchel of holding
   description: A satchel that opens into a localized pocket of bluespace.
