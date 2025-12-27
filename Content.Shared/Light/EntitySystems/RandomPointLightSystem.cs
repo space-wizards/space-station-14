@@ -12,7 +12,6 @@ namespace Content.Shared.Light.EntitySystems;
 public sealed class RandomPointLightSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
 
 
