@@ -856,6 +856,7 @@
   - type: ItemBorgModule
     hands:
     - item: HandheldHealthAnalyzerUnpowered
+    - item: BorgHealthAnalyzer
     - item: ClothingNeckStethoscope
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
@@ -935,6 +936,7 @@
   - type: ItemBorgModule
     hands:
     - item: HandheldHealthAnalyzerUnpowered
+    - item: AdvancedJetInjector
     - item: Syringe
     - item: BorgDropper
     - item: BaseChemistryEmptyVial
