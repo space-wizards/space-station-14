@@ -56,14 +56,8 @@ public sealed partial class ShuttleSystem
         }
         else
         {
-            if ((component.AllowedFlags & IFFFlags.HideLabel) != 0x0)
-            {
-                RemoveIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
-            }
-            if ((component.AllowedFlags & IFFFlags.Hide) != 0x0)
-            {
-                RemoveIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
-            }
+            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
         }
     }
 
@@ -76,8 +70,14 @@ public sealed partial class ShuttleSystem
 
         if (component.HideOnInit)
         {
-            AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
-            AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
+            if ((component.AllowedFlags & IFFFlags.HideLabel) != 0x0)
+            {
+                AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+            }
+            if ((component.AllowedFlags & IFFFlags.Hide) != 0x0)
+            {
+                AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
+            }
         }
     }
 
