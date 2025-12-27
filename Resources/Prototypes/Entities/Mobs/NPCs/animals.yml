@@ -2661,7 +2661,7 @@
     cooldown: 90
     actionDescription: bite-action-description-sleep
     injectedReagents:
-      ChloralHydrate: 10
+      ChloralHydrate: 15
 
 - type: entity
   parent:
