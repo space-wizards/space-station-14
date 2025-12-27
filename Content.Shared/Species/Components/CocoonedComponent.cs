@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Drywink <hugogrethen@gmail.com>
-//
-// SPDX-License-Identifier: MIT
-
 using Content.Shared.Alert;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
