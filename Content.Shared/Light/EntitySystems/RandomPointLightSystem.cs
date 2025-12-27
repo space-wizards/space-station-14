@@ -1,6 +1,7 @@
 using System.Numerics;
-using Robust.Shared.Random;
 using Content.Shared.Light.Components;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Light.EntitySystems;
@@ -29,17 +30,21 @@ public sealed class RandomPointLightSystem : EntitySystem
 
         var rpl = ent.Comp;
 
-        // Keeping value between 0.5 and 1.0 so that it's always bright
+        // TODO: Replace with RandomPredicted once the engine PR is merged
+        var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(ent).Id);
+        var rand = new System.Random(seed);
+
+        // Keeping the V variable between 0.5 and 1.0 so that it's always bright
         var hsv = new Vector4(
-            _random.NextFloat(0, 1),
-            _random.NextFloat(0, 1),
-            _random.NextFloat(0.5f, 1),
+            rand.NextFloat(0, 1),
+            rand.NextFloat(0, 1),
+            rand.NextFloat(0.5f, 1),
             1);
 
         var color = Color.FromHsv(hsv);
 
-        _light.SetRadius(ent, _random.NextFloat(rpl.MinRadius, rpl.MaxRadius));
-        _light.SetEnergy(ent, _random.NextFloat(rpl.MinEnergy, rpl.MaxEnergy));
+        _light.SetRadius(ent, rand.NextFloat(rpl.MinRadius, rpl.MaxRadius));
+        _light.SetEnergy(ent, rand.NextFloat(rpl.MinEnergy, rpl.MaxEnergy));
         _light.SetColor(ent, color);
     }
 }
