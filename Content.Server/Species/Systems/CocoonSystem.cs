@@ -7,6 +7,7 @@ using System.Linq;
 using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Containers.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
@@ -388,6 +389,10 @@ public sealed class CocoonSystem : SharedCocoonSystem
         }
 
         cocoonComp.Victim = target;
+
+        // Add BloodstreamProxyContainerComponent to allow syringes/hyposprays to inject into the victim
+        var proxyComp = EnsureComp<BloodstreamProxyContainerComponent>(cocoonContainer);
+        proxyComp.ContainerId = CocoonContainerId;
 
         Dirty(cocoonContainer, cocoonComp);
 

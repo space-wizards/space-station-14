@@ -4,6 +4,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Events;
 using Content.Shared.Chemistry.Prototypes;
+using Content.Shared.Containers.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
@@ -20,6 +21,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -42,6 +44,7 @@ public sealed partial class InjectorSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly StandingStateSystem _standingState = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -74,7 +77,8 @@ public sealed partial class InjectorSystem : EntitySystem
             return;
 
         // Is the target a mob? If yes, use a do-after to give them time to respond.
-        if (HasComp<BloodstreamComponent>(target))
+        // Also check for containers that proxy to a victim's bloodstream
+        if (HasComp<BloodstreamComponent>(target) || HasComp<BloodstreamProxyContainerComponent>(target))
         {
             // Are use using an injector capable of targeting a mob?
             if (injector.Comp.IgnoreMobs)
@@ -194,8 +198,11 @@ public sealed partial class InjectorSystem : EntitySystem
     /// </summary>
     private bool TryMobsDoAfter(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
     {
+        // If target is a proxy container, get the actual target
+        var actualTarget = GetActualTarget(target);
+
         if (_useDelay.IsDelayed(injector.Owner) // Check for Delay.
-            || !GetMobsDoAfterTime(injector, user, target, out var doAfterTime, out var amount)) // Get the DoAfter time.
+            || !GetMobsDoAfterTime(injector, user, actualTarget, out var doAfterTime, out var amount)) // Get the DoAfter time.
             return false;
 
         if (!_doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, doAfterTime, new InjectorDoAfterEvent(), injector.Owner, target: target, used: injector.Owner)
@@ -218,7 +225,7 @@ public sealed partial class InjectorSystem : EntitySystem
             return false;
 
         // Create a pop-up for the user.
-        _popup.PopupClient(Loc.GetString(activeMode.PopupUserAttempt), target, user);
+        _popup.PopupClient(Loc.GetString(activeMode.PopupUserAttempt), actualTarget, user);
 
         if (user == target)
         {
@@ -238,17 +245,17 @@ public sealed partial class InjectorSystem : EntitySystem
             // Create a popup to the target.
             var userName = Identity.Entity(user, EntityManager);
             var popup = Loc.GetString(activeMode.PopupTargetAttempt, ("user", userName));
-            _popup.PopupEntity(popup, user, target);
+            _popup.PopupEntity(popup, user, actualTarget);
 
             if (activeMode.Behavior.HasFlag(InjectorBehavior.Draw))
             {
                 _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from {ToPrettyString(target):target}");
+                    $"{ToPrettyString(user):user} is attempting to draw {amount} units from {ToPrettyString(actualTarget):target}");
             }
             else
             {
                 _adminLogger.Add(LogType.ForceFeed,
-                    $"{ToPrettyString(user):user} is attempting to inject {ToPrettyString(target):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}");
+                    $"{ToPrettyString(user):user} is attempting to inject {ToPrettyString(actualTarget):target} with a solution {SharedSolutionContainerSystem.ToPrettyString(injectorSolution):solution}");
             }
         }
 
@@ -372,6 +379,58 @@ public sealed partial class InjectorSystem : EntitySystem
 
     #region Injecting/Drawing
     /// <summary>
+    /// Gets the actual target entity from a proxy container if applicable, otherwise returns the original target.
+    /// </summary>
+    private EntityUid GetActualTarget(EntityUid target)
+    {
+        if (TryComp<BloodstreamProxyContainerComponent>(target, out var proxyContainer))
+        {
+            if (_container.TryGetContainer(target, proxyContainer.ContainerId, out var container) &&
+                container.ContainedEntities.Count > 0)
+            {
+                return container.ContainedEntities[0];
+            }
+        }
+        return target;
+    }
+
+    /// <summary>
+    /// Attempts to inject into a target, checking for proxy containers first.
+    /// </summary>
+    private bool TryInjectWithProxy(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
+    {
+        // Check if target is a container that proxies to a victim's bloodstream
+        var actualTarget = GetActualTarget(target);
+        if (actualTarget != target)
+        {
+            if (TryComp<BloodstreamComponent>(actualTarget, out var victimBloodstream) &&
+                _solutionContainer.TryGetInjectableSolution(actualTarget, out var victimSolution, out _))
+            {
+                return TryInject(injector, user, actualTarget, victimSolution.Value, false);
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Attempts to draw from a target's bloodstream, checking for proxy containers first.
+    /// </summary>
+    private bool TryDrawWithProxy(Entity<InjectorComponent> injector, EntityUid user, EntityUid target)
+    {
+        // Check if target is a container that proxies to a victim's bloodstream
+        var actualTarget = GetActualTarget(target);
+        if (actualTarget != target)
+        {
+            if (TryComp<BloodstreamComponent>(actualTarget, out var victimStream) &&
+                _solutionContainer.ResolveSolution(actualTarget, victimStream.BloodSolutionName, ref victimStream.BloodSolution))
+            {
+                return TryDraw(injector, user, (actualTarget, victimStream), victimStream.BloodSolution.Value);
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Depending on the <see cref="InjectorBehavior"/>, this will deal with the result of the DoAfter and draw/inject accordingly.
     /// </summary>
     /// <param name="injector">The injector used.</param>
@@ -398,6 +457,9 @@ public sealed partial class InjectorSystem : EntitySystem
 
                 if (isOpenOrIgnored && _solutionContainer.TryGetRefillableSolution(target, out var refillableSolution, out _))
                     return TryInject(injector, user, target, refillableSolution.Value, true);
+
+                if (TryInjectWithProxy(injector, user, target))
+                    return true;
                 break;
             }
             case InjectorBehavior.Draw:
@@ -408,6 +470,9 @@ public sealed partial class InjectorSystem : EntitySystem
                 {
                     return TryDraw(injector, user, (target, stream), stream.BloodSolution.Value);
                 }
+
+                if (TryDrawWithProxy(injector, user, target))
+                    return true;
 
                 // Draw from an object (food, beaker, etc)
                 if (isOpenOrIgnored && _solutionContainer.TryGetDrawableSolution(target, out var drawableSolution, out _))
@@ -425,6 +490,9 @@ public sealed partial class InjectorSystem : EntitySystem
                 {
                     return TryInject(injector, user, target, injectableSolution.Value, false);
                 }
+
+                if (TryInjectWithProxy(injector, user, target))
+                    return true;
 
                 // Draw from an object (food, beaker, etc.)
                 if (isOpenOrIgnored && _solutionContainer.TryGetDrawableSolution(target, out var drawableSolution, out _))
