@@ -1,6 +1,6 @@
-using Content.Server.Storage.Components;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
+using Content.Shared.Storage.Components;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 
