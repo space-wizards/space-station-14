@@ -977,7 +977,7 @@
     hands:
     - item: HandheldHealthAnalyzerUnpowered
     - item: BorgHypo
-    - item: Syringe
+    - item: SyringeBluespace
     - item: BorgDropper
     - item: Beaker
       hand:
