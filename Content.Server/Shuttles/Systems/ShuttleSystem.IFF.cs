@@ -12,7 +12,7 @@ public sealed partial class ShuttleSystem
     {
         SubscribeLocalEvent<IFFConsoleComponent, AnchorStateChangedEvent>(OnIFFConsoleAnchor);
         SubscribeLocalEvent<IFFConsoleComponent, IFFShowIFFMessage>(OnIFFShow);
-        SubscribeLocalEvent<IFFConsoleComponent, IFFShowVesselMessage>(OnIFFShowVessel);
+        SubscribeLocalEvent<IFFConsoleComponent, MapInitEvent>(OnInitIFFConsole);
         SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
     }
 
@@ -37,37 +37,47 @@ public sealed partial class ShuttleSystem
 
     private void OnIFFShow(EntityUid uid, IFFConsoleComponent component, IFFShowIFFMessage args)
     {
-        if (!TryComp(uid, out TransformComponent? xform) || xform.GridUid == null ||
-            (component.AllowedFlags & IFFFlags.HideLabel) == 0x0)
+        if (!TryComp(uid, out TransformComponent? xform) || xform.GridUid == null)
         {
             return;
         }
 
+        // Merged toggle controls both HideLabel and Hide flags
         if (!args.Show)
         {
-            AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+            if ((component.AllowedFlags & IFFFlags.HideLabel) != 0x0)
+            {
+                AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+            }
+            if ((component.AllowedFlags & IFFFlags.Hide) != 0x0)
+            {
+                AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
+            }
         }
         else
         {
-            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+            if ((component.AllowedFlags & IFFFlags.HideLabel) != 0x0)
+            {
+                RemoveIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
+            }
+            if ((component.AllowedFlags & IFFFlags.Hide) != 0x0)
+            {
+                RemoveIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
+            }
         }
     }
 
-    private void OnIFFShowVessel(EntityUid uid, IFFConsoleComponent component, IFFShowVesselMessage args)
+    private void OnInitIFFConsole(EntityUid uid, IFFConsoleComponent component, MapInitEvent args)
     {
-        if (!TryComp(uid, out TransformComponent? xform) || xform.GridUid == null ||
-            (component.AllowedFlags & IFFFlags.Hide) == 0x0)
+        if (!TryComp(uid, out TransformComponent? xform) || xform.GridUid == null)
         {
             return;
         }
 
-        if (!args.Show)
+        if (component.HideOnInit)
         {
+            AddIFFFlag(xform.GridUid.Value, IFFFlags.HideLabel);
             AddIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
-        }
-        else
-        {
-            RemoveIFFFlag(xform.GridUid.Value, IFFFlags.Hide);
         }
     }
 

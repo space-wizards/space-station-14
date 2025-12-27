@@ -145,8 +145,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp<PhysicsComponent>(uid, out var body))
                 return;
 
-            _fixture.TryCreateFixture(uid, component.FlammableCollisionShape, component.FlammableFixtureID, hard: false,
-                collisionMask: (int) CollisionGroup.FullTileLayer, body: body);
+            _fixture.TryCreateFixture(uid, component.FlammableCollisionShape, component.FlammableFixtureID, density: 0,
+                hard: false, collisionMask: (int) CollisionGroup.FullTileLayer, body: body);
         }
 
         private void OnInteractUsing(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
@@ -228,7 +228,7 @@ namespace Content.Server.Atmos.EntitySystems
             // Get the average of both entity's firestacks * mass
             // Then for each entity, we divide the average by their mass and set their firestacks to that value
             // An entity with a higher mass will lose some fire and transfer it to the one with lower mass.
-            var avg = (flammable.FireStacks * mass1  + otherFlammable.FireStacks * mass2) / 2f;
+            var avg = (flammable.FireStacks * mass1 + otherFlammable.FireStacks * mass2) / 2f;
 
             // bring each entity to the same firestack mass, firestack amount is scaled by the inverse of the entity's mass
             SetFireStacks(uid, avg / mass1, flammable, ignite: true);

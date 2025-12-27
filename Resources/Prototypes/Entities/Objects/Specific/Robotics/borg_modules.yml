@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseBorgModule
   parent: BaseItem
   name: borg module
@@ -873,6 +873,13 @@
     hands:
     - item: HandheldHealthAnalyzerUnpowered
     - item: Syringe
+    - item: Gauze
+      hand:
+        emptyLabel: borg-slot-topicals-empty
+        emptyRepresentative: Gauze
+        whitelist:
+          components:
+          - Healing
     - item: Brutepack
       hand:
         emptyLabel: borg-slot-topicals-empty
@@ -887,9 +894,34 @@
         whitelist:
           components:
           - Healing
+    - item: Bloodpack
+      hand:
+        emptyLabel: borg-slot-topicals-empty
+        emptyRepresentative: Bloodpack
+        whitelist:
+          components:
+          - Healing
     - item: DefibrillatorOneHandedUnpowered
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: chem-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
+
+- type: entity
+  id: BorgModuleRescue
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: rescue cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-defib
+  - type: ItemBorgModule
+    hands:
+    - item: HandheldHealthAnalyzerUnpowered
+    - item: Crowbar
+    - item: BorgFireExtinguisher
+    - item: BorgHandheldGPSBasic
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
 - type: entity
   id: BorgModuleChemical
@@ -903,6 +935,7 @@
   - type: ItemBorgModule
     hands:
     - item: HandLabeler
+    - item: Syringe
     - item: BorgDropper
       hand:
         emptyLabel: borg-slot-small-containers-empty
@@ -947,7 +980,13 @@
     hands:
     - item: HandheldHealthAnalyzerUnpowered
     - item: BorgHypo
-    - item: Syringe
+    - item: Gauze
+      hand:
+        emptyLabel: borg-slot-topicals-empty
+        emptyRepresentative: Gauze
+        whitelist:
+          components:
+          - Healing
     - item: Brutepack
       hand:
         emptyLabel: borg-slot-topicals-empty
@@ -959,6 +998,13 @@
       hand:
         emptyLabel: borg-slot-topicals-empty
         emptyRepresentative: Ointment
+        whitelist:
+          components:
+          - Healing
+    - item: Bloodpack
+      hand:
+        emptyLabel: borg-slot-topicals-empty
+        emptyRepresentative: Bloodpack
         whitelist:
           components:
           - Healing
@@ -1466,6 +1512,24 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-extinguisher-module }
 
 - type: entity
+  parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
+  id: XenoborgModuleDoorControl
+  name: door control xenoborg module
+  description: Module that allows Xenoborgs to control airlocks.
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-access-breaker
+  - type: ItemBorgModule
+    hands:
+    - item: DoorRemoteXenoborg
+    - item: AccessBreaker
+    - item: AccessConfiguratorXenoborg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-door-remote-module }
+
+- type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleJammer
   name: jammer xenoborg module
@@ -1493,15 +1557,15 @@
     - state: icon-xenoborg-laser
   - type: ItemBorgModule
     hands:
-    - item: XenoborgLaserGun
+    - item: WeaponLaserGunXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser-module }
 
 - type: entity
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleHeavyLaser
-  name: heavy laser xenoborg module
-  description: Module with a heavy laser gun.
+  name: laser cannon xenoborg module
+  description: Module with a laser cannon.
   components:
   - type: Sprite
     layers:
@@ -1509,7 +1573,7 @@
     - state: icon-xenoborg-laser2
   - type: ItemBorgModule
     hands:
-    - item: XenoborgHeavyLaserGun
+    - item: WeaponLaserCannonXenoborg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-laser2-module }
 
@@ -1537,7 +1601,7 @@
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleSword
-  name: sword xenoborg module
+  name: knife xenoborg module
   description: Module with a kukri knife.
   components:
   - type: Sprite
@@ -1554,7 +1618,7 @@
 - type: entity
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleEnergySword
-  name: energy sword xenoborg module
+  name: energy dagger xenoborg module
   description: Module with an energy dagger.
   components:
   - type: Sprite
@@ -1604,7 +1668,7 @@
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleCloakDevice
   name: cloaking device xenoborg module
-  description: Module with a device that allows xenoborgs to become invisible for some time.
+  description: Module with a device that allows xenoborgs to become semi-invisible for some time.
   components:
   - type: Sprite
     layers:
@@ -1619,8 +1683,8 @@
 - type: entity
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
   id: XenoborgModuleSuperCloakDevice
-  name: cloaking device xenoborg module
-  description: Module with a device that allows xenoborgs to become truly invisible for less time.
+  name: invisibility device xenoborg module
+  description: Module with a device that allows xenoborgs to become truly invisible for a short amount of time.
   components:
   - type: Sprite
     layers:

@@ -120,7 +120,6 @@
     - BorgModuleJanitor
 
   defaultModules:
-  - BorgModuleTool
   - BorgModuleCleaning
   - BorgModuleCustodial
 
@@ -156,10 +155,9 @@
     - BorgModuleMedical
 
   defaultModules:
-  - BorgModuleTool
-  - BorgModuleFireExtinguisher
   - BorgModuleChemical
   - BorgModuleTopicals
+  - BorgModuleRescue
 
   radioChannels:
   - Science
@@ -206,7 +204,6 @@
     - BorgModuleService
 
   defaultModules:
-  - BorgModuleTool
   - BorgModuleMusique
   - BorgModuleService
   - BorgModuleClowning
