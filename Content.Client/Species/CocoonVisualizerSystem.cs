@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Drywink <43855731+Drywink@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Drywink <hugogrethen@gmail.com>
-//
-// SPDX-License-Identifier: MIT
-
 using System.Numerics;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Species.Arachnid;
