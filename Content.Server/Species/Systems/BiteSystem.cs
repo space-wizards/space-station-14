@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Drywink <43855731+Drywink@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Drywink <hugogrethen@gmail.com>
-//
-// SPDX-License-Identifier: MIT
-
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
