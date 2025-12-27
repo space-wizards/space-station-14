@@ -56,6 +56,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     private const string CocoonContainerId = "cocoon_victim";
 
@@ -77,7 +78,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         SubscribeLocalEvent<CocoonedComponent, RemoveCocoonAlertEvent>(OnRemoveCocoonAlert);
         SubscribeLocalEvent<CocoonedComponent, AttackAttemptEvent>(OnCocoonedAttackAttempt);
 
-        SubscribeLocalEvent<CocoonedComponent, BeingGibbedEvent>(OnCocoonedVictimGibbed);
+        SubscribeLocalEvent<CocoonedComponent, EntityGibbedEvent>(OnCocoonedVictimGibbed);
     }
 
     private void OnCocoonContainerDamage(EntityUid uid, CocoonContainerComponent component, DamageChangedEvent args)
@@ -121,7 +122,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         try
         {
             // Set the damage to only the absorbed portion
-            _damageable.SetDamage(uid, args.Damageable, newDamage);
+            _damageable.SetDamage(uid, newDamage);
         }
         finally
         {
@@ -204,7 +205,11 @@ public sealed class CocoonSystem : SharedCocoonSystem
 
         // Remove effects from victim
         if (HasComp<BlockMovementComponent>(victim))
+        {
             RemComp<BlockMovementComponent>(victim);
+            // Update movement blockers immediately after removal
+            _blocker.UpdateCanMove(victim);
+        }
 
         if (HasComp<MumbleAccentComponent>(victim))
         {
@@ -214,6 +219,27 @@ public sealed class CocoonSystem : SharedCocoonSystem
         if (HasComp<TemporaryBlindnessComponent>(victim))
         {
             RemComp<TemporaryBlindnessComponent>(victim);
+        }
+
+        // Ensure the character is downed
+        if (TryComp<StandingStateComponent>(victim, out var standingState))
+        {
+            // Ensure they're downed (they should already be from when cocooned)
+            if (standingState.Standing)
+            {
+                _standing.Down(victim, playSound: false, force: true);
+            }
+
+            var wasNew = EnsureComp<KnockedDownComponent>(victim, out var knockedDown);
+
+            // Configure knockdown: prevent auto-standing, show alert, allow immediate stand-up
+            _stun.SetAutoStand((victim, knockedDown), false);
+            _alerts.ShowAlert(victim, SharedStunSystem.KnockdownAlert);
+
+            if (wasNew)
+            {
+                _stun.SetKnockdownTime((victim, knockedDown), TimeSpan.Zero);
+            }
         }
     }
 
@@ -366,16 +392,28 @@ public sealed class CocoonSystem : SharedCocoonSystem
         Dirty(cocoonContainer, cocoonComp);
 
         // Drop all items from victim's hands before inserting
-        if (TryComp<HandsComponent>(target, out var hands))
+        if (TryComp<HandsComponent>(target, out var handsComponent))
         {
-            foreach (var hand in _hands.EnumerateHands(target, hands))
+            var freeHands = 0;
+            foreach (var hand in _hands.EnumerateHands((target, handsComponent)))
             {
-                if (hand.HeldEntity != null)
+                if (!_hands.TryGetHeldItem((target, handsComponent), hand, out var held))
                 {
-                    _hands.TryDrop(target, hand, checkActionBlocker: false);
+                    freeHands++;
+                    continue;
                 }
+
+                // Is this entity removable? (it might be an existing handcuff blocker)
+                if (HasComp<UnremoveableComponent>(held))
+                    continue;
+
+                _hands.DoDrop((target, handsComponent), hand, true);
+                freeHands++;
+                if (freeHands == 2)
+                    break;
             }
         }
+
 
         // Ensure the container exists (it should already be created by the prototype, but create it if missing)
         var victimContainer = _container.EnsureContainer<Container>(cocoonContainer, CocoonContainerId);
@@ -554,7 +592,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         args.Cancel();
     }
 
-    private void OnCocoonedVictimGibbed(Entity<CocoonedComponent> ent, ref BeingGibbedEvent args)
+    private void OnCocoonedVictimGibbed(Entity<CocoonedComponent> ent, ref EntityGibbedEvent args)
     {
         // Find the cocoon container that contains this victim
         if (!_container.TryGetContainingContainer(ent.Owner, out var container))
@@ -567,7 +605,7 @@ public sealed class CocoonSystem : SharedCocoonSystem
         if (!_container.TryGetContainer(container.Owner, CocoonContainerId, out var victimContainer))
             return;
 
-        foreach (var gibbedPart in args.GibbedParts)
+        foreach (var gibbedPart in args.DroppedEntities)
         {
             if (Deleted(gibbedPart))
                 continue;

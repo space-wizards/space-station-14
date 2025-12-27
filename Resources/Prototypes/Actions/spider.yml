@@ -23,33 +23,39 @@
     event: !type:SericultureActionEvent
 
 - type: entity
+  parent: BaseAction
   id: ActionWrap
   name: Cocoon prey
   description: Wrap a nearby humanoid in immobilizing silk.
   components:
+  - type: Action
+    icon: Interface/Actions/cocoon.png
+    iconOn: Interface/Actions/cocoon.png
+    itemIconStyle: NoItem
+  - type: TargetAction
+    interactOnMiss: false
   - type: EntityTargetAction
     whitelist:
       components:
       - Body
     canTargetSelf: false
-    interactOnMiss: false
-    itemIconStyle: NoItem
-    icon: _Funkystation/Interface/Actions/cocoon.png
-    iconOn: _Funkystation/Interface/Actions/cocoon.png
     event: !type:WrapActionEvent {}
 
 - type: entity
+  parent: BaseAction
   id: ActionBite
   name: Bite
   description: Bite a target and inject them with a solution.
   components:
+  - type: Action
+    icon: Interface/Actions/bite.png
+    iconOn: Interface/Actions/bite.png
+    itemIconStyle: NoItem
+  - type: TargetAction
+    interactOnMiss: false
   - type: EntityTargetAction
     whitelist:
       components:
       - Body
     canTargetSelf: false
-    interactOnMiss: false
-    itemIconStyle: NoItem
-    icon: _Funkystation/Interface/Actions/bite.png
-    iconOn: _Funkystation/Interface/Actions/bite.png
     event: !type:BiteActionEvent {}
