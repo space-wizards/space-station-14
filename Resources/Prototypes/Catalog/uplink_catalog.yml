@@ -444,7 +444,6 @@
     Telecrystal: 11
   categories:
     - UplinkExplosives
-  restockTime: 1800
   conditions:
   - !type:StoreWhitelistCondition
     blacklist:
