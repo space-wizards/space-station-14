@@ -178,11 +178,6 @@
     severity: HighlyIllegal
   - type: Sprite
     sprite: Clothing/Back/Satchels/ninja.rsi
-  - type: Storage
-    grid:
-    - 0,0,2,3
-    - 4,0,7,3
-    - 9,0,11,3
 
 - type: entity
   parent: ClothingBackpackSatchel
