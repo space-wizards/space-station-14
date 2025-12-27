@@ -181,13 +181,8 @@
     weight: 5
     duration: 1
     minimumPlayers: 10
-  - type: AntagRandomSpawn
-  - type: AntagSelection
-    definitions:
-    - spawnerPrototype: SpawnPointGhostSkeleton
-      min: 1
-      max: 1
-      pickPlayer: false
+  - type: RandomEntityStorageSpawnRule
+    prototype: SpawnPointGhostSkeleton
 
 
 - type: entity
