@@ -213,8 +213,8 @@ namespace Content.Server.Kitchen.EntitySystems
                 && _solutionContainersSystem.TryGetFitsInDispenser(outputContainer.Value, out _, out containerSolution)
                 && inputContainer.ContainedEntities.Count > 0)
             {
-                canGrind = inputContainer.ContainedEntities.All(CanGrind);
-                canJuice = inputContainer.ContainedEntities.All(CanJuice);
+                canGrind = inputContainer.ContainedEntities.All(x => CanGrind(x));
+                canJuice = inputContainer.ContainedEntities.All(x => CanJuice(x));
             }
 
             var state = new ReagentGrinderInterfaceState(
@@ -288,10 +288,10 @@ namespace Content.Server.Kitchen.EntitySystems
             SoundSpecifier? sound;
             switch (program)
             {
-                case GrinderProgram.Grind when inputContainer.ContainedEntities.All(CanGrind):
+                case GrinderProgram.Grind when inputContainer.ContainedEntities.All(x => CanGrind(x)):
                     sound = reagentGrinder.GrindSound;
                     break;
-                case GrinderProgram.Juice when inputContainer.ContainedEntities.All(CanJuice):
+                case GrinderProgram.Juice when inputContainer.ContainedEntities.All(x => CanJuice(x)):
                     sound = reagentGrinder.JuiceSound;
                     break;
                 default:

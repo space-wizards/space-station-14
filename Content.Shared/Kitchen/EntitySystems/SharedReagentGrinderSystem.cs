@@ -13,7 +13,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
     /// <summary>
     /// Gets the solutions from an entity using the specified Grinder program.
     /// </summary>
-    /// <param name="uid">The entity which we check for solutions.</param>
+    /// <param name="ent">The entity which we check for solutions.</param>
     /// <param name="program">The grinder program.</param>
     /// <returns>The solution received, or null if none.</returns>
     public Solution? GetGrinderSolution(Entity<ExtractableComponent?> ent, GrinderProgram program)
@@ -24,8 +24,7 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         switch (program)
         {
             case GrinderProgram.Grind:
-                if (ent.Comp.GrindableSolution is not null
-                    && _solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolution, out _, out var solution))
+                if (_solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolution, out _, out var solution))
                 {
                     return solution;
                 }
@@ -47,9 +46,10 @@ public abstract class SharedReagentGrinderSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        var solutionName = ent.Comp.GrindableSolution;
+        if (ent.Comp.GrindableSolution == null)
+            return false;
 
-        return solutionName is not null && _solutionContainersSystem.TryGetSolution(ent.Owner, solutionName, out _, out _);
+        return _solutionContainersSystem.TryGetSolution(ent.Owner, ent.Comp.GrindableSolution, out _, out _);
     }
 
     /// <summary>
