@@ -58,6 +58,9 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+        whitelist:
+          tags:
+          - PowerCell
   - type: Item
     heldPrefix: off
   - type: ContainerContainer
