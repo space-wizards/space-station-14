@@ -144,7 +144,7 @@ public sealed class IdentitySystem : EntitySystem
             return;
 
         var representation = GetIdentityRepresentation(ent.Owner);
-        var name = GetIdentityName(ent, representation);
+        var name = GetIdentityName(ent, representation, out var isUnknownIdentity);
 
         // Clone the old entity's grammar to the identity entity, for loc purposes.
         if (TryComp<GrammarComponent>(ent, out var grammar))
@@ -157,8 +157,8 @@ public sealed class IdentitySystem : EntitySystem
                 identityGrammar.Attributes.Add(k, v);
             }
 
-            // If presumed name is null and we're using that, we set proper noun to be false ("the old woman")
-            if (name != representation.TrueName && representation.PresumedName == null)
+            // If we're using an unknown identity, mark it as a common noun ("the old woman").
+            if (isUnknownIdentity)
                 _grammarSystem.SetProperNoun((ident, identityGrammar), false);
 
             Dirty(ident, identityGrammar);
@@ -194,12 +194,15 @@ public sealed class IdentitySystem : EntitySystem
     /// An entity's real name if <see cref="SeeIdentityAttemptEvent"/> isn't cancelled,
     /// or a hidden identity such as a fake ID or fully hidden identity like "middle-aged man".
     /// </returns>
-    private string GetIdentityName(EntityUid target, IdentityRepresentation representation)
+    private string GetIdentityName(EntityUid target, IdentityRepresentation representation, out bool isUnknownIdentity)
     {
         var ev = new SeeIdentityAttemptEvent();
 
         RaiseLocalEvent(target, ev);
-        return representation.ToStringKnown(!ev.Cancelled, ev.NameOverride);
+        var canSeeIdentity = !ev.Cancelled;
+        var hasOverride = ev.NameOverride != null;
+        isUnknownIdentity = !canSeeIdentity && representation.PresumedName == null && !hasOverride;
+        return representation.ToStringKnown(canSeeIdentity, ev.NameOverride);
     }
 
     /// <summary>
