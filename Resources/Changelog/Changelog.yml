@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: The station AI will receive chat notifications when its sentry turrets
-      start firing upon hostile targets.
-    type: Add
-  id: 8838
-  time: '2025-08-08T18:56:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35277
 - author: K-Dynamic
   changes:
   - message: Captain and Head of Personnel starts with administration glasses and
@@ -3943,3 +3935,10 @@
   id: 9338
   time: '2025-12-28T06:36:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42077
+- author: Ilya246
+  changes:
+  - message: Large grid shuttle collisions should now be somewhat less laggy.
+    type: Fix
+  id: 9339
+  time: '2025-12-28T07:30:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40984
