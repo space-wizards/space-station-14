@@ -11,6 +11,12 @@ namespace Content.Shared.Fax.Components;
 public sealed partial class FaxMachineComponent : Component
 {
     /// <summary>
+    /// Fax must refresh after map init when all faxes are powered
+    /// </summary>
+    [DataField]
+    public float RefreshDelay = 3f;
+
+    /// <summary>
     /// Name with which the fax will be visible to others on the network
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
@@ -58,6 +64,12 @@ public sealed partial class FaxMachineComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public bool ReceiveNukeCodes { get; set; } = false;
+
+    /// <summary>
+    /// Should fax connect to other maps faxes
+    /// </summary>
+    [DataField]
+    public bool IsLongRange { get; set; } = false;
 
     /// <summary>
     /// Sound to play when fax printing new message
