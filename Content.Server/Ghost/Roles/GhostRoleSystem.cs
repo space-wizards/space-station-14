@@ -35,6 +35,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Roles.Components;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -50,6 +51,7 @@ public sealed class GhostRoleSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly FollowerSystem _followerSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -785,6 +787,10 @@ public sealed class GhostRoleSystem : EntitySystem
 
         var mob = Spawn(component.Prototype, Transform(uid).Coordinates);
         _transform.AttachToGridOrMap(mob);
+
+        // If our spawner is in a container, make sure the spawned entity ends up in there too
+        if (_containers.TryGetContainingContainer((component.Owner, null, null), out var container))
+            _containers.Insert(mob, container);
 
         var spawnedEvent = new GhostRoleSpawnerUsedEvent(uid, mob);
         RaiseLocalEvent(mob, spawnedEvent);

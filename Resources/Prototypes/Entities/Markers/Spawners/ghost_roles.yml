@@ -359,3 +359,19 @@
     - state: green
     - sprite: Clothing/Head/Hats/wizardhat.rsi
       state: icon
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostSkeleton
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobSkeletonCloset
+  - type: GhostRole
+    name: ghost-role-information-closet-skeleton-name
+    description: ghost-role-information-closet-skeleton-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
+    raffle:
+      settings: default
