@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class RoleBanCommand : IConsoleCommand
+public sealed class RoleBanCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IBanManager _bans = default!;
@@ -22,11 +22,9 @@ public sealed class RoleBanCommand : IConsoleCommand
 
     private ISawmill? _sawmill;
 
-    public string Command => "roleban";
-    public string Description => Loc.GetString("cmd-roleban-desc");
-    public string Help => Loc.GetString("cmd-roleban-help");
+    public override string Command => "roleban";
 
-    public async void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string target;
         string role;
@@ -107,7 +105,7 @@ public sealed class RoleBanCommand : IConsoleCommand
             shell.WriteError(Loc.GetString("cmd-roleban-job-parse", ("job", role)));
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         var durOpts = new CompletionOption[]
         {

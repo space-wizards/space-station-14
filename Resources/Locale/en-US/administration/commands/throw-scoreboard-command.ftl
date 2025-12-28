@@ -1,2 +1,2 @@
-throw-scoreboard-command-description = Show round-end scoreboard for all players, but not finish the round
-throw-scoreboard-command-help-text = Usage: throwscoreboard
+cmd-throwscoreboard-desc = Show round-end scoreboard for all players, but not finish the round.
+cmd-throwscoreboard-help = Usage: {$command}

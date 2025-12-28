@@ -53,7 +53,7 @@ namespace Content.Server.GameTicking.Commands
                     .Select(p => new CompletionOption(p.ID, p.MapName))
                     .OrderBy(p => p.Value);
 
-                return CompletionResult.FromHintOptions(options, Loc.GetString($"cmd-forcemap-hint"));
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-forcemap-hint"));
             }
 
             return CompletionResult.Empty;

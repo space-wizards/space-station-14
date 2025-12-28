@@ -6,16 +6,14 @@ using Robust.Shared.Console;
 namespace Content.Server.GameTicking.Commands
 {
     [AnyCommand]
-    sealed class ObserveCommand : IConsoleCommand
+    sealed class ObserveCommand : LocalizedEntityCommands
     {
-        [Dependency] private readonly IEntityManager _e = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly GameTicker _gameTicker = default!;
 
-        public string Command => "observe";
-        public string Description => "";
-        public string Help => "";
+        public override string Command => "observe";
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (shell.Player is not { } player)
             {
@@ -23,11 +21,9 @@ namespace Content.Server.GameTicking.Commands
                 return;
             }
 
-            var ticker = _e.System<GameTicker>();
-
-            if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
+            if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             {
-                shell.WriteError("Wait until the round starts.");
+                shell.WriteError(Loc.GetString("shell-can-only-run-while-round-is-active"));
                 return;
             }
 
@@ -38,14 +34,14 @@ namespace Content.Server.GameTicking.Commands
                 _adminManager.DeAdmin(player);
             }
 
-            if (ticker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
+            if (_gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) &&
                 status != PlayerGameStatus.JoinedGame)
             {
-                ticker.JoinAsObserver(player);
+                _gameTicker.JoinAsObserver(player);
             }
             else
             {
-                shell.WriteError($"{player.Name} is not in the lobby.   This incident will be reported.");
+                shell.WriteError(Loc.GetString("cmd-observe-not-in-lobby", ("player", player.Name)));
             }
         }
     }

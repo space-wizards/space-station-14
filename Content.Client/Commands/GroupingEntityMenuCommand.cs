@@ -11,7 +11,7 @@ public sealed class GroupingEntityMenuCommand : LocalizedCommands
 
     public override string Command => "entitymenug";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command), ("groupingTypesCount", EntityMenuUIController.GroupingTypesCount));
+    public override string Help => Loc.GetString($"cmd-{Command}-help", ("command", Command), ("groupingTypesCount", EntityMenuUIController.GroupingTypesCount));
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -23,19 +23,19 @@ public sealed class GroupingEntityMenuCommand : LocalizedCommands
 
         if (!int.TryParse(args[0], out var id))
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error", ("arg", args[0])));
+            shell.WriteError(Loc.GetString("cmd-entitymenug-error", ("arg", args[0])));
             return;
         }
 
         if (id < 0 || id > EntityMenuUIController.GroupingTypesCount - 1)
         {
-            shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error", ("arg", args[0])));
+            shell.WriteError(Loc.GetString("cmd-entitymenug-error", ("arg", args[0])));
             return;
         }
 
         var cvar = CCVars.EntityMenuGroupingType;
 
         _configurationManager.SetCVar(cvar, id);
-        shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify", ("cvar", _configurationManager.GetCVar(cvar))));
+        shell.WriteLine(Loc.GetString("cmd-entitymenug-notify", ("cvar", _configurationManager.GetCVar(cvar))));
     }
 }
