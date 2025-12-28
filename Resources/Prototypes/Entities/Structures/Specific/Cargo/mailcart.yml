@@ -14,7 +14,6 @@
     - type: Storage
       grid:
       - 0,0,15,7
-      quickInsert: true
       maxItemSize: Huge
       whitelist:
         components:
@@ -24,6 +23,7 @@
         - Document
         - BoxCardboard
         - Folder
+    - type: QuickPickup
     - type: Fixtures
       fixtures:
         fix1:
