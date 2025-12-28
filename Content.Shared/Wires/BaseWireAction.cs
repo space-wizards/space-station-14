@@ -1,9 +1,8 @@
-using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.Wires;
+using Content.Shared.Power.EntitySystems;
 
-namespace Content.Server.Wires;
+namespace Content.Shared.Wires;
 
 /// <summary><see cref="IWireAction" /></summary>
 [ImplicitDataDefinitionForInheritors]
@@ -14,20 +13,20 @@ public abstract partial class BaseWireAction : IWireAction
     /// <summary>
     ///     The loc-string of the text that gets returned by <see cref="GetStatusLightData(Wire)"/>. Also used for admin logging.
     /// </summary>
-    [DataField("name")]
+    [DataField]
     public abstract string Name { get; set; }
 
     /// <summary>
     ///     Default color that gets returned by <see cref="GetStatusLightData(Wire)"/>.
     /// </summary>
-    [DataField("color")]
+    [DataField]
     public abstract Color Color { get; set; }
 
     /// <summary>
     ///     If true, the default behavior of <see cref="GetStatusLightData(Wire)"/> will return an off-light when the
     ///     wire owner is not powered.
     /// </summary>
-    [DataField("lightRequiresPower")]
+    [DataField]
     public virtual bool LightRequiresPower { get; set; } = true;
 
     public virtual StatusLightData? GetStatusLightData(Wire wire)
@@ -44,7 +43,8 @@ public abstract partial class BaseWireAction : IWireAction
     public virtual StatusLightState? GetLightState(Wire wire) => null;
 
     public IEntityManager EntityManager = default!;
-    public WiresSystem WiresSystem = default!;
+    public SharedWiresSystem WiresSystem = default!;
+    public SharedPowerReceiverSystem PowerReceiverSystem = default!;
 
     // not virtual so implementors are aware that they need a nullable here
     public abstract object? StatusKey { get; }
@@ -52,10 +52,11 @@ public abstract partial class BaseWireAction : IWireAction
     // ugly, but IoC doesn't work during deserialization
     public virtual void Initialize()
     {
-        EntityManager = IoCManager.Resolve<IEntityManager>();
         _adminLogger = IoCManager.Resolve<ISharedAdminLogManager>();
+        EntityManager = IoCManager.Resolve<IEntityManager>();
 
-        WiresSystem = EntityManager.EntitySysManager.GetEntitySystem<WiresSystem>();
+        WiresSystem = EntityManager.EntitySysManager.GetEntitySystem<SharedWiresSystem>();
+        PowerReceiverSystem = EntityManager.EntitySysManager.GetEntitySystem<SharedPowerReceiverSystem>();
     }
 
     public virtual bool AddWire(Wire wire, int count) => count == 1;
@@ -86,6 +87,6 @@ public abstract partial class BaseWireAction : IWireAction
     /// <returns>true if powered, false otherwise</returns>
     protected bool IsPowered(EntityUid uid)
     {
-        return WiresSystem.IsPowered(uid, EntityManager);
+        return PowerReceiverSystem.IsPowered(uid);
     }
 }
