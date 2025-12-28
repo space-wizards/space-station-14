@@ -2,6 +2,7 @@
 using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
+using Content.Client.Stylesheets.Palette;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -11,7 +12,7 @@ using static Content.Client.Stylesheets.StylesheetHelpers;
 namespace Content.Client.Stylesheets.Sheetlets.Hud;
 
 [CommonSheetlet]
-public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet, ITooltipConfig
+public sealed class TooltipSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet, ITooltipConfig
 {
     public override StyleRule[] GetRules(T sheet, object config)
     {
@@ -29,7 +30,7 @@ public sealed class TooltipSheetlet<T> : Sheetlet<T> where T: PalettedStylesheet
         [
             E<PanelContainer>()
                 .Class(StyleClass.TooltipPanel)
-                .Modulate(Color.Gray.WithAlpha(0.9f)) // TODO: you know the drill by now
+                .Modulate(Palettes.White.TextDark.WithAlpha(0.9f))
                 .Panel(tooltipBox),
             E<RichTextLabel>()
                 .Class(StyleClass.TooltipTitle)
