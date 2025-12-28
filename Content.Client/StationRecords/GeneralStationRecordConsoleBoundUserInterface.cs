@@ -22,6 +22,12 @@ public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInt
         _window.OnFiltersChanged += (type, filterValue) =>
             SendMessage(new SetStationRecordFilter(type, filterValue));
         _window.OnDeleted += id => SendMessage(new DeleteStationRecord(id));
+
+        _window.AddRecord.OnPressed += _ =>
+        {
+            SendMessage(new ShowAddStationRecord());
+        };
+        _window.AddRecord.Disabled = true;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
