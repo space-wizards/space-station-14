@@ -3,7 +3,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mech.Systems;
 using Content.Shared.DoAfter;
-using Content.Shared.Mech.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Vehicle;
 using Content.Shared.Wall;
@@ -16,7 +15,7 @@ using Robust.Shared.Physics.Components;
 namespace Content.Shared.Mech.Equipment.Systems;
 
 /// <summary>
-/// Handles <see cref="MechGrabberComponent"/> and all related UI logic
+/// Handles <see cref="MechGrabberComponent"/> and all related UI logic.
 /// </summary>
 public sealed class MechGrabberSystem : EntitySystem
 {
@@ -64,11 +63,11 @@ public sealed class MechGrabberSystem : EntitySystem
     }
 
     /// <summary>
-    /// Removes an item from the grabber's container
+    /// Removes an item from the grabber's container.
     /// </summary>
-    /// <param name="uid">The mech grabber</param>
-    /// <param name="mech">The mech it belongs to</param>
-    /// <param name="toRemove">The item being removed</param>
+    /// <param name="uid">The mech grabber.</param>
+    /// <param name="mech">The mech it belongs to.</param>
+    /// <param name="toRemove">The item being removed.</param>
     /// <param name="component"></param>
     public void RemoveItem(EntityUid uid, EntityUid mech, EntityUid toRemove, MechGrabberComponent? component = null)
     {
@@ -83,7 +82,7 @@ public sealed class MechGrabberSystem : EntitySystem
 
         var offset = mechPos + mechRot.RotateVec(component.DepositOffset);
         _transform.SetWorldPositionRotation(toRemove, offset, Angle.Zero);
-        _mech.UpdateUserInterface(mech);
+        _mech.UpdateMechUi(mech);
     }
 
     private void OnEquipmentRemoved(EntityUid uid, MechGrabberComponent component, ref MechEquipmentRemovedEvent args)
@@ -128,7 +127,7 @@ public sealed class MechGrabberSystem : EntitySystem
         if (args.Target is not { } target)
             return;
 
-        // Stop if target is same as grabber or already doing after
+        // Stop if target is same as grabber or already doing after.
         if (target == uid || component.DoAfter != null)
             return;
 
@@ -151,11 +150,11 @@ public sealed class MechGrabberSystem : EntitySystem
         if (component.ItemContainer.ContainedEntities.Count >= component.MaxContents)
             return;
 
-        // Prevent grabbing the pilot operating this mech
+        // Prevent grabbing the pilot operating this mech.
         if (_vehicle.GetOperatorOrNull(mech) == target)
             return;
 
-        // Use mech range for interaction checks instead of the pilot
+        // Use mech range for interaction checks instead of the pilot.
         if (!_interaction.InRangeUnobstructed(mech, Transform(target).Coordinates))
             return;
 
@@ -186,14 +185,11 @@ public sealed class MechGrabberSystem : EntitySystem
             return;
 
         var mechUid = equipmentComponent.EquipmentOwner.Value;
-        if (TryComp<MechComponent>(mechUid, out var mechComp))
-        {
-            if (!_mech.TryChangeEnergy((mechUid, mechComp!), component.GrabEnergyDelta))
+        if (!_mech.TryChangeEnergy(mechUid, component.GrabEnergyDelta))
                 return;
-        }
 
         _container.Insert(args.Args.Target.Value, component.ItemContainer);
-        _mech.UpdateUserInterface(mechUid);
+        _mech.UpdateMechUi(mechUid);
 
         args.Handled = true;
     }

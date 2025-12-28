@@ -32,42 +32,27 @@ public sealed class MechEquipmentUiStateReadyEvent : EntityEventArgs
 /// <summary>
 /// Event raised to relay an equipment ui message
 /// </summary>
-public sealed class MechEquipmentUiMessageRelayEvent : EntityEventArgs
+public sealed class MechEquipmentUiMessageRelayEvent(MechEquipmentUiMessage message) : EntityEventArgs
 {
-    public MechEquipmentUiMessage Message;
-
-    public MechEquipmentUiMessageRelayEvent(MechEquipmentUiMessage message)
-    {
-        Message = message;
-    }
+    public MechEquipmentUiMessage Message = message;
 }
 
 /// <summary>
 /// UI event raised to remove a piece of equipment from a mech
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechEquipmentRemoveMessage : BoundUserInterfaceMessage
+public sealed class MechEquipmentRemoveMessage(NetEntity equipment) : BoundUserInterfaceMessage
 {
-    public NetEntity Equipment;
-
-    public MechEquipmentRemoveMessage(NetEntity equipment)
-    {
-        Equipment = equipment;
-    }
+    public NetEntity Equipment = equipment;
 }
 
 /// <summary>
 /// UI event raised to remove a passive module from a mech
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechModuleRemoveMessage : BoundUserInterfaceMessage
+public sealed class MechModuleRemoveMessage(NetEntity module) : BoundUserInterfaceMessage
 {
-    public NetEntity Module;
-
-    public MechModuleRemoveMessage(NetEntity module)
-    {
-        Module = module;
-    }
+    public NetEntity Module = module;
 }
 
 /// <summary>
@@ -83,9 +68,7 @@ public abstract class MechEquipmentUiMessage : BoundUserInterfaceMessage
 /// Purge cabin air message
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechCabinAirMessage : BoundUserInterfaceMessage
-{
-}
+public sealed class MechCabinAirMessage : BoundUserInterfaceMessage;
 
 /// <summary>
 /// event raised for the grabber equipment to eject an item from it's storage
@@ -121,56 +104,36 @@ public sealed class MechSoundboardPlayMessage : MechEquipmentUiMessage
 /// Event raised to toggle the airtight mode of a mech
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechAirtightMessage : BoundUserInterfaceMessage
+public sealed class MechAirtightMessage(bool isAirtight) : BoundUserInterfaceMessage
 {
-    public bool IsAirtight;
-
-    public MechAirtightMessage(bool isAirtight)
-    {
-        IsAirtight = isAirtight;
-    }
+    public bool IsAirtight = isAirtight;
 }
 
 /// <summary>
 /// Event raised to toggle the fan state of a mech
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechFanToggleMessage : BoundUserInterfaceMessage
+public sealed class MechFanToggleMessage(bool isActive) : BoundUserInterfaceMessage
 {
-    public bool IsActive;
-
-    public MechFanToggleMessage(bool isActive)
-    {
-        IsActive = isActive;
-    }
+    public bool IsActive = isActive;
 }
 
 /// <summary>
 /// Event raised to toggle the fan module's filter on/off
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechFilterToggleMessage : BoundUserInterfaceMessage
+public sealed class MechFilterToggleMessage(bool enabled) : BoundUserInterfaceMessage
 {
-    public bool Enabled;
-
-    public MechFilterToggleMessage(bool enabled)
-    {
-        Enabled = enabled;
-    }
+    public bool Enabled = enabled;
 }
 
 /// <summary>
 /// Event raised to select equipment in the radial menu
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechEquipmentSelectMessage : BoundUserInterfaceMessage
+public sealed class MechEquipmentSelectMessage(NetEntity? equipment) : BoundUserInterfaceMessage
 {
-    public NetEntity? Equipment;
-
-    public MechEquipmentSelectMessage(NetEntity? equipment)
-    {
-        Equipment = equipment;
-    }
+    public NetEntity? Equipment = equipment;
 }
 
 /// <summary>
@@ -217,7 +180,6 @@ public sealed class MechBoundUiState : BoundUserInterfaceState
     public string? OwnerDna;
     public string? OwnerJobTitle;
     public bool IsLocked;
-    public bool HasAccess;
 
     // Passive modules presence
     public bool HasFanModule;
@@ -280,15 +242,4 @@ public sealed class MechGeneratorEjectFuelMessage : MechEquipmentUiMessage
 public sealed class MechSoundboardUiState : BoundUserInterfaceState
 {
     public List<string> Sounds = new();
-}
-
-[Serializable, NetSerializable]
-public sealed class MechAccessSyncMessage : BoundUserInterfaceMessage
-{
-    public bool HasAccess;
-
-    public MechAccessSyncMessage(bool hasAccess)
-    {
-        HasAccess = hasAccess;
-    }
 }

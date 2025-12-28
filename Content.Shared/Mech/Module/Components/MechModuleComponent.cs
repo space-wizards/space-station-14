@@ -1,7 +1,7 @@
 using Robust.Shared.Serialization;
 using Content.Shared.DoAfter;
 
-namespace Content.Shared.Mech.Components;
+namespace Content.Shared.Mech.Module.Components;
 
 [RegisterComponent]
 public sealed partial class MechModuleComponent : Component
@@ -29,6 +29,4 @@ public sealed partial class MechModuleComponent : Component
 /// Raised on the module when the installation is finished successfully.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class InsertModuleEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class InsertModuleEvent : SimpleDoAfterEvent;

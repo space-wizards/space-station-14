@@ -1,11 +1,12 @@
 ﻿using Content.Shared.DoAfter;
+using Content.Shared.Mech.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Mech.Components;
+namespace Content.Shared.Mech.Equipment.Components;
 
 /// <summary>
-/// A piece of equipment that can be installed into <see cref="MechComponent"/>
+/// A piece of equipment that can be installed into <see cref="MechComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MechEquipmentComponent : Component
@@ -35,27 +36,8 @@ public sealed partial class MechEquipmentComponent : Component
     public bool BlockUseOutsideMech = true;
 }
 
-/// <summary>
-/// Raised on the equipment when the installation is finished successfully.
-/// </summary>
-public sealed class MechEquipmentInstallFinished(EntityUid mech) : EntityEventArgs
-{
-    public EntityUid Mech = mech;
-}
-
-/// <summary>
-/// Raised on the equipment when the installation fails.
-/// </summary>
-public sealed class MechEquipmentInstallCancelled : EntityEventArgs
-{
-}
+[Serializable, NetSerializable]
+public sealed partial class GrabberDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
-public sealed partial class GrabberDoAfterEvent : SimpleDoAfterEvent
-{
-}
-
-[Serializable, NetSerializable]
-public sealed partial class InsertEquipmentEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class InsertEquipmentEvent : SimpleDoAfterEvent;

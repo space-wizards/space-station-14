@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
   id: DebugMechEquipment
-  abstract: true
+  categories: [ HideSpawnMenu ]
   suffix: DEBUG
-  categories: [ HideSpawnMenu ]
   components:
   - type: Tag
     tags:
@@ -12,8 +12,8 @@
     - SpecialMech
 
 - type: entity
+  abstract: true
   id: UniversalMechEquipment
-  abstract: true
   categories: [ HideSpawnMenu ]
   components:
   - type: Tag
@@ -21,8 +21,8 @@
     - UniversalMech
 
 - type: entity
-  id: CombatMechEquipment
   abstract: true
+  id: CombatMechEquipment
   categories: [ HideSpawnMenu ]
   components:
   - type: Tag
@@ -30,8 +30,8 @@
     - CombatMech
 
 - type: entity
-  id: IndustrialMechEquipment
   abstract: true
+  id: IndustrialMechEquipment
   categories: [ HideSpawnMenu ]
   components:
   - type: Tag
@@ -39,19 +39,18 @@
     - IndustrialMech
 
 - type: entity
-  id: SpecialMechEquipment
   abstract: true
+  id: SpecialMechEquipment
   categories: [ HideSpawnMenu ]
   components:
   - type: Tag
     tags:
     - SpecialMech
-# TODO: Make medical mech with equipment.
 
 - type: entity
+  abstract: true
   parent: BaseItem
   id: BaseMechEquipment
-  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
@@ -64,8 +63,8 @@
     - Robotics
 
 - type: entity
-  id: MechEquipmentGrabber
   parent: [ BaseMechEquipment, IndustrialMechEquipment ]
+  id: MechEquipmentGrabber
   name: hydraulic clamp
   description: Gives the mech the ability to grab things and drag them around.
   components:
@@ -86,8 +85,8 @@
       item-container: !type:Container
 
 - type: entity
-  id: MechEquipmentGrabberSmall
   parent: [ BaseMechEquipment, UniversalMechEquipment ]
+  id: MechEquipmentGrabberSmall
   name: small hydraulic clamp
   description: Gives the mech the ability to grab things and drag them around.
   components:

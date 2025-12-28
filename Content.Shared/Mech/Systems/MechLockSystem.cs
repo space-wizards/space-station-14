@@ -1,11 +1,13 @@
 using System.Linq;
-using Content.Shared.Access.Systems;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
-using Content.Shared.Mech.Components;
-using Content.Shared.Forensics.Components;
-using Content.Shared.Popups;
+using Content.Shared.Access.Systems;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Forensics.Components;
+using Content.Shared.Mech.Components;
+using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mech.Systems;
 
@@ -14,10 +16,11 @@ namespace Content.Shared.Mech.Systems;
 /// </summary>
 public sealed partial class MechLockSystem : EntitySystem
 {
-    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
+    [Dependency] private readonly SharedMechSystem _mech = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -35,214 +38,236 @@ public sealed partial class MechLockSystem : EntitySystem
         SubscribeLocalEvent<MechLockComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    /// <summary>
-    /// Handles DNA lock registration
-    /// </summary>
-    private void OnDnaLockRegister(EntityUid uid, MechLockComponent component, MechDnaLockRegisterEvent args)
+    private void OnDnaLockRegister(Entity<MechLockComponent> ent, ref MechDnaLockRegisterEvent args)
     {
-        var user = GetEntity(args.User);
-        if (user == EntityUid.Invalid)
-            return;
-
-        TryRegisterLock(uid, user, MechLockType.Dna, component);
+        RegisterLock(ent, GetEntity(args.User), MechLockType.Dna);
     }
 
-    /// <summary>
-    /// Handles DNA lock toggle
-    /// </summary>
-    private void OnDnaLockToggle(EntityUid uid, MechLockComponent component, MechDnaLockToggleEvent args)
+    private void OnDnaLockToggle(Entity<MechLockComponent> ent, ref MechDnaLockToggleEvent args)
     {
-        var user = GetEntity(args.User);
-        if (user == EntityUid.Invalid)
-            return;
-
-        if (TryToggleLock(uid, MechLockType.Dna, component))
-        {
-            var (_, isActive, _) = GetLockState(MechLockType.Dna, component);
-            ShowLockMessage(uid, user, isActive);
-        }
+        TryToggleLock(ent, MechLockType.Dna);
     }
 
-    /// <summary>
-    /// Handles DNA lock reset
-    /// </summary>
-    private void OnDnaLockReset(EntityUid uid, MechLockComponent component, MechDnaLockResetEvent args)
+    private void OnDnaLockReset(Entity<MechLockComponent> ent, ref MechDnaLockResetEvent args)
     {
-        var user = GetEntity(args.User);
-        if (user == EntityUid.Invalid)
-            return;
-
-        TryResetLock(uid, user, MechLockType.Dna, component);
+        ResetLock(ent, MechLockType.Dna);
+    }
+    private void OnCardLockRegister(Entity<MechLockComponent> ent, ref MechCardLockRegisterEvent args)
+    {
+        RegisterLock(ent, GetEntity(args.User), MechLockType.Card);
     }
 
-    /// <summary>
-    /// Handles card lock registration
-    /// </summary>
-    private void OnCardLockRegister(EntityUid uid, MechLockComponent component, MechCardLockRegisterEvent args)
+    private void OnCardLockToggle(Entity<MechLockComponent> ent, ref MechCardLockToggleEvent args)
     {
-        var user = GetEntity(args.User);
-        if (user == EntityUid.Invalid)
-            return;
-
-        TryRegisterLock(uid, user, MechLockType.Card, component);
+        TryToggleLock(ent, MechLockType.Card);
     }
 
-    /// <summary>
-    /// Handles card lock toggle
-    /// </summary>
-    private void OnCardLockToggle(EntityUid uid, MechLockComponent component, MechCardLockToggleEvent args)
+    private void OnCardLockReset(Entity<MechLockComponent> ent, ref MechCardLockResetEvent args)
     {
-        var user = GetEntity(args.User);
-        if (user == EntityUid.Invalid)
-            return;
-
-        if (TryToggleLock(uid, MechLockType.Card, component))
-        {
-            var (_, isActive, _) = GetLockState(MechLockType.Card, component);
-            ShowLockMessage(uid, user, isActive);
-        }
-    }
-
-    /// <summary>
-    /// Handles card lock reset
-    /// </summary>
-    private void OnCardLockReset(EntityUid uid, MechLockComponent component, MechCardLockResetEvent args)
-    {
-        var user = GetEntity(args.User);
-        if (user == EntityUid.Invalid)
-            return;
-
-        TryResetLock(uid, user, MechLockType.Card, component);
-    }
-
-    private void UpdateMechUI(EntityUid uid)
-    {
-        var ev = new UpdateMechUiEvent();
-        RaiseLocalEvent(uid, ev);
-    }
-
-    private bool TryFindIdCard(EntityUid user, out Entity<IdCardComponent> idCard)
-    {
-        return _idCard.TryFindIdCard(user, out idCard);
+        ResetLock(ent, MechLockType.Card);
     }
 
     /// <summary>
     /// Checks if a user has access to a locked mech and can manage locks
     /// </summary>
-    private bool HasAccess(EntityUid user, MechLockComponent component)
+    private bool HasAccess(EntityUid user, Entity<MechLockComponent> ent)
     {
-        // If no locks are registered, access is granted
-        if (!component.DnaLockRegistered && !component.CardLockRegistered)
-        {
+        // If no locks are registered or active, access is granted
+        if (ent.Comp is { DnaLockRegistered: false, CardLockRegistered: false } or { DnaLockActive: false, CardLockActive: false })
             return true;
-        }
 
         // If any locks are registered, user must be registered for at least one type
-        var isRegisteredForAny = IsAnyOwner(user, component);
+        var isRegisteredForAny = IsAnyOwner(user, ent);
         if (!isRegisteredForAny)
-        {
             return false;
-        }
-
-        // If no locks are active, access is granted (but only for registered users)
-        if (!component.DnaLockActive && !component.CardLockActive)
-        {
-            return true;
-        }
-
-        var hasAccess = false;
 
         // Check DNA lock - if active, user must have matching DNA
-        if (component.DnaLockActive && component.DnaLockRegistered)
+        if (ent.Comp is { DnaLockActive: true, DnaLockRegistered: true })
         {
-            if (TryComp<DnaComponent>(user, out var dnaComp) && dnaComp.DNA == component.OwnerDna)
-            {
-                hasAccess = true;
-            }
+            if (TryComp<DnaComponent>(user, out var dnaComp)
+                && dnaComp.DNA == ent.Comp.OwnerDna)
+                return true;
         }
 
         // Check card lock - if active, user must have matching access tags
-        if (component.CardLockActive && component.CardLockRegistered)
+        if (ent.Comp is { CardLockActive: true, CardLockRegistered: true })
         {
-            if (TryFindIdCard(user, out var idCard))
+            if (!_idCard.TryFindIdCard(user, out var idCard)
+                || !TryComp<AccessComponent>(idCard.Owner, out var access))
+                return false;
+
+            var tags = access.Tags;
+            foreach (var tag in tags)
             {
-                if (TryComp<AccessComponent>(idCard.Owner, out var access) && access != null && access.Tags != null)
-                {
-                    var tags = access.Tags;
-                    foreach (var tag in tags)
-                    {
-                        if (component.CardAccessTags!.Contains(tag))
-                        {
-                            hasAccess = true;
-                            break;
-                        }
-                    }
-                }
+                if (ent.Comp.CardAccessTags!.Contains(tag))
+                    return true;
             }
         }
 
-        // User has access if they can access at least one active lock type
-        return hasAccess;
+        return false;
     }
 
-    private bool IsOwnerOfLock(EntityUid user, MechLockType lockType, MechLockComponent component)
+    /// <summary>
+    /// Resets a lock for the specified user.
+    /// </summary>
+    private void ResetLock(Entity<MechLockComponent> ent, MechLockType lockType)
     {
-        var (isRegistered, _, ownerId) = GetLockState(lockType, component);
+        switch (lockType)
+        {
+            case MechLockType.Dna:
+                ent.Comp.DnaLockRegistered = false;
+                ent.Comp.DnaLockActive = false;
+                ent.Comp.OwnerDna = null;
+                break;
+
+            case MechLockType.Card:
+                ent.Comp.CardLockRegistered = false;
+                ent.Comp.CardLockActive = false;
+                ent.Comp.OwnerJobTitle = null;
+                ent.Comp.CardAccessTags = null;
+                break;
+
+            default:
+                return;
+        }
+
+        UpdateLockState(ent.AsNullable());
+    }
+
+    /// <summary>
+    /// Registers a lock for the specified user.
+    /// </summary>
+    private void RegisterLock(Entity<MechLockComponent> ent,
+        EntityUid user,
+        MechLockType lockType)
+    {
+        switch (lockType)
+        {
+            case MechLockType.Dna:
+                if (!TryComp<DnaComponent>(user, out var dnaComp))
+                {
+                    _popup.PopupCursor(Loc.GetString("mech-lock-no-dna-popup"), user);
+                    return;
+                }
+
+                ent.Comp.DnaLockRegistered = true;
+                ent.Comp.OwnerDna = dnaComp.DNA;
+                _popup.PopupCursor(Loc.GetString("mech-lock-dna-registered-popup"), user);
+                break;
+
+            case MechLockType.Card:
+                if (!_idCard.TryFindIdCard(user, out var idCard))
+                {
+                    _popup.PopupCursor(Loc.GetString("mech-lock-no-card-popup"), user);
+                    return;
+                }
+
+                ent.Comp.CardLockRegistered = true;
+                ent.Comp.OwnerJobTitle = idCard.Comp.LocalizedJobTitle;
+                if (TryComp<AccessComponent>(idCard.Owner, out var access))
+                    ent.Comp.CardAccessTags = new HashSet<ProtoId<AccessLevelPrototype>>(access.Tags);
+
+                _popup.PopupCursor(Loc.GetString("mech-lock-card-registered-popup"), user);
+                break;
+
+            default:
+                return;
+        }
+
+        UpdateLockState(ent.AsNullable());
+    }
+
+    /// <summary>
+    /// Toggles lock state.
+    /// </summary>
+    private void TryToggleLock(Entity<MechLockComponent> ent, MechLockType lockType)
+    {
+        switch (lockType)
+        {
+            case MechLockType.Dna:
+                if (!ent.Comp.DnaLockRegistered)
+                    return;
+                ent.Comp.DnaLockActive = !ent.Comp.DnaLockActive;
+                break;
+
+            case MechLockType.Card:
+                if (!ent.Comp.CardLockRegistered)
+                    return;
+                ent.Comp.CardLockActive = !ent.Comp.CardLockActive;
+                break;
+
+            default:
+                return;
+        }
+
+        UpdateLockState(ent.AsNullable());
+    }
+
+    /// <summary>
+    /// Checks if the user is the owner of the lock.
+    /// </summary>
+    private bool IsOwnerOfLock(EntityUid user, Entity<MechLockComponent> ent, MechLockType lockType)
+    {
+        var (isRegistered, _, ownerId) = GetLockState(lockType, ent.Comp);
         if (!isRegistered || ownerId == null)
             return false;
+
         switch (lockType)
         {
             case MechLockType.Dna:
                 return TryComp<DnaComponent>(user, out var dnaComp) && dnaComp.DNA == ownerId;
+
             case MechLockType.Card:
-                if (component.CardAccessTags == null || component.CardAccessTags.Count == 0)
+                if (ent.Comp.CardAccessTags == null || ent.Comp.CardAccessTags.Count == 0)
                     return false;
-                if (!TryFindIdCard(user, out var idCard))
+                if (!_idCard.TryFindIdCard(user, out var idCard))
                     return false;
-                if (!TryComp<AccessComponent>(idCard.Owner, out var access) || access == null || access.Tags == null)
+                if (!TryComp<AccessComponent>(idCard.Owner, out var access))
                     return false;
 
                 var tags = access.Tags;
 
-                return component.CardAccessTags.Any(tag => tags.Contains(tag));
+                return ent.Comp.CardAccessTags.Any(tags.Contains);
+
+            default:
+                return false;
         }
-        return false;
     }
 
-    private bool IsAnyOwner(EntityUid user, MechLockComponent component)
+    private bool IsAnyOwner(EntityUid user, Entity<MechLockComponent> ent)
     {
-        return IsOwnerOfLock(user, MechLockType.Dna, component) || IsOwnerOfLock(user, MechLockType.Card, component);
+        return IsOwnerOfLock(user, ent, MechLockType.Dna) || IsOwnerOfLock(user, ent, MechLockType.Card);
     }
 
-    private void OnLockStartup(EntityUid uid, MechLockComponent component, ComponentStartup args)
+    private void OnLockStartup(Entity<MechLockComponent> ent, ref ComponentStartup args)
     {
-        UpdateLockState(uid, component);
+        UpdateLockState(ent.AsNullable());
     }
 
     /// <summary>
-    /// AccessBreaker support: clears mech locks on EmagType.Access, same as doors.
+    /// AccessBreaker: clears mech locks on EmagType.Access, same as doors.
     /// </summary>
-    private void OnEmagged(EntityUid uid, MechLockComponent component, ref GotEmaggedEvent args)
+    private void OnEmagged(Entity<MechLockComponent> ent, ref GotEmaggedEvent args)
     {
         if (!_emag.CompareFlag(args.Type, EmagType.Access))
             return;
 
-        var anyLockedOrRegistered = component.IsLocked || component.DnaLockRegistered || component.CardLockRegistered || component.DnaLockActive || component.CardLockActive;
+        var anyLockedOrRegistered = ent.Comp.IsLocked || ent.Comp.DnaLockRegistered || ent.Comp.CardLockRegistered ||
+                                    ent.Comp.DnaLockActive || ent.Comp.CardLockActive;
         if (!anyLockedOrRegistered)
             return;
 
-        // Reset both lock types completely
-        component.DnaLockRegistered = false;
-        component.DnaLockActive = false;
-        component.OwnerDna = null;
+        // Reset both lock types completely.
+        ent.Comp.DnaLockRegistered = false;
+        ent.Comp.DnaLockActive = false;
+        ent.Comp.OwnerDna = null;
 
-        component.CardLockRegistered = false;
-        component.CardLockActive = false;
-        component.OwnerJobTitle = null;
-        component.CardAccessTags = null;
+        ent.Comp.CardLockRegistered = false;
+        ent.Comp.CardLockActive = false;
+        ent.Comp.OwnerJobTitle = null;
+        ent.Comp.CardAccessTags = null;
 
-        UpdateLockState(uid, component);
-        UpdateMechUI(uid);
+        UpdateLockState(ent.AsNullable());
 
         args.Handled = true;
         args.Repeatable = true;

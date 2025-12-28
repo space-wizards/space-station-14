@@ -1,7 +1,7 @@
 - type: entity
-  id: MechModuleBase
-  parent: BaseItem
   abstract: true
+  parent: BaseItem
+  id: MechModuleBase
   components:
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_modules.rsi
@@ -15,8 +15,8 @@
     - Robotics
 
 - type: entity
-  id: MechModuleFan
   parent: [ MechModuleBase, UniversalMechEquipment ]
+  id: MechModuleFan
   name: exosuit fan module
   description: Draws outside air into the cabin to maintain a breathable atmosphere. Features a built-in filter.
   components:
@@ -26,8 +26,8 @@
     filterGases: [ Plasma, CarbonDioxide, NitrousOxide ]
 
 - type: entity
-  id: MechModuleAirTank
   parent: [ MechModuleBase, UniversalMechEquipment ]
+  id: MechModuleAirTank
   name: exosuit air tank module
   description: A special air canister capable of holding a large amount of air.
   components:
@@ -40,8 +40,8 @@
       volume: 25
 
 - type: entity
-  id: MechModuleTeslaRelay
   parent: [ MechModuleBase, UniversalMechEquipment ]
+  id: MechModuleTeslaRelay
   name: tesla energy relay module
   description: Connects the mech to nearby APCs and trickle-charges its battery.
   components:
@@ -56,8 +56,8 @@
     ui: !type:MechGeneratorUi
 
 - type: entity
-  id: MechModulePlasmaGenerator
   parent: [ MechModuleBase, UniversalMechEquipment ]
+  id: MechModulePlasmaGenerator
   name: plasma generator module
   description: Generates energy by consuming plasma sheets stored internally.
   components:
@@ -82,8 +82,8 @@
     ui: !type:MechGeneratorUi
 
 - type: entity
-  id: MechModuleHorn
   parent: [ MechModuleBase, SpecialMechEquipment ]
+  id: MechModuleHorn
   name: mech horn module
   description: An enhanced bike horn that plays a hilarious array of sounds for the enjoyment of the crew. HONK!
   components:

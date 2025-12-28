@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Mech.Components;
+namespace Content.Shared.Mech.Module.Components;
 
 /// <summary>
 /// Defines the type of energy generation provided by a mech generator module.

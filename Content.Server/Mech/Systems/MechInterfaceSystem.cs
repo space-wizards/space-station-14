@@ -1,15 +1,15 @@
-using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
+using Content.Shared.Mech.Module.Components;
 using Content.Shared.Mech.Systems;
 using Content.Shared.PowerCell;
 using Content.Shared.Power.EntitySystems;
-using Robust.Shared.Timing;
-using Robust.Server.GameObjects;
 using Robust.Server.Containers;
+using Robust.Server.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Mech.Systems;
 
@@ -17,33 +17,28 @@ namespace Content.Server.Mech.Systems;
 /// Handles logic for the mech interface.
 /// </summary>
 /// <remarks>
-/// <para>
 /// This system is responsible for updating the mech UI state and handling UI interactions.
 /// It is not responsible for any mech logic on its own, it merely provides UI functionality.
-/// </para>
 /// </remarks>
 public sealed class MechInterfaceSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = null!;
+    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly MechLockSystem _mechLock = default!;
+    [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
-    [Dependency] private readonly PowerCellSystem _powerCell = null!;
-    [Dependency] private readonly MechLockSystem _mechLock = null!;
-    [Dependency] private readonly ContainerSystem _container = null!;
-    [Dependency] private readonly IGameTiming _gameTiming = null!;
-
-
-    // TODO: make it work to delay value updates
-    private static readonly TimeSpan VisualsChangeDelay = TimeSpan.FromSeconds(0.5f);
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<MechComponent, UpdateMechUiEvent>(OnUpdateMechUi);
 
-        Subs.BuiEvents<MechComponent>(MechUiKey.Key, subs =>
-        {
-            subs.Event<BoundUIOpenedEvent>(OnMechUiOpened);
-        });
+        Subs.BuiEvents<MechComponent>(MechUiKey.Key,
+            subs =>
+            {
+                subs.Event<BoundUIOpenedEvent>(OnMechUiOpened);
+            });
 
         Subs.BuiEvents<MechComponent>(
             MechUiKey.Key,
@@ -69,10 +64,15 @@ public sealed class MechInterfaceSystem : EntitySystem
 
     private void OnMechUiOpened(Entity<MechComponent> ent, ref BoundUIOpenedEvent args)
     {
-        UpdateUI(ent);
+        UpdateUi(ent);
     }
 
-    private void RelayEquipmentUiMessage(Entity<MechComponent> ent, MechEquipmentUiMessage msg)
+    private void OnUpdateMechUi(Entity<MechComponent> ent, ref UpdateMechUiEvent args)
+    {
+        UpdateUi(ent);
+    }
+
+    private void RelayEquipmentUiMessage(MechEquipmentUiMessage msg)
     {
         var equipment = GetEntity(msg.Equipment);
         RaiseLocalEvent(equipment, new MechEquipmentUiMessageRelayEvent(msg));
@@ -80,22 +80,22 @@ public sealed class MechInterfaceSystem : EntitySystem
 
     private void HandleEquipmentUiMessageRelay(Entity<MechComponent> ent, ref MechEquipmentUiMessage args)
     {
-        RelayEquipmentUiMessage(ent, args);
+        RelayEquipmentUiMessage(args);
     }
 
     private void HandleEquipmentUiMessageRelay(Entity<MechComponent> ent, ref MechGrabberEjectMessage args)
     {
-        RelayEquipmentUiMessage(ent, args);
+        RelayEquipmentUiMessage(args);
     }
 
     private void HandleEquipmentUiMessageRelay(Entity<MechComponent> ent, ref MechSoundboardPlayMessage args)
     {
-        RelayEquipmentUiMessage(ent, args);
+        RelayEquipmentUiMessage(args);
     }
 
     private void HandleEquipmentUiMessageRelay(Entity<MechComponent> ent, ref MechGeneratorEjectFuelMessage args)
     {
-        RelayEquipmentUiMessage(ent, args);
+        RelayEquipmentUiMessage(args);
     }
 
     private void HandleEquipmentRemove(Entity<MechComponent> ent, ref MechEquipmentRemoveMessage args)
@@ -105,7 +105,7 @@ public sealed class MechInterfaceSystem : EntitySystem
             return;
 
         _container.Remove(equipment, ent.Comp.EquipmentContainer);
-        UpdateMechUI(ent.Owner);
+        UpdateUi(ent);
     }
 
     private void HandleModuleRemove(Entity<MechComponent> ent, ref MechModuleRemoveMessage args)
@@ -115,7 +115,7 @@ public sealed class MechInterfaceSystem : EntitySystem
             return;
 
         _container.Remove(module, ent.Comp.ModuleContainer);
-        UpdateMechUI(ent.Owner);
+        UpdateUi(ent);
     }
 
     private void HandleCabinPurge(Entity<MechComponent> ent, ref MechCabinAirMessage args)
@@ -137,118 +137,65 @@ public sealed class MechInterfaceSystem : EntitySystem
 
         var purgeComp = EnsureComp<MechCabinPurgeComponent>(ent);
         purgeComp.CooldownRemaining = purgeComp.CooldownDuration;
-        UpdateMechUI(ent);
+        Dirty(ent, purgeComp);
+        UpdateUi(ent);
     }
-
 
     private void HandleDnaLockRegister(Entity<MechComponent> ent, ref MechDnaLockRegisterMessage args)
     {
-        if (!TryComp<MechLockComponent>(ent, out var lockComp))
+        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, args.Actor))
             return;
 
-        if (args.Actor is not { Valid: true } actor)
-            return;
-        var user = actor;
-
-        // Access check
-        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, user, lockComp))
-            return;
-
-        var ev = new MechDnaLockRegisterEvent { User = GetNetEntity(user) };
+        var ev = new MechDnaLockRegisterEvent { User = GetNetEntity(args.Actor) };
         RaiseLocalEvent(ent, ev);
     }
 
     private void HandleDnaLockToggle(Entity<MechComponent> ent, ref MechDnaLockToggleMessage args)
     {
-        if (!TryComp<MechLockComponent>(ent, out var lockComp))
+        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, args.Actor))
             return;
 
-        if (args.Actor is not { Valid: true } actor)
-            return;
-        var user = actor;
-
-        // Access check
-        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, user, lockComp))
-            return;
-
-        var ev = new MechDnaLockToggleEvent { User = GetNetEntity(user) };
+        var ev = new MechDnaLockToggleEvent { User = GetNetEntity(args.Actor) };
         RaiseLocalEvent(ent, ev);
     }
 
     private void HandleDnaLockReset(Entity<MechComponent> ent, ref MechDnaLockResetMessage args)
     {
-        if (!TryComp<MechLockComponent>(ent, out var lockComp))
+        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, args.Actor))
             return;
 
-        if (args.Actor is not { Valid: true } actor)
-            return;
-        var user = actor;
-
-        // Access check
-        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, user, lockComp))
-            return;
-
-        var ev = new MechDnaLockResetEvent { User = GetNetEntity(user) };
+        var ev = new MechDnaLockResetEvent { User = GetNetEntity(args.Actor) };
         RaiseLocalEvent(ent, ev);
     }
 
     private void HandleCardLockRegister(Entity<MechComponent> ent, ref MechCardLockRegisterMessage args)
     {
-        if (!TryComp<MechLockComponent>(ent, out var lockComp))
+        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, args.Actor))
             return;
 
-        if (args.Actor is not { Valid: true } actor)
-            return;
-        var user = actor;
-
-        // Access check
-        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, user, lockComp))
-            return;
-
-        var ev = new MechCardLockRegisterEvent { User = GetNetEntity(user) };
+        var ev = new MechCardLockRegisterEvent { User = GetNetEntity(args.Actor) };
         RaiseLocalEvent(ent, ev);
     }
 
     private void HandleCardLockToggle(Entity<MechComponent> ent, ref MechCardLockToggleMessage args)
     {
-        if (!TryComp<MechLockComponent>(ent, out var lockComp))
+        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, args.Actor))
             return;
 
-        if (args.Actor is not { Valid: true } actor)
-            return;
-        var user = actor;
-
-        // Access check
-        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, user, lockComp))
-            return;
-
-        var ev = new MechCardLockToggleEvent { User = GetNetEntity(user) };
+        var ev = new MechCardLockToggleEvent { User = GetNetEntity(args.Actor) };
         RaiseLocalEvent(ent, ev);
     }
 
     private void HandleCardLockReset(Entity<MechComponent> ent, ref MechCardLockResetMessage args)
     {
-        if (!TryComp<MechLockComponent>(ent, out var lockComp))
+        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, args.Actor))
             return;
 
-        if (args.Actor is not { Valid: true } actor)
-            return;
-        var user = actor;
-
-        // Access check
-        if (!_mechLock.CheckAccessWithFeedback(ent.Owner, user, lockComp))
-            return;
-
-        var ev = new MechCardLockResetEvent { User = GetNetEntity(user) };
+        var ev = new MechCardLockResetEvent { User = GetNetEntity(args.Actor) };
         RaiseLocalEvent(ent, ev);
     }
 
-    private void OnUpdateMechUi(Entity<MechComponent> ent, ref UpdateMechUiEvent args)
-    {
-        UpdateUI(ent);
-    }
-
-    private void UpdateUI(Entity<MechComponent> ent)
+    private void UpdateUi(Entity<MechComponent> ent)
     {
         if (!_uiSystem.IsUiOpen(ent.Owner, MechUiKey.Key))
             return;
@@ -270,12 +217,12 @@ public sealed class MechInterfaceSystem : EntitySystem
         MechFanModuleComponent? fanModule = null;
         foreach (var modulesEnt in ent.Comp.ModuleContainer.ContainedEntities)
         {
-            if (TryComp<MechFanModuleComponent>(modulesEnt, out var fan))
-            {
-                fanModule = fan;
-                break;
-            }
+            if (!TryComp<MechFanModuleComponent>(modulesEnt, out var fan))
+                continue;
+
+            fanModule = fan;
         }
+
         var fanActive = fanModule?.IsActive ?? false;
         var fanState = fanModule?.State ?? MechFanState.Na;
         var filterEnabled = fanModule?.FilterEnabled ?? false;
@@ -302,37 +249,40 @@ public sealed class MechInterfaceSystem : EntitySystem
             cabinPressure = cabin.Air.Pressure;
             cabinTemperature = cabin.Air.Temperature;
         }
+
         GasMixture? tankAir = null;
         foreach (var modulesEnt in ent.Comp.ModuleContainer.ContainedEntities)
         {
-            if (TryComp<MechAirTankModuleComponent>(modulesEnt, out _))
-            {
-                if (TryComp<GasTankComponent>(modulesEnt, out var tank))
-                {
-                    tankAir = tank.Air;
-                    break;
-                }
-            }
+            if (HasComp<MechAirTankModuleComponent>(modulesEnt))
+                continue;
+
+            if (!TryComp<GasTankComponent>(modulesEnt, out var tank))
+                continue;
+
+            tankAir = tank.Air;
         }
+
         if (tankAir != null)
         {
-            // Pressure straight from tank and amount in liters
+            // Pressure straight from tank and amount in liters.
             tankPressure = tankAir.Pressure;
             var pressure = MathF.Max(tankAir.Pressure, 0f);
             if (pressure > 0)
                 gasAmountLiters = tankAir.TotalMoles * Atmospherics.R * tankAir.Temperature / pressure;
-            else
-                gasAmountLiters = 0f;
         }
 
-        // Compute energy from battery
-        float energy = 0f;
-        float maxEnergy = 0f;
+        // Compute energy from battery.
+        var energy = 0f;
+        var maxEnergy = 0f;
         if (_powerCell.TryGetBatteryFromSlot(ent.Owner, out var battery))
         {
             energy = _battery.GetCharge(battery.Value.AsNullable());
             maxEnergy = battery.Value.Comp.MaxCharge;
         }
+
+        var purgeAvailable = false;
+        if (TryComp<MechCabinPurgeComponent>(ent.Owner, out var purgeComp))
+            purgeAvailable = purgeComp.CooldownRemaining <= 0;
 
         var state = new MechBoundUiState
         {
@@ -359,7 +309,7 @@ public sealed class MechInterfaceSystem : EntitySystem
             EquipmentUsed = ent.Comp.EquipmentContainer.ContainedEntities.Count,
             MaxEquipmentAmount = ent.Comp.MaxEquipmentAmount,
             IsBroken = ent.Comp.Broken,
-            CabinPurgeAvailable = !TryComp<MechCabinPurgeComponent>(ent.Owner, out var purgeComp) || purgeComp.CooldownRemaining <= 0
+            CabinPurgeAvailable = purgeAvailable,
         };
 
         if (TryComp<MechLockComponent>(ent.Owner, out var lockComp))
@@ -371,45 +321,26 @@ public sealed class MechInterfaceSystem : EntitySystem
             state.OwnerDna = lockComp.OwnerDna;
             state.OwnerJobTitle = lockComp.OwnerJobTitle;
             state.IsLocked = lockComp.IsLocked;
-            state.HasAccess = true;
-
-            var actors = _uiSystem.GetActors(ent.Owner, MechUiKey.Key).ToList();
-            if (actors.Count > 0)
-            {
-                foreach (var actor in actors)
-                {
-                    var perActorHasAccess = _mechLock.CheckAccess(ent.Owner, actor, lockComp);
-                    _uiSystem.ServerSendUiMessage(ent.Owner, MechUiKey.Key, new MechAccessSyncMessage(perActorHasAccess), actor);
-                }
-            }
-        }
-        else
-        {
-            state.HasAccess = true;
         }
 
-        // Collect equipment and module UI states
+        // Collect equipment and module UI states.
         CollectEquipmentUiStates(ent.Comp.EquipmentContainer.ContainedEntities, state.EquipmentUiStates);
         CollectEquipmentUiStates(ent.Comp.ModuleContainer.ContainedEntities, state.EquipmentUiStates);
 
         _uiSystem.SetUiState(ent.Owner, MechUiKey.Key, state);
     }
 
-    private void UpdateMechUI(EntityUid uid)
-    {
-        RaiseLocalEvent(uid, new UpdateMechUiEvent());
-    }
-
-    private void CollectEquipmentUiStates(IEnumerable<EntityUid> entities, Dictionary<NetEntity, BoundUserInterfaceState> states)
+    private void CollectEquipmentUiStates(IEnumerable<EntityUid> entities,
+        Dictionary<NetEntity, BoundUserInterfaceState> states)
     {
         foreach (var entity in entities)
         {
-            var evt = new MechEquipmentUiStateReadyEvent();
-            RaiseLocalEvent(entity, evt);
-            if (evt.States.Count == 0)
+            var ev = new MechEquipmentUiStateReadyEvent();
+            RaiseLocalEvent(entity, ev);
+            if (ev.States.Count == 0)
                 continue;
 
-            foreach (var (netEntity, state) in evt.States)
+            foreach (var (netEntity, state) in ev.States)
             {
                 states[netEntity] = state;
             }

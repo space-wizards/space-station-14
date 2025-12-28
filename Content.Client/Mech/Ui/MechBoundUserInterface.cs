@@ -1,8 +1,7 @@
+using JetBrains.Annotations;
 using Content.Client.UserInterface;
 using Content.Shared.Mech;
-using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Systems;
-using JetBrains.Annotations;
 using Robust.Client.Timing;
 using Robust.Client.UserInterface;
 
@@ -12,10 +11,10 @@ namespace Content.Client.Mech.Ui;
 public sealed class MechBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey), IBuiPreTickUpdate
 {
     [Dependency] private readonly IClientGameTiming _gameTiming = null!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
 
     [ViewVariables]
     private MechMenu? _menu;
+
     private BuiPredictionState? _pred;
 
     // Input coalescers for performance optimization
@@ -31,22 +30,15 @@ public sealed class MechBoundUserInterface(EntityUid owner, Enum uiKey) : BoundU
 
         _menu = this.CreateWindowCenteredLeft<MechMenu>();
         _menu.SetEntity(Owner);
-        _menu.SetParentBui(this);
-
-        // Predict access banner based on lock component if available
-        var predictedHasAccess = true;
-        if (_entMan.TryGetComponent<MechLockComponent>(Owner, out var lockComp))
-            predictedHasAccess = !lockComp.IsLocked;
-        _menu.OverrideAccessAndRefresh(predictedHasAccess);
 
         // Equipment and module removal
         _menu.OnRemoveButtonPressed += uid =>
         {
-            _pred!.SendMessage(new MechEquipmentRemoveMessage(EntMan.GetNetEntity(uid)));
+            _pred.SendMessage(new MechEquipmentRemoveMessage(EntMan.GetNetEntity(uid)));
         };
         _menu.OnRemoveModuleButtonPressed += uid =>
         {
-            _pred!.SendMessage(new MechModuleRemoveMessage(EntMan.GetNetEntity(uid)));
+            _pred.SendMessage(new MechModuleRemoveMessage(EntMan.GetNetEntity(uid)));
         };
 
         // Cabin control
@@ -55,17 +47,17 @@ public sealed class MechBoundUserInterface(EntityUid owner, Enum uiKey) : BoundU
         _menu.OnFilterToggle += enabled => _filterCoalescer.Set(enabled);
 
         // Direct action
-        _menu.OnCabinPurge += () => _pred!.SendMessage(new MechCabinAirMessage());
+        _menu.OnCabinPurge += () => _pred.SendMessage(new MechCabinAirMessage());
 
         // DNA lock
-        _menu.OnDnaLockRegister += () => _pred!.SendMessage(new MechDnaLockRegisterMessage());
-        _menu.OnDnaLockToggle += () => _pred!.SendMessage(new MechDnaLockToggleMessage());
-        _menu.OnDnaLockReset += () => _pred!.SendMessage(new MechDnaLockResetMessage());
+        _menu.OnDnaLockRegister += () => _pred.SendMessage(new MechDnaLockRegisterMessage());
+        _menu.OnDnaLockToggle += () => _pred.SendMessage(new MechDnaLockToggleMessage());
+        _menu.OnDnaLockReset += () => _pred.SendMessage(new MechDnaLockResetMessage());
 
         // Card lock
-        _menu.OnCardLockRegister += () => _pred!.SendMessage(new MechCardLockRegisterMessage());
-        _menu.OnCardLockToggle += () => _pred!.SendMessage(new MechCardLockToggleMessage());
-        _menu.OnCardLockReset += () => _pred!.SendMessage(new MechCardLockResetMessage());
+        _menu.OnCardLockRegister += () => _pred.SendMessage(new MechCardLockRegisterMessage());
+        _menu.OnCardLockToggle += () => _pred.SendMessage(new MechCardLockToggleMessage());
+        _menu.OnCardLockReset += () => _pred.SendMessage(new MechCardLockResetMessage());
     }
 
     void IBuiPreTickUpdate.PreTickUpdate()
@@ -107,16 +99,6 @@ public sealed class MechBoundUserInterface(EntityUid owner, Enum uiKey) : BoundU
         }
 
         _menu?.UpdateState(mechState);
-    }
-
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        base.ReceiveMessage(message);
-
-        if (message is MechAccessSyncMessage access)
-        {
-            _menu?.OverrideAccessAndRefresh(access.HasAccess);
-        }
     }
 
     protected override void Dispose(bool disposing)

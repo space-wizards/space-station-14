@@ -1,6 +1,6 @@
 - type: entity
-  id: BaseMechPart
   abstract: true
+  id: BaseMechPart
   components:
   - type: Clickable
   - type: InteractionOutline
@@ -29,9 +29,9 @@
 # Clarke
 
 - type: entity
-  id: BaseClarkePart
-  parent: BaseMechPart
   abstract: true
+  parent: BaseMechPart
+  id: BaseClarkePart
   components:
   - type: Sprite
     drawdepth: Items
@@ -39,9 +39,9 @@
     sprite: Objects/Specific/Mech/clarke_construction.rsi
 
 - type: entity
+  abstract: true
   id: BaseClarkePartItem
   parent: BaseClarkePart
-  abstract: true
   components:
   - type: Item
     size: Ginormous
@@ -144,9 +144,9 @@
 # Durand
 
 - type: entity
-  id: BaseDurandPart
-  parent: BaseMechPart
   abstract: true
+  parent: BaseMechPart
+  id: BaseDurandPart
   components:
   - type: Sprite
     drawdepth: Items
@@ -154,9 +154,9 @@
     sprite: Objects/Specific/Mech/durand_construction.rsi
 
 - type: entity
-  id: BaseDurandPartItem
-  parent: BaseDurandPart
   abstract: true
+  parent: BaseDurandPart
+  id: BaseDurandPartItem
   components:
   - type: Item
     size: Ginormous
@@ -276,9 +276,9 @@
 # Gygax
 
 - type: entity
-  id: BaseGygaxPart
-  parent: BaseMechPart
   abstract: true
+  parent: BaseMechPart
+  id: BaseGygaxPart
   components:
   - type: Sprite
     drawdepth: Items
@@ -286,9 +286,9 @@
     sprite: Objects/Specific/Mech/gygax_construction.rsi
 
 - type: entity
-  id: BaseGygaxPartItem
-  parent: BaseGygaxPart
   abstract: true
+  parent: BaseGygaxPart
+  id: BaseGygaxPartItem
   components:
   - type: Item
     size: Ginormous
@@ -408,9 +408,9 @@
 # Ripley APLU
 
 - type: entity
-  id: BaseRipleyPart
-  parent: BaseMechPart
   abstract: true
+  parent: BaseMechPart
+  id: BaseRipleyPart
   components:
   - type: Sprite
     drawdepth: Items
@@ -418,9 +418,9 @@
     sprite: Objects/Specific/Mech/ripley_construction.rsi
 
 - type: entity
-  id: BaseRipleyPartItem
-  parent: BaseRipleyPart
   abstract: true
+  parent: BaseRipleyPart
+  id: BaseRipleyPartItem
   components:
   - type: Item
     size: Ginormous
@@ -523,9 +523,9 @@
 # Ripley MK-II
 
 - type: entity
-  id: BaseRipleyMKIIPart
-  parent: BaseMechPart
   abstract: true
+  parent: BaseMechPart
+  id: BaseRipleyMKIIPart
   components:
   - type: Sprite
     drawdepth: Items
@@ -587,9 +587,9 @@
 # H.O.N.K.
 
 - type: entity
+  abstract: true
   parent: BaseMechPart
   id: BaseHonkerPart
-  abstract: true
   components:
   - type: Sprite
     drawdepth: Items
@@ -597,9 +597,9 @@
     sprite: Objects/Specific/Mech/honker_construction.rsi
 
 - type: entity
-  id: BaseHonkerPartItem
-  parent: BaseHonkerPart
   abstract: true
+  parent: BaseHonkerPart
+  id: BaseHonkerPartItem
   components:
   - type: Item
     size: Ginormous
@@ -702,9 +702,9 @@
 # H.A.M.T.R.
 
 - type: entity
-  id: BaseHamtrPart
-  parent: BaseMechPart
   abstract: true
+  parent: BaseMechPart
+  id: BaseHamtrPart
   components:
   - type: Sprite
     drawdepth: Items
@@ -712,9 +712,9 @@
     sprite: Objects/Specific/Mech/hamtr_construction.rsi
 
 - type: entity
-  id: BaseHamtrPartItem
-  parent: BaseHamtrPart
   abstract: true
+  parent: BaseHamtrPart
+  id: BaseHamtrPartItem
   components:
   - type: Item
     size: Huge

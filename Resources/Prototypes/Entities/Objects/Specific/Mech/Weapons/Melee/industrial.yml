@@ -1,6 +1,6 @@
 - type: entity
-  id: WeaponMechMelleDrill
   parent: BaseMechWeaponMelee
+  id: WeaponMechMelleDrill
   name: exosuit drill
   suffix: Mech Weapon, Melee, Industrial
   description: Equipment for mining exosuits. This is the drill that'll pierce the rocks!
@@ -26,8 +26,8 @@
         Structural: 20
 
 - type: entity
-  id: WeaponMechMelleDrillDiamond
   parent: BaseMechWeaponMelee
+  id: WeaponMechMelleDrillDiamond
   name: diamond-tipped exosuit drill
   suffix: Mech Weapon, Melee, Industrial
   description: Equipment for mining exosuits. This is an upgraded version of the drill that'll pierce the rocks!

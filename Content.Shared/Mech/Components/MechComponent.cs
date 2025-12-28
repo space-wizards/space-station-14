@@ -94,7 +94,7 @@ public sealed partial class MechComponent : Component
     /// The slot the battery is stored in.
     /// </summary>
     [ViewVariables]
-    public ContainerSlot BatterySlot = default!;
+    public ContainerSlot BatterySlot = new();
 
     [ViewVariables]
     public readonly string BatterySlotId = "cell_slot";
@@ -109,7 +109,7 @@ public sealed partial class MechComponent : Component
     /// The slot the pilot is stored in.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public ContainerSlot PilotSlot = default!;
+    public ContainerSlot PilotSlot = new();
 
     [ViewVariables]
     public readonly string PilotSlotId = "mech-pilot-slot";
@@ -132,7 +132,7 @@ public sealed partial class MechComponent : Component
     /// A container for storing the equipment entities.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public Container EquipmentContainer = default!;
+    public Container EquipmentContainer = new();
 
     [ViewVariables]
     public readonly string EquipmentContainerId = "mech-equipment-container";
@@ -162,7 +162,7 @@ public sealed partial class MechComponent : Component
     /// A container for storing passive module entities.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public Container ModuleContainer = default!;
+    public Container ModuleContainer = new();
 
     [ViewVariables]
     public readonly string ModuleContainerId = "mech-passive-module-container";

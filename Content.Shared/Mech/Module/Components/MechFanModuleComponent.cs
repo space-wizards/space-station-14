@@ -2,43 +2,43 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Atmos;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Mech.Components;
+namespace Content.Shared.Mech.Module.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MechFanModuleComponent : Component
 {
     /// <summary>
-    /// Whether the fan is currently active
+    /// Whether the fan is currently active.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public bool IsActive = false;
+    [DataField, AutoNetworkedField]
+    public bool IsActive;
 
     /// <summary>
-    /// Current fan state (Off, On, Idle)
+    /// Current fan state see <see cref="MechFanState"/>.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public MechFanState State = MechFanState.Off;
 
     /// <summary>
-    /// How much energy the fan consumes per second when active
+    /// How much energy the fan consumes per second when active.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public FixedPoint2 EnergyConsumption = 1.0f;
 
     /// <summary>
-    /// How much gas the fan can process per second when active
+    /// How much gas the fan can process per second when active.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float GasProcessingRate = 1f;
 
     /// <summary>
-    /// Whether the attached filter should be active
+    /// Whether the attached filter should be active.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public bool FilterEnabled = true;
 
     /// <summary>
-    /// Gases that will be filtered during fan operation
+    /// Gases that will be filtered during fan operation.
     /// </summary>
     [DataField(required: true)]
     public HashSet<Gas> FilterGases = new();

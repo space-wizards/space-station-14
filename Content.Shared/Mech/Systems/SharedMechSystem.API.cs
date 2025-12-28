@@ -1,12 +1,13 @@
-using Content.Shared.DoAfter;
+using JetBrains.Annotations;
 using Content.Shared.Body.Events;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
-using Content.Shared.Mech.Components;
-using Content.Shared.Vehicle.Components;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Mech.Components;
+using Content.Shared.Mech.Equipment.Components;
+using Content.Shared.Mech.Module.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization;
-using JetBrains.Annotations;
 
 namespace Content.Shared.Mech.Systems;
 
@@ -20,9 +21,14 @@ public abstract partial class SharedMechSystem
     /// <param name="equipmentComponent">Optional resolved equipment component for <paramref name="toInsert"/>.</param>
     /// <param name="moduleComponent">Optional resolved module component for <paramref name="toInsert"/>.</param>
     [PublicAPI]
-    public void InsertEquipment(Entity<MechComponent> ent, EntityUid toInsert,
-        MechEquipmentComponent? equipmentComponent = null, MechModuleComponent? moduleComponent = null)
+    public void InsertEquipment(Entity<MechComponent?> ent,
+        EntityUid toInsert,
+        MechEquipmentComponent? equipmentComponent = null,
+        MechModuleComponent? moduleComponent = null)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
         if (ent.Comp.Broken)
             return;
 
@@ -39,11 +45,11 @@ public abstract partial class SharedMechSystem
             _container.Insert(toInsert, ent.Comp.EquipmentContainer);
             var ev = new MechEquipmentInsertedEvent(ent.Owner);
             RaiseLocalEvent(toInsert, ref ev);
-            UpdateUserInterface(ent.Owner);
+            UpdateMechUi(ent.Owner);
             return;
         }
 
-        // Module
+        // Module.
         if (Resolve(toInsert, ref moduleComponent, false))
         {
             if (ent.Comp.ModuleContainer.ContainedEntities.Count >= ent.Comp.MaxModuleAmount)
@@ -56,8 +62,7 @@ public abstract partial class SharedMechSystem
             _container.Insert(toInsert, ent.Comp.ModuleContainer);
             var modEv = new MechModuleInsertedEvent(ent.Owner);
             RaiseLocalEvent(toInsert, ref modEv);
-            UpdateUserInterface(ent.Owner);
-            return;
+            UpdateMechUi(ent.Owner);
         }
     }
 
@@ -66,8 +71,11 @@ public abstract partial class SharedMechSystem
     /// the currently selected equipment (or the mech itself).
     /// </summary>
     [PublicAPI]
-    public void RefreshPilotHandVirtualItems(Entity<MechComponent> ent)
+    public void RefreshPilotHandVirtualItems(Entity<MechComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
         var pilot = Vehicle.GetOperatorOrNull(ent.Owner);
         if (pilot == null)
             return;
@@ -78,11 +86,11 @@ public abstract partial class SharedMechSystem
                 continue;
 
             var newBlocking = ent.Comp.CurrentSelectedEquipment ?? ent.Owner;
-            if (virt.BlockingEntity != newBlocking)
-            {
-                virt.BlockingEntity = newBlocking;
-                Dirty(held, virt);
-            }
+            if (virt.BlockingEntity == newBlocking)
+                continue;
+
+            virt.BlockingEntity = newBlocking;
+            Dirty(held, virt);
         }
     }
 
@@ -93,8 +101,11 @@ public abstract partial class SharedMechSystem
     /// <param name="ent">The mech.</param>
     /// <param name="value">New integrity value (clamped to [0, MaxIntegrity]).</param>
     [PublicAPI]
-    public void SetIntegrity(Entity<MechComponent> ent, FixedPoint2 value)
+    public void SetIntegrity(Entity<MechComponent?> ent, FixedPoint2 value)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
         ent.Comp.Integrity = FixedPoint2.Clamp(value, 0, ent.Comp.MaxIntegrity);
 
         // Handle broken state transitions based on integrity
@@ -121,8 +132,8 @@ public abstract partial class SharedMechSystem
         }
 
         Dirty(ent);
-        UpdateUserInterface(ent.Owner);
-        UpdateAppearance(ent);
+        UpdateMechUi(ent.Owner);
+        UpdateAppearance((ent.Owner, ent.Comp));
     }
 
     /// <summary>
@@ -132,8 +143,11 @@ public abstract partial class SharedMechSystem
     /// <param name="delta">Amount to change energy by (negative to drain).</param>
     /// <returns>True if the requested energy was available and applied; false otherwise.</returns>
     [PublicAPI]
-    public bool TryChangeEnergy(Entity<MechComponent> ent, FixedPoint2 delta)
+    public bool TryChangeEnergy(Entity<MechComponent?> ent, FixedPoint2 delta)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
         if (delta > 0)
             return false;
 
@@ -141,7 +155,7 @@ public abstract partial class SharedMechSystem
         if (!_powerCell.TryUseCharge(ent.Owner, amount))
             return false;
 
-        UpdateUserInterface(ent.Owner);
+        UpdateMechUi(ent.Owner);
         UpdateBatteryAlert(ent);
 
         return true;
@@ -151,8 +165,11 @@ public abstract partial class SharedMechSystem
     /// Update battery alerts shown on the mech.
     /// </summary>
     [PublicAPI]
-    public void UpdateBatteryAlert(Entity<MechComponent> ent)
+    public void UpdateBatteryAlert(Entity<MechComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
         if (!_powerCell.TryGetBatteryFromSlot(ent.Owner, out var cell))
         {
             _alerts.ClearAlert(ent.Owner, ent.Comp.BatteryAlert);
@@ -177,17 +194,20 @@ public abstract partial class SharedMechSystem
     /// Update health alerts shown on the mech.
     /// </summary>
     [PublicAPI]
-    public void UpdateHealthAlert(Entity<MechComponent> ent)
+    public void UpdateHealthAlert(Entity<MechComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
         if (ent.Comp.Broken)
         {
-            // Mech is broken
+            // Mech is broken.
             _alerts.ClearAlert(ent.Owner, ent.Comp.HealthAlert);
             _alerts.ShowAlert(ent.Owner, ent.Comp.BrokenAlert);
         }
         else
         {
-            // Mech is healthy, show health percentage
+            // Mech is healthy, show health percentage.
             _alerts.ClearAlert(ent.Owner, ent.Comp.BrokenAlert);
 
             var integrity = ent.Comp.Integrity.Float();
@@ -201,11 +221,14 @@ public abstract partial class SharedMechSystem
     /// Eject the battery from the mech's battery slot.
     /// </summary>
     [PublicAPI]
-    public void RemoveBattery(Entity<MechComponent> ent)
+    public void RemoveBattery(Entity<MechComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
         _container.EmptyContainer(ent.Comp.BatterySlot);
         _actionBlocker.UpdateCanMove(ent.Owner);
-        UpdateUserInterface(ent.Owner);
+        UpdateMechUi(ent.Owner);
         Dirty(ent);
     }
 
@@ -213,14 +236,17 @@ public abstract partial class SharedMechSystem
     /// Puts the mech into a broken state: ejects all contents, disables control, but allows repair.
     /// </summary>
     [PublicAPI]
-    public void SetBrokenState(Entity<MechComponent> ent)
+    public void SetBrokenState(Entity<MechComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
         var pilot = ent.Comp.PilotSlot.ContainedEntity;
 
         if (pilot.HasValue)
-            ManageVirtualItems(pilot.Value, ent.Owner, create: false);
+            ManageVirtualItems((ent.Owner, ent.Comp), pilot.Value, create: false);
 
-        // In broken state, equipment, modules, and battery are ejected
+        // In broken state, equipment, modules, and battery are ejected.
         var equipment = new List<EntityUid>(ent.Comp.EquipmentContainer.ContainedEntities);
         foreach (var equipmentEnt in equipment)
         {
@@ -239,12 +265,12 @@ public abstract partial class SharedMechSystem
         {
             var battery = ent.Comp.BatterySlot.ContainedEntity.Value;
 
-            // Remove from container and throw from mech position
+            // Remove from container and throw from mech position.
             _container.Remove(battery, ent.Comp.BatterySlot);
             ScatterEntityFromMech(battery);
         }
 
-        // Eject pilot from the mech when entering broken state
+        // Eject pilot from the mech when entering broken state.
         if (pilot.HasValue)
         {
             TryEject(ent);
@@ -252,11 +278,11 @@ public abstract partial class SharedMechSystem
         }
 
         ent.Comp.Broken = true;
-        UpdateAppearance(ent);
+        UpdateAppearance((ent.Owner, ent.Comp));
         Dirty(ent);
-        UpdateUserInterface(ent.Owner);
+        UpdateMechUi(ent.Owner);
 
-        // Play broken sound
+        // Play broken sound.
         if (ent.Comp.BrokenSound != null)
         {
             var ev = new MechBrokenSoundEvent(ent.Owner, ent.Comp.BrokenSound);
@@ -268,21 +294,24 @@ public abstract partial class SharedMechSystem
     /// Repair a broken mech: restore integrity, clear broken flag and refresh appearance.
     /// </summary>
     [PublicAPI]
-    public void RepairMech(Entity<MechComponent> ent)
+    public void RepairMech(Entity<MechComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
         if (!ent.Comp.Broken)
             return;
 
-        // Restore integrity to a safe level above broken threshold
+        // Restore integrity to a safe level above broken threshold.
         var repairAmount = ent.Comp.MaxIntegrity;
         SetIntegrity(ent, repairAmount);
 
-        // Reset broken state
+        // Reset broken state.
         ent.Comp.Broken = false;
 
-        UpdateAppearance(ent);
+        UpdateAppearance((ent.Owner, ent.Comp));
         Dirty(ent);
-        UpdateUserInterface(ent.Owner);
+        UpdateMechUi(ent.Owner);
     }
 
     /// <summary>
@@ -293,12 +322,12 @@ public abstract partial class SharedMechSystem
     /// <param name="toInsert">Candidate entity to insert.</param>
     /// <returns>True if insertion is allowed.</returns>
     [PublicAPI]
-    public virtual bool CanInsert(Entity<MechComponent> ent, EntityUid toInsert)
+    public virtual bool CanInsert(Entity<MechComponent?> ent, EntityUid toInsert)
     {
-        if (ent.Comp.Broken)
+        if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (HasComp<VehicleOperatorComponent>(toInsert))
+        if (ent.Comp.Broken)
             return false;
 
         if (!_actionBlocker.CanMove(toInsert))
@@ -320,8 +349,11 @@ public abstract partial class SharedMechSystem
     /// <param name="toInsert">Entity to insert as pilot.</param>
     /// <returns>True if insertion succeeded.</returns>
     [PublicAPI]
-    public bool TryInsert(Entity<MechComponent> ent, EntityUid toInsert)
+    public bool TryInsert(Entity<MechComponent?> ent, EntityUid toInsert)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
         if (!CanInsert(ent, toInsert))
             return false;
 
@@ -333,8 +365,11 @@ public abstract partial class SharedMechSystem
     /// Attempt to eject the current pilot from the mech.
     /// </summary>
     [PublicAPI]
-    public bool TryEject(Entity<MechComponent> ent)
+    public bool TryEject(Entity<MechComponent?> ent)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
         if (!Vehicle.TryGetOperator(ent.Owner, out var operatorEnt))
             return false;
 
@@ -346,9 +381,10 @@ public abstract partial class SharedMechSystem
     /// Updates the UI.
     /// </summary>
     [PublicAPI]
-    public virtual void UpdateUserInterface(EntityUid uid)
+    public void UpdateMechUi(EntityUid uid)
     {
-        RaiseLocalEvent(uid, new UpdateMechUiEvent());
+        var ev = new UpdateMechUiEvent();
+        RaiseLocalEvent(uid, ev);
     }
 
     /// <summary>
@@ -365,95 +401,73 @@ public abstract partial class SharedMechSystem
 }
 
 /// <summary>
-/// Event to request mech UI update (shared between client and server)
+/// Event to request mech UI update.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class UpdateMechUiEvent : EntityEventArgs
-{
-}
+public sealed class UpdateMechUiEvent : EntityEventArgs;
 
 [Serializable, NetSerializable]
-public sealed partial class RemoveBatteryEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class RemoveBatteryEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
-public sealed partial class MechExitEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class MechExitEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
-public sealed partial class MechEntryEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class MechEntryEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
-public sealed partial class RemoveModuleEvent : SimpleDoAfterEvent
-{
-}
+public sealed partial class RemoveModuleEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
-public sealed partial class MechDnaLockRegisterEvent : EntityEventArgs
+public sealed class MechDnaLockRegisterEvent : EntityEventArgs
 {
     public NetEntity User;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MechDnaLockToggleEvent : EntityEventArgs
+public sealed class MechDnaLockToggleEvent : EntityEventArgs
 {
     public NetEntity User;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MechDnaLockResetEvent : EntityEventArgs
+public sealed class MechDnaLockResetEvent : EntityEventArgs
 {
     public NetEntity User;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MechCardLockRegisterEvent : EntityEventArgs
+public sealed class MechCardLockRegisterEvent : EntityEventArgs
 {
     public NetEntity User;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MechCardLockToggleEvent : EntityEventArgs
+public sealed class MechCardLockToggleEvent : EntityEventArgs
 {
     public NetEntity User;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MechCardLockResetEvent : EntityEventArgs
+public sealed class MechCardLockResetEvent : EntityEventArgs
 {
     public NetEntity User;
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MechDnaLockRegisterMessage : BoundUserInterfaceMessage
-{
-}
+public sealed class MechDnaLockRegisterMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed partial class MechDnaLockToggleMessage : BoundUserInterfaceMessage
-{
-}
+public sealed class MechDnaLockToggleMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed partial class MechDnaLockResetMessage : BoundUserInterfaceMessage
-{
-}
+public sealed class MechDnaLockResetMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed partial class MechCardLockRegisterMessage : BoundUserInterfaceMessage
-{
-}
+public sealed class MechCardLockRegisterMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed partial class MechCardLockToggleMessage : BoundUserInterfaceMessage
-{
-}
+public sealed class MechCardLockToggleMessage : BoundUserInterfaceMessage;
 
 [Serializable, NetSerializable]
-public sealed partial class MechCardLockResetMessage : BoundUserInterfaceMessage
-{
-}
+public sealed class MechCardLockResetMessage : BoundUserInterfaceMessage;

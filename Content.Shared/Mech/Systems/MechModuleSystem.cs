@@ -1,5 +1,5 @@
 using Content.Shared.Interaction;
-using Content.Shared.Mech.Components;
+using Content.Shared.Mech.Module.Components;
 
 namespace Content.Shared.Mech.Systems;
 
@@ -30,13 +30,13 @@ public sealed class MechModuleSystem : MechInstallSystem
 
         if (mechComp.ModuleContainer.ContainedEntities.Count >= mechComp.MaxModuleAmount)
         {
-            Popup.PopupPredicted(Loc.GetString("mech-module-slot-full-popup"), args.User, args.User);
+            Popup.PopupClient(Loc.GetString("mech-module-slot-full-popup"), args.User, args.User);
             return;
         }
 
         if (Whitelist.IsWhitelistFail(mechComp.ModuleWhitelist, ent.Owner))
         {
-            Popup.PopupPredicted(Loc.GetString("mech-module-whitelist-fail-popup"), args.User, args.User);
+            Popup.PopupClient(Loc.GetString("mech-module-whitelist-fail-popup"), args.User, args.User);
             return;
         }
 
@@ -52,11 +52,8 @@ public sealed class MechModuleSystem : MechInstallSystem
             return;
 
         var mech = args.Args.Target.Value;
-        if (!TryFinalizeInsert(mech, out var mechComp))
-            return;
 
-        PopupFinish(mech, ent.Owner);
-        MechSystem.InsertEquipment((mech, mechComp!), ent.Owner, moduleComponent: ent.Comp);
+        Mech.InsertEquipment(mech, ent.Owner, moduleComponent: ent.Comp);
         args.Handled = true;
     }
 }

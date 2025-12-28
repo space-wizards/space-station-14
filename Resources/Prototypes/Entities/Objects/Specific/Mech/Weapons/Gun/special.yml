@@ -1,8 +1,8 @@
 - type: entity
-  id: WeaponMechSpecialMousetrapMortar
   parent: [ BaseMechWeaponRange, SpecialMechEquipment ]
-  suffix: Mech Weapon, Gun, Special, Mortar
+  id: WeaponMechSpecialMousetrapMortar
   name: mousetrap mortar
+  suffix: Mech Weapon, Gun, Special, Mortar
   description: Mounted mousetrap launcher.
   components:
   - type: Sprite
@@ -30,10 +30,10 @@
   - type: Appearance
 
 - type: entity
-  id: WeaponMechSpecialBananaMortar
   parent: [ BaseMechWeaponRange, SpecialMechEquipment ]
-  suffix: Mech Weapon, Gun, Special, Mortar
+  id: WeaponMechSpecialBananaMortar
   name: banana mortar
+  suffix: Mech Weapon, Gun, Special, Mortar
   description: Mounted banana peel launcher.
   components:
   - type: Sprite

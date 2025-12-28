@@ -1,7 +1,7 @@
 - type: entity
-  id: BaseMechWeaponMelee
-  parent: BaseMechEquipment
   abstract: true
+  parent: BaseMechEquipment
+  id: BaseMechWeaponMelee
   components:
   - type: Appearance
   - type: StaticPrice

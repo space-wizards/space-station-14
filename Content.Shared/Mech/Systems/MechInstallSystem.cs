@@ -1,8 +1,9 @@
-using Content.Shared.Popups;
 using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Mech.Components;
-using Content.Shared.Whitelist;
+using Content.Shared.Popups;
 using Content.Shared.Vehicle;
+using Content.Shared.Whitelist;
 
 namespace Content.Shared.Mech.Systems;
 
@@ -12,11 +13,12 @@ namespace Content.Shared.Mech.Systems;
 /// </summary>
 public abstract class MechInstallSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly EntityWhitelistSystem Whitelist = default!;
+    [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
+    [Dependency] protected readonly SharedMechSystem Mech = default!;
+    [Dependency] protected readonly MechLockSystem MechLock = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly VehicleSystem Vehicle = default!;
-    [Dependency] protected readonly SharedMechSystem MechSystem = default!;
 
     /// <summary>
     /// Common precondition checks before starting install. Validates mech, broken/closed states and actor relation.
@@ -26,25 +28,21 @@ public abstract class MechInstallSystem : EntitySystem
         if (!TryComp(target, out mechComp))
             return false;
 
-        // Check lock access before starting install
-        if (TryComp<MechLockComponent>(target, out var lockComp) && lockComp.IsLocked)
-        {
-            var lockSys = EntityManager.System<MechLockSystem>();
-            if (!lockSys.CheckAccessWithFeedback(target, user, lockComp))
-                return false;
-        }
+        // Check lock access before starting install.
+        if (!MechLock.CheckAccessWithFeedback(target, user))
+            return false;
 
-        // Block install if mech is in broken state
+        // Block install if mech is in broken state.
         if (mechComp.Broken && !Vehicle.HasOperator(target))
         {
-            Popup.PopupPredicted(Loc.GetString("mech-cannot-insert-broken-popup"), user, user);
+            Popup.PopupClient(Loc.GetString("mech-cannot-insert-broken-popup"), user, user);
             return false;
         }
 
-        // Block install if cabin is closed
+        // Block install if cabin is closed.
         if (Vehicle.HasOperator(target))
         {
-            Popup.PopupPredicted(Loc.GetString("mech-cannot-modify-closed-popup"), user, user);
+            Popup.PopupClient(Loc.GetString("mech-cannot-modify-closed-popup"), user, user);
             return false;
         }
 
@@ -55,7 +53,7 @@ public abstract class MechInstallSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks duplicate by prototype id among already installed items. Pops up on duplicate.
+    /// Checks duplicate by prototype id among already installed items.
     /// </summary>
     protected bool HasDuplicateInstalled(EntityUid item, IReadOnlyList<EntityUid> installed, EntityUid user)
     {
@@ -69,7 +67,7 @@ public abstract class MechInstallSystem : EntitySystem
             var md2 = EntityManager.GetComponentOrNull<MetaDataComponent>(ent);
             if (md2?.EntityPrototype != null && md2.EntityPrototype.ID == id)
             {
-                Popup.PopupPredicted(Loc.GetString("mech-duplicate-installed-popup"), user, user);
+                Popup.PopupClient(Loc.GetString("mech-duplicate-installed-popup"), user, user);
                 return true;
             }
         }
@@ -82,7 +80,7 @@ public abstract class MechInstallSystem : EntitySystem
     /// </summary>
     protected void StartInstallDoAfter(EntityUid user, EntityUid item, EntityUid mech, float duration, SimpleDoAfterEvent insertEvent)
     {
-        Popup.PopupPredicted(Loc.GetString("mech-install-begin-popup", ("item", item)), mech, mech);
+        Popup.PopupPredicted(Loc.GetString("mech-install-begin-popup", ("user", Identity.Entity(user, EntityManager)), ("item", item)), user, user);
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, user, duration, insertEvent, item, target: mech, used: item)
         {
@@ -90,24 +88,5 @@ public abstract class MechInstallSystem : EntitySystem
         };
 
         DoAfter.TryStartDoAfter(doAfterEventArgs);
-    }
-
-    /// <summary>
-    /// Shared finalization checks before performing insert.
-    /// </summary>
-    protected bool TryFinalizeInsert(EntityUid mech, out MechComponent? mechComp)
-    {
-        if (!TryComp(mech, out mechComp))
-            return false;
-
-        return true;
-    }
-
-    /// <summary>
-    /// Pops up standard finish message.
-    /// </summary>
-    protected void PopupFinish(EntityUid mech, EntityUid item)
-    {
-        Popup.PopupPredicted(Loc.GetString("mech-install-finish-popup", ("item", item)), mech, mech);
     }
 }

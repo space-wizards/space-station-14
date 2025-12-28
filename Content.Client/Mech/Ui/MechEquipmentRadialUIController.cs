@@ -1,7 +1,7 @@
+using JetBrains.Annotations;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
-using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Utility;
 
@@ -33,10 +33,11 @@ public sealed class MechEquipmentRadialUIController : UIController
         var options = new List<RadialMenuOptionBase>
         {
             // Add "No Equipment" option
-            new RadialMenuActionOption<string>(data =>
-            {
-                _entManager.RaisePredictiveEvent(new RequestMechEquipmentSelectEvent { Equipment = null });
-            }, "no_equipment")
+            new RadialMenuActionOption<string>(_ =>
+                {
+                    _entManager.RaisePredictiveEvent(new RequestMechEquipmentSelectEvent { Equipment = null });
+                },
+                "no_equipment")
             {
                 ToolTip = Loc.GetString("mech-radial-no-equipment"),
                 IconSpecifier = null
@@ -56,10 +57,12 @@ public sealed class MechEquipmentRadialUIController : UIController
             if (metaData.EntityPrototype != null)
                 sprite = new SpriteSpecifier.EntityPrototype(metaData.EntityPrototype.ID);
 
-            options.Add(new RadialMenuActionOption<string>(data =>
-            {
-                _entManager.RaisePredictiveEvent(new RequestMechEquipmentSelectEvent { Equipment = _entManager.GetNetEntity(equipmentEntity) });
-            }, metaData.EntityName)
+            options.Add(new RadialMenuActionOption<string>(_ =>
+                {
+                    _entManager.RaisePredictiveEvent(new RequestMechEquipmentSelectEvent
+                        { Equipment = _entManager.GetNetEntity(equipmentEntity) });
+                },
+                metaData.EntityName)
             {
                 ToolTip = tooltip,
                 IconSpecifier = RadialMenuIconSpecifier.With(sprite)

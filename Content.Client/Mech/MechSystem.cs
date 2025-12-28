@@ -1,9 +1,9 @@
 ﻿using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Systems;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Client.GameObjects;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
-using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Client.Mech;
 
@@ -11,14 +11,23 @@ public sealed class MechSystem : SharedMechSystem
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
 
-    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<MechComponent, MechToggleEquipmentEvent>(OnToggleEquipmentAction);
         SubscribeLocalEvent<MechComponent, AppearanceChangeEvent>(OnAppearanceChanged);
         SubscribeLocalEvent<MechComponent, PrepareMeleeLungeEvent>(OnPrepareMeleeLunge);
         SubscribeLocalEvent<MechPilotComponent, GetMeleeAttackerEntityEvent>(OnGetMeleeAttacker);
+    }
+
+    private void OnToggleEquipmentAction(Entity<MechComponent> ent, ref MechToggleEquipmentEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        RaiseLocalEvent(ent.Owner, new MechOpenEquipmentRadialEvent());
+        args.Handled = true;
     }
 
     private void OnAppearanceChanged(Entity<MechComponent> ent, ref AppearanceChangeEvent args)
@@ -55,13 +64,13 @@ public sealed class MechSystem : SharedMechSystem
         _sprite.SetDrawDepth((ent.Owner, args.Sprite), (int)drawDepth);
     }
 
-    private void OnPrepareMeleeLunge(Entity<MechComponent> ent, ref PrepareMeleeLungeEvent args)
+    private static void OnPrepareMeleeLunge(Entity<MechComponent> ent, ref PrepareMeleeLungeEvent args)
     {
         args.SpawnAtMap = true;
         args.DisableTracking = true;
     }
 
-    private void OnGetMeleeAttacker(Entity<MechPilotComponent> ent, ref GetMeleeAttackerEntityEvent args)
+    private static void OnGetMeleeAttacker(Entity<MechPilotComponent> ent, ref GetMeleeAttackerEntityEvent args)
     {
         if (args.Handled)
             return;

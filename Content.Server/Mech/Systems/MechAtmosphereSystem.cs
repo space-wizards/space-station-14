@@ -1,10 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
-using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Mech;
-using Content.Shared.Mech.Systems;
 using Content.Shared.Mech.Components;
+using Content.Shared.Mech.Module.Components;
+using Content.Shared.Mech.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Mech.Systems;
@@ -44,28 +45,28 @@ public sealed class MechAtmosphereSystem : EntitySystem
 
             uiDirty |= UpdatePurgeCooldown(uid, frameTime);
             uiDirty |= UpdateFanModule((uid, component), frameTime);
-            uiDirty |= UpdateCabinPressure((uid, component), frameTime);
+            uiDirty |= UpdateCabinPressure((uid, component));
 
             if (uiDirty && _ui.IsUiOpen(uid, MechUiKey.Key))
-                UpdateMechUI(uid);
+                _mech.UpdateMechUi(uid);
         }
     }
 
     #region Cabin & Airtight
+
     public bool TryGetGasModuleAir(Entity<MechComponent> ent, out GasMixture? air)
     {
         air = null;
         foreach (var moduleEnt in ent.Comp.ModuleContainer.ContainedEntities)
         {
-            if (TryComp<MechAirTankModuleComponent>(moduleEnt, out _))
-            {
-                if (TryComp<GasTankComponent>(moduleEnt, out var tank))
-                {
-                    air = tank.Air;
-                    return true;
-                }
-                return false;
-            }
+            if (!HasComp<Shared.Mech.Module.Components.MechAirTankModuleComponent>(moduleEnt))
+                continue;
+
+            if (!TryComp<GasTankComponent>(moduleEnt, out var tank))
+                continue;
+
+            air = tank.Air;
+            return true;
         }
 
         return false;
@@ -89,12 +90,13 @@ public sealed class MechAtmosphereSystem : EntitySystem
         return false;
     }
 
-    private bool UpdateCabinPressure(Entity<MechComponent> ent, float frameTime)
+    private bool UpdateCabinPressure(Entity<MechComponent> ent)
     {
-        if (!TryComp(ent.Owner, out MechCabinAirComponent? cabin))
+        if (!TryComp<MechCabinAirComponent>(ent.Owner, out var cabin))
             return false;
 
-        var purgingActive = TryComp<MechCabinPurgeComponent>(ent.Owner, out var purgeComp) && purgeComp.CooldownRemaining > 0;
+        var purgingActive = TryComp<MechCabinPurgeComponent>(ent.Owner, out var purgeComp) &&
+                            purgeComp.CooldownRemaining > 0;
         if (purgingActive || !TryGetGasModuleAir(ent, out var tankAir) || tankAir == null)
             return false;
 
@@ -106,7 +108,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
         // Cannot be airtight if CanAirtight is false.
         ent.Comp.Airtight = ent.Comp.CanAirtight && args.IsAirtight;
         Dirty(ent);
-        UpdateMechUI(ent.Owner);
+        _mech.UpdateMechUi(ent.Owner);
     }
 
     private void OnInhale(Entity<MechPilotComponent> ent, ref InhaleLocationEvent args)
@@ -117,7 +119,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
         // Meter a single breath from the cabin using a tank-like regulator pressure.
         if (mechComp.Airtight && TryComp<MechCabinAirComponent>(ent.Comp.Mech, out var cabin))
         {
-            var vol = args.Respirator?.BreathVolume ?? Atmospherics.BreathVolume;
+            var vol = args.Respirator.BreathVolume;
             var breath = new GasMixture(vol)
             {
                 Temperature = cabin.Air.Temperature
@@ -158,9 +160,11 @@ public sealed class MechAtmosphereSystem : EntitySystem
 
         return _atmosphere.GetContainingMixture(ent.Owner, excite: excite);
     }
+
     #endregion
 
     #region Fan
+
     private bool UpdateFanModule(Entity<MechComponent> ent, float frameTime)
     {
         var fanModule = GetFanModule(ent);
@@ -186,28 +190,29 @@ public sealed class MechAtmosphereSystem : EntitySystem
     {
         foreach (var ent in mechComp.ModuleContainer.ContainedEntities)
         {
-            if (TryComp<MechAirTankModuleComponent>(ent, out _) && TryComp<GasTankComponent>(ent, out var tank))
+            if (TryComp<Shared.Mech.Module.Components.MechAirTankModuleComponent>(ent, out _) && TryComp<GasTankComponent>(ent, out var tank))
                 return (tank, tank.Air);
         }
+
         return (null, null);
     }
 
-    private bool ProcessFanOperation(Entity<MechComponent> ent, MechFanModuleComponent fanModule, GasTankComponent tankComp, GasMixture tankAir, float frameTime)
+    private bool ProcessFanOperation(Entity<MechComponent> ent,
+        MechFanModuleComponent fanModule,
+        GasTankComponent tankComp,
+        GasMixture tankAir,
+        float frameTime)
     {
         var external = _atmosphere.GetContainingMixture(ent.Owner);
-        if (external == null || external.Pressure <= MinExternalPressure)
+        if (external == null
+            || external.Pressure <= MinExternalPressure
+            || tankAir.Pressure >= tankComp.MaxOutputPressure - PressureTolerance)
         {
             SetFanState(ent, fanModule, MechFanState.Idle);
             return false;
         }
 
-        if (tankAir.Pressure >= tankComp.MaxOutputPressure - PressureTolerance)
-        {
-            SetFanState(ent, fanModule, MechFanState.Idle);
-            return false;
-        }
-
-        if (!_mech.TryChangeEnergy(ent, -fanModule.EnergyConsumption * frameTime))
+        if (!_mech.TryChangeEnergy(ent.AsNullable(), -fanModule.EnergyConsumption * frameTime))
         {
             SetFanState(ent, fanModule, MechFanState.Off);
             return false;
@@ -219,17 +224,22 @@ public sealed class MechAtmosphereSystem : EntitySystem
         return success;
     }
 
-    private bool ProcessFilteredTransfer(GasMixture external, GasMixture tankAir, MechFanModuleComponent fanModule, float frameTime)
+    private bool ProcessFilteredTransfer(GasMixture external,
+        GasMixture tankAir,
+        MechFanModuleComponent fanModule,
+        float frameTime)
     {
         // Calculate transfer volume based on processing rate.
         var transferVolume = fanModule.GasProcessingRate * frameTime;
-        if (transferVolume <= 0) return false;
+        if (transferVolume <= 0)
+            return false;
 
         // Remove gas from external environment.
         var removed = external.RemoveVolume(transferVolume);
-        if (removed.TotalMoles <= 0) return false;
+        if (removed.TotalMoles <= 0)
+            return false;
 
-        if (fanModule.FilterEnabled && fanModule.FilterGases.Count > 0)
+        if (fanModule is { FilterEnabled: true, FilterGases.Count: > 0 })
         {
             var filtered = new GasMixture { Temperature = removed.Temperature };
             _atmosphere.ScrubInto(removed, filtered, fanModule.FilterGases);
@@ -245,11 +255,11 @@ public sealed class MechAtmosphereSystem : EntitySystem
 
     private void SetFanState(Entity<MechComponent> ent, MechFanModuleComponent fanModule, MechFanState state)
     {
-        if (fanModule.State != state)
-        {
-            fanModule.State = state;
-            Dirty(ent);
-        }
+        if (fanModule.State == state)
+            return;
+
+        fanModule.State = state;
+        Dirty(ent);
     }
 
     private void OnFanToggleMessage(Entity<MechComponent> ent, ref MechFanToggleMessage args)
@@ -268,7 +278,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
             Dirty(ent);
         }
 
-        UpdateMechUI(ent.Owner);
+        _mech.UpdateMechUi(ent.Owner);
     }
 
     private void OnFilterToggleMessage(Entity<MechComponent> ent, ref MechFilterToggleMessage args)
@@ -279,7 +289,7 @@ public sealed class MechAtmosphereSystem : EntitySystem
 
         fanModule.FilterEnabled = args.Enabled;
         Dirty(ent);
-        UpdateMechUI(ent.Owner);
+        _mech.UpdateMechUi(ent.Owner);
     }
 
     private MechFanModuleComponent? GetFanModule(Entity<MechComponent> ent)
@@ -289,12 +299,9 @@ public sealed class MechAtmosphereSystem : EntitySystem
             if (TryComp<MechFanModuleComponent>(entModule, out var fanModule))
                 return fanModule;
         }
+
         return null;
     }
-    #endregion
 
-    private void UpdateMechUI(EntityUid uid)
-    {
-        RaiseLocalEvent(uid, new UpdateMechUiEvent());
-    }
+    #endregion
 }

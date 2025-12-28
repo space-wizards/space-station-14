@@ -1,6 +1,6 @@
 - type: entity
-  id: WeaponMechDebugMelle
   parent: [ BaseMechWeaponMelee, DebugMechEquipment ] # Debug equipment dose has all whitelist tags.
+  id: WeaponMechDebugMelle
   name: debug bam
   suffix: Mech Weapon, DEBUG, Melee
   description: A robust thing.

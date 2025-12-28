@@ -1,9 +1,9 @@
 using System.Linq;
-using Content.Shared.Mech.Components;
+using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 
-namespace Content.Shared.Mech.Systems;
+namespace Content.Shared.Mech.Equipment.Systems;
 
 /// <summary>
 /// Handles everything for mech soundboard.
@@ -13,6 +13,7 @@ public sealed class MechSoundboardSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -23,7 +24,7 @@ public sealed class MechSoundboardSystem : EntitySystem
 
     private void OnUiStateReady(EntityUid uid, MechSoundboardComponent comp, MechEquipmentUiStateReadyEvent args)
     {
-        // you have to specify a collection so it must exist probably
+        // you have to specify a collection so it must exist probably.
         var sounds = comp.Sounds.Select(sound => sound.Collection!);
         var state = new MechSoundboardUiState
         {

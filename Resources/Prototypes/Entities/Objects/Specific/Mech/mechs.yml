@@ -1,6 +1,6 @@
 - type: entity
+  abstract: true
   id: DebugMech
-  abstract: true
   categories: [ HideSpawnMenu ]
   components:
   - type: Mech
@@ -18,8 +18,8 @@
       - UniversalMech
 
 - type: entity
+  abstract: true
   id: UniversalMech
-  abstract: true
   categories: [ HideSpawnMenu ]
   components:
   - type: Mech
@@ -31,8 +31,8 @@
       - UniversalMech
 
 - type: entity
+  abstract: true
   id: CombatMech
-  abstract: true
   categories: [ HideSpawnMenu ]
   components:
   - type: Mech
@@ -46,8 +46,8 @@
       - UniversalMech
 
 - type: entity
+  abstract: true
   id: IndustrialMech
-  abstract: true
   categories: [ HideSpawnMenu ]
   components:
   - type: Mech
@@ -61,8 +61,8 @@
       - UniversalMech
 
 - type: entity
+  abstract: true
   id: SpecialMech
-  abstract: true
   categories: [ HideSpawnMenu ]
   components:
   - type: Mech
@@ -74,12 +74,10 @@
       tags:
       - SpecialMech
       - UniversalMech
-# TODO: Make medical mech.
 
 - type: entity
-  id: BaseMech
-  save: false
   abstract: true
+  id: BaseMech
   components:
   - type: MobMover
   - type: Mech
@@ -98,6 +96,7 @@
     netsync: false
   - type: MechLock
     isLocked: false
+  - type: MechCabinAir
   - type: Vehicle
   - type: ContainerVehicle
     containerId: "mech-pilot-slot"
@@ -202,8 +201,8 @@
 
 # Ripley MK-I
 - type: entity
-  id: MechRipley
   parent: [ BaseMech, IndustrialMech, BaseCargoContraband ]
+  id: MechRipley
   name: Ripley APLU
   description: Versatile and lightly armored, the Ripley is useful for almost any heavy work scenario. The "APLU" stands for Autonomous Power Loading Unit.
   components:
@@ -246,8 +245,8 @@
     baseSprintSpeed: 3.6
 
 - type: entity
-  id: MechRipleyBattery
   parent: MechRipley
+  id: MechRipleyBattery
   suffix: Battery
   components:
   - type: ItemSlots
@@ -260,8 +259,8 @@
 
 # Ripley MK-II
 - type: entity
-  id: MechRipley2
   parent: [ BaseMech, IndustrialMech, BaseCargoContraband ]
+  id: MechRipley2
   name: Ripley APLU MK-II
   description: The "MK-II" has a pressurized cabin for space operations, but the added weight has slowed it down.
   components:
@@ -305,8 +304,8 @@
     damageModifierSet: MediumArmorNT
 
 - type: entity
-  id: MechRipley2Battery
   parent: MechRipley2
+  id: MechRipley2Battery
   suffix: Battery
   components:
   - type: ItemSlots
@@ -319,8 +318,8 @@
 
 # Clarke
 - type: entity
-  id: MechClarke
   parent: [ BaseMech, IndustrialMech, BaseCargoContraband ]
+  id: MechClarke
   name: Clarke
   description: A fast-moving mech for space travel. It has built-in trusts.
   components:
@@ -371,8 +370,8 @@
   - type: MovementAlwaysTouching
 
 - type: entity
-  id: MechClarkeBattery
   parent: MechClarke
+  id: MechClarkeBattery
   suffix: Battery
   components:
   - type: ItemSlots
@@ -441,13 +440,13 @@
   components:
   - type: Mech
     startingEquipment:
-      - WeaponMechSpecialBananaMortar
-      - WeaponMechSpecialMousetrapMortar
+    - WeaponMechSpecialBananaMortar
+    - WeaponMechSpecialMousetrapMortar
     startingModules:
-      - MechModuleFan
-      - MechModuleAirTank
-      - MechModuleTeslaRelay
-      - MechModuleHorn
+    - MechModuleFan
+    - MechModuleAirTank
+    - MechModuleTeslaRelay
+    - MechModuleHorn
 
 # HAMTR
 - type: entity
@@ -570,8 +569,6 @@
   - type: Access
     tags:
     - Maintenance
-  # TOOD: buzz / chime actions
-  # TODO: builtin flashlight
 
 - type: entity
   parent: MechVim
@@ -590,8 +587,8 @@
 
 # Gygax
 - type: entity
-  id: MechGygax
   parent: [ BaseMech, CombatMech, BaseRestrictedContraband ]
+  id: MechGygax
   name: Gygax
   description: While lightly armored, the Gygax has incredible mobility thanks to its ability that lets it smash through walls at high speeds.
   components:
@@ -634,8 +631,8 @@
     baseSprintSpeed: 2.6
 
 - type: entity
-  id: MechGygaxBattery
   parent: MechGygax
+  id: MechGygaxBattery
   suffix: Battery
   components:
   - type: ItemSlots
@@ -648,8 +645,8 @@
 
 # Durand
 - type: entity
-  id: MechDurand
   parent: [ BaseMech, CombatMech, BaseRestrictedContraband ]
+  id: MechDurand
   name: Durand
   description: A slow but beefy combat exosuit that is extra scary in confined spaces due to its punches. Xenos hate it!
   components:
@@ -700,8 +697,8 @@
     doAfterDelay: 15
 
 - type: entity
-  id: MechDurandBattery
   parent: MechDurand
+  id: MechDurandBattery
   suffix: Battery
   components:
   - type: ItemSlots
@@ -716,8 +713,8 @@
 
 # Marauder
 - type: entity
-  id: MechMarauder
   parent: [ BaseMech, CombatMech, BaseCentcommContraband ]
+  id: MechMarauder
   name: Marauder
   description: Looks like we're all saved. # ERT mech
   components:
@@ -768,8 +765,8 @@
     doAfterDelay: 15
 
 - type: entity
-  id: MechMarauderBattery
   parent: MechMarauder
+  id: MechMarauderBattery
   suffix: Battery
   components:
   - type: ItemSlots
@@ -781,25 +778,25 @@
         swap: false
 
 - type: entity
-  id: MechMarauderFilled
   parent: MechMarauderBattery
+  id: MechMarauderFilled
   suffix: Battery, Filled
   components:
   - type: Mech
     startingEquipment:
-      - WeaponMechChainSword
-      - WeaponMechCombatPulseRifle
-      - WeaponMechCombatUltraRifle
-      - WeaponMechCombatMissileRack8
+    - WeaponMechChainSword
+    - WeaponMechCombatPulseRifle
+    - WeaponMechCombatUltraRifle
+    - WeaponMechCombatMissileRack8
     startingModules:
-      - MechModuleFan
-      - MechModuleAirTank
-      - MechModuleTeslaRelay
+    - MechModuleFan
+    - MechModuleAirTank
+    - MechModuleTeslaRelay
 
 # Seraph
 - type: entity
-  id: MechSeraph
   parent: [ BaseMech, CombatMech, BaseCentcommContraband ]
+  id: MechSeraph
   name: Seraph
   description: That's the last thing you'll see. # Death Squad mech
   components:
@@ -830,7 +827,7 @@
         Shock: 0.05
     pilotWhitelist:
       components:
-        - HumanoidAppearance
+      - HumanoidAppearance
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
@@ -850,8 +847,8 @@
     doAfterDelay: 20
 
 - type: entity
-  id: MechSeraphBattery
   parent: MechSeraph
+  id: MechSeraphBattery
   suffix: Battery
   components:
   - type: ItemSlots
@@ -863,28 +860,28 @@
         swap: false
 
 - type: entity
-  id: MechSeraphFilled
   parent: MechSeraphBattery
+  id: MechSeraphFilled
   suffix: Battery, Filled
   components:
   - type: Mech
     startingEquipment:
-      - WeaponMechChainSword
-      - WeaponMechCombatPulseRifle
-      - WeaponMechCombatShotgun
-      - WeaponMechCombatMissileRack6
-      - WeaponMechCombatUltraRifle
+    - WeaponMechChainSword
+    - WeaponMechCombatPulseRifle
+    - WeaponMechCombatShotgun
+    - WeaponMechCombatMissileRack6
+    - WeaponMechCombatUltraRifle
     startingModules:
-      - MechModuleFan
-      - MechModuleAirTank
-      - MechModuleTeslaRelay
+    - MechModuleFan
+    - MechModuleAirTank
+    - MechModuleTeslaRelay
 
 # Syndicate Combat Mech
 
 # Dark Gygax
 - type: entity
-  id: MechGygaxSyndie
   parent: [ BaseMech, CombatMech, BaseSyndicateContraband ]
+  id: MechGygaxSyndie
   name: Dark Gygax
   description: A modified Gygax used for nefarious purposes. On the back of the armor plate there is an inscription "Cybersun Inc."
   components:
@@ -915,7 +912,7 @@
         Shock: 0.15
     pilotWhitelist:
       components:
-        - HumanoidAppearance
+      - HumanoidAppearance
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
@@ -948,24 +945,24 @@
         swap: false
 
 - type: entity
-  id: MechGygaxSyndieFilled
   parent: MechGygaxSyndieBattery
+  id: MechGygaxSyndieFilled
   suffix: Battery, Filled
   components:
   - type: Mech
     startingEquipment:
-      - WeaponMechChainSword
-      - WeaponMechCombatShotgun
-      - WeaponMechCombatMissileRack6
+    - WeaponMechChainSword
+    - WeaponMechCombatShotgun
+    - WeaponMechCombatMissileRack6
     startingModules:
-      - MechModuleFan
-      - MechModuleAirTank
-      - MechModuleTeslaRelay
+    - MechModuleFan
+    - MechModuleAirTank
+    - MechModuleTeslaRelay
 
 # Mauler
 - type: entity
-  id: MechMaulerSyndie
   parent: [ BaseMech, CombatMech, BaseSyndicateContraband ]
+  id: MechMaulerSyndie
   name: Mauler
   description: A modified Marauder used by the Syndicate that's not as maneuverable as the Dark Gygax, but it makes up for that in armor and sheer firepower. On the back of the armor plate there is an inscription "Cybersun Inc."
   components:
@@ -996,7 +993,7 @@
         Shock: 0.1
     pilotWhitelist:
       components:
-        - HumanoidAppearance
+      - HumanoidAppearance
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
@@ -1016,8 +1013,8 @@
     doAfterDelay: 25
 
 - type: entity
-  id: MechMaulerSyndieBattery
   parent: MechMaulerSyndie
+  id: MechMaulerSyndieBattery
   suffix: Battery
   components:
   - type: ItemSlots
@@ -1029,17 +1026,17 @@
         swap: false
 
 - type: entity
-  id: MechMaulerSyndieFilled
   parent: MechMaulerSyndieBattery
+  id: MechMaulerSyndieFilled
   suffix: Battery, Filled
   components:
   - type: Mech
     startingEquipment:
-      - WeaponMechChainSword
-      - WeaponMechCombatUltraRifle
-      - WeaponMechCombatShotgun
-      - WeaponMechCombatMissileRack8
+    - WeaponMechChainSword
+    - WeaponMechCombatUltraRifle
+    - WeaponMechCombatShotgun
+    - WeaponMechCombatMissileRack8
     startingModules:
-      - MechModuleFan
-      - MechModuleAirTank
-      - MechModuleTeslaRelay
+    - MechModuleFan
+    - MechModuleAirTank
+    - MechModuleTeslaRelay

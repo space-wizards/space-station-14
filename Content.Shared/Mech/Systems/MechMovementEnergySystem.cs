@@ -1,11 +1,11 @@
+using System.Linq;
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mech.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.Power.EntitySystems;
-using System.Numerics;
-using System.Linq;
 
 namespace Content.Shared.Mech.Systems;
 
@@ -15,9 +15,9 @@ namespace Content.Shared.Mech.Systems;
 public sealed class MechMovementEnergySystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly SharedMechSystem _mech = default!;
-    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
+    [Dependency] private readonly SharedMechSystem _mech = default!;
 
     private readonly HashSet<EntityUid> _activeMechs = [];
 
@@ -70,7 +70,7 @@ public sealed class MechMovementEnergySystem : EntitySystem
                 continue;
             }
 
-            _mech.TryChangeEnergy((mechUid, mechComp!), -FixedPoint2.New(toDrain));
+            _mech.TryChangeEnergy(mechUid, -FixedPoint2.New(toDrain));
             _actionBlocker.UpdateCanMove(mechUid);
         }
     }

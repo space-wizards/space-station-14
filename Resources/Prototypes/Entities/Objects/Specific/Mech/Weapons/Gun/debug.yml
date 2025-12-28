@@ -1,8 +1,8 @@
 - type: entity
-  id: WeaponMechDebugBallistic
   parent: [ BaseMechWeaponRange, DebugMechEquipment ] # Debug equipment dose has all whitelist tags.
-  suffix: Mech Weapon, DEBUG, Ballistic
+  id: WeaponMechDebugBallistic
   name: debug bang
+  suffix: Mech Weapon, DEBUG, Ballistic
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -19,7 +19,7 @@
     fireRate: 5
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
     soundEmpty:
@@ -35,10 +35,10 @@
   - type: Appearance
 
 - type: entity
+  parent: [ BaseMechWeaponRange, DebugMechEquipment ]
   id: WeaponMechDebugLaser
   name: debug pow
   suffix: Mech Weapon, DEBUG, Laser
-  parent: [ BaseMechWeaponRange, DebugMechEquipment ]
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
   - type: Sprite
@@ -60,17 +60,17 @@
     fireRate: 2
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: AmmoCounter
 
 - type: entity
+  parent: [ BaseMechWeaponRange, DebugMechEquipment ]
   id: WeaponMechDebugDisabler
   name: debug tew
-  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
   suffix: Mech Weapon, DEBUG, Disabler
-  parent: [ BaseMechWeaponRange, DebugMechEquipment ]
+  description: A self-defense weapon that exhausts organic targets, weakening them until they collapse.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
@@ -84,7 +84,7 @@
     fireRate: 1
     selectedMode: SemiAuto
     availableModes:
-      - SemiAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: BatteryAmmoProvider

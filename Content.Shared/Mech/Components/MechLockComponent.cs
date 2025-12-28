@@ -5,7 +5,7 @@ using Content.Shared.Access;
 namespace Content.Shared.Mech.Components;
 
 /// <summary>
-/// Types of mech locks
+/// Types of mech locks.
 /// </summary>
 public enum MechLockType
 {
@@ -14,56 +14,56 @@ public enum MechLockType
 }
 
 /// <summary>
-/// Component for managing mech lock system (DNA and Card locks)
+/// Component for managing mech lock system (DNA and Card locks).
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MechLockComponent : Component
 {
     /// <summary>
-    /// Whether DNA lock is registered
+    /// Whether DNA lock is registered.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool DnaLockRegistered = false;
+    public bool DnaLockRegistered;
 
     /// <summary>
-    /// Whether DNA lock is active (prevents access)
+    /// Whether DNA lock is active (prevents access).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool DnaLockActive = false;
+    public bool DnaLockActive;
 
     /// <summary>
-    /// DNA of the lock owner
+    /// DNA of the lock owner.
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? OwnerDna;
 
     /// <summary>
-    /// Whether ID card lock is registered
+    /// Whether ID card lock is registered.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool CardLockRegistered = false;
+    public bool CardLockRegistered;
 
     /// <summary>
-    /// Whether ID card lock is active (prevents access)
+    /// Whether ID card lock is active (prevents access).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool CardLockActive = false;
+    public bool CardLockActive;
 
     /// <summary>
-    /// Localized job title of the lock owner (for UI display)
+    /// Localized job title of the lock owner (for UI display).
     /// </summary>
     [DataField, AutoNetworkedField]
     public string? OwnerJobTitle;
 
     /// <summary>
-    /// Access tags captured from the registered ID card
+    /// Access tags captured from the registered ID card.
     /// </summary>
     [DataField, AutoNetworkedField]
     public HashSet<ProtoId<AccessLevelPrototype>>? CardAccessTags;
 
     /// <summary>
-    /// Whether the mech is locked (prevents unauthorized access)
+    /// Whether the mech is locked (prevents unauthorized access).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool IsLocked = false;
+    public bool IsLocked;
 }

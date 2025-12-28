@@ -58,24 +58,16 @@ public readonly record struct MechModuleInsertedEvent(EntityUid Mech)
     public readonly EntityUid Mech = Mech;
 }
 
-public sealed partial class MechToggleEquipmentEvent : InstantActionEvent
-{
-}
+public sealed partial class MechToggleEquipmentEvent : InstantActionEvent;
 
-public sealed class MechOpenEquipmentRadialEvent : EntityEventArgs
-{
-}
+public sealed class MechOpenEquipmentRadialEvent : EntityEventArgs;
 
-public sealed partial class MechOpenUiEvent : InstantActionEvent
-{
-}
+public sealed partial class MechOpenUiEvent : InstantActionEvent;
 
-public sealed partial class MechEjectPilotEvent : InstantActionEvent
-{
-}
+public sealed partial class MechEjectPilotEvent : InstantActionEvent;
 
 [Serializable, NetSerializable]
-public sealed partial class RequestMechEquipmentSelectEvent : EntityEventArgs
+public sealed class RequestMechEquipmentSelectEvent : EntityEventArgs
 {
     public NetEntity? Equipment;
 }

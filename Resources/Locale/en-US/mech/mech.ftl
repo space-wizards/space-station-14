@@ -9,8 +9,7 @@ mech-verb-exit = Remove pilot
 mech-ui-open-verb = Open control panel
 
 # Installation
-mech-install-begin-popup = Installing the {THE($item)}...
-mech-install-finish-popup = Finished installing the {THE($item)}
+mech-install-begin-popup = {$user} is installing the {THE($item)}...
 mech-cannot-modify-closed-popup = You cannot modify while the cabin is closed!
 mech-duplicate-installed-popup = Identical item already installed.
 mech-cannot-insert-broken-popup = You cannot insert anything while the mech is in broken state.
@@ -92,9 +91,6 @@ mech-lock-access-denied-popup = Access denied! This mech is locked.
 
 mech-lock-dna-registered-popup = DNA lock registered!
 mech-lock-card-registered-popup = ID lock registered!
-mech-lock-activated-popup = Lock activated!
-mech-lock-deactivated-popup = Lock deactivated!
-mech-lock-reset-success-popup = Lock reset!
 
 # Settings access banner
 mech-settings-no-access-label = Access denied
