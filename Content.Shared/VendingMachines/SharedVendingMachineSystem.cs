@@ -430,7 +430,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         }
     }
 
-
     private void OnActivatableUIOpenAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)
     {
         if (component.Broken)
