@@ -120,7 +120,7 @@ public sealed partial class JukeboxMenu : FancyWindow
         {
             if (SearchBar.Text.Trim().Length != 0)
             {
-                if (string.Concat(track.Name.ToLowerInvariant(),track.Artist.ToLowerInvariant()).Contains(SearchBar.Text.Trim().ToLowerInvariant()))
+                if (track.Name.ToLowerInvariant().Contains(SearchBar.Text.Trim().ToLowerInvariant()) || track.Artist.ToLowerInvariant().Contains(SearchBar.Text.Trim().ToLowerInvariant()))
                     tracksToShow.Add(track);
             }
             else

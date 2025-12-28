@@ -6,7 +6,7 @@
         StyleClasses="ButtonSquare">
         <BoxContainer Orientation="Vertical">
             <Label Name="TrackName" HorizontalExpand="True" />
-            <Label Name="TrackArtist" HorizontalExpand="True" />
+            <Label Name="TrackArtist" HorizontalExpand="True" StyleClasses="PdaContentFooterText"/>
         </BoxContainer>
     </Button>
 </Control>
