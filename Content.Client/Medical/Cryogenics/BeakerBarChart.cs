@@ -38,6 +38,12 @@ public sealed class BeakerBarChart : Control
     public int MediumNotchInterval = 5;
     public int BigNotchInterval = 10;
 
+    // When we have a very large beaker (i.e. bluespace beaker) we might need to increase the distance between notches.
+    // The distance between notches is increased by ScaleMultiplier when the distance between notches is less than
+    // MinSmallNotchScreenDistance in UI units.
+    public int MinSmallNotchScreenDistance = 2;
+    public int ScaleMultiplier = 10;
+
     public float SmallNotchHeight = 0.1f;
     public float MediumNotchHeight = 0.25f;
     public float BigNotchHeight = 1f;
@@ -225,8 +231,19 @@ public sealed class BeakerBarChart : Control
 
         // Draw notches
         var unitWidth = PixelWidth / Capacity;
+        var unitsPerNotch = 1;
 
-        for (int i = 0; i <= Capacity; i++)
+        while (unitWidth < MinSmallNotchScreenDistance)
+        {
+            // This is here for 1000u bluespace beakers. If the distance between small notches is so small that it would
+            // be very ugly, we reduce the amount of notches by ScaleMultiplier (currently a factor of 10).
+            // (I could use an analytical algorithm here, but it would be more difficult to read with pretty much no
+            //  performance benefit, since it loops zero times normally and one time for the bluespace beaker)
+            unitWidth *= ScaleMultiplier;
+            unitsPerNotch *= ScaleMultiplier;
+        }
+
+        for (int i = 0; i <= Capacity / unitsPerNotch; i++)
         {
             var x = i * unitWidth;
             var height = (i % BigNotchInterval    == 0 ? BigNotchHeight :
