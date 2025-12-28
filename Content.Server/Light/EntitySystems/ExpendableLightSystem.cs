@@ -2,6 +2,7 @@ using Content.Server.Light.Components;
 using Content.Server.Stack;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Examine;
 using Content.Shared.IgnitionSource;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -29,6 +30,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+        [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
 
@@ -41,6 +43,23 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<ExpendableLightComponent, GetVerbsEvent<ActivationVerb>>(AddIgniteVerb);
             SubscribeLocalEvent<ExpendableLightComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ExpendableLightComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
+            SubscribeLocalEvent<ExpendableLightComponent, ExaminedEvent>(OnExamine);
+        }
+
+        private void OnExamine(Entity<ExpendableLightComponent> ent, ref ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange)
+                return;
+
+            var protoId = ent.Comp.RefuelMaterialID;
+
+            if (!_protoManager.Resolve(protoId, out var proto))
+                return;
+
+            using (args.PushGroup(nameof(ExpendableLightComponent)))
+            {
+                args.PushMarkup(Loc.GetString("expendable-light-description", ("stackName", Loc.GetString(proto.Name))));
+            }
         }
 
         public override void Update(float frameTime)
@@ -130,18 +149,19 @@ namespace Content.Server.Light.EntitySystems
             if (component.StateExpiryTime + component.RefuelMaterialTime.TotalSeconds >= component.RefuelMaximumDuration.TotalSeconds)
                 return;
 
-            if (component.CurrentState is ExpendableLightState.Dead)
-            {
-                component.CurrentState = ExpendableLightState.BrandNew;
-                component.StateExpiryTime = (float)component.RefuelMaterialTime.TotalSeconds;
-
-                _nameModifier.RefreshNameModifiers(uid);
-                _stackSystem.ReduceCount((args.Used, stack), 1);
-                UpdateVisualizer((uid, component));
-                return;
-            }
-
             component.StateExpiryTime += (float)component.RefuelMaterialTime.TotalSeconds;
+            switch (component.CurrentState)
+            {
+                case ExpendableLightState.Dead:
+                    component.CurrentState = ExpendableLightState.BrandNew;
+                    _nameModifier.RefreshNameModifiers(uid);
+                    _stackSystem.ReduceCount((args.Used, stack), 1);
+                    return;
+                case ExpendableLightState.Fading:
+                    component.CurrentState = ExpendableLightState.Lit;
+                    break;
+            }
+            UpdateVisualizer((uid, component));
             _stackSystem.ReduceCount((args.Used, stack), 1);
             args.Handled = true;
         }
