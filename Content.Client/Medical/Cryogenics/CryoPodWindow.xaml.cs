@@ -193,9 +193,12 @@ public sealed partial class CryoPodWindow : FancyWindow
         bool isReady = (hasCorrectPressure && hasChemicals && hasTemperatureCheck);
         bool isCooling = (lowestTempRequirement != null && hasPatient
                           && msg.Health.Temperature > lowestTempRequirement);
-        StatusLabel.Text = (!isReady  ? Loc.GetString("cryo-pod-window-status-not-ready") :
-                            isCooling ? Loc.GetString("cryo-pod-window-status-cooling") :
-                                        Loc.GetString("cryo-pod-window-status-nominal"));
+        bool isInjecting = (injectingQuantity > 0);
+        StatusLabel.Text = (!isReady    ? Loc.GetString("cryo-pod-window-status-not-ready") :
+                            isCooling   ? Loc.GetString("cryo-pod-window-status-cooling") :
+                            isInjecting ? Loc.GetString("cryo-pod-window-status-injecting") :
+                            hasPatient  ? Loc.GetString("cryo-pod-window-status-ready-to-inject") :
+                                          Loc.GetString("cryo-pod-window-status-ready-for-patient"));
         StatusLabel.FontColorOverride = (isReady ? Color.DeepSkyBlue : Color.Orange);
     }
 
