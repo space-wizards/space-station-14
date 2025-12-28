@@ -1,8 +1,10 @@
+using Content.Shared.CCVar;
 using Content.Shared.Drunk;
 using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -11,13 +13,14 @@ namespace Content.Client.Drunk;
 
 public sealed class DrunkOverlay : Overlay
 {
-    private static readonly ProtoId<ShaderPrototype> Shader = "Drunk";
+    private static readonly ProtoId<ShaderPrototype> DrunkShader = "Drunk";
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
@@ -38,11 +41,18 @@ public sealed class DrunkOverlay : Overlay
     private const float BoozePowerScale = 8f;
 
     private float _visualScale = 0;
+    private float _visualPowerScale = 0.35f;
 
     public DrunkOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _drunkShader = _prototypeManager.Index(Shader).InstanceUnique();
+        _drunkShader = _prototypeManager.Index(DrunkShader).InstanceUnique();
+        _configManager.OnValueChanged(CCVars.ReducedMotion, OnReducedMotionChanged, invokeImmediately: true);
+    }
+
+    private void OnReducedMotionChanged(bool reducedMotion)
+    {
+        _visualPowerScale = _configManager.GetCVar(CCVars.ReducedMotion) ? 0.35f : 1.0f;
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -82,8 +92,9 @@ public sealed class DrunkOverlay : Overlay
             return;
 
         var handle = args.WorldHandle;
+
         _drunkShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _drunkShader.SetParameter("boozePower", _visualScale);
+        _drunkShader.SetParameter("boozePower", _visualScale * _visualPowerScale);
         handle.UseShader(_drunkShader);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
