@@ -2,7 +2,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Cryogenics;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-
 namespace Content.Client.Medical.Cryogenics;
 
 [UsedImplicitly]
@@ -26,7 +25,7 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
 
     private void EjectPatientPressed()
     {
-        bool isLocked =
+        var isLocked =
             EntMan.TryGetComponent<CryoPodComponent>(Owner, out var cryoComp)
             && cryoComp.Locked;
 

@@ -177,7 +177,7 @@ public sealed class BeakerBarChart : Control
     {
         // Tween the amounts to their target amounts.
         const float tweenInverseHalfLife = 8;  // Half life of tween is 1/n
-        bool hasChanged = false;
+        var hasChanged = false;
 
         foreach (var entry in _entries)
         {

@@ -46,9 +46,9 @@ public sealed partial class CryoPodWindow : FancyWindow
         }
 
         // Atmosphere
-        bool hasCorrectPressure = (msg.GasMix.Pressure > Atmospherics.WarningLowPressure);
-        bool hasGas = (msg.GasMix.Pressure > Atmospherics.GasMinMoles);
-        bool showsPressureWarning = !hasCorrectPressure;
+        var hasCorrectPressure = (msg.GasMix.Pressure > Atmospherics.WarningLowPressure);
+        var hasGas = (msg.GasMix.Pressure > Atmospherics.GasMinMoles);
+        var showsPressureWarning = !hasCorrectPressure;
         LowPressureWarning.Visible = showsPressureWarning;
         Pressure.Text = Loc.GetString("gas-analyzer-window-pressure-val-text",
                                       ("pressure", $"{msg.GasMix.Pressure:0.00}"));
@@ -85,8 +85,8 @@ public sealed partial class CryoPodWindow : FancyWindow
 
         // Health analyzer
         var maybePatient = _entityManager.GetEntity(msg.Health.TargetEntity);
-        bool hasPatient = msg.Health.TargetEntity.HasValue;
-        bool hasDamage = (hasPatient
+        var hasPatient = msg.Health.TargetEntity.HasValue;
+        var hasDamage = (hasPatient
              && _entityManager.TryGetComponent(maybePatient, out DamageableComponent? damageable)
              && damageable.TotalDamage > 0);
 
@@ -105,7 +105,7 @@ public sealed partial class CryoPodWindow : FancyWindow
         var injectingQuantity =
             msg.Injecting?.Aggregate(new FixedPoint2(), (sum, r) => sum + r.Quantity)
             ?? new FixedPoint2(); // Either the sum of the reagent quantities in `msg.Injecting` or zero.
-        bool hasBeaker = (msg.Beaker != null);
+        var hasBeaker = (msg.Beaker != null);
 
         ChemicalsChart.Clear();
         ChemicalsChart.Capacity = (totalBeakerCapacity < 1 ? 50 : (int)totalBeakerCapacity);
@@ -155,8 +155,8 @@ public sealed partial class CryoPodWindow : FancyWindow
             );
         }
 
-        bool isBeakerEmpty = (injectingQuantity + availableQuantity == 0);
-        bool isChemicalsChartVisible = (hasBeaker || injectingQuantity != 0);
+        var isBeakerEmpty = (injectingQuantity + availableQuantity == 0);
+        var isChemicalsChartVisible = (hasBeaker || injectingQuantity != 0);
         NoBeakerText.Visible = !isChemicalsChartVisible;
         ChemicalsChart.Visible = isChemicalsChartVisible;
         Inject1.Disabled = (!hasPatient || availableQuantity < 0.1f);
@@ -166,8 +166,8 @@ public sealed partial class CryoPodWindow : FancyWindow
         EjectBeakerButton.Disabled = !hasBeaker;
 
         // Temperature warning
-        bool hasCorrectTemperature = (lowestTempRequirement == null || lowestTempRequirement > msg.GasMix.Temperature);
-        bool showsTemperatureWarning = (!showsPressureWarning && !hasCorrectTemperature);
+        var hasCorrectTemperature = (lowestTempRequirement == null || lowestTempRequirement > msg.GasMix.Temperature);
+        var showsTemperatureWarning = (!showsPressureWarning && !hasCorrectTemperature);
 
         HighTemperatureWarning.Visible = showsTemperatureWarning;
 
@@ -182,18 +182,18 @@ public sealed partial class CryoPodWindow : FancyWindow
 
         // Status checklist
         const float fallbackTemperatureRequirement = 213;
-        bool hasTemperatureCheck = (hasGas && hasCorrectTemperature
+        var hasTemperatureCheck = (hasGas && hasCorrectTemperature
                 && (lowestTempRequirement != null || msg.GasMix.Temperature < fallbackTemperatureRequirement));
-        bool hasChemicals = (hasBeaker && !isBeakerEmpty);
+        var hasChemicals = (hasBeaker && !isBeakerEmpty);
 
         UpdateChecklistItem(PressureCheck, Loc.GetString("cryo-pod-window-checklist-pressure"), hasCorrectPressure);
         UpdateChecklistItem(ChemicalsCheck, Loc.GetString("cryo-pod-window-checklist-chemicals"), hasChemicals);
         UpdateChecklistItem(TemperatureCheck, Loc.GetString("cryo-pod-window-checklist-temperature"), hasTemperatureCheck);
 
-        bool isReady = (hasCorrectPressure && hasChemicals && hasTemperatureCheck);
-        bool isCooling = (lowestTempRequirement != null && hasPatient
+        var isReady = (hasCorrectPressure && hasChemicals && hasTemperatureCheck);
+        var isCooling = (lowestTempRequirement != null && hasPatient
                           && msg.Health.Temperature > lowestTempRequirement);
-        bool isInjecting = (injectingQuantity > 0);
+        var isInjecting = (injectingQuantity > 0);
         StatusLabel.Text = (!isReady    ? Loc.GetString("cryo-pod-window-status-not-ready") :
                             isCooling   ? Loc.GetString("cryo-pod-window-status-cooling") :
                             isInjecting ? Loc.GetString("cryo-pod-window-status-injecting") :
