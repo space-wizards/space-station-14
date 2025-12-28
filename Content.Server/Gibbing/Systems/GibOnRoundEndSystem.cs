@@ -1,8 +1,10 @@
-﻿using Content.Shared.GameTicking;
-using Content.Shared.Gibbing.Components;
+﻿using Content.Shared.Gibbing.Components;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Systems;
 using Content.Server.Body.Systems;
+using Content.Server.GameTicking;
+using Content.Server.Objectives;
+using Content.Shared.Inventory;
 
 namespace Content.Server.Gibbing.Systems;
 public sealed class GibOnRoundEndSystem : EntitySystem
@@ -10,16 +12,17 @@ public sealed class GibOnRoundEndSystem : EntitySystem
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedObjectivesSystem _objectives = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        // this is raised after RoundEndTextAppendEvent, so they can successfully greentext before we gib them
-        SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
+        // this is raised before ObjectivesSystem, so that survival objectives fail if it triggers (gibbing kills you)
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd, before: [typeof(ObjectivesSystem)]);
     }
 
-    private void OnRoundEnd(RoundEndMessageEvent args)
+    private void OnRoundEnd(RoundEndTextAppendEvent args)
     {
         var gibQuery = EntityQueryEnumerator<GibOnRoundEndComponent>();
 
@@ -45,6 +48,15 @@ public sealed class GibOnRoundEndSystem : EntitySystem
 
             if (!gib)
                 continue;
+
+            if (gibComp.DeleteItems)
+            {
+                var items = _inventory.GetHandOrInventoryEntities(uid);
+                foreach (var item in items)
+                {
+                    PredictedQueueDel(item);
+                }
+            }
 
             if (gibComp.SpawnProto != null)
                 SpawnAtPosition(gibComp.SpawnProto, Transform(uid).Coordinates);

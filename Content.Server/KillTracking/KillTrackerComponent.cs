@@ -7,19 +7,19 @@ namespace Content.Server.KillTracking;
 /// <summary>
 /// This is used for entities that track player damage sources and killers.
 /// </summary>
-[RegisterComponent, Access(typeof(KillTrackingSystem))]
+[RegisterComponent]
 public sealed partial class KillTrackerComponent : Component
 {
     /// <summary>
     /// The mobstate that registers as a "kill"
     /// </summary>
-    [DataField("killState")]
+    [DataField]
     public MobState KillState = MobState.Critical;
 
     /// <summary>
     /// A dictionary of sources and how much damage they've done to this entity over time.
     /// </summary>
-    [DataField("lifetimeDamage")]
+    [DataField]
     public Dictionary<KillSource, FixedPoint2> LifetimeDamage = new();
 }
 
