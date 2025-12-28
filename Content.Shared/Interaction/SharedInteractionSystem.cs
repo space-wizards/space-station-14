@@ -446,10 +446,17 @@ namespace Content.Shared.Interaction
                 ? !checkAccess || InRangeUnobstructed(user, coordinates)
                 : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
+            // Allow systems to bypass the CanUseHeldEntity check for specific interactions via a by-ref event.
+            var bypassEv = new UseHeldBypassAttemptEvent(user, target);
+            if (target != null)
+                RaiseLocalEvent(target.Value, ref bypassEv);
+
+            var shouldCheckUse = checkCanUse && !bypassEv.Bypass;
+
             // empty-hand interactions
             // combat mode hand interactions will always be true here -- since
             // they check this earlier before returning in
-            if (!TryGetUsedEntity(user, out var used, checkCanUse))
+            if (!TryGetUsedEntity(user, out var used, shouldCheckUse))
             {
                 if (inRangeUnobstructed && target != null)
                     InteractHand(user, target.Value);
@@ -465,6 +472,13 @@ namespace Content.Shared.Interaction
 
             if (inRangeUnobstructed && target != null)
             {
+                if (bypassEv.Bypass)
+                {
+                    // Skip InteractUsing and go straight to AfterInteract on the used item.
+                    InteractDoAfter(user, used.Value, target.Value, coordinates, canReach: true, checkDeletion: false);
+                    return;
+                }
+
                 InteractUsing(
                     user,
                     used.Value,
@@ -1465,7 +1479,7 @@ namespace Content.Shared.Interaction
         /// In most cases, this refers to the entity in the character's active hand.
         /// </summary>
         /// <returns>If there is an entity being used.</returns>
-        public bool TryGetUsedEntity(EntityUid user, [NotNullWhen(true)] out EntityUid? used, bool checkCanUse = true)
+        public bool TryGetUsedEntity(EntityUid user, [NotNullWhen(true)] out EntityUid? used, bool checkCanUse = true, EntityUid? intendedTarget = null)
         {
             var ev = new GetUsedEntityEvent(user);
             RaiseLocalEvent(user, ref ev);
@@ -1537,6 +1551,17 @@ namespace Content.Shared.Interaction
 
         public bool Handled => Used != null;
     };
+
+    /// <summary>
+    ///     Raised by-ref on the interaction target to allow bypassing held-entity use checks for specific interactions.
+    /// </summary>
+    /// <param name="User">The user performing the interaction.</param>
+    /// <param name="Target">The interaction target.</param>
+    [ByRefEvent]
+    public record struct UseHeldBypassAttemptEvent(EntityUid User, EntityUid? Target)
+    {
+        public bool Bypass;
+    }
 
     /// <summary>
     ///     Raised directed by-ref on an item to determine if hand interactions should go through.
