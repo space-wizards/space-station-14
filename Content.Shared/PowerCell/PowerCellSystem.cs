@@ -1,10 +1,12 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Examine;
+using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -17,6 +19,8 @@ public sealed partial class PowerCellSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -45,9 +49,24 @@ public sealed partial class PowerCellSystem : EntitySystem
         if (args.Container.ID != ent.Comp.CellSlotId)
             return;
 
-        // TODO: Can't this just use the ItemSlot's whitelist?
+        // Only allow entities with PowerCellComponent
         if (!HasComp<PowerCellComponent>(args.EntityUid))
+        {
             args.Cancel();
+            return;
+        }
+
+        // Check ItemSlot's whitelist/blacklist if it exists
+        if (_itemSlots.TryGetSlot(ent.Owner, ent.Comp.CellSlotId, out var slot))
+        {
+            if (_whitelist.IsWhitelistFail(slot.Whitelist, args.EntityUid)
+                || _whitelist.IsWhitelistPass(slot.Blacklist, args.EntityUid))
+            {
+                args.Cancel();
+                return;
+            }
+        }
+
     }
 
     private void OnCellSlotInserted(Entity<PowerCellSlotComponent> ent, ref EntInsertedIntoContainerMessage args)
