@@ -21,6 +21,7 @@
     - SMESMachineCircuitboard
     - SubstationMachineCircuitboard
     - TelecomServerCircuitboard
+    - FaxMachineCircuitboard
     chance: 0.95
     rarePrototypes:
     - CommsComputerCircuitboard
