@@ -30,7 +30,7 @@
   - type: Objective
     difficulty: 2.75
   - type: ObjectiveLimit
-    limit: 2 # there is usually only 1 of each steal objective, have 2 max for drama
+    limit: 1 # there is usually only 1 of each steal objective, have 2 max for drama
 
 # state
 
