@@ -230,10 +230,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     private void ApplyMarkingSet(Entity<HumanoidAppearanceComponent, SpriteComponent> entity)
     {
         var humanoid = entity.Comp1;
-        var sprite = entity.Comp2;
 
-        // I am lazy and I CBF resolving the previous mess, so I'm just going to nuke the markings.
-        // Really, markings should probably be a separate component altogether.
+        // TODO: Really, markings should probably be a separate component altogether.
         ClearAllMarkings(entity);
 
         var censorNudity = _configurationManager.GetCVar(CCVars.AccessibilityClientCensorNudity) ||
@@ -246,14 +244,14 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         {
             foreach (var marking in markingList)
             {
-                if (_markingManager.TryGetMarking(marking, out var markingPrototype))
-                {
-                    ApplyMarking(markingPrototype, marking.MarkingColors, marking.Visible, entity);
-                    if (markingPrototype.BodyPart == HumanoidVisualLayers.UndergarmentTop)
-                        applyUndergarmentTop = false;
-                    else if (markingPrototype.BodyPart == HumanoidVisualLayers.UndergarmentBottom)
-                        applyUndergarmentBottom = false;
-                }
+                if (!_markingManager.TryGetMarking(marking, out var markingPrototype))
+                    continue;
+
+                ApplyMarking(markingPrototype, marking.MarkingColors, marking.Visible, entity);
+                if (markingPrototype.BodyPart == HumanoidVisualLayers.UndergarmentTop)
+                    applyUndergarmentTop = false;
+                else if (markingPrototype.BodyPart == HumanoidVisualLayers.UndergarmentBottom)
+                    applyUndergarmentBottom = false;
             }
         }
 
@@ -262,28 +260,58 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         AddUndergarments(entity, applyUndergarmentTop, applyUndergarmentBottom);
     }
 
+    /// <summary>
+    /// Clears all markings from the humanoid that are no longer present in the new marking set.
+    /// </summary>
     private void ClearAllMarkings(Entity<HumanoidAppearanceComponent, SpriteComponent> entity)
     {
         var humanoid = entity.Comp1;
         var sprite = entity.Comp2;
 
-        foreach (var markingList in humanoid.ClientOldMarkings.Markings.Values)
+        foreach (var (category, oldList) in humanoid.ClientOldMarkings.Markings)
         {
-            foreach (var marking in markingList)
+            if (humanoid.MarkingSet.Markings.TryGetValue(category, out var newList) &&
+                MarkingIdEquals(oldList, newList))
+            {
+                continue;
+            }
+
+            foreach (var marking in oldList)
             {
                 RemoveMarking(marking, (entity, sprite));
             }
         }
 
-        humanoid.ClientOldMarkings.Clear();
-
-        foreach (var markingList in humanoid.MarkingSet.Markings.Values)
+        foreach (var (category, newList) in humanoid.MarkingSet.Markings)
         {
-            foreach (var marking in markingList)
+            if (humanoid.ClientOldMarkings.Markings.TryGetValue(category, out var oldList) &&
+                MarkingIdEquals(oldList, newList))
+            {
+                continue;
+            }
+
+            foreach (var marking in newList)
             {
                 RemoveMarking(marking, (entity, sprite));
             }
         }
+    }
+
+    private static bool MarkingIdEquals(List<Marking> a, List<Marking> b)
+    {
+        if (ReferenceEquals(a, b))
+            return true;
+
+        if (a.Count != b.Count)
+            return false;
+
+        for (var i = 0; i < a.Count; i++)
+        {
+            if (a[i].MarkingId != b[i].MarkingId)
+                return false;
+        }
+
+        return true;
     }
 
     private void RemoveMarking(Marking marking, Entity<SpriteComponent> spriteEnt)
