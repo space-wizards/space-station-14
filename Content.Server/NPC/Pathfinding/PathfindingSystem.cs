@@ -212,8 +212,8 @@ namespace Content.Server.NPC.Pathfinding
             var originA = GetOrigin(coordsA, gridUidA.Value);
             var originB = GetOrigin(coordsB, gridUidB.Value);
 
-            gridA.PortalLookup.Add(portal, originA);
-            gridB.PortalLookup.Add(portal, originB);
+            gridA.PortalLookup[portal] = originA;
+            gridB.PortalLookup[portal] = originB;
 
             var chunkA = GetChunk(originA, gridUidA.Value);
             var chunkB = GetChunk(originB, gridUidB.Value);
