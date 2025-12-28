@@ -127,31 +127,34 @@ public abstract partial class SharedStunSystem : EntitySystem
     }
 
     // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
-    public bool TryAddStunDuration(EntityUid uid, TimeSpan duration)
+    public bool TryAddStunDuration(EntityUid uid, TimeSpan duration, bool visualized = false)
     {
         if (!_status.TryAddStatusEffectDuration(uid, StunId, duration))
             return false;
 
-        OnStunnedSuccessfully(uid, duration);
+        OnStunnedSuccessfully(uid, duration, visualized);
         return true;
     }
 
-    public bool TryUpdateStunDuration(EntityUid uid, TimeSpan? duration)
+    public bool TryUpdateStunDuration(EntityUid uid, TimeSpan? duration, bool visualized = false)
     {
         if (!_status.TryUpdateStatusEffectDuration(uid, StunId, duration))
             return false;
 
-        OnStunnedSuccessfully(uid, duration);
+        OnStunnedSuccessfully(uid, duration, visualized);
         return true;
     }
 
-    private void OnStunnedSuccessfully(EntityUid uid, TimeSpan? duration)
+    private void OnStunnedSuccessfully(EntityUid uid, TimeSpan? duration, bool visualized)
     {
         var ev = new StunnedEvent(); // todo: rename event or change how it is raised - this event is raised each time duration of stun was externally changed
         RaiseLocalEvent(uid, ref ev);
 
         var evDropHands = new DropHandItemsEvent();
         RaiseLocalEvent(uid, ref evDropHands);
+
+        if (visualized)
+            TrySeeingStars(uid);
 
         var timeForLogs = duration.HasValue
             ? duration.Value.Seconds.ToString()
@@ -291,7 +294,7 @@ public abstract partial class SharedStunSystem : EntitySystem
         }
     }
 
-    public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan? duration)
+    public bool TryAddParalyzeDuration(EntityUid uid, TimeSpan? duration, bool visualized = false)
     {
         if (duration == null)
             return TryUpdateParalyzeDuration(uid, duration);
@@ -301,19 +304,19 @@ public abstract partial class SharedStunSystem : EntitySystem
 
         // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
         Knockdown(uid, null, false, true, true);
-        OnStunnedSuccessfully(uid, duration);
+        OnStunnedSuccessfully(uid, duration, visualized);
 
         return true;
     }
 
-    public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration)
+    public bool TryUpdateParalyzeDuration(EntityUid uid, TimeSpan? duration, bool visualized = false)
     {
         if (!_status.TryUpdateStatusEffectDuration(uid, StunId, duration))
             return false;
 
         // We can't exit knockdown when we're stunned, so this prevents knockdown lasting longer than the stun.
         Knockdown(uid, null, false, true, true);
-        OnStunnedSuccessfully(uid, duration);
+        OnStunnedSuccessfully(uid, duration, visualized);
 
         return true;
     }
