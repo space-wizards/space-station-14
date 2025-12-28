@@ -5,7 +5,8 @@ ion-storm-law-scrambled-number = [font="Monospace"][scramble rate=250 length={$l
 ion-storm-you = YOU
 ion-storm-the-station = THE STATION
 ion-storm-the-crew = THE CREW
-ion-storm-the-job = THE {$job}
+ion-storm-the = THE {$subject}
+ion-storm-those = THOSE {$subject}
 ion-storm-clowns = CLOWNS
 ion-storm-heads = HEADS OF STAFF
 ion-storm-crew = CREW
@@ -19,7 +20,7 @@ ion-storm-x-and-y = {$x} AND {$y}
 # thing is specified above it
 ion-storm-law-on-station = THERE ARE {$joined} {$subjects} ON THE STATION
 ion-storm-law-call-shuttle = THE SHUTTLE MUST BE CALLED BECAUSE OF {$joined} {$subjects} ON THE STATION
-ion-storm-law-crew-are = THE {$who} ARE NOW {$joined} {$subjects}
+ion-storm-law-crew-are = {$who} ARE NOW {$joined} {$subjects}
 
 ion-storm-law-subjects-harmful = {$adjective} {$subjects} ARE HARMFUL TO THE CREW
 ion-storm-law-must-harmful = THOSE WHO {$must} ARE HARMFUL TO THE CREW
@@ -58,25 +59,31 @@ ion-storm-law-you-are-subjects = YOU ARE NOW {$joined} {$subjects}
 ion-storm-law-you-must-always = YOU MUST ALWAYS {$must}
 ion-storm-law-you-must-never = YOU MUST NEVER {$must}
 
-ion-storm-law-eat = THE {$who} MUST EAT {$adjective} {$food} TO SURVIVE
-ion-storm-law-drink = THE {$who} MUST DRINK {$adjective} {$drink} TO SURVIVE
+ion-storm-law-eat = {$who} MUST EAT {$adjective} {$food} TO SURVIVE
+ion-storm-law-drink = {$who} MUST DRINK {$adjective} {$drink} TO SURVIVE
 
-ion-storm-law-change-job = THE {$who} ARE NOW {$adjective} {$change}
-ion-storm-law-highest-rank = THE {$who} ARE NOW THE HIGHEST RANKING CREWMEMBERS
-ion-storm-law-lowest-rank = THE {$who} ARE NOW THE LOWEST RANKING CREWMEMBERS
+ion-storm-law-change-job = {$who} ARE NOW {$adjective} {$change}
+ion-storm-law-highest-rank = {$who} ARE NOW THE HIGHEST RANKING CREWMEMBERS
+ion-storm-law-lowest-rank = {$who} ARE NOW THE LOWEST RANKING CREWMEMBERS
 
-ion-storm-law-crew-must = THE {$who} MUST {$must}
-ion-storm-law-crew-must-go = THE {$who} MUST GO TO {$area}
+ion-storm-law-crew-must = {$who} MUST {$must}
+ion-storm-law-crew-must-go = {$who} MUST GO TO {$area}
 
 ion-storm-part = {$part ->
     [true] PART
     *[false] NOT PART
 }
+
+ion-storm-know = {$know ->
+    [true] IN THE KNOW
+    *[false] NOT IN THE KNOW
+}
+
 # due to phrasing, this would mean a law such as
 # ONLY HUMANS ARE NOT PART OF THE CREW
 # would make non-human nukies/syndies/whatever crew :)
-ion-storm-law-crew-only-1 = ONLY THE {$who} ARE {$part} OF THE CREW
-ion-storm-law-crew-only-2 = ONLY THE {$who} AND {$other} ARE {$part} OF THE CREW
+ion-storm-law-crew-only-1 = ONLY {$who} ARE {$part} OF THE CREW
+ion-storm-law-crew-only-2 = ONLY {$who} AND {$other} ARE {$part} OF THE CREW
 ion-storm-law-crew-only-subjects = ONLY {$adjective} {$subjects} ARE {$part} OF THE CREW
 ion-storm-law-crew-must-do = ONLY THOSE WHO {$must} ARE {$part} OF THE CREW
 ion-storm-law-crew-must-have = ONLY THOSE WHO HAVE {$adjective} {$objects} ARE {$part} OF THE CREW
