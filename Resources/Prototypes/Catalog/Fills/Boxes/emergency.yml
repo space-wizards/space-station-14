@@ -178,6 +178,8 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
+# Intended for nukies (or similar syndicate operatives).
+# Contains food because we don't want to force nukies to go get lunch in the middle of a mission.
 - type: entity
   parent: BoxCardboard
   id: BoxSurvivalSyndicate
@@ -223,18 +225,22 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
-
+# Intended primarily for ERT/deathsquad, rather than standard crew.
+# "Military" might be a misnomer, since NT isn't technically a government entity, but whatever.
 - type: entity
-  parent: BoxCardboardSmall # Cannot fit 3x3 boxes into already-filled ERT backpacks.
+  parent: BoxSurvival
   id: BoxSurvivalMilitaryDouble
-  suffix: Military O2
-  description: It's a box with basic internals inside. This one is labelled to contain an double extended-capacity tank.
+  name: military survival box
+  suffix: O2
+  description: A military-grade survival box containing a double-capacity emergency oxygen tank, an emergency medipen, and an emergency flare.
   components:
-  - type: StorageFill
-    contents:
-    - id: DoubleEmergencyOxygenTankFilled
-    - id: EmergencyMedipen
-    - id: Flare
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: DoubleEmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
@@ -243,13 +249,16 @@
 - type: entity
   parent: BoxSurvivalMilitaryDouble
   id: BoxSurvivalMilitaryDoubleNitrogen
-  suffix: Military N2
+  suffix: N2
+  description: A military-grade survival box containing a double-capacity emergency nitrogen tank, an emergency medipen, and an emergency flare.
   components:
-  - type: StorageFill
-    contents:
-    - id: DoubleEmergencyNitrogenTankFilled
-    - id: EmergencyMedipen
-    - id: Flare
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: DoubleEmergencyNitrogenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
   - type: Sprite
     layers:
     - state: internals
