@@ -10,6 +10,7 @@ using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -50,7 +51,7 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
     /// Reason should only be passed if status is Wanted, nullability isn't checked.
     /// </summary>
     /// <returns>True if the status is changed, false if not</returns>
-    public bool TryChangeStatus(StationRecordKey key, SecurityStatus status, string? reason, string? initiatorName = null)
+    public bool TryChangeStatus(StationRecordKey key, ProtoId<SecurityStatusPrototype>? status, string? reason, string? initiatorName = null)
     {
         // don't do anything if its the same status
         if (!_records.TryGetRecord<CriminalRecord>(key, out var record)
@@ -65,7 +66,7 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
     /// <summary>
     /// Sets the status without checking previous status or reason nullability.
     /// </summary>
-    public void OverwriteStatus(StationRecordKey key, CriminalRecord record, SecurityStatus status, string? reason, string? initiatorName = null)
+    public void OverwriteStatus(StationRecordKey key, CriminalRecord record, ProtoId<SecurityStatusPrototype>? status, string? reason, string? initiatorName = null)
     {
         record.Status = status;
         record.Reason = reason;
@@ -168,7 +169,7 @@ public sealed class CriminalRecordsSystem : SharedCriminalRecordsSystem
             return;
 
         var records = _records.GetRecordsOfType<CriminalRecord>(station)
-            .Where(cr => cr.Item2.Status is not SecurityStatus.None || cr.Item2.History.Count > 0)
+            .Where(cr => cr.Item2.Status is not null || cr.Item2.History.Count > 0)
             .Select(cr =>
             {
                 var (i, r) = cr;
