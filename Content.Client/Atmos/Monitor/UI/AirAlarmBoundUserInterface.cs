@@ -1,10 +1,12 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.Monitor.UI;
 
+[UsedImplicitly]
 public sealed class AirAlarmBoundUserInterface : BoundUserInterface
 {
     private AirAlarmWindow? _window;
@@ -23,6 +25,7 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
         _window.AtmosDeviceDataChanged += OnDeviceDataChanged;
 		_window.AtmosDeviceDataCopied += OnDeviceDataCopied;
         _window.AtmosAlarmThresholdChanged += OnThresholdChanged;
+        _window.AtmosAlarmThresholdsToggled += OnThresholdsToggled;
         _window.AirAlarmModeChanged += OnAirAlarmModeChanged;
         _window.AutoModeChanged += OnAutoModeChanged;
         _window.ResyncAllRequested += ResyncAllDevices;
@@ -56,6 +59,11 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     private void OnThresholdChanged(string address, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
     {
         SendMessage(new AirAlarmUpdateAlarmThresholdMessage(address, type, threshold, gas));
+    }
+
+    private void OnThresholdsToggled(string address, AtmosSensorData data)
+    {
+        SendMessage(new AirAlarmToggleThresholdsMessage(address, data));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
