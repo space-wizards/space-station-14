@@ -72,7 +72,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
     public void PopulateMusic()
     {
         _menu?.UpdateAvailableTracks(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
-        _menu?.Populate();
+        _menu?.PopulateTracklist();
     }
 
     public void SelectSong(ProtoId<JukeboxPrototype> songid)

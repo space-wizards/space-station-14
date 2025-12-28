@@ -20,13 +20,15 @@
                     PlaceHolder="{Loc 'jukebox-menu-search-tracks'}"
                     HorizontalExpand="True">
                 </LineEdit>
-                <ItemList
-                    Name="MusicList"
-                    SelectMode="Button"
-                    Margin="3 3 3 3"
-                    HorizontalExpand="True"
-                    VerticalExpand="True"
-                    SizeFlagsStretchRatio="8"/>
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <BoxContainer
+                        Name="TrackList"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        RectClipContent="True">
+                    </BoxContainer>
+                </ScrollContainer>
             </BoxContainer>
             <!-- Right Col-->
             <BoxContainer
