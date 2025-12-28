@@ -7,7 +7,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 using static Content.Client.Changelog.ChangelogManager;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -21,6 +20,11 @@ public sealed partial class ChangelogTab : Control
     [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     public bool AdminOnly;
+
+    /// <summary>
+    /// Changelog is from a PR marked "Experimental" and should therefore have an additional icon.
+    /// </summary>
+    private static string _experimentalString = "Intent: Experimental";
 
     public ChangelogTab()
     {
@@ -134,43 +138,17 @@ public sealed partial class ChangelogTab : Control
                     FormattedMessage.FromMarkupOrThrow(Loc.GetString("changelog-author-changed", ("author", FormattedMessage.EscapeText(author)))));
                 ChangelogBody.AddChild(authorLabel);
 
-                foreach (var change in groupedEntry.SelectMany(c => c.Changes))
+                foreach (var (labels, changes) in groupedEntry.Select(c => (c.Labels, c.Changes)))
                 {
-                    var text = new RichTextLabel();
-                    text.SetMessage(FormattedMessage.FromUnformatted(change.Message));
-                    ChangelogBody.AddChild(new BoxContainer
+                    foreach (var change in changes)
                     {
-                        Orientation = LayoutOrientation.Horizontal,
-                        Margin = new Thickness(14, 1, 10, 2),
-                        Children =
-                        {
-                            GetIcon(change.Type),
-                            text
-                        }
-                    });
+                        var entry = new ChangelogEntry();
+                        entry.SetText(FormattedMessage.FromUnformatted(change.Message));
+                        entry.SetIcons(change.Type, labels.Contains(_experimentalString));
+                        ChangelogBody.AddChild(entry);
+                    }
                 }
             }
         }
-    }
-
-    private TextureRect GetIcon(ChangelogLineType type)
-    {
-        var (file, color) = type switch
-        {
-            ChangelogLineType.Add => ("plus.svg.192dpi.png", "#6ED18D"),
-            ChangelogLineType.Remove => ("minus.svg.192dpi.png", "#D16E6E"),
-            ChangelogLineType.Fix => ("bug.svg.192dpi.png", "#D1BA6E"),
-            ChangelogLineType.Tweak => ("wrench.svg.192dpi.png", "#6E96D1"),
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
-        };
-
-        return new TextureRect
-        {
-            Texture = _resourceCache.GetTexture(new ResPath($"/Textures/Interface/Changelog/{file}")),
-            VerticalAlignment = VAlignment.Top,
-            TextureScale = new Vector2(0.5f, 0.5f),
-            Margin = new Thickness(2, 4, 6, 2),
-            ModulateSelfOverride = Color.FromHex(color)
-        };
     }
 }
