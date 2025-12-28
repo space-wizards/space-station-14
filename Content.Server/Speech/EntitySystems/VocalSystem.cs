@@ -25,7 +25,7 @@ public sealed class VocalSystem : EntitySystem
 
         SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
+        SubscribeLocalEvent<VocalComponent, VoiceChangedEvent>(OnVoiceChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
     }
@@ -65,9 +65,9 @@ public sealed class VocalSystem : EntitySystem
         }
     }
 
-    private void OnSexChanged(EntityUid uid, VocalComponent component, SexChangedEvent args)
+    private void OnVoiceChanged(EntityUid uid, VocalComponent component, VoiceChangedEvent args)
     {
-        LoadSounds(uid, component, args.NewSex);
+        LoadSounds(uid, component, args.NewVoice);
     }
 
     private void OnEmote(EntityUid uid, VocalComponent component, ref EmoteEvent args)
@@ -112,14 +112,14 @@ public sealed class VocalSystem : EntitySystem
         return _chat.TryPlayEmoteSound(uid, _proto.Index(sounds), component.ScreamId);
     }
 
-    private void LoadSounds(EntityUid uid, VocalComponent component, Sex? sex = null)
+    private void LoadSounds(EntityUid uid, VocalComponent component, Sex? voice = null)
     {
         if (component.Sounds == null)
             return;
 
-        sex ??= CompOrNull<HumanoidAppearanceComponent>(uid)?.Sex ?? Sex.Unsexed;
+        voice ??= CompOrNull<HumanoidAppearanceComponent>(uid)?.PreferredVoice ?? Sex.Unsexed;
 
-        if (!component.Sounds.TryGetValue(sex.Value, out var protoId))
+        if (!component.Sounds.TryGetValue(voice.Value, out var protoId))
             return;
 
         if (!_proto.HasIndex(protoId))
