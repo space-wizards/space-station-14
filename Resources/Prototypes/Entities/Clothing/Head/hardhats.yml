@@ -12,6 +12,9 @@
       map: [ "light" ]
   - type: Clothing
     equippedPrefix: off
+    clothingVisuals:
+      head:
+      - state: equipped-helmet
   - type: PointLight
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
@@ -44,12 +47,15 @@
     spriteLayer: light
     inhandVisuals:
       left:
-      - state: on-inhand-left
+      - state: inhand-left-light
+        shader: unshaded
       right:
-      - state: on-inhand-right
+      - state: inhand-right-light
+        shader: unshaded
     clothingVisuals:
       head:
-      - state: on-equipped-HELMET
+      - state: equipped-helmet-light
+        shader: unshaded
   - type: ItemTogglePointLight
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -60,6 +66,11 @@
         startingItem: PowerCellMedium
   - type: Item
     heldPrefix: off
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
@@ -75,8 +86,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/blue.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardhats/blue.rsi
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -85,8 +94,6 @@
   description: A hard hat, painted in orange, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardhats/orange.rsi
-  - type: Clothing
     sprite: Clothing/Head/Hardhats/orange.rsi
 
 - type: entity
@@ -97,8 +104,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/red.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardhats/red.rsi
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -107,8 +112,6 @@
   description: A hard hat, painted in white, used in dangerous working conditions to protect the head. Comes with a built-in flashlight.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardhats/white.rsi
-  - type: Clothing
     sprite: Clothing/Head/Hardhats/white.rsi
 
 - type: entity
@@ -119,8 +122,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/yellow.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardhats/yellow.rsi
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -130,8 +131,6 @@
   components:
   - type: Sprite
     sprite: Clothing/Head/Hardhats/dark_yellow.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardhats/dark_yellow.rsi
 
 - type: entity
   parent: ClothingHeadHatHardhatBase
@@ -140,8 +139,6 @@
   description: An armored hard hat. Provides the best of both worlds in both protection & utility - perfect for the engineer on the frontlines.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hardhats/armored.rsi
-  - type: Clothing
     sprite: Clothing/Head/Hardhats/armored.rsi
   - type: Armor #Copied from the sec helmet, as it's hard to give these sane values without locational damage existing.
     modifiers:
