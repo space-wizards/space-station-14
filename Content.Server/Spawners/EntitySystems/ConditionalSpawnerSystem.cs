@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Server.GameTicking;
+using Content.Server.Holiday;
 using Content.Server.Spawners.Components;
 using Content.Shared.EntityTable;
 using Content.Shared.GameTicking.Components;
@@ -15,6 +16,7 @@ namespace Content.Server.Spawners.EntitySystems
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly EntityTableSystem _entityTable = default!;
+        [Dependency] private readonly HolidaySystem _holiday = default!;
 
         public override void Initialize()
         {
@@ -94,6 +96,11 @@ namespace Content.Server.Spawners.EntitySystems
 
         private void Spawn(EntityUid uid, RandomSpawnerComponent component)
         {
+            if (true)
+            {
+                component.Prototypes.AddRange(component.HolidayPrototypes);
+            }
+
             if (component.RarePrototypes.Count > 0 && (component.RareChance == 1.0f || _robustRandom.Prob(component.RareChance)))
             {
                 Spawn(_robustRandom.Pick(component.RarePrototypes), Transform(uid).Coordinates);
