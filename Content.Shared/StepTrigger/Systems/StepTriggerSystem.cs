@@ -8,6 +8,11 @@ using Robust.Shared.Physics.Events;
 
 namespace Content.Shared.StepTrigger.Systems;
 
+/// <summary>
+/// StepTrigger uses stange and fancy AABBs math and not part of new <see cref="Trigger.Systems.TriggerSystem"/>.
+/// Use <see cref="Trigger.Systems.TriggerSystem"/> instead.
+/// </summary>
+[Obsolete]
 public sealed class StepTriggerSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
@@ -201,6 +206,8 @@ public sealed class StepTriggerSystem : EntitySystem
         }
     }
 
+    /// <inheritdoc cref="StepTrigger.Systems.StepTriggerSystem"/>
+    [Obsolete]
     public void SetIntersectRatio(EntityUid uid, float ratio, StepTriggerComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -213,6 +220,8 @@ public sealed class StepTriggerSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    /// <inheritdoc cref="StepTrigger.Systems.StepTriggerSystem"/>
+    [Obsolete]
     public void SetRequiredTriggerSpeed(EntityUid uid, float speed, StepTriggerComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -225,6 +234,8 @@ public sealed class StepTriggerSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    /// <inheritdoc cref="StepTrigger.Systems.StepTriggerSystem"/>
+    [Obsolete]
     public void SetActive(EntityUid uid, bool active, StepTriggerComponent? component = null)
     {
         if (!Resolve(uid, ref component))
