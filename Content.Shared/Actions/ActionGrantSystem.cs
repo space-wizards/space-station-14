@@ -23,7 +23,8 @@ public sealed class ActionGrantSystem : EntitySystem
         if (!TryComp(ent.Owner, out ActionGrantComponent? grant))
             return;
 
-        if (ent.Comp.ActiveIfWorn && (args.SlotFlags == null || args.SlotFlags == SlotFlags.POCKET))
+        // If slot we are equipping into isn't allowed then don't give the action
+        if (ent.Comp.AllowedSlots == null || (ent.Comp.AllowedSlots & args.SlotFlags) != args.SlotFlags)
             return;
 
         foreach (var action in grant.ActionEntities)
