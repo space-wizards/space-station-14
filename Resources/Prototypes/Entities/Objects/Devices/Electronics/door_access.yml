@@ -244,6 +244,22 @@
   - type: AccessReader
     access: [["Brig"]]
 
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsGenpopEnter
+  suffix: Genpop Enter, Locked
+  components:
+  - type: AccessReader
+    access: [["GenpopEnter"], ["Security"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsGenpopLeave
+  suffix: Genpop Leave, Locked
+  components:
+  - type: AccessReader
+    access: [["GenpopLeave"], ["Security"]]
+
 # Medical
 - type: entity
   parent: DoorElectronics
