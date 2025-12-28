@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: OffsetCaneMakeshift
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: offsetcaneMakeshift
+      steps:
+      - material: MetalRod
+        amount: 2
+        doAfter: 2
+  - node: offsetcaneMakeshift
+    entity: OffsetCaneMakeshift
