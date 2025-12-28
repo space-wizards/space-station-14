@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Server.Vocalization.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -16,6 +17,7 @@ namespace Content.Server.Vocalization.Systems;
 public sealed partial class VocalizationSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private readonly ActorSystem _actor = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -47,6 +49,10 @@ public sealed partial class VocalizationSystem : EntitySystem
     /// </summary>
     private void TrySpeak(Entity<VocalizerComponent> entity)
     {
+        // prevent player-controlled entities from vocalizing if they're not set to do so
+        if (!entity.Comp.VocalizePlayerControlled && _actor.TryGetSession(entity, out _))
+            return;
+
         var tryVocalizeEvent = new TryVocalizeEvent();
         RaiseLocalEvent(entity.Owner, ref tryVocalizeEvent);
 
