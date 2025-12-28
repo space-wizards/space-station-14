@@ -13,6 +13,7 @@ public static class Palettes
     public static readonly ColorPalette Cyan = ColorPalette.FromHexBase("#42586a", lightnessShift: 0.05f, chromaShift: 0.0045f);
     public static readonly ColorPalette Slate = ColorPalette.FromHexBase("#545562");
     public static readonly ColorPalette Neutral = ColorPalette.FromHexBase("#555555");
+    public static readonly ColorPalette Dark = ColorPalette.FromHexBase("#383838");
 
     // status tones
     public static readonly ColorPalette Red = ColorPalette.FromHexBase("#b62124", chromaShift: 0.02f);
