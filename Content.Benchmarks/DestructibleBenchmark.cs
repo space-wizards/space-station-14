@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using BenchmarkDotNet.Attributes;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.Server.Destructible;
@@ -8,6 +8,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
 using Robust.Shared;

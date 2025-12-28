@@ -1,3 +1,5 @@
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Explosion.Components;
 using JetBrains.Annotations;
 
@@ -13,7 +15,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField(required: true)]
         public string Solution = default!;
 
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        public void Execute(EntityUid owner, DestructibleBehaviorSystem system, EntityUid? cause = null)
         {
             if (system.SolutionContainerSystem.TryGetSolution(owner, Solution, out _, out var explodingSolution)
                 && system.EntityManager.TryGetComponent(owner, out ExplosiveComponent? explosiveComponent))

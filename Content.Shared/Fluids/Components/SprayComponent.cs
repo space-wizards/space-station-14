@@ -1,32 +1,33 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Fluids.Components;
 
-[RegisterComponent]
-[Access(typeof(SharedSpraySystem))]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SpraySystem))]
 public sealed partial class SprayComponent : Component
 {
     public const string SolutionName = "spray";
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public FixedPoint2 TransferAmount = 10;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public float SprayDistance = 3.5f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public float SprayVelocity = 3.5f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public EntProtoId SprayedPrototype = "Vapor";
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public int VaporAmount = 1;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField]
+    [DataField]
     public float VaporSpread = 90f;
 
     /// <summary>
@@ -36,7 +37,7 @@ public sealed partial class SprayComponent : Component
     public float PushbackAmount = 5f;
 
     [DataField(required: true)]
-    [Access(typeof(SharedSpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
+    [Access(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
     public SoundSpecifier SpraySound { get; private set; } = default!;
 
     [DataField]

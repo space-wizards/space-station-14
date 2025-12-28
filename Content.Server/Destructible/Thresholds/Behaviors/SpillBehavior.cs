@@ -1,6 +1,9 @@
+using JetBrains.Annotations;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
-using JetBrains.Annotations;
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Behaviors;
+using Content.Shared.Fluids.Components;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
 
@@ -23,7 +26,7 @@ public sealed partial class SpillBehavior : IThresholdBehavior
     /// <param name="owner">Entity whose solution will be spilled</param>
     /// <param name="system">System calling this behavior</param>
     /// <param name="cause">Optional entity that caused this behavior to trigger</param>
-    public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid owner, DestructibleBehaviorSystem system, EntityUid? cause = null)
     {
         var puddleSystem = system.EntityManager.System<PuddleSystem>();
         var solutionContainer = system.EntityManager.System<SharedSolutionContainerSystem>();
