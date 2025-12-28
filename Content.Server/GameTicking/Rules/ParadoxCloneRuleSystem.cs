@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Antag;
 using Content.Server.Cloning;
 using Content.Server.GameTicking.Rules.Components;
@@ -59,10 +60,9 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         else
         {
             // get possible targets
-            var allAliveHumanoids = _mind.GetAliveHumans();
-
+            var allAliveHumanoids = _mind.TryGetAliveHumansOnMap(_transform.GetMap(spawner)).ToList();
             // we already checked when starting the gamerule, but someone might have died since then.
-            if (allAliveHumanoids.Count == 0)
+            if (!allAliveHumanoids.Any())
             {
                 Log.Warning("Could not find any alive players to create a paradox clone from!");
                 return;

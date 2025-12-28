@@ -38,7 +38,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [ViewVariables]
     protected readonly Dictionary<NetUserId, EntityUid> UserMinds = new();
 
@@ -186,13 +186,13 @@ public abstract partial class SharedMindSystem : EntitySystem
         // 5. Alive + No Session: Player disconnected while alive (SSD)
 
         if (dead && hasUserId == null)
-            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
-        else if (dead && !hasActiveSession)
-            args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
-        else if (dead)
-            args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
+            args.PushMarkup(
+                $"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
+        else if (dead && !hasActiveSession) args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
+        else if (dead) args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
         else if (hasUserId == null)
-            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
+            args.PushMarkup(
+                $"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
         else if (!hasActiveSession)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
     }
@@ -408,7 +408,7 @@ public abstract partial class SharedMindSystem : EntitySystem
         var objective = mind.Objectives[index];
 
         var title = Name(objective);
-        _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) removed from the mind of {MindOwnerLoggingString(mind)}");
+        _adminLogger.Add(LogType.Mind, LogImpact.Low,$"Objective {objective} ({title}) removed from the mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Remove(objective);
 
         // garbage collection - only delete the objective entity if no mind uses it anymore
@@ -430,11 +430,14 @@ public abstract partial class SharedMindSystem : EntitySystem
         {
             return true;
         }
+
         objective = default;
         return false;
     }
 
-    public bool TryGetObjectiveComp<T>(EntityUid mindId, [NotNullWhen(true)] out T? objective, MindComponent? mind = null) where T : IComponent
+    public bool TryGetObjectiveComp<T>(EntityUid mindId,
+        [NotNullWhen(true)] out T? objective,
+        MindComponent? mind = null) where T : IComponent
     {
         if (Resolve(mindId, ref mind))
         {
@@ -510,12 +513,7 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// <param name="mind">The returned mind.</param>
     /// <param name="container">Mind component on <paramref name="uid"/> to get the mind from.</param>
     /// <returns>True if mind found. False if not.</returns>
-    public bool TryGetMind(
-        EntityUid uid,
-        out EntityUid mindId,
-        [NotNullWhen(true)] out MindComponent? mind,
-        MindContainerComponent? container = null,
-        VisitingMindComponent? visitingmind = null)
+    public bool TryGetMind(EntityUid uid, out EntityUid mindId, [NotNullWhen(true)] out MindComponent? mind, MindContainerComponent? container = null, VisitingMindComponent? visitingmind = null)
     {
         mindId = default;
         mind = null;
@@ -648,7 +646,8 @@ public abstract partial class SharedMindSystem : EntitySystem
         {
             // the player needs to have a mind and not be the excluded one +
             // the player has to be alive
-            if (!TryGetMind(uid, out var mind, out var mindComp) || mind == exclude || !_mobState.IsAlive(uid, mobState))
+            if (!TryGetMind(uid, out var mind, out var mindComp) || mind == exclude ||
+                !_mobState.IsAlive(uid, mobState))
                 continue;
 
             allHumans.Add((mind, mindComp));
@@ -717,6 +716,21 @@ public abstract partial class SharedMindSystem : EntitySystem
         }
 
         EnsureComp<ExaminerComponent>(uid);
+    }
+
+    /// <summary>
+    /// Get all minds on the same Map as the Refrence
+    /// </summary>>
+    public IEnumerable<Entity<MindComponent>> TryGetAliveHumansOnMap(EntityUid? map)
+    {
+        foreach (var candidateMind in GetAliveHumans())
+        {
+            if (candidateMind.Comp.CurrentEntity is not {} candidateEntity ||
+               _transform.GetMap(candidateEntity) != map)
+            {
+                yield return candidateMind;
+            }
+        }
     }
 }
 
