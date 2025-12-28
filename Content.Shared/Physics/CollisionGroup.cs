@@ -64,6 +64,10 @@ public enum CollisionGroup
     // Tabletop machines
     TabletopMachineLayer = Opaque | BulletImpassable,
 
+    // Large machines: anomaly generator, gravity generator, station anchor, etc.
+    LargeMachineMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
+    LargeMachineLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable | InteractImpassable,
+
     // Airlocks, windoors, firelocks
     GlassAirlockLayer = HighImpassable | MidImpassable | BulletImpassable | InteractImpassable,
     AirlockLayer = Opaque | GlassAirlockLayer,
