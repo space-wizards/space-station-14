@@ -232,7 +232,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             var targetPos = new EntityCoordinates(uid, new Vector2(0, -1));
 
-            _gun.Shoot(uid, gunComponent, ent, xform.Coordinates, targetPos, out _);
+            _gun.Shoot((uid, gunComponent), ent, xform.Coordinates, targetPos, out _);
         }
 
         private void UpdateAppearance(EntityUid uid, EmitterComponent component)

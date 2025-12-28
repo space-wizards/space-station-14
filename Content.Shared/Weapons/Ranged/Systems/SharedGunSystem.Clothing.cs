@@ -16,7 +16,7 @@ public partial class SharedGunSystem
     {
         var getConnectedContainerEvent = new GetConnectedContainerEvent();
         RaiseLocalEvent(uid, ref getConnectedContainerEvent);
-        if(!getConnectedContainerEvent.ContainerEntity.HasValue)
+        if (!getConnectedContainerEvent.ContainerEntity.HasValue)
             return;
 
         RaiseLocalEvent(getConnectedContainerEvent.ContainerEntity.Value, args);

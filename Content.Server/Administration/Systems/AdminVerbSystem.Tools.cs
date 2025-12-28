@@ -722,7 +722,7 @@ public sealed partial class AdminVerbSystem
                             return;
 
                         _gun.SetBallisticUnspawned((args.Target, ballisticAmmo), result);
-                        _gun.UpdateBallisticAppearance(args.Target, ballisticAmmo);
+                        _gun.UpdateBallisticAppearance((args.Target, ballisticAmmo));
                     });
                 },
                 Impact = LogImpact.Medium,
