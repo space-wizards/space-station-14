@@ -749,7 +749,6 @@
       - BorgModuleFireExtinguisher
       - BorgModuleChemical
       - BorgModuleTopicals
-      - BorgModuleRescue
   - type: ItemSlots
     slots:
       cell_slot:
