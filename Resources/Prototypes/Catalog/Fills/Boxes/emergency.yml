@@ -206,7 +206,7 @@
     currentLabel: reagent-name-oxygen
 
 - type: entity
-  parent: BoxSurvivalExtendedAntag
+  parent: BoxSurvivalDeluxeExtended
   id: BoxSurvivalDeluxeExtendedNitrogen
   suffix: N2
   description: A deluxe survival box containing a breath mask, an extended-capacity emergency oxygen tank, an emergency medipen, an emergency flare, and a bit of food and water.
