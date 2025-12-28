@@ -6,12 +6,24 @@ namespace Content.Client.Administration;
 /// <summary>
 /// This handles the client portion of quick dialogs.
 /// </summary>
-public sealed class QuickDialogSystem : EntitySystem
+public sealed class QuickDialogSystem : SharedQuickDialogSystem
 {
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeNetworkEvent<QuickDialogOpenEvent>(OpenDialog);
+        base.Initialize();
+
+        SubscribeAllEvent<QuickDialogOpenEvent>(OpenDialog);
+    }
+
+    private int nextDialogId = 0;
+
+    protected override int GetDialogId(Robust.Shared.Network.NetUserId userId, bool predicted)
+    {
+        var did = nextDialogId++;
+
+        _mappingClientToLocal[(userId, did)] = did;
+        return did;
     }
 
     private void OpenDialog(QuickDialogOpenEvent ev)
@@ -20,18 +32,37 @@ public sealed class QuickDialogSystem : EntitySystem
         var cancel = (ev.Buttons & QuickDialogButtonFlag.CancelButton) != 0;
         var window = new DialogWindow(ev.Title, ev.Prompts, ok: ok, cancel: cancel);
 
-        window.OnConfirmed += responses =>
+        if (ev.Predicted)
         {
-            RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
-                responses,
-                QuickDialogButtonFlag.OkButton));
-        };
+            window.OnConfirmed += responses =>
+            {
+                RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
+                    responses,
+                    QuickDialogButtonFlag.OkButton));
+            };
 
-        window.OnCancelled += () =>
+            window.OnCancelled += () =>
+            {
+                RaisePredictiveEvent(new QuickDialogResponseEvent(ev.DialogId,
+                    new(),
+                    QuickDialogButtonFlag.CancelButton));
+            };
+        }
+        else
         {
-            RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
-                new(),
-                QuickDialogButtonFlag.CancelButton));
-        };
+            window.OnConfirmed += responses =>
+            {
+                RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
+                    responses,
+                    QuickDialogButtonFlag.OkButton));
+            };
+
+            window.OnCancelled += () =>
+            {
+                RaiseNetworkEvent(new QuickDialogResponseEvent(ev.DialogId,
+                    new(),
+                    QuickDialogButtonFlag.CancelButton));
+            };
+        }
     }
 }

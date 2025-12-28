@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration;
 
@@ -28,12 +28,18 @@ public sealed class QuickDialogOpenEvent : EntityEventArgs
     /// </summary>
     public QuickDialogButtonFlag Buttons = QuickDialogButtonFlag.OkButton | QuickDialogButtonFlag.CancelButton;
 
-    public QuickDialogOpenEvent(string title, List<QuickDialogEntry> prompts, int dialogId, QuickDialogButtonFlag buttons)
+    /// <summary>
+    /// Dialog that can be predicted
+    /// </summary>
+    public bool Predicted;
+
+    public QuickDialogOpenEvent(string title, List<QuickDialogEntry> prompts, int dialogId, QuickDialogButtonFlag buttons, bool predicted = false)
     {
         Title = title;
         Prompts = prompts;
         Buttons = buttons;
         DialogId = dialogId;
+        Predicted = predicted;
     }
 }
 
