@@ -71292,27 +71292,6 @@ entities:
       parent: 60
     - type: FaxMachine
       name: Lawyer's Office
-  - uid: 5116
-    components:
-    - type: Transform
-      pos: 5.5,-27.5
-      parent: 60
-    - type: FaxMachine
-      name: HoP Office
-  - uid: 7919
-    components:
-    - type: Transform
-      pos: -40.5,5.5
-      parent: 60
-    - type: FaxMachine
-      name: RD Office
-  - uid: 8341
-    components:
-    - type: Transform
-      pos: -27.5,0.5
-      parent: 60
-    - type: FaxMachine
-      name: Head of Security
   - uid: 8348
     components:
     - type: Transform
@@ -71334,13 +71313,6 @@ entities:
       parent: 60
     - type: FaxMachine
       name: Science
-  - uid: 15399
-    components:
-    - type: Transform
-      pos: 8.5,21.5
-      parent: 60
-    - type: FaxMachine
-      name: CE's Office
   - uid: 16417
     components:
     - type: Transform
@@ -71376,6 +71348,36 @@ entities:
       parent: 60
     - type: FaxMachine
       name: Library
+- proto: FaxMachineLongRange
+  entities:
+  - uid: 5116
+    components:
+    - type: Transform
+      pos: 5.5,-27.5
+      parent: 60
+    - type: FaxMachine
+      name: HoP Office
+  - uid: 7919
+    components:
+    - type: Transform
+      pos: -40.5,5.5
+      parent: 60
+    - type: FaxMachine
+      name: RD Office
+  - uid: 8341
+    components:
+    - type: Transform
+      pos: -27.5,0.5
+      parent: 60
+    - type: FaxMachine
+      name: Head of Security
+  - uid: 15399
+    components:
+    - type: Transform
+      pos: 8.5,21.5
+      parent: 60
+    - type: FaxMachine
+      name: CE's Office
 - proto: FaxMachineCaptain
   entities:
   - uid: 15836
