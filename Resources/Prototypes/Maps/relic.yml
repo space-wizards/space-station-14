@@ -26,8 +26,8 @@
             trade: !type:GridSpawnGroup
               minCount: 0
               maxCount: 0
-              paths:
-                - /Maps/Shuttles/trading_outpost.yml
+              gridPacks:
+              - DefaultTradeGridPack
         - type: StationJobs
           availableJobs:
             #command (6)
