@@ -115,6 +115,9 @@
     - MobCorgiIanOld
     - MobCorgiLisa
     - MobCorgiIanPup
+  - type: MisplacementMarker
+    misplacementChance: 0.025
+    replacementEntity: PaperWrittenIanAdventureNote
 
 - type: entity
   parent: MarkerBase
