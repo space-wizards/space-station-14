@@ -74,8 +74,6 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         SubscribeLocalEvent<CryoPodComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<CryoPodComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
-        SubscribeLocalEvent<CryoPodComponent, CryoPodSimpleUiMessage>(OnSimpleUiMessage);
-        SubscribeLocalEvent<CryoPodComponent, CryoPodInjectUiMessage>(OnInjectUiMessage);
         SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
         SubscribeLocalEvent<CryoPodComponent, EntInsertedIntoContainerMessage>(OnBodyInserted);
 
@@ -86,7 +84,12 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
 
         InitializeInsideCryoPod();
 
-        Subs.BuiEvents<CryoPodComponent>(CryoPodUiKey.Key, subs => { subs.Event<BoundUIOpenedEvent>(OnBoundUiOpened); });
+        Subs.BuiEvents<CryoPodComponent>(CryoPodUiKey.Key, subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(OnBoundUiOpened);
+            subs.Event<CryoPodSimpleUiMessage>(OnSimpleUiMessage);
+            subs.Event<CryoPodInjectUiMessage>(OnInjectUiMessage);
+        });
     }
 
     public override void Update(float frameTime)
