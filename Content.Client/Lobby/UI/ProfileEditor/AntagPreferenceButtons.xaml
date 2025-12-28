@@ -1,0 +1,16 @@
+<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Content.Client.Lobby.UI.Roles"
+    Orientation="Horizontal">
+    <ui:RequirementsSelector
+        Name="PreferenceSelector"
+        Margin="3 3 3 0" />
+    <Button
+        Name="LoadoutButton"
+        Disabled="True"
+        Text="{Loc 'loadout-window'}"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Center"
+        Margin="3 0 0 0" />
+</BoxContainer>
