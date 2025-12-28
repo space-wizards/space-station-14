@@ -1,14 +1,20 @@
+using System;
+using System.Collections.Generic;
+using System.Numerics;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
 using Content.IntegrationTests.Pair;
 using Content.Server.Atmos;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 
 namespace Content.Benchmarks;
@@ -23,6 +29,13 @@ namespace Content.Benchmarks;
 public class GasReactionBenchmark
 {
     private const int Iterations = 1000;
+
+    /// <summary>
+    /// Number of entities to spawn for tile processing benchmarks.
+    /// Can be adjusted to test different density scenarios.
+    /// </summary>
+    [Params(1000)]
+    public int EntityCount { get; set; }
     private TestPair _pair = default!;
     private AtmosphereSystem _atmosphereSystem = default!;
 
@@ -37,6 +50,9 @@ public class GasReactionBenchmark
     private AmmoniaOxygenReaction _ammoniaOxygenReaction = default!;
     private N2ODecompositionReaction _n2oDecompositionReaction = default!;
     private WaterVaporReaction _waterVaporReaction = default!;
+    private ElectrovaeProductionReaction _electrovaeProductionReaction = default!;
+    private ElectrovaeChargeReaction _electrovaeChargeReaction = default!;
+    private ChargedElectrovaeDischargeReaction _chargedElectrovaeDischargeReaction = default!;
     // Gas mixtures for each reaction type
     private GasMixture _plasmaFireMixture = default!;
     private GasMixture _tritiumFireMixture = default!;
@@ -45,6 +61,9 @@ public class GasReactionBenchmark
     private GasMixture _ammoniaOxygenMixture = default!;
     private GasMixture _n2oDecompositionMixture = default!;
     private GasMixture _waterVaporMixture = default!;
+    private GasMixture _electrovaeProductionMixture = default!;
+    private GasMixture _electrovaeChargeMixture = default!;
+    private GasMixture _chargedElectrovaeDischargeM = default!;
 
     [GlobalSetup]
     public async Task SetupAsync()
@@ -70,6 +89,9 @@ public class GasReactionBenchmark
             _ammoniaOxygenReaction = new AmmoniaOxygenReaction();
             _n2oDecompositionReaction = new N2ODecompositionReaction();
             _waterVaporReaction = new WaterVaporReaction();
+            _electrovaeProductionReaction = new ElectrovaeProductionReaction();
+            _electrovaeChargeReaction = new ElectrovaeChargeReaction();
+            _chargedElectrovaeDischargeReaction = new ChargedElectrovaeDischargeReaction();
 
             SetupGasMixtures();
             SetupTile();
@@ -136,6 +158,78 @@ public class GasReactionBenchmark
             Temperature = Atmospherics.T20C
         };
         _waterVaporMixture.AdjustMoles(Gas.WaterVapor, 50f);
+
+        // Electrovae Production: N2O + H2O -> Electrovae + O2
+        // Minimum temp: 373.15K (100°C), Full efficiency: 1370K (1097°C)
+        _electrovaeProductionMixture = new GasMixture(Atmospherics.CellVolume)
+        {
+            Temperature = 1370f // Full efficiency temperature
+        };
+        _electrovaeProductionMixture.AdjustMoles(Gas.WaterVapor, 50f);
+        _electrovaeProductionMixture.AdjustMoles(Gas.NitrousOxide, 50f);
+        _electrovaeProductionMixture.AdjustMoles(Gas.Nitrogen, 10f); // Catalyst
+
+        // Electrovae Charging: Electrovae + Heat -> ChargedElectrovae
+        // Minimum temp: 1508K (1235°C), Full efficiency: 1984K (1711°C)
+        _electrovaeChargeMixture = new GasMixture(Atmospherics.CellVolume)
+        {
+            Temperature = 1984f // Full efficiency temperature
+        };
+        _electrovaeChargeMixture.AdjustMoles(Gas.Electrovae, 100f);
+
+        // Charged Electrovae Discharge: ChargedElectrovae + O2 -> Electrovae (slow conversion)
+        // Provides power to nearby machines and batteries
+        _chargedElectrovaeDischargeM = new GasMixture(Atmospherics.CellVolume)
+        {
+            Temperature = Atmospherics.T20C
+        };
+        _chargedElectrovaeDischargeM.AdjustMoles(Gas.ChargedElectrovae, 100f);
+        _chargedElectrovaeDischargeM.AdjustMoles(Gas.Oxygen, 10f); // Needs oxygen to discharge
+
+        // Setup tile processing benchmark entities
+        var entMan = _pair.Server.ResolveDependency<IEntityManager>();
+
+        // Create a tile with charged electrovae gas
+        var testIndices = new Vector2i(5, 5);
+        _tileProcessingTile = new TileAtmosphere(_testGrid, testIndices, new GasMixture(Atmospherics.CellVolume)
+        {
+            Temperature = Atmospherics.T20C
+        });
+
+        // Add charged electrovae gas (2 moles = full intensity)
+        _tileProcessingTile.Air!.AdjustMoles(Gas.ChargedElectrovae, 2f);
+        _tileProcessingTile.Air.AdjustMoles(Gas.Oxygen, 10f);
+
+        _tileProcessingEntities = [];
+
+        // Spawn mix of entities based on EntityCount parameter
+        // Distribution: 20% batteries, 60% machines, 20% mobs
+        var batteryCount = (int)(EntityCount * 0.2f);
+        var machineCount = (int)(EntityCount * 0.6f);
+        var mobCount = EntityCount - batteryCount - machineCount;
+
+        var tileCenter = new Vector2(testIndices.X + 0.5f, testIndices.Y + 0.5f);
+
+        // Spawn batteries (SMES, APCs)
+        for (var i = 0; i < batteryCount; i++)
+        {
+            var ent = entMan.SpawnEntity("SMESBasic", new EntityCoordinates(_testGrid, tileCenter));
+            _tileProcessingEntities.Add(ent);
+        }
+
+        // Spawn machines with power receivers (computers, consoles, etc.)
+        for (var i = 0; i < machineCount; i++)
+        {
+            var ent = entMan.SpawnEntity("ComputerAlert", new EntityCoordinates(_testGrid, tileCenter));
+            _tileProcessingEntities.Add(ent);
+        }
+
+        // Spawn mobs (for lightning strike testing)
+        for (var i = 0; i < mobCount; i++)
+        {
+            var ent = entMan.SpawnEntity("MobHuman", new EntityCoordinates(_testGrid, tileCenter));
+            _tileProcessingEntities.Add(ent);
+        }
     }
 
     private void SetupTile()
@@ -244,9 +338,84 @@ public class GasReactionBenchmark
         });
     }
 
+    [Benchmark]
+    public async Task ElectrovaeProductionReaction()
+    {
+        await _pair.Server.WaitPost(() =>
+        {
+            for (var i = 0; i < Iterations; i++)
+            {
+                var mixture = CloneMixture(_electrovaeProductionMixture);
+                _electrovaeProductionReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+            }
+        });
+    }
+
+    [Benchmark]
+    public async Task ElectrovaeChargeReaction()
+    {
+        await _pair.Server.WaitPost(() =>
+        {
+            for (var i = 0; i < Iterations; i++)
+            {
+                var mixture = CloneMixture(_electrovaeChargeMixture);
+                _electrovaeChargeReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+            }
+        });
+    }
+
+    [Benchmark]
+    public async Task ChargedElectrovaeDischargeReaction()
+    {
+        await _pair.Server.WaitPost(() =>
+        {
+            for (var i = 0; i < Iterations; i++)
+            {
+                var mixture = CloneMixture(_chargedElectrovaeDischargeM);
+                _chargedElectrovaeDischargeReaction.React(mixture, _testTile, _atmosphereSystem, 1f);
+            }
+        });
+    }
+
+    private List<EntityUid> _tileProcessingEntities = default!;
+    private TileAtmosphere _tileProcessingTile = default!;
+
+    /// <summary>
+    /// Benchmarks the real-world performance of charged electrovae discharge with realistic entity counts.
+    /// Tests the tile-based processing system including entity iteration, battery charging,
+    /// capacity expansion, power toggling, and lightning strikes.
+    /// This simulates the actual atmos tick processing cost.
+    /// </summary>
+    [Benchmark]
+    public async Task ProcessChargedElectrovaeTile()
+    {
+        await _pair.Server.WaitPost(() =>
+        {
+            // Run the discharge reaction which triggers tile processing
+            for (var i = 0; i < Iterations; i++)
+            {
+                // Clone the mixture to reset state each iteration
+                var mixture = CloneMixture(_tileProcessingTile.Air);
+
+                // The discharge reaction internally calls ChargedElectrovaeExpose
+                // which marks the tile and triggers entity processing
+                _chargedElectrovaeDischargeReaction.React(mixture, _tileProcessingTile, _atmosphereSystem, 1f);
+            }
+        });
+    }
+
     [GlobalCleanup]
     public async Task CleanupAsync()
     {
+        await _pair.Server.WaitPost(() =>
+        {
+            var entMan = _pair.Server.ResolveDependency<IEntityManager>();
+            foreach (var ent in _tileProcessingEntities)
+            {
+                entMan.DeleteEntity(ent);
+            }
+        });
+
         await _pair.DisposeAsync();
         PoolManager.Shutdown();
     }

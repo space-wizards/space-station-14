@@ -117,6 +117,22 @@
       spawnGas: Tritium
 
 - type: entity
+  name: electrovae gas miner
+  parent: GasMinerBase
+  id: GasMinerElectrovae
+  components:
+    - type: GasMiner
+      spawnGas: Electrovae
+
+- type: entity
+  name: charged electrovae gas miner
+  parent: GasMinerBase
+  id: GasMinerChargedElectrovae
+  components:
+    - type: GasMiner
+      spawnGas: ChargedElectrovae
+
+- type: entity
   name: frezon gas miner
   parent: GasMinerBase
   id: GasMinerFrezon
