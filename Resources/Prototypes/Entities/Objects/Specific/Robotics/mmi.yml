@@ -39,6 +39,9 @@
     proto: robot
   - type: Speech
     speechSounds: Pai
+  - type: MobState
+    allowedStates:
+    - Alive
   - type: ItemSlots
   - type: ContainerContainer
     containers:
@@ -52,6 +55,20 @@
     whitelist:
       components:
       - SecretStash
+  - type: DamagedSiliconAccent
+    damageAtMaxCorruption: 100
+    enableChargeCorruption: false
+  - type: Damageable
+    damageContainer: Silicon
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damage:
+      types:
+        Heat: -8
+        Shock: -8
+      groups:
+        Brute: -8
 
 - type: entity
   parent: MMI
@@ -137,3 +154,17 @@
       whitelist:
         components:
         - SecretStash
+    - type: DamagedSiliconAccent
+      damageAtMaxCorruption: 100
+      enableChargeCorruption: false
+    - type: Damageable
+      damageContainer: Silicon
+    - type: PassiveDamage
+      allowedStates:
+      - Alive
+      damage:
+        types:
+          Heat: -8
+          Shock: -8
+        groups:
+          Brute: -8
