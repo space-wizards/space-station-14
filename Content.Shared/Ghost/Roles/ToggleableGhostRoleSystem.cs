@@ -1,15 +1,15 @@
-using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Examine;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 
-namespace Content.Server.Ghost.Roles;
+namespace Content.Shared.Ghost.Roles;
 
 /// <summary>
-/// This handles logic and interaction related to <see cref="ToggleableGhostRoleComponent"/>
+/// This handles logic and interaction related to <see cref="ToggleableGhostRoleComponent"/>.
 /// </summary>
 public sealed class ToggleableGhostRoleSystem : EntitySystem
 {
@@ -27,29 +27,29 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         SubscribeLocalEvent<ToggleableGhostRoleComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
     }
 
-    private void OnUseInHand(EntityUid uid, ToggleableGhostRoleComponent component, UseInHandEvent args)
+    private void OnUseInHand(Entity<ToggleableGhostRoleComponent> ent, ref UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
         args.Handled = true;
 
-        // check if a mind is present
-        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
+        // Check if a mind is present.
+        if (TryComp<MindContainerComponent>(ent.Owner, out var mind) && mind.HasMind)
         {
-            _popup.PopupEntity(Loc.GetString(component.ExamineTextMindPresent), uid, args.User, PopupType.Large);
+            _popup.PopupClient(Loc.GetString(ent.Comp.ExamineTextMindPresent), ent.Owner, args.User, PopupType.Large);
             return;
         }
-        if (HasComp<GhostTakeoverAvailableComponent>(uid))
+        if (HasComp<GhostTakeoverAvailableComponent>(ent.Owner))
         {
-            _popup.PopupEntity(Loc.GetString(component.ExamineTextMindSearching), uid, args.User);
+            _popup.PopupClient(Loc.GetString(ent.Comp.ExamineTextMindSearching), ent.Owner, args.User);
             return;
         }
-        _popup.PopupEntity(Loc.GetString(component.BeginSearchingText), uid, args.User);
+        _popup.PopupClient(Loc.GetString(ent.Comp.BeginSearchingText), ent.Owner, args.User);
 
-        UpdateAppearance(uid, ToggleableGhostRoleStatus.Searching);
+        UpdateAppearance(ent.Owner, ToggleableGhostRoleStatus.Searching);
 
-        ActivateGhostRole((uid, component));
+        ActivateGhostRole(ent.AsNullable());
     }
 
     public void ActivateGhostRole(Entity<ToggleableGhostRoleComponent?> ent)
@@ -60,7 +60,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         var ghostRole = EnsureComp<GhostRoleComponent>(ent);
         EnsureComp<GhostTakeoverAvailableComponent>(ent);
 
-        // GhostRoleComponent inherits custom settings from the ToggleableGhostRoleComponent
+        // GhostRoleComponent inherits custom settings from the <see cref="ToggleableGhostRoleComponent"/>.
         ghostRole.RoleName = Loc.GetString(ent.Comp.RoleName);
         ghostRole.RoleDescription = Loc.GetString(ent.Comp.RoleDescription);
         ghostRole.RoleRules = Loc.GetString(ent.Comp.RoleRules);
@@ -68,37 +68,34 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         ghostRole.MindRoles = ent.Comp.MindRoles;
     }
 
-    private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<ToggleableGhostRoleComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
-        {
-            args.PushMarkup(Loc.GetString(component.ExamineTextMindPresent));
-        }
-        else if (HasComp<GhostTakeoverAvailableComponent>(uid))
-        {
-            args.PushMarkup(Loc.GetString(component.ExamineTextMindSearching));
-        }
+        string textKey;
+        if (TryComp<MindContainerComponent>(ent.Owner, out var mindComp) && mindComp.HasMind)
+            textKey = ent.Comp.ExamineTextMindPresent;
+        else if (HasComp<GhostTakeoverAvailableComponent>(ent.Owner))
+            textKey = ent.Comp.ExamineTextMindSearching;
         else
-        {
-            args.PushMarkup(Loc.GetString(component.ExamineTextNoMind));
-        }
+            textKey = ent.Comp.ExamineTextNoMind;
+
+        args.PushMarkup(Loc.GetString(textKey));
     }
 
-    private void OnMindAdded(EntityUid uid, ToggleableGhostRoleComponent pai, MindAddedMessage args)
+    private void OnMindAdded(Entity<ToggleableGhostRoleComponent> ent, ref MindAddedMessage args)
     {
-        // Mind was added, shutdown the ghost role stuff so it won't get in the way
-        RemCompDeferred<GhostTakeoverAvailableComponent>(uid);
-        UpdateAppearance(uid, ToggleableGhostRoleStatus.On);
+        // Mind was added, shutdown the ghost role stuff so it won't get in the way.
+        RemCompDeferred<GhostTakeoverAvailableComponent>(ent.Owner);
+        UpdateAppearance(ent.Owner, ToggleableGhostRoleStatus.On);
     }
 
-    private void OnMindRemoved(EntityUid uid, ToggleableGhostRoleComponent component, MindRemovedMessage args)
+    private void OnMindRemoved(Entity<ToggleableGhostRoleComponent> ent, ref MindRemovedMessage args)
     {
-        // Mind was removed, prepare for re-toggle of the role
-        RemCompDeferred<GhostRoleComponent>(uid);
-        UpdateAppearance(uid, ToggleableGhostRoleStatus.Off);
+        // Mind was removed, prepare for re-toggle of the role.
+        RemCompDeferred<GhostRoleComponent>(ent.Owner);
+        UpdateAppearance(ent.Owner, ToggleableGhostRoleStatus.Off);
     }
 
     private void UpdateAppearance(EntityUid uid, ToggleableGhostRoleStatus status)
@@ -106,42 +103,43 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         _appearance.SetData(uid, ToggleableGhostRoleVisuals.Status, status);
     }
 
-    private void AddWipeVerb(EntityUid uid, ToggleableGhostRoleComponent component, GetVerbsEvent<ActivationVerb> args)
+    private void AddWipeVerb(Entity<ToggleableGhostRoleComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
-        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
+        var user = args.User;
+        if (TryComp<MindContainerComponent>(ent.Owner, out var mind) && mind.HasMind)
         {
             ActivationVerb verb = new()
             {
-                Text = Loc.GetString(component.WipeVerbText),
+                Text = Loc.GetString(ent.Comp.WipeVerbText),
                 Act = () =>
                 {
-                    if (!_mind.TryGetMind(uid, out var mindId, out var mind))
+                    if (!_mind.TryGetMind(ent.Owner, out var mindId, out var mind))
                         return;
                     // Wiping device :(
                     // The shutdown of the Mind should cause automatic reset of the pAI during OnMindRemoved
                     _mind.TransferTo(mindId, null, mind: mind);
-                    _popup.PopupEntity(Loc.GetString(component.WipeVerbPopup), uid, args.User, PopupType.Large);
+                    _popup.PopupClient(Loc.GetString(ent.Comp.WipeVerbPopup), ent.Owner, user, PopupType.Large);
                 }
             };
             args.Verbs.Add(verb);
         }
-        else if (HasComp<GhostTakeoverAvailableComponent>(uid))
+        else if (HasComp<GhostTakeoverAvailableComponent>(ent.Owner))
         {
             ActivationVerb verb = new()
             {
-                Text = Loc.GetString(component.StopSearchVerbText),
+                Text = Loc.GetString(ent.Comp.StopSearchVerbText),
                 Act = () =>
                 {
-                    if (component.Deleted || !HasComp<GhostTakeoverAvailableComponent>(uid))
+                    if (ent.Comp.Deleted || !HasComp<GhostTakeoverAvailableComponent>(ent.Owner))
                         return;
 
-                    RemCompDeferred<GhostTakeoverAvailableComponent>(uid);
-                    RemCompDeferred<GhostRoleComponent>(uid);
-                    _popup.PopupEntity(Loc.GetString(component.StopSearchVerbPopup), uid, args.User);
-                    UpdateAppearance(uid, ToggleableGhostRoleStatus.Off);
+                    RemCompDeferred<GhostTakeoverAvailableComponent>(ent.Owner);
+                    RemCompDeferred<GhostRoleComponent>(ent.Owner);
+                    _popup.PopupClient(Loc.GetString(ent.Comp.StopSearchVerbPopup), ent.Owner, user);
+                    UpdateAppearance(ent.Owner, ToggleableGhostRoleStatus.Off);
                 }
             };
             args.Verbs.Add(verb);
