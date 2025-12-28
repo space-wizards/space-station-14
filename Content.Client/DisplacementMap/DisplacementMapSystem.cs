@@ -84,6 +84,7 @@ public sealed class DisplacementMapSystem : EntitySystem
         displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString()!;
 
         _sprite.AddLayer(sprite.AsNullable(), displacementLayer, index);
+        _sprite.SetAsParent(sprite, index, index + 1);
         _sprite.LayerMapSet(sprite.AsNullable(), displacementKey, index);
 
         return true;

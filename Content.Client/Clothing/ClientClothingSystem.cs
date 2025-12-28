@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.DisplacementMap;
 using Content.Client.Inventory;
+using Content.Client.Sprite;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
@@ -50,6 +51,7 @@ public sealed class ClientClothingSystem : ClothingSystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly DisplacementMapSystem _displacement = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteDirectionLayeringSystem _spriteDirection = default!;
 
     public override void Initialize()
     {
@@ -204,6 +206,7 @@ public sealed class ClientClothingSystem : ClothingSystem
         {
             _sprite.RemoveLayer(entity.AsNullable(), layer);
         }
+        _spriteDirection.RegenerateCachedOverrides((entity, null));
         revealedLayers.Clear();
     }
 
@@ -300,7 +303,7 @@ public sealed class ClientClothingSystem : ClothingSystem
             {
                 index++;
                 // note that every insertion requires reshuffling & remapping all the existing layers.
-                _sprite.AddBlankLayer((equipee, sprite), index);
+                _sprite.AddBlankLayer((equipee, sprite), index, index - 1);
                 _sprite.LayerMapSet((equipee, sprite), key, index);
 
                 if (layerData.Color != null)
@@ -340,6 +343,7 @@ public sealed class ClientClothingSystem : ClothingSystem
             }
         }
 
+        _spriteDirection.RegenerateCachedOverrides(equipee);
         RaiseLocalEvent(equipment, new EquipmentVisualsUpdatedEvent(equipee, slot, revealedLayers), true);
     }
 }

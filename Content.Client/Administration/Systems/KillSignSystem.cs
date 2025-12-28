@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Content.Client.Sprite;
 using Content.Shared.Administration.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -8,6 +9,7 @@ namespace Content.Client.Administration.Systems;
 public sealed class KillSignSystem : EntitySystem
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly SpriteDirectionLayeringSystem _spriteDirection = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
 
     public override void Initialize()
@@ -55,6 +57,7 @@ public sealed class KillSignSystem : EntitySystem
         var adj = _sprite.GetLocalBounds((ent, sprite)).Height / 2 + ((1.0f / 32) * 6.0f);
 
         var layer = _sprite.AddLayer((ent, sprite), ent.Comp.Sprite);
+        _spriteDirection.RegenerateCachedOverrides(ent.Owner);
         _sprite.LayerMapSet((ent, sprite), KillSignKey.Key, layer);
         _sprite.LayerSetScale((ent, sprite), layer, ent.Comp.Scale);
         _sprite.LayerSetOffset((ent, sprite), layer, ent.Comp.DoOffset ? new Vector2(0.0f, adj) : new Vector2(0.0f, 0.0f));
