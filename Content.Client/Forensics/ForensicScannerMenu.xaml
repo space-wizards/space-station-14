@@ -21,7 +21,12 @@
             Name="NameLabel"
             Align="Center" />
         <Label
-            Name="Diagnostics"
+            Name="EmptyDiagnostics"
+            Align="Center"
+            Margin="0 25 0 0"
             Text="{Loc forensic-scanner-interface-no-data}"/>
+        <BoxContainer
+            Name="Diagnostics"
+            Orientation="Vertical"/>
     </BoxContainer>
 </DefaultWindow>
