@@ -159,11 +159,13 @@ public sealed partial class TriggerSystem
             return;
 
         var xform = Transform(target.Value);
+        var grid = xform.GridUid;
 
         if (xform.Anchored && ent.Comp.CanUnanchor)
             _transform.Unanchor(target.Value, xform);
         else if (ent.Comp.CanAnchor)
-            _transform.AnchorEntity(target.Value, xform);
+            if (grid != null)
+                _transform.AnchorEntity(target.Value, xform);
 
         if (ent.Comp.RemoveOnTrigger)
             RemCompDeferred<AnchorOnTriggerComponent>(target.Value);
