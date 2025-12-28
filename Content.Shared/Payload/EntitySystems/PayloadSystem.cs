@@ -1,28 +1,30 @@
-using Content.Server.Administration.Logs;
+using System.Linq;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
 using Content.Shared.Trigger;
-using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
-using System.Linq;
-using Robust.Server.GameObjects;
-using Robust.Shared.Prototypes;
 
-namespace Content.Server.Payload.EntitySystems;
+namespace Content.Shared.Payload.EntitySystems;
 
+/// <summary>
+/// Handles activation, triggering, and explosions of payload entity.
+/// </summary>
 public sealed class PayloadSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
 
     private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
 
@@ -48,35 +50,33 @@ public sealed class PayloadSystem : EntitySystem
         if (!_container.TryGetContainer(uid, PayloadContainer, out var container))
             yield break;
 
-        foreach (var entity in container.ContainedEntities)
+        foreach (var ent in container.ContainedEntities)
         {
-            if (_tagSystem.HasTag(entity, PayloadTag))
-                yield return entity;
+            if (_tagSystem.HasTag(ent, PayloadTag))
+                yield return ent;
         }
     }
 
-    private void OnCaseTriggered(EntityUid uid, PayloadCaseComponent component, TriggerEvent args)
+    private void OnCaseTriggered(Entity<PayloadCaseComponent> ent, ref TriggerEvent args)
     {
         // TODO: Adjust to the new trigger system
         // Pass trigger event onto all contained payloads. Payload capacity configurable by construction graphs.
-        foreach (var ent in GetAllPayloads(uid))
-        {
-            RaiseLocalEvent(ent, ref args, false);
-        }
+        foreach (var entAll in GetAllPayloads(ent.Owner))
+            RaiseLocalEvent(entAll, ref args, false);
     }
 
-    private void OnTriggerTriggered(EntityUid uid, PayloadTriggerComponent component, TriggerEvent args)
+    private void OnTriggerTriggered(Entity<PayloadTriggerComponent> ent, ref TriggerEvent args)
     {
         // TODO: Adjust to the new trigger system
 
-        if (!component.Active)
+        if (!ent.Comp.Active)
             return;
 
-        if (Transform(uid).ParentUid is not { Valid: true } parent)
+        if (Transform(ent.Owner).ParentUid is not { Valid: true } parent)
             return;
 
-        // Ensure we don't enter a trigger-loop
-        DebugTools.Assert(!_tagSystem.HasTag(uid, PayloadTag));
+        // Ensure we don't enter a trigger-loop.
+        DebugTools.Assert(!_tagSystem.HasTag(ent.Owner, PayloadTag));
 
         RaiseLocalEvent(parent, ref args);
     }
@@ -90,7 +90,7 @@ public sealed class PayloadSystem : EntitySystem
             args.Cancel();
     }
 
-    private void OnEntityInserted(EntityUid uid, PayloadCaseComponent _, EntInsertedIntoContainerMessage args)
+    private void OnEntityInserted(Entity<PayloadCaseComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID != TriggerContainer || !TryComp(args.Entity, out PayloadTriggerComponent? trigger))
             return;
@@ -106,21 +106,21 @@ public sealed class PayloadSystem : EntitySystem
             if (!Factory.TryGetRegistration(name, out var registration))
                 continue;
 
-            if (HasComp(uid, registration.Type))
+            if (HasComp(ent.Owner, registration.Type))
                 continue;
 
             if (Factory.GetComponent(registration.Type) is not Component component)
                 continue;
 
-            var temp = (object) component;
+            var temp = (object)component;
             _serializationManager.CopyTo(data.Component, ref temp);
-            AddComp(uid, (Component) temp!);
+            AddComp(ent.Owner, (Component)temp!);
 
             trigger.GrantedComponents.Add(registration.Type);
         }
     }
 
-    private void OnEntityRemoved(EntityUid uid, PayloadCaseComponent component, EntRemovedFromContainerMessage args)
+    private void OnEntityRemoved(Entity<PayloadCaseComponent> ent, ref EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID != TriggerContainer || !TryComp(args.Entity, out PayloadTriggerComponent? trigger))
             return;
@@ -128,45 +128,39 @@ public sealed class PayloadSystem : EntitySystem
         trigger.Active = false;
 
         foreach (var type in trigger.GrantedComponents)
-        {
-            RemComp(uid, type);
-        }
+            RemComp(ent.Owner, type);
 
         trigger.GrantedComponents.Clear();
     }
 
-    private void OnExamined(EntityUid uid, PayloadCaseComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<PayloadCaseComponent> ent, ref ExaminedEvent args)
     {
         using (args.PushGroup(nameof(PayloadCaseComponent)))
         {
             if (!args.IsInDetailsRange)
             {
-                args.PushMarkup(Loc.GetString("payload-case-not-close-enough", ("ent", uid)));
+                args.PushMarkup(Loc.GetString("payload-case-not-close-enough", ("ent", ent.Owner)));
                 return;
             }
 
-            if (GetAllPayloads(uid).Any())
-            {
-                args.PushMarkup(Loc.GetString("payload-case-has-payload", ("ent", uid)));
-            }
+            if (GetAllPayloads(ent.Owner).Any())
+                args.PushMarkup(Loc.GetString("payload-case-has-payload", ("ent", ent.Owner)));
             else
-            {
-                args.PushMarkup(Loc.GetString("payload-case-does-not-have-payload", ("ent", uid)));
-            }
+                args.PushMarkup(Loc.GetString("payload-case-does-not-have-payload", ("ent", ent.Owner)));
         }
     }
 
-    private void HandleChemicalPayloadTrigger(Entity<ChemicalPayloadComponent> entity, ref TriggerEvent args)
+    private void HandleChemicalPayloadTrigger(Entity<ChemicalPayloadComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !entity.Comp.KeysIn.Contains(args.Key))
+        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
             return;
 
-        if (entity.Comp.BeakerSlotA.Item is not EntityUid beakerA
-            || entity.Comp.BeakerSlotB.Item is not EntityUid beakerB
+        if (ent.Comp.BeakerSlotA.Item is not EntityUid beakerA
+            || ent.Comp.BeakerSlotB.Item is not EntityUid beakerB
             || !TryComp(beakerA, out FitsInDispenserComponent? compA)
             || !TryComp(beakerB, out FitsInDispenserComponent? compB)
-            || !_solutionContainerSystem.TryGetSolution(beakerA, compA.Solution, out var solnA, out var solutionA)
-            || !_solutionContainerSystem.TryGetSolution(beakerB, compB.Solution, out var solnB, out var solutionB)
+            || !_solutionContainer.TryGetSolution(beakerA, compA.Solution, out var solnA, out var solutionA)
+            || !_solutionContainer.TryGetSolution(beakerB, compB.Solution, out var solnB, out var solutionB)
             || solutionA.Volume == 0
             || solutionB.Volume == 0)
         {
@@ -177,17 +171,17 @@ public sealed class PayloadSystem : EntitySystem
         var solStringB = SharedSolutionContainerSystem.ToPrettyString(solutionB);
 
         _adminLogger.Add(LogType.ChemicalReaction,
-            $"Chemical bomb payload {ToPrettyString(entity.Owner):payload} at {_transform.GetMapCoordinates(entity.Owner):location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
+            $"Chemical bomb payload {ToPrettyString(ent.Owner):payload} at {_transform.GetMapCoordinates(ent.Owner):location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");
 
         solutionA.MaxVolume += solutionB.MaxVolume;
-        _solutionContainerSystem.TryAddSolution(solnA.Value, solutionB);
-        _solutionContainerSystem.RemoveAllSolution(solnB.Value);
+        _solutionContainer.TryAddSolution(solnA.Value, solutionB);
+        _solutionContainer.RemoveAllSolution(solnB.Value);
 
         // The grenade might be a dud. Redistribute solution:
-        var tmpSol = _solutionContainerSystem.SplitSolution(solnA.Value, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
-        _solutionContainerSystem.TryAddSolution(solnB.Value, tmpSol);
+        var tmpSol = _solutionContainer.SplitSolution(solnA.Value, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
+        _solutionContainer.TryAddSolution(solnB.Value, tmpSol);
         solutionA.MaxVolume -= solutionB.MaxVolume;
-        _solutionContainerSystem.UpdateChemicals(solnA.Value);
+        _solutionContainer.UpdateChemicals(solnA.Value);
 
         args.Handled = true;
     }
