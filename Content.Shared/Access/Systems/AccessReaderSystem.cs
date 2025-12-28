@@ -871,14 +871,14 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
-    /// Try to find <see cref="StationRecordKeyStorageComponent"/> on this entity or inside it (if it's a PDA).
+    /// Try to find <see cref="StationRecordInfoStorageComponent"/> on this entity or inside it (if it's a PDA).
     /// </summary>
     /// <param name="uid">The entity being searched.</param>
     /// <param name="key">The station record key that was found.</param>
     /// <returns>True if a station record key was found.</returns>
     private bool FindStationRecordKeyItem(EntityUid uid, [NotNullWhen(true)] out StationRecordKey? key)
     {
-        if (TryComp(uid, out StationRecordKeyStorageComponent? storage) && storage.Key != null)
+        if (TryComp(uid, out StationRecordInfoStorageComponent? storage) && storage.Key != null)
         {
             key = storage.Key;
             return true;
@@ -887,7 +887,7 @@ public sealed class AccessReaderSystem : EntitySystem
         if (TryComp<PdaComponent>(uid, out var pda) &&
             pda.ContainedId is { Valid: true } id)
         {
-            if (TryComp<StationRecordKeyStorageComponent>(id, out var pdastorage) && pdastorage.Key != null)
+            if (TryComp<StationRecordInfoStorageComponent>(id, out var pdastorage) && pdastorage.Key != null)
             {
                 key = pdastorage.Key;
                 return true;
