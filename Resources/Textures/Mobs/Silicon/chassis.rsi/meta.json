@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/faf6db214927874c19b8fa8585d26b5d40de1acc, derelict generic sprites modified by GoldenCan(GitHub), xenoborg sprites, created and modified by Samuka-C (github), Derelict Engineer, Janitor, Miner, Medical, and Assault Borg sprites by _miket on Discord, minor resprite of the service borg by Kittygyat (github), red cross on Syndi Medical Borg changed to blue to avoid Geneva issues by CDWimmer (GitHub)",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/faf6db214927874c19b8fa8585d26b5d40de1acc, derelict generic sprites modified by GoldenCan(GitHub), xenoborg sprites, created and modified by Samuka-C (github), Derelict Engineer, Janitor, Miner, Medical, and Assault Borg sprites by _miket on Discord, derelict xenoborg sprites modified by DigitalThaumaturge(GitHub) minor resprite of the service borg by Kittygyat (github), red cross on Syndi Medical Borg changed to blue to avoid Geneva issues by CDWimmer (GitHub)",
     "states": [
         {
             "name": "clown",
@@ -526,6 +526,64 @@
             "directions": 4
         },
         {
+            "name": "xenoborg_heavy_derelict",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg_heavy_derelict_e",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg_heavy_derelict_e_r",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "xenoborg_heavy_derelict_l",
+            "directions": 4
+        },
+        {
             "name": "xenoborg_scout",
             "directions": 4
         },
@@ -583,6 +641,108 @@
         },
         {
             "name": "xenoborg_scout_e_r",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "xenoborg_scout_derelict",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg_scout_derelict_l",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "xenoborg_scout_derelict_e",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "xenoborg_scout_derelict_e_r",
             "directions": 4,
             "delays": [
                 [
@@ -686,6 +846,22 @@
             "directions": 4
         },
         {
+            "name": "xenoborg_engi_derelict",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg_engi_derelict_crystal",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg_engi_derelict_e",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg_engi_derelict_l",
+            "directions": 4
+        },
+        {
             "name": "xenoborg_stealth",
             "directions": 4
         },
@@ -763,6 +939,62 @@
         },
         {
             "name": "xenoborg_stealth_l",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "xenoborg_stealth_derelict",
+            "directions": 4
+        },
+        {
+            "name": "xenoborg_stealth_derelict_e",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "xenoborg_stealth_derelict_l",
             "directions": 4,
             "delays": [
                 [

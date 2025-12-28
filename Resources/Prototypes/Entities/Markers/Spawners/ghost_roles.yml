@@ -341,6 +341,54 @@
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostDerelictCyborg
+  id: SpawnPointGhostDerelictEngineeringXenoborg
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-engineering-xenoborg-name
+    description: ghost-role-information-derelict-engineering-xenoborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostDerelictCyborg
+  id: SpawnPointGhostDerelictHeavyXenoborg
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-heavy-xenoborg-name
+    description: ghost-role-information-derelict-heavy-xenoborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostDerelictCyborg
+  id: SpawnPointGhostDerelictScoutXenoborg
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-scout-xenoborg-name
+    description: ghost-role-information-derelict-scout-xenoborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: SpawnPointGhostDerelictCyborg
+  id: SpawnPointGhostDerelictStealthXenoborg
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-stealth-xenoborg-name
+    description: ghost-role-information-derelict-stealth-xenoborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointGhostWizard
   name: ghost role spawn point
