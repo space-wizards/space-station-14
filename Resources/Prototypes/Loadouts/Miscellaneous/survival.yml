@@ -122,7 +122,26 @@
     back:
     - BoxSurvivalSecurityNitrogen
 
-# Syndicate
+# Antagonist
+
+- type: loadout
+  id: EmergencyOxygenExtendedAntag
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalDeluxeExtended
+
+- type: loadout
+  id: EmergencyNitrogenExtendedAntag
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalDeluxeExtendedNitrogen
+
 - type: loadout
   id: EmergencyOxygenSyndicate
   effects:

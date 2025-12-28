@@ -244,7 +244,7 @@
       pickPlayer: false
       startingGear: SpaceNinjaGear
       roleLoadout:
-      - RoleSurvivalEVA
+      - RoleSurvivalEVAAntag
       briefing:
         text: ninja-role-greeting
         color: Green
@@ -337,7 +337,7 @@
       pickPlayer: false
       startingGear: WizardBlueGear
       roleLoadout:
-      - RoleSurvivalExtended
+      - RoleSurvivalExtendedAntag
       briefing:
         text: wizard-role-greeting
         color: Turquoise

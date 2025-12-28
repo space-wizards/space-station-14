@@ -178,14 +178,65 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
+# Primarily intended for antagonists that spawn outside the station (e.g ninjas, wizards)
+# Contains food and water because, unlike normal crew, we don't want to force them to seek food mid-round.
+# Later down the line we might want to make these more specialized per antag (e.g, maybe wizards get a box with magical self-regenerating food and a magical light source).
+- type: entity
+  parent: BoxCardboard
+  id: BoxSurvivalDeluxeExtended
+  name: deluxe extended-capacity survival box
+  suffix: O2
+  description: A deluxe survival box containing a breath mask, an extended-capacity emergency oxygen tank, an emergency medipen, an emergency flare, and a bit of food and water.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingMaskBreath
+        - id: ExtendedEmergencyOxygenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
+        - id: FoodSnackNutribrick
+        - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: extendedtank
+  - type: Label
+    currentLabel: reagent-name-oxygen
+
+- type: entity
+  parent: BoxSurvivalExtendedAntag
+  id: BoxSurvivalDeluxeExtendedNitrogen
+  suffix: N2
+  description: A deluxe survival box containing a breath mask, an extended-capacity emergency oxygen tank, an emergency medipen, an emergency flare, and a bit of food and water.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingMaskBreath
+        - id: ExtendedEmergencyNitrogenTankFilled
+        - id: EmergencyMedipen
+        - id: Flare
+        - id: FoodSnackNutribrick
+        - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
 # Intended for nukies (or similar syndicate operatives).
 # Contains food because we don't want to force nukies to go get lunch in the middle of a mission.
+# Not enough space left to fit the water bottle (syndie gas mask is 1x2), but that's not a problem since the nukies have a whole bar on the nukie planet.
 - type: entity
   parent: BoxCardboard
   id: BoxSurvivalSyndicate
   name: syndicate survival box
   suffix: O2
-  description: A deluxe survival box containing a syndicate gas mask, an extended-capacity emergency oxygen tank, an emergency medipen, an emergency flare, and a bit of food.
+  description: A Syndicate-designed survival box containing a syndicate gas mask, an extended-capacity emergency oxygen tank, an emergency medipen, an emergency flare, and a bit of food.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -207,7 +258,7 @@
   parent: BoxSurvivalSyndicate
   id: BoxSurvivalSyndicateNitrogen
   suffix: N2
-  description: A deluxe survival box containing a syndicate gas mask, an extended-capacity emergency nitrogen tank, an emergency medipen, an emergency flare, and a bit of food.
+  description: A Syndicate-designed survival box containing a syndicate gas mask, an extended-capacity emergency nitrogen tank, an emergency medipen, an emergency flare, and a bit of food.
   components:
   - type: EntityTableContainerFill
     containers:
@@ -225,7 +276,8 @@
   - type: Label
     currentLabel: reagent-name-nitrogen
 
-# Intended primarily for ERT/deathsquad, rather than standard crew.
+# Intended primarily for ERT/deathsquad.
+# Uses a 2x2 box mostly just because the 3x3 boxes don't fit into already-filled ERT backpacks.
 # "Military" might be a misnomer, since NT isn't technically a government entity, but whatever.
 - type: entity
   parent: BoxSurvival
