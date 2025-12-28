@@ -2309,3 +2309,40 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineDrugs
+  name: Drugvend
+  description: Legal? Maybe. What are you, a cop?
+  components:
+  - type: VendingMachine
+    pack: DrugVendInventory
+    initialStockQuality: 0.6
+    offState: off
+    brokenState: broken
+    screenState: screen
+    ejectDelay: 2
+  - type: DatasetVocalizer
+    dataset: DrugMachineAds
+  - type: SpeakOnUIClosed
+    pack: DrugMachineGoodbyes
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/drugs.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+    - state: "screen"
+      map: ["enum.VendingMachineVisualLayers.Screen"]
+    - state: "panel"
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: RgbLightController
+    cycleRate: 0.2
+  - type: PointLight
+    radius: 1.3
+    energy: 50.0 # Deliberately a bit too bright
+  - type: GuideHelp
+    guides:
+    - Narcotics

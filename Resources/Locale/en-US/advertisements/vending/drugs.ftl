@@ -1,0 +1,10 @@
+advertisement-drugs-1 = Colors so good you can taste them!
+advertisement-drugs-2 = Use responsibly, or don't.
+advertisement-drugs-3 = Hey dude, wanna be cool?
+advertisement-drugs-4 = Dude... got any snacks?
+advertisement-drugs-5 = There's some better stuff around back.
+advertisement-drugs-6 = Do I smoke? Smoke what?
+thankyou-drugs-1 = Thank you for our 42,069th sale!
+thankyou-drugs-2 = If security asks, I wasn't here!
+thankyou-drugs-3 = You didn't get those from me.
+thankyou-drugs-4 = That's some premium stuff.
