@@ -1646,3 +1646,11 @@
   hidden: true
   loadouts:
   - LoadoutSpeciesBreathToolSecurity
+
+- type: loadoutGroup
+  id: GroupBluespaceJetpack
+  name: loadout-group-EVA-tank
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesBSJetpackNitrogen
+  - LoadoutSpeciesBSJetpackOxygen

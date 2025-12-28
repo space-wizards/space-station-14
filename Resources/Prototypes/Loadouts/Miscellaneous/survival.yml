@@ -289,3 +289,20 @@
     proto: EffectSpeciesVox
   equipment:
     mask: ClothingMaskGasSecurity
+
+# Deathsquad loadouts
+- type: loadout
+  id: LoadoutSpeciesBSJetpackNitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    suitstorage: JetpackBluespaceFilledNitrogen
+
+- type: loadout
+  id: LoadoutSpeciesBSJetpackOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    suitstorage: JetpackBluespaceFilledOxygen
