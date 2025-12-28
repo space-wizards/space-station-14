@@ -210,11 +210,12 @@ namespace Content.Client.Cargo.UI
 
             foreach (var order in orders)
             {
-                if (order.Approved)
+                if (order.Approved ||
+                    !_protoManager.Resolve(order.Product, out var productProto))
                     continue;
 
-                var product = _protoManager.Index<EntityPrototype>(order.ProductId);
-                var productName = product.Name;
+                var product = _protoManager.Index<EntityPrototype>(productProto.Product);
+                var productName = productProto.Name;
                 var account = _protoManager.Index(order.Account);
 
                 var row = new CargoOrderRow

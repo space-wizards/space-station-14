@@ -73,7 +73,10 @@
   icon:
     sprite: Objects/Fun/crayons.rsi
     state: box
-  product: CrateFunArtSupplies
+  product: CrayonBox
+  container:
+    entity: WrappedParcel
+    containerId: contents
   cost: 500
   category: cargoproduct-category-name-fun
   group: market
