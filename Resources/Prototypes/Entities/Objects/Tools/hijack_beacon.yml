@@ -15,15 +15,17 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.25,-0.4,0.25,0.1"
-        density: 20
+          bounds: "-0.1,-0.1,0.1,0.1"
+        density: 190
         mask:
-        - Impassable
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Clickable
   - type: InteractionOutline
   - type: Appearance
   - type: Sprite
-    sprite: Objects/Tools/thief_beacon.rsi
+    sprite: Objects/Tools/hijack_beacon.rsi
     noRot: true
     layers:
     - state: extraction_point
