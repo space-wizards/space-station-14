@@ -6,6 +6,7 @@ using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.HijackBeacon;
 
@@ -15,6 +16,7 @@ public sealed class HijackBeaconSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -38,10 +40,18 @@ public sealed class HijackBeaconSystem : EntitySystem
             switch (ent.Comp.Status)
             {
                 case HijackBeaconStatus.ARMED:
-                    TickTimer(ent, frameTime);
+                    if (ent.Comp.RemainingTime < _gameTiming.CurTime)
+                    {
+                        HijackFinish(ent);
+                        Dirty(ent);
+                    }
                     break;
                 case HijackBeaconStatus.COOLDOWN:
-                    TickCooldown(ent, frameTime);
+                    if (ent.Comp.CooldownTime < _gameTiming.CurTime)
+                    {
+                        ent.Comp.Status = HijackBeaconStatus.AWAIT_ACTIVATE;
+                        Dirty(ent);
+                    }
                     break;
             }
         }
@@ -117,7 +127,7 @@ public sealed class HijackBeaconSystem : EntitySystem
            case HijackBeaconStatus.ARMED:
                args.PushMarkup(Loc.GetString("defusable-examine-live",
                    ("name", ent),
-                   ("time", Math.Floor(ent.Comp.RemainingTime))));
+                   ("time", AdjustToSeconds(ent.Comp.RemainingTime))));
                break;
            case HijackBeaconStatus.COOLDOWN:
                args.PushMarkup(Loc.GetString("hijack-beacon-examine-await-cooldown"));
@@ -147,42 +157,6 @@ public sealed class HijackBeaconSystem : EntitySystem
 
     #endregion
 
-    #region Timer Logic
-
-    /// <summary>
-    ///     Adjusts the remaining time left on beacon activation, and activates the beacon if it is over.
-    /// </summary>
-    private void TickTimer(Entity<HijackBeaconComponent> ent, float frameTime)
-    {
-        ent.Comp.RemainingTime -= frameTime;
-
-        if (ent.Comp.RemainingTime <= 0)
-        {
-            ent.Comp.RemainingTime = 0;
-            HijackFinish(ent);
-        }
-
-        Dirty(ent);
-    }
-
-    /// <summary>
-    ///     Adjusts the remaining time left on beacon cooldown, and readies the beacon if it is over.
-    /// </summary>
-    private void TickCooldown(Entity<HijackBeaconComponent> ent, float frameTime)
-    {
-        ent.Comp.CooldownTime -= frameTime;
-
-        if (ent.Comp.CooldownTime <= 0)
-        {
-            ent.Comp.CooldownTime = 0;
-            ent.Comp.Status = HijackBeaconStatus.AWAIT_ACTIVATE;
-        }
-
-        Dirty(ent);
-    }
-
-    #endregion
-
     /// <summary>
     ///     Arming the beacon. Should only occur if on the ATS.
     /// </summary>
@@ -192,11 +166,13 @@ public sealed class HijackBeaconSystem : EntitySystem
             return;
 
         // Activate and start countdown.
+        // Remaining time is adjusted by current time to simplify the update loop.
+        ent.Comp.RemainingTime = _gameTiming.CurTime + ent.Comp.RemainingTime;
         ent.Comp.Status = HijackBeaconStatus.ARMED;
 
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
-        var message = Loc.GetString("hijack-beacon-announcement-activated", ("time", (int) ent.Comp.RemainingTime));
+        var message = Loc.GetString("hijack-beacon-announcement-activated", ("time", AdjustToSeconds(ent.Comp.RemainingTime)));
         _chat.DispatchGlobalAnnouncement(message, sender, true, null, Color.Yellow);
 
         //Anchor. Anchoring is tied to activation.
@@ -214,8 +190,8 @@ public sealed class HijackBeaconSystem : EntitySystem
             return;
 
         // Put beacon on cooldown
+        ent.Comp.CooldownTime = ent.Comp.Cooldown + _gameTiming.CurTime;
         ent.Comp.Status = HijackBeaconStatus.COOLDOWN;
-        ent.Comp.CooldownTime = ent.Comp.Cooldown;
 
         //global announcement
         var sender = Loc.GetString("hijack-beacon-announcement-sender");
@@ -223,7 +199,8 @@ public sealed class HijackBeaconSystem : EntitySystem
         _chat.DispatchGlobalAnnouncement(message, sender, true, null, Color.Green);
 
         // In case the beacon is re-activated, it has a minimum amount of time before it can go off.
-        ent.Comp.RemainingTime = Math.Max(ent.Comp.RemainingTime, ent.Comp.MinimumTime);
+        // Subtracting the current time from the remaining time here so the numbers are the actual time values and not the curTime-adjusted ones.
+        ent.Comp.RemainingTime = (ent.Comp.RemainingTime - _gameTiming.CurTime > ent.Comp.MinimumTime ? ent.Comp.RemainingTime - _gameTiming.CurTime : ent.Comp.MinimumTime);
 
         // Unanchor. we want anchoring to be tied to activation here so we just call this.
         Unanchor(ent);
@@ -334,6 +311,14 @@ public sealed class HijackBeaconSystem : EntitySystem
 
         _transform.Unanchor(ent, beaconXForm);
         _popup.PopupPredicted(Loc.GetString("hijack-beacon-popup-unanchor"), ent, null);
+    }
+
+    /// <summary>
+    ///     Turns time values into usable values for announcements/examine messages
+    /// </summary>
+    private int AdjustToSeconds(TimeSpan time)
+    {
+        return (int) (time - _gameTiming.CurTime).TotalSeconds;
     }
 
     #endregion
