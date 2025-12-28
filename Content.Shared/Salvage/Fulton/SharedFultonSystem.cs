@@ -31,7 +31,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private   readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public static readonly EntProtoId EffectProto = "FultonEffect";
     protected static readonly Vector2 EffectOffset = Vector2.Zero;
@@ -47,8 +47,8 @@ public abstract partial class SharedFultonSystem : EntitySystem
         SubscribeLocalEvent<FultonedComponent, EntGotInsertedIntoContainerMessage>(OnFultonContainerInserted);
 
         SubscribeLocalEvent<FultonComponent, AfterInteractEvent>(OnFultonInteract);
-
         SubscribeLocalEvent<FultonComponent, StackSplitEvent>(OnFultonSplit);
+        SubscribeLocalEvent<FultonComponent, GetVerbsEvent<UtilityVerb>>(OnFultonGetVerbs);
     }
 
     private void OnFultonContainerInserted(EntityUid uid, FultonedComponent component, EntGotInsertedIntoContainerMessage args)
@@ -107,6 +107,28 @@ public abstract partial class SharedFultonSystem : EntitySystem
         Audio.PlayPredicted(fulton.FultonSound, args.Target.Value, args.User);
     }
 
+    private void OnFultonGetVerbs(Entity<FultonComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
+    {
+        if (args.Target is not { Valid: true } target || !args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!CanFultonTarget(ent, target, out _))
+            return;
+
+        var user = args.User;
+
+        var verb = new UtilityVerb()
+        {
+            Act = () =>
+            {
+                TryStartFulton(ent, user, target);
+            },
+            Text = Loc.GetString("fulton-verb-text"),
+        };
+
+        args.Verbs.Add(verb);
+    }
+
     private void OnFultonInteract(EntityUid uid, FultonComponent component, AfterInteractEvent args)
     {
         if (args.Target == null || args.Handled || !args.CanReach)
@@ -129,35 +151,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
             return;
         }
 
-        if (Deleted(component.Beacon))
-        {
-            _popup.PopupClient(Loc.GetString("fulton-not-found"), uid, args.User);
-            return;
-        }
-
-        if (!CanApplyFulton(args.Target.Value, component))
-        {
-            _popup.PopupClient(Loc.GetString("fulton-invalid"), uid, uid);
-            return;
-        }
-
-        if (HasComp<FultonedComponent>(args.Target))
-        {
-            _popup.PopupClient(Loc.GetString("fulton-fultoned"), uid, uid);
-            return;
-        }
-
-        args.Handled = true;
-
-        var ev = new FultonedDoAfterEvent();
-        _doAfter.TryStartDoAfter(
-            new DoAfterArgs(EntityManager, args.User, component.ApplyFultonDuration, ev, args.Target, args.Target, args.Used)
-            {
-                MovementThreshold = 0.5f,
-                BreakOnMove = true,
-                Broadcast = true,
-                NeedHand = true,
-            });
+        args.Handled = TryStartFulton((uid, component), args.User, args.Target.Value);
     }
 
     private void OnFultonSplit(EntityUid uid, FultonComponent component, ref StackSplitEvent args)
@@ -195,6 +189,55 @@ public abstract partial class SharedFultonSystem : EntitySystem
             return false;
 
         return true;
+    }
+
+    private bool CanFultonTarget(Entity<FultonComponent> fulton, EntityUid target, out string? message)
+    {
+        message = null;
+
+        if (HasComp<FultonBeaconComponent>(target))
+            return false;
+
+        if (Deleted(fulton.Comp.Beacon))
+        {
+            message = "fulton-not-found";
+            return false;
+        }
+
+        if (!CanApplyFulton(target, fulton.Comp))
+        {
+            message = "fulton-invalid";
+            return false;
+        }
+
+        if (HasComp<FultonedComponent>(target))
+        {
+            message = "fulton-fultoned";
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool TryStartFulton(Entity<FultonComponent> fulton, EntityUid user, EntityUid target)
+    {
+        if (!CanFultonTarget(fulton, target, out var message))
+        {
+            if (message is not null)
+                _popup.PopupClient(Loc.GetString(message), fulton, user);
+
+            return false;
+        }
+
+        var ev = new FultonedDoAfterEvent();
+        return _doAfter.TryStartDoAfter(
+            new DoAfterArgs(EntityManager, user, fulton.Comp.ApplyFultonDuration, ev, target, target, fulton)
+            {
+                MovementThreshold = 0.5f,
+                BreakOnMove = true,
+                Broadcast = true,
+                NeedHand = true,
+            });
     }
 
     [Serializable, NetSerializable]
