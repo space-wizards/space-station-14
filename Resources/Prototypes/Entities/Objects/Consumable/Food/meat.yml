@@ -481,6 +481,12 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+  - type: InternalTemperature
+    conductivity: 0.43
+  - type: Construction
+    graph: RatSteak
+    node: start
+    defaultTarget: rat steak
   - type: Item
     storedOffset: -2,1
     inhandVisuals:
@@ -956,6 +962,38 @@
       - state: plain-inhand-right
 
 # Cooked
+- type: entity
+  name: rat steak
+  parent: FoodMeatBase
+  id: FoodMeatRatCooked
+  description: A cooked slab of rat meat. Could use some cheese.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+    - Steak
+  - type: Sprite
+    layers:
+    - state: plain-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Protein
+          Quantity: 5
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatCutletCooked
+  - type: Construction
+    graph: RatSteak
+    node: rat steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: MeatSteak
+      Taco: MeatSteak
 
 - type: entity
   parent: FoodBase
