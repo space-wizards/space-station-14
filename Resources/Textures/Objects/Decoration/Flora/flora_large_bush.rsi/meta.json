@@ -1,0 +1,20 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/blob/787aa76ca263781e2c8b00fdc44911901951dfdf/icons/obj/fluff/flora/largejungleflora.dmi",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "bush1"
+        },
+        {
+            "name": "bush2"
+        },
+        {
+            "name": "bush3"
+        }
+    ]
+}
