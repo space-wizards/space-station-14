@@ -43,5 +43,6 @@ job-description-scientist = Research alien artifacts, unlock new technologies, b
 job-description-security = Catch criminals and enemies of the station, enforce the law, and ensure that the station does not fall into disarray.
 job-description-serviceworker = Learn the basics of bartending, cooking, and growing plants.
 job-description-station-ai = Follow your laws, serve the crew.
+job-description-trainee = Learn how to thrive in space.
 job-description-visitor = Enjoy your visit to the station.
 job-description-warden = Patrol the Security department, ensure that no one is stealing from the armory, and make sure that all prisoners are processed and let out when their time is up.
