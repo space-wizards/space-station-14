@@ -4,7 +4,7 @@
 # trash prototypes use "trash" state
 - type: entity
   abstract: true
-  parent: [FoodBase, FoodOpenableBase]
+  parent: [FoodBase, BaseSolOpenable, BaseSolVisualsOpenable]
   id: FoodTinBase
   name: tin
   description: A tin of something, sealed tight.
@@ -50,6 +50,8 @@
     damageContainer: Inorganic
   - type: StaticPrice
     price: 50
+  - type: ExaminableSolution
+    solution: food
 
 - type: entity
   abstract: true
@@ -126,7 +128,7 @@
   components:
   - type: Sprite
     layers:
-    - state: icon-open
+    - state: icon_open
       map: ["icon"]
   - type: Openable
     opened: true
