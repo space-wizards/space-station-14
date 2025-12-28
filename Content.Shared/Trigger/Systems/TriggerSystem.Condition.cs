@@ -1,4 +1,5 @@
-﻿using Content.Shared.Random.Helpers;
+﻿using Content.Shared.Mobs.Components;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Trigger.Components.Conditions;
 using Content.Shared.Verbs;
 using Robust.Shared.Random;
@@ -14,6 +15,8 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<ToggleTriggerConditionComponent, AttemptTriggerEvent>(OnToggleTriggerAttempt);
         SubscribeLocalEvent<RandomChanceTriggerConditionComponent, AttemptTriggerEvent>(OnRandomChanceTriggerAttempt);
         SubscribeLocalEvent<MindRoleTriggerConditionComponent, AttemptTriggerEvent>(OnMindRoleTriggerAttempt);
+        SubscribeLocalEvent<MobStateTriggerConditionComponent, AttemptTriggerEvent>(OnMobStateTriggerAttempt);
+        SubscribeLocalEvent<UserIsOwnerTriggerConditionComponent, AttemptTriggerEvent>(OnUserTargetTriggerAttempt);
 
         SubscribeLocalEvent<ToggleTriggerConditionComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleGetAltVerbs);
     }
@@ -113,5 +116,34 @@ public sealed partial class TriggerSystem
                 args.Cancelled = true; // the user does not have the required role
             }
         }
+    }
+
+    private void OnMobStateTriggerAttempt(Entity<MobStateTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
+    {
+        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
+            return;
+
+        if (!TryComp<MobStateComponent>(args.User, out var mobState))
+        {
+            args.Cancelled = true; // If the user has no MobState, no way they can pass the condition.
+            return;
+        }
+
+        var cancel = !ent.Comp.MobStates.Contains(mobState.CurrentState);
+
+        args.Cancelled |= cancel;
+    }
+
+    private void OnUserTargetTriggerAttempt(Entity<UserIsOwnerTriggerConditionComponent> ent, ref AttemptTriggerEvent args)
+    {
+        if (args.Key != null && !ent.Comp.Keys.Contains(args.Key))
+            return;
+
+        var cancel = ent.Owner != args.User;
+
+        if (ent.Comp.Invert)
+            cancel = !cancel;
+
+        args.Cancelled |= cancel;
     }
 }
