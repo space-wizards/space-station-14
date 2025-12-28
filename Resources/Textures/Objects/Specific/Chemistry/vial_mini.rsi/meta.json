@@ -1,15 +1,12 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Drawn by Ubaser, taken inspiration by /tg/'s vials. icon_open edit by iaada(GitHub)",
+    "copyright": "Drawn by Ubaser, taken inspiration by /tg/'s vials. Edited and shrunk by iaada(GitHub)",
     "size": {
         "x": 32,
         "y": 32
     },
     "states": [
-        {
-            "name": "vial"
-        },
         {
             "name": "inhand-left",
             "directions": 4
@@ -48,7 +45,7 @@
         },
         {
             "name": "inhand-right-fill-4",
-            "directions": 4
+             "directions": 4
         },
         {
             "name": "icon_empty"
@@ -70,9 +67,6 @@
         },
         {
             "name": "fill-5"
-        },
-        {
-            "name": "fill-6"
         }
     ]
 }
