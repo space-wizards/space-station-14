@@ -8,21 +8,37 @@ namespace Content.Client.Weapons.Melee.UI;
 public sealed partial class MeleeSpeechWindow : DefaultWindow
 {
 
-    public event Action<string>? OnBattlecryEntered;
+    public event Action<string>? OnBattlecryChanged;
 
 	public MeleeSpeechWindow()
 	{
         RobustXamlLoader.Load(this);
 
-		BattlecryLineEdit.OnTextEntered += e => OnBattlecryEntered?.Invoke(e.Text);
+		BattlecryLineEdit.OnTextChanged += e => OnBattlecryChanged?.Invoke(e.Text);
 	}
-
 
 	public void SetCurrentBattlecry(string battlecry)
 	{
-		BattlecryLineEdit.Text = battlecry;
+        if (!BattlecryLineEdit.HasKeyboardFocus())
+            BattlecryLineEdit.Text = battlecry;
 	}
 
+    public void SetInitialBattlecry(string? battlecry)
+    {
+        if (battlecry != null)
+        {
+            BattlecryLineEdit.Text = battlecry;
+            BattlecryLineEdit.CursorPosition = battlecry.Length;
+            BattlecryLineEdit.SelectionStart = 0;
+        }
+
+        BattlecryLineEdit.GrabKeyboardFocus();
+    }
+
+    public void SetMaxBattlecryLength(int maxLength)
+    {
+        BattlecryLineEdit.IsValid = s => s.Length <= maxLength;
+    }
 }
 
 
