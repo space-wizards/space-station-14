@@ -1,12 +1,9 @@
+# Base Parent Item
 - type: entity
   parent: BaseItem
-  id: voicesensor
-  name: voice sensor
-  description: This microphone, invented by Micheal Phone during his time working at Michealsoft, sends signals when a prerecorded code phrase is uttered!
+  id: BaseLinkingUtility
+  abstract: true
   components:
-  - type: Sprite
-    sprite: Objects/Devices/voicesensor.rsi
-    state: icon
   - type: StaticPrice
     price: 40
   - type: DeviceLinkSource
@@ -14,7 +11,6 @@
       - Trigger
   - type: SignalOnTrigger
     port: Trigger
-  - type: TriggerOnVoice
   - type: UseDelayOnTrigger
   - type: UseDelayTriggerCondition
   - type: UseDelay
@@ -26,3 +22,48 @@
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
     range: 15
+
+- type: entity
+  parent: BaseLinkingUtility
+  id: voicesensor
+  name: voice sensor
+  description: This microphone, invented by Micheal Phone during his time working at Michealsoft, sends signals when a prerecorded code phrase is uttered!
+  components:
+  - type: TriggerOnVoice
+  - type: Sprite
+    sprite: Objects/Devices/voicesensor.rsi
+    state: icon
+
+- type: entity
+  parent: BaseLinkingUtility
+  id: pressureplate
+  name: pressure plate
+  description: A super omnious looking square... Plate Co. is not responsible for any deaths or traps involving Plate TM technologies!
+  components:
+  - type: LandMine
+    instantTrigger: true
+    sound:
+        collection: TriggerActivate
+  - type: Physics
+    bodyType: Dynamic
+  - type: CollisionWake
+    enabled: false
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: TriggerActivate
+  - type: Anchorable
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+          - LowImpassable
+  - type: Sprite
+    sprite: Objects/Devices/pressureplate.rsi
+    state: icon
+  - type: StepTrigger
+    requiredTriggeredSpeed: 0
+    stepOn: true
