@@ -268,7 +268,7 @@ public sealed partial class ShuttleSystem
         ref (List<Entity<PhysicsComponent>> List, HashSet<EntityUid> Processed, EntityQuery<PhysicsComponent> PhysicsQuery) state,
         in EntityUid uid)
     {
-        if (state.PhysicsQuery.TryComp(uid, out var body) && state.Processed.Add(uid))
+        if (state.Processed.Add(uid) && state.PhysicsQuery.TryComp(uid, out var body))
             state.List.Add((uid, body));
 
         return true;
