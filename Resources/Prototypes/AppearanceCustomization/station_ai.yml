@@ -11,6 +11,7 @@
   - StationAiIconDorf
   - StationAiIconHeartline
   - StationAiIconSmiley
+  - StationAiIconCat
 
 - type: stationAiCustomizationGroup
   id: StationAiHolograms
@@ -115,6 +116,18 @@
     Dead:
       sprite: Mobs/Silicon/station_ai.rsi
       state: "ai_dead"
+
+- type: stationAiCustomization
+  parent: StationAiIconBase
+  id: StationAiIconCat
+  name: station-ai-icon-sillycon
+  layerData:
+    Occupied:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: "ai_sillycon"
+    Dead:
+      sprite: Mobs/Silicon/station_ai.rsi
+      state: "ai_sillycon_dead"
 
 # Holograms
 - type: stationAiCustomization
