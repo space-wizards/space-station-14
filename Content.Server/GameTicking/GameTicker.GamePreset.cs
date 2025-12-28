@@ -55,16 +55,25 @@ public sealed partial class GameTicker
 
         if (_cfg.GetCVar(CCVars.GameLobbyFallbackEnabled))
         {
+            var fallbackDecoy = _cfg.GetCVar(CCVars.GameLobbyFallbackUseDecoy);
             var fallbackPresets = _cfg.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",");
+            var firstDefault = _cfg.GetCVar(CCVars.GameLobbyDefaultPreset).Split(",").First();
+            var decoyPreset = !fallbackDecoy ? null : firstDefault;
             var startFailed = true;
 
             _sawmill.Info($"Fallback - Failed to start round, attempting to start fallback presets.");
             foreach (var preset in fallbackPresets)
             {
                 _sawmill.Info($"Fallback - Clearing up gamerules");
+                //TODO would be more proper to outright delete these rules, in this case. For when gameticker is being refactored
                 ClearGameRules();
-                _sawmill.Info($"Fallback - Attempting to start '{preset}'");
-                SetGamePreset(preset, resetDelay: 1);
+                _allPreviousGameRules.Clear();
+
+                if (fallbackDecoy && decoyPreset is not null)
+                    _sawmill.Info($"Fallback - Attempting to start '{preset}', but showing '{decoyPreset}' decoy to the Lobby. ");
+                else
+                    _sawmill.Info($"Fallback - Attempting to start '{preset}'");
+                SetGamePreset(preset, resetDelay: 1, decoy: decoyPreset);
                 AddGamePresetRules();
                 StartGamePresetRules();
 
@@ -136,11 +145,15 @@ public sealed partial class GameTicker
         }
     }
 
-    public void SetGamePreset(string preset, bool force = false, int? resetDelay = null)
+    public void SetGamePreset(string preset, bool force = false, string? decoy = null, int? resetDelay = null)
     {
         var proto = FindGamePreset(preset);
+        var decoyProto = (decoy is null) ? null : FindGamePreset(decoy);
+
         if (proto != null)
-            SetGamePreset(proto, force, null, resetDelay);
+            SetGamePreset(proto, force, decoyProto, resetDelay);
+        else
+            Log.Warning($"Unable to Set GamePreset to '{preset}' - not a valid preset prototype");
     }
 
     public GamePresetPrototype? FindGamePreset(string preset)

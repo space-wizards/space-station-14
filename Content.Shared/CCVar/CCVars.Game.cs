@@ -48,6 +48,13 @@ public sealed partial class CCVars
         GameLobbyFallbackPreset = CVarDef.Create("game.fallbackpreset", "Traitor,Extended", CVar.ARCHIVE);
 
     /// <summary>
+    ///     Controls if the game will use decoy presets in fallback mode.
+    ///     If true, then the default game preset will be shown for late joiners, rather than the fallback.
+    /// </summary>
+    public static readonly CVarDef<bool>
+        GameLobbyFallbackUseDecoy = CVarDef.Create("game.fallback_decoy", true, CVar.ARCHIVE);
+
+    /// <summary>
     ///     Controls if people can win the game in Suspicion or Deathmatch.
     /// </summary>
     public static readonly CVarDef<bool>
