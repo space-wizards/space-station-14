@@ -1,0 +1,86 @@
+- type: entity
+  id: DeepFryer
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: deep fryer
+  description: The great greasy enabler of all things fast food. With a little cooking oil, anything will fry...
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/deep_fryer.rsi
+    layers:
+    - state: deep_fryer_open
+      map: ["enum.DeepFryerVisualLayers.Base", "enum.StorageVisualLayers.Base"]
+    - state: deep_fryer_closed_big
+      map: ["enum.DeepFryerVisualLayers.Big"]
+      visible: false
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: EntityStorage
+    openOnMove: false  
+    isCollidableWhenOpen: true
+    showContents: false
+    capacity: 1
+    airtight: true
+    open: true
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
+  - type: EntityStorageLayingDownOverride
+  - type: DeepFryer
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        # basic open.close layer:
+        enum.DeepFryerVisualLayers.Base:
+          True: { state: deep_fryer_open}
+          False: { state: deep_fryer_closed}
+      enum.DeepFryerVisualState.HasMob:
+        enum.DeepFryerVisualLayers.Big:
+          True: { visible: true }
+          False: { visible: false }   
+  - type: Machine
+    board: DeepFryerMachineCircuitboard
+  - type: Transform
+    anchored: true
+  - type: Climbable
+    delay: 1.5
+  - type: AmbientSound
+    enabled: false
+    volume: 7
+    range: 10
+    sound:
+      path: /Audio/Ambience/Objects/deep_fryer_ambience.ogg
+  - type: ApcPowerReceiver
+    powerLoad: 700
+  - type: SolutionContainerManager
+    solutions:
+      fryer:
+        maxVol: 300
+  - type: MixableSolution
+    solution: fryer
+  - type: RefillableSolution
+    solution: fryer
+  - type: ExaminableSolution
+    solution: fryer
+    exactVolume: true
+  - type: DrawableSolution
+    solution: fryer
