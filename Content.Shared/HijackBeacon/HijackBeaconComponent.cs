@@ -24,16 +24,10 @@ public sealed partial class HijackBeaconComponent : Component
     public int DeactivationLength = 5;
 
     /// <summary>
-    ///     Default amount of time in seconds before it completes the hijack.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int Timer = 200;
-
-    /// <summary>
     ///     Remaining time until the hijack is completed.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float RemainingTime;
+    public float RemainingTime = 200f;
 
     /// <summary>
     ///     The minimum amount of time on the timer if the beacon is reactivated.
@@ -45,7 +39,7 @@ public sealed partial class HijackBeaconComponent : Component
     ///     Default amount of time before the beacon can be re-activated, if it is disarmed.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int Cooldown = 5;
+    public int Cooldown = 20;
 
     /// <summary>
     ///     Remaining cooldown time before the beacon can be reactivated.

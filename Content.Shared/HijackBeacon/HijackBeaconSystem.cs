@@ -20,7 +20,6 @@ public sealed class HijackBeaconSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HijackBeaconComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<HijackBeaconComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<HijackBeaconComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<HijackBeaconComponent, HijackBeaconDeactivateDoAfterEvent>(OnDeactivateDoAfter);
@@ -46,13 +45,6 @@ public sealed class HijackBeaconSystem : EntitySystem
                     break;
             }
         }
-    }
-
-    private void OnInit(Entity<HijackBeaconComponent> ent, ref ComponentInit args)
-    {
-        //Initialize the remaining time. Necessary to have here, because
-        // including it in ActivateBeacon messes with the reactivation timer.
-        ent.Comp.RemainingTime = ent.Comp.Timer;
     }
 
     #region Event Subs
