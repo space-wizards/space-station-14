@@ -43,7 +43,6 @@
     coldDamageThreshold: 285
   # Good eatin', you monster.
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 4

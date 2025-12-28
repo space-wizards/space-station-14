@@ -21,11 +21,11 @@
         name: clothing-boots-sidearm
         whitelist:
           tags:
-          - Knife
+          - ToyKnife
           - ToySidearm
         blacklist:
           components:
-          - Sharp
+          - Tool
 
 - type: entity
   parent: ClothingShoesClownBase

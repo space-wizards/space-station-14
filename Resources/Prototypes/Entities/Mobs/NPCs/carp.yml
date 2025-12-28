@@ -53,13 +53,13 @@
         Dead:
           Base: dead
           BaseUnshaded: dead_mouth
-    - type: Butcherable
-      spawned:
-        - id: FoodMeatFish
-          amount: 2
-        - id: MaterialToothSpaceCarp1
-          amount: 1
-          maxAmount: 4
+    - type: Sliceable
+      slices:
+      - id: FoodMeatFish
+        amount: 2
+      - id: MaterialToothSpaceCarp1
+        amount: 1
+        maxAmount: 4
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
@@ -111,10 +111,10 @@
   id: MobCarpMagic
   description: Looks like some kind of fish. Might be magical.
   components:
-    - type: Sprite
-      sprite: Mobs/Aliens/Carps/magic.rsi
-    - type: TypingIndicator
-      proto: guardian
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/magic.rsi
+  - type: TypingIndicator
+    proto: guardian
 
 - type: entity
   name: holocarp
@@ -122,22 +122,22 @@
   id: MobCarpHolo
   description: Carp made out of holographic energies. Sadly for you, it is very much real.
   components:
-    - type: Sprite
-      sprite: Mobs/Aliens/Carps/holo.rsi
-    - type: Physics
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.40
-          density: 10
-          mask:
-            - MobMask
-          layer:
-            - Opaque
-    - type: TypingIndicator
-      proto: robot
+  - type: Sprite
+    sprite: Mobs/Aliens/Carps/holo.rsi
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 10
+        mask:
+          - MobMask
+        layer:
+          - Opaque
+  - type: TypingIndicator
+    proto: robot
 
 - type: entity
   parent: MobCarp
@@ -246,21 +246,21 @@
     - type: Body
       prototype: Bloodsucker
       requiredLegs: 1
-    - type: Butcherable
-      spawned:
-        - id: FoodMeatFish
-          amount: 4
-        - id: MaterialToothSharkminnow1
-          amount: 3
     - type: MeleeWeapon
       damage:
         types:
           Slash: 10
           Bloodloss: 5
+    - type: Sliceable
+      slices:
+      - id: FoodMeatFish
+        amount: 4
+      - id: MaterialToothSharkminnow1
+        amount: 3
 
 - type: entity
   id: MobSharkSalvage
   parent: MobShark
   suffix: "Salvage Ruleset"
   components:
-    - type: SalvageMobRestrictions
+  - type: SalvageMobRestrictions
