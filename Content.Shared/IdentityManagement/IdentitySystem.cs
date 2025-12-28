@@ -3,11 +3,13 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Clothing;
 using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Verbs;
 using Content.Shared.VoiceMask;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
@@ -29,6 +31,7 @@ public sealed class IdentitySystem : EntitySystem
     [Dependency] private readonly SharedCriminalRecordsConsoleSystem _criminalRecordsConsole = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoid = default!;
     [Dependency] private readonly SharedIdCardSystem _idCard = default!;
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
 
     // The name of the container holding the identity entity
     private const string SlotName = "identity";
@@ -55,6 +58,8 @@ public sealed class IdentitySystem : EntitySystem
         SubscribeLocalEvent<IdentityComponent, WearerMaskToggledEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, EntityRenamedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
         SubscribeLocalEvent<IdentityComponent, VoiceMaskNameUpdatedEvent>((uid, _, _) => QueueIdentityUpdate(uid));
+
+        SubscribeLocalEvent<IdentityBlockerComponent, GetVerbsEvent<ExamineVerb>>(OnDetailedExamine);
     }
 
     /// <summary>
@@ -119,6 +124,29 @@ public sealed class IdentitySystem : EntitySystem
     {
         ent.Comp.Enabled = !args.Mask.Comp.IsToggled;
         Dirty(ent);
+    }
+
+    private void OnDetailedExamine(EntityUid ent, IdentityBlockerComponent component, ref GetVerbsEvent<ExamineVerb> args)
+    {
+        var coverage = component.Coverage;
+
+        var coverageText = coverage switch
+        {
+            IdentityBlockerCoverage.NONE => "identity-block-coverage-text-none",
+            IdentityBlockerCoverage.MOUTH => "identity-block-coverage-text-mouth",
+            IdentityBlockerCoverage.EYES => "identity-block-coverage-text-eyes",
+            IdentityBlockerCoverage.FULL => "identity-block-coverage-text-full",
+            _ => "identity-block-coverage-none"
+        };
+
+        var iconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
+
+        _examine.AddHoverExamineVerb(args,
+            component,
+            Loc.GetString("identity-block-examinable-verb-text"),
+            Loc.GetString(coverageText),
+            iconTexture
+        );
     }
 
     #endregion
