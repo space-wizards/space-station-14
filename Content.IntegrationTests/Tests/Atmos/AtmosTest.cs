@@ -18,6 +18,7 @@ namespace Content.IntegrationTests.Tests.Atmos;
 public abstract class AtmosTest : InteractionTest
 {
     protected AtmosphereSystem SAtmos = default!;
+    protected Content.Client.Atmos.EntitySystems.AtmosphereSystem CAtmos = default!;
     protected EntityLookupSystem LookupSystem = default!;
 
     protected Entity<GridAtmosphereComponent> RelevantAtmos = default!;
@@ -38,6 +39,7 @@ public abstract class AtmosTest : InteractionTest
         await base.Setup();
 
         SAtmos = SEntMan.System<AtmosphereSystem>();
+        CAtmos = CEntMan.System<Content.Client.Atmos.EntitySystems.AtmosphereSystem>();
         LookupSystem = SEntMan.System<EntityLookupSystem>();
 
         RelevantAtmos = (MapData.Grid, SEntMan.GetComponent<GridAtmosphereComponent>(MapData.Grid));
