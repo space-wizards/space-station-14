@@ -1,0 +1,133 @@
+#################
+
+# Index
+
+# 1. DISCO FLOOR
+# Empty
+# Fluorescent
+
+#################
+
+# 1. DISCO FLOOR
+- type: entity
+  abstract: true
+  parent: BaseStructure # replace with BaseLightFixture after #40191
+  id: BaseDiscoFloorFixture
+  name: disco floor
+  components:
+  - type: InteractionOutline # remove after #40191
+  - type: Sprite
+    sprite: Structures/disco_floor.rsi
+    drawdepth: FloorTiles
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
+    state: base
+  - type: Fixtures
+  - type: Physics
+    canCollide: false
+  - type: Construction
+    graph: LightFixture
+    node: discoFloor
+  - type: Destructible
+    thresholds:
+    - trigger: #excess damage, don't spawn entities.
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+          ShardGlass:
+            min: 1
+            max: 1
+          CableApcStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: TrayScanReveal
+
+## Empty
+- type: entity
+  parent: BaseDiscoFloorFixture # replace with [ BasePoweredLight , BaseDiscoFloorFixture ] after #40191
+  id: PoweredDiscoFloorFixtureEmpty
+  suffix: Empty
+  description: ♫ It's time to boogy! ♫
+  components:
+  - type: PointLight # remove after #40191
+  - type: ApcPowerReceiver # remove after #40191
+  - type: ExtensionCableReceiver # remove after #40191
+  - type: InteractionOutline # remove after #40191
+  - type: DeviceLinkSink # remove after #40191
+    ports:
+    - On
+    - Off
+    - Toggle
+  - type: DeviceNetwork # remove after #40191
+    deviceNetId: Wireless
+    receiveFrequencyId: SmartLight
+  - type: ContainerContainer # remove after #40191
+    containers:
+      light_bulb: !type:ContainerSlot
+  - type: PoweredLight
+    bulb: Tube
+  - type: Appearance
+  - type: PoweredLightVisuals
+    blinkingSound:
+      path: /Audio/Machines/light_tube_on.ogg
+    spriteStateMap:
+      empty: base
+      off: base
+      on: base
+      broken: base
+      burned: base
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWood
+      params:
+        volume: 3
+  - type: Tag
+    tags:
+    - Catwalk
+
+## Fluorescent
+- type: entity
+  parent: PoweredDiscoFloorFixtureEmpty
+  id: PoweredDiscoFloorFixtureFluorescent
+  suffix: Fluorescent
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: LightTube
+  - type: Tag
+    tags:
+    - Catwalk
+
+- type: entity
+  parent: BaseDiscoFloorFixture
+  id: AlwaysPoweredDiscoFloorFixtureFluorescent
+  suffix: Always powered, fluorescent
+  description: A disco floor that lets you ♫ boogy ♫ without consuming power.
+  components:
+  - type: PointLight
+    color: "#FFE4CE" # 5000K color temp
+    energy: 0.8
+    radius: 10
+    softness: 1
+  - type: Tag
+    tags:
+    - Catwalk
