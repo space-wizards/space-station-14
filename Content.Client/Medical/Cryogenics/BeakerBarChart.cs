@@ -244,7 +244,7 @@ public sealed class BeakerBarChart : Control
     {
         foreach (var (entry, xMin, xMax) in EntryRanges(finalSize.X))
         {
-            entry.Label.ArrangePixel(new((int)xMin, 0, (int)xMax, (int)finalSize.Y));
+            entry.Label.Arrange(new((int)xMin, 0, (int)xMax, (int)finalSize.Y));
         }
 
         return finalSize;
