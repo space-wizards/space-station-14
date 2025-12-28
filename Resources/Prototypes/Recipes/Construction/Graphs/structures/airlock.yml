@@ -194,6 +194,86 @@
         amount: 2
         doAfter: 2
 
+## Glass external airlock
+  - node: glassExternal
+    entity: AirlockExternalGlass
+    doNotReplaceInheritingEntities: true
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
+    edges:
+    - to: glassElectronics
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorWelded {}
+      - !type:DoorBolted
+        value: false
+      - !type:WirePanel {}
+      - !type:AllWiresCut
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 1
+      steps:
+      - tool: Prying
+        doAfter: 2
+
+    - to: medSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+
+    - to: highSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Plasteel
+        amount: 2
+        doAfter: 2
+
+## External airlock
+  - node: external
+    entity: AirlockExternal
+    doNotReplaceInheritingEntities: true
+    actions:
+    - !type:SetWiresPanelSecurity
+      wiresAccessible: true
+    edges:
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      - !type:DoorWelded {}
+      - !type:DoorBolted
+        value: false
+      - !type:WirePanel {}
+      - !type:AllWiresCut
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 5
+
+    - to: medSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 2
+
+    - to: highSecurityUnfinished
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - material: Plasteel
+        amount: 2
+        doAfter: 2
+
 ## High security door
   - node: highSecDoor
     actions:
@@ -245,6 +325,32 @@
       - !type:WirePanel {}
       - !type:HasTag
         tag: Airlock
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: glassExternal
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: GlassExternal
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: external
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: External
       steps:
       - tool: Prying
         doAfter: 4
@@ -311,6 +417,32 @@
       - !type:WirePanel {}
       - !type:HasTag
         tag: Airlock
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: glassExternal
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: GlassExternal
+      steps:
+      - tool: Prying
+        doAfter: 4
+
+    - to: external
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      - !type:HasTag
+        tag: External
       steps:
       - tool: Prying
         doAfter: 4

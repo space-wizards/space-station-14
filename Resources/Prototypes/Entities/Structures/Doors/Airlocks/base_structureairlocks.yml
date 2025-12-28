@@ -174,8 +174,8 @@
     priority: 1
   - type: Tag
     tags:
-      - Airlock
-      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+    - Airlock
+      # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
   - type: PryUnpowered
   - type: BlockWeather
   - type: GuideHelp
@@ -233,5 +233,5 @@
     resistance: 2
   - type: Tag
     tags:
-      - GlassAirlock
-      # This tag is used to nagivate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, and HighSecDoor
+    - GlassAirlock
+      # This tag is used to navigate the Airlock construction graph. It's needed because the construction graph is shared between Airlock, AirlockGlass, AirlockExternal, AirlockExternalGlass and HighSecDoor
