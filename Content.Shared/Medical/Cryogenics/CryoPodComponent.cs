@@ -8,7 +8,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-
 namespace Content.Shared.Medical.Cryogenics;
 
 /// <summary>
@@ -150,16 +149,25 @@ public sealed class CryoPodUserMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public sealed class CryoPodUiMessage : BoundUserInterfaceMessage
+public sealed class CryoPodSimpleUiMessage : BoundUserInterfaceMessage
 {
-    public enum MessageType { EjectPatient, EjectBeaker, Inject }
+    public enum MessageType { EjectPatient, EjectBeaker }
 
     public readonly MessageType Type;
-    public readonly FixedPoint2? Quantity; // For Inject
 
-    public CryoPodUiMessage(MessageType type, FixedPoint2? quantity = null)
+    public CryoPodSimpleUiMessage(MessageType type)
     {
         Type = type;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CryoPodInjectUiMessage : BoundUserInterfaceMessage
+{
+    public readonly FixedPoint2 Quantity;
+
+    public CryoPodInjectUiMessage(FixedPoint2 quantity)
+    {
         Quantity = quantity;
     }
 }

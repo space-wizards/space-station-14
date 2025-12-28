@@ -30,17 +30,17 @@ public sealed class CryoPodBoundUserInterface : BoundUserInterface
             && cryoComp.Locked;
 
         _window?.SetEjectErrorVisible(isLocked);
-        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.EjectPatient));
+        SendMessage(new CryoPodSimpleUiMessage(CryoPodSimpleUiMessage.MessageType.EjectPatient));
     }
 
     private void EjectBeakerPressed()
     {
-        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.EjectBeaker));
+        SendMessage(new CryoPodSimpleUiMessage(CryoPodSimpleUiMessage.MessageType.EjectBeaker));
     }
 
     private void InjectPressed(FixedPoint2 transferAmount)
     {
-        SendMessage(new CryoPodUiMessage(CryoPodUiMessage.MessageType.Inject, transferAmount));
+        SendMessage(new CryoPodInjectUiMessage(transferAmount));
     }
 
     protected override void ReceiveMessage(BoundUserInterfaceMessage message)

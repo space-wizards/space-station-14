@@ -30,7 +30,6 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-
 namespace Content.Shared.Medical.Cryogenics;
 
 public abstract partial class SharedCryoPodSystem : EntitySystem
@@ -75,7 +74,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         SubscribeLocalEvent<CryoPodComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<CryoPodComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
-        SubscribeLocalEvent<CryoPodComponent, CryoPodUiMessage>(OnUiMessage);
+        SubscribeLocalEvent<CryoPodComponent, CryoPodSimpleUiMessage>(OnSimpleUiMessage);
+        SubscribeLocalEvent<CryoPodComponent, CryoPodInjectUiMessage>(OnInjectUiMessage);
         SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
         SubscribeLocalEvent<CryoPodComponent, EntInsertedIntoContainerMessage>(OnBodyInserted);
 
@@ -468,21 +468,24 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnUiMessage(Entity<CryoPodComponent> cryoPod, ref CryoPodUiMessage msg)
+    private void OnSimpleUiMessage(Entity<CryoPodComponent> cryoPod, ref CryoPodSimpleUiMessage msg)
     {
         switch (msg.Type)
         {
-            case CryoPodUiMessage.MessageType.EjectPatient:
+            case CryoPodSimpleUiMessage.MessageType.EjectPatient:
                 TryEjectBody(cryoPod.Owner, msg.Actor, cryoPod.Comp);
                 break;
-            case CryoPodUiMessage.MessageType.EjectBeaker:
+            case CryoPodSimpleUiMessage.MessageType.EjectBeaker:
                 TryEjectBeaker(cryoPod, msg.Actor);
-                break;
-            case CryoPodUiMessage.MessageType.Inject:
-                TryInject(cryoPod, msg.Quantity.GetValueOrDefault());
                 break;
         }
 
+        UpdateUi(cryoPod);
+    }
+
+    private void OnInjectUiMessage(Entity<CryoPodComponent> cryoPod, ref CryoPodInjectUiMessage msg)
+    {
+        TryInject(cryoPod, msg.Quantity);
         UpdateUi(cryoPod);
     }
 
