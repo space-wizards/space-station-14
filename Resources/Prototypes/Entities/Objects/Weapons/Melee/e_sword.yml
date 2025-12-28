@@ -92,6 +92,20 @@
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: StaticPrice
     price: 2500
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.6
+    - type: Execution
+      doAfterDuration: 4.0
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.5
+    - type: RequiresEyeProtection
+      toggled: true
 
 - type: entity
   name: energy dagger
@@ -131,6 +145,13 @@
       malus: 0.4
     - type: Execution
       doAfterDuration: 4.0
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.7
+    - type: RequiresEyeProtection
+      toggled: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger_loud.rsi
     layers:
@@ -197,6 +218,13 @@
       doAfterDuration: 4.0
     - type: Contraband
       severity: Syndicate
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.8
+    - type: RequiresEyeProtection
+      toggled: true
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -277,6 +305,20 @@
         map: [ "blade" ]
   - type: Item
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
+  - type: ComponentToggler
+    components:
+    - type: Sharp
+    - type: DisarmMalus
+      malus: 0.6
+    - type: Execution
+      doAfterDuration: 4.0
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.4
+    - type: RequiresEyeProtection
+      toggled: true
 
 - type: entity
   name: double-bladed energy sword
@@ -318,6 +360,13 @@
       malus: 0.7
     - type: Execution
       doAfterDuration: 4.0
+    - type: Tool
+      useSound:
+        collection: Welder
+      qualities: Welding
+      speedModifier: 0.4
+    - type: RequiresEyeProtection
+      toggled: true
   - type: Wieldable
     wieldSound: null # esword light sound instead
   - type: MeleeWeapon
