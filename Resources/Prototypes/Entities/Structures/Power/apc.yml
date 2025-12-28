@@ -151,6 +151,7 @@
     priority: 1
   - type: StaticPrice
     price: 500
+  - type: PowerGridCheckNotify
   - type: GuideHelp
     guides:
     - VoltageNetworks
