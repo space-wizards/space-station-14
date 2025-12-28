@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -9,7 +10,6 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -18,7 +18,6 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed class BinSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
@@ -28,151 +27,167 @@ public sealed class BinSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<BinComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<BinComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<BinComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
-        SubscribeLocalEvent<BinComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
         SubscribeLocalEvent<BinComponent, InteractHandEvent>(OnInteractHand, before: new[] { typeof(SharedItemSystem) });
         SubscribeLocalEvent<BinComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-        SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnAltInteractHand);
+        SubscribeLocalEvent<BinComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<BinComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnExamined(EntityUid uid, BinComponent component, ExaminedEvent args)
+    private void OnExamined(Entity<BinComponent> entity, ref ExaminedEvent args)
     {
-        args.PushText(Loc.GetString("bin-component-on-examine-text", ("count", component.Items.Count)));
-    }
-
-    private void OnStartup(EntityUid uid, BinComponent component, ComponentStartup args)
-    {
-        component.ItemContainer = _container.EnsureContainer<Container>(uid, component.ContainerId);
-    }
-
-    private void OnMapInit(EntityUid uid, BinComponent component, MapInitEvent args)
-    {
-        // don't spawn on the client.
-        if (_net.IsClient)
-            return;
-
-        var xform = Transform(uid);
-        foreach (var id in component.InitialContents)
+        if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is {Valid: true} next)
         {
-            var ent = Spawn(id, xform.Coordinates);
-            if (!TryInsertIntoBin(uid, ent, component))
-            {
-                Log.Error($"Entity {ToPrettyString(ent)} was unable to be initialized into bin {ToPrettyString(uid)}");
-                return;
-            }
+            var meta = MetaData(next);
+            // This means we have a contained item
+            args.PushText(Loc.GetString(
+                entity.Comp.ExamineText,
+                ("count", entity.Comp.ItemContainer.Count),
+                ("subject", meta.EntityPrototype?.Name ?? meta.EntityName)));
+
+            return;
         }
+
+        args.PushText(Loc.GetString(entity.Comp.EmptyText));
     }
 
-    private void OnEntInserted(Entity<BinComponent> ent, ref EntInsertedIntoContainerMessage args)
+    private void OnStartup(Entity<BinComponent> entity, ref ComponentStartup args)
     {
-        if (args.Container.ID != ent.Comp.ContainerId)
-            return;
-
-        ent.Comp.Items.Add(args.Entity);
+        entity.Comp.ItemContainer = _container.EnsureContainer<Container>(entity, entity.Comp.ContainerId);
     }
 
-    private void OnEntRemoved(Entity<BinComponent> ent, ref EntRemovedFromContainerMessage args)
-    {
-        if (args.Container.ID != ent.Comp.ContainerId)
-            return;
-
-        ent.Comp.Items.Remove(args.Entity);
-    }
-
-    private void OnInteractHand(EntityUid uid, BinComponent component, InteractHandEvent args)
+    private void OnInteractHand(Entity<BinComponent> entity, ref InteractHandEvent args)
     {
         if (args.Handled)
             return;
 
-        EntityUid? toGrab = component.Items.LastOrDefault();
-        if (!TryRemoveFromBin(uid, toGrab, component))
+        if (!TryRemoveFromBin((entity, entity), args.User))
             return;
 
-        _hands.TryPickupAnyHand(args.User, toGrab.Value);
-        _admin.Add(LogType.Pickup, LogImpact.Low,
-            $"{ToPrettyString(uid):player} removed {ToPrettyString(toGrab.Value)} from bin {ToPrettyString(uid)}.");
         args.Handled = true;
     }
 
-    /// <summary>
-    /// Alt interact acts the same as interacting with your hands normally, but allows fallback interaction if the item
-    /// has priority. E.g. a water cup on a water cooler fills itself on a normal click,
-    /// but you can use alternative interactions to restock the cup bin
-    /// </summary>
-    private void OnAltInteractHand(EntityUid uid, BinComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetAltVerbs(Entity<BinComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (args.Using != null)
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        var user = args.User;
+        if (args.Using != null && CanInsertIntoBin((entity, entity), args.Using.Value))
         {
-            var canReach = args.CanAccess && args.CanInteract;
-            InsertIntoBin(args.User, args.Target, (EntityUid)args.Using, component, false, canReach);
+            var used = args.Using.Value;
+            AlternativeVerb verb = new()
+            {
+                Act = () => TryInsertIntoBin((entity, entity), used, user),
+                Icon = entity.Comp.InsertIcon,
+                Text = Loc.GetString("place-item-verb-text", ("subject", used)),
+                Priority = 2
+            };
+            args.Verbs.Add(verb);
+        }
+        else if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is { Valid: true } next)
+        {
+            AlternativeVerb verb = new()
+            {
+                Act = () =>
+                {
+                    TryRemoveFromBin((entity, entity), user);
+                },
+                Icon = entity.Comp.RemoveIcon,
+                Text = Loc.GetString("take-item-verb-text", ("subject", next)),
+                Priority = 2
+            };
+            args.Verbs.Add(verb);
         }
     }
 
-    private void OnAfterInteractUsing(EntityUid uid, BinComponent component, AfterInteractUsingEvent args)
+    private void OnAfterInteractUsing(Entity<BinComponent> entity, ref AfterInteractUsingEvent args)
     {
-        InsertIntoBin(args.User, uid, args.Used, component, args.Handled, args.CanReach);
-        args.Handled = true;
+        if (args.Handled || !args.CanReach)
+            return;
+
+        if (TryInsertIntoBin((entity, entity), args.Used, args.User))
+            args.Handled = true;
     }
 
-    private void InsertIntoBin(EntityUid user, EntityUid target, EntityUid itemInHand, BinComponent component, bool handled, bool canReach)
+    public bool CanInsertIntoBin(Entity<BinComponent?> entity, EntityUid toInsert)
     {
-        if (handled || !canReach)
-            return;
+        if (!Resolve(entity, ref entity.Comp, false))
+            return false;
 
-        if (!TryInsertIntoBin(target, itemInHand, component))
-            return;
+        if (entity.Comp.ItemContainer.Count >= entity.Comp.MaxItems)
+            return false;
 
-        _admin.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(target):player} inserted {ToPrettyString(user)} into bin {ToPrettyString(target)}.");
+        return _whitelistSystem.IsWhitelistPassOrNull(entity.Comp.Whitelist, toInsert);
     }
 
     /// <summary>
     /// Inserts an entity at the top of the bin
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="toInsert"></param>
-    /// <param name="component"></param>
-    /// <returns></returns>
-    public bool TryInsertIntoBin(EntityUid uid, EntityUid toInsert, BinComponent? component = null)
+    /// <param name="entity">Bin entity we're trying to insert into</param>
+    /// <param name="toInsert">Entity we're trying to insert</param>
+    /// <param name="user">Entity who is inserting into the bin if one exists.</param>
+    /// <returns>Returns true if insertion was successful.</returns>
+    public bool TryInsertIntoBin(Entity<BinComponent?> entity, EntityUid toInsert, EntityUid? user = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
-        if (component.Items.Count >= component.MaxItems)
+        if (!CanInsertIntoBin((entity, entity), toInsert))
             return false;
 
-        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, toInsert))
-            return false;
+        _container.Insert(toInsert, entity.Comp.ItemContainer);
 
-        _container.Insert(toInsert, component.ItemContainer);
-        Dirty(uid, component);
+        if (user != null)
+        {
+            _admin.Add(LogType.Pickup,
+                LogImpact.Low,
+                $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into bin {ToPrettyString(entity)}.");
+        }
+
         return true;
     }
 
     /// <summary>
-    /// Tries to remove an entity from the top of the bin.
+    /// Tries to remove an entity from the top of the bin, returns the removed item.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="toRemove"></param>
-    /// <param name="component"></param>
-    /// <returns></returns>
-    public bool TryRemoveFromBin(EntityUid uid, EntityUid? toRemove, BinComponent? component = null)
+    /// <param name="entity">Entity we're removing an item from.</param>
+    /// <param name="removed">Entity that was removed from the bin.</param>
+    /// <returns>Returns true if removal was successful.</returns>
+    public bool TryRemoveFromBin(Entity<BinComponent?> entity, [NotNullWhen(true)] out EntityUid? removed)
     {
-        if (!Resolve(uid, ref component))
+        removed = null;
+        if (!Resolve(entity, ref entity.Comp, false))
             return false;
 
-        if (component.Items.Count == 0)
+        if (entity.Comp.ItemContainer.ContainedEntities.LastOrDefault() is not { Valid: true } toRemove)
             return false;
 
-        if (toRemove == null || toRemove != component.Items.LastOrDefault())
+        if (!_container.Remove(toRemove, entity.Comp.ItemContainer))
             return false;
 
-        if (!_container.Remove(toRemove.Value, component.ItemContainer))
+        removed = toRemove;
+        return true;
+    }
+
+    /// <summary>
+    /// Overflow of <see cref="TryRemoveFromBin(Entity{BinComponent?},out EntityUid?)"/> which takes a user, and
+    /// doesn't return an item instead placing it in the user's hand or dropping it on them if their hands are full.
+    /// </summary>
+    /// <param name="entity">Bin the item is being removed from.</param>
+    /// <param name="user">User who is picking up the item.</param>
+    /// <returns>Returns true if removal was successful.</returns>
+    public bool TryRemoveFromBin(Entity<BinComponent?> entity, EntityUid user)
+    {
+        if (!TryRemoveFromBin(entity, out var removed))
             return false;
 
-        component.Items.Remove(toRemove.Value);
-        Dirty(uid, component);
+        _admin.Add(
+            LogType.Pickup,
+            LogImpact.Low,
+            $"{ToPrettyString(user):player} removed {ToPrettyString(removed)} from bin {ToPrettyString(entity)}.");
+
+        _hands.PickupOrDrop(user, removed.Value, dropNear: true);
+
         return true;
     }
 }
