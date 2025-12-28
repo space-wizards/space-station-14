@@ -139,7 +139,14 @@ public sealed class IdentitySystem : EntitySystem
             _ => "identity-block-coverage-none"
         };
 
-        var iconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
+        var iconTexture = coverage switch
+        {
+            IdentityBlockerCoverage.NONE => "/Textures/Interface/VerbIcons/human-head.svg.192dpi.png",
+            IdentityBlockerCoverage.MOUTH => "/Textures/Interface/VerbIcons/human-head-mouth.svg.192dpi.png",
+            IdentityBlockerCoverage.EYES => "/Textures/Interface/VerbIcons/human-head-eyes.svg.192dpi.png",
+            IdentityBlockerCoverage.FULL => "/Textures/Interface/VerbIcons/human-head-mask.svg.192dpi.png",
+            _ => "/Textures/Interface/VerbIcons/human-head.svg.192dpi.png"
+        };
 
         _examine.AddHoverExamineVerb(args,
             component,
