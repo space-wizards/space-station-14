@@ -2330,3 +2330,5 @@
   - !type:BuyerJobCondition
     whitelist:
     - Lawyer
+
+#Objective items
