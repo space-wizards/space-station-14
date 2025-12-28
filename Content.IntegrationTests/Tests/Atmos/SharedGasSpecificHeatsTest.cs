@@ -10,7 +10,6 @@ namespace Content.IntegrationTests.Tests.Atmos;
 /// Tests for asserting that various gas specific heat operations agree with each other and do not deviate
 /// across client and server.
 /// </summary>
-[TestFixture]
 [TestOf(nameof(SharedAtmosphereSystem))]
 public sealed class SharedGasSpecificHeatsTest : AtmosTest
 {
@@ -38,7 +37,9 @@ public sealed class SharedGasSpecificHeatsTest : AtmosTest
             clientSpecificHeats = CAtmos.GasSpecificHeats;
         });
 
-        Assert.That(serverSpecificHeats, Is.EqualTo(clientSpecificHeats));
+        Assert.That(serverSpecificHeats,
+            Is.EqualTo(clientSpecificHeats),
+            "Server and client gas specific heat arrays do not agree.");
     }
 
     /// <summary>
@@ -89,25 +90,49 @@ public sealed class SharedGasSpecificHeatsTest : AtmosTest
         // so check for if they're sane.
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(serverScaled, Is.GreaterThan(0f));
-            Assert.That(serverUnscaled, Is.GreaterThan(0f));
-            Assert.That(clientScaled, Is.GreaterThan(0f));
-            Assert.That(clientUnscaled, Is.GreaterThan(0f));
+            Assert.That(serverScaled,
+                Is.GreaterThan(0f),
+                "Heat capacity calculated on server with scaling is not greater than zero.");
+            Assert.That(serverUnscaled,
+                Is.GreaterThan(0f),
+                "Heat capacity calculated on server without scaling is not greater than zero.");
+            Assert.That(clientScaled,
+                Is.GreaterThan(0f),
+                "Heat capacity calculated on client with scaling is not greater than zero.");
+            Assert.That(clientUnscaled,
+                Is.GreaterThan(0f),
+                "Heat capacity calculated on client without scaling is not greater than zero.");
 
-            Assert.That(float.IsFinite(serverScaled), Is.True);
-            Assert.That(float.IsFinite(serverUnscaled), Is.True);
-            Assert.That(float.IsFinite(clientScaled), Is.True);
-            Assert.That(float.IsFinite(clientUnscaled), Is.True);
+            Assert.That(float.IsFinite(serverScaled),
+                Is.True,
+                "Heat capacity calculated on server with scaling is not finite.");
+            Assert.That(float.IsFinite(serverUnscaled),
+                Is.True,
+                "Heat capacity calculated on server without scaling is not finite.");
+            Assert.That(float.IsFinite(clientScaled),
+                Is.True,
+                "Heat capacity calculated on client with scaling is not finite.");
+            Assert.That(float.IsFinite(clientUnscaled),
+                Is.True,
+                "Heat capacity calculated on client without scaling is not finite.");
         }
 
         const float epsilon = 1e-4f;
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(serverScaled, Is.EqualTo(clientScaled).Within(epsilon));
-            Assert.That(serverUnscaled, Is.EqualTo(clientUnscaled).Within(epsilon));
+            Assert.That(serverScaled,
+                Is.EqualTo(clientScaled).Within(epsilon),
+                "Heat capacity calculated with scaling does not agree between client and server.");
+            Assert.That(serverUnscaled,
+                Is.EqualTo(clientUnscaled).Within(epsilon),
+                "Heat capacity calculated without scaling does not agree between client and server.");
 
-            Assert.That(serverUnscaled, Is.EqualTo(serverScaled * SAtmos.HeatScale).Within(epsilon));
-            Assert.That(clientUnscaled, Is.EqualTo(clientScaled * CAtmos.HeatScale).Within(epsilon));
+            Assert.That(serverUnscaled,
+                Is.EqualTo(serverScaled * SAtmos.HeatScale).Within(epsilon),
+                "Heat capacity calculated on server without scaling does not equal scaled value multiplied by HeatScale.");
+            Assert.That(clientUnscaled,
+                Is.EqualTo(clientScaled * CAtmos.HeatScale).Within(epsilon),
+                "Heat capacity calculated on client without scaling does not equal scaled value multiplied by HeatScale.");
         }
     }
 
@@ -155,13 +180,23 @@ public sealed class SharedGasSpecificHeatsTest : AtmosTest
         const float epsilon = 1e-4f;
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(serverCVar, Is.EqualTo(newHeatScale).Within(epsilon));
-            Assert.That(clientCVar, Is.EqualTo(newHeatScale).Within(epsilon));
+            Assert.That(serverCVar,
+                Is.EqualTo(newHeatScale).Within(epsilon),
+                "Server CVAR value for AtmosHeatScale does not equal the set value.");
+            Assert.That(clientCVar,
+                Is.EqualTo(newHeatScale).Within(epsilon),
+                "Client CVAR value for AtmosHeatScale does not equal the set value.");
 
-            Assert.That(serverHeatScale, Is.EqualTo(newHeatScale).Within(epsilon));
-            Assert.That(clientHeatScale, Is.EqualTo(newHeatScale).Within(epsilon));
+            Assert.That(serverHeatScale,
+                Is.EqualTo(newHeatScale).Within(epsilon),
+                "Server cached HeatScale does not equal the set CVAR value.");
+            Assert.That(clientHeatScale,
+                Is.EqualTo(newHeatScale).Within(epsilon),
+                "Client cached HeatScale does not equal the set CVAR value.");
 
-            Assert.That(serverHeatScale, Is.EqualTo(clientHeatScale).Within(epsilon));
+            Assert.That(serverHeatScale,
+                Is.EqualTo(clientHeatScale).Within(epsilon),
+                "Client and server cached HeatScale values do not agree.");
         }
 
         // verify that anything calculated using the shared HeatScale agrees properly
@@ -195,11 +230,19 @@ public sealed class SharedGasSpecificHeatsTest : AtmosTest
 
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(sScaled, Is.GreaterThan(0f));
-            Assert.That(cScaled, Is.GreaterThan(0f));
+            Assert.That(sScaled,
+                Is.GreaterThan(0f),
+                "Heat capacity calculated on server with scaling is not greater than zero after CVAR change.");
+            Assert.That(cScaled,
+                Is.GreaterThan(0f),
+                "Heat capacity calculated on client with scaling is not greater than zero after CVAR change.");
 
-            Assert.That(sUnscaled, Is.EqualTo(sScaled * serverHeatScale).Within(epsilon));
-            Assert.That(cUnscaled, Is.EqualTo(cScaled * clientHeatScale).Within(epsilon));
+            Assert.That(sUnscaled,
+                Is.EqualTo(sScaled * serverHeatScale).Within(epsilon),
+                "Heat capacity calculated on server without scaling does not equal scaled value multiplied by updated HeatScale.");
+            Assert.That(cUnscaled,
+                Is.EqualTo(cScaled * clientHeatScale).Within(epsilon),
+                "Heat capacity calculated on client without scaling does not equal scaled value multiplied by updated HeatScale.");
         }
     }
 }
