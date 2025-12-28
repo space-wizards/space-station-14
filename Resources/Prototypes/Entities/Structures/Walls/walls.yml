@@ -574,7 +574,7 @@
       behaviors:
         - !type:SpawnEntitiesBehavior
           spawn:
-            Girder:
+            GirderDiagonal:
               min: 1
               max: 1
         - !type:DoActsBehavior
@@ -723,7 +723,7 @@
         damage: 300
       behaviors:
       - !type:ChangeConstructionNodeBehavior
-        node: girder
+        node: girderDiagonal
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
@@ -731,7 +731,12 @@
         acts: ["Destruction"]
   - type: RadiationBlocker
     resistance: 5
-
+  - type: Construction
+    graph: GirderDiagonal
+    node: reinforcedWallDiagonal
+  - type: StaticPrice
+    price: 200
+    
 # Riveting
 - type: entity
   parent: BaseWall
@@ -890,15 +895,15 @@
         damage: 300
       behaviors:
       - !type:ChangeConstructionNodeBehavior
-        node: girder
+        node: girderDiagonal
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Construction
-    graph: Girder
-    node: diagonalshuttleWall
+    graph: GirderDiagonal
+    node: shuttleWallDiagonal
   - type: RadiationBlocker
     resistance: 5
   - type: StaticPrice
@@ -1046,12 +1051,15 @@
         damage: 200
       behaviors:
       - !type:ChangeConstructionNodeBehavior
-        node: girder
+        node: girderDiagonal
       - !type:PlaySoundBehavior
         sound:
           collection: MetalSlam
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Construction
+    graph: GirderDiagonal
+    node: wallDiagonal
 
 - type: entity
   parent: WallSolid
@@ -1443,7 +1451,7 @@
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
-          Girder:
+          GirderDiagonal:
             min: 1
             max: 1
       - !type:PlaySoundBehavior
