@@ -205,7 +205,6 @@
   - type: IgnoreUIRange
   - type: ComplexInteraction
   - type: MindContainer
-  - type: SiliconLawBound
   - type: Actions
   - type: ActionGrant
     actions:
