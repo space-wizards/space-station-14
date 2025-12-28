@@ -679,6 +679,9 @@
 ## H ##
 
 - type: Tag
+  id: HairFlower #  Chameleon key for ClothingHeadHatHairFlowerBase.
+
+- type: Tag
   id: Hamster # storage whitelist: MechHamtr
 
 - type: Tag
