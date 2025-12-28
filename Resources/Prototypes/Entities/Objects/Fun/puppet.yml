@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ BaseItem, MobCombat ]
+  parent: [ BaseItem, BaseMob ]
   id: MrChips
   name: mr chips
   suffix: Dummy
@@ -13,6 +13,7 @@
     context: "human"
   - type: DoAfter
   - type: VentriloquistPuppet
+  - type: BlockMovement
   - type: Item
     size: Normal
   - type: Muted
