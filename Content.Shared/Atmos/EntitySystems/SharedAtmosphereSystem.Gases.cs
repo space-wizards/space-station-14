@@ -63,6 +63,13 @@ public abstract partial class SharedAtmosphereSystem
         return GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
     }
 
+    /// <summary>
+    /// Gets the heat capacity for a <see cref="GasMixture"/>.
+    /// </summary>
+    /// <param name="moles">The moles array of the <see cref="GasMixture"/></param>
+    /// <param name="space">Whether this <see cref="GasMixture"/> represents space,
+    /// and thus experiences space-specific mechanics (we cheat and make it a bit cooler).</param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected abstract float GetHeatCapacityCalculation(float[] moles, bool space);
 }

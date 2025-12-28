@@ -118,7 +118,7 @@ public sealed class SharedGasSpecificHeatsTest : AtmosTest
     /// Also assert that calculations using the updated HeatScale agree properly.
     /// </summary>
     [Test]
-    public async Task HeatScaleCVar_ReplicatesAndAgree()
+    public async Task HeatScaleCVar_Replicates_Agree()
     {
         // ensure that replicated value changes by testing a new value
         const float newHeatScale = 13f;
