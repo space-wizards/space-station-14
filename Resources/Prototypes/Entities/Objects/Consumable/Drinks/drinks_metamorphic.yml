@@ -334,6 +334,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkBlackJapanGlass
+  suffix: black japan
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BlackJapan
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/blackjapan.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkBlackRussianGlass
   suffix: black russian
   components:
@@ -446,6 +462,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkBruisedMelonGlass
+  suffix: bruised melon
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: BruisedMelon
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/bruisedmelon.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: BudgetInsulsDrinkGlass
   suffix: budget insuls
   components:
@@ -526,6 +558,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkCoconutSakeColadaGlass
+  suffix: coconut sake colada
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CoconutSakeColada
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/coconutsakecolada.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkCoconutWaterGlass
   suffix: coconut water
   components:
@@ -568,6 +616,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCosmicAlaskaGlass
+  suffix: cosmic alaska
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CosmicAlaska
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/cosmicalaska.rsi
     state: icon
 
 - type: entity
@@ -998,6 +1062,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/glass_brown2.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkHorsesNeckGlass
+  suffix: horses neck
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: HorsesNeck
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/horsesneck.rsi
     state: icon
 
 - type: entity
@@ -1645,6 +1725,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/radler.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkRansomNoteGlass
+  suffix: ransom note
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: RansomNote
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/ransomnote.rsi
     state: icon
 
 - type: entity
