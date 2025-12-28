@@ -129,6 +129,24 @@
       board: [ DoorElectronicsKitchenHydroponics ]
 
 - type: entity
+  parent: WindoorServiceLocked
+  id: WindoorLibraryLocked
+  suffix: Library, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLibrary ]
+
+- type: entity
+  parent: WindoorServiceLocked
+  id: WindoorNewsroomLocked
+  suffix: Newsroom, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsNewsroom ]
+
+- type: entity
   parent: Windoor
   id: WindoorServiceLocked
   suffix: Service, Locked
@@ -386,6 +404,24 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsKitchen ]
+
+- type: entity
+  parent: WindoorSecureServiceLocked
+  id: WindoorSecureLibraryLocked
+  suffix: Library, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsLibrary ]
+
+- type: entity
+  parent: WindoorSecureServiceLocked
+  id: WindoorSecureNewsroomLocked
+  suffix: Newsroom, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsNewsroom ]
 
 - type: entity
   parent: WindoorSecureSecurityLocked
