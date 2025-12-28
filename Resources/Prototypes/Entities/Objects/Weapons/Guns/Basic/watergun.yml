@@ -24,6 +24,8 @@
     solutions:
       chamber:
         maxVol: 50 #10 shots
+  - type: SolutionItemStatus
+    solution: chamber
   - type: SolutionAmmoProvider
     solutionId: chamber
     proto: BulletWaterShot
