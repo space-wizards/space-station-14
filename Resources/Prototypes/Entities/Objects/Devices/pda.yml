@@ -1548,6 +1548,13 @@
         type: ChameleonBoundUserInterface
 
 - type: entity
+  parent: ChameleonPDA
+  id: ChameleonPDAWithAgentID
+  components:
+  - type: Pda
+    id: AgentIDCard
+
+- type: entity
   parent: BaseWidePDA
   id: WizardPDA
   name: wizard PDA
