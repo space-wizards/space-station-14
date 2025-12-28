@@ -3,6 +3,7 @@ forensic-scanner-interface-fingerprints = Fingerprints
 forensic-scanner-interface-fibers = Fibers
 forensic-scanner-interface-dnas = DNAs
 forensic-scanner-interface-residues = Residues
+forensic-scanner-interface-damage-traces = Traces of damage from
 forensic-scanner-interface-no-data = No scan data available
 forensic-scanner-interface-print = Print
 forensic-scanner-interface-clear = Clear
@@ -20,6 +21,11 @@ forensic-scanner-match-none = No matches found!
 forensic-scanner-printer-not-ready = Printer is not ready yet.
 forensic-scanner-verb-text = Scan
 forensic-scanner-verb-message = Perform a forensic scan
+
+forensic-damage-traces-melee-hands = punches
+forensic-damage-traces-melee-unknown = unidentified weaponized blow
+forensic-damage-traces-hitscan-unknown = unidentified beam trace
+forensic-damage-traces-projectile-unknown = unidentified high-speed hit
 
 forensics-dna-unknown = unknown DNA
 
