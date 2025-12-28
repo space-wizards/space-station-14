@@ -1,0 +1,49 @@
+<Document>
+# Medication
+
+The [color=#5b97bc]Medical[/color] department can make use of various medications to stabilize, treat, or provide comfort to patients.
+
+## Stabilizing Medications
+
+These medicines primarily slow down how fast a patient's condition worsens, without treating their underlying causes.
+
+<GuideReagentEmbed Reagent="Inaprovaline"/>
+<GuideReagentEmbed Reagent="Dexalin"/>
+<GuideReagentEmbed Reagent="DexalinPlus"/>
+
+## Painkillers
+
+These medicines reduce how much pain a patient feels, reducing the risk of pain shock and allowing them better use of their body.
+
+They do not treat the underlying causes of pain, and allowing them to wear off before a patient's injuries have been treated can lead to cardiac arrest.
+
+<GuideReagentEmbed Reagent="Paracetamol"/>
+<GuideReagentEmbed Reagent="Tramadol"/>
+<GuideReagentEmbed Reagent="Oxycodone"/>
+
+## Basic Healing Medications
+
+These medicines heal various injuries, but cannot treat severe internal wounds that require surgery.
+
+<GuideReagentEmbed Reagent="Kelotane"/>
+<GuideReagentEmbed Reagent="Dermaline"/>
+<GuideReagentEmbed Reagent="Dylovene"/>
+<GuideReagentEmbed Reagent="Bicaridine"/>
+<GuideReagentEmbed Reagent="Tricordrazine"/>
+<GuideReagentEmbed Reagent="Hyronalin"/>
+<GuideReagentEmbed Reagent="Arithrazine"/>
+<GuideReagentEmbed Reagent="Phalanximine"/>
+
+## Cryogenic Medicines
+
+Cryogenic medicines can be applied to patients with low body temperatures. Cryo pods are the primary means of using them.
+
+[textlink="Learn more about Cryostasis." link="OffbrandCryostasis"]
+
+## All Medications
+
+This page is not comprehensive, and you may encounter other medication in a round. All medications can be found in the Chemist's guide.
+
+[textlink="Read all possible medications." link="OffbrandMedicineList"]
+
+</Document>

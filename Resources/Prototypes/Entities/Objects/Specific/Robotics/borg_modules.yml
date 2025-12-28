@@ -958,6 +958,15 @@
         whitelist:
           components:
           - FitsInDispenser
+    # Begin Offbrand
+    - item: IVBag
+      hand:
+        emptyLabel: borg-slot-iv-bag-empty
+        emptyRepresentative: IVBag
+        whitelist:
+          tags:
+          - IVBag
+    # End Offbrand
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: chem-module }
 

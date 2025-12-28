@@ -567,6 +567,15 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         RaiseLocalEvent(gun, ref ev);
 
+        // Begin Offbrand
+        if (Containers.TryGetContainingContainer(gun.Owner, out var container))
+        {
+            var relayed = new Content.Shared._Offbrand.Weapons.RelayedGunRefreshModifiersEvent(ev);
+            RaiseLocalEvent(container.Owner, ref relayed);
+            ev = relayed.Args;
+        }
+        // End Offbrand
+
         if (comp.SoundGunshotModified != ev.SoundGunshot)
         {
             comp.SoundGunshotModified = ev.SoundGunshot;

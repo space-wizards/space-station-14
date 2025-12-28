@@ -146,7 +146,7 @@ public sealed partial class ZombieComponent : Component
     {
         DamageDict = new()
         {
-            { "Slash", 13 },
+            // { "Slash", 13 }, Offbrand - slash is too fast a crit
             { "Piercing", 7 },
             { "Structural", 10 }
         }
