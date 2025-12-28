@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System.Text;
 using Content.Server.Speech.Components;
 using Content.Shared.Speech;
@@ -6,6 +7,10 @@ namespace Content.Server.Speech.EntitySystems
 {
     public sealed class SpanishAccentSystem : EntitySystem
     {
+        private static readonly Regex RegexLowersC = new(@"(?<!\w)(s+h*[bcdfgjklmnpqrtvwxz])");
+        private static readonly Regex RegexUpperSC = new(@"(?<!\w)S(s*h*[bcdfgjklmnpqrtvwxz])");
+        private static readonly Regex RegexCapsSC = new(@"(?<!\w)(SH*[BCDFGJKLMNPQRTVWXZ])");
+
         public override void Initialize()
         {
             SubscribeLocalEvent<SpanishAccentComponent, AccentGetEvent>(OnAccent);
@@ -13,7 +18,7 @@ namespace Content.Server.Speech.EntitySystems
 
         public string Accentuate(string message)
         {
-            // Insert E before every S
+            // Insert E before every S that is followed by a consonant
             message = InsertS(message);
             // If a sentence ends with ?, insert a reverse ? at the beginning of the sentence
             message = ReplacePunctuation(message);
@@ -22,18 +27,12 @@ namespace Content.Server.Speech.EntitySystems
 
         private string InsertS(string message)
         {
-            // Replace every new Word that starts with s/S
-            var msg = message.Replace(" s", " es").Replace(" S", " Es");
+            // Replace every new Word that starts with s/S and a consonant
+            var msg = message;
 
-            // Still need to check if the beginning of the message starts
-            if (msg.StartsWith("s", StringComparison.Ordinal))
-            {
-                return msg.Remove(0, 1).Insert(0, "es");
-            }
-            else if (msg.StartsWith("S", StringComparison.Ordinal))
-            {
-                return msg.Remove(0, 1).Insert(0, "Es");
-            }
+            msg = RegexLowersC.Replace(msg, "e$1");
+            msg = RegexUpperSC.Replace(msg, "Es$1");
+            msg = RegexCapsSC.Replace(msg, "E$1");
 
             return msg;
         }
