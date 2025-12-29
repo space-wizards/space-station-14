@@ -61,7 +61,7 @@ public sealed partial class InjectorSystem : EntitySystem
 
         if (activeProto.InjectOnUse) // Injectors that can't toggle transferAmounts will be used.
             TryMobsDoAfter(injector, args.User, args.User);
-        else // Syringes toggle Draw/Inject. Since this creates popups on failure, we always want to handle it.
+        else // Syringes toggle Draw/Inject.
             ToggleMode(injector, args.User);
 
         args.Handled = true;
