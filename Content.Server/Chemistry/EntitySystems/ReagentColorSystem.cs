@@ -23,6 +23,7 @@ public sealed class ReagentColorSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ReagentColorComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<ReagentColorComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
     }
 
     private void OnStartup(Entity<ReagentColorComponent> entity, ref ComponentStartup args)
@@ -30,24 +31,19 @@ public sealed class ReagentColorSystem : EntitySystem
         UpdateColor(entity);
     }
 
-    public override void Update(float frameTime)
+    private void OnSolutionChanged(Entity<ReagentColorComponent> entity, ref SolutionContainerChangedEvent args)
     {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<ReagentColorComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        if (args.SolutionId == entity.Comp.SolutionName)
         {
-            if (_solutionContainer.ResolveSolution(uid, comp.SolutionName, ref comp.Solution))
-            {
-                UpdateColor((uid, comp));
-            }
+            UpdateColor(entity, args.Solution);
         }
     }
 
-    private void UpdateColor(Entity<ReagentColorComponent> entity)
+    private void UpdateColor(Entity<ReagentColorComponent> entity, Solution? solution = null)
     {
         var (uid, comp) = entity;
-        if (!_solutionContainer.TryGetSolution(uid, comp.SolutionName, out _, out var solution))
+
+        if (solution == null && !_solutionContainer.TryGetSolution(uid, comp.SolutionName, out _, out solution))
             return;
 
         var color = solution.GetColor(_prototypeManager);
