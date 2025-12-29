@@ -627,3 +627,8 @@
   groups:
   - GroupEVATank
   - SurvivalExtendedAntag
+
+- type: roleLoadout
+  id: RoleSurvivalSpaceNinja
+  groups:
+  - GroupEVATank
