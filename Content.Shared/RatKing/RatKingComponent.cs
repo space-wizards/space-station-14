@@ -1,3 +1,4 @@
+using Content.Shared.Alert;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -99,6 +100,9 @@ public sealed partial class RatKingComponent : Component
         { RatKingOrderType.CheeseEm, "RatKingCommandCheeseEm" },
         { RatKingOrderType.Loose, "RatKingCommandLoose" }
     };
+
+    [DataField]
+    public ProtoId<AlertCategoryPrototype> HungerAlertCategory = "Hunger";
 }
 
 [Serializable, NetSerializable]
