@@ -1,0 +1,14 @@
+ent-BaseChemistryEmptyVial = vial
+    .desc = A small vial.
+ent-VestineChemistryVial = { ent-BaseChemistryEmptyVial }
+    .suffix = vestine
+    .desc = { ent-BaseChemistryEmptyVial.desc }
+ent-RadiumChemistryVial = { ent-BaseChemistryEmptyVial }
+    .suffix = radium
+    .desc = { ent-BaseChemistryEmptyVial.desc }
+ent-ChlorineChemistryVial = { ent-BaseChemistryEmptyVial }
+    .suffix = chlorine
+    .desc = { ent-BaseChemistryEmptyVial.desc }
+ent-PlasmaChemistryVial = { ent-BaseChemistryEmptyVial }
+    .suffix = plasma
+    .desc = { ent-BaseChemistryEmptyVial.desc }

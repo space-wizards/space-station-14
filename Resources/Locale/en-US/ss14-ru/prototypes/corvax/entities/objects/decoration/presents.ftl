@@ -1,0 +1,11 @@
+ent-BasePresentBox = decoration present
+    .desc = Beautiful wrapper, disappointing emptiness inside.
+ent-BigPresentBox = { ent-BasePresentBox }
+    .suffix = Big
+    .desc = { ent-BasePresentBox.desc }
+ent-MediumPresentBox = { ent-BasePresentBox }
+    .suffix = Medium
+    .desc = { ent-BasePresentBox.desc }
+ent-SmallPresentBox = { ent-BasePresentBox }
+    .suffix = Small
+    .desc = { ent-BasePresentBox.desc }

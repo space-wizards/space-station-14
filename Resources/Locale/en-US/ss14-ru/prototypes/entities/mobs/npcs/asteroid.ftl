@@ -1,0 +1,24 @@
+ent-BaseMobAsteroid = { ent-BaseMob }
+    .desc = { ent-BaseMob.desc }
+ent-MobGoliath = goliath
+    .desc = A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions.
+ent-ActionGoliathTentacle = [color=red]Tentacle Slam[/color]
+    .desc = Use your tentacles to grab and stun a target player!
+ent-GoliathTentacle = tentacle
+    .desc = { "" }
+ent-BaseEffectGoliathTentacleSpawn = tentacle
+    .desc = { "" }
+ent-EffectGoliathTentacleSpawn = tentacle
+    .desc = { ent-BaseEffectGoliathTentacleSpawn.desc }
+ent-EffectGoliathTentacleRetract = { ent-BaseEffectGoliathTentacleSpawn }
+    .desc = { ent-BaseEffectGoliathTentacleSpawn.desc }
+ent-MobHivelord = hivelord
+    .desc = A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original.
+ent-MobHivelordBrood = hivelord brood
+    .desc = A fragment of the original hivelord, rallying behind its original. One isn't much of a threat, but...
+ent-FoodHivelordRemains = hivelord remains
+    .desc = All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating.
+ent-FoodHivelordRemainsInert = inert hivelord remains
+    .desc = All that remains of a hivelord... Now all is truly lost.
+ent-MobBasilisk = basilisk
+    .desc = A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside.

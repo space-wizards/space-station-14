@@ -1,0 +1,2 @@
+ent-VoiceLock = { "" }
+    .desc = { "" }

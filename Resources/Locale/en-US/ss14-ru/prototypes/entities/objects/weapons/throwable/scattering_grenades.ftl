@@ -1,0 +1,15 @@
+ent-ScatteringGrenadeBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+ent-ClusterBang = clusterbang
+    .desc = Can be used only with flashbangs. Explodes several times.
+ent-ClusterBangFull = ClusterBang
+    .desc = Launches three flashbangs after the timer runs out.
+    .suffix = Full
+ent-ClusterGrenade = clustergrenade
+    .desc = Why use one grenade when you can use three at once!
+ent-ClusterBananaPeel = cluster banana peel
+    .desc = Splits into 6 explosive banana peels after throwing, guaranteed fun!
+ent-SlipocalypseClusterSoap = slipocalypse clustersoap
+    .desc = Spreads small pieces of syndicate soap over an area upon landing on the floor.
+ent-GrenadeFoamDart = foam dart grenade
+    .desc = Releases a bothersome spray of foam darts that cause severe welching.

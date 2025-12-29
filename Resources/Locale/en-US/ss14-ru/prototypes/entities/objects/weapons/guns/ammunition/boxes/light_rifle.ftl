@@ -1,0 +1,13 @@
+ent-BaseMagazineBoxLightRifle = ammunition box (.30 rifle)
+    .desc = { ent-BaseItem.desc }
+ent-MagazineBoxLightRifleBig = ammunition box (.30 rifle)
+    .suffix = Big
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRifle = ammunition box (.30 rifle)
+    .desc = A cardboard box of .30 rifle rounds. Intended to hold general-purpose kinetic ammunition.
+ent-MagazineBoxLightRiflePractice = ammunition box (.30 rifle practice)
+    .desc = A cardboard box of .30 rifle rounds. Intended to hold non-harmful chalk ammunition.
+ent-MagazineBoxLightRifleIncendiary = ammunition box (.30 rifle incendiary)
+    .desc = A cardboard box of .30 rifle rounds. Intended to hold self-igniting incendiary ammunition.
+ent-MagazineBoxLightRifleUranium = ammunition box (.30 rifle uranium)
+    .desc = A cardboard box of .30 rifle rounds. Intended to hold exotic uranium-core ammunition.

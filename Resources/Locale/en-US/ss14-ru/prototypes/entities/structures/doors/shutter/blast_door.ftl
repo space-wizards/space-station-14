@@ -1,0 +1,14 @@
+ent-BlastDoor = blast door
+    .desc = This one says 'BLAST DONGER'.
+ent-BlastDoorOpen = { ent-BlastDoor }
+    .suffix = Open
+    .desc = { ent-BlastDoor.desc }
+ent-BlastDoorFrame = blast door frame
+    .desc = This one says 'BLAST DONGER'.
+ent-BlastDoorXeno = xeno blast door
+    .desc = Don't lose an arm!
+ent-BlastDoorXenoOpen = { ent-BlastDoorXeno }
+    .suffix = Open
+    .desc = { ent-BlastDoorXeno.desc }
+ent-BlastDoorXenoFrame = xeno blast door frame
+    .desc = This one says 'BLAST DONGER'.

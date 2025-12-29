@@ -1,0 +1,12 @@
+ent-SpawnPointPilot = pilot
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointSurgeon = surgeon
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointSeniorEngineer = seniorengineer
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointSeniorPhysician = seniorphysician
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointSeniorResearcher = seniorresearcher
+    .desc = { ent-SpawnPointJobBase.desc }
+ent-SpawnPointSeniorOfficer = seniorofficer
+    .desc = { ent-SpawnPointJobBase.desc }

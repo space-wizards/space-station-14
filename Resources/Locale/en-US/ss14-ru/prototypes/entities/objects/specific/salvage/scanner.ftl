@@ -1,0 +1,16 @@
+ent-MineralScannerUnpowered = mineral scanner
+    .desc = A scanner that checks surrounding rock for useful minerals. It must be in your hand or pocket to work.
+    .suffix = Always Powered
+ent-MineralScanner = { ent-MineralScannerUnpowered }
+    .desc = { ent-MineralScannerUnpowered.desc }
+ent-MineralScannerEmpty = { ent-MineralScanner }
+    .suffix = Empty
+    .desc = { ent-MineralScanner.desc }
+ent-AdvancedMineralScannerUnpowered = advanced mineral scanner
+    .desc = A scanner that checks surrounding rock for useful minerals. It must be in your hand or pocket to work. This one has an extended range.
+    .suffix = Always Powered
+ent-AdvancedMineralScanner = { ent-AdvancedMineralScannerUnpowered }
+    .desc = { ent-AdvancedMineralScannerUnpowered.desc }
+ent-AdvancedMineralScannerEmpty = { ent-AdvancedMineralScanner }
+    .suffix = Empty
+    .desc = { ent-AdvancedMineralScanner.desc }

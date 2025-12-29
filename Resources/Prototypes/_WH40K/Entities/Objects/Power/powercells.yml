@@ -28,10 +28,10 @@
   - type: Tag
     tags:
       - LasgunPowerCell
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: RedLaser
     fireCost: 50
-    
+
 - type: entity
   name: батарея лонглаза
   id: LonglasPowerCell
@@ -46,7 +46,7 @@
   - type: Tag
     tags:
       - LonglasPowerCell
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: RedLaserLong
     fireCost: 150
   - type: Battery
@@ -71,7 +71,7 @@
   - type: Battery
     maxCharge: 14000
     startingCharge: 14000
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: WHBulletPlasmaRifle
     fireCost: 1000
 
@@ -92,7 +92,7 @@
   - type: Battery
     maxCharge: 7000
     startingCharge: 7000
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: WHBulletPlasmaPistol
     fireCost: 1000
 
@@ -112,6 +112,6 @@
   - type: Battery
     maxCharge: 15000
     startingCharge: 15000
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: RedMeltaLaser
     fireCost: 1500

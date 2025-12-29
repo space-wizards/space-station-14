@@ -1,0 +1,10 @@
+ent-OffsetCane = standard offset cane
+    .desc = A standard offset cane, essential for getting around when your legs aren't up to the task. May or may not grant you the wisdom of the elderly.
+ent-OffsetCaneClown = rainbow offset cane
+    .desc = A rainbow offset cane, perfect for clowns and those who enjoy a splash of color in their lives.
+ent-OffsetCaneMime = striped offset cane
+    .desc = A black and white striped cane, perfect for silent performances.
+ent-OffsetCaneNT = nanotrasen offset cane
+    .desc = A nanotrasen standard issue offset cane with the NT logo, favored by those who prefer a more corporate look.
+ent-OffsetCaneWood = wooden offset cane
+    .desc = A wooden offset cane, a classic choice for those who appreciate natural materials and a sturdy grip.

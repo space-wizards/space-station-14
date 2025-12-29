@@ -1,0 +1,17 @@
+black-wood-floor = black wood floor
+dark-wood-floor = dark wood floor
+light-wood-floor = light wood floor
+red-wood-floor = red wood floor
+large-black-wood-floor = large black wood floor
+large-dark-wood-floor = large dark wood floor
+large-light-wood-floor = large light wood floor
+large-red-wood-floor = large red wood floor
+parquet-black-wood-floor = parquet black wood floor
+parquet-dark-wood-floor = parquet dark wood floor
+parquet-light-wood-floor = parquet light wood floor
+parquet-red-wood-floor = parquet red wood floor
+chess-wood-floor = chess wood floor
+chess-black-wood-floor = chess black wood floor
+chess-dark-wood-floor = chess dark wood floor
+chess-light-wood-floor = chess light wood floor
+chess-red-wood-floor = chess red wood floor

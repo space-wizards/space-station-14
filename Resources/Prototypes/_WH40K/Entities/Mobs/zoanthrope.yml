@@ -52,7 +52,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 5
-  - type: HitscanBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: ZoanthropeLighting
     fireCost: 100
   - type: BatterySelfRecharger

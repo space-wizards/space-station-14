@@ -1,0 +1,10 @@
+ent-SpawnMobMedibot = medibot spawner
+    .desc = { ent-MarkerBase.desc }
+ent-SpawnMobCleanBot = cleanbot spawner
+    .desc = { ent-MarkerBase.desc }
+ent-SpawnMobFireBot = firebot spawner
+    .desc = { ent-MarkerBase.desc }
+ent-SpawnMobSupplyBot = supplybot spawner
+    .desc = { ent-MarkerBase.desc }
+ent-SpawnMobHonkBot = honkbot spawner
+    .desc = { ent-MarkerBase.desc }

@@ -1,7 +1,7 @@
 - type: entity
   id: MagazineBolter
   name: магазин болтера (.75 болт)
-  parent: BaseMagazineHeavyRifle
+  parent: BaseMagazineRifle
   suffix: WH40K
   components:
   - type: Tag
@@ -19,7 +19,7 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-      
+
 - type: entity
   id: MagazineBolterPistol
   parent: MagazineBolter

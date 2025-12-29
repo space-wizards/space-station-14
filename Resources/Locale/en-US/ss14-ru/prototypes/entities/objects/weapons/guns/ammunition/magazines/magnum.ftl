@@ -1,0 +1,13 @@
+ent-BaseMagazineMagnum = pistol magazine (.45 magnum)
+    .desc = { ent-BaseMagazinePistol.desc }
+ent-MagazineMagnumEmpty = pistol magazine (.45 magnum any)
+    .desc = 7-round single stack pistol magazine.
+    .suffix = empty
+ent-MagazineMagnum = pistol magazine (.45 magnum)
+    .desc = 7-round single stack pistol magazine. Intended to hold general-purpose kinetic ammunition.
+ent-MagazineMagnumPractice = pistol magazine (.45 magnum practice)
+    .desc = 7-round single stack pistol magazine. Intended to hold non-harmful chalk ammunition.
+ent-MagazineMagnumUranium = pistol magazine (.45 magnum uranium)
+    .desc = 7-round single stack pistol magazine. Intended to hold exotic uranium-core ammunition.
+ent-MagazineMagnumAP = pistol magazine (.45 magnum armor-piercing)
+    .desc = 7-round single stack pistol magazine. Intended to hold rare armor-piercing ammunition.
