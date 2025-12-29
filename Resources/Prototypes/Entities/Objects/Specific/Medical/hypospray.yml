@@ -126,7 +126,7 @@
   - type: Item
     sprite: Objects/Specific/Medical/jetinjector.rsi
   - type: UseDelay
-    delay: 2.0
+    delay: 1.5
   - type: SolutionContainerManager
     solutions:
       hypospray:
