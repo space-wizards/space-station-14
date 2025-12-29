@@ -52,6 +52,15 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
