@@ -14,6 +14,10 @@
         - id: Cautery
         - id: Retractor
         - id: Scalpel
+        - id: BoneGel # Offbrand
+        - id: BoneSetter # Offbrand
+        - id: VascularRecoupler # Offbrand
+        - id: MedicatedSuture # Offbrand
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
@@ -33,6 +37,10 @@
         - id: ScalpelAdvanced
         - id: ClothingHandsGlovesNitrile
         - id: EmergencyRollerBedSpawnFolded
+        - id: BoneGel # Offbrand
+        - id: BoneSetter # Offbrand
+        - id: VascularRecoupler # Offbrand
+        - id: MedicatedSuture # Offbrand
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -350,7 +358,7 @@
         - id: DefibrillatorSyndicate
         - id: MedkitCombatFilled
           amount: 4
-        - id: Tourniquet
+        - id: TourniquetOffbrand # Offbrand
           amount: 4
         - id: CombatMedipen
           amount: 4

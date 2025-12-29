@@ -20,6 +20,9 @@
       whitelist:
         components:
         - Brain
+  - type: MMIExtractor # Offbrand
+    whitelist:
+      components: [Woundable, BrainDamage]
   - type: BorgBrain
   - type: BlockMovement
   - type: Examiner

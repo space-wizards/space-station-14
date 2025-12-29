@@ -33,7 +33,7 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         SubscribeLocalEvent<StatusEffectContainerComponent, EntInsertedIntoContainerMessage>(OnEntityInserted);
         SubscribeLocalEvent<StatusEffectContainerComponent, EntRemovedFromContainerMessage>(OnEntityRemoved);
 
-        SubscribeLocalEvent<RejuvenateRemovedStatusEffectComponent, StatusEffectRelayedEvent<RejuvenateEvent>>(OnRejuvenate);
+        SubscribeLocalEvent<StatusEffectContainerComponent, RejuvenateEvent>(OnRejuvenate); // Offbrand
 
         _containerQuery = GetEntityQuery<StatusEffectContainerComponent>();
         _effectQuery = GetEntityQuery<StatusEffectComponent>();
@@ -114,11 +114,19 @@ public sealed partial class StatusEffectsSystem : EntitySystem
         Dirty(args.Entity, statusComp);
     }
 
-    private void OnRejuvenate(Entity<RejuvenateRemovedStatusEffectComponent> ent,
-        ref StatusEffectRelayedEvent<RejuvenateEvent> args)
+    // Begin Offbrand Changes
+    private void OnRejuvenate(Entity<StatusEffectContainerComponent> ent,
+        ref RejuvenateEvent args)
     {
-        PredictedQueueDel(ent.Owner);
+        if (!TryEffectsWithComp<RejuvenateRemovedStatusEffectComponent>(ent, out var effects))
+            return;
+
+        foreach (var effect in effects)
+        {
+            Del(effect);
+        }
     }
+    // End Offbrand Changes
 
     /// <summary>
     /// Applies the status effect, i.e. starts it after it has been added. Ensures delayed start times trigger when they should.

@@ -208,6 +208,23 @@
           inverted: true
       - !type:Drunk
         boozePower: 2
+      # Begin Offbrand
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectPainkillersMildEthanol
+        time: 2
+        type: Add
+      - !type:ModifyStatusEffect
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 15
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+          inverted: true
+        effectProto: StatusEffectPainkillersMildEthanolOverdose
+        time: 2
+        type: Add
+      # End Offbrand
 
 - type: reagent
   id: Gin

@@ -1,0 +1,227 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/blob/86d3bac030f32b016ce1b749b35f6b3930ee5d28/icons/obj/medical/surgery_tools.dmi, https://github.com/tgstation/tgstation/blob/86d3bac030f32b016ce1b749b35f6b3930ee5d28/icons/mob/inhands/equipment/medical_lefthand.dmi, and https://github.com/tgstation/tgstation/blob/86d3bac030f32b016ce1b749b35f6b3930ee5d28/icons/mob/inhands/equipment/medical_righthand.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "scalpel"
+    },
+    {
+      "name": "cautery"
+    },
+    {
+      "name": "retractor"
+    },
+    {
+      "name": "hemostat"
+    },
+    {
+      "name": "saw"
+    },
+    {
+      "name": "esaw"
+    },
+    {
+      "name": "esaw_on",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "drill"
+    },
+    {
+      "name": "bone-gel"
+    },
+    {
+      "name": "surgical_drapes"
+    },
+    {
+      "name": "optable"
+    },
+    {
+      "name": "e_scalpel_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "e_scalpel"
+    },
+    {
+      "name": "e_cautery_on"
+    },
+    {
+      "name": "e_cautery"
+    },
+    {
+      "name": "adv_retractor"
+    },
+    {
+      "name": "adv_retractor_on"
+    },
+    {
+      "name": "shears"
+    },
+    {
+      "name": "bonesetter"
+    },
+    {
+      "name": "eyesnatcher"
+    },
+    {
+      "name": "eyesnatcher-used"
+    },
+    {
+      "name": "bloodfilter"
+    },
+    {
+      "name": "cruelscalpel"
+    },
+    {
+      "name": "cruelcautery"
+    },
+    {
+      "name": "cruelretractor"
+    },
+    {
+      "name": "cruelhemostat"
+    },
+    {
+      "name": "flesh_shaper"
+    },
+    {
+      "name": "flesh_shaper_med"
+    },
+    {
+      "name": "adv_retractor-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "adv_retractor-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "adv_retractor_on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "adv_retractor_on-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bloodfilter-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bloodfilter-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bone-gel-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bone-gel-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bonesetter-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "bonesetter-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cautery-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "cautery-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "e_cautery-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "e_cautery-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "e_cautery_on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "e_cautery_on-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "e_scalpel-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "e_scalpel-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "e_scalpel_on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "e_scalpel_on-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "retractor-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "retractor-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "saw-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "saw-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "scalpel-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "scalpel-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "hemostat-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "hemostat-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "drill-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "drill-inhand-right",
+      "directions": 4
+    }
+  ]
+}
