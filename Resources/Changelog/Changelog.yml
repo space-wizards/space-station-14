@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Captain and Head of Personnel starts with administration glasses and
-      hud respectively.
-    type: Add
-  id: 8839
-  time: '2025-08-08T19:00:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35531
 - author: perryprog
   changes:
   - message: The emote radial menu now shows the correct icons for its subcategories.
@@ -3942,3 +3934,11 @@
   id: 9339
   time: '2025-12-28T07:30:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40984
+- author: PAFFhassoocks
+  changes:
+  - message: Ninjas no longer spawn with a survival box, and instead have the items
+      directly in their bags, excluding the emergency tank.
+    type: Tweak
+  id: 9340
+  time: '2025-12-29T10:42:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42102
