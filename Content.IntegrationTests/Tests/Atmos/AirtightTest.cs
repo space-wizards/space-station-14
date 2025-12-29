@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -25,13 +23,23 @@ public sealed class AirtightTest : AtmosTest
     private readonly EntProtoId _wallProto = new("WallSolid");
 
     private EntityUid _targetWall = EntityUid.Invalid;
+    private EntityUid _targetRotationEnt = EntityUid.Invalid;
 
-    // TODO ATMOS TESTS:
-    // - Airtightmap reconstruction/deletion on entities with different blocked directions along with cache reflection
-    // - Airtightmap entity rotation
-    // - Airtightmap entity movement
-    // - Public methods
-    // - Deduplication
+    #region Prototypes
+
+    [TestPrototypes]
+    private const string Prototypes = @"
+- type: entity
+  id: AirtightDirectionalRotationTest
+  parent: WindowDirectional
+  components:
+  - type: Airtight
+    airBlockedDirection: North
+    fixAirBlockedDirectionInitialize: true
+    noAirWhenFullyAirBlocked: false
+";
+
+    #endregion
 
     #region Component and Helper Assertions
 
@@ -430,11 +438,11 @@ public sealed class AirtightTest : AtmosTest
                 var curTile = tile.AdjacentTiles[i];
                 if (direction == atmosDirection)
                 {
-                    Assert.That(curTile, Is.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
+                    Assert.That(curTile, Is.Null, $"Center tile holds unexpected reference to adjacent tile in direction {direction}.");
                 }
                 else
                 {
-                    Assert.That(curTile, Is.Not.Null, $"Center tile holds unexpected reference to adjacent tile in direction {direction}.");
+                    Assert.That(curTile, Is.Not.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
                 }
             }
         }
@@ -482,11 +490,11 @@ public sealed class AirtightTest : AtmosTest
                 var curTile = tile.AdjacentTiles[i];
                 if (direction == atmosDirection)
                 {
-                    Assert.That(curTile, Is.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
+                    Assert.That(curTile, Is.Null, $"Center tile holds unexpected reference to adjacent tile in direction {direction}.");
                 }
                 else
                 {
-                    Assert.That(curTile, Is.Not.Null, $"Center tile holds unexpected reference to adjacent tile in direction {direction}.");
+                    Assert.That(curTile, Is.Not.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
                 }
             }
         }
@@ -508,6 +516,69 @@ public sealed class AirtightTest : AtmosTest
                 Assert.That(curTile, Is.Not.Null, $"Center tile does not hold expected reference to adjacent tile in direction {direction}.");
             }
         }
+    }
+
+    #endregion
+
+    #region Rotation Assertion
+
+    /// <summary>
+    /// Asserts that an airtight entity with a directional air blocked direction
+    /// properly reflects rotation on spawn.
+    /// </summary>
+    /// <param name="degrees">The degrees to rotate the entity on spawn.</param>
+    /// <param name="expected">The expected blocked direction after rotation.</param>
+    /// <remarks>Yeah, so here I learned that RT handles rotation directions
+    /// as positive == counterclockwise.</remarks>
+    [Test]
+    [TestCase(0f, AtmosDirection.North)]
+    [TestCase(90f, AtmosDirection.West)]
+    [TestCase(180f, AtmosDirection.South)]
+    [TestCase(270f, AtmosDirection.East)]
+    [TestCase(-90f, AtmosDirection.East)]
+    [TestCase(-180f, AtmosDirection.South)]
+    [TestCase(-270f, AtmosDirection.West)]
+    public async Task Rotation_AirBlockedDirectionsOnSpawn(float degrees, AtmosDirection expected)
+    {
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+
+        var rotation = Angle.FromDegrees(degrees);
+
+        await Server.WaitPost(delegate
+        {
+            var coords = new EntityCoordinates(RelevantAtmos.Owner, Vector2.Zero);
+            _targetRotationEnt = SEntMan.SpawnAtPosition("AirtightDirectionalRotationTest", coords);
+
+            Transform.SetLocalRotation(_targetRotationEnt, rotation);
+        });
+
+        SAtmos.RunProcessingFull(ProcessEnt, MapData.Grid.Owner, SAtmos.AtmosTickRate);
+
+        await Server.WaitAssertion(delegate
+        {
+            using (Assert.EnterMultipleScope())
+            {
+                SEntMan.TryGetComponent<AirtightComponent>(_targetRotationEnt, out var airtight);
+                Assert.That(airtight, Is.Not.Null);
+
+                var initial = (AtmosDirection)airtight.InitialAirBlockedDirection;
+                Assert.That(initial,
+                    Is.EqualTo(AtmosDirection.North),
+                    "Directional airtight entity should block North on spawn.");
+
+                Assert.That(airtight.AirBlockedDirection,
+                    Is.EqualTo(expected),
+                    $"Expected AirBlockedDirection to be {expected} after rotating by {degrees} degrees on spawn.");
+
+                // i dont trust you airtightsystem
+                if (degrees is 90f or 270f)
+                {
+                    Assert.That(expected,
+                        Is.Not.EqualTo(initial),
+                        "Rotated directions should differ for 90/270 degrees.");
+                }
+            }
+        });
     }
 
     #endregion
