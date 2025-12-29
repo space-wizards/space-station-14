@@ -44,8 +44,8 @@
 
 - type: entity
   id: PaperWrittenSyndicateZombieBundle
-  name: "syndicate zombie bundle instructions"
-  description: "burn zombies after reading."
+  name: syndicate zombie bundle instructions
+  description: Burn zombies after reading.
   parent: Paper
   components:
   - type: Paper
