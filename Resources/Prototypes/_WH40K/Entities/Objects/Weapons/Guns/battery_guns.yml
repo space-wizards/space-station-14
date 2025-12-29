@@ -188,6 +188,8 @@
     - SemiAuto
     soundGunshot:
       path: /Audio/_WH40K/Weapons/Guns/Gunshots/meltagun.ogg
+  - type: MagazineAmmoProvider
+    proto: RedMeltaLaser
   - type: ItemSlots
     slots:
       gun_magazine:
