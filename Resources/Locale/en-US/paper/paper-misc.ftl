@@ -72,5 +72,5 @@ book-text-combat-bakery-kit = Thank you for choosing our combat bakery kit!
       Cook Time: 5 seconds
 
 book-text-syndicate-zombie-bundle = Thank you for choosing Interdyne Pharmaceuticals!
-      In the bundle, you'll find a syringe of Romerol, which can infect a total of three living beings, simply inject any dead or dying being with 5u of Romerol, and theyll transform into a zombie! Be careful not to get bit.
-      You'll also find one 5u ambuzol plus pill which eliminates any chance of getting infected, along with three regular 10u ambuzol pills which ONLY purge the zombie virus if it is currently in your bloodstream. Perhaps if you have some omnizine, you could turn ambuzol into ambuzol plus.
+      In this bundle, you'll find a full syringe of Romerol, which can infect a total of three living beings. Simply inject any [italic]currently alive[/italic] being with 5u of Romerol, and they'll transform into a zombie upon death! Be careful not to get bit.
+      You'll also find one 5u ambuzol plus pill which fully vaccinates you against being infected, along with three regular 10u ambuzol pills which ONLY purge the zombie virus if it is currently in your bloodstream. If you obtain omnizine (not included), you could turn ambuzol into ambuzol plus.
