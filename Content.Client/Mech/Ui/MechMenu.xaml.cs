@@ -28,6 +28,7 @@ public sealed partial class MechMenu : FancyWindow
     // State.
     private EntityUid _mech;
     private bool _pilotPresent;
+    private BoundUserInterface? _parentBui;
 
     // Events for the BUI to subscribe to.
     public event Action<EntityUid>? OnRemoveButtonPressed;
@@ -61,6 +62,11 @@ public sealed partial class MechMenu : FancyWindow
         MechName.Text = _entityManager.GetComponent<MetaDataComponent>(_mech).EntityName;
     }
 
+    public void SetParentBui(BoundUserInterface parentBui)
+    {
+        _parentBui = parentBui;
+    }
+
     private void InitializeEventHandlers()
     {
         // Cabin controls with access checks.
@@ -83,52 +89,48 @@ public sealed partial class MechMenu : FancyWindow
         FilterEnabledCheck.OnToggled += args => OnFilterToggle?.Invoke(args.Pressed);
     }
 
-    public void UpdateMechStats()
+    public void UpdateMechStats(MechBoundUiState state)
     {
-        if (_lastState != null)
+        if (state.MaxIntegrity > 0f)
         {
-            if (_lastState.MaxIntegrity > 0f)
-            {
-                var integrityPercent = _lastState.Integrity / _lastState.MaxIntegrity;
-                IntegrityDisplayBar.Value = integrityPercent;
+            var integrityPercent = state.Integrity / state.MaxIntegrity;
+            IntegrityDisplayBar.Value = integrityPercent;
 
-                var integrityText = _lastState.IsBroken
-                    ? Loc.GetString("mech-integrity-display-broken", ("amount", (int)(integrityPercent * 100)))
-                    : Loc.GetString("mech-integrity-display", ("amount", (int)(integrityPercent * 100)));
+            var integrityText = state.IsBroken
+                ? Loc.GetString("mech-integrity-display-broken", ("amount", (int)(integrityPercent * 100)))
+                : Loc.GetString("mech-integrity-display", ("amount", (int)(integrityPercent * 100)));
 
-                IntegrityDisplay.Text = integrityText;
-            }
-            else
-            {
-                IntegrityDisplayBar.Value = 0f;
-                IntegrityDisplay.Text = Loc.GetString("mech-integrity-display", ("amount", 0));
-            }
-
-            if (_lastState.MaxEnergy > 0f)
-            {
-                var energyPercent = _lastState.Energy / _lastState.MaxEnergy;
-                EnergyDisplayBar.Value = energyPercent;
-                EnergyDisplay.Text = Loc.GetString("mech-energy-display", ("amount", (int)(energyPercent * 100)));
-            }
-            else
-            {
-                EnergyDisplayBar.Value = 0f;
-                EnergyDisplay.Text = Loc.GetString("mech-energy-missing");
-            }
-
-            SlotDisplay.Text = Loc.GetString("mech-equipment-slot-display-label",
-                ("used", _lastState.EquipmentUsed),
-                ("max", _lastState.MaxEquipmentAmount));
-
-            ModuleSlotDisplay.Text = Loc.GetString("mech-module-slot-display-label",
-                ("used", _lastState.ModuleSpaceUsed),
-                ("max", _lastState.ModuleSpaceMax));
+            IntegrityDisplay.Text = integrityText;
         }
+        else
+        {
+            IntegrityDisplayBar.Value = 0f;
+            IntegrityDisplay.Text = Loc.GetString("mech-integrity-display", ("amount", 0));
+        }
+
+        if (state.MaxEnergy > 0f)
+        {
+            var energyPercent = state.Energy / state.MaxEnergy;
+            EnergyDisplayBar.Value = energyPercent;
+            EnergyDisplay.Text = Loc.GetString("mech-energy-display", ("amount", (int)(energyPercent * 100)));
+        }
+        else
+        {
+            EnergyDisplayBar.Value = 0f;
+            EnergyDisplay.Text = Loc.GetString("mech-energy-missing");
+        }
+
+        SlotDisplay.Text = Loc.GetString("mech-equipment-slot-display-label",
+            ("used", state.EquipmentUsed),
+            ("max", state.MaxEquipmentAmount));
+
+        ModuleSlotDisplay.Text = Loc.GetString("mech-module-slot-display-label",
+            ("used", state.ModuleSpaceUsed),
+            ("max", state.ModuleSpaceMax));
     }
 
     public void UpdateMechState(MechBoundUiState state)
     {
-        _lastState = state;
         _pilotPresent = state.PilotPresent;
 
         FanToggle.Visible = state.HasFanModule;
@@ -251,18 +253,10 @@ public sealed partial class MechMenu : FancyWindow
         var (cardRegistered, cardActive) = GetLockState(state, MechLockType.Card);
 
         UpdateLockButtonSet(DnaLockRegisterButton, DnaLockBlockButton, DnaLockResetButton, dnaRegistered, dnaActive);
-        UpdateLockButtonSet(CardLockRegisterButton,
-            CardLockBlockButton,
-            CardLockResetButton,
-            cardRegistered,
-            cardActive);
+        UpdateLockButtonSet(CardLockRegisterButton, CardLockBlockButton, CardLockResetButton, cardRegistered, cardActive);
     }
 
-    private static void UpdateLockButtonSet(Button registerButton,
-        Button blockButton,
-        Button resetButton,
-        bool isRegistered,
-        bool isActive)
+    private static void UpdateLockButtonSet(Button registerButton,  Button blockButton, Button resetButton, bool isRegistered, bool isActive)
     {
         registerButton.Visible = !isRegistered;
         blockButton.Visible = isRegistered;
@@ -278,8 +272,6 @@ public sealed partial class MechMenu : FancyWindow
             control.SetRemoveDisabled(disabled);
         }
     }
-
-    private MechBoundUiState? _lastState;
 
     private void RefreshEquipmentFragmentStates(MechBoundUiState state)
     {
@@ -302,8 +294,7 @@ public sealed partial class MechMenu : FancyWindow
         }
     }
 
-    private (bool IsRegistered, bool IsActive) GetLockState(MechBoundUiState state,
-        MechLockType lockType)
+    private (bool IsRegistered, bool IsActive) GetLockState(MechBoundUiState state, MechLockType lockType)
     {
         return lockType switch
         {
@@ -333,24 +324,8 @@ public sealed partial class MechMenu : FancyWindow
         foreach (var netEnt in equipment)
         {
             var ent = _entityManager.GetEntity(netEnt);
-            if (!_entityManager.TryGetComponent<MetaDataComponent>(ent, out var metaData))
-                continue;
-
-            var uicomp = _entityManager.GetComponentOrNull<UIFragmentComponent>(ent);
-            Control? ui = null;
-
-            if (uicomp?.Ui != null)
-            {
-                if (_lastState?.EquipmentUiStates.TryGetValue(netEnt, out var eqState) == true)
-                    uicomp.Ui.UpdateState(eqState);
-
-                ui = uicomp.Ui.GetUIFragmentRoot();
-            }
-
-            // Get equipment size.
             var size = _entityManager.GetComponentOrNull<MechEquipmentComponent>(ent)?.Size ?? 1;
-
-            var control = new MechEquipmentControl(ent, metaData.EntityName, ui, size);
+            var control = HelperUpdateView(netEnt, ent, size);
             control.OnRemoveButtonPressed += () => OnRemoveButtonPressed?.Invoke(ent);
             EquipmentControlContainer.AddChild(control);
         }
@@ -362,26 +337,26 @@ public sealed partial class MechMenu : FancyWindow
         foreach (var netEnt in modules)
         {
             var ent = _entityManager.GetEntity(netEnt);
-            if (!_entityManager.TryGetComponent<MetaDataComponent>(ent, out var metaData))
-                continue;
-
-            Control? ui = null;
-            var uicomp = _entityManager.GetComponentOrNull<UIFragmentComponent>(ent);
-            if (uicomp?.Ui != null)
-            {
-                if (_lastState?.EquipmentUiStates.TryGetValue(netEnt, out var modState) == true)
-                    uicomp.Ui.UpdateState(modState);
-
-                ui = uicomp.Ui.GetUIFragmentRoot();
-            }
-
-            // Get module size.
             var size = _entityManager.GetComponentOrNull<MechModuleComponent>(ent)?.Size ?? 1;
-
-            var control = new MechEquipmentControl(ent, metaData.EntityName, ui, size);
+            var control = HelperUpdateView(netEnt, ent, size);
             control.OnRemoveButtonPressed += () => OnRemoveModuleButtonPressed?.Invoke(ent);
             ModuleControlContainer.AddChild(control);
         }
+    }
+
+    private MechEquipmentControl HelperUpdateView(NetEntity netEnt, EntityUid ent, int size)
+    {
+        Control? ui = null;
+        var uicomp = _entityManager.GetComponentOrNull<UIFragmentComponent>(ent);
+        if (uicomp?.Ui != null)
+        {
+            uicomp.Ui.Setup(_parentBui!, ent);
+            ui = uicomp.Ui.GetUIFragmentRoot();
+        }
+
+        var metaData = _entityManager.GetComponentOrNull<MetaDataComponent>(ent);
+        var control = new MechEquipmentControl(ent, metaData?.EntityName ?? "", ui, size);
+        return control;
     }
 
     /// <summary>
@@ -389,8 +364,6 @@ public sealed partial class MechMenu : FancyWindow
     /// </summary>
     public void UpdateState(MechBoundUiState state)
     {
-        _lastState = state;
         UpdateMechState(state);
-        UpdateMechStats();
     }
 }

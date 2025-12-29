@@ -30,6 +30,7 @@ public sealed class MechBoundUserInterface(EntityUid owner, Enum uiKey) : BoundU
 
         _menu = this.CreateWindowCenteredLeft<MechMenu>();
         _menu.SetEntity(Owner);
+        _menu.SetParentBui(this);
 
         // Equipment and module removal
         _menu.OnRemoveButtonPressed += uid =>
