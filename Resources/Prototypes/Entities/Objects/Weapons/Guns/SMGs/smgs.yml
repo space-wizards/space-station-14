@@ -74,7 +74,7 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Tag
     tags:
-    - SubMachineGunOneHand
+    - SubMachineGun
   - type: Gun
     fireRate: 10
     soundGunshot:
@@ -252,7 +252,7 @@
         shader: unshaded
   - type: Tag
     tags:
-    - SubMachineGunOneHand
+    - SubMachineGun
   - type: Clothing
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
   - type: ChamberMagazineAmmoProvider

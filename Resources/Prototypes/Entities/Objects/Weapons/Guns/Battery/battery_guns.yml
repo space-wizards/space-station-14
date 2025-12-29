@@ -591,7 +591,7 @@
   - type: Tag
     tags:
       - Taser
-      - SubMachineGunOneHand
+      - SubMachineGun
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/disabler_smg.rsi
     layers:

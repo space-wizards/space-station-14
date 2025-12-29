@@ -1390,9 +1390,6 @@
   id: SubMachineGun # Storage whitelist: ClothingBeltSyndieHolster
 
 - type: Tag
-  id: SubMachineGunOneHand # Storage whitelist: ClothingBeltSyndieHolster
-
-- type: Tag
   id: SuitEVA # ConstructionGraph: ClownHardsuit, MimeHardsuit
 
 - type: Tag
