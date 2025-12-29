@@ -48,6 +48,11 @@ public static class StyleClass
     public const string BackgroundPanelOpenLeft = "BackgroundPanelOpenLeft"; // replaces `BackgroundOpenLeft`
     public const string BackgroundPanelOpenRight = "BackgroundPanelOpenRight"; // replaces `BackgroundOpenRight`
 
+    // This is a replacement for the Inset styleclass which had darker background panels
+    public const string BackgroundPanelDark = "BackgroundPanelDark";
+    public const string BackgroundPanelDarkOpenLeft = "BackgroundPanelDarkOpenLeft";
+    public const string BackgroundPanelDarkOpenRight = "BackgroundPanelDarkOpenRight";
+
     public const string PanelDark = "PanelDark";
     public const string PanelLight = "PanelLight";
 
