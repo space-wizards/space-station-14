@@ -207,6 +207,8 @@
           - HighImpassable
           layer:
           - GlassAirlockLayer
+    - type: StaticPrice
+      price: 180
     - type: Door
       occludes: false
     - type: Destructible
@@ -280,7 +282,7 @@
     - type: Physics
       canCollide: false
     - type: StaticPrice
-      price: 100
+      price: 150
     - type: Construction
       graph: Firelock
       node: FirelockEdge
