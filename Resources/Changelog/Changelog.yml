@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: The emote radial menu now shows the correct icons for its subcategories.
-    type: Fix
-  id: 8840
-  time: '2025-08-08T19:27:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39481
 - author: Flareguy
   changes:
   - message: Updated moth displacement maps to fix missing pixels, among other various
@@ -3942,3 +3935,11 @@
   id: 9340
   time: '2025-12-29T10:42:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42102
+- author: GeneralGaws
+  changes:
+  - message: The Decoy Syndicate Bomb in the Traitor uplink now has a purchase timer,
+      same as the regular Syndicate Bomb.
+    type: Tweak
+  id: 9341
+  time: '2025-12-29T10:59:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42114
