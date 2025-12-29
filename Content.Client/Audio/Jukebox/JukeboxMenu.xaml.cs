@@ -20,6 +20,7 @@ namespace Content.Client.Audio.Jukebox;
 public sealed partial class JukeboxMenu : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private AudioSystem _audioSystem;
 
     /// <summary>
@@ -36,6 +37,9 @@ public sealed partial class JukeboxMenu : FancyWindow
 
     public event Action<ProtoId<JukeboxPrototype>>? TrackQueueAction;
     public event Action<float>? SetTime;
+    public event Action<int>? QueueDeleteAction;
+    public event Action<int>? QueueMoveUpAction;
+    public event Action<int>? QueueMoveDownAction;
 
     private List<JukeboxPrototype> availableTracks = new();
     private EntityUid? _audio;
@@ -92,26 +96,6 @@ public sealed partial class JukeboxMenu : FancyWindow
         SetTime?.Invoke(PlaybackSlider.Value);
         _lockTimer = 0.5f;
     }
-
-    /// <summary>
-    /// Re-populates the list of jukebox prototypes available.
-    /// </summary>
-    // public void Populate()
-    // {
-    //     MusicList.Clear();
-
-    //     foreach (var entry in availableTracks)
-    //     {
-    //         if (SearchBar.Text.Trim().Length != 0)
-    //         {
-    //             if (entry.Name.ToLowerInvariant().Contains(SearchBar.Text.Trim().ToLowerInvariant()))
-    //                 MusicList.AddItem(entry.Name, metadata: entry.ID);
-    //         } else {
-    //             MusicList.AddItem(entry.Name, metadata: entry.ID);
-    //         }
-    //     }
-    // }
-
 
     public void PopulateTracklist()
     {
@@ -170,6 +154,50 @@ public sealed partial class JukeboxMenu : FancyWindow
     }
 
 
+    /// <summary>
+    /// Populates the queue list with all queued items
+    /// </summary>
+    /// <param name="queue"></param>
+    public void PopulateQueueList(IReadOnlyCollection<ProtoId<JukeboxPrototype>> queue)
+    {
+        // Get the existing list of queue controls
+        var oldChildCount = QueueList.ChildCount;
+
+        var idx = 0;
+        foreach (var item in queue)
+        {
+            var track = _prototypeManager.Index(item);
+
+            if (idx >= oldChildCount)
+            {
+                var queuedTrackBox = new QueuedTrackControl(track, idx);
+                queuedTrackBox.OnDeletePressed += s => QueueDeleteAction?.Invoke(s);
+                queuedTrackBox.OnMoveUpPressed += s => QueueMoveUpAction?.Invoke(s);
+                queuedTrackBox.OnMoveDownPressed += s => QueueMoveDownAction?.Invoke(s);
+                QueueList.AddChild(queuedTrackBox);
+            }
+            else
+            {
+                var child = QueueList.GetChild(idx) as QueuedTrackControl;
+
+                if (child == null)
+                {
+                    DebugTools.Assert($"Jukebox menu queued track control at {idx} is not of type QueuedTrackControl"); // Something's gone terribly wrong.
+                    continue;
+                }
+
+                child.SetTrackInfo(track);
+                child.SetIndex(idx);
+            }
+            idx++;
+        }
+
+        // Shrink list if new list is shorter than old list.
+        for (var childIdx = oldChildCount - 1; idx <= childIdx; childIdx--)
+        {
+            QueueList.RemoveChild(childIdx);
+        }
+    }
 
     public void UpdateAvailableTracks(IEnumerable<JukeboxPrototype> jukeboxProtos)
     {
@@ -180,7 +208,6 @@ public sealed partial class JukeboxMenu : FancyWindow
             availableTracks.Add(entry);
         }
     }
-
 
     public void SetPlayPauseButton(bool playing, bool force = false)
     {

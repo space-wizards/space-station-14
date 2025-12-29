@@ -65,39 +65,6 @@ public sealed partial class JukeboxComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class JukeboxPlayingMessage : BoundUserInterfaceMessage;
-
-[Serializable, NetSerializable]
-public sealed class JukeboxPauseMessage : BoundUserInterfaceMessage;
-
-[Serializable, NetSerializable]
-public sealed class JukeboxStopMessage : BoundUserInterfaceMessage;
-
-[Serializable, NetSerializable]
-public sealed class JukeboxRepeatMessage(bool repeat) : BoundUserInterfaceMessage
-{
-    public bool Repeat { get; } = repeat;
-}
-
-[Serializable, NetSerializable]
-public sealed class JukeboxShuffleMessage(bool shuffle) : BoundUserInterfaceMessage
-{
-    public bool Shuffle { get; } = shuffle;
-}
-
-[Serializable, NetSerializable]
-public sealed class JukeboxSelectedMessage(ProtoId<JukeboxPrototype> songId) : BoundUserInterfaceMessage
-{
-    public ProtoId<JukeboxPrototype> SongId { get; } = songId;
-}
-
-[Serializable, NetSerializable]
-public sealed class JukeboxSetTimeMessage(float songTime) : BoundUserInterfaceMessage
-{
-    public float SongTime { get; } = songTime;
-}
-
-[Serializable, NetSerializable]
 public enum JukeboxVisuals : byte
 {
     VisualState

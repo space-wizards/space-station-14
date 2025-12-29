@@ -44,6 +44,12 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         _menu.OnSongSelected += SelectSong;
 
         _menu.SetTime += SetTime;
+
+        _menu.QueueDeleteAction += index => SendMessage(new JukeboxDeleteRequestMessage(index));
+        _menu.QueueMoveUpAction += index => SendMessage(new JukeboxMoveRequestMessage(index, -1));
+        _menu.QueueMoveDownAction += index => SendMessage(new JukeboxMoveRequestMessage(index, 1));
+
+
         PopulateMusic();
         Reload();
     }

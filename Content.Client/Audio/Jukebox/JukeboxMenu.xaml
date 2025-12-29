@@ -36,13 +36,15 @@
                 VerticalExpand="True"
                 HorizontalExpand="True">
                 <Label Text="{Loc 'jukebox-menu-playlist-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
-                <ItemList
-                    Name="PlayList"
-                    SelectMode="Button"
-                    Margin="3 3 3 3"
-                    HorizontalExpand="True"
-                    VerticalExpand="True"
-                    SizeFlagsStretchRatio="8"/>
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                    <BoxContainer
+                        Name="QueueList"
+                        Orientation="Vertical"
+                        HorizontalExpand="True"
+                        VerticalExpand="True"
+                        RectClipContent="True">
+                    </BoxContainer>
+                </ScrollContainer>
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Vertical">
