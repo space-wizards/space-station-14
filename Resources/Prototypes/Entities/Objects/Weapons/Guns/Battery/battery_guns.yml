@@ -90,7 +90,6 @@
         whitelist:
           tags:
             - PowerCell
-            - PowerCellSmall
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: Appearance
