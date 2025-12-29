@@ -10,6 +10,8 @@
     allowedModes:
     - HyposprayDynamicMode
     - HyposprayInjectMode
+  - type: Spillable
+    solution: hypospray
   - type: Appearance
 
 - type: entity

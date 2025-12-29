@@ -65,6 +65,7 @@ public sealed partial class InjectorSystem : EntitySystem
             ToggleMode(injector, args.User);
 
         args.Handled = true;
+        args.ApplyDelay = false;
     }
 
     private void OnInjectorAfterInteract(Entity<InjectorComponent> injector, ref AfterInteractEvent args)
