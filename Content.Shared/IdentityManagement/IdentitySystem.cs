@@ -130,23 +130,30 @@ public sealed class IdentitySystem : EntitySystem
     {
         var coverage = component.Coverage;
 
-        var coverageText = coverage switch
-        {
-            IdentityBlockerCoverage.NONE => "identity-block-coverage-text-none",
-            IdentityBlockerCoverage.MOUTH => "identity-block-coverage-text-mouth",
-            IdentityBlockerCoverage.EYES => "identity-block-coverage-text-eyes",
-            IdentityBlockerCoverage.FULL => "identity-block-coverage-text-full",
-            _ => "identity-block-coverage-none"
-        };
+        String coverageText;
+        String iconTexture;
 
-        var iconTexture = coverage switch
+        switch (coverage)
         {
-            IdentityBlockerCoverage.NONE => "/Textures/Interface/VerbIcons/human-head.svg.192dpi.png",
-            IdentityBlockerCoverage.MOUTH => "/Textures/Interface/VerbIcons/human-head-mouth.svg.192dpi.png",
-            IdentityBlockerCoverage.EYES => "/Textures/Interface/VerbIcons/human-head-eyes.svg.192dpi.png",
-            IdentityBlockerCoverage.FULL => "/Textures/Interface/VerbIcons/human-head-mask.svg.192dpi.png",
-            _ => "/Textures/Interface/VerbIcons/human-head.svg.192dpi.png"
-        };
+            case IdentityBlockerCoverage.MOUTH:
+                coverageText = "identity-block-coverage-text-mouth";
+                iconTexture = "/Textures/Interface/VerbIcons/human-head-mouth.svg.192dpi.png";
+                break;
+
+            case IdentityBlockerCoverage.EYES:
+                coverageText = "identity-block-coverage-text-eyes";
+                iconTexture = "/Textures/Interface/VerbIcons/human-head-eyes.svg.192dpi.png";
+                break;
+
+            case IdentityBlockerCoverage.FULL:
+                coverageText = "identity-block-coverage-text-full";
+                iconTexture = "/Textures/Interface/VerbIcons/human-head-mask.svg.192dpi.png";
+                break;
+
+            default:
+                // technically the coverage can be NONE, so we return just in case
+                return;
+        }
 
         _examine.AddHoverExamineVerb(args,
             component,
