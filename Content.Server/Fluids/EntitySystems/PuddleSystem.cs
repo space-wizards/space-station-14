@@ -387,21 +387,34 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         spilled = solution.Value.Comp.Solution;
 
-        return TrySplashSpillAt(entity, coordinates, spilled, out puddleUid, sound, user);
+        return TrySplashSpillAt(entity, coordinates, solution.Value, out puddleUid, sound, user);
+    }
+
+    private bool TrySplashSpillAt(EntityUid entity,
+        EntityCoordinates coordinates,
+        Entity<SolutionComponent> solution,
+        out EntityUid puddleUid,
+        bool sound = true,
+        EntityUid? user = null)
+    {
+        var result = TrySplashSpillAt(entity, coordinates, solution.Comp.Solution, out puddleUid, sound, user);
+        _solutionContainerSystem.UpdateChemicals(solution);
+        return result;
     }
 
     public override bool TrySplashSpillAt(EntityUid entity,
         EntityCoordinates coordinates,
-        Solution spilled,
+        Solution solution,
         out EntityUid puddleUid,
         bool sound = true,
         EntityUid? user = null)
     {
         puddleUid = EntityUid.Invalid;
 
-        if (spilled.Volume == 0)
+        if (solution.Volume == 0)
             return false;
 
+        var spilled = solution.SplitSolution(solution.Volume);
         var targets = new List<EntityUid>();
         var reactive = new HashSet<Entity<ReactiveComponent>>();
         _lookup.GetEntitiesInRange(coordinates, 1.0f, reactive);
