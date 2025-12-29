@@ -12,12 +12,14 @@ public abstract partial class SharedAtmosphereSystem
      due to sandboxing.
      */
 
-    private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
-
     /// <summary>
-    ///     Cached array of gas specific heats.
+    /// Cached array of gas specific heats.
     /// </summary>
     public float[] GasSpecificHeats => _gasSpecificHeats;
+    private float[] _gasSpecificHeats = new float[Atmospherics.TotalNumberOfGases];
+
+    public string?[] GasReagents = new string[Atmospherics.TotalNumberOfGases];
+    protected readonly GasPrototype[] GasPrototypes = new GasPrototype[Atmospherics.TotalNumberOfGases];
 
     public virtual void InitializeGases()
     {
