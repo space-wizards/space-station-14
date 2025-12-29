@@ -159,7 +159,7 @@ namespace Content.Client.Chemistry.UI
                     SetBufferText(castState.InputContainerInfo?.CurrentVolume, "chem-master-output-beaker-draw");
                     break;
                 default:
-                    throw new("Unreachable");
+                    throw new($"Chemmaster {castState.OutputContainerInfo} draw source is not set");
             }
 
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
@@ -227,7 +227,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     ChemMasterDrawSource.Internal => state.BufferReagents,
                     ChemMasterDrawSource.External => state.InputContainerInfo.Reagents ?? [],
-                    _ => throw new("Unreachable"),
+                    _ => throw new($"Chemmaster {state.OutputContainerInfo} draw source is not set"),
                 }).MinBy(r => r.Quantity)
                 .Reagent;
             _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
