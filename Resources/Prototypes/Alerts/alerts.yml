@@ -336,6 +336,24 @@
   description: alerts-hunger-desc
 
 - type: alert
+  id: Overfed
+  category: Hunger
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: overfed
+  name: alerts-hunger-name
+  description: alerts-hunger-desc
+
+- type: alert
+  id: Okay
+  category: Hunger
+  icons:
+  - sprite: /Textures/Interface/Alerts/hunger.rsi
+    state: okay
+  name: alerts-hunger-name
+  description: alerts-hunger-desc
+
+- type: alert
   id: Stamina
   category: Stamina
   icons:

@@ -6,6 +6,7 @@
     "states": [
         { "name": "peckish", "directions": 1, "delays": [[1.0]] },
         { "name": "starving", "directions": 1, "delays": [[0.5, 0.5]] },
+        { "name": "okay", "directions": 1, "delays": [[1.0]] },
         { "name": "overfed", "directions": 1, "delays": [[1.0]] }
     ]
 }
