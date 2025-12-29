@@ -35,10 +35,6 @@
     solution: food
   - type: TrashOnSolutionEmpty
     solution: food
-  - type: Tag
-    tags:
-      - Ingredient
-
 - type: entity
   abstract: true
   parent: ReagentContainerBase
@@ -88,8 +84,17 @@
   name: flour bag
   description: A big bag of flour. Good for baking!
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "flour-big_open"} # open
+          False: {state: "flour-big"} # closed
   - type: Sprite
-    state: flour-big
+    layers:
+    - state: flour-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -120,8 +125,17 @@
   name: cornmeal bag
   description: A big bag of cornmeal. Good for cooking!
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "cornmeal-big_open"} # open
+          False: {state: "cornmeal-big"} # closed
   - type: Sprite
-    state: cornmeal-big
+    layers:
+    - state: cornmeal-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -151,8 +165,17 @@
   name: rice bag
   description: A big bag of rice. Good for cooking!
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "rice-big_open"} # open
+          False: {state: "rice-big"} # closed
   - type: Sprite
-    state: rice-big
+    layers:
+    - state: rice-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -182,8 +205,17 @@
   name: sugar bag
   description: A big bag of tasty spacey sugar.
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "sugar-big_open"} # open
+          False: {state: "sugar-big"} # closed
   - type: Sprite
-    state: sugar-big
+    layers:
+    - state: sugar-big
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -215,8 +247,17 @@
   name: olive oil
   description: Olive oil. From space olives presumably.
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "oliveoil_open"} # open
+          False: {state: "oliveoil"} # closed
   - type: Sprite
-    state: oliveoil
+    layers:
+    - state: oliveoil
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -233,8 +274,17 @@
   name: mayonnaise
   description: Bottle of mayonnaise.
   components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "mayo_open"} # open
+          False: {state: "mayo"} # closed
   - type: Sprite
-    state: mayo
+    layers:
+    - state: mayo
+      map: ["enum.OpenableVisuals.Layer"]
   - type: SolutionContainerManager
     solutions:
       food:
@@ -278,9 +328,6 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
-  - type: Tag
-    tags:
-      - Ingredient
 
 - type: entity
   parent: FoodBakingBase
@@ -468,7 +515,6 @@
     node: start
   - type: Tag
     tags:
-    - Ingredient
     - ClothMade
   - type: SolutionContainerManager
     solutions:
@@ -540,7 +586,6 @@
   - type: Tag
     tags:
      - ClothMade
-     - Ingredient
 
 - type: entity
   name: raw pastry base
@@ -934,9 +979,6 @@
       reagents:
       - ReagentId: CocoaPowder
         Quantity: 2
-  - type: Tag
-    tags:
-      - Ingredient
 
 - type: entity
   parent: FoodBakingBase

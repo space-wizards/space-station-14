@@ -64,7 +64,7 @@
   parent: [ BaseWeaponLauncher, BaseGunWieldable, BaseMajorContraband ]
   id: WeaponLauncherHydra
   name: hydra
-  description: PLOOP... FSSSSSS
+  description: PLOOP... FSSSSSS...
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
@@ -102,6 +102,14 @@
       path: /Audio/Weapons/Guns/MagOut/sfrifle_magout.ogg
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/sfrifle_magin.ogg
+
+- type: entity
+  parent: [WeaponLauncherHydra]
+  id: WeaponLauncherHydraLethal
+  suffix: frag
+  components:
+  - type: RevolverAmmoProvider
+    proto: GrenadeFrag
 
 - type: entity
   name: RPG-7
@@ -331,6 +339,33 @@
             False: { state: base-unshaded-off }
     - type: PacifismAllowedGun
 
+- type: entity
+  parent: BaseItem
+  id: WeaponStickyHand
+  name: sticky hand
+  description: They're saying you're reaching. They're saying it's a stretch. You'll show them all, and you'll stick it to them.
+  components:
+  - type: AmmoCounter
+  - type: GrapplingGun
+    cycleSound: /Audio/Misc/woosh.ogg
+    ropeSprite:
+      sprite: Objects/Weapons/Guns/Launchers/sticky_hand.rsi
+      state: rope
+  - type: Gun
+    soundGunshot: /Audio/Misc/stickystretch.ogg
+    fireRate: 0.5
+    clumsyProof: true
+    soundEmpty: /Audio/Misc/boing.ogg
+  - type: BasicEntityAmmoProvider
+    proto: StickyHandPalm
+    capacity: 1
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Launchers/sticky_hand.rsi
+    state: base
+  - type: UseDelay
+    delay: 1.5
+  - type: PacifismAllowedGun
+
 # Admeme
 - type: entity
   name: tether gun
@@ -425,9 +460,6 @@
   description: It fires large meteors.
   components:
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeRocket
     proto: MeteorMedium
 
 - type: entity
@@ -438,7 +470,4 @@
   description: It fires slow immovable rods.
   components:
   - type: BallisticAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeRocket
     proto: ImmovableRodSlow

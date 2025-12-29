@@ -18,7 +18,6 @@
   roles:
   - Bartender
   - Botanist
-  - Boxer
   - Chaplain
   - Chef
   - Clown
@@ -31,7 +30,6 @@
   - Passenger
   - Reporter
   - Visitor
-  - Zookeeper
   - ServiceWorker
   editorHidden: true
 
@@ -147,9 +145,7 @@
   color: "#9FED58"
   weight: 10
   roles:
-  - Boxer
   - Reporter
-  - Zookeeper
   - Psychologist
   primary: false
   editorHidden: true

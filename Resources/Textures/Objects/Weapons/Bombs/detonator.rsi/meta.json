@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from austation at commit https://github.com/austation/austation/commit/71d8e7406d84f8ec8cb79bf153b050e7e09d2a17 and modified by IProduceWidgets",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "empty",
+        "directions": 1
+    },
+    {
+        "name": "wired",
+        "directions": 1
+    },
+    {
+        "name": "addtrigger",
+        "directions": 1
+    },
+    {
+        "name": "complete",
+        "directions": 1
+    },
+    {
+        "name": "primed",
+        "directions": 1,
+        "delays": [
+            [ 0.2, 0.2 ]
+        ]
+    }
+  ]
+}
