@@ -15,9 +15,4 @@ public sealed partial class ReagentColorComponent : Component
     /// </summary>
     [DataField("solution"), AutoNetworkedField]
     public string SolutionName = "bloodstream";
-
-    /// <summary>
-    /// The solution entity that is being monitored.
-    /// </summary>
-    public Entity<SolutionComponent>? Solution;
 }
