@@ -60,11 +60,13 @@ public sealed partial class InjectorSystem : EntitySystem
             return;
 
         if (activeProto.InjectOnUse) // Injectors that can't toggle transferAmounts will be used.
-            TryMobsDoAfter(injector, args.User, args.User);
-        else // Syringes toggle Draw/Inject.
+            args.Handled |= TryMobsDoAfter(injector, args.User, args.User);
+        else // Syringes toggle Draw/Inject. Since this creates popups on failure, we always want to handle it.
+        {
             ToggleMode(injector, args.User);
+            args.Handled = true;
+        }
 
-        args.Handled = true;
         args.ApplyDelay = false;
     }
 
@@ -96,7 +98,7 @@ public sealed partial class InjectorSystem : EntitySystem
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        args.Handled = TryUseInjector(injector, args.Args.User, args.Args.Target.Value);
+        args.Handled |= TryUseInjector(injector, args.Args.User, args.Args.Target.Value);
     }
 
     private void OnAttack(Entity<InjectorComponent> injector, ref MeleeHitEvent args)
