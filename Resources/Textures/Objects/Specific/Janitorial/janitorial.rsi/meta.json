@@ -8,12 +8,6 @@
   },
   "states": [
     {
-      "name": "cleaner"
-    },
-    {
-      "name": "cleaner_large"
-    },
-    {
       "name": "mopbucket"
     },
     {
@@ -62,14 +56,6 @@
     },
     {
       "name": "mopbucket_cube"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
     },
     {
       "name": "equipped-BELT",

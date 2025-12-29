@@ -1,7 +1,7 @@
 - type: entity
   name: Plant-B-Gone
   id: PlantBGoneSpray
-  parent: SprayBottle
+  parent: SprayBottleBase
   description: Kills those pesky weeds!
   suffix: "Filled"
   components:
@@ -27,7 +27,7 @@
 - type: entity
   name: weed spray
   id: WeedSpray
-  parent: SprayBottle
+  parent: SprayBottleBase
   description: It's a toxic mixture, in spray form, to kill small weeds.
   suffix: "Filled"
   components:
