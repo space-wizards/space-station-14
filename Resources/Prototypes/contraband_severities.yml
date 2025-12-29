@@ -4,7 +4,7 @@
   id: Minor
   examineText: contraband-examine-text-Minor
 
-# Dangerous fucking shit that doesn't belong to CyberSun or NanoTrasen, RPGs, retro laser blasters, unholy things
+# Dangerous fucking shit that doesn't belong to CyberSun or Nanotrasen, RPGs, retro laser blasters, unholy things
 - type: contrabandSeverity
   id: Major
   examineText: contraband-examine-text-Major
