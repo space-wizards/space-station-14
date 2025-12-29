@@ -54,12 +54,12 @@
     heldPrefix: off
     size: Normal
   - type: Appearance
+  - type: ItemTogglePrefix
+    prefixOn: on
+    prefixOff: off
   - type: GenericVisualizer
     visuals:
       enum.ToggleableVisuals.Enabled:
         enum.ToggleableVisuals.Layer:
           True: {state: on-icon}
           False: {state: off-icon}
-        enum.ItemVisuals.HeldPrefix:
-          True: on
-          False: off
