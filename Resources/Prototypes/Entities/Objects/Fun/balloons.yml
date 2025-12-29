@@ -39,7 +39,7 @@
 - type: entity
   parent: BaseBalloon
   id: BalloonNT
-  name: nanotrasen balloon
+  name: Nanotrasen balloon
   description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
   components:
   - type: Sprite

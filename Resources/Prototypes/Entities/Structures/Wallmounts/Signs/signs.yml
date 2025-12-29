@@ -1292,7 +1292,7 @@
 - type: entity
   parent: BaseSign
   id: SignNanotrasen1
-  name: nanotrasen sign 1
+  name: Nanotrasen sign 1
   description: Part 1.
   components:
   - type: Sprite
@@ -1302,7 +1302,7 @@
 - type: entity
   parent: BaseSign
   id: SignNanotrasen2
-  name: nanotrasen sign 2
+  name: Nanotrasen sign 2
   description: Part 2.
   components:
   - type: Sprite
@@ -1312,7 +1312,7 @@
 - type: entity
   parent: BaseSign
   id: SignNanotrasen3
-  name: nanotrasen sign 3
+  name: Nanotrasen sign 3
   description: Part 3.
   components:
   - type: Sprite
@@ -1322,7 +1322,7 @@
 - type: entity
   parent: BaseSign
   id: SignNanotrasen4
-  name: nanotrasen sign 4
+  name: Nanotrasen sign 4
   description: Part 4.
   components:
   - type: Sprite
@@ -1332,7 +1332,7 @@
 - type: entity
   parent: BaseSign
   id: SignNanotrasen5
-  name: nanotrasen sign 5
+  name: Nanotrasen sign 5
   description: Part 5.
   components:
   - type: Sprite

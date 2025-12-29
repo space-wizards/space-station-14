@@ -40,7 +40,7 @@
 - type: entity
   id: BannerNanotrasen
   parent: BannerBase
-  name: nanotrasen banner
+  name: Nanotrasen banner
   description: A banner displaying the Nanotrasen logo. It looks rather cheap.
   components:
   - type: Sprite
