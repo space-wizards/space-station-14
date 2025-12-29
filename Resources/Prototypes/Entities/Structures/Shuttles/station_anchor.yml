@@ -80,10 +80,12 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 150
+          damage: 300
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Breakage" ]
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
       - trigger:
           !type:DamageTrigger
           damage: 600

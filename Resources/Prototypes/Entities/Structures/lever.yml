@@ -32,10 +32,21 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
+          damage: 200
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
           damage: 100
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 1
+              max: 1
     - type: Construction
       graph: LeverGraph
       node: LeverNode
