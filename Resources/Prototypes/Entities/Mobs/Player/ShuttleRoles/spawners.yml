@@ -827,7 +827,7 @@
 ### Misc
 
 - type: entity
-  name: NanoTrasen visitor spawner
+  name: Nanotrasen visitor spawner
   id: NTVisitorSpawner
   parent: MarkerBase
   components:
@@ -881,7 +881,7 @@
     - MobSkeletonCloset
 
 - type: entity
-  name: NanoTrasen visitor spawner
+  name: Nanotrasen visitor spawner
   suffix: 50
   id: NTVisitorSpawner50
   parent: MarkerBase
@@ -897,7 +897,7 @@
     chance: 0.5
 
 - type: entity
-  name: NanoTrasen visitor spawner
+  name: Nanotrasen visitor spawner
   suffix: 33
   id: NTVisitorSpawner33
   parent: NTVisitorSpawner50
@@ -908,7 +908,7 @@
     chance: 0.33
 
 - type: entity
-  name: NanoTrasen visitor spawner
+  name: Nanotrasen visitor spawner
   suffix: 25
   id: NTVisitorSpawner25
   parent: NTVisitorSpawner50
@@ -919,7 +919,7 @@
     chance: 0.25
 
 - type: entity
-  name: NanoTrasen visitor spawner
+  name: Nanotrasen visitor spawner
   suffix: 20
   id: NTVisitorSpawner20
   parent: NTVisitorSpawner50
@@ -930,7 +930,7 @@
     chance: 0.20
 
 - type: entity
-  name: NanoTrasen visitor spawner
+  name: Nanotrasen visitor spawner
   suffix: 10
   id: NTVisitorSpawner10
   parent: NTVisitorSpawner50
