@@ -6,7 +6,6 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
-using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -20,7 +19,6 @@ public sealed partial class PowerCellSystem : EntitySystem
     [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -55,17 +53,7 @@ public sealed partial class PowerCellSystem : EntitySystem
             args.Cancel();
             return;
         }
-
-        // Check ItemSlot's whitelist/blacklist if it exists
-        if (_itemSlots.TryGetSlot(ent.Owner, ent.Comp.CellSlotId, out var slot))
-        {
-            if (_whitelist.IsWhitelistFail(slot.Whitelist, args.EntityUid)
-                || _whitelist.IsWhitelistPass(slot.Blacklist, args.EntityUid))
-            {
-                args.Cancel();
-                return;
-            }
-        }
+        // System also uses whitelist logic in the component to check if its allowed to insert.
 
     }
 
