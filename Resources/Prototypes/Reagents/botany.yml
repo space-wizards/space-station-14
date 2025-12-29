@@ -266,13 +266,13 @@
           types:
             Bloodloss: -5
       - !type:ModifyBloodLevel
+        amount: 1
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Rat ]
         - !type:ReagentCondition
           reagent: Ammonia
           min: 1
-          amount: 6
       - !type:Oxygenate # ammonia displaces nitrogen in vox blood
         conditions:
         - !type:MetabolizerTypeCondition
