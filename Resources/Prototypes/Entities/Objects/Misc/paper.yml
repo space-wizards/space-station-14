@@ -461,3 +461,6 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Paper: 25

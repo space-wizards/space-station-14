@@ -25,10 +25,21 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 100
+            damage: 200
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+          - !type:DoActsBehavior
+            acts: ["Destruction"]
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              CableApcStack1:
+                min: 1
+                max: 7
     - type: Visibility
       layer: 1
     - type: Appearance

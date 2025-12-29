@@ -82,10 +82,21 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 15
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard1:
+            min: 1
+            max: 3
 
 
 #For admin spawning only

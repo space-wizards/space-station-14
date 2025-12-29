@@ -48,10 +48,24 @@
     thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 50
+          damage: 100
         behaviors:
           - !type:DoActsBehavior
             acts: ["Destruction"]
+      - trigger:
+          !type:DamageTrigger
+          damage: 50
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetPlastic1:
+              min: 1
+              max: 4
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: pet_carrier_open
