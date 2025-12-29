@@ -33,7 +33,7 @@ public sealed class ReagentColorSystem : EntitySystem
 
     private void OnSolutionChanged(Entity<ReagentColorComponent> entity, ref SolutionContainerChangedEvent args)
     {
-        if (args.SolutionId == entity.Comp.SolutionName)
+        if (args.SolutionId == entity.Comp.Solution)
         {
             UpdateColor(entity, args.Solution);
         }
@@ -43,7 +43,7 @@ public sealed class ReagentColorSystem : EntitySystem
     {
         var (uid, comp) = entity;
 
-        if (solution == null && !_solutionContainer.TryGetSolution(uid, comp.SolutionName, out _, out solution))
+        if (solution == null && !_solutionContainer.TryGetSolution(uid, comp.Solution, out _, out solution))
             return;
 
         var color = solution.GetColor(_prototypeManager);

@@ -13,6 +13,6 @@ public sealed partial class ReagentColorComponent : Component
     /// <summary>
     /// The name of the solution that determines the color.
     /// </summary>
-    [DataField("solution"), AutoNetworkedField]
-    public string SolutionName = "bloodstream";
+    [DataField(required: true), AutoNetworkedField]
+    public string? Solution;
 }
