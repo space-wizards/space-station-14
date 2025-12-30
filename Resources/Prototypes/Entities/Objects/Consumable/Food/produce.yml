@@ -2685,7 +2685,7 @@
           Quantity: 5
   - type: SliceableFood
     slice: MaterialPyrotton1
-    count: 2
+    count: 4
     sliceTime: 0.5
     potencyEffectsCount: true
     anySharp: true

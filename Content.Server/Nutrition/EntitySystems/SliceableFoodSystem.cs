@@ -85,16 +85,17 @@ public sealed class SliceableFoodSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, ref entity.Comp3) || string.IsNullOrEmpty(entity.Comp2.Slice))
             return false;
 
+        var count = entity.Comp2.TotalCount; //avoid changing TotalCount directly because theoretically deleting the food can be cancelled
         if (entity.Comp2.PotencyEffectsCount == true)
         {
             if (TryComp<ProduceComponent>(entity, out var prod))
             {
                 if (prod.Seed != null) //Is seed data defined? Wouldn't be for produce not coming from a plant.
-                    entity.Comp2.TotalCount = (ushort)Math.Ceiling(entity.Comp2.TotalCount * Math.Min(prod.Seed.Potency, 100f) / 100);
+                    count = (ushort)Math.Ceiling(entity.Comp2.TotalCount * Math.Min(prod.Seed.Potency, 100f) / 100);
             }
         }
 
-        var slices = Slice(entity, user);
+        var slices = Slice(entity, count);
         if (!HasComp<StackComponent>(slices[0]) && !slices.Contains(EntityUid.Invalid)) //stackable entities don't handle inconsistent reagent makeups well
         {
             TryComp<EdibleComponent>(entity, out var edible);
@@ -103,7 +104,7 @@ public sealed class SliceableFoodSystem : EntitySystem
                 if (!_solutionContainer.TryGetSolution(entity.Owner, container, out var soln, out var solution)) //check if there's a solution to get
                     continue;
 
-                var sliceVolume = solution.Volume / FixedPoint2.New(entity.Comp2.TotalCount);
+                var sliceVolume = solution.Volume / FixedPoint2.New(count);
 
                 foreach (var sliceUid in slices) //for each slice
                 {
@@ -132,14 +133,14 @@ public sealed class SliceableFoodSystem : EntitySystem
     /// Create a new slices in the world, returns all slices as a list.
     /// The solutions must be set afterwards.
     /// </summary>
-    public List<EntityUid> Slice(Entity<TransformComponent?, SliceableFoodComponent?> entity, EntityUid user)
+    public List<EntityUid> Slice(Entity<TransformComponent?, SliceableFoodComponent?> entity, int count)
     {
         var fail = new List<EntityUid>() { EntityUid.Invalid };
 
         if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
             return fail;
 
-        var slices = _stack.SpawnMultipleAtPosition(entity.Comp2.Slice!.Value, entity.Comp2.TotalCount, entity.Comp1.Coordinates);
+        var slices = _stack.SpawnMultipleAtPosition(entity.Comp2.Slice!.Value, count, entity.Comp1.Coordinates);
         foreach (var sliceUid in slices)
         {
             if (!Place(entity, sliceUid))
