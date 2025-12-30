@@ -1,0 +1,1 @@
+skeleton-suffix = КЛАЦ КЛАЦ!
