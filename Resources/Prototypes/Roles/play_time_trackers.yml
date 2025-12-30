@@ -149,10 +149,4 @@
   id: JobWarden
 
 - type: playTimeTracker
-  id: JobBoxer
-
-- type: playTimeTracker
-  id: JobZookeeper
-
-- type: playTimeTracker
   id: JobTrainee
