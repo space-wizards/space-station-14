@@ -18,6 +18,8 @@ using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.PowerCell;
+using Content.Shared.PowerCell;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
