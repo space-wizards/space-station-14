@@ -368,7 +368,7 @@ namespace Content.Client.IconSmoothing
             if  ((directionsOnNorth & counterClockwiseDir) != 0 &&
                  directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0)
             {
-                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{8}");
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{7}");
                 return;
             }
 
@@ -376,7 +376,7 @@ namespace Content.Client.IconSmoothing
             if  ((directionsOnNorth & clockwiseDir) != 0 &&
                  directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
             {
-                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{7}");
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{6}");
                 return;
             }
 
@@ -384,7 +384,7 @@ namespace Content.Client.IconSmoothing
             if  ((directionsOnSouth & counterClockwiseDir) != 0 &&
                  directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
             {
-                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{6}");
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{5}");
                 return;
             }
 
@@ -392,7 +392,7 @@ namespace Content.Client.IconSmoothing
             if  ((directionsOnSouth & clockwiseDir) != 0 &&
                  directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0)
             {
-                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{5}");
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{4}");
                 return;
             }
 
@@ -426,25 +426,25 @@ namespace Content.Client.IconSmoothing
 
             if (westOk && eastOk)
             {
-                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{4}");
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{3}");
                 return;
             }
 
             // Только на западе есть соседи смотрящие не в противоположную сторону
             if (westOk)
             {
-                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{3}");
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{2}");
                 return;
             }
 
             // Только на востоке есть соседи смотрящие не в противоположную сторону
             if (eastOk)
             {
-                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{2}");
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{1}");
                 return;
             }
 
-            _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{1}");
+            _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{0}");
         }
 
         private void CalculateNewSpriteCardinal(Entity<MapGridComponent>? gridEntity, IconSmoothComponent smooth, Entity<SpriteComponent> sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)

@@ -9,6 +9,9 @@
   components:
   - type: Sprite
     noRot: false
+    state: state0
+  - type: Icon
+    state: state0
   - type: PlacementReplacement
     key: sofa
   - type: IconSmooth
@@ -36,10 +39,9 @@
 - type: entity
   id: SofaDark
   parent: SofaBase
+  name: dark sofa
   components:
   - type: Sprite
     sprite: Structures/Furniture/Sofas/black.rsi
-    state: state1
   - type: Icon
     sprite: Structures/Furniture/Sofas/black.rsi
-    state: state1

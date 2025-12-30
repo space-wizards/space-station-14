@@ -8,6 +8,10 @@
     "copyright": "derived from tgstation https://github.com/tgstation/tgstation/blob/HEAD/icons/obj/chairs_wide.dmi and edited by TheShuEd for ss14",
     "states": [
         {
+            "name": "state0",
+            "directions": 4
+        },
+        {
             "name": "state1",
             "directions": 4
         },
@@ -33,10 +37,6 @@
         },
         {
             "name": "state7",
-            "directions": 4
-        },
-        {
-            "name": "state8",
             "directions": 4
         }
     ]
