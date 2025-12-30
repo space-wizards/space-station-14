@@ -19,24 +19,4 @@ public static class ContentCompletionHelper
             yield return new CompletionOption(uid.ToString(), metaData.EntityName);
         }
     }
-
-    public static IEnumerable<CompletionOption> ByComponentAndEntityUid<T>(string text, IEntityManager entManager, int limit = 20) where T : IComponent
-    {
-        if (text != string.Empty && !EntityUid.TryParse(text, out _))
-            yield break;
-
-        var query = entManager.AllEntityQueryEnumerator<T, MetaDataComponent>();
-
-        var i = 0;
-        while (i < limit && query.MoveNext(out var uid, out _, out var metadata))
-        {
-            var uidText = uid.ToString();
-            if (uidText?.StartsWith(text) != true)
-                continue;
-
-            i++;
-            yield return new CompletionOption(uidText, metadata.EntityName);
-        }
-    }
-
 }
