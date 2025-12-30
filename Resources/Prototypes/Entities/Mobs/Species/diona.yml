@@ -33,10 +33,10 @@
       - id: FoodMeatPlant
         amount: 5
   - type: Bloodstream
-    bloodReagents:
+    bloodReferenceSolution:
       reagents:
       - ReagentId: Sap
-        Quantity: 1
+        Quantity: 300
   - type: Reactive
     groups:
       Flammable: [ Touch ]

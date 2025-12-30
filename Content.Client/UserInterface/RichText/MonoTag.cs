@@ -7,7 +7,7 @@ namespace Content.Client.UserInterface.RichText;
 /// <summary>
 /// Sets the font to a monospaced variant
 /// </summary>
-public sealed class MonoTag : IMarkupTag
+public sealed class MonoTag : IMarkupTagHandler
 {
     [Dependency] private readonly IFontSelectionManager _fontSelection = default!;
 

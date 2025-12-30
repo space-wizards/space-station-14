@@ -34,6 +34,10 @@ uplink-gloves-north-star-desc = A pair of gloves that reduce your punching coold
 
 uplink-gloves-knuckleduster-name = Syndicate Knuckle Dusters
 uplink-gloves-knuckleduster-desc = A pair of plastitanium knuckle dusters that let you punch hard enough to break the captains jaw into pieces.
+
+uplink-hushpup-name = Hushpup
+uplink-hushpup-desc = A powerful silenced shotgun with a low magazine capacity. Comes with a spare box of buckshot. Uses .50 shotgun ammo.
+
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
 uplink-explosive-grenade-desc = A simplistic grenade with a 3.5 second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
@@ -171,9 +175,6 @@ uplink-binary-translator-key-desc = Lets you tap into the silicons' binary chann
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Starts empty.
 
-uplink-voice-mask-name = Voice Mask
-uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of. Also utilizes cutting-edge chameleon technology.
-
 uplink-clothing-eyes-hud-syndicate-name = Syndicate Visor
 uplink-clothing-eyes-hud-syndicate-desc = The syndicate's professional head-up display, designed for better detection of humanoids and their subsequent elimination.
 
@@ -225,6 +226,9 @@ uplink-micro-bomb-implanter-desc = Explode on death or manual activation with th
 
 uplink-radio-implanter-name = Radio Implanter
 uplink-radio-implanter-desc = Implants a Syndicate radio, allowing covert communication without a headset.
+
+uplink-voice-mask-implanter-name = Voice Mask Implanter
+uplink-voice-mask-implanter-desc = Modifies your vocal cords to be able to sound like anyone you could imagine.
 
 # Bundles
 uplink-observation-kit-name = Observation Kit
@@ -280,7 +284,7 @@ uplink-toolbox-name = Toolbox
 uplink-toolbox-desc = A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves and a syndicate gas mask as well.
 
 uplink-syndicate-jaws-of-life-name = Jaws Of Life
-uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments.
+uplink-syndicate-jaws-of-life-desc = A combined prying and cutting tool. Useful for entering the station or its departments. Can even open bolted doors!
 
 uplink-duffel-surgery-name = Surgical Duffel Bag
 uplink-duffel-surgery-desc = A large duffel bag containing a full suite of surgical tools.
