@@ -47,7 +47,7 @@ public sealed class SolitarySpawningPrototype : IPrototype
     /// <remarks>
     /// SolitarySpawning ignores job bans, but real jobs should in general not be used with the system.
     /// We don't want players trying to pad their role times using the tutorial.
-    /// Recommended that all tutorials use the 'Tutorial' job, and place any necessary equipment on the map itself.
+    /// Recommended that all tutorials use the 'Trainee' job, and place any necessary equipment on the map itself.
     /// </remarks>
     [DataField]
     public ProtoId<JobPrototype> Job = "Trainee";
