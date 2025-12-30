@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: beck-thompson
-  changes:
-  - message: Various syndicate items can now be "locked" with your voice to hide their
-      true identity. The items are, all chameleon clothing, voice masks, no slips,
-      agent IDs, cane swords, and e daggers.
-    type: Add
-  - message: e dagger now has a slightly longer activation cool down (1s -> 1.5s).
-    type: Tweak
-  - message: Voice triggered items now properly display the trigger text when examined.
-    type: Fix
-  id: 8843
-  time: '2025-08-10T18:10:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39310
 - author: jessicamaybe
   changes:
   - message: 'Added a rare Hamlet variant: Fragile Hamlet'
@@ -3943,3 +3930,10 @@
   id: 9343
   time: '2025-12-30T21:52:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/40121
+- author: jessicamaybe
+  changes:
+  - message: Moved borg module remove button to the left side
+    type: Tweak
+  id: 9344
+  time: '2025-12-30T23:26:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42119
