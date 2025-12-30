@@ -359,14 +359,6 @@ namespace Content.Client.IconSmoothing
             var directionOnSouth = CollectNeighborDirections(gridUid, grid, pos + (Vector2i) rotation.RotateVec(-Vector2.UnitY), smooth, smoothQuery);
             var directionOnNorth = CollectNeighborDirections(gridUid, grid, pos + (Vector2i) rotation.RotateVec(Vector2.UnitY), smooth, smoothQuery);
 
-            
-            // На западе и востоке есть соседи, которые смотрят не в противоположную сторону
-            if (directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0 &&
-                directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
-            {
-                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{4}");
-                return;
-            }
 
             // на севере есть сосед, смотрящий против часовой от нас, на западе смотрящий не в противоположную сторону
             if  ((directionOnNorth & counterClockwiseDir) != 0 &&
@@ -397,6 +389,14 @@ namespace Content.Client.IconSmoothing
                 directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0)
             {
                 _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{5}");
+                return;
+            }
+
+            // На западе и востоке есть соседи, которые смотрят не в противоположную сторону
+            if (directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0 &&
+                directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
+            {
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{4}");
                 return;
             }
 
