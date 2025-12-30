@@ -42,6 +42,16 @@
   name: dark sofa
   components:
   - type: Sprite
-    sprite: Structures/Furniture/Sofas/black.rsi
+    sprite: Structures/Furniture/Sofas/dark.rsi
   - type: Icon
-    sprite: Structures/Furniture/Sofas/black.rsi
+    sprite: Structures/Furniture/Sofas/dark.rsi
+
+- type: entity
+  id: SofaWhite
+  parent: SofaBase
+  name: white sofa
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Sofas/white.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Sofas/white.rsi
