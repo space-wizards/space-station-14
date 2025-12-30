@@ -395,7 +395,7 @@
         - id: ClothingOuterHardsuitSyndieFake
 #        - id: PlushieC20rSMG figuring out how to randomize to any fake syndie gun
         - id: EnergySwordFake
-#        - id: FakeGrenadeEntityTable
+#        - id: FakeGrenadsEntityTable
 
 - type: entity
   parent: [ ClothingBackpackDuffelBundle, BaseMajorContraband ]
