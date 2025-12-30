@@ -419,7 +419,7 @@
         Heat: 4
   - type: ItemToggleSize
     activatedSize: Small
-  - Type: Reflect
+  - type: Reflect
     reflectProb: 0.05
     spread: 5
   - type: Item
