@@ -55,3 +55,13 @@
     sprite: Structures/Furniture/Sofas/white.rsi
   - type: Icon
     sprite: Structures/Furniture/Sofas/white.rsi
+
+- type: entity
+  id: SofaWooden
+  parent: SofaBase
+  name: wooden sofa
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Sofas/wooden.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Sofas/wooden.rsi
