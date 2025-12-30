@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Princess-Cheeseballs
-  changes:
-  - message: Mobs such as borgs, dragons, etc can no longer crawl.
-    type: Tweak
-  id: 8842
-  time: '2025-08-10T17:49:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39084
 - author: beck-thompson
   changes:
   - message: Various syndicate items can now be "locked" with your voice to hide their
@@ -3942,3 +3935,11 @@
   id: 9342
   time: '2025-12-29T22:49:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42167
+- author: OnyxTheBrave
+  changes:
+  - message: The Chemmaster 4000 can now switch between making pills from the internal
+      buffer or from an inserted beaker.
+    type: Tweak
+  id: 9343
+  time: '2025-12-30T21:52:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40121
