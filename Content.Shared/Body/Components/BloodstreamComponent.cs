@@ -22,6 +22,7 @@ public sealed partial class BloodstreamComponent : Component
 {
     public const string DefaultBloodSolutionName = "bloodstream";
     public const string DefaultBloodTemporarySolutionName = "bloodstreamTemporary";
+    public const string DefaultMetabolitesSolutionName = "metabolites";
 
     /// <summary>
     /// The next time that blood level will be updated and bloodloss damage dealt.
@@ -172,6 +173,12 @@ public sealed partial class BloodstreamComponent : Component
     public string BloodTemporarySolutionName = DefaultBloodTemporarySolutionName;
 
     /// <summary>
+    /// Name/Key that <see cref="MetabolitesSolution"/> is indexed by.
+    /// </summary>
+    [DataField]
+    public string MetabolitesSolutionName = DefaultMetabolitesSolutionName;
+
+    /// <summary>
     /// Internal solution for blood storage
     /// </summary>
     [ViewVariables]
@@ -184,6 +191,12 @@ public sealed partial class BloodstreamComponent : Component
     /// </summary>
     [ViewVariables]
     public Entity<SolutionComponent>? TemporarySolution;
+
+    /// <summary>
+    /// Internal solution for metabolite storage
+    /// </summary>
+    [ViewVariables]
+    public Entity<SolutionComponent>? MetabolitesSolution;
 
     /// <summary>
     /// Alert to show when bleeding.

@@ -67,9 +67,7 @@
     solutionOnBody: false
     solution: "Lung"
     metabolizerTypes: [ Human ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
+    stages: [ Respiration ]
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -100,10 +98,7 @@
     updateInterval: 1.5
     maxReagents: 2
     metabolizerTypes: [Arachnid]
-    groups:
-    - id: Medicine
-    - id: Poison
-    - id: Narcotic
+    stages: [ Bloodstream ]
 
 - type: entity
   id: OrganArachnidLiver
@@ -121,8 +116,7 @@
     updateInterval: 1.5
     maxReagents: 1
     metabolizerTypes: [Animal]
-    groups:
-    - id: Alcohol
+    stages: [ Metabolites ]
 
 - type: entity
   id: OrganArachnidKidneys

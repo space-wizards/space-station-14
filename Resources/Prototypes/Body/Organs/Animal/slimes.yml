@@ -12,14 +12,7 @@
       maxReagents: 3
       metabolizerTypes: [ Slime ]
       removeEmpty: true
-      groups:
-        - id: Food
-        - id: Drink
-        - id: Medicine
-        - id: Poison
-        - id: Narcotic
-        - id: Alcohol
-          rateModifier: 2
+      stages: [ Digestion, Bloodstream, Metabolites ]
     - type: SolutionContainerManager
       solutions:
         stomach:
@@ -48,9 +41,7 @@
       solutionOnBody: false
       solution: "Lung"
       metabolizerTypes: [ Slime ]
-      groups:
-      - id: Gas
-        rateModifier: 100.0
+      stages: [ Respiration ]
     - type: SolutionContainerManager
       solutions:
         organ:
