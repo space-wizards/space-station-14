@@ -90,7 +90,7 @@ public sealed class SliceableFoodSystem : EntitySystem
             if (TryComp<ProduceComponent>(entity, out var prod))
             {
                 if (prod.Seed != null) //Is seed data defined? Wouldn't be for produce not coming from a plant.
-                    entity.Comp2.TotalCount = (ushort)Math.Ceiling(entity.Comp2.TotalCount * prod.Seed.Potency / 100);
+                    entity.Comp2.TotalCount = (ushort)Math.Ceiling(entity.Comp2.TotalCount * Math.Min(prod.Seed.Potency, 100f) / 100);
             }
         }
 
