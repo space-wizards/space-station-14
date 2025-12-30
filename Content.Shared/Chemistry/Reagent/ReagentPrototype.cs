@@ -243,7 +243,6 @@ namespace Content.Shared.Chemistry.Reagent
     {
         public string ReagentPrototype;
 
-        // TODO: Kill Metabolism groups!
         public Dictionary<ProtoId<MetabolismStagePrototype>, ReagentEffectsGuideEntry>? GuideEntries;
 
         public List<string>? PlantMetabolisms = null;
