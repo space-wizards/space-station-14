@@ -95,25 +95,27 @@ public sealed class SliceableFoodSystem : EntitySystem
         }
 
         var slices = Slice(entity, user);
-        if (!HasComp<StackComponent>(slices[0])) //stackable entities don't handle inconsistent reagent makeups well
+        if (!HasComp<StackComponent>(slices[0]) && !slices.Contains(EntityUid.Invalid)) //stackable entities don't handle inconsistent reagent makeups well
         {
             TryComp<EdibleComponent>(entity, out var edible);
             foreach (var container in entity.Comp3.Containers) //for each solution container in the entity
             {
                 if (!_solutionContainer.TryGetSolution(entity.Owner, container, out var soln, out var solution)) //check if there's a solution to get
                     continue;
+
                 var sliceVolume = solution.Volume / FixedPoint2.New(entity.Comp2.TotalCount);
+
                 foreach (var sliceUid in slices) //for each slice
                 {
                     TryComp<EdibleComponent>(sliceUid, out var edibleSlice);
                     var lostSolution =
                         _solutionContainer.SplitSolution(soln.Value, sliceVolume);
 
-                    //if both sliced and slice have ediblecomponent, and current container is the edible solution container, make sure it ends up in the slice's edible solution container
+                    //if both sliced and slice entities have ediblecomponent, and current container is the sliced's edible solution container, make sure it ends up in the slice's edible solution container
                     if (edible != null && edibleSlice != null & edible.Solution == container)
                         FillSlice(sliceUid, lostSolution, edibleSlice!.Solution); //fill specifically the EdibleComponent-linked solution container
                     else
-                        FillSlice(sliceUid, lostSolution, lostSolution.Name!); //fill with a proportion of the whole
+                        FillSlice(sliceUid, lostSolution, lostSolution.Name!); //fill a solution container of the same name (if it exists)
                 }
             }
         }
