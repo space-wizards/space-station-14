@@ -1,43 +1,4 @@
 ﻿Entries:
-- author: lolman360
-  changes:
-  - message: Fixed certain items (like pickaxes) failing to insert into containers
-      that have enough space to store them, sometimes.
-    type: Fix
-  id: 8837
-  time: '2025-08-07T16:01:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38896
-- author: chromiumboy
-  changes:
-  - message: The station AI will receive chat notifications when its sentry turrets
-      start firing upon hostile targets.
-    type: Add
-  id: 8838
-  time: '2025-08-08T18:56:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35277
-- author: K-Dynamic
-  changes:
-  - message: Captain and Head of Personnel starts with administration glasses and
-      hud respectively.
-    type: Add
-  id: 8839
-  time: '2025-08-08T19:00:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35531
-- author: perryprog
-  changes:
-  - message: The emote radial menu now shows the correct icons for its subcategories.
-    type: Fix
-  id: 8840
-  time: '2025-08-08T19:27:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39481
-- author: Flareguy
-  changes:
-  - message: Updated moth displacement maps to fix missing pixels, among other various
-      issues.
-    type: Fix
-  id: 8841
-  time: '2025-08-09T21:52:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39174
 - author: Princess-Cheeseballs
   changes:
   - message: Mobs such as borgs, dragons, etc can no longer crawl.
@@ -3944,3 +3905,40 @@
   id: 9337
   time: '2025-12-28T01:10:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42110
+- author: SnappingOpossum
+  changes:
+  - message: Happy Honk Big Bite may now contain crayon boxes.
+    type: Add
+  id: 9338
+  time: '2025-12-28T06:36:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42077
+- author: Ilya246
+  changes:
+  - message: Large grid shuttle collisions should now be somewhat less laggy.
+    type: Fix
+  id: 9339
+  time: '2025-12-28T07:30:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40984
+- author: PAFFhassoocks
+  changes:
+  - message: Ninjas no longer spawn with a survival box, and instead have the items
+      directly in their bags, excluding the emergency tank.
+    type: Tweak
+  id: 9340
+  time: '2025-12-29T10:42:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42102
+- author: GeneralGaws
+  changes:
+  - message: The Decoy Syndicate Bomb in the Traitor uplink now has a purchase timer,
+      same as the regular Syndicate Bomb.
+    type: Tweak
+  id: 9341
+  time: '2025-12-29T10:59:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42114
+- author: 0-Anon
+  changes:
+  - message: Rat creatures will now restore bloodlevel when exposed to ammonia gas.
+    type: Tweak
+  id: 9342
+  time: '2025-12-29T22:49:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42167

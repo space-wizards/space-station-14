@@ -963,4 +963,12 @@
   id: 117
   time: '2025-12-24T00:43:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42028
+- author: EchoOfNothing
+  changes:
+  - message: On Plasma, added a second APC to telecommunications, so the APC is no
+      longer overloaded at the start of the round.
+    type: Fix
+  id: 118
+  time: '2025-12-29T04:05:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42144
 Order: 2
