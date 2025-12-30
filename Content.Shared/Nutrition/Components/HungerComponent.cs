@@ -46,6 +46,20 @@ public sealed partial class HungerComponent : Component
     public float ActualDecayRate;
 
     /// <summary>
+    /// The minimum possible starting hunger value.
+    /// If it is less than 0, it will be set in <see cref="HungerSystem.OnMapInit"/>
+    /// </summary>
+    [DataField]
+    public float MinStartingHunger = -1;
+
+    /// <summary>
+    /// The maximum possible starting hunger value.
+    /// If it is less than 0, it will be set in <see cref="HungerSystem.OnMapInit"/>
+    /// </summary>
+    [DataField]
+    public float MaxStartingHunger = -1;
+
+    /// <summary>
     /// The last threshold this entity was at.
     /// Stored in order to prevent recalculating
     /// </summary>
