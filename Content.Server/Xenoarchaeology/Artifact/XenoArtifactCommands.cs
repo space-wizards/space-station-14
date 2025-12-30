@@ -132,6 +132,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     /// <summary>
     /// Create node in artifact (new on depth 0 or attach next to existing one).
     /// </summary>
+    [CommandImplementation("createNode")]
     public void CreateNodeNew(
         [CommandArgument] Entity<XenoArtifactComponent> artifact,
         [CommandArgument(typeof(XenoEffectParser))] ProtoId<EntityPrototype> effect,
@@ -359,7 +360,8 @@ public sealed class XenoArtifactCommand : ToolshedCommand
 }
 
 /// <summary>
-/// Custom type parser for toolshed commands that will enable choosing between hand-held and 
+/// Custom type parser for toolshed commands that will enable choosing between hand-held and
+/// stationary artifact types.
 /// </summary>
 public sealed class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityPrototype>>
 {
@@ -383,7 +385,7 @@ public sealed class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityProt
         if (Array.IndexOf(Options, protoId) == -1)
             return false;
 
-        if (!_prototypeManager.TryIndex<EntityPrototype>(protoId, out var prototype))
+        if (!_prototypeManager.TryIndex<EntityPrototype>(protoId, out var _))
             return false;
         
         return true;
@@ -401,11 +403,16 @@ public sealed class XenoArtifactTypeParser : CustomTypeParser<ProtoId<EntityProt
     }
 }
 
+/// <summary>
+/// Custom type parser for toolshed commands
+/// that lets choose entity prototype of XenoArtifact effect.
+/// </summary>
 public sealed class XenoEffectParser : CustomTypeParser<ProtoId<EntityPrototype>>
 {
     private static readonly EntProtoId ArtifactEffectBaseProtoId = "BaseXenoArtifactEffect";
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IEntitySystemManager _systemManager = default!;
 
     public override bool TryParse(ParserContext ctx, out ProtoId<EntityPrototype> result)
     {
@@ -432,19 +439,10 @@ public sealed class XenoEffectParser : CustomTypeParser<ProtoId<EntityPrototype>
 
     public override CompletionResult TryAutocomplete(ParserContext ctx, CommandArgument? arg)
     {
-        var list = new List<CompletionOption>();
         var hint = ToolshedCommand.GetArgHint(arg, typeof(ProtoId<EntityPrototype>));
 
-        var query = _prototypeManager.EnumeratePrototypes<EntityPrototype>();
-        foreach (var entityPrototype in query)
-        {
-            if (entityPrototype is { Abstract: false, Parents: not null }
-                && Array.IndexOf(entityPrototype.Parents, ArtifactEffectBaseProtoId.Id) != -1 )
-            {
-                list.Add(new CompletionOption(entityPrototype.ID, entityPrototype.Description));
-            }
-        }
+        var artifact = _systemManager.GetEntitySystem<XenoArtifactSystem>();
 
-        return CompletionResult.FromHintOptions(list, hint);
+        return CompletionResult.FromHintOptions(artifact.EffectPrototypes, hint);
     }
 }
