@@ -37,7 +37,6 @@
     size: Small
     heldPrefix: stomach
   - type: Stomach
-    digestionDelay: 30
   - type: SolutionContainerManager
     solutions:
       stomach:

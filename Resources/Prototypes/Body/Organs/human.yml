@@ -232,4 +232,3 @@
   - type: Metabolizer
     maxReagents: 5
     metabolizerTypes: [Human]
-    removeEmpty: true

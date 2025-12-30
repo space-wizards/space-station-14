@@ -43,9 +43,6 @@
   - type: Organ
   - type: Lung
   - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
     metabolizerTypes: [ Animal ]
     stages: [ Respiration ]
   - type: SolutionContainerManager
@@ -155,7 +152,6 @@
   - type: Metabolizer
     maxReagents: 5
     metabolizerTypes: [ Animal ]
-    removeEmpty: true
   - type: Item
     size: Small
     heldPrefix: kidneys
