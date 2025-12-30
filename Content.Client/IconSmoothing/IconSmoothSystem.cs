@@ -289,6 +289,9 @@ namespace Content.Client.IconSmoothing
                 case IconSmoothingMode.Diagonal:
                     CalculateNewSpriteDiagonal(gridEntity, smooth, spriteEnt, xform, smoothQuery);
                     break;
+                case IconSmoothingMode.SnakeDirectional:
+                    CalculateNewSnakeDirectional(gridEntity, smooth, spriteEnt, xform, smoothQuery);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -331,6 +334,87 @@ namespace Content.Client.IconSmoothing
             {
                 _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}0");
             }
+        }
+
+        private void CalculateNewSnakeDirectional(Entity<MapGridComponent>? gridEntity, IconSmoothComponent smooth, Entity<SpriteComponent> sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
+        {
+            if (gridEntity == null)
+            {
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}0");
+                return;
+            }
+
+            var gridUid = gridEntity.Value.Owner;
+            var grid = gridEntity.Value.Comp;
+            var pos = _mapSystem.TileIndicesFor(gridUid, grid, xform.Coordinates);
+            var rotation = xform.LocalRotation;
+
+            var counterClockwiseDir = CardinalFlagFromDir(rotation.RotateVec(Vector2.UnitX).ToWorldAngle().GetCardinalDir());
+            var clockwiseDir = CardinalFlagFromDir(rotation.RotateVec(-Vector2.UnitX).ToWorldAngle().GetCardinalDir());
+            var oppositeDir = CardinalFlagFromDir(rotation.RotateVec(Vector2.UnitY).ToWorldAngle().GetCardinalDir());
+
+            // Directions where entities are directed on the adjacent tile
+            var directionsOnWest = CollectNeighborDirections(gridUid, grid, pos + (Vector2i) rotation.RotateVec(-Vector2.UnitX), smooth, smoothQuery);
+            var directionsOnEast = CollectNeighborDirections(gridUid, grid, pos + (Vector2i) rotation.RotateVec(Vector2.UnitX), smooth, smoothQuery);
+            var directionOnSouth = CollectNeighborDirections(gridUid, grid, pos + (Vector2i) rotation.RotateVec(-Vector2.UnitY), smooth, smoothQuery);
+            var directionOnNorth = CollectNeighborDirections(gridUid, grid, pos + (Vector2i) rotation.RotateVec(Vector2.UnitY), smooth, smoothQuery);
+
+            
+            // На западе и востоке есть соседи, которые смотрят не в противоположную сторону
+            if (directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0 &&
+                directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
+            {
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{4}");
+                return;
+            }
+
+            // на севере есть сосед, смотрящий против часовой от нас, на западе смотрящий не в противоположную сторону
+            if  ((directionOnNorth & counterClockwiseDir) != 0 &&
+                directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0)
+            {
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{8}");
+                return;
+            }
+
+            // На севере есть сосед, смотрящий по часовой от нас, на востоке смотрящий не в противоположную сторону
+            if  ((directionOnNorth & clockwiseDir) != 0 &&
+                directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
+            {
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{7}");
+                return;
+            }
+
+            // На юге есть сосед, смотрящий против часовой от нас, на востоке смотрящий не в противоположную сторону
+            if  ((directionOnSouth & counterClockwiseDir) != 0 &&
+                directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
+            {
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{6}");
+                return;
+            }
+
+            // На юге есть сосед, смотрящий по часовой от нас, на западе смотрящий не в противоположную сторону
+            if  ((directionOnSouth & clockwiseDir) != 0 &&
+                directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0)
+            {
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{5}");
+                return;
+            }
+
+            // Только на западе есть соседи смотрящие не в противоположную сторону
+            if (directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0)
+            {
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{3}");
+                return;
+            }
+
+            // Только на востоке есть соседи смотрящие не в противоположную сторону
+            if (directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
+            {
+                _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{2}");
+                return;
+            }
+
+            _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{1}");
         }
 
         private void CalculateNewSpriteCardinal(Entity<MapGridComponent>? gridEntity, IconSmoothComponent smooth, Entity<SpriteComponent> sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
@@ -386,6 +470,42 @@ namespace Content.Client.IconSmoothing
             }
 
             return false;
+        }
+
+        private CardinalConnectDirs CollectNeighborDirections(EntityUid gridUid, MapGridComponent grid, Vector2i targetPos, IconSmoothComponent smooth, EntityQuery<IconSmoothComponent> smoothQuery)
+        {
+            var dirs = CardinalConnectDirs.None;
+            var entities = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, targetPos);
+
+            while (entities.MoveNext(out var entity))
+            {
+                if (!smoothQuery.TryGetComponent(entity, out var other) ||
+                    other.SmoothKey == null ||
+                    !(other.SmoothKey == smooth.SmoothKey || smooth.AdditionalKeys.Contains(other.SmoothKey)) ||
+                    !other.Enabled)
+                {
+                    continue;
+                }
+
+                if (!TryComp(entity, out TransformComponent? xform))
+                    continue;
+
+                dirs |= CardinalFlagFromDir(xform.LocalRotation.GetCardinalDir());
+            }
+
+            return dirs;
+        }
+
+        private static CardinalConnectDirs CardinalFlagFromDir(Direction dir)
+        {
+            return dir switch
+            {
+                Direction.North => CardinalConnectDirs.North,
+                Direction.South => CardinalConnectDirs.South,
+                Direction.East => CardinalConnectDirs.East,
+                Direction.West => CardinalConnectDirs.West,
+                _ => CardinalConnectDirs.None
+            };
         }
 
         private void CalculateNewSpriteCorners(Entity<MapGridComponent>? gridEntity, IconSmoothComponent smooth, Entity<SpriteComponent> spriteEnt, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
