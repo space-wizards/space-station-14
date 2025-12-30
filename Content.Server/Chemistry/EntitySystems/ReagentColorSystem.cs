@@ -77,9 +77,9 @@ public sealed class ReagentColorSystem : EntitySystem
         }
 
         // Update appearance for sprite coloring (for slimes)
-        if (HasComp<AppearanceComponent>(uid))
+        if (TryComp<AppearanceComponent>(uid, out var appComp))
         {
-            _appearance.SetData(uid, ReagentColorVisuals.Color, color);
+            _appearance.SetData(uid, ReagentColorVisuals.Color, color, appComp);
         }
     }
 }
