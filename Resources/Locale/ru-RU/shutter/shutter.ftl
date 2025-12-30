@@ -1,0 +1,1 @@
+shutter-rattle = *гряк-гряк*
