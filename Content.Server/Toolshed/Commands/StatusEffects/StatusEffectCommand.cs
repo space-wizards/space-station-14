@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Toolshed.TypeParsers.StatusEffects;
 using Content.Shared.Administration;
 using Content.Shared.StatusEffectNew;
@@ -21,7 +21,7 @@ public sealed class StatusEffectCommand : ToolshedCommand
             input,
             status,
             TimeSpan.FromSeconds(time),
-            delay == 0 ? null : TimeSpan.FromSeconds(delay));
+            ZeroAsNull(delay));
 
         return input;
     }
@@ -37,7 +37,7 @@ public sealed class StatusEffectCommand : ToolshedCommand
                 ent,
                 status,
                 TimeSpan.FromSeconds(time),
-                delay == 0 ? null : TimeSpan.FromSeconds(delay));
+                ZeroAsNull(delay));
 
             yield return ent;
         }
@@ -51,8 +51,8 @@ public sealed class StatusEffectCommand : ToolshedCommand
         _statusEffectsSystem.TryUpdateStatusEffectDuration(
             input,
             status,
-            time == 0 ? null : TimeSpan.FromSeconds(time),
-            delay == 0 ? null : TimeSpan.FromSeconds(delay));
+            ZeroAsNull(time),
+            ZeroAsNull(delay));
 
         return input;
     }
@@ -67,8 +67,8 @@ public sealed class StatusEffectCommand : ToolshedCommand
             _statusEffectsSystem.TryUpdateStatusEffectDuration(
                 ent,
                 status,
-                time == 0 ? null : TimeSpan.FromSeconds(time),
-                delay == 0 ? null : TimeSpan.FromSeconds(delay));
+                ZeroAsNull(time),
+                ZeroAsNull(delay));
 
             yield return ent;
         }
@@ -82,8 +82,8 @@ public sealed class StatusEffectCommand : ToolshedCommand
         _statusEffectsSystem.TrySetStatusEffectDuration(
             input,
             status,
-            time == 0 ? null : TimeSpan.FromSeconds(time),
-            delay == 0 ? null : TimeSpan.FromSeconds(delay));
+            ZeroAsNull(time),
+            ZeroAsNull(delay));
 
         return input;
     }
@@ -98,8 +98,8 @@ public sealed class StatusEffectCommand : ToolshedCommand
             _statusEffectsSystem.TrySetStatusEffectDuration(
                 ent,
                 status,
-                time == 0 ? null : TimeSpan.FromSeconds(time),
-                delay == 0 ? null : TimeSpan.FromSeconds(delay));
+                ZeroAsNull(time),
+                ZeroAsNull(delay));
 
             yield return ent;
         }
@@ -113,7 +113,7 @@ public sealed class StatusEffectCommand : ToolshedCommand
         _statusEffectsSystem.TryRemoveTime(
             input,
             status,
-            time == 0 ? null : TimeSpan.FromSeconds(time));
+            ZeroAsNull(time));
 
         return input;
     }
@@ -128,9 +128,14 @@ public sealed class StatusEffectCommand : ToolshedCommand
             _statusEffectsSystem.TryRemoveTime(
                 ent,
                 status,
-                time == 0 ? null : TimeSpan.FromSeconds(time));
+                ZeroAsNull(time));
 
             yield return ent;
         }
+    }
+
+    private static TimeSpan? ZeroAsNull(float delay)
+    {
+        return delay == 0 ? null : TimeSpan.FromSeconds(delay);
     }
 }
