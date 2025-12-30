@@ -333,6 +333,19 @@
     access: [["Command"]]
 
 - type: entity
+  parent: CrateBaseSecure
+  id: CrateSyndicateSecure
+  name: secure syndicate crate
+  description: A dark steel crate with red bands and a letter S embossed on the front.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/syndicate_secure.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/syndicate_secure.rsi
+  - type: AccessReader
+    access: [["SyndicateAgent", "NuclearOperative"]]
+
+- type: entity
   parent: CrateGeneric
   id: CrateLivestock
   name: livestock crate
@@ -822,7 +835,7 @@
 - type: entity
   parent: CrateGenericSteel
   id: CrateSyndicate
-  name: Syndicate crate
+  name: syndicate crate
   description: A dark steel crate with red bands and a letter S embossed on the front.
   components:
   - type: Icon
