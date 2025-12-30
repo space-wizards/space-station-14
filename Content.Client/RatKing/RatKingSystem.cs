@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Alert.Components;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.RatKing;
 
 namespace Content.Client.RatKing;
@@ -7,6 +8,8 @@ namespace Content.Client.RatKing;
 /// <inheritdoc/>
 public sealed class RatKingSystem : SharedRatKingSystem
 {
+    [Dependency] private readonly HungerSystem _hunger = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -25,6 +28,6 @@ public sealed class RatKingSystem : SharedRatKingSystem
         if (!TryComp<HungerComponent>(ent, out var hungerComponent))
             return;
 
-        args.Amount = (int?)hungerComponent.LastAuthoritativeHungerValue;
+        args.Amount = (int?)_hunger.GetHunger(hungerComponent);
     }
 }
