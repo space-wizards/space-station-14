@@ -62,7 +62,7 @@ public sealed class SolitarySpawningSystem : GameRuleSystem<SolitarySpawningRule
             // Only need to report failure if the player was covered under any active rules
             active = true;
 
-            if (comp.Prototypes.Count <= 0)
+            if (comp.Prototypes.Count == 0)
             {
                 Log.Warning("No prototypes were included in SolitarySpawningRuleComponent");
                 continue;
