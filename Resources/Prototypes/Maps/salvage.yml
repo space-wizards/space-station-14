@@ -61,22 +61,22 @@
   id: SmallTesla
   mapPath: /Maps/Salvage/small-tesla.yml
   sizeString: salvage-map-wreck-size-small
-  
+
 - type: salvageMap
   id: SmallDefibwreck
   mapPath: /Maps/Salvage/small-defibwreck.yml
   sizeString: salvage-map-wreck-size-small
-  
+
 - type: salvageMap
   id: SmallJohnspiderclan
   mapPath: /Maps/Salvage/small-johnspiderclan.yml
   sizeString: salvage-map-wreck-size-small
-  
+
 - type: salvageMap
   id: SmallXenoChunk
   mapPath: /Maps/Salvage/small-xenochunk.yml
   sizeString: salvage-map-wreck-size-small
-  
+
 - type: salvageMap
   id: SmallScichunk
   mapPath: /Maps/Salvage/small-scichunk.yml
@@ -170,17 +170,17 @@
   id: MediumHaulingShuttleWreck
   mapPath: /Maps/Salvage/hauling-shuttle.yml
   sizeString: salvage-map-wreck-size-medium
-  
+
 - type: salvageMap
   id: MediumBrigmed
   mapPath: /Maps/Salvage/medium-brigmed.yml
   sizeString: salvage-map-wreck-size-medium
-  
+
 - type: salvageMap
   id: MediumFreelancershuttle
   mapPath: /Maps/Salvage/medium-freelancershuttle.yml
   sizeString: salvage-map-wreck-size-medium
-  
+
 - type: salvageMap
   id: MediumDiamondroid
   mapPath: /Maps/Salvage/medium-diamondroid.yml
@@ -217,12 +217,12 @@
   id: OutpostArm
   mapPath: /Maps/Salvage/outpost-arm.yml
   sizeString: salvage-map-wreck-size-large
-  
+
 - type: salvageMap
   id: LargeSyndieoutpost
   mapPath: /Maps/Salvage/large-syndieoutpost.yml
   sizeString: salvage-map-wreck-size-large
-  
+
 - type: salvageMap
   id: LargeXenoroid
   mapPath: /Maps/Salvage/large-xenoroid.yml
