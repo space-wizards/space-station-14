@@ -31,29 +31,38 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Vox
+  # Begin Offbrand Additions
+  - type: Heartrate
+    etco2Name: etco2-ammonia
+    etco2GasName: reagent-name-ammonia
+    spo2Name: spo2-nitrogen
+    spo2GasName: reagent-name-nitrogen
+  # End Offbrand Additions
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Blunt
-        damage: 400
-      behaviors:
-      - !type:GibBehavior { }
-    - trigger:
-        !type:DamageTypeTrigger
-        damageType: Heat
-        damage: 1500
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawnInContainer: true
-        spawn:
-          FoodMeatChickenFriedVox:
-            min: 3
-            max: 5
-      - !type:BurnBodyBehavior { }
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MeatLaserImpact
+    # Begin Offbrand Removals
+    # - trigger:
+    #     !type:DamageTypeTrigger
+    #     damageType: Blunt
+    #     damage: 400
+    #   behaviors:
+    #   - !type:GibBehavior { }
+    # - trigger:
+    #     !type:DamageTypeTrigger
+    #     damageType: Heat
+    #     damage: 1500
+    #   behaviors:
+    #   - !type:SpawnEntitiesBehavior
+    #     spawnInContainer: true
+    #     spawn:
+    #       FoodMeatChickenFriedVox:
+    #         min: 3
+    #         max: 5
+    #   - !type:BurnBodyBehavior { }
+    #   - !type:PlaySoundBehavior
+    #     sound:
+    #       collection: MeatLaserImpact
+    # End Offbrand Removals
     - trigger:
         !type:DamageTypeTrigger
         damageType: Radiation

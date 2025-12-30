@@ -1,0 +1,138 @@
+- type: entity
+  abstract: true
+  id: WoundInternalBase
+  components:
+  - type: StatusEffect
+  - type: Sprite
+    drawdepth: Effects
+  - type: RejuvenateRemovedStatusEffect
+  - type: Wound
+
+- type: entity
+  parent: WoundInternalBase
+  id: WoundFracture
+  name: fracture wound
+  components:
+  - type: Wound
+    damage:
+      damageDict:
+        Blunt: 10
+    maximumDamage: 10
+  - type: MovementModStatusEffect
+    sprintSpeedModifier: 0.8
+    walkSpeedModifier: 0.8
+  - type: AnalyzableWound
+    descriptions:
+      0: wound-internal-fracture
+  - type: PopupOnAppliedStatusEffect
+    message: fracture-applied
+    visualType: MediumCaution
+  - type: ExaminableStatusEffect
+    message: fracture-examine
+
+- type: entity
+  parent: WoundInternalBase
+  id: WoundArterialBleeding
+  name: arterial bleeding
+  components:
+  - type: Wound
+    damage:
+      damageDict:
+        Slash: 5
+    maximumDamage: 5
+  - type: BleedingWound
+    bleedingCoefficients:
+      Slash: 0.2
+    bleedingDurationCoefficients:
+      Slash: 1
+    startsBleedingAbove: 0
+    requiresTendingAbove: 0
+  - type: AnalyzableWound
+    descriptions:
+      0: wound-arterial-bleeding
+  - type: PopupOnAppliedStatusEffect
+    message: arterial-bleeding-applied
+    visualType: MediumCaution
+  - type: ExaminableStatusEffect
+    message: arterial-bleeding-examine
+
+- type: entity
+  parent: WoundInternalBase
+  id: WoundHusking
+  name: husking
+  components:
+  - type: Wound
+    damage:
+      damageDict:
+        Heat: 100
+        Blunt: 100
+    maximumDamage: 200
+  - type: PainfulWound
+    painCoefficients:
+      Heat: 0.8
+      Blunt: 0.8
+    freshPainCoefficients:
+      Heat: 0.8
+      Blunt: 0.8
+  - type: MeleeModifiersStatusEffect
+    damageModifier:
+      coefficients:
+        Blunt: 0.5
+        Piercing: 0.5
+        Slash: 0.5
+        Structural: 0.5
+    attackRateMultiplier: 0.5
+    attackRateConstant: -0.1
+  - type: GunAccuracyStatusEffect
+    angleRangeModifier: 3
+  - type: CannotUseHeadsetStatusEffect
+  - type: SilencedStatusEffect
+  - type: KnockdownStatusEffect
+  - type: KnockdownOnAppliedStatusEffect
+    duration: 5
+  - type: MovementModStatusEffect
+  - type: IdentityBlocker
+
+- type: entity
+  parent: WoundInternalBase
+  id: WoundBoneDeath
+  name: bone death
+  components:
+  - type: Wound
+    damage:
+      damageDict:
+        Blunt: 50
+        Slash: 50
+        Piercing: 50
+    maximumDamage: 150
+  - type: AnalyzableWound
+    descriptions:
+      0: wound-bone-death
+  - type: PainfulWound
+    painCoefficients:
+      Blunt: 0.8
+      Slash: 0.8
+      Piercing: 0.8
+    freshPainCoefficients:
+      Blunt: 0.8
+      Slash: 0.8
+      Piercing: 0.8
+  - type: MeleeModifiersStatusEffect
+    damageModifier:
+      coefficients:
+        Blunt: 0.5
+        Piercing: 0.5
+        Slash: 0.5
+        Structural: 0.5
+    attackRateMultiplier: 0.5
+    attackRateConstant: -0.1
+  - type: GunAccuracyStatusEffect
+    angleRangeModifier: 3
+  - type: CannotUseHeadsetStatusEffect
+  - type: SilencedStatusEffect
+  - type: KnockdownStatusEffect
+  - type: KnockdownOnAppliedStatusEffect
+    duration: 5
+  - type: MovementModStatusEffect
+  - type: ExaminableStatusEffect
+    message: bone-death-examine

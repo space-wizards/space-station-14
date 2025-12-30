@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Baystation from https://github.com/Baystation12/Baystation12/blob/7b3f23f40d706096a61a3eddf73a60ba71be4067/icons/obj/medical.dmi, state splint",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "splint"
+        }
+    ]
+}

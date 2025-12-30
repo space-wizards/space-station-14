@@ -205,13 +205,13 @@
         damage:
           types:
             Poison:
-              0.8
+              0.2 # Offbrand
       - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
         conditions:
         - !type:MetabolizerTypeCondition
           type: [ Plant ]
           inverted: true
-        factor: -4
+        factor: -1 # Offbrand
       # We need a metabolism effect on reagent removal
       #- !type:AdjustAlert
       #  alertType: CarbonDioxide
@@ -317,6 +317,17 @@
         effectProto: StatusEffectForcedSleeping
         time: 3
         type: Update
+      - !type:ModifyStatusEffect # Offbrand
+        conditions:
+        - !type:ReagentCondition
+          reagent: NitrousOxide
+          min: 1.8
+        - !type:MetabolizerTypeCondition
+          type: [ Slime ]
+          inverted: false
+        effectProto: StatusEffectPainSuppressionNitrousOxide
+        time: 3
+        type: Add
       - !type:HealthChange
         minScale: 3.5
         conditions:

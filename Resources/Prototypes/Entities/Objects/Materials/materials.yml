@@ -108,6 +108,19 @@
       params:
         volume: 1.0
         variation: 0.125
+  # Begin Offbrand
+  - type: Tending
+    woundWhitelist:
+      tags: [WoundCut, WoundPuncture]
+    damage:
+      types:
+        Slash: -0.5
+        Piercing: -0.5
+    tendingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    tendingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  # End Offbrand
   - type: Stack
     stackType: Cloth
     baseLayer: base

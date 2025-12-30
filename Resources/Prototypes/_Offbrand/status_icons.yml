@@ -1,0 +1,104 @@
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconNormal1
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: normal_1
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconNormal2
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: normal_2
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconNormal3
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: normal_3
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconNormal4
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: normal_4
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconNormal5
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: normal_5
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconNormal6
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: normal_6
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconNormal7
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: normal_7
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconCritical1
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: critical_1
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconCritical2
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: critical_2
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconCritical3
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: critical_3
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconCritical4
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: critical_4
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconCritical5
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: critical_5
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconCritical6
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: critical_6
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconCritical7
+  icon:
+    sprite: /Textures/_Offbrand/Icons/medical_hud.rsi
+    state: critical_7
+
+- type: healthIcon
+  parent: HealthIcon
+  id: HealthIconBrainDead
+  icon:
+    sprite: /Textures/Interface/Misc/health_icons.rsi
+    state: Rotting

@@ -65,3 +65,7 @@
     size: Normal # Make smaller than typical outer clothing
     shape:
     - 0, 0, 0, 1
+  - type: Tag # Offbrand
+    tags:
+    - OperatableClothing
+    - WhitelistChameleon

@@ -1,0 +1,73 @@
+<Document>
+# Paramedic
+
+As the primary first responders within the [color=#5b97bc]Medical[/color] department, [color=cyan]Paramedics[/color] are responsible for responding to injury calls, stabilizing patients, and bringing them back to [color=#5b97bc]Medical[/color] for [color=cyan]Physicians[/color] to treat. If the [color=cyan]Physicians[/color] need extra hands to keep patients stable, the [color=cyan]Paramedics[/color] provide this as well.
+
+As a [color=cyan]Paramedic[/color], keep the following things in mind:
+
+- [bold]Speed is key[/bold]: A few seconds can be the difference between life and death. Familiarize yourself with the stations you work on, and be prepared to respond to calls promptly.
+- [bold]Stay alert[/bold]: Keep an eye on the crew monitors, listen to communications for calls for medical assistance, and anticipate situations where your assistance will be required.
+- [bold]Don't die[/bold]: You cannot save lives if you yourself are in need of saving. Avoid dangerous situations in trying to save patients, and do not end up getting dragged to [color=#5b97bc]Medical[/color] by your coworkers.
+
+## Saving Lives
+
+### 1. The call to action
+
+At some point, someone will call for help, you will notice abnormal readings on the crew monitor, or you will run across injured personnel as you travel the station.
+
+### 2. Decide who to treat
+
+Triage is an important skill. Your medical HUD provides a head's up display of your patients' brain health, whether or not the brain is getting enough oxygen, and your patients' heart rates. Your health analyzer can provide more specific information.
+
+Consider prioritizing patients with the following symptoms:
+
+- [bold]Brain damage[/bold]: Brain death is to be avoided at all costs. As long as your patient has a glimmer of brain activity, you can still save them.
+- [bold]Stopped heart[/bold]: A patient's heart being stopped can quickly escalate into severe brain damage.
+- [bold]Arterial bleeding[/bold]: A patient's blood volume going too low can deprive the brain of the blood saturation important for life, and cause the heart to stop.
+
+### 3. Stabilization
+
+- [bold]Keep blood moving[/bold]: If your patient's heart has stopped, CPR is strongly advised. You can enlist nearby personnel to perform CPR whilst you proceed with other measures.
+- [bold]Treat external wounds[/bold]: Apply topicals as necessary to bandage and salve exterior wounds to halt patients' bleeding.
+- [bold]Give stabilizing medicines[/bold]: Inaprovaline can be used to keep the heart and brain from deterioriating as fast, painkillers to relieve the pain, and dexalin (plus) to improve oxygenation if needed.
+
+### 4. Get them to medical
+
+Get your patient to medical, and keep them stable during the process of doing so.
+
+Once they're in the hands of [color=cyan]Physicians[/color], you should be fine to leave to retrieve other patients, unless the [color=cyan]Physicians[/color] ask for a hand.
+
+## The Body
+
+A good understanding of how patients' bodies works is essential for saving lives and keeping your patient alive until you get them to the [color=#5b97bc]Medical[/color] department.
+
+[textlink="Learn more about The Body." link="OffbrandBody"]
+
+## Topicals
+
+<Box>
+  <GuideEntityEmbed Entity="Brutepack" Caption="Bruise Pack"/>
+  <GuideEntityEmbed Entity="Ointment" Caption="Ointment"/>
+  <GuideEntityEmbed Entity="Gauze" Caption="Gauze"/>
+</Box>
+
+When responding to injuries, the first thing you should do is apply the best type of topical for the wound that you have on hand.
+
+[textlink="Learn more about Topicals." link="OffbrandTopicals"]
+
+## Medications
+
+<Box>
+  <GuideEntityEmbed Entity="ChemistryBottleBicaridine" Caption="Bicaridine" />
+  <GuideEntityEmbed Entity="ChemistryBottleDermaline" Caption="Dermaline" />
+  <GuideEntityEmbed Entity="ChemistryBottleDexalinPlus" Caption="Dexalin Plus" />
+  <GuideEntityEmbed Entity="ChemistryBottleDylovene" Caption="Dylovene" />
+  <GuideEntityEmbed Entity="ChemistryBottleInaprovaline" Caption="Inaprovaline" />
+  <GuideEntityEmbed Entity="ChemistryBottleTramadol" Caption="Tramadol" />
+</Box>
+
+After ensuring wounds have been treated with topicals, medications can be given to aid the body in healing, and to relieve pain.
+
+[textlink="Learn more about Medications." link="OffbrandMedication"]
+
+</Document>

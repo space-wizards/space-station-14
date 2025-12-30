@@ -1,0 +1,39 @@
+<Document>
+# Medical
+If someone finds themselves injured, Medical is tasked with bringing them to health.
+
+## Personnel
+[color=#5b97bc]Medical[/color] primarily employs [color=cyan]Physicians[/color], [color=cyan]Paramedics[/color], and [color=cyan]Chemists[/color].
+
+[color=#5b97bc]Medical[/color] care is directed by the [color=cyan]Chief Medical Officer.[/color]
+
+<Box>
+  <GuideEntityEmbed Entity="ToyFigurineMedicalDoctor" Caption="Physician"/>
+  <GuideEntityEmbed Entity="ToyFigurineParamedic" Caption="Paramedic"/>
+  <GuideEntityEmbed Entity="ToyFigurineChemist" Caption="Chemist"/>
+  <GuideEntityEmbed Entity="ToyFigurineChiefMedicalOfficer" Caption="CMO"/>
+</Box>
+
+## Physicians
+
+[color=cyan]Physicians[/color] serve as the primary practitioners within the [color=#5b97bc]Medical[/color] ward, and are responsible for bringing patients to good health. This is done through performing surgeries and other intensive care as necessary.
+
+[textlink="Learn more about Physicians." link="OffbrandPhysician"]
+
+## Paramedics
+
+[color=cyan]Paramedics[/color] serve as the primary medical first responder on stations, and are tasked with retrieving and stabilizing patients to bring them to the [color=#5b97bc]Medical[/color] department for [color=cyan]Physicians[/color] to treat. In states of emergencies, [color=cyan]Paramedics[/color] may also take on additional responsibilities in the [color=#5b97bc]Medical[/color] ward whilst the [color=cyan]Physicians[/color] work through surgeries.
+
+[textlink="Learn more about Physicians." link="OffbrandParamedic"]
+
+## Chemists
+
+[color=cyan]Chemists[/color] are responsible for synthesizing medications relied upon by the [color=cyan]Physicians[/color] and the [color=cyan]Paramedics[/color] to treat patients. They also fill prescriptions for the crew, and can create non-medical chemicals in their laboratory, should the need arise.
+
+[textlink="Learn more about Chemists." link="OffbrandChemist"]
+
+## The Body
+
+[textlink="Learn more about The Body." link="OffbrandBody"]
+
+</Document>

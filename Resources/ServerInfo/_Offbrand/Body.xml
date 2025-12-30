@@ -1,0 +1,148 @@
+<Document>
+# The Body
+
+## The Brain
+<Box>
+  <GuideEntityEmbed Entity="OrganHumanBrain" Caption="Human Brain" />
+</Box>
+
+Everything in a patient's body depends on the brain.
+[color=#00d3b8][bold]As long as the patient's brain is not dead, the patient is alive.[/bold][/color]
+Everything else in their body is responsible for keeping its brain alive.
+The more an injury threatens your patient's brain, the more important it is to treat.
+
+[color=#00d3b8][bold]Once a brain dies, it is dead, and the body cannot be rescuitated.[/bold][/color]
+
+A patient's brain requires adequate saturation (oxygenation for most species) in the bloodstream to survive.
+This is usually measured as SpO2 for oxygen-breathing species, or SpN2 for nitrogen-breathing species.
+[color=#00d3b8][bold]The primary goal in medical care is to ensure the brain has adequate saturation.[/bold][/color]
+
+Symptoms of a patient with severe brain trauma include, but are not limited to:
+
+- [color=cyan]Impaired communication[/color]: A patient experiencing severe brain trauma can have difficulty speaking (i.e. stuttering).
+- [color=cyan]Impaired motor control[/color]: A patient experiencing pain may show sluggishness or an inability to aim precisely.
+- [color=cyan]Inability to stand[/color]: A patient experiencing severe brain trauma may be unable to stand.
+- [color=cyan]Gasping[/color]: A patient experiencing severe brain trauma may have trouble breathing, and gasp as a result.
+- [color=cyan]Nonresponsiveness[/color]: A patient experiencing severe brain trauma may be unable to respond to environmental stimuli.
+
+## Saturation (SpO2/SpN2)
+
+Saturation is the most important metric for ensuring your patient's brain continues to survive.
+
+It is a balance between the [color=#00d3b8][bold]Supply of Oxygen[/bold][/color] and [color=#00d3b8][bold]Oxygen Demand[/bold][/color].
+
+If there is more demand than there is supply, the saturation will drop below 100%.
+
+Supply comes from the lungs, the heart, and the bloodstream.
+Any of these faltering will cause the overall supply to drop.
+
+The body always requires air to live, but physical trauma and pain can result in its need for air to drastically increase, outpacing what even a healthy cardiovascular system can provide.
+
+## The Heart
+
+<Box>
+  <GuideEntityEmbed Entity="OrganHumanHeart" Caption="Human Heart" />
+</Box>
+
+The heart is the primary organ overseeing bloodflow in the patient's body.
+
+[color=#00d3b8][bold]If a patient's heart has stopped, they are priority number one.[/bold][/color]
+Immediately administer CPR, keep administering CPR, and attempt to restart the heart.
+
+The heart is the body's first line of defense against inadequate air supply.
+When the body's saturation (SpO2) drops, the heart rate increases to compensate for this.
+However, an increased heartrate can only do so much before it begins to become ineffective or dangerous.
+
+[bold]Excesssively high heartrates can damage the heart or lead to cardiac arrest. If your patient's heartrate is high, seek to address the causes that might be increasing it before it worsens.[/bold]
+
+### Heart Rate
+
+The [color=#7af396]Heart Rate[/color
+] is the primary indicator of how hard the patient's heart is working.
+It increases in response to other vitals dropping, and can potentially stop the heart if it is too high for too long.
+
+High heartrate can also reduce the [color=#7af396]Heart Health[/color].
+
+### Heart Health
+
+The [color=#7af396]Heart Health[/color] is an indicator of how much damage the heart has taken, either from strain caused by excessive heartrates, or by direct injury.
+
+## The Bloodstream
+
+The bloodstream is the primary vehicle that carries air from your lungs to the brain, with help from the heart.
+
+It is primarily measured by the [color=#7af396]Blood Pressure[/color], which is affected by three factors.
+
+### Blood Volume
+
+Blood is responsible for carrying air, and if there's no blood, there's nothing to carry air.
+Low blood volume causes low blood pressure.
+
+Missing blood can be replaced using IV stands.
+
+In a pinch, Saline, Iron, and Copper can help the patient's body regenerate more blood.
+
+### Vascular Tone
+
+A patient's brain is responsible for many things, and among those, regulating the patient's bloodstream.
+
+If your patient is suffering from injuries to the brain, its ability to keep blood vessels tight will drop, and the blood pressure will drop.
+
+Epinephrine can help ensure vascular tone in this scenario.
+
+### Cardiac Output
+
+A patient's heart is responsible for circulating blood through the body.
+
+A stopped or damaged heart can cause [color=#7af396]Blood Pressure[/color] to drop dramatically.
+
+If the patient's heart has stopped, CPR can be given to keep blood moving.
+
+## Lungs
+
+<Box>
+  <GuideEntityEmbed Entity="OrganHumanLungs" Caption="Human Lungs" />
+</Box>
+
+Lungs are responsible for taking in oxygen (for most species) from the air, and exhaling carbon dioxide (for most species).
+
+If lungs cannot breathe enough, your patient's SpO2 drops, potentially causing injury to the brain.
+If lungs cannot exhale enough, your patient's EtCO2 will drop, potentially causing buildup of toxic waste gases.
+
+Dexalin and Dexalin Plus can be used to substitute for lung function for SpO2, and Inaprovaline can help the patient breathe normally, helping with EtCO2 and SpO2.
+
+### Lung Health
+
+Your patient's lungs can be damaged from breathing in dangerously cold or hot air.
+
+This reduces their ability to inhale air and their ability to provide inhaled air to the body.
+
+### Respiratory Rate
+
+If your patient's body has more demand for air, or their supply of air begins to drop, they will breathe faster to attempt to keep supply and demand in balance.
+
+Past a certain point, breaths can become too fast and shallow, leading to audible gasping and asphyxiation.
+
+### Exhaled Waste Gases (EtCO2/EtNH3/EtN2O)
+
+As a part of life, your patient's body will create waste gases from the inhaled air, primarily Carbon Dioxide (CO2) for most species.
+
+A functional bloodstream ([color=#7af396]Blood Pressure[/color]) is important to carry waste gases to your patient's lungs, so that they can be expelled.
+Inadequate [color=#7af396]Blood Pressure[/color] can reduce the EtCO2, resulting in buildup of toxic waste gases.
+
+The [color=#7af396]Respiratory Rate[/color] also affects how much the patient is exhaling.
+If your patient is breathing too fast and cannot exhale fully, toxic waste gases will build up.
+
+## Pain
+
+In response to injuries, your patient will experience pain.
+
+Fresh wounds are more painful than older and untended wounds.
+
+Pain increases the body's demand for air, causing the cardiovascular system to work overtime.
+
+Possible symptoms include increased heartrate, increased breathing rate, and potentially unconsciousness if the pain is great enough to cause the patient to enter shock.
+
+Pain can be treated temporarily by giving painkillers, and treated long-term by healing the injuries that are causing pain.
+
+</Document>

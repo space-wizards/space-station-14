@@ -33,6 +33,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
     [Dependency] private readonly SharedEntityConditionsSystem _entityConditions = default!;
     [Dependency] private readonly SharedEntityEffectsSystem _entityEffects = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly Content.Shared.StatusEffectNew.StatusEffectsSystem _statusEffects = default!;
 
     private EntityQuery<OrganComponent> _organQuery;
     private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
@@ -128,7 +129,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
         if (solutionEntityUid is null
             || soln is null
             || solution is null
-            || solution.Contents.Count == 0)
+            || (solution.Contents.Count == 0 && ent.Comp1.MetabolizingReagents.Count == 0 && ent.Comp1.Metabolites.Count == 0)) // Offbrand - we need to ensure we clear out metabolizing reagents
         {
             return;
         }
@@ -146,6 +147,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
 
         bool isDead = _mobStateSystem.IsDead(solutionEntityUid.Value);
 
+        var metabolized = new HashSet<ProtoId<ReagentPrototype>>(); // Offbrand
         int reagents = 0;
         foreach (var (reagent, quantity) in list)
         {
@@ -167,10 +169,13 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 continue;
             }
 
+            // Offbrand - keep processing for status effects and metabolites
             // we're done here entirely if this is true
-            if (reagents >= ent.Comp1.MaxReagentsProcessable)
-                return;
+            // if (reagents >= ent.Comp1.MaxReagentsProcessable)
+            //     return;
 
+            metabolized.Add(reagent.Prototype);
+            // End Offbrand
 
             // loop over all our groups and see which ones apply
             if (ent.Comp1.MetabolismGroups is null)
@@ -201,6 +206,16 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                     continue;
 
                 var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
+
+                // Begin Offbrand - status effects
+                foreach (var effect in entry.StatusEffects)
+                {
+                    if (!_entityConditions.TryConditions(actualEntity, effect.Conditions))
+                        _statusEffects.TryRemoveStatusEffect(actualEntity, effect.StatusEffect);
+                    else
+                        _statusEffects.TryUpdateStatusEffectDuration(actualEntity, effect.StatusEffect, out _);
+                }
+                // End Offbrand - status effects
 
                 // do all effects, if conditions apply
                 foreach (var effect in entry.Effects)
@@ -240,12 +255,79 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
             // remove a certain amount of reagent
             if (mostToRemove > FixedPoint2.Zero)
             {
-                solution.RemoveReagent(reagent, mostToRemove);
+                var removed = solution.RemoveReagent(reagent, mostToRemove); // Offbrand
 
                 // We have processed a reagant, so count it towards the cap
                 reagents += 1;
+
+                // Begin Offbrand - track metabbolites
+                if (!ent.Comp1.Metabolites.ContainsKey(reagent.Prototype))
+                    ent.Comp1.Metabolites[reagent.Prototype] = 0;
+                ent.Comp1.Metabolites[reagent.Prototype] += removed;
+                // End Offbrand - track metabbolites
             }
         }
+
+        // Begin Offbrand
+        foreach (var reagent in ent.Comp1.MetabolizingReagents)
+        {
+            if (metabolized.Contains(reagent))
+                continue;
+
+            var proto = _prototypeManager.Index(reagent);
+            var actualEntity = ent.Comp2?.Body ?? solutionEntityUid.Value;
+
+            if (ent.Comp1.MetabolismGroups is null)
+                continue;
+
+            foreach (var group in ent.Comp1.MetabolismGroups)
+            {
+                if (proto.Metabolisms is null)
+                    continue;
+
+                if (!proto.Metabolisms.TryGetValue(group.Id, out var entry))
+                    continue;
+
+                foreach (var effect in entry.StatusEffects)
+                {
+                    _statusEffects.TryRemoveStatusEffect(actualEntity, effect.StatusEffect);
+                }
+            }
+        }
+        ent.Comp1.MetabolizingReagents = metabolized;
+
+        foreach (var metaboliteReagent in ent.Comp1.Metabolites.Keys)
+        {
+            if (ent.Comp1.MetabolizingReagents.Contains(metaboliteReagent))
+                continue;
+
+            if (!_prototypeManager.Resolve(metaboliteReagent, out var proto) || proto.Metabolisms is not { } metabolisms)
+                continue;
+
+            if (ent.Comp1.MetabolismGroups is null)
+                continue;
+
+            ReagentEffectsEntry? entry = null;
+            var metabolismRateModifier = FixedPoint2.Zero;
+            foreach (var group in ent.Comp1.MetabolismGroups)
+            {
+                if (!proto.Metabolisms.TryGetValue(group.Id, out entry))
+                    continue;
+
+                metabolismRateModifier = group.MetabolismRateModifier;
+                break;
+            }
+
+            if (entry is not { } metabolismEntry)
+                continue;
+
+            var rate = metabolismEntry.MetabolismRate * metabolismRateModifier * ent.Comp1.MetaboliteDecayFactor;
+            ent.Comp1.Metabolites[metaboliteReagent] -= rate;
+
+            if (ent.Comp1.Metabolites[metaboliteReagent] <= 0)
+                ent.Comp1.Metabolites.Remove(metaboliteReagent);
+        }
+        // End Offbrand
 
         _solutionContainerSystem.UpdateChemicals(soln.Value);
     }
