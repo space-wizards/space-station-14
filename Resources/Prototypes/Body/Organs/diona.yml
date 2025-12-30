@@ -84,7 +84,6 @@
   - type: Metabolizer
     maxReagents: 6
     metabolizerTypes: [ Plant ]
-    removeEmpty: true
     stages: [ Digestion, Bloodstream, Metabolites ]
   - type: Item
     size: Small
@@ -103,9 +102,6 @@
     heldPrefix: lungs
   - type: Lung
   - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
     metabolizerTypes: [ Plant ]
     stages: [ Respiration ]
   - type: SolutionContainerManager

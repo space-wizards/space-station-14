@@ -133,9 +133,6 @@
     heldPrefix: lungs
   - type: Lung
   - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
     metabolizerTypes: [ Human ]
     stages: [ Respiration ]
   - type: SolutionContainerManager

@@ -11,7 +11,6 @@
     - type: Metabolizer
       maxReagents: 3
       metabolizerTypes: [ Slime ]
-      removeEmpty: true
       stages: [ Digestion, Bloodstream, Metabolites ]
     - type: SolutionContainerManager
       solutions:
@@ -37,9 +36,6 @@
     - type: Lung
       alert: LowNitrogen
     - type: Metabolizer
-      removeEmpty: true
-      solutionOnBody: false
-      solution: "Lung"
       metabolizerTypes: [ Slime ]
       stages: [ Respiration ]
     - type: SolutionContainerManager

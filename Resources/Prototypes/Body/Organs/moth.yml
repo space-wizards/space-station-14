@@ -21,4 +21,3 @@
   - type: Metabolizer
     maxReagents: 3
     metabolizerTypes: [ Moth ]
-    removeEmpty: true
