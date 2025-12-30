@@ -101,6 +101,9 @@ public sealed partial class RatKingComponent : Component
         { RatKingOrderType.Loose, "RatKingCommandLoose" }
     };
 
+    /// <summary>
+    /// Alert category that will have counter alert that displays current hunger value.
+    /// </summary>
     [DataField]
     public ProtoId<AlertCategoryPrototype> HungerAlertCategory = "Hunger";
 }
