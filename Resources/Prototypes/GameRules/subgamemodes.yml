@@ -78,7 +78,7 @@
   - type: XenoborgsRule
   - type: RuleGrids
   - type: GameRule
-    minPlayers: 40
+    minPlayers: 30
   - type: LoadMapRule
     gridPath: /Maps/Shuttles/mothership.yml
   - type: AntagMultipleRoleSpawner

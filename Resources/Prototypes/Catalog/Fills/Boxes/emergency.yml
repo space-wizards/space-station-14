@@ -320,19 +320,16 @@
 
 
 - type: entity
-  parent: BoxCardboard
+  parent: BoxCardboardSmall # Cannot fit 3x3 boxes into already-filled ERT backpacks.
   id: BoxSurvivalMilitaryDouble
   suffix: Military O2
   description: It's a box with basic internals inside. This one is labelled to contain an double extended-capacity tank.
   components:
   - type: StorageFill
     contents:
-    - id: ClothingMaskBreath
     - id: DoubleEmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals
@@ -345,12 +342,9 @@
   components:
   - type: StorageFill
     contents:
-    - id: ClothingMaskBreath
     - id: DoubleEmergencyNitrogenTankFilled
     - id: EmergencyMedipen
     - id: Flare
-    - id: FoodSnackNutribrick
-    - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
     - state: internals

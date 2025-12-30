@@ -80,6 +80,8 @@
     damage:
       types:
         Blunt: 190
+  - type: Physics
+    bodyType: KinematicController
   - type: InputMover
   - type: MovementSpeedModifier
     baseWeightlessAcceleration: 5

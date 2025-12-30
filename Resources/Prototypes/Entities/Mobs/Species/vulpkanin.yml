@@ -34,9 +34,10 @@
         Piercing: 2
         Slash: 3
   - type: Temperature # Same as moth temperatures until below is solved.
+    specificHeat: 44
+  - type: TemperatureDamage
     heatDamageThreshold: 320 # TODO: 315 when there is a way to make the temperature alert not blink to the side of the screen and disappear when you "sweat" at 39C.
     coldDamageThreshold: 230 # TODO: 220 when the above is solved.
-    specificHeat: 44
     coldDamage:
       types:
         Cold: 0.05 # Per second, scales with temperature & other constants

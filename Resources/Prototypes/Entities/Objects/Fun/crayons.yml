@@ -298,6 +298,8 @@
   - type: Item
     sprite: Objects/Fun/crayons.rsi
     size: Small
+    shape:
+    - 0,0,1,1
     heldPrefix: box
   - type: EntityTableContainerFill
     containers:
