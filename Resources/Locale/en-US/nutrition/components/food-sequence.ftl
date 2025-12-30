@@ -158,6 +158,7 @@ food-sequence-cotton-burger-content-plushie-human = uristmc
 food-sequence-cotton-burger-content-plushie-moth = fluff
 food-sequence-cotton-burger-content-plushie-vulp = vulp
 food-sequence-cotton-burger-content-plushie-ian = corgi
+food-sequence-cotton-burger-content-plushie-C20rSMG = C-20
 food-sequence-cotton-burger-content-among-pequeno = sus
 
 # TACO

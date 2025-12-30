@@ -949,6 +949,20 @@
   - UplinkDeception
 
 - type: listing
+  id: UplinkFoolKit
+  name: uplink-fool-kit-name
+  description: uplink-fool-kit-desc
+  icon: { sprite: /Textures/Objects/Tools/Decoys/elite_decoy.rsi, state: folded }
+  productEntity: ClothingBackpackDuffelSyndicateFoolKitFilled
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 4
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkDeception
+
+- type: listing
   id: UplinkSyndicateBombFake
   name: uplink-exploding-syndicate-bomb-fake-name
   description: uplink-exploding-syndicate-bomb-fake-desc

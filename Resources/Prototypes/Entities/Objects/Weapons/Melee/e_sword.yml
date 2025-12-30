@@ -396,6 +396,37 @@
     reflectProb: 1.0
     spread: 75
 
+# Fake energy sword
+- type: entity
+  name: energy sword
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  id: EnergySwordFake
+  description: An energy sword dialed way down. Only a fool would use this.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword.rsi
+    layers:
+    - state: e_sword
+    - state: e_sword_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Slash: 4
+        Heat: 4
+  - type: ItemToggleSize
+    activatedSize: Small
+  - Type: Reflect
+    reflectProb: 0.05
+    spread: 5
+  - type: Item
+    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+  - type: StaticPrice
+    price: 2500
+
 # Borgs
 
 - type: entity

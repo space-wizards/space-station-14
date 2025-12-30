@@ -1228,3 +1228,32 @@
   - type: FoodSequenceElement
     entries:
       CottonBurger: PlushieVulp
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieC20rSMG
+  name: C-20r submachine gun
+  description: A classic and widespread submachine gun, infamous for its use by the Gorlex Marauders. One of the first homegrown Waffle Corp. designs, it remains in service today. Feeds from .35 SMG magazines.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    state: icon
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+  - type: Edible
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+  - type: MeleeWeapon
+    soundHit: *BasePlushieSound
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PlushieC20rSMG
+  - type: Wieldable

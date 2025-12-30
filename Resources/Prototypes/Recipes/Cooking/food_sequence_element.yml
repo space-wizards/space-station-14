@@ -1566,6 +1566,16 @@
   - sprite: Objects/Fun/toy_ian.rsi
     state: icon
 
+#C-20r plushie
+
+- type: foodSequenceElement
+  id: PlushieC20rSMG
+  scale: 0.8, 0.8
+  name: food-sequence-cotton-burger-content-plushie-C20rSMG
+  sprites:
+  - sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    state: icon
+
 #Among pequeño - does not work with randomized sprites
 
 #- type: foodSequenceElement

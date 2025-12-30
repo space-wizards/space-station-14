@@ -383,6 +383,21 @@
           amount: 2
 
 - type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelSyndicateFoolKitFilled
+  name: syndicate duffel bag
+  description: A large duffel bag for holding various traitor goods.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingOuterHardsuitSyndieFake
+#        - id: PlushieC20rSMG figuring out how to randomize to any fake syndie gun
+        - id: EnergySwordFake
+#        - id: FakeGrenadeEntityTable
+
+- type: entity
   parent: [ ClothingBackpackDuffelBundle, BaseMajorContraband ]
   id: ClothingBackpackDuffelAcolyteBundle
   name: acolyte armor bundle

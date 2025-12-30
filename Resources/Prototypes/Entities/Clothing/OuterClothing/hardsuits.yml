@@ -1111,3 +1111,34 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSanta
+
+# Fake blood-red hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitBase, BaseSyndicateContraband ]
+  id: ClothingOuterHardsuitSyndieFake
+  name: blood-red hardsuit
+  description: A blood-red hardsuit without the plating but still capable of spacewalks, only a fool would wear this. Developed by Gorlex Marauders.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSyndieFake
+  - type: Tag
+    tags:
+    - MonkeyWearable
+    - Hardsuit
+    - CorgiWearable
+    - ScurretWearable
+  - type: StaticPrice
+    price: 5000
