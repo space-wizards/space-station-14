@@ -20,6 +20,20 @@ public sealed partial class ThirstComponent : Component
     [AutoNetworkedField]
     public float ActualDecayRate;
 
+    /// <summary>
+    /// The minimum possible starting thirst value.
+    /// If it is less than 0, it will be set in <see cref="ThirstSystem.OnMapInit"/>
+    /// </summary>
+    [DataField]
+    public float MinStartingThirst = -1;
+
+    /// <summary>
+    /// The maximum possible starting thirst value.
+    /// If it is less than 0, it will be set in <see cref="ThirstSystem.OnMapInit"/>
+    /// </summary>
+    [DataField]
+    public float MaxStartingThirst = -1;
+
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public ThirstThreshold CurrentThirstThreshold;
 
