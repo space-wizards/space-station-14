@@ -1229,31 +1229,92 @@
     entries:
       CottonBurger: PlushieVulp
 
+# Fake plushie guns for the fool kit
+
 - type: entity
-  parent: BasePlushie
-  id: PlushieC20rSMG
+  parent: [BasePlushie, BaseSyndicateContraband]
+  id: PlushieC20r
   name: C-20r submachine gun
-  description: A classic and widespread submachine gun, infamous for its use by the Gorlex Marauders. One of the first homegrown Waffle Corp. designs, it remains in service today. Feeds from .35 SMG magazines.
+  description: A holo-plushie that looks and sounds exactly like a C-20r submachine gun. Only a fool would point this at someone.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     state: icon
-  - type: EmitSoundOnLand
+  - type: EmitSoundOnUse
     sound:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+  - type: EmitSoundOnLand
+    sound: &PlushieC20rSound
       path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - type: EmitSoundOnActivate
     sound:
       path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
   - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+    sound: *PlushieC20rSound
   - type: Edible
     requiresSpecialDigestion: true
-    useSound:
-      path: /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+    useSound: *PlushieC20rSound
   - type: MeleeWeapon
     soundHit: *BasePlushieSound
   - type: FoodSequenceElement
     entries:
-      CottonBurger: PlushieC20rSMG
+      CottonBurger: PlushieC20r
+  - type: Wieldable
+
+- type: entity
+  parent: [BasePlushie, BaseSyndicateContraband]
+  id: PlushieL6
+  name: L6 SAW
+  description: A holo-plushie that looks and sounds exactly like an L6 SAW. Only a fool would point this at someone.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/LMGs/L6.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
+  - type: EmitSoundOnLand
+    sound: &PlushieL6Sound
+      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
+  - type: EmitSoundOnTrigger
+    sound: *PlushieL6Sound
+  - type: Edible
+    requiresSpecialDigestion: true
+    useSound: *PlushieL6Sound
+  - type: MeleeWeapon
+    soundHit: *BasePlushieSound
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PlushieL6
+  - type: Wieldable
+
+- type: entity
+  parent: [BasePlushie, BaseSyndicateContraband]
+  id: PlushieBulldog
+  name: Bulldog
+  description: A holo-plushie that looks and sounds exactly like a bulldog. Only a fool would point this at someone.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
+    state: icon
+  - type: EmitSoundOnUse
+    sound: &PlushieBulldogSound
+      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+  - type: EmitSoundOnLand
+    sound: *PlushieBulldogSound
+  - type: EmitSoundOnActivate
+    sound: *PlushieBulldogSound
+  - type: EmitSoundOnTrigger
+    sound: *PlushieBulldogSound
+  - type: Edible
+    requiresSpecialDigestion: true
+    useSound: *PlushieBulldogSound
+  - type: MeleeWeapon
+    soundHit: *BasePlushieSound
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PlushieBulldog
   - type: Wieldable

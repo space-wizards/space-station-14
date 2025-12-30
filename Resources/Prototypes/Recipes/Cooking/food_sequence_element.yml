@@ -1569,11 +1569,31 @@
 #C-20r plushie
 
 - type: foodSequenceElement
-  id: PlushieC20rSMG
+  id: PlushieC20r
   scale: 0.8, 0.8
-  name: food-sequence-cotton-burger-content-plushie-C20rSMG
+  name: food-sequence-cotton-burger-content-plushie-C20r
   sprites:
   - sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    state: icon
+
+#L6 SAW plushie
+
+- type: foodSequenceElement
+  id: PlushieL6
+  scale: 0.8, 0.8
+  name: food-sequence-cotton-burger-content-plushie-l6
+  sprites:
+  - sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+    state: icon
+
+#Bulldog plushie
+
+- type: foodSequenceElement
+  id: PlushieBulldog
+  scale: 0.8, 0.8
+  name: food-sequence-cotton-burger-content-plushie-bulldog
+  sprites:
+  - sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     state: icon
 
 #Among pequeño - does not work with randomized sprites

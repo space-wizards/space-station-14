@@ -393,9 +393,28 @@
       storagebase: !type:AllSelector
         children:
         - id: ClothingOuterHardsuitSyndieFake
-#        - id: PlushieC20rSMG figuring out how to randomize to any fake syndie gun
         - id: EnergySwordFake
-#        - id: FakeGrenadsEntityTable
+        - !type:NestedSelector
+          tableId: FoolKitGrenadeEntityTable
+        - !type:NestedSelector
+          tableId: FoolKitGunEntityTable
+
+- type: entityTable
+  id: FoolKitGrenadeEntityTable
+  table: !type:AllSelector
+    children:
+    - id: C4Fake
+    - id: ExplosiveGrenadeFake
+    - id: BlackholeGrenadeFake
+    - id: ClusterGrenadeFake
+
+- type: entityTable
+  id: FoolKitGunEntityTable
+  table: !type:AllSelector
+    children:
+    - id: PlushieC20r
+    - id: PlushieL6
+    - id: PlushieBulldog
 
 - type: entity
   parent: [ ClothingBackpackDuffelBundle, BaseMajorContraband ]
