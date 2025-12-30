@@ -364,7 +364,7 @@ namespace Content.Client.IconSmoothing
             var directionsOnNorthWest = CollectNeighborDirections(gridUid, grid, pos + (Vector2i) rotation.RotateVec(new Vector2(-1f,1f)), smooth, smoothQuery);
             var directionsOnNorthEast = CollectNeighborDirections(gridUid, grid, pos + (Vector2i) rotation.RotateVec(new Vector2(1f,1f)), smooth, smoothQuery);
 
-            // на севере есть сосед, смотрящий против часовой от нас, на западе смотрящий не в противоположную сторону
+            // There is a neighbor to the north looking counterclockwise from us, to the west looking not in the opposite direction
             if  ((directionsOnNorth & counterClockwiseDir) != 0 &&
                  directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0)
             {
@@ -372,7 +372,7 @@ namespace Content.Client.IconSmoothing
                 return;
             }
 
-            // На севере есть сосед, смотрящий по часовой от нас, на востоке смотрящий не в противоположную сторону
+            // There is a neighbor to the north looking clockwise from us, to the east looking not in the opposite direction
             if  ((directionsOnNorth & clockwiseDir) != 0 &&
                  directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
             {
@@ -380,7 +380,7 @@ namespace Content.Client.IconSmoothing
                 return;
             }
 
-            // На юге есть сосед, смотрящий против часовой от нас, на востоке смотрящий не в противоположную сторону
+            // There is a neighbor to the south looking counterclockwise from us, to the east looking not in the opposite direction
             if  ((directionsOnSouth & counterClockwiseDir) != 0 &&
                  directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & oppositeDir) == 0)
             {
@@ -388,7 +388,7 @@ namespace Content.Client.IconSmoothing
                 return;
             }
 
-            // На юге есть сосед, смотрящий по часовой от нас, на западе смотрящий не в противоположную сторону
+            // There is a neighbor to the south looking clockwise from us, to the west looking not in the opposite direction
             if  ((directionsOnSouth & clockwiseDir) != 0 &&
                  directionsOnWest != CardinalConnectDirs.None && (directionsOnWest & oppositeDir) == 0)
             {
@@ -396,7 +396,7 @@ namespace Content.Client.IconSmoothing
                 return;
             }
 
-            // На западе и востоке есть соседи, которые смотрят не в противоположную сторону
+            // There are neighbors to the west and east that are not looking in the opposite direction
             var eastOk = directionsOnEast != CardinalConnectDirs.None && (directionsOnEast & sameDir) != 0;
             if (!eastOk)
             {
@@ -430,14 +430,14 @@ namespace Content.Client.IconSmoothing
                 return;
             }
 
-            // Только на западе есть соседи смотрящие не в противоположную сторону
+            // Only to the west are there neighbors looking not in the opposite direction
             if (westOk)
             {
                 _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{2}");
                 return;
             }
 
-            // Только на востоке есть соседи смотрящие не в противоположную сторону
+            // Only to the east are there neighbors looking not in the opposite direction
             if (eastOk)
             {
                 _sprite.LayerSetRsiState(sprite.AsNullable(), 0, $"{smooth.StateBase}{1}");
