@@ -32,12 +32,6 @@
         - SlipLayer
         density: 150
         hard: false
-  - type: SpeedModifierContacts
-    walkSpeedModifier: 1
-    sprintSpeedModifier: 0.6 # Who the heck sprints over a sofa?
-  - type: StepTrigger
-    requiredTriggeredSpeed: 0
-    intersectRatio: 0.1
 
 - type: entity
   id: SofaDark
