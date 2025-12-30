@@ -22,7 +22,7 @@ public sealed class RatKingSystem : SharedRatKingSystem
         if (ent.Comp.HungerAlertCategory != args.Alert.Category)
             return;
 
-        if (!TryComp(ent, out HungerComponent? hungerComponent))
+        if (!TryComp<HungerComponent>(ent, out var hungerComponent))
             return;
 
         args.Amount = (int?)hungerComponent.LastAuthoritativeHungerValue;
