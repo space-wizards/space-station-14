@@ -66,12 +66,6 @@ public sealed partial class FaxMachineComponent : Component
     public bool ReceiveNukeCodes { get; set; } = false;
 
     /// <summary>
-    /// Should fax connect to other maps faxes
-    /// </summary>
-    [DataField]
-    public bool IsLongRange { get; set; } = false;
-
-    /// <summary>
     /// Sound to play when fax printing new message
     /// </summary>
     [DataField]

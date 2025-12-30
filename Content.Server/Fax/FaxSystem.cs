@@ -30,7 +30,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Map;
 
 namespace Content.Server.Fax;
 
@@ -52,7 +51,6 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly FaxecuteSystem _faxecute = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
 
     private static readonly ProtoId<ToolQualityPrototype> ScrewingQuality = "Screwing";
 
@@ -287,18 +285,6 @@ public sealed class FaxSystem : EntitySystem
                 case FaxConstants.FaxPingCommand:
                     var isForSyndie = _emag.CheckFlag(uid, EmagType.Interaction) &&
                                       args.Data.ContainsKey(FaxConstants.FaxSyndicateData);
-
-                    var senderTransform = _entManager.GetComponent<TransformComponent>(args.Sender);
-                    var receiverTransform = _entManager.GetComponent<TransformComponent>(uid);
-
-                    if (senderTransform.MapUid != receiverTransform.MapUid)
-                    {
-                        if (!_entManager.TryGetComponent<FaxMachineComponent>(args.Sender, out var senderFax) ||
-                            !senderFax.IsLongRange || !component.IsLongRange)
-                        {
-                            return; 
-                        }
-                    }
 
                     if (!isForSyndie && !component.ResponsePings)
                         return;
