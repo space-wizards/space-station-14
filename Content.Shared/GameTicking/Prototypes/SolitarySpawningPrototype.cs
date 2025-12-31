@@ -8,7 +8,7 @@ namespace Content.Shared.GameTicking.Prototypes;
 /// This prototype defines details for a spawn option for SolitarySpawningRule.
 /// </summary>
 [Prototype]
-public sealed class SolitarySpawningPrototype : IPrototype
+public sealed partial class SolitarySpawningPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
