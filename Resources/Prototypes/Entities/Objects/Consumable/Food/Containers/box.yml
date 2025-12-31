@@ -288,7 +288,7 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage:
+      storagebase:
         id: FoodPizzaCottonSlice
         amount: 8
 
