@@ -1,93 +1,93 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "cleaner"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "cleaner1"
-    },
-    {
-      "name": "cleaner2"
-    },
-    {
-      "name": "cleaner3"
-    },
-    {
-      "name": "cleaner4"
-    },
-    {
-      "name": "cleaner5"
-    },
-    {
-      "name": "cleaner_large"
-    },
-    {
-      "name": "cleaner_large1"
-    },
-    {
-      "name": "cleaner_large2"
-    },
-    {
-      "name": "cleaner_large3"
-    },
-    {
-      "name": "cleaner_large4"
-    },
-    {
-      "name": "cleaner_large5"
-    },
-    {
-      "name": "cleaner_large6"
-    },
-    {
-      "name": "cleaner_large7"
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left-fill-1",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left-fill-2",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left-fill-3",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left-fill-4",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right-fill-1",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right-fill-2",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right-fill-3",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right-fill-4",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "cleaner"
+        },
+        {
+            "name": "cleaner1"
+        },
+        {
+            "name": "cleaner2"
+        },
+        {
+            "name": "cleaner3"
+        },
+        {
+            "name": "cleaner4"
+        },
+        {
+            "name": "cleaner5"
+        },
+        {
+            "name": "cleaner_large"
+        },
+        {
+            "name": "cleaner_large1"
+        },
+        {
+            "name": "cleaner_large2"
+        },
+        {
+            "name": "cleaner_large3"
+        },
+        {
+            "name": "cleaner_large4"
+        },
+        {
+            "name": "cleaner_large5"
+        },
+        {
+            "name": "cleaner_large6"
+        },
+        {
+            "name": "cleaner_large7"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-3",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left-fill-4",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-2",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-3",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right-fill-4",
+            "directions": 4
+        }
+    ]
 }
