@@ -23,8 +23,6 @@ using Content.Shared.Rotation;
 using Content.Shared.Species.Arachnid;
 using Content.Shared.Standing;
 using Content.Shared.Stunnable;
-using Content.Shared.Bed.Sleep;
-using Content.Shared.Mobs.Systems;
 using Content.Shared.Destructible;
 using Content.Shared.Gibbing.Events;
 using Content.Server.Body.Components;
@@ -51,7 +49,6 @@ public sealed class CocoonSystem : SharedCocoonSystem
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
 
     private const string CocoonContainerId = "cocoon_victim";
@@ -60,7 +57,6 @@ public sealed class CocoonSystem : SharedCocoonSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CocoonerComponent, WrapActionEvent>(OnWrapAction);
         SubscribeLocalEvent<CocoonerComponent, WrapDoAfterEvent>(OnWrapDoAfter);
 
         SubscribeLocalEvent<CocoonContainerComponent, ComponentShutdown>(OnCocoonContainerShutdown);
@@ -258,75 +254,10 @@ public sealed class CocoonSystem : SharedCocoonSystem
         EmptyCocoonContainer(uid);
     }
 
-    private void OnWrapAction(EntityUid uid, CocoonerComponent component, ref WrapActionEvent args)
+    protected override void OnWrapActionServer(EntityUid user, EntityUid target)
     {
-        if (args.Handled)
-            return;
-
-        var user = args.Performer;
-        var target = args.Target;
-
-        if (target == user)
-            return;
-
-        if (!HasComp<HumanoidAppearanceComponent>(target))
-        {
-            _popups.PopupEntity(Loc.GetString("arachnid-wrap-invalid-target"), user, user);
-            return;
-        }
-
-        // Check if target is already in a cocoon container
-        if (_container.TryGetContainingContainer(target, out var existingContainer) &&
-            HasComp<CocoonContainerComponent>(existingContainer.Owner))
-        {
-            _popups.PopupEntity(Loc.GetString("arachnid-wrap-already"), user, user);
-            return;
-        }
-
-        if (!_blocker.CanInteract(user, target))
-            return;
-
-        // Check if entity has enough hunger to perform the action
-        if (TryComp<Content.Shared.Nutrition.Components.HungerComponent>(user, out var hungerComp))
-        {
-            var currentHunger = _hunger.GetHunger(hungerComp);
-            if (currentHunger < component.HungerCost)
-            {
-                _popups.PopupEntity(Loc.GetString("arachnid-wrap-failure-hunger"), user, user);
-                return;
-            }
-        }
-
-        // Only require hands if the entity has hands (spiders don't have hands)
-        var needHand = HasComp<HandsComponent>(user);
-
-        var wrapTime = component.WrapDuration;
-        // Reduce DoAfter time if target is stunned, asleep, critical, or dead
-        if (HasComp<StunnedComponent>(target) || HasComp<SleepingComponent>(target) || _mobState.IsCritical(target) || _mobState.IsDead(target))
-            wrapTime = component.WrapDuration_Short;
-
-        var doAfter = new DoAfterArgs(EntityManager, user, TimeSpan.FromSeconds(wrapTime), new WrapDoAfterEvent(), user, target)
-        {
-            BreakOnMove = true,
-            BreakOnDamage = true,
-            NeedHand = needHand,
-            DistanceThreshold = component.WrapRange,
-            CancelDuplicate = true,
-            BlockDuplicate = true,
-        };
-
-        if (!_doAfter.TryStartDoAfter(doAfter))
-            return;
-
         _adminLog.Add(LogType.Action, LogImpact.High,
             $"{ToPrettyString(user):player} is trying to cocoon {ToPrettyString(target):player}");
-
-        PlaySoundAtEntity(target, new SoundPathSpecifier("/Audio/Items/Handcuffs/rope_start.ogg"));
-
-        _popups.PopupEntity(Loc.GetString("arachnid-wrap-start-user", ("target", target)), user, user);
-        _popups.PopupEntity(Loc.GetString("arachnid-wrap-start-target", ("user", user)), target, target, PopupType.LargeCaution);
-
-        args.Handled = true;
     }
 
     private void OnWrapDoAfter(EntityUid uid, CocoonerComponent component, ref WrapDoAfterEvent args)
