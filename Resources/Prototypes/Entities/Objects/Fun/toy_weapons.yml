@@ -4,14 +4,14 @@
 
 - type: entity
   abstract: true
-  id: ToyGunBase
+  id: BaseToyGun
   components:
   - type: PacifismAllowedGun # They don't hurt!
   - type: Gun
     clumsyProof: true # Clown proficiency
 
 - type: entity
-  parent: [ BaseItem, ToyGunBase ]
+  parent: [ BaseItem, BaseToyGun ]
   id: FoamCrossbow
   name: foam crossbow
   description: Aiming this at Security may get you filled with lead.
@@ -43,7 +43,7 @@
 
 - type: entity
   name: Foam Force Astro Ace
-  parent: [ ToyGunBase, BaseWeaponShotgun, BaseGunWieldable ]
+  parent: [ BaseToyGun, BaseWeaponShotgun, BaseGunWieldable ]
   id: WeaponRifleFoam
   description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
   components:
@@ -74,7 +74,7 @@
     price: 100
 
 - type: entity
-  parent: [ BaseItem, ToyGunBase ]
+  parent: [ BaseItem, BaseToyGun ]
   id: RevolverCapGun
   name: cap gun
   description: Looks almost like the real thing! Ages 8 and up.
@@ -134,7 +134,7 @@
     proto: CartridgeMagnumAP
 
 - type: entity
-  parent: [ BaseItem, ToyGunBase ]
+  parent: [ BaseItem, BaseToyGun ]
   id: WeaponStickyHand
   name: sticky hand
   description: They're saying you're reaching. They're saying it's a stretch. You'll show them all, and you'll stick it to them.
@@ -189,7 +189,6 @@
   - type: Item
     size: Small
     sprite: Objects/Fun/Foam/foam_blade.rsi
-  - type: UseDelay
 
 - type: entity
   parent: [ BaseItem, BaseToySword ]
@@ -205,7 +204,7 @@
     attackRate: 1.5
     range: 2.0
   - type: Item
-    size: Medium
+    size: Normal
     storedSprite:
       state: foam_storage
       sprite: Objects/Weapons/Melee/cutlass.rsi

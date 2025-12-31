@@ -1,4 +1,4 @@
-﻿# When adding a new board game, also add it to id: AllBattlemapsTable
+﻿# When adding a new battlemap, also add it to id: AllBattlemapsTable
 
 # Board item (given to players)
 - type: entity
