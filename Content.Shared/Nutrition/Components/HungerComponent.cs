@@ -47,17 +47,15 @@ public sealed partial class HungerComponent : Component
 
     /// <summary>
     /// The minimum possible starting hunger value.
-    /// If it is less than 0, it will be set in <see cref="HungerSystem.OnMapInit"/>
     /// </summary>
     [DataField]
-    public float MinStartingHunger = -1;
+    public float MinStartingHunger = 110f; // Peckish + 10
 
     /// <summary>
     /// The maximum possible starting hunger value.
-    /// If it is less than 0, it will be set in <see cref="HungerSystem.OnMapInit"/>
     /// </summary>
     [DataField]
-    public float MaxStartingHunger = -1;
+    public float MaxStartingHunger = 150f; // Okay
 
     /// <summary>
     /// The last threshold this entity was at.

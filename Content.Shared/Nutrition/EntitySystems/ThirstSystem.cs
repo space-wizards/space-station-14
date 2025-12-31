@@ -38,14 +38,6 @@ public sealed class ThirstSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, ThirstComponent component, MapInitEvent args)
     {
-        if (component.MinStartingThirst < 0)
-        {
-            component.MinStartingThirst = component.ThirstThresholds[ThirstThreshold.Thirsty] + 10;
-        }
-        if (component.MaxStartingThirst < 0)
-        {
-            component.MaxStartingThirst = component.ThirstThresholds[ThirstThreshold.Okay] - 1;
-        }
         // Do not change behavior unless starting value is explicitly defined
         if (component.CurrentThirst < 0)
         {
