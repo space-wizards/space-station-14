@@ -8,14 +8,14 @@
   name: board
   description: A blank board.
   components:
-    - type: TabletopGame
-      size: 256, 256
-      setup:
-        !type:TabletopEmptySetup
-        boardPrototype: Crowbar
-    - type: Tag
-      tags:
-        - TabletopBoard
+  - type: TabletopGame
+    size: 256, 256
+    setup:
+      !type:TabletopEmptySetup
+      boardPrototype: Crowbar
+  - type: Tag
+    tags:
+      - TabletopBoard
 
 - type: entity
   abstract: true

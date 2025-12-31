@@ -14,7 +14,6 @@
       !type:TabletopBackgammonSetup
       boardPrototype: &BackgammonBoard BackgammonBoardTabletop
 
-
 - type: entity
   parent: BaseBoardTabletop
   id: *BackgammonBoard
