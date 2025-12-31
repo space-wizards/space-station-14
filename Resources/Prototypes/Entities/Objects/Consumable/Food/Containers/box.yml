@@ -250,28 +250,38 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: KnifePlastic
         - !type:GroupSelector
           children:
-          - id: FoodPizzaArnold
+          - id: FoodPizzaArnoldSlice
             weight: 1.5
-          - id: FoodPizzaSassysage
+            amount: 8
+          - id: FoodPizzaSassysageSlice
             weight: 1.5
-          - id: FoodPizzaMargherita
+            amount: 8
+          - id: FoodPizzaMargheritaSlice
             weight: 1.5
-          - id: FoodPizzaMeat
+            amount: 8
+          - id: FoodPizzaMeatSlice
             weight: 1.5
-          - id: FoodPizzaMushroom
+            amount: 8
+          - id: FoodPizzaMushroomSlice
             weight: 1.5
-          - id: FoodPizzaPineapple
+            amount: 8
+          - id: FoodPizzaPineappleSlice
             weight: 1.5
-          - id: FoodPizzaVegetable
+            amount: 8
+          - id: FoodPizzaVegetableSlice
             weight: 1.5
-          - id: FoodPizzaDank
-          - id: FoodPizzaDonkpocket
-          - id: FoodPizzaCotton
-          - id: FoodPizzaWorldpeas
+            amount: 8
+          - id: FoodPizzaDankSlice
+            amount: 8
+          - id: FoodPizzaDonkpocketSlice
+            amount: 8
+          - id: FoodPizzaCottonSlice
+            amount: 8
+          - id: FoodPizzaWorldpeasSlice
             weight: 0.5
+            amount: 8
 
 - type: entity
   parent: FoodBoxPizza
@@ -282,8 +292,8 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: FoodPizzaCotton
-        - id: KnifePlastic
+        - id: FoodPizzaCottonSlice
+          amount: 8
 
 # Nugget
 
