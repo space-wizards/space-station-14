@@ -1,6 +1,6 @@
 - type: entity
-  id: BaseGameRule
   abstract: true
+  id: BaseGameRule
   components:
   - type: GameRule
 
@@ -68,8 +68,8 @@
       prob: 0.3
 
 - type: entity
-  id: DeathMatch31
   parent: BaseGameRule
+  id: DeathMatch31
   components:
   - type: DeathMatchRule
     rewardSpawns:
@@ -97,20 +97,31 @@
     respawnDelay: 5
 
 - type: entity
-  id: InactivityTimeRestart
   parent: BaseGameRule
+  id: InactivityTimeRestart
   components:
   - type: InactivityRule
     inactivityMaxTime: 600
     roundEndDelay: 10
 
 - type: entity
-  id: MaxTimeRestart
   parent: BaseGameRule
+  id: MaxTimeRestart
   components:
   - type: MaxTimeRestartRule
     roundMaxTime: 300
     roundEndDelay: 10
+
+# Each player is spawned on a separate map, created just for them.
+# Players can individually choose their map from the provided prototypes. (UI not yet implemented!)
+- type: entity
+  parent: BaseGameRule
+  id: TutorialSpawn
+  components:
+  - type: SolitarySpawningRule
+    prototypes:
+    - TutorialTest
+    - Death
 
 - type: entity
   abstract: true

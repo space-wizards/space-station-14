@@ -147,3 +147,6 @@
 
 - type: playTimeTracker
   id: JobWarden
+
+- type: playTimeTracker
+  id: JobTrainee

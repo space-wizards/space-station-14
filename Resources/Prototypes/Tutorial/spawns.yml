@@ -1,0 +1,13 @@
+- type: solitarySpawning
+  id: TutorialTest
+  name: solitary-spawn-name-tutorial
+  description: solitary-spawn-description-tutorial
+  welcomeLoc: solitary-spawn-welcome-tutorial
+  map: TutorialTest
+
+- type: solitarySpawning
+  id: Death
+  name: solitary-spawn-name-tutorial
+  description: solitary-spawn-description-tutorial
+  welcomeLoc: solitary-spawn-welcome-tutorial
+  map: Empty

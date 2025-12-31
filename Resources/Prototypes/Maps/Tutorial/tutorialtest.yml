@@ -1,0 +1,14 @@
+- type: gameMap
+  id: TutorialTest
+  mapName: 'TutorialTest'
+  mapPath: /Maps/Tutorial/tutorialtest.yml
+  minPlayers: 0
+  stations:
+    TutorialTest:
+      stationProto: StandardTutorialStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'Tutorial'
+        - type: StationJobs
+          availableJobs:
+            Passenger: [ -1, -1 ] #infinite, not counted

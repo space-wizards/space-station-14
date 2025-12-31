@@ -48,6 +48,7 @@ job-name-ertmedic = ERT Medic
 job-name-ertjanitor = ERT Janitor
 job-name-visitor = Visitor
 job-name-cluwne = Cluwne
+job-name-trainee = Tutorial Participant
 
 # unused jobs
 # these are required for the agent ID job icon tooltips
