@@ -79,10 +79,6 @@ public sealed class CocoonSystem : SharedCocoonSystem
 
     private void OnCocoonContainerDamage(EntityUid uid, CocoonContainerComponent component, DamageChangedEvent args)
     {
-        // Skip if we're already processing damage for this entity (prevents recursion from SetDamage)
-        if (component.ProcessingDamage)
-            return;
-
         // Only process if damage was actually increased
         if (!args.DamageIncreased || args.DamageDelta == null)
             return;
@@ -112,18 +108,8 @@ public sealed class CocoonSystem : SharedCocoonSystem
         // Set damage to: current - delta + absorbed (using DamageSpecifier operators)
         var newDamage = currentDamage - damageDelta + absorbedDamageSpec;
 
-        // Mark as processing to prevent recursion
-        component.ProcessingDamage = true;
-
-        try
-        {
-            // Set the damage to only the absorbed portion
-            _damageable.SetDamage(uid, newDamage);
-        }
-        finally
-        {
-            component.ProcessingDamage = false;
-        }
+        // Set the damage to only the absorbed portion
+        _damageable.SetDamage(uid, newDamage);
 
         // Pass the reduced damage to the victim inside
         if (component.Victim != null && Exists(component.Victim.Value))

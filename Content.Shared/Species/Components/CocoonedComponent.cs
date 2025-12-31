@@ -6,9 +6,16 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Species.Arachnid;
 
+/// <summary>
+/// Component added to an entity that has been wrapped in a cocoon. Tracks damage absorption,
+/// displays a cocooned alert, and manages the visual sprite for the cocooned state.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class CocoonedComponent : Component
 {
+    /// <summary>
+    /// The sprite specification for the cocooned visual effect displayed on the entity.
+    /// </summary>
     [DataField]
     public SpriteSpecifier Sprite = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Effects/cocooned.rsi"), "cocooned");
 
@@ -30,6 +37,9 @@ public sealed partial class CocoonedComponent : Component
     [DataField]
     public float AbsorbPercentage = 0.3f;
 
+    /// <summary>
+    /// The alert prototype ID that is displayed to indicate the entity is cocooned.
+    /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> CocoonedAlert = "Cocooned";
 }
