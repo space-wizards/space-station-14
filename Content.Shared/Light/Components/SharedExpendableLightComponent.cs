@@ -1,3 +1,4 @@
+using Content.Shared.Light.EntitySystems;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -6,11 +7,13 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Components;
 
-[NetworkedComponent]
-public abstract partial class SharedExpendableLightComponent : Component
+[RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
+public sealed partial class ExpendableLightComponent : Component
 {
 
     [ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
     public ExpendableLightState CurrentState;
 
     [DataField]
@@ -42,6 +45,27 @@ public abstract partial class SharedExpendableLightComponent : Component
 
     [DataField]
     public SoundSpecifier? DieSound;
+
+    [Access(typeof(SharedExpendableLightSystem))]
+    public EntityUid? PlayingStream;
+
+    [DataField]
+    public string? IconStateSpent;
+    [DataField]
+    public string? IconStateLit;
+    [DataField]
+    public string? SpriteShaderLit = null;
+    [DataField]
+    public string? SpriteShaderSpent = null;
+    [DataField]
+    public Color? GlowColorLit = null;
+
+    [ViewVariables]
+    public bool Activated => CurrentState is ExpendableLightState.Lit or ExpendableLightState.Fading;
+
+    [ViewVariables]
+    [AutoNetworkedField]
+    public TimeSpan? StateExpiryTime;
 }
 
 [Serializable, NetSerializable]

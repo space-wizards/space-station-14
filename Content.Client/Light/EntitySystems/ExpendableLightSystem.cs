@@ -5,7 +5,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComponent>
+public sealed class ExpendableLightVisualsSystem : VisualizerSystem<ExpendableLightComponent>
 {
     [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -15,13 +15,8 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ExpendableLightComponent, ComponentShutdown>(OnLightShutdown);
     }
 
-    private void OnLightShutdown(EntityUid uid, ExpendableLightComponent component, ComponentShutdown args)
-    {
-        component.PlayingStream = _audioSystem.Stop(component.PlayingStream);
-    }
 
     protected override void OnAppearanceChange(EntityUid uid, ExpendableLightComponent comp, ref AppearanceChangeEvent args)
     {
@@ -49,10 +44,6 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
         switch (state)
         {
             case ExpendableLightState.Lit:
-                _audioSystem.Stop(comp.PlayingStream);
-                comp.PlayingStream = _audioSystem.PlayPvs(
-                    comp.LoopedSound, uid)?.Entity;
-
                 if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out var layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateLit))
@@ -72,7 +63,6 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
 
                 break;
             case ExpendableLightState.Dead:
-                comp.PlayingStream = _audioSystem.Stop(comp.PlayingStream);
                 if (SpriteSystem.LayerMapTryGet((uid, args.Sprite), ExpendableLightVisualLayers.Overlay, out layerIdx, true))
                 {
                     if (!string.IsNullOrWhiteSpace(comp.IconStateSpent))
@@ -87,4 +77,11 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
                 break;
         }
     }
+}
+
+public enum ExpendableLightVisualLayers : byte
+{
+    Base = 0,
+    Glow = 1,
+    Overlay = 2,
 }
