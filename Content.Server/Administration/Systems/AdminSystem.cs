@@ -400,7 +400,8 @@ public sealed class AdminSystem : EntitySystem
             _popup.PopupCoordinates(Loc.GetString("admin-erase-popup", ("user", name)), coordinates, PopupType.LargeCaution);
             var filter = Filter.Pvs(coordinates, 1, EntityManager, _playerManager);
             var audioParams = new AudioParams().WithVolume(3);
-            _audio.PlayStatic("/Audio/Effects/pop_high.ogg", filter, coordinates, true, audioParams);
+            var audioSpecifier = new ResolvedPathSpecifier("/Audio/Effects/pop_high.ogg");
+            _audio.PlayStatic(audioSpecifier, filter, coordinates, true, audioParams);
         }
 
         foreach (var item in _inventory.GetHandOrInventoryEntities(entity))
