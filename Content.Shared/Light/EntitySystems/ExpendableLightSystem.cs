@@ -16,7 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Light.EntitySystems;
 
-public sealed class SharedExpendableLightSystem : EntitySystem
+public sealed class ExpendableLightSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
