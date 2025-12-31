@@ -83,8 +83,6 @@
   id: BaseWeaponSubMachineGunOpenBolt
   components:
   - type: MagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
