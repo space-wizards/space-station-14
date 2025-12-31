@@ -2656,12 +2656,6 @@
     wrapAction: ActionWrap
     wrapDuration: 10
     hungerCost: 30
-  - type: Bite
-    biteAction: ActionBite
-    cooldown: 90
-    actionDescription: bite-action-description-sleep
-    injectedReagents:
-      ChloralHydrate: 15
 
 - type: entity
   parent:
