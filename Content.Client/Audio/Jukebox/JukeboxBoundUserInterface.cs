@@ -10,7 +10,6 @@ namespace Content.Client.Audio.Jukebox;
 public sealed class JukeboxBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     [ViewVariables]
     private JukeboxMenu? _menu;
@@ -62,7 +61,8 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
         if (_protoManager.Resolve(jukebox.SelectedSongId, out var songProto))
         {
-            var length = EntMan.System<AudioSystem>().GetAudioLength(_audio.ResolveSound(songProto.Path));
+            var sound = EntMan.System<SharedAudioSystem>().ResolveSound(songProto.Path);
+            var length = EntMan.System<SharedAudioSystem>().GetAudioLength(sound);
             _menu.SetSelectedSong(songProto.Name, (float) length.TotalSeconds);
         }
         else
