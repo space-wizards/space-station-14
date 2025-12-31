@@ -1,4 +1,5 @@
 using Content.Shared.Body;
+using System.Numerics;
 using Content.Shared.Dataset;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
@@ -105,6 +106,12 @@ public sealed partial class SpeciesPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MaxAge = 120;
+
+    /// <summary>
+    ///     Scale to apply to cocoon sprites when this species is cocooned.
+    /// </summary>
+    [DataField]
+    public Vector2 CocoonScale { get; private set; } = new Vector2(1.0f, 1.0f);
 }
 
 public enum SpeciesNaming : byte

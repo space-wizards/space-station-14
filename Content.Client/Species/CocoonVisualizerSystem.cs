@@ -1,4 +1,6 @@
 using System.Numerics;
+using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Species.Arachnid;
 using Robust.Client.Animations;
@@ -6,6 +8,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 using Robust.Shared.Containers;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Species;
 
@@ -14,31 +17,9 @@ public sealed class CocoonVisualizerSystem : EntitySystem
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private const string CocoonContainerId = "cocoon_victim";
-
-    /// <summary>
-    /// Dictionary mapping entity prototype IDs to Vector2 scale values for cocoon sprites.
-    /// </summary>
-    private static readonly Dictionary<string, Vector2> SpeciesCocoonScales = new()
-    {
-        { "MobHuman", new Vector2(1.0f, 1.0f) },
-        { "MobReptilian", new Vector2(1.0f, 1.0f) },
-        { "MobMoth", new Vector2(1.0f, 1.0f) },
-        { "MobDwarf", new Vector2(1.0f, 0.8f) },
-        { "MobSlime", new Vector2(1.0f, 1.0f) },
-        { "MobVox", new Vector2(1.1f, 1.1f) },
-        { "MobSkeleton", new Vector2(1.0f, 1.0f) },
-        { "MobDiona", new Vector2(1.0f, 1.0f) },
-        { "MobFelinid", new Vector2(1.0f, 1.0f) },
-        { "MobArachnid", new Vector2(1.1f, 1.0f) },
-        { "MobGingerbread", new Vector2(1.0f, 1.0f) },
-    };
-
-    /// <summary>
-    /// Default scale to use when species is not found in the dictionary.
-    /// </summary>
-    private static readonly Vector2 DefaultCocoonScale = new Vector2(1.0f, 1.0f);
 
     public override void Initialize()
     {
@@ -85,22 +66,22 @@ public sealed class CocoonVisualizerSystem : EntitySystem
             return;
 
         var victim = container.ContainedEntities[0];
-        if (!Exists(victim) || !TryComp<MetaDataComponent>(victim, out var metaData)
-            || metaData.EntityPrototype == null)
+        if (!Exists(victim))
             return;
 
-        sprite.Scale = GetScaleForSpecies(metaData.EntityPrototype.ID);
-    }
+        // Get the species from the victim's HumanoidAppearanceComponent
+        if (!TryComp<HumanoidAppearanceComponent>(victim, out var humanoid))
+            return;
 
-    /// <summary>
-    /// Gets the Vector2 scale for a given entity prototype ID.
-    /// Returns the default scale if the prototype ID is not found in the dictionary.
-    /// </summary>
-    private static Vector2 GetScaleForSpecies(string entityProtoId)
-    {
-        return SpeciesCocoonScales.TryGetValue(entityProtoId, out var scale)
-            ? scale
-            : DefaultCocoonScale;
+        // Get the species prototype and use its cocoon scale, or default to 1.0, 1.0 if not found
+        if (_prototype.TryIndex<SpeciesPrototype>(humanoid.Species, out var speciesPrototype))
+        {
+            sprite.Scale = speciesPrototype.CocoonScale;
+        }
+        else
+        {
+            sprite.Scale = new Vector2(1.0f, 1.0f);
+        }
     }
 
     private void PlayInstantRotationAnimation(EntityUid uid, SpriteComponent spriteComp, Angle rotation)

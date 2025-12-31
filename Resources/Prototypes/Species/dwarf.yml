@@ -5,3 +5,4 @@
   prototype: MobDwarf
   dollPrototype: AppearanceDwarf
   skinColoration: HumanToned
+  cocoonScale: 1.0, 0.8

@@ -6,6 +6,7 @@
   dollPrototype: AppearanceVox
   skinColoration: VoxFeathers
   defaultSkinTone: "#6c741d"
+  cocoonScale: 1.1, 1.1
   maleFirstNames: NamesVox
   femaleFirstNames: NamesVox
   naming: First
