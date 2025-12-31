@@ -89,6 +89,8 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
         }
 
         audio = audio.AddVolume(-8);
+
+        // TODO Sanitize the path
         var specifier = new ResolvedPathSpecifier(args[0]);
         _entManager.System<ServerGlobalSoundSystem>().PlayAdminGlobal(filter, specifier, audio, replay);
     }
