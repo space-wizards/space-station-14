@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: Samuka
-  changes:
-  - message: The Robotics Console now correctly displays the brain installed information
-      if the borg has a empty MMI
-    type: Fix
-  - message: The Robotics Console now shows the borg physical integrity
-    type: Tweak
-  - message: Changed the colors for the battery display in the robotics console so
-      it easier to read the percentage
-    type: Tweak
-  id: 8846
-  time: '2025-08-11T18:57:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38023
 - author: metalgearsloth
   changes:
   - message: Inserting lights now plays an insert animation.
@@ -3937,3 +3924,10 @@
   id: 9346
   time: '2025-12-31T01:37:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42112
+- author: kontakt
+  changes:
+  - message: Fixed broken FTL links for implanters and medibot.
+    type: Fix
+  id: 9347
+  time: '2025-12-31T01:52:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42181
