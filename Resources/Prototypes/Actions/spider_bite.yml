@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseAction
+  id: ActionBite
+  name: Bite
+  description: Bite a target and inject them with a solution.
+  components:
+  - type: Action
+    icon: Interface/Actions/bite.png
+    iconOn: Interface/Actions/bite.png
+    itemIconStyle: NoItem
+  - type: TargetAction
+    interactOnMiss: false
+  - type: EntityTargetAction
+    whitelist:
+      components:
+      - Body
+    canTargetSelf: false
+    event: !type:BiteActionEvent {}
+
