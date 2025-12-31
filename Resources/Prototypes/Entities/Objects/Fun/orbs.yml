@@ -1,4 +1,5 @@
 # When adding new orbs, also add it to id: AllMiscToysTable
+# Spherical objects of incredible* powers
 
 - type: entity
   parent: BaseItem

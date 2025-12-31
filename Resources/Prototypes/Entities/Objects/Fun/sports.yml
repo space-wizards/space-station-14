@@ -1,4 +1,7 @@
 # When adding new sports, also add them to id: AllMiscToysTable
+# File for SPORTS and the various oddly shaped objects used while playing them
+
+## Balls
 
 - type: entity
   abstract: true
