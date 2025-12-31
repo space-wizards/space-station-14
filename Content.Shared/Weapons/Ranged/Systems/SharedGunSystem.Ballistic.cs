@@ -255,13 +255,13 @@ public abstract partial class SharedGunSystem
                 ammoEntity = Spawn(ent.Comp.Proto, args.Coordinates);
             }
 
-            if (ammoEntity is { } ammoEnt)
+            if (ammoEntity is not { } ammoEnt)
+                continue;
+
+            args.Ammo.Add((ammoEnt, EnsureShootable(ammoEnt)));
+            if (TryComp<BallisticAmmoSelfRefillerComponent>(ent, out var refiller))
             {
-                args.Ammo.Add((ammoEnt, EnsureShootable(ammoEnt)));
-                if (TryComp<BallisticAmmoSelfRefillerComponent>(ent, out var refiller))
-                {
-                    PauseSelfRefill((ammoEnt, refiller));
-                }
+                PauseSelfRefill((ent, refiller));
             }
         }
 
