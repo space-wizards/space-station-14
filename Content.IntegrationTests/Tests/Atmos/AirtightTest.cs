@@ -362,7 +362,7 @@ public sealed class AirtightTest : AtmosTest
     #region Multi-Tile Assertion
 
     /*
-     Tests for asserting multi-tile airtightness state on both reconstructed and cached data.
+     Tests for asserting multi-tile airtightness state on cached data.
      These tests spawn multiple entities and check that the center unblocked entity
      properly reflects partial airtightness states.
 
