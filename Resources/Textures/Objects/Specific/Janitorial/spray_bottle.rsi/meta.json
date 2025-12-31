@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+    "copyright": "cleaner, cleaner_large and in-hand sprites are from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428 and modified by chaisftw (GitHub), Fill levels created by chaisftw (GitHub) by modifying cleaner, cleaner_large and in-hand sprites",
     "size": {
         "x": 32,
         "y": 32
