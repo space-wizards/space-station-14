@@ -227,4 +227,4 @@
       path: "/Audio/Machines/door_lock_off.ogg"
     positional: true
   - type: StaticPrice
-    price: 2500
+    price: 250

@@ -427,7 +427,7 @@
   - type: Item
     sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
   - type: StaticPrice
-    price: 2500
+    price: 250
 
 # Borgs
 

@@ -399,7 +399,8 @@
           tableId: FoolKitGunEntityTable
         - !type:NestedSelector
           tableId: FoolKitGrenadeEntityTable
-          amount: 2
+        - !type:NestedSelector
+          tableId: SyndicateHardsuitExtrasEntityTable
 
 - type: entityTable
   id: FoolKitGunEntityTable

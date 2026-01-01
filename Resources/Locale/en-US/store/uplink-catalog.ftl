@@ -241,7 +241,7 @@ uplink-decoy-kit-name = Decoy Kit
 uplink-decoy-kit-desc = State-of-the-art distraction technology straight from RND. Comes with five realistic balloons, four decoy grenades, and some snap poppers!
 
 uplink-fool-kit-name = Fool Kit
-uplink-fool-kit-desc = A myriad of very convincing items meant to make you look very dangerous. Comes with a fake blood-red hardsuit, a random syndicate gun plushie, a fake energy sword, a fake C4, and two fake grenades.
+uplink-fool-kit-desc = A myriad of very convincing items meant to make you look very dangerous. Comes with an unarmored blood-red hardsuit, a random syndicate gun plushie, a fake energy sword, a fake C4, and a random fake grenade.
 
 uplink-chemistry-kit-name = Chemical Synthesis Kit
 uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!

@@ -182,14 +182,14 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
-  - type: DeleteOnTrigger
-    keysIn:
-    - timer
   - type: EmitSoundOnTrigger
     keysIn:
     - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
+  - type: DeleteOnTrigger
+    keysIn:
+    - timer
     canCreateVacuum: false
   - type: HolidayVisuals
     holidays:
@@ -199,4 +199,4 @@
     sprite:
       festive: Objects/Weapons/Bombs/c4gift.rsi
   - type: StaticPrice
-    price: 625 # 5000 for a bundle of 8
+    price: 100 # 5000 for a bundle of 8
