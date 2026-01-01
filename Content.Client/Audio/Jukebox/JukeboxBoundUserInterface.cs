@@ -74,6 +74,8 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         {
             _menu.SetSelectedSong(string.Empty, 0f);
         }
+
+        _menu.PopulateQueueList(jukebox.Queue);
     }
 
     public void PopulateMusic()

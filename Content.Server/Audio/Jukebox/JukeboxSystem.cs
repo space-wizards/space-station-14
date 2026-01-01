@@ -254,6 +254,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
                 }
 
                 comp.SelectedSongId = comp.Queue[0];
+                comp.AudioStream = null; // Nuke the audio stream so that OnJukeboxPlay doesn't try and set the state of a shutting down audio stream to playing
                 OnJukeboxPlay(uid, comp);
             }
         }
