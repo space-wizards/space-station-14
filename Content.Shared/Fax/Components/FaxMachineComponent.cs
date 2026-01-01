@@ -14,7 +14,7 @@ public sealed partial class FaxMachineComponent : Component
     /// Name with which the fax will be visible to others on the network
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("name")]
+    [DataField("name"), AutoNetworkedField]
     public string FaxName { get; set; } = "Unknown";
 
     /// <summary>
@@ -28,13 +28,13 @@ public sealed partial class FaxMachineComponent : Component
     /// Device address of fax in network to which data will be send
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("destinationAddress")]
+    [DataField("destinationAddress"), AutoNetworkedField]
     public string? DestinationFaxAddress { get; set; }
 
     /// <summary>
     /// Contains the item to be sent, assumes it's paper...
     /// </summary>
-    [DataField(required: true)]
+    [DataField(required: true), AutoNetworkedField]
     public ItemSlot PaperSlot = new();
 
     /// <summary>
@@ -42,7 +42,7 @@ public sealed partial class FaxMachineComponent : Component
     /// This will make it visible to others on the network
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool ResponsePings { get; set; } = true;
 
     /// <summary>
@@ -60,84 +60,78 @@ public sealed partial class FaxMachineComponent : Component
     public bool ReceiveNukeCodes { get; set; } = false;
 
     /// <summary>
-    /// Sound to play when fax printing new message
+    /// Sound to play when fax performing given action
     /// </summary>
     [DataField]
-    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
-
-    /// <summary>
-    /// Sound to play when fax successfully send message
-    /// </summary>
-    [DataField]
-    public SoundSpecifier SendSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
+    public Dictionary<FaxActions, SoundSpecifier> ActionSoundsSpecifiers = new() {
+        { FaxActions.Send, new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg") },
+        { FaxActions.Print, new SoundPathSpecifier("/Audio/Machines/printer.ogg") },
+    };
 
     /// <summary>
     /// Known faxes in network by address with fax names
     /// </summary>
-    [ViewVariables]
-    public Dictionary<string, string> KnownFaxes { get; } = new();
+    [ViewVariables, AutoNetworkedField]
+    public Dictionary<string, string> KnownFaxes { get; set; } = new();
 
     /// <summary>
     /// Print queue of the incoming message
     /// </summary>
     [ViewVariables]
-    [DataField]
-    public Queue<FaxPrintout> PrintingQueue { get; private set; } = new();
+    [DataField, AutoNetworkedField]
+    public Queue<FaxPrintout> PrintingQueue { get; set; } = new();
 
     /// <summary>
-    /// Message sending timeout
+    /// The times at which actions will be complete
     /// </summary>
     [ViewVariables]
-    [DataField]
-    public float SendTimeoutRemaining;
+    [DataField, AutoNetworkedField]
+    public Dictionary<FaxActions, TimeSpan> ReadyTimes = new();
 
     /// <summary>
-    /// Message sending timeout
+    /// Timeout of each action
     /// </summary>
     [ViewVariables]
-    [DataField]
-    public float SendTimeout = 5f;
+    [DataField, AutoNetworkedField]
+    public Dictionary<FaxActions, TimeSpan> ActionTimeout = new() {
+        { FaxActions.Print, TimeSpan.FromSeconds(2.3f) },
+        { FaxActions.Send, TimeSpan.FromSeconds(5f) },
+        { FaxActions.Insert, TimeSpan.FromSeconds(1.88f) }, // 0.02 off for correct animation
+    };
 
     /// <summary>
-    /// Remaining time of inserting animation
-    /// </summary>
-    [DataField]
-    public float InsertingTimeRemaining;
-
-    /// <summary>
-    /// How long the inserting animation will play
+    /// State of action being performed.
     /// </summary>
     [ViewVariables]
-    public float InsertionTime = 1.88f; // 0.02 off for correct animation
-
-    /// <summary>
-    /// Remaining time of printing animation
-    /// </summary>
-    [DataField]
-    public float PrintingTimeRemaining;
-
-    /// <summary>
-    /// How long the printing animation will play
-    /// </summary>
-    [ViewVariables]
-    public float PrintingTime = 2.3f;
+    [DataField, AutoNetworkedField]
+    public Dictionary<FaxActions, bool> IsActionActive = new() {
+        { FaxActions.Print, false },
+        { FaxActions.Send, false },
+        { FaxActions.Insert, false },
+    };
 
     /// <summary>
     ///     The prototype ID to use for faxed or copied entities if we can't get one from
     ///     the paper entity for whatever reason.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId PrintPaperId = "Paper";
 
     /// <summary>
     ///     The prototype ID to use for faxed or copied entities if we can't get one from
     ///     the paper entity for whatever reason of the Office type.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntProtoId PrintOfficePaperId = "PaperOffice";
+
+    /// <summary>
+    ///     Ongoing sounds of actions fax may be performing
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<FaxActions, EntityUid?> ActionSounds = new();
 }
 
-[DataDefinition]
+[DataDefinition, Serializable]
 public sealed partial class FaxPrintout
 {
     [DataField(required: true)]
@@ -175,4 +169,11 @@ public sealed partial class FaxPrintout
         StampedBy = stampedBy ?? new List<StampDisplayInfo>();
         Locked = locked;
     }
+}
+
+public enum FaxActions
+{
+    Insert,
+    Send,
+    Print,
 }

@@ -1,4 +1,4 @@
-namespace Content.Server.Fax;
+namespace Content.Shared.Fax;
 
 public static class FaxConstants
 {
@@ -31,3 +31,4 @@ public static class FaxConstants
     public const string FaxSyndicateData = "fax_data_i_am_syndicate";
     public const string FaxPaperLockedData = "fax_data_locked";
 }
+

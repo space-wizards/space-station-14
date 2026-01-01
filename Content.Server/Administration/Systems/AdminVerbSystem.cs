@@ -124,7 +124,7 @@ namespace Content.Server.Administration.Systems
                         _quickDialog.OpenDialog(player, "Subtle Message", "Message", "Popup Message", (string message, string popupMessage) =>
                         {
                             _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, popupMessage == "" ? Loc.GetString("prayer-popup-subtle-default") : popupMessage);
-                        });
+                        }, null, false);
                     };
                     prayerVerb.Impact = LogImpact.Low;
                     args.Verbs.Add(prayerVerb);

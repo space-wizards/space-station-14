@@ -73,7 +73,7 @@ namespace Content.Server.Nuke
                         new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#BB3232") },
                     }
                 );
-                _faxSystem.Receive(faxEnt, printout, null, fax);
+                _faxSystem.Receive((faxEnt, fax), printout, null);
 
                 wasSent = true;
             }

@@ -16,18 +16,18 @@ public sealed class FaxecuteSystem : EntitySystem
         base.Initialize();
     }
 
-    public void Faxecute(EntityUid uid, FaxMachineComponent component, DamageOnFaxecuteEvent? args = null)
+    public void Faxecute(Entity<FaxMachineComponent> ent, DamageOnFaxecuteEvent? args = null)
     {
-        var sendEntity = component.PaperSlot.Item;
+        var sendEntity = ent.Comp.PaperSlot.Item;
         if (sendEntity == null)
             return;
 
-        if (!TryComp<FaxecuteComponent>(uid, out var faxecute))
+        if (!TryComp<FaxecuteComponent>(ent.Owner, out var faxecute))
             return;
 
         var damageSpec = faxecute.Damage;
-        _damageable.ChangeDamage(sendEntity.Value, damageSpec);
-        _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", uid)), uid, PopupType.LargeCaution);
+        _damageable.TryChangeDamage(sendEntity.Value, damageSpec);
+        _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-error", ("target", ent.Owner)), ent.Owner, PopupType.LargeCaution);
         return;
 
     }
