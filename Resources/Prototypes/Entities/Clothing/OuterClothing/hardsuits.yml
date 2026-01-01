@@ -1120,9 +1120,18 @@
   description: A heavily armored hardsuit designed for work in special operations. Property of Gorlex Marauders.
   suffix: Fake
   components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 1
-  - type: StaminaResistance
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
     damageCoefficient: 1
   - type: Armor
     modifiers:
@@ -1133,5 +1142,17 @@
         Heat: 1
         Radiation: 1
         Caustic: 1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
     clothingPrototype: FakeClothingHeadHelmetHardsuitSyndie
-    suffix: Fake
+  - type: Tag
+    tags:
+    - MonkeyWearable
+    - Hardsuit
+    - CorgiWearable
+    - ScurretWearable
+  - type: StaticPrice
+    price: 500

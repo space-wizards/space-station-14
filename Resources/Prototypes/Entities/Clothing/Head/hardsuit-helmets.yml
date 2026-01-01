@@ -1063,9 +1063,22 @@
   description: A heavily armored helmet designed for work in special operations. Property of Gorlex Marauders.
   suffix: Fake
   components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/syndicate.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/syndicate.rsi
+  - type: PointLight
+    color: green
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
     modifiers:
       coefficients:
         Blunt: 1
         Slash: 1
         Piercing: 1
         Heat: 1
+  - type: Tag
+    tags:
+    - CorgiWearable
