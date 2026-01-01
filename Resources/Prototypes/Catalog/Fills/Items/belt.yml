@@ -3,15 +3,18 @@
   parent: ClothingBeltUtility
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: Crowbar
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+              - id: Crowbar
       - id: Wrench
       - id: Screwdriver
       - id: Wirecutter
       - id: Welder
       - id: NetworkConfigurator
       - id: trayScanner
+
 
 - type: entity
   id: ClothingBeltUtilityEngineering
