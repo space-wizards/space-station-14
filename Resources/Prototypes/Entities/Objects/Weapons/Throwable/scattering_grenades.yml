@@ -210,7 +210,7 @@
     - state: icon
       map: ["enum.TriggerVisualLayers.Base"]
   - type: ScatteringGrenade
-    fillPrototype: FakeExGrenade
+    fillPrototype: GrenadeDummy
     distance: 4
   - type: TimerTrigger
     beepSound:

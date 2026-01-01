@@ -377,9 +377,9 @@
         - id: BalloonJuggernaut
         - id: BalloonCommander
         - id: SnapPopBox
-        - id: FakeExGrenade
+        - id: GrenadeDummy
           amount: 2
-        - id: FakeSyndieMiniBomb
+        - id: SyndieTrickyBomb
           amount: 2
 
 - type: entity
@@ -403,7 +403,7 @@
 
 - type: entityTable
   id: FoolKitGunEntityTable
-  table: !type:GroupSelector
+  storagebase: !type:GroupSelector
     children:
     - id: PlushieC20r
     - id: PlushieL6
@@ -411,11 +411,11 @@
 
 - type: entityTable
   id: FoolKitGunEntityTable
-  table: !type:GroupSelector
+  storagebase: !type:GroupSelector
     children:
     - id: FakeClusterGrenade
     - id: FakeSingularityGrenade
-    - id: FakeSyndieMiniBomb
+    - id: SyndieTrickyBomb
 
 - type: entity
   parent: [ ClothingBackpackDuffelBundle, BaseMajorContraband ]

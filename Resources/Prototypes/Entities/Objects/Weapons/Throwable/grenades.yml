@@ -403,7 +403,7 @@
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
   parent: GrenadeBase
-  id: FakeExGrenade
+  id: GrenadeDummy
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/grenade.rsi
@@ -430,7 +430,7 @@
   name: syndicate minibomb
   description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
   parent: [GrenadeDummy, BaseSyndicateContraband]
-  id: FakeSyndieMiniBomb
+  id: SyndieTrickyBomb
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
