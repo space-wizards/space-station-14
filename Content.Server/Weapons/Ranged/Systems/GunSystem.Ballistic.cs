@@ -1,5 +1,6 @@
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 
 namespace Content.Server.Weapons.Ranged.Systems;
@@ -17,8 +18,17 @@ public sealed partial class GunSystem
             component.Entities.RemoveAt(component.Entities.Count - 1);
             DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.Entities));
 
-            Containers.Remove(existing, component.Container);
-            EnsureShootable(existing);
+            if (EntityManager.EntityExists(existing))
+            {
+                Containers.Remove(existing, component.Container);
+                EnsureShootable(existing);
+            }
+            else
+            {
+                // Out-of-order deletes (e.g. prediction corrections) can leave stale entities.
+                // Nothing to eject anymore, so just log and continue.
+                Log.Debug($"Skipping ballistic cycle for missing cartridge {existing} on {uid}");
+            }
         }
         else if (component.UnspawnedCount > 0)
         {
