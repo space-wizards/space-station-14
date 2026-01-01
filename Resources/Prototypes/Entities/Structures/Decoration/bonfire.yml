@@ -1,15 +1,11 @@
 - type: entity
-  id: Bonfire
+  id: BaseBonfire
+  abstract: true
   parent: BaseStructure
-  name: bonfire
-  description: What can be better than a late evening under the sky with guitar and friends?
   components:
   - type: Sprite
     noRot: true
     sprite: Structures/Decoration/bonfire.rsi
-    layers:
-      - state: bonfire
-      - state: burning
   - type: PointLight
     radius: 5
     energy: 3
@@ -31,10 +27,45 @@
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
   - type: AlwaysHot
+  - type: IgnitionSource
+    temperature: 700
+    ignited: true
+
+- type: entity
+  id: Bonfire
+  parent: BaseBonfire
+  name: bonfire
+  description: What can be better than a late evening under the sky with guitar and friends?
+  components:
+  - type: Sprite
+    layers:
+      - state: burning
+  - type: Construction
+    graph: Bonfire
+    node: bonfire
+
+- type: entity
+  id: StakeBonfire
+  parent: BaseBonfire
+  name: bonfire with stake
+  description: A sinister bonfire with a stake for.. ceremonial purposes. Best not to ask.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/bonfire_stake.rsi
+    layers:
+      - state: burning
+    offset: "0, 0.5"
+  - type: Strap
+    position: Stand
+    buckleOffset: "0, 0.5"
+  - type: IgniteOnBuckle
+  - type: Construction
+    graph: StakeBonfire
+    node: stakeBonfire
 
 - type: entity
   id: LegionnaireBonfire
-  parent: Bonfire
+  parent: BaseBonfire
   name: legionnaire bonfire
   description: There, in the land of lava and ash, place to to cook marshmallow and potato.
   components:
