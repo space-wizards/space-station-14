@@ -34,6 +34,12 @@ public sealed partial class SurveillanceCameraComponent : Component
     [DataField("id")]
     public string CameraId = "camera";
 
+    /// <summary>
+    /// If true, <see cref="CameraId"/> will be changed to the name of the entity
+    /// </summary>
+    [DataField]
+    public bool UseEntityNameAsCameraId = false;
+
     [DataField, AutoNetworkedField]
     public bool NameSet;
 

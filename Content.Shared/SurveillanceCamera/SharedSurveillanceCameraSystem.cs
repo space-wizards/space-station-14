@@ -1,4 +1,5 @@
 using Content.Shared.Emp;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.SurveillanceCamera.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
@@ -7,11 +8,14 @@ namespace Content.Shared.SurveillanceCamera;
 
 public abstract class SharedSurveillanceCameraSystem : EntitySystem
 {
+    [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<SurveillanceCameraComponent, GetVerbsEvent<AlternativeVerb>>(AddVerbs);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpPulseEvent>(OnEmpPulse);
         SubscribeLocalEvent<SurveillanceCameraComponent, EmpDisabledRemovedEvent>(OnEmpDisabledRemoved);
+        SubscribeLocalEvent<SurveillanceCameraComponent, EntityRenamedEvent>(OnEntityRenamed);
     }
 
     private void AddVerbs(EntityUid uid, SurveillanceCameraComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -43,6 +47,16 @@ public abstract class SharedSurveillanceCameraSystem : EntitySystem
     private void OnEmpDisabledRemoved(EntityUid uid, SurveillanceCameraComponent component, ref EmpDisabledRemovedEvent args)
     {
         SetActive(uid, true);
+    }
+
+    private void OnEntityRenamed(EntityUid uid, SurveillanceCameraComponent component, ref EntityRenamedEvent args)
+    {
+        if (!component.UseEntityNameAsCameraId)
+            return;
+
+        _nameModifier.RefreshNameModifiers(uid);
+
+        component.CameraId = MetaData(uid).EntityName;
     }
 
     // TODO: predict the rest of the server side system
