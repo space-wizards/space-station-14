@@ -1051,7 +1051,7 @@
       offset: *icon-offset
       state: Ninja
   - type: Item
-    heldPrefix: black
+    heldPrefix: green
   - type: AgentIDCard
   - type: IdCard
     jobIcon: JobIconNinja
