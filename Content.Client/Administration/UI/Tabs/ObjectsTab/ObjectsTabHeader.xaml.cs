@@ -66,15 +66,12 @@ namespace Content.Client.Administration.UI.Tabs.ObjectsTab
             HeaderClicked(args, Header.EntityID);
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void ExitedTree()
         {
-            base.Dispose(disposing);
+            base.ExitedTree();
 
-            if (disposing)
-            {
-                ObjectNameLabel.OnKeyBindDown -= ObjectNameClicked;
-                EntityIDLabel.OnKeyBindDown -= EntityIDClicked;
-            }
+            ObjectNameLabel.OnKeyBindDown -= ObjectNameClicked;
+            EntityIDLabel.OnKeyBindDown -= EntityIDClicked;
         }
 
         public enum Header

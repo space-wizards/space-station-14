@@ -322,14 +322,9 @@ public sealed partial class NoteEdit : FancyWindow
         return true;
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
-
-        if (!disposing)
-        {
-            return;
-        }
+        base.ExitedTree();
 
         PermanentCheckBox.OnPressed -= OnPermanentPressed;
         SecretCheckBox.OnPressed -= OnSecretPressed;

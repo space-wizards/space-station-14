@@ -342,12 +342,12 @@ public sealed partial class ShuttleDockControl : BaseShuttleControl
 
         foreach (var btn in _dockButtons.Values)
         {
-            btn.Dispose();
+            btn.Orphan();
         }
 
         foreach (var container in _dockContainers.Values)
         {
-            container.Dispose();
+            container.Orphan();
         }
 
         _dockButtons.Clear();

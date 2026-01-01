@@ -119,11 +119,9 @@ public sealed partial class ArticleEditorPanel : Control
         ArticleDraftUpdated?.Invoke(string.Empty, string.Empty);
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
-        if (!disposing)
-            return;
+        base.ExitedTree();
 
         ButtonPreview.OnPressed -= OnPreview;
         ButtonCancel.OnPressed -= OnCancel;

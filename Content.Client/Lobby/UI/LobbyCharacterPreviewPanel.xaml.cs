@@ -54,9 +54,10 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         ViewBox.AddChild(spriteView);
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
+        base.ExitedTree();
+
         _entManager.DeleteEntity(_previewDummy);
         _previewDummy = null;
     }
