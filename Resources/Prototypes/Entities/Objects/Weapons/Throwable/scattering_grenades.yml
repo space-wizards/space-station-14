@@ -196,3 +196,34 @@
     sound:
       path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
     positional: true
+
+# Fake clustergrenade for Fool kit
+- type: entity
+  parent: [GrenadeBase, ScatteringGrenadeBase, BaseSyndicateContraband]
+  id: FakeClusterGrenade
+  name: clustergrenade
+  description: Why use one grenade when you can use three at once!
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/clusterbomb.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ScatteringGrenade
+    fillPrototype: FakeExGrenade
+    distance: 4
+  - type: TimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 0.5
+  - type: EmitSoundOnTrigger
+    keysIn:
+    - timer
+    sound:
+      path: "/Audio/Machines/door_lock_off.ogg"
+    positional: true
+  - type: StaticPrice
+    price: 2500

@@ -395,9 +395,11 @@
         - id: FakeClothingOuterHardsuitSyndie
         - id: FakeEnergySword
         - id: FakeC4
-          amount: 2
         - !type:NestedSelector
           tableId: FoolKitGunEntityTable
+        - !type:NestedSelector
+          tableId: FoolKitGrenadeEntityTable
+          amount: 2
 
 - type: entityTable
   id: FoolKitGunEntityTable
@@ -406,6 +408,14 @@
     - id: PlushieC20r
     - id: PlushieL6
     - id: PlushieBulldog
+
+- type: entityTable
+  id: FoolKitGunEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: FakeClusterGrenade
+    - id: FakeSingularityGrenade
+    - id: FakeSyndieMiniBomb
 
 - type: entity
   parent: [ ClothingBackpackDuffelBundle, BaseMajorContraband ]

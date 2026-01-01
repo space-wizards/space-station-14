@@ -400,10 +400,10 @@
 # Non-explosive "dummy" grenades to use as a distraction.
 
 - type: entity
-  name: trick grenade
-  description: All the grenade without any of the boom.
+  name: explosive grenade
+  description: Grenade that creates a small but devastating explosion.
   parent: GrenadeBase
-  id: GrenadeDummy
+  id: FakeExGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/grenade.rsi
@@ -424,13 +424,13 @@
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
-      path: /Audio/Effects/countdown.ogg
+      path: /Audio/Effects/beep1.ogg
 
 - type: entity
-  name: syndicate trickybomb
-  description: A syndicate-manufactured explosive used to make an excellent distraction.
+  name: syndicate minibomb
+  description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
   parent: [GrenadeDummy, BaseSyndicateContraband]
-  id: SyndieTrickyBomb
+  id: FakeSyndieMiniBomb
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
@@ -450,3 +450,24 @@
         volume: 12
   - type: StaticPrice
     price: 50
+
+- type: entity
+  parent: [GrenadeDummy, BaseSyndicateContraband]
+  id: FakeSingularityGrenade
+  name: singularity grenade
+  description: Grenade that simulates the power of a singularity, pulling things in a heap.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
+  - type: TimerTrigger
+    delay: 3
+    beepInterval: 0.46
+    beepSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
