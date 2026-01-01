@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Audio.Jukebox;
@@ -126,37 +125,29 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxTrackQueued(EntityUid uid, JukeboxComponent component, JukeboxQueueTrackMessage args)
     {
-        component.Queue.AddLast(args.SongId);
+        component.Queue.Add(args.SongId);
 
         if (component.SelectedSongId is null)
         {
-            component.SelectedSongId = component.Queue.First!.Value;
+            component.SelectedSongId = component.Queue[0];
         }
 
         Dirty(uid, component);
     }
 
-        /// <summary>
-        /// Removes a track from the queue by index.
-        /// If the index given does not exist or is outside of the bounds of the queue, nothing happens.
-        /// </summary>
-        /// <param name="uid">The jukebox whose queue is being altered.</param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
+    /// <summary>
+    /// Removes a track from the queue by index.
+    /// If the index given does not exist or is outside of the bounds of the queue, nothing happens.
+    /// </summary>
+    /// <param name="uid">The jukebox whose queue is being altered.</param>
+    /// <param name="component"></param>
+    /// <param name="args"></param>
     private void OnJukeboxDeleteRequestMessage(EntityUid uid, JukeboxComponent component, JukeboxDeleteRequestMessage args)
     {
         if (args.Index < 0 || args.Index >= component.Queue.Count)
             return;
 
-        var node = component.Queue.First;
-        for (int i = 0; i < args.Index; i++)
-            node = node?.Next;
-
-        if (node == null) // Shouldn't happen with checks above.
-            return;
-
-        var batch = node.Value;
-        component.Queue.Remove(node);
+        component.Queue.RemoveAt(args.Index);
         Dirty(uid, component);
     }
 
@@ -164,43 +155,34 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
     private void OnJukeboxMoveRequestMessage(EntityUid uid, JukeboxComponent component, JukeboxMoveRequestMessage args)
     {
         if (args.Change == 0 || args.Index < 0 || args.Index >= component.Queue.Count)
-                return;
+            return;
 
-        // New index must be within the bounds of the batch.
+        // New index must be within the bounds of the queue.
         var newIndex = args.Index + args.Change;
         if (newIndex < 0 || newIndex >= component.Queue.Count)
             return;
 
-        var node = component.Queue.First;
-        for (int i = 0; i < args.Index; i++)
-            node = node?.Next;
-
-        if (node == null) // Something went wrong.
-            return;
-
-        if (args.Change > 0)
+        // Only moving by 1, use a swap
+        if (Math.Abs(args.Change) == 1)
         {
-            var newRelativeNode = node.Next;
-            for (int i = 1; i < args.Change; i++) // 1-indexed: starting from Next
-                newRelativeNode = newRelativeNode?.Next;
-
-            if (newRelativeNode == null) // Something went wrong.
-                return;
-
-            component.Queue.Remove(node);
-            component.Queue.AddAfter(newRelativeNode, node);
+            var temp = component.Queue[newIndex];
+            component.Queue[newIndex] = component.Queue[args.Index];
+            component.Queue[args.Index] = temp;
         }
         else
         {
-            var newRelativeNode = node.Previous;
-            for (int i = 1; i < -args.Change; i++) // 1-indexed: starting from Previous
-                newRelativeNode = newRelativeNode?.Previous;
+            var track = component.Queue[args.Index];
+            component.Queue.RemoveAt(args.Index);
 
-            if (newRelativeNode == null) // Something went wrong.
-                return;
-
-            component.Queue.Remove(node);
-            component.Queue.AddBefore(newRelativeNode, node);
+            // since we change the indices of all elements after the removed item, we have to adjust newIndex accordingly
+            if (args.Change < 0)
+            {
+                component.Queue.Insert(newIndex, track);
+            }
+            else
+            {
+                component.Queue.Insert(newIndex - 1, track);
+            }
         }
 
         Dirty(uid, component);
@@ -243,10 +225,10 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
                 }
 
                 // Remove the last played song from the queue, but append it to the end if repeat is on.
-                var lastPlayed = comp.Queue.First;
-                comp.Queue.RemoveFirst();
-                if (comp.RepeatTracks && lastPlayed is not null)
-                    comp.Queue.AddLast(lastPlayed);
+                var lastPlayed = comp.Queue[0];
+                comp.Queue.RemoveAt(0);
+                if (comp.RepeatTracks)
+                    comp.Queue.Add(lastPlayed);
 
                 // Queue's actually empty now, stop
                 if (comp.Queue.Count == 0)
@@ -260,19 +242,18 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
                 {
                     var nextIndex = _random.Next(comp.Queue.Count);
 
-                    var node = comp.Queue.First;
-                    for (int i = 0; i < nextIndex; i++)
-                        node = node?.Next;
+                    // Only rearrange if it's not already at the front of the queue
+                    if (nextIndex != 0)
+                    {
+                        var nextTrack = comp.Queue[nextIndex];
 
-                    if (node == null) // Something went wrong.
-                        return;
-
-                    // since we're just playing the first song, move the shuffled song to the top, if it isn't already.
-                    comp.Queue.Remove(node);
-                    comp.Queue.AddFirst(node);
+                        // since we're just playing the first song, move the shuffled song to the top, if it isn't already.
+                        comp.Queue.RemoveAt(nextIndex);
+                        comp.Queue.Insert(0, nextTrack);
+                    }
                 }
 
-                comp.SelectedSongId = comp.Queue.First!.Value;
+                comp.SelectedSongId = comp.Queue[0];
                 OnJukeboxPlay(uid, comp);
             }
         }

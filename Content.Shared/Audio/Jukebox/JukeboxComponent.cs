@@ -22,14 +22,10 @@ public sealed partial class JukeboxComponent : Component
     public EntityUid? AudioStream;
 
     /// <summary>
-    /// The queue of queued songs.
+    /// The queue of queued songs. (which is actually a list)
     /// </summary>
-    /// This is a LinkedList to allow for constant time insertion/deletion (vs a List), and more efficient
-    /// moves (vs a Queue).
-    /// It is also shamelessly stolen from the lathe queue implementation.
-    /// </remarks>
     [DataField, AutoNetworkedField]
-    public LinkedList<ProtoId<JukeboxPrototype>> Queue = new();
+    public List<ProtoId<JukeboxPrototype>> Queue = new();
 
     /// <summary>
     /// Whether or not a played song should be removed from the queue or readded to the bottom.
