@@ -401,7 +401,7 @@
   name: energy sword
   parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
   id: FakeEnergySword
-  description: An energy sword dialed way down. Only a fool would use this.
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi

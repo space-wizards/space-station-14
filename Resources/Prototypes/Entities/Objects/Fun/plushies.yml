@@ -1235,7 +1235,7 @@
   parent: [BasePlushie, BaseSyndicateContraband]
   id: PlushieC20r
   name: C-20r submachine gun
-  description: A holo-plushie that looks and sounds exactly like a C-20r submachine gun. Only a fool would point this at someone.
+  description: A classic and widespread submachine gun, infamous for its use by the Gorlex Marauders. One of the first homegrown Waffle Corp. designs, it remains in service today. Feeds from .35 SMG magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -1265,7 +1265,7 @@
   parent: [BasePlushie, BaseSyndicateContraband]
   id: PlushieL6
   name: L6 SAW
-  description: A holo-plushie that looks and sounds exactly like an L6 SAW. Only a fool would point this at someone.
+  description: Developed by Waffle Corp, the L6 Squad Automatic Weapon is a deadly light machine gun often used by the Gorlex Marauders. Although bulky and cumbersome, its heavy barrel and high ammo capacity make it perfect for suppressing combatants with a hail of bullets. Feeds from .30 ammo belts.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/LMGs/L6.rsi
@@ -1295,7 +1295,7 @@
   parent: [BasePlushie, BaseSyndicateContraband]
   id: PlushieBulldog
   name: Bulldog
-  description: A holo-plushie that looks and sounds exactly like a bulldog. Only a fool would point this at someone.
+  description: An automatic magazine-fed shotgun for close-quarters combat. Kicks like a mule on steroids. Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
