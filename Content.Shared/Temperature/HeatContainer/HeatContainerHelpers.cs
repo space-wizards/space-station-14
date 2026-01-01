@@ -30,7 +30,7 @@ public static partial class HeatContainerHelpers
     /// <param name="dQ">The energy in joules to add or remove.</param>
     /// <returns>The resulting temperature in kelvin after the heat change.</returns>
     [PublicAPI]
-    public static float AddHeatQuery(this HeatContainer c, float dQ)
+    public static float AddHeatQuery(this ref HeatContainer c, float dQ)
     {
         // Don't allow the temperature to go below the absolute minimum.
         return Math.Max(0f, c.Temperature + dQ / c.HeatCapacity);
