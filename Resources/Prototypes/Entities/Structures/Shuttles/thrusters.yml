@@ -107,12 +107,12 @@
   id: ThrusterXenoborg
   components:
   - type: Thruster
-    preventToggle: true
+    preventToggle: true # no turning it off by just clicking it
   - type: Anchorable
     flags:
-    - Anchorable
+    - Anchorable # no unwrenching it
   - type: Rotatable
-    rotateWhileAnchored: false
+    rotateWhileAnchored: false # no rotating it backwards so it doesn't face space
   - type: Sprite
     sprite: Structures/Shuttles/xenoborg_thruster.rsi
 
