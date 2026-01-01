@@ -132,12 +132,16 @@
           - MagazinePistolAll
           - SpeedLoaderAll
           - PowerCellAll
+        insertSound: /Audio/Animals/goose_honk.ogg
+        ejectSound: /Audio/Animals/goose_honk.ogg
       sidearm_slot:
         name: clothing-holster-sidearm-slot
         priority: 2
         whitelist:
           tags:
           - Sidearm
+        insertSound: /Audio/Animals/goose_honk.ogg
+        ejectSound: /Audio/Animals/goose_honk.ogg
   - type: ItemMapper
     mapLayers:
       icon_knife:
@@ -198,6 +202,8 @@
           - MagazineRifleAll
           - MagazineShotgun
           - PowerCellAll
+        insertSound: /Audio/Animals/goose_honk.ogg
+        ejectSound: /Audio/Animals/goose_honk.ogg
       upgraded_sidearm_slot:
         name: clothing-holster-upgraded-sidearm-slot
         priority: 2
@@ -205,6 +211,8 @@
           tags:
           - Sidearm
           - SubMachineGun
+        insertSound: /Audio/Animals/goose_honk.ogg
+        ejectSound: /Audio/Animals/goose_honk.ogg
       gun_slot:
         name: clothing-holster-gun-slot
         priority: 3
@@ -213,6 +221,8 @@
           - Shotgun
           - AssaultRifle
           - EnergyWeapon
+        insertSound: /Audio/Animals/goose_honk.ogg
+        ejectSound: /Audio/Animals/goose_honk.ogg
   - type: StaticPrice
     price: 500
   - type: ItemMapper
