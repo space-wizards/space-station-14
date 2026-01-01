@@ -130,7 +130,6 @@
   name: VGRoid interior marker
   components:
   - type: RoomFill
-    maxSize: 11, 5
     roomWhitelist:
       tags:
       - VGRoidInterior
@@ -138,9 +137,9 @@
     layers:
       - state: red
       # max size
-      - sprite: Markers/Outlines/11x5.rsi
+      - sprite: Markers/Outlines/5x5.rsi
         state: rect
         color: red
-      - sprite: Markers/Outlines/11x5.rsi
+      - sprite: Markers/Outlines/5x5.rsi
         state: label
         color: red
