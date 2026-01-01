@@ -87,7 +87,7 @@ public sealed class ProjectileGrenadeSystem : EntitySystem
             // slightly uneven, doesn't really change much, but it looks better
             var direction = angle.ToVec().Normalized();
             var velocity = _random.NextFloat(component.MinVelocity, component.MaxVelocity);
-            _gun.ShootProjectile(contentUid, direction, Vector2.Zero, null, speed: component.BaseVelocity + velocity);
+            _gun.ShootProjectile(contentUid, direction, Vector2.Zero, null, speed: velocity);
         }
     }
 

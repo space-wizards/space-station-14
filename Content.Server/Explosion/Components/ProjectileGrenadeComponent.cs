@@ -36,22 +36,16 @@ public sealed partial class ProjectileGrenadeComponent : Component
     public bool RandomAngle = false;
 
     /// <summary>
-    /// The base velocity the projectiles come out at.
+    /// The minimum speed the projectiles may come out at, to vary the spread.
     /// </summary>
     [DataField]
-    public float BaseVelocity = SharedGunSystem.ProjectileSpeed;
+    public float MinVelocity = 42f;
 
     /// <summary>
-    /// The minimum added speed the projectiles may come out at, to vary the spread.
+    /// The maximum speed the projectiles may come out at, to vary the spread.
     /// </summary>
     [DataField]
-    public float MinVelocity = 2f;
-
-    /// <summary>
-    /// The maximum added speed the projectiles may come out at, to vary the spread.
-    /// </summary>
-    [DataField]
-    public float MaxVelocity = 6f;
+    public float MaxVelocity = 46f;
 
     /// <summary>
     /// The trigger key that will activate the grenade.
