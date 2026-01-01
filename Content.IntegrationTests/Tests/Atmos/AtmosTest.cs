@@ -20,7 +20,7 @@ public abstract class AtmosTest : InteractionTest
     protected AtmosphereSystem SAtmos = default!;
     protected EntityLookupSystem LookupSystem = default!;
 
-    protected Entity<GridAtmosphereComponent> RelevantAtmos = default!;
+    protected Entity<GridAtmosphereComponent> RelevantAtmos;
 
     /// <summary>
     /// Used in <see cref="AtmosphereSystem.RunProcessingFull"/>. Resolved during test setup.
@@ -40,14 +40,35 @@ public abstract class AtmosTest : InteractionTest
         SAtmos = SEntMan.System<AtmosphereSystem>();
         LookupSystem = SEntMan.System<EntityLookupSystem>();
 
-        RelevantAtmos = (MapData.Grid, SEntMan.GetComponent<GridAtmosphereComponent>(MapData.Grid));
+        SEntMan.TryGetComponent<GridAtmosphereComponent>(MapData.Grid, out var gridAtmosComp);
+        SEntMan.TryGetComponent<GasTileOverlayComponent>(MapData.Grid, out var overlayComp);
+        SEntMan.TryGetComponent<MapGridComponent>(MapData.Grid, out var mapGridComp);
+        var xform = SEntMan.GetComponent<TransformComponent>(MapData.Grid);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(gridAtmosComp,
+                    Is.Not.Null,
+                    "Loaded map doesn't have a GridAtmosphereComponent on its grid. " +
+                    "Did you forget to override TestMapPath with a proper atmospherics testing map?");
+            Assert.That(overlayComp,
+                Is.Not.Null,
+                "Loaded map doesn't have a GasTileOverlayComponent on its grid. " +
+                "Did you forget to override TestMapPath with a proper atmospherics testing map?");
+            Assert.That(mapGridComp,
+                Is.Not.Null,
+                "Loaded map doesn't have a MapGridComponent on its grid. " +
+                "Did you forget to override TestMapPath with a proper atmospherics testing map?");
+        }
+
+        RelevantAtmos = (MapData.Grid, gridAtmosComp);
 
         ProcessEnt = new Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent>(
             MapData.Grid.Owner,
-            SEntMan.GetComponent<GridAtmosphereComponent>(MapData.Grid.Owner),
-            SEntMan.GetComponent<GasTileOverlayComponent>(MapData.Grid.Owner),
-            SEntMan.GetComponent<MapGridComponent>(MapData.Grid.Owner),
-            SEntMan.GetComponent<TransformComponent>(MapData.Grid.Owner));
+            gridAtmosComp,
+            overlayComp,
+            mapGridComp,
+            xform);
     }
 
     /// <summary>
