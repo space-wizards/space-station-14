@@ -1571,7 +1571,7 @@
 - type: foodSequenceElement
   id: PlushieC20r
   scale: 0.8, 0.8
-  name: food-sequence-cotton-burger-content-plushie-C20r
+  name: food-sequence-cotton-burger-content-plushie-c20r
   sprites:
   - sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
     state: icon

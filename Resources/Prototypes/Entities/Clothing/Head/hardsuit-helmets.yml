@@ -1058,7 +1058,7 @@
 # Fake Blood-red Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
-  id: ClothingHeadHelmetHardsuitSyndieFake
+  id: FakeClothingHeadHelmetHardsuitSyndie
   name: blood-red hardsuit helmet
   description: A blood-red helmet without the plating. Developed by Gorlex Marauders.
   components:

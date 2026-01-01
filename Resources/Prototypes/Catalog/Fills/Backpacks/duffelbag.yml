@@ -392,25 +392,16 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        - id: ClothingOuterHardsuitSyndieFake
-        - id: EnergySwordFake
-        - !type:NestedSelector
-          tableId: FoolKitGrenadeEntityTable
+        - id: FakeClothingOuterHardsuitSyndie
+        - id: FakeEnergySword
+        - id: FakeC4
+          amount: 2
         - !type:NestedSelector
           tableId: FoolKitGunEntityTable
 
 - type: entityTable
-  id: FoolKitGrenadeEntityTable
-  table: !type:AllSelector
-    children:
-    - id: C4Fake
-    - id: ExplosiveGrenadeFake
-    - id: BlackholeGrenadeFake
-    - id: ClusterGrenadeFake
-
-- type: entityTable
   id: FoolKitGunEntityTable
-  table: !type:AllSelector
+  table: !type:GroupSelector
     children:
     - id: PlushieC20r
     - id: PlushieL6

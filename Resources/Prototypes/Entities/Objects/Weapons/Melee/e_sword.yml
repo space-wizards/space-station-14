@@ -400,7 +400,7 @@
 - type: entity
   name: energy sword
   parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
-  id: EnergySwordFake
+  id: FakeEnergySword
   description: An energy sword dialed way down. Only a fool would use this.
   components:
   - type: Sprite
@@ -415,8 +415,9 @@
   - type: ItemToggleMeleeWeapon
     activatedDamage:
       types:
-        Slash: 4
-        Heat: 4
+        Slash: 2
+        Heat: 2
+        Structural: 2
   - type: ItemToggleSize
     activatedSize: Small
   - type: Reflect
