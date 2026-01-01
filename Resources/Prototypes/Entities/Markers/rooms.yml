@@ -4,6 +4,8 @@
   parent: MarkerBase
   components:
   - type: RoomFill
+    minSize: 3, 3
+    maxSize: 10, 10
   - type: Sprite
     layers:
       - state: red
