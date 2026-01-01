@@ -74,17 +74,14 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 // If a damage type is required, stop the bullet if the hit entity doesn't have that type.
                 if (component.PenetrationDamageTypeRequirement != null)
                 {
-                    var stopPenetration = false;
                     foreach (var requiredDamageType in component.PenetrationDamageTypeRequirement)
                     {
-                        if (!damage.DamageDict.Keys.Contains(requiredDamageType))
-                        {
-                            stopPenetration = true;
-                            break;
-                        }
-                    }
-                    if (stopPenetration)
+                        if (damage.DamageDict.Keys.Contains(requiredDamageType))
+                            continue;
+
                         component.ProjectileSpent = true;
+                        break;
+                    }
                 }
 
                 // If the object won't be destroyed, it "tanks" the penetration hit.
@@ -103,6 +100,10 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                     }
                 }
             }
+            else
+            {
+                component.ProjectileSpent = true;
+            }
         }
         else
         {
@@ -117,7 +118,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 _sharedCameraRecoil.KickCamera(target, args.OurBody.LinearVelocity.Normalized());
         }
 
-        if (component.DeleteOnCollide || component.ProjectileSpent)
+        if (component.DeleteOnCollide && component.ProjectileSpent)
             QueueDel(uid);
 
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
