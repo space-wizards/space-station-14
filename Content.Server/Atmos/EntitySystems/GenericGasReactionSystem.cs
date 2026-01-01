@@ -31,14 +31,15 @@ public sealed class GenericGasReactionSystem : EntitySystem
         var temp = mix.Temperature;
 
         // Gas reactions have a MinimumEnergyRequirement which is in spirit activation energy (Ea),
-        // but no reactions define it. So we have to calculate one to use. One way is to assume that
-        // Ea = 10 * R * MinimumTemperatureRequirement such that Ea >> RT.
-        const float TScaleFactor = 7f;
+        // but no reactions define it. So we have to calculate one to use. One way is to assume an
+        // Ea that puts the 'knee' of the exponential at the MinTemperature.
+        const float KneeRate = 1e-11f;
+        float TScaleFactor = -MathF.Log(KneeRate);
         var Ea = TScaleFactor * Atmospherics.R * reaction.MinimumTemperatureRequirement + dE;
 
-        // To compute initial rate coefficient A, assume that at temp = min temp we return 1/10.
-        const float RateScaleFactor = 0.1f; // not necessarily the same as TScaleFactor! Don't get confused!
-        var A = MathF.Exp(TScaleFactor) / RateScaleFactor;
+        // Compute initial rate coefficient A with an assumed initial rate.
+        const float RateAtMinTemp = 0.1f;
+        var A = RateAtMinTemp / KneeRate;
 
         // Prevent divide by zero
         if (temp < Atmospherics.TCMB)
