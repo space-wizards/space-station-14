@@ -41,6 +41,16 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
             SendMessage(new JukeboxStopMessage());
         };
 
+        _menu.OnRepeatToggled += args =>
+        {
+            SendMessage(new JukeboxRepeatMessage(args));
+        };
+
+        _menu.OnShuffleToggled += args =>
+        {
+            SendMessage(new JukeboxShuffleMessage(args));
+        };
+
         _menu.SetTime += SetTime;
         _menu.TrackQueueAction += track =>
         {
@@ -49,7 +59,6 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         _menu.QueueDeleteAction += index => SendMessage(new JukeboxDeleteRequestMessage(index));
         _menu.QueueMoveUpAction += index => SendMessage(new JukeboxMoveRequestMessage(index, -1));
         _menu.QueueMoveDownAction += index => SendMessage(new JukeboxMoveRequestMessage(index, 1));
-
 
         PopulateMusic();
         Reload();
@@ -76,6 +85,7 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         }
 
         _menu.PopulateQueueList(jukebox.Queue);
+        _menu.UpdateButtons(jukebox.RepeatTracks, jukebox.ShuffleTracks);
     }
 
     public void PopulateMusic()

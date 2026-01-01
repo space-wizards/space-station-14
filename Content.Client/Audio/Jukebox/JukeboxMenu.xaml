@@ -56,8 +56,8 @@
         VerticalExpand="False" SizeFlagsStretchRatio="1">
             <Button Name="PlayButton" Text="{Loc 'jukebox-menu-buttonplay'}" />
             <Button Name="StopButton" Text="{Loc 'jukebox-menu-buttonstop'}" />
-            <Button Name="RepeatButton" Text="{Loc 'jukebox-menu-buttonrepeat'}" />
-            <Button Name="ShuffleButton" Text="{Loc 'jukebox-menu-buttonshuffle'}" />
+            <Button Name="RepeatButton" Text="{Loc 'jukebox-menu-buttonrepeat'}" ToggleMode="True"/>
+            <Button Name="ShuffleButton" Text="{Loc 'jukebox-menu-buttonshuffle'}" ToggleMode="True"/>
             <Label Name="DurationLabel" Text="00:00 / 00:00" HorizontalAlignment="Right" HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
