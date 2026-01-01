@@ -187,9 +187,6 @@
     - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
-  - type: DeleteOnTrigger
-    keysIn:
-    - timer
     canCreateVacuum: false
   - type: HolidayVisuals
     holidays:
