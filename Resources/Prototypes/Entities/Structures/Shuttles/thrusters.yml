@@ -108,6 +108,9 @@
   components:
   - type: Thruster
     preventToggle: true
+  - type: Anchorable
+    flags:
+    - Anchorable
   - type: Sprite
     sprite: Structures/Shuttles/xenoborg_thruster.rsi
 
