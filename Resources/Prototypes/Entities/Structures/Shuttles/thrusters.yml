@@ -114,7 +114,6 @@
     - Anchorable # no unwrenching it
   - type: Rotatable
     rotateWhileAnchored: false # no rotating it backwards so it doesn't face space
-  # ---
   - type: Sprite
     sprite: Structures/Shuttles/xenoborg_thruster.rsi
 
