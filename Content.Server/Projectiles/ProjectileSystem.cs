@@ -104,6 +104,10 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 }
             }
         }
+        else
+        {
+            component.ProjectileSpent = true;
+        }
 
         if (!deleted)
         {
