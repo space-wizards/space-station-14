@@ -10,11 +10,9 @@ using Content.Shared.Popups;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
@@ -30,7 +28,6 @@ public abstract class SharedFlatpackSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] protected readonly MachinePartSystem MachinePart = default!;
@@ -85,12 +82,12 @@ public abstract class SharedFlatpackSystem : EntitySystem
         var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
 
         if (!PrototypeManager.TryIndex(comp.Entity, out var proto) ||
-            proto.TryGetComponent<FixturesComponent>(out var fixture, EntityManager.ComponentFactory))
+            !proto.TryGetComponent<FixturesComponent>(out var fixture, EntityManager.ComponentFactory))
         {
             return;
         }
 
-        var (layer, mask) = _physics.GetHardCollision(fixture);
+        var (layer, mask) = SharedPhysicsSystem.GetHardCollision(fixture);
 
         if (!_anchorable.TileFree((grid, gridComp), buildPos, layer, mask))
         {
