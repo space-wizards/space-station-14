@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Audio.Jukebox;
-
 
 [Serializable, NetSerializable]
 public sealed class JukeboxPlayingMessage : BoundUserInterfaceMessage;
@@ -28,7 +28,7 @@ public sealed class JukeboxShuffleMessage(bool shuffle) : BoundUserInterfaceMess
 }
 
 [Serializable, NetSerializable]
-public sealed class JukeboxSelectedMessage(ProtoId<JukeboxPrototype> songId) : BoundUserInterfaceMessage
+public sealed class JukeboxQueueTrackMessage(ProtoId<JukeboxPrototype> songId) : BoundUserInterfaceMessage
 {
     public ProtoId<JukeboxPrototype> SongId { get; } = songId;
 }

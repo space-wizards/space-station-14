@@ -41,10 +41,11 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
             SendMessage(new JukeboxStopMessage());
         };
 
-        _menu.OnSongSelected += SelectSong;
-
         _menu.SetTime += SetTime;
-
+        _menu.TrackQueueAction += track =>
+        {
+            SendMessage(new JukeboxQueueTrackMessage(track));
+        };
         _menu.QueueDeleteAction += index => SendMessage(new JukeboxDeleteRequestMessage(index));
         _menu.QueueMoveUpAction += index => SendMessage(new JukeboxMoveRequestMessage(index, -1));
         _menu.QueueMoveDownAction += index => SendMessage(new JukeboxMoveRequestMessage(index, 1));
@@ -79,11 +80,6 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
     {
         _menu?.UpdateAvailableTracks(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
         _menu?.PopulateTracklist();
-    }
-
-    public void SelectSong(ProtoId<JukeboxPrototype> songid)
-    {
-        SendMessage(new JukeboxSelectedMessage(songid));
     }
 
     public void SetTime(float time)

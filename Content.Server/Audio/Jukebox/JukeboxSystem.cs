@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.InteropServices;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Audio.Jukebox;
@@ -8,6 +10,7 @@ using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using JukeboxComponent = Content.Shared.Audio.Jukebox.JukeboxComponent;
 
 namespace Content.Server.Audio.Jukebox;
@@ -17,11 +20,14 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<JukeboxComponent, JukeboxSelectedMessage>(OnJukeboxSelected);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxQueueTrackMessage>(OnJukeboxTrackQueued);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxDeleteRequestMessage>(OnJukeboxDeleteRequestMessage);
+        SubscribeLocalEvent<JukeboxComponent, JukeboxMoveRequestMessage>(OnJukeboxMoveRequestMessage);
         SubscribeLocalEvent<JukeboxComponent, JukeboxPlayingMessage>(OnJukeboxPlay);
         SubscribeLocalEvent<JukeboxComponent, JukeboxPauseMessage>(OnJukeboxPause);
         SubscribeLocalEvent<JukeboxComponent, JukeboxStopMessage>(OnJukeboxStop);
@@ -30,6 +36,8 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         SubscribeLocalEvent<JukeboxComponent, ComponentShutdown>(OnComponentShutdown);
 
         SubscribeLocalEvent<JukeboxComponent, PowerChangedEvent>(OnPowerChanged);
+
+        SubscribeLocalEvent<JukeboxMusicComponent, ComponentShutdown>(OnAudioShutdown);
     }
 
     private void OnComponentInit(EntityUid uid, JukeboxComponent component, ComponentInit args)
@@ -42,6 +50,11 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxPlay(EntityUid uid, JukeboxComponent component, ref JukeboxPlayingMessage args)
     {
+        OnJukeboxPlay(uid, component);
+    }
+
+    private void OnJukeboxPlay(EntityUid uid, JukeboxComponent component)
+    {
         if (Exists(component.AudioStream))
         {
             Audio.SetState(component.AudioStream, AudioState.Playing);
@@ -51,12 +64,17 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
             component.AudioStream = Audio.Stop(component.AudioStream);
 
             if (string.IsNullOrEmpty(component.SelectedSongId) ||
-                !_protoManager.Resolve(component.SelectedSongId, out var jukeboxProto))
+                !_protoManager.TryIndex(component.SelectedSongId, out var jukeboxProto))
             {
                 return;
             }
 
             component.AudioStream = Audio.PlayPvs(jukeboxProto.Path, uid, AudioParams.Default.WithMaxDistance(10f))?.Entity;
+            if (component.AudioStream != null)
+            {
+                AddComp<JukeboxMusicComponent>(component.AudioStream.Value);
+            }
+
             Dirty(uid, component);
         }
     }
@@ -106,18 +124,88 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         entity.Comp.ShuffleTracks = args.Shuffle;
     }
 
-    private void OnJukeboxSelected(EntityUid uid, JukeboxComponent component, JukeboxSelectedMessage args)
+    private void OnJukeboxTrackQueued(EntityUid uid, JukeboxComponent component, JukeboxQueueTrackMessage args)
     {
-        if (!Audio.IsPlaying(component.AudioStream))
+        component.Queue.AddLast(args.SongId);
+
+        if (component.SelectedSongId is null)
         {
-            component.SelectedSongId = args.SongId;
-            DirectSetVisualState(uid, JukeboxVisualState.Select);
-            component.Selecting = true;
-            component.AudioStream = Audio.Stop(component.AudioStream);
+            component.SelectedSongId = component.Queue.First!.Value;
         }
 
         Dirty(uid, component);
     }
+
+        /// <summary>
+        /// Removes a track from the queue by index.
+        /// If the index given does not exist or is outside of the bounds of the queue, nothing happens.
+        /// </summary>
+        /// <param name="uid">The jukebox whose queue is being altered.</param>
+        /// <param name="component"></param>
+        /// <param name="args"></param>
+    private void OnJukeboxDeleteRequestMessage(EntityUid uid, JukeboxComponent component, JukeboxDeleteRequestMessage args)
+    {
+        if (args.Index < 0 || args.Index >= component.Queue.Count)
+            return;
+
+        var node = component.Queue.First;
+        for (int i = 0; i < args.Index; i++)
+            node = node?.Next;
+
+        if (node == null) // Shouldn't happen with checks above.
+            return;
+
+        var batch = node.Value;
+        component.Queue.Remove(node);
+        Dirty(uid, component);
+    }
+
+
+    private void OnJukeboxMoveRequestMessage(EntityUid uid, JukeboxComponent component, JukeboxMoveRequestMessage args)
+    {
+        if (args.Change == 0 || args.Index < 0 || args.Index >= component.Queue.Count)
+                return;
+
+        // New index must be within the bounds of the batch.
+        var newIndex = args.Index + args.Change;
+        if (newIndex < 0 || newIndex >= component.Queue.Count)
+            return;
+
+        var node = component.Queue.First;
+        for (int i = 0; i < args.Index; i++)
+            node = node?.Next;
+
+        if (node == null) // Something went wrong.
+            return;
+
+        if (args.Change > 0)
+        {
+            var newRelativeNode = node.Next;
+            for (int i = 1; i < args.Change; i++) // 1-indexed: starting from Next
+                newRelativeNode = newRelativeNode?.Next;
+
+            if (newRelativeNode == null) // Something went wrong.
+                return;
+
+            component.Queue.Remove(node);
+            component.Queue.AddAfter(newRelativeNode, node);
+        }
+        else
+        {
+            var newRelativeNode = node.Previous;
+            for (int i = 1; i < -args.Change; i++) // 1-indexed: starting from Previous
+                newRelativeNode = newRelativeNode?.Previous;
+
+            if (newRelativeNode == null) // Something went wrong.
+                return;
+
+            component.Queue.Remove(node);
+            component.Queue.AddBefore(newRelativeNode, node);
+        }
+
+        Dirty(uid, component);
+    }
+
 
     public override void Update(float frameTime)
     {
@@ -136,6 +224,56 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
                     TryUpdateVisualState(uid, comp);
                 }
+            }
+        }
+    }
+
+    private void OnAudioShutdown(Entity<JukeboxMusicComponent> ent, ref ComponentShutdown args)
+    {
+        var query = EntityQueryEnumerator<JukeboxComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.AudioStream == ent.Owner)
+            {
+                // Queue's empty (somehow), stop
+                if (comp.Queue.Count == 0)
+                {
+                    Stop((uid, comp));
+                    continue;
+                }
+
+                // Remove the last played song from the queue, but append it to the end if repeat is on.
+                var lastPlayed = comp.Queue.First;
+                comp.Queue.RemoveFirst();
+                if (comp.RepeatTracks && lastPlayed is not null)
+                    comp.Queue.AddLast(lastPlayed);
+
+                // Queue's actually empty now, stop
+                if (comp.Queue.Count == 0)
+                {
+                    Stop((uid, comp));
+                    continue;
+                }
+
+                // Otherwise, pick the next song
+                if (comp.ShuffleTracks)
+                {
+                    var nextIndex = _random.Next(comp.Queue.Count);
+
+                    var node = comp.Queue.First;
+                    for (int i = 0; i < nextIndex; i++)
+                        node = node?.Next;
+
+                    if (node == null) // Something went wrong.
+                        return;
+
+                    // since we're just playing the first song, move the shuffled song to the top, if it isn't already.
+                    comp.Queue.Remove(node);
+                    comp.Queue.AddFirst(node);
+                }
+
+                comp.SelectedSongId = comp.Queue.First!.Value;
+                OnJukeboxPlay(uid, comp);
             }
         }
     }

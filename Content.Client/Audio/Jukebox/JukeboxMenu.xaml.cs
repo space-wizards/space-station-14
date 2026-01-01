@@ -33,7 +33,6 @@ public sealed partial class JukeboxMenu : FancyWindow
     /// </summary>
     public event Action<bool>? OnPlayPressed;
     public event Action? OnStopPressed;
-    public event Action<ProtoId<JukeboxPrototype>>? OnSongSelected;
 
     public event Action<ProtoId<JukeboxPrototype>>? TrackQueueAction;
     public event Action<float>? SetTime;
