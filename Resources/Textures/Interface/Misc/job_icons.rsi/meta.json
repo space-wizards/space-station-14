@@ -131,6 +131,9 @@
             "name": "Nanotrasen"
         },
         {
+            "name": "Ninja"
+        },
+        {
             "name": "NoId"
         },
         {
@@ -141,6 +144,9 @@
         },
         {
             "name": "Passenger"
+        },
+        {
+            "name": "Pirate"
         },
         {
             "name": "Prisoner"
@@ -230,10 +236,10 @@
             "name": "Wizard"
         },
         {
-            "name": "Zombie"
+            "name": "Zookeeper"
         },
         {
-            "name": "Zookeeper"
+            "name": "Zombie"
         }
     ]
 }

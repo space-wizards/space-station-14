@@ -18,7 +18,7 @@
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceNinja
     shoes: ClothingShoesSpaceNinja
-    id: AgentIDCard
+    id: NinjaIDCard
     ears: ClothingHeadsetNinja
     pocket1: SpiderCharge
     pocket2: PinpointerStation
@@ -38,6 +38,7 @@
   id: NinjaChameleonOutfit
   name: roles-antag-space-ninja-name
   startingGear: SpaceNinjaGear
+  icon: "JobIconNinja"
   equipment:
     id: PassengerPDA
     neck: ClothingNeckGoldmedal
