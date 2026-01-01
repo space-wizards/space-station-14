@@ -1,8 +1,7 @@
-using Content.Server.Power.EntitySystems;
-using Content.Server.PowerCell;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Interaction;
-using Content.Shared.PowerCell.Components;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.PowerCell;
 using Content.Shared.Radio.EntitySystems;
 using Content.Shared.Radio.Components;
 using Content.Shared.DeviceNetwork.Systems;
@@ -12,7 +11,7 @@ namespace Content.Server.Radio.EntitySystems;
 public sealed class JammerSystem : SharedJammerSystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly SharedBatterySystem _battery = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedDeviceNetworkJammerSystem _jammer = default!;
 
@@ -25,6 +24,8 @@ public sealed class JammerSystem : SharedJammerSystem
         SubscribeLocalEvent<RadioSendAttemptEvent>(OnRadioSendAttempt);
     }
 
+    // TODO: Very important: Make this charge rate based instead of updating every single tick
+    // See BatteryComponent
     public override void Update(float frameTime)
     {
         var query = EntityQueryEnumerator<ActiveRadioJammerComponent, RadioJammerComponent>();
@@ -32,9 +33,9 @@ public sealed class JammerSystem : SharedJammerSystem
         while (query.MoveNext(out var uid, out var _, out var jam))
         {
 
-            if (_powerCell.TryGetBatteryFromSlot(uid, out var batteryUid, out var battery))
+            if (_powerCell.TryGetBatteryFromSlot(uid, out var battery))
             {
-                if (!_battery.TryUseCharge((batteryUid.Value, battery), GetCurrentWattage((uid, jam)) * frameTime))
+                if (!_battery.TryUseCharge(battery.Value.AsNullable(), GetCurrentWattage((uid, jam)) * frameTime))
                 {
                     ChangeLEDState(uid, false);
                     RemComp<ActiveRadioJammerComponent>(uid);
@@ -42,8 +43,8 @@ public sealed class JammerSystem : SharedJammerSystem
                 }
                 else
                 {
-                    var percentCharged = battery.CurrentCharge / battery.MaxCharge;
-                    var chargeLevel = percentCharged switch
+                    var chargeFraction = _battery.GetChargeLevel(battery.Value.AsNullable());
+                    var chargeLevel = chargeFraction switch
                     {
                         > 0.50f => RadioJammerChargeLevel.High,
                         < 0.15f => RadioJammerChargeLevel.Low,
@@ -64,7 +65,7 @@ public sealed class JammerSystem : SharedJammerSystem
 
         var activated = !HasComp<ActiveRadioJammerComponent>(ent) &&
             _powerCell.TryGetBatteryFromSlot(ent.Owner, out var battery) &&
-            battery.CurrentCharge > GetCurrentWattage(ent);
+            _battery.GetCharge(battery.Value.AsNullable()) > GetCurrentWattage(ent);
         if (activated)
         {
             ChangeLEDState(ent.Owner, true);
