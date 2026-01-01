@@ -40,6 +40,8 @@ public abstract class SharedWieldableSystem : EntitySystem
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
     [Dependency] private readonly UseDelaySystem _delay = default!;
 
+    protected const string GunWieldDelayExamineColor = "yellow";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -60,6 +62,7 @@ public abstract class SharedWieldableSystem : EntitySystem
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
         SubscribeLocalEvent<GunRequiresWieldComponent, ExaminedEvent>(OnExamineRequires);
         SubscribeLocalEvent<GunRequiresWieldComponent, ShotAttemptedEvent>(OnShootAttempt);
+        SubscribeLocalEvent<GunRequiresWieldComponent, ItemWieldedEvent>(OnRequiresGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
         SubscribeLocalEvent<GunWieldBonusComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
@@ -110,6 +113,11 @@ public abstract class SharedWieldableSystem : EntitySystem
         _gun.RefreshModifiers(uid);
     }
 
+    private void OnRequiresGunWielded(EntityUid uid, GunRequiresWieldComponent component, ref ItemWieldedEvent args)
+    {
+        _gun.AddFireDelay(uid, component.WieldDelay);
+    }
+
     private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
     {
         if (_hands.GetHandCount(args.User) > 2)
@@ -152,6 +160,9 @@ public abstract class SharedWieldableSystem : EntitySystem
     {
         if (entity.Comp.WieldRequiresExamineMessage != null)
             args.PushText(Loc.GetString(entity.Comp.WieldRequiresExamineMessage));
+
+        if (entity.Comp.WieldDelay > TimeSpan.Zero && entity.Comp.WieldDelayExamineMessage != null)
+            args.PushMarkup(Loc.GetString(entity.Comp.WieldDelayExamineMessage, ("color", GunWieldDelayExamineColor), ("delay", entity.Comp.WieldDelay.TotalSeconds)));
     }
 
     private void OnExamine(EntityUid uid, GunWieldBonusComponent component, ref ExaminedEvent args)
