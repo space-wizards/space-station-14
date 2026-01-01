@@ -107,7 +107,7 @@
   id: ThrusterXenoborg
   components:
   - type: Thruster
-    preventToggle: true # no turning it off by just clicking it
+    canToggle: false # no turning it off by just clicking it
   - type: Anchorable
     flags:
     - Anchorable # no unwrenching it
