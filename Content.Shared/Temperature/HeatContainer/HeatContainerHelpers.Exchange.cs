@@ -55,7 +55,7 @@ public static partial class HeatContainerHelpers
     /// <param name="cA">The first <see cref="HeatContainer"/> to exchange heat.</param>
     /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
     [PublicAPI]
-    public static void Equilibrate(this HeatContainer cA, HeatContainer cB)
+    public static void Equilibrate(this ref HeatContainer cA, ref HeatContainer cB)
     {
         var tFinal = EquilibriumTemperatureQuery(cA, cB);
         cA.Temperature = tFinal;
@@ -69,7 +69,7 @@ public static partial class HeatContainerHelpers
     /// <param name="cB">The second <see cref="HeatContainer"/> to exchange heat with.</param>
     /// <param name="dQ">The amount of heat in joules that was transferred from container A to B.</param>
     [PublicAPI]
-    public static void Equilibrate(this HeatContainer cA, HeatContainer cB, out float dQ)
+    public static void Equilibrate(this ref HeatContainer cA, ref HeatContainer cB, out float dQ)
     {
         var tInitialA = cA.Temperature;
         var tFinal = EquilibriumTemperatureQuery(cA, cB);
@@ -103,7 +103,7 @@ public static partial class HeatContainerHelpers
     /// <param name="cA">The first <see cref="HeatContainer"/> to bring into thermal equilibrium.</param>
     /// <param name="cN">The array of <see cref="HeatContainer"/>s to bring into thermal equilibrium.</param>
     [PublicAPI]
-    public static void Equilibrate(this HeatContainer cA, HeatContainer[] cN)
+    public static void Equilibrate(this ref HeatContainer cA, HeatContainer[] cN)
     {
         var tF = cA.EquilibriumTemperatureQuery(cN);
 

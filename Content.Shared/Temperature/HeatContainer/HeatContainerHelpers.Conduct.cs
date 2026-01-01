@@ -26,7 +26,7 @@ public static partial class HeatContainerHelpers
     /// integration steps with adaptive step size.
     /// </remarks>
     [PublicAPI]
-    public static float ConductHeat(this HeatContainer c, float temp, float deltaTime, float g)
+    public static float ConductHeat(this ref HeatContainer c, float temp, float deltaTime, float g)
     {
         var dQ = c.ConductHeatQuery(temp, deltaTime, g);
         c.AddHeat(dQ);
@@ -55,7 +55,7 @@ public static partial class HeatContainerHelpers
     /// integration steps with adaptive step size.
     /// </remarks>
     [PublicAPI]
-    public static float ConductHeat(this HeatContainer cA, HeatContainer cB, float deltaTime, float g)
+    public static float ConductHeat(this ref HeatContainer cA, HeatContainer cB, float deltaTime, float g)
     {
         var dQ = ConductHeatQuery(cA, cB.Temperature, deltaTime, g);
         cA.AddHeat(dQ);
@@ -131,7 +131,7 @@ public static partial class HeatContainerHelpers
     /// to reach the target temperature.</returns>
     /// <example>A positive value indicates heat must be added to the container to reach the target temperature.</example>
     [PublicAPI]
-    public static float ConductHeatToTemp(this HeatContainer c, float targetTemp)
+    public static float ConductHeatToTemp(this ref HeatContainer c, float targetTemp)
     {
         var dQ = ConductHeatToTempQuery(c, targetTemp);
         c.Temperature = targetTemp;
