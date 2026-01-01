@@ -17,6 +17,18 @@ public sealed class GenericGasReactionSystem : EntitySystem
 
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
+    private float LimExp(float x)
+    {
+        const float LimX = 26.7f; // ln(LimY) where LimY=3e11 (1/KneeRate + 3 orders of magnitude)
+        if (x < LimX)
+            return MathF.Exp(x);
+
+        // Linearize beyond LimX
+        float dxLim = 1/LimX; // derivative of ln(x) at x=LimX
+        float argLim = MathF.Exp(LimX);
+        return dxLim*(x - LimX) + argLim;
+    }
+
     /// <summary>
     /// Return a reaction rate (in units reactants per second) for a given reaction. Based on the
     /// Arrhenius equation (https://en.wikipedia.org/wiki/Arrhenius_equation).
@@ -45,7 +57,7 @@ public sealed class GenericGasReactionSystem : EntitySystem
         if (temp < Atmospherics.TCMB)
             return 0;
 
-        return A * MathF.Exp(-Ea / (Atmospherics.R * Math.Min(temp, MaxTemperature)));
+        return A * LimExp(-Ea / (Atmospherics.R * Math.Min(temp, MaxTemperature)));
     }
 
     /// <summary>
