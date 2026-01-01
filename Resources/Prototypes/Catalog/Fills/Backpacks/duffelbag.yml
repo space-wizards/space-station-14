@@ -377,9 +377,9 @@
         - id: BalloonJuggernaut
         - id: BalloonCommander
         - id: SnapPopBox
-        - id: GrenadeDummy
+        - id: FakeExGrenade
           amount: 2
-        - id: SyndieTrickyBomb
+        - id: FakeSyndieMiniBomb
           amount: 2
 
 - type: entity
