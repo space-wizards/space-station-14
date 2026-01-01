@@ -61,7 +61,7 @@
         Piercing: 8
   - type: Body
     prototype: Rat
-    requiredLegs: 1 # TODO: More than 1 leg
+    requiredLegs: 0 # TODO: Make more than 1 leg, set to 0 to avoid sprint speed being reset by the body system
   - type: Hunger # probably should be prototyped
     thresholds:
       Overfed: 200
@@ -79,7 +79,6 @@
       Dead: 0
     baseDecayRate: 0.1
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: regalrat
@@ -92,9 +91,9 @@
     makeSentient: true
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
-    rules: ghost-role-information-freeagent-rules
+    rules: ghost-role-information-antagonist-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -103,6 +102,7 @@
       - CannotSuicide
       - FootstepSound
   - type: NoSlip
+  - type: Rummager
   - type: RatKing
     hungerPerArmyUse: 25
     hungerPerDomainUse: 50
@@ -241,7 +241,7 @@
       - !type:GibBehavior
         recursive: false
   - type: Stamina
-    critThreshold: 60
+    baseCritThreshold: 60
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
@@ -253,7 +253,7 @@
         Piercing: 3
   - type: Body
     prototype: Rat
-    requiredLegs: 1 # TODO: More than 1 leg
+    requiredLegs: 0 # TODO: Make more than 1 leg, set to 0 to avoid sprint speed being reset by the body system
   - type: Hunger # probably should be prototyped
     thresholds:
       Overfed: 200
@@ -307,12 +307,16 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
 
-- type: weightedRandomEntity
+- type: entityTable
   id: RatKingLoot
-  weights:
-    RandomSpawner100: 66 #garbage
-    FoodCheese: 28 #food
-    IngotGold1: 5 #loot
+  table: !type:GroupSelector
+    children:
+    - id: RandomSpawner100
+      weight: 66
+    - id: FoodCheese
+      weight: 28
+    - id: IngotGold1
+      weight: 5
 
 - type: entity
   parent: BaseAction

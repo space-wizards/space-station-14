@@ -1,94 +1,110 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/1592a112e3d33eec4a0704b518a138d5a976f455, inhand-left and inhand-right by SlamBamActionman (Github)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon",
-      "directions": 1
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/1592a112e3d33eec4a0704b518a138d5a976f455, inhand-left and inhand-right by SlamBamActionman (Github). Dog states modified from base states by Sparlight (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "icon-on",
-      "directions": 1,
-      "delays": [
-        [
-          0.5,
-          0.1,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "equipped-BACKPACK",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-BACKPACK",
-      "directions": 4,
-      "delays": [
-        [
-          0.5,
-          0.2,
-          0.1
-        ],
-        [
-          0.5,
-          0.2,
-          0.1
-        ],
-        [
-          0.5,
-          0.2,
-          0.1
-        ],
-        [
-          0.5,
-          0.2,
-          0.1
-        ]
-      ]
-    },
-    {
-      "name": "equipped-SUITSTORAGE",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-SUITSTORAGE",
-      "directions": 4,
-      "delays": [
-        [
-          0.5,
-          0.2,
-          0.1
-        ],
-        [
-          0.5,
-          0.2,
-          0.1
-        ],
-        [
-          0.5,
-          0.2,
-          0.1
-        ],
-        [
-          0.5,
-          0.2,
-          0.1
-        ]
-      ]
-    }
-  ]
+    "states": [
+        {
+            "name": "icon",
+            "directions": 1
+        },
+        {
+            "name": "icon-on",
+            "directions": 1,
+            "delays": [
+                [
+                    0.5,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-BACKPACK",
+            "directions": 4,
+            "delays": [
+                [
+                    0.5,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.5,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.5,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.5,
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "equipped-BACKPACK-dog",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-BACKPACK-dog",
+            "directions": 4
+        },
+        {
+            "name": "equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-SUITSTORAGE",
+            "directions": 4,
+            "delays": [
+                [
+                    0.5,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.5,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.5,
+                    0.2,
+                    0.1
+                ],
+                [
+                    0.5,
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "equipped-SUITSTORAGE-dog",
+            "directions": 4
+        },
+        {
+            "name": "on-equipped-SUITSTORAGE-dog",
+            "directions": 4
+        }
+    ]
 }

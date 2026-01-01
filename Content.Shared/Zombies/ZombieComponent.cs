@@ -1,7 +1,7 @@
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
@@ -93,10 +93,8 @@ public sealed partial class ZombieComponent : Component
     [DataField("beforeZombifiedEyeColor")]
     public Color BeforeZombifiedEyeColor;
 
-    [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
-    public string? EmoteSoundsId = "Zombie";
-
-    public EmoteSoundsPrototype? EmoteSounds;
+    [DataField("emoteId")]
+    public ProtoId<EmoteSoundsPrototype>? EmoteSoundsId = "Zombie";
 
     [DataField("nextTick", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTick;
@@ -167,14 +165,14 @@ public sealed partial class ZombieComponent : Component
     public SoundSpecifier BiteSound = new SoundPathSpecifier("/Audio/Effects/bite.ogg");
 
     /// <summary>
-    /// The blood reagent of the humanoid to restore in case of cloning
+    /// The blood reagents of the humanoid to restore in case of cloning
     /// </summary>
-    [DataField("beforeZombifiedBloodReagent")]
-    public string BeforeZombifiedBloodReagent = string.Empty;
+    [DataField("beforeZombifiedBloodReagents")]
+    public Solution BeforeZombifiedBloodReagents = new();
 
     /// <summary>
-    /// The blood reagent to give the zombie. In case you want zombies that bleed milk, or something.
+    /// The blood reagents to give the zombie. In case you want zombies that bleed milk, or something.
     /// </summary>
-    [DataField("newBloodReagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
-    public string NewBloodReagent = "ZombieBlood";
+    [DataField("newBloodReagents")]
+    public Solution NewBloodReagents = new([new("ZombieBlood", 1)]);
 }

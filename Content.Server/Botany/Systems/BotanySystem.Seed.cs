@@ -1,5 +1,4 @@
 using Content.Server.Botany.Components;
-using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Botany;
@@ -16,6 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Kitchen.Components;
 
 namespace Content.Server.Botany.Systems;
 

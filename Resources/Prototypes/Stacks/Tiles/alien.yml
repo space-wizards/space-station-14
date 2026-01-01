@@ -1,0 +1,38 @@
+# Tiles you might find in an alien world
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileXenoborg
+  name: stack-xenoborg
+  spawn: FloorTileItemXenoborg
+
+# Exo station
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileXeno
+  name: stack-xeno-floor
+  spawn: FloorTileItemXeno
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileXenoSteel
+  name: stack-xeno-steel
+  spawn: FloorTileItemXenoSteelCorner
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileXenoSteelCorner
+  name: stack-xeno-steel-corner
+  spawn: FloorTileItemXenoSteelCorner
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileXenoMaint
+  name: stack-xeno-maint
+  spawn: FloorTileItemXenoSteelCorner
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileDarkSquiggly
+  name: stack-dark-squiggly
+  spawn: FloorTileItemDarkSquiggly
