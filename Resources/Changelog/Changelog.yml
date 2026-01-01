@@ -1,50 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Borg modules can now have hands!
-    type: Add
-  - message: The generic cables module can now throw and mix and match cables in its
-      slots
-    type: Tweak
-  - message: The engineering construction module can now hold any material in its
-      materials slots, any floor tile in its floor tile slots, and now has slots for
-      holding any circuitboard and flatpack
-    type: Tweak
-  - message: The janitor custodial module can now throw its soap and pick up new and
-      better varieties of soap
-    type: Tweak
-  - message: The janitor advanced cleaning module can now throw and pick up beakers
-      in its slot
-    type: Tweak
-  - message: The medical topicals module can now hold any type of topicals in its
-      topicals slots
-    type: Tweak
-  - message: The medical chemical module can now drop and pick up its vials, and hold
-      other small containers
-    type: Tweak
-  - message: The medical advanced chemical module can now drop and pick up its beakers,
-      and hold other larger containers
-    type: Tweak
-  - message: The science artifact module can drop and pick up its vial, and hold other
-      small containers
-    type: Tweak
-  - message: The service service module can now drop and pick up its shaker, and pick
-      up other drink containers. It also has a spoon now.l containers
-    type: Tweak
-  - message: The science anomaly module can now throw its reinforced and reinforced
-      plasma glass
-    type: Tweak
-  - message: The service service module now has a book bag, and two slots for books
-      and paper
-    type: Tweak
-  - message: The service service module can now drop and pick up its shaker, and pick
-      up other drink containers. It also has a spoon now.
-    type: Tweak
-  - message: The service musique module can now drop and pick up instruments.
-    type: Tweak
-  id: 8848
-  time: '2025-08-12T22:21:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38668
 - author: perryprog
   changes:
   - message: Fixed lights sometimes not emitting light when spawning them or when
@@ -3931,3 +3885,14 @@
   id: 9348
   time: '2026-01-01T05:42:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42158
+- author: Samuka
+  changes:
+  - message: xenoborg thrusters can't be toggled off
+    type: Tweak
+  - message: xenoborg thrusters can't unwrenched
+    type: Tweak
+  - message: xenoborg thrusters can't be rotated while anchored
+    type: Tweak
+  id: 9349
+  time: '2026-01-01T21:36:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42201
