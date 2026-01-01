@@ -51,6 +51,7 @@
     earliestStart: 15
     weight: 6
     duration: 50
+    occursDuringRoundEnd: false
     minimumPlayers: 30 # Hopefully this is enough for the Rat King's potential Army (it was not, raised from 15 -> 30)
   - type: VentCrittersRule
     entries:
