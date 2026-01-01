@@ -403,7 +403,7 @@
 
 - type: entityTable
   id: FoolKitGunEntityTable
-  storagebase: !type:GroupSelector
+  table: !type:GroupSelector
     children:
     - id: PlushieC20r
     - id: PlushieL6
@@ -411,7 +411,7 @@
 
 - type: entityTable
   id: FoolKitGunEntityTable
-  storagebase: !type:GroupSelector
+  table: !type:GroupSelector
     children:
     - id: FakeClusterGrenade
     - id: FakeSingularityGrenade

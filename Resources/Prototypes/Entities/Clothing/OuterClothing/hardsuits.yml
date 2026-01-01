@@ -1118,6 +1118,7 @@
   id: FakeClothingOuterHardsuitSyndie
   name: blood-red hardsuit
   description: A heavily armored hardsuit designed for work in special operations. Property of Gorlex Marauders.
+  suffix: Fake
   components:
   - type: ExplosionResistance
     damageCoefficient: 1
@@ -1133,3 +1134,4 @@
         Radiation: 1
         Caustic: 1
     clothingPrototype: FakeClothingHeadHelmetHardsuitSyndie
+    suffix: Fake

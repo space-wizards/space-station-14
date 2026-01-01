@@ -146,6 +146,7 @@
   description: Used to put holes in specific areas without too much extra hole. A saboteur's favorite.
   parent: [BasePlasticExplosive, BaseSyndicateContraband]
   id: FakeC4
+  suffix: Fake
   components:
   - type: Sprite
     sprite: Objects/Weapons/Bombs/c4.rsi

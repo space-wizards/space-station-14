@@ -1057,10 +1057,11 @@
 
 # Fake Blood-red Hardsuit
 - type: entity
-  parent: [ ClothingHeadHardsuitSyndie, ClothingHeadSuitWithLightBase ]
+  parent: [ ClothingHeadHelmetHardsuitSyndie, ClothingHeadSuitWithLightBase ]
   id: FakeClothingHeadHelmetHardsuitSyndie
   name: blood-red hardsuit helmet
   description: A heavily armored helmet designed for work in special operations. Property of Gorlex Marauders.
+  suffix: Fake
   components:
     modifiers:
       coefficients:

@@ -1236,6 +1236,7 @@
   id: PlushieC20r
   name: C-20r submachine gun
   description: A classic and widespread submachine gun, infamous for its use by the Gorlex Marauders. One of the first homegrown Waffle Corp. designs, it remains in service today. Feeds from .35 SMG magazines.
+  suffix: Fake
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -1266,6 +1267,7 @@
   id: PlushieL6
   name: L6 SAW
   description: Developed by Waffle Corp, the L6 Squad Automatic Weapon is a deadly light machine gun often used by the Gorlex Marauders. Although bulky and cumbersome, its heavy barrel and high ammo capacity make it perfect for suppressing combatants with a hail of bullets. Feeds from .30 ammo belts.
+  suffix: Fake
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/LMGs/L6.rsi
@@ -1296,6 +1298,7 @@
   id: PlushieBulldog
   name: Bulldog
   description: An automatic magazine-fed shotgun for close-quarters combat. Kicks like a mule on steroids. Uses .50 shotgun shells.
+  suffix: Fake
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi

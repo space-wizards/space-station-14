@@ -404,6 +404,7 @@
   description: Grenade that creates a small but devastating explosion.
   parent: GrenadeBase
   id: GrenadeDummy
+  suffix: Fake
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/grenade.rsi
@@ -431,6 +432,7 @@
   description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
   parent: [GrenadeDummy, BaseSyndicateContraband]
   id: SyndieTrickyBomb
+  suffix: Fake
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
@@ -456,6 +458,7 @@
   id: FakeSingularityGrenade
   name: singularity grenade
   description: Grenade that simulates the power of a singularity, pulling things in a heap.
+  suffix: Fake
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/singularitygrenade.rsi
