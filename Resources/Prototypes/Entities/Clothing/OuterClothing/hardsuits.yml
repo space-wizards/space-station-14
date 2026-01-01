@@ -1130,9 +1130,9 @@
     highPressureMultiplier: 0.05
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 1
+    damageCoefficient: 0.95
   - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
-    damageCoefficient: 1
+    damageCoefficient: 0.95
   - type: Armor
     modifiers:
       coefficients:
