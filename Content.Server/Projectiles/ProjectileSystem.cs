@@ -103,10 +103,6 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                     }
                 }
             }
-            else
-            {
-                component.ProjectileSpent = true;
-            }
         }
 
         if (!deleted)
@@ -117,7 +113,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
                 _sharedCameraRecoil.KickCamera(target, args.OurBody.LinearVelocity.Normalized());
         }
 
-        if (component.DeleteOnCollide && component.ProjectileSpent)
+        if (component.DeleteOnCollide || component.ProjectileSpent)
             QueueDel(uid);
 
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))

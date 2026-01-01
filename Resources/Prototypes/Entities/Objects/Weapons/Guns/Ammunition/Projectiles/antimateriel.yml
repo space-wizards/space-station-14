@@ -5,6 +5,7 @@
   name: bullet (.60 anti-materiel)
   components:
   - type: Projectile
+    deleteOnCollide: false
     damage:
       types:
         Piercing: 75
