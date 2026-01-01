@@ -1057,27 +1057,14 @@
 
 # Fake Blood-red Hardsuit
 - type: entity
-  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  parent: [ ClothingHeadHardsuitSyndie, ClothingHeadSuitWithLightBase ]
   id: FakeClothingHeadHelmetHardsuitSyndie
   name: blood-red hardsuit helmet
   description: A heavily armored helmet designed for work in special operations. Property of Gorlex Marauders.
   components:
-  - type: Sprite
-    sprite: Clothing/Head/Hardsuits/syndicate.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hardsuits/syndicate.rsi
-  - type: PointLight
-    color: green
-  - type: PressureProtection
-    highPressureMultiplier: 0.08
-    lowPressureMultiplier: 1000
-  - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Heat: 0.95
-  - type: Tag
-    tags:
-    - CorgiWearable
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+        Heat: 1

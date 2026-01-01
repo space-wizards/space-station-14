@@ -181,6 +181,9 @@
   - type: DeviceLinkSink
     ports:
     - Trigger
+  - type: DeleteOnTrigger
+    keysIn:
+    - timer
   - type: EmitSoundOnTrigger
     keysIn:
     - timer

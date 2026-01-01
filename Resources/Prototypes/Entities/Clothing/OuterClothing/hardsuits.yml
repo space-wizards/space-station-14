@@ -1114,38 +1114,22 @@
 
 # Fake blood-red hardsuit
 - type: entity
-  parent: [ ClothingOuterHardsuitBase, BaseSyndicateContraband ]
+  parent: [ ClothingOuterHardsuitSyndie, BaseSyndicateContraband ]
   id: FakeClothingOuterHardsuitSyndie
   name: blood-red hardsuit
   description: A heavily armored hardsuit designed for work in special operations. Property of Gorlex Marauders.
   components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
-  - type: Item
-    size: Huge
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.05
-    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 1
+  - type: StaminaResistance
+    damageCoefficient: 1
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.95
-        Slash: 0.95
-        Piercing: 0.95
-        Heat: 0.95
-  - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.9
-  - type: HeldSpeedModifier
-  - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHelmetHardsuitSyndieFake
-  - type: Tag
-    tags:
-    - MonkeyWearable
-    - Hardsuit
-    - CorgiWearable
-    - ScurretWearable
-  - type: StaticPrice
-    price: 5000
+        Blunt: 1
+        Slash: 1
+        Piercing: 1
+        Heat: 1
+        Radiation: 1
+        Caustic: 1
+    clothingPrototype: FakeClothingHeadHelmetHardsuitSyndie

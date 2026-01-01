@@ -956,9 +956,9 @@
   productEntity: ClothingBackpackDuffelSyndicateFoolKitFilled
   discountCategory: usualDiscounts
   discountDownTo:
-    Telecrystal: 3
+    Telecrystal: 4
   cost:
-    Telecrystal: 6
+    Telecrystal: 8
   categories:
   - UplinkDeception
 
