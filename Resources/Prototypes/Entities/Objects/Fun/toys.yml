@@ -666,10 +666,15 @@
   - type: SpeakOnTrigger
     pack: Magic9Ball
   - type: Speech
-    speechSounds: Baritone
+    speechSounds: Pai
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
   - type: SolutionContainerManager
     solutions:
       magic9ball:
