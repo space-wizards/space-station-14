@@ -82,7 +82,8 @@ public sealed partial class DocumentParsingManager
                     }
 
                     msg.Pop();
-                    rt.SetMessage(msg);
+                    // Pass null to allow all markup tags, including custom ones like TextLinkTag, KeyBindTag, etc.
+                    rt.SetMessage(msg, tagsAllowed: null);
                     return rt;
                 },
                 TextParser)
