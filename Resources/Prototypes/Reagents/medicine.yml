@@ -1304,7 +1304,6 @@
   worksOnTheDead: true
   metabolisms:
     Medicine:
-      metabolismRate: 0.2
       effects:
       - !type:EvenHealthChange
         conditions:
