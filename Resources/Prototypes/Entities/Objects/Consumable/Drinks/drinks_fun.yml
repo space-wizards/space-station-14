@@ -1,24 +1,36 @@
 - type: entity
-  parent: DrinkBase
-  id: DrinkSpaceGlue
-  name: space glue tube
-  description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
+  abstract: true
+  parent: [ DrinkBaseMaterialPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAllFilled ]
+  id: BaseSqueezeBottle
   components:
   - type: Openable
     sound:
       collection: packetOpenSounds
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/glue-tube.rsi
     layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
-      - state: icon-front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
-  - type: Glue
+    - state: icon_empty
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: fill-6
+      map: [ "enum.SolutionContainerLayers.Fill" ] # already has liquid, so no visible: false
+    - state: icon-front
+      map: [ "enum.SolutionContainerLayers.Overlay" ]
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  parent: BaseSqueezeBottle
+  id: DrinkSpaceGlue
+  name: space glue tube
+  description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glue-tube.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -26,41 +38,16 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 30
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: fill
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
-  - type: Tag
-    tags:
-      - DrinkSpaceGlue
-  - type: TrashOnSolutionEmpty
-    solution: drink
+  - type: Glue
 
 - type: entity
-  parent: DrinkBase
+  parent: BaseSqueezeBottle
   id: DrinkSpaceLube
   name: space lube tube
   description: High performance lubricant intended for maintenance of extremely complex mechanical equipment.
   components:
-  - type: Openable
-    sound:
-      collection: packetOpenSounds
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lube-tube.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
-      - state: icon-front
-        map: [ "enum.SolutionContainerLayers.Overlay" ]
-  - type: Appearance
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -68,19 +55,9 @@
         reagents:
         - ReagentId: SpaceLube
           Quantity: 30
-  - type: SolutionContainerVisuals
-    maxFillLevels: 6
-    fillBaseName: fill
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
   - type: Lube
-  - type: TrashOnSolutionEmpty
-    solution: drink
 
+# Find your nearest clown and give them a gift :o)
 - type: entity
   parent: BluespaceBeaker
   id: BottomlessLube
@@ -101,6 +78,17 @@
       reagents:
       - ReagentId: SpaceLube
         Quantity: 200
+
+- type: entity
+  parent: [DrinkBaseMaterialGlass, DrinkBase]
+  id: DrinkJarWhat
+  name: jar of something
+  description: You can't really tell what this is.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/jar_what.rsi
+  - type: FitsInDispenser
+    solution: drink
 
 # Mopwata
 - type: weightedRandomFillSolution
@@ -150,13 +138,11 @@
     - FourteenLoko
 
 - type: entity
-  parent: DrinkBottleGlassBaseFull
+  parent: [DrinkVisualsAllFilled, DrinkBottleGlassSmallBaseFull]
   id: DrinkMopwataBottleRandom
   name: delicious mopwata
   description: A foggy brown bottle with a faded label depicting a mop. It comes full of murky... vintage.
   components:
-  - type: Item
-    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -167,26 +153,5 @@
   - type: RandomFillSolution
     solution: drink
     weightedRandomId: RandomFillMopwata
-  - type: PressurizedSolution
-    solution: drink
-  - type: Shakeable
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon_empty"}
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mopwata.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: fill-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: fill-
-    inHandsMaxFillLevels: 3
-    inHandsFillBaseName: -fill-
