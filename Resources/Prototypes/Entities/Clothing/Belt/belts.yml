@@ -132,16 +132,16 @@
           - MagazinePistolAll
           - SpeedLoaderAll
           - PowerCellAll
-        insertSound: /Audio/Animals/goose_honk.ogg
-        ejectSound: /Audio/Animals/goose_honk.ogg
+        insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
       sidearm_slot:
         name: clothing-holster-sidearm-slot
         priority: 2
         whitelist:
           tags:
           - Sidearm
-        insertSound: /Audio/Animals/goose_honk.ogg
-        ejectSound: /Audio/Animals/goose_honk.ogg
+        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
   - type: ItemMapper
     mapLayers:
       icon_knife:
@@ -202,8 +202,8 @@
           - MagazineRifleAll
           - MagazineShotgun
           - PowerCellAll
-        insertSound: /Audio/Animals/goose_honk.ogg
-        ejectSound: /Audio/Animals/goose_honk.ogg
+        insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
       upgraded_sidearm_slot:
         name: clothing-holster-upgraded-sidearm-slot
         priority: 2
@@ -211,8 +211,8 @@
           tags:
           - Sidearm
           - SubMachineGun
-        insertSound: /Audio/Animals/goose_honk.ogg
-        ejectSound: /Audio/Animals/goose_honk.ogg
+        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
       gun_slot:
         name: clothing-holster-gun-slot
         priority: 3
@@ -221,8 +221,8 @@
           - Shotgun
           - AssaultRifle
           - EnergyWeapon
-        insertSound: /Audio/Animals/goose_honk.ogg
-        ejectSound: /Audio/Animals/goose_honk.ogg
+        insertSound: /Audio/Weapons/Guns/Misc/long_gun_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/long_gun_eject.ogg
   - type: StaticPrice
     price: 500
   - type: ItemMapper
