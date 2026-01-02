@@ -234,9 +234,34 @@ public sealed partial class JukeboxMenu : FancyWindow
         ShuffleButton.Pressed = shuffle;
     }
 
-    public void SetSelectedSong(string name, float length)
+    public void SetSelectedSong(JukeboxPrototype? prototype, float length)
     {
-        SetSelectedSongText(name);
+        if (prototype is null)
+        {
+            CurrentlyPlaying.RemoveAllChildren();
+        }
+        else
+        {
+            if (CurrentlyPlaying.ChildCount != 0)
+            {
+                var child = CurrentlyPlaying.GetChild(0) as TrackListingControl;
+
+                if (child is null)
+                {
+                    DebugTools.Assert("Jukebox menu currently playing control is not of type TrackListingControl"); // Something's gone terribly wrong.
+                }
+                else
+                {
+                    child.SetTrackInfo(prototype);
+                }
+
+            }
+            else
+            {
+                var control = new TrackListingControl(prototype);
+                CurrentlyPlaying.AddChild(control);
+            }
+        }
         PlaybackSlider.MaxValue = length;
         PlaybackSlider.SetValueWithoutEvent(0);
     }
@@ -274,17 +299,5 @@ public sealed partial class JukeboxMenu : FancyWindow
         }
 
         SetPlayPauseButton(_audioSystem.IsPlaying(_audio, audio));
-    }
-
-    public void SetSelectedSongText(string? text)
-    {
-        if (!string.IsNullOrEmpty(text))
-        {
-            SongName.Text = text;
-        }
-        else
-        {
-            SongName.Text = "---";
-        }
     }
 }

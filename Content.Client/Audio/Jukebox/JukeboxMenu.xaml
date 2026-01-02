@@ -1,7 +1,8 @@
 <ui:FancyWindow
     xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-    SetSize="400 500"
+    SetSize="450 500"
+    MinSize="450 300"
     Title="{Loc 'jukebox-menu-title'}">
     <BoxContainer Margin="4 0" Orientation="Vertical">
         <BoxContainer
@@ -13,7 +14,8 @@
             <BoxContainer
                 Orientation="Vertical"
                 VerticalExpand="True"
-                HorizontalExpand="True">
+                HorizontalExpand="True"
+                SizeFlagsStretchRatio="1">
                 <Label Text="{Loc 'jukebox-menu-library-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
                 <LineEdit
                     Name="SearchBar"
@@ -34,9 +36,13 @@
             <BoxContainer
                 Orientation="Vertical"
                 VerticalExpand="True"
-                HorizontalExpand="True">
+                HorizontalExpand="True"
+                SizeFlagsStretchRatio="1.5">
                 <Label Text="{Loc 'jukebox-menu-playlist-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
-                <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+                <BoxContainer
+                    Name="CurrentlyPlaying"
+                    HorizontalExpand="True"/>
+                <ScrollContainer VerticalExpand="True" HScrollEnabled="False" Margin="5 5 5 5">
                     <BoxContainer
                         Name="QueueList"
                         Orientation="Vertical"
@@ -48,8 +54,6 @@
             </BoxContainer>
         </BoxContainer>
         <BoxContainer Orientation="Vertical">
-            <Label Name="SongSelected" Text="{Loc 'jukebox-menu-selectedsong'}" />
-            <Label Name="SongName" Text="---" />
             <Slider Name="PlaybackSlider" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True"

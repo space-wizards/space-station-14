@@ -77,11 +77,11 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         if (_protoManager.Resolve(jukebox.SelectedSongId, out var songProto))
         {
             var length = EntMan.System<AudioSystem>().GetAudioLength(songProto.Path.Path.ToString());
-            _menu.SetSelectedSong(songProto.Name, (float) length.TotalSeconds);
+            _menu.SetSelectedSong(songProto, (float) length.TotalSeconds);
         }
         else
         {
-            _menu.SetSelectedSong(string.Empty, 0f);
+            _menu.SetSelectedSong(null, 0f);
         }
 
         _menu.PopulateQueueList(jukebox.Queue);

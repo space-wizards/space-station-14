@@ -1,9 +1,9 @@
 <Control xmlns="https://spacestation14.io"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
-    <BoxContainer Orientation="Horizontal">
-        <BoxContainer Orientation = "Vertical">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <BoxContainer Orientation = "Vertical" HorizontalExpand="True">
             <Label Name="TrackName" HorizontalExpand="True" />
-            <Label Name="TrackArtist" HorizontalExpand="True" StyleClasses="PdaContentFooterText"/>
+            <Label Name="TrackArtist" HorizontalExpand="True" StyleClasses="LabelSubText"/>
         </BoxContainer>
         <Button
             Name="MoveUp"
