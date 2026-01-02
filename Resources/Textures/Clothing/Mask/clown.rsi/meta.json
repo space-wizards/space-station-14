@@ -37,6 +37,29 @@
     {
       "name": "equipped-MASK-vox",
       "directions": 4
+    },
+    {
+      "name": "icon-opened"
+    },
+    {
+      "name": "opened-equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "opened-equipped-MASK-hamster",
+      "directions": 4
+    },
+    {
+      "name": "opened-equipped-MASK-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "opened-equipped-MASK-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "opened-equipped-MASK-vox",
+      "directions": 4
     }
   ]
 }
