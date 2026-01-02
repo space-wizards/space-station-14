@@ -1270,7 +1270,7 @@
   suffix: Fake
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/LMGs/L6.rsi
+    sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     state: icon
   - type: EmitSoundOnUse
     sound:
