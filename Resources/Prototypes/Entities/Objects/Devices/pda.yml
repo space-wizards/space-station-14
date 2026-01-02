@@ -1504,7 +1504,7 @@
   parent: [ BaseHighlyIllegalContraband, BasePDA ]
   id: NinjaPDA
   name: ninja PDA
-  description: you stealthy bastard, you!
+  description: You stealthy bastard, you!
   components:
   - type: Pda
     id: NinjaIDCard
