@@ -16,12 +16,13 @@ public sealed partial class QueuedTrackControl : Control
     private ProtoId<JukeboxPrototype> _trackId;
     private int _index;
 
-    public QueuedTrackControl(JukeboxPrototype track, int index)
+    public QueuedTrackControl(JukeboxPrototype track, int index, bool disableMoveUp, bool disableMoveDown)
     {
         RobustXamlLoader.Load(this);
 
         SetTrackInfo(track);
         SetIndex(index);
+        SetButtonStatus(disableMoveUp, disableMoveDown);
 
         MoveUp.OnPressed += (_) =>
         {
@@ -49,5 +50,11 @@ public sealed partial class QueuedTrackControl : Control
     public void SetIndex(int index)
     {
         _index = index;
+    }
+
+    public void SetButtonStatus(bool disableMoveUp, bool disableMoveDown)
+    {
+        MoveUp.Disabled = disableMoveUp;
+        MoveDown.Disabled = disableMoveDown;
     }
 }

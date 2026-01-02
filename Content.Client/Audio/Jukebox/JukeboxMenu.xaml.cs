@@ -173,10 +173,11 @@ public sealed partial class JukeboxMenu : FancyWindow
 
             if (idx >= oldChildCount)
             {
-                var queuedTrackBox = new QueuedTrackControl(track, idx);
+                var queuedTrackBox = new QueuedTrackControl(track, idx, idx == 0, idx == queue.Count - 1);
                 queuedTrackBox.OnDeletePressed += s => QueueDeleteAction?.Invoke(s);
                 queuedTrackBox.OnMoveUpPressed += s => QueueMoveUpAction?.Invoke(s);
                 queuedTrackBox.OnMoveDownPressed += s => QueueMoveDownAction?.Invoke(s);
+
                 QueueList.AddChild(queuedTrackBox);
             }
             else
@@ -191,6 +192,7 @@ public sealed partial class JukeboxMenu : FancyWindow
 
                 child.SetTrackInfo(track);
                 child.SetIndex(idx);
+                child.SetButtonStatus(idx == 0, idx == queue.Count - 1);
             }
             idx++;
         }

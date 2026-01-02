@@ -129,11 +129,13 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
 
     private void OnJukeboxQueueTrackMessage(Entity<JukeboxComponent> ent, ref JukeboxQueueTrackMessage args)
     {
-        ent.Comp.Queue.Add(args.SongId);
-
         if (ent.Comp.SelectedSongId is null)
         {
-            ent.Comp.SelectedSongId = ent.Comp.Queue[0];
+            ent.Comp.SelectedSongId = args.SongId;
+        }
+        else
+        {
+            ent.Comp.Queue.Add(args.SongId);
         }
 
         Dirty(ent);
@@ -214,20 +216,11 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
         {
             if (comp.AudioStream == ent.Owner)
             {
-                // Queue's empty (somehow), stop
-                if (comp.Queue.Count == 0)
-                {
-                    Stop((uid, comp));
-                    continue;
-                }
+                // Append last played song to the end of the queue if repeat is on.
+                if (comp.RepeatTracks && comp.SelectedSongId is not null)
+                    comp.Queue.Add(comp.SelectedSongId.Value);
 
-                // Remove the last played song from the queue, but append it to the end if repeat is on.
-                var lastPlayed = comp.Queue[0];
-                comp.Queue.RemoveAt(0);
-                if (comp.RepeatTracks)
-                    comp.Queue.Add(lastPlayed);
-
-                // Queue's actually empty now, stop
+                // Queue's empty, stop
                 if (comp.Queue.Count == 0)
                 {
                     Stop((uid, comp));
@@ -235,22 +228,15 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
                 }
 
                 // Otherwise, pick the next song
+                int nextIndex = 0;
                 if (comp.ShuffleTracks)
                 {
-                    var nextIndex = _random.Next(comp.Queue.Count);
-
-                    // Only rearrange if it's not already at the front of the queue
-                    if (nextIndex != 0)
-                    {
-                        var nextTrack = comp.Queue[nextIndex];
-
-                        // since we're just playing the first song, move the shuffled song to the top, if it isn't already.
-                        comp.Queue.RemoveAt(nextIndex);
-                        comp.Queue.Insert(0, nextTrack);
-                    }
+                    nextIndex = _random.Next(comp.Queue.Count);
                 }
 
-                comp.SelectedSongId = comp.Queue[0];
+                comp.SelectedSongId = comp.Queue[nextIndex];
+                comp.Queue.RemoveAt(nextIndex);
+
                 comp.AudioStream = null; // Nuke the audio stream so that Play doesn't try and set the state of a shutting down audio stream to playing
                 Play((uid, comp));
             }
