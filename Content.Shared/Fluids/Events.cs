@@ -39,7 +39,7 @@ public sealed partial class AbsorbantDoAfterEvent : DoAfterEvent
 /// Raised when trying to spray something, for example a fire extinguisher.
 /// </summary>
 [ByRefEvent]
-public record struct SprayAttemptEvent(EntityUid User, bool Cancelled = false)
+public record struct SprayAttemptEvent(EntityUid? User, bool Cancelled = false, string? CancelPopupMessage = null)
 {
     public void Cancel()
     {

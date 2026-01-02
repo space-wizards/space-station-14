@@ -37,3 +37,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "machinegun-one-shot.wav by DeltaCode. Converted to .OGG and MONO by august-sun"
   source: "https://freesound.org/people/DeltaCode/sounds/668347/"
+
+- files: ["hushpup.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Created by UnderlinedDesigns and DrinkingWindGames (https://freesound.org/people/DrinkingWindGames/sounds/789647), modified by Halycon"
+  source: "https://freesound.org/people/UnderlinedDesigns/sounds/188499/"

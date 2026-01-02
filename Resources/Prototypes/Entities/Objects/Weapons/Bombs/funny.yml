@@ -75,10 +75,9 @@
   - type: AnimationPlayer
 
 - type: entity
-  name: banana peel
-  suffix: Explosive
   parent: TrashBananaPeel
   id: TrashBananaPeelExplosive
+  suffix: Explosive
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
@@ -131,3 +130,18 @@
   - type: Tag
     tags:
     - Banana
+
+- type: entity
+  parent: SnapPop
+  id: SnapPopExplosive
+  suffix: explosive
+  components:
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 0.8
+    intensitySlope: 1
+    totalIntensity: 3.5
+    canCreateVacuum: false
+  - type: Construction
+    graph: SnapPopExplosiveGraph
+    node: snapPopExplosive

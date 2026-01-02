@@ -1,6 +1,7 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Power.Components;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
 
@@ -20,9 +21,9 @@ public sealed class XAEChargeBatterySystem : BaseXAESystem<XAEChargeBatteryCompo
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEChargeBatteryComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        var chargeBatteryComponent = ent.Comp;
         _batteryEntities.Clear();
-        _lookup.GetEntitiesInRange(args.Coordinates, chargeBatteryComponent.Radius, _batteryEntities);
+
+        _lookup.GetEntitiesInRange(args.Coordinates, ent.Comp.Radius, _batteryEntities);
         foreach (var battery in _batteryEntities)
         {
             _battery.SetCharge(battery.AsNullable(), battery.Comp.MaxCharge);

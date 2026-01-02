@@ -1,49 +1,70 @@
+using System.Linq;
+using System.Runtime.InteropServices;
 using Content.Server.Atmos.Components;
+using Content.Server.Explosion.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Explosion;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
+using static Content.Server.Explosion.Components.ExplosionAirtightGridComponent;
 
 namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem
 {
-    private readonly Dictionary<string, int> _explosionTypes = new();
+    // We keep track of which tiles are airtight, and how much damage from explosions those airtight blockers can take.
+    // This is quite complicated, as the data effectively needs to be tracked *per tile*, *per explosion type*.
+    // To avoid wasting significant memory, we calculate the values and share the actual backing storage of it.
+    // Stored values are reference counted so they can be evicted when no longer needed.
+    // At the time of writing, this compacts the storage for Box Station from ~5500 tolerance value sets to 13,
+    // at round start.
+
+    // Use integers instead of prototype IDs for storage of explosion data.
+    // This allows us to replace a Dictionary<string, FixedPoint2> with just a FixedPoint2[].
+    private readonly Dictionary<ProtoId<ExplosionPrototype>, int> _explosionTypes = new();
+    // Index to look up if we already have an existing set of tolerance values stored, so the data can be shared.
+    private readonly Dictionary<ToleranceValues, int> _toleranceIndex = new();
+    // Storage for tolerance values. Entries form a free linked list when not occupied by a set of real values.
+    private ValueList<CacheEntry> _toleranceData;
+    // First free position in _toleranceData.
+    // -1 indicates there are no free slots left and the storage must be expanded.
+    private int _freeListHead = -1;
 
     private void InitAirtightMap()
     {
-        // Currently explosion prototype hot-reload isn't supported, as it would involve completely re-computing the
-        // airtight map. Could be done, just not yet implemented.
+        _explosionTypes.Clear();
 
-        // for storing airtight entity damage thresholds for all anchored airtight entities, we will use integers in
-        // place of id-strings. This initializes the string <--> id association.
-        // This allows us to replace a Dictionary<string, float> with just a float[].
         int index = 0;
         foreach (var prototype in _prototypeManager.EnumeratePrototypes<ExplosionPrototype>())
         {
-            // TODO EXPLOSION
-            // just make this a field on the prototype
             _explosionTypes.Add(prototype.ID, index);
             index++;
         }
     }
 
-    // The explosion intensity required to break an entity depends on the explosion type. So it is stored in a
-    // Dictionary<string, float>
-    //
-    // Hence, each tile has a tuple (Dictionary<string, float>, AtmosDirection). This specifies what directions are
-    // blocked, and how intense a given explosion type needs to be in order to destroy ALL airtight entities on that
-    // tile. This is the TileData struct.
-    //
-    // We then need this data for every tile on a grid. So this mess of a variable maps the Grid ID and Vector2i grid
-    // indices to this tile-data struct.
-    private Dictionary<EntityUid, Dictionary<Vector2i, TileData>> _airtightMap = new();
+    private void ReloadExplosionPrototypes(PrototypesReloadedEventArgs prototypesReloadedEventArgs)
+    {
+        if (!prototypesReloadedEventArgs.Modified.Contains(typeof(ExplosionPrototype)))
+            return;
+
+        InitAirtightMap();
+        ReloadMap();
+    }
 
     public void UpdateAirtightMap(EntityUid gridId, Vector2i tile, MapGridComponent? grid = null)
     {
         if (Resolve(gridId, ref grid, false))
             UpdateAirtightMap(gridId, grid, tile);
+    }
+
+    [Access(typeof(ExplosionGridTileFlood))]
+    public ToleranceValues GetToleranceValues(int idx)
+    {
+        return _toleranceData[idx].Values;
     }
 
     /// <summary>
@@ -58,11 +79,12 @@ public sealed partial class ExplosionSystem
     /// </remarks>
     public void UpdateAirtightMap(EntityUid gridId, MapGridComponent grid, Vector2i tile)
     {
-        var tolerance = new float[_explosionTypes.Count];
-        var blockedDirections = AtmosDirection.Invalid;
+        var airtightGrid = EnsureComp<ExplosionAirtightGridComponent>(gridId);
 
-        if (!_airtightMap.ContainsKey(gridId))
-            _airtightMap[gridId] = new();
+        // Calculate tile new airtight state.
+
+        var tolerance = new FixedPoint2[_explosionTypes.Count];
+        var blockedDirections = AtmosDirection.Invalid;
 
         var anchoredEnumerator = _map.GetAnchoredEntitiesEnumerator(gridId, grid, tile);
 
@@ -72,17 +94,97 @@ public sealed partial class ExplosionSystem
                 continue;
 
             blockedDirections |= airtight.AirBlockedDirection;
-            var entityTolerances = GetExplosionTolerance(uid.Value);
-            for (var i = 0; i < tolerance.Length; i++)
-            {
-                tolerance[i] = Math.Max(tolerance[i], entityTolerances[i]);
-            }
+            GetExplosionTolerance(uid.Value, tolerance);
         }
 
-        if (blockedDirections != AtmosDirection.Invalid)
-            _airtightMap[gridId][tile] = new(tolerance, blockedDirections);
+        // Log.Info($"UPDATE {gridId}/{tile}: {blockedDirections}");
+
+        if (blockedDirections == AtmosDirection.Invalid)
+        {
+            // No longer airtight
+
+            if (!airtightGrid.Tiles.Remove(tile, out var tileData))
+            {
+                // Did not have this tile before and after, nothing to do.
+                return;
+            }
+
+            // Removing tile data.
+            DecrementRefCount(tileData.ToleranceCacheIndex);
+            return;
+        }
+
+        ref var tileEntry = ref CollectionsMarshal.GetValueRefOrAddDefault(airtightGrid.Tiles, tile, out var existed);
+        var cacheKey = new ToleranceValues { Values = tolerance };
+
+        // Remove previous tolerance reference if necessary.
+        if (existed)
+        {
+            ref var prevEntry = ref _toleranceData[tileEntry.ToleranceCacheIndex];
+            if (prevEntry.Values == cacheKey)
+            {
+                // No change.
+                return;
+            }
+
+            DecrementRefCount(tileEntry.ToleranceCacheIndex);
+        }
+
+        ref var newCacheIndex = ref CollectionsMarshal.GetValueRefOrAddDefault(_toleranceIndex, cacheKey, out existed);
+        if (existed)
+        {
+            _toleranceData[newCacheIndex].RefCount += 1;
+        }
         else
-            _airtightMap[gridId].Remove(tile);
+        {
+            if (_freeListHead < 0)
+                ExpandCache();
+
+            newCacheIndex = _freeListHead;
+            ref var newCacheEntry = ref _toleranceData[newCacheIndex];
+            _freeListHead = newCacheEntry.RefCount;
+
+            newCacheEntry.Values = cacheKey;
+            newCacheEntry.RefCount = 1;
+        }
+
+        tileEntry = new TileData
+        {
+            BlockedDirections = blockedDirections,
+            ToleranceCacheIndex = newCacheIndex,
+        };
+    }
+
+    private void ExpandCache()
+    {
+        var newCacheSize = Math.Max(8, _toleranceData.Count * 2);
+        var curSize = _toleranceData.Count;
+
+        _toleranceData.EnsureLength(newCacheSize);
+        for (var i = curSize; i < newCacheSize; i++)
+        {
+            _toleranceData[i].RefCount = _freeListHead;
+            _freeListHead = i;
+        }
+    }
+
+    private void DecrementRefCount(int index)
+    {
+        ref var cacheEntry = ref _toleranceData[index];
+
+        DebugTools.Assert(cacheEntry.RefCount > 0);
+        cacheEntry.RefCount -= 1;
+
+        if (cacheEntry.RefCount == 0)
+        {
+            var prevValue = cacheEntry.Values;
+            cacheEntry.Values = default;
+            cacheEntry.RefCount = _freeListHead;
+            _freeListHead = index;
+
+            var result = _toleranceIndex.Remove(prevValue);
+            DebugTools.Assert(result, "Failed to removed 0 refcounted index!");
+        }
     }
 
     /// <summary>
@@ -106,7 +208,7 @@ public sealed partial class ExplosionSystem
     /// <summary>
     ///     Return a dictionary that specifies how intense a given explosion type needs to be in order to destroy an entity.
     /// </summary>
-    public float[] GetExplosionTolerance(EntityUid uid)
+    private void GetExplosionTolerance(EntityUid uid, Span<FixedPoint2> explosionTolerance)
     {
         // How much total damage is needed to destroy this entity? This also includes "break" behaviors. This ASSUMES
         // that this will result in a non-airtight entity.Entities that ONLY break via construction graph node changes
@@ -117,14 +219,14 @@ public sealed partial class ExplosionSystem
             totalDamageTarget = _destructibleSystem.DestroyedAt(uid, destructible);
         }
 
-        var explosionTolerance = new float[_explosionTypes.Count];
         if (totalDamageTarget == FixedPoint2.MaxValue || !_damageableQuery.TryGetComponent(uid, out var damageable))
         {
             for (var i = 0; i < explosionTolerance.Length; i++)
             {
-                explosionTolerance[i] = float.MaxValue;
+                explosionTolerance[i] = ToleranceValues.Invulnerable;
             }
-            return explosionTolerance;
+
+            return;
         }
 
         // What multiple of each explosion type damage set will result in the damage exceeding the required amount? This
@@ -157,38 +259,43 @@ public sealed partial class ExplosionSystem
                 damagePerIntensity += value * mod * Math.Max(0, ev.DamageCoefficient);
             }
 
-            explosionTolerance[index] = damagePerIntensity > 0
+            var toleranceValue = damagePerIntensity > 0
                 ? (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity)
-                : float.MaxValue;
-        }
+                : ToleranceValues.Invulnerable;
 
-        return explosionTolerance;
+            explosionTolerance[index] = toleranceValue;
+        }
     }
 
-    /// <summary>
-    ///     Data struct that describes the explosion-blocking airtight entities on a tile.
-    /// </summary>
-    public struct TileData
+    private void OnAirtightGridRemoved(EntityUid entity)
     {
-        public TileData(float[] explosionTolerance, AtmosDirection blockedDirections)
+        if (!TryComp(entity, out ExplosionAirtightGridComponent? airtightGrid))
+            return;
+
+        foreach (var tile in airtightGrid.Tiles.Values)
         {
-            ExplosionTolerance = explosionTolerance;
-            BlockedDirections = blockedDirections;
+            DecrementRefCount(tile.ToleranceCacheIndex);
         }
 
-        public float[] ExplosionTolerance;
-        public AtmosDirection BlockedDirections = AtmosDirection.Invalid;
+        RemComp<ExplosionAirtightGridComponent>(entity);
     }
 
     public override void ReloadMap()
     {
-        foreach (var(grid, dict) in _airtightMap)
+        var enumerator = EntityQueryEnumerator<ExplosionAirtightGridComponent, MapGridComponent>();
+        while (enumerator.MoveNext(out var uid, out var airtightComp, out var mapGrid))
         {
-            var comp = Comp<MapGridComponent>(grid);
-            foreach (var index in dict.Keys)
+            foreach (var pos in airtightComp.Tiles.Keys)
             {
-                UpdateAirtightMap(grid, comp, index);
+                UpdateAirtightMap(uid, pos, mapGrid);
             }
         }
     }
+
+    private struct CacheEntry
+    {
+        public ToleranceValues Values;
+        public int RefCount; // Doubles as freelist chain
+    }
+
 }

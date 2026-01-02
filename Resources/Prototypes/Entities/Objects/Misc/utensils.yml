@@ -130,6 +130,17 @@
     - Plastic
     - Trash
     - Knife
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeAabb
+          bounds: "-0.1,-0.375,0.1,0.375"
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+
 
 - type: entity
   parent: UtensilBase

@@ -1,0 +1,52 @@
+- type: entityTable # size 1x2
+  id: AllBoardGamesTable
+  table: !type:GroupSelector
+    children:
+    - id: BackgammonBoard
+    - id: ChessBoard
+    - id: ParchisBoard
+    - id: CheckerBoard
+
+- type: entityTable # size 1x2
+  id: AllBattlemapsTable
+  table: !type:GroupSelector
+    children:
+    - id: GrassBattlemap
+    - id: MoonBattlemap
+    - id: SandBattlemap
+    - id: SnowBattlemap
+    - id: ShipBattlemap
+
+## Spawners ##
+
+- type: entity
+  parent: MarkerBase
+  id: BoardGameSpawner100
+  name: Board Game Spawner
+  suffix: 100
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/Tabletop/chessboard.rsi
+      state: chessboard
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: AllBoardGamesTable
+
+- type: entity
+  parent: MarkerBase
+  id: BattleMapSpawner100
+  name: Battle Map Spawner
+  suffix: 100
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Fun/Tabletop/Battlemaps/grassbm.rsi
+      state: icon
+  - type: EntityTableSpawner
+    offset: 0
+    table: !type:NestedSelector
+      tableId: AllBattlemapsTable

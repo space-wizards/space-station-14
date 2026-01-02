@@ -13,6 +13,7 @@ namespace Content.Shared.Atmos.EntitySystems
         protected bool PvsEnabled;
 
         [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
+        [Dependency] private readonly SharedAtmosphereSystem _atmosphere = default!;
 
         /// <summary>
         ///     array of the ids of all visible gases.
@@ -28,7 +29,7 @@ namespace Content.Shared.Atmos.EntitySystems
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var gasPrototype = ProtoMan.Index<GasPrototype>(i.ToString());
+                var gasPrototype = _atmosphere.GetGas(i);
                 if (!string.IsNullOrEmpty(gasPrototype.GasOverlayTexture) || !string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
                     visibleGases.Add(i);
             }

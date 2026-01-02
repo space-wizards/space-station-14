@@ -112,7 +112,6 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
             _prototypeManager.RegisterIgnore("gameMapPool");
-            _prototypeManager.RegisterIgnore("lobbyBackground");
             _prototypeManager.RegisterIgnore("gamePreset");
             _prototypeManager.RegisterIgnore("noiseChannel");
             _prototypeManager.RegisterIgnore("playerConnectionWhitelist");

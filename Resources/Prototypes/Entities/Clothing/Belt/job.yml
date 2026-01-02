@@ -177,6 +177,7 @@
       - Bloodpack
       - Gauze
       - Ointment
+      - Tourniquet
       - CigPack
       - PillCanister
       - Radio
@@ -184,7 +185,6 @@
       - SurgeryTool
       - Dropper
       components:
-      - Hypospray
       - Injector
       - Pill
       - HandLabeler
@@ -197,7 +197,7 @@
           - Bottle
       hypo:
         whitelist:
-          components:
+          tags:
           - Hypospray
       pill:
         whitelist:

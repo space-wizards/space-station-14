@@ -76,6 +76,55 @@
           Open: { visible: true }
           Closed: { visible: false }
 
+# Defines the behavior (but not the visuals!) for attaching paper labels to objects (e.g crates, parcels).
+# Use this (NOT BasePaperLabelableVisualized) if the child prototype allows paper labels but has no sprites for it.
+# Note that if an entity has its own ContainerContainer component then paper_label needs to be added to that too, or else there's bugs.
+- type: entity
+  id: BasePaperLabelable
+  abstract: true
+  components:
+  - type: ContainerContainer
+    containers:
+      paper_label: !type:ContainerSlot
+  - type: ItemSlots
+  - type: PaperLabel
+    labelSlot:
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
+      whitelist:
+        components:
+        - Paper
+      blacklist:
+        tags:
+        - Book
+
+# Defines both the behavior (via parenting) and the visuals for attaching paper labels to objects (e.g crates, parcels).
+# Use this (NOT BasePaperLabelable) if the child prototype has sprites for paper labels.
+# The GenericVisualizer used here ONLY manages the paper label. If the child prototype has a unique GenericVisualizer for some reason or another,
+# then that will also need to handle the paper label too, since it'll completely overwrite the one here.
+# You should still parent from this instead of BasePaperLabelable since if that unique GenericVisualizer is missing for some reason this one works as a failsafe.
+# (Though it might not really matter in practice.)
+# In any case, the actual Sprite component for the label layer still needs to be defined on a per-item basis!
+# And again note that if an entity has its own ContainerContainer component then paper_label needs to be added to that too, or else there's bugs.
+- type: entity
+  parent: BasePaperLabelable
+  id: BasePaperLabelableVisualized
+  abstract: true
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PaperLabelVisuals.HasLabel:
+        enum.PaperLabelVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PaperLabelVisuals.LabelType:
+        enum.PaperLabelVisuals.Layer:
+          Paper: { state: paper }
+          Bounty: { state: bounty }
+          CaptainsPaper: { state: captains_paper }
+          Invoice: { state: invoice }
+
 # PowerCellSlot parents
 - type: entity
   id: PowerCellSlotSmallItem

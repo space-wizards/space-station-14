@@ -51,6 +51,8 @@ public class DestructibleBenchmark
     private readonly List<Entity<DamageableComponent>> _damageables = new();
     private readonly List<Entity<DamageableComponent, DestructibleComponent>> _destructbiles = new();
 
+    private TestMapData _currentMapData = default!;
+
     private DamageSpecifier _damage;
 
     private TestPair _pair = default!;
@@ -70,8 +72,6 @@ public class DestructibleBenchmark
         _pair = await PoolManager.GetServerClient();
         var server = _pair.Server;
 
-        var mapdata = await _pair.CreateTestMap();
-
         _entMan = server.ResolveDependency<IEntityManager>();
         _protoMan = server.ResolveDependency<IPrototypeManager>();
         _random = server.ResolveDependency<IRobustRandom>();
@@ -86,19 +86,25 @@ public class DestructibleBenchmark
         _damage = new DamageSpecifier(type, DamageAmount);
 
         _random.SetSeed(69420); // Randomness needs to be deterministic for benchmarking.
+    }
 
+    [IterationSetup]
+    public void IterationSetup()
+    {
         var plating = _tileDefMan[TileRef].TileId;
+        var server = _pair.Server;
+        _currentMapData = _pair.CreateTestMap().GetAwaiter().GetResult();
 
         // We make a rectangular grid of destructible entities, and then damage them all simultaneously to stress test the system.
         // Needed for managing the performance of destructive effects and damage application.
-        await server.WaitPost(() =>
+        server.WaitPost(() =>
         {
             // Set up a thin line of tiles to place our objects on. They should be anchored for a "realistic" scenario...
             for (var x = 0; x < EntityCount; x++)
             {
                 for (var y = 0; y < _prototypes.Length; y++)
                 {
-                    _map.SetTile(mapdata.Grid, mapdata.Grid, new Vector2i(x, y), new Tile(plating));
+                    _map.SetTile(_currentMapData.Grid, _currentMapData.Grid, new Vector2i(x, y), new Tile(plating));
                 }
             }
 
@@ -107,7 +113,7 @@ public class DestructibleBenchmark
                 var y = 0;
                 foreach (var protoId in _prototypes)
                 {
-                    var coords = new EntityCoordinates(mapdata.Grid, x + 0.5f, y + 0.5f);
+                    var coords = new EntityCoordinates(_currentMapData.Grid, x + 0.5f, y + 0.5f);
                     _entMan.SpawnEntity(protoId, coords);
                     y++;
                 }
@@ -115,12 +121,17 @@ public class DestructibleBenchmark
 
             var query = _entMan.EntityQueryEnumerator<DamageableComponent, DestructibleComponent>();
 
+            _destructbiles.EnsureCapacity(EntityCount);
+            _damageables.EnsureCapacity(EntityCount);
+
             while (query.MoveNext(out var uid, out var damageable, out var destructible))
             {
                 _damageables.Add((uid, damageable));
                 _destructbiles.Add((uid, damageable, destructible));
             }
-        });
+        })
+        .GetAwaiter()
+        .GetResult();
     }
 
     [Benchmark]
@@ -150,6 +161,26 @@ public class DestructibleBenchmark
         });
     }
 
+    [IterationCleanup]
+    public void IterationCleanupAsync()
+    {
+        // We need to nuke the entire map and respawn everything as some destructible effects
+        // spawn entities and whatnot.
+        _pair.Server.WaitPost(() =>
+            {
+                _map.QueueDeleteMap(_currentMapData.MapId);
+            })
+            .Wait();
+
+        // Deletion of entities is often queued (QueueDel) which must be processed by running ticks
+        // or else it will grow infinitely and leak memory.
+        _pair.Server.WaitRunTicks(2)
+            .GetAwaiter()
+            .GetResult();
+
+        _destructbiles.Clear();
+        _damageables.Clear();
+    }
 
     [GlobalCleanup]
     public async Task CleanupAsync()

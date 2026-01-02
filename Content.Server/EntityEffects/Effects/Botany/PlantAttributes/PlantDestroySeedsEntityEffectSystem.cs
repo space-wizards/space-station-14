@@ -9,7 +9,6 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 
 public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSystem<PlantHolderComponent, PlantDestroySeeds>
 {
-    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     protected override void Effect(Entity<PlantHolderComponent> entity, ref EntityEffectEvent<PlantDestroySeeds> args)
@@ -20,7 +19,6 @@ public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSy
         if (entity.Comp.Seed.Seedless)
             return;
 
-        _plantHolder.EnsureUniqueSeed(entity, entity.Comp);
         _popup.PopupEntity(
             Loc.GetString("botany-plant-seedsdestroyed"),
             entity,

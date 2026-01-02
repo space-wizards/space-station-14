@@ -1522,5 +1522,57 @@ Entries:
   id: 185
   time: '2025-11-15T23:31:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41448
+- author: Errant
+  changes:
+  - message: Looc and Deadchat logs now show mob information, similar to the logs
+      of the IC chat channels.
+    type: Tweak
+  - message: Mobs who have been "Freeze and Muted" can no longer send on LOOC or Deadchat.
+    type: Fix
+  id: 186
+  time: '2025-11-21T21:53:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41273
+- author: ScarKy0
+  changes:
+  - message: The killsign can now be customized to use any sprite via it's component.
+    type: Add
+  - message: Hidden Kill Sign smite. Visible to everyone but the person you apply
+      it to.
+    type: Add
+  id: 187
+  time: '2025-12-14T02:16:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41845
+- author: AshBats
+  changes:
+  - message: The admin log now shows APC power toggle interactions.
+    type: Add
+  id: 188
+  time: '2025-12-14T03:27:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41839
+- author: Hitlinemoss
+  changes:
+  - message: Added a debug wizard's grimoire, for debugging purposes. Contains 99999
+      WizCoin and has ownerOnly set to false. You can use this for admeme purposes
+      but probably shouldn't unless you want to risk everyone on the station having
+      every spell.
+    type: Add
+  id: 189
+  time: '2025-12-18T19:33:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41900
+- author: ScarKy0
+  changes:
+  - message: Station AI Radial actions are now logged. Search for "Station AI Radial"
+      in the logs menu under Actions.
+    type: Add
+  id: 190
+  time: '2025-12-20T18:23:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41911
+- author: eoineoineoin
+  changes:
+  - message: Fix bug where scrollbars were missing from player list
+    type: Fix
+  id: 191
+  time: '2025-12-22T16:54:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/40525
 Name: Admin
 Order: 3

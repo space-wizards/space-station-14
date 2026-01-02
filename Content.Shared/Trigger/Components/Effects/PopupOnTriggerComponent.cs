@@ -5,6 +5,9 @@ namespace Content.Shared.Trigger.Components.Effects;
 
 /// <summary>
 /// Displays a popup on the target when triggered.
+/// Supports following fluent variables:
+///     $entity - displays the target entity's name
+///     $user - displays the user's name
 /// Will display the popup on the user when <see cref="BaseXOnTriggerComponent.TargetUser"/> is true.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]

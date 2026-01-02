@@ -191,7 +191,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     public bool IsInvalid(ChameleonProjectorComponent comp, EntityUid target)
     {
         return _whitelist.IsWhitelistFail(comp.Whitelist, target)
-            || _whitelist.IsBlacklistPass(comp.Blacklist, target);
+            || _whitelist.IsWhitelistPass(comp.Blacklist, target);
     }
 
     /// <summary>

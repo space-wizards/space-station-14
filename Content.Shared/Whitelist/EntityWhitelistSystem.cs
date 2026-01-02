@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Item;
 using Content.Shared.Tag;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Whitelist;
 
@@ -44,21 +45,13 @@ public sealed class EntityWhitelistSystem : EntitySystem
     /// </summary>
     public bool IsValid(EntityWhitelist list, EntityUid uid)
     {
-        if (list.Components != null)
-        {
-            if (list.Registrations == null)
-            {
-                var regs = StringsToRegs(list.Components);
-                list.Registrations = new List<ComponentRegistration>();
-                list.Registrations.AddRange(regs);
-            }
-        }
+        list.Registrations ??= StringsToRegs(list.Components);
 
-        if (list.Registrations != null && list.Registrations.Count > 0)
+        if (list.Registrations != null)
         {
             foreach (var reg in list.Registrations)
             {
-                if (HasComp(uid, reg.Type))
+                if (EntityManager.HasComponent(uid, reg))
                 {
                     if (!list.RequireAll)
                         return true;
@@ -132,61 +125,18 @@ public sealed class EntityWhitelistSystem : EntitySystem
         return !IsValid(whitelist, uid);
     }
 
-    /// <summary>
-    /// Helper function to determine if Blacklist is not null and entity is on list
-    /// Duplicate of equivalent Whitelist function
-    /// </summary>
-    public bool IsBlacklistPass(EntityWhitelist? blacklist, EntityUid uid)
+    private List<ComponentRegistration>? StringsToRegs(string[]? input)
     {
-        return IsWhitelistPass(blacklist, uid);
-    }
-
-    /// <summary>
-    /// Helper function to determine if Blacklist is not null and entity is not on the list
-    /// Duplicate of equivalent Whitelist function
-    /// </summary>
-    public bool IsBlacklistFail(EntityWhitelist? blacklist, EntityUid uid)
-    {
-        return IsWhitelistFail(blacklist, uid);
-    }
-
-    /// <summary>
-    /// Helper function to determine if Blacklist is either null or the entity is on the list
-    /// Duplicate of equivalent Whitelist function
-    /// </summary>
-    public bool IsBlacklistPassOrNull(EntityWhitelist? blacklist, EntityUid uid)
-    {
-        return IsWhitelistPassOrNull(blacklist, uid);
-    }
-
-    /// <summary>
-    /// Helper function to determine if Blacklist is either null or the entity is not on the list
-    /// Duplicate of equivalent Whitelist function
-    /// </summary>
-    public bool IsBlacklistFailOrNull(EntityWhitelist? blacklist, EntityUid uid)
-    {
-        return IsWhitelistFailOrNull(blacklist, uid);
-    }
-
-    private List<ComponentRegistration> StringsToRegs(string[]? input)
-    {
-        var list = new List<ComponentRegistration>();
-
         if (input == null || input.Length == 0)
-            return list;
+            return null;
 
+        var list = new List<ComponentRegistration>(input.Length);
         foreach (var name in input)
         {
-            var availability = Factory.GetComponentAvailability(name);
-            if (Factory.TryGetRegistration(name, out var registration)
-                && availability == ComponentAvailability.Available)
-            {
+            if (Factory.TryGetRegistration(name, out var registration))
                 list.Add(registration);
-            }
-            else if (availability == ComponentAvailability.Unknown)
-            {
-                Log.Error($"StringsToRegs failed: Unknown component name {name} passed to EntityWhitelist!");
-            }
+            else if (Factory.GetComponentAvailability(name) != ComponentAvailability.Ignore)
+                Log.Error($"{nameof(StringsToRegs)} failed: Unknown component name {name} passed to EntityWhitelist!");
         }
 
         return list;

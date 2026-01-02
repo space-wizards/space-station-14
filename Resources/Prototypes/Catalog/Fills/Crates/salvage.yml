@@ -1,94 +1,98 @@
 - type: entity
+  parent: CrateGenericSteel
   id: CrateSalvageEquipment
   name: "salvage equipment crate"
-  description: For the daring.
   suffix: Filled
-  parent: CrateGenericSteel
+  description: For the daring.
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterHardsuitSalvage
-      - id: ClothingMaskBreath
-      - id: OxygenTankFilled
-      - id: FireExtinguisher
-      - id: ClothingShoesBootsMag
-      - id: HandHeldMassScanner
-      - id: Pickaxe
-      - id: Welder
-      - id: Wrench
-      - id: Screwdriver
-      - id: Crowbar
-      - id: Wirecutter
-      - id: ClothingBeltUtility
-      - id: OreBag
-      - id: ClothingBeltSalvageWebbing
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingOuterHardsuitSalvage
+        - id: ClothingMaskBreath
+        - id: OxygenTankFilled
+        - id: FireExtinguisher
+        - id: ClothingShoesBootsMag
+        - id: HandHeldMassScanner
+        - id: Pickaxe
+        - id: Welder
+        - id: Wrench
+        - id: Screwdriver
+        - id: Crowbar
+        - id: Wirecutter
+        - id: ClothingBeltUtility
+        - id: OreBag
+        - id: ClothingBeltSalvageWebbing
 
 - type: entity
-  id: CrateSalvageAssortedGoodies
-  suffix: Filled, Salvage Random
-  categories: [ HideSpawnMenu ] # You should use SalvageMaterialCrateSpawner instead
   parent: CrateGenericSteel
+  id: CrateSalvageAssortedGoodies
+  categories: [ HideSpawnMenu ] # You should use SalvageMaterialCrateSpawner instead
+  suffix: Filled, Salvage Random
   components:
-  - type: StorageFill
-    contents:
-        # Normal (10%)
-      - id: OxygenTankFilled
-        prob: 0.1
-      - id: SheetPlasma
-        prob: 0.1
-      - id: IngotGold
-        prob: 0.1
-      - id: IngotSilver
-        prob: 0.1
-      - id: SheetPlasma
-        prob: 0.1
-      - id: WelderIndustrialAdvanced
-        prob: 0.1
-      - id: ResearchDisk
-        prob: 0.1
-      - id: SheetUranium
-        prob: 0.1
-        #  - Service
-      - id: CrayonBox
-        prob: 0.1
-        #  - Medical
-      - id: MedkitFilled
-        prob: 0.1
-      - id: BoxSyringe
-        prob: 0.1
-      - id: BoxBeaker
-        prob: 0.1
-        #  - Heh
-      - id: SalvageHumanCorpse
-        prob: 0.1
-        # Interesting (1%)
-        #  - Ammo
-      - id: MagazineBoxMagnum
-        prob: 0.01
-      - id: ResearchDisk10000
-        prob: 0.01
-        # Just no (0.1%)
-        #  - Working guns
-      - id: WeaponRevolverDeckard
-        prob: 0.001
-      - id: WeaponRevolverInspector
-        prob: 0.001
-      - id: ClothingShoesBootsMagBlinding
-        prob: 0.001
-        #  - Skub
-      - id: Skub
-        prob: 0.001
-      - id: ClothingHeadHatCatEars
-        prob: 0.01
-      - id: ClothingHeadHatDogEars
-        prob: 0.01
-        # TRAITOR EQUIPMENT (0.01%)
-      - id: Telecrystal10
-        prob: 0.0001
-      - id: WeaponRevolverPython
-        prob: 0.0001
-      - id: WeaponRevolverMateba
-        prob: 0.0001
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+          # Normal (10%)
+        - id: OxygenTankFilled
+          prob: 0.1
+        - id: SheetPlasma
+          prob: 0.1
+        - id: IngotGold
+          prob: 0.1
+        - id: IngotSilver
+          prob: 0.1
+        - id: SheetPlasma
+          prob: 0.1
+        - id: WelderIndustrialAdvanced
+          prob: 0.1
+        - id: ResearchDisk
+          prob: 0.1
+        - id: SheetUranium
+          prob: 0.1
+          #  - Service
+        - id: CrayonBox
+          prob: 0.1
+          #  - Medical
+        - id: MedkitFilled
+          prob: 0.1
+        - id: BoxSyringe
+          prob: 0.1
+        - id: BoxBeaker
+          prob: 0.1
+          #  - Heh
+        - id: SalvageHumanCorpse
+          prob: 0.1
+          # Interesting (1%)
+          #  - Ammo
+        - id: MagazineBoxMagnum
+          prob: 0.01
+        - id: ResearchDisk10000
+          prob: 0.01
+          # Just no (0.1%)
+          #  - Working guns
+        - id: WeaponRevolverDeckard
+          prob: 0.001
+        - id: WeaponRevolverInspector
+          prob: 0.001
+        - id: ClothingShoesBootsMagBlinding
+          prob: 0.001
+          #  - Skub
+        - id: Skub
+          prob: 0.001
+        - id: ClothingHeadHatCatEars
+          prob: 0.01
+        - id: ClothingHeadHatDogEars
+          prob: 0.01
+          # TRAITOR EQUIPMENT (0.01%)
+        - id: Telecrystal10
+          prob: 0.0001
+        - id: WeaponRevolverPython
+          prob: 0.0001
+        - id: WeaponRevolverMateba
+          prob: 0.0001
 
 - type: entity
   parent: CrateGenericSteel
@@ -210,10 +214,11 @@
   description: Contains 5 random tier 3 parts for upgrading machines.
   # TODO add contents.
   #components:
-  #- type: StorageFill
-  #  contents:
-  #   - id: SalvagePartsT3Spawner
-  #    amount: 5
+  #- type: EntityTableContainerFill
+  #  containers:
+  #    entity_storage: !type:AllSelector
+  #      id: SalvagePartsT3Spawner
+  #      amount: 5
 
 - type: entity
   parent: CrateGenericSteel
@@ -222,10 +227,11 @@
   description: Contains 5 random tier 3 or 4 parts for upgrading machines.
   # TODO add contents.
   #components:
-  # type: StorageFill
-  #  contents:
-  #  - id: SalvagePartsT3T4Spawner
-  #     amount: 5
+  #- type: EntityTableContainerFill
+  #  containers:
+  #    entity_storage:
+  #      id: SalvagePartsT3T4Spawner
+  #      amount: 5
 
 - type: entity
   parent: CrateGenericSteel
@@ -234,7 +240,8 @@
   description: Contains 5 random tier 4 parts for upgrading machines.
   # TODO add contents.
   #components:
-  #- type: StorageFill
-  #  contents:
-  #  - id: SalvagePartsT4Spawner
-  #    amount: 5
+  #- type: EntityTableContainerFill
+  #  containers:
+  #    entity_storage:
+  #      id: SalvagePartsT4Spawner
+  #      amount: 5

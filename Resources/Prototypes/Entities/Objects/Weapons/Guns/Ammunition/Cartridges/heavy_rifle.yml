@@ -1,8 +1,8 @@
 - type: entity
+  abstract: true
+  parent: [ BaseCartridge, BaseSecurityContraband ]
   id: BaseCartridgeHeavyRifle
   name: cartridge (.10 rifle)
-  parent: [ BaseCartridge, BaseSecurityContraband ]
-  abstract: true
   components:
   - type: Tag
     tags:
@@ -20,9 +20,9 @@
     price: 10
 
 - type: entity
+  parent: BaseCartridgeHeavyRifle
   id: CartridgeMinigun
   name: cartridge (.10 rifle)
-  parent: BaseCartridgeHeavyRifle
   components:
   - type: CartridgeAmmo
     proto: BulletMinigun

@@ -1,28 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- Work around https://github.com/dotnet/project-system/issues/4314 -->
-    <TargetFramework>$(TargetFramework)</TargetFramework>
-    <LangVersion>12</LangVersion>
-    <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
+  <Import Project="../MSBuild/Content.props" />
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
+    <PackageReference Include="YamlDotNet" />
   </ItemGroup>
+
+  <Import Project="..\RobustToolbox\Imports\Lidgren.props" />
+  <Import Project="..\RobustToolbox\Imports\Shared.props" />
+
   <ItemGroup>
     <ProjectReference Include="..\Content.Shared.Database\Content.Shared.Database.csproj" />
-    <ProjectReference Include="..\RobustToolbox\Lidgren.Network\Lidgren.Network.csproj">
-      <Private>false</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared.Maths\Robust.Shared.Maths.csproj">
-      <Private>false</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\RobustToolbox\Robust.Shared\Robust.Shared.csproj">
-      <Private>false</Private>
-    </ProjectReference>
   </ItemGroup>
+
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets" />
 </Project>

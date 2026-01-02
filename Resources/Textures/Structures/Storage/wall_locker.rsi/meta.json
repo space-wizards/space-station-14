@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from shiptest at commmit https://github.com/shiptest-ss13/Shiptest/commit/440a15fb476a20d77ba28c1fe315c1b659032ce8, edited by Alekshhh, N2 lockers edited by Lamrr, Evac lockers by EmoGarbage404 (GitHub), genpop* derived from Wizards Den SS14 by K-Dynamic (github)",
+    "copyright": "Taken from shiptest at commmit https://github.com/shiptest-ss13/Shiptest/commit/440a15fb476a20d77ba28c1fe315c1b659032ce8, edited by Alekshhh, N2 lockers edited by Lamrr, syndicate lockers by Unkn0wnGh0st333 (GitHub) based on N2 lockers, Evac lockers by EmoGarbage404 (GitHub), genpop* derived from Wizards Den SS14 by K-Dynamic (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -135,6 +135,12 @@
         },
         {
             "name": "genpop_door_8"
+        },
+        {
+            "name": "syndicate_closed"
+        },
+        {
+            "name": "syndicate_open"
         }
     ]
 }

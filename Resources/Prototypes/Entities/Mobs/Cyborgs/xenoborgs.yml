@@ -43,6 +43,7 @@
       - BorgModuleCable
       - XenoborgModuleAccessBreaker
       - XenoborgModuleFireExtinguisher
+  - type: ShowElectrocutionHUD
   - type: ShowHealthBars
     damageContainers:
     - Inorganic
@@ -92,7 +93,7 @@
     thresholds:
       0: Alive
       250: Critical
-      500: Dead
+      750: Dead # Same as destruction threshold. Borgs act exactly like crit when dead, except for ghosting on move
     stateAlertDict:
       Alive: BorgHealth
       Critical: BorgCrit
@@ -129,8 +130,6 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Repairable
-    doAfterDelay: 25 # more HP, more time to heal
   - type: ContainerFill
     containers:
       borg_brain:

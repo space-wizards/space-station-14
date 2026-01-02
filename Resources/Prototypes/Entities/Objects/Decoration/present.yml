@@ -360,7 +360,7 @@
         orGroup: GiftPool
       - id: Bola
         orGroup: GiftPool
-      - id: GlowstickBase
+      - id: GlowstickGreen
         orGroup: GiftPool
       - id: GlowstickBlue
         orGroup: GiftPool

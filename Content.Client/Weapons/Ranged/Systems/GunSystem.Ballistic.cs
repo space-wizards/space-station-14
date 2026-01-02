@@ -12,41 +12,41 @@ public sealed partial class GunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UpdateAmmoCounterEvent>(OnBallisticAmmoCount);
     }
 
-    private void OnBallisticAmmoCount(EntityUid uid, BallisticAmmoProviderComponent component, UpdateAmmoCounterEvent args)
+    private void OnBallisticAmmoCount(Entity<BallisticAmmoProviderComponent> ent, ref UpdateAmmoCounterEvent args)
     {
         if (args.Control is DefaultStatusControl control)
         {
-            control.Update(GetBallisticShots(component), component.Capacity);
+            control.Update(GetBallisticShots(ent.Comp), ent.Comp.Capacity);
         }
     }
 
-    protected override void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates)
+    protected override void Cycle(Entity<BallisticAmmoProviderComponent> ent, MapCoordinates coordinates)
     {
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        EntityUid? ent = null;
+        EntityUid? ammoEnt = null;
 
         // TODO: Combine with TakeAmmo
-        if (component.Entities.Count > 0)
+        if (ent.Comp.Entities.Count > 0)
         {
-            var existing = component.Entities[^1];
-            component.Entities.RemoveAt(component.Entities.Count - 1);
+            var existing = ent.Comp.Entities[^1];
+            ent.Comp.Entities.RemoveAt(ent.Comp.Entities.Count - 1);
 
-            Containers.Remove(existing, component.Container);
+            Containers.Remove(existing, ent.Comp.Container);
             EnsureShootable(existing);
         }
-        else if (component.UnspawnedCount > 0)
+        else if (ent.Comp.UnspawnedCount > 0)
         {
-            component.UnspawnedCount--;
-            ent = Spawn(component.Proto, coordinates);
-            EnsureShootable(ent.Value);
+            ent.Comp.UnspawnedCount--;
+            ammoEnt = Spawn(ent.Comp.Proto, coordinates);
+            EnsureShootable(ammoEnt.Value);
         }
 
-        if (ent != null && IsClientSide(ent.Value))
-            Del(ent.Value);
+        if (ammoEnt != null && IsClientSide(ammoEnt.Value))
+            Del(ammoEnt.Value);
 
         var cycledEvent = new GunCycledEvent();
-        RaiseLocalEvent(uid, ref cycledEvent);
+        RaiseLocalEvent(ent, ref cycledEvent);
     }
 }

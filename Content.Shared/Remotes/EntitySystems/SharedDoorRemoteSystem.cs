@@ -3,11 +3,13 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Electrocution;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Remotes.Components;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -16,7 +18,9 @@ namespace Content.Shared.Remotes.EntitySystems;
 public abstract class SharedDoorRemoteSystem : EntitySystem
 {
     [Dependency] private readonly SharedAirlockSystem _airlock = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
+    [Dependency] private readonly SharedElectrocutionSystem _electrify = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -111,6 +115,20 @@ public abstract class SharedDoorRemoteSystem : EntitySystem
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
                         $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
+                }
+
+                break;
+            case OperatingMode.ToggleOvercharge:
+                if (TryComp<ElectrifiedComponent>(args.Target, out var eletrifiedComp))
+                {
+                    _electrify.SetElectrified((args.Target.Value, eletrifiedComp), !eletrifiedComp.Enabled);
+                    var soundToPlay = eletrifiedComp.Enabled
+                        ? eletrifiedComp.AirlockElectrifyDisabled
+                        : eletrifiedComp.AirlockElectrifyEnabled;
+                    _audio.PlayLocal(soundToPlay, args.Target.Value, args.User);
+                    _adminLogger.Add(LogType.Action,
+                        LogImpact.Medium,
+                        $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(eletrifiedComp.Enabled ? "" : "un")}electrify it");
                 }
 
                 break;

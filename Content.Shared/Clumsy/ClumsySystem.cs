@@ -1,5 +1,5 @@
 using Content.Shared.CCVar;
-using Content.Shared.Chemistry.Hypospray.Events;
+using Content.Shared.Chemistry.Events;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Damage.Systems;
@@ -31,7 +31,7 @@ public sealed class ClumsySystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<ClumsyComponent, SelfBeforeHyposprayInjectsEvent>(BeforeHyposprayEvent);
+        SubscribeLocalEvent<ClumsyComponent, SelfBeforeInjectEvent>(BeforeHyposprayEvent);
         SubscribeLocalEvent<ClumsyComponent, SelfBeforeDefibrillatorZapsEvent>(BeforeDefibrillatorZapsEvent);
         SubscribeLocalEvent<ClumsyComponent, SelfBeforeGunShotEvent>(BeforeGunShotEvent);
         SubscribeLocalEvent<ClumsyComponent, CatchAttemptEvent>(OnCatchAttempt);
@@ -40,7 +40,7 @@ public sealed class ClumsySystem : EntitySystem
 
     // If you add more clumsy interactions add them in this section!
     #region Clumsy interaction events
-    private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeHyposprayInjectsEvent args)
+    private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeInjectEvent args)
     {
         // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
 
@@ -54,9 +54,9 @@ public sealed class ClumsySystem : EntitySystem
         if (!rand.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
-        args.TargetGettingInjected = args.EntityUsingHypospray;
-        args.InjectMessageOverride = Loc.GetString(ent.Comp.HypoFailedMessage);
-        _audio.PlayPredicted(ent.Comp.ClumsySound, ent, args.EntityUsingHypospray);
+        args.TargetGettingInjected = args.EntityUsingInjector;
+        args.OverrideMessage = Loc.GetString(ent.Comp.HypoFailedMessage);
+        _audio.PlayPredicted(ent.Comp.ClumsySound, ent, args.EntityUsingInjector);
     }
 
     private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> ent, ref SelfBeforeDefibrillatorZapsEvent args)

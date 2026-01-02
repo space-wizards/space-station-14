@@ -29,24 +29,26 @@
   id: SodaDispenser
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-    - id: DrinkCoconutWaterJug
-    - id: DrinkCoffeeJug
-    - id: DrinkColaBottleFull
-    - id: DrinkCreamCartonXL
-    - id: DrinkDrGibbJug
-    - id: DrinkEnergyDrinkJug
-    - id: DrinkGreenTeaJug
-    - id: DrinkIceJug
-    - id: DrinkJuiceLimeCartonXL
-    - id: DrinkJuiceOrangeCartonXL
-    - id: DrinkLemonLimeJug
-    - id: DrinkRootBeerJug
-    - id: DrinkSodaWaterBottleFull
-    - id: DrinkSpaceMountainWindBottleFull
-    - id: DrinkSpaceUpBottleFull
-    - id: DrinkSugarJug
-    - id: DrinkTeaJug
-    - id: DrinkTonicWaterBottleFull
-    - id: DrinkWaterMelonJuiceJug
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: DrinkCoconutWaterJug
+        - id: DrinkCoffeeJug
+        - id: DrinkColaBottleFull
+        - id: DrinkCreamCartonXL
+        - id: DrinkDrGibbJug
+        - id: DrinkEnergyDrinkJug
+        - id: DrinkGreenTeaJug
+        - id: DrinkIceJug
+        - id: DrinkJuiceLimeCartonXL
+        - id: DrinkJuiceOrangeCartonXL
+        - id: DrinkLemonLimeJug
+        - id: DrinkRootBeerJug
+        - id: DrinkSodaWaterBottleFull
+        - id: DrinkSpaceMountainWindBottleFull
+        - id: DrinkSpaceUpBottleFull
+        - id: DrinkSugarJug
+        - id: DrinkTeaJug
+        - id: DrinkTonicWaterBottleFull
+        - id: DrinkWaterMelonJuiceJug

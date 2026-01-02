@@ -202,7 +202,7 @@ public sealed partial class StoreSystem
             EntityUid? actionId;
             // I guess we just allow duplicate actions?
             // Allow duplicate actions and just have a single list buy for the buy-once ones.
-            if (!_mind.TryGetMind(buyer, out var mind, out _))
+            if (listing.ApplyToMob || !_mind.TryGetMind(buyer, out var mind, out _))
                 actionId = _actions.AddAction(buyer, listing.ProductAction);
             else
                 actionId = _actionContainer.AddAction(mind, listing.ProductAction);

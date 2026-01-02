@@ -76,7 +76,7 @@ public sealed partial class SmartFridgeComponent : Component
 }
 
 [Serializable, NetSerializable, DataRecord]
-public record struct SmartFridgeEntry
+public partial record struct SmartFridgeEntry
 {
     public string Name;
 

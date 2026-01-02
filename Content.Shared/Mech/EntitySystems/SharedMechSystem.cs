@@ -283,6 +283,7 @@ public abstract partial class SharedMechSystem : EntitySystem
 
     /// <summary>
     /// Attempts to change the amount of energy in the mech.
+    /// TODO: Power cells are predicted now, so no need to duplicate the charge level
     /// </summary>
     /// <param name="uid">The mech itself</param>
     /// <param name="delta">The change in energy</param>

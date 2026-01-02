@@ -112,7 +112,7 @@ public sealed partial class MindTests
             Assert.That(entMan.EntityExists(attachedEntity), Is.True);
             Assert.That(attachedEntity, Is.Not.EqualTo(playerEnt));
             Assert.That(entMan.HasComponent<GhostComponent>(attachedEntity));
-            var transform = entMan.GetComponent<TransformComponent>(attachedEntity.Value);
+            var transform = entMan.GetComponent<TransformComponent>(attachedEntity!.Value);
             Assert.That(transform.MapID, Is.Not.EqualTo(MapId.Nullspace));
             Assert.That(transform.MapID, Is.Not.EqualTo(testMap.MapId));
 #pragma warning restore NUnit2045
@@ -175,7 +175,7 @@ public sealed partial class MindTests
         Assert.That(player.AttachedEntity, Is.Not.Null);
         Assert.That(entMan.EntityExists(player.AttachedEntity));
 #pragma warning restore NUnit2045
-        var originalEntity = player.AttachedEntity.Value;
+        var originalEntity = player.AttachedEntity!.Value;
 
         EntityUid ghost = default!;
         await server.WaitAssertion(() =>
@@ -248,7 +248,7 @@ public sealed partial class MindTests
         var mindId = player.ContentData()?.Mind;
         Assert.That(mindId, Is.Not.Null);
 
-        var mind = entMan.GetComponent<MindComponent>(mindId.Value);
+        var mind = entMan.GetComponent<MindComponent>(mindId!.Value);
         Assert.That(mind.VisitingEntity, Is.Null);
 
         await pair.CleanReturnAsync();

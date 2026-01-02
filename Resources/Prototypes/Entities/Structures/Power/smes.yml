@@ -33,6 +33,11 @@
     - type: Smes
     - type: Appearance
     - type: Battery
+      # Very important:
+      # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+      # This can not be done by changing the charge rate as the power supply ramps up over time.
+      # This disables prediction for this battery.
+      netsync: false
       startingCharge: 0
       maxCharge: 8000000
     - type: ExaminableBattery

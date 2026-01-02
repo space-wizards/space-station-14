@@ -14,3 +14,4 @@ store-not-account-owner = This {$store} is not bound to you!
 
 store-preset-name-uplink = Uplink
 store-preset-name-spellbook = Spellbook
+store-preset-name-changeling = DNA Store

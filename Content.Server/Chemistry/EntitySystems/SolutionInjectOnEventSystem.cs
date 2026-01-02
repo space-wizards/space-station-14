@@ -148,7 +148,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
             // Take our portion of the adjusted solution for this target
             var individualInjection = solutionToInject.SplitSolution(volumePerBloodstream);
             // Inject our portion into the target's bloodstream
-            if (_bloodstream.TryAddToChemicals(targetBloodstream.AsNullable(), individualInjection))
+            if (_bloodstream.TryAddToBloodstream(targetBloodstream.AsNullable(), individualInjection))
                 anySuccess = true;
         }
 

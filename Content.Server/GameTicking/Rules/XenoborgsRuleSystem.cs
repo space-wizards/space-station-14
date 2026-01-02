@@ -75,7 +75,12 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         else if (numXenoborgs == 0)
             args.AddLine(Loc.GetString("xenoborgs-cond-all-xenoborgs-dead-core-alive"));
         else
-            args.AddLine(Loc.GetString("xenoborgs-cond-xenoborgs-alive", ("count", numXenoborgs)));
+        {
+            args.AddLine(Loc.GetString("xenoborg-number-xenoborg-alive-end", ("count", numXenoborgs)));
+            args.AddLine(Loc.GetString("xenoborg-number-crew-alive-end", ("count", numHumans)));
+        }
+
+        args.AddLine(Loc.GetString("xenoborg-max-number", ("count", component.MaxNumberXenoborgs)));
 
         args.AddLine(Loc.GetString("xenoborgs-list-start"));
 
@@ -93,14 +98,19 @@ public sealed class XenoborgsRuleSystem : GameRuleSystem<XenoborgsRuleComponent>
         var numXenoborgs = GetNumberXenoborgs();
         var numHumans = _mindSystem.GetAliveHumans().Count;
 
-        if ((float)numXenoborgs / (numHumans + numXenoborgs) > xenoborgsRuleComponent.XenoborgShuttleCallPercentage)
+        xenoborgsRuleComponent.MaxNumberXenoborgs = Math.Max(xenoborgsRuleComponent.MaxNumberXenoborgs, numXenoborgs);
+
+        if (xenoborgsRuleComponent.XenoborgShuttleCalled
+            || (float)numXenoborgs / (numHumans + numXenoborgs) <= xenoborgsRuleComponent.XenoborgShuttleCallPercentage
+            || _roundEnd.IsRoundEndRequested())
+            return;
+
+        foreach (var station in _station.GetStations())
         {
-            foreach (var station in _station.GetStations())
-            {
-                _chatSystem.DispatchStationAnnouncement(station, Loc.GetString("xenoborg-shuttle-call"), colorOverride: Color.BlueViolet);
-            }
-            _roundEnd.RequestRoundEnd(null, false);
+            _chatSystem.DispatchStationAnnouncement(station, Loc.GetString("xenoborg-shuttle-call"), colorOverride: Color.BlueViolet);
         }
+        _roundEnd.RequestRoundEnd(null, false, cantRecall: true);
+        xenoborgsRuleComponent.XenoborgShuttleCalled = true;
     }
 
     protected override void Started(EntityUid uid, XenoborgsRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
