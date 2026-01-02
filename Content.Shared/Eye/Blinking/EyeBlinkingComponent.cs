@@ -1,6 +1,7 @@
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Eye.Blinking;
 
@@ -85,4 +86,7 @@ public sealed partial class EyeBlinkingComponent : Component
     public TimeSpan MaxAsyncBlink = TimeSpan.FromSeconds(0.1f);
     [DataField]
     public TimeSpan MaxAsyncOpenBlink = TimeSpan.FromSeconds(0.05f);
+
+    [DataField]
+    public ResPath? EyelidsSprite { get; private set; }
 }

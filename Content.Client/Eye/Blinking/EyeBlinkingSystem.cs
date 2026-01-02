@@ -3,10 +3,12 @@ using Content.Shared.Cloning.Events;
 using Content.Shared.Eye.Blinking;
 using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using System.Linq;
 
 namespace Content.Client.Eye.Blinking;
@@ -17,6 +19,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAppearanceSystem _apperance = default!;
+    [Dependency] private readonly IResourceCache _resCache = default!;
 
     public override void Initialize()
     {
@@ -54,12 +57,14 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
         var clientComp = EntityManager.EnsureComponent<EyeBlinkingClientComponent>(ent.Owner);
 
+        InitEyelidsLayers(ent);
+
         foreach (var layer in comp.AllLayers)
         {
-            Logger.Info($"Layer: {layer.RsiState.Name} {layer.RsiState.Name?.Contains("eyelids") == true}");
+            Logger.Info($"Layer: {layer.RsiState.Name} {layer.RsiState.Name?.Contains("eyelid") == true}");
         }
 
-        var allEyelids = comp.AllLayers.Where(layer => layer.RsiState.Name?.Contains("eyelids") == true);
+        var allEyelids = comp.AllLayers.Where(layer => layer.RsiState.Name?.Contains("eyelid") == true);
         foreach (var layer in allEyelids)
         {
             clientComp.Eyelids.Add(new EyelidState(layer));
@@ -81,6 +86,48 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         }
 
         //ChangeEyeState(ent, eyeClosed);
+    }
+
+    private void InitEyelidsLayers(Entity<EyeBlinkingComponent> ent)
+    {
+        if (!TryComp<SpriteComponent>(ent.Owner, out var spriteComp))
+            return;
+
+        var rsiPath = ent.Comp.EyelidsSprite;
+        if (rsiPath == null)
+            return;
+
+        if (!_resCache.TryGetResource<RSIResource>(rsiPath.Value, out var rsiRes))
+        {
+            Log.Error($"EyeBlinkingSystem: can't find RSI '{rsiPath}'");
+            return;
+        }
+        if (!_sprite.LayerMapTryGet((ent.Owner, spriteComp), HumanoidVisualLayers.Eyelids, out var targetLayer, false))
+        {
+            return;
+        }
+
+        var rsiCollection = rsiRes.RSI;
+        int i = 0;
+
+        foreach (var state in rsiCollection)
+        {
+            var specifier = new SpriteSpecifier.Rsi(rsiPath.Value, state.StateId.Name!);
+            var layerId = $"eyelids_extra_{state.StateId}";
+
+            if (!_sprite.LayerMapTryGet((ent.Owner, spriteComp), layerId, out var existingLayer, false))
+            {
+                var layer = _sprite.AddLayer((ent.Owner, spriteComp), specifier, targetLayer + i + 1);
+                _sprite.LayerMapSet((ent.Owner, spriteComp), layerId, layer);
+                _sprite.LayerSetSprite((ent.Owner, spriteComp), layerId, specifier);
+            }
+            else
+            {
+                _sprite.LayerSetSprite((ent.Owner, spriteComp), layerId, specifier);
+            }
+
+            i++;
+        }
     }
 
     private void OnApperanceChangeEventHandler(Entity<EyeBlinkingComponent> ent, ref AppearanceChangeEvent args)
@@ -158,7 +205,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         {
             if (clientComp.Eyelids.Count == 0)
             {
-                Logger.Info($"Blink aborted for {ent.Owner} - no eyelids found.");
                 return;
             }
         }
