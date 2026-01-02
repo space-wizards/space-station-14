@@ -187,7 +187,6 @@
     - timer
     sound:
       path: /Audio/Effects/Emotes/parp1.ogg
-    canCreateVacuum: false
   - type: HolidayVisuals
     holidays:
       festive:
