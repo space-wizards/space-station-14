@@ -79,15 +79,14 @@ public abstract class SharedFlatpackSystem : EntitySystem
             return;
         }
 
-        var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
-
-        if (!PrototypeManager.TryIndex(comp.Entity, out var proto) ||
+        if (!PrototypeManager.Resolve(comp.Entity, out var proto) ||
             !proto.TryGetComponent<FixturesComponent>(out var fixture, EntityManager.ComponentFactory))
         {
             return;
         }
 
         var (layer, mask) = SharedPhysicsSystem.GetHardCollision(fixture);
+        var buildPos = _map.TileIndicesFor(grid, gridComp, xform.Coordinates);
 
         if (!_anchorable.TileFree((grid, gridComp), buildPos, layer, mask))
         {
