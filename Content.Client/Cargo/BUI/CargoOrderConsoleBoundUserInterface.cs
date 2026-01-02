@@ -130,11 +130,15 @@ namespace Content.Client.Cargo.BUI
 
             if (state is not CargoConsoleInterfaceState cState || !EntMan.TryGetComponent<CargoOrderConsoleComponent>(Owner, out var orderConsole))
                 return;
+
             var station = EntMan.GetEntity(cState.Station);
+
+            if (!_cargoSystem.TryGetAccountBalance(station, orderConsole.Account, out var balance))
+                return;
 
             OrderCapacity = cState.Capacity;
             OrderCount = cState.Count;
-            BankBalance = _cargoSystem.GetBalanceFromAccount(station, orderConsole.Account);
+            BankBalance = balance;
 
             AccountName = cState.Name;
 

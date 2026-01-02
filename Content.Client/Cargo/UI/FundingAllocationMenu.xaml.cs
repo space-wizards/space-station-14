@@ -79,7 +79,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         BuildEntries();
     }
 
-    private IEnumerable<KeyValuePair<ProtoId<CargoAccountPrototype>, int>> EditableAccounts(StationBankAccountComponent bank)
+    private IEnumerable<KeyValuePair<ProtoId<CargoAccountPrototype>, CargoAccountData>> EditableAccounts(StationBankAccountComponent bank)
     {
         foreach (var kvp in bank.Accounts)
         {
@@ -129,7 +129,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         PrimaryCutLabel.Visible = _allowPrimaryCutAdjustment;
 
         var accounts = EditableAccounts(bank).OrderBy(p => p.Key);
-        foreach (var (account, balance) in accounts)
+        foreach (var (account, accountData) in accounts)
         {
             var accountProto = _prototypeManager.Index(account);
 
@@ -151,7 +151,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
 
             var balanceLabel = new RichTextLabel
             {
-                Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", balance)),
+                Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", accountData.Balance)),
                 HorizontalExpand = true,
                 HorizontalAlignment = HAlignment.Center,
                 Margin = new Thickness(5, 0),
@@ -162,7 +162,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
             {
                 HorizontalAlignment = HAlignment.Center,
                 HorizontalExpand = true,
-                Value = (int) (bank.RevenueDistribution[account] * 100),
+                Value = (int) (bank.Accounts[account].RevenueDistribution * 100),
                 IsValid = val => val is >= 0 and <= 100,
             };
             box.ValueChanged += _ => UpdateButtonDisabled();
@@ -190,7 +190,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         for (var i = 0; i < accounts.Count; i++)
         {
             var percent = _spinBoxes[i].Value;
-            if (percent != (int) Math.Round(bank.RevenueDistribution[accounts[i]] * 100))
+            if (percent != (int) Math.Round(bank.Accounts[accounts[i]].RevenueDistribution * 100))
             {
                 differs = true;
                 break;
@@ -223,7 +223,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
 
         foreach (var (account, label) in _balanceLabels)
         {
-            label.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", bank.Accounts[account]));
+            label.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", bank.Accounts[account].Balance));
         }
     }
 }

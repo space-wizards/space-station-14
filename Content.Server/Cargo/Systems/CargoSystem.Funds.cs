@@ -27,12 +27,13 @@ public sealed partial class CargoSystem
     private void OnWithdrawFunds(Entity<CargoOrderConsoleComponent> ent, ref CargoConsoleWithdrawFundsMessage args)
     {
         if (_station.GetOwningStation(ent) is not { } station ||
-            !TryComp<StationBankAccountComponent>(station, out var bank))
+            !TryComp<StationBankAccountComponent>(station, out var bank) ||
+            !TryGetAccountBalance(station, ent.Comp.Account, out var balance))
             return;
 
         if (args.Account == ent.Comp.Account ||
             args.Amount <= 0 ||
-            args.Amount > GetBalanceFromAccount((station, bank), ent.Comp.Account) * ent.Comp.TransferLimit)
+            args.Amount > balance * ent.Comp.TransferLimit)
             return;
 
         if (Timing.CurTime < ent.Comp.NextAccountActionTime)
@@ -109,14 +110,14 @@ public sealed partial class CargoSystem
             !TryComp<StationBankAccountComponent>(station, out var bank))
             return;
 
-        var expectedCount = _allowPrimaryAccountAllocation ? bank.RevenueDistribution.Count : bank.RevenueDistribution.Count - 1;
+        var expectedCount = _allowPrimaryAccountAllocation ? bank.Accounts.Count : bank.Accounts.Count - 1;
         if (args.Percents.Count != expectedCount)
             return;
 
         var differs = false;
         foreach (var (account, percent) in args.Percents)
         {
-            if (percent != (int) Math.Round(bank.RevenueDistribution[account] * 100))
+            if (percent != (int) Math.Round(bank.Accounts[account].RevenueDistribution * 100))
             {
                 differs = true;
                 break;
@@ -130,15 +131,13 @@ public sealed partial class CargoSystem
         if (args.Percents.Values.Sum() != 100)
             return;
 
-        var primaryCut = bank.RevenueDistribution[bank.PrimaryAccount];
-        bank.RevenueDistribution.Clear();
         foreach (var (account, percent )in args.Percents)
         {
-            bank.RevenueDistribution.Add(account, percent / 100.0);
+            bank.Accounts[account].RevenueDistribution = percent / 100.0;
         }
         if (!_allowPrimaryAccountAllocation)
         {
-            bank.RevenueDistribution.Add(bank.PrimaryAccount, 0);
+            bank.Accounts[bank.PrimaryAccount].RevenueDistribution = 0.0;
         }
 
         if (_allowPrimaryCutAdjustment && args.PrimaryCut is >= 0.0 and <= 1.0)
@@ -156,7 +155,7 @@ public sealed partial class CargoSystem
         _adminLogger.Add(
             LogType.Action,
             LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set station {ToPrettyString(station)} fund distribution: {string.Join(',', bank.RevenueDistribution.Select(p => $"{p.Key}: {p.Value}").ToList())}, primary cut: {bank.PrimaryCut}, lockbox cut: {bank.LockboxCut}");
+            $"{ToPrettyString(args.Actor):player} set station {ToPrettyString(station)} fund distribution: {string.Join(',', bank.Accounts.Select(p => $"{p.Key}: {p.Value}").ToList())}, primary cut: {bank.PrimaryCut}, lockbox cut: {bank.LockboxCut}");
     }
 
     private void OnFundAllocationBuiOpen(Entity<FundingAllocationConsoleComponent> ent, ref BeforeActivatableUIOpenEvent args)
