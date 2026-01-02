@@ -99,9 +99,7 @@
         mask:
         - MachineMask
         layer:
-        - MidImpassable
-        - LowImpassable
-
+        - MachineLayer
 
 - type: entity
   parent: BaseIronsandStatue
@@ -121,8 +119,7 @@
         mask:
         - MachineMask
         layer:
-        - MidImpassable
-        - LowImpassable
+        - MachineLayer
 
 - type: entity
   parent: BaseIronsandStatue
@@ -143,8 +140,7 @@
         mask:
         - MachineMask
         layer:
-        - MidImpassable
-        - LowImpassable
+        - MachineLayer
 
 - type: entity
   parent: BaseIronsandStatue
@@ -165,5 +161,4 @@
         mask:
         - MachineMask
         layer:
-        - MidImpassable
-        - LowImpassable
+        - MachineLayer
