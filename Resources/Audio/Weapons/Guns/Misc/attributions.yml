@@ -4,9 +4,9 @@
   source: "https://freesound.org/people/LiamG_SFX/sounds/322224/"
 
 - files: ["long_gun_eject"]
-  license: ""
-  copyright: ""
-  source: ""
+  license: "CC0-1.0"
+  copyright: "Created by nioczkus, converted to ogg & modified by Prole0"
+  source: "https://freesound.org/s/377145/"
 
 - files: ["long_gun_insert"]
   license: ""
