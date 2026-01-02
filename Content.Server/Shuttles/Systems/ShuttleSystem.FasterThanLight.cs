@@ -89,7 +89,7 @@ public sealed partial class ShuttleSystem
         _cfg.OnValueChanged(CCVars.FTLTravelTime, time => DefaultTravelTime = time, true);
         _cfg.OnValueChanged(CCVars.FTLArrivalTime, time => DefaultArrivalTime = time, true);
         _cfg.OnValueChanged(CCVars.FTLCooldown, time => FTLCooldown = time, true);
-        _cfg.OnValueChanged(CCVars.ArrivalsFTLCooldown, time => FTLCooldown = time, true);
+        _cfg.OnValueChanged(CCVars.ArrivalsFTLCooldown, time => ArrivalsFTLCooldown  = time, true);
         _cfg.OnValueChanged(CCVars.FTLMassLimit, time => FTLMassLimit = time, true);
         _cfg.OnValueChanged(CCVars.HyperspaceKnockdownTime, time => _hyperspaceKnockdownTime = TimeSpan.FromSeconds(time), true);
     }
