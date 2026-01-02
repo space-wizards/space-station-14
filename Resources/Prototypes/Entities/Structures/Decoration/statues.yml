@@ -89,6 +89,19 @@
   - type: Sprite
     sprite: Structures/Decoration/ironsand_statue.rsi
     state: small_pillar
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
+
 
 - type: entity
   parent: BaseIronsandStatue
@@ -98,6 +111,18 @@
   - type: Sprite
     sprite: Structures/Decoration/ironsand_statue.rsi
     state: small_pillar_2
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
 
 - type: entity
   parent: BaseIronsandStatue
@@ -108,6 +133,18 @@
     sprite: Structures/Decoration/ironsand_statue_tall.rsi
     state: pillar_of_weh
     offset: "0.0,0.5"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
 
 - type: entity
   parent: BaseIronsandStatue
@@ -118,3 +155,15 @@
     sprite: Structures/Decoration/ironsand_statue_tall.rsi
     state: inverse_pillar
     offset: "0.0,0.5"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.1,0.45,0.1"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable
+        - LowImpassable
