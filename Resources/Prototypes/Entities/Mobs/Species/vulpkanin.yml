@@ -170,6 +170,8 @@
           32:
             sprite: Mobs/Species/Vulpkanin/displacement.rsi
             state: belt
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Vulpkanin/eyelids.rsi
 
 - type: entity
   parent: [BaseSpeciesDummy]

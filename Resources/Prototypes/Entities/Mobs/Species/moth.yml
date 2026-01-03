@@ -122,6 +122,8 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_moth"
         visible: false
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Moth/eyelids.rsi
   - type: Inventory
     speciesId: moth
     femaleDisplacements:
