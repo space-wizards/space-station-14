@@ -27,6 +27,10 @@
   id: Weapons
   name: lathe-category-weapons
 
+- type: latheCategory
+  id: Containers
+  name: lathe-category-containers
+
 # Biogen
 - type: latheCategory
   id: Food

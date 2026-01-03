@@ -6,6 +6,7 @@ lathe-category-machines = Machines
 lathe-category-parts = Parts
 lathe-category-tools = Tools
 lathe-category-weapons = Weapons
+lathe-category-containers = Containers
 
 # Biogen
 lathe-category-food = Food
