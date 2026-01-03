@@ -34,7 +34,7 @@
       tags:
       - TheaterBagel
   - type: Sprite
-    offset: 0, -0.5
+    offset: 0, 0.5
     layers:
       - state: red
       # max size

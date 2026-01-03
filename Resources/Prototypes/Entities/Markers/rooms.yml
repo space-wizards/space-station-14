@@ -20,8 +20,8 @@
       - sprite: Markers/Outlines/10x10.rsi
         state: rect
         color: red
-        offset: -0.5, -0.5
+        offset: 0.5, 0.5
       - sprite: Markers/Outlines/10x10.rsi
         state: label
         color: red
-        offset: -0.5, -0.5
+        offset: 0.5, 0.5
