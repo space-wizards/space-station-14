@@ -14,7 +14,7 @@ reagent-name-bicaridine = bicaridine
 reagent-desc-bicaridine = An analgesic which is highly effective at treating brute damage. It's useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries.
 
 reagent-name-cryoxadone = cryoxadone
-reagent-desc-cryoxadone = Required for the proper function of cryogenics. Used to treat bloodloss and asphyxiation, as well as to restore bodily fluids such as blood. It can treat and rejuvenate plants when applied in small doses. Works regardless of the patient being alive or dead.
+reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage, but only works in temperatures under 213K. It can treat and rejuvenate plants when applied in small doses.
 
 reagent-name-doxarubixadone = doxarubixadone
 reagent-desc-doxarubixadone = A cryogenics chemical. Heals cellular damage caused by dangerous gasses and chemicals.
@@ -26,6 +26,7 @@ reagent-name-dexalin = dexalin
 reagent-desc-dexalin = Used for treating minor oxygen deprivation and bloodloss. A required reagent for dexalin plus.
 
 reagent-name-dexalin-plus = dexalin plus
+reagent-name-dexalin-plus-saline = dexalin plus & saline
 reagent-desc-dexalin-plus = Used in treatment of extreme cases of oxygen deprivation and bloodloss. Flushes heartbreaker toxin out of the blood stream.
 
 reagent-name-epinephrine = epinephrine
@@ -113,6 +114,7 @@ reagent-name-lacerinol = lacerinol
 reagent-desc-lacerinol = A fairly unreactive chemical that boosts collagen sythesis to incredible levels, healing slash trauma.
 
 reagent-name-puncturase = puncturase
+reagent-name-puncturase-tranexamic = puncturase & tranexamic
 reagent-desc-puncturase = A fizzy chemical that helps rebuild trauma caused by piercing damage, leaving a slight amount of tissue damage behind.
 
 reagent-name-bruizine = bruizine
@@ -122,6 +124,7 @@ reagent-name-holywater = holy water
 reagent-desc-holywater = The cleanest and purest of waters straight from the hands of god, is known to magically heal wounds.
 
 reagent-name-pyrazine = pyrazine
+reagent-name-pyrazine-dermaline = pyrazine & dermaline
 reagent-desc-pyrazine = Efficiently heals burns from the hottest of fires. Causes massive internal bleeding when overdosed.
 
 reagent-name-insuzine = insuzine
@@ -130,14 +133,14 @@ reagent-desc-insuzine = Rapidly repairs dead tissue caused by electrocution, but
 reagent-name-opporozidone = opporozidone
 reagent-desc-opporozidone= A difficult to synthesize cryogenic drug used to regenerate rotting tissue and brain matter.
 
+reagent-name-arcryox = arcryox
+reagent-desc-arcryox = A sickeningly blue cryogenics chemical that is able to heal extreme wounds even on the dead. It has trouble stabilizing patients however.
+
 reagent-name-necrosol = necrosol
 reagent-desc-necrosol = A necrotic substance that seems to be able to heal frozen corpses. It can treat and rejuvenate plants when applied in small doses.
 
 reagent-name-aloxadone = aloxadone
 reagent-desc-aloxadone = A cryogenics chemical. Used to treat severe burns and frostbite via regeneration of the affected tissue. Works regardless of the patient being alive or dead.
-
-reagent-name-traumoxadone = traumoxadone
-reagent-desc-traumoxadone = A cryogenics chemical. Used to treat severe trauma to tissues via patching them with tiny particles within the liquid. Works regardless of the patient being alive or dead.
 
 reagent-name-mannitol = mannitol
 reagent-desc-mannitol = Efficiently restores brain damage.
@@ -151,5 +154,5 @@ reagent-desc-potassium-iodide = Will reduce the damaging effects of radiation by
 reagent-name-haloperidol = haloperidol
 reagent-desc-haloperidol = Removes most stimulating and hallucinogenic drugs. Reduces druggy effects and jitteriness. Causes drowsiness.
 
-reagent-name-stelloxadone = stelloxadone
-reagent-desc-stelloxadone = A cryogenics chemical. Used to aggressively dissolve toxins from the body. Works regardless of the patient being alive or dead.
+reagent-name-warfarin = warfarin
+reagent-desc-warfarin = Commonly used as an anticoagulant medication. Causes blood to have difficulty forming clots. Can cause internal bleeding when overdosed.

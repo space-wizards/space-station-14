@@ -11,7 +11,7 @@
   - type: Item
     size: Small
     storedRotation: -90
-  - type: Food
+  - type: Edible
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:
@@ -62,7 +62,9 @@
   - type: Item
     heldPrefix: off
     size: Normal
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: ItemTogglePointLight
   - type: PointLight
     enabled: false
     radius: 3
@@ -89,8 +91,8 @@
         id: blinking
         interpolate: Nearest
         maxDuration: 1.0
-        minValue: 0.1
-        maxValue: 2.0
+        startValue: 0.1
+        endValue: 2.0
         isLooped: true
   - type: PowerCellSlot
     cellSlotId: cell_slot
@@ -109,8 +111,9 @@
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
-  - type: SlotBlock
-    slots: [ears, eyes, mask]
+# SlotBlocker blocked until UI change
+#  - type: SlotBlock
+#    slots: [ears, eyes, mask]
   - type: BreathMask
   - type: Item
     size: Normal
@@ -138,6 +141,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    - FacialHair
 
 - type: entity
   abstract: true
@@ -146,8 +150,9 @@
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]
   components:
-  - type: SlotBlock
-    slots: [ears, eyes, mask]
+# SlotBlocker blocked until UI change
+#  - type: SlotBlock
+#    slots: [ears, eyes, mask]
   - type: BreathMask
   - type: Sprite
     state: icon # default state used by most inheritors
@@ -185,6 +190,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    - FacialHair
 
 - type: entity
   abstract: true
@@ -194,8 +200,9 @@
   name: base hardsuit helmet with light
   categories: [ HideSpawnMenu ]
   components:
-  - type: SlotBlock
-    slots: [ears, eyes, mask]
+# SlotBlocker blocked until UI change
+#  - type: SlotBlock
+#    slots: [ears, eyes, mask]
   - type: Sprite
     layers:
     - state: icon
@@ -204,7 +211,9 @@
       map: [ "light" ]
   - type: Clothing
     equippedPrefix: off
-  - type: ToggleableLightVisuals
+  - type: ToggleableVisuals
+    spriteLayer: light
+  - type: ItemTogglePointLight
   - type: PointLight
     enabled: false
     radius: 3
@@ -231,14 +240,13 @@
         id: blinking
         interpolate: Nearest
         maxDuration: 1.0
-        minValue: 0.1
-        maxValue: 2.0
+        startValue: 0.1
+        endValue: 2.0
         isLooped: true
   - type: Battery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: BatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 2 #recharge of 2 makes total drain 1w / s so max charge is 1:1 with time. Time to fully charge should be 5 minutes. Having recharge gives light an extended flicker period which gives you some warning to return to light area.
 
 - type: entity

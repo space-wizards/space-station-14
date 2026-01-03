@@ -136,13 +136,13 @@ namespace Content.Server.Light.EntitySystems
                 component.StateExpiryTime = (float)component.RefuelMaterialTime.TotalSeconds;
 
                 _nameModifier.RefreshNameModifiers(uid);
-                _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
+                _stackSystem.ReduceCount((args.Used, stack), 1);
                 UpdateVisualizer((uid, component));
                 return;
             }
 
             component.StateExpiryTime += (float)component.RefuelMaterialTime.TotalSeconds;
-            _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
+            _stackSystem.ReduceCount((args.Used, stack), 1);
             args.Handled = true;
         }
 
@@ -209,7 +209,7 @@ namespace Content.Server.Light.EntitySystems
 
             component.CurrentState = ExpendableLightState.BrandNew;
             component.StateExpiryTime = (float)component.GlowDuration.TotalSeconds;
-            EntityManager.EnsureComponent<PointLightComponent>(uid);
+            EnsureComp<PointLightComponent>(uid);
         }
 
         private void OnExpLightUse(Entity<ExpendableLightComponent> ent, ref UseInHandEvent args)

@@ -3,12 +3,12 @@
 chat-manager-max-message-length = Your message exceeds {$maxMessageLength} character limit
 chat-manager-ooc-chat-enabled-message = OOC chat has been enabled.
 chat-manager-ooc-chat-disabled-message = OOC chat has been disabled.
-chat-manager-looc-chat-enabled-message = LOOC chat has been enabled.
-chat-manager-looc-chat-disabled-message = LOOC chat has been disabled.
-chat-manager-dead-looc-chat-enabled-message = Dead players can now use LOOC.
-chat-manager-dead-looc-chat-disabled-message = Dead players can no longer use LOOC.
-chat-manager-crit-looc-chat-enabled-message = Crit players can now use LOOC.
-chat-manager-crit-looc-chat-disabled-message = Crit players can no longer use LOOC.
+chat-manager-looc-chat-enabled-message = Help chat has been enabled.
+chat-manager-looc-chat-disabled-message = Help chat has been disabled.
+chat-manager-dead-looc-chat-enabled-message = Dead players can now use Help.
+chat-manager-dead-looc-chat-disabled-message = Dead players can no longer use Help.
+chat-manager-crit-looc-chat-enabled-message = Crit players can now use Help.
+chat-manager-crit-looc-chat-disabled-message = Crit players can no longer use Help.
 chat-manager-admin-ooc-chat-enabled-message = Admin OOC chat has been enabled.
 chat-manager-admin-ooc-chat-disabled-message = Admin OOC chat has been disabled.
 
@@ -34,7 +34,7 @@ chat-manager-entity-me-wrap-message = [italic]{ PROPER($entity) ->
      [true] {CAPITALIZE($entityName)} {$message}[/italic]
     }
 
-chat-manager-entity-looc-wrap-message = LOOC: [bold]{$entityName}:[/bold] {$message}
+chat-manager-entity-looc-wrap-message = Help: [bold]{$entityName}:[/bold] {$message}
 chat-manager-send-ooc-wrap-message = OOC: [bold]{$playerName}:[/bold] {$message}
 chat-manager-send-ooc-patron-wrap-message = OOC: [bold][color={$patronColor}]{$playerName}[/color]:[/bold] {$message}
 
@@ -157,3 +157,15 @@ chat-speech-verb-name-electricity = Electricity
 chat-speech-verb-electricity-1 = crackles
 chat-speech-verb-electricity-2 = buzzes
 chat-speech-verb-electricity-3 = screeches
+
+chat-speech-verb-vulpkanin-1 = rawrs
+chat-speech-verb-vulpkanin-2 = barks
+chat-speech-verb-vulpkanin-3 = rurs
+chat-speech-verb-vulpkanin-4 = yaps
+chat-speech-verb-vulpkanin = Vulpkanin
+
+chat-speech-verb-name-wawa = Wawa
+chat-speech-verb-wawa-1 = intones
+chat-speech-verb-wawa-2 = states
+chat-speech-verb-wawa-3 = declares
+chat-speech-verb-wawa-4 = ponders
