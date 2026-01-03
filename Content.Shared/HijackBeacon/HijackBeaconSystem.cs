@@ -238,9 +238,6 @@ public sealed class HijackBeaconSystem : EntitySystem
         var message = Loc.GetString("hijack-beacon-announcement-success");
         _chat.DispatchGlobalAnnouncement(message, sender, true, null, Color.Red);
 
-        // Dispense a reward at the station's expense
-        DispenseReward(ent);
-
         // Unanchoring must occur after updating the status, or it will disarm the beacon
         Unanchor(ent, beaconXForm);
 
