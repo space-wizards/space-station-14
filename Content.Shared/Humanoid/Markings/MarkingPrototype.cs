@@ -9,8 +9,6 @@ namespace Content.Shared.Humanoid.Markings
         [IdDataField]
         public string ID { get; private set; } = "uwu";
 
-        public string Name { get; private set; } = default!;
-
         [DataField("bodyPart", required: true)]
         public HumanoidVisualLayers BodyPart { get; private set; } = default!;
 
