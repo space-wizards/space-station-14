@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using Content.Shared.Maps;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -18,6 +19,8 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     private EntityQuery<MapGridComponent> _gridQuery;
 
@@ -47,17 +50,15 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
             return;
 
         // SLAM-TODO: Replace with system functions + box property + offset in component
-        var targetPoint = ent.Comp2.WorldPosition + ent.Comp2.WorldRotation.ToWorldVec() * 0.625f;
+        var targetPoint = ent.Comp2.WorldPosition + ent.Comp2.WorldRotation.ToWorldVec();
         var mapPos = _transform.GetMapCoordinates(ent);
 
-        var range = 0.125f;
-
-        var box = Box2.CenteredAround(targetPoint, new Vector2(range * 2.5f, range));
+        var box = Box2.CenteredAround(targetPoint, new Vector2(1, 1));
         var grids = new List<Entity<MapGridComponent>>();
 
         _mapManager.FindGridsIntersecting(mapPos.MapId, box, ref grids);
 
-        var tiles = new List<(Vector2i, Tile)>();
+        var shredded = false;
 
         foreach (var grid in grids)
         {
@@ -71,14 +72,23 @@ public sealed class SharedTileReclaimerSystem : EntitySystem
 
             foreach (var tile in _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, box))
             {
-                tiles.Add((tile.GridIndices, Tile.Empty));
-                Spawn("SheetSteel1", mapPos); // SLAM-TODO: Replace with proper spawn value
-            }
+                foreach (var entityOnTile in _lookup.GetLocalEntitiesIntersecting(tile))
+                {
+                    _physics.ApplyLinearImpulse(entityOnTile, _physics.GetLinearVelocity(grid.Owner, Transform(entityOnTile).LocalPosition));
+                }
 
-            _mapSystem.SetTiles(grid, grid, tiles);
+                var mapGrid = Comp<MapGridComponent>(tile.GridUid);
+                _mapSystem.SetTile(tile.GridUid, mapGrid, tile.GridIndices, Tile.Empty);
+                Spawn("SheetSteel1", mapPos); // SLAM-TODO: Replace with proper spawn value
+                shredded = true;
+
+                // We suck in the grid slurrrrp
+                // SLAM-TODO: Should be set via component, AND also impulses cause stacking speed so that should be tempered
+                _physics.ApplyLinearImpulse(grid, -ent.Comp2.WorldRotation.ToWorldVec(), tile.GridIndices);
+            }
         }
 
-        if (tiles.Count == 0)
+        if (!shredded)
             return;
 
         ent.Comp1.NextRecycle = _timing.CurTime + ent.Comp1.RecycleDelay;
