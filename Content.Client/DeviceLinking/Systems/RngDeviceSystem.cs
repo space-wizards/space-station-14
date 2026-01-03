@@ -3,6 +3,7 @@ using Content.Shared.DeviceLinking.Visuals;
 using Content.Shared.DeviceLinking.Events;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
+using Robust.Shared.GameStates;
 using Content.Shared.Popups;
 using static Content.Shared.DeviceLinking.Visuals.RngDeviceVisuals;
 using Content.Shared.UserInterface;

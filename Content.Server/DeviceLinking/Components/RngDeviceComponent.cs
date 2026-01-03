@@ -1,6 +1,8 @@
+using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Audio;
+using SignalState = Content.Shared.DeviceLinking.Components.SignalState;
 
 namespace Content.Server.DeviceLinking.Components;
 
