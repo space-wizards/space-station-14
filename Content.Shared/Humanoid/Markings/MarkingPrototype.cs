@@ -44,5 +44,24 @@ namespace Content.Shared.Humanoid.Markings
         {
             return new Marking(ID, Sprites.Count);
         }
+
+        /// <summary>
+        /// Gets the locale ID of this marking.
+        /// </summary>
+        public LocId GetNameLocale()
+        {
+            return $"marking-{ID}";
+        }
+
+        /// <summary>
+        /// Gets the localized name of this marking.
+        /// </summary>
+        /// <remarks>
+        /// This shows up in the list of markings in the marking picker.
+        /// </remarks>
+        public string GetName()
+        {
+            return Loc.GetString(GetNameLocale());
+        }
     }
 }

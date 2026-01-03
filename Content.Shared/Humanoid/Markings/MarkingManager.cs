@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings
 {
@@ -267,6 +268,45 @@ namespace Content.Shared.Humanoid.Markings
 
             alpha = sprite.LayerAlpha;
             return true;
+        }
+
+        /// <summary>
+        /// Get the locale ID of a marking with the given state.
+        /// </summary>
+        /// <param name="prototype">The marking prototype to use.</param>
+        /// <param name="state">The state's sprite specifier.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Throws if the state's SpriteSpecifier type cannot be localized.</exception>
+        public static LocId GetMarkingStateId(MarkingPrototype prototype, SpriteSpecifier state)
+        {
+            var stateId = prototype.GetNameLocale() + "-";
+
+            stateId += state switch
+            {
+                SpriteSpecifier.Rsi rsi => rsi.RsiState,
+                SpriteSpecifier.Texture texture => texture.TexturePath.Filename,
+                _ => throw new ArgumentOutOfRangeException(nameof(state)),
+            };
+
+            return stateId;
+        }
+
+        /// <summary>
+        /// Gets the localized strings of this marking's states.
+        /// </summary>
+        /// <remarks>
+        /// This shows up upon adding a marking to your character and attempting to recolor the states of the marking.
+        /// </remarks>
+        public static List<string> GetMarkingStateNames(MarkingPrototype prototype)
+        {
+            var stateNames = new List<string>();
+
+            foreach (var state in prototype.Sprites)
+            {
+                var stateId = GetMarkingStateId(prototype, state);
+                stateNames.Add(Loc.GetString(stateId));
+            }
+
+            return stateNames;
         }
     }
 }
