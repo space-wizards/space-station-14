@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed light bulb color.
-    type: Fix
-  id: 8851
-  time: '2025-08-13T22:45:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39623
 - author: Bhijn and Myr
   changes:
   - message: Those within the SS13 and SS14 community who have passed are now explicitly
@@ -3899,3 +3892,13 @@
   id: 9351
   time: '2026-01-03T07:01:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/41962
+- author: SeaWyrm
+  changes:
+  - message: Red sand astro-tiles are now researchable as part of the astro-tile research
+      option
+    type: Add
+  - message: Iron-red concrete tiles can now be created at Cutters
+    type: Add
+  id: 9352
+  time: '2026-01-03T07:15:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39793
