@@ -22,11 +22,11 @@ public sealed class RngDeviceSystem : SharedRngDeviceSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RngDeviceComponent, AfterAutoHandleStateEvent>(OnRngDeviceState);
+        SubscribeLocalEvent<RngDeviceComponent, ComponentHandleState>(OnRngDeviceState);
         SubscribeLocalEvent<RngDeviceVisualsComponent, RollEvent>(OnRoll);
     }
 
-    private void OnRngDeviceState(Entity<RngDeviceComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnRngDeviceState(Entity<RngDeviceComponent> ent, ref ComponentHandleState args)
     {
         // Update any open BUIs when component data changes
         if (_ui.TryGetOpenUi(ent.Owner, RngDeviceUiKey.Key, out var bui))
