@@ -122,6 +122,8 @@
   - type: Inventory
     templateId: arachnid
     speciesId: arachnid
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Arachnid/eyelids.rsi
 
 
 - type: entity
