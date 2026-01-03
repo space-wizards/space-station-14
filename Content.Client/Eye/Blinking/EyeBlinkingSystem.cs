@@ -120,7 +120,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             {
                 _sprite.LayerSetSprite((ent.Owner, spriteComp), layerId, specifier);
             }
-
+            _sprite.LayerSetColor((ent.Owner, spriteComp), layerId, Color.Transparent);
             i++;
         }
     }

@@ -8,11 +8,11 @@
   },
   "states": [
     {
-      "name": "eyelid_left",
+      "name": "eyelid-left",
       "directions": 4
     },
     {
-      "name": "eyelid_right",
+      "name": "eyelid-right",
       "directions": 4
     }
   ]
