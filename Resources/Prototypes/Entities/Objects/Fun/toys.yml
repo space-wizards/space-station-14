@@ -671,7 +671,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
-    range: 200
+    range: 20
   - type: DeviceLinkSink
     ports:
     - Trigger
@@ -688,6 +688,9 @@
     damage:
       types:
         Blunt: 10
+  - type: EmitSoundOnLand
+    sound:
+      collection: GlassBreak
   - type: Destructible
     thresholds:
     - trigger:
