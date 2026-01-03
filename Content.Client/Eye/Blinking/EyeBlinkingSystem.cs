@@ -52,19 +52,14 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
             return;
 
         // Check if the entity has an Eyelids layer. If not, we can't do anything visually.
-        //if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var eyelids, false))
-        //    return;
+        if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var eyelids, false))
+            return;
 
         var clientComp = EntityManager.EnsureComponent<EyeBlinkingClientComponent>(ent.Owner);
 
         InitEyelidsLayers(ent);
 
-        foreach (var layer in comp.AllLayers)
-        {
-            Logger.Info($"Layer: {layer.RsiState.Name} {layer.RsiState.Name?.Contains("eyelid") == true}");
-        }
-
-        var allEyelids = comp.AllLayers.Where(layer => layer.RsiState.Name?.Contains("eyelid") == true);
+        var allEyelids = comp.AllLayers.Where(layer => layer.RsiState.Name?.Contains("eyelid-") == true);
         foreach (var layer in allEyelids)
         {
             clientComp.Eyelids.Add(new EyelidState(layer));
@@ -81,11 +76,11 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         // Apply the initial eye state (open or closed).
         if (!(_apperance.TryGetData(ent.Owner, EyeBlinkingVisuals.EyesClosed, out var value) && value is bool eyeClosed))
         {
-            //ChangeEyeState(ent, false);
+            ChangeEyeState(ent, false);
             return;
         }
 
-        //ChangeEyeState(ent, eyeClosed);
+        ChangeEyeState(ent, eyeClosed);
     }
 
     private void InitEyelidsLayers(Entity<EyeBlinkingComponent> ent)
@@ -138,7 +133,7 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if ((eyeClosed == false && ent.Comp.BlinkInProgress == false) ||
             eyeClosed)
         {
-            //ChangeEyeState(ent, eyeClosed);
+            ChangeEyeState(ent, eyeClosed);
             return;
         }
     }
@@ -160,22 +155,17 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         if (!_sprite.TryGetLayer(ent.Owner, HumanoidVisualLayers.Eyelids, out var layer, false))
             return;
 
-        var blinkColor = Color.Transparent;
-
-        if (ent.Comp.EyelidsColor == null && TryComp<HumanoidAppearanceComponent>(ent.Owner, out var humanoid))
+        foreach (var eyelidState in EntityManager.GetComponent<EyeBlinkingClientComponent>(ent.Owner).Eyelids)
         {
-            var blinkFade = ent.Comp.BlinkSkinColorMultiplier;
-            blinkColor = new Color(
-                humanoid.SkinColor.R * blinkFade,
-                humanoid.SkinColor.G * blinkFade,
-                humanoid.SkinColor.B * blinkFade);
+            if (eyeClsoed)
+            {
+                CloseEye(ent, eyelidState);
+            }
+            else
+            {
+                OpenEye(ent, eyelidState);
+            }
         }
-        else if (ent.Comp.EyelidsColor != null)
-        {
-            blinkColor = ent.Comp.EyelidsColor.Value;
-        }
-
-        _sprite.LayerSetColor(layer, eyeClsoed ? blinkColor : Color.Transparent);
     }
 
     /// <summary>
@@ -242,7 +232,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void CloseEye(Entity<EyeBlinkingComponent> ent, EyelidState state)
     {
-        Logger.Info($"CloseEye for {ent.Owner} {_timing.CurTime}");
         var layer = state.Layer;
         state.IsClosed = true;
         state.IsCompleteBlink = false;
@@ -267,8 +256,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
 
     private void OpenEye(Entity<EyeBlinkingComponent> ent, EyelidState state)
     {
-        Logger.Info($"OpenEye for {ent.Owner} {_timing.CurTime}");
-
         var layer = state.Layer;
         state.IsClosed = false;
         state.IsCompleteBlink = true;
@@ -290,7 +277,6 @@ public sealed partial class EyeBlinkingSystem : SharedEyeBlinkingSystem
         var randomSeconds = minInterval + (_random.NextDouble() * (maxInterval - minInterval));
 
         ent.Comp.NextBlinkingTime = ent.Comp.NextOpenEyesTime + randomSeconds;
-        Logger.Info($"ResetBlink for {ent.Owner} NextBlinkingTime: {ent.Comp.NextBlinkingTime}");
     }
 
     public override void Update(float frameTime)
