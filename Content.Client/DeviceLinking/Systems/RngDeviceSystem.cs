@@ -3,7 +3,6 @@ using Content.Shared.DeviceLinking.Visuals;
 using Content.Shared.DeviceLinking.Events;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
-using Robust.Shared.GameStates;
 using Content.Shared.Popups;
 using static Content.Shared.DeviceLinking.Visuals.RngDeviceVisuals;
 using Content.Shared.UserInterface;
@@ -23,11 +22,11 @@ public sealed class RngDeviceSystem : SharedRngDeviceSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RngDeviceComponent, ComponentHandleState>(OnRngDeviceState);
+        SubscribeLocalEvent<RngDeviceComponent, AfterAutoHandleStateEvent>(OnRngDeviceState);
         SubscribeLocalEvent<RngDeviceVisualsComponent, RollEvent>(OnRoll);
     }
 
-    private void OnRngDeviceState(Entity<RngDeviceComponent> ent, ref ComponentHandleState args)
+    private void OnRngDeviceState(Entity<RngDeviceComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         // Update any open BUIs when component data changes
         if (_ui.TryGetOpenUi(ent.Owner, RngDeviceUiKey.Key, out var bui))

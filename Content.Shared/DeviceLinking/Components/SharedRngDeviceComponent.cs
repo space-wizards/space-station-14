@@ -31,7 +31,7 @@ namespace Content.Shared.DeviceLinking.Components
     /// <summary>
     /// Shared component for RNG device that contains UI-relevant data that needs to be networked to clients.
     /// </summary>
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(raiseAfterAutoHandleState: true)]
     public sealed partial class RngDeviceComponent : Component
     {
         /// <summary>
