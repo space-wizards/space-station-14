@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: perryprog
-  changes:
-  - message: Fixed lights sometimes not emitting light when spawning them or when
-      they enter PVS.
-    type: Fix
-  id: 8849
-  time: '2025-08-12T23:00:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39585
 - author: Nox38
   changes:
   - message: Resized every firearm.
@@ -3896,3 +3888,14 @@
   id: 9349
   time: '2026-01-01T21:36:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42201
+- author: Ian321
+  changes:
+  - message: The clustersoap now visually changes when eaten.
+    type: Fix
+  - message: Soaplets now leave red residue behind.
+    type: Fix
+  - message: Soaplets now contain less soap.
+    type: Tweak
+  id: 9350
+  time: '2026-01-03T01:33:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34165
