@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Resized every firearm.
-    type: Tweak
-  id: 8850
-  time: '2025-08-13T17:13:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36473
 - author: slarticodefast
   changes:
   - message: Fixed light bulb color.
@@ -3899,3 +3892,10 @@
   id: 9350
   time: '2026-01-03T01:33:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34165
+- author: K-Dynamic
+  changes:
+  - message: Intercoms have new appearance.
+    type: Tweak
+  id: 9351
+  time: '2026-01-03T07:01:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41962
