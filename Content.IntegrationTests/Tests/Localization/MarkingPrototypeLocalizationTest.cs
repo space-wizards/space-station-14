@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Localization;
 
@@ -26,26 +27,35 @@ public sealed class MarkingPrototypeLocalizationTest
         {
             foreach (var proto in protoMan.EnumeratePrototypes<MarkingPrototype>())
             {
-                if (proto.SpeciesRestrictions.Count == 0) // Won't show up in the marking picker anyway!
+                if (proto.SpeciesRestrictions?.Count == 0) // won't show up in the marking picker anyway
                     continue;
+
+                var missingLocales = new List<string>();
 
                 var nameId = proto.GetNameLocale();
-                Assert.That(locMan.HasString(nameId),
-                    $"Marking {proto.ID} lacks a localized name string matching {nameId}!");
+                if (!locMan.HasString(nameId))
+                    missingLocales.Add(nameId);
 
-                // Neither markings with forced coloring nor hair/facial hair will show their state names anyway.
-                if (proto.ForcedColoring || _excludedStateCategories.Contains(proto.MarkingCategory))
-                    continue;
+                // markings with forced coloring, hair, and facial hair will not show their layer states anyway
+                var statesExcluded = proto.ForcedColoring || _excludedStateCategories.Contains(proto.MarkingCategory);
+                if (!statesExcluded)
+                    GetMissingStateLocales(proto, ref missingLocales, locMan);
 
-                foreach (var state in proto.Sprites)
-                {
-                    var stateId = MarkingManager.GetMarkingStateId(proto, state);
-                    Assert.That(locMan.HasString(stateId),
-                        $"Marking {proto.ID} lacks a localized state string matching {stateId}!");
-                }
+                Assert.That(missingLocales, Is.Empty,
+                    $"Marking {proto.ID} is missing the following localization strings: {string.Join(", ", missingLocales)}");
             }
         });
 
         await pair.CleanReturnAsync();
+    }
+
+    private void GetMissingStateLocales(MarkingPrototype marking, ref List<string> missingLocales, ILocalizationManager locMan)
+    {
+        foreach (var state in marking.Sprites)
+        {
+            var stateId = MarkingManager.GetMarkingStateId(marking, state);
+            if (!locMan.HasString(stateId))
+                missingLocales.Add(stateId);
+        }
     }
 }
