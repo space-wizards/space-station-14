@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.CombatMode;
+using Content.Shared.Gravity;
 using Content.Shared.Hands;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -29,6 +30,8 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
     [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
     public const string GrapplingJoint = "grappling";
 
@@ -183,23 +186,57 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 continue;
             }
 
-            // TODO: This should be on engine.
-            distance.MaxLength = MathF.Max(distance.MinLength, distance.MaxLength - grappling.ReelRate * frameTime);
-            distance.Length = MathF.Min(distance.MaxLength, distance.Length);
-
-            _physics.WakeBody(joint.BodyAUid);
-            _physics.WakeBody(joint.BodyBUid);
-
+            // Checks if the entity is "tied" to the grid it is on via anti-gravity technology.
+            bool attachedToGrid;
             if (jointComp.Relay != null)
             {
                 _physics.WakeBody(jointComp.Relay.Value);
+                attachedToGrid = !_gravity.IsWeightless(jointComp.Relay.Value) && !_gravity.IsWeightlessStatusFromGrid(jointComp.Relay.Value);
+            }
+            else
+            {
+                attachedToGrid = !_gravity.IsWeightless(joint.BodyAUid) && !_gravity.IsWeightlessStatusFromGrid(joint.BodyAUid);
             }
 
-            Dirty(uid, jointComp);
-
-            if (distance.MaxLength.Equals(distance.MinLength))
+            // Pull yourself in
+            if (!attachedToGrid)
             {
-                SetReeling(uid, grappling, false, null);
+                // TODO: This should be on engine.
+                distance.MaxLength = MathF.Max(distance.MinLength, distance.MaxLength - grappling.ReelRate * frameTime);
+                distance.Length = MathF.Min(distance.MaxLength, distance.Length);
+
+                _physics.WakeBody(joint.BodyAUid);
+                _physics.WakeBody(joint.BodyBUid);
+
+                Dirty(uid, jointComp);
+
+                if (distance.MaxLength.Equals(distance.MinLength))
+                {
+                    SetReeling(uid, grappling, false, null);
+                }
+            }
+            // Pull the grids together
+            else
+            {
+                var gridA = _transform.GetGrid(joint.BodyAUid);
+                var gridB = _transform.GetGrid(joint.BodyBUid);
+
+                if (gridA == gridB)
+                    return;
+
+                var direction = Vector2.Normalize(Vector2.Transform(joint.LocalAnchorB, _transform.GetWorldMatrix(Transform(joint.BodyBUid))) - Vector2.Transform(joint.LocalAnchorA, _transform.GetWorldMatrix(Transform(joint.BodyAUid))));
+
+                if (gridA != null)
+                {
+                    var gridAOffset = _transform.GetRelativePosition(Transform(joint.BodyAUid), gridA.Value);
+                    _physics.ApplyLinearImpulse(gridA.Value, direction, gridAOffset);
+                }
+
+                if (gridB != null)
+                {
+                    var gridBOffset = _transform.GetRelativePosition(Transform(joint.BodyBUid), gridB.Value);
+                    _physics.ApplyLinearImpulse(gridB.Value, -direction, gridBOffset);
+                }
             }
         }
     }
