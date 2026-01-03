@@ -1,72 +1,4 @@
 ﻿Entries:
-- author: sowelipililimute
-  changes:
-  - message: Borg modules can now have hands!
-    type: Add
-  - message: The generic cables module can now throw and mix and match cables in its
-      slots
-    type: Tweak
-  - message: The engineering construction module can now hold any material in its
-      materials slots, any floor tile in its floor tile slots, and now has slots for
-      holding any circuitboard and flatpack
-    type: Tweak
-  - message: The janitor custodial module can now throw its soap and pick up new and
-      better varieties of soap
-    type: Tweak
-  - message: The janitor advanced cleaning module can now throw and pick up beakers
-      in its slot
-    type: Tweak
-  - message: The medical topicals module can now hold any type of topicals in its
-      topicals slots
-    type: Tweak
-  - message: The medical chemical module can now drop and pick up its vials, and hold
-      other small containers
-    type: Tweak
-  - message: The medical advanced chemical module can now drop and pick up its beakers,
-      and hold other larger containers
-    type: Tweak
-  - message: The science artifact module can drop and pick up its vial, and hold other
-      small containers
-    type: Tweak
-  - message: The service service module can now drop and pick up its shaker, and pick
-      up other drink containers. It also has a spoon now.l containers
-    type: Tweak
-  - message: The science anomaly module can now throw its reinforced and reinforced
-      plasma glass
-    type: Tweak
-  - message: The service service module now has a book bag, and two slots for books
-      and paper
-    type: Tweak
-  - message: The service service module can now drop and pick up its shaker, and pick
-      up other drink containers. It also has a spoon now.
-    type: Tweak
-  - message: The service musique module can now drop and pick up instruments.
-    type: Tweak
-  id: 8848
-  time: '2025-08-12T22:21:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/38668
-- author: perryprog
-  changes:
-  - message: Fixed lights sometimes not emitting light when spawning them or when
-      they enter PVS.
-    type: Fix
-  id: 8849
-  time: '2025-08-12T23:00:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39585
-- author: Nox38
-  changes:
-  - message: Resized every firearm.
-    type: Tweak
-  id: 8850
-  time: '2025-08-13T17:13:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36473
-- author: slarticodefast
-  changes:
-  - message: Fixed light bulb color.
-    type: Fix
-  id: 8851
-  time: '2025-08-13T22:45:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39623
 - author: Bhijn and Myr
   changes:
   - message: Those within the SS13 and SS14 community who have passed are now explicitly
@@ -3931,3 +3863,42 @@
   id: 9348
   time: '2026-01-01T05:42:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42158
+- author: Samuka
+  changes:
+  - message: xenoborg thrusters can't be toggled off
+    type: Tweak
+  - message: xenoborg thrusters can't unwrenched
+    type: Tweak
+  - message: xenoborg thrusters can't be rotated while anchored
+    type: Tweak
+  id: 9349
+  time: '2026-01-01T21:36:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42201
+- author: Ian321
+  changes:
+  - message: The clustersoap now visually changes when eaten.
+    type: Fix
+  - message: Soaplets now leave red residue behind.
+    type: Fix
+  - message: Soaplets now contain less soap.
+    type: Tweak
+  id: 9350
+  time: '2026-01-03T01:33:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34165
+- author: K-Dynamic
+  changes:
+  - message: Intercoms have new appearance.
+    type: Tweak
+  id: 9351
+  time: '2026-01-03T07:01:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41962
+- author: SeaWyrm
+  changes:
+  - message: Red sand astro-tiles are now researchable as part of the astro-tile research
+      option
+    type: Add
+  - message: Iron-red concrete tiles can now be created at Cutters
+    type: Add
+  id: 9352
+  time: '2026-01-03T07:15:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39793
