@@ -455,9 +455,6 @@
         restitution: 0
         friction: 0.4
   - type: EntityStorage
-    blacklist:
-      tags:
-      - AnomalyHost # No more cadets shoving a prisoner in a locker for 30 minutes.
 
 - type: entity
   parent: LockerPrisoner
