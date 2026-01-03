@@ -1,6 +1,8 @@
 - type: latheRecipe
   id: MineralScannerEmpty
   result: MineralScannerEmpty
+  categories:
+  - Tools
   completetime: 3
   materials:
     Steel: 1000
@@ -10,6 +12,8 @@
 
 - type: latheRecipe
   id: AdvancedMineralScannerEmpty
+  categories:
+  - Tools
   result: AdvancedMineralScannerEmpty
   completetime: 1
   materials:
@@ -54,6 +58,8 @@
   parent: BaseToolRecipe
   id: MiningDrill
   result: MiningDrill
+  categories:
+  - Tools
   completetime: 3
   materials:
     Steel: 500
@@ -63,6 +69,8 @@
   parent: MiningDrill
   id: MiningDrillDiamond
   result: MiningDrillDiamond
+  categories:
+  - Tools
   materials:
     Steel: 600
     Plastic: 200
