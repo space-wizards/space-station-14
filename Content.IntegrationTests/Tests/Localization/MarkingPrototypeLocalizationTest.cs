@@ -26,6 +26,9 @@ public sealed class MarkingPrototypeLocalizationTest
         {
             foreach (var proto in protoMan.EnumeratePrototypes<MarkingPrototype>())
             {
+                if (proto.SpeciesRestrictions.Count == 0) // Won't show up in the marking picker anyway!
+                    continue;
+
                 var nameId = proto.GetNameLocale();
                 Assert.That(locMan.HasString(nameId),
                     $"Marking {proto.ID} lacks a localized name string matching {nameId}!");
