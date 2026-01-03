@@ -8,6 +8,9 @@ lathe-category-tools = Tools
 lathe-category-weapons = Weapons
 lathe-category-containers = Containers
 
+# Medical
+lathe-category-topicals = Topicals
+
 # Biogen
 lathe-category-food = Food
 lathe-category-chemicals = Chemicals
