@@ -136,6 +136,8 @@ namespace Content.Client.HealthAnalyzer.UI
             IReadOnlyDictionary<string, FixedPoint2> damagePerType = damageable.Damage.DamageDict;
 
             DrawDiagnosticGroups(damageSortedGroups, damagePerType);
+
+            Window.Visible = true;
         }
 
         private static string GetStatus(MobState mobState)
