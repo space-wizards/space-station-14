@@ -1,5 +1,6 @@
 using Content.Server.Medical.Components;
 using Content.Shared.CartridgeLoader;
+using Content.Shared.MedicalScanner;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -17,7 +18,7 @@ public sealed class MedTekCartridgeSystem : EntitySystem
 
     private void OnCartridgeAdded(Entity<MedTekCartridgeComponent> ent, ref CartridgeAddedEvent args)
     {
-        var healthAnalyzer = EnsureComp<HealthAnalyzerComponent>(args.Loader);
+        EnsureComp<HealthAnalyzerComponent>(args.Loader);
     }
 
     private void OnCartridgeRemoved(Entity<MedTekCartridgeComponent> ent, ref CartridgeRemovedEvent args)

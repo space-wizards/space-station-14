@@ -85,9 +85,8 @@ namespace Content.Client.HealthAnalyzer.UI
 
             // Basic Diagnostic
 
-            TemperatureLabel.Text = !float.IsNaN(msg.Temperature)
-                ? $"{msg.Temperature - Atmospherics.T0C:F1} °C ({msg.Temperature:F1} K)"
-                : Loc.GetString("health-analyzer-window-entity-unknown-value-text");
+            if (TemperatureLabel.Text == null)
+                TemperatureLabel.Text = Loc.GetString("health-analyzer-window-entity-unknown-value-text");
 
             BloodLabel.Text = !float.IsNaN(msg.BloodLevel)
                 ? $"{msg.BloodLevel * 100:F1} %"
@@ -236,6 +235,13 @@ namespace Content.Client.HealthAnalyzer.UI
             rootContainer.AddChild(CreateDiagnosticItemLabel(text));
 
             return rootContainer;
+        }
+
+        public void UpdateTemperature(float temperature)
+        {
+            TemperatureLabel.Text = !float.IsNaN(temperature)
+                ? $"{temperature - Atmospherics.T0C:F1} °C ({temperature:F1} K)"
+                : Loc.GetString("health-analyzer-window-entity-unknown-value-text");
         }
     }
 }

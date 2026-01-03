@@ -48,6 +48,7 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] private readonly SharedHealthAnalyzerSystem _sharedHealthAnalyzer = default!;
 
     private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
     private EntityQuery<ItemSlotsComponent> _itemSlotsQuery;
@@ -69,6 +70,8 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         SubscribeLocalEvent<CryoPodComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<CryoPodComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
+        SubscribeLocalEvent<CryoPodComponent, AfterActivatableUIOpenEvent>(OnActivateUI);
+        SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
 
         _bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
         _itemSlotsQuery = GetEntityQuery<ItemSlotsComponent>();
@@ -76,6 +79,17 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         _solutionContainerQuery = GetEntityQuery<SolutionContainerManagerComponent>();
 
         InitializeInsideCryoPod();
+    }
+
+    private void OnActivateUI(Entity<CryoPodComponent> entity, ref AfterActivatableUIOpenEvent args)
+    {
+        if (!entity.Comp.BodyContainer.ContainedEntity.HasValue
+            || !TryComp<HealthAnalyzerComponent>(entity, out var analyzerComp))
+            return;
+
+        var patient = entity.Comp.BodyContainer.ContainedEntity.Value;
+
+        _sharedHealthAnalyzer.BeginAnalyzingEntity((entity.Owner, analyzerComp), args.User, patient);
     }
 
     public override void Update(float frameTime)
@@ -150,6 +164,14 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         var containedEntity = ent.Comp.BodyContainer.ContainedEntity;
         if (containedEntity == null || containedEntity == args.User || !HasComp<ActiveCryoPodComponent>(ent))
             args.Cancel();
+
+        if (!TryComp<HealthAnalyzerComponent>(ent, out var analyzer)
+            || analyzer.ScannerUser == null
+            && !_ui.IsUiOpen(ent.Owner,  HealthAnalyzerUiKey.Key))
+            return;
+
+        args.Cancel();
+        _popup.PopupClient(Loc.GetString("machine-already-in-use", ("machine", ent)), args.User);
     }
 
     private void OnInteractUsing(Entity<CryoPodComponent> ent, ref InteractUsingEvent args)
@@ -303,6 +325,16 @@ public abstract partial class SharedCryoPodSystem : EntitySystem
         _climb.ForciblySetClimbing(contained, uid);
         UpdateAppearance(uid, cryoPodComponent);
         return contained;
+    }
+
+    private void OnEjected(Entity<CryoPodComponent> cryoPod, ref EntRemovedFromContainerMessage args)
+    {
+        if (!TryComp<HealthAnalyzerComponent>(cryoPod.Owner, out var healthAnalyzer)
+            || healthAnalyzer.ScannerUser is null
+            || healthAnalyzer.ScannerUser != cryoPod.Comp.BodyContainer.ContainedEntity)
+            return;
+
+        _sharedHealthAnalyzer.StopAnalyzingEntity((cryoPod.Owner, healthAnalyzer));
     }
 
     protected void AddAlternativeVerbs(EntityUid uid, CryoPodComponent cryoPodComponent, GetVerbsEvent<AlternativeVerb> args)
