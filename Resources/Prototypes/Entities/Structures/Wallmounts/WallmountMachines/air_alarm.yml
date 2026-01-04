@@ -105,6 +105,12 @@
               collection: MetalGlassBreak
               params:
                 volume: -4
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
+                max: 1
+
   - type: GuideHelp
     guides:
     - AirAlarms
@@ -152,6 +158,11 @@
               collection: MetalGlassBreak
               params:
                 volume: -4
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              SheetSteel1:
+                min: 1
+                max: 2
 
 - type: entity
   id: AirAlarmXeno
