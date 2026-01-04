@@ -169,8 +169,8 @@
       - MobLuminousPerson
 
 - type: entity
-  id: FleshKudzu
-  name: tendons
+  id: BaseFleshKudzu
+  abstract: true
   parent: BaseKudzu
   description: A rapidly growing cluster of meaty tendons. WHY ARE YOU STOPPING TO LOOK AT IT?!
   placement:
@@ -226,18 +226,6 @@
           Heat: -1.0
           Cold: -1.0
           Blunt: -0.5 # Needs to be balanced (approx 3x) with vacuum damage to stall but not kill Kudzu
-    - type: Temperature
-    - type: TemperatureDamage
-      heatDamage:
-        types:
-          Heat: 10
-      coldDamage:
-        types:
-          Cold: 5 #per second, scales with temperature & other constants
-    - type: Barotrauma
-      damage:
-        types:
-          Blunt: 0.10 #per second, scales with pressure and other constants.
     - type: Flammable
       fireSpread: true
       damage:
@@ -267,6 +255,31 @@
       tags:
       - Meat
       - Ruminant
+
+- type: entity
+  name: tendons
+  id: FleshKudzu
+  parent: BaseFleshKudzu
+  components:
+    - type: Temperature
+    - type: TemperatureDamage
+      heatDamage:
+        types:
+          Heat: 10
+      coldDamage:
+        types:
+          Cold: 5 #per second, scales with temperature & other constants
+      coldDamageThreshold: 0
+    - type: Barotrauma
+      damage:
+        types:
+          Blunt: 0.10 #per second, scales with pressure and other constants.
+
+- type: entity
+  name: tendons
+  suffix: Space
+  id: FleshKudzuSpace
+  parent: BaseFleshKudzu
 
 - type: entity
   name: dark haze
