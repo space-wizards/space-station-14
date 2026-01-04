@@ -1,10 +1,13 @@
-using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Physics;
 using Robust.Shared.Audio;
+using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Ranged;
 
@@ -12,32 +15,32 @@ public sealed partial class GunOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [DataField("shutdownState")]
+    [DataField]
     public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.TaskFinished;
 
     /// <summary>
     /// Key that contains the target entity.
     /// </summary>
-    [DataField("targetKey", required: true)]
+    [DataField(required: true)]
     public string TargetKey = default!;
 
     /// <summary>
     /// Minimum damage state that the target has to be in for us to consider attacking.
     /// </summary>
-    [DataField("targetState")]
+    [DataField]
     public MobState TargetState = MobState.Alive;
 
     /// <summary>
     /// Do we require line of sight of the target before failing.
     /// </summary>
-    [DataField("requireLOS")]
+    [DataField]
     public bool RequireLOS = false;
 
     /// <summary>
-    /// If true, only opaque objects will block line of sight.
+    /// Collision group(s) that block line of sight to the target.
     /// </summary>
-    [DataField("opaqueKey")]
-    public bool UseOpaqueForLOSChecks = false;
+    [DataField(customTypeSerializer: typeof(FlagSerializer<CollisionLayer>))]
+    public int BlockingGroup = (int)(CollisionGroup.Impassable | CollisionGroup.InteractImpassable);
 
     // Like movement we add a component and pass it off to the dedicated system.
 
@@ -65,7 +68,7 @@ public sealed partial class GunOperator : HTNOperator, IHtnConditionalShutdown
 
         var ranged = _entManager.EnsureComponent<NPCRangedCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
         ranged.Target = blackboard.GetValue<EntityUid>(TargetKey);
-        ranged.UseOpaqueForLOSChecks = UseOpaqueForLOSChecks;
+        ranged.BlockingGroup = (CollisionGroup)BlockingGroup;
 
         if (blackboard.TryGetValue<float>(NPCBlackboard.RotateSpeed, out var rotSpeed, _entManager))
         {
