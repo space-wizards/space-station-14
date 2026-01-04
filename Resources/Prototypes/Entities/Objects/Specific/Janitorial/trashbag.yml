@@ -12,8 +12,6 @@
     maxItemSize: Normal
     grid:
     - 0,0,7,5
-    quickInsert: true
-    areaInsert: true
     storageOpenSound:
       collection: trashBagRustle
     storageInsertSound:
@@ -21,6 +19,8 @@
     whitelist:
       tags:
         - Trash
+  - type: QuickPickup
+  - type: AreaPickup
   - type: UseDelay
     delay: 0.5
   - type: Tag
@@ -60,9 +60,9 @@
     maxItemSize: Huge
     grid:
     - 0,0,19,9
-    quickInsert: true
-    areaInsert: true
-    areaInsertRadius: 5
+  - type: QuickPickup
+  - type: AreaPickup
+    radius: 5
 
 - type: entity
   parent: TrashBag

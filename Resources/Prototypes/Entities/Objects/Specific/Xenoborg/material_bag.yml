@@ -19,11 +19,11 @@
     maxItemSize: Normal
     grid:
     - 0,0,9,3
-    quickInsert: true
-    areaInsert: true
     whitelist:
       tags:
       - Sheet
       - RawMaterial
       - Ingot
   - type: Dumpable
+  - type: QuickPickup
+  - type: AreaPickup
