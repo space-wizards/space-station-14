@@ -1,21 +1,27 @@
 ﻿using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.AlertLevel;
 using Content.Shared.Communications;
+using Content.Shared.Station;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
-using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Communications.UI
 {
     public sealed class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
+        private readonly SharedStationSystem _station = default!;
+        private readonly AlertLevelSystem _alertLevel = default!;
 
         [ViewVariables]
         private CommunicationsConsoleMenu? _menu;
 
         public CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            _station = EntMan.System<SharedStationSystem>();
+            _alertLevel = EntMan.System<AlertLevelSystem>();
         }
 
         protected override void Open()
@@ -29,11 +35,15 @@ namespace Content.Client.Communications.UI
             _menu.OnEmergencyLevel += EmergencyShuttleButtonPressed;
         }
 
-        public void AlertLevelSelected(string level)
+        public void AlertLevelSelected(ProtoId<AlertLevelPrototype> level)
         {
             if (_menu!.AlertLevelSelectable)
             {
-                _menu.CurrentLevel = level;
+                // TODO: This does not work until the console UI is predicted and uses component states.
+                // Also someone decided to send BUI states regularly in an update loop, so this just gets randomly bulldozed until the message reaches the server.
+                // _menu.CurrentAlertLevel = level;
+                // _menu.AlertLevelSelectable = false;
+                // _menu.AlertLevelButton.Disabled = true;
                 SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
             }
         }
@@ -68,11 +78,17 @@ namespace Content.Client.Communications.UI
             SendMessage(new CommunicationsConsoleRecallEmergencyShuttleMessage());
         }
 
+        // TODO: Use component states and update in an AfterAutoHandleState subscription
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
 
             if (state is not CommunicationsConsoleInterfaceState commsState)
+                return;
+
+            var stationUid = _station.GetOwningStation(Owner);
+
+            if (!EntMan.TryGetComponent<AlertLevelComponent>(stationUid, out var alertComp))
                 return;
 
             if (_menu != null)
@@ -81,12 +97,15 @@ namespace Content.Client.Communications.UI
                 _menu.CanBroadcast = commsState.CanBroadcast;
                 _menu.CanCall = commsState.CanCall;
                 _menu.CountdownStarted = commsState.CountdownStarted;
-                _menu.AlertLevelSelectable = commsState.AlertLevels != null && !float.IsNaN(commsState.CurrentAlertDelay) && commsState.CurrentAlertDelay <= 0;
-                _menu.CurrentLevel = commsState.CurrentAlert;
                 _menu.CountdownEnd = commsState.ExpectedCountdownEnd;
 
+                _menu.CurrentAlertLevel = alertComp.CurrentAlertLevel;
+                _menu.SelectableAlertLevels = _alertLevel.GetSelectableAlertLevels((stationUid.Value, alertComp));
+                _menu.AlertLevelSelectable = _alertLevel.CanChangeAlertLevel((stationUid.Value, alertComp));
+
                 _menu.UpdateCountdown();
-                _menu.UpdateAlertLevels(commsState.AlertLevels, _menu.CurrentLevel);
+                _menu.UpdateAlertLevels();
+
                 _menu.AlertLevelButton.Disabled = !_menu.AlertLevelSelectable;
                 _menu.EmergencyShuttleButton.Disabled = !_menu.CanCall;
                 _menu.AnnounceButton.Disabled = !_menu.CanAnnounce;
