@@ -863,6 +863,9 @@
 - type: Tag
   id: Lime # CargoBounty: BountyLime
 
+- type: Tag
+  id: Log # ConstructionGraph: Bonfire, StakeBonfire
+
 ## M ##
 
 #region Magazine (Ammo)

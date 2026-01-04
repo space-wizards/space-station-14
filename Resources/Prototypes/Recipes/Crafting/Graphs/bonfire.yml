@@ -1,0 +1,69 @@
+- type: constructionGraph
+  id: Bonfire
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bonfire
+      steps:
+      - tag: Log
+        name: construction-graph-tag-log
+        icon:
+          sprite: Objects/Specific/Hydroponics/towercap.rsi
+          state: produce
+        doAfter: 1
+      - tag: Log
+        name: construction-graph-tag-log
+        icon:
+          sprite: Objects/Specific/Hydroponics/towercap.rsi
+          state: produce
+        doAfter: 1
+      - tag: Log
+        name: construction-graph-tag-log
+        icon:
+          sprite: Objects/Specific/Hydroponics/towercap.rsi
+          state: produce
+        doAfter: 1
+      - tag: Log
+        name: construction-graph-tag-log
+        icon:
+          sprite: Objects/Specific/Hydroponics/towercap.rsi
+          state: produce
+        doAfter: 1
+  - node: bonfire
+    entity: Bonfire
+
+- type: constructionGraph
+  id: StakeBonfire
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: stakeBonfire
+      steps:
+      - tag: Log
+        name: construction-graph-tag-log
+        icon:
+          sprite: Objects/Specific/Hydroponics/towercap.rsi
+          state: produce
+        doAfter: 1
+      - tag: Log
+        name: construction-graph-tag-log
+        icon:
+          sprite: Objects/Specific/Hydroponics/towercap.rsi
+          state: produce
+        doAfter: 1
+      - tag: Log
+        name: construction-graph-tag-log
+        icon:
+          sprite: Objects/Specific/Hydroponics/towercap.rsi
+          state: produce
+        doAfter: 1
+      - tag: Log
+        name: construction-graph-tag-log
+        icon:
+          sprite: Objects/Specific/Hydroponics/towercap.rsi
+          state: produce
+        doAfter: 1
+  - node: stakeBonfire
+    entity: StakeBonfire
