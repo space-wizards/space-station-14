@@ -12,12 +12,12 @@
     size: 550, 410
     setup:
       !type:TabletopBackgammonSetup
-      boardPrototype: BackgammonBoardTabletop
+      boardPrototype: &BackgammonBoard BackgammonBoardTabletop
 
 - type: entity
-  id: BackgammonBoardTabletop
-  name: backgammon
   parent: BaseBoardTabletop
+  id: *BackgammonBoard
+  name: backgammon
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

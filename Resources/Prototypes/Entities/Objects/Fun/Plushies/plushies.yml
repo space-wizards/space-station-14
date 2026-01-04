@@ -1228,3 +1228,77 @@
   - type: FoodSequenceElement
     entries:
       CottonBurger: PlushieVulp
+
+- type: entity
+  parent: BasePlushie
+  id: ToyIan
+  name: ian toy
+  description: Unable to eat, but just as fluffy as the real guy!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toy_ian.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    sprite: Objects/Fun/toy_ian.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        offset: "0, 0.06"
+  - type: Item
+    size: Tiny
+  - type: EmitSoundOnUse
+    sound: &SoundIan
+  - type: EmitSoundOnLand
+    sound: *SoundIan
+  - type: EmitSoundOnActivate
+    sound: *SoundIan
+  - type: EmitSoundOnTrigger
+    sound: *SoundIan
+  - type: EmitSoundOnCollide
+    sound: *SoundIan
+  - type: MeleeWeapon
+    soundHit: *SoundIan
+  - type: Edible
+    useSound: *SoundIan
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: IanPlushie
+
+- type: entity
+  parent: BasePlushie
+  id: ToyAmongPequeno
+  name: among pequeño
+  description: Sus!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pequeno.rsi
+    layers:
+    - state: base
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+    - state: visor
+  - type: Clothing
+    sprite: Objects/Fun/pequeno.rsi
+    slots:
+    - HEAD
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET-body
+      - state: equipped-HELMET-vis
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-body
+      - state: inhand-left-vis
+      right:
+      - state: inhand-right-body
+      - state: inhand-right-vis
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        base: Sixteen
+#  - type: FoodSequenceElement - does not work with randomized sprites
+#    entries:
+#      CottonBurger: AmongPequeno

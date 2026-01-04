@@ -1,8 +1,8 @@
 ﻿# This base is created so we don't have to define the different sprite path for each plushie job.
 - type: entity
+  abstract: true
   parent: PlushieLizard
   id: BasePlushieLizardJob
-  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Fun/plushielizard_jobs.rsi
