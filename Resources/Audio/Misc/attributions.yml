@@ -1,14 +1,9 @@
-- files: ["tension_session.ogg"]
-  license: "CC-BY-3.0"
-  copyright: "Created by qwertyquerty"
-  source: "https://www.youtube.com/@qwertyquerty"
-
 - files: ["ninja_greeting.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by Chillyconmor"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
 
-- files: ["nparadox_clone_greeting.ogg"]
+- files: ["paradox_clone_greeting.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Created by ps3moira"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
@@ -72,3 +67,23 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from stevielematt via freesound.org, edit by august-sun(GitHub)/augustsun(Discord)"
   source: "https://freesound.org/people/stevielematt/sounds/538066/"
+
+- files: ["notice1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station"
+  source: "https://github.com/phil235/-tg-station/blob/462ce9c87771c6fa4a0ac29270ef78ea47364d6a/sound/misc/notice1.ogg"
+
+- files: ["notice2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station"
+  source: "https://github.com/phil235/-tg-station/blob/c80f22bf524a900ca484011f1bea55a2c182ac53/sound/misc/notice2.ogg"
+
+- files: ["zip.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from TG station"
+  source: "https://github.com/phil235/-tg-station/blob/c80f22bf524a900ca484011f1bea55a2c182ac53/sound/items/zip.ogg"
+
+- files: ["delta.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from Citadel station"
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/blob/e31455667ebf3331255c1143e1e7215bc737a287/sound/misc/deltakalaxon.ogg"
