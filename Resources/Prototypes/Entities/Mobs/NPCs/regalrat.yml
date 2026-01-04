@@ -109,6 +109,8 @@
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
+  - type: Insulated
+    coefficient: 0.5
   - type: Butcherable
     spawned:
     - id: ClothingHeadHatFancyCrown #how did that get there?
