@@ -10,12 +10,17 @@
     requiredLegs: 2 # It would be funny if arachnids could use their little back limbs to move around once they lose their legs, but just something to consider post-woundmed
   - type: HumanoidAppearance
     species: Arachnid
-  - type: Hunger
-  - type: Thirst
+  - type: Satiation
+    satiations:
+      Hunger:
+        prototype: NormalSatiationHunger
+      Thirst:
+        prototype: NormalSatiationThirst
   - type: Sericulture
     productionLength: 2
     entityProduced: MaterialWebSilk1
     hungerCost: 4 # Should total to 25 total silk on full hunger
+    minHungerThreshold: Peckish
   - type: Tag
     tags:
     - CanPilot
