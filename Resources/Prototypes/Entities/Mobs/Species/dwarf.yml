@@ -49,6 +49,8 @@
     accent: dwarf
   - type: Speech
     speechSounds: Bass
+  - type: ZombieAccentOverride
+    accent: zombieDwarf
   - type: HumanoidAppearance
     species: Dwarf
     hideLayersOnEquip:
