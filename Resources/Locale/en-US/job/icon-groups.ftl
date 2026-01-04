@@ -1,0 +1,13 @@
+job-icon-group-cargo = Cargo
+job-icon-group-command = Command
+job-icon-group-engineering = Engineering
+job-icon-group-medical = Medical
+job-icon-group-research = Research
+job-icon-group-security = Security
+job-icon-group-service = Service
+job-icon-group-entertainer = Entertainer
+job-icon-group-civilian = Civilian
+job-icon-group-silicon = Silicon
+job-icon-group-blank = Blank
+job-icon-group-threat = Threat
+job-icon-group-admin = Admin
