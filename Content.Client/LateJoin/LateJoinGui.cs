@@ -260,7 +260,12 @@ namespace Content.Client.LateJoin
 
                         jobButton.OnPressed += _ => SelectedId.Invoke((id, jobButton.JobId));
 
-                        if (!_jobRequirements.IsAllowed(prototype, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                        if (!_jobRequirements.IsAllowed(
+                                prototype,
+                                (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter,
+                                out var reason,
+                                out var reason_short)
+                            )
                         {
                             jobButton.Disabled = true;
 
