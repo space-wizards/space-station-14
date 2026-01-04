@@ -111,7 +111,7 @@
   - type: CryoPodAir
   - type: Climbable # so that ejected bodies don't get stuck
     vaultable: false
-  - type: ContainerTemperatureDamageThresholds
+  - type: ContainerTemperature
     coldDamageThreshold: 10
   - type: GuideHelp
     guides:
