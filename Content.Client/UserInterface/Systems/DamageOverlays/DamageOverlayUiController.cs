@@ -11,6 +11,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.DamageOverlays;
 
@@ -19,6 +20,7 @@ public sealed class DamageOverlayUiController : UIController
 {
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     [UISystemDependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [UISystemDependency] private readonly StatusEffectsSystem _statusEffects = default!;

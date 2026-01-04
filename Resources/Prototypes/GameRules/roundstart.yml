@@ -274,6 +274,7 @@
       - type: ChangelingDevour
       - type: ChangelingIdentity
       - type: ChangelingTransform
+      - type: ChangelingStasis
       - type: ActionGrant
         actions:
         - ActionChangelingStore
