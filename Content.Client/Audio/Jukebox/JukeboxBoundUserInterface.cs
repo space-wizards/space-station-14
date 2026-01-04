@@ -10,11 +10,14 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
+    private readonly SharedJukeboxSystem _sharedJukeboxSystem = default!;
+
     [ViewVariables]
     private JukeboxMenu? _menu;
 
     public JukeboxBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        _sharedJukeboxSystem = EntMan.System<SharedJukeboxSystem>();
         IoCManager.InjectDependencies(this);
     }
 
@@ -90,7 +93,10 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
 
     public void PopulateMusic()
     {
-        _menu?.UpdateAvailableTracks(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
+        if (!EntMan.TryGetComponent(Owner, out JukeboxComponent? jukebox))
+            return;
+
+        _menu?.UpdateAvailableTracks(_sharedJukeboxSystem.GetAvailableTracks((Owner, jukebox)));
         _menu?.PopulateTracklist();
     }
 
