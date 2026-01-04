@@ -80,10 +80,7 @@
   suffix: CentCom
   components:
   - type: Sprite
-    layers:
-      - state: icon
-        map: [ "base" ]
-        color: "#bfe3ff"
+    color: "#bfe3ff"
   - type: FaxMachine
     name: "Central Command"
     notifyAdmins: true
@@ -95,10 +92,7 @@
   suffix: Syndicate
   components:
   - type: Sprite
-    layers:
-      - state: icon
-        map: [ "base" ]
-        color: "#a3a3a3"
+    color: "#a3a3a3"
   - type: FaxMachine
     name: "ERR*?*%!"
     responsePings: false
