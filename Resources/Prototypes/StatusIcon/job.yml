@@ -376,6 +376,7 @@
     sprite: *icon-rsi
     state: Borg
   jobName: job-name-borg
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -384,6 +385,7 @@
     sprite: *icon-rsi
     state: StationAi
   jobName: job-name-station-ai
+  isCrewJob: false
 
 # Bad guys
 
@@ -410,6 +412,7 @@
     sprite: *icon-rsi
     state: Syndicate
   jobName: job-name-syndicate
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -418,6 +421,7 @@
     sprite: *icon-rsi
     state: Zombie
   jobName: job-name-zombie
+  isCrewJob: false
 
 # Admin
 
@@ -478,6 +482,7 @@
     sprite: *icon-rsi
     state: NoId
   jobName: job-name-no-id
+  isCrewJob: false
 
 - type: jobIcon
   parent: JobIcon
@@ -486,3 +491,4 @@
     sprite: *icon-rsi
     state: Unknown
   jobName: job-name-unknown
+  isCrewJob: false
