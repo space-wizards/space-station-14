@@ -14,6 +14,9 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 /// </summary>
 public abstract partial class SharedXenoArtifactSystem : EntitySystem
 {
+    private static readonly EntProtoId ArtifactEffectBaseProtoId = "BaseXenoArtifactEffect";
+
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
@@ -22,9 +25,13 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
+    public HashSet<string> EffectPrototypes = [];
+
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
+
         SubscribeLocalEvent<XenoArtifactComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<XenoArtifactComponent, ArtifactSelfActivateEvent>(OnSelfActivate);
 
@@ -32,6 +39,28 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
         InitializeUnlock();
         InitializeXAT();
         InitializeXAE();
+
+        ReloadEffectCache();
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs args)
+    {
+        if (!args.WasModified<EntityPrototype>())
+            return;
+
+        ReloadEffectCache();
+    }
+
+    private void ReloadEffectCache()
+    {
+        EffectPrototypes.Clear();
+
+        foreach (var entityPrototype in PrototypeManager.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (entityPrototype is { Abstract: false, Parents: not null }
+                && Array.IndexOf(entityPrototype.Parents, ArtifactEffectBaseProtoId.Id) != -1)
+                EffectPrototypes.Add(entityPrototype.ID);
+        }
     }
 
     /// <inheritdoc />

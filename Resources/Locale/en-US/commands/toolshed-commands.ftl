@@ -114,6 +114,18 @@ command-description-xenoartifact-averageResearch =
     Calculates amount of research points average generated xeno artifact will output when fully activated.
 command-description-xenoartifact-unlockAllNodes =
     Unlocks all nodes of artifact.
+command-description-xenoartifact-createNode =
+    Creates node inside artifact
+command-description-xenoartifact-createNodeAtDepth =
+    Creates node inside artifact as successor of specified other node
+command-description-xenoartifact-spawnArtWithNode =
+    Spawns hand-held or structure artifact with specified node
+command-description-xenoartifact-unlockNode =
+    Unlocks specific node inside artifact
+command-description-xenoartifact-addEdge =
+    Add edge between nodes of artifact
+command-description-xenoartifact-removeNode =
+    Removes node from xeno artifact, breaking all connected edges
 command-description-jobboard-completeJob =
     Completes a given salvage job board job for the station.
 command-description-scale-set =
