@@ -1,27 +1,4 @@
 ﻿Entries:
-- author: Nox38
-  changes:
-  - message: Resized every firearm.
-    type: Tweak
-  id: 8850
-  time: '2025-08-13T17:13:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36473
-- author: slarticodefast
-  changes:
-  - message: Fixed light bulb color.
-    type: Fix
-  id: 8851
-  time: '2025-08-13T22:45:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39623
-- author: Bhijn and Myr
-  changes:
-  - message: Those within the SS13 and SS14 community who have passed are now explicitly
-      memorialized within the game's credits, accessible within the lobby. May their
-      names and legacies live on.
-    type: Add
-  id: 8852
-  time: '2025-08-14T01:21:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39621
 - author: rumaks-xyz, SlamBamActionman
   changes:
   - message: Advanced Brute chemicals, Insuzine, Ultravasculine and Sigynate have
@@ -3899,3 +3876,27 @@
   id: 9350
   time: '2026-01-03T01:33:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34165
+- author: K-Dynamic
+  changes:
+  - message: Intercoms have new appearance.
+    type: Tweak
+  id: 9351
+  time: '2026-01-03T07:01:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41962
+- author: SeaWyrm
+  changes:
+  - message: Red sand astro-tiles are now researchable as part of the astro-tile research
+      option
+    type: Add
+  - message: Iron-red concrete tiles can now be created at Cutters
+    type: Add
+  id: 9352
+  time: '2026-01-03T07:15:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/39793
+- author: TheShuEd
+  changes:
+  - message: Melee weapon attack animations now looks way cooler!
+    type: Tweak
+  id: 9353
+  time: '2026-01-03T21:43:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/41425
