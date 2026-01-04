@@ -20,6 +20,12 @@
     hideLayersOnEquip:
     - Hair
     - Snout
+    femaleMarkingsDisplacement:
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
   - type: Inventory
     femaleDisplacements:
       jumpsuit:
@@ -34,6 +40,13 @@
   id: MobHumanDummy
   categories: [ HideSpawnMenu ]
   components:
+  - type: HumanoidAppearance
+    femaleMarkingsDisplacement:
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
   - type: Inventory
     femaleDisplacements:
       jumpsuit:

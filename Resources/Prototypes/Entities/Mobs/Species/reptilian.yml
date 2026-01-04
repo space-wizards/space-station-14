@@ -13,6 +13,12 @@
     - HeadSide
     - Tail
     undergarmentBottom: UndergarmentBottomBoxersReptilian
+    femaleMarkingsDisplacement:
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
   - type: Hunger
   - type: Puller
     needsHands: false
@@ -114,6 +120,12 @@
     - HeadTop
     - HeadSide
     undergarmentBottom: UndergarmentBottomBoxersReptilian
+    femaleMarkingsDisplacement:
+      UndergarmentTop:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
   - type: Inventory
     speciesId: reptilian
     femaleDisplacements:
