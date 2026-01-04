@@ -447,6 +447,35 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
+        private bool ProcessChargedElectrovaeTiles(
+            Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent)
+        {
+            var atmosphere = ent.Comp1;
+            if (!atmosphere.ProcessingPaused)
+                QueueRunTiles(atmosphere.CurrentRunTiles, atmosphere.ChargedElectrovaeTiles);
+
+            var number = 0;
+            while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
+            {
+                ProcessChargedElectrovae(ent, tile);
+
+                if (number++ < LagCheckIterations)
+                    continue;
+
+                number = 0;
+                // Process the rest next time.
+                if (_simulationStopwatch.Elapsed.TotalMilliseconds >= AtmosMaxProcessTime)
+                {
+                    return false;
+                }
+            }
+
+            // Clean up entities that left the gas after processing all tiles
+            CleanupChargedElectrovaeEntities((ent.Owner, atmosphere));
+
+            return true;
+        }
+
         private bool ProcessSuperconductivity(GridAtmosphereComponent atmosphere)
         {
             if(!atmosphere.ProcessingPaused)
@@ -775,6 +804,17 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     atmosphere.ProcessingPaused = false;
+                    atmosphere.State = AtmosphereProcessingState.ChargedElectrovae;
+                    return AtmosphereProcessingCompletionState.Continue;
+                case AtmosphereProcessingState.ChargedElectrovae:
+                    if (!ProcessChargedElectrovaeTiles(ent))
+                    {
+                        atmosphere.ProcessingPaused = true;
+                        return AtmosphereProcessingCompletionState.Return;
+                    }
+
+                    atmosphere.ProcessingPaused = false;
+
                     // Next state depends on whether superconduction is enabled or not.
                     // Note: We do this here instead of on the tile equalization step to prevent ending it early.
                     //       Therefore, a change to this CVar might only be applied after that step is over.
@@ -854,6 +894,7 @@ namespace Content.Server.Atmos.EntitySystems
         HighPressureDelta,
         DeltaPressure,
         Hotspots,
+        ChargedElectrovae,
         Superconductivity,
         PipeNet,
         AtmosDevices,
