@@ -857,10 +857,10 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
                 foreach (var decal in decals)
                 {
-                    if (!_decals.TryAddDecal(decal.ID, new EntityCoordinates(gridUid, decal.Position), out var dec))
+                    if (!_decals.TryAddDecal(new Decal(decal.ID), new EntityCoordinates(gridUid, decal.Position), out var dec))
                         continue;
 
-                    loadedDecals.Add(dec, indices);
+                    loadedDecals.Add(dec.Value, indices);
                 }
             }
         }
@@ -912,7 +912,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         foreach (var (dec, indices) in component.LoadedDecals[chunk])
         {
             // If we couldn't remove it then flag the tile to never be touched.
-            if (!_decals.RemoveDecal(gridUid, dec))
+            if (!_decals.RemoveDecal(gridUid, dec, out var _))
             {
                 modified.Add(indices);
             }
