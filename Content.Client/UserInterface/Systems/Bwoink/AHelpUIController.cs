@@ -22,6 +22,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
@@ -48,7 +49,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
     private bool _discordRelayActive;
     private bool _hasUnreadAHelp;
     private bool _bwoinkSoundEnabled;
-    private string? _aHelpSound;
+    private SoundSpecifier? _aHelpSound;
 
     protected override string SawmillName => "c.s.go.es.bwoink";
 
@@ -60,7 +61,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
         SubscribeNetworkEvent<BwoinkPlayerTypingUpdated>(PeopleTypingUpdated);
 
         _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
-        _config.OnValueChanged(CCVars.AHelpSound, v => _aHelpSound = v, true);
+        _config.OnValueChanged(CCVars.AHelpSound, v => _aHelpSound = new SoundPathSpecifier(v), true);
         _config.OnValueChanged(CCVars.BwoinkSoundEnabled, v => _bwoinkSoundEnabled = v, true);
     }
 

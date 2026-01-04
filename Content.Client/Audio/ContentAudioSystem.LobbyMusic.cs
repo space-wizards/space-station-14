@@ -31,9 +31,9 @@ public sealed partial class ContentAudioSystem
     private EntityUid? _lobbyRoundRestartAudioStream;
 
     /// <summary>
-    /// Shuffled list of soundtrack file-names.
+    /// Shuffled list of soundtrack paths.
     /// </summary>
-    private string[]? _lobbyPlaylist;
+    private ResPath[]? _lobbyPlaylist;
 
     /// <summary>
     /// Short info about lobby soundtrack currently playing. Is null if soundtrack is not playing.
@@ -156,8 +156,8 @@ public sealed partial class ContentAudioSystem
     /// <summary>
     /// Starts playing lobby music from playlist. If playlist is empty, or lobby music setting is turned off - does nothing.
     /// </summary>
-    /// <param name="playlist">Array of soundtrack filenames for lobby playlist.</param>
-    private void StartLobbyMusic(string[] playlist)
+    /// <param name="playlist">Array of soundtrack paths for lobby playlist.</param>
+    private void StartLobbyMusic(ResPath[] playlist)
     {
         if (_lobbySoundtrackInfo != null || !_configManager.GetCVar(CCVars.LobbyMusicEnabled))
             return;
@@ -168,12 +168,13 @@ public sealed partial class ContentAudioSystem
             return;
         }
 
-        PlaySoundtrack(playlist[0]);
+        var track = new ResolvedPathSpecifier(playlist[0]);
+        PlaySoundtrack(track);
     }
 
-    private void PlaySoundtrack(string soundtrackFilename)
+    private void PlaySoundtrack(ResolvedPathSpecifier soundtrackFilename)
     {
-        if (!_resourceCache.TryGetResource(new ResPath(soundtrackFilename), out AudioResource? audio))
+        if (!_resourceCache.TryGetResource(soundtrackFilename.Path, out AudioResource? audio))
         {
             return;
         }
@@ -193,9 +194,9 @@ public sealed partial class ContentAudioSystem
         }
 
         var nextTrackOn = _timing.CurTime + audio.AudioStream.Length;
-        _lobbySoundtrackInfo = new LobbySoundtrackInfo(soundtrackFilename, nextTrackOn, playResult.Value.Entity);
+        _lobbySoundtrackInfo = new LobbySoundtrackInfo(soundtrackFilename.Path.ToString(), nextTrackOn, playResult.Value.Entity);
 
-        var lobbySongChangedEvent = new LobbySoundtrackChangedEvent(soundtrackFilename);
+        var lobbySongChangedEvent = new LobbySoundtrackChangedEvent(soundtrackFilename.Path.ToString());
         _lobbySoundtrackChanged?.Invoke(lobbySongChangedEvent);
     }
 
@@ -248,12 +249,13 @@ public sealed partial class ContentAudioSystem
             && _lobbyPlaylist?.Length > 0
             )
         {
-            var nextSoundtrackFilename = GetNextSoundtrackFromPlaylist(_lobbySoundtrackInfo.Filename, _lobbyPlaylist);
-            PlaySoundtrack(nextSoundtrackFilename);
+            var nextSoundtrackPath = GetNextSoundtrackFromPlaylist(_lobbySoundtrackInfo.Filename, _lobbyPlaylist);
+            var track = new ResolvedPathSpecifier(nextSoundtrackPath);
+            PlaySoundtrack(track);
         }
     }
 
-    private static string GetNextSoundtrackFromPlaylist(string currentSoundtrackFilename, string[] playlist)
+    private static ResPath GetNextSoundtrackFromPlaylist(string currentSoundtrackFilename, ResPath[] playlist)
     {
         var indexOfCurrent = Array.IndexOf(playlist, currentSoundtrackFilename);
         var nextTrackIndex = indexOfCurrent + 1;
