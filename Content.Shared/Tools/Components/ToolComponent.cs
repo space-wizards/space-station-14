@@ -5,20 +5,20 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedToolSystem))]
 public sealed partial class ToolComponent : Component
 {
     [DataField]
-    public PrototypeFlags<ToolQualityPrototype> Qualities  = [];
+    public PrototypeFlags<ToolQualityPrototype> Qualities = [];
 
     /// <summary>
     ///     For tool interactions that have a delay before action this will modify the rate, time to wait is divided by this value
     /// </summary>
     [DataField]
-    public float SpeedModifier  = 1;
+    public float SpeedModifier = 1;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public SoundSpecifier? UseSound;
 }
 
