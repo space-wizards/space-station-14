@@ -265,6 +265,18 @@ ghost-role-information-derelict-mining-cyborg-description = You are a salvage cy
 ghost-role-information-derelict-syndicate-assault-cyborg-name = Derelict Syndicate Assault Cyborg
 ghost-role-information-derelict-syndicate-assault-cyborg-description = You are an early model syndicate assault cyborg that got lost in space. After years of exposure to ion storms you find yourself near a space station.
 
+ghost-role-information-derelict-engineering-xenoborg-name = Derelict Engineer Xenoborg
+ghost-role-information-derelict-engineering-xenoborg-description = You are an engineer xenoborg, left behind in space while your mothership fled. Long after the ion storms broke through your EMI shielding, you find yourself near a space station.
+
+ghost-role-information-derelict-heavy-xenoborg-name = Derelict Heavy Xenoborg
+ghost-role-information-derelict-heavy-xenoborg-description = You are a heavy xenoborg, left behind in space while your mothership fled. Long after the ion storms broke through your EMI shielding, you find yourself near a space station.
+
+ghost-role-information-derelict-scout-xenoborg-name = Derelict Scout Xenoborg
+ghost-role-information-derelict-scout-xenoborg-description = You are a scout xenoborg, left behind in space while your mothership fled. Long after the ion storms broke through your EMI shielding, you find yourself near a space station.
+
+ghost-role-information-derelict-stealth-xenoborg-name = Derelict Stealth Xenoborg
+ghost-role-information-derelict-stealth-xenoborg-description = You are a stealth xenoborg, left behind in space while your mothership fled. Long after the ion storms broke through your EMI shielding, you find yourself near a space station.
+
 ghost-role-information-security-name = Security
 ghost-role-information-security-description = You are part of a security task force, but seem to have found yourself in a strange situation...
 
