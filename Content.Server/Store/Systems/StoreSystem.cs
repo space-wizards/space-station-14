@@ -5,6 +5,7 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Store.Events;
 using Content.Shared.UserInterface;
@@ -23,6 +24,7 @@ public sealed partial class StoreSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {
@@ -47,6 +49,9 @@ public sealed partial class StoreSystem : EntitySystem
     {
         RefreshAllListings(component);
         component.StartingMap = Transform(uid).MapUid;
+
+        var userInterfaceComp = EnsureComp<UserInterfaceComponent>(uid);
+        _uiSystem.SetUi((uid, userInterfaceComp), StoreUiKey.Key, new InterfaceData("StoreBoundUserInterface"));
     }
 
     private void OnStartup(EntityUid uid, StoreComponent component, ComponentStartup args)
