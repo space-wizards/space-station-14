@@ -13,6 +13,8 @@
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
   - ReagentGrinderIndustrialMachineCircuitboard
+  - SyntheticSwab
+  - SwabApplicator
 
 - type: technology
   id: CritterMechs
