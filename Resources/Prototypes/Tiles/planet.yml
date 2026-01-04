@@ -1,5 +1,16 @@
 - type: tile
+  id: BaseFloorPlanet
+  abstract: true
+  heatCapacity: 10000
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  weather: true
+  indestructible: true
+
+- type: tile
   id: FloorPlanetDirt
+  parent: BaseFloorPlanet
   name: tiles-dirt-planet-floor
   sprite: /Textures/Tiles/Planet/dirt.rsi/dirt.png
   variants: 4
@@ -8,16 +19,11 @@
   - 1.0
   - 1.0
   - 1.0
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepAsteroid
-  heatCapacity: 10000
-  weather: true
-  indestructible: true
 
 # Desert
 - type: tile
   id: FloorDesert
+  parent: BaseFloorPlanet
   name: tiles-desert-floor
   sprite: /Textures/Tiles/Planet/Desert/desert.png
   variants: 6
@@ -28,12 +34,6 @@
   - 1.0
   - 1.0
   - 1.0
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepAsteroid
-  heatCapacity: 10000
-  weather: true
-  indestructible: true
 
 - type: tile
   id: FloorLowDesert
@@ -47,16 +47,11 @@
   - 1.0
   - 1.0
   - 1.0
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepAsteroid
-  heatCapacity: 10000
-  weather: true
-  indestructible: true
 
 # Grass
 - type: tile
   id: FloorPlanetGrass
+  parent: BaseFloorPlanet
   name: tiles-grass-planet-floor
   sprite: /Textures/Tiles/Planet/Grass/grass.png
   variants: 4
@@ -76,29 +71,20 @@
     North: /Textures/Tiles/Planet/Grass/double_edge.png
     West: /Textures/Tiles/Planet/Grass/double_edge.png
   baseTurf: FloorPlanetDirt
-  isSubfloor: true
   footstepSounds:
     collection: FootstepGrass
-  itemDrop: FloorTileItemGrass
-  heatCapacity: 10000
-  weather: true
-  indestructible: true
 
 # Lava
 - type: tile
   id: FloorBasalt
   name: tiles-basalt-floor
+  parent: BaseFloorPlanet
   sprite: /Textures/Tiles/Planet/basalt.png
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepAsteroid
-  heatCapacity: 10000
-  weather: true
-  indestructible: true
 
 # Snow
 - type: tile
   id: FloorSnow
+  parent: BaseFloorPlanet
   name: tiles-snow
   sprite: /Textures/Tiles/Planet/Snow/snow.png
   variants: 13
@@ -122,12 +108,8 @@
     East: /Textures/Tiles/Planet/Snow/snow_double_edge_east.png
     North: /Textures/Tiles/Planet/Snow/snow_double_edge_north.png
     West: /Textures/Tiles/Planet/Snow/snow_double_edge_west.png
-  isSubfloor: true
   footstepSounds:
     collection: FootstepSnow
-  heatCapacity: 10000
-  weather: true
-  indestructible: true
 
 # Ice
 - type: tile
@@ -144,6 +126,7 @@
 # Dug snow
 - type: tile
   id: FloorSnowDug
+  parent: BaseFloorPlanet
   name: tiles-snow-dug
   sprite: /Textures/Tiles/Planet/Snow/snow_dug.png
   edgeSpritePriority: 1
@@ -152,11 +135,7 @@
     East: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_east.png
     North: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_north.png
     West: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_west.png
-  isSubfloor: true
   footstepSounds:
     collection: FootstepSnow
-  heatCapacity: 10000
-  weather: true
-  indestructible: true
 
 # Wasteland
