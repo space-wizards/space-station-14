@@ -98,8 +98,8 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakNanotrasen
-  name: nanotrasen cloak
-  description: A stately blue cloak to represent NanoTrasen.
+  name: Nanotrasen cloak
+  description: A stately blue cloak to represent Nanotrasen.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/nanotrasen.rsi

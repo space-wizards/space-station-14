@@ -2978,7 +2978,7 @@ entities:
   - uid: 513
     components:
     - type: MetaData
-      desc: Glory to NanoTrasen!
+      desc: Glory to Nanotrasen!
       name: beer dispenser
     - type: Transform
       rot: 3.141592653589793 rad
