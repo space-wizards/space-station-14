@@ -18,6 +18,12 @@ public sealed partial class JukeboxPrototype : IPrototype
     [DataField(required: true)]
     public string Name = string.Empty;
 
+    /// <summary>
+    /// Name of the artist to use in UI.
+    /// </summary>
+    [DataField(required: true)]
+    public string Artist = string.Empty;
+
     [DataField(required: true)]
     public SoundPathSpecifier Path = default!;
 }

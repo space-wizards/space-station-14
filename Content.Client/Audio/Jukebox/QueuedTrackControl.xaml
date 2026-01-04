@@ -1,0 +1,31 @@
+<Control xmlns="https://spacestation14.io"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+        <BoxContainer Orientation = "Vertical" HorizontalExpand="True">
+            <Label Name="TrackName" HorizontalExpand="True" />
+            <Label Name="TrackArtist" HorizontalExpand="True" StyleClasses="LabelSubText"/>
+        </BoxContainer>
+        <Button
+            Name="MoveUp"
+            Margin="0"
+            Text="⏶"
+            StyleClasses="OpenRight"
+            ToolTip="{Loc 'jukebox-menu-move-up-tooltip'}"/>
+        <Button
+            Name="MoveDown"
+            Margin="0"
+            Text="⏷"
+            StyleClasses="OpenBoth"
+            ToolTip="{Loc 'jukebox-menu-move-down-tooltip'}"/>
+        <Button
+            Name="Delete"
+            Margin="0"
+            Text="✖"
+            ToolTip="{Loc 'jukebox-menu-delete-item-tooltip'}">
+            <Button.StyleClasses>
+                <system:String>Caution</system:String>
+                <system:String>OpenLeft</system:String>
+            </Button.StyleClasses>
+        </Button>
+    </BoxContainer>
+</Control>

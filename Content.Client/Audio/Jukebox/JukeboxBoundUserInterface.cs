@@ -41,9 +41,25 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
             SendMessage(new JukeboxStopMessage());
         };
 
-        _menu.OnSongSelected += SelectSong;
+        _menu.OnRepeatToggled += args =>
+        {
+            SendMessage(new JukeboxRepeatMessage(args));
+        };
+
+        _menu.OnShuffleToggled += args =>
+        {
+            SendMessage(new JukeboxShuffleMessage(args));
+        };
 
         _menu.SetTime += SetTime;
+        _menu.TrackQueueAction += track =>
+        {
+            SendMessage(new JukeboxQueueTrackMessage(track));
+        };
+        _menu.QueueDeleteAction += index => SendMessage(new JukeboxDeleteRequestMessage(index));
+        _menu.QueueMoveUpAction += index => SendMessage(new JukeboxMoveRequestMessage(index, -1));
+        _menu.QueueMoveDownAction += index => SendMessage(new JukeboxMoveRequestMessage(index, 1));
+
         PopulateMusic();
         Reload();
     }
@@ -61,22 +77,21 @@ public sealed class JukeboxBoundUserInterface : BoundUserInterface
         if (_protoManager.Resolve(jukebox.SelectedSongId, out var songProto))
         {
             var length = EntMan.System<AudioSystem>().GetAudioLength(songProto.Path.Path.ToString());
-            _menu.SetSelectedSong(songProto.Name, (float) length.TotalSeconds);
+            _menu.SetSelectedSong(songProto, (float) length.TotalSeconds);
         }
         else
         {
-            _menu.SetSelectedSong(string.Empty, 0f);
+            _menu.SetSelectedSong(null, 0f);
         }
+
+        _menu.PopulateQueueList(jukebox.Queue);
+        _menu.UpdateButtons(jukebox.RepeatTracks, jukebox.ShuffleTracks);
     }
 
     public void PopulateMusic()
     {
-        _menu?.Populate(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
-    }
-
-    public void SelectSong(ProtoId<JukeboxPrototype> songid)
-    {
-        SendMessage(new JukeboxSelectedMessage(songid));
+        _menu?.UpdateAvailableTracks(_protoManager.EnumeratePrototypes<JukeboxPrototype>());
+        _menu?.PopulateTracklist();
     }
 
     public void SetTime(float time)
