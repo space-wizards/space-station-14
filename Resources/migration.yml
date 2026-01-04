@@ -480,7 +480,7 @@ PresentRandomAsh: PresentRandomCoal
 CrateCrewMonitoringBoards: CrateCrewMonitoring
 
 # 2024-11-25
-CrateSlimepersonLifeSupport: CrateNitrogenInternals
+CrateSlimepersonLifeSupport: CrateEmergencyEVA
 
 # 2024-12-01
 DungeonMasterCircuitBoard: GameMasterCircuitBoard
@@ -759,3 +759,8 @@ SpawnPointBoxer: null
 FigureSpawner: MechFigurineSpawner50
 ToySpawner: PlushieSpawner50
 SpacemenFigureSpawner: SpacemenFigurineSpawner90
+
+# 2025-12-13
+CrateEmergencyInternals: CrateEmergencyEVA
+CrateEmergencyInternalsLarge: CrateEmergencyEVA
+CrateNitrogenInternals: CrateEmergencyEVA
