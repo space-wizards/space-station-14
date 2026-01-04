@@ -20,6 +20,18 @@ public sealed partial class ThirstComponent : Component
     [AutoNetworkedField]
     public float ActualDecayRate;
 
+    /// <summary>
+    /// The minimum possible starting thirst value.
+    /// </summary>
+    [DataField]
+    public float MinStartingThirst = 310f; // Thirsty + 10
+
+    /// <summary>
+    /// The maximum possible starting thirst value.
+    /// </summary>
+    [DataField]
+    public float MaxStartingThirst = 449f; // Okay - 1
+
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public ThirstThreshold CurrentThirstThreshold;
 

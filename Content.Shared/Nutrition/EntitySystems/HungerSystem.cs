@@ -39,10 +39,10 @@ public sealed class HungerSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, HungerComponent component, MapInitEvent args)
     {
-        var amount = _random.Next(
-            (int) component.Thresholds[HungerThreshold.Peckish] + 10,
-            (int) component.Thresholds[HungerThreshold.Okay]);
-        SetHunger(uid, amount, component);
+         var amount = _random.Next(
+             (int) component.MinStartingHunger,
+             (int) component.MaxStartingHunger);
+         SetHunger(uid, amount, component);
     }
 
     private void OnShutdown(EntityUid uid, HungerComponent component, ComponentShutdown args)
