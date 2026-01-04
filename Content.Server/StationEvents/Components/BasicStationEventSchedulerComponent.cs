@@ -14,6 +14,12 @@ public sealed partial class BasicStationEventSchedulerComponent : Component
     public float MinimumTimeUntilFirstEvent = 200;
 
     /// <summary>
+    /// How much additional time it may take for a GameRule to first start.
+    /// </summary>
+    [DataField]
+    public float MaximumSpanUntilFirstEvent = 120;
+
+    /// <summary>
     /// The minimum and maximum time between rule starts in seconds.
     /// </summary>
     [DataField]
