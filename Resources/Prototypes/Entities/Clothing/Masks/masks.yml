@@ -192,7 +192,7 @@
   id: ClothingMaskClownBase
   abstract: true
   name: clown wig and mask
-  description: A true prankster's facial attire. A clown is incomplete without their mask. Now features a foldable wig!
+  description: A clown mask featuring a foldable wig, true pranksters attire.
   components:
   - type: Sprite
     sprite: Clothing/Mask/clown.rsi
