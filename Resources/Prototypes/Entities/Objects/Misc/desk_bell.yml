@@ -1,50 +1,207 @@
 - type: entity
   parent: BaseItem
-  id: DeskBell
-  name: desk bell
-  description: The cornerstone of any customer service job. You feel an unending urge to ring it.
+  id: EmptyDeskBell
+  name: unfinished desk bell
+  description: An empty bell missing its noise maker.
   components:
   - type: Sprite
     sprite: Objects/Misc/desk_bell.rsi
-    state: "normal"
-  - type: Tag
-    tags:
-      - Payload
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessSound:
-      collection: DeskBell
-      params:
-        variation: 0.03
-        volume: 3
-    onActivate: true
-  - type: EmitSoundOnUse
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
-  - type: EmitSoundOnLand
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
-  - type: UseDelay
-    delay: 0.5
+    state: icon-empty
+  - type: Construction
+    graph: &BellGraph BellGraph
+    node: start
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger: &DamageTrigger50
+        !type:DamageTrigger
+        damage: 50
+      behaviors: &OverkillBehavior
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger: &DamageTrigger20
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 0
+              max: 1
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
   - type: MeleeWeapon
     wideAnimationRotation: 180
-    soundHit:
+    soundHit: &BellSound
       collection: DeskBell
-      params:
+      params: &SoundParams
           variation: 0.03
           volume: 3
     damage:
       types:
         Blunt: 4
+  # Sound
+  - type: MeleeSound
+    soundGroups:
+      Brute: *BellSound
+  - type: EmitSoundOnLand
+    sound: *BellSound
+  - type: EmitSoundOnCollide
+    sound: *BellSound
+
+- type: entity
+  parent: EmptyDeskBell
+  id: DeskBell
+  name: desk bell
+  description: The cornerstone of any customer service job. You feel an unending urge to ring it.
+  components:
+  - type: Sprite
+    state: icon-bell
+  - type: Tag
+    tags: &PayloadTag
+      - Payload
+  - type: Construction
+    graph: *BellGraph
+    node: deskBellNode
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageTrigger50
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger20
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            PartRodMetal1:
+              min: 0
+              max: 1
+        - !type:ChangeConstructionNodeBehavior
+          node: start
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+  - type: InteractionPopup
+    successChance: 1
+    onActivate: true
+    interactSuccessSound: *BellSound
+  - type: UseDelay
+    delay: 0.5
+  # Sound
+  - type: EmitSoundOnUse
+    sound: *BellSound
+  - type: EmitSoundOnTrigger
+    sound: *BellSound
+
+- type: entity
+  parent: EmptyDeskBell
+  id: DeskBuzzer
+  name: desk buzzer
+  description: An advanced customer service tool. You feel an unending urge to buzz it.
+  components:
+  - type: Sprite
+    state: icon-buzzer
+  - type: Tag
+    tags: *PayloadTag
+  - type: Construction
+    graph: *BellGraph
+    node: deskBuzzerNode
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageTrigger50
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger20
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            CableApcStack1:
+              min: 0
+              max: 2
+        - !type:ChangeConstructionNodeBehavior
+          node: start
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+  - type: StationAiWhitelist
+  - type: InteractionPopup
+    successChance: 1
+    onActivate: true
+    interactSuccessSound: &BuzzerSound
+      collection: DeskBuzzer
+      params: *SoundParams
+  - type: UseDelay
+    delay: 0.5
+  # Sound
+  - type: EmitSoundOnUse
+    sound: *BuzzerSound
+  - type: EmitSoundOnTrigger
+    sound: *BuzzerSound
+  - type: MeleeSound
+    soundGroups:
+      Brute: *BuzzerSound
+  - type: MeleeWeapon
+    soundHit: *BuzzerSound
+  - type: EmitSoundOnLand
+    sound: *BuzzerSound
+  - type: EmitSoundOnCollide
+    sound: *BuzzerSound
+
+- type: entity
+  parent: EmptyDeskBell
+  id: DeskHorn
+  name: desk horn
+  description: The cornerstone of any clown business. You feel an unending urge to honk it.
+  components:
+  - type: Sprite
+    state: icon-buzzer
+  - type: Tag
+    tags: *PayloadTag
+  - type: Construction
+    graph: *BellGraph
+    node: deskHornNode
+  - type: Destructible
+    thresholds:
+    - trigger: *DamageTrigger50
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger20
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            BikeHorn:
+              min: 1
+              max: 1
+        - !type:ChangeConstructionNodeBehavior
+          node: start
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+  - type: InteractionPopup
+    successChance: 1
+    onActivate: true
+    interactSuccessSound: &HornSound
+      collection: BikeHorn
+      params: *SoundParams
+  - type: UseDelay
+    delay: 0.5
+  # Sound
+  - type: EmitSoundOnUse
+    sound: *HornSound
+  - type: EmitSoundOnTrigger
+    sound: *HornSound
+  - type: MeleeSound
+    soundGroups:
+      Brute: *HornSound
+  - type: MeleeWeapon
+    soundHit: *HornSound
+  - type: EmitSoundOnLand
+    sound: *HornSound
+  - type: EmitSoundOnCollide
+    sound: *HornSound
