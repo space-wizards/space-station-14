@@ -396,6 +396,39 @@
     reflectProb: 1.0
     spread: 75
 
+# Fake energy sword
+- type: entity
+  name: energy sword
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  id: FakeEnergySword
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
+  suffix: Fake
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword.rsi
+    layers:
+    - state: e_sword
+    - state: e_sword_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Slash: 2
+        Heat: 2
+        Structural: 2
+  - type: ItemToggleSize
+    activatedSize: Small
+  - type: Reflect
+    reflectProb: 0.05
+    spread: 5
+  - type: Item
+    sprite: Objects/Weapons/Melee/e_sword-inhands.rsi
+  - type: StaticPrice
+    price: 250
+
 # Borgs
 
 - type: entity

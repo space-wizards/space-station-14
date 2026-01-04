@@ -1111,3 +1111,48 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSanta
+
+# Fake blood-red hardsuit
+- type: entity
+  parent: [ ClothingOuterHardsuitSyndie, BaseSyndicateContraband ]
+  id: FakeClothingOuterHardsuitSyndie
+  name: blood-red hardsuit
+  description: A heavily armored hardsuit designed for work in special operations. Property of Gorlex Marauders.
+  suffix: Fake
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: Item
+    size: Normal
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.95
+  - type: StaminaResistance # do not add these to other equipment or mobs, we don't want to microbalance these everywhere
+    damageCoefficient: 0.95
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+        Radiation: 0.95
+        Caustic: 0.95
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: FakeClothingHeadHelmetHardsuitSyndie
+  - type: Tag
+    tags:
+    - MonkeyWearable
+    - Hardsuit
+    - CorgiWearable
+    - ScurretWearable
+  - type: StaticPrice
+    price: 500
