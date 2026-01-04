@@ -1,5 +1,6 @@
 using Content.Server.Objectives.Systems;
 using Content.Shared.Mind.Filters;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Objectives.Components;
 
