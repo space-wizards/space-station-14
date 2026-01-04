@@ -32,14 +32,14 @@ public sealed class ActivatableUIRequiresAnchorSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (!Transform(ent.Owner).Anchored)
-        {
-            if (ent.Comp.Popup != null)
-            {
-                _popup.PopupClient(Loc.GetString(ent.Comp.Popup), args.User);
-            }
+        if (Transform(ent.Owner).Anchored)
+            return;
 
-            args.Cancel();
+        if (ent.Comp.Popup != null && !args.Silent)
+        {
+            _popup.PopupClient(Loc.GetString(ent.Comp.Popup), args.User);
         }
+
+        args.Cancel();
     }
 }

@@ -11,8 +11,53 @@
     storedRotation: -90
   - type: Access
   - type: DoorRemote
+    options:
+    - mode: OpenClose
+      tooltip: &TextOpenClose door-remote-open-close-text
+      icon: &IconOpenClose
+        sprite: /Textures/Structures/Doors/Airlocks/Standard/basic.rsi
+        state: assembly
+    - mode: ToggleBolts
+      tooltip: &TextToggleBolt door-remote-toggle-bolt-text
+      icon: &IconToggleBolt
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: bolt_door
+    - mode: ToggleEmergencyAccess
+      tooltip: &TextEmergencyAccess door-remote-emergency-access-text
+      icon: &IconEmergencyAccess
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: emergency_on
   - type: StealTarget
     stealGroup: DoorRemote
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.DoorRemoteUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.DoorRemoteUiKey.Key:
+        type: DoorRemoteBoundUserInterface
+
+- type: entity
+  parent: DoorRemoteDefault
+  id: DoorRemoteCanEletrifyDoors
+  abstract: true
+  components:
+  - type: DoorRemote
+    options:
+    - mode: ToggleOvercharge
+      tooltip: door-remote-toggle-eletrify-text
+      icon:
+        sprite: /Textures/Interface/Actions/actions_ai.rsi
+        state: door_overcharge_on
+    - mode: OpenClose
+      tooltip: *TextOpenClose
+      icon: *IconOpenClose
+    - mode: ToggleBolts
+      tooltip: *TextToggleBolt
+      icon: *IconToggleBolt
+    - mode: ToggleEmergencyAccess
+      tooltip: *TextEmergencyAccess
+      icon: *IconEmergencyAccess
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -186,7 +231,7 @@
     - Xenoborg
 
 - type: entity
-  parent: [ DoorRemoteDefault, BaseXenoborgContraband ]
+  parent: [ DoorRemoteCanEletrifyDoors, BaseXenoborgContraband ]
   id: DoorRemoteXenoborg
   name: xenoborg door remote
   components:
