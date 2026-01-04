@@ -27,6 +27,10 @@ alert-level-gamma = Gamma
 alert-level-gamma-announcement = Central Command has ordered the Gamma security level on the station. Security is to have weapons equipped at all times, and all civilians are to immediately seek their nearest head for transportation to a secure location.
 alert-level-gamma-instructions = All civilians are to immediately seek their nearest head for transportation to a secure location.
 
+alert-level-martial_law = Martial law
+alert-level-martial_law-announcement = Martial law has been declared at the station. All crew members are to arm themselves immediately and obey without question all orders from the captain and the chief of security.
+alert-level-martial_law-instructions = All crew members are to arm themselves immediately and obey without question all orders from the captain and the Head of security.
+
 alert-level-delta = Delta
 alert-level-delta-announcement = The station is currently under threat of imminent destruction. Crewmembers are advised to listen to heads of staff for more information.
 alert-level-delta-instructions = Crewmembers are advised to listen to heads of staff for more information.
