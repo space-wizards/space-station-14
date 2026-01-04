@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -19,5 +20,6 @@ public sealed partial class WeatherPrototype : IPrototype
     /// Sound to play on the affected areas.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
+    [AllowStereo]
     public SoundSpecifier? Sound;
 }
