@@ -17,7 +17,11 @@
       - board
   - type: Computer
   - type: ApcPowerReceiver
-    powerLoad: 200
+    powerLoad: 50
+  - type: PowerState
+    idlePowerDraw: 50
+    workingPowerDraw: 500
+  - type: UIPowerState
   - type: ExtensionCableReceiver
   - type: ActivatableUIRequiresPower
   - type: Sprite
