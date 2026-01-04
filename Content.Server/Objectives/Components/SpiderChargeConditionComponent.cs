@@ -17,8 +17,13 @@ public sealed partial class SpiderChargeConditionComponent : Component
     public EntityUid? Target;
 
     /// <summary>
-    /// Tags that should be used to exclude Warp Points
-    /// from the list of valid bombing targets
+    /// Which points are in the list of valid bombing targets
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Which points are in the list of invalid bombing targets
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
