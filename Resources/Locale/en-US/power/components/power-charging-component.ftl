@@ -20,3 +20,7 @@ power-charge-window-power-label = { $draw } / { $max } W
 
 power-charge-window-eta-none = N/A
 power-charge-window-eta-value = { TOSTRING($left, "m\\:ss") }
+
+## Entity
+
+power-charge-component-interact-broken = It's broken!
