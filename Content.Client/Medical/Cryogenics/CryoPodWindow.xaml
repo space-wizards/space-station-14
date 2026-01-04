@@ -1,0 +1,232 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+               xmlns:health="clr-namespace:Content.Client.HealthAnalyzer.UI"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               xmlns:cryogenics="clr-namespace:Content.Client.Medical.Cryogenics"
+               MinSize="250 300"
+               Resizable="False">
+
+    <Label Name="LoadingPlaceHolder"
+           Text="{Loc 'cryo-pod-window-loading'}"
+           Align="Center"
+           HorizontalExpand="True"
+           VerticalExpand="True"/>
+
+    <BoxContainer Name="Sections"
+                  Orientation="Horizontal"
+                  Visible="False"
+                  Margin="10"
+                  SeparationOverride="16">
+        <BoxContainer Name="CryoSection"
+                      VerticalExpand="True"
+                      Orientation="Vertical"
+                      MinWidth="250"
+                      MaxWidth="250">
+
+            <!-- Flavor text -->
+            <BoxContainer Orientation="Horizontal"
+                          SeparationOverride="10"
+                          Margin="8 0 0 8">
+                <TextureRect StyleClasses="NTLogoDark"
+                             VerticalExpand="True"
+                             Stretch="KeepAspectCentered"
+                             SetSize="32 32"/>
+                <BoxContainer Orientation="Vertical"
+                              SeparationOverride="-4">
+                    <Label Text="{Loc 'cryo-pod-window-product-name'}"
+                           StyleClasses="FontLarge"/>
+                    <Label Text="{Loc 'cryo-pod-window-product-subtitle'}"
+                           StyleClasses="LabelSubText"/>
+
+                </BoxContainer>
+            </BoxContainer>
+
+            <!-- Atmos info -->
+            <BoxContainer Orientation="Horizontal"
+                          SeparationOverride="20"
+                          Margin="0 0 0 4">
+                <!-- Pressure -->
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'gas-analyzer-window-pressure-text'}"
+                           StyleClasses="LabelSubText"/>
+                    <Label Name="Pressure"/>
+                </BoxContainer>
+
+                <!-- Temperature -->
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc 'gas-analyzer-window-temperature-text'}"
+                           StyleClasses="LabelSubText"/>
+                    <Label Name="Temperature"/>
+                </BoxContainer>
+            </BoxContainer>
+
+            <!-- Gas mix -->
+            <Control Margin="0 0 0 22">
+                <controls:SplitBar Name="GasMixChart"
+                                   MinHeight="8"
+                                   MaxHeight="8"/>
+            </Control>
+
+            <!-- Warnings & status -->
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True"
+                          Align="Center"
+                          Margin="0 0 0 14"
+                          SeparationOverride="20">
+
+                <!-- Ejection error (if the pod is locked) -->
+                <PanelContainer Name="EjectError"
+                                Visible="False"
+                                HorizontalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="orange"/>
+                    </PanelContainer.PanelOverride>
+
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="6">
+                        <Label Text="{Loc 'cryo-pod-window-error-header'}"
+                               FontColorOverride="orange"
+                               Align="Center"/>
+                        <RichTextLabel Text="{Loc 'cryo-pod-window-eject-error'}"/>
+                    </BoxContainer>
+                </PanelContainer>
+
+                <!-- Pressure warning -->
+                <PanelContainer Name="LowPressureWarning"
+                                Visible="False"
+                                HorizontalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="orange"/>
+                    </PanelContainer.PanelOverride>
+
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="6">
+                        <Label Text="{Loc 'cryo-pod-window-warning-header'}"
+                               FontColorOverride="orange"
+                               Align="Center"/>
+                        <RichTextLabel Text="{Loc 'cryo-pod-window-low-pressure-warning'}"/>
+                    </BoxContainer>
+                </PanelContainer>
+
+                <!-- Temperature warning -->
+                <PanelContainer Name="HighTemperatureWarning"
+                                Visible="False"
+                                HorizontalExpand="True">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BorderThickness="1" BorderColor="orange"/>
+                    </PanelContainer.PanelOverride>
+
+                    <BoxContainer Orientation="Vertical"
+                                  Margin="6">
+                        <Label Text="{Loc 'cryo-pod-window-warning-header'}"
+                               FontColorOverride="orange"
+                               Align="Center"/>
+                        <!-- Note: This placeholder text should never be visible. -->
+                        <RichTextLabel Name="HighTemperatureWarningText"
+                                       Text="Temperature too high."/>
+                    </BoxContainer>
+                </PanelContainer>
+
+                <!-- Status checklist -->
+                <BoxContainer Orientation="Vertical">
+
+                    <BoxContainer Orientation="Horizontal"
+                                  SeparationOverride="8">
+                        <Label Text="{Loc 'cryo-pod-window-status'}"/>
+                        <Label Name="StatusLabel"
+                               Text="{Loc 'cryo-pod-window-status-not-ready'}"
+                               FontColorOverride="Orange"/>
+                    </BoxContainer>
+
+                    <GridContainer Columns="2"
+                                   HSeparationOverride="0"
+                                   VSeparationOverride="6"
+                                   Margin="6 3 0 0">
+                        <Label Text="⋄"
+                               StyleClasses="LabelSubText"/>
+                        <Label Name="PressureCheck"
+                               Text="{Loc 'cryo-pod-window-checklist-pressure'}"
+                               StyleClasses="LabelSubText"/>
+                        <Label Text="⋄"
+                               StyleClasses="LabelSubText"/>
+                        <Label Name="ChemicalsCheck"
+                               Text="{Loc 'cryo-pod-window-checklist-chemicals'}"
+                               StyleClasses="LabelSubText"
+                               FontColorOverride="Orange"/>
+                        <Label Text="⋄"
+                               StyleClasses="LabelSubText"/>
+                        <Label Name="TemperatureCheck"
+                               Text="{Loc 'cryo-pod-window-checklist-temperature'}"
+                               StyleClasses="LabelSubText"/>
+                    </GridContainer>
+
+                </BoxContainer>
+
+            </BoxContainer>
+
+            <!-- Reagents -->
+            <Control HorizontalExpand="True"
+                     MinHeight="30">
+                <Label Name="NoBeakerText"
+                       Text="{Loc 'cryo-pod-window-chems-no-beaker'}"
+                       FontColorOverride="Gray"
+                       VerticalExpand="True"
+                       VAlign="Center"/>
+                <cryogenics:BeakerBarChart Name="ChemicalsChart"
+                                  HorizontalExpand="True"
+                                  VerticalExpand="True"/>
+            </Control>
+
+            <!-- Buttons -->
+            <BoxContainer Orientation="Vertical"
+                          Margin="-2 2 -2 0">
+                <BoxContainer Orientation="Horizontal">
+                    <Button Name="Inject1"
+                            Text="{Loc 'cryo-pod-window-inject-1u'}"
+                            Disabled="True"
+                            HorizontalExpand="True"
+                            StyleClasses="OpenBoth"/>
+                    <Button Name="Inject5"
+                            Text="{Loc 'cryo-pod-window-inject-5u'}"
+                            Disabled="True"
+                            HorizontalExpand="True"
+                            StyleClasses="OpenBoth"/>
+                    <Button Name="Inject10"
+                            Text="{Loc 'cryo-pod-window-inject-10u'}"
+                            Disabled="True"
+                            HorizontalExpand="True"
+                            StyleClasses="OpenBoth"/>
+                    <Button Name="Inject20"
+                            Text="{Loc 'cryo-pod-window-inject-20u'}"
+                            Disabled="True"
+                            HorizontalExpand="True"
+                            StyleClasses="OpenBoth"/>
+                    <Button Name="EjectBeakerButton"
+                            Text="{Loc 'cryo-pod-window-eject-beaker'}"
+                            Disabled="True"
+                            StyleClasses="OpenBoth"/>
+                </BoxContainer>
+                <Button Name="EjectPatientButton"
+                        Text="{Loc 'cryo-pod-window-eject-patient'}"
+                        Disabled="True"
+                        HorizontalExpand="True"
+                        StyleClasses="OpenRight"/>
+            </BoxContainer>
+
+        </BoxContainer>
+        <BoxContainer Name="HealthSection"
+                      VerticalExpand="True"
+                      Orientation="Vertical">
+
+            <health:HealthAnalyzerControl Name="HealthAnalyzer"/>
+
+            <!-- This label is used to deal with a stray hline at the end of the health analyzer UI -->
+            <Label Name="NoDamageText"
+                   Text="{Loc 'cryo-pod-window-health-no-damage'}"
+                   FontColorOverride="DeepSkyBlue"/>
+            <Control VerticalExpand="True"/>
+
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
