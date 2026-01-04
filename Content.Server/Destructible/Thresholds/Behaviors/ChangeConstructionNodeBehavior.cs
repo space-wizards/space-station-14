@@ -1,4 +1,7 @@
-﻿using Content.Server.Construction.Components;
+﻿using Content.Server.Construction;
+using Content.Server.Construction.Components;
+using Content.Shared.Destructible;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
@@ -9,12 +12,14 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("node")]
         public string Node { get; private set; } = string.Empty;
 
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        public void Execute(EntityUid owner, DestructibleBehaviorSystem system, EntityUid? cause = null)
         {
+            var constructionSystem = system.EntityManager.System<ConstructionSystem>();
+
             if (string.IsNullOrEmpty(Node) || !system.EntityManager.TryGetComponent(owner, out ConstructionComponent? construction))
                 return;
 
-            system.ConstructionSystem.ChangeNode(owner, null, Node, true, construction);
+            constructionSystem.ChangeNode(owner, null, Node, true, construction);
         }
     }
 }
