@@ -91,7 +91,6 @@
         whitelist:
           tags:
             - PowerCell
-            - PowerCellSmall
   - type: BatteryAmmoProvider
     proto: RedLightLaser
     fireCost: 50

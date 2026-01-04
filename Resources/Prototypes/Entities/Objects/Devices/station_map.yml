@@ -47,6 +47,9 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+        whitelist:
+          tags:
+          - PowerCell
 
 - type: entity
   id: HandheldStationMapUnpowered

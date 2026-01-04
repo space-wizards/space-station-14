@@ -47,6 +47,9 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellMedium
+        whitelist:
+          tags:
+          - PowerCell
   - type: Sprite
     sprite: Objects/Tools/flashlight.rsi
     layers:
@@ -135,3 +138,6 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+        whitelist:
+          tags:
+          - PowerCell
