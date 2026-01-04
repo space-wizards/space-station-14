@@ -30,6 +30,14 @@
   id: Lawyer
   name: id-card-access-level-lawyer
 
+- type: accessLevel
+  id: Library
+  name: id-card-access-level-library
+
+- type: accessLevel
+  id: Newsroom
+  name: id-card-access-level-newsroom
+
 - type: accessGroup
   id: Service
   tags:
@@ -42,3 +50,5 @@
   - Theatre
   - Chapel
   - Lawyer
+  - Library
+  - Newsroom
