@@ -100,7 +100,7 @@ public sealed partial class AnomalySystem
 
             // no air-blocked areas.
             if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile) ||
-                _atmosphere.IsTileAirBlocked(grid, tile, mapGridComp: gridComp))
+                _atmosphere.IsTileAirBlockedCached(grid, tile))
             {
                 continue;
             }
