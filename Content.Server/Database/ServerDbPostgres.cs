@@ -341,7 +341,9 @@ namespace Content.Server.Database
 
             await using var db = await GetDbImpl();
 
-            var query = MakeRoleBanLookupQuery(address, userId, hwId, modernHWIds, db, includeUnbanned)
+            var exempt = await GetBanExemptionCore(db, userId);
+
+            var query = MakeRoleBanLookupQuery(address, userId, hwId, modernHWIds, db, exempt, includeUnbanned)
                 .OrderByDescending(b => b.BanTime);
 
             return await QueryRoleBans(query);
@@ -371,6 +373,7 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             ImmutableArray<ImmutableArray<byte>>? modernHWIds,
             DbGuardImpl db,
+            ServerBanExemptFlags? flags,
             bool includeUnbanned)
         {
             var query = MakeBanLookupQualityShared<ServerRoleBan, ServerRoleUnban>(
@@ -379,7 +382,9 @@ namespace Content.Server.Database
                 modernHWIds,
                 db.PgDbContext.RoleBan);
 
-            if (address != null)
+            // We only care about the IP flag since while it is possible for rolebans to match IPs, they cannot have
+            // exemptions of their own. As such the only flag that makes sense is the IP flag for the player.
+            if (address != null && !flags.GetValueOrDefault(ServerBanExemptFlags.None).HasFlag(ServerBanExemptFlags.IP))
             {
                 var newQ = db.PgDbContext.RoleBan
                     .Include(p => p.Unban)
