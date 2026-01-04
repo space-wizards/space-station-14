@@ -399,7 +399,6 @@
       Dead:
         Base: founder_dead
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeatXeno
       amount: 5
@@ -445,7 +444,6 @@
       Dead:
         Base: leviathing_dead
   - type: Butcherable
-    butcheringType: Spike
     spawned:
     - id: FoodMeatXeno
       amount: 10

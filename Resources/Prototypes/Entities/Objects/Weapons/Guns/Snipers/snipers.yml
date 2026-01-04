@@ -83,8 +83,9 @@
     solution: melee
   - type: SolutionTransfer
     maxTransferAmount: 2
-  - type: Sharp
-    butcherDelayModifier: 2 #It's a bayonet
+  - type: Tool
+    qualities: Slicing
+    speedModifier: 0.5 #It's a bayonet
   - type: GunRequiresWield
   - type: StaticPrice
     price: 500
@@ -133,7 +134,9 @@
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
-  - type: Sharp
+  - type: Tool
+    qualities:
+    - Slicing
   - type: Item
     size: Large
   - type: Sprite

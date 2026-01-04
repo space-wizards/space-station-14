@@ -95,8 +95,8 @@
         Base: bear_dead
       Dead:
         Base: bear_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatBear
       amount: 3
     - id: MaterialHideBear
@@ -211,8 +211,8 @@
         BaseUnshaded: glow
       Dead:
         Base: spacespider_dead
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatSpider
       amount: 2
     - id: EggSpider
@@ -314,8 +314,8 @@
           BaseUnshaded: glow
         Dead:
           Base: dead_spacecobra
-    - type: Butcherable
-      spawned:
+    - type: Sliceable
+      slices:
         - id: FoodMeatSnake
           amount: 2
         - id: UraniumOre1
@@ -487,10 +487,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
-  - type: Butcherable
-    spawned:
+  - type: Sliceable
+    slices:
     - id: FoodMeatSnail
-      amount: 1
   - type: Tag
     tags:
     - Trash

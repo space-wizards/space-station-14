@@ -6,7 +6,6 @@
   - type: Tag
     tags:
     - Knife
-  - type: Sharp
   - type: Execution
     doAfterDuration: 4.0
   - type: Utensil
@@ -24,7 +23,7 @@
     size: Small
   - type: Tool
     qualities:
-      - Slicing
+    - Slicing
     useSound:
       path: /Audio/Items/Culinary/chop.ogg
 
@@ -389,15 +388,12 @@
     components:
     - type: Execution
       doAfterDuration: 4.0
-    - type: Sharp
     - type: Utensil
       types:
       - Knife
     - type: Tool
       qualities:
       - Slicing
-      useSound:
-        path: /Audio/Items/Culinary/chop.ogg
   - type: Item
     size: Tiny
     sprite: Objects/Weapons/Melee/utility_knife.rsi

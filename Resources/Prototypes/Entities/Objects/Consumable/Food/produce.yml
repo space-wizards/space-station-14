@@ -148,9 +148,10 @@
   - type: SolutionContainerManager
   - type: Produce
     seedId: papercane
-  - type: Log
-    spawnedPrototype: SheetPaper1
-    spawnCount: 2
+  - type: Sliceable
+    slices:
+    - id: SheetPaper1
+      amount: 2
 
 - type: entity
   parent: FoodProduceBase
@@ -205,7 +206,12 @@
         Blunt: 10
   - type: Produce
     seedId: towercap
-  - type: Log
+  - type: Sliceable
+    toolQuality: Sawing
+    solutionToSplit: null
+    slices:
+    - id: MaterialWoodPlank1
+      amount: 2
 
 - type: entity
   name: steel-cap log
@@ -224,9 +230,11 @@
         Blunt: 12
   - type: Produce
     seedId: steelcap
-  - type: Log
-    spawnedPrototype: SheetSteel1
-    spawnCount: 1
+  - type: Sliceable
+    solutionToSplit: null
+    toolQuality: Sawing
+    slices:
+    - id: SheetSteel1
 
 - type: entity
   name: nettle
@@ -852,9 +860,10 @@
       reagents:
       - ReagentId: JuicePineapple
         Quantity: 10
-  - type: SliceableFood
-    count: 5
-    slice: FoodPineappleSlice
+  - type: Sliceable
+    slices:
+    - id: FoodPineappleSlice
+      amount: 5
   - type: Tag
     tags:
     - Fruit
@@ -1297,9 +1306,10 @@
     heldPrefix: produce
   - type: Produce
     seedId: onion
-  - type: SliceableFood
-    count: 5
-    slice: FoodOnionSlice
+  - type: Sliceable
+    slices:
+    - id: FoodOnionSlice
+      amount: 5
   - type: Tag
     tags:
     - Vegetable
@@ -1330,9 +1340,10 @@
     heldPrefix: produce
   - type: Produce
     seedId: onionred
-  - type: SliceableFood
-    count: 5
-    slice: FoodOnionRedSlice
+  - type: Sliceable
+    slices:
+    - id: FoodOnionRedSlice
+      amount: 5
   - type: Tag
     tags:
     - Vegetable
@@ -2155,13 +2166,12 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: SliceableFood
-    count: 5
-    slice: FoodWatermelonSlice
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
+    - id: FoodWatermelonSlice
+      amount: 5
     - id: ClothingHeadHatWatermelon
+      prob: 0.5
   - type: Tag
     tags:
     - Fruit
@@ -2258,13 +2268,12 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: SliceableFood
-    count: 5
-    slice: FoodHolymelonSlice
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
+    - id: FoodHolymelonSlice
+      amount: 5
     - id: ClothingHeadHatHolyWatermelon
+      prob: 0.5
   - type: Tag
     tags:
     - Fruit
@@ -2555,9 +2564,8 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
+  - type: Sliceable
+    slices:
     - id: CarvedPumpkin
     - id: PumpkinSeeds
   - type: Tag
@@ -2635,9 +2643,10 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-  - type: Log
-    spawnedPrototype: MaterialCotton1
-    spawnCount: 2
+  - type: Sliceable
+    slices:
+    - id: MaterialCotton1
+      amount: 2
   - type: Produce
     seedId: cotton
   - type: Tag
@@ -2669,9 +2678,10 @@
           Quantity: 5
         - ReagentId: Phlogiston
           Quantity: 5
-  - type: Log
-    spawnedPrototype: MaterialPyrotton1
-    spawnCount: 2
+  - type: Sliceable
+    slices:
+    - id: MaterialPyrotton1
+      amount: 2
   - type: Produce
     seedId: pyrotton
   - type: Tag
