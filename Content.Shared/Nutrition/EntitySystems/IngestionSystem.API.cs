@@ -220,7 +220,7 @@ public sealed partial class IngestionSystem
             if (reagent.Metabolisms == null)
                 continue;
 
-            foreach (var entry in reagent.Metabolisms.Values)
+            foreach (var entry in reagent.Metabolisms.Metabolisms.Values)
             {
                 foreach (var effect in entry.Effects)
                 {
@@ -271,7 +271,7 @@ public sealed partial class IngestionSystem
             if (reagent.Metabolisms == null)
                 continue;
 
-            foreach (var entry in reagent.Metabolisms.Values)
+            foreach (var entry in reagent.Metabolisms.Metabolisms.Values)
             {
                 foreach (var effect in entry.Effects)
                 {
