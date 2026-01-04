@@ -44,6 +44,17 @@
     - MedicalDoctor
 
 - type: entity
+  id: BorgHealthAnalyzer
+  parent: HandheldHealthAnalyzerUnpowered
+  name: integrated anaylzer
+  suffix: DO NOT MAP
+  description: An integrated body scanner capable of distinguishing vital signs of the subject quicker than handheld modules.
+  components:
+  - type: HealthAnalyzer
+    scanDelay: 0.4 # Half the time of a handheld analyzer.
+
+
+- type: entity
   id: HandheldHealthAnalyzer
   parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
   suffix: ""
