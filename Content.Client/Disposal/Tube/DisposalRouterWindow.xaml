@@ -2,19 +2,20 @@
             Title="{Loc 'disposal-router-window-title'}"
             MinSize="500 110"
             SetSize="500 110">
-    <BoxContainer Orientation="Vertical">
-        <Label Text="{Loc 'disposal-router-window-tags-label'}" />
-        <Control MinSize="0 10" />
-        <BoxContainer Orientation="Horizontal">
+    <BoxContainer Orientation="Vertical" SeparationOverride="5">
+        <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+            <Label Text="{Loc 'disposal-router-window-tags-label'}" />
             <LineEdit Name="TagInput"
                       Access="Public"
                       HorizontalExpand="True"
                       MinSize="320 0"
                       ToolTip="{Loc 'disposal-router-window-tag-input-tooltip'}" />
-            <Control MinSize="10 0" />
             <Button Name="Confirm"
                     Access="Public"
                     Text="{Loc 'disposal-router-window-tag-input-confirm-button'}" />
         </BoxContainer>
+        <CheckBox Name="BackwardsAllowed"
+                  Text="{Loc 'disposal-junction-backwards-travel-checkbox'}"
+                  Access="Public" />
     </BoxContainer>
 </DefaultWindow>
