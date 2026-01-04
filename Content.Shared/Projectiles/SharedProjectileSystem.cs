@@ -4,6 +4,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Teleportation.Systems;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -32,6 +33,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<ProjectileComponent, TeleportedEvent>(OnTeleported);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
@@ -205,6 +207,15 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         {
             args.Cancelled = true;
         }
+    }
+
+    // Some special cased stuff: projectiles should stop ignoring shooter when they enter a portal, to avoid
+    // stacking 500 bullets in between 2 portals and instakilling people--you'll just hit yourself instead
+    // (as expected)
+    private void OnTeleported(Entity<ProjectileComponent> ent, ref TeleportedEvent args)
+    {
+        ent.Comp.IgnoreShooter = false;
+        Dirty(ent);
     }
 
     public void SetShooter(EntityUid id, ProjectileComponent component, EntityUid shooterId)
