@@ -43,7 +43,6 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, PointAttemptEvent>(CheckAct);
-        SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
         SubscribeLocalEvent<MobStateComponent, CombatModeShouldHandInteractEvent>(OnCombatModeShouldHandInteract);
         SubscribeLocalEvent<MobStateComponent, AttemptPacifiedAttackEvent>(OnAttemptPacifiedAttack);
         SubscribeLocalEvent<MobStateComponent, DamageModifyEvent>(OnDamageModify);
@@ -141,12 +140,6 @@ public partial class MobStateSystem
     }
 
     #region Event Subscribers
-
-    private void OnSleepAttempt(EntityUid target, MobStateComponent component, ref TryingToSleepEvent args)
-    {
-        if (IsDead(target, component))
-            args.Cancelled = true;
-    }
 
     private void OnGettingStripped(EntityUid target, MobStateComponent component, BeforeGettingStrippedEvent args)
     {
