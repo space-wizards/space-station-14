@@ -37,6 +37,5 @@ ui-vote-abuse-warning =
 ui-vote-fluff = Powered by Robust™ Anti-Tamper Technology
 
 ## Vote menu command
-
 cmd-votemenu-desc = Opens the voting menu.
-cmd-votemenu-help = Usage: votemenu
+cmd-votemenu-help = Usage: {$command}

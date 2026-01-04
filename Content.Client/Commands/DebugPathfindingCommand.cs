@@ -13,8 +13,6 @@ public sealed class DebugPathfindingCommand : LocalizedCommands
 
     public override string Command => "pathfinder";
 
-    public override string Help => LocalizationManager.GetString($"cmd-{Command}-help", ("command", Command));
-
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var system = _entitySystemManager.GetEntitySystem<PathfindingSystem>();
@@ -29,12 +27,12 @@ public sealed class DebugPathfindingCommand : LocalizedCommands
         {
             if (!Enum.TryParse<PathfindingDebugMode>(arg, out var mode))
             {
-                shell.WriteError(LocalizationManager.GetString($"cmd-{Command}-error", ("arg", arg)));
+                shell.WriteError(Loc.GetString("cmd-pathfinder-error", ("arg", arg)));
                 continue;
             }
 
             system.Modes ^= mode;
-            shell.WriteLine(LocalizationManager.GetString($"cmd-{Command}-notify", ("arg", arg), ("newMode", (system.Modes & mode) != 0x0)));
+            shell.WriteLine(Loc.GetString("cmd-pathfinder-notify", ("arg", arg), ("newMode", (system.Modes & mode) != 0x0)));
         }
     }
 

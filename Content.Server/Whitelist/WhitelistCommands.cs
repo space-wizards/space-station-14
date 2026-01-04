@@ -14,6 +14,7 @@ public sealed class AddWhitelistCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IServerDbManager _dbManager = default!;
+
     public override string Command => "whitelistadd";
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -134,7 +135,7 @@ public sealed class KickNonWhitelistedCommand : LocalizedCommands
                 continue;
 
             if (!await _dbManager.GetWhitelistStatusAsync(session.UserId))
-                _netManager.DisconnectChannel(session.Channel, Loc.GetString("whitelist-not-whitelisted"));
+                _netManager.DisconnectChannel(session.Channel, Loc.GetString("whitelist-not-whitelisted")); // TODO: No localization key
         }
     }
 }
