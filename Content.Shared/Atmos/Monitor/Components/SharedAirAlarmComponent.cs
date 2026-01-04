@@ -134,3 +134,11 @@ public sealed class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMess
         Gas = gas;
     }
 }
+
+[Serializable, NetSerializable]
+public sealed class AirAlarmToggleThresholdsMessage(string address, AtmosSensorData currentSensorData)
+    : BoundUserInterfaceMessage
+{
+    public string Address { get; } = address;
+    public AtmosSensorData CurrentSensorData { get; } = currentSensorData;
+}
