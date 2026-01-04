@@ -1,29 +1,30 @@
 using Content.Shared.Examine;
-using Content.Shared.Coordinates.Helpers;
-using Content.Shared.PowerCell;
 using Content.Shared.Interaction;
+using Content.Shared.PowerCell;
 using Content.Shared.Storage;
+using Robust.Shared.Network;
 
-namespace Content.Server.Holosign;
+namespace Content.Shared.Holosign;
 
 public sealed class HolosignSystem : EntitySystem
 {
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<HolosignProjectorComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
         SubscribeLocalEvent<HolosignProjectorComponent, ExaminedEvent>(OnExamine);
     }
 
-    private void OnExamine(EntityUid uid, HolosignProjectorComponent component, ExaminedEvent args)
+    private void OnExamine(Entity<HolosignProjectorComponent> ent, ref ExaminedEvent args)
     {
         // TODO: This should probably be using an itemstatus
         // TODO: I'm too lazy to do this rn but it's literally copy-paste from emag.
-        var charges = _powerCell.GetRemainingUses(uid, component.ChargeUse);
-        var maxCharges = _powerCell.GetMaxUses(uid, component.ChargeUse);
+        var charges = _powerCell.GetRemainingUses(ent.Owner, ent.Comp.ChargeUse);
+        var maxCharges = _powerCell.GetMaxUses(ent.Owner, ent.Comp.ChargeUse);
 
         using (args.PushGroup(nameof(HolosignProjectorComponent)))
         {
@@ -36,23 +37,18 @@ public sealed class HolosignSystem : EntitySystem
         }
     }
 
-    private void OnBeforeInteract(EntityUid uid, HolosignProjectorComponent component, BeforeRangedInteractEvent args)
+    private void OnBeforeInteract(Entity<HolosignProjectorComponent> ent, ref BeforeRangedInteractEvent args)
     {
-
         if (args.Handled
             || !args.CanReach // prevent placing out of range
             || HasComp<StorageComponent>(args.Target) // if it's a storage component like a bag, we ignore usage so it can be stored
-            || !_powerCell.TryUseCharge(uid, component.ChargeUse, user: args.User) // if no battery or no charge, doesn't work
+            || !_powerCell.TryUseCharge(ent.Owner, ent.Comp.ChargeUse, user: args.User, predicted: true) // if no battery or no charge, doesn't work
             )
             return;
 
-        // places the holographic sign at the click location, snapped to grid.
         // overlapping of the same holo on one tile remains allowed to allow holofan refreshes
-        var holoUid = Spawn(component.SignProto, args.ClickLocation.SnapToGrid(EntityManager));
-        var xform = Transform(holoUid);
-        // TODO: Just make the prototype anchored
-        if (!xform.Anchored)
-            _transform.AnchorEntity(holoUid, xform); // anchor to prevent any tempering with (don't know what could even interact with it)
+        if (ent.Comp.PredictedSpawn || _net.IsServer)
+            PredictedSpawnAtPosition(ent.Comp.SignProto, args.ClickLocation);
 
         args.Handled = true;
     }
