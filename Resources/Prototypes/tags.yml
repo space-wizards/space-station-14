@@ -99,7 +99,7 @@
   id: BorgHead # Used by PartAssemblyComponent on CyborgEndoskeleton. Also in ConstructionGraphs for various bots
 
 - type: Tag
-  id: BorgLeg # Used by PartAssemblyComponent on VimHarness
+  id: BorgLeg # Used by PartAssemblyComponent on VimHarness, also ConstructionGraph: BoomBot
 
 - type: Tag
   id: BorgLArm # Used by PartAssemblyComponent on CyborgEndoskeleton
@@ -159,7 +159,7 @@
   id: Bottle # Storage whitelist: ChemMaster, ChemBag, SmartFridge, ClothingBeltJanitor, ClothingBeltMedical, ClothingBeltPlant
 
 - type: Tag
-  id: BoxCardboard # CargoBounty: BountyCardboardBox. Storage whitelist: MailCart
+  id: BoxCardboard # CargoBounty: BountyCardboardBox. Storage whitelist: MailCart. ConstructionGraph: BoomBot
 
 - type: Tag
   id: BoxHug # ConstructionGraph: HugBot
@@ -1379,6 +1379,9 @@
 
 - type: Tag
   id: Syndicate # FTLDestination whitelist in nukieplanet.yml. Tag exists on ComputerShuttleSyndie and infiltrator.yml
+
+- type: Tag
+  id: SynthesizerInstrument # ConstructionGraph: BoomBot
 
 - type: Tag
   id: Syringe # Storage whitelist: ClothingBeltPlant, ChemBag, SmartFridge. CargoBounty: BountySyringe
