@@ -84,6 +84,8 @@
         behaviors:
         - !type:DoActsBehavior
           acts: [ "Breakage" ]
+        - !type:ChangeConstructionNodeBehavior
+          node: machineFrame
       - trigger:
           !type:DamageTrigger
           damage: 600

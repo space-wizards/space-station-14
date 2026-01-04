@@ -9,7 +9,7 @@
             - !type:SnapToGrid { }
           steps:
             - material: Steel
-              amount: 3
+              amount: 10
               doAfter: 1
 
 
@@ -30,7 +30,7 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
-              amount: 3
+              amount: 10
             - !type:DeleteEntity {}
           conditions:
             - !type:EntityAnchored

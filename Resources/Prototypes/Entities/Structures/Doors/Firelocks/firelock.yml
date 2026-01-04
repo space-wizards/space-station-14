@@ -34,10 +34,30 @@
       thresholds:
       - trigger:
           !type:DamageTrigger
-          damage: 500
+          damage: 1000
         behaviors:
         - !type:DoActsBehavior
           acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalCrunch
+            params:
+              volume: -4
+      - trigger:
+          !type:DamageTrigger
+          damage: 500
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalCrunch
+            params:
+              volume: -4
+        - !type:WeightedSpawnEntityBehavior
+          weightedEntityTable: "FirelockFrameDestructionSpawnTable"
+          minSpawn: 1
+          maxSpawn: 1
     - type: Sprite
       sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
       snapCardinals: true
@@ -187,8 +207,43 @@
           - HighImpassable
           layer:
           - GlassAirlockLayer
+    - type: StaticPrice
+      price: 180
     - type: Door
       occludes: false
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 1000
+        behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalGlassBreak
+            params:
+              volume: -4
+      - trigger:
+          !type:DamageTrigger
+          damage: 500
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalGlassBreak
+            params:
+              volume: -4
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            ShardGlass:
+              min: 1
+              max: 1
+        - !type:WeightedSpawnEntityBehavior
+          weightedEntityTable: "FirelockFrameDestructionSpawnTable"
+          minSpawn: 1
+          maxSpawn: 1
     - type: Construction
       node: FirelockGlass
 
@@ -227,7 +282,7 @@
     - type: Physics
       canCollide: false
     - type: StaticPrice
-      price: 100
+      price: 150
     - type: Construction
       graph: Firelock
       node: FirelockEdge

@@ -80,16 +80,37 @@
     thresholds:
     - trigger: # Excess damage, don't spawn entities
         !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
         damage: 200
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+          params:
+            volume: -4
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
         acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+          params:
+            volume: -4
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
