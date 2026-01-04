@@ -7,7 +7,7 @@ namespace Content.Shared.Strip.Components;
 /// <summary>
 /// Give this to an entity when you want to decrease stripping times
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent(restriction: StateRestriction.OwnerOnly)]
 [AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class ThievingComponent : Component
 {
@@ -28,13 +28,6 @@ public sealed partial class ThievingComponent : Component
     /// </summary>
     [DataField]
     public ProtoId<AlertPrototype> StealthyAlertProtoId = "Stealthy";
-
-    /// <summary>
-    /// Prevent component replication to clients other than the owner,
-    /// doesn't affect prediction.
-    /// Get mogged.
-    /// </summary>
-    public override bool SendOnlyToOwner => true;
 }
 
 /// <summary>
