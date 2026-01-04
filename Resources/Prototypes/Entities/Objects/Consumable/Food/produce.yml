@@ -148,9 +148,12 @@
   - type: SolutionContainerManager
   - type: Produce
     seedId: papercane
-  - type: Log
-    spawnedPrototype: SheetPaper1
-    spawnCount: 2
+  - type: SliceableFood
+    slice: SheetPaper1
+    count: 4
+    sliceTime: 0.5
+    potencyEffectsCount: true
+    anySharp: true
 
 - type: entity
   parent: FoodProduceBase
@@ -205,7 +208,12 @@
         Blunt: 10
   - type: Produce
     seedId: towercap
-  - type: Log
+  - type: SliceableFood
+    slice: MaterialWoodPlank1
+    count: 5
+    sliceTime: 0.5
+    potencyEffectsCount: true
+    anySharp: true
 
 - type: entity
   name: steel-cap log
@@ -224,9 +232,12 @@
         Blunt: 12
   - type: Produce
     seedId: steelcap
-  - type: Log
-    spawnedPrototype: SheetSteel1
-    spawnCount: 1
+  - type: SliceableFood
+    slice: SheetSteel1
+    count: 3
+    sliceTime: 0.5
+    potencyEffectsCount: true
+    anySharp: true
 
 - type: entity
   name: nettle
@@ -2635,9 +2646,12 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-  - type: Log
-    spawnedPrototype: MaterialCotton1
-    spawnCount: 2
+  - type: SliceableFood
+    slice: MaterialCotton1
+    count: 4
+    sliceTime: 0.5
+    potencyEffectsCount: true
+    anySharp: true
   - type: Produce
     seedId: cotton
   - type: Tag
@@ -2669,9 +2683,12 @@
           Quantity: 5
         - ReagentId: Phlogiston
           Quantity: 5
-  - type: Log
-    spawnedPrototype: MaterialPyrotton1
-    spawnCount: 2
+  - type: SliceableFood
+    slice: MaterialPyrotton1
+    count: 4
+    sliceTime: 0.5
+    potencyEffectsCount: true
+    anySharp: true
   - type: Produce
     seedId: pyrotton
   - type: Tag
