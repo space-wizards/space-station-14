@@ -43,6 +43,7 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
 
         _artifactSystem = _entityManager.System<XenoArtifactSystem>();
 
+        // TODO: Move fonts to stylesheets, respect user font preferences.
         var fontResource = IoCManager.Resolve<IResourceCache>()
                                      .GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
         _font = new VectorFont(fontResource, 16);

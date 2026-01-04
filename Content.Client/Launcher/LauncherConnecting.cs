@@ -1,4 +1,5 @@
 using System;
+using Content.Client.Stylesheets;
 using Robust.Client;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
@@ -20,6 +21,7 @@ namespace Content.Client.Launcher
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IClipboardManager _clipboard = default!;
+        [Dependency] private readonly IStylesheetManager _stylesheets = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
 
         private LauncherConnectingGui? _control;
@@ -61,7 +63,7 @@ namespace Content.Client.Launcher
 
         protected override void Startup()
         {
-            _control = new LauncherConnectingGui(this, _random, _prototypeManager, _cfg, _clipboard);
+            _control = new LauncherConnectingGui(this, _random, _prototypeManager, _cfg, _clipboard, _stylesheets);
 
             _sawmill = _logManager.GetSawmill("launcher-ui");
 
