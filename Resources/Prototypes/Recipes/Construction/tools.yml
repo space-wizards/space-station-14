@@ -45,3 +45,13 @@
   targetNode: random_gate
   category: construction-category-tools
   objectType: Item
+
+- type: construction
+  name: rng-device-name
+  id: RngDevice
+  graph: RngDevice
+  startNode: start
+  targetNode: empty
+  category: construction-category-tools
+  description: rng-device-description
+  objectType: Item

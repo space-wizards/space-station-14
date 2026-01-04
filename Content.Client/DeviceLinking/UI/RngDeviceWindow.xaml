@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:s="clr-namespace:Content.Client.Stylesheets"
+            x:Class="Content.Client.DeviceLinking.UI.RngDeviceWindow"
+            MinSize="400 150" Title="RNG Device">
+    <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
+        <BoxContainer Name="TargetNumberContainer" Orientation="Vertical">
+            <Label Text="{Loc rng-device-section-target}" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig"/>
+            <BoxContainer Orientation="Horizontal">
+                <BoxContainer Orientation="Vertical">
+                    <Label Text="{Loc rng-device-input-target}"/>
+                    <Control VerticalExpand="True"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="15 0 0 0" SeparationOverride="5">
+                    <Slider Name="TargetNumberSlider" HorizontalExpand="True" MinValue="1" MaxValue="100"/>
+                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Name="MinusButton" Text="-" MinWidth="30"/>
+                        <SpinBox MinSize="60 0" Name="TargetNumberSpinBox" Access="Public" Value="50"/>
+                        <Button Name="PlusButton" Text="+" MinWidth="30"/>
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+
+        <BoxContainer Orientation="Vertical">
+            <Label Text="{Loc rng-device-section-options}" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig"/>
+            <BoxContainer Orientation="Horizontal">
+                <CheckBox Name="MuteCheckBox" Text="{Loc rng-device-checkbox-mute}"/>
+                <CheckBox Name="EdgeModeCheckBox" Text="{Loc rng-device-checkbox-edge-mode}" Margin="10 0 0 0"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
