@@ -822,6 +822,22 @@
     job: CargoTechnician
 
 - type: entity
+  parent: CargoIDCard
+  id: SeniorCourierIDCard
+  name: senior courier ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: stripe_top
+      color: *color-supply-top
+    - state: stripe_bottom
+      color: *color-supply-bottom
+    - sprite: *icon-rsi
+      offset: *icon-offset
+      state: SeniorCourier
+
+- type: entity
   parent: IDCardStandard
   id: SalvageIDCard
   name: salvage ID card
