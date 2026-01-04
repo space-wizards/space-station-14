@@ -36,7 +36,9 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Disposal.Unit;
 
 [Serializable, NetSerializable]
-public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent;
+[Serializable, NetSerializable]
+public sealed partial class DisposalExitDoAfterEvent : SimpleDoAfterEvent
 {
 }
 
@@ -77,6 +79,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<Verb>>(AddClimbInsideVerb);
 
         SubscribeLocalEvent<DisposalUnitComponent, DisposalDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<DisposalUnitComponent, DisposalExitDoAfterEvent>(OnDisposalExitDoAfter);
 
         SubscribeLocalEvent<DisposalUnitComponent, BeforeThrowInsertEvent>(OnThrowInsert);
 
@@ -98,7 +101,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     private void AddDisposalAltVerbs(Entity<DisposalUnitComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
         var uid = ent.Owner;
@@ -164,6 +167,16 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnDisposalExitDoAfter(EntityUid uid, DisposalUnitComponent component, DisposalExitDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        Remove(uid, component, args.Args.User);
+        UpdateUI((uid, component));
+        args.Handled = true;
+    }
+
     private void OnThrowInsert(Entity<DisposalUnitComponent> ent, ref BeforeThrowInsertEvent args)
     {
         if (!CanInsert(ent, ent, args.ThrownEntity))
@@ -184,20 +197,23 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     // TODO: This should just use the same thing as entity storage?
     private void OnMovement(EntityUid uid, DisposalUnitComponent component, ref ContainerRelayMovementEntityEvent args)
     {
-        var currentTime = GameTiming.CurTime;
-
         if (!ActionBlockerSystem.CanMove(args.Entity))
             return;
 
-        if (!TryComp(args.Entity, out HandsComponent? hands) ||
-            hands.Count == 0 ||
-            currentTime < component.LastExitAttempt + ExitAttemptDelay)
-            return;
+        var exitTime = component.EntryDelay;
+        if (!TryComp(args.Entity, out HandsComponent? hands))
+        {
+            exitTime *= 1.5f;
+        }
 
-        Dirty(uid, component);
-        component.LastExitAttempt = currentTime;
-        Remove(uid, component, args.Entity);
-        UpdateUI((uid, component));
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.Entity, exitTime, new DisposalExitDoAfterEvent(), uid)
+        {
+            BreakOnMove = false,
+            BreakOnDamage = true,
+            NeedHand = false,
+        };
+
+        _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 
     private void OnActivate(EntityUid uid, DisposalUnitComponent component, ActivateInWorldEvent args)
@@ -518,6 +534,11 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         var delay = insertingSelf ? unit.EntryDelay : unit.DraggedEntryDelay;
 
+        if (userId.HasValue && !HasComp<HandsComponent>(userId.Value))
+        {
+            delay *= 1.5f;
+        }
+
         if (userId != null && !insertingSelf)
             _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted", ("user", Identity.Entity((EntityUid)userId, EntityManager))), toInsertId, toInsertId, PopupType.Large);
 
@@ -767,6 +788,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
         if (!args.CanAccess ||
             !args.CanInteract ||
+            !args.CanComplexInteract ||
             component.Container.ContainedEntities.Contains(args.User) ||
             !ActionBlockerSystem.CanMove(args.User))
         {
