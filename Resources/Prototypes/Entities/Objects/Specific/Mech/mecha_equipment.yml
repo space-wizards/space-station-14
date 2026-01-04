@@ -1,7 +1,56 @@
 - type: entity
+  abstract: true
+  id: DebugMechEquipment
+  categories: [ HideSpawnMenu ]
+  suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+    - UniversalMech
+    - CombatMech
+    - IndustrialMech
+    - SpecialMech
+
+- type: entity
+  abstract: true
+  id: UniversalMechEquipment
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - UniversalMech
+
+- type: entity
+  abstract: true
+  id: CombatMechEquipment
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - CombatMech
+
+- type: entity
+  abstract: true
+  id: IndustrialMechEquipment
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - IndustrialMech
+
+- type: entity
+  abstract: true
+  id: SpecialMechEquipment
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - SpecialMech
+
+- type: entity
+  abstract: true
   parent: BaseItem
   id: BaseMechEquipment
-  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
@@ -14,8 +63,8 @@
     - Robotics
 
 - type: entity
+  parent: [ BaseMechEquipment, IndustrialMechEquipment ]
   id: MechEquipmentGrabber
-  parent: BaseMechEquipment
   name: hydraulic clamp
   description: Gives the mech the ability to grab things and drag them around.
   components:
@@ -36,8 +85,8 @@
       item-container: !type:Container
 
 - type: entity
+  parent: [ BaseMechEquipment, UniversalMechEquipment ]
   id: MechEquipmentGrabberSmall
-  parent: BaseMechEquipment
   name: small hydraulic clamp
   description: Gives the mech the ability to grab things and drag them around.
   components:
@@ -49,45 +98,14 @@
       - state: inhand-left-small
       right:
       - state: inhand-right-small
+  - type: Prying
   - type: MultiHandedItem
   - type: MechGrabber
     maxContents: 4
     grabDelay: 3
     grabEnergyDelta: -20
-  - type: Tag
-    tags:
-    - SmallMech
   - type: UIFragment
     ui: !type:MechGrabberUi
   - type: ContainerContainer
     containers:
       item-container: !type:Container
-
-- type: entity
-  id: MechEquipmentHorn
-  parent: BaseMechEquipment
-  name: mech horn
-  description: An enhanced bike horn that plays a hilarious array of sounds for the enjoyment of the crew. HONK!
-  components:
-  - type: Sprite
-    # TODO: use own sprite
-    state: mecha_honker
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left-honk
-      right:
-      - state: inhand-right-honk
-  - type: MultiHandedItem
-  - type: MechSoundboard
-    sounds:
-    - collection: BikeHorn
-    - collection: CluwneHorn
-    - collection: TrollAnimals
-    - collection: TrollBeeping
-    - collection: TrollEsword
-  - type: UIFragment
-    ui: !type:MechSoundboardUi
-  - type: UseDelay
-    delay: 0.5
-  # TODO: tag as being for H.O.N.K. only!!!

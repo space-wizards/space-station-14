@@ -1,0 +1,61 @@
+- type: entity
+  parent: [ BaseMechWeaponRange, SpecialMechEquipment ]
+  id: WeaponMechSpecialMousetrapMortar
+  name: mousetrap mortar
+  suffix: Mech Weapon, Gun, Special, Mortar
+  description: Mounted mousetrap launcher.
+  components:
+  - type: Sprite
+    state: mecha_mousetrapmrtr
+  - type: Battery
+    maxCharge: 300
+    startingCharge: 300
+  - type: Gun
+    minAngle: 24
+    maxAngle: 45
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: AmmoCounter
+  - type: BatteryAmmoProvider
+    proto: MousetrapArmed
+    fireCost: 100
+  - type: Appearance
+
+- type: entity
+  parent: [ BaseMechWeaponRange, SpecialMechEquipment ]
+  id: WeaponMechSpecialBananaMortar
+  name: banana mortar
+  suffix: Mech Weapon, Gun, Special, Mortar
+  description: Mounted banana peel launcher.
+  components:
+  - type: Sprite
+    state: mecha_bananamrtr
+  - type: Battery
+    maxCharge: 300
+    startingCharge: 300
+  - type: Gun
+    minAngle: 24
+    maxAngle: 25
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: AmmoCounter
+  - type: BatteryAmmoProvider
+    proto: TrashBananaPeel
+    fireCost: 100
+  - type: Appearance
