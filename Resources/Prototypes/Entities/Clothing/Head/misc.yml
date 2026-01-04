@@ -363,14 +363,307 @@
 
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatHairflower
-  name: hairflower
+  id: ClothingHeadHatHairFlowerBase
   description: A beautiful hairflower that can be inserted between locks of hair.
+  abstract: true
+  components:
+  - type: ChameleonClothing
+    slot: HEAD
+#    default: idfk
+    requireTag: HairFlower
+    affectedByEmp: false
+  - type: UserInterface
+    interfaces:
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
+  - type: Tag
+    tags:
+    - ClothMade #idk man its on the parent
+    - WhitelistChameleon
+    - HairFlower
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerWhite
+  name: blank white hairflower
   components:
   - type: Sprite
     sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
   - type: Clothing
     sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerWhite
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerBlue
+  name: command blue hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#395578"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#395578"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerBlue
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerLightBlue
+  name: medical light blue hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#4493bf"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#4493bf"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerLightBlue
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerLime
+  name: service lime hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#7fbd4c"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#7fbd4c"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerLime
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerYellow
+  name: engineering yellow hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#e5cc21"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#e5cc21"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerYellow
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerRed
+  name: security red hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#de3a3a"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#de3a3a"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerRed
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerPink
+  name: science pink hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#c172b8"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#c172b8"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerPink
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerBrown
+  name: cargo brown hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#834f22"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#834f22"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerBrown
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerOrange
+  name: chemistry orange hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#d96a28"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#d96a28"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerOrange
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerGreen
+  name: virology green hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#397a23"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#397a23"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerGreen
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerTeal
+  name: atmospherics teal hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#368f6f"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#368f6f"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerTeal
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerPurple
+  name: salvage purple hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#81268e"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#81268e"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerPurple
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerGrey
+  name: passenger grey hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#9a9a9b"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#9a9a9b"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerGrey
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerBlack
+  name: void black hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#242424"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#242424"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerBlack
+
+- type: entity
+  parent: ClothingHeadHatHairFlowerBase
+  id: ClothingHeadHatHairFlowerGold
+  name: pirate gold hairflower
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    layers:
+    - state: icon
+      color: "#bb882d"
+  - type: Clothing
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-HELMET
+        color: "#bb882d"
+  - type: ChameleonClothing
+    default: ClothingHeadHatHairFlowerGold
 
 - type: entity
   parent: ClothingHeadBase
