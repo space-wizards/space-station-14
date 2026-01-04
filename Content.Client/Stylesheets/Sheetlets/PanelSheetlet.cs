@@ -52,6 +52,19 @@ public sealed class PanelSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet,
                 .Class(StyleClass.BackgroundPanelOpenRight)
                 .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenRightStyleBox(sheet))
                 .Modulate(sheet.SecondaryPalette.Background),
+            // This is a replacement for the Inset styleclass which had darker background panels
+            E()
+                .Class(StyleClass.BackgroundPanelDark)
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.BaseStyleBox(sheet))
+                .Modulate(sheet.SecondaryPalette.BackgroundDark),
+            E()
+                .Class(StyleClass.BackgroundPanelDarkOpenLeft)
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenLeftStyleBox(sheet))
+                .Modulate(sheet.SecondaryPalette.BackgroundDark),
+            E()
+                .Class(StyleClass.BackgroundPanelDarkOpenRight)
+                .Prop(PanelContainer.StylePropertyPanel, StyleBoxHelpers.OpenRightStyleBox(sheet))
+                .Modulate(sheet.SecondaryPalette.BackgroundDark),
         ];
     }
 }
