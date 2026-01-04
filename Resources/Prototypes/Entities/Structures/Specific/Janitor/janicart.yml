@@ -101,10 +101,29 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
         damage: 70
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+      - !type:EmptyContainersBehaviour
+        containers:
+        - item_slot
+      - !type:SpillBehavior
+        solution: bucket
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 1
+            max: 4
   - type: DnaSubstanceTrace
   - type: Fixtures
     fixtures:
@@ -282,12 +301,19 @@
             !type:DamageTrigger
             damage: 200
           behaviors:
-            - !type:EmptyAllContainersBehaviour
             - !type:DoActsBehavior
               acts: ["Destruction"]
+            - !type:SpillBehavior
+              solution: bucket
+            - !type:EmptyAllContainersBehaviour
             - !type:PlaySoundBehavior
               sound:
                 collection: MetalBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetPlastic1:
+                  min: 1
+                  max: 4
     - type: ItemMapper
       mapLayers:
         cart_plunger:
