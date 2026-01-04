@@ -51,6 +51,42 @@ public abstract class SharedRoofSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Returns whether the specified tile is roof-occupied and occludes weather rendering.
+    /// </summary>
+    /// <returns>Returns false if no data, is not rooved, or if the roof does not occlude weather.</returns>
+    [Pure]
+    public bool IsWeatherOccluding(Entity<MapGridComponent, RoofComponent> grid, Vector2i index)
+    {
+        var roof = grid.Comp2;
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(index, RoofComponent.ChunkSize);
+
+        if (roof.WeatherOcclusionData.TryGetValue(chunkOrigin, out var bitMask))
+        {
+            var chunkRelative = SharedMapSystem.GetChunkRelative(index, RoofComponent.ChunkSize);
+            var bitFlag = (ulong) 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
+
+            var isWeatherOccluding = (bitMask & bitFlag) == bitFlag;
+
+            // Early out, otherwise check for components on tile.
+            if (isWeatherOccluding)
+                return true;
+        }
+
+        _roofSet.Clear();
+        _lookup.GetLocalEntitiesIntersecting(grid.Owner, index, _roofSet);
+
+        foreach (var isRoofEnt in _roofSet)
+        {
+            if (!isRoofEnt.Comp.Enabled)
+                continue;
+
+            return true;
+        }
+
+        return false;
+    }
+
     [Pure]
     public Color? GetColor(Entity<MapGridComponent, RoofComponent> grid, Vector2i index)
     {
@@ -85,7 +121,7 @@ public abstract class SharedRoofSystem : EntitySystem
         return null;
     }
 
-    public void SetRoof(Entity<MapGridComponent?, RoofComponent?> grid, Vector2i index, bool value)
+    public void SetRoof(Entity<MapGridComponent?, RoofComponent?> grid, Vector2i index, bool value, bool occludeWeather)
     {
         if (!Resolve(grid, ref grid.Comp1, ref grid.Comp2, false))
             return;
@@ -94,35 +130,25 @@ public abstract class SharedRoofSystem : EntitySystem
         var roof = grid.Comp2;
 
         if (!roof.Data.TryGetValue(chunkOrigin, out var chunkData))
-        {
-            // No value to remove so leave it.
-            if (!value)
-            {
-                return;
-            }
-
             chunkData = 0;
-        }
 
         var chunkRelative = SharedMapSystem.GetChunkRelative(index, RoofComponent.ChunkSize);
         var bitFlag = (ulong) 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
 
-        if (value)
-        {
-            // Already set
-            if ((chunkData & bitFlag) == bitFlag)
-                return;
+        roof.WeatherOcclusionData.TryGetValue(chunkOrigin, out var weatherChunkData);
+        var weatherOcclusionFlag = (ulong) 1 << (chunkRelative.X + chunkRelative.Y * RoofComponent.ChunkSize);
 
-            chunkData |= bitFlag;
-        }
+        if (occludeWeather)
+            weatherChunkData |= weatherOcclusionFlag;
         else
-        {
-            // Not already set
-            if ((chunkData & bitFlag) == 0x0)
-                return;
+            weatherChunkData &= ~weatherOcclusionFlag;
 
+        roof.WeatherOcclusionData[chunkOrigin] = weatherChunkData;
+
+        if (value)
+            chunkData |= bitFlag;
+        else
             chunkData &= ~bitFlag;
-        }
 
         roof.Data[chunkOrigin] = chunkData;
         Dirty(grid.Owner, roof);
