@@ -123,3 +123,9 @@
   values:
     prefix: thankyou-pride-
     count: 3
+
+- type: localizedDataset
+  id: DrugMachineGoodbyes
+  values:
+    prefix: thankyou-drugs-
+    count: 4
