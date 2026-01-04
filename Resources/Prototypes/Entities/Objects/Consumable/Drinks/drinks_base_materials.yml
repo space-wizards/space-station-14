@@ -12,13 +12,13 @@
     damageModifierSet: FlimsyGlass
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
+    - trigger: &DamageTrigger100
         !type:DamageTrigger
-        damage: 200
-      behaviors:
+        damage: 100
+      behaviors: &OverkillBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    - trigger:
+    - trigger: &DamageTrigger5
         !type:DamageTrigger
         damage: 5
       behaviors:
@@ -42,7 +42,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 5
+        Blunt: 2
 #  - type: EmitSoundOnLand TODO other materials need a sound
 #    sound:
 #      collection: GlassCrack
@@ -58,15 +58,9 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -88,16 +82,10 @@
 #    damageModifierSet: FlimsyPlastic TODO
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger5
+      behaviors: &PlasticBreakBehavior
       - !type:PlaySoundBehavior
         sound:
           collection: MetalCrunch # TODO a plastic break collection
@@ -112,7 +100,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 2
+        Blunt: 1
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
@@ -125,22 +113,12 @@
   components:
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 20 # can take a few more hits than basic plastic
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalCrunch # TODO a plastic break collection
-      - !type:SpillBehavior { }
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *PlasticBreakBehavior
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
@@ -155,15 +133,9 @@
     damageModifierSet: Card
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -194,16 +166,12 @@
     damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 10
-      behaviors:
+      behaviors: &MetalBreakBehavior
       - !type:PlaySoundBehavior
         sound:
           collection: MetalCrunch # TODO a flimsier metal break collection
@@ -218,7 +186,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 5
+        Blunt: 1
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
@@ -233,25 +201,19 @@
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 25
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalCrunch
-      - !type:SpillBehavior { }
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+      behaviors: *MetalBreakBehavior
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 2
   - type: PhysicalComposition
     materialComposition:
-      Steel: 300
+      Steel: 100
 
 # Flimsy gold
 - type: entity
@@ -263,15 +225,9 @@
     damageModifierSet: FlimsyMetallic
   - type: Destructible
     thresholds:
-    - trigger: # Overkill threshold
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 5 # Gold is very weak
+    - trigger: *DamageTrigger100
+      behaviors: *OverkillBehavior
+    - trigger: *DamageTrigger5
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -293,7 +249,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Blunt: 2
+        Blunt: 1
   - type: PhysicalComposition
     materialComposition:
       Gold: 25
