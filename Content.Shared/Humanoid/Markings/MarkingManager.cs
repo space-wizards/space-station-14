@@ -67,7 +67,10 @@ namespace Content.Shared.Humanoid.Markings
 
             foreach (var (key, marking) in MarkingsByCategory(category))
             {
-                if ((markingPoints.OnlyWhitelisted || markingPoints.Points[category].OnlyWhitelisted) && marking.SpeciesRestrictions == null)
+                if ((markingPoints.OnlyWhitelisted ||
+                    !markingPoints.Points.ContainsKey(category) ||
+                    markingPoints.Points[category].OnlyWhitelisted) &&
+                    marking.SpeciesRestrictions == null)
                 {
                     continue;
                 }
