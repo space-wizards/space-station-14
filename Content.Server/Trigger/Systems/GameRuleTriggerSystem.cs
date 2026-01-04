@@ -24,7 +24,7 @@ public sealed class GameRuleTriggerSystem : EntitySystem
 
     private void AddRuleOnTrigger(Entity<AddGameRuleOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
+        if (args.Keys != null && !ent.Comp.KeysIn.Overlaps(args.Keys))
             return;
 
         var rule = _ticker.AddGameRule(ent.Comp.GameRule);

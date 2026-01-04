@@ -80,7 +80,7 @@ public sealed class SpiderChargeSystem : SharedSpiderChargeSystem
     /// </summary>
     private void OnExplode(EntityUid uid, SpiderChargeComponent comp, TriggerEvent args)
     {
-        if (args.Key != comp.TriggerKey)
+        if (args.Keys != null && !args.Keys.Contains(comp.TriggerKey))
             return;
 
         if (!TryComp<SpaceNinjaComponent>(comp.Planter, out var ninja))
