@@ -337,7 +337,7 @@
       pickPlayer: false
       startingGear: WizardBlueGear
       roleLoadout:
-      - RoleSurvivalExtended
+      - RoleSurvivalExtendedAntag
       briefing:
         text: wizard-role-greeting
         color: Turquoise
