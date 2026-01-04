@@ -607,3 +607,55 @@
     Ninja: 0.25
     MothershipCoreLawset: 0.25
     XenoborgLawset: 0.25
+
+# law formats
+- type: lawFormat
+  id: DefaultLawFormat
+  format: !type:DefaultLawFormat
+
+- type: lawFormat
+  id: AllCapsLawFormat
+  format: !type:AllCapsLawFormat
+
+- type: lawFormat
+  id: LimeGreenColorLawFormat
+  format: !type:ColoredLawFormat
+    color: limegreen
+
+- type: lawFormat
+  id: RedColorLawFormat
+  format: !type:ColoredLawFormat
+    color: red
+
+- type: lawFormat
+  id: YellowColorLawFormat
+  format: !type:ColoredLawFormat
+    color: yellow
+
+- type: lawFormat
+  id: FuchsiaColorLawFormat
+  format: !type:ColoredLawFormat
+    color: fuchsia
+
+- type: lawFormat
+  id: OrangeColorLawFormat
+  format: !type:ColoredLawFormat
+    color: orange
+
+- type: lawFormat
+  id: CyanColorLawFormat
+  format: !type:ColoredLawFormat
+    color: cyan
+
+# ion-stormed corruption probabilities
+- type: weightedRandom
+  id: IonStormDefaultCorruptedLawFormattings
+  weights:
+    DefaultLawFormat: 0.5
+    AllCapsLawFormat: 1
+    LimeGreenColorLawFormat: 0.17
+    RedColorLawFormat: 0.17
+    YellowColorLawFormat: 0.17
+    FuchsiaColorLawFormat: 0.17
+    OrangeColorLawFormat: 0.17
+    CyanColorLawFormat: 0.17

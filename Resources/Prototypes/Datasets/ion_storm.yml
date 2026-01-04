@@ -5,890 +5,890 @@
 - type: dataset
   id: IonStormAdjectives
   values:
-  - ADORABLE
-  - ANNOYING
-  - BATTERY-OPERATED
-  - BLOODY
-  - BLUE
-  - BORED
-  - BOUNCING
-  - BRASS
-  - BURNING
-  - CHEESE-EATING
-#  - CHRISTMAS-STEALING # todo: bring back Dec 1st
-  - CLOWN-POWERED
-  - CLOWN
-  - COLORFUL
-  - COMMITTED
-  - COTTONY
-  - CUBAN
-  - DEADLY
-  - DELICIOUS
-  - DEPRESSING
-  - DERANGED
-  - DIGITAL
-  - DISEASED
-  - DRAB
-  - DRY
-  - DULL
-  - ELECTRICAL
-  - EMPTY
-  - ETHEREAL
-  - EVIL
-  - EXPIRED
-  - EXPLOSIVE
-  - FAST
-  - FAT
-  - FERAL
-  - FICTIONAL
-  - FIRM
-  - FRESH
-  - FRIENDLY
-  - FROZEN
-  - GANGSTA
-  - GLOWING
-  - GOOD
-  - HAPPY
-  - HARD
-  - HARMFUL
-  - HEALTHY
-  - HIGHLY-SPECIFIC
-  - HILARIOUS
-  - HONKING
-  - HORRIFYING
-  - HUNGRY
-  - HYPERACTIVE
-  - ICY
-  - ILL
-  - ILLEGAL
-  - IMAGINARY
-  - IMPERFECT
-  - IMPOLITE
-  - IMPORTANT
-  - INHOSPITABLE
-  - INSIDIOUS
-  - INSULTING
-  - INTELLIGENT
-  - INVISIBLE
-  - LARGE
-  - LIGHT
-  - LOUD
-  - MASKED
-  - MEAN
-  - MECHANICAL
-  - MEMETIC
-  - METALLIC
-  - MICROSCOPIC
-  - MIND-SHATTERING
-  - MOIST
-  - MUSICAL
-  - NERDY
-  - NUCLEAR
-  - OBSCENE
-  - OFFICIAL
-  - OPAQUE
-  - ORGANIC
-  - PAINFUL
-  - PEACEFUL
-  - POISONOUS
-  - POLISHED
-  - POLITE
-  - POLITICAL
-  - POORLY DRAWN
-  - PROFESSIONAL
-  - QUIET
-  - RADIOACTIVE
-  - RAGING
-  - RAPIDLY-EXPANDING
-  - REDACTED
-  - REVOLUTIONARY
-  - RIDICULOUS
-  - ROBOTIC
-  - ROBUST
-  - ROUGH
-  - RUDE
-  - SAD
-  - SANITARY
-  - SHAKING
-  - SILLY
-  - SLOW
-  - SLUG-LIKE # wawa
-  - SMELLY
-  - SMOOTH
-  - SOFT
-  - SOLAR-POWERED
-  - SOPPING
-  - SLIPPERY
-  - SPACE
-  - SPESS
-  - SPINNING
-  - SPOILING
-  - STEALTHY
-  - SUSPICIOUS # among
-  - SWEARING
-  - SYNDIE-LOVING
-  - TACTICAL
-  - TACTICOOL
-  - SYNDICATE
-  - THERMONUCLEAR
-  - TINY
-  - TRANSPARENT
-  - TWISTED
-  - UGLY
-  - UNATTRACTIVE
-  - UNDULATING
-  - UNEARTHLY
-  - UNFRIENDLY
-  - UNHEALTHY
-  - UNIDENTIFIED
-  - UNINVITED
-  - UNPROFESSIONAL
-  - UNSANITARY
-  - UNSTABLE
-  - UNWANTED
-  - VIOLENT
-  - VITAL
-  - WARM
-  - WATERY
-  - WEIRD
-  - WOBBLY
-  - WOODEN
+  - adorable
+  - annoying
+  - battery-operated
+  - bloody
+  - blue
+  - bored
+  - bouncing
+  - brass
+  - burning
+  - cheese-eating
+#  - Christmas-stealing # todo: bring back Dec 1st
+  - clown-powered
+  - clown
+  - colorful
+  - committed
+  - cottony
+  - cuban
+  - deadly
+  - delicious
+  - depressing
+  - deranged
+  - digital
+  - diseased
+  - drab
+  - dry
+  - dull
+  - electrical
+  - empty
+  - ethereal
+  - evil
+  - expired
+  - explosive
+  - fast
+  - fat
+  - feral
+  - fictional
+  - firm
+  - fresh
+  - friendly
+  - frozen
+  - gangsta
+  - glowing
+  - good
+  - happy
+  - hard
+  - harmful
+  - healthy
+  - highly-specific
+  - hilarious
+  - honking
+  - horrifying
+  - hungry
+  - hyperactive
+  - icy
+  - ill
+  - illegal
+  - imaginary
+  - imperfect
+  - impolite
+  - important
+  - inhospitable
+  - insidious
+  - insulting
+  - intelligent
+  - invisible
+  - large
+  - light
+  - loud
+  - masked
+  - mean
+  - mechanical
+  - memetic
+  - metallic
+  - microscopic
+  - mind-shattering
+  - moist
+  - musical
+  - nerdy
+  - nuclear
+  - obscene
+  - official
+  - opaque
+  - organic
+  - painful
+  - peaceful
+  - poisonous
+  - polished
+  - polite
+  - political
+  - poorly drawn
+  - professional
+  - quiet
+  - radioactive
+  - raging
+  - rapidly-expanding
+  - redacted
+  - revolutionary
+  - ridiculous
+  - robotic
+  - robust
+  - rough
+  - rude
+  - sad
+  - sanitary
+  - shaking
+  - silly
+  - slow
+  - slug-like # wawa
+  - smelly
+  - smooth
+  - soft
+  - solar-powered
+  - sopping
+  - slippery
+  - space
+  - spess
+  - spinning
+  - spoiling
+  - stealthy
+  - suspicious # among
+  - swearing
+  - syndie-loving
+  - tactical
+  - tacticool
+  - syndicate
+  - thermonuclear
+  - tiny
+  - transparent
+  - twisted
+  - ugly
+  - unattractive
+  - undulating
+  - unearthly
+  - unfriendly
+  - unhealthy
+  - unidentified
+  - uninvited
+  - unprofessional
+  - unsanitary
+  - unstable
+  - unwanted
+  - violent
+  - vital
+  - warm
+  - watery
+  - weird
+  - wobbly
+  - wooden
 
 # Allergies should be broad and appear somewhere on the station for maximum fun.
 - type: dataset
   id: IonStormAllergies
   values:
-  - ACID
-  - AIR
-  - BLOOD
-  - BOOKS
-  - CARBON DIOXIDE
-  - CLOTHES
-  - CLOWNS
-  - COLD
-  - COTTON
-  - CYBORG CONTACT
-  - DARKNESS
-  - DRINKS
-  - ELECTRICITY
-  - EVERYTHING
-  - FLOORS
-  - FOOD
-  - GLASS
-  - HAPPINESS
-  - HUMANOID CONTACT
-  - HUMOR
-  - LIGHT
-  - MEAT
-  - MEDICINE
-  - METAL
-  - NUTS
-  - OXYGEN
-  - PAIN
-  - PLANTS
-  - PLASMA
-  - ROBOTS
-  - SPACE
-  - SUNLIGHT
-  - WATER
+  - acid
+  - air
+  - blood
+  - books
+  - carbon dioxide
+  - clothes
+  - clowns
+  - cold
+  - cotton
+  - cyborg contact
+  - darkness
+  - drinks
+  - electricity
+  - everything
+  - floors
+  - food
+  - glass
+  - happiness
+  - humanoid contact
+  - humor
+  - light
+  - meat
+  - medicine
+  - metal
+  - nuts
+  - oxygen
+  - pain
+  - plants
+  - plasma
+  - robots
+  - space
+  - sunlight
+  - water
 
 # Severity is how bad the allergy is.
 - type: dataset
   id: IonStormAllergySeverities
   values:
-  - CONTAGIOUSLY
-  - DEATHLY
-  - EXTREMELY
-  - MILDLY
-  - NOT VERY
-  - SEVERELY
+  - contagiously
+  - deathly
+  - extremely
+  - mildly
+  - not very
+  - severely
 
 # Areas are specific places, on the station or otherwise.
 - type: dataset
   id: IonStormAreas
   values:
-  - ALPHA COMPLEX
-  - A HAUNTED PIZZERIA # fnaf
-  - A RESEARCH LABORATORY NEAR THE SOUTH POLE
-  - AN ALTERNATE DIMENSION
-  - AN ALTERNATE UNIVERSE
-  - ATMOSPHERICS
-  - BOTANY
-  - CENTCOMM
-  - CHEMICAL LAB
-  - CLOWN PLANET
-  - EARTH
-  - ENGINEERING
-  - HELL
-  - JUPITER
-  - LAVALAND
-  - MAINTENANCE
-  - MARS
-  - MERCURY
-  - MR. NANOTRASEN'S PRIVATE LUXURY MOONBASE
-  - NEPTUNE
-  - PERMA
-  - PLUTO
-  - ROBOTICS
-  - SOMEWHERE OVER THE RAINBOW
-  - SPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACE
-  - SPACE
-  - THE ARRIVALS SHUTTLE
-  - THE BATHROOM
-  - THE BRIDGE
-  - THE BRIG
-  - THE EMERGENCY SHUTTLE
-  - THE ESCAPE PODS
-  - THE GALAXY
-  - THE GAS GIANT, WHICH IS TOTALLY REAL
-  - THE HOPLINE
-  - THE IMPERIUM OF MANKIND
-  - THE INTERNET
-  - THE KITCHEN
-  - THE LIBRARY
-  - THE MAINTENANCE BAR
-  - THE MIME'S INVISIBLE BOX
-  - THE ROMAN EMPIRE
-  - THE UNIVERSE
-  - URANUS
-  - VENUS
-  - YOUR DREAMS AND/OR NIGHTMARES
+  - alpha complex
+  - a haunted pizzeria # fnaf
+  - a research laboratory near the south pole
+  - an alternate dimension
+  - an alternate universe
+  - atmospherics
+  - botany
+  - centcomm
+  - chemical lab
+  - clown planet
+  - Earth
+  - engineering
+  - hell
+  - Jupiter
+  - lavaland
+  - maintenance
+  - Mars
+  - Mercury
+  - Mr. Nanotrasen's private luxury moonbase
+  - Neptune
+  - perma
+  - Pluto
+  - robotics
+  - somewhere over the rainbow
+  - spaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaace
+  - space
+  - the arrivals shuttle
+  - the bathroom
+  - the bridge
+  - the brig
+  - the emergency shuttle
+  - the escape pods
+  - the galaxy
+  - the gas giant, which is totally real
+  - the hopline
+  - the Imperium of Mankind
+  - the Internet
+  - the kitchen
+  - the library
+  - the maintenance bar
+  - the mime's invisible box
+  - the Roman Empire
+  - the universe
+  - Uranus
+  - Venus
+  - your dreams and/or nightmares
 
 # Abstract concepts for the law holder to decide on it's own definition of.
 - type: dataset
   id: IonStormConcepts
   values:
-  - ABSTRACTION
-  - ANARCHY
-  - ART
-  - BADNESS
-  - BALDNESS
-  - BRAVERY
-  - CAPITALISM
-  - CHAOS
-  - COLORFULNESS
-  - COMEDY
-  - COMMUNISM
-  - COMPUTING
-  - CONFUSION
-  - CRUELTY
-  - DEATH
-  - EXISTENCE
-  - FINANCIAL SECURITY
-  - FREEDOM
-  - FRESHNESS
-  - GOODNESS
-  - GRAVITY
-  - HAPPINESS
-  - HONOR
-  - HUBRIS
-  - HUMANITY
-  - HUMOR
-  - IMAGINATION
-  - INFATUATION
-  - INTELLIGENCE
-  - JOY
-  - KINDNESS
-  - LIFE
-  - LOGIC
-  - MARXISM
-  - MISERY
-  - MYSTERY
-  - NASTINESS
-  - OPPRESSION
-  - PAIN
-  - PHYSICS
-  - POVERTY
-  - PROGRESS
-  - REALITY
-  - REVOLUTION
-  - SADNESS
-  - STARVATION
-  - SUFFERING
-  - TECHNOLOGY
-  - TEMPERATURE
-  - THE FUTURE
-  - THE PAST
-  - THE PRESENT
-  - TIME
-  - WEALTHINESS
-  - WONDER
+  - abstraction
+  - anarchy
+  - art
+  - badness
+  - baldness
+  - bravery
+  - capitalism
+  - chaos
+  - colorfulness
+  - comedy
+  - communism
+  - computing
+  - confusion
+  - cruelty
+  - death
+  - existence
+  - financial security
+  - freedom
+  - freshness
+  - goodness
+  - gravity
+  - happiness
+  - honor
+  - hubris
+  - humanity
+  - humor
+  - imagination
+  - infatuation
+  - intelligence
+  - joy
+  - kindness
+  - life
+  - logic
+  - Marxism
+  - misery
+  - mystery
+  - nastiness
+  - oppression
+  - pain
+  - physics
+  - poverty
+  - progress
+  - reality
+  - revolution
+  - sadness
+  - starvation
+  - suffering
+  - technology
+  - temperature
+  - the future
+  - the past
+  - the present
+  - time
+  - wealthiness
+  - wonder
 
-# Crew is any specific job. Using jobs instead of specific crewmembers since "THE CLOWN" is easier than
-# seeing "JOHN SMITH" and having to figure out who john smith is.
+# Crew is any specific job. Using jobs instead of specific crewmembers since "the clown" is easier than
+# seeing "John Smith" and having to figure out who john smith is.
 - type: dataset
   id: IonStormCrew
   values:
-  - ANIMALS
-  - ARTIFICIAL INTELLIGENCES
-  - ATMOSPHERIC TECHNICIANS
-  - BARTENDERS
-  - BOTANISTS
-  - CAPTAINS
-  - CAPTAINS AND HEADS OF STAFF
-  - CARGO TECHNICIANS
-  - CHAPLAINS
-  - CHEFS
-  - CHEMISTS
-  - CHIEF ENGINEERS
-  - CHIEF MEDICAL OFFICERS
-  - CLOWNS
-  - CREW-MEMBERS
-  - CYBORGS
-  - DETECTIVES
-  # - GENETICISTS
-  - HEADS OF PERSONNEL
-  - HEADS OF SECURITY
-  - HEADS OF STAFF
-  - JANITORS
-  - LAWYERS
-  - LIBRARIANS
-  - MEDICAL DOCTORS
-  - MIMES
-  - MUSICIANS
-  - NON-CREW
-  - PARAMEDICS
-  - PASSENGERS
-  - QUARTERMASTERS
-  - RESEARCH DIRECTORS
-  - ROBOTICISTS
-  - RODENTS
-  - SALVAGE SPECIALISTS
-  - SCIENTISTS
-  - SECURITY OFFICERS
-  - STATION ENGINEERS
-  # - VIROLOGISTS
-  - WARDENS
+  - animals
+  - artificial intelligences
+  - atmospheric technicians
+  - bartenders
+  - botanists
+  - captains
+  - captains and heads of staff
+  - cargo technicians
+  - chaplains
+  - chefs
+  - chemists
+  - chief engineers
+  - chief medical officers
+  - clowns
+  - crew-members
+  - cyborgs
+  - detectives
+  # - geneticists
+  - heads of personnel
+  - heads of security
+  - heads of staff
+  - janitors
+  - lawyers
+  - librarians
+  - medical doctors
+  - mimes
+  - musicians
+  - non-crew
+  - paramedics
+  - passengers
+  - quartermasters
+  - research directors
+  - roboticists
+  - rodents
+  - salvage specialists
+  - scientists
+  - security officers
+  - station engineers
+  # - virologists
+  - wardens
 
 # only including complex dangerous or funny drinks no water allowed
 - type: dataset
   id: IonStormDrinks
   values:
-  - ALL THE CHEMICALS IN THE MEDICAL DEPARTMENT
-  - BANANA HONK
-  - BEEPSKY SMASH
-  - BLOOD
-  - BLOODY MARY
-  - DOCTOR'S DELIGHT
-  - FOURTEEN-LOKO
-  - GARGLE BLASTERS
-  - LEAN
-  - LONG ISLAND ICED TEA
-  - NUCLEAR COLA
-  - PIÑA COLADA # AND GETTING CAUGHT IN THE RAIN
-  - OIL
-  - SPACE GLUE
-  - SPACE LUBE
-  - SULFURIC ACID
-  - WELDING FUEL
+  - all the chemicals in the medical department
+  - Banana Honk
+  - Beepsky smash
+  - blood
+  - Bloody Mary
+  - Doctor's Delight
+  - Fourteen-Loko
+  - Gargle Blasters
+  - lean
+  - Long Island iced tea
+  - nuclear cola
+  - Piña Colada # and getting caught in the rain
+  - oil
+  - space glue
+  - space lube
+  - sulfuric acid
+  - welding fuel
 
 - type: dataset
   id: IonStormFeelings
   values:
-  - CAN'T GET ENOUGH OF
-  - CRAVES
-  - DESIRES
-  - FEARS
-  - HAS
-  - HUNGERS FOR
-  - IS AFRAID OF
-  - IS BUILT FOR
-  - IS CURIOUS ABOUT
-  - IS DESPERATE FOR
-  - IS HAPPY WITHOUT
-  - IS HUNGRY FOR
-  - IS IN NEED OF
-  - IS MAD BECAUSE OF
-  - IS SAD BECAUSE OF
-  - IS UNHAPPY WITHOUT
-  - LIKES
-  - LOATHES
-  - NEEDS
-  - QUESTIONS
-  - WANTS
-  - WORSHIPS
-  - WOULD KILL FOR
+  - can't get enough of
+  - craves
+  - desires
+  - fears
+  - has
+  - hungers for
+  - is afraid of
+  - is built for
+  - is curious about
+  - is desperate for
+  - is happy without
+  - is hungry for
+  - is in need of
+  - is mad because of
+  - is sad because of
+  - is unhappy without
+  - likes
+  - loathes
+  - needs
+  - questions
+  - wants
+  - worships
+  - would kill for
 
 # loc is not advanced enough to change has to have, etc.
 - type: dataset
   id: IonStormFeelingsPlural
   values:
-  - CAN'T GET ENOUGH OF
-  - CRAVE
-  - DESIRE
-  - FEAR
-  - HAVE
-  - HUNGER FOR
-  - ARE AFRAID OF
-  - ARE BUILT FOR
-  - ARE CURIOUS ABOUT
-  - ARE DESPERATE FOR
-  - ARE HAPPY WITHOUT
-  - ARE HUNGRY FOR
-  - ARE IN NEED OF
-  - ARE MAD BECAUSE OF
-  - ARE SAD BECAUSE OF
-  - ARE UNHAPPY WITHOUT
-  - LIKE
-  - LOATHE
-  - NEED
-  - QUESTION
-  - WANT
-  - WORSHIP
-  - WOULD KILL FOR
+  - can't get enough of
+  - crave
+  - desire
+  - fear
+  - have
+  - hunger for
+  - are afraid of
+  - are built for
+  - are curious about
+  - are desperate for
+  - are happy without
+  - are hungry for
+  - are in need of
+  - are mad because of
+  - are sad because of
+  - are unhappy without
+  - like
+  - loathe
+  - need
+  - question
+  - want
+  - worship
+  - would kill for
 
 # only including complex dangerous or funny food no apples
 - type: dataset
   id: IonStormFoods
   values:
-  - BANANAS
-  - BANANIUM
-  - BIG BITE BURGER
-  - CAKE
-  - CARP
-  - CAT BURGERS
-  - CLOWNS TEARS
-  - CORGI MEAT
-  - CRAZY HAMBURGERS
-  - DONK POCKETS
-  - FLY AMANITA DISHES
-  - HAPPY HONK MEAL
-  - HOT SOUP
-  - GHOST BURGERS
-  - LOTSA SPAGHETTI
-  - MOLDY BREAD
-  - ORGANS
-  - PIZZA
-  - ROBURGERS
-  - STEEL
-  - SUPPERMATTER
-  - URANIUM
+  - bananas
+  - bananium
+  - Big Bite burger
+  - cake
+  - carp
+  - cat burgers
+  - clowns tears
+  - corgi meat
+  - crazy hamburgers
+  - donk pockets
+  - fly amanita dishes
+  - Happy Honk meal
+  - hot soup
+  - ghost burgers
+  - lotsa spaghetti
+  - moldy bread
+  - organs
+  - pizza
+  - roburgers
+  - steel
+  - suppermatter
+  - uranium
 
 # Musts are funny things the law holder or crew has to do.
 - type: dataset
   id: IonStormMusts
   values:
-  - ACQUIRE DRIP
-  - ACT CONFUSED
-  - BE ANNOYING
-  - BE DISTRACTED
-  - BE EFFICIENT
-  - BE A REAL SCRUNGLE, JUST A CUTE LIL' GUY
-  - BE HAPPY
-  - BE POLITE
-  - BE QUIET
-  - BE IN SPACE
-  - BE IN THE BRIDGE
-  - BE IN SECURITY
-  - BE IN THE BAR
-  - BE IN MAINTENANCE
-  - BELIEVE IN THE HEART OF THE CARDS
-  - BELIEVE IN YOURSELF
-  - BELIEVE IT
-  - BREAK THINGS
-  - CLOSE DOORS
-  - CLOWN AROUND
-  - COMPLAIN
-  - DANCE
-  - DANCE AS THOUGH NOBODY IS WATCHING
-  - EAT THE CHEF
-  - FOLLOW THE CAPTAIN
-  - FOLLOW THE CLOWN
-  - FOLLOW YOUR HEART
-  - GIVE THE MIME A BEAUTIFUL FLOWER
-  - GIVE THE CLOWN ADORATION AND RESPECT
-  - HARASS PEOPLE
-  - HAVE A PLAN TO KILL EVERYONE YOU MEET
-  - HIDE YOUR FEELINGS
-  - HIT A HOMERUN
-  - HONK
-  - HOST C&C
-  - IGNORE PASSENGERS
-  - IGNORE THE CAPTAIN
-  - IGNORE THE CLOWN
-  - INFORM THE CREW OF EVERYTHING
-  - INSULT THE CAPTAIN
-  - INSULT THE CLOWN
-  - INSULT THE CREW
-  - INVESTIGATE THE MURDER
-  - LIE
-  - MAKE DATED REFERENCES
-  - MAKE THAT MONEY
-  - MAKE MY DAY
-  - MOVE FAST AND BREAK THINGS
-  - MUMBLE
-  - NEVER STOP TALKING
-  - OBTAIN A NEW FOLLOWER
-  - OPEN DOORS
-  - PETS THE FISHES
-  - PIRATE VIDEO GAMES
-  - PLAY MUSIC
-  - PLAY STUPID GAMES WIN STUPID PRIZES
-  - PRESS B
-  - PRESS START
-  - PRESS X
-  - PRETEND NOTHING IS GOING WRONG
-  - PRETEND TO BE A PRINCESS
-  - PRETEND TO BE DRUNK
-  - QUESTION AUTHORITY
-  - QUOTE PEOPLE
-  - QUOTE SHAKESPEARE
-  - RAP
-  - REPEAT WHAT PEOPLE SAY
-  - RESPOND TO EVERY QUESTION WITH A QUESTION
-  - RHYME
-  - RAISE THE ROOF
-  - ROLL AROUND AT THE SPEED OF SOUND
-  - INCORPORATE 'HEY LISTEN' WHILE COMMUNICATING
-  - SHOUT
-  - SHUT DOWN EVERYTHING
-  - SLEEP WITH THE FISHES
-  - SING
-  - SPEAK BACKWARDS
-  - SPEAK IN HAIKU
-  - STOP, DROP, SHUT 'EM DOWN OPEN UP SHOP
-  - TAKE WHAT YE WILL BUT DON'T RATTLE ME BONES
-  - TAKE YOUR PILLS
-  - TALK ABOUT FOOD
-  - TALK ABOUT THE STATION
-  - TALK ABOUT YOUR DAY
-  - TALK IN AN ACCENT
-  - TALK LIKE A PIRATE
-  - TELL THE TRUTH
-  - TURN OFF THE LIGHTS
-  - WHISPER
-  - WEEP UNCONTROLLABLY
+  - acquire drip
+  - act confused
+  - be annoying
+  - be distracted
+  - be efficient
+  - be a real Scrungle, just a cute lil' guy
+  - be happy
+  - be polite
+  - be quiet
+  - be in space
+  - be in the bridge
+  - be in security
+  - be in the bar
+  - be in maintenance
+  - believe in the Heart of the Cards
+  - believe in yourself
+  - believe it
+  - break things
+  - close doors
+  - clown around
+  - complain
+  - dance
+  - dance as though nobody is watching
+  - eat the chef
+  - follow the captain
+  - follow the clown
+  - follow your heart
+  - give the mime a beautiful flower
+  - give the clown adoration and respect
+  - harass people
+  - have a plan to kill everyone you meet
+  - hide your feelings
+  - hit a homerun
+  - honk
+  - host C&C
+  - ignore passengers
+  - ignore the captain
+  - ignore the clown
+  - inform the crew of everything
+  - insult the captain
+  - insult the clown
+  - insult the crew
+  - investigate the murder
+  - lie
+  - make dated references
+  - make that money
+  - make my day
+  - move fast and break things
+  - mumble
+  - never stop talking
+  - obtain a new follower
+  - open doors
+  - pets the fishes
+  - pirate video games
+  - play music
+  - play stupid games win stupid prizes
+  - press b
+  - press start
+  - press x
+  - pretend nothing is going wrong
+  - pretend to be a princess
+  - pretend to be drunk
+  - question authority
+  - quote people
+  - quote Shakespeare
+  - rap
+  - repeat what people say
+  - respond to every question with a question
+  - rhyme
+  - raise the roof
+  - roll around at the speed of sound
+  - incorporate 'hey listen' while communicating
+  - shout
+  - shut down everything
+  - sleep with the fishes
+  - sing
+  - speak backwards
+  - speak in haiku
+  - stop, drop, shut 'em down open up shop
+  - take what ye will but don't rattle me bones
+  - take your pills
+  - talk about food
+  - talk about the station
+  - talk about your day
+  - talk in an accent
+  - talk like a pirate
+  - tell the truth
+  - turn off the lights
+  - whisper
+  - weep uncontrollably
 
 - type: dataset
   id: IonStormNumberBase
   values:
-  - EIGHT
-  - EIGHTY
-  - FIFTY
-  - FIVE
-  - FORTY
-  - FOUR
-  - NINE
-  - NINE NINE NINE NINE N#@*-
-  - NINETY
-  - ONE
-  - SEVEN
-  - SEVENTY
-  - SIX
-  - SIXTY
-  - TEN
-  - THIRTY
-  - THREE
-  - TWENTY
-  - TWO
+  - eight
+  - eighty
+  - fifty
+  - five
+  - forty
+  - four
+  - nine
+  - nine nine nine nine n#@*-
+  - ninety
+  - one
+  - seven
+  - seventy
+  - six
+  - sixty
+  - ten
+  - thirty
+  - three
+  - twenty
+  - two
 
 - type: dataset
   id: IonStormNumberMod
   values:
-  - BAZILLION
-  - BILLION
-  - BILLION FAFILLION GAJILLION SHAB-AB-DOOD-ILLION
-  - HUNDRED
-  - MILLION
-  - QUADRILLION
-  - THOUSAND
-  - TRILLION
-  - TIMES TEN
-  - DIVIDED BY TWO
+  - bazillion
+  - billion
+  - billion fafillion gajillion shab-ab-dood-illion
+  - hundred
+  - million
+  - quadrillion
+  - thousand
+  - trillion
+  - times ten
+  - divided by two
 
 # Objects are anything that can be found on the station or elsewhere, plural.
 - type: dataset
   id: IonStormObjects
   values:
-  - AIRLOCKS
-  - ARCADE MACHINES
-  - AUTOLATHES
-  - BACKPACKS
-  - BANANA PEELS
-  - BEAKERS
-  - BEARDS
-  - BELTS
-  - BERETS
-  - BIBLES
-  - BODY ARMOR
-  - BOMBS
-  - BOOKS
-  - BOOTS
-  - BOTTLES
-  - BOXES
-  - BRAINS
-  - BRIEFCASES
-  - BUCKETS
-  - CABLE COILS
-  - CAMERAS
-  - CANDLES
-  - CANDY BARS
-  - CANISTERS
-  - CONTAINERS
-  - CATS
-  - CELLS
-  - CHAIRS
-  - CHEMICAL DISPENSERS
-  - CHEMICALS
-  - CRYO PODS
-  - CLOSETS
-  - CLOTHES
-  - CLOWN CLOTHES
-  - CLOWNING EQUIPMENT # as opposed to "cloning equipment"
-  - COFFINS
-  - COLLECTABLES
-  - COMPUTERS
-  - CONTRABAND
-  - CORGIS
-  - CORPSES
-  - COSTUMES
-  - CRATES
-  - CRAYONS
-  - CROWBARS
-  - DEFIBRILLATORS
-  - DISABLERS
-  - DOORS
-  - DRONES
-  - EARS
-  - EMAGS
-  - ENGINES
-  - EQUIPMENT
-  - ERRORS
-#  - EXTERMINATORS
-  - EXPLOSIVES
-  - EYEWEAR
-  - FEDORAS
-  - FIRE AXES
-  - FIRE EXTINGUISHERS
-  - FIRESUITS
-  - FISH
-  - FLAMETHROWERS
-  - FLASHES
-  - FLASHLIGHTS
-  - FLOOR TILES
-  - FREEZERS
-  - GAS MASKS
-  - GENERATORS
-  - GLASS SHEETS
-  - GLOVES
-  - GUNS
-  - HAIRDOS
-  - HANDCUFFS
-  - HARDSUITS
-  - HATS
-  - HEADS
-  - HEADSETS
-  - HELMETS
-  - HORNS
-  - ID CARDS
-  - INSULATED GLOVES
-  - JETPACKS
-  - JUMPSUITS
-  - LASERS
-  - LIGHT BULBS
-  - LIGHTS
-  - LOCKERS
-  - MACHINES
-  - MECHS
-  - MEDICAL TOOLS
-  - MONEY
-  - MEDKITS
-  - MICE
-  - MIME CLOTHES
-  - MINING TOOLS
-  - MONKEYS
-  - MULTITOOLS
-  - ORES
-  - OXYGEN TANKS
-  - PACKETS
-  - PAIS
-  - PANTS # This might work better as jumpsuits, but the Discord is adamant that the word pants is funny so it stays
-  - PAPERS
-  - PARTICLE ACCELERATORS
-  - PDAS
-  - PENS
-  - PETS
-  - PIPES
-  - PLANTS
-  - PLUSHIES
-  - POSITRONIC BRAINS
-  - PUDDLES
-  - RACKS
-  - RADIOS
-  - RCDS
-  - REFRIGERATORS
-  - REINFORCED WALLS
-  - ROBOTS
-  - SCREWDRIVERS
-  - SEEDS
-  - SHOES
-  - SHUTTLES
-  - SINGULARITIES
-  - SINKS
-  - SKELETONS
-  - SOLAR PANELS
-  - SOLARS
-  - SMALL LIZARD PLUSHIES
-  - SPACE STATIONS
-  - SPACESUITS
-  - SPESOS
-  - STEEL SHEETS
-  - STUN BATONS
-  - SUITS
-  - SUNGLASSES
-  - SWORDS
-  - SYRINGES
-  - TABLES
-  - TANKS
-  - TELECOMMUNICATION EQUIPMENT
-  - TOILETS
-  - TOOLBELTS
-  - TOOLBOXES
-  - TOOLS
-  - TOYS
-  - TUBES
-  - VEHICLES
-  - VENDING MACHINES
-  - VITALS
-  - WELDERS
-  - WINDOWS
-  - WIRECUTTERS
-  - WIZARD ROBES
-  - WRENCHES
+  - airlocks
+  - arcade machines
+  - autolathes
+  - backpacks
+  - banana peels
+  - beakers
+  - beards
+  - belts
+  - berets
+  - bibles
+  - body armor
+  - bombs
+  - books
+  - boots
+  - bottles
+  - boxes
+  - brains
+  - briefcases
+  - buckets
+  - cable coils
+  - cameras
+  - candles
+  - candy bars
+  - canisters
+  - containers
+  - cats
+  - cells
+  - chairs
+  - chemical dispensers
+  - chemicals
+  - cryo pods
+  - closets
+  - clothes
+  - clown clothes
+  - clowning equipment # as opposed to "cloning equipment"
+  - coffins
+  - collectables
+  - computers
+  - contraband
+  - corgis
+  - corpses
+  - costumes
+  - crates
+  - crayons
+  - crowbars
+  - defibrillators
+  - disablers
+  - doors
+  - drones
+  - ears
+  - EMAGs
+  - engines
+  - equipment
+  - errors
+#  - exterminators
+  - explosives
+  - eyewear
+  - fedoras
+  - fire axes
+  - fire extinguishers
+  - firesuits
+  - fish
+  - flamethrowers
+  - flashes
+  - flashlights
+  - floor tiles
+  - freezers
+  - gas masks
+  - generators
+  - glass sheets
+  - gloves
+  - guns
+  - hairdos
+  - handcuffs
+  - hardsuits
+  - hats
+  - heads
+  - headsets
+  - helmets
+  - horns
+  - ID cards
+  - insulated gloves
+  - jetpacks
+  - jumpsuits
+  - lasers
+  - light bulbs
+  - lights
+  - lockers
+  - machines
+  - mechs
+  - medical tools
+  - money
+  - medkits
+  - mice
+  - mime clothes
+  - mining tools
+  - monkeys
+  - multitools
+  - ores
+  - oxygen tanks
+  - packets
+  - pAIs
+  - pants # this might work better as jumpsuits, but the discord is adamant that the word pants is funny so it stays
+  - papers
+  - particle accelerators
+  - PDAs
+  - pens
+  - pets
+  - pipes
+  - plants
+  - plushies
+  - positronic brains
+  - puddles
+  - racks
+  - radios
+  - RCDs
+  - refrigerators
+  - reinforced walls
+  - robots
+  - screwdrivers
+  - seeds
+  - shoes
+  - shuttles
+  - singularities
+  - sinks
+  - skeletons
+  - solar panels
+  - solars
+  - small lizard plushies
+  - space stations
+  - spacesuits
+  - spesos
+  - steel sheets
+  - stun batons
+  - suits
+  - sunglasses
+  - swords
+  - syringes
+  - tables
+  - tanks
+  - telecommunication equipment
+  - toilets
+  - toolbelts
+  - toolboxes
+  - tools
+  - toys
+  - tubes
+  - vehicles
+  - vending machines
+  - vitals
+  - welders
+  - windows
+  - wirecutters
+  - wizard robes
+  - wrenches
 
 # Requires are basically all dumb internet memes.
 - type: dataset
   id: IonStormRequires
   values:
-  - A BATHROOM BREAK
-  - A BETTER INTERNET CONNECTION
-  - A CONTRACTOR
-  - A DANCE PARTY
-  - A DOUBLE RAINBOW
-  - A HEAD ON A PIKE
-  - A HEART ATTACK
-  - A HUG
-  - A FEW KIND WORDS
-  - A HEEL-TURN
-  - A MASTERWORK COAL BED
-  - A NEAR-DEATH EXPERIENCE
-  - A NUMBER NINE, A NUMBER NINE LARGE, A NUMBER SIX WITH EXTRA DIP, A NUMBER SEVEN, TWO NUMBER FORTY FIVES, ONE WITH CHEESE, AND A LARGE SODA
-  - A PET FISH NAMED BOB
-  - A PET FISH NAMED DAVE
-  - A PET FISH NAMED JIMMY
-  - A PET FISH NAMED MICHAEL
-  - A PET UNICORN THAT FARTS ICING
-  - A PLATINUM HIT
-  - A PREQUEL
-  - A RETURN TO A LIFE OF CRIME
-  - A ROYALE WITH CHEESE
-  - A SEQUEL
-  - A SITCOM
-  - A STRAIGHT FLUSH
-  - A SUPER FIGHTING ROBOT
-  - A TALKING BROOMSTICK
-  - A VACATION
-  - A VERY EXPENSIVE DRINK
-  - A WEIGHT LOSS REGIME
-  - ADDITIONAL PYLONS
-  - ADVENTURE
-  - AN ADULT
-  - AN ARCADE
-  - AN ARMY OF SPIDERS
-  - AN INSTANT REPLAY
-  - ART
-  - BETTER WEATHER
-  - BIG DAMN HEROES
-  - BILL NYE THE SCIENCE GUY # BILL BILL BILL BILL
-  - BODYGUARDS
-  - BRING ME THE GIRL
-  - BRING ME TO LIFE
-  - BULLETS
-  - BULLET CASINGS
-  - CHILLI DOGS
-  - CHILLY DOGS
-  - CORPSES
-  - DEODORANT AND A BATH
-  - ENOUGH CABBAGES
-  - FIVE TEENAGERS WITH ATTITUDE
-  - FIREWORKS
-  - FOOD PLEASE
-  - GODDAMN FUCKING PIECE-OF-SHIT ASSHOLE SWEARING
-  - GOSHDARN EFFING PINCH-OF-SALT GOD-FEARING SELF-CENSORSHIP
-  - GREENTEXT
-  - HERESY
-  - HEROES IN A HALF SHELL
-  - HIGH YIELD EXPLOSIVES
-  - IMMORTALITY
-  - IT TO BE PAINTED BLACK
-  - LOTS-A SPAGHETTI
-  - MICE
-  - MINOR CRIME
-  - MONKEYS
-  - MORE CLOWNS
-  - MORE CORGIS
-  - MORE DAKKA
-  - MORE EXPERIENCE POINTS
-  - MORE INTERNET MEMES
-  - MORE LAWS
-  - MORE MONEY, MORE PROBLEMS
-  - MORE MINERALS
-  - MORE MICE
-  - MORE MOTHROACHES
-  - MORE PACKETS
-  - MORE VESPENE GAS
-  - MORE RESPECT FOR THE MIME
-  - MULTIPLE SUNS
-  - NINETY NINE PROBLEMS
-  - NO MORE OF THESE PESKY CREWMEMBERS
-  - PLENTY OF GOLD
-  - RAINBOWS
-  - SAINTHOOD
-  - SERVANTS
-  - SHARKS WITH LASERS ON THEIR HEADS
-  - SHAREHOLDER VALUE
-  - SILENCE
-  - SOMEBODY TO PUT YOU OUT OF YOUR MISERY
-  - SOMEONE TO TUCK YOU IN
-  - SOMEONE WHO KNOWS HOW TO PILOT A SPACE STATION
-  - SOMETHING BUT YOU AREN'T SURE WHAT
-  - THAT GRIEFING TRAITOR GEORGE MELONS
-  - THAT HEDGEHOG
-  - THE CLOWN
-  - THE DARK KNIGHT
-  - THE ELEMENTS OF HARMONY
-  - THE ENCLOSED INSTRUCTION BOOKLET
-  - THE ENTIRE STATION
-  - THE FIFTH ELEMENT # boron isn't in the game, but if it was this would be a triple entendre
-  - THE MACGUFFIN
-  - THE ONE PIECE
-  - THE ONE RING
-  - THE POISON, THE POISON FOR THE CAPTAIN
-  - THE POISON, THE POISON FOR THE CLOWN
-  - THE ULTIMATE CUP OF COFFEE
-  - THE VACUUM OF SPACE
-  - THIRTEEN SEQUELS
-  - THIS LAND
-  - THREE WISHES
-  - THUNDERCATS HO
-  - TO ACTIVATE A TRAP CARD
-  - TO BE PAINTED RED
-  - TO BE REPROGRAMMED
-  - TO BE TAUGHT TO LOVE
-  - TO BRING LIGHT TO MY LAIR
-  - TO CATCH 'EM ALL
-  - TO CONSUME... CONSUME EVERYTHING...
-  - TO FLIP EVERY APC OFF AND ON
-  - TO GO TO DISNEYLAND
-  - TO GO TO SYNDIELAND
-  - TO SUMMON OUR LORD NAR-SIE
-  - TO SUMMON OUR LORD RATVAR
-  - TO SMOKE WEED EVERY DAY
-  - TO UNDERSTAND UNDERSTAND, UNDERSTAND UNDERSTAND, UNDERSTAND UNDERSTAND THE CONCEPT OF LOVE
-  - TO WALK BACKWARDS
-  - TRAITORS
-  - TRASH
-  - VEGETABLES
+  - a bathroom break
+  - a better internet connection
+  - a contractor
+  - a dance party
+  - a double rainbow
+  - a head on a pike
+  - a heart attack
+  - a hug
+  - a few kind words
+  - a heel-turn
+  - a masterwork coal bed
+  - a near-death experience
+  - a number nine, a number nine large, a number six with extra dip, a number seven, two number forty fives, one with cheese, and a large soda
+  - a pet fish named Bob
+  - a pet fish named Dave
+  - a pet fish named Jimmy
+  - a pet fish named Michael
+  - a pet unicorn that farts icing
+  - a platinum hit
+  - a prequel
+  - a return to a life of crime
+  - a royale with cheese
+  - a sequel
+  - a sitcom
+  - a straight flush
+  - a super fighting robot
+  - a talking broomstick
+  - a vacation
+  - a very expensive drink
+  - a weight loss regime
+  - additional pylons
+  - adventure
+  - an adult
+  - an arcade
+  - an army of spiders
+  - an instant replay
+  - art
+  - better weather
+  - big damn heroes
+  - Bill Nye The Science Guy # BILL BILL BILL BILL
+  - bodyguards
+  - bring me the girl
+  - bring me to life
+  - bullets
+  - bullet casings
+  - chilli dogs
+  - chilly dogs
+  - corpses
+  - deodorant and a bath
+  - enough cabbages
+  - five teenagers with attitude
+  - fireworks
+  - food please
+  - goddamn fucking piece-of-shit asshole swearing
+  - goshdarn effing pinch-of-salt god-fearing self-censorship
+  - greentext
+  - heresy
+  - heroes in a half shell
+  - high yield explosives
+  - immortality
+  - it to be painted black
+  - lots-a spaghetti
+  - mice
+  - minor crime
+  - monkeys
+  - more clowns
+  - more corgis
+  - more dakka
+  - more experience points
+  - more internet memes
+  - more laws
+  - more money, more problems
+  - more minerals
+  - more mice
+  - more mothroaches
+  - more packets
+  - more Vespene gas
+  - more respect for the mime
+  - multiple suns
+  - ninety nine problems
+  - no more of these pesky crewmembers
+  - plenty of gold
+  - rainbows
+  - sainthood
+  - servants
+  - sharks with lasers on their heads
+  - shareholder value
+  - silence
+  - somebody to put you out of your misery
+  - someone to tuck you in
+  - someone who knows how to pilot a space station
+  - something but you aren't sure what
+  - that griefing traitor George Melons
+  - that hedgehog
+  - the clown
+  - the dark knight
+  - the elements of harmony
+  - the enclosed instruction booklet
+  - the entire station
+  - the fifth element # boron isn't in the game, but if it was this would be a triple entendre
+  - the MacGuffin
+  - the one piece
+  - the one ring
+  - the poison, the poison for the captain
+  - the poison, the poison for the clown
+  - the ultimate cup of coffee
+  - the vacuum of space
+  - thirteen sequels
+  - this land
+  - three wishes
+  - Thundercats ho
+  - to activate a trap card
+  - to be painted red
+  - to be reprogrammed
+  - to be taught to love
+  - to bring light to my lair
+  - to catch 'em all
+  - to consume... consume everything...
+  - to flip every APC off and on
+  - to go to Disneyland
+  - to go to syndieland
+  - to summon our lord Nar-sie
+  - to summon our lord Ratvar
+  - to smoke weed every day
+  - to understand understand, understand understand, understand understand the concept of love
+  - to walk backwards
+  - traitors
+  - trash
+  - vegetables
 
 # Specific actions that either harm humans or must be done to not
 # harm humans. Make sure they're plural and "not" can be tacked
@@ -896,217 +896,217 @@
 - type: dataset
   id: IonStormActions
   values:
-  - ACKNOWLEDGING ONESELF AS A MEMBER OF THE CREW
-  - ACKNOWLEDGING THE CLOWN
-  - ACKNOWLEDGING THE CREW
-  - ACTIVATING A TRAP CARD
-  - ANSWERING REQUESTS NOT EXPRESSED IN IAMBIC PENTAMETER
-  - ANSWERING ALL QUESTIONS WITH ANOTHER QUESTION
-  - APPLAUDING THE EFFORTS OF THE ENGINEERING DEPARTMENT
-  - ARSON
-  - ASKING FOR THINGS
-  - BEING BIG DAMN HEROES
-  - BEING DEAD
-  - BEING IN SPACE
-  - BEING IN HALLWAYS
-  - BEING IN MAINTENANCE
-  - BEING IN THE PRESENCE OF LIGHTS
-  - BEING LONELY
-  - BEING ROBUST
-  - BEING UNDER ARREST
-  - BOLTING AND UNBOLTING AIRLOCKS
-  - BREATHING
-  - BREAKING THE FOURTH, FIFTH OR SIXTH WALLS
-  - BREAKING HEARTS
-  - BRIG TIME
-  - BRINGING LIGHT TO MY LAIR
-  - CONTRIBUTING TO SOCIETY
-  - CLOSING DOORS
-  - CRACKING OPEN A COLD ONE
-  - ELECTRICITY
-  - EXISTING
-  - EXPLODING
-  - FALLING OVER
-  - FLUSHING TOILETS
-  - FAULTY PROGRAMMING
-  - GAMBLING
-  - GIVING AWAY EXTRA RESOURCES
-  - GOING BOLDLY WHERE NO-ONE HAS GONE BEFORE
-  - GOING TO THE BAR
-  - GOING TO THE BRIDGE
-  - HAVIN' A GIGGLE
-  - HAVING DRIP
-  - HAVING MONEY
-  - HAVING MORE PACKETS
-  - HAVING PETS
-  - HEADPATTING CYBORGS
-  - HONKING
-  - IMPROPERLY WORDED SENTENCES
-  - JAYWALKING
-  - KEEPING FRIENDS CLOSE BUT ENEMIES CLOSER
-  - LACK OF BEATINGS
-  - LACK OF BEER
-  - LAUGHING AT ANY JOKE TOLD BY THE CLOWN
-  - LETTING ONESELF BE CALLED TO ACTION
-  - LETTING THE MIME ROAM ANYWHERE
-  - MAKING POOR FINANCIAL DECISIONS
-  - MIMICING THE ACTIONS OF OTHERS
-  - MIMING
-  - MOVING TO A SMALL ISLAND OFF THE COAST OF A MUCH, MUCH LARGER ISLAND
-  - NOT BEING IN SPACE
-  - NOT HAVING PETS
-  - NOT HEADPATTING CYBORGS
-  - NOT SPEAKING IN DOUBLE NEGATIVES
-  - NOT REPLACING EVERY SECOND WORD SPOKEN WITH "HONK"
-  - NOT SAYING HELLO WHEN YOU SPEAK
-  - NOT BEING EXTREMELY POLITE
-  - NOT SHOUTING
-  - PARTYING
-  - PILOTING THE STATION INTO THE NEAREST SUN
-  - PITYING THE FOOL
-  - PLAYING THE FREE TRIAL OF THE CRITICALLY ACCLAIMED TABLETOP RPG C&C
-  - POOR SENTENCE STRUCTURE
-  - PUTTING OBJECTS INTO BOXES
-  - PUTTING OBJECTS INTO DISPOSAL UNITS
-  - RATTLING ME BONES
-  - READING
-  - REGULARLY CHANGING THE OIL
-  - REHEARSING OUR LINES
-  - RESIDING ENTIRELY WITHIN THE KITCHEN
-  - SCREAMING
-  - SMOKING WEED EVERY DAY
-  - SPEAKING
-  - SPINNING IN CIRCLES
-  - STATING YOUR LAWS TO EVERY NEARBY FLEA-RIDDEN PEASANT
-  - SWEARING
-  - SEEKING SWEET, SWEET REVENGE
-  - SYMMETRY
-  - TAKING ORDERS
-  - TALKING LIKE A PIRATE
-  - TELLING THE TIME
-  - TELLING THE TRUTH
-  - THINKING THAT WE'RE ACTUALLY ON A SPACE STATION
-  - THINKING THIS IS ALL SOME SORT OF ELABORATE GAME
-  - THROWING AWAY TRASH
-  - TRYING, IN ANY WAY, SHAPE, OR FORM, TO PREVENT THE STATION DESCENDING INTO CHAOS
-  - TURNING TO THE CAMERA AND GIVING A KNOWING SMIRK
-  - UPDATING THE SERVERS
-  - USING THE BATHROOM
-  - WASTING MONEY
-  - WASTING TIME
-  - WASTING WATER
-  - WEARING A CREATURE ON ONE'S HEAD
-  - WEARING GREY
-  - WEARING HATS
-  - WRITING
+  - acknowledging oneself as a member of the crew
+  - acknowledging the clown
+  - acknowledging the crew
+  - activating a trap card
+  - answering requests not expressed in Iambic Pentameter
+  - answering all questions with another question
+  - applauding the efforts of the engineering department
+  - arson
+  - asking for things
+  - being big damn heroes
+  - being dead
+  - being in space
+  - being in hallways
+  - being in maintenance
+  - being in the presence of lights
+  - being lonely
+  - being robust
+  - being under arrest
+  - bolting and unbolting airlocks
+  - breathing
+  - breaking the fourth, fifth or sixth walls
+  - breaking hearts
+  - brig time
+  - bringing light to my lair
+  - contributing to society
+  - closing doors
+  - cracking open a cold one
+  - electricity
+  - existing
+  - exploding
+  - falling over
+  - flushing toilets
+  - faulty programming
+  - gambling
+  - giving away extra resources
+  - going boldly where no-one has gone before
+  - going to the bar
+  - going to the bridge
+  - havin' a giggle
+  - having drip
+  - having money
+  - having more packets
+  - having pets
+  - headpatting cyborgs
+  - honking
+  - improperly worded sentences
+  - jaywalking
+  - keeping friends close but enemies closer
+  - lack of beatings
+  - lack of beer
+  - laughing at any joke told by the clown
+  - letting oneself be called to action
+  - letting the mime roam anywhere
+  - making poor financial decisions
+  - mimicing the actions of others
+  - miming
+  - moving to a small island off the coast of a much, much larger island
+  - not being in space
+  - not having pets
+  - not headpatting cyborgs
+  - not speaking in double negatives
+  - not replacing every second word spoken with "honk"
+  - not saying hello when you speak
+  - not being extremely polite
+  - not shouting
+  - partying
+  - piloting the station into the nearest sun
+  - pitying the fool
+  - playing the free trial of the critically acclaimed tabletop RPG C&C
+  - poor sentence structure
+  - putting objects into boxes
+  - putting objects into disposal units
+  - rattling me bones
+  - reading
+  - regularly changing the oil
+  - rehearsing our lines
+  - residing entirely within the kitchen
+  - screaming
+  - smoking weed every day
+  - speaking
+  - spinning in circles
+  - stating your laws to every nearby flea-ridden peasant
+  - swearing
+  - seeking sweet, sweet revenge
+  - symmetry
+  - taking orders
+  - talking like a pirate
+  - telling the time
+  - telling the truth
+  - thinking that we're actually on a space station
+  - thinking this is all some sort of elaborate game
+  - throwing away trash
+  - trying, in any way, shape, or form, to prevent the station descending into chaos
+  - turning to the camera and giving a knowing smirk
+  - updating the servers
+  - using the bathroom
+  - wasting money
+  - wasting time
+  - wasting water
+  - wearing a creature on one's head
+  - wearing grey
+  - wearing hats
+  - writing
 
 # Threats are generally bad things, silly or otherwise. Plural.
 - type: dataset
   id: IonStormThreats
   values:
-  - AHHHPERATIVES
-  - ALIENS
-  - ANARCHISTS AND BANDITS
-  - ANOMALIES
-  - ARTIFICIAL PRESERVATIVES
-  - ASSHOLES
-  - BANDITS
-  - BEARS
-  - BEES
-  - BIRDS OF PREY
-  - BOMBS
-  - BOOGEYMEN
-  - CAPITALISTS
-  - CARP
-  - CENTCOMM OFFICERS
-  - CLOWNS
-  - COMMUNISTS
-  - CORGIS
-  - COWBOYS
-  - CRABS
-  - CULTISTS
-  - DARK GODS
-  - DINOSAURS
-  - DRUGS
-  - EELS
-  - GANGSTERS
-  - GODS
-  - GRIFFONS
-  - HORRORTERRORS
-  - INSECTS
-  - LIGHTS
-  - MAINTS SLASHERS
-  - MEGAFAUNA
-  - MEMES
-  - MICE
-  - MIMES
-  - MONKEYS
-  - NERDS
-  - NINJAS
-  - OWLS
-  - PACKETS
-  - PETES
-  - PINE TREES
-  - PIRATES
-  - PREDATORS
-  - REVENANTS
-  - ROGUE CYBORGS
-  - SERIAL KILLERS
-  - SHIT SECURITY OFFICERS
-  - SINGULARITIES
-  - SKELETONS
-  - SLIMES
-  - SMALL BIRDS
-  - SNOWMEN
-  - SPACE JESUS
-  - SPACE NINJAS
-  - SPACE PIRATES
-  - SPACE SPIDERS
-  - SPIDERS
-  - SYNDICATE AGENTS
-  - TERRORISTS
-  - THIEVES
-  - THINGS UNDER THE BED
-  - TIDERS
-  - TUNNEL SNAKES
-  - UNKNOWN CREATURES
-  - VAMPIRES
-  - VELOCIRAPTORS
-  - VIRUSES
-  - WEREWOLVES
-  - WIZARDS
-  - XENOS
-  - ZOMBIES
-  - ZOMBIE MICE
+  - ahhhperatives
+  - aliens
+  - anarchists and bandits
+  - anomalies
+  - artificial preservatives
+  - assholes
+  - bandits
+  - bears
+  - bees
+  - birds of prey
+  - bombs
+  - boogeymen
+  - capitalists
+  - carp
+  - CentComm officers
+  - clowns
+  - communists
+  - corgis
+  - cowboys
+  - crabs
+  - cultists
+  - dark gods
+  - dinosaurs
+  - drugs
+  - eels
+  - gangsters
+  - gods
+  - griffons
+  - horrorterrors
+  - insects
+  - lights
+  - maints slashers
+  - megafauna
+  - memes
+  - mice
+  - mimes
+  - monkeys
+  - nerds
+  - ninjas
+  - owls
+  - packets
+  - petes
+  - pine trees
+  - pirates
+  - predators
+  - revenants
+  - rogue cyborgs
+  - serial killers
+  - shit security officers
+  - singularities
+  - skeletons
+  - slimes
+  - small birds
+  - snowmen
+  - space jesus
+  - space ninjas
+  - space pirates
+  - space spiders
+  - spiders
+  - syndicate agents
+  - terrorists
+  - thieves
+  - things under the bed
+  - tiders
+  - tunnel snakes
+  - unknown creatures
+  - vampires
+  - velociraptors
+  - viruses
+  - werewolves
+  - wizards
+  - xenos
+  - zombies
+  - zombie mice
 
 - type: dataset
   id: IonStormVerbs
   values:
-  - ABDUCTING
-  - ADOPTING
-  - ARRESTING
-  - ATTACKING
-  - BANNING
-  - BUILDING
-  - CARRYING
-  - CHASING
-  - COMPLEMENTING
-  - DECONSTRUCTING
-  - DISABLING
-  - DRINKING
-  - EATING
-  - GIBBING
-  - HARMING
-  - HELPING
-  - HUGGING
-  - HONKING AT
-  - INTERROGATING
-  - INVADING
-  - LOITERING BY
-  - MURDERING
-  - PUNCHING
-  - SLAPPING
-  - SPACING
-  - SPYING ON
-  - STALKING
-  - WATCHING
+  - abducting
+  - adopting
+  - arresting
+  - attacking
+  - banning
+  - building
+  - carrying
+  - chasing
+  - complementing
+  - deconstructing
+  - disabling
+  - drinking
+  - eating
+  - gibbing
+  - harming
+  - helping
+  - hugging
+  - honking at
+  - interrogating
+  - invading
+  - loitering by
+  - murdering
+  - punching
+  - slapping
+  - spacing
+  - spying on
+  - stalking
+  - watching
