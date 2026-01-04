@@ -422,6 +422,11 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Speech
+    speechVerb: Arachnid
+    speechSounds: Arachnid
+  - type: ReplacementAccent
+    accent: xeno
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepSnake
@@ -534,6 +539,8 @@
     molsPerSecondPerUnitMass: 0.0005
   - type: Speech
     speechVerb: LargeMob
+  - type: ReplacementAccent
+    accent: xeno
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/Xenos/praetorian.rsi
