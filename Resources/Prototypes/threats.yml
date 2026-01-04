@@ -4,6 +4,7 @@
   weights:
     Dragon: 1
     Revenant: 1
+    Wizard: 0.25
 
 - type: ninjaHackingThreat
   id: Dragon
@@ -14,3 +15,8 @@
   id: Revenant
   announcement: terror-revenant
   rule: RevenantSpawn
+
+- type: ninjaHackingThreat
+  id: Wizard
+  announcement: terror-wizard
+  rule: Wizard
