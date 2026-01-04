@@ -15,6 +15,7 @@
     state: icon
   - type: TimedDespawn
     lifetime: 90
+  - type: ShowTimedDespawn
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
