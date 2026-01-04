@@ -61,6 +61,8 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Human/eyelids.rsi
 
 - type: entity
   parent: BaseSpeciesDummy

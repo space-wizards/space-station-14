@@ -114,6 +114,8 @@
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
   - type: Rootable
+  - type: EyeBlinking
+    eyelidsSprite: /Textures/Mobs/Species/Diona/eyelids.rsi
 
 - type: entity
   parent: BaseSpeciesDummy
