@@ -170,7 +170,7 @@
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
-  description: A deep shoulder holster capable of holding many types of ballistics. Seems cumbersome to put on.
+  description: A deep shoulder holster capable of holding many types of ballistics.
   components:
   - type: Sprite
     sprite: Clothing/Belt/syndieholster.rsi
