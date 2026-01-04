@@ -176,8 +176,6 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: Clothing
     sprite: Clothing/Belt/syndieholster.rsi
-    equipDelay: 1
-    unequipDelay: 1
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
