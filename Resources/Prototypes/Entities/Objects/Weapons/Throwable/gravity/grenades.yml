@@ -1,0 +1,103 @@
+- type: entity
+  parent: GrenadeBase
+  id: BaseGravGrenade
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/GravitationalGrenades/singularity.rsi
+  - type: StaticPrice
+    price: 1000
+  # - type: MultiTimerQueue
+  #   keysIn: [timer]
+  #   queue:
+  #   - ignition
+  #   queueDelays:
+  #   - 0.7
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Grenades/Supermatter/beep.ogg
+      params:
+        volume: -5
+  - type: TimerTrigger
+    keysIn:
+    - trigger
+    keyOut: timer
+    delay: 3.6 # 6 beeps
+    beepInterval: 0.6
+    beepSound:
+      path: /Audio/Effects/Grenades/Supermatter/beep.ogg
+      params:
+        volume: -5
+  - type: EmitSoundOnTrigger
+    positional: true
+    keysIn:
+    - timer
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter.start.ogg #0.804
+      params:
+        volume: 5
+  # - type: AnchorOnTrigger
+  #   keysIn:
+  #   - timer
+  - type: TwoStageTrigger
+    keysIn:
+    - timer
+    triggerDelay: 0.4
+    keyOut: stageTwo
+  - type: SpawnOnTrigger
+    keysIn:
+    - stageTwo
+    proto: SupermatterDelamination
+  - type: DeleteOnTrigger
+    keysIn:
+    - stageTwo
+  # - type: Explosive
+  #   explosionType: Default
+  #   totalIntensity: 1
+  #   intensitySlope: 1
+  #   maxIntensity: 1
+  #   tileBreakScale: 0
+  # - type: ExplodeOnTrigger
+  #   keysIn:
+  #   - stageTwo
+
+- type: entity
+  parent: [ BaseGravGrenade, BaseSyndicateContraband ]
+  id: SingularityGrenade
+  name: singularity gravgrenade
+  description: Grenade that simulates the power of a singularity, pulling things in a heap.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/GravitationalGrenades/singularity.rsi
+  - type: SpawnOnTrigger
+    proto: SinguloDelamination
+
+- type: entity
+  parent: [ BaseGravGrenade, BaseSyndicateContraband, VolatileGrenadeBase ]
+  id: SupermatterGrenade
+  name: supermatter gravgrenade
+  description: Grenade that simulates the power of a singularity, pulling things in a heap.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/GravitationalGrenades/supermatter.rsi
+  - type: SpawnOnTrigger
+    proto: SupermatterDelamination
+
+- type: entity
+  parent: [ BaseGravGrenade, BaseSyndicateContraband ]
+  id: WhiteholeGrenade
+  name: whitehole gravgrenade
+  description: Grenade that repulses everything around for some time.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/GravitationalGrenades/whitehole.rsi
+  - type: EmitSoundOnTrigger
+    positional: true
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/whitehole.start.ogg
+      params:
+        volume: 5
+  - type: SpawnOnTrigger
+    proto: WhiteholeDelamination
+  - type: TwoStageTrigger
+    triggerDelay: 0.8
