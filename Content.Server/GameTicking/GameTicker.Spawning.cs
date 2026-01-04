@@ -9,6 +9,7 @@ using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Clothing;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
@@ -16,6 +17,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
+using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
@@ -254,7 +256,8 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            DoSpawn(player, character, station, jobId, silent, out var mob, out var jobPrototype, out var jobName);
+            var name = DeriveCharacterName(character, jobId);
+            DoSpawn(player, character, name, station, jobId, silent, out var mob, out var jobPrototype, out var jobName);
 
             if (lateJoin && !silent)
             {
@@ -318,6 +321,7 @@ namespace Content.Server.GameTicking
             PlayersJoinedRoundNormally++;
             var aev = new PlayerSpawnCompleteEvent(mob,
                 player,
+                name,
                 jobId,
                 lateJoin,
                 silent,
@@ -327,12 +331,35 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(mob, aev, true);
         }
 
+        private string DeriveCharacterName(HumanoidCharacterProfile character, string jobId)
+        {
+            var jobLoadout = LoadoutSystem.GetJobPrototype(jobId);
+            bool hasLoadoutProto = _prototypeManager.TryIndex(jobLoadout, out RoleLoadoutPrototype? loadoutProto);
+            bool hasLoadout = character.Loadouts.TryGetValue(jobLoadout, out var loadout);
+
+            if (!hasLoadoutProto)
+                return character.Name;
+
+            if (hasLoadout && loadoutProto!.CanCustomizeName && !string.IsNullOrEmpty(loadout!.EntityName))
+                return loadout.EntityName;
+
+            if (_prototypeManager.Resolve(loadoutProto!.NameDataset, out var nameData))
+            {
+                var defaultRoleName = Loc.GetString(_robustRandom.Pick(nameData.Values));
+                if (!string.IsNullOrEmpty(defaultRoleName))
+                    return defaultRoleName;
+            }
+
+            return character.Name;
+        }
+
         /// <summary>
         /// Creates a mob on the specified station, creates the new mind, equips job-specific starting gear and loadout
         /// </summary>
         public void DoSpawn(
             ICommonSession player,
             HumanoidCharacterProfile character,
+            string name,
             EntityUid station,
             string jobId,
             bool silent,
@@ -346,14 +373,14 @@ namespace Content.Server.GameTicking
 
             DebugTools.AssertNotNull(data);
 
-            var newMind = _mind.CreateMind(data!.UserId, character.Name);
+            var newMind = _mind.CreateMind(data!.UserId, name);
             _mind.SetUserId(newMind, data.UserId);
 
             jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
-            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character);
+            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, name, jobId, character);
             DebugTools.AssertNotNull(mobMaybe);
             mob = mobMaybe!.Value;
 
