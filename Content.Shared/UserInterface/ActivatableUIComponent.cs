@@ -40,6 +40,12 @@ namespace Content.Shared.UserInterface
         public bool RequiresComplex = true;
 
         /// <summary>
+        ///     Skips check of <see cref="RequiredItems"/> when item is used in hand.
+        /// </summary>
+        [DataField, ViewVariables(VVAccess.ReadWrite)]
+        public bool AllowUseInHandIfHasRequiredItems = false;
+
+        /// <summary>
         ///     Entities that are required to open this UI.
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -73,5 +79,25 @@ namespace Content.Shared.UserInterface
         /// </summary>
         [DataField, AutoNetworkedField]
         public EntityUid? CurrentSingleUser;
+
+        /// <summary>
+        ///     What should happen on interaction attempt with UI, iniciated by <see cref="Content.Shared.Interaction.Events.UseInHandEvent"/>.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public InteractionMode InteractionModeOnUseInHand = InteractionMode.ToggleUI;
+
+        /// <summary>
+        ///     What should happen on interaction attempt with UI, iniciated by <see cref="Content.Shared.Interaction.InteractUsingEvent"/>.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField]
+        public InteractionMode InteractionModeOnInteractUsing = InteractionMode.ToggleUI;
+    }
+
+    public enum InteractionMode
+    {
+        ToggleUI,
+        OpenUI,
     }
 }
