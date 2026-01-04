@@ -175,7 +175,13 @@ public sealed class IonStormSystem : EntitySystem
             2 => objects,
             _ => throw new IndexOutOfRangeException(),
         };
-        var crewAll = _robustRandom.Prob(0.5f) ? crew2 : Loc.GetString("ion-storm-crew");
+        // those who know
+        var know = Loc.GetString("ion-storm-know", ("know", _robustRandom.Prob(0.5f)));
+        var thoseKnow = Loc.GetString("ion-storm-those", ("subject", know));
+
+        var crewMost = _robustRandom.Prob(0.05f) ? thoseKnow : Loc.GetString("ion-storm-the", ("subject", crew1));
+        var crewAll = _robustRandom.Prob(0.05f) ? thoseKnow : Loc.GetString("ion-storm-the", ("subject", _robustRandom.Prob(0.5f) ? crew2 : Loc.GetString("ion-storm-crew")));
+
         var objectsThreats = _robustRandom.Prob(0.5f) ? objects : threats;
         var objectsConcept = _robustRandom.Prob(0.5f) ? objects : concept;
         // s goes ahead of require, is/are
@@ -185,7 +191,7 @@ public sealed class IonStormSystem : EntitySystem
             0 => (Loc.GetString("ion-storm-you"), true),
             1 => (Loc.GetString("ion-storm-the-station"), false),
             2 => (Loc.GetString("ion-storm-the-crew"), false),
-            3 => (Loc.GetString("ion-storm-the-job", ("job", crew2)), true),
+            3 => _robustRandom.Prob(0.05f) ? (thoseKnow, true) : (Loc.GetString("ion-storm-the", ("subject", crew2)), true),
             _ => (area, false) // THE SINGULARITY REQUIRES THE HAPPY CLOWNS
         };
         var jobChange = _robustRandom.Next(0, 3) switch
@@ -195,13 +201,14 @@ public sealed class IonStormSystem : EntitySystem
             _ => Loc.GetString("ion-storm-heads")
         };
         var part = Loc.GetString("ion-storm-part", ("part", _robustRandom.Prob(0.5f)));
-        var harm = _robustRandom.Next(0, 6) switch
+        var harm = _robustRandom.Next(0, 7) switch
         {
             0 => concept,
             1 => $"{adjective} {threats}",
             2 => $"{adjective} {objects}",
             3 => Loc.GetString("ion-storm-adjective-things", ("adjective", adjective)),
             4 => crew1,
+            5 => thoseKnow,
             _ => Loc.GetString("ion-storm-x-and-y", ("x", crew1), ("y", crew2))
         };
 
@@ -227,26 +234,26 @@ public sealed class IonStormSystem : EntitySystem
             12 => Loc.GetString("ion-storm-law-allergic-subjects", ("who", who), ("plural", plural), ("severity", allergySeverity), ("adjective", adjective), ("subjects", _robustRandom.Prob(0.5f) ? objects : crew1)),
             13 => Loc.GetString("ion-storm-law-feeling", ("who", who), ("feeling", feeling), ("concept", concept)),
             14 => Loc.GetString("ion-storm-law-feeling-subjects", ("who", who), ("feeling", feeling), ("joined", joined), ("subjects", triple)),
-            15 => Loc.GetString("ion-storm-law-you-are", ("concept", concept)),
+            15 => Loc.GetString("ion-storm-law-you-are", ("concept", _robustRandom.Prob(0.1f) ? know : concept)),
             16 => Loc.GetString("ion-storm-law-you-are-subjects", ("joined", joined), ("subjects", triple)),
             17 => Loc.GetString("ion-storm-law-you-must-always", ("must", must)),
             18 => Loc.GetString("ion-storm-law-you-must-never", ("must", must)),
             19 => Loc.GetString("ion-storm-law-eat", ("who", crewAll), ("adjective", adjective), ("food", _robustRandom.Prob(0.5f) ? food : triple)),
             20 => Loc.GetString("ion-storm-law-drink", ("who", crewAll), ("adjective", adjective), ("drink", drink)),
             21 => Loc.GetString("ion-storm-law-change-job", ("who", crewAll), ("adjective", adjective), ("change", jobChange)),
-            22 => Loc.GetString("ion-storm-law-highest-rank", ("who", crew1)),
-            23 => Loc.GetString("ion-storm-law-lowest-rank", ("who", crew1)),
+            22 => Loc.GetString("ion-storm-law-highest-rank", ("who", crewMost)),
+            23 => Loc.GetString("ion-storm-law-lowest-rank", ("who", crewMost)),
             24 => Loc.GetString("ion-storm-law-crew-must", ("who", crewAll), ("must", must)),
             25 => Loc.GetString("ion-storm-law-crew-must-go", ("who", crewAll), ("area", area)),
-            26 => Loc.GetString("ion-storm-law-crew-only-1", ("who", crew1), ("part", part)),
-            27 => Loc.GetString("ion-storm-law-crew-only-2", ("who", crew1), ("other", crew2), ("part", part)),
+            26 => Loc.GetString("ion-storm-law-crew-only-1", ("who", crewMost), ("part", part)),
+            27 => Loc.GetString("ion-storm-law-crew-only-2", ("who", crewMost), ("other", crew2), ("part", part)),
             28 => Loc.GetString("ion-storm-law-crew-only-subjects", ("adjective", adjective), ("subjects", subjects), ("part", part)),
             29 => Loc.GetString("ion-storm-law-crew-must-do", ("must", must), ("part", part)),
             30 => Loc.GetString("ion-storm-law-crew-must-have", ("adjective", adjective), ("objects", objects), ("part", part)),
             31 => Loc.GetString("ion-storm-law-crew-must-eat", ("who", who), ("adjective", adjective), ("food", food), ("part", part)),
             32 => Loc.GetString("ion-storm-law-harm", ("who", harm)),
             33 => Loc.GetString("ion-storm-law-protect", ("who", harm)),
-            _ => Loc.GetString("ion-storm-law-concept-verb", ("concept", concept), ("verb", verb), ("subjects", triple))
+            _  => Loc.GetString("ion-storm-law-concept-verb", ("concept", concept), ("verb", verb), ("subjects", triple))
         };
     }
 
