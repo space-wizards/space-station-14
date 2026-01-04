@@ -118,6 +118,7 @@ stack-coal = coal
 stack-salt = salt
 stack-inflatable-wall = inflatable wall
 stack-inflatable-door = inflatable door
+stack-cone-warning = warning cone
 stack-ointment = ointment
 stack-aloe-cream = aloe cream
 stack-gauze = gauze
