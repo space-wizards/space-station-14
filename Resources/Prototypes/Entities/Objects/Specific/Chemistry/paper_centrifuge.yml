@@ -56,3 +56,5 @@
     timeToMix: 10
     mixingSound: !type:SoundPathSpecifier
       path: /Audio/Items/Medical/paper_centrifuge.ogg
+      params:
+        loop: true
