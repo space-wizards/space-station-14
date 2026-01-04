@@ -182,7 +182,8 @@
     duration: 1
     minimumPlayers: 10
   - type: RandomEntityStorageSpawnRule
-    prototype: MobSkeletonCloset
+    prototype: SpawnPointGhostSkeleton
+
 
 - type: entity
   parent: BaseGameRule
