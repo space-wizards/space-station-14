@@ -14,17 +14,14 @@ public sealed partial class PlantRestoreSeedsEntityEffectSystem : EntityEffectSy
 {
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantTraitsSystem _plantTraits = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantRestoreSeeds> args)
     {
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        if (!TryComp<PlantTraitsComponent>(entity, out var traits)
-            || !traits.Seedless)
-            return;
-
         _popup.PopupEntity(Loc.GetString("botany-plant-seedsrestored"), entity);
-        traits.Seedless = false;
+        _plantTraits.DelTrait(entity.Owner, new TraitSeedless());
     }
 }

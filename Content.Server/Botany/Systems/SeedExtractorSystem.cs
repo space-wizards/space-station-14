@@ -13,6 +13,7 @@ public sealed class SeedExtractorSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
+    [Dependency] private readonly PlantTraitsSystem _plantTraits = default!;
 
     public override void Initialize()
     {
@@ -36,15 +37,18 @@ public sealed class SeedExtractorSystem : EntitySystem
         if (produce.PlantData != null)
             snapshot = produce.PlantData;
 
-        if (_botany.TryGetPlantComponent<PlantTraitsComponent>(snapshot, produce.PlantProtoId, out var traits) && traits.Seedless)
+        if (_botany.TryGetPlantComponent<PlantTraitsComponent>(snapshot, produce.PlantProtoId, out var traits) &&
+            _plantTraits.TryGetTrait<TraitSeedless>(traits, out _))
         {
             _popup.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds", ("name", args.Used)),
-                args.User, PopupType.MediumCaution);
+                args.User,
+                PopupType.MediumCaution);
             return;
         }
 
         _popup.PopupCursor(Loc.GetString("seed-extractor-component-interact-message", ("name", args.Used)),
-            args.User, PopupType.Medium);
+            args.User,
+            PopupType.Medium);
 
         QueueDel(args.Used);
         args.Handled = true;

@@ -7,8 +7,14 @@ public sealed partial class PlantChangeStat : EntityEffectBase<PlantChangeStat>
     /// It's meant to be generic and expandable I guess? But it's looking for a specific datafield and then
     /// sending it into an if else if else if statement that filters by object type and randomly flips bits.
     /// </remarks>
-    [DataField (required: true)]
+    [DataField(required: true)]
     public string TargetValue = string.Empty;
+
+    /// <summary>
+    /// The plant component that contains <see cref="TargetValue"/>.
+    /// </summary>
+    [DataField(required: true)]
+    public string TargetComponent = string.Empty;
 
     [DataField]
     public float MinValue;

@@ -7,9 +7,10 @@ namespace Content.Server.Botany.Systems;
 /// Handles toxin accumulation and tolerance for plants, applying health damage
 /// and decrementing toxins based on per-tick uptake.
 /// </summary>
-public sealed class ToxinsSystem : EntitySystem
+public sealed class PlantToxinsSystem : EntitySystem
 {
     [Dependency] private readonly BotanySystem _botany = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
     [Dependency] private readonly MutationSystem _mutation = default!;
 
     public override void Initialize()
@@ -29,20 +30,18 @@ public sealed class ToxinsSystem : EntitySystem
 
     private void OnPlantGrow(Entity<PlantToxinsComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (plantUid, component) = ent;
-
-        if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;
 
-        if (holder.Toxins < 0)
+        if (ent.Comp.ToxinUptakeDivisor <= 0)
             return;
 
-        var toxinUptake = MathF.Max(1, MathF.Round(holder.Toxins / component.ToxinUptakeDivisor));
-        if (holder.Toxins > component.ToxinsTolerance)
-            holder.Health -= toxinUptake;
+        var toxinUptake = MathF.Max(1, MathF.Round(holder.Toxins / ent.Comp.ToxinUptakeDivisor));
+        if (holder.Toxins > ent.Comp.ToxinsTolerance)
+            _plantHolder.AdjustsHealth(ent.Owner, -toxinUptake);
 
         // there is a possibility that it will remove more toxin than amount of damage it took on plant health (and killed it).
         // TODO: get min out of health left and toxin uptake - would work better, probably.
-        holder.Toxins -= toxinUptake;
+        _plantHolder.AdjustsToxins(ent.Owner, -toxinUptake);
     }
 }

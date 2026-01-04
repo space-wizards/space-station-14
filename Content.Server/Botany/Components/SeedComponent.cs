@@ -8,7 +8,7 @@ namespace Content.Server.Botany.Components;
 /// Data container for plant seed. Contains all info (values for components) for new plant to grow from seed.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(BotanySystem), typeof(PlantHolderSystem))]
+[Access(typeof(BotanySystem))]
 public sealed partial class SeedComponent : SharedSeedComponent
 {
     /// <summary>

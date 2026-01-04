@@ -154,7 +154,6 @@
   - AtmosphericGrowth
   - ConsumeExudeGasGrowth
   - WeedPestGrowth
-  - UnviableGrowth
   - PlantToxins
 
 # for plant lifecycle clones

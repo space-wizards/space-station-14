@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Server.Botany.Systems;
 
 namespace Content.Server.Botany.Components;
 
@@ -7,6 +8,7 @@ namespace Content.Server.Botany.Components;
 /// </summary>
 [RegisterComponent]
 [DataDefinition]
+[Access(typeof(ConsumeExudeGasGrowthSystem))]
 public sealed partial class ConsumeExudeGasGrowthComponent : Component
 {
     /// <summary>

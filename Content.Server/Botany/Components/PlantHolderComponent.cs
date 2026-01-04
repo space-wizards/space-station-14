@@ -1,3 +1,4 @@
+using Content.Server.Botany.Systems;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Botany.Components;
@@ -6,6 +7,7 @@ namespace Content.Server.Botany.Components;
 /// Runtime plant lifecycle data. This component is attached to the plant entity.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(PlantHolderSystem), typeof(PlantSystem))]
 public sealed partial class PlantHolderComponent : Component
 {
     /// <summary>
@@ -23,15 +25,8 @@ public sealed partial class PlantHolderComponent : Component
     /// <summary>
     /// Whether the plant is dead.
     /// </summary>
-    [DataField]
-    public bool Dead = false;
-
-    /// <summary>
-    /// Set to true if this plant has been clipped by seed clippers. Used to prevent a single plant
-    /// from repeatedly being clipped.
-    /// </summary>
-    [DataField]
-    public bool Sampled;
+    [ViewVariables]
+    public bool Dead;
 
     /// <summary>
     /// Multiplier for the number of entities produced at harvest.
@@ -39,35 +34,37 @@ public sealed partial class PlantHolderComponent : Component
     [DataField]
     public int YieldMod = 1;
 
+    [DataField]
+    public int MaxYieldMod = 2;
+
     /// <summary>
     /// Multiplier for mutation chance and severity.
     /// </summary>
     [DataField]
     public float MutationMod = 1f;
 
+    [DataField]
+    public float MaxMutationMod = 3f;
+
     /// <summary>
-    /// Current mutation level (0-100).
+    /// Current mutation level.
     /// </summary>
     [DataField]
     public float MutationLevel;
+
+    public float MaxMutationLevel = 100f;
 
     /// <summary>
     /// Current health of the plant (0 to seed endurance).
     /// </summary>
     [DataField]
-    public float Health = 100;
+    public float Health = 100f;
 
     /// <summary>
     /// Game time for the next plant reagent update.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate = TimeSpan.Zero;
-
-    /// <summary>
-    /// Number of missing gases required for plant growth.
-    /// </summary>
-    [DataField]
-    public int MissingGas;
 
     /// <summary>
     /// Time between plant growth updates.
@@ -88,26 +85,41 @@ public sealed partial class PlantHolderComponent : Component
     public bool ForceUpdate;
 
     /// <summary>
-    /// Current pest level in the plant (0-10).
+    /// Current pest level in the plant.
     /// </summary>
     [DataField]
     public float PestLevel;
 
+    [DataField]
+    public float MaxPestLevel = 10f;
+
     /// <summary>
-    /// Current toxin level in the plant (0-100).
+    /// Current toxin level in the plant.
     /// </summary>
     [DataField]
     public float Toxins;
+
+    [DataField]
+    public float MaxToxins = 100f;
 
     /// <summary>
     /// True if the plant is losing health due to too high/low temperature.
     /// </summary>
     [DataField]
+    [Access(Other = AccessPermissions.ReadWriteExecute)]
     public bool ImproperHeat;
 
     /// <summary>
     /// True if the plant is losing health due to too high/low pressure.
     /// </summary>
     [DataField]
+    [Access(Other = AccessPermissions.ReadWriteExecute)]
     public bool ImproperPressure;
+
+    /// <summary>
+    /// True if the plant is missing gases required for growth.
+    /// </summary>
+    [DataField]
+    [Access(Other = AccessPermissions.ReadWriteExecute)]
+    public bool MissingGas;
 }

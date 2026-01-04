@@ -8,6 +8,7 @@ namespace Content.Server.Botany.Components;
 /// Produce-related data for plant and plant growth cycle.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(BotanySystem))]
 public sealed partial class ProduceComponent : SharedProduceComponent
 {
     /// <summary>
@@ -28,4 +29,10 @@ public sealed partial class ProduceComponent : SharedProduceComponent
     /// </summary>
     [DataField("targetSolution")]
     public string SolutionName { get; set; } = "food";
+
+    /// <summary>
+    /// Divider for the nutrient bonus when composting this produce.
+    /// </summary>
+    [DataField]
+    public float NutrientDivider = 2.5f;
 }

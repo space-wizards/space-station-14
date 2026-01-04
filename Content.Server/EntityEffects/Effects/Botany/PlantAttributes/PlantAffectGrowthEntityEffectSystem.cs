@@ -11,7 +11,7 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantAffectGrowthEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantAffectGrowth>
 {
-    [Dependency] private readonly BasicGrowthSystem _plantGrowth = default!;
+    [Dependency] private readonly PlantHarvestSystem _plantHarvest = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantAffectGrowth> args)
@@ -19,6 +19,6 @@ public sealed partial class PlantAffectGrowthEntityEffectSystem : EntityEffectSy
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        _plantGrowth.AffectGrowth(entity.Owner, (int)args.Effect.Amount);
+        _plantHarvest.AffectGrowth(entity.Owner, (int)args.Effect.Amount);
     }
 }

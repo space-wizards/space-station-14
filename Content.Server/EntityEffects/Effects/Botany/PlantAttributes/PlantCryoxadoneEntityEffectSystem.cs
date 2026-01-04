@@ -13,25 +13,23 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class PlantCryoxadoneEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantCryoxadone>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantHarvestSystem _plantHarvest = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantCryoxadone> args)
     {
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        if (!TryComp<PlantHolderComponent>(entity, out var plantHolder)
-            || !TryComp<PlantComponent>(entity, out var plantComp)
-            || !TryComp<PlantHarvestComponent>(entity, out var harvest))
+        if (!TryComp<PlantHolderComponent>(entity, out var plantHolder))
             return;
 
-        var deviation = plantHolder.Age > plantComp.Maturation
-            ? (int)Math.Max(plantComp.Maturation - 1, plantHolder.Age - _random.Next(7, 10))
-            : (int)(plantComp.Maturation / plantComp.GrowthStages);
+        var deviation = plantHolder.Age > entity.Comp.Maturation
+            ? (int)Math.Max(entity.Comp.Maturation - 1, plantHolder.Age - _random.Next(7, 10))
+            : (int)(entity.Comp.Maturation / entity.Comp.GrowthStages);
 
-        plantHolder.Age -= deviation;
-        plantHolder.SkipAging++;
-        plantHolder.ForceUpdate = true;
-        harvest.LastHarvest = plantHolder.Age;
+        _plantHarvest.AffectGrowth(entity.Owner, -deviation);
+        _plant.ForceUpdateByExternalCause(entity.AsNullable());
     }
 }

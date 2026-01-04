@@ -19,7 +19,7 @@ namespace Content.Server.Botany.Systems;
 /// Manages harvest readiness and execution for plants, including repeat/self-harvest
 /// logic and produce spawning, responding to growth and interaction events.
 /// </summary>
-public sealed class HarvestSystem : EntitySystem
+public sealed class PlantHarvestSystem : EntitySystem
 {
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly BotanySystem _botany = default!;
@@ -30,58 +30,30 @@ public sealed class HarvestSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     public override void Initialize()
     {
         SubscribeLocalEvent<PlantHarvestComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<PlantHarvestComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<PlantHarvestComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<PlantHarvestComponent, DoHarvestEvent>(OnHandledDoHarvest);
     }
 
     private void OnPlantGrow(Entity<PlantHarvestComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (plantUid, component) = ent;
-
-        if (!TryComp<PlantHolderComponent>(plantUid, out var holder)
-            || !TryComp<PlantComponent>(plantUid, out var plant)
-            || holder.Dead)
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder)
+            || !TryComp<PlantComponent>(ent.Owner, out var plant))
             return;
 
         // Check if plant is ready for harvest.
-        var timeLastHarvest = holder.Age - component.LastHarvest;
-        if (timeLastHarvest > plant.Production && !component.ReadyForHarvest)
+        var timeLastHarvest = holder.Age - ent.Comp.LastHarvest;
+        if (timeLastHarvest > plant.Production && !ent.Comp.ReadyForHarvest)
         {
-            component.ReadyForHarvest = true;
-            component.LastHarvest = holder.Age;
-            _plant.UpdateSprite(plantUid);
-            TryAutoHarvest(ent, (plantUid, plant), plantUid);
+            ent.Comp.ReadyForHarvest = true;
+            ent.Comp.LastHarvest = holder.Age;
+            _plant.UpdateSprite(ent.Owner);
+            TryAutoHarvest(ent, (ent.Owner, plant), ent.Owner);
         }
-    }
-
-    private void OnInteractUsing(Entity<PlantHarvestComponent> ent, ref InteractUsingEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        var (plantUid, harvest) = ent;
-
-        if (!TryComp<PlantComponent>(plantUid, out var plant)
-            || !TryComp<PlantHolderComponent>(plantUid, out var holder)
-            || !TryComp<PlantTraitsComponent>(plantUid, out var traits))
-            return;
-
-        if (!harvest.ReadyForHarvest || holder.Dead || !traits.Ligneous)
-            return;
-
-        // ligneous requires sharp tool.
-        if (!HasComp<SharpComponent>(args.Used))
-        {
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
-            return;
-        }
-
-        TryHandleHarvest((plantUid, harvest), (plantUid, plant), args.User);
-        args.Handled = true;
     }
 
     private void OnInteractHand(Entity<PlantHarvestComponent> ent, ref InteractHandEvent args)
@@ -89,38 +61,30 @@ public sealed class HarvestSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var (plantUid, harvest) = ent;
-
-        if (!TryComp<PlantComponent>(plantUid, out var plant)
-            || !TryComp<PlantHolderComponent>(plantUid, out var holder)
-            || !TryComp<PlantTraitsComponent>(plantUid, out var traits))
-            return;
-
-        if (holder.Dead)
+        if (_plantHolder.IsDead(ent.Owner))
         {
-            _plant.RemovePlant(plantUid);
+            args.Handled = true;
+            _plant.RemovePlant(ent.Owner);
             return;
         }
 
-        if (!harvest.ReadyForHarvest)
+        if (!ent.Comp.ReadyForHarvest)
             return;
 
-        if (traits.Ligneous)
-        {
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), args.User);
-            return;
-        }
-
-        TryHandleHarvest((plantUid, harvest), (plantUid, plant), args.User);
+        var ev = new DoHarvestEvent(args.User, ent.Owner);
+        RaiseLocalEvent(ent.Owner, ref ev);
         args.Handled = true;
     }
 
-    private void TryHandleHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
+    private void OnHandledDoHarvest(Entity<PlantHarvestComponent> ent, ref DoHarvestEvent args)
     {
-        if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
-            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(plantEnt.Owner).Coordinates}.");
+        if (args.Cancelled)
+            return;
 
-        DoHarvest(ent, plantEnt, user);
+        if (!TryComp<PlantComponent>(ent.Owner, out var plant))
+            return;
+
+        TryHandleHarvest(ent, (ent.Owner, plant), args.User);
     }
 
     private void TryAutoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
@@ -128,6 +92,14 @@ public sealed class HarvestSystem : EntitySystem
         if (ent.Comp.HarvestRepeat != HarvestType.SelfHarvest)
             return;
 
+        if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
+            _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(plantEnt.Owner).Coordinates}.");
+
+        DoHarvest(ent, plantEnt, user);
+    }
+
+    public void TryHandleHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
+    {
         if (TryComp<PlantDataComponent>(ent.Owner, out var plantData) && plantData.HarvestLogImpact != null)
             _adminLogger.Add(LogType.Botany, plantData.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(plantData.DisplayName):seed} at Pos:{Transform(plantEnt.Owner).Coordinates}.");
 
@@ -143,15 +115,12 @@ public sealed class HarvestSystem : EntitySystem
     [PublicAPI]
     public void DoHarvest(Entity<PlantHarvestComponent> ent, Entity<PlantComponent> plantEnt, EntityUid user)
     {
-        var (plantUid, harvest) = ent;
-
-        if (!TryComp<PlantComponent>(plantUid, out var plant)
-            || !TryComp<PlantDataComponent>(plantUid, out var plantData)
-            || !TryComp<PlantTraitsComponent>(plantUid, out var traits)
-            || !TryComp<PlantHolderComponent>(plantUid, out var holder))
+        if (!TryComp<PlantComponent>(ent.Owner, out var plant)
+            || !TryComp<PlantDataComponent>(ent.Owner, out var plantData)
+            || !TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;
 
-        if (!harvest.ReadyForHarvest || plantData.ProductPrototypes.Count == 0 || plant.Yield == 0)
+        if (!ent.Comp.ReadyForHarvest || plantData.ProductPrototypes.Count == 0 || plant.Yield == 0)
             return;
 
         var name = Loc.GetString(plantData.DisplayName);
@@ -164,31 +133,83 @@ public sealed class HarvestSystem : EntitySystem
             totalYield = Math.Max(1, totalYield);
         }
 
-        var position = Transform(plantUid).Coordinates;
+        var position = Transform(ent.Owner).Coordinates;
         for (var i = 0; i < totalYield; i++)
         {
-            var product = _random.Pick(plantData.ProductPrototypes);
-            var entity = Spawn(product, position);
-            _randomHelper.RandomOffset(entity, 0.25f);
-
-            var produce = EnsureComp<ProduceComponent>(entity);
-            produce.PlantProtoId = MetaData(plantUid).EntityPrototype!.ID;
-            produce.PlantData = _botany.ClonePlantSnapshotData(plantUid);
-            _botany.ProduceGrown(entity, produce);
-            _appearance.SetData(entity, ProduceVisuals.Potency, plant.Potency);
+            _botany.SpawnProduce((ent.Owner, plantData, plant), position);
         }
 
-        harvest.ReadyForHarvest = false;
-        harvest.LastHarvest = holder.Age;
+        ent.Comp.ReadyForHarvest = false;
+        ent.Comp.LastHarvest = holder.Age;
 
-        if (traits.CanScream)
-            _audio.PlayPvs(new SoundCollectionSpecifier("PlantScreams"), plantUid);
-
-        if (harvest.HarvestRepeat == HarvestType.NoRepeat)
+        if (ent.Comp.HarvestRepeat == HarvestType.NoRepeat)
             _plant.RemovePlant(plantEnt.AsNullable());
 
         _plant.UpdateSprite(plantEnt.AsNullable());
-        if (_plant.TryGetTray(plantEnt.AsNullable(), out var trayEnt))
-            _tray.UpdateWarnings(trayEnt);
+        var ev = new AfterDoHarvestEvent(user, ent.Owner);
+        RaiseLocalEvent(ent.Owner, ref ev);
     }
+
+    /// <summary>
+    /// Affects the growth of a plant by modifying its age or production timing.
+    /// </summary>
+    [PublicAPI]
+    public void AffectGrowth(Entity<PlantHarvestComponent?> ent, int amount)
+    {
+        if (amount == 0)
+            return;
+
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder)
+            || !TryComp<PlantComponent>(ent.Owner, out var plant))
+            return;
+
+        if (amount > 0)
+        {
+            if (holder.Age < plant.Maturation)
+                _plantHolder.AdjustsAge(ent.Owner, amount);
+            else if (!ent.Comp.ReadyForHarvest && plant.Yield <= 0f)
+                ent.Comp.LastHarvest -= amount;
+        }
+        else
+        {
+            if (holder.Age < plant.Maturation)
+                _plantHolder.AdjustsSkipAging(ent.Owner, 1);
+            else if (!ent.Comp.ReadyForHarvest && plant.Yield <= 0f)
+                ent.Comp.LastHarvest += amount;
+        }
+    }
+
+    /// <summary>
+    /// Changes the harvest repeat of a plant.
+    /// </summary>
+    [PublicAPI]
+    public void ChangeHarvestRepeat(Entity<PlantHarvestComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        ent.Comp.HarvestRepeat = ent.Comp.HarvestRepeat switch
+        {
+            HarvestType.NoRepeat => HarvestType.Repeat,
+            HarvestType.Repeat => HarvestType.SelfHarvest,
+            _ => ent.Comp.HarvestRepeat,
+        };
+    }
+}
+
+[ByRefEvent]
+public sealed class DoHarvestEvent(EntityUid user, EntityUid target) : CancellableEntityEventArgs
+{
+    public EntityUid User { get; } = user;
+    public EntityUid Target { get; } = target;
+}
+
+[ByRefEvent]
+public sealed class AfterDoHarvestEvent(EntityUid user, EntityUid target) : CancellableEntityEventArgs
+{
+    public EntityUid User { get; } = user;
+    public EntityUid Target { get; } = target;
 }

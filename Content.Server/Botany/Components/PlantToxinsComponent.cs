@@ -1,3 +1,5 @@
+using Content.Server.Botany.Systems;
+
 namespace Content.Server.Botany.Components;
 
 /// <summary>
@@ -5,6 +7,7 @@ namespace Content.Server.Botany.Components;
 /// </summary>
 [RegisterComponent]
 [DataDefinition]
+[Access(typeof(PlantToxinsSystem))]
 public sealed partial class PlantToxinsComponent : Component
 {
     /// <summary>

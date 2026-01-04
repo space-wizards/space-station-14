@@ -26,7 +26,6 @@
   - type: PlantToxins
   - type: PlantTraits
   - type: PlantVisuals
-  - type: UnviableGrowth
   - type: WeedPestGrowth
   - type: AtmosphericGrowth
   - type: BasicGrowth
@@ -44,6 +43,11 @@
     packetPrototype: WheatSeeds
     productPrototypes: [ WheatBushel ]
     mutationPrototypes: [ MeatWheatPlants ]
+  - type: PlantTraits
+    traits:
+    - !type:TraitUnviable
+    - !type:TraitKudzu
+    - !type:TraitLigneous
   - type: Plant
     lifespan: 25
     maturation: 6

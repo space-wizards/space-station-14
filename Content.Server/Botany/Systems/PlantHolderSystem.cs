@@ -1,5 +1,7 @@
 using JetBrains.Annotations;
 using Content.Server.Botany.Components;
+using Content.Server.Popups;
+using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
 
@@ -23,7 +25,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         ent.Comp.Health += amount;
-        ent.Comp.Health = MathHelper.Clamp(ent.Comp.Health, 0, plant.Endurance);
+        ent.Comp.Health = MathHelper.Clamp(ent.Comp.Health, 0f, plant.Endurance);
         CheckHealth(ent);
         _plant.UpdateSprite(ent.Owner);
     }
@@ -38,6 +40,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         ent.Comp.MutationLevel += amount * ent.Comp.MutationMod;
+        ent.Comp.MutationLevel = MathHelper.Clamp(ent.Comp.MutationLevel, 0f, ent.Comp.MaxMutationLevel);
         CheckHealth(ent);
     }
 
@@ -51,6 +54,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         ent.Comp.MutationMod += amount;
+        ent.Comp.MutationMod = MathHelper.Clamp(ent.Comp.MutationMod, 0f, ent.Comp.MaxMutationMod);
     }
 
     /// <summary>
@@ -63,6 +67,7 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         ent.Comp.PestLevel += amount;
+        ent.Comp.PestLevel = MathHelper.Clamp(ent.Comp.PestLevel, 0f, ent.Comp.MaxPestLevel);
     }
 
     /// <summary>
@@ -74,7 +79,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp))
             return;
 
-        ent.Comp.Age += amount;
+        ent.Comp.Age = Math.Max(0, ent.Comp.Age + amount);
         _plant.UpdateSprite(ent.Owner);
     }
 
@@ -88,6 +93,32 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         ent.Comp.Toxins += amount;
+        ent.Comp.Toxins = MathHelper.Clamp(ent.Comp.Toxins, 0f, ent.Comp.MaxToxins);
+    }
+
+    /// <summary>
+    /// Adjusts the yield mod of the plant.
+    /// </summary>
+    [PublicAPI]
+    public void AdjustsYieldMod(Entity<PlantHolderComponent?> ent, int amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
+        ent.Comp.YieldMod += amount;
+        ent.Comp.YieldMod = MathHelper.Clamp(ent.Comp.YieldMod, 1, ent.Comp.MaxYieldMod);
+    }
+
+    /// <summary>
+    /// Adjusts the skip aging of the plant.
+    /// </summary>
+    [PublicAPI]
+    public void AdjustsSkipAging(Entity<PlantHolderComponent?> ent, int amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return;
+
+        ent.Comp.SkipAging = Math.Max(0, ent.Comp.SkipAging + amount);
     }
 
     /// <summary>
@@ -126,10 +157,6 @@ public sealed class PlantHolderSystem : EntitySystem
 
         ent.Comp.Dead = true;
         ent.Comp.Health = Math.Max(0, ent.Comp.Health);
-
-        if (TryComp<PlantHarvestComponent>(ent.Owner, out var harvest))
-            harvest.ReadyForHarvest = false;
-
         ent.Comp.MutationLevel = 0;
         ent.Comp.YieldMod = 1;
         ent.Comp.MutationMod = 1;

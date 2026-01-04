@@ -12,15 +12,13 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 public sealed partial class PlantPhalanximineEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantPhalanximine>
 {
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantTraitsSystem _plantTrait = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantPhalanximine> args)
     {
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        if (!TryComp<PlantTraitsComponent>(entity, out var traits))
-            return;
-
-        traits.Viable = true;
+        _plantTrait.DelTrait(entity.Owner, new TraitUnviable());
     }
 }

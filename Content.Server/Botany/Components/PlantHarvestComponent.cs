@@ -1,3 +1,5 @@
+using Content.Server.Botany.Systems;
+
 namespace Content.Server.Botany.Components;
 
 /// <summary>
@@ -5,6 +7,7 @@ namespace Content.Server.Botany.Components;
 /// </summary>
 [RegisterComponent]
 [DataDefinition]
+[Access(typeof(PlantHarvestSystem))]
 public sealed partial class PlantHarvestComponent : Component
 {
     /// <summary>
@@ -17,12 +20,14 @@ public sealed partial class PlantHarvestComponent : Component
     /// Whether the plant is currently ready for harvest.
     /// </summary>
     [ViewVariables]
+    [Access(Other = AccessPermissions.ReadWriteExecute)]
     public bool ReadyForHarvest = false;
 
     /// <summary>
     /// The age of the plant when last harvested.
     /// </summary>
     [ViewVariables]
+    [Access(Other = AccessPermissions.ReadWriteExecute)]
     public int LastHarvest = 0;
 }
 

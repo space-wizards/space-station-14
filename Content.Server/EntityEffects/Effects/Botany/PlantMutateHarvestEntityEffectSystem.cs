@@ -1,4 +1,5 @@
 using Content.Server.Botany.Components;
+using Content.Server.Botany.Systems;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
 
@@ -10,17 +11,10 @@ namespace Content.Server.EntityEffects.Effects.Botany;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantMutateHarvestEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantMutateHarvest>
 {
+    [Dependency] private readonly PlantHarvestSystem _plantHarvest = default!;
+
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantMutateHarvest> args)
     {
-        var harvest = EnsureComp<PlantHarvestComponent>(entity.Owner);
-        switch (harvest.HarvestRepeat)
-        {
-            case HarvestType.NoRepeat:
-                harvest.HarvestRepeat = HarvestType.Repeat;
-                break;
-            case HarvestType.Repeat:
-                harvest.HarvestRepeat = HarvestType.SelfHarvest;
-                break;
-        }
+        _plantHarvest.ChangeHarvestRepeat(entity.Owner);
     }
 }

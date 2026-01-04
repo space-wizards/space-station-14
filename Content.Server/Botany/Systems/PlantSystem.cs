@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Events;
@@ -36,18 +35,12 @@ public sealed class PlantSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
-    /// <summary>
-    /// Tag for items that can be used to take a sample of a plant.
-    /// </summary>
-    private static readonly ProtoId<TagPrototype> PlantSampleTakerTag = "PlantSampleTaker";
-
     public override void Initialize()
     {
         SubscribeLocalEvent<PlantComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PlantComponent, PlantCrossPollinateEvent>(OnCrossPollinate);
         SubscribeLocalEvent<PlantComponent, OnPlantGrowEvent>(OnPlantGrow);
         SubscribeLocalEvent<PlantComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<PlantComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
     private void OnMapInit(Entity<PlantComponent> ent, ref MapInitEvent args)
@@ -67,28 +60,16 @@ public sealed class PlantSystem : EntitySystem
         _mutation.CrossFloat(ref ent.Comp.Maturation, pollenData.Maturation);
         _mutation.CrossFloat(ref ent.Comp.Production, pollenData.Production);
         _mutation.CrossFloat(ref ent.Comp.Potency, pollenData.Potency);
-
-        // TODO: Move this to a separate system
-        if (_botany.TryGetPlantComponent<PlantTraitsComponent>(args.PollenData, args.PollenProtoId, out var pollenTraits)
-            && TryComp<PlantTraitsComponent>(ent.Owner, out var traits))
-        {
-            _mutation.CrossBool(ref traits.Seedless, pollenTraits.Seedless);
-            _mutation.CrossBool(ref traits.Ligneous, pollenTraits.Ligneous);
-            _mutation.CrossBool(ref traits.CanScream, pollenTraits.CanScream);
-            _mutation.CrossBool(ref traits.TurnIntoKudzu, pollenTraits.TurnIntoKudzu);
-        }
     }
 
     private void OnPlantGrow(Entity<PlantComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (plantUid, component) = ent;
-
-        if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;
 
         // Check if plant is too old.
-        if (holder.Age > component.Lifespan)
-            _plantHolder.AdjustsHealth(plantUid, -_random.Next(3, 5));
+        if (holder.Age > ent.Comp.Lifespan)
+            _plantHolder.AdjustsHealth(ent.Owner, -_random.Next(3, 5));
     }
 
     private void OnExamined(Entity<PlantComponent> ent, ref ExaminedEvent args)
@@ -96,116 +77,49 @@ public sealed class PlantSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var (uid, plant) = ent;
-
-        if (!TryComp<PlantHolderComponent>(uid, out var holder)
-            || !TryComp<PlantDataComponent>(uid, out var plantData))
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder)
+            || !TryComp<PlantDataComponent>(ent.Owner, out var plantData))
             return;
 
         using (args.PushGroup(nameof(PlantComponent)))
         {
+            args.PushMarkup(GetPlantStateMarkup(ent));
+
             var displayName = Loc.GetString(plantData.DisplayName);
             args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
                 ("seedName", displayName),
                 ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
 
-            if (holder.Dead)
-            {
+            if (_plantHolder.IsDead(ent.Owner))
                 args.PushMarkup(Loc.GetString("plant-holder-component-dead-plant-message"));
-                return;
-            }
 
-            if (holder.Health <= plant.Endurance / 2f)
+            if (holder.Health <= ent.Comp.Endurance / 2f)
             {
                 args.PushMarkup(Loc.GetString(
                     "plant-holder-component-something-already-growing-low-health-message",
                     ("healthState",
-                        Loc.GetString(holder.Age > plant.Lifespan
+                        Loc.GetString(holder.Age > ent.Comp.Lifespan
                             ? "plant-holder-component-plant-old-adjective"
                             : "plant-holder-component-plant-unhealthy-adjective"))));
             }
 
-            if (TryComp<PlantTraitsComponent>(uid, out var traits))
+            if (TryComp<PlantTraitsComponent>(ent.Owner, out var traits))
             {
-                if (traits.Ligneous)
-                    args.PushMarkup(Loc.GetString("mutation-plant-ligneous"));
-
-                if (traits.TurnIntoKudzu)
-                    args.PushMarkup(Loc.GetString("mutation-plant-kudzu"));
-
-                if (traits.CanScream)
-                    args.PushMarkup(Loc.GetString("mutation-plant-scream"));
-
-                if (!traits.Viable)
-                    args.PushMarkup(Loc.GetString("mutation-plant-unviable"));
+                var traitList = traits.Traits;
+                foreach (var trait in traitList)
+                {
+                    foreach (var markup in trait.GetPlantStateMarkup())
+                    {
+                        args.PushMarkup(markup);
+                    }
+                }
             }
         }
     }
 
-    private void OnInteractUsing(Entity<PlantComponent> ent, ref InteractUsingEvent args)
-    {
-        var (plantUid, plant) = ent;
-
-        if (args.Handled)
-            return;
-
-        if (!_tag.HasTag(args.Used, PlantSampleTakerTag))
-            return;
-
-        if (!TryComp<PlantHolderComponent>(plantUid, out var holder)
-            || !TryComp<PlantDataComponent>(plantUid, out var plantData))
-            return;
-
-        args.Handled = true;
-
-        if (holder.Sampled)
-        {
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"), args.User);
-            return;
-        }
-
-        if (holder.Dead)
-        {
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-dead-plant-message"), args.User);
-            return;
-        }
-
-        // Prevent early sampling.
-        var maturation = Math.Max(plant.Maturation, 1f);
-        var growthStage = Math.Max(1, (int)(holder.Age * plant.GrowthStages / maturation));
-        if (growthStage <= 1)
-        {
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-early-sample-message"), args.User);
-            return;
-        }
-
-        // Damage the plant and produce a seed packet snapshot.
-        _plantHolder.AdjustsHealth(plantUid, -_random.Next(3, 5) * 10);
-
-        float? healthOverride;
-        if (TryComp<PlantHarvestComponent>(plantUid, out var harvest) && harvest.ReadyForHarvest)
-            healthOverride = null;
-        else
-            healthOverride = holder.Health;
-
-        var seed = _botany.SpawnSeedPacketFromPlant(plantUid, Transform(args.User).Coordinates, args.User, healthOverride);
-        _randomHelper.RandomOffset(seed, 0.25f);
-
-        var displayName = Loc.GetString(plantData.DisplayName);
-        _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
-            ("seedName", displayName)), args.User);
-
-        if (_random.Prob(0.3f))
-            holder.Sampled = true;
-
-        ForceUpdateByExternalCause(ent.AsNullable());
-    }
-
     private void Mutate(Entity<PlantComponent?> ent, float severity)
     {
-        var (uid, component) = ent;
-
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
         _mutation.MutatePlant(ent, severity);
@@ -228,12 +142,10 @@ public sealed class PlantSystem : EntitySystem
 
     public void Update(Entity<PlantComponent?> ent)
     {
-        var (uid, component) = ent;
-
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!TryComp<PlantHolderComponent>(uid, out var plantHolder))
+        if (!TryComp<PlantHolderComponent>(ent, out var plantHolder))
             return;
 
         var curTime = _gameTiming.CurTime;
@@ -246,13 +158,12 @@ public sealed class PlantSystem : EntitySystem
 
         plantHolder.LastCycle = curTime;
 
-        if (plantHolder.Dead)
+        if (_plantHolder.IsDead(ent.Owner))
             return;
 
         TryGetTray(ent, out var trayEnt);
         var plantGrow = new OnPlantGrowEvent(trayEnt);
-        RaiseLocalEvent(trayEnt.Owner, ref plantGrow);
-        RaiseLocalEvent(uid, ref plantGrow);
+        RaiseLocalEvent(ent.Owner, ref plantGrow);
 
         // Process mutations.
         if (plantHolder.MutationLevel > 0)
@@ -262,7 +173,7 @@ public sealed class PlantSystem : EntitySystem
         }
 
         if (plantHolder.Health <= 0)
-            _plantHolder.Die(uid);
+            _plantHolder.Die(ent.Owner);
     }
 
     /// <summary>
@@ -271,16 +182,14 @@ public sealed class PlantSystem : EntitySystem
     [PublicAPI]
     public void ForceUpdateByExternalCause(Entity<PlantComponent?> ent)
     {
-        var (uid, component) = ent;
-
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!TryComp<PlantHolderComponent>(uid, out var plantHolder))
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder))
             return;
 
-        plantHolder.SkipAging++;
         plantHolder.ForceUpdate = true;
+        _plantHolder.AdjustsSkipAging(ent.Owner, 1);
         Update(ent);
     }
 
@@ -288,10 +197,7 @@ public sealed class PlantSystem : EntitySystem
     /// Tries to get the tray entity that the plant is in.
     /// </summary>
     [PublicAPI]
-    public bool TryGetTray(
-        Entity<PlantComponent?> ent,
-        [NotNullWhen(true)] out Entity<PlantTrayComponent?> trayEnt
-    )
+    public bool TryGetTray(Entity<PlantComponent?> ent, out Entity<PlantTrayComponent?> trayEnt)
     {
         trayEnt = default!;
         if (!Resolve(ent.Owner, ref ent.Comp))
@@ -313,7 +219,43 @@ public sealed class PlantSystem : EntitySystem
         if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        ent.Comp.Potency = Math.Max(ent.Comp.Potency + amount, 1);
+        ent.Comp.Potency = Math.Max(0, ent.Comp.Potency + amount);
+    }
+
+    /// <summary>
+    /// Adjusts the lifespan of a plant component.
+    /// </summary>
+    [PublicAPI]
+    public void AdjustLifespan(Entity<PlantComponent?> ent, int amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        ent.Comp.Lifespan = Math.Max(0, ent.Comp.Lifespan + amount);
+    }
+
+    /// <summary>
+    /// Adjusts the endurance of a plant component.
+    /// </summary>
+    [PublicAPI]
+    public void AdjustEndurance(Entity<PlantComponent?> ent, int amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        ent.Comp.Endurance = Math.Max(0, ent.Comp.Endurance);
+    }
+
+    /// <summary>
+    /// Adjusts the yield of a plant component.
+    /// </summary>
+    [PublicAPI]
+    public void AdjustYield(Entity<PlantComponent?> ent, int amount)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return;
+
+        ent.Comp.Yield = Math.Max(0, ent.Comp.Yield + amount);
     }
 
     /// <summary>
@@ -328,10 +270,22 @@ public sealed class PlantSystem : EntitySystem
             return;
 
         QueueDel(uid);
+    }
 
-        // Delete the plant from the tray.
-        if (TryGetTray(ent, out var trayEnt))
-            trayEnt.Comp!.PlantEntity = null;
+    /// <summary>
+    /// Gets the growth stage value of the plant.
+    /// </summary>
+    [PublicAPI]
+    public int GetGrowthStageValue(Entity<PlantComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return 1;
+
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder))
+            return 1;
+
+        var maturation = Math.Max(ent.Comp.Maturation, 1f);
+        return Math.Max(1, (int)(plantHolder.Age * ent.Comp.GrowthStages / maturation));
     }
 
     /// <summary>
@@ -340,43 +294,41 @@ public sealed class PlantSystem : EntitySystem
     [PublicAPI]
     public void UpdateSprite(Entity<PlantComponent?> ent)
     {
-        var (uid, component) = ent;
-
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!TryComp<PlantHolderComponent>(uid, out var plantHolder)
-            || !TryComp<PlantDataComponent>(uid, out var plantData)
-            || !TryComp<PlantHarvestComponent>(uid, out var harvest))
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder)
+            || !TryComp<PlantDataComponent>(ent.Owner, out var plantData)
+            || !TryComp<PlantHarvestComponent>(ent.Owner, out var harvest))
             return;
 
-        if (!TryComp<AppearanceComponent>(uid, out var plantApp))
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var plantApp))
             return;
 
-        _appearance.SetData(uid, PlantVisuals.PlantRsi, plantData.PlantRsi.ToString(), plantApp);
+        _appearance.SetData(ent.Owner, PlantVisuals.PlantRsi, plantData.PlantRsi.ToString(), plantApp);
 
-        if (plantHolder.Dead)
+        if (_plantHolder.IsDead(ent.Owner))
         {
-            _appearance.SetData(uid, PlantVisuals.PlantState, "dead", plantApp);
+            _appearance.SetData(ent.Owner, PlantVisuals.PlantState, "dead", plantApp);
         }
         else if (harvest.ReadyForHarvest)
         {
-            _appearance.SetData(uid, PlantVisuals.PlantState, "harvest", plantApp);
+            _appearance.SetData(ent.Owner, PlantVisuals.PlantState, "harvest", plantApp);
         }
         else
         {
-            if (plantHolder.Age < component.Maturation)
+            if (plantHolder.Age < ent.Comp.Maturation)
             {
-                var growthStage = Math.Max(1, (int)(plantHolder.Age * component.GrowthStages / component.Maturation));
-                _appearance.SetData(uid, PlantVisuals.PlantState, $"stage-{growthStage}", plantApp);
+                var growthStage = Math.Max(1, (int)(plantHolder.Age * ent.Comp.GrowthStages / ent.Comp.Maturation));
+                _appearance.SetData(ent.Owner, PlantVisuals.PlantState, $"stage-{growthStage}", plantApp);
             }
             else
             {
-                _appearance.SetData(uid, PlantVisuals.PlantState, $"stage-{component.GrowthStages}", plantApp);
+                _appearance.SetData(ent.Owner, PlantVisuals.PlantState, $"stage-{ent.Comp.GrowthStages}", plantApp);
             }
         }
 
-        if (TryGetTray(uid, out var trayEnt))
+        if (TryGetTray(ent, out var trayEnt))
             _tray.UpdateWarnings(trayEnt);
     }
 
@@ -384,25 +336,62 @@ public sealed class PlantSystem : EntitySystem
     /// Planting a plant.
     /// </summary>
     [PublicAPI]
-    public void PlantingPlant(Entity<PlantComponent?> plantEnt)
+    public void PlantingPlant(Entity<PlantComponent?> ent, float? healthOverride = null)
     {
-        var (plantUid, plantComp) = plantEnt;
-
-        if (!Resolve(plantUid, ref plantComp, false))
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
             return;
 
-        if (!TryComp<PlantHolderComponent>(plantUid, out var plantHolder))
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var plantHolder))
             return;
 
-        plantHolder.Health = plantComp.Endurance;
+        plantHolder.Health = healthOverride ?? ent.Comp.Endurance;
         plantHolder.LastCycle = _gameTiming.CurTime;
 
-        if (TryComp<PlantHarvestComponent>(plantUid, out var harvest))
+        if (TryComp<PlantHarvestComponent>(ent.Owner, out var harvest))
         {
             harvest.ReadyForHarvest = false;
             harvest.LastHarvest = 0;
         }
 
-        UpdateSprite(plantEnt.AsNullable());
+        UpdateSprite(ent.AsNullable());
+    }
+
+    /// <summary>
+    /// Gets the warnings markup of the plant.
+    /// </summary>
+    [PublicAPI]
+    public string GetPlantWarningsMarkup(Entity<PlantHolderComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return string.Empty;
+
+        var markup = string.Empty;
+        if (ent.Comp.Toxins > 40f)
+            markup += "\n" + Loc.GetString("plant-holder-component-toxins-high-warning");
+
+        if (ent.Comp.ImproperHeat)
+            markup += "\n" + Loc.GetString("plant-holder-component-heat-improper-warning");
+
+        if (ent.Comp.ImproperPressure)
+            markup += "\n" + Loc.GetString("plant-holder-component-pressure-improper-warning");
+
+        if (ent.Comp.MissingGas)
+            markup += "\n" + Loc.GetString("plant-holder-component-gas-missing-warning");
+
+        if (ent.Comp.PestLevel >= 5)
+            markup += "\n" + Loc.GetString("plant-holder-component-pest-high-level-message");
+
+        return markup;
+    }
+
+    public string GetPlantStateMarkup(EntityUid uid, PlantComponent? component = null)
+    {
+        if (component == null && !Resolve(uid, ref component, false))
+            return string.Empty;
+
+        var markup = Loc.GetString("seed-component-plant-yield-text", ("seedYield", component.Yield));
+        markup += "\n" + Loc.GetString("seed-component-plant-potency-text", ("seedPotency", component.Potency));
+
+        return markup;
     }
 }

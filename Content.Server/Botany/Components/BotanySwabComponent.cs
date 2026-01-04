@@ -1,3 +1,4 @@
+using Content.Server.Botany.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Botany.Components;
@@ -6,6 +7,7 @@ namespace Content.Server.Botany.Components;
 /// Anything that can be used to cross-pollinate plants.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(BotanySwabSystem))]
 public sealed partial class BotanySwabComponent : Component
 {
     /// <summary>

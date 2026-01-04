@@ -1,3 +1,5 @@
+using Content.Server.Botany.Systems;
+
 namespace Content.Server.Botany.Components;
 
 /// <summary>
@@ -6,6 +8,7 @@ namespace Content.Server.Botany.Components;
 /// </summary>
 [RegisterComponent]
 [DataDefinition]
+[Access(typeof(WeedPestGrowthSystem))]
 public sealed partial class WeedPestGrowthComponent : Component
 {
     /// <summary>
@@ -15,34 +18,28 @@ public sealed partial class WeedPestGrowthComponent : Component
     public float WeedTolerance = 5f;
 
     /// <summary>
+    /// Amount of damage dealt to the plant per successful weed damage tick.
+    /// </summary>
+    [DataField]
+    public float WeedDamageAmount = 1f;
+
+    /// <summary>
     /// Maximum pest level the plant can tolerate before taking damage.
     /// </summary>
     [DataField]
     public float PestTolerance = 5f;
 
     /// <summary>
-    /// Chance per tick for weeds to grow around this plant.
+    /// Chance per tick for pests to grow around this plant.
     /// </summary>
     [DataField]
-    public float WeedGrowthChance = 0.01f;
+    public float PestGrowthChance = 0.01f;
 
     /// <summary>
-    /// Amount of weed growth per successful weed growth tick.
+    /// Amount of pest growth per successful pest growth tick.
     /// </summary>
     [DataField]
-    public float WeedGrowthAmount = 0.5f;
-
-    /// <summary>
-    /// Weed level threshold at which the plant is considered overgrown and will transform into kudzu.
-    /// </summary>
-    [DataField]
-    public float WeedHighLevelThreshold = 10f;
-
-    /// <summary>
-    /// Chance per tick for pests to damage this plant.
-    /// </summary>
-    [DataField]
-    public float PestDamageChance = 0.05f;
+    public float PestGrowthAmount = 0.5f;
 
     /// <summary>
     /// Amount of damage dealt to the plant per successful pest damage tick.

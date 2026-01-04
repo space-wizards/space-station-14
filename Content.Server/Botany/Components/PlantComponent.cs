@@ -1,3 +1,4 @@
+using Content.Server.Botany.Systems;
 using Content.Shared.Random;
 
 namespace Content.Server.Botany.Components;
@@ -7,6 +8,7 @@ namespace Content.Server.Botany.Components;
 /// </summary>
 [RegisterComponent]
 [DataDefinition]
+[Access(typeof(PlantSystem), typeof(MutationSystem))]
 public sealed partial class PlantComponent : Component
 {
     /// <summary>

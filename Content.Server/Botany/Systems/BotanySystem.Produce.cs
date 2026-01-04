@@ -1,7 +1,10 @@
 using Content.Server.Botany.Components;
+using Content.Shared.Botany;
 using Content.Shared.EntityEffects;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Map;
+using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
 
@@ -25,7 +28,9 @@ public sealed partial class BotanySystem
                 produce.SolutionName,
                 out var solutionContainer,
                 FixedPoint2.Zero))
+        {
             return;
+        }
 
         solutionContainer.RemoveAllSolution();
 
@@ -40,10 +45,9 @@ public sealed partial class BotanySystem
         }
     }
 
-    public void OnProduceExamined(EntityUid uid, ProduceComponent comp, ExaminedEvent args)
+    private void OnProduceExamined(Entity<ProduceComponent> ent, ref ExaminedEvent args)
     {
-        if (comp.PlantData == null
-            || !TryGetPlantComponent<PlantComponent>(comp.PlantData, comp.PlantProtoId, out var plant))
+        if (!TryGetPlantComponent<PlantComponent>(ent.Comp.PlantData, ent.Comp.PlantProtoId, out var plant))
             return;
 
         using (args.PushGroup(nameof(ProduceComponent)))
@@ -58,5 +62,21 @@ public sealed partial class BotanySystem
                     args.PushMarkup(Loc.GetString(m.Description));
             }
         }
+    }
+
+    public void SpawnProduce(Entity<PlantDataComponent?, PlantComponent?> ent, EntityCoordinates position)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2, false))
+            return;
+
+        var product = _random.Pick(ent.Comp1.ProductPrototypes);
+        var entity = Spawn(product, position);
+        _randomHelper.RandomOffset(entity, 0.25f);
+
+        var produce = EnsureComp<ProduceComponent>(entity);
+        produce.PlantProtoId = MetaData(ent.Owner).EntityPrototype!.ID;
+        produce.PlantData = ClonePlantSnapshotData(ent.Owner);
+        ProduceGrown(entity, produce);
+        _appearance.SetData(entity, ProduceVisuals.Potency, ent.Comp2.Potency);
     }
 }

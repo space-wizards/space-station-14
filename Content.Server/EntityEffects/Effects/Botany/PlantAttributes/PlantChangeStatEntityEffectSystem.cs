@@ -12,8 +12,8 @@ namespace Content.Server.EntityEffects.Effects.Botany.PlantAttributes;
 /// <inheritdoc cref="EntityEffectSystem{T,TEffect}"/>
 public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSystem<PlantComponent, PlantChangeStat>
 {
-    // TODO: This is awful. I do not have the strength to refactor this. I want it gone.
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantChangeStat> args)
@@ -22,43 +22,49 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
             return;
 
         var targetValue = args.Effect.TargetValue;
+        var targetComponent = args.Effect.TargetComponent;
 
-        // Scan live plant growth components and mutate the first matching field.
-        foreach (var growthComp in EntityManager.GetComponents<Component>(entity.Owner))
+        if (string.IsNullOrWhiteSpace(targetComponent))
+            return;
+
+        if (!_componentFactory.TryGetRegistration(targetComponent, out var registration))
         {
-            var componentType = growthComp.GetType();
-            var field = componentType.GetField(targetValue);
-
-            if (field == null)
-                continue;
-
-            var currentValue = field.GetValue(growthComp);
-            if (currentValue == null)
-                continue;
-
-            if (TryGetValue<float>(currentValue, out var floatVal))
-            {
-                MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
-                field.SetValue(growthComp, floatVal);
-                return;
-            }
-
-            if (TryGetValue<int>(currentValue, out var intVal))
-            {
-                MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
-                field.SetValue(growthComp, intVal);
-                return;
-            }
-
-            if (TryGetValue<bool>(currentValue, out var boolVal))
-            {
-                field.SetValue(growthComp, !boolVal);
-                return;
-            }
+            Log.Error($"{nameof(PlantChangeStat)} Error: Component '{targetComponent}' is not a valid component name.");
+            return;
         }
 
-        // Field not found in any component.
-        Log.Error($"{nameof(PlantChangeStat)} Error: Field '{targetValue}' not found in any plant component. Did you misspell it?");
+        if (!EntityManager.TryGetComponent(entity.Owner, registration.Type, out var plantComp))
+            return;
+
+        var field = registration.Type.GetField(targetValue);
+        if (field == null)
+        {
+            Log.Error($"{nameof(PlantChangeStat)} Error: Field '{targetValue}' not found on component '{targetComponent}'. Did you misspell it?");
+            return;
+        }
+
+        var currentValue = field.GetValue(plantComp);
+        if (currentValue == null)
+            return;
+
+        if (TryGetValue<float>(currentValue, out var floatVal))
+        {
+            MutateFloat(ref floatVal, args.Effect.MinValue, args.Effect.MaxValue, args.Effect.Steps);
+            field.SetValue(plantComp, floatVal);
+            return;
+        }
+
+        if (TryGetValue<int>(currentValue, out var intVal))
+        {
+            MutateInt(ref intVal, (int)args.Effect.MinValue, (int)args.Effect.MaxValue, args.Effect.Steps);
+            field.SetValue(plantComp, intVal);
+            return;
+        }
+
+        if (TryGetValue<bool>(currentValue, out var boolVal))
+        {
+            field.SetValue(plantComp, !boolVal);
+        }
     }
 
     private bool TryGetValue<T>(object value, out T? result)
@@ -73,40 +79,33 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
         return false;
     }
 
+    // Thermometer-code helpers: map a value in [min, max] to an integer [0, bits] and move it by +-1 (biased toward the middle).
+    private static int GetThermometerBitsHigh(float val, float min, float max, int bits)
+    {
+        var thermometer = (int) MathF.Round((val - min) / (max - min) * bits);
+        return Math.Clamp(thermometer, 0, bits);
+    }
+
+    private int GetThermometerDelta(int thermometer, int bits)
+    {
+        var probIncrease = 1f - (float) thermometer / bits;
+        return _random.Prob(probIncrease) ? 1 : -1;
+    }
+
     // Mutate reference 'val' between 'min' and 'max' by pretending the value
     // is representable by a thermometer code with 'bits' number of bits and
     // randomly flipping some of them.
     private void MutateFloat(ref float val, float min, float max, int bits)
     {
-        if (min == max)
+        if (MathHelper.CloseTo(min, max))
         {
             val = min;
             return;
         }
 
-        // Starting number of bits that are high, between 0 and bits.
-        // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
-        var valInt = (int)MathF.Round((val - min) / (max - min) * bits);
-        // val may be outside the range of min/max due to starting prototype values, so clamp.
-        valInt = Math.Clamp(valInt, 0, bits);
-
-        // Probability that the bit flip increases n.
-        // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasive it it.
-        // In other words, it tends to go to the middle.
-        var probIncrease = 1 - (float)valInt / bits;
-        int valIntMutated;
-        if (_random.Prob(probIncrease))
-        {
-            valIntMutated = valInt + 1;
-        }
-        else
-        {
-            valIntMutated = valInt - 1;
-        }
-
-        // Set value based on mutated thermometer code.
-        var valMutated = Math.Clamp((float)valIntMutated / bits * (max - min) + min, min, max);
-        val = valMutated;
+        var thermometer = GetThermometerBitsHigh(val, min, max, bits);
+        thermometer += GetThermometerDelta(thermometer, bits);
+        val = Math.Clamp((float) thermometer / bits * (max - min) + min, min, max);
     }
 
     private void MutateInt(ref int val, int min, int max, int bits)
@@ -117,27 +116,8 @@ public sealed partial class PlantChangeStatEntityEffectSystem : EntityEffectSyst
             return;
         }
 
-        // Starting number of bits that are high, between 0 and bits.
-        // In other words, it's val mapped linearly from range [min, max] to range [0, bits], and then rounded.
-        var valInt = (int)MathF.Round((val - min) / (max - min) * bits);
-        // val may be outside the range of min/max due to starting prototype values, so clamp.
-        valInt = Math.Clamp(valInt, 0, bits);
-
-        // Probability that the bit flip increases n.
-        // The higher the current value is, the lower the probability of increasing value is, and the higher the probability of decreasing it.
-        // In other words, it tends to go to the middle.
-        var probIncrease = 1 - (float)valInt / bits;
-        int valMutated;
-        if (_random.Prob(probIncrease))
-        {
-            valMutated = val + 1;
-        }
-        else
-        {
-            valMutated = val - 1;
-        }
-
-        valMutated = Math.Clamp(valMutated, min, max);
-        val = valMutated;
+        var thermometer = GetThermometerBitsHigh(val, min, max, bits);
+        thermometer += GetThermometerDelta(thermometer, bits);
+        val = Math.Clamp(val + thermometer, min, max);
     }
 }

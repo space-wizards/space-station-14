@@ -14,19 +14,17 @@ public sealed partial class PlantDiethylamineEntityEffectSystem : EntityEffectSy
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantDiethylamine> args)
     {
         if (_plantHolder.IsDead(entity.Owner))
             return;
 
-        if (!TryComp<PlantComponent>(entity, out var plant))
-            return;
+        if (_random.Prob(0.1f))
+            _plant.AdjustLifespan(entity.AsNullable(), 1);
 
         if (_random.Prob(0.1f))
-            plant.Lifespan++;
-
-        if (_random.Prob(0.1f))
-            plant.Endurance++;
+            _plant.AdjustEndurance(entity.AsNullable(), 1);
     }
 }

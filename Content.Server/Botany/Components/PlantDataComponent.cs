@@ -46,7 +46,7 @@ public sealed partial class PlantDataComponent : Component
     /// The RSI path to the plant's sprite.
     /// </summary>
     [DataField(required: true)]
-    public ResPath PlantRsi = default!;
+    public ResPath PlantRsi;
 
     /// <summary>
     /// Log impact for harvest operations.

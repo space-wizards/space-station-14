@@ -1,5 +1,6 @@
 using Content.Client.Botany.Components;
 using Content.Shared.Botany;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
 
@@ -19,6 +20,8 @@ public sealed class PlantVisualizerSystem : VisualizerSystem<PlantVisualsCompone
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
+        // Ensure they always render above the tray sprite.
+        SpriteSystem.SetDrawDepth((uid, sprite), (int) DrawDepth.SmallObjects);
         SpriteSystem.LayerMapReserve((uid, sprite), PlantLayers.Plant);
         SpriteSystem.LayerSetVisible((uid, sprite), PlantLayers.Plant, false);
     }

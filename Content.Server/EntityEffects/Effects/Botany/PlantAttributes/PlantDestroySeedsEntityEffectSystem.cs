@@ -15,14 +15,11 @@ public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSy
 {
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PlantHolderSystem _plantHolder = default!;
+    [Dependency] private readonly PlantTraitsSystem _plantTraits = default!;
 
     protected override void Effect(Entity<PlantComponent> entity, ref EntityEffectEvent<PlantDestroySeeds> args)
     {
         if (_plantHolder.IsDead(entity.Owner))
-            return;
-
-        if (!TryComp<PlantTraitsComponent>(entity, out var traits)
-            || traits.Seedless)
             return;
 
         _popup.PopupEntity(
@@ -30,6 +27,6 @@ public sealed partial class PlantDestroySeedsEntityEffectSystem : EntityEffectSy
             entity,
             PopupType.SmallCaution
         );
-        traits.Seedless = true;
+        _plantTraits.AddTrait(entity.Owner, new TraitSeedless());
     }
 }

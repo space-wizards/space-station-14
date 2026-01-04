@@ -23,7 +23,7 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly CloningSystem _cloning = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -31,6 +31,7 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly PlantSystem _plant = default!;
 
     public readonly ProtoId<CloningSettingsPrototype> SettingsId = "PlantClone";
     public readonly ProtoId<CloningSettingsPrototype> LifecycleSettingsId = "PlantLifecycleClone";
@@ -56,8 +57,7 @@ public sealed partial class BotanySystem : EntitySystem
         {
             var name = Loc.GetString(plantData.DisplayName);
             args.PushMarkup(Loc.GetString("seed-component-description", ("seedName", name)));
-            args.PushMarkup(Loc.GetString("seed-component-plant-yield-text", ("seedYield", plant.Yield)));
-            args.PushMarkup(Loc.GetString("seed-component-plant-potency-text", ("seedPotency", plant.Potency)));
+            args.PushMarkup(_plant.GetPlantStateMarkup(uid, plant));
         }
     }
 
@@ -112,9 +112,6 @@ public sealed partial class BotanySystem : EntitySystem
                 continue;
 
             var compName = _componentFactory.GetComponentName(component.GetType());
-            if (!settings.Components.Contains(compName))
-                continue;
-
             var copied = _serialization.CreateCopy(component, notNullableOverride: true);
             snap[compName] = new EntityPrototype.ComponentRegistryEntry(copied, []);
         }
@@ -142,7 +139,7 @@ public sealed partial class BotanySystem : EntitySystem
 
     /// <summary>
     /// Spawns a seed packet that stores a component snapshot of <paramref name="snapshot"/>.
-    /// </summary
+    /// </summary>
     [PublicAPI]
     public EntityUid SpawnSeedPacketFromSnapshot(ComponentRegistry? snapshot, EntProtoId plantProtoId, EntityCoordinates coords, EntityUid user, float? healthOverride = null)
     {
@@ -155,7 +152,7 @@ public sealed partial class BotanySystem : EntitySystem
     /// <summary>
     /// Internal method to spawn a seed packet from a plant component.
     /// </summary>
-    /// <param name="plant">The plant component to spawn.</param>
+    /// <param name="plantData">The plant component to spawn.</param>
     /// <param name="plantProtoId">The plant prototype ID to store in the seed component.</param>
     /// <param name="snapshot">The component snapshot to store in the seed component.</param>
     /// <param name="coords">The coordinates to spawn the seed packet at.</param>

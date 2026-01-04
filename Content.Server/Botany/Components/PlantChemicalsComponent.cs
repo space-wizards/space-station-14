@@ -1,3 +1,4 @@
+using Content.Server.Botany.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
@@ -9,6 +10,7 @@ namespace Content.Server.Botany.Components;
 /// </summary>
 [RegisterComponent]
 [DataDefinition]
+[Access(typeof(PlantChemicalsSystem))]
 public sealed partial class PlantChemicalsComponent : Component
 {
     /// <summary>

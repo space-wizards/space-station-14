@@ -37,15 +37,13 @@ public sealed class AtmosphericGrowthSystem : EntitySystem
 
     private void OnPlantGrow(Entity<AtmosphericGrowthComponent> ent, ref OnPlantGrowEvent args)
     {
-        var (plantUid, component) = ent;
-
-        if (!TryComp<PlantHolderComponent>(plantUid, out var holder))
+        if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;
 
-        var environment = _atmosphere.GetContainingMixture(plantUid, true, true) ?? GasMixture.SpaceGas;
-        if (MathF.Abs(environment.Temperature - component.IdealHeat) > component.HeatTolerance)
+        var environment = _atmosphere.GetContainingMixture(ent.Owner, true, true) ?? GasMixture.SpaceGas;
+        if (MathF.Abs(environment.Temperature - ent.Comp.IdealHeat) > ent.Comp.HeatTolerance)
         {
-            _plantHolder.AdjustsHealth(plantUid, -_random.Next(1, 3));
+            _plantHolder.AdjustsHealth(ent.Owner, -_random.Next(1, 3));
             holder.ImproperHeat = true;
         }
         else
@@ -54,9 +52,9 @@ public sealed class AtmosphericGrowthSystem : EntitySystem
         }
 
         var pressure = environment.Pressure;
-        if (pressure < component.LowPressureTolerance || pressure > component.HighPressureTolerance)
+        if (pressure < ent.Comp.LowPressureTolerance || pressure > ent.Comp.HighPressureTolerance)
         {
-            _plantHolder.AdjustsHealth(plantUid, -_random.Next(1, 3));
+            _plantHolder.AdjustsHealth(ent.Owner, -_random.Next(1, 3));
             holder.ImproperPressure = true;
         }
         else
