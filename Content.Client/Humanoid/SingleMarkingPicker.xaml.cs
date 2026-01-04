@@ -186,14 +186,14 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         MarkingList.Clear();
 
-        var sortedMarkings = _markingPrototypeCache.Where(m =>
-            m.Key.ToLower().Contains(filter.ToLower()) ||
-            GetMarkingName(m.Value).ToLower().Contains(filter.ToLower())
-        ).OrderBy(p => Loc.GetString($"marking-{p.Key}"));
+        var sortedMarkings = _markingPrototypeCache
+            .Where(m => m.Key.Contains(filter, StringComparison.OrdinalIgnoreCase) ||
+                m.Value.GetName().Contains(filter, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(p => p.Value.GetName());
 
         foreach (var (id, marking) in sortedMarkings)
         {
-            var item = MarkingList.AddItem(Loc.GetString($"marking-{id}"), _sprite.Frame0(marking.Sprites[0]));
+            var item = MarkingList.AddItem(marking.GetName(), _sprite.Frame0(marking.Sprites[0]));
             item.Metadata = marking.ID;
 
             if (_markings[Slot].MarkingId == id)
@@ -295,10 +295,5 @@ public sealed partial class SingleMarkingPicker : BoxContainer
                 SlotSelector.SelectId(i);
             }
         }
-    }
-
-    private string GetMarkingName(MarkingPrototype marking)
-    {
-        return Loc.GetString($"marking-{marking.ID}");
     }
 }
