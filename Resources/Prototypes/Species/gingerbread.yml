@@ -8,6 +8,7 @@
   dollPrototype: MobGingerbreadDummy
   skinColoration: HumanToned
   defaultSkinTone: "#9a7c5a"
+  cocoonScale: 1.0, 1.0
 
 - type: speciesBaseSprites
   id: MobGingerbreadSprites
