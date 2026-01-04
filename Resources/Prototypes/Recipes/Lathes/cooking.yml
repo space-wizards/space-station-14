@@ -24,6 +24,8 @@
 - type: latheRecipe
   parent: BaseGlasswareRecipe
   id: DrinkMug
+  categories:
+  - Containers
   result: DrinkMug
 
 - type: latheRecipe
@@ -52,6 +54,8 @@
 - type: latheRecipe
   id: CustomDrinkJug
   result: CustomDrinkJug
+  categories:
+  - Containers
   completetime: 2
   materials:
     Plastic: 200
