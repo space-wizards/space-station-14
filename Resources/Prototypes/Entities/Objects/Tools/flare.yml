@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: emergency flare
   parent: BaseItem
   id: Flare
@@ -12,7 +12,6 @@
   - type: ExpendableLight
     glowDuration: 225
     fadeOutDuration: 15
-    iconStateOn: flare_unlit
     iconStateSpent: flare_spent
     turnOnBehaviourID: turn_on
     fadeOutBehaviourID: fade_out
