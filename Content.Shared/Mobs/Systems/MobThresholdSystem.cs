@@ -250,24 +250,24 @@ public sealed class MobThresholdSystem : EntitySystem
     /// <summary>
     /// Takes the damage from one entity and scales it relative to the health of another
     /// </summary>
-    /// <param name="target1">The entity whose damage will be scaled</param>
-    /// <param name="target2">The entity whose health the damage will scale to</param>
+    /// <param name="original">The entity whose damage will be scaled</param>
+    /// <param name="target">The entity whose health the damage will scale to</param>
     /// <param name="damage">The newly scaled damage. Can be null</param>
-    public bool GetScaledDamage(EntityUid target1, EntityUid target2, out DamageSpecifier? damage)
+    public bool GetScaledDamage(EntityUid original, EntityUid target, [NotNullWhen(true)] out DamageSpecifier? damage)
     {
         damage = null;
 
-        if (!TryComp<DamageableComponent>(target1, out var oldDamage))
+        if (!TryComp<DamageableComponent>(original, out var oldDamage))
             return false;
 
-        if (!TryComp<MobThresholdsComponent>(target1, out var threshold1) ||
-            !TryComp<MobThresholdsComponent>(target2, out var threshold2))
+        if (!TryComp<MobThresholdsComponent>(original, out var threshold1) ||
+            !TryComp<MobThresholdsComponent>(target, out var threshold2))
             return false;
 
-        if (!TryGetThresholdForState(target1, MobState.Dead, out var ent1DeadThreshold, threshold1))
+        if (!TryGetThresholdForState(original, MobState.Dead, out var ent1DeadThreshold, threshold1))
             ent1DeadThreshold = 0;
 
-        if (!TryGetThresholdForState(target2, MobState.Dead, out var ent2DeadThreshold, threshold2))
+        if (!TryGetThresholdForState(target, MobState.Dead, out var ent2DeadThreshold, threshold2))
             ent2DeadThreshold = 0;
 
         damage = (oldDamage.Damage / ent1DeadThreshold.Value) * ent2DeadThreshold.Value;
