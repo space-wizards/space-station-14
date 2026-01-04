@@ -1,4 +1,4 @@
-using Content.Shared.Alert;
+﻿using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
@@ -259,7 +259,7 @@ public abstract partial class SharedStunSystem
     private void ToggleKnockdown(Entity<CrawlerComponent?, KnockedDownComponent?> entity)
     {
         // We resolve here instead of using TryCrawling to be extra sure someone without crawler can't stand up early.
-        if (!Resolve(entity, ref entity.Comp1, false) || !_cfgManager.GetCVar(CCVars.MovementCrawling))
+        if (!_crawlerQuery.Resolve(entity, ref entity.Comp1, false) || !_cfgManager.GetCVar(CCVars.MovementCrawling))
             return;
 
         if (!Resolve(entity, ref entity.Comp2, false))
@@ -426,23 +426,23 @@ public abstract partial class SharedStunSystem
         args.Handled = true;
     }
 
-    private bool TryForceStand(Entity<StaminaComponent?> entity)
+    private bool TryForceStand(Entity<CrawlerComponent?, StaminaComponent?> entity)
     {
-        // Can't force stand if no Stamina.
-        if (!Resolve(entity, ref entity.Comp, false))
+        // Can't force stand if no Stamina, and can't force stand if not a crawler.
+        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2, false))
             return false;
 
-        var ev = new TryForceStandEvent(entity.Comp.ForceStandStamina);
+        var ev = new TryForceStandEvent(entity.Comp1.ForceStandStamina);
         RaiseLocalEvent(entity, ref ev);
 
-        if (!Stamina.TryTakeStamina(entity, ev.Stamina, entity.Comp, visual: true))
+        if (!Stamina.TryTakeStamina(entity, ev.Stamina, entity.Comp2, visual: true))
         {
             _popup.PopupClient(Loc.GetString("knockdown-component-pushup-failure"), entity, entity, PopupType.MediumCaution);
             return false;
         }
 
         _popup.PopupClient(Loc.GetString("knockdown-component-pushup-success"), entity, entity);
-        _audio.PlayPredicted(entity.Comp.ForceStandSuccessSound, entity.Owner, entity.Owner, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+        _audio.PlayPredicted(entity.Comp1.ForceStandSuccessSound, entity.Owner, entity.Owner, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
 
         return true;
     }
