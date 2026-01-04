@@ -40,14 +40,23 @@ namespace Content.Server.Atmos.Components
         // depressurizing a room. However it can also effectively be used as a means of generating gasses for free
         // TODO ATMOS Mass conservation. Make it actually push/pull air from adjacent tiles instead of destroying & creating,
 
-
-        // TODO ATMOS Do we need these two fields?
+        // TODO ATMOS slate for removal. Stuff doesn't use this.
         [DataField("rotateAirBlocked")]
         public bool RotateAirBlocked { get; set; } = true;
 
-        // TODO ATMOS remove this? What is this even for??
-        [DataField("fixAirBlockedDirectionInitialize")]
-        public bool FixAirBlockedDirectionInitialize { get; set; } = true;
+        /// <summary>
+        /// Whether to fix the <see cref="CurrentAirBlockedDirection"/> on initialization
+        /// to the entity's current rotation.
+        /// </summary>
+        /// <remarks>This is an optimization routine for initializing airtight components.
+        /// If this entity doesn't have unique airtight directions
+        /// (ex. not all directions are blocked but some are), we can skip
+        /// a lot of event/transform business during initialization.
+        /// This field marks whether this is skipped or not.</remarks>
+        /// <example>If your entity only blocks air in one direction,
+        /// and that can depend on rotation, this needs to be set to true.</example>
+        [DataField]
+        public bool FixAirBlockedDirectionInitialize = true;
 
         /// <summary>
         /// If true, then the tile that this entity is on will have no air at all if all directions are blocked.
