@@ -118,3 +118,4 @@ public sealed partial class RngDeviceWindow : DefaultWindow
         TargetNumberContainer.Visible = visible;
     }
 }
+
