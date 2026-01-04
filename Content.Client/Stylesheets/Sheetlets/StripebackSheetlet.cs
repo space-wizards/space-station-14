@@ -1,4 +1,5 @@
-﻿using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.Palette;
+using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
@@ -14,9 +15,10 @@ public sealed class StripebackSheetlet<T> : Sheetlet<T> where T : PalettedStyles
     {
         IStripebackConfig stripebackCfg = sheet;
 
+        var stripeTex = sheet.GetTextureOr(stripebackCfg.StripebackPath, NanotrasenStylesheet.TextureRoot);
         var stripeBack = new StyleBoxTexture
         {
-            Texture = sheet.GetTextureOr(stripebackCfg.StripebackPath, NanotrasenStylesheet.TextureRoot),
+            Texture = stripeTex,
             Mode = StyleBoxTexture.StretchMode.Tile,
         };
 
