@@ -43,20 +43,22 @@
   id: AmmoniaOxygenReaction
   priority: 2
   minimumTemperature: 323.149
-  minimumRequirements:
-    Oxygen: 0.01
-    Ammonia: 0.01
-  effects:
-  - !type:AmmoniaOxygenReaction {}
+  reactants:
+    Ammonia: 2
+    Oxygen: 2
+  products:
+    NitrousOxide: 1
+    WaterVapor: 3
 
 - type: gasReaction
   id: N2ODecomposition
   priority: 0
   minimumTemperature: 850
-  minimumRequirements:
-    NitrousOxide: 0.01
-  effects:
-  - !type:N2ODecompositionReaction {}
+  reactants:
+    NitrousOxide: 2
+  products:
+    Nitrogen: 2
+    Oxygen: 1
 
 #- type: gasReaction
 #  id: WaterVaporPuddle
