@@ -48,6 +48,9 @@
     damageContainers:
     - Inorganic
     - Silicon
+  - type: LockingWhitelist # so it can help the mothership borging other xenoborgs
+    blacklist:
+      null
   - type: ItemSlots
     slots:
       cell_slot:
