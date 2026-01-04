@@ -1,0 +1,17 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/blob/787aa76ca263781e2c8b00fdc44911901951dfdf/icons/obj/fluff/beach2.dmi",
+    "size": {
+        "x": 32,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "palm1"
+        },
+        {
+            "name": "palm2"
+        }
+    ]
+}
