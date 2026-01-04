@@ -1,0 +1,52 @@
+- type: entity
+  name: AI camera jammer
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: AiCameraJammer
+  description: This device will disrupt any nearby AI camera surveillance when activated. Requires a battery.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/jammer.rsi
+    layers:
+        - state: jammer
+        - state: jammer_high_charge
+          map: ["enum.AiCameraJammerLayers.LED"]
+          shader: unshaded
+          visible: false
+  - type: AiCameraJammer
+    settings:
+    - wattage: 1
+      range: 2.5
+      message: ai-camera-jammer-set-message-low
+      name: ai-camera-jammer-setting-low
+    - wattage: 3
+      range: 6
+      message: ai-camera-jammer-set-message-medium
+      name: ai-camera-jammer-setting-medium
+    - wattage: 10
+      range: 12
+      message: ai-camera-jammer-set-message-high
+      name: ai-camera-jammer-setting-high
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AiCameraJammerVisuals.LEDOn:
+        AiCameraJammerLayers.LED:
+          True: { visible: True }
+          False: { visible: False }
+      enum.AiCameraJammerVisuals.ChargeLevel:
+        AiCameraJammerLayers.LED:
+          Low: {state: jammer_low_charge}
+          Medium: {state: jammer_medium_charge}
+          High: {state: jammer_high_charge}
+  - type: StaticPrice
+    price: 2000
