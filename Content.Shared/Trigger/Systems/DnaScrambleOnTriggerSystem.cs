@@ -9,7 +9,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Trigger.Systems;
 
-public sealed class DnaScrambleOnTriggerSystem : EntitySystem
+public sealed class DnaScrambleOnTriggerSystem : XOnTriggerSystem<DnaScrambleOnTriggerComponent>
 {
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearance = default!;
@@ -18,23 +18,8 @@ public sealed class DnaScrambleOnTriggerSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly INetManager _net = default!;
 
-    public override void Initialize()
+    protected override void OnTrigger(Entity<DnaScrambleOnTriggerComponent> ent, EntityUid target, ref TriggerEvent args)
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<DnaScrambleOnTriggerComponent, TriggerEvent>(OnTrigger);
-    }
-
-    private void OnTrigger(Entity<DnaScrambleOnTriggerComponent> ent, ref TriggerEvent args)
-    {
-        if (args.Key != null && !ent.Comp.KeysIn.Contains(args.Key))
-            return;
-
-        var target = ent.Comp.TargetUser ? args.User : ent.Owner;
-
-        if (target == null)
-            return;
-
         if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid))
             return;
 
@@ -46,21 +31,21 @@ public sealed class DnaScrambleOnTriggerSystem : EntitySystem
             return;
 
         var newProfile = HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species);
-        _humanoidAppearance.LoadProfile(target.Value, newProfile, humanoid);
-        _metaData.SetEntityName(target.Value, newProfile.Name, raiseEvents: false); // raising events would update ID card, station record, etc.
+        _humanoidAppearance.LoadProfile(target, newProfile, humanoid);
+        _metaData.SetEntityName(target, newProfile.Name, raiseEvents: false); // raising events would update ID card, station record, etc.
 
         // If the entity has the respective components, then scramble the dna and fingerprint strings.
-        _forensics.RandomizeDNA(target.Value);
-        _forensics.RandomizeFingerprint(target.Value);
+        _forensics.RandomizeDNA(target);
+        _forensics.RandomizeFingerprint(target);
 
-        RemComp<DetailExaminableComponent>(target.Value); // remove MRP+ custom description if one exists
-        _identity.QueueIdentityUpdate(target.Value); // manually queue identity update since we don't raise the event
+        RemComp<DetailExaminableComponent>(target); // remove MRP+ custom description if one exists
+        _identity.QueueIdentityUpdate(target); // manually queue identity update since we don't raise the event
 
         // Can't use PopupClient or PopupPredicted because the trigger might be unpredicted.
-        _popup.PopupEntity(Loc.GetString("scramble-on-trigger-popup"), target.Value, target.Value);
+        _popup.PopupEntity(Loc.GetString("scramble-on-trigger-popup"), target, target);
 
-        var ev = new DnaScrambledEvent(target.Value);
-        RaiseLocalEvent(target.Value, ref ev, true);
+        var ev = new DnaScrambledEvent(target);
+        RaiseLocalEvent(target, ref ev, true);
     }
 }
 
