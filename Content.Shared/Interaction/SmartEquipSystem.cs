@@ -109,7 +109,7 @@ public sealed class SmartEquipSystem : EntitySystem
 
         _inventory.TryGetSlotEntity(uid, equipmentSlot, out var slotEntity);
         var emptyEquipmentSlotString = Loc.GetString("smart-equip-empty-equipment-slot", ("slotName", equipmentSlot));
-        var ignoreContents = HasComp<IgnoreContentsOnSmartEquipComponent>(slotEntity);
+        var ignoreContents = HasComp<IgnoreContentsOnSmartEquipComponent>(slotEntity) && handItem is null;
 
         // case 1 (no slot item):
         if (slotEntity is not { } slotItem)
