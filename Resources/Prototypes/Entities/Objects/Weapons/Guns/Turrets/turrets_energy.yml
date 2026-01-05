@@ -202,6 +202,8 @@
   description: An auto-turret armed with a heavy laser. Its weapon will recharge while connected to an active power grid. Shoots meteors.
   suffix: AntiMeteor
   components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Turrets/salvage_turret.rsi
   - type: HTN
     rootTask:
       task: EnergyTurretCompoundLongRange
