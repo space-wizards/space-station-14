@@ -1430,7 +1430,7 @@
         emptyLabel: borg-slot-hats-empty
         whitelist:
           components:
-          - Clothing
+          - Clothing #it can kinda hold any clothing, but if we don't tell that to the player, they won't know, wink wink.
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-module-module }
 
