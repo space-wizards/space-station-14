@@ -599,7 +599,7 @@
     growthStages: 3
   - type: PlantTraits
     traits:
-    - !type: TraitLigneous
+      - !type: TraitLigneous
   - type: BasicGrowth
     waterConsumption: 0.6
     nutrientConsumption: 0.5
@@ -628,7 +628,7 @@
     growthStages: 3
   - type: PlantTraits
     traits:
-    - !type: TraitLigneous
+      - !type: TraitLigneous
   - type: BasicGrowth
     waterConsumption: 0.6
     nutrientConsumption: 0.8
