@@ -14,7 +14,7 @@ public sealed partial class ProduceComponent : Component
     /// <summary>
     /// Name of a base plant prototype to spawn when extracting seeds.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField("plantId"), AutoNetworkedField]
     public EntProtoId? PlantProtoId;
 
     /// <summary>

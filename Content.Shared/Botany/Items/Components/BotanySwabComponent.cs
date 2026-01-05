@@ -20,7 +20,7 @@ public sealed partial class BotanySwabComponent : Component
     /// <summary>
     /// Name of a base plant prototype for the stored pollen snapshot.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField("plantId"), AutoNetworkedField]
     public EntProtoId? PlantProtoId;
 
     /// <summary>

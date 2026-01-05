@@ -45,10 +45,6 @@
     productPrototypes: [ WheatBushel ]
     mutationPrototypes: [ MeatWheatPlants ]
   - type: PlantTraits
-    traits:
-    - !type:TraitUnviable
-    - !type:TraitKudzu
-    - !type:TraitLigneous
   - type: Plant
     lifespan: 25
     maturation: 6
@@ -602,7 +598,8 @@
     potency: 1
     growthStages: 3
   - type: PlantTraits
-    ligneous: true
+    traits:
+    - !type: TraitLigneous
   - type: BasicGrowth
     waterConsumption: 0.6
     nutrientConsumption: 0.5
@@ -630,7 +627,8 @@
     potency: 1
     growthStages: 3
   - type: PlantTraits
-    ligneous: true
+    traits:
+    - !type: TraitLigneous
   - type: BasicGrowth
     waterConsumption: 0.6
     nutrientConsumption: 0.8
