@@ -1,100 +1,107 @@
 - type: entity
   name: jug
-  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkBaseOpenable, DrinkBaseVisualsAll ]
+  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAll ]
   id: Jug
   description: Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
   components:
-    - type: SolutionContainerManager
-      solutions:
-        beaker:
-          maxVol: 200
-    - type: Sprite
-      sprite: Objects/Specific/Chemistry/jug.rsi
-      layers:
-        - state: icon
-          map: [ "enum.OpenableVisuals.Layer" ]
-        - state: jug1
-          map: [ "enum.SolutionContainerLayers.Fill" ]
-          visible: false
-    - type: Openable
-      sound:
-        collection: bottleOpenSounds
-      closeable: true
-      closeSound:
-        collection: bottleCloseSounds
-    - type: Item
-      size: Normal
-      sprite: Objects/Specific/Chemistry/jug.rsi
-    - type: MixableSolution
-      solution: beaker
-    - type: RefillableSolution
-      solution: beaker
-    - type: DrainableSolution
-      solution: beaker
-    - type: ExaminableSolution
-      solution: beaker
-      exactVolume: true
-      examinableWhileClosed: true
-    - type: DrawableSolution
-      solution: beaker
-    - type: InjectableSolution
-      solution: beaker
-    - type: SolutionTransfer
-      canChangeTransferAmount: true
-    - type: SolutionItemStatus
-      solution: beaker
-    - type: UserInterface
-      interfaces:
-        enum.TransferAmountUiKey.Key:
-          type: TransferAmountBoundUserInterface
-    - type: Edible
-      edible: Drink
-      solution: beaker
-      destroyOnEmpty: false
-      utensil: Spoon
-    - type: Spillable
-      solution: beaker
-    - type: Appearance
-    - type: SolutionContainerVisuals
-      maxFillLevels: 6
-      fillBaseName: jug
-      inHandsMaxFillLevels: 5
-      inHandsFillBaseName: -fill-
-    - type: StaticPrice
-      price: 60
-    - type: Damageable
-      damageContainer: Inorganic
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 200
-        behaviors:
-          - !type:DoActsBehavior
-            acts: [ "Destruction" ]
-      - trigger:
-          !type:DamageTrigger
-          damage: 20
-        behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-            params:
-              volume: -4
-        - !type:SpillBehavior { }
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            SheetPlastic1:
-              min: 0
-              max: 1
-          transferForensics: true
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 200
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"} # lid off
+          False: {state: "icon"} # lid on
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/jug.rsi
+    layers:
+      - state: icon
+        map: [ "enum.OpenableVisuals.Layer" ]
+      - state: jug1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: Item
+    size: Normal
+    sprite: Objects/Specific/Chemistry/jug.rsi
+  - type: MixableSolution
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+    exactVolume: true
+    examinableWhileClosed: true
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: beaker
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Edible
+    edible: Drink
+    solution: beaker
+    destroyOnEmpty: false
+    utensil: Spoon
+  - type: Spillable
+    solution: beaker
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    solutionName: beaker
+    maxFillLevels: 6
+    fillBaseName: jug
+    inHandsMaxFillLevels: 5
+    inHandsFillBaseName: -fill-
+  - type: StaticPrice
+    price: 60
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
-    - type: Label
-    - type: Tag
-      tags:
-      - ChemDispensable
-    - type: DnaSubstanceTrace
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -4
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic1:
+            min: 0
+            max: 1
+        transferForensics: true
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Label
+  - type: Tag
+    tags:
+    - ChemDispensable
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: Jug
