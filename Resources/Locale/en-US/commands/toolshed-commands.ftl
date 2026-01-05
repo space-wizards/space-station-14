@@ -6,6 +6,26 @@ command-description-acmd-perms =
     Returns the admin permissions of the given command, if any.
 command-description-acmd-caninvoke =
     Check if the given player can invoke the given command.
+command-description-bank-accounts =
+    Returns all accounts on a station.
+command-description-bank-account =
+    Returns a given bank account from a station.
+command-description-bank-adjust =
+    Adjusts the money for the given bank account.
+command-description-bank-set =
+    Sets the money for the given bank account.
+command-description-bank-amount =
+    Returns the money for the given bank account.
+command-description-clone-humanoidappearance =
+    Clones the humanoid appearance of provided entity to all input entities.
+command-description-clone-comps =
+    Clones all components from the provided entity to all input entities. Only works for supported components.
+command-description-clone-equipment =
+    Clones the equipment from the provided entity to all input entities. Uses base prototypes, meaning changes to equipment won't persist to the cloned versions.
+command-description-clone-implants =
+    Clones the implants from the provided entity to all input entities. Uses base prototypes, meaning changes to implants won't persist to the cloned versions.
+command-description-clone-storage =
+    Clones the storage from the provided entity to all input entities. Uses base prototypes, meaning changes to contents won't persist to the cloned versions.
 command-description-jobs-jobs =
     Returns all jobs on a station.
 command-description-jobs-job =
@@ -146,3 +166,11 @@ command-description-dynamicrule-executenow =
     Executes the piped dynamic rule as if it had reached its regular update time.
 command-description-dynamicrule-rules =
     Gets a list of all the rules spawned by the piped dynamic rule.
+command-description-statuseffect-add =
+    Adds time in seconds to a given status effect's duration, or creates one with a duration equal to time.
+command-description-statuseffect-update =
+    Sets the duration of a status effect to the higher of the inputted time or existing time. If time is 0, duration will be infinite.
+command-description-statuseffect-set =
+    Sets the duration of a status effect to the inputted time in seconds. If time is 0, duration will be infinite.
+command-description-statuseffect-remove =
+    Removes a time from a given status effect by prototype. If time isn't set, removes the status effect. 

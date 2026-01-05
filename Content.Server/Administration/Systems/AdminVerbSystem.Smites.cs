@@ -1,11 +1,10 @@
-using Content.Server.Administration.Components;
+using System.Numerics;
+using System.Threading;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Electrocution;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.GhostKick;
-using Content.Server.Medical;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Physics.Components;
 using Content.Server.Pointing.Components;
@@ -19,19 +18,21 @@ using Content.Server.Tabletop.Components;
 using Content.Shared.Actions;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
+using Content.Shared.Administration.Systems;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clumsy;
 using Content.Shared.Cluwne;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Electrocution;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Medical;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -56,8 +57,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Spawners;
 using Robust.Shared.Utility;
-using System.Numerics;
-using System.Threading;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration.Systems;
@@ -66,7 +65,7 @@ public sealed partial class AdminVerbSystem
 {
     private readonly ProtoId<PolymorphPrototype> LizardSmite = "AdminLizardSmite";
     private readonly ProtoId<PolymorphPrototype> VulpkaninSmite = "AdminVulpSmite";
-  
+
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
@@ -146,7 +145,6 @@ public sealed partial class AdminVerbSystem
             {
                 _sharedGodmodeSystem.EnableGodmode(args.Target); // So they don't suffocate.
                 EnsureComp<TabletopDraggableComponent>(args.Target);
-                RemComp<PhysicsComponent>(args.Target); // So they can be dragged around.
                 var xform = Transform(args.Target);
                 _popupSystem.PopupEntity(Loc.GetString("admin-smite-chess-self"), args.Target,
                     args.Target, PopupType.LargeCaution);
@@ -575,12 +573,31 @@ public sealed partial class AdminVerbSystem
                 Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/killsign.rsi"), "icon"),
                 Act = () =>
                 {
-                    EnsureComp<KillSignComponent>(args.Target);
+                    EnsureComp<KillSignComponent>(args.Target, out var comp);
+                    comp.HideFromOwner = false; // We set it to false anyway, in case the hidden smite was used beforehand.
+                    Dirty(args.Target, comp);
                 },
                 Impact = LogImpact.Extreme,
                 Message = string.Join(": ", killSignName, Loc.GetString("admin-smite-kill-sign-description"))
             };
             args.Verbs.Add(killSign);
+
+            var hiddenKillSignName = Loc.GetString("admin-smite-kill-sign-hidden-name").ToLowerInvariant();
+            Verb hiddenKillSign = new()
+            {
+                Text = hiddenKillSignName,
+                Category = VerbCategory.Smite,
+                Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Misc/killsign.rsi"), "icon-hidden"),
+                Act = () =>
+                {
+                    EnsureComp<KillSignComponent>(args.Target, out var comp);
+                    comp.HideFromOwner = true;
+                    Dirty(args.Target, comp);
+                },
+                Impact = LogImpact.Extreme,
+                Message = string.Join(": ", hiddenKillSignName, Loc.GetString("admin-smite-kill-sign-hidden-description"))
+            };
+            args.Verbs.Add(hiddenKillSign);
 
             var cluwneName = Loc.GetString("admin-smite-cluwne-name").ToLowerInvariant();
             Verb cluwne = new()
