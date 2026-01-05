@@ -5,7 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using System.Numerics;
 
-namespace Content.Shared.Physics.EntitySystems;
+namespace Content.Server.Physics.EntitySystems;
 
 /// <summary>
 /// Handles singularity attractors.
@@ -71,7 +71,6 @@ public sealed class RandomWalkAttractorSystem : EntitySystem
             return;
 
         AttractRandomWalkers(mapPos, attractor.BaseRange, attractor.Whitelist);
-
     }
 
     public void AttractRandomWalkers(MapCoordinates toLocation, float range, EntityWhitelist? whitelist)
@@ -86,7 +85,6 @@ public sealed class RandomWalkAttractorSystem : EntitySystem
 
         while (query.MoveNext(out var other, out var walk, out var otherXform))
         {
-            // I think this buys us free tag functionality, so thats pretty neat.
             if (!_whitelist.IsValid(whitelist, other))
                 continue;
 
@@ -105,7 +103,6 @@ public sealed class RandomWalkAttractorSystem : EntitySystem
             walk.BiasVector += biasBy;
         }
     }
-
 
     /// <summary>
     /// Resets the pulse timings of the attractor when the component starts up.

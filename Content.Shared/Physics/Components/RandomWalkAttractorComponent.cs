@@ -1,4 +1,4 @@
-using Content.Shared.Physics.EntitySystems;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -8,7 +8,7 @@ namespace Content.Shared.Physics.Components;
 /// Attracts the singularity.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(RandomWalkAttractorSystem))]
+[AutoGenerateComponentPause]
 public sealed partial class RandomWalkAttractorComponent : Component
 {
     /// <summary>
@@ -36,5 +36,6 @@ public sealed partial class RandomWalkAttractorComponent : Component
     /// The last time this attractor pulsed.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan LastPulseTime = default!;
 }
