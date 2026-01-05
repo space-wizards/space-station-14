@@ -1,3 +1,4 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using System.Numerics;
 
@@ -6,7 +7,7 @@ namespace Content.Shared.Physics.Components;
 /// <summary>
 /// A component which makes its entity move around at random.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class RandomWalkComponent : Component
 {
     /// <summary>
