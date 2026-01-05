@@ -190,7 +190,7 @@ namespace Content.Client.Inventory
             if (EntMan.TryGetComponent<VirtualItemComponent>(heldEntity, out var virt))
             {
                 button.Blocked = true;
-                if (EntMan.TryGetComponent<CuffableComponent>(Owner, out var cuff) && _cuffable.GetAllCuffs(cuff).Contains(virt.BlockingEntity))
+                if (_cuffable.TryGetAllCuffs(Owner, out var cuffs) && cuffs.Contains(virt.BlockingEntity))
                     button.BlockedRect.MouseFilter = MouseFilterMode.Ignore;
             }
 

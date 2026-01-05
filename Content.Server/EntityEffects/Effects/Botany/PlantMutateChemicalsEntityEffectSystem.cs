@@ -2,6 +2,7 @@ using Content.Server.Botany;
 using Content.Server.Botany.Components;
 using Content.Shared.EntityEffects;
 using Content.Shared.EntityEffects.Effects.Botany;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -23,7 +24,7 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
         // Add a random amount of a random chemical to this set of chemicals
         var pick = _random.Pick(randomChems);
         var chemicalId = _random.Pick(pick.Reagents);
-        var amount = _random.Next(1, (int)pick.Quantity);
+        var amount = _random.NextFloat(0.1f, (float)pick.Quantity);
         var seedChemQuantity = new SeedChemQuantity();
         if (chemicals.ContainsKey(chemicalId))
         {
@@ -32,12 +33,13 @@ public sealed partial class PlantMutateChemicalsEntityEffectSystem : EntityEffec
         }
         else
         {
-            seedChemQuantity.Min = 1;
-            seedChemQuantity.Max = 1 + amount;
+            //Set the minimum to a fifth of the quantity to give some level of bad luck protection
+            seedChemQuantity.Min = FixedPoint2.Clamp(pick.Quantity / 5f, FixedPoint2.Epsilon, 1f);
+            seedChemQuantity.Max = seedChemQuantity.Min + amount;
             seedChemQuantity.Inherent = false;
         }
-        var potencyDivisor = (int)Math.Ceiling(100.0f / seedChemQuantity.Max);
-        seedChemQuantity.PotencyDivisor = potencyDivisor;
+        var potencyDivisor = 100f / seedChemQuantity.Max;
+        seedChemQuantity.PotencyDivisor = (float) potencyDivisor;
         chemicals[chemicalId] = seedChemQuantity;
     }
 }
