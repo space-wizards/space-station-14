@@ -28,7 +28,7 @@
       0: Alive
       120: Dead
   - type: Stamina
-    critThreshold: 120
+    baseCritThreshold: 120
   - type: Destructible
     thresholds:
     - trigger:

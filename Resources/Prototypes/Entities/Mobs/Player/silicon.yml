@@ -241,6 +241,11 @@
     powerLoad: 500
   - type: ExtensionCableReceiver
   - type: Battery
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
     maxCharge: 300000
     startingCharge: 300000
   - type: ApcPowerReceiverBattery
@@ -452,6 +457,13 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
+  - type: ToggleableGhostRole
+    roleName: station-ai-ghost-role-name
+    roleDescription: station-ai-ghost-role-description
+    roleRules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleGhostRoleSilicon
+    job: StationAi
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
