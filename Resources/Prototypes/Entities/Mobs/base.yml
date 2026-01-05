@@ -1,17 +1,14 @@
-# The progenitor. This should only container the most basic components possible.
-# Only put things on here if every mob *must* have it. This includes ghosts.
+# The literal bare minimum needed to be a controllable mob. Cannot move but can interact.
 - type: entity
-  save: false
-  id: BaseMob
   abstract: true
+  save: false
+  id: BaseControllable
   components:
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-  - type: MobCollision
   - type: GravityAffected
   - type: Physics
-    bodyType: KinematicController
   - type: Fixtures
     fixtures:
       fix1:
@@ -25,11 +22,8 @@
         - MobLayer
   - type: Clickable
   - type: InteractionOutline
-  - type: InputMover
   - type: Input
     context: "human"
-  - type: LagCompensation
-  - type: MobMover
   - type: Actions
   - type: Alerts
   - type: Appearance
@@ -42,10 +36,24 @@
   - type: ContentEye
   - type: CameraRecoil
   - type: MindContainer
-  - type: MovementSpeedModifier
   - type: RequireProjectileTarget
     active: False
-  - type: StunVisuals
+
+# The progenitor. This should only container the most basic components possible.
+# Only put things on here if every mob *must* have it. This includes ghosts.
+- type: entity
+  abstract: true
+  save: false
+  parent: BaseControllable
+  id: BaseMob
+  components:
+  - type: MobCollision
+  - type: Physics
+    bodyType: KinematicController
+  - type: InputMover
+  - type: MobMover
+  - type: MovementSpeedModifier
+  - type: LagCompensation
 
 - type: entity
   save: false
@@ -85,8 +93,24 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MeatLaserImpact
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 15
+      behaviors:
+      - !type:PopupBehavior
+        popup: mouth-taste-metal
+        popupType: LargeCaution
+        targetOnly: true
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Radiation
+        damage: 40
+      behaviors:
+      - !type:VomitBehavior
   - type: RadiationReceiver
   - type: Stamina
+  - type: StunVisuals
   - type: MobState
   - type: MobThresholds
     thresholds:
@@ -145,13 +169,14 @@
   components:
   - type: AtmosExposed
   - type: Temperature
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: TemperatureDamage
     heatDamageThreshold: 325
     coldDamageThreshold: 0
-    currentTemperature: 310.15
     coldDamage: #per second, scales with temperature & other constants
       types:
         Cold : 0.1
-    specificHeat: 42
     heatDamage: #per second, scales with temperature & other constants
       types:
         Heat : 1.5
@@ -180,10 +205,11 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 2
   - type: Temperature
-    heatDamageThreshold: 325
-    coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
+  - type: TemperatureDamage
+    heatDamageThreshold: 325
+    coldDamageThreshold: 260
     coldDamage:
       types:
         Cold: 1 #per second, scales with temperature & other constants
@@ -234,7 +260,7 @@
   components:
   - type: SolutionContainerManager
   - type: InjectableSolution
-    solution: chemicals
+    solution: bloodstream
   - type: Bloodstream
     bloodlossDamage:
       types:

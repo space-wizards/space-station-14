@@ -24,6 +24,15 @@ public abstract class MovementTest : InteractionTest
     /// </summary>
     protected virtual bool AddWalls => true;
 
+    /// <summary>
+    /// The wall entity on the left side.
+    /// </summary>
+    protected NetEntity? WallLeft;
+    /// <summary>
+    /// The wall entity on the right side.
+    /// </summary>
+    protected NetEntity? WallRight;
+
     [SetUp]
     public override async Task Setup()
     {
@@ -38,8 +47,11 @@ public abstract class MovementTest : InteractionTest
 
         if (AddWalls)
         {
-            await SpawnEntity("WallSolid", pCoords.Offset(new Vector2(-Tiles, 0)));
-            await SpawnEntity("WallSolid", pCoords.Offset(new Vector2(Tiles, 0)));
+            var sWallLeft = await SpawnEntity("WallSolid", pCoords.Offset(new Vector2(-Tiles, 0)));
+            var sWallRight = await SpawnEntity("WallSolid", pCoords.Offset(new Vector2(Tiles, 0)));
+
+            WallLeft = SEntMan.GetNetEntity(sWallLeft);
+            WallRight = SEntMan.GetNetEntity(sWallRight);
         }
 
         await AddGravity();
