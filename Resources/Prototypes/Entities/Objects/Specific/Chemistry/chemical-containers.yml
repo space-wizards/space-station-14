@@ -6,22 +6,10 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         maxVol: 200
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"} # lid off
-          False: {state: "icon"} # lid on
   - type: Sprite
     sprite: Objects/Specific/Chemistry/jug.rsi
-    layers:
-      - state: icon
-        map: [ "enum.OpenableVisuals.Layer" ]
-      - state: jug1
-        map: [ "enum.SolutionContainerLayers.Fill" ]
-        visible: false
   - type: Openable
     sound:
       collection: bottleOpenSounds
@@ -31,40 +19,17 @@
   - type: Item
     size: Normal
     sprite: Objects/Specific/Chemistry/jug.rsi
-  - type: MixableSolution
-    solution: beaker
-  - type: RefillableSolution
-    solution: beaker
-  - type: DrainableSolution
-    solution: beaker
-  - type: ExaminableSolution
-    solution: beaker
-    exactVolume: true
-    examinableWhileClosed: true
-  - type: DrawableSolution
-    solution: beaker
-  - type: InjectableSolution
-    solution: beaker
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-  - type: SolutionItemStatus
-    solution: beaker
+  - type: Edible
+    utensil: Spoon
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
-  - type: Edible
-    edible: Drink
-    solution: beaker
-    destroyOnEmpty: false
-    utensil: Spoon
-  - type: Spillable
-    solution: beaker
   - type: Appearance
   - type: SolutionContainerVisuals
-    solutionName: beaker
+    solutionName: drink
     maxFillLevels: 6
-    fillBaseName: jug
+    fillBaseName: fill-
     inHandsMaxFillLevels: 5
     inHandsFillBaseName: -fill-
   - type: StaticPrice
@@ -112,7 +77,7 @@
     currentLabel: reagent-name-puncturase-tranexamic
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Puncturase
           Quantity: 160
@@ -128,7 +93,7 @@
     currentLabel: reagent-name-pyrazine-dermaline
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Pyrazine
           Quantity: 50
@@ -144,7 +109,7 @@
     currentLabel: reagent-name-dexalin-plus-saline
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: DexalinPlus
           Quantity: 100
@@ -160,7 +125,7 @@
     currentLabel: reagent-name-tricordrazine
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Tricordrazine
           Quantity: 200
@@ -174,7 +139,7 @@
     currentLabel: reagent-name-blood
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Blood
           Quantity: 200
@@ -188,7 +153,7 @@
     currentLabel: reagent-name-water
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Water
           Quantity: 200
@@ -203,7 +168,7 @@
     currentLabel: reagent-name-carbon
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Carbon
           Quantity: 200
@@ -218,7 +183,7 @@
     currentLabel: reagent-name-iodine
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Iodine
           Quantity: 200
@@ -233,7 +198,7 @@
     currentLabel: reagent-name-fluorine
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Fluorine
           Quantity: 200
@@ -248,7 +213,7 @@
     currentLabel: reagent-name-chlorine
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Chlorine
           Quantity: 200
@@ -263,7 +228,7 @@
     currentLabel: reagent-name-aluminium
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Aluminium
           Quantity: 200
@@ -278,7 +243,7 @@
     currentLabel: reagent-name-phosphorus
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Phosphorus
           Quantity: 200
@@ -293,7 +258,7 @@
     currentLabel: reagent-name-sulfur
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Sulfur
           Quantity: 200
@@ -308,7 +273,7 @@
     currentLabel: reagent-name-silicon
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Silicon
           Quantity: 200
@@ -323,7 +288,7 @@
     currentLabel: reagent-name-hydrogen
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Hydrogen
           Quantity: 200
@@ -338,7 +303,7 @@
     currentLabel: reagent-name-lithium
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Lithium
           Quantity: 200
@@ -353,7 +318,7 @@
     currentLabel: reagent-name-sodium
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Sodium
           Quantity: 200
@@ -368,7 +333,7 @@
     currentLabel: reagent-name-potassium
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Potassium
           Quantity: 200
@@ -383,7 +348,7 @@
     currentLabel: reagent-name-radium
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Radium
           Quantity: 200
@@ -398,7 +363,7 @@
     currentLabel: reagent-name-iron
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Iron
           Quantity: 200
@@ -413,7 +378,7 @@
     currentLabel: reagent-name-copper
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Copper
           Quantity: 200
@@ -428,7 +393,7 @@
     currentLabel: reagent-name-gold
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Gold
           Quantity: 200
@@ -443,7 +408,7 @@
     currentLabel: reagent-name-mercury
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Mercury
           Quantity: 200
@@ -458,7 +423,7 @@
     currentLabel: reagent-name-silver
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Silver
           Quantity: 200
@@ -473,7 +438,7 @@
     currentLabel: reagent-name-ethanol
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Ethanol
           Quantity: 200
@@ -488,7 +453,7 @@
     currentLabel: reagent-name-sugar
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Sugar
           Quantity: 200
@@ -503,7 +468,7 @@
     currentLabel: reagent-name-nitrogen
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Nitrogen
           Quantity: 200
@@ -518,7 +483,7 @@
     currentLabel: reagent-name-oxygen
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: Oxygen
           Quantity: 200
@@ -533,7 +498,7 @@
     currentLabel: reagent-name-plant-b-gone
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: PlantBGone
           Quantity: 200
@@ -548,7 +513,7 @@
     currentLabel: reagent-name-welding-fuel
   - type: SolutionContainerManager
     solutions:
-      beaker:
+      drink:
         reagents:
         - ReagentId: WeldingFuel
           Quantity: 200
