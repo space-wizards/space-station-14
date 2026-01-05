@@ -3885,3 +3885,10 @@
   id: 9354
   time: '2026-01-05T00:42:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42234
+- author: IProduceWidgets
+  changes:
+  - message: Chemical jugs are now closeable.
+    type: Tweak
+  id: 9355
+  time: '2026-01-05T23:31:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29413
