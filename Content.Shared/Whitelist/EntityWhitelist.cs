@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
@@ -74,9 +73,9 @@ public sealed partial class EntityWhitelist : IEquatable<EntityWhitelist>
         if (other is null) return false;
 
         if (RequireAll != other.RequireAll) return false;
-        if (!NullableSequenceEqual(Components, other.Components)) return false;
-        if (!NullableSequenceEqual(Sizes, other.Sizes)) return false;
-        if (!NullableSequenceEqual(Tags, other.Tags)) return false;
+        if (!NullableSetEquals(Components, other.Components)) return false;
+        if (!NullableSetEquals(Sizes, other.Sizes)) return false;
+        if (!NullableSetEquals(Tags, other.Tags)) return false;
 
         return true;
     }
@@ -86,26 +85,35 @@ public sealed partial class EntityWhitelist : IEquatable<EntityWhitelist>
         var hash = new HashCode();
 
         hash.Add(RequireAll);
-        AddNullableSequence(ref hash, Components);
-        AddNullableSequence(ref hash, Sizes);
-        AddNullableSequence(ref hash, Tags);
+        AddNullableSet(ref hash, Components);
+        AddNullableSet(ref hash, Sizes);
+        AddNullableSet(ref hash, Tags);
 
         return hash.ToHashCode();
     }
 
-    private static bool NullableSequenceEqual<T>(IEnumerable<T>? a, IEnumerable<T>? b)
+    private static bool NullableSetEquals<T>(IEnumerable<T>? a, IEnumerable<T>? b)
     {
         if (ReferenceEquals(a, b)) return true;
         if (a is null || b is null) return false;
-        return a.SequenceEqual(b);
+        return new HashSet<T>(a).SetEquals(b); // ignore the order the entries are in
     }
 
-    private static void AddNullableSequence<T>(ref HashCode hash, IEnumerable<T>? seq)
+    private static void AddNullableSet<T>(ref HashCode hash, IEnumerable<T>? seq)
     {
         if (seq == null)
+        {
             hash.Add(0);
-        else
-            foreach (var item in seq)
-                hash.Add(item);
+            return;
+        }
+
+        int combined = 0;
+
+        // use XOR to make the hash order independent
+        // this works since xor is commutative and associative
+        foreach (var item in seq)
+            combined ^= item?.GetHashCode() ?? 0;
+
+        hash.Add(combined);
     }
 }
