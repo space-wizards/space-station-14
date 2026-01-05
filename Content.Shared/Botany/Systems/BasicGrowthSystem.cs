@@ -50,6 +50,7 @@ public sealed class BasicGrowthSystem : EntitySystem
         var seed = SharedRandomExtensions.HashCodeCombine((int)_timing.CurTick.Value, GetNetEntity(plantUid).Id);
         var rand = new System.Random(seed);
 
+        // TODO: There are too many magic numbers that don't really make sense to add to the component. Balance needs to be reworked
         // Advance plant age here.
         if (holder.SkipAging > 0)
             _plantHolder.AdjustsSkipAging(plantUid, -1);

@@ -36,6 +36,12 @@ public sealed partial class PlantComponent : Component
     public float Lifespan;
 
     /// <summary>
+    /// Damage from old age.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float OldAgeDamage = 4f;
+
+    /// <summary>
     /// The number of growth ticks it takes for a plant to reach its final growth stage.
     /// </summary>
     [DataField, AutoNetworkedField]

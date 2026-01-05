@@ -51,13 +51,9 @@ public sealed class PlantSystem : EntitySystem
         if (!TryComp<PlantHolderComponent>(ent.Owner, out var holder))
             return;
 
-        // TODO: Replace with RandomPredicted once the engine PR is merged
-        var seed = SharedRandomExtensions.HashCodeCombine((int)_gameTiming.CurTick.Value, GetNetEntity(ent).Id);
-        var rand = new System.Random(seed);
-
         // Check if plant is too old.
         if (holder.Age > ent.Comp.Lifespan)
-            _plantHolder.AdjustsHealth(ent.Owner, -rand.Next(3, 5));
+            _plantHolder.AdjustsHealth(ent.Owner, -ent.Comp.OldAgeDamage);
     }
 
     private void OnExamined(Entity<PlantComponent> ent, ref ExaminedEvent args)
