@@ -107,9 +107,9 @@ public sealed partial class EntityWhitelist : IEquatable<EntityWhitelist>
             return;
         }
 
-        int combined = 0;
+        var combined = 0;
 
-        // use XOR to make the hash order independent
+        // use XOR to make the hash independent of the order of the entries
         // this works since xor is commutative and associative
         foreach (var item in seq)
             combined ^= item?.GetHashCode() ?? 0;
