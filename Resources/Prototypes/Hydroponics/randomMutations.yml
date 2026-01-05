@@ -1,12 +1,6 @@
-- type: RandomPlantMutationList
+- type: randomPlantMutationList
   id: RandomPlantMutations
   mutations:
-    # disabled until 50 morbillion point lights don't cause the renderer to die
-    #- name: Bioluminescent
-    #  description: mutation-plant-bioluminescent
-    #  baseOdds: 0.036
-    #  appliesToPlant: false
-    #  effect: !type:Glow
     - name: Sentient
       description: mutation-plant-sentient
       baseOdds: 0.0072
@@ -27,7 +21,7 @@
       baseOdds: 0.109
       persists: false
       effect: !type:PlantChangeTraits
-        trait: TraitUnviable
+        trait: !type:TraitUnviable
     - name: ChangeWaterConsumption
       baseOdds: 0.018
       persists: false
@@ -36,7 +30,10 @@
         targetComponent: BasicGrowth
         minValue: 0.3
         maxValue: 0.9
-        steps: 5
+        up: !type:PlantAdjustWaterConsumption
+          amount: 5
+        down: !type:PlantAdjustWaterConsumption
+          amount: -5
     - name: ChangeNutrientConsumption
       baseOdds: 0.018
       persists: false
@@ -45,25 +42,10 @@
         targetComponent: BasicGrowth
         minValue: 0.05
         maxValue: 1.2
-        steps: 5
-    - name: ChangeIdealHeat
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetValue: IdealHeat
-        targetComponent: AtmosphericGrowth
-        minValue: 263
-        maxValue: 323
-        steps: 5
-    - name: ChangeHeatTolerance
-      baseOdds: 0.018
-      persists: false
-      effect: !type:PlantChangeStat
-        targetValue: HeatTolerance
-        targetComponent: AtmosphericGrowth
-        minValue: 2
-        maxValue: 25
-        steps: 5
+        up: !type:PlantAdjustNutrientConsumption
+          amount: 5
+        down: !type:PlantAdjustNutrientConsumption
+          amount: -5
     - name: ChangeToxinsTolerance
       baseOdds: 0.018
       persists: false
@@ -72,7 +54,10 @@
         targetComponent: PlantToxins
         minValue: 1
         maxValue: 10
-        steps: 5
+        up: !type:PlantAdjustToxinsTolerance
+          amount: 5
+        down: !type:PlantAdjustToxinsTolerance
+          amount: -5
     - name: ChangeLowPressureTolerance
       baseOdds: 0.018
       persists: false
@@ -81,7 +66,10 @@
         targetComponent: AtmosphericGrowth
         minValue: 60
         maxValue: 100
-        steps: 5
+        up: !type:PlantAdjustLowPressureTolerance
+          amount: 5
+        down: !type:PlantAdjustLowPressureTolerance
+          amount: -5
     - name: ChangeHighPressureTolerance
       baseOdds: 0.018
       persists: false
@@ -90,7 +78,34 @@
         targetComponent: AtmosphericGrowth
         minValue: 100
         maxValue: 140
-        steps: 5
+        up: !type:PlantAdjustHighPressureTolerance
+          amount: 5
+        down: !type:PlantAdjustHighPressureTolerance
+          amount: -5
+    - name: ChangeLowHeatTolerance
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: LowHeatTolerance
+        targetComponent: AtmosphericGrowth
+        minValue: 2
+        maxValue: 25
+        up: !type:PlantAdjustLowHeatTolerance
+          amount: 5
+        down: !type:PlantAdjustLowHeatTolerance
+          amount: -5
+    - name: ChangeHighHeatTolerance
+      baseOdds: 0.018
+      persists: false
+      effect: !type:PlantChangeStat
+        targetValue: HighHeatTolerance
+        targetComponent: AtmosphericGrowth
+        minValue: 2
+        maxValue: 25
+        up: !type:PlantAdjustHighHeatTolerance
+          amount: 5
+        down: !type:PlantAdjustHighHeatTolerance
+          amount: -5
     - name: ChangePestTolerance
       baseOdds: 0.018
       persists: false
@@ -99,7 +114,10 @@
         targetComponent: WeedPestGrowth
         minValue: 0
         maxValue: 15
-        steps: 5
+        up: !type:PlantAdjustPestTolerance
+          amount: 5
+        down: !type:PlantAdjustPestTolerance
+          amount: -5
     - name: ChangeWeedTolerance
       baseOdds: 0.018
       persists: false
@@ -108,7 +126,10 @@
         targetComponent: WeedPestGrowth
         minValue: 0
         maxValue: 15
-        steps: 5
+        up: !type:PlantAdjustWeedTolerance
+          amount: 5
+        down: !type:PlantAdjustWeedTolerance
+          amount: -5
     - name: ChangeEndurance
       baseOdds: 0.036
       persists: false
@@ -117,7 +138,10 @@
         targetComponent: Plant
         minValue: 50
         maxValue: 150
-        steps: 5
+        up: !type:PlantAdjustEndurance
+          amount: 5
+        down: !type:PlantAdjustEndurance
+          amount: -5
     - name: ChangeYield
       baseOdds: 0.036
       persists: false
@@ -126,7 +150,10 @@
         targetComponent: Plant
         minValue: 3
         maxValue: 10
-        steps: 5
+        up: !type:PlantAdjustYield
+          amount: 5
+        down: !type:PlantAdjustYield
+          amount: -5
     - name: ChangeLifespan
       baseOdds: 0.036
       persists: false
@@ -135,7 +162,10 @@
         targetComponent: Plant
         minValue: 10
         maxValue: 80
-        steps: 5
+        up: !type:PlantAdjustLifespan
+          amount: 5
+        down: !type:PlantAdjustLifespan
+          amount: -5
     - name: ChangeMaturation
       baseOdds: 0.036
       persists: false
@@ -144,7 +174,10 @@
         targetComponent: Plant
         minValue: 3
         maxValue: 8
-        steps: 5
+        up: !type:PlantAdjustMaturation
+          amount: 5
+        down: !type:PlantAdjustMaturation
+          amount: -5
     - name: ChangeProduction
       baseOdds: 0.036
       persists: false
@@ -153,7 +186,10 @@
         targetComponent: Plant
         minValue: 1
         maxValue: 10
-        steps: 5
+        up: !type:PlantAdjustProduction
+          amount: 5
+        down: !type:PlantAdjustProduction
+          amount: -5
     - name: ChangePotency
       baseOdds: 0.036
       persists: false
@@ -162,27 +198,30 @@
         targetComponent: Plant
         minValue: 30
         maxValue: 100
-        steps: 5
+        up: !type:PlantAdjustPotency
+          amount: 5
+        down: !type:PlantAdjustPotency
+          amount: -5
     - name: ChangeSeedless
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeTraits
-        trait: TraitSeedless
+        trait: !type:TraitSeedless
     - name: Lignification
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeTraits
-        trait: TraitLigneous
+        trait: !type:TraitLigneous
     - name: Kudzufication
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeTraits
-        trait: TraitKudzu
+        trait: !type:TraitKudzu
     - name: ChangeScreaming
       baseOdds: 0.036
       persists: false
       effect: !type:PlantChangeTraits
-        trait: TraitScream
+        trait: !type:TraitScream
     - name: ChangeChemicals
       baseOdds: 0.072
       persists: false

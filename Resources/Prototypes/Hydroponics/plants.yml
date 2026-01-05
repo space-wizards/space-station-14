@@ -1,6 +1,6 @@
 - type: entity
-  id: BasePlant
   abstract: true
+  id: BasePlant
   components:
   - type: Fixtures
     fixtures:
@@ -13,6 +13,7 @@
         layer:
         - BulletImpassable
   - type: Sprite
+    sprite: Objects/Specific/Hydroponics/wheat.rsi
     snapCardinals: true
   - type: Appearance
   - type: Clickable
@@ -32,14 +33,14 @@
   - type: ConsumeExudeGasGrowth
 
 - type: entity
-  id: WheatPlants
   parent: BasePlant
+  id: WheatPlants
   name: wheat
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/wheat.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-wheat-display-name
-    plantRsi: Objects/Specific/Hydroponics/wheat.rsi
     packetPrototype: WheatSeeds
     productPrototypes: [ WheatBushel ]
     mutationPrototypes: [ MeatWheatPlants ]
@@ -68,14 +69,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: MeatWheatPlants
   parent: BasePlant
+  id: MeatWheatPlants
   name: meatwheat
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/meatwheat.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-meatwheat-display-name
-    plantRsi: Objects/Specific/Hydroponics/meatwheat.rsi
     packetPrototype: MeatwheatSeeds
     productPrototypes: [ MeatwheatBushel ]
   - type: Plant
@@ -98,14 +99,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: OatPlants
   parent: BasePlant
+  id: OatPlants
   name: oat
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/oat.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-oat-display-name
-    plantRsi: Objects/Specific/Hydroponics/oat.rsi
     packetPrototype: OatSeeds
     productPrototypes: [ OatBushel ]
   - type: Plant
@@ -128,14 +129,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: BananaPlants
   parent: BasePlant
+  id: BananaPlants
   name: banana
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-banana-display-name
-    plantRsi: Objects/Specific/Hydroponics/banana.rsi
     packetPrototype: BananaSeeds
     productPrototypes: [ FoodBanana ]
     mutationPrototypes: [ MimanaPlants ]
@@ -149,7 +150,8 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Vitamin:
@@ -162,14 +164,14 @@
         potencyDivisor: 50
 
 - type: entity
-  id: MimanaPlants
   parent: BasePlant
+  id: MimanaPlants
   name: mimana
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/mimana.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-mimana-display-name
-    plantRsi: Objects/Specific/Hydroponics/mimana.rsi
     packetPrototype: MimanaSeeds
     productPrototypes: [ FoodMimana ]
   - type: Plant
@@ -182,7 +184,8 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       MuteToxin:
@@ -195,14 +198,14 @@
         potencyDivisor: 50
 
 - type: entity
-  id: CarrotPlants
   parent: BasePlant
+  id: CarrotPlants
   name: carrot
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-carrots-display-name
-    plantRsi: Objects/Specific/Hydroponics/carrot.rsi
     packetPrototype: CarrotSeeds
     productPrototypes: [ FoodCarrot ]
   - type: Plant
@@ -230,14 +233,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: LaughinPeaPlants
   parent: BasePlant
+  id: LaughinPeaPlants
   name: laughin' peas
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/laughin_pea.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-laughin-pea-display-name
-    plantRsi: Objects/Specific/Hydroponics/laughin_pea.rsi
     packetPrototype: LaughinPeaSeeds
     productPrototypes: [ FoodLaughinPeaPod ]
     mutationPrototypes: [ WorldPeaPlants ]
@@ -269,14 +272,14 @@
         potencyDivisor: 5
 
 - type: entity
-  id: LemonPlants
   parent: BasePlant
+  id: LemonPlants
   name: lemon
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lemon.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-lemon-display-name
-    plantRsi: Objects/Specific/Hydroponics/lemon.rsi
     packetPrototype: LemonSeeds
     productPrototypes: [ FoodLemon ]
     mutationPrototypes: [ LemoonPlants, LimePlants, OrangePlants ]
@@ -300,14 +303,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: LemoonPlants
   parent: BasePlant
+  id: LemoonPlants
   name: lemoon
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lemoon.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-lemoon-display-name
-    plantRsi: Objects/Specific/Hydroponics/lemoon.rsi
     packetPrototype: LemoonSeeds
     productPrototypes: [ FoodLemoon ]
   - type: Plant
@@ -330,14 +333,14 @@
         potencyDivisor: 5
 
 - type: entity
-  id: LimePlants
   parent: BasePlant
+  id: LimePlants
   name: lime
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lime.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-lime-display-name
-    plantRsi: Objects/Specific/Hydroponics/lime.rsi
     packetPrototype: LimeSeeds
     productPrototypes: [ FoodLime ]
     mutationPrototypes: [ OrangePlants, LemonPlants ]
@@ -361,14 +364,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: OrangePlants
   parent: BasePlant
+  id: OrangePlants
   name: orange
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/orange.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-orange-display-name
-    plantRsi: Objects/Specific/Hydroponics/orange.rsi
     packetPrototype: OrangeSeeds
     productPrototypes: [ FoodOrange ]
     mutationPrototypes: [ ExtradimensionalOrangePlants, LemonPlants, LimePlants ]
@@ -392,14 +395,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: ExtradimensionalOrangePlants
   parent: BasePlant
+  id: ExtradimensionalOrangePlants
   name: extradimensional orange
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-extradimensionalorange-display-name
-    plantRsi: Objects/Specific/Hydroponics/extradimensional_orange.rsi
     packetPrototype: ExtradimensionalOrangeSeeds
     productPrototypes: [ FoodExtradimensionalOrange ]
   - type: Plant
@@ -426,14 +429,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: PineapplePlants
   parent: BasePlant
+  id: PineapplePlants
   name: pineapple
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-pineapple-display-name
-    plantRsi: Objects/Specific/Hydroponics/pineapple.rsi
     packetPrototype: PineappleSeeds
     productPrototypes: [ FoodPineapple ]
   - type: Plant
@@ -461,14 +464,14 @@
         potencyDivisor: 50
 
 - type: entity
-  id: PotatoPlants
   parent: BasePlant
+  id: PotatoPlants
   name: potato
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-potato-display-name
-    plantRsi: Objects/Specific/Hydroponics/potato.rsi
     packetPrototype: PotatoSeeds
     productPrototypes: [ FoodPotato ]
   - type: Plant
@@ -492,14 +495,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: SugarcanePlants
   parent: BasePlant
+  id: SugarcanePlants
   name: sugarcane
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sugarcane.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-sugarcane-display-name
-    plantRsi: Objects/Specific/Hydroponics/sugarcane.rsi
     packetPrototype: SugarcaneSeeds
     productPrototypes: [ Sugarcane ]
     mutationPrototypes: [ PapercanePlants ]
@@ -513,7 +516,8 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Sugar:
@@ -522,14 +526,14 @@
         potencyDivisor: 5
 
 - type: entity
-  id: TeaPlantPlants
   parent: BasePlant
+  id: TeaPlantPlants
   name: tea plant
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tea_plant.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-teaplant-display-name
-    plantRsi: Objects/Specific/Hydroponics/tea_plant.rsi
     packetPrototype: TeaPlantSeeds
     productPrototypes: [ LeavesTea ]
   - type: Plant
@@ -544,7 +548,8 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Vitamin:
@@ -553,14 +558,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: PapercanePlants
   parent: BasePlant
+  id: PapercanePlants
   name: papercane
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/papercane.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-papercane-display-name
-    plantRsi: Objects/Specific/Hydroponics/papercane.rsi
     packetPrototype: PapercaneSeeds
     productPrototypes: [ Papercane ]
   - type: Plant
@@ -573,17 +578,19 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
 
 - type: entity
-  id: TowercapPlants
   parent: BasePlant
+  id: TowercapPlants
   name: tower cap
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/towercap.rsi
   - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-towercap-display-name
-    plantRsi: Objects/Specific/Hydroponics/towercap.rsi
     packetPrototype: TowercapSeeds
     productPrototypes: [ Log ]
     mutationPrototypes: [ SteelcapPlants ]
@@ -600,17 +607,19 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.5
   - type: AtmosphericGrowth
-    idealHeat: 288
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
 
 - type: entity
-  id: SteelcapPlants
   parent: BasePlant
+  id: SteelcapPlants
   name: steel cap
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/steelcap.rsi
   - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-steelcap-display-name
-    plantRsi: Objects/Specific/Hydroponics/steelcap.rsi
     packetPrototype: SteelcapSeeds
     productPrototypes: [ SteelLog ]
   - type: Plant
@@ -626,17 +635,18 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.8
   - type: AtmosphericGrowth
-    idealHeat: 288
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
 
 - type: entity
-  id: TomatoPlants
   parent: BasePlant
+  id: TomatoPlants
   name: tomato
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tomato.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-tomato-display-name
-    plantRsi: Objects/Specific/Hydroponics/tomato.rsi
     packetPrototype: TomatoSeeds
     productPrototypes: [ FoodTomato ]
     mutationPrototypes: [ BlueTomatoPlants, BloodTomatoPlants ]
@@ -652,7 +662,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.4
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -669,14 +680,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: BlueTomatoPlants
   parent: BasePlant
+  id: BlueTomatoPlants
   name: blue tomato
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/blue_tomato.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-bluetomato-display-name
-    plantRsi: Objects/Specific/Hydroponics/blue_tomato.rsi
     packetPrototype: BlueTomatoSeeds
     productPrototypes: [ FoodBlueTomato ]
   - type: Plant
@@ -691,7 +702,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.7
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 288 # 15°C
+    highHeatTolerance: 308 # 35°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -708,14 +720,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: BloodTomatoPlants
   parent: BasePlant
+  id: BloodTomatoPlants
   name: blood tomato
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/blood_tomato.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-bloodtomato-display-name
-    plantRsi: Objects/Specific/Hydroponics/blood_tomato.rsi
     packetPrototype: BloodTomatoSeeds
     productPrototypes: [ FoodBloodTomato ]
     mutationPrototypes: [ KillerTomatoPlants ]
@@ -731,7 +743,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.7
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Blood:
@@ -744,14 +757,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: KillerTomatoPlants
   parent: BasePlant
+  id: KillerTomatoPlants
   name: tomato killer
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tomatokiller.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-killertomato-display-name
-    plantRsi: Objects/Specific/Hydroponics/tomatokiller.rsi
     plantLogImpact: High
     harvestLogImpact: High
     packetPrototype: KillerTomatoSeeds
@@ -769,7 +782,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.7
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Blood:
@@ -782,14 +796,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: EggplantPlants
   parent: BasePlant
+  id: EggplantPlants
   name: eggplant
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/eggplant.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-eggplant-display-name
-    plantRsi: Objects/Specific/Hydroponics/eggplant.rsi
     packetPrototype: EggplantSeeds
     productPrototypes: [ FoodEggplant ]
     mutationPrototypes: [ EggyPlants ]
@@ -803,7 +817,8 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -816,14 +831,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: CabbagePlants
   parent: BasePlant
+  id: CabbagePlants
   name: cabbage
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cabbage.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-cabbage-display-name
-    plantRsi: Objects/Specific/Hydroponics/cabbage.rsi
     packetPrototype: CabbageSeeds
     productPrototypes: [ FoodCabbage ]
   - type: Plant
@@ -845,14 +860,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: GarlicPlants
   parent: BasePlant
+  id: GarlicPlants
   name: garlic head
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/garlic.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-garlic-display-name
-    plantRsi: Objects/Specific/Hydroponics/garlic.rsi
     packetPrototype: GarlicSeeds
     productPrototypes: [ FoodGarlic ]
   - type: Plant
@@ -878,14 +893,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: ApplePlants
   parent: BasePlant
+  id: ApplePlants
   name: apple
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-apple-display-name
-    plantRsi: Objects/Specific/Hydroponics/apple.rsi
     packetPrototype: AppleSeeds
     productPrototypes: [ FoodApple ]
     mutationPrototypes: [ GoldenApplePlants ]
@@ -909,14 +924,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: GoldenApplePlants
   parent: BasePlant
+  id: GoldenApplePlants
   name: golden apple
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/golden_apple.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-goldenapple-display-name
-    plantRsi: Objects/Specific/Hydroponics/golden_apple.rsi
     packetPrototype: GoldenAppleSeeds
     productPrototypes: [ FoodGoldenApple ]
   - type: Plant
@@ -945,14 +960,14 @@
         potencyDivisor: 10
 
 - type: entity
-  id: CornPlants
   parent: BasePlant
+  id: CornPlants
   name: corn
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-corn-display-name
-    plantRsi: Objects/Specific/Hydroponics/corn.rsi
     packetPrototype: CornSeeds
     productPrototypes: [ FoodCorn ]
   - type: Plant
@@ -965,7 +980,8 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -978,14 +994,14 @@
         potencyDivisor: 10
 
 - type: entity
-  id: OnionPlants
   parent: BasePlant
+  id: OnionPlants
   name: onion
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-onion-display-name
-    plantRsi: Objects/Specific/Hydroponics/onion.rsi
     packetPrototype: OnionSeeds
     productPrototypes: [ FoodOnion ]
     mutationPrototypes: [ OnionRedPlants, BloonionPlants ]
@@ -1002,7 +1018,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.5
   - type: AtmosphericGrowth
-    idealHeat: 288
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -1019,14 +1036,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: OnionRedPlants
   parent: BasePlant
+  id: OnionRedPlants
   name: red onion
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion_red.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-onionred-display-name
-    plantRsi: Objects/Specific/Hydroponics/onion_red.rsi
     packetPrototype: OnionRedSeeds
     productPrototypes: [ FoodOnionRed ]
   - type: Plant
@@ -1041,7 +1058,8 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: AtmosphericGrowth
-    idealHeat: 288
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -1058,14 +1076,15 @@
         potencyDivisor: 25
 
 - type: entity
-  id: ChanterellePlants
   parent: BasePlant
+  id: ChanterellePlants
   name: chanterelle
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-chanterelle-display-name
-    plantRsi: Objects/Specific/Hydroponics/chanterelle.rsi
     packetPrototype: ChanterelleSeeds
     productPrototypes: [ FoodMushroom ]
   - type: Plant
@@ -1079,7 +1098,8 @@
     waterConsumption: 0.6
     nutrientConsumption: 0.5
   - type: AtmosphericGrowth
-    idealHeat: 288
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -1088,14 +1108,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: EggyPlants
   parent: BasePlant
+  id: EggyPlants
   name: egg-plant
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/eggy.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-eggy-display-name
-    plantRsi: Objects/Specific/Hydroponics/eggy.rsi
     packetPrototype: EggySeeds
     productPrototypes: [ FoodEgg ]
   - type: Plant
@@ -1109,7 +1129,8 @@
   - type: BasicGrowth
     nutrientConsumption: 0.5
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Egg:
@@ -1118,14 +1139,14 @@
         potencyDivisor: 10
 
 - type: entity
-  id: CannabisPlants
   parent: BasePlant
+  id: CannabisPlants
   name: cannabis
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cannabis.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-cannabis-display-name
-    plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
     packetPrototype: CannabisSeeds
     productPrototypes: [ LeavesCannabis ]
     mutationPrototypes: [ RainbowCannabisPlants ]
@@ -1139,7 +1160,8 @@
   - type: BasicGrowth
     waterConsumption: 0.4
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       THC:
@@ -1148,14 +1170,14 @@
         potencyDivisor: 10
 
 - type: entity
-  id: RainbowCannabisPlants
   parent: BasePlant
+  id: RainbowCannabisPlants
   name: rainbow cannabis
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-rainbow-cannabis-display-name
-    plantRsi: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
     packetPrototype: RainbowCannabisSeeds
     productPrototypes: [ LeavesCannabisRainbow ]
   - type: Plant
@@ -1167,7 +1189,8 @@
   - type: BasicGrowth
     nutrientConsumption: 0.5
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       SpaceDrugs:
@@ -1185,25 +1208,20 @@
       Happiness:
         min: 1
         max: 5
-#       potencyDivisor: 20
-#     ColorfulReagent:
-#       min: 0
-#       max: 5
-#       potencyDivisor: 20
       Psicodine:
         min: 0
         max: 5
         potencyDivisor: 33
 
 - type: entity
-  id: TobaccoPlants
   parent: BasePlant
+  id: TobaccoPlants
   name: tobacco
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tobacco.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-tobacco-display-name
-    plantRsi: Objects/Specific/Hydroponics/tobacco.rsi
     packetPrototype: TobaccoSeeds
     productPrototypes: [ LeavesTobacco ]
   - type: Plant
@@ -1218,7 +1236,8 @@
   - type: BasicGrowth
     waterConsumption: 0.4
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Nicotine:
@@ -1227,14 +1246,14 @@
         potencyDivisor: 10
 
 - type: entity
-  id: NettlePlants
   parent: BasePlant
+  id: NettlePlants
   name: nettle
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/nettle.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-nettle-display-name
-    plantRsi: Objects/Specific/Hydroponics/nettle.rsi
     packetPrototype: NettleSeeds
     productPrototypes: [ Nettle ]
     mutationPrototypes: [ DeathNettlePlants ]
@@ -1248,7 +1267,8 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Histamine:
@@ -1257,14 +1277,14 @@
         potencyDivisor: 4
 
 - type: entity
-  id: DeathNettlePlants
   parent: BasePlant
+  id: DeathNettlePlants
   name: death nettle
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/death_nettle.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-deathnettle-display-name
-    plantRsi: Objects/Specific/Hydroponics/death_nettle.rsi
     packetPrototype: DeathNettleSeeds
     productPrototypes: [ DeathNettle ]
     plantLogImpact: High
@@ -1280,7 +1300,8 @@
     waterConsumption: 0.7
     nutrientConsumption: 0.8
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       SulfuricAcid:
@@ -1293,14 +1314,14 @@
         potencyDivisor: 6
 
 - type: entity
-  id: ChiliPlants
   parent: BasePlant
+  id: ChiliPlants
   name: chili
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/chili.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-chili-display-name
-    plantRsi: Objects/Specific/Hydroponics/chili.rsi
     packetPrototype: ChiliSeeds
     productPrototypes: [ FoodChiliPepper ]
     mutationPrototypes: [ ChillyPlants ]
@@ -1313,7 +1334,8 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       CapsaicinOil:
@@ -1330,14 +1352,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: ChillyPlants
   parent: BasePlant
+  id: ChillyPlants
   name: chilly
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/chilly.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-chilly-display-name
-    plantRsi: Objects/Specific/Hydroponics/chilly.rsi
     packetPrototype: ChillySeeds
     productPrototypes: [ FoodChillyPepper ]
   - type: Plant
@@ -1349,7 +1371,8 @@
   - type: PlantHarvest
     harvestRepeat: Repeat
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       FrostOil:
@@ -1366,14 +1389,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: PoppyPlants
   parent: BasePlant
+  id: PoppyPlants
   name: poppy
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/poppy.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-poppy-display-name
-    plantRsi: Objects/Specific/Hydroponics/poppy.rsi
     packetPrototype: PoppySeeds
     productPrototypes: [ FoodPoppy ]
     mutationPrototypes: [ LilyPlants ]
@@ -1398,14 +1421,14 @@
         potencyDivisor: 5
 
 - type: entity
-  id: LilyPlants
   parent: BasePlant
+  id: LilyPlants
   name: lily
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lily.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-lily-display-name
-    plantRsi: Objects/Specific/Hydroponics/lily.rsi
     packetPrototype: LilySeeds
     productPrototypes: [ FoodLily ]
     mutationPrototypes: [ SpacemansTrumpetPlants ]
@@ -1430,14 +1453,14 @@
         potencyDivisor: 5
 
 - type: entity
-  id: AloePlants
   parent: BasePlant
+  id: AloePlants
   name: aloe
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/aloe.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-aloe-display-name
-    plantRsi: Objects/Specific/Hydroponics/aloe.rsi
     packetPrototype: AloeSeeds
     productPrototypes: [ FoodAloe ]
   - type: Plant
@@ -1461,14 +1484,15 @@
         potencyDivisor: 10
 
 - type: entity
-  id: LingzhiPlants
   parent: BasePlant
+  id: LingzhiPlants
   name: lingzhi
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lingzhi.rsi
   - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-lingzhi-display-name
-    plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
     packetPrototype: LingzhiSeeds
     productPrototypes: [ FoodLingzhi ]
   - type: Plant
@@ -1492,14 +1516,14 @@
         potencyDivisor: 5
 
 - type: entity
-  id: AmbrosiaVulgarisPlants
   parent: BasePlant
+  id: AmbrosiaVulgarisPlants
   name: ambrosia vulgaris
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-ambrosiavulgaris-display-name
-    plantRsi: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
     packetPrototype: AmbrosiaVulgarisSeeds
     productPrototypes: [ FoodAmbrosiaVulgaris ]
     mutationPrototypes: [ AmbrosiaDeusPlants ]
@@ -1532,14 +1556,14 @@
         potencyDivisor: 50
 
 - type: entity
-  id: AmbrosiaDeusPlants
   parent: BasePlant
+  id: AmbrosiaDeusPlants
   name: ambrosia deus
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/ambrosia_deus.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-ambrosiadeus-display-name
-    plantRsi: Objects/Specific/Hydroponics/ambrosia_deus.rsi
     packetPrototype: AmbrosiaDeusSeeds
     productPrototypes: [ FoodAmbrosiaDeus ]
   - type: Plant
@@ -1567,14 +1591,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: GalaxythistlePlants
   parent: BasePlant
+  id: GalaxythistlePlants
   name: galaxythistle
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/galaxythistle.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-galaxythistle-display-name
-    plantRsi: Objects/Specific/Hydroponics/galaxythistle.rsi
     packetPrototype: GalaxythistleSeeds
     productPrototypes: [ FoodGalaxythistle ]
     mutationPrototypes: [ GlasstlePlants ]
@@ -1595,14 +1619,14 @@
         potencyDivisor: 4
 
 - type: entity
-  id: GlasstlePlants
   parent: BasePlant
+  id: GlasstlePlants
   name: glasstle
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/glasstle.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-glasstle-display-name
-    plantRsi: Objects/Specific/Hydroponics/glasstle.rsi
     packetPrototype: GlasstleSeeds
     productPrototypes: [ FoodGlasstle ]
   - type: Plant
@@ -1624,14 +1648,15 @@
         potencyDivisor: 10
 
 - type: entity
-  id: FlyAmanitaPlants
   parent: BasePlant
+  id: FlyAmanitaPlants
   name: fly amanita
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/fly_amanita.rsi
   - type: PlantData
     noun: seeds-noun-spores
     displayName: seeds-flyamanita-display-name
-    plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
     packetPrototype: FlyAmanitaSeeds
     productPrototypes: [ FoodFlyAmanita ]
   - type: Plant
@@ -1656,14 +1681,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: GatfruitPlants
   parent: BasePlant
+  id: GatfruitPlants
   name: gatfruit
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/gatfruit.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-gatfruit-display-name
-    plantRsi: Objects/Specific/Hydroponics/gatfruit.rsi
     packetPrototype: GatfruitSeeds
     productPrototypes: [ FoodGatfruit ]
     mutationPrototypes: [ FakeCapfruitPlants, RealCapfruitPlants ]
@@ -1686,14 +1711,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: FakeCapfruitPlants
   parent: BasePlant
+  id: FakeCapfruitPlants
   name: fake capfruit
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/capfruit.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-capfruit-display-name
-    plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
     packetPrototype: FakeCapfruitSeeds
     productPrototypes: [ FoodFakeCapfruit ]
   - type: Plant
@@ -1715,14 +1740,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: RealCapfruitPlants
   parent: BasePlant
+  id: RealCapfruitPlants
   name: real capfruit
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/capfruit.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-capfruit-display-name
-    plantRsi: Objects/Specific/Hydroponics/capfruit.rsi
     packetPrototype: RealCapfruitSeeds
     productPrototypes: [ FoodRealCapfruit ]
   - type: Plant
@@ -1744,14 +1769,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: RicePlants
   parent: BasePlant
+  id: RicePlants
   name: rice
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/rice.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-rice-display-name
-    plantRsi: Objects/Specific/Hydroponics/rice.rsi
     packetPrototype: RiceSeeds
     productPrototypes: [ RiceBushel ]
   - type: Plant
@@ -1776,14 +1801,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: SoybeanPlants
   parent: BasePlant
+  id: SoybeanPlants
   name: soybeans
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/soybeans.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-soybeans-display-name
-    plantRsi: Objects/Specific/Hydroponics/soybeans.rsi
     packetPrototype: SoybeanSeeds
     productPrototypes: [ FoodSoybeans ]
     mutationPrototypes: [ KoibeanPlants ]
@@ -1804,14 +1829,14 @@
         potencyDivisor: 50
 
 - type: entity
-  id: SpacemansTrumpetPlants
   parent: BasePlant
+  id: SpacemansTrumpetPlants
   name: spaceman's trumpet
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-spacemans-trumpet-display-name
-    plantRsi: Objects/Specific/Hydroponics/spacemans_trumpet.rsi
     packetPrototype: SpacemansTrumpetSeeds
     productPrototypes: [ FoodSpacemansTrumpet ]
   - type: Plant
@@ -1835,14 +1860,14 @@
         potencyDivisor: 5
 
 - type: entity
-  id: KoibeanPlants
   parent: BasePlant
+  id: KoibeanPlants
   name: koibeans
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/koibean.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-koibean-display-name
-    plantRsi: Objects/Specific/Hydroponics/koibean.rsi
     packetPrototype: KoibeanSeeds
     productPrototypes: [ FoodKoibean ]
   - type: Plant
@@ -1866,14 +1891,14 @@
         potencyDivisor: 30
 
 - type: entity
-  id: GrapePlants
   parent: BasePlant
+  id: GrapePlants
   name: grape
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/grape.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-grape-display-name
-    plantRsi: Objects/Specific/Hydroponics/grape.rsi
     packetPrototype: GrapeSeeds
     productPrototypes: [ FoodGrape ]
   - type: Plant
@@ -1895,14 +1920,14 @@
         potencyDivisor: 25
 
 - type: entity
-  id: WatermelonPlants
   parent: BasePlant
+  id: WatermelonPlants
   name: watermelon
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/watermelon.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-watermelon-display-name
-    plantRsi: Objects/Specific/Hydroponics/watermelon.rsi
     packetPrototype: WatermelonSeeds
     productPrototypes: [ FoodWatermelon ]
     mutationPrototypes: [ HolymelonPlants ]
@@ -1928,14 +1953,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: HolymelonPlants
   parent: BasePlant
+  id: HolymelonPlants
   name: holymelon
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/holymelon.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-holymelon-display-name
-    plantRsi: Objects/Specific/Hydroponics/holymelon.rsi
     packetPrototype: HolymelonSeeds
     productPrototypes: [ FoodHolymelon ]
   - type: Plant
@@ -1960,14 +1985,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: CocoaPlants
   parent: BasePlant
+  id: CocoaPlants
   name: cocoa
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cocoa.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-cocoa-display-name
-    plantRsi: Objects/Specific/Hydroponics/cocoa.rsi
     packetPrototype: CocoaSeeds
     productPrototypes: [ FoodCocoaPod ]
   - type: Plant
@@ -1981,7 +2006,8 @@
     waterConsumption: 1.0
     nutrientConsumption: 0.8
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Vitamin:
@@ -1994,14 +2020,14 @@
         potencyDivisor: 50
 
 - type: entity
-  id: BerryPlants
   parent: BasePlant
+  id: BerryPlants
   name: berries
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/berries.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-berries-display-name
-    plantRsi: Objects/Specific/Hydroponics/berries.rsi
     packetPrototype: BerrySeeds
     productPrototypes: [ FoodBerries ]
   - type: Plant
@@ -2025,14 +2051,14 @@
         potencyDivisor: 40
 
 - type: entity
-  id: BungoPlants
   parent: BasePlant
+  id: BungoPlants
   name: bungo
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/bungo.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-bungo-display-name
-    plantRsi: Objects/Specific/Hydroponics/bungo.rsi
     packetPrototype: BungoSeeds
     productPrototypes: [ FoodBungo ]
   - type: Plant
@@ -2047,7 +2073,8 @@
   - type: BasicGrowth
     waterConsumption: 0.6
   - type: AtmosphericGrowth
-    idealHeat: 298
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Nutriment:
@@ -2060,14 +2087,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: PeaPlants
   parent: BasePlant
+  id: PeaPlants
   name: peas
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pea.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-pea-display-name
-    plantRsi: Objects/Specific/Hydroponics/pea.rsi
     packetPrototype: PeaSeeds
     productPrototypes: [ FoodPeaPod ]
     mutationPrototypes: [ LaughinPeaPlants ]
@@ -2094,14 +2121,14 @@
         potencyDivisor: 50
 
 - type: entity
-  id: WorldPeaPlants
   parent: BasePlant
+  id: WorldPeaPlants
   name: world peas
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/world_pea.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-worldpea-display-name
-    plantRsi: Objects/Specific/Hydroponics/world_pea.rsi
     packetPrototype: PeaSeeds
     productPrototypes: [ FoodWorldPeas ]
   - type: Plant
@@ -2131,14 +2158,14 @@
         potencyDivisor: 50
 
 - type: entity
-  id: PumpkinPlants
   parent: BasePlant
+  id: PumpkinPlants
   name: pumpkin
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pumpkin.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-pumpkin-display-name
-    plantRsi: Objects/Specific/Hydroponics/pumpkin.rsi
     packetPrototype: PumpkinSeeds
     productPrototypes: [ FoodPumpkin ]
     mutationPrototypes: [ BluePumpkinPlants ]
@@ -2150,7 +2177,8 @@
     potency: 10
     growthStages: 3
   - type: AtmosphericGrowth
-    idealHeat: 288
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       PumpkinFlesh:
@@ -2163,14 +2191,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: BluePumpkinPlants
   parent: BasePlant
+  id: BluePumpkinPlants
   name: blue pumpkin
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/blue_pumpkin.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-blue-pumpkin-display-name
-    plantRsi: Objects/Specific/Hydroponics/blue_pumpkin.rsi
     packetPrototype: BluePumpkinSeeds
     productPrototypes: [ FoodBluePumpkin ]
   - type: Plant
@@ -2181,7 +2209,8 @@
     potency: 10
     growthStages: 3
   - type: AtmosphericGrowth
-    idealHeat: 288
+    lowHeatTolerance: 278 # 5°C
+    highHeatTolerance: 298 # 25°C
   - type: PlantChemicals
     chemicals:
       Ammonia:
@@ -2198,14 +2227,14 @@
         potencyDivisor: 3
 
 - type: entity
-  id: CottonPlants
   parent: BasePlant
+  id: CottonPlants
   name: cotton
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cotton.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-cotton-display-name
-    plantRsi: Objects/Specific/Hydroponics/cotton.rsi
     packetPrototype: CottonSeeds
     productPrototypes: [ CottonBol ]
     mutationPrototypes: [ PyrottonPlants ]
@@ -2226,14 +2255,14 @@
         potencyDivisor: 20
 
 - type: entity
-  id: PyrottonPlants
   parent: BasePlant
+  id: PyrottonPlants
   name: pyrotton
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pyrotton.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-pyrotton-display-name
-    plantRsi: Objects/Specific/Hydroponics/pyrotton.rsi
     packetPrototype: PyrottonSeeds
     productPrototypes: [ PyrottonBol ]
   - type: Plant
@@ -2257,14 +2286,14 @@
         potencyDivisor: 30
 
 - type: entity
-  id: CherryPlants
   parent: BasePlant
+  id: CherryPlants
   name: cherry
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/cherry.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-cherry-display-name
-    plantRsi: Objects/Specific/Hydroponics/cherry.rsi
     packetPrototype: CherrySeeds
     productPrototypes: [ FoodCherry ]
   - type: Plant
@@ -2287,14 +2316,14 @@
         potencyDivisor: 40
 
 - type: entity
-  id: AnomalyBerryPlants
   parent: BasePlant
+  id: AnomalyBerryPlants
   name: anomaly berry
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-anomaly-berry-display-name
-    plantRsi: Objects/Specific/Hydroponics/anomaly_berry.rsi
     packetPrototype: AnomalyBerrySeeds
     productPrototypes: [ FoodAnomalyBerry ]
   - type: Plant
@@ -2323,14 +2352,14 @@
         potencyDivisor: 40
 
 - type: entity
-  id: BloonionPlants
   parent: BasePlant
+  id: BloonionPlants
   name: bloonion
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/bloonion.rsi
   - type: PlantData
-    noun: seeds-noun-seeds
     displayName: seeds-bloonion-display-name
-    plantRsi: Objects/Specific/Hydroponics/bloonion.rsi
     packetPrototype: BloonionSeeds
     productPrototypes: [ FoodBloonion ]
   - type: Plant
