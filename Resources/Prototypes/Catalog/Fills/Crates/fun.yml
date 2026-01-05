@@ -1,49 +1,4 @@
 - type: entityTable
-  id: AllPlushiesTable
-  table: !type:GroupSelector
-    children:
-    - id: PlushieBee
-    - id: PlushieNar
-      weight: 0.5
-    - id: PlushieRatvar
-      weight: 0.5
-    - id: PlushieNuke
-    - id: PlushieSlime
-    - id: PlushieSnake
-    - id: PlushieExperiment
-    - !type:GroupSelector
-      children:
-      - id: PlushieLizard
-        weight: 9
-      - id: PlushieSpaceLizard
-        weight: 1
-      - id: PlushieLizardInversed
-        weight: 0.5
-    - !type:GroupSelector
-      children:
-      - id: PlushieCarp
-      - id: PlushieHolocarp
-        weight: 0.25
-      - id: PlushieMagicarp
-        weight: 0.25
-      - id: PlushieRainbowCarp
-        weight: 0.15
-    - id: PlushieVox
-    - id: PlushieRouny
-    - !type:GroupSelector
-      children:
-      - id: PlushieSharkBlue
-      - id: PlushieSharkGrey
-      - id: PlushieSharkPink
-    - id: PlushieAtmosian
-    - id: PlushieDiona
-    - id: PlushieXeno
-    - id: PlushieHampter
-    - id: PlushieMoth
-    - id: PlushieArachind
-    - id: PlushiePenguin
-
-- type: entityTable
   id: AllPottedPlantsTable
   table: !type:GroupSelector
     children:
@@ -74,8 +29,8 @@
     - id: PottedPlant26
 
 - type: entity
-  id: CratePlants
   parent: CrateGenericSteel
+  id: CratePlants
   name: plant crate
   description: A variety pack of potted plants to spruce up your station!
   components:
@@ -87,8 +42,8 @@
           value: 5
 
 - type: entity
-  id: CrateFunPlushie
   parent: CrateGenericSteel
+  id: CrateFunPlushie
   name: plushie crate
   description: A buncha soft plushies. Throw them around and then wonder how you're gonna explain this purchase to NT.
   components:
@@ -100,25 +55,21 @@
           value: 10
 
 - type: entity
-  id: CrateFunLizardPlushieBulk
   parent: CrateGenericSteel
+  id: CrateFunLizardPlushieBulk
   name: bulk lizard plushie crate
   description: A buncha soft lizard plushies. Throw them around and then wonder how you're gonna explain this purchase to NT.
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage: !type:AllSelector
-        children:
-        - id: PlushieLizard
-          amount: !type:ConstantNumberSelector
-            value: 3
-        - id: PlushieSpaceLizard
-          amount: !type:ConstantNumberSelector
-            value: 3
+      entity_storage: !type:NestedSelector
+        tableId: AllLizardPlushieTable
+        rolls: !type:ConstantNumberSelector
+          value: 6
 
 - type: entity
-  id: CrateFunSharkPlushieBulk
   parent: CrateGenericSteel
+  id: CrateFunSharkPlushieBulk
   name: bulk soft toy shark crate
   description: A crate filled with a variety of everyone's favorite finned friend. Rawr!
   components:
@@ -137,343 +88,394 @@
             value: 2
 
 - type: entity
-  id: CrateFunInstrumentsVariety
   parent: CrateGenericSteel
+  id: CrateFunInstrumentsVariety
   name: variety instrument collection
   description: Get your sad station movin' and groovin' with this catch-all variety pack! Contains seven different instruments.
   components:
-  - type: StorageFill
-    contents:
-      - id: SynthesizerInstrument
-      - id: AcousticGuitarInstrument
-      - id: TrumpetInstrument
-      - id: AccordionInstrument
-      - id: HarmonicaInstrument
-      - id: RecorderInstrument
-      - id: GlockenspielInstrument
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SynthesizerInstrument
+        - id: AcousticGuitarInstrument
+        - id: TrumpetInstrument
+        - id: AccordionInstrument
+        - id: HarmonicaInstrument
+        - id: RecorderInstrument
+        - id: GlockenspielInstrument
 
 - type: entity
-  id: CrateFunInstrumentsBrass
   parent: CrateGenericSteel
+  id: CrateFunInstrumentsBrass
   name: brass instrument ensemble crate
   description: Bring some jazz to the station with the brass ensemble. Contains a variety of brass instruments for the whole station to play.
   components:
-  - type: StorageFill
-    contents:
-      - id: TrumpetInstrument
-        amount: 2
-      - id: TromboneInstrument
-        amount: 2
-      - id: FrenchHornInstrument
-        amount: 2
-      - id: EuphoniumInstrument
-      - id: TubaInstrument
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: TrumpetInstrument
+          amount: 2
+        - id: TromboneInstrument
+          amount: 2
+        - id: FrenchHornInstrument
+          amount: 2
+        - id: EuphoniumInstrument
+        - id: TubaInstrument
 
 - type: entity
-  id: CrateFunInstrumentsString
   parent: CrateGenericSteel
+  id: CrateFunInstrumentsString
   name: string instrument ensemble crate
   description: Pluck or pick, slap or shred! Play a smooth melody or melt peoples' faces with this package of stringed instruments.
   components:
-  - type: StorageFill
-    contents:
-      - id: AcousticGuitarInstrument
-      - id: ElectricGuitarInstrument
-      - id: BassGuitarInstrument
-      - id: RockGuitarInstrument
-      - id: BanjoInstrument
-      - id: ViolinInstrument
-      - id: CelloInstrument
-      - id: ViolaInstrument
-      - id: HarpInstrument
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: AcousticGuitarInstrument
+        - id: ElectricGuitarInstrument
+        - id: BassGuitarInstrument
+        - id: RockGuitarInstrument
+        - id: BanjoInstrument
+        - id: ViolinInstrument
+        - id: CelloInstrument
+        - id: ViolaInstrument
+        - id: HarpInstrument
 
 - type: entity
-  id: CrateFunInstrumentsWoodwind
   parent: CrateGenericSteel
+  id: CrateFunInstrumentsWoodwind
   name: woodwind instrument ensemble crate
   description: If atmos is good at their job, use air to play music with these woodwind instruments! Real wood not guaranteed with every item.
   components:
-  - type: StorageFill
-    contents:
-      - id: RecorderInstrument
-        amount: 2
-      - id: BagpipeInstrument
-      - id: ClarinetInstrument
-      - id: FluteInstrument
-      - id: HarmonicaInstrument
-        amount: 2
-      - id: SaxophoneInstrument
-        amount: 2
-      - id: OcarinaInstrument
-      - id: PanFluteInstrument
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: RecorderInstrument
+          amount: 2
+        - id: BagpipeInstrument
+        - id: ClarinetInstrument
+        - id: FluteInstrument
+        - id: HarmonicaInstrument
+          amount: 2
+        - id: SaxophoneInstrument
+          amount: 2
+        - id: OcarinaInstrument
+        - id: PanFluteInstrument
 
 - type: entity
-  id: CrateFunInstrumentsKeyedPercussion
   parent: CrateGenericSteel
+  id: CrateFunInstrumentsKeyedPercussion
   name: keyed/percussion instrument ensemble crate
   description: Hit some keys with some sticks or your hands, with this Keyed and Percussion instrument ensemble crate.
   components:
-  - type: StorageFill
-    contents:
-      - id: SynthesizerInstrument
-        amount: 2
-      - id: AccordionInstrument
-        amount: 2
-      - id: KalimbaInstrument
-        amount: 2
-      - id: WoodblockInstrument
-      - id: GlockenspielInstrument
-        amount: 2
-      - id: VibraphoneInstrument
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: SynthesizerInstrument
+          amount: 2
+        - id: AccordionInstrument
+          amount: 2
+        - id: KalimbaInstrument
+          amount: 2
+        - id: WoodblockInstrument
+        - id: GlockenspielInstrument
+          amount: 2
+        - id: VibraphoneInstrument
 
 - type: entity
-  id: CrateFunInstrumentsSpecial
   parent: CrateGenericSteel
+  id: CrateFunInstrumentsSpecial
   name: special instrument collector's crate
   description: Create some noise with this special collection of arguably-instruments! Centcomm is not responsible for any trauma caused by the contents.
   components:
-  - type: StorageFill
-    contents:
-      - id: BikeHornInstrument
-      - id: MusicBoxInstrument
-      - id: SeashellInstrument
-      - id: XylophoneInstrument
-      - id: GunpetInstrument
-      - id: MicrophoneInstrument
-      - id: HelicopterInstrument
-      - id: BirdToyInstrument
-      - id: MusicalLungInstrument
-      - id: ReverseCymbalsInstrument
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: BikeHornInstrument
+        - id: MusicBoxInstrument
+        - id: SeashellInstrument
+        - id: XylophoneInstrument
+        - id: GunpetInstrument
+        - id: MicrophoneInstrument
+        - id: HelicopterInstrument
+        - id: BirdToyInstrument
+        - id: MusicalLungInstrument
+        - id: ReverseCymbalsInstrument
 
 - type: entity
-  id: CrateFunArtSupplies
   parent: CrateGenericSteel
+  id: CrateFunInstrumentsRandom
+  name: random instrument collection
+  description: A box containing several randomly curated instruments, hand picked by Centcomm's top musicians!
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: VarietyInstrumentTable # 200 speso max
+        - !type:NestedSelector
+          tableId: BrassInstrumentTable # 300 speso max
+        - !type:NestedSelector
+          tableId: StringInstrumentTable # 300 speso max
+        - !type:NestedSelector
+          tableId: WoodwindInstrumentTable # 200 speso max
+        - !type:NestedSelector
+          tableId: KeyedPercussionInstrumentTable # 300 speso max
+        - !type:NestedSelector
+          tableId: SpecialInstrumentTable # x2 200 speso max
+          rolls: 2
+
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateFunArtSupplies
   name: art supplies
   description: Make some happy little accidents with lots of crayons!
   components:
-  - type: StorageFill
-    contents:
-      - id: CrayonBox
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: CrayonBox
 
 - type: entity
-  id: CrateFunBoardGames
   parent: CrateGenericSteel
+  id: CrateFunBoardGames
   name: board game crate
   description: Game nights have been proven to either decrease boredom or increase murderous rage depending on the game.
   components:
-  - type: StorageFill
-    contents:
-      - id: ChessBoard
-      - id: BackgammonBoard
-      - id: ParchisBoard
-      - id: CheckerBoard
-      - id: ShipBattlemap
-      - id: SnowBattlemap
-      - id: SandBattlemap
-      - id: MoonBattlemap
-      - id: GrassBattlemap
-      - id: DiceBag
-        amount: 6
-      - id: PaperCNCSheet
-        amount: 6
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ChessBoard
+        - id: BackgammonBoard
+        - id: ParchisBoard
+        - id: CheckerBoard
+        - id: ShipBattlemap
+        - id: SnowBattlemap
+        - id: SandBattlemap
+        - id: MoonBattlemap
+        - id: GrassBattlemap
+        - id: DiceBag
+          amount: 6
+        - id: PaperCNCSheet
+          amount: 6
 
 - type: entity
-  id: CrateFunSadTromboneImplants
   parent: CrateGenericSteel
+  id: CrateFunSadTromboneImplants
   name: sad trombone implants
   description: Death's never been so fun before! Implant these to make dying a bit more happy.
   components:
-  - type: StorageFill
-    contents:
-      - id: SadTromboneImplanter
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: SadTromboneImplanter
         amount: 3
 
 - type: entity
-  id: CrateFunLightImplants
   parent: CrateGenericSteel
+  id: CrateFunLightImplants
   name: light implants
   description: Light up your skin with these implants!
   components:
-  - type: StorageFill
-    contents:
-      - id: LightImplanter
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: LightImplanter
         amount: 3
 
 - type: entity
-  id: CrateFunParty
   parent: CrateGenericSteel
+  id: CrateFunParty
   name: party crate
   description: An entire party just waiting for you to open it. Includes party favors, party beverages, and even a cake.
   components:
-  - type: StorageFill
-    contents:
-      - id: GlowstickBase
-        amount: 2
-      - id: GlowstickBlue
-        amount: 2
-      - id: GlowstickPurple
-        amount: 2
-      - id: GlowstickRed
-        amount: 2
-      - id: GlowstickYellow
-        amount: 2
-      - id: FoodCakeBirthday
-      - id: DrinkLean
-        amount: 4
-      - id: KnifePlastic
-      - id: ClothingHeadHatPartyRed
-        amount: 2
-      - id: ClothingHeadHatPartyYellow
-        amount: 2
-      - id: ClothingHeadHatPartyGreen
-        amount: 2
-      - id: ClothingHeadHatPartyBlue
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: GlowstickGreen
+          amount: 2
+        - id: GlowstickBlue
+          amount: 2
+        - id: GlowstickPurple
+          amount: 2
+        - id: GlowstickRed
+          amount: 2
+        - id: GlowstickYellow
+          amount: 2
+        - id: FoodCakeBirthday
+        - id: DrinkLean
+          amount: 4
+        - id: KnifePlastic
+        - id: ClothingHeadHatPartyRed
+          amount: 2
+        - id: ClothingHeadHatPartyYellow
+          amount: 2
+        - id: ClothingHeadHatPartyGreen
+          amount: 2
+        - id: ClothingHeadHatPartyBlue
+          amount: 2
 
 - type: entity
-  id: CrateFunWaterGuns
   parent: CratePlastic
+  id: CrateFunWaterGuns
   name: water gun crate
   description: A summer special with a variety of brightly colored water guns. Water not included.
   components:
-  - type: StorageFill
-    contents:
-      - id: WeaponWaterBlaster
-        amount: 2
-      - id: WeaponWaterPistol
-        amount: 4
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: WeaponWaterBlaster
+          amount: 2
+        - id: WeaponWaterPistol
+          amount: 4
 
 - type: entity
-  id: CrateFunFoamGuns
   parent: CratePlastic
+  id: CrateFunFoamGuns
   name: Foam Force crate
-  description: Contains four Foam Force rifles, some grenades, and extra ammo. It's [REDACTED] or nothing!
+  description: Contains four Foam Force Battle Kits™. It's [REDACTED] or nothing!
   components:
-  - type: StorageFill
-    contents:
-    - id: WeaponRifleFoam
-      amount: 4
-    - id: BoxDonkSoftBox
-      amount: 2
-    - id: GrenadeFoamDart
-      amount: 4
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: RandomFoamGunTable
+          rolls: 4
+        - id: GrenadeFoamDart
+          amount: 4
 
 - type: entity
-  id: CrateFunBoxing
   parent: CrateGenericSteel
+  id: CrateFunBoxing
   name: boxing crate
   description: Want to set up an underground fight club or host a tournament amongst station crew? This crate is for you!
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingHandsGlovesBoxingRed
-      - id: ClothingHandsGlovesBoxingBlue
-      - id: ClothingHandsGlovesBoxingYellow
-      - id: ClothingHandsGlovesBoxingGreen
-      - id: UniformShortsRed
-        amount: 3
-      - id: UniformShortsRedWithTop
-        amount: 3
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingHandsGlovesBoxingRed
+        - id: ClothingHandsGlovesBoxingBlue
+        - id: ClothingHandsGlovesBoxingYellow
+        - id: ClothingHandsGlovesBoxingGreen
+        - id: UniformShortsRed
+          amount: 3
+        - id: UniformShortsRedWithTop
+          amount: 3
 
 - type: entity
-  id: CrateFunPirate
   parent: CratePirate
+  id: CrateFunPirate
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingUniformJumpsuitPirate
-        amount: 2
-      - id: ClothingHeadHatPirate
-      - id: ClothingOuterCoatPirate
-      - id: ClothingShoesBootsLaceup
-        amount: 2
-      - id: ClothingHeadBandRed
-      - id: FoamCutlass
-        amount: 2
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingUniformJumpsuitPirate
+          amount: 2
+        - id: ClothingHeadHatPirate
+        - id: ClothingOuterCoatPirate
+        - id: ClothingShoesBootsLaceup
+          amount: 2
+        - id: ClothingHeadBandRed
+        - id: FoamCutlass
+          amount: 2
 
 - type: entity
-  id: CrateFunToyBox
   parent: CrateToyBox
+  id: CrateFunToyBox
   suffix: Filled
   components:
-  - type: StorageFill
-    contents:
-      - id: SnapPopBox
-      - id: CrazyGlue
-        amount: 2
-      - id: PlasticBanana
-      - id: WhoopieCushion
-      - id: ToyHammer
-      - id: MrChips
-        orGroup: GiftPool
-      - id: MrDips
-        orGroup: Giftpool
-      - id: RevolverCapGun
-      - id: BalloonNT
-      - id: ClothingShoesClownLarge
-      - id: ClothingHeadHatMagician
-      - id: BeachBall
-      - id: ClothingShoesSkates
-      - id: RubberChicken
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: AllToyWeaponsTable
+          rolls: 2
+        - !type:NestedSelector
+          tableId: AllToySoundMakerTable
+          rolls: 2
+        - !type:NestedSelector
+          tableId: AllMiscToysTable
+          rolls: 2
+        - !type:NestedSelector # Extras rolls for extra variety
+          tableId: AllToysTable
+          rolls: 2
 
 - type: entity
-  id: CrateFunBikeHornImplants
   parent: CrateGenericSteel
+  id: CrateFunBikeHornImplants
   name: bike horn implants
   description: A thousand honks a day keeps security officers away!
   components:
-  - type: StorageFill
-    contents:
-      - id: BikeHornImplanter
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage:
+        id: BikeHornImplanter
         amount: 3
 
 - type: entity
-  id: CrateFunMysteryFigurines
   parent: CratePlastic
+  id: CrateFunMysteryFigurines
   name: mystery figure crate
   description: A collection of 10 Mystery Figurine boxes. Duplicates non refundable.
   components:
-  - type: StorageFill
-    contents:
-      - id: MysteryFigureBox
-        amount: 10
-      - id: MysteryFigureBox
-        amount: 15
-        prob: 0.05
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: MysteryFigureBox
+          amount: 10
+        - id: MysteryFigureBox
+          amount: 15
+          prob: 0.05
 
 - type: entity
+  parent: CratePlastic
+  id: CrateFunDartsSet
   name: dartboard box set
   description: A box with everything you need for a fun game of darts.
-  id: CrateFunDartsSet
-  parent: CratePlastic
   components:
-  - type: StorageFill
-    contents:
-      - id: TargetDarts
-        amount: 1
-      - id: BoxDarts
-        amount: 2
-      - id: BoxDarts
-        amount: 1
-        prob: 0.05
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: TargetDarts
+        - id: BoxDarts
+          amount: 2
+        - id: BoxDarts
+          prob: 0.05
 
 - type: entity
+  parent: CrateLivestock
+  id: CrateFunScurret
   name: hydrated scurret
   description: Wait, what?
-  id: CrateFunScurret
-  parent: CrateLivestock
   components:
-  - type: StorageFill
-    contents:
-    - id: MobEmotionalSupportScurret # How? Why?
-    - id: DrinkVodkaBottleFull
-    - id: DrinkWhiskeyBottleFull
-    - id: DrinkTequilaBottleFull # ...that explains it.
-    - id: DrinkShotGlass
-      amount: 2
-    - id: Spear # self defence
-    - id: ClothingHeadHatHardhatYellow
-    - id: ClothingNeckMantleQM
-    - id: ClothingHeadsetCargo
-
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: MobEmotionalSupportScurret # How? Why?
+        - id: DrinkVodkaBottleFull
+        - id: DrinkWhiskeyBottleFull
+        - id: DrinkTequilaBottleFull # ...that explains it.
+        - id: DrinkShotGlass
+          amount: 2
+        - id: Spear # self defence
+        - id: ClothingHeadHatHardhatYellow
+        - id: ClothingNeckMantleQM
+        - id: ClothingHeadsetCargo

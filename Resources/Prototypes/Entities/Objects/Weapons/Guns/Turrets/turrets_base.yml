@@ -129,11 +129,16 @@
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: BulletEnergyTurretLaser
     fireCost: 100
   - type: Battery
-    maxCharge: 1000
+    # Very important:
+    # Disable networking to prevent the battery getting continuously dirtied every tick as it interacts with the power network.
+    # This can not be done by changing the charge rate as the power supply ramps up over time.
+    # This disables prediction for this battery.
+    netsync: false
+    maxCharge: 2000
     startingCharge: 0
   - type: ApcPowerReceiverBattery
     idleLoad: 25
@@ -147,3 +152,5 @@
   - type: HTN
     rootTask:
       task: EnergyTurretCompound
+  - type: StaticPrice
+    price: 200
