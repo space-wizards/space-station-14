@@ -13,6 +13,7 @@ public sealed class MindExamineSystem : EntitySystem
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly ISharedPlayerManager _player = default!;
 
     public override void Initialize()
     {
@@ -33,24 +34,18 @@ public sealed class MindExamineSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        switch (ent.Comp.State)
+        var message = ent.Comp.State switch
         {
-            case MindState.Irrecoverable:
-                args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", ent.Owner))}[/color]");
-                break;
-            case MindState.DeadSSD:
-                args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", ent.Owner))}[/color]");
-                break;
-            case MindState.Dead:
-                args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", ent.Owner))}[/color]");
-                break;
-            case MindState.Catatonic:
-                args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", ent.Owner))}[/color]");
-                break;
-            case MindState.SSD:
-                args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", ent.Owner))}[/color]");
-                break;
-        }
+            MindState.Irrecoverable => $"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", ent.Owner))}[/color]",
+            MindState.DeadSSD => $"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", ent.Owner))}[/color]",
+            MindState.Dead => $"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", ent.Owner))}[/color]",
+            MindState.Catatonic => $"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", ent.Owner))}[/color]",
+            MindState.SSD => $"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", ent.Owner))}[/color]",
+            _ => null,
+        };
+
+        if (message != null)
+            args.PushMarkup(message);
     }
 
     private void OnPlayerAttached(PlayerAttachedEvent args)
@@ -81,12 +76,12 @@ public sealed class MindExamineSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return;
 
-        // We don't let the client handle this.
-        // This is because the mind is not networked, and the client will be always wrong.
+        // Only allow the local client to handle this.
+        // This is because the mind is only networked to the owner, and other clients will always be wrong.
         // So instead, we do this on server and dirty the result to the client.
         // And since it is stored on the component, the text won't flicker anymore.
-        // Will cause slight mispredicts right after a state is changed due to networking, but I don't know a better way to handle this.
-        if (_net.IsClient)
+        // Will cause a small jump when examined during networking due to the server update coming in.
+        if (_net.IsClient && _player.LocalEntity != ent)
             return;
 
         var dead = _mobState.IsDead(ent);

@@ -18,13 +18,16 @@ public sealed partial class MindExaminableComponent : Component
     public MindState State = MindState.None;
 }
 
+/// <summary>
+/// The states for when an entity with a mind is examined.
+/// </summary>
 [Serializable, NetSerializable]
 public enum MindState : byte
 {
-    None,
-    Dead,
-    Catatonic,
-    SSD,
-    DeadSSD,
-    Irrecoverable
+    None, // No text
+    Dead, // Player is dead but still connected
+    Catatonic, // Entity was never controlled by a player
+    SSD, // Player disconnected while alive
+    DeadSSD, // Player died and disconnected
+    Irrecoverable // Entity is permanently dead with no player ever attached
 }
