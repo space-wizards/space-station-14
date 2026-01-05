@@ -388,9 +388,9 @@
     solution: bloodstream
 
 - type: entity
-  name: Reagent Slime Spawner
-  id: ReagentSlimeSpawner
   parent: MarkerBase
+  id: ReagentSlimeSpawner
+  name: Reagent Slime Spawner
   components:
   - type: Sprite
     layers:
