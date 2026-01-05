@@ -1,5 +1,6 @@
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Physics.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using System.Numerics;
@@ -14,6 +15,7 @@ public sealed class RandomWalkAttractorSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _power = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     /// <summary>
     /// The minimum range at which the attraction will act.
@@ -68,15 +70,15 @@ public sealed class RandomWalkAttractorSystem : EntitySystem
         if (mapPos == MapCoordinates.Nullspace)
             return;
 
-        AttractRandomWalkers(mapPos, attractor.BaseRange, attractor.Component);
+        AttractRandomWalkers(mapPos, attractor.BaseRange, attractor.Whitelist);
 
     }
 
-    public void AttractRandomWalkers(MapCoordinates toLocation, float range, string compName)
+    public void AttractRandomWalkers(MapCoordinates toLocation, float range, EntityWhitelist? whitelist)
     {
-        if (!Factory.TryGetRegistration(compName, out var compReg))
+        if (whitelist == null)
         {
-            Log.Error($"Tried to use invalid component registration for attracting random walker: {compName}");
+            Log.Error($"RandomWalkAttractor attempted to attract with a null whitelist.");
             return;
         }
 
@@ -84,7 +86,8 @@ public sealed class RandomWalkAttractorSystem : EntitySystem
 
         while (query.MoveNext(out var other, out var walk, out var otherXform))
         {
-            if (!HasComp(other, compReg.Type))
+            // I think this buys us free tag functionality, so thats pretty neat.
+            if (!_whitelist.IsValid(whitelist, other))
                 continue;
 
             var otherMapPos = _transform.ToMapCoordinates(otherXform.Coordinates);

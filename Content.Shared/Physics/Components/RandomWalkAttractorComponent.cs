@@ -12,10 +12,13 @@ namespace Content.Shared.Physics.Components;
 public sealed partial class RandomWalkAttractorComponent : Component
 {
     /// <summary>
-    /// Pair component used to limit the type of random walker we want to attract.
+    /// Whitelist used to limit the type of random walker we want to attract.
     /// </summary>
+    /// <remarks>
+    /// RandomWalkComponent not necessary to include in the whitelist as its enforced regardless.
+    /// </remarks>
     [DataField(required: true)]
-    public string Component;
+    public EntityWhitelist Whitelist = new();
 
     /// <summary>
     /// The range at which singularities will be unable to go away from the attractor.
