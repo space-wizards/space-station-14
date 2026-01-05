@@ -224,7 +224,7 @@
     maxAngle: 35
     angleIncrease: 1
     fireRate: 8
-  - type: ProjectileBatteryAmmoProvider
+  - type: BatteryAmmoProvider
     proto: BulletLaserRadar
     fireCost: 100
   - type: NpcFactionMember
