@@ -1421,10 +1421,16 @@
           - ConstructionMaterial
     - hand:
         emptyRepresentative: PowerCellHigh
-        emptyLabel: borg-slot-powercell-empty
+        emptyLabel: borg-slot-powercell-empty 
         whitelist:
           components:
           - PowerCell
+    - hand:
+        emptyRepresentative: ClothingHeadHatFedoraBrown
+        emptyLabel: borg-slot-hats-empty
+        whitelist:
+          components:
+          - Clothing
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-module-module }
 
