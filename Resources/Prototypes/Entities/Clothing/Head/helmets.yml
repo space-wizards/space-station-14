@@ -524,6 +524,7 @@
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
     speed: 360
+  - type: IgnoreContentsOnSmartEquip
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer

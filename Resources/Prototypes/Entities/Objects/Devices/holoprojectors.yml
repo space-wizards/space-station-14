@@ -11,6 +11,7 @@
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot {}
+  - type: IgnoreContentsOnSmartEquip
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots

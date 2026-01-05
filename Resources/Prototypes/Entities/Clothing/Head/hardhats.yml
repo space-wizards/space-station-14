@@ -51,6 +51,7 @@
       head:
       - state: on-equipped-HELMET
   - type: ItemTogglePointLight
+  - type: IgnoreContentsOnSmartEquip
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots

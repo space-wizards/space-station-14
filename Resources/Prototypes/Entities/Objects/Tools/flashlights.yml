@@ -37,6 +37,7 @@
       - state: inhand-right-light
         shader: unshaded
   - type: ItemTogglePointLight
+  - type: IgnoreContentsOnSmartEquip
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ContainerContainer

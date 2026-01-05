@@ -24,6 +24,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
+  - type: IgnoreContentsOnSmartEquip
   - type: PowerCellSlot
     cellSlotId: cell_slot
   - type: ItemSlots
