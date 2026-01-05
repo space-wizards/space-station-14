@@ -74,7 +74,6 @@ public sealed class RottingSystem : SharedRottingSystem
                 continue;
 
             perishable.RotNextUpdate += perishable.PerishUpdateRate;
-            DirtyField(uid, perishable, nameof(PerishableComponent.RotNextUpdate));
 
             var stage = PerishStage((uid, perishable), MaxStages);
             if (stage != perishable.Stage)
