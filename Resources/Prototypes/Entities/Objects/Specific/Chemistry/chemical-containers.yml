@@ -1,6 +1,6 @@
 - type: entity
   name: jug
-  parent: [BaseItem, DrinkBottleVisualsOpenable]
+  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkBaseOpenable, DrinkBaseVisualsAll ]
   id: Jug
   description: Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
   components:
