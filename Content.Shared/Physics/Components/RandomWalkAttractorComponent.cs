@@ -21,7 +21,7 @@ public sealed partial class RandomWalkAttractorComponent : Component
     public EntityWhitelist Whitelist = new();
 
     /// <summary>
-    /// The range at which singularities will be unable to go away from the attractor.
+    /// The range at which RandomWalkers will be unable to go away from the attractor.
     /// </summary>
     [DataField]
     public float BaseRange = 25f;
