@@ -88,7 +88,8 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
         }
 
         audio = audio.AddVolume(-8);
-        _entManager.System<ServerGlobalSoundSystem>().PlayAdminGlobal(filter, args[0], audio, replay);
+        var path = new ResolvedPathSpecifier(args[0]);
+        _entManager.System<ServerGlobalSoundSystem>().PlayAdminGlobal(filter, path, audio, replay);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

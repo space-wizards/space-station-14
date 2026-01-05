@@ -76,6 +76,12 @@ command-description-marked =
     Returns the value of $marked as a List<EntityUid>.
 command-description-rejuvenate =
     Rejuvenates the given entities, restoring them to full health, clearing status effects, etc.
+command-description-playsound-at =
+    Plays a sound at the given coordinates.
+command-description-playsound-on =
+    Plays a sound on the given entity, at its coordinates.
+command-description-playsound-attached =
+    Plays a sound on the given entity, following it if it moves.
 command-description-tag-list =
     Lists tags on the given entities.
 command-description-tag-with =
