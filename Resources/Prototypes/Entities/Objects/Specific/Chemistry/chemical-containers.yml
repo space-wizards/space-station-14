@@ -1,72 +1,34 @@
 - type: entity
-  name: jug
   parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAll ]
   id: Jug
+  name: jug
   description: Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
   components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/jug.rsi
+  - type: Item
+    size: Normal
+    sprite: Objects/Specific/Chemistry/jug.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 200
-  - type: Sprite
-    sprite: Objects/Specific/Chemistry/jug.rsi
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    inHandsMaxFillLevels: 5
+  - type: ExaminableSolution
+    exactVolume: true # Chemistry item
   - type: Openable
     sound:
       collection: bottleOpenSounds
     closeable: true
     closeSound:
       collection: bottleCloseSounds
-  - type: Item
-    size: Normal
-    sprite: Objects/Specific/Chemistry/jug.rsi
-  - type: Edible
-    utensil: Spoon
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    solutionName: drink
-    maxFillLevels: 6
-    fillBaseName: fill-
-    inHandsMaxFillLevels: 5
-    inHandsFillBaseName: -fill-
   - type: StaticPrice
     price: 60
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
-          params:
-            volume: -4
-      - !type:SpillBehavior { }
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetPlastic1:
-            min: 0
-            max: 1
-        transferForensics: true
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Label
   - type: Tag
     tags:
     - ChemDispensable
-  - type: DnaSubstanceTrace
 
 - type: entity
   parent: Jug
