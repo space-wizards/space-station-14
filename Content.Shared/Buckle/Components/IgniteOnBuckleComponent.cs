@@ -12,14 +12,22 @@ namespace Content.Shared.Buckle.Components
         /// <summary>
         /// How many fire stacks to add per cycle.
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public float FireStacks = 1f;
 
         /// <summary>
         /// How frequently the ignition should be applied, in seconds.
         /// </summary>
-        [DataField]
+        [DataField, AutoNetworkedField]
         public float IgniteTime = 1f;
+
+        /// <summary>
+        /// Maximum fire stacks that can be added by this source.
+        /// If target already has this many or more fire stacks, no additional stacks will be added.
+        /// 0 = unlimited.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public float MaxFireStacks = 0f;
 
         /// <summary>
         /// Next time that fire stacks will be applied.

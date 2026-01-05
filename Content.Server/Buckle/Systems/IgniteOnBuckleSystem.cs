@@ -44,15 +44,20 @@ public sealed class IgniteOnBuckleSystem : EntitySystem
             Dirty(uid, igniteComponent);
 
             if (strapComponent.BuckledEntities.Count == 0)
+            {
+                RemComp<IgniteOnBuckleBurningComponent>(uid);
                 continue;
+            }
 
             foreach (var buckledEntity in strapComponent.BuckledEntities)
             {
-                if (TryComp<FlammableComponent>(buckledEntity, out var flammable))
-                {
-                    flammable.FireStacks += igniteComponent.FireStacks;
-                    _flammable.Ignite(buckledEntity, uid, flammable);
-                }
+                if (!TryComp<FlammableComponent>(buckledEntity, out var flammable))
+                    continue;
+
+                if (igniteComponent.MaxFireStacks > 0 && flammable.FireStacks >= igniteComponent.MaxFireStacks)
+                    continue;
+
+                _flammable.AdjustFireStacks(buckledEntity, igniteComponent.FireStacks, flammable, ignite: true);
             }
         }
     }

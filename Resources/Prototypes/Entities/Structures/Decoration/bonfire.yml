@@ -48,7 +48,7 @@
   parent: BaseBonfire
   id: StakeBonfire
   name: bonfire with stake
-  description: A sinister bonfire with a stake for.. ceremonial purposes. Best not to ask.
+  description: A sinister bonfire with a stake for... ceremonial purposes. Best not to ask.
   components:
   - type: Sprite
     sprite: Structures/Decoration/bonfire_stake.rsi
@@ -58,7 +58,10 @@
   - type: Strap
     position: Stand
     buckleOffset: "0, 0.5"
+    buckleDoafterTime: 4
   - type: IgniteOnBuckle
+    fireStacks: 0.5
+    maxFireStacks: 5
   - type: Construction
     graph: StakeBonfire
     node: stakeBonfire
