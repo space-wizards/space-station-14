@@ -213,7 +213,7 @@ public sealed partial class RevenantSystem
             return;
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Cold", damage.Value);
-        _damage.TryChangeDamage(args.Args.Target, dspec, true, origin: uid);
+        _damage.ChangeDamage(args.Args.Target.Value, dspec, true, origin: uid);
 
         args.Handled = true;
     }
@@ -344,7 +344,7 @@ public sealed partial class RevenantSystem
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
             if (_whitelistSystem.IsWhitelistFail(component.MalfunctionWhitelist, ent) ||
-                _whitelistSystem.IsBlacklistPass(component.MalfunctionBlacklist, ent))
+                _whitelistSystem.IsWhitelistPass(component.MalfunctionBlacklist, ent))
                 continue;
 
             _emagSystem.TryEmagEffect(uid, uid, ent);
