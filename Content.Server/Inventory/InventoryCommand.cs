@@ -12,6 +12,27 @@ public sealed class InventoryCommand : ToolshedCommand
 {
     private InventorySystem? _inventorySystem;
 
+    [CommandImplementation("query")]
+    public IEnumerable<EntityUid> InventoryQuery([PipedArgument] IEnumerable<EntityUid> entities) =>
+        entities.SelectMany(InventoryQuery);
+
+    private IEnumerable<EntityUid> InventoryQuery(EntityUid entity)
+    {
+        _inventorySystem ??= GetSys<InventorySystem>();
+
+        if (!EntityManager.TryGetComponent<InventoryComponent>(entity, out var inventory))
+            return [];
+
+        List<EntityUid> result = new();
+
+        foreach (var slot in inventory.Slots)
+        {
+            if (_inventorySystem.TryGetSlotEntity(entity, slot.Name, out var item, inventory))
+                result.Add(item.Value);
+        }
+        return result;
+    }
+
     [CommandImplementation("getflags")]
     public IEnumerable<EntityUid> InventoryGetFlags([PipedArgument] IEnumerable<EntityUid> ents, SlotFlags slotFlag)
     {

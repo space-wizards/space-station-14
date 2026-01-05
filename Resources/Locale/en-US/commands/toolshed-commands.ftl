@@ -130,6 +130,8 @@ command-description-storage-fasttake =
     Takes the most recently placed item from the piped storage entity.
 command-description-storage-insert =
     Inserts the piped entity into the given storage entity.
+command-description-storage-query =
+    Get all entities in a given storage entity
 command-description-inventory-getflags =
     Gets all entities in slots on the piped inventory entity matching a certain slot flag.
 command-description-inventory-getnamed =
@@ -150,6 +152,8 @@ command-description-inventory-ensure =
     Puts a given entity on the first piped entity that has a slot matching the given flag if none exists, passing through the UID of whatever is in the slot by the end.
 command-description-inventory-ensurespawn =
     Spawns a given prototype on the first piped entity that has a slot matching the given flag if none exists, passing through the UID of whatever is in the slot by the end.
+command-description-inventory-query =
+    Get all entities in an entity's inventory
 command-description-dynamicrule-list =
     Lists all currently active dynamic rules, usually this is just one.
 command-description-dynamicrule-get =
