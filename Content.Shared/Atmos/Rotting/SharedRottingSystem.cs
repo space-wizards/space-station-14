@@ -34,7 +34,6 @@ public abstract class SharedRottingSystem : EntitySystem
     private void OnPerishableMapInit(Entity<PerishableComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.RotNextUpdate = _timing.CurTime + ent.Comp.PerishUpdateRate;
-        DirtyField(ent.Owner, ent.Comp, nameof(PerishableComponent.RotNextUpdate));
     }
 
     private void OnMobStateChanged(Entity<PerishableComponent> ent, ref MobStateChangedEvent args)
@@ -48,7 +47,6 @@ public abstract class SharedRottingSystem : EntitySystem
         ent.Comp.RotAccumulator = TimeSpan.Zero;
         ent.Comp.RotNextUpdate = _timing.CurTime + ent.Comp.PerishUpdateRate;
         DirtyField(ent.Owner, ent.Comp, nameof(PerishableComponent.RotAccumulator));
-        DirtyField(ent.Owner, ent.Comp, nameof(PerishableComponent.RotNextUpdate));
     }
 
     private void OnPerishableExamined(Entity<PerishableComponent> perishable, ref ExaminedEvent args)
@@ -70,7 +68,6 @@ public abstract class SharedRottingSystem : EntitySystem
         if (TryComp<PerishableComponent>(ent, out var perishable))
         {
             perishable.RotNextUpdate = TimeSpan.Zero;
-            DirtyField(ent, perishable, nameof(PerishableComponent.RotNextUpdate));
         }
     }
 
@@ -153,6 +150,7 @@ public abstract class SharedRottingSystem : EntitySystem
         if (!TryComp<RottingComponent>(uid, out var rotting))
         {
             perishable.RotAccumulator -= time;
+            DirtyField(uid, perishable, nameof(PerishableComponent.RotAccumulator));
             return;
         }
         var total = (rotting.TotalRotTime + perishable.RotAccumulator) - time;

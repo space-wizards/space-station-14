@@ -26,7 +26,7 @@ public sealed partial class PerishableComponent : Component
     /// <summary>
     /// Gasses are released, this is when the next gas release update will be.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan RotNextUpdate = TimeSpan.Zero;
 
