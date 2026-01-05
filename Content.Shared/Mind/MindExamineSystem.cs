@@ -10,7 +10,6 @@ namespace Content.Shared.Mind;
 public sealed class MindExamineSystem : EntitySystem
 {
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedPlayerManager _player = default!;
@@ -87,7 +86,7 @@ public sealed class MindExamineSystem : EntitySystem
         var dead = _mobState.IsDead(ent);
         _mind.TryGetMind(ent.Owner, out _, out var mindComp);
         var hasUserId = mindComp?.UserId;
-        var hasActiveSession = hasUserId != null && _playerManager.ValidSessionId(hasUserId.Value);
+        var hasActiveSession = hasUserId != null && _player.ValidSessionId(hasUserId.Value);
 
         // Scenarios:
         // 1. Dead + No User ID: Entity is permanently dead with no player ever attached
