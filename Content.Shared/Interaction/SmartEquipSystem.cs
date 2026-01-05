@@ -3,6 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -102,9 +103,13 @@ public sealed class SmartEquipSystem : EntitySystem
         // 4) has an item, with no special storage components
         //    - with hand item: fail
         //    - without hand item: try to put the item into your hand
+        // 5: has an item with something it but we don't want to take out its contents
+        // because we are fighting 3 nukeops and the item is a gun and the contents are its magazine
+        //    - see case 4
 
         _inventory.TryGetSlotEntity(uid, equipmentSlot, out var slotEntity);
         var emptyEquipmentSlotString = Loc.GetString("smart-equip-empty-equipment-slot", ("slotName", equipmentSlot));
+        var ignoreContents = HasComp<IgnoreContentsOnSmartEquipComponent>(slotEntity);
 
         // case 1 (no slot item):
         if (slotEntity is not { } slotItem)
@@ -127,7 +132,7 @@ public sealed class SmartEquipSystem : EntitySystem
         }
 
         // case 2 (storage item):
-        if (TryComp<StorageComponent>(slotItem, out var storage))
+        if (!ignoreContents && TryComp<StorageComponent>(slotItem, out var storage))
         {
             switch (handItem)
             {
@@ -164,7 +169,7 @@ public sealed class SmartEquipSystem : EntitySystem
         }
 
         // case 3 (itemslot item):
-        if (TryComp<ItemSlotsComponent>(slotItem, out var slots))
+        if (!ignoreContents && TryComp<ItemSlotsComponent>(slotItem, out var slots))
         {
             if (handItem == null)
             {

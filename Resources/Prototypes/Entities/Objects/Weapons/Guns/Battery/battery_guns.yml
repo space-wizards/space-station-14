@@ -45,6 +45,7 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedLightLaser
     fireCost: 50
+  - type: IgnoreContentsOnSmartEquip
   - type: ItemSlots
     slots:
       cell_slot:

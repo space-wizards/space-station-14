@@ -36,6 +36,7 @@
     proto: ShellShotgun
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+  - type: IgnoreContentsOnSmartEquip
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -76,6 +77,7 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: IgnoreContentsOnSmartEquip
   - type: ItemSlots
     slots:
       gun_magazine:

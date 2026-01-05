@@ -15,6 +15,7 @@
     size: Huge
   - type: StaticPrice
     price: 500
+  - type: IgnoreContentsOnSmartEquip
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
