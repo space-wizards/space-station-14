@@ -64,37 +64,3 @@ command-description-stations-largestgrid =
     Returns the largest grid the given station has, if any.
 command-description-stations-rerollBounties =
     Clears all the current bounties for the station and gets a new selection.
-command-description-stationevent-lsprob =
-    Given a BasicStationEventScheduler prototype, lists the probability of different station events occuring out of the entire pool with current conditions.
-command-description-stationevent-lsprobtheoretical =
-    Given a BasicStationEventScheduler prototype, player count, and round time, lists the probability of different station events occuring based on the specified number of players and round time.
-command-description-stationevent-prob =
-    Given a BasicStationEventScheduler prototype and an event prototype, returns the probability of a single station event occuring out of the entire pool with current conditions.
-command-description-admins-active =
-    Returns a list of active admins.
-command-description-admins-all =
-    Returns a list of ALL admins, including deadmined ones.
-command-description-marked =
-    Returns the value of $marked as a List<EntityUid>.
-command-description-rejuvenate =
-    Rejuvenates the given entities, restoring them to full health, clearing status effects, etc.
-command-description-tag-list =
-    Lists tags on the given entities.
-command-description-tag-with =
-    Returns only the entities with the given tag from the piped list of entities.
-command-description-tag-add =
-    Adds a tag to the given entities.
-command-description-tag-rm =
-    Removes a tag from the given entities.
-command-description-tag-addmany =
-    Adds a list of tags to the given entities.
-command-description-tag-rmmany =
-    Removes a list of tags from the given entities.
-command-description-polymorph =
-    Polymorphs the input entity with the given prototype.
-command-description-unpolymorph =
-    Reverts a polymorph.
-command-description-solution-get =
-    Grabs the given solution off the given entity.
-command-description-solution-adjreagent =
-    Adjusts the given reagent on the given solution.
