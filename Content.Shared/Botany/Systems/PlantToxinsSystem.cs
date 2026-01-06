@@ -39,11 +39,17 @@ public sealed class PlantToxinsSystem : EntitySystem
 
         var toxinUptake = MathF.Max(1, MathF.Round(holder.Toxins / ent.Comp.ToxinUptakeDivisor));
         if (holder.Toxins > ent.Comp.ToxinsTolerance)
-            _plantHolder.AdjustsHealth(ent.Owner, -toxinUptake);
+        {
+            // Get minimum value between health left and toxin uptake.
+            var actualUptake = Math.Min(toxinUptake, holder.Health);
 
-        // there is a possibility that it will remove more toxin than amount of damage it took on plant health (and killed it).
-        // TODO: get min out of health left and toxin uptake - would work better, probably.
-        _plantHolder.AdjustsToxins(ent.Owner, -toxinUptake);
+            _plantHolder.AdjustsHealth(ent.Owner, -actualUptake);
+            _plantHolder.AdjustsToxins(ent.Owner, -actualUptake);
+        }
+        else
+        {
+            _plantHolder.AdjustsToxins(ent.Owner, -toxinUptake);
+        }
     }
 
     /// <summary>
