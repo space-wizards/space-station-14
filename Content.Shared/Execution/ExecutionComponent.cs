@@ -67,11 +67,4 @@ public sealed partial class ExecutionComponent : Component
     /// </summary>
     [DataField]
     public LocId CompleteExternalSelfExecutionMessage = "execution-popup-self-complete-external";
-
-    // Not networked because this is transient inside of a tick.
-    /// <summary>
-    /// True if it is currently executing for handlers.
-    /// </summary>
-    [DataField]
-    public bool Executing = false;
 }
