@@ -151,9 +151,7 @@
         weight: 0.85
         prob: 0.05
     deleteSpawnerAfterSpawn: false
-    rareChance: 0.15
     offset: 0.2
-    chance: 0.05
   - type: Tag
     tags:
     - Ruminant
