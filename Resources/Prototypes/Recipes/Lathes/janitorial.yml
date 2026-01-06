@@ -22,6 +22,7 @@
   result: Bucket
   categories:
   - Containers
+  - Clothing
   completetime: 2
   materials:
     Plastic: 100
@@ -29,6 +30,8 @@
 - type: latheRecipe
   id: WetFloorSign
   result: WetFloorSign
+  categories:
+  - Clothing
   completetime: 2
   materials:
     Plastic: 100

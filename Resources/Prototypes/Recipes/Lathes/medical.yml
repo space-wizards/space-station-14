@@ -4,6 +4,9 @@
   abstract: true
   parent: BaseToolRecipe
   id: BaseSurgicalRecipe
+  categories:
+  - Tools
+  - Surgical
   materials:
     Steel: 200
 
@@ -25,7 +28,7 @@
   result: Cautery
 
 - type: latheRecipe
-  parent: BaseToolRecipe
+  parent: BaseSurgicalRecipe
   id: Drill
   result: Drill
   materials:
@@ -55,7 +58,7 @@
   id: Brutepack
   result: Brutepack1
   categories:
-  - Topicals
+  - Medicinal
   completetime: 1
   materials:
     Steel: 25
@@ -65,7 +68,7 @@
   id: Ointment
   result: Ointment1
   categories:
-  - Topicals
+  - Medicinal
   completetime: 1
   materials:
     Glass: 25
@@ -75,7 +78,7 @@
   id: Gauze
   result: Gauze1
   categories:
-  - Topicals
+  - Medicinal
   completetime: 1
   materials:
     Cloth: 100 # lathe more efficient than handcrafting
@@ -235,7 +238,7 @@
   id: WhiteCane
   result: WhiteCane
   categories:
-  - Tools
+  - Medicinal
   completetime: 2
   materials:
     Steel: 100
