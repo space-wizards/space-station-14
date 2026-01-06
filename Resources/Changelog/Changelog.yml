@@ -3885,3 +3885,10 @@
   id: 9354
   time: '2026-01-05T00:42:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42234
+- author: ThatGuyUSA
+  changes:
+  - message: There are more IDs and icons that can be used for a variety of roles.
+    type: Add
+  id: 9355
+  time: '2026-01-06T10:41:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42200
