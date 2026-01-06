@@ -11,7 +11,7 @@ execution-popup-melee-initial-external = { CAPITALIZE(THE($attacker)) } readies 
 execution-popup-melee-complete-internal = You slit the throat of {THE($victim)}!
 execution-popup-melee-complete-external = { CAPITALIZE(THE($attacker)) } slits the throat of {THE($victim)}!
 
-execution-popup-self-initial-internal = You ready {THE($weapon)} against your own throat.
-execution-popup-self-initial-external = { CAPITALIZE(THE($attacker)) } readies {POSS-ADJ($attacker)} {$weapon} against their own throat.
-execution-popup-self-complete-internal = You slit your own throat!
-execution-popup-self-complete-external = { CAPITALIZE(THE($attacker)) } slits their own throat!
+execution-popup-melee-self-initial-internal = You ready {THE($weapon)} against your own throat.
+execution-popup-melee-self-initial-external = { CAPITALIZE(THE($attacker)) } readies {POSS-ADJ($attacker)} {$weapon} against their own throat.
+execution-popup-melee-self-complete-internal = You slit your own throat!
+execution-popup-melee-self-complete-external = { CAPITALIZE(THE($attacker)) } slits their own throat!

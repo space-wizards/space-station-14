@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Execution;
@@ -49,23 +50,23 @@ public sealed partial class ExecutionComponent : Component
     /// Shown to the person performing the self execution when starting one.
     /// </summary>
     [DataField]
-    public LocId InternalSelfExecutionMessage = "execution-popup-self-initial-internal";
+    public LocId InternalSelfExecutionMessage = "execution-popup-melee-self-initial-internal";
 
     /// <summary>
     /// Shown to bystanders near a self execution when one is started.
     /// </summary>
     [DataField]
-    public LocId ExternalSelfExecutionMessage = "execution-popup-self-initial-external";
+    public LocId ExternalSelfExecutionMessage = "execution-popup-melee-self-initial-external";
 
     /// <summary>
     /// Shown to the person performing a self execution upon completion of a do-after or on use of /suicide with a weapon that has the Execution component.
     /// </summary>
     [DataField]
-    public LocId CompleteInternalSelfExecutionMessage = "execution-popup-self-complete-internal";
+    public LocId CompleteInternalSelfExecutionMessage = "execution-popup-melee-self-complete-internal";
 
     /// <summary>
     /// Shown to bystanders when a self execution is completed or a suicide via execution weapon happens nearby.
     /// </summary>
     [DataField]
-    public LocId CompleteExternalSelfExecutionMessage = "execution-popup-self-complete-external";
+    public LocId CompleteExternalSelfExecutionMessage = "execution-popup-melee-self-complete-external";
 }
