@@ -123,8 +123,19 @@
     size: Ginormous
   - type: ItemSlots
     slots:
+      sidearm_slot:
+        name: clothing-holster-sidearm-slot
+        ejectOnUse: true
+        priority: 2
+        whitelist:
+          tags:
+          - Sidearm
+        whitelistFailPopup: clothing-holster-insert-fail
+        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
       utility_slot:
         name: clothing-holster-utility-slot
+        ejectOnUse: true
         priority: 1
         whitelist:
           tags:
@@ -132,16 +143,9 @@
           - MagazinePistolAll
           - SpeedLoaderAll
           - PowerCellAll
+        whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
         ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
-      sidearm_slot:
-        name: clothing-holster-sidearm-slot
-        priority: 2
-        whitelist:
-          tags:
-          - Sidearm
-        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
-        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
   - type: ItemMapper
     mapLayers:
       icon_knife:
@@ -165,6 +169,7 @@
           tags:
           - Sidearm
   - type: Appearance
+  - type: UseDelay
 
 - type: entity
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSyndicateContraband]
@@ -187,8 +192,32 @@
     size: Ginormous
   - type: ItemSlots
     slots:
+      gun_slot:
+        name: clothing-holster-gun-slot
+        ejectOnUse: true
+        priority: 3
+        whitelist:
+          tags:
+          - Shotgun
+          - AssaultRifle
+          - EnergyWeapon
+        whitelistFailPopup: clothing-holster-insert-fail
+        insertSound: /Audio/Weapons/Guns/Misc/long_gun_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/long_gun_eject.ogg
+      upgraded_sidearm_slot:
+        name: clothing-holster-upgraded-sidearm-slot
+        ejectOnUse: true
+        priority: 2
+        whitelist:
+          tags:
+          - Sidearm
+          - SubMachineGun
+        whitelistFailPopup: clothing-holster-insert-fail
+        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
+        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
       upgraded_utility_slot:
         name: clothing-holster-upgraded-utility-slot
+        ejectOnUse: true
         priority: 1
         whitelist:
           tags:
@@ -200,27 +229,9 @@
           - MagazineRifleAll
           - MagazineShotgun
           - PowerCellAll
+        whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
         ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
-      upgraded_sidearm_slot:
-        name: clothing-holster-upgraded-sidearm-slot
-        priority: 2
-        whitelist:
-          tags:
-          - Sidearm
-          - SubMachineGun
-        insertSound: /Audio/Weapons/Guns/Misc/sidearm_insert.ogg
-        ejectSound: /Audio/Weapons/Guns/Misc/sidearm_eject.ogg
-      gun_slot:
-        name: clothing-holster-gun-slot
-        priority: 3
-        whitelist:
-          tags:
-          - Shotgun
-          - AssaultRifle
-          - EnergyWeapon
-        insertSound: /Audio/Weapons/Guns/Misc/long_gun_insert.ogg
-        ejectSound: /Audio/Weapons/Guns/Misc/long_gun_eject.ogg
   - type: StaticPrice
     price: 500
   - type: ItemMapper
@@ -278,6 +289,7 @@
           tags:
           - EnergyWeapon
   - type: Appearance
+  - type: UseDelay
 
 ## Webbing
 
