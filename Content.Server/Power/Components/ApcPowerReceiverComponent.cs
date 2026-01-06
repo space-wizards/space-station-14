@@ -50,7 +50,7 @@ namespace Content.Server.Power.Components
         }
 
         [DataField("powerDisabled"), ViewVariables(VVAccess.ReadOnly)]
-        public bool StartingPowerDisabled = false;
+        public bool StartingPowerDisabled = false; 
 
         [ViewVariables]
         public PowerState.Load NetworkLoad { get; } = new PowerState.Load
