@@ -55,14 +55,6 @@ public sealed partial class BinomialNumberSelector : NumberSelector
         if (Chance >= 1f)
             return Trials;
 
-        var prob = Chance;
-        var sum = 0f;
-        for (var i = 0; i < Trials; i++)
-        {
-            sum += prob;
-            prob *= Chance;
-        }
-
-        return sum;
+        return Trials * Chance;
     }
 }
