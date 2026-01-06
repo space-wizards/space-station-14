@@ -4,11 +4,11 @@
         <BoxContainer Orientation="Vertical" HorizontalExpand="True">
             <humanoid:MarkingPicker Name="MarkingPickerWidget" />
             <BoxContainer>
-                <CheckBox Name="MarkingForced" Text="Force" Pressed="True" />
-                <CheckBox Name="MarkingIgnoreSpecies" Text="Ignore Species" Pressed="True" />
+                <CheckBox Name="MarkingForced" Text="{Loc humanoid-marking-modifier-force}" Pressed="True" />
+                <CheckBox Name="MarkingIgnoreSpecies" Text="{Loc humanoid-marking-modifier-ignore-species}" Pressed="True" />
             </BoxContainer>
             <Collapsible HorizontalExpand="True">
-                <CollapsibleHeading Title="Base layers" />
+                <CollapsibleHeading Title="{Loc humanoid-marking-modifier-base-layers}" />
                 <CollapsibleBody HorizontalExpand="True">
                     <BoxContainer Name="BaseLayersContainer" Orientation="Vertical" HorizontalExpand="True" />
                 </CollapsibleBody>

@@ -8,69 +8,61 @@ namespace Content.Shared.Light.Components;
 /// Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
 /// TODO: Breaking and burning should probably be moved to another component eventually.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class LightBulbComponent : Component
 {
     /// <summary>
     /// The color of the lightbulb and the light it produces.
     /// </summary>
-    [DataField("color")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public Color Color = Color.White;
 
     /// <summary>
     /// The type of lightbulb. Tube/bulb/etc...
     /// </summary>
     [DataField("bulb")]
-    [ViewVariables(VVAccess.ReadWrite)]
     public LightBulbType Type = LightBulbType.Tube;
 
     /// <summary>
     /// The initial state of the lightbulb.
     /// </summary>
-    [DataField("startingState")]
+    [DataField("startingState"), AutoNetworkedField]
     public LightBulbState State = LightBulbState.Normal;
 
     /// <summary>
     /// The temperature the air around the lightbulb is exposed to when the lightbulb burns out.
     /// </summary>
     [DataField("BurningTemperature")]
-    [ViewVariables(VVAccess.ReadWrite)]
     public int BurningTemperature = 1400;
 
     /// <summary>
     /// Relates to how bright the light produced by the lightbulb is.
     /// </summary>
-    [DataField("lightEnergy")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float LightEnergy = 0.8f;
 
     /// <summary>
     /// The maximum radius of the point light source this light produces.
     /// </summary>
-    [DataField("lightRadius")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float LightRadius = 10;
 
     /// <summary>
     /// Relates to the falloff constant of the light produced by the lightbulb.
     /// </summary>
-    [DataField("lightSoftness")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float LightSoftness = 1;
 
     /// <summary>
     /// The amount of power used by the lightbulb when it's active.
     /// </summary>
     [DataField("PowerUse")]
-    [ViewVariables(VVAccess.ReadWrite)]
     public int PowerUse = 60;
 
     /// <summary>
     /// The sound produced when the lightbulb breaks.
     /// </summary>
-    [DataField("breakSound")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier BreakSound = new SoundCollectionSpecifier("GlassBreak", AudioParams.Default.WithVolume(-6f));
 
     #region Appearance
@@ -78,22 +70,19 @@ public sealed partial class LightBulbComponent : Component
     /// <summary>
     /// The sprite state used when the lightbulb is intact.
     /// </summary>
-    [DataField("normalSpriteState")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string NormalSpriteState = "normal";
 
     /// <summary>
     /// The sprite state used when the lightbulb is broken.
     /// </summary>
-    [DataField("brokenSpriteState")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string BrokenSpriteState = "broken";
 
     /// <summary>
     /// The sprite state used when the lightbulb is burned.
     /// </summary>
-    [DataField("burnedSpriteState")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string BurnedSpriteState = "burned";
 
     #endregion Appearance

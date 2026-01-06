@@ -20,7 +20,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
     [Dependency] private readonly IPlacementManager _placementManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
-    
+
     private Direction _placementDirection = default;
 
     public override void Update(float frameTime)
@@ -41,6 +41,11 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
             return;
 
         var heldEntity = _hands.GetActiveItem(player);
+
+        // Don't open the placement overlay for client-side RCDs.
+        // This may happen when predictively spawning one in your hands.
+        if (heldEntity != null && IsClientSide(heldEntity.Value))
+            return;
 
         if (!TryComp<RCDComponent>(heldEntity, out var rcd))
         {
@@ -69,7 +74,7 @@ public sealed class RCDConstructionGhostSystem : EntitySystem
             MobUid = heldEntity.Value,
             PlacementOption = PlacementMode,
             EntityType = prototype.Prototype,
-            Range = (int) Math.Ceiling(SharedInteractionSystem.InteractionRange),
+            Range = (int)Math.Ceiling(SharedInteractionSystem.InteractionRange),
             IsTile = (prototype.Mode == RcdMode.ConstructTile),
             UseEditorContext = false,
         };

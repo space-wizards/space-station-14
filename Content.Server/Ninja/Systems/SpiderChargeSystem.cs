@@ -1,10 +1,10 @@
 using Content.Server.Mind;
 using Content.Server.Objectives.Components;
 using Content.Server.Popups;
-using Content.Server.Roles;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Components;
 using Content.Shared.Sticky;
 using Content.Shared.Trigger;
 

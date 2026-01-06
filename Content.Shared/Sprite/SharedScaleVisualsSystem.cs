@@ -27,6 +27,7 @@ public abstract class SharedScaleVisualsSystem : EntitySystem
 
     protected virtual void ResetScale(Entity<ScaleVisualsComponent> ent)
     {
+        _appearance.RemoveData(ent.Owner, ScaleVisuals.Scale);
         var ev = new ScaleEntityEvent(ent.Owner, Vector2.One);
         RaiseLocalEvent(ent.Owner, ref ev);
     }

@@ -11,10 +11,8 @@
     blacklist:
       components:
       - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
-      - NukeDisk # Could confuse the Nukies if they don't know that plushies have a stash.
       tags:
       - QuantumSpinInverter # It will cause issues with the grinder...
-      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
   - type: ToolOpenable
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
@@ -128,85 +126,6 @@
       params:
         variation: 0.125
 
-## Cheapo Figurines
-
-- type: entity
-  parent: BaseItem
-  id: BaseFigurineCheapo
-  name: figurine
-  description: A small miniature.
-  abstract: true
-  components:
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 100
-  - type: StaticPrice
-    price: 25
-  - type: Tag
-    tags:
-    - Figurine
-
-- type: entity
-  parent: BaseFigurineCheapo
-  id: ToyAi
-  name: AI toy
-  description: A scaled-down toy AI core.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/AI.rsi
-    state: icon
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/AI.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.06"
-
-- type: entity
-  parent: BaseFigurineCheapo
-  id: ToyNuke
-  name: nuke toy
-  description: A plastic model of a Nuclear Fission Explosive. No uranium included... probably.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/toy_nuke.rsi
-    state: icon
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/toy_nuke.rsi
-    slots:
-    - HEAD
-    clothingVisuals:
-      head:
-      - state: equipped-HELMET
-        offset: "0, 0.12"
-  - type: Tag
-    tags:
-    - Payload
-  - type: UseDelay
-    delay: 180.0
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Machines/Nuke/nuke_alarm.ogg
-      params:
-        volume: -5
-        maxDistance: 10
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Machines/Nuke/nuke_alarm.ogg
-      params:
-        volume: -5
-        maxDistance: 10
-  - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Machines/Nuke/nuke_alarm.ogg
-      params:
-        volume: -5
-        maxDistance: 10
-
 - type: entity
   parent: BasePlushie
   id: ToyIan
@@ -245,8 +164,7 @@
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Items/Toys/ian.ogg
-  - type: Food
-    requiresSpecialDigestion: true
+  - type: Edible
     useSound:
       path: /Audio/Items/Toys/ian.ogg
   - type: FoodSequenceElement
@@ -283,14 +201,14 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/click.ogg
+      path: /Audio/Weapons/Guns/Gunshots/energycrossbow_shoot.ogg
   - type: BallisticAmmoProvider
     whitelist:
       tags:
       - BulletFoam
     capacity: 1
     soundInsert:
-      path: /Audio/Items/bow_pull.ogg
+      path: /Audio/Weapons/Guns/MagIn/energycrossbow_reload.ogg
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -317,6 +235,10 @@
     - state: base
       map: ["enum.GunVisualLayers.Base"]
   - type: Item
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedOffset: -2,-7
     sprite: Objects/Fun/capgun.rsi
   - type: Tag
     tags:
@@ -385,6 +307,69 @@
     sprite: Objects/Fun/Foam/foam_blade.rsi
   - type: UseDelay
 
+# Balloons
+
+- type: entity
+  parent: BaseItem
+  id: BaseBalloon
+  abstract: true
+  components:
+  - type: Sprite
+    noRot: true
+  - type: Item
+    size: Small
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/balloon_hits.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Effects/balloon_hits.ogg
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: TileFrictionModifier
+    modifier: 0.3
+  - type: Tag
+    tags:
+    - Balloon
+
+- type: entity
+  parent: BaseBalloon
+  id: BalloonSyn
+  name: syndie balloon
+  description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balloons/syndicate.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Balloons/syndicate.rsi
+  - type: StaticPrice
+    price: 100 # Entertainment.
+
+- type: entity
+  parent: BaseBalloon
+  id: BalloonNT
+  name: nanotrasen balloon
+  description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balloons/nanotrasen.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Balloons/nanotrasen.rsi
+
+- type: entity
+  parent: BaseBalloon
+  id: BalloonCorgi
+  name: corgi balloon
+  description: Just like owning a real dog - but a lot floatier.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balloons/corgi.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Balloons/corgi.rsi
+
 # MISC
 
 - type: entity
@@ -451,6 +436,47 @@
 
 - type: entity
   parent: BaseItem
+  id: TennisBall
+  name: tennis ball
+  description: A fuzzy orb of endless betrayal.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Balls/tennisball.rsi
+    state: icon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.5 # a little bouncy
+        friction: 0.2
+  - type: Catchable
+    catchChance: 0.8
+    catchSuccessSound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/Balls/tennisball.rsi
+  - type: EmitSoundOnUse
+    sound:
+      collection: ToySqueak
+      params:
+        volume: -4
+  - type: UseDelay
+  - type: Clothing
+    slots: [mask]
+  - type: Tag
+    tags:
+    - PetWearable
+
+- type: entity
+  parent: BaseItem
   id: BeachBall
   name: beach ball
   description: The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen
@@ -466,77 +492,60 @@
           position: "0,-0.2"
         density: 20
         mask:
-        - ItemMask
-        restitution: 0.1 # not bouncy
+          - ItemMask
+        restitution: 0.2 # not bouncy
         friction: 0.2
   - type: Catchable
     catchChance: 0.8
     catchSuccessSound:
-      path: /Audio/Effects/Footsteps/bounce.ogg
-  - type: EmitSoundOnCollide
-    sound:
       path: /Audio/Effects/Footsteps/bounce.ogg
   - type: Item
     size: Normal
     sprite: Objects/Fun/Balls/beach_ball.rsi
   - type: TileFrictionModifier
     modifier: 0.05
+  - type: TriggerOnCollide
+    fixtureID: fix1
+    keyOut: OnCollide
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Effects/Footsteps/bounce.ogg
+    keysIn:
+      - OnCollide
 
 - type: entity
-  parent: BaseItem
-  id: BalloonSyn
-  name: syndie balloon
-  description: Handed out to the bravest souls who survived the "atomic twister" ride at Syndieland.
+  parent: BeachBall
+  id: EvilBeachBall
+  suffix: EVIL/ADMEME
+  description: Someone's drawn ">:3c" on the side of this beach ball in indelible ink.
   components:
-  - type: Sprite
-    sprite: Objects/Fun/Balloons/syndicate.rsi
-    state: icon
-  - type: Item
-    size: Small
-    sprite: Objects/Fun/Balloons/syndicate.rsi
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Tag
-    tags:
-    - Balloon
-  - type: StaticPrice
-    price: 5000 # Entertainment.
-
-- type: entity
-  parent: BaseItem
-  id: BalloonNT
-  name: nanotrasen balloon
-  description: Specially designed to inflict maximum psychological damage to Syndicate operatives.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Balloons/nanotrasen.rsi
-    state: icon
-  - type: Item
-    size: Small
-    sprite: Objects/Fun/Balloons/nanotrasen.rsi
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Tag
-    tags:
-    - Balloon
-
-- type: entity
-  parent: BaseItem
-  id: BalloonCorgi
-  name: corgi balloon
-  description: Just like owning a real dog - but a lot floatier.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Balloons/corgi.rsi
-    state: icon
-  - type: Item
-    size: Small
-    sprite: Objects/Fun/Balloons/corgi.rsi
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Tag
-    tags:
-    - Balloon
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.3
+          position: "0,-0.2"
+        density: 20
+        mask:
+        - ThrownItem
+        restitution: 0.5 # very bouncy
+        friction: 0.2
+  - type: LaunchOnTrigger
+    impulse: 100.0
+    keysIn:
+      - OnCollide
+  - type: StaminaDamageOnTrigger
+    stamina: 25.0
+    keysIn:
+      - OnCollide
+    targetUser: true
+  - type: DamageOnTrigger
+    damage:
+      types:
+        Blunt: 20
+    keysIn:
+      - OnCollide
+    targetUser: true
 
 - type: entity
   parent: BaseItem
@@ -771,6 +780,44 @@
 
 - type: entity
   parent: BaseItem
+  id: CardSword
+  name: cardboard sword
+  description: A cardboard tube fashioned into the shape of a sword.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/card_sword.rsi
+    state: icon
+  - type: Clothing
+    sprite: Objects/Fun/card_sword.rsi
+    slots:
+    - Back
+    - SuitStorage
+  - type: StaminaDamageOnHit
+    damage: 6
+  - type: Appearance
+  - type: DisarmMalus
+    malus: 0
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 1.25
+    damage:
+      types:
+        Blunt: 0.3
+    soundHit:
+      path: /Audio/Items/Toys/card_tube_bonk.ogg
+  - type: Construction
+    graph: CardSword
+    node: cardSword
+  - type: Item
+    size: Normal
+    storedSprite:
+      state: icon
+      sprite: Objects/Fun/card_sword.rsi
+    shape:
+    - 0,0,1,3
+
+- type: entity
+  parent: BaseItem
   id: ClownRecorder
   name: clown recorder
   description: When you just can't get those laughs coming the natural way!
@@ -873,6 +920,7 @@
     delay: 0.8
   - type: Slippery
     staminaDamage: 0
+    frictionStatusTime: 0
     slipData:
       stunTime: 0
       knockdownTime: 0
@@ -927,7 +975,7 @@
   - type: FlavorProfile
     flavors:
     - plastic
-  - type: Food
+  - type: Edible
   - type: SolutionContainerManager
     solutions:
       food:
@@ -973,9 +1021,38 @@
       collection: packetOpenSounds
   - type: TrashOnSolutionEmpty
     solution: drink
-  - type: Tag
-    tags:
-    - DrinkSpaceGlue
+
+- type: entity
+  parent: DrinkBase
+  id: CrazyLube
+  name: crazy lube
+  description: A bottle of super slipery crazy lube manufactured by Honk! Co.
+  components:
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
+  - type: Sprite
+    sprite: Objects/Fun/lube.rsi
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: Appearance
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: SpaceLube
+          Quantity: 100
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "icon_open"}
+          False: {state: "icon"}
+  - type: Lube
+  - type: TrashOnSolutionEmpty
+    solution: drink
 
 - type: entity
   parent: BaseItem
