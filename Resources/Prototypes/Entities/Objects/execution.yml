@@ -1,0 +1,13 @@
+- type: entity
+  id: SharpExecution
+  abstract: true
+  components:
+  - type: Execution
+    internalMeleeExecutionMessage: execution-popup-melee-initial-internal
+    externalMeleeExecutionMessage: execution-popup-melee-initial-external
+    completeInternalMeleeExecutionMessage: execution-popup-melee-complete-internal
+    completeExternalMeleeExecutionMessage: execution-popup-melee-complete-external
+    internalSelfExecutionMessage: execution-popup-melee-self-initial-internal
+    externalSelfExecutionMessage: execution-popup-melee-self-initial-external
+    completeInternalSelfExecutionMessage: execution-popup-melee-self-complete-internal
+    completeExternalSelfExecutionMessage: execution-popup-melee-self-complete-external

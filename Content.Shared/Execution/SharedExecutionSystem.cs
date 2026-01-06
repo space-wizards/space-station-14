@@ -1,6 +1,7 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chat;
 using Content.Shared.CombatMode;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -12,15 +13,17 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Interaction.Events;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Execution;
 
 /// <summary>
 ///     Verb for violently murdering cuffed creatures.
 /// </summary>
-public sealed class SharedExecutionSystem : EntitySystem
+public sealed partial class SharedExecutionSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -29,17 +32,15 @@ public sealed class SharedExecutionSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSuicideSystem _suicide = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-    [Dependency] private readonly SharedExecutionSystem _execution = default!;
     [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+        InitialiseMelee();
 
         SubscribeLocalEvent<ExecutionComponent, GetVerbsEvent<UtilityVerb>>(OnGetInteractionsVerbs);
-        SubscribeLocalEvent<ExecutionComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
-        SubscribeLocalEvent<ExecutionComponent, SuicideByEnvironmentEvent>(OnSuicideByEnvironment);
         SubscribeLocalEvent<ExecutionComponent, ExecutionDoAfterEvent>(OnExecutionDoAfter);
     }
 
@@ -71,16 +72,14 @@ public sealed class SharedExecutionSystem : EntitySystem
         if (!CanBeExecuted(victim, attacker))
             return;
 
+        var internalMessage = comp.InternalMeleeExecutionMessage;
+        var externalMessage = comp.ExternalMeleeExecutionMessage;
         if (attacker == victim)
         {
-            ShowExecutionInternalPopup(comp.InternalSelfExecutionMessage, attacker, victim, weapon);
-            ShowExecutionExternalPopup(comp.ExternalSelfExecutionMessage, attacker, victim, weapon);
+            internalMessage = comp.InternalSelfExecutionMessage;
+            externalMessage = comp.ExternalSelfExecutionMessage;
         }
-        else
-        {
-            ShowExecutionInternalPopup(comp.InternalMeleeExecutionMessage, attacker, victim, weapon);
-            ShowExecutionExternalPopup(comp.ExternalMeleeExecutionMessage, attacker, victim, weapon);
-        }
+        ShowPopups(internalMessage, externalMessage, attacker, victim, weapon);
 
         var doAfter =
             new DoAfterArgs(EntityManager, attacker, comp.DoAfterDuration, new ExecutionDoAfterEvent(), weapon, target: victim, used: weapon)
@@ -91,7 +90,25 @@ public sealed class SharedExecutionSystem : EntitySystem
             };
 
         _doAfter.TryStartDoAfter(doAfter);
+    }
 
+    private void ShowPopups(string internalMessage, string externalMessage, EntityUid attacker, EntityUid victim, EntityUid weapon)
+    {
+        // popup for self
+        _popup.PopupClient(
+            Loc.GetString(internalMessage, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
+            attacker,
+            PopupType.MediumCaution
+        );
+
+        // popup for others
+        _popup.PopupEntity(
+            Loc.GetString(externalMessage, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
+            attacker,
+            Filter.PvsExcept(attacker),
+            true,
+            PopupType.MediumCaution
+        );
     }
 
     public bool CanBeExecuted(EntityUid victim, EntityUid attacker)
@@ -120,113 +137,58 @@ public sealed class SharedExecutionSystem : EntitySystem
         return true;
     }
 
-    private void OnGetMeleeDamage(Entity<ExecutionComponent> entity, ref GetMeleeDamageEvent args)
-    {
-        if (!TryComp<MeleeWeaponComponent>(entity, out var melee) || !entity.Comp.Executing)
-        {
-            return;
-        }
-
-        var bonus = melee.Damage * entity.Comp.DamageMultiplier - melee.Damage;
-        args.Damage += bonus;
-        args.ResistanceBypass = true;
-    }
-
-    private void OnSuicideByEnvironment(Entity<ExecutionComponent> entity, ref SuicideByEnvironmentEvent args)
-    {
-        if (!TryComp<MeleeWeaponComponent>(entity, out var melee))
-            return;
-
-        string? internalMsg = entity.Comp.CompleteInternalSelfExecutionMessage;
-        string? externalMsg = entity.Comp.CompleteExternalSelfExecutionMessage;
-
-        if (!TryComp<DamageableComponent>(args.Victim, out var damageableComponent))
-            return;
-
-        ShowExecutionInternalPopup(internalMsg, args.Victim, args.Victim, entity, false);
-        ShowExecutionExternalPopup(externalMsg, args.Victim, args.Victim, entity);
-        _audio.PlayPredicted(melee.HitSound, args.Victim, args.Victim);
-        _suicide.ApplyLethalDamage((args.Victim, damageableComponent), melee.Damage);
-        args.Handled = true;
-    }
-
-    private void ShowExecutionInternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon, bool predict = true)
-    {
-        if (predict)
-        {
-            _popup.PopupClient(
-               Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
-               attacker,
-               attacker,
-               PopupType.MediumCaution
-               );
-        }
-        else
-        {
-            _popup.PopupEntity(
-               Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
-               attacker,
-               attacker,
-               PopupType.MediumCaution
-               );
-        }
-    }
-
-    private void ShowExecutionExternalPopup(string locString, EntityUid attacker, EntityUid victim, EntityUid weapon)
-    {
-        _popup.PopupEntity(
-            Loc.GetString(locString, ("attacker", Identity.Entity(attacker, EntityManager)), ("victim", Identity.Entity(victim, EntityManager)), ("weapon", weapon)),
-            attacker,
-            Filter.PvsExcept(attacker),
-            true,
-            PopupType.MediumCaution
-            );
-    }
-
     private void OnExecutionDoAfter(Entity<ExecutionComponent> entity, ref ExecutionDoAfterEvent args)
     {
         if (args.Handled || args.Cancelled || args.Used == null || args.Target == null)
             return;
 
-        if (!TryComp<MeleeWeaponComponent>(entity, out var meleeWeaponComp))
+        if (!CanBeExecuted(args.Target.Value, args.User))
             return;
 
-        var attacker = args.User;
-        var victim = args.Target.Value;
-        var weapon = args.Used.Value;
+        var ev = new BeforeExecutionEvent();
+        RaiseLocalEvent(entity.Owner, ref ev);
 
-        if (!_execution.CanBeExecuted(victim, attacker))
+        if (!ev.Handled)
             return;
 
-        // This is needed so the melee system does not stop it.
-        var prev = _combat.IsInCombatMode(attacker);
-        _combat.SetInCombatMode(attacker, true);
-        entity.Comp.Executing = true;
+        if (ev.Sound is not null)
+            _audio.PlayPredicted(ev.Sound, args.Target.Value, args.User);
 
-        var internalMsg = entity.Comp.CompleteInternalMeleeExecutionMessage;
-        var externalMsg = entity.Comp.CompleteExternalMeleeExecutionMessage;
+        if (ev.Damage is null)
+            return;
 
-        if (attacker == victim)
+        if (!TryComp<DamageableComponent>(args.Target.Value, out var damageable))
+            return;
+
+        _suicide.ApplyLethalDamage((args.Target.Value, damageable), ev.Damage);
+
+        var internalMessage = entity.Comp.CompleteInternalMeleeExecutionMessage;
+        var externalMessage = entity.Comp.CompleteExternalMeleeExecutionMessage;
+        if (args.User == args.Target)
         {
-            var suicideEvent = new SuicideEvent(victim);
-            RaiseLocalEvent(victim, suicideEvent);
-
-            var suicideGhostEvent = new SuicideGhostEvent(victim);
-            RaiseLocalEvent(victim, suicideGhostEvent);
+            internalMessage = entity.Comp.CompleteInternalSelfExecutionMessage;
+            externalMessage = entity.Comp.CompleteExternalSelfExecutionMessage;
         }
-        else
-        {
-            _melee.AttemptLightAttack(attacker, weapon, meleeWeaponComp, victim);
-        }
+        ShowPopups(internalMessage, externalMessage, args.User, args.Target.Value, entity.Owner);
 
-        _combat.SetInCombatMode(attacker, prev);
-        entity.Comp.Executing = false;
         args.Handled = true;
-
-        if (attacker != victim)
-        {
-            _execution.ShowExecutionInternalPopup(internalMsg, attacker, victim, entity);
-            _execution.ShowExecutionExternalPopup(externalMsg, attacker, victim, entity);
-        }
     }
 }
+
+[Serializable, NetSerializable]
+public sealed partial class ExecutionDoAfterEvent : SimpleDoAfterEvent
+{
+}
+
+/// <summary>
+/// Event called on the execution weapon before the execution occurs.
+/// </summary>
+/// <param name="Handled"></param>
+/// <param name="Sound">Optional parameter, leave as null for the execution to be silent.</param>
+/// <param name="Damage">
+/// The damage types the weapon deals. The actual numeric values don't matter, only the types; the victim will always die regardless.
+/// If it is left null then the execution will fail and it will use the fail messages instead. If you include a sound that sound will still play but the victim won't be harmed.
+/// Used for firing an empty revolver.
+/// </param>
+[ByRefEvent]
+public record struct BeforeExecutionEvent(bool Handled = false, SoundSpecifier? Sound = null, DamageSpecifier? Damage = null);

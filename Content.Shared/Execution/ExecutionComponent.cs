@@ -13,14 +13,7 @@ public sealed partial class ExecutionComponent : Component
     /// How long the execution duration lasts.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float DoAfterDuration = 5f;
-
-    /// <summary>
-    /// Damage the target will have after the execution.
-    /// Not a delta of damage inflicted but values it is set to.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public DamageSpecifier Damage = new();
+    public float DoAfterDuration = 4f;
 
     /// <summary>
     /// Shown to the person performing the melee execution (attacker) upon starting a melee execution.
