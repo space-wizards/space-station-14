@@ -5,7 +5,6 @@
   components:
   - type: Injector
     solutionName: hypospray
-    ignoreClosed: false
     activeModeProtoId: HyposprayDynamicMode
     allowedModes:
     - HyposprayDynamicMode
@@ -216,6 +215,7 @@
     solution: pen
   - type: Injector
     solutionName: pen
+    ignoreClosed: false
     currentTransferAmount: null
     activeModeProtoId: HyposprayInjectMode
     allowedModes:
