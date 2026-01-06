@@ -40,9 +40,9 @@ public sealed partial class PointingSystem : SharedPointingSystem
         }
     }
 
-    private void UpdatePointerAppearance(EntityUid uid, SpriteComponent? sprite = null)
+    private void UpdatePointerAppearance(Entity<SpriteComponent?> entity)
     {
-        if (!TryComp<SpriteComponent>(uid, out sprite))
+        if (!Resolve(entity, ref entity.Comp))
             return;
 
         var useHighlight = _cfg.GetCVar(CCVars.PointerHighlight);
