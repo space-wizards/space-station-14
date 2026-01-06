@@ -7,6 +7,19 @@
   - type: Sprite
     sprite: /Textures/Objects/Devices/chameleon_projector.rsi
     state: icon
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: PowerCellDraw
+    drawRate: 4 # About 3 minutes with a medium cell.
+  - type: ToggleCellDraw
+  - type: ItemToggle
+    onActivate: false
+    onUse: false
   - type: ChameleonProjector
     whitelist:
       components:
@@ -28,6 +41,22 @@
     disguiseProto: ChameleonDisguise
   - type: StaticPrice
     price: 5000
+
+- type: entity
+  parent: ChameleonProjector
+  id: ChameleonProjectorRecharging
+  name: chameleon projector
+  description: Holoparasite technology used to create a hard-light replica of any object around you. Disguise is destroyed when picked up or deactivated.
+  suffix: AutoRecharge
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactor
+        disableEject: true
+  - type: PowerCellDraw
+    drawRate: 16 # We offset the charge rate of the microreactor. This is basically same as 4.
 
 - type: entity
   categories: [ HideSpawnMenu ]

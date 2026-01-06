@@ -14,6 +14,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Damage.Systems;
+using Content.Shared.Item.ItemToggle;
+using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.PowerCell;
 
 namespace Content.Shared.Polymorph.Systems;
 
@@ -34,6 +37,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {
@@ -53,6 +57,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         SubscribeLocalEvent<ChameleonProjectorComponent, HandDeselectedEvent>(OnDeselected);
         SubscribeLocalEvent<ChameleonProjectorComponent, GotUnequippedHandEvent>(OnUnequipped);
         SubscribeLocalEvent<ChameleonProjectorComponent, ComponentShutdown>(OnProjectorShutdown);
+        SubscribeLocalEvent<ChameleonProjectorComponent, ItemToggledEvent>(OnProjectorToggled);
     }
 
     #region Disguise entity
@@ -105,6 +110,18 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
         TryDisguise(ent, args.User, target);
     }
 
+    private void OnProjectorToggled(Entity<ChameleonProjectorComponent> ent, ref ItemToggledEvent args)
+    {
+        if (args.Activated)
+            return;
+
+        if (ent.Comp.Disguised == null)
+            return;
+
+        // We don't toggle here as this is only called when we subscribe to being toggled off.
+        TryReveal(ent.Comp.Disguised.Value, false);
+    }
+
     private void OnGetVerbs(Entity<ChameleonProjectorComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess)
@@ -135,6 +152,9 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
             _popup.PopupClient(Loc.GetString("chameleon-projector-invalid"), target, user);
             return false;
         }
+
+        if (!_toggle.TryActivate(ent.Owner, user))
+            return false;
 
         _popup.PopupClient(Loc.GetString("chameleon-projector-success"), target, user);
         Disguise(ent, user, target);
@@ -206,7 +226,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
             return;
 
         // reveal first to allow quick switching
-        TryReveal(user);
+        // We should've already toggled the projector inside TryDiguise.
+        TryReveal(user, false);
 
         // add actions for controlling transform aspects
         _actions.AddAction(user, ref proj.NoRotActionEntity, proj.NoRotAction, container: ent);
@@ -241,7 +262,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     /// <summary>
     /// Removes the disguise, if the user is disguised.
     /// </summary>
-    public bool TryReveal(Entity<ChameleonDisguisedComponent?> ent)
+    public bool TryReveal(Entity<ChameleonDisguisedComponent?> ent, bool toggle = true)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
@@ -250,6 +271,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
             && TryComp<ChameleonProjectorComponent>(disguise.Projector, out var proj))
         {
             proj.Disguised = null;
+            if (toggle)
+                _toggle.TryDeactivate(disguise.Projector);
         }
 
         var xform = Transform(ent);
