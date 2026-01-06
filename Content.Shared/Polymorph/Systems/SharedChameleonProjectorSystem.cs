@@ -16,7 +16,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.PowerCell;
 
 namespace Content.Shared.Polymorph.Systems;
 
