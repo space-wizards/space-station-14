@@ -148,7 +148,7 @@
 
 - type: entity
   id: SyndicateMicrowave
-  parent: KitchenMicrowave
+  parent: [ KitchenMicrowave, BaseSyndicateContraband ]
   name: donk co. microwave
   description: So advanced, it can cook donk-pockets in a mere 2.5 seconds!
   components:
