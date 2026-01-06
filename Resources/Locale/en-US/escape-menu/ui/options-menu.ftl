@@ -52,6 +52,7 @@ ui-options-interface-label = Interface
 ui-options-auto-fill-highlights = Auto-fill the highlights with the character's information
 ui-options-highlights-color = Highlights color:
 ui-options-highlights-color-example = This is highlighted text.
+ui-options-pointer-highlights = Use your highlight color to shade the "point" arrow
 ui-options-show-held-item = Show held item next to cursor
 ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
 ui-options-opaque-storage-window = Opaque storage window
