@@ -53,10 +53,6 @@
   - RuleC8
   - RuleC9
   - RuleC10
-  - RuleC11
-  - RuleC12
-  - RuleC13
-  - RuleC14
 
 - type: guideEntry
   id: RuleC1
@@ -116,31 +112,7 @@
   id: RuleC10
   name: guide-entry-rules-c10
   ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC10AHelp.xml"
-
-- type: guideEntry
-  id: RuleC11
-  name: guide-entry-rules-c11
-  ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC11AhelpThreats.xml"
-
-- type: guideEntry
-  id: RuleC12
-  name: guide-entry-rules-c12
-  ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC12MinAge.xml"
-
-- type: guideEntry
-  id: RuleC13
-  name: guide-entry-rules-c13
-  ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC13CharacterNames.xml"
-
-- type: guideEntry
-  id: RuleC14
-  name: guide-entry-rules-c14
-  ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC14ICinOOC.xml"
+  text: "/ServerInfo/Guidebook/ServerRules/CoreRules/RuleC10MinAge.xml"
 
 - type: guideEntry
   id: RoleplayRules
@@ -363,17 +335,3 @@
   name: guide-entry-rules-m1
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/MRPRules/RuleM1DoNotPowergame.xml"
-
-# Ban-Related Guide Entries are used as hyperlinks in certain Ruleset Guide Entry explanations.
-
-- type: guideEntry
-  id: BanTypes
-  name: guide-entry-rules-ban-types
-  ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/BanTypes.xml"
-
-- type: guideEntry
-  id: BanDurations
-  name: guide-entry-rules-ban-durations
-  ruleEntry: true
-  text: "/ServerInfo/Guidebook/ServerRules/BanDurations.xml"
