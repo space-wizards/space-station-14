@@ -95,6 +95,17 @@ public abstract partial class EntityTableSelector
         }
     }
 
+    public IEnumerable<(EntProtoId spawn, double prob)> AverageSpawns(IEntityManager entMan,
+        IPrototypeManager proto,
+        EntityTableContext ctx,
+        float mod = 1f)
+    {
+        foreach (var (spawn, prob) in ListSpawnsImplementation(entMan, proto, ctx))
+        {
+            yield return (spawn, prob * Prob * Rolls.Average() * mod);
+        }
+    }
+
     protected abstract IEnumerable<EntProtoId> GetSpawnsImplementation(System.Random rand,
         IEntityManager entMan,
         IPrototypeManager proto,

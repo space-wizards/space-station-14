@@ -33,7 +33,7 @@ public sealed class EntityTableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Builds a dictionary of all the spawns in an EntityTable as keys, and their modified weights as values.
+    /// Builds a list of all the spawns in an EntityTable as keys, and their modified weights as values.
     /// </summary>
     /// <param name="table">Table we're examining</param>
     /// <param name="ctx">Optional extra context</param>
@@ -44,6 +44,20 @@ public sealed class EntityTableSystem : EntitySystem
 
         ctx ??= new EntityTableContext();
         return table.ListSpawns(EntityManager, _prototypeManager, ctx);
+    }
+
+    public IEnumerable<(EntProtoId spawn, double)> AverageSpawns(EntityTablePrototype entTableProto, EntityTableContext? ctx = null)
+    {
+        return AverageSpawns(entTableProto.Table, ctx);
+    }
+
+    public IEnumerable<(EntProtoId spawn, double)> AverageSpawns(EntityTableSelector? table, EntityTableContext? ctx = null)
+    {
+        if (table == null)
+            return new List<(EntProtoId spawn, double)>();
+
+        ctx ??= new EntityTableContext();
+        return table.AverageSpawns(EntityManager, _prototypeManager, ctx);
     }
 }
 

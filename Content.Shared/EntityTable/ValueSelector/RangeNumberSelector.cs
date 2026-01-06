@@ -22,6 +22,11 @@ public sealed partial class RangeNumberSelector : NumberSelector
 
     public override float Odds()
     {
-        return Math.Min(1, Range.X + Range.Y / 2);
+        return Range.X == 0 ? 1f / (Range.Y + 1) : 1;
+    }
+
+    public override float Average()
+    {
+        return Range.X * Range.Y / 2f;
     }
 }

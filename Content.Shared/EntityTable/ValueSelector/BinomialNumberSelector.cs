@@ -44,9 +44,25 @@ public sealed partial class BinomialNumberSelector : NumberSelector
         var prob = 1f;
         for (var i = 0; i < Trials; i++)
         {
-            prob *= (1 - Chance);
+            prob *= 1 - Chance;
         }
 
         return 1 - prob;
+    }
+
+    public override float Average()
+    {
+        if (Chance >= 1f)
+            return Trials;
+
+        var prob = Chance;
+        var sum = 0f;
+        for (var i = 0; i < Trials; i++)
+        {
+            sum += prob;
+            prob *= Chance;
+        }
+
+        return sum;
     }
 }
