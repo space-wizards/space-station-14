@@ -105,7 +105,7 @@
   parent: [ClothingBeltBase, ClothingSlotBase, BaseSecurityContraband]
   id: ClothingBeltHolster
   name: shoulder holster
-  description: 'A holster to carry a sidearm and a slot for ammo or knives. WARNING: Badasses only.'
+  description: 'A holster to carry a sidearm and a slot for everything else. WARNING: Badasses only.'
   components:
   - type: Sprite
     sprite: Clothing/Belt/holster.rsi
@@ -139,10 +139,13 @@
         priority: 1
         whitelist:
           tags:
-          - Knife
+          - CombatKnife
           - MagazinePistolAll
           - SpeedLoaderAll
           - PowerCellAll
+          - HandGrenade
+          - CigPack
+          - Radio
         whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
         ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
@@ -168,6 +171,18 @@
         whitelist:
           tags:
           - Sidearm
+      icon_grenade:
+        whitelist:
+          tags:
+          - HandGrenade
+      icon_pack:
+        whitelist:
+          tags:
+          - CigPack
+      icon_radio:
+        whitelist:
+          tags:
+          - Radio
   - type: Appearance
   - type: UseDelay
 
@@ -221,7 +236,7 @@
         priority: 1
         whitelist:
           tags:
-          - Knife
+          - CombatKnife
           - MagazinePistolAll
           - MagazinePistolSubMachineGun
           - MagazinePistolSubMachineGunTopMounted
@@ -229,6 +244,9 @@
           - MagazineRifleAll
           - MagazineShotgun
           - PowerCellAll
+          - HandGrenade
+          - CigPack
+          - Radio
         whitelistFailPopup: clothing-holster-insert-fail
         insertSound: /Audio/Weapons/Guns/Misc/utility_insert.ogg
         ejectSound: /Audio/Weapons/Guns/Misc/utility_eject.ogg
@@ -268,6 +286,18 @@
         whitelist:
           tags:
           - MagazineShotgun
+      icon_grenade:
+        whitelist:
+          tags:
+          - HandGrenade
+      icon_pack:
+        whitelist:
+          tags:
+          - CigPack
+      icon_radio:
+        whitelist:
+          tags:
+          - Radio
       icon_sidearm:
         whitelist:
           tags:

@@ -26,6 +26,15 @@
       "name": "icon_powercell"
     },
     {
+      "name": "icon_grenade"
+    },
+    {
+      "name": "icon_pack"
+    },
+    {
+      "name": "icon_radio"
+    },
+    {
       "name": "equipped-BELT",
       "directions": 4
     },
