@@ -15,10 +15,11 @@ public sealed partial class ExecutionComponent : Component
     public float DoAfterDuration = 5f;
 
     /// <summary>
-    /// Arbitrarily chosen number to multiply damage by, used to deal reasonable amounts of damage to a victim of an execution.
-    /// /// </summary>
+    /// Damage the target will have after the execution.
+    /// Not a delta of damage inflicted but values it is set to.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public float DamageMultiplier = 9f;
+    public DamageSpecifier Damage = new();
 
     /// <summary>
     /// Shown to the person performing the melee execution (attacker) upon starting a melee execution.
