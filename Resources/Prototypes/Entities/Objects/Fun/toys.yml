@@ -657,6 +657,8 @@
   - type: Sprite
     sprite: Objects/Fun/Balls/magic9ball.rsi
     state: icon
+  - type: Item
+    size: Tiny
   - type: TriggerOnActivate
   - type: TriggerOnSignal
   - type: UseDelay
