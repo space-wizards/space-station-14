@@ -12,8 +12,5 @@ public abstract partial class NumberSelector
     public abstract int Get(System.Random rand);
 
     // Most implementations just return 100%.
-    public virtual float Odds()
-    {
-        return 1;
-    }
+    public abstract float Odds();
 }

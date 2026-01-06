@@ -19,4 +19,9 @@ public sealed partial class RangeNumberSelector : NumberSelector
         // so we add 1 to the second number.
         return rand.Next(Range.X, Range.Y + 1);
     }
+
+    public override float Odds()
+    {
+        return Math.Min(1, Range.X + Range.Y / 2);
+    }
 }
