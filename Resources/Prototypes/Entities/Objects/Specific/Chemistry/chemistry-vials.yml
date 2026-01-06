@@ -92,14 +92,14 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 10
-  - type: Destructible # remove glass shard spawn
+  - type: Destructible
     thresholds:
     - trigger: *DamageTrigger100
       behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
         damage: 10 # smaller so weaker
-      behaviors:
+      behaviors: # remove glass shard spawn
       - *SoundGlassBreak
       - !type:SpillBehavior { }
       - !type:DoActsBehavior
