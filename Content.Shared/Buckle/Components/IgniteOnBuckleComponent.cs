@@ -27,7 +27,7 @@ namespace Content.Shared.Buckle.Components
         /// 0 = unlimited.
         /// </summary>
         [DataField, AutoNetworkedField]
-        public float MaxFireStacks = 0f;
+        public float? MaxFireStacks = null;
 
         /// <summary>
         /// Next time that fire stacks will be applied.

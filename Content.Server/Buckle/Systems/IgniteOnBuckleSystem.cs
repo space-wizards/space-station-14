@@ -54,7 +54,7 @@ public sealed class IgniteOnBuckleSystem : EntitySystem
                 if (!TryComp<FlammableComponent>(buckledEntity, out var flammable))
                     continue;
 
-                if (igniteComponent.MaxFireStacks > 0 && flammable.FireStacks >= igniteComponent.MaxFireStacks)
+                if (igniteComponent.MaxFireStacks.HasValue && flammable.FireStacks >= igniteComponent.MaxFireStacks)
                     continue;
 
                 _flammable.AdjustFireStacks(buckledEntity, igniteComponent.FireStacks, flammable, ignite: true);
