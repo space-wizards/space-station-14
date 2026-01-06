@@ -6,7 +6,28 @@
   components:
   - type: Sprite
     sprite: /Textures/Objects/Devices/chameleon_projector.rsi
-    state: icon
+    layers:
+    - state: icon
+    - state: powered
+      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      visible: false
+    - state: decharging
+      map: [ "enum.PowerDeviceVisualLayers.Charging" ]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.BatteryVisuals.State:
+        enum.PowerDeviceVisualLayers.Powered:
+          Full: { visible: true }
+          Neither: { visible: true }
+          Empty: { visible: false }
+      enum.BatteryVisuals.Charging:
+        enum.PowerDeviceVisualLayers.Charging:
+          Charging: { visible: false }
+          Decharging: { visible: true }
+          Constant: { visible: false }
+  - type: BatteryVisuals
   - type: ItemSlots
     slots:
       cell_slot:

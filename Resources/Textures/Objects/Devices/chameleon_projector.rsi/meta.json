@@ -8,11 +8,25 @@
   },
   "states": [
     {
-      "name": "icon",
+      "name": "icon"
+    },
+    {
+      "name": "powered",
       "delays": [
         [
           0.2,
           0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "decharging",
+      "delays": [
+        [
           0.2,
           0.2,
           0.2,
