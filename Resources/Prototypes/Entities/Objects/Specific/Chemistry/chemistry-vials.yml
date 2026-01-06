@@ -98,7 +98,7 @@
       behaviors: *OverkillBehavior
     - trigger:
         !type:DamageTrigger
-        damage: 10 # smaller so weaker
+        damage: 5 # smaller so weaker
       behaviors: # remove glass shard spawn
       - *SoundGlassBreak
       - !type:SpillBehavior { }
