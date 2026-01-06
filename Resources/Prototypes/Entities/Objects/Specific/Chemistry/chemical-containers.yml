@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkBaseOpenable, DrinkVisualsAll ]
+  parent: [ DrinkBaseMaterialStrongPlastic, DrinkBase, DrinkVisualsAll ]
   id: Jug
   name: jug
   description: Used to contain a very large amount of chemicals or solutions. Chugging is extremely ill-advised.
@@ -18,12 +18,6 @@
     inHandsMaxFillLevels: 5
   - type: ExaminableSolution
     exactVolume: true # Chemistry item
-  - type: Openable
-    sound:
-      collection: bottleOpenSounds
-    closeable: true
-    closeSound:
-      collection: bottleCloseSounds
   - type: StaticPrice
     price: 60
   - type: Tag
