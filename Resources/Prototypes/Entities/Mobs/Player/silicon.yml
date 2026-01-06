@@ -457,6 +457,13 @@
       state: ai_female
   - type: NameIdentifier
     group: StationAi
+  - type: ToggleableGhostRole
+    roleName: station-ai-ghost-role-name
+    roleDescription: station-ai-ghost-role-description
+    roleRules: ghost-role-information-silicon-rules
+    mindRoles:
+    - MindRoleGhostRoleSilicon
+    job: StationAi
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
