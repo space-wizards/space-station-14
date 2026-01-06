@@ -192,7 +192,7 @@
   id: ClothingMaskClownBase
   abstract: true
   name: clown wig and mask
-  description: A clown mask featuring a foldable wig; a true prankster's attire.
+  description: A true prankster's facial attire. A clown is incomplete without his wig and mask.
   components:
   - type: Sprite
     sprite: Clothing/Mask/clown.rsi
@@ -211,6 +211,7 @@
 - type: entity
   parent: [ClothingMaskClownBase, BaseFoldable]
   id: ClothingMaskClown
+  description: A clown mask featuring a foldable wig; a true prankster's attire.
   components:
   - type: Appearance
   - type: Foldable
@@ -224,7 +225,7 @@
     - state: icon
       map: [ "unfoldedLayer" ]
     - state: icon-opened
-      map: ["foldedLayer"]
+      map: [ "foldedLayer" ]
       visible: false
   - type: Tag
     tags:
