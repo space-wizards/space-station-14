@@ -13,7 +13,7 @@ namespace Content.Client.Pointing;
 public sealed partial class PointingSystem : SharedPointingSystem
 {
     [Dependency] private readonly SpriteSystem _sprite = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!; // Wayfarer
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public override void Initialize()
     {
@@ -46,7 +46,7 @@ public sealed partial class PointingSystem : SharedPointingSystem
             return;
 
         var useHighlight = _cfg.GetCVar(CCVars.PointerHighlight);
-        
+
         if (useHighlight)
         {
             // Use blank sprite and apply highlight color
