@@ -128,6 +128,7 @@
     - type: Kudzu
       spriteVariants: 5
       spreadChance: 0.01
+      blockVisionAtLevel: null
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.8
       sprintSpeedModifier: 0.8
