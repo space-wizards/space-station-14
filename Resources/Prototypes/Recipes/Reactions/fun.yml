@@ -221,14 +221,14 @@
 - type: reaction
   id: CorgiJuice
   reactants:
-    UncookedAnimalProteins:
+    UnstableMutagen: # because mutations are cool!
       amount: 1
-    JuiceThatMakesYouWeh:
+    Cognizine: # Since turning into a dog won't let you talk
       amount: 1
-    Happiness:
+    Caninase: # It does turn you into a dog...
       amount: 1
   products:
-    CorgiJuice: 2
+    CorgiJuice: 1
 
 - type: reaction
   id: Felinase

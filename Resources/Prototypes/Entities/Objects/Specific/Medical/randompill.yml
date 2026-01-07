@@ -86,12 +86,12 @@
       - Amatoxin
       - Tazinide
     - quantity: 5
-      weight: 2.5
+      weight: 2
       reagents:
       - Lexorin
       - Lead
-    - quantity: 15
-      weight: .1 # just so it doesn't happen every round
+    - quantity: 20
+      weight: .5 # just so it doesn't happen every round...
       reagents:
       - CorgiJuice
 

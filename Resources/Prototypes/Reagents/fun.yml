@@ -418,14 +418,14 @@
         conditions:
         - !type:ReagentCondition
           reagent: CorgiJuice
-          min: 15
+          min: 20
       - !type:AdjustReagent
         reagent: CorgiJuice
-        amount: -5 # 10 Genetic damage after transformation
+        amount: -10 # 10 Genetic damage after transformation
         conditions:
         - !type:ReagentCondition
           reagent: CorgiJuice
-          min: 15
+          min: 20
 
 - type: reagent
   id: Felinase
