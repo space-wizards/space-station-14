@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: FlipBrooke
-  changes:
-  - message: Banana peels and their variants can now be worn as headgear
-    type: Add
-  - message: Banana peels will correctly render when selected using chameleon headgear
-    type: Fix
-  - message: Banana peels will no longer render as headgear when off a player's head
-    type: Fix
-  - message: Banana peels as headgear now correctly displays in the change log
-    type: Fix
-  id: 8855
-  time: '2025-08-15T05:56:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/39457
 - author: CoolioDudio
   changes:
   - message: Added baby and cube hair
@@ -3897,3 +3884,11 @@
   id: 9358
   time: '2026-01-07T16:38:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42205
+- author: SomegnihT
+  changes:
+  - message: Vox now properly say they turn into fried chicken upon getting enough
+      heat damage
+    type: Fix
+  id: 9359
+  time: '2026-01-07T19:37:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42280
