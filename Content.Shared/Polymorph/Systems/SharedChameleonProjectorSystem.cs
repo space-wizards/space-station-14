@@ -152,7 +152,8 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
             return false;
         }
 
-        if (!_toggle.TryActivate(ent.Owner, user))
+        // We do a TryComp, so if the item has variations without ItemToggle, they can still be used just fine.
+        if (TryComp<ItemToggleComponent>(ent.Owner, out var itemToggle) && !_toggle.TryActivate((ent.Owner, itemToggle), user))
             return false;
 
         _popup.PopupClient(Loc.GetString("chameleon-projector-success"), target, user);
